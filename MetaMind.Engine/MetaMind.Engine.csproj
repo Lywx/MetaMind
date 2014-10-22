@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C107D8AC-046F-4F68-96CA-EDB5482EE0E6}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MetaMind.Engine</RootNamespace>
+    <AssemblyName>MetaMind.Engine</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Windows\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Windows\Release\</OutputPath>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Components\AudioManager.cs" />
+    <Compile Include="Components\EventManager.cs" />
+    <Compile Include="Components\Events\EventBase.cs" />
+    <Compile Include="Components\Events\ListenerBase.cs" />
+    <Compile Include="Components\Files\Folder.cs" />
+    <Compile Include="Components\FolderManager.cs" />
+    <Compile Include="Components\Font.cs" />
+    <Compile Include="Components\FontManager.cs" />
+    <Compile Include="Components\InputEventManager.cs" />
+    <Compile Include="Components\InputSequenceManager.cs" />
+    <Compile Include="Components\Inputs\ActionMap.cs" />
+    <Compile Include="Components\Inputs\Actions.cs" />
+    <Compile Include="Components\Inputs\CharacterEventArgs.cs" />
+    <Compile Include="Components\Inputs\CharEnteredHandler.cs" />
+    <Compile Include="Components\Inputs\KeyboardManager.cs" />
+    <Compile Include="Components\Inputs\KeyEventArgs.cs" />
+    <Compile Include="Components\Inputs\KeyEventHandler.cs" />
+    <Compile Include="Components\Inputs\MouseButton.cs" />
+    <Compile Include="Components\Inputs\MouseEventArgs.cs" />
+    <Compile Include="Components\Inputs\MouseEventHandler.cs" />
+    <Compile Include="Components\Inputs\MouseKeys.cs" />
+    <Compile Include="Components\Inputs\MouseManager.cs" />
+    <Compile Include="Components\MessageManager.cs" />
+    <Compile Include="Components\Messages\FlashMessage.cs" />
+    <Compile Include="Components\Processes\IProcess.cs" />
+    <Compile Include="Components\Processes\ProcessBase.cs" />
+    <Compile Include="Components\Processes\ProcessState.cs" />
+    <Compile Include="Components\Processes\SoundProcess.cs" />
+    <Compile Include="Components\Processes\WaitProcess.cs" />
+    <Compile Include="Components\ProcessManager.cs" />
+    <Compile Include="Components\ScreenManager.cs" />
+    <Compile Include="Engine.cs" />
+    <Compile Include="EngineComponent.cs" />
+    <Compile Include="EngineElement.cs" />
+    <Compile Include="EngineObject.cs" />
+    <Compile Include="Extensions\ColorExtension.cs" />
+    <Compile Include="Extensions\GameTimeExtension.cs" />
+    <Compile Include="Extensions\PointExtension.cs" />
+    <Compile Include="Extensions\RectangleExtension.cs" />
+    <Compile Include="Extensions\Vector2Extension.cs" />
+    <Compile Include="Guis\Elements\Abstract\IDraggable.cs" />
+    <Compile Include="Guis\Elements\Abstract\IPickable.cs" />
+    <Compile Include="Guis\Elements\Abstract\IPressable.cs" />
+    <Compile Include="Guis\Elements\Frames\DraggableFrame.cs" />
+    <Compile Include="Guis\Elements\Frames\FrameEventArgs.cs" />
+    <Compile Include="Guis\Elements\Frames\FrameEventType.cs" />
+    <Compile Include="Guis\Elements\Frames\FrameObject.cs" />
+    <Compile Include="Guis\Elements\Frames\FrameState.cs" />
+    <Compile Include="Guis\Elements\Frames\IDraggableFrame.cs" />
+    <Compile Include="Guis\Elements\Frames\IPickableFrame.cs" />
+    <Compile Include="Guis\Elements\Frames\IPressableFrame.cs" />
+    <Compile Include="Guis\Elements\Frames\MimicFrame.cs" />
+    <Compile Include="Guis\Elements\Frames\PickableFrame.cs" />
+    <Compile Include="Guis\Elements\Frames\PressableFrame.cs" />
+    <Compile Include="Guis\Elements\Regions\IRegion.cs" />
+    <Compile Include="Guis\Elements\Regions\Region.cs" />
+    <Compile Include="Guis\Elements\Regions\RegionObject.cs" />
+    <Compile Include="Guis\Elements\Regions\RegionState.cs" />
+    <Compile Include="Guis\WidgetGroups\WidgetGroup.cs" />
+    <Compile Include="Guis\WidgetGroups\WidgetGroupComponent.cs" />
+    <Compile Include="Guis\WidgetGroups\WidgetGroupControl.cs" />
+    <Compile Include="Guis\WidgetGroups\WidgetGroupGraphics.cs" />
+    <Compile Include="Guis\Widgets\Cameras\IMarkovCamera.cs" />
+    <Compile Include="Guis\Widgets\Cameras\MarkovCamera.cs" />
+    <Compile Include="Guis\Widgets\Items\IItemGraphics.cs" />
+    <Compile Include="Guis\Widgets\Items\ItemEntityFrame.cs" />
+    <Compile Include="Guis\Widgets\Items\ItemFrameType.cs" />
+    <Compile Include="Guis\Widgets\Items\ItemObject.cs" />
+    <Compile Include="Guis\Widgets\Items\ItemRootFrame.cs" />
+    <Compile Include="Guis\Widgets\Items\ItemSettings.cs" />
+    <Compile Include="Guis\Widgets\Items\ItemState.cs" />
+    <Compile Include="Guis\Widgets\IWidget.cs" />
+    <Compile Include="Guis\Widgets\ViewItems\IViewItemControl1D.cs" />
+    <Compile Include="Guis\Widgets\ViewItems\IViewItemData.cs" />
+    <Compile Include="Guis\Widgets\ViewItems\IViewItemFactory.cs" />
+    <Compile Include="Guis\Widgets\ViewItems\IViewItemModifier.cs" />
+    <Compile Include="Guis\Widgets\ViewItems\ViewItemBasicData.cs" />
+    <Compile Include="Guis\Widgets\ViewItems\ViewItemBasicFactory1D.cs" />
+    <Compile Include="Guis\Widgets\ViewItems\ViewItemBasicFactory2D.cs" />
+    <Compile Include="Guis\Widgets\ViewItems\ViewItemBasicGraphics.cs" />
+    <Compile Include="Guis\Widgets\ViewItems\ViewItemCharInteractor.cs" />
+    <Compile Include="Guis\Widgets\ViewItems\ViewItemCharModifier.cs" />
+    <Compile Include="Guis\Widgets\ViewItems\ViewItemComponent.cs" />
+    <Compile Include="Guis\Widgets\ViewItems\ViewItemControl1D.cs" />
+    <Compile Include="Guis\Widgets\ViewItems\ViewItemControl2D.cs" />
+    <Compile Include="Guis\Widgets\ViewItems\ViewItemDataControl.cs" />
+    <Compile Include="Guis\Widgets\ViewItems\ViewItemDataEventArgs.cs" />
+    <Compile Include="Guis\Widgets\ViewItems\ViewItemExchangable.cs" />
+    <Compile Include="Guis\Widgets\ViewItems\ViewItemExchangeless.cs" />
+    <Compile Include="Guis\Widgets\ViewItems\ViewItemFrameControl.cs" />
+    <Compile Include="Guis\Widgets\ViewItems\ViewItemLabelType.cs" />
+    <Compile Include="Guis\Widgets\ViewItems\ViewItemSwapProcess.cs" />
+    <Compile Include="Guis\Widgets\Views\IViewControl.cs" />
+    <Compile Include="Guis\Widgets\Views\IViewFactory.cs" />
+    <Compile Include="Guis\Widgets\Views\IViewGraphics.cs" />
+    <Compile Include="Guis\Widgets\Views\IViewScrollControlHorizontal.cs" />
+    <Compile Include="Guis\Widgets\Views\IViewScrollControlVertical.cs" />
+    <Compile Include="Guis\Widgets\Views\IViewSwapControl.cs" />
+    <Compile Include="Guis\Widgets\Views\View.cs" />
+    <Compile Include="Guis\Widgets\Views\ViewBasicFactory1D.cs" />
+    <Compile Include="Guis\Widgets\Views\ViewBasicFactory2D.cs" />
+    <Compile Include="Guis\Widgets\Views\ViewBasicGraphics.cs" />
+    <Compile Include="Guis\Widgets\Views\ViewComponent.cs" />
+    <Compile Include="Guis\Widgets\Views\ViewControl1D.cs" />
+    <Compile Include="Guis\Widgets\Views\ViewControl2D.cs" />
+    <Compile Include="Guis\Widgets\Views\ViewObject.cs" />
+    <Compile Include="Guis\Widgets\Views\ViewScrollControl1D.cs" />
+    <Compile Include="Guis\Widgets\Views\ViewScrollControl2D.cs" />
+    <Compile Include="Guis\Widgets\Views\ViewSelectionControl1D.cs" />
+    <Compile Include="Guis\Widgets\Views\ViewSelectionControl2D.cs" />
+    <Compile Include="Guis\Widgets\Views\ViewSortMode.cs" />
+    <Compile Include="Guis\Widgets\Views\ViewState.cs" />
+    <Compile Include="Guis\Widgets\Views\ViewSwapControl.cs" />
+    <Compile Include="Guis\Widgets\Widget.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Screens\GameScreen.cs" />
+    <Compile Include="Screens\ScreenState.cs" />
+    <Compile Include="Settings\CameraSettings.cs" />
+    <Compile Include="Settings\GraphicsSettings.cs" />
+    <Compile Include="Settings\MessageSettings.cs" />
+    <Compile Include="Settings\ViewSettings1D.cs" />
+    <Compile Include="Settings\ViewSettings2D.cs" />
+    <Compile Include="Settings\WindowSettings.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="MonoGame.Framework">
+      <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Components\Fonts\" />
+    <Folder Include="Content\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MetaMind.EngineBuilder\MetaMind.EngineBuilder\MetaMind.EngineBuilder.csproj">
+      <Project>{492c04cf-f181-48af-b919-fcd639ed711c}</Project>
+      <Name>MetaMind.EngineBuilder</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ThirdParty\C3.Primitives2D\C3.Primitives2D.csproj">
+      <Project>{39ad1482-1881-4852-a05d-dc61b0d3446a}</Project>
+      <Name>C3.Primitives2D</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

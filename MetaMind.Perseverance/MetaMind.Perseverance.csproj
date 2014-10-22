@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{91A424B6-E62B-4B7A-B30D-331C7E3AF5F0}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MetaMind.Perseverance</RootNamespace>
+    <AssemblyName>MetaMind.Perseverance</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Windows\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Windows\Release\</OutputPath>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Concepts\Datebase.cs" />
+    <Compile Include="Concepts\Thing.cs" />
+    <Compile Include="Extensions\ArrayExtension.cs" />
+    <Compile Include="Extensions\GameScreenExtension.cs" />
+    <Compile Include="Extensions\PointExtension.cs" />
+    <Compile Include="Guis\Widgets\FeelingItems\FeelingItemControl.cs" />
+    <Compile Include="Guis\Widgets\FeelingItems\FeelingItemData.cs" />
+    <Compile Include="Guis\Widgets\FeelingItems\FeelingItemFactory.cs" />
+    <Compile Include="Guis\Widgets\FeelingItems\FeelingItemGraphics.cs" />
+    <Compile Include="Guis\Widgets\FeelingItems\FeelingItemSettings.cs" />
+    <Compile Include="Guis\Widgets\FeelingItems\FeelingItemSymbolControl.cs" />
+    <Compile Include="Guis\Widgets\FeelingItems\FeelingItemSymbolFrameControl.cs" />
+    <Compile Include="Guis\Widgets\FeelingItems\FeelingItemSymbolGraphics.cs" />
+    <Compile Include="Guis\Widgets\FeelingItems\FeelingType.cs" />
+    <Compile Include="Guis\Widgets\Feelings\FeelingWidget.cs" />
+    <Compile Include="Guis\Widgets\FeelingViews\FeelingViewControl.cs" />
+    <Compile Include="Guis\Widgets\FeelingViews\FeelingViewFactory.cs" />
+    <Compile Include="Guis\Widgets\FeelingViews\FeelingViewGraphics.cs" />
+    <Compile Include="Guis\Widgets\TimelineHuds\TimelineHud.cs" />
+    <Compile Include="Guis\Widgets\TimelineHuds\TimelineLight.cs" />
+    <Compile Include="Guis\Widgets\TimelineHuds\TimelineText.cs" />
+    <Compile Include="Guis\Widgets\TimesphereHuds\TimesphereCircle.cs" />
+    <Compile Include="Guis\Widgets\TimesphereHuds\TimesphereHud.cs" />
+    <Compile Include="Perseverance.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Screens\BackgroundScreen.cs" />
+    <Compile Include="Screens\ChamberScreen.cs" />
+    <Compile Include="Sessions\Adventure.cs" />
+    <Compile Include="Sessions\AdventureGui.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MonoGame.Framework">
+      <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MetaMind.EngineBuilder\MetaMind.EngineBuilder\MetaMind.EngineBuilder.csproj">
+      <Project>{492c04cf-f181-48af-b919-fcd639ed711c}</Project>
+      <Name>MetaMind.EngineBuilder</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MetaMind.Engine\MetaMind.Engine.csproj">
+      <Project>{c107d8ac-046f-4f68-96ca-edb5482ee0e6}</Project>
+      <Name>MetaMind.Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MetaMind.PerseveranceBuilder\MetaMind.PerseveranceBuilder\MetaMind.PerseveranceBuilder.csproj">
+      <Project>{5718d82f-2ac8-42bb-a7f0-5309bed3d883}</Project>
+      <Name>MetaMind.PerseveranceBuilder</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ThirdParty\C3.Primitives2D\C3.Primitives2D.csproj">
+      <Project>{39ad1482-1881-4852-a05d-dc61b0d3446a}</Project>
+      <Name>C3.Primitives2D</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

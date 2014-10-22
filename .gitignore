@@ -1,0 +1,17 @@
+*.pdb
+*.cache
+MetaMind.Engine/obj/
+MetaMind.Engine/bin/
+MetaMind.EngineProcessor/obj/
+ThirdParty/C3.Primitives2D/obj/
+ThirdParty/C3.Primitives2D/bin/
+MetaMind.EngineProcessor/bin/
+MetaMind.Perseverance/bin/
+MetaMind.EngineBuilder/MetaMind.EngineBuilder/bin/
+MetaMind.EngineBuilder/MetaMind.EngineBuilder/obj/
+*.cachefile
+MetaMind.PerseveranceBuilder/MetaMind.PerseveranceBuilder/bin/
+MetaMind.Perseverance/obj/
+MetaMind.PerseveranceBuilder/MetaMind.PerseveranceBuilder/obj/
+MetaMind.PerseveranceBuilder/MetaMind.PerseveranceBuilderContent/obj/
+MetaMind.EngineBuilder/MetaMind.EngineBuilderContent/obj/
