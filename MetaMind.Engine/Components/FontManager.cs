@@ -6,6 +6,28 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MetaMind.Engine.Components
 {
+    public enum Font
+    {
+        //---------------------------------------------------------------------
+        UiRegularFont,
+
+        UiStatisticsFont,
+
+        //---------------------------------------------------------------------
+        InfoSimSunFont,
+
+        //---------------------------------------------------------------------
+        FontNum,
+    }
+
+    public static class FontExtension
+    {
+        public static Vector2 MeasureString( this Font font, string text )
+        {
+            return GameEngine.FontManager[ font ].MeasureString( text );
+        }
+    }
+
     /// <summary>
     /// Static storage of SpriteFont objects and colors for use throughout the game.
     /// </summary>
@@ -13,6 +35,7 @@ namespace MetaMind.Engine.Components
     {
         private static SpriteFont[] fonts = new SpriteFont[ ( int ) Font.FontNum ];
         private static FontManager singleton;
+
         public SpriteFont this[ Font font ]
         {
             get { return fonts[ ( int ) font ]; }

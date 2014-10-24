@@ -1,50 +1,53 @@
+using MetaMind.Engine.Guis.Widgets;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace MetaMind.Engine.Components.Inputs
 {
-    public class MouseManager
+    public class MouseManager : InputObject
     {
-        #region Input Settings
+        #region Singleton
 
-        public static readonly int WheelUnit = 120;
+        private static MouseManager singleton;
 
-        #endregion Input Settings
+        public static MouseManager GetInstance()
+        {
+            return singleton ?? ( singleton = new MouseManager() );
+        }
 
-        #region Input Data
+        #endregion Singleton
+
+        #region Settings
+
+        private const int WheelUnit = 120;
+
+        #endregion Settings
+
+        #region Latch State
 
         private MouseState currentState;
         private MouseState previousState;
+
         public MouseState CurrentState
         {
             get { return currentState; }
         }
+
         public MouseState PreviousState
         {
             get { return previousState; }
         }
 
-        #endregion Input Data
+        #endregion Latch State
 
-        #region Constructors
-
-        private MouseManager()
-        {
-        }
-
-        public void Initialize()
-        {
-        }
-
-        #endregion Constructors
-
-        #region Input Triggers
+        #region Input State
 
         public bool IsButtonLeftClicked
         {
             get
             {
                 if ( currentState.LeftButton == ButtonState.Released &&
-                    previousState.LeftButton == ButtonState.Pressed )
+                     previousState.LeftButton == ButtonState.Pressed )
                     return true;
                 else
                     return false;
@@ -56,7 +59,7 @@ namespace MetaMind.Engine.Components.Inputs
             get
             {
                 if ( currentState.RightButton == ButtonState.Released &&
-                    previousState.RightButton == ButtonState.Pressed )
+                     previousState.RightButton == ButtonState.Pressed )
                     return true;
                 else
                     return false;
@@ -85,6 +88,15 @@ namespace MetaMind.Engine.Components.Inputs
             }
         }
 
+        public Point MouseLocation
+        {
+            get
+            {
+                var state = Mouse.GetState();
+                return new Point( state.X, state.Y );
+            }
+        }
+
         public int WheelRelativeMovement
         {
             get
@@ -96,25 +108,30 @@ namespace MetaMind.Engine.Components.Inputs
             }
         }
 
-        #endregion Input Triggers
+        #endregion Input State
 
-        #region Singleton
+        #region Constructors
 
-        private static MouseManager singleton;
-
-        public static MouseManager GetInstance()
+        private MouseManager()
         {
-            return singleton ?? ( singleton = new MouseManager() );
         }
 
-        #endregion Singleton
+        #endregion Constructors
 
         #region Update
 
-        public void HandleInput()
+        public override void Draw( GameTime gameTime )
+        {
+        }
+
+        public override void UpdateInput( GameTime gameTime )
         {
             previousState = currentState;
             currentState = Mouse.GetState();
+        }
+
+        public override void UpdateStructure( GameTime gameTime )
+        {
         }
 
         #endregion Update

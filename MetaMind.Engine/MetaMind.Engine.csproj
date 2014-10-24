@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C107D8AC-046F-4F68-96CA-EDB5482EE0E6}</ProjectGuid>
+    <ProjectGuid>{8944C3AB-1865-49CF-9E84-1ECC42AD2C3E}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MetaMind.Engine</RootNamespace>
@@ -39,23 +39,11 @@
     <Compile Include="Components\EventManager.cs" />
     <Compile Include="Components\Events\EventBase.cs" />
     <Compile Include="Components\Events\ListenerBase.cs" />
-    <Compile Include="Components\Files\Folder.cs" />
     <Compile Include="Components\FolderManager.cs" />
-    <Compile Include="Components\Font.cs" />
     <Compile Include="Components\FontManager.cs" />
     <Compile Include="Components\InputEventManager.cs" />
     <Compile Include="Components\InputSequenceManager.cs" />
-    <Compile Include="Components\Inputs\ActionMap.cs" />
-    <Compile Include="Components\Inputs\Actions.cs" />
-    <Compile Include="Components\Inputs\CharacterEventArgs.cs" />
-    <Compile Include="Components\Inputs\CharEnteredHandler.cs" />
     <Compile Include="Components\Inputs\KeyboardManager.cs" />
-    <Compile Include="Components\Inputs\KeyEventArgs.cs" />
-    <Compile Include="Components\Inputs\KeyEventHandler.cs" />
-    <Compile Include="Components\Inputs\MouseButton.cs" />
-    <Compile Include="Components\Inputs\MouseEventArgs.cs" />
-    <Compile Include="Components\Inputs\MouseEventHandler.cs" />
-    <Compile Include="Components\Inputs\MouseKeys.cs" />
     <Compile Include="Components\Inputs\MouseManager.cs" />
     <Compile Include="Components\MessageManager.cs" />
     <Compile Include="Components\Messages\FlashMessage.cs" />
@@ -65,11 +53,11 @@
     <Compile Include="Components\Processes\SoundProcess.cs" />
     <Compile Include="Components\Processes\WaitProcess.cs" />
     <Compile Include="Components\ProcessManager.cs" />
+    <Compile Include="Components\RunnerManager.cs" />
     <Compile Include="Components\ScreenManager.cs" />
-    <Compile Include="Engine.cs" />
-    <Compile Include="EngineComponent.cs" />
-    <Compile Include="EngineElement.cs" />
+    <Compile Include="GameEngine.cs" />
     <Compile Include="EngineObject.cs" />
+    <Compile Include="EngineRunner.cs" />
     <Compile Include="Extensions\ColorExtension.cs" />
     <Compile Include="Extensions\GameTimeExtension.cs" />
     <Compile Include="Extensions\PointExtension.cs" />
@@ -99,6 +87,7 @@
     <Compile Include="Guis\WidgetGroups\WidgetGroupGraphics.cs" />
     <Compile Include="Guis\Widgets\Cameras\IMarkovCamera.cs" />
     <Compile Include="Guis\Widgets\Cameras\MarkovCamera.cs" />
+    <Compile Include="Guis\Widgets\InputObject.cs" />
     <Compile Include="Guis\Widgets\Items\IItemGraphics.cs" />
     <Compile Include="Guis\Widgets\Items\ItemEntityFrame.cs" />
     <Compile Include="Guis\Widgets\Items\ItemFrameType.cs" />
@@ -106,7 +95,7 @@
     <Compile Include="Guis\Widgets\Items\ItemRootFrame.cs" />
     <Compile Include="Guis\Widgets\Items\ItemSettings.cs" />
     <Compile Include="Guis\Widgets\Items\ItemState.cs" />
-    <Compile Include="Guis\Widgets\IWidget.cs" />
+    <Compile Include="Guis\Widgets\IInputObject.cs" />
     <Compile Include="Guis\Widgets\ViewItems\IViewItemControl1D.cs" />
     <Compile Include="Guis\Widgets\ViewItems\IViewItemData.cs" />
     <Compile Include="Guis\Widgets\ViewItems\IViewItemFactory.cs" />
@@ -148,7 +137,6 @@
     <Compile Include="Guis\Widgets\Views\ViewSortMode.cs" />
     <Compile Include="Guis\Widgets\Views\ViewState.cs" />
     <Compile Include="Guis\Widgets\Views\ViewSwapControl.cs" />
-    <Compile Include="Guis\Widgets\Widget.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screens\GameScreen.cs" />
@@ -162,7 +150,6 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
@@ -174,7 +161,6 @@
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Components\Fonts\" />
     <Folder Include="Content\" />
   </ItemGroup>
   <ItemGroup>

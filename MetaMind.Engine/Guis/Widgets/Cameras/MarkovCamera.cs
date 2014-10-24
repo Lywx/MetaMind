@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MetaMind.Engine.Guis.Widgets.Cameras
 {
-    public class MarkovCamera : Widget, IMarkovCamera
+    public class MarkovCamera : InputObject, IMarkovCamera
     {
         //---------------------------------------------------------------------
         private CameraSettings settings;

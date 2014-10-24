@@ -35,11 +35,39 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Concepts\Datebase.cs" />
+    <Compile Include="Components\SaveManager.cs" />
+    <Compile Include="Concepts\Cognitions\Cognition.cs" />
+    <Compile Include="Concepts\Cognitions\Consciousness.cs" />
+    <Compile Include="Concepts\Cognitions\ConsciousnessAwake.cs" />
+    <Compile Include="Concepts\Cognitions\ConsciousnessSleepy.cs" />
+    <Compile Include="Concepts\Cognitions\ConsciousnessSleepStartedEventArgs.cs" />
+    <Compile Include="Concepts\Cognitions\ConsciousnessSleepStoppedEventArgs.cs" />
+    <Compile Include="Concepts\Cognitions\Synchronization.cs" />
+    <Compile Include="Concepts\Cognitions\SynchronizationDailyStatistics.cs" />
+    <Compile Include="Concepts\Cognitions\SynchronizationDataProcessor.cs" />
+    <Compile Include="Concepts\Cognitions\SynchronizationDescription.cs" />
+    <Compile Include="Concepts\Cognitions\SynchronizationStartedEventArgs.cs" />
+    <Compile Include="Concepts\Cognitions\SynchronizationStoppedEventArgs.cs" />
+    <Compile Include="Concepts\Cognitions\SynchronizationTimer.cs" />
+    <Compile Include="Concepts\TaskEntries\Tasklist.cs" />
+    <Compile Include="Concepts\TaskEntries\DirectionEntry.cs" />
+    <Compile Include="Concepts\TaskEntries\Experience.cs" />
+    <Compile Include="Concepts\TaskEntries\FutureEntry.cs" />
+    <Compile Include="Concepts\TaskEntries\TaskEntry.cs" />
+    <Compile Include="Concepts\TaskEntries\QuestionEntry.cs" />
     <Compile Include="Concepts\Thing.cs" />
-    <Compile Include="Extensions\ArrayExtension.cs" />
-    <Compile Include="Extensions\GameScreenExtension.cs" />
-    <Compile Include="Extensions\PointExtension.cs" />
+    <Compile Include="Extensions\ColorExtension.cs" />
+    <Compile Include="Guis\Modules\IModuleData.cs" />
+    <Compile Include="Guis\Modules\Module.cs" />
+    <Compile Include="Guis\Modules\ModuleComponent.cs" />
+    <Compile Include="Guis\Modules\ModuleControl.cs" />
+    <Compile Include="Guis\Modules\ModuleGraphics.cs" />
+    <Compile Include="Guis\Modules\SummaryModule.cs" />
+    <Compile Include="Guis\Modules\SummaryModuleSettings.cs" />
+    <Compile Include="Guis\Particles\ShapelessParticle.cs" />
+    <Compile Include="Guis\Particles\FloatParticleContainer.cs" />
+    <Compile Include="Guis\Particles\FloatParticle.cs" />
+    <Compile Include="Guis\Particles\Particle.cs" />
     <Compile Include="Guis\Widgets\FeelingItems\FeelingItemControl.cs" />
     <Compile Include="Guis\Widgets\FeelingItems\FeelingItemData.cs" />
     <Compile Include="Guis\Widgets\FeelingItems\FeelingItemFactory.cs" />
@@ -53,26 +81,38 @@
     <Compile Include="Guis\Widgets\FeelingViews\FeelingViewControl.cs" />
     <Compile Include="Guis\Widgets\FeelingViews\FeelingViewFactory.cs" />
     <Compile Include="Guis\Widgets\FeelingViews\FeelingViewGraphics.cs" />
+    <Compile Include="Guis\Widgets\SynchronizationHuds\SynchronizationHud.cs" />
+    <Compile Include="Guis\Widgets\SynchronizationHuds\SynchronizationHudMonitor.cs" />
+    <Compile Include="Guis\Widgets\SynchronizationHuds\SynchronizationHudSettings.cs" />
+    <Compile Include="Guis\Widgets\SynchronizationHuds\SynchronizationHudSynchronizationStartListener.cs" />
+    <Compile Include="Guis\Widgets\SynchronizationHuds\SynchronizationHudSynchronizationStopListener.cs" />
     <Compile Include="Guis\Widgets\TimelineHuds\TimelineHud.cs" />
     <Compile Include="Guis\Widgets\TimelineHuds\TimelineLight.cs" />
     <Compile Include="Guis\Widgets\TimelineHuds\TimelineText.cs" />
-    <Compile Include="Guis\Widgets\TimesphereHuds\TimesphereCircle.cs" />
-    <Compile Include="Guis\Widgets\TimesphereHuds\TimesphereHud.cs" />
+    <Compile Include="Guis\Widgets\RibbonHuds\RibbonHud.cs" />
     <Compile Include="Perseverance.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screens\BackgroundScreen.cs" />
-    <Compile Include="Screens\ChamberScreen.cs" />
+    <Compile Include="Screens\ComputingScreen.cs" />
+    <Compile Include="Screens\MotivationScreen.cs" />
     <Compile Include="Sessions\Adventure.cs" />
-    <Compile Include="Sessions\AdventureGui.cs" />
+    <Compile Include="Sessions\AdventureEventType.cs" />
+    <Compile Include="Guis\ComputingGui.cs" />
+    <Compile Include="Sessions\AdventureSleepStartedEventListener.cs" />
+    <Compile Include="Sessions\AdventureSleepStoppedEventListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="MouseKeyboardActivityMonitor">
+      <HintPath>..\ThirdParty\MouseKeyboardActivityMonitor.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -87,7 +127,7 @@
       <Name>MetaMind.EngineBuilder</Name>
     </ProjectReference>
     <ProjectReference Include="..\MetaMind.Engine\MetaMind.Engine.csproj">
-      <Project>{c107d8ac-046f-4f68-96ca-edb5482ee0e6}</Project>
+      <Project>{8944c3ab-1865-49cf-9e84-1ecc42ad2c3e}</Project>
       <Name>MetaMind.Engine</Name>
     </ProjectReference>
     <ProjectReference Include="..\MetaMind.PerseveranceBuilder\MetaMind.PerseveranceBuilder\MetaMind.PerseveranceBuilder.csproj">

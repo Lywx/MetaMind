@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Engine.Guis.WidgetGroups
 {
-    public abstract class WidgetGroup<TWidgetGroupSettings> : Widget
+    public abstract class WidgetGroup<TWidgetGroupSettings> : InputObject
     {
         public TWidgetGroupSettings Settings { get; protected set; }
         public IWidgetGroupControl Control { get; protected set; }

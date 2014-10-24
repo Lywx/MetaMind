@@ -1,13 +1,13 @@
 ﻿using System;
 using MetaMind.Engine.Screens;
-using MetaMind.Perseverance.Guis.Widgets.TimelineHuds;
-using MetaMind.Perseverance.Guis.Widgets.TimesphereHuds;
+using MetaMind.Perseverance.Guis.Particles;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MetaMind.Perseverance.Screens
 {
-    public class BackgroundScreen : GameScreen
+    internal class BackgroundScreen : GameScreen
     {
         //---------------------------------------------------------------------
 
@@ -15,8 +15,8 @@ namespace MetaMind.Perseverance.Screens
 
         private Texture2D backgroundTexture;
 
-        private TimesphereHud timesphereHud = new TimesphereHud();
-        private TimelineHud  timelineHud  = new TimelineHud( new Vector2( 130, 670 - 230 ) );
+        private const int particleNumber = 1500;
+        private FloatParticleContainer particleContainer = new FloatParticleContainer( particleNumber );
 
         #endregion Graphicalc Data
 
@@ -29,9 +29,13 @@ namespace MetaMind.Perseverance.Screens
         /// </summary>
         public BackgroundScreen()
         {
-            TransitionOnTime = TimeSpan.FromSeconds( 2.5 );
+            TransitionOnTime = TimeSpan.FromSeconds( 0.5 );
             TransitionOffTime = TimeSpan.FromSeconds( 0.5 );
         }
+
+        #endregion Constructors
+
+        #region Load and Unload
 
         /// <summary>
         /// Loads graphics content for this screen. The background texture is quite
@@ -42,7 +46,7 @@ namespace MetaMind.Perseverance.Screens
         /// </summary>
         public override void LoadContent()
         {
-            backgroundTexture = ContentManager.Load<Texture2D>( @"Textures\Screens\Background\Field Of Journey" );
+            backgroundTexture = ContentManager.Load<Texture2D>( @"Textures\Screens\Background\Sea Of Mind" );
         }
 
         /// <summary>
@@ -50,10 +54,10 @@ namespace MetaMind.Perseverance.Screens
         /// </summary>
         public override void UnloadContent()
         {
-            base.UnloadContent();
+            ContentManager.Unload();
         }
 
-        #endregion Constructors
+        #endregion Load and Unload
 
         #region Update and Draw
 
@@ -63,15 +67,13 @@ namespace MetaMind.Perseverance.Screens
         public override void Draw( GameTime gameTime )
         {
             var spriteBatch = ScreenManager.SpriteBatch;
+            var viewport    = ScreenManager.GraphicsDevice.Viewport;
+            var fullscreen  = new Rectangle( 0, 0, viewport.Width, viewport.Height );
+
             spriteBatch.Begin();
 
-            var viewport = ScreenManager.GraphicsDevice.Viewport;
-            var fullscreen = new Rectangle( 0, 0, viewport.Width, viewport.Height );
-            var color = new Color( 0, 0, TransitionAlpha * 2 / 3 );
-            spriteBatch.Draw( backgroundTexture, fullscreen, color );
-
-            timesphereHud.Draw( gameTime, TransitionAlpha );
-            timelineHud.Draw( gameTime );
+            spriteBatch.Draw( backgroundTexture, fullscreen, new Color( 0, 0, TransitionAlpha / 2 ) );
+            particleContainer.Draw( gameTime );
 
             spriteBatch.End();
         }
@@ -83,11 +85,10 @@ namespace MetaMind.Perseverance.Screens
         /// coveredByOtherScreen parameter to false in order to stop the base
         /// Update method wanting to transition off.
         /// </summary>
-        public override void Update( GameTime gameTime, bool otherScreenHasFocus,
-            bool coveredByOtherScreen )
+        public override void Update( GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen )
         {
-            timesphereHud.Update( gameTime );
-            timelineHud.Update( gameTime );
+            particleContainer.Update( gameTime );
+
             base.Update( gameTime, otherScreenHasFocus, false );
         }
 

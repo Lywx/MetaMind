@@ -15,3 +15,7 @@ MetaMind.Perseverance/obj/
 MetaMind.PerseveranceBuilder/MetaMind.PerseveranceBuilder/obj/
 MetaMind.PerseveranceBuilder/MetaMind.PerseveranceBuilderContent/obj/
 MetaMind.EngineBuilder/MetaMind.EngineBuilderContent/obj/
+MetaMind.Engined/bin/
+MetaMind.Engined/obj/x86/Debug/MetaMind.Engine.csproj.FileListAbsolute.txt
+MetaMind.PerseveranceUnitTest/obj/
+*.dll

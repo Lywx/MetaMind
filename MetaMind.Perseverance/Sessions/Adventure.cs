@@ -1,92 +1,92 @@
-using System.IO;
+﻿using System.IO;
 using System.Runtime.Serialization;
 using System.Xml;
-using MetaMind.Engine;
 using MetaMind.Engine.Components;
-using MetaMind.Engine.Guis.Widgets;
-using MetaMind.Perseverance.Concepts;
-using MetaMind.Perseverance.Screens;
+using MetaMind.Perseverance.Concepts.Cognitions;
+using MetaMind.Perseverance.Concepts.TaskEntries;
 using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Sessions
 {
     [DataContract]
-    public class Adventure : EngineObject
+    public class Adventure
     {
-        //---------------------------------------------------------------------
-        public static readonly string XmlFilename = "adventure.xml";
-        public static readonly string XmlPath = FolderManager.SaveFolderPath + XmlFilename;
+        #region File Storage
+
+        [DataMember]
+        public const string XmlFilename = "Adventure.xml";
+
+        [DataMember]
+        public const string XmlPath = FolderManager.SaveFolderPath + XmlFilename;
+
+        #endregion File Storage
 
         //---------------------------------------------------------------------
+
+        #region Singleton
+
         private static Adventure singleton;
 
-        //---------------------------------------------------------------------
-        private ChamberScreen chamberScreen;
-        private IWidget       adventureGui;
+        #endregion Singleton
 
         //---------------------------------------------------------------------
-        private Adventure( ChamberScreen chamberScreen )
-        {
-            //------------------------------------------------------------------
-            // screen control
-            this.chamberScreen = chamberScreen;
 
-            //------------------------------------------------------------------
-            // data
-            Datebase = new Datebase();
-        }
+        #region Concepts
 
-        //---------------------------------------------------------------------
         [DataMember]
-        public Datebase Datebase { get; set; }
+        private Cognition cognition;
+
+        [DataMember]
+        private Tasklist tasklist;
+
+        #endregion Concepts
+
         //---------------------------------------------------------------------
 
-        #region Gui Load
+        #region Constructors
 
-        public void LoadGui()
+        private Adventure()
         {
-            adventureGui = new AdventureGui();
+            tasklist = new Tasklist();
+            cognition = new Cognition();
         }
 
-        #endregion Gui Load
+        #endregion Constructors
 
         //---------------------------------------------------------------------
 
-        #region Data Load and Save
+        #region Public Properties
 
-        public static Adventure Load( ChamberScreen chamberScreen )
+        public Cognition Cognition { get { return cognition; } }
+
+        public Tasklist Tasklist { get { return tasklist; } }
+
+        #endregion Public Properties
+
+        //---------------------------------------------------------------------
+
+        #region Load and Save
+
+        public static Adventure LoadSave()
         {
             if ( File.Exists( XmlPath ) )
             {
                 // auto-backup the old file
                 File.Copy( XmlPath, XmlPath + ".bak", true );
                 // load from save
-                Load( chamberScreen, XmlPath );
+                LoadSave( XmlPath );
             }
             else if ( File.Exists( XmlPath + ".bak" ) )
             {
                 // load from the backup
-                Load( chamberScreen, XmlPath + ".bak" );
+                LoadSave( XmlPath + ".bak" );
             }
             else
             {
                 // create a new singleton
-                singleton = new Adventure( chamberScreen );
+                singleton = new Adventure();
             }
             return singleton;
-        }
-
-        public void End()
-        {
-            // exit the mainscreen
-            // store the flow, for re-entrance
-            if ( singleton == null )
-                return;
-            singleton = null;
-
-            if ( chamberScreen == null )
-                return;
-            chamberScreen.ExitScreen();
         }
 
         public void Save()
@@ -96,7 +96,7 @@ namespace MetaMind.Perseverance.Sessions
                 serializer.WriteObject( file, singleton );
         }
 
-        private static void Load( ChamberScreen chamberScreen, string path )
+        private static void LoadSave( string path )
         {
             using ( var file = File.OpenRead( path ) )
             {
@@ -108,30 +108,20 @@ namespace MetaMind.Perseverance.Sessions
                 }
                 catch ( SerializationException )
                 {
-                    singleton = new Adventure( chamberScreen );
+                    singleton = new Adventure();
                 }
             }
         }
 
-        #endregion Data Load and Save
+        #endregion Load and Save
 
         //---------------------------------------------------------------------
 
         #region Update and Draw
 
-        public void Draw( GameTime gameTime )
-        {
-            adventureGui.Draw( gameTime );
-        }
-
-        public void HandleInput()
-        {
-            adventureGui.HandleInput();
-        }
-
         public void Update( GameTime gameTime )
         {
-            adventureGui.Update( gameTime );
+            cognition.Update( gameTime );
         }
 
         #endregion Update and Draw

@@ -1,4 +1,5 @@
 using MetaMind.Engine.Components.Inputs;
+using MetaMind.Engine.Guis.Widgets;
 using Microsoft.Xna.Framework;
 
 namespace MetaMind.Engine.Components
@@ -6,13 +7,18 @@ namespace MetaMind.Engine.Components
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class InputSequenceManager
+    public class InputSequenceManager : InputObject
     {
-        #region Manager Data
+        #region Singleton
 
-        private bool isInitialized = false;
+        private static InputSequenceManager singleton;
 
-        #endregion Manager Data
+        public static InputSequenceManager GetInstance()
+        {
+            return singleton ?? ( singleton = new InputSequenceManager() );
+        }
+
+        #endregion Singleton
 
         #region Components
 
@@ -34,48 +40,28 @@ namespace MetaMind.Engine.Components
 
         #region Constructors
 
-        private InputSequenceManager(Game game)
+        private InputSequenceManager()
         {
             keyboard = KeyboardManager.GetInstance();
             mouse = MouseManager.GetInstance();
-
-            if (!isInitialized)
-                Initialize();
         }
 
         #endregion Constructors
 
-        #region Initialization
-
-        /// <summary>
-        /// Allows the game component to perform any Constructors it needs to before starting
-        /// to run.  This is where it can query for any required services and load content.
-        /// </summary>
-        public void Initialize()
-        {
-            keyboard.Initialize();
-            mouse.Initialize();
-        }
-
-        #endregion Initialization
-
-        #region Singleton
-
-        private static InputSequenceManager singleton;
-
-        public static InputSequenceManager GetInstance(Game game)
-        {
-            return singleton ?? (singleton = new InputSequenceManager(game));
-        }
-
-        #endregion Singleton
-
         #region Update
 
-        public void HandleInput()
+        public override void Draw( GameTime gameTime )
         {
-            mouse.HandleInput();
-            keyboard.HandleInput();
+        }
+
+        public override void UpdateInput( GameTime gameTime )
+        {
+            mouse   .UpdateInput( gameTime );
+            keyboard.UpdateInput( gameTime );
+        }
+
+        public override void UpdateStructure( GameTime gameTime )
+        {
         }
 
         #endregion Update

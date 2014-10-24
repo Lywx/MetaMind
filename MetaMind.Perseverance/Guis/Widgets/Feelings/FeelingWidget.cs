@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Feelings
 {
-    public class FeelingWidget : Widget
+    public class FeelingWidget : InputObject
     {
         private readonly ViewSettings1D pastViewSettings   = new ViewSettings1D { ColumnNumDisplay = 1, StartPoint = new Point( 160, GraphicsSettings.Height / 2 ) };
         private readonly ViewSettings1D nowViewSettings    = new ViewSettings1D { ColumnNumDisplay = 1, StartPoint = new Point( 421, GraphicsSettings.Height / 2 ) };

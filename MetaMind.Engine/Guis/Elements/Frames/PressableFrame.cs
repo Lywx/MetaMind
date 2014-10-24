@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using MetaMind.Engine.Components;
 using MetaMind.Engine.Components.Inputs;
 using MetaMind.Engine.Extensions;
 using Microsoft.Xna.Framework;

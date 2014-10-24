@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Engine.Guis.Widgets.Views
 {
-    public interface IViewObject : IWidget
+    public interface IViewObject : IInputObject
     {
         ICloneable ViewSettings { get; }
         ICloneable ItemSettings { get; }
@@ -17,7 +17,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         bool IsEnabled( ViewState state );
     }
 
-    public class ViewObject : Widget, IViewObject
+    public class ViewObject : InputObject, IViewObject
     {
         private ICloneable viewSettings;
         private ICloneable itemSettings;

@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Components.Processes
     {
         private readonly SoundEffectInstance soundInstance;
 
-        public SoundProcess(SoundEffect sound)
+        public SoundProcess( SoundEffect sound )
         {
             soundInstance = sound.CreateInstance();
         }
@@ -29,9 +29,9 @@ namespace MetaMind.Engine.Components.Processes
         {
         }
 
-        public override void OnUpdate(Microsoft.Xna.Framework.GameTime gameTime)
+        public override void OnUpdate( Microsoft.Xna.Framework.GameTime gameTime )
         {
-            if (soundInstance.IsDisposed || soundInstance.State == SoundState.Stopped)
+            if ( soundInstance.IsDisposed || soundInstance.State == SoundState.Stopped )
                 Succeed();
         }
     }
