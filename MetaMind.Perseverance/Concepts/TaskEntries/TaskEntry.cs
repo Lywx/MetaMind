@@ -87,17 +87,6 @@ namespace MetaMind.Perseverance.Concepts.TaskEntries
 
         #endregion Constructors
 
-        #region Initialization
-
-        protected void SetupFolder()
-        {
-            GlobalId = FolderManager.NextID;
-            Folder = new Folder( Symbol, GlobalId, Name );
-            Folder.Enable();
-        }
-
-        #endregion Initialization
-
         #region Operations
 
         public abstract void AddChildData( TaskEntry child );
@@ -111,20 +100,12 @@ namespace MetaMind.Perseverance.Concepts.TaskEntries
             DeleteRelationship();
             // not laid out
             IsLaidOut = false;
-            // remove folder
-            Folder.Delete();
         }
 
         protected abstract void DeleteRelationship();
 
         public virtual bool Finish()
         {
-            // move folder
-            if ( Folder.MoveToRepository() )
-            {
-                return true;
-            }
-
             MessageManager.PopMessages( "Repository is not ready." );
             return false;
         }

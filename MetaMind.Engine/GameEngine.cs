@@ -96,7 +96,7 @@ namespace MetaMind.Engine
             MessageManager = MessageManager.GetInstance( MessageSettings.Default );
             //---------------------------------------------------------------------
             Debug.Assert( RunnerManager == null );
-            RunnerManager = RunnerManager.GetInstance();
+            RunnerManager = RunnerManager.GetInstance( this );
         }
 
         #endregion Consructors

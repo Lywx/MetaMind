@@ -1,25 +1,26 @@
 using System;
 using MetaMind.Engine.Extensions;
-using MetaMind.Engine.Guis.Elements;
 using MetaMind.Engine.Guis.Elements.Frames;
 using MetaMind.Engine.Guis.Widgets.Items;
 using MetaMind.Engine.Guis.Widgets.ViewItems;
 using Microsoft.Xna.Framework;
 
-namespace MetaMind.Perseverance.Guis.Widgets.FeelingItems
+namespace MetaMind.Perseverance.Guis.Widgets.FeelingWidgets
 {
     public class FeelingItemSymbolFrameControl : ViewItemComponent
     {
+        private const float IncrementFactor = 0.2f;
+        
         private MimicFrame symbolFrame;
-        private TimeSpan selectedTime;
+        private TimeSpan   selectedTime;
 
         private Point SymbolFrameSize
         {
             get
             {
                 return new Point(
-                    ( int ) ( ItemControl.RootFrame.Rectangle.Width * ( 1 + 0.5 * Math.Abs( Math.Atan( SelectedTime.TotalSeconds ) ) ) ),
-                    ( int ) ( ItemControl.RootFrame.Rectangle.Height * ( 1 + 0.5 * Math.Abs( Math.Atan( SelectedTime.TotalSeconds ) ) ) ) );
+                    ( int ) ( ItemControl.RootFrame.Rectangle.Width * ( 1 + IncrementFactor * Math.Abs( Math.Atan( SelectedTime.TotalSeconds ) ) ) ),
+                    ( int ) ( ItemControl.RootFrame.Rectangle.Height * ( 1 + IncrementFactor * Math.Abs( Math.Atan( SelectedTime.TotalSeconds ) ) ) ) );
             }
         }
 

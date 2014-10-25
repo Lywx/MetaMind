@@ -2,11 +2,9 @@
 using MetaMind.Engine.Guis.Widgets.ViewItems;
 using MetaMind.Engine.Guis.Widgets.Views;
 using MetaMind.Engine.Settings;
-using MetaMind.Perseverance.Guis.Widgets.FeelingItems;
-using MetaMind.Perseverance.Guis.Widgets.FeelingViews;
 using Microsoft.Xna.Framework;
 
-namespace MetaMind.Perseverance.Guis.Widgets.Feelings
+namespace MetaMind.Perseverance.Guis.Widgets.FeelingWidgets
 {
     public class FeelingWidget : InputObject
     {

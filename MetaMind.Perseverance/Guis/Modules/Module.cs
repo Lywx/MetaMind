@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Guis.Modules
 {
-    public interface IModule : IInputObject
+    public interface IModule : IWidget
     {
         IModuleControl Control { get; }
         IModuleGraphics Graphics { get; }

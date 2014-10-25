@@ -1,7 +1,7 @@
 using System;
 using MetaMind.Engine.Guis.Widgets.Views;
 
-namespace MetaMind.Perseverance.Guis.Widgets.FeelingViews
+namespace MetaMind.Perseverance.Guis.Widgets.FeelingWidgets
 {
     public class FeelingViewFactory : IViewFactory
     {

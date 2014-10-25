@@ -8,12 +8,14 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
         private int id;
 
         private readonly ViewItemFrameControl defaultFrameControl;
-        
+
         public ViewItemControl1D( IViewItem item )
             : base( item )
         {
             defaultFrameControl = new ViewItemFrameControl( item );
         }
+
+        #region Public Properties
 
         public int Id
         {
@@ -25,7 +27,9 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
         {
             get { return defaultFrameControl.RootFrame; }
         }
-        
+
+        #endregion Public Properties
+
         #region Operations
 
         public void SelectIt()
@@ -42,10 +46,11 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
             var originCenter = this        .ViewControl.Scroll.RootCenterPoint( this        .ItemControl.Id );
             var targetCenter = draggingItem.ViewControl.Scroll.RootCenterPoint( draggingItem.ItemControl.Id );
-                               this        .ViewControl.Swap  .Initialize     ( originCenter, targetCenter      );
+            this                           .ViewControl.Swap.Initialize( originCenter, targetCenter );
 
             ProcessManager.AttachProcess( new ViewItemSwapProcess( draggingItem, Item ) );
         }
+
         public void UnSelectIt()
         {
             if ( ViewControl.Selection.IsSelected( Id ) )

@@ -16,11 +16,7 @@ namespace MetaMind.Perseverance.Guis
         private AdventureSleepStoppedEventListener sleepStoppedEventListener;
 
         //---------------------------------------------------------------------
-        private IModule summary;
-
-        private IModule tactic;
-        private IModule planning;
-        private IInputObject view = new View( PlanningViewSettings.Default, ItemSettings.Default, new PlanningViewFactory() );
+        private IWidget view = new View( PlanningViewSettings.Default, ItemSettings.Default, new PlanningViewFactory() );
 
         private SynchronizationHud synchronizationHud;
 
@@ -41,16 +37,6 @@ namespace MetaMind.Perseverance.Guis
         public SynchronizationHud SynchronizationHud
         {
             get { return synchronizationHud; }
-        }
-
-        public IModule PlanningModule
-        {
-            get { return planning; }
-        }
-
-        public IModule TacticModule
-        {
-            get { return tactic; }
         }
 
         #endregion Public Properties
@@ -92,8 +78,6 @@ namespace MetaMind.Perseverance.Guis
             Debug.Assert( tactic == null );
 
             synchronizationHud = new SynchronizationHud( Concepts.Cognition.Synchronization, SynchronizationHudSettings.Default );
-
-            summary = new SummaryModule( Concepts.Cognition.Synchronization, Concepts.Cognition.Consciousness, SummaryModuleSettings.Default );
 
             planning = new PlanningModule( PlanningModuleSettings.Default );
             tactic = new TacticModule( TacticModuleSettings.Default );
@@ -146,8 +130,6 @@ namespace MetaMind.Perseverance.Guis
             //planning          .Draw( gameTime );
             //tactic            .Draw( gameTime );
 
-            //summary           .Draw( gameTime );
-
             view.Draw( gameTime );
         }
 
@@ -160,7 +142,6 @@ namespace MetaMind.Perseverance.Guis
             //planning          .HandleInput();
             //tactic            .HandleInput();
 
-            //summary           .HandleInput();
             view.HandleInput();
         }
 
@@ -175,8 +156,6 @@ namespace MetaMind.Perseverance.Guis
 
             //planning          .Update( gameTime );
             //tactic            .Update( gameTime );
-
-            //summary           .Update( gameTime );
 
             view.UpdateStructure( gameTime );
         }

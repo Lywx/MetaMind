@@ -72,7 +72,7 @@ namespace MetaMind.Perseverance.Screens
 
             spriteBatch.Begin();
 
-            spriteBatch.Draw( backgroundTexture, fullscreen, new Color( 0, 0, TransitionAlpha / 2 ) );
+            spriteBatch      .Draw( backgroundTexture, fullscreen, new Color( 0, 0, TransitionAlpha / 2 ) );
             particleContainer.Draw( gameTime );
 
             spriteBatch.End();

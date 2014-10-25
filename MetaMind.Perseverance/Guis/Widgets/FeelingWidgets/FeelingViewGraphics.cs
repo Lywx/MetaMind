@@ -2,7 +2,7 @@ using System;
 using MetaMind.Engine.Guis.Widgets.Views;
 using Microsoft.Xna.Framework;
 
-namespace MetaMind.Perseverance.Guis.Widgets.FeelingViews
+namespace MetaMind.Perseverance.Guis.Widgets.FeelingWidgets
 {
     public class FeelingViewGraphics : ViewBasicGraphics
     {

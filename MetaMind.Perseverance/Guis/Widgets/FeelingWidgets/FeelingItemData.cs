@@ -1,6 +1,6 @@
 ﻿using MetaMind.Engine.Guis.Widgets.ViewItems;
 
-namespace MetaMind.Perseverance.Guis.Widgets.FeelingItems
+namespace MetaMind.Perseverance.Guis.Widgets.FeelingWidgets
 {
     public class FeelingItemData : ViewItemBasicData
     {

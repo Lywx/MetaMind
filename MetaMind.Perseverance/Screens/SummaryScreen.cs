@@ -5,20 +5,23 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Screens
 {
-    public class ComputingScreen : GameScreen
+    public class SummaryScreen : GameScreen
     {
-        private IModule planning;
+        private IModule summary;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ComputingScreen"/> class.
+        /// Initializes a new instance of the <see cref="SummaryScreen"/> class.
         /// This is the most active screen of all.
         /// </summary>
-        public ComputingScreen()
+        public SummaryScreen()
         {
             TransitionOnTime = TimeSpan.FromSeconds( 0.5 );
             TransitionOffTime = TimeSpan.FromSeconds( 0.5 );
 
-            planning = new PlanningModule( PlanningModuleSettings.Default );
+            summary = new SummaryModule(
+                Perseverance.Adventure.Cognition.Synchronization,
+                Perseverance.Adventure.Cognition.Consciousness,
+                SummaryModuleSettings.Default );
         }
 
         public override void Draw( GameTime gameTime )
@@ -27,7 +30,7 @@ namespace MetaMind.Perseverance.Screens
 
             MessageManager.Draw( gameTime );
 
-            planning.Draw( gameTime );
+            summary.Draw( gameTime );
 
             ScreenManager.SpriteBatch.End();
         }
@@ -36,8 +39,6 @@ namespace MetaMind.Perseverance.Screens
         {
             InputEventManager.HandleInput();
             InputSequenceManager.HandleInput();
-
-            planning.HandleInput();
         }
 
         public override void LoadContent()
@@ -51,8 +52,8 @@ namespace MetaMind.Perseverance.Screens
             {
                 Perseverance.Adventure.Update( gameTime );
                 MessageManager.Update( gameTime );
-
-                planning.Update( gameTime );
+                
+                summary.Update( gameTime );
             }
 
             base.Update( gameTime, otherScreenHasFocus, coveredByOtherScreen );

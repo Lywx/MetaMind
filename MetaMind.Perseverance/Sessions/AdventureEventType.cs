@@ -7,8 +7,5 @@
         
         SyncStarted = 0x35e3,
         SyncStopped = 0x95db,
-
-        ItemCreated  = 0xf951,
-        ChildWindowCreated = 0xf4f2,
     }
 }

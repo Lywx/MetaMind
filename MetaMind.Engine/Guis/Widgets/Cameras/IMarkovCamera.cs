@@ -2,7 +2,7 @@
 
 namespace MetaMind.Engine.Guis.Widgets.Cameras
 {
-    public interface IMarkovCamera : IInputObject
+    public interface IMarkovCamera : IWidget
     {
         Vector2 Movement { get; set; }
     }

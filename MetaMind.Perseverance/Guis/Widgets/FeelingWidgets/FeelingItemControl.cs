@@ -3,7 +3,7 @@ using MetaMind.Engine.Guis.Elements.Frames;
 using MetaMind.Engine.Guis.Widgets.ViewItems;
 using Microsoft.Xna.Framework;
 
-namespace MetaMind.Perseverance.Guis.Widgets.FeelingItems
+namespace MetaMind.Perseverance.Guis.Widgets.FeelingWidgets
 {
     public class FeelingItemControl : ViewItemControl1D
     {
@@ -30,10 +30,16 @@ namespace MetaMind.Perseverance.Guis.Widgets.FeelingItems
             get { return symbolControl.SelectedTime; }
         }
 
-        public override void Update( GameTime gameTime )
+        protected override void UpdateStructure(GameTime gameTime)
         {
-            base.Update( gameTime );
+            base.UpdateStructure( gameTime );
             symbolControl.Update( gameTime );
+        }
+
+        protected override void UpdateInput(GameTime gameTime)
+        {
+            base.UpdateInput(gameTime);
+
         }
     }
 }

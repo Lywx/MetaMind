@@ -5,7 +5,7 @@ using MetaMind.Engine.Guis.Widgets.Items;
 using MetaMind.Engine.Guis.Widgets.ViewItems;
 using Microsoft.Xna.Framework;
 
-namespace MetaMind.Perseverance.Guis.Widgets.FeelingItems
+namespace MetaMind.Perseverance.Guis.Widgets.FeelingWidgets
 {
     public class FeelingItemSymbolControl : ViewItemComponent
     {

@@ -1,9 +1,10 @@
 ﻿using System;
 using MetaMind.Engine.Components;
+using MetaMind.Engine.Guis.Widgets;
 using MetaMind.Engine.Screens;
+using MetaMind.Perseverance.Guis.Widgets.FeelingWidgets;
 using MetaMind.Perseverance.Guis.Widgets.RibbonHuds;
 using MetaMind.Perseverance.Guis.Widgets.TimelineHuds;
-using MetaMind.Perseverance.Sessions;
 using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Screens
@@ -12,11 +13,8 @@ namespace MetaMind.Perseverance.Screens
     {
         private RibbonHud   ribbonHud   = new RibbonHud();
         private TimelineHud timelineHud = new TimelineHud( new Vector2( 130, 670 - 230 ) );
+        private IWidget     feeling     = new FeelingWidget();
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MotivationScreen"/> class.
-        /// This is the most active screen of all.
-        /// </summary>
         public MotivationScreen()
         {
             TransitionOnTime = TimeSpan.FromSeconds( 0.5 );
@@ -28,9 +26,10 @@ namespace MetaMind.Perseverance.Screens
             ScreenManager.SpriteBatch.Begin();
 
             MessageManager.Draw( gameTime );
-
-            ribbonHud  .Draw( gameTime, TransitionAlpha );
-            timelineHud.Draw( gameTime );
+            
+            ribbonHud     .Draw( gameTime, TransitionAlpha );
+            timelineHud   .Draw( gameTime );
+            feeling       .Draw( gameTime );
 
             ScreenManager.SpriteBatch.End();
         }
@@ -39,6 +38,8 @@ namespace MetaMind.Perseverance.Screens
         {
             InputEventManager   .HandleInput();
             InputSequenceManager.HandleInput();
+            
+            feeling             .HandleInput();
         }
 
         public override void LoadContent()
@@ -51,12 +52,16 @@ namespace MetaMind.Perseverance.Screens
         {
             if ( IsActive && !coveredByOtherScreen )
             {
+                InputEventManager   .Update( gameTime );
+                InputSequenceManager.Update( gameTime );
+                MessageManager      .Update( gameTime );
+
                 Perseverance.Adventure.Update( gameTime );
 
                 ribbonHud  .Update( gameTime );
                 timelineHud.Update( gameTime );
+                feeling    .Update( gameTime );
 
-                MessageManager.Update( gameTime );
             }
             base.Update( gameTime, otherScreenHasFocus, coveredByOtherScreen );
         }

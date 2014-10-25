@@ -48,13 +48,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\Screens\Background\Field Of Journey.png">
-      <Name>Field Of Journey</Name>
+    <Compile Include="Textures\UIs\Heart.png">
+      <Name>Heart</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Textures\UIs\Heart.png">
-      <Name>Heart</Name>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\Screens\Background\Sea Of Mind.png">
+      <Name>Sea Of Mind</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

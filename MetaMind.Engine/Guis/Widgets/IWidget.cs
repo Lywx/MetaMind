@@ -2,12 +2,8 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Engine.Guis.Widgets
 {
-    public interface IInputObject
+    public interface IWidget
     {
-        bool IsHandlingInput { get; }
-
-        bool IsUpdating { get; }
-
         void Draw(GameTime gameTime);
 
         /// <summary>

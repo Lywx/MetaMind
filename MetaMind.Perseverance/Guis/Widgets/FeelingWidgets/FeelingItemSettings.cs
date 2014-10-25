@@ -1,7 +1,7 @@
 ﻿using MetaMind.Engine.Guis.Widgets.Items;
 using Microsoft.Xna.Framework;
 
-namespace MetaMind.Perseverance.Guis.Widgets.FeelingItems
+namespace MetaMind.Perseverance.Guis.Widgets.FeelingWidgets
 {
     public class FeelingItemSettings : ItemSettings
     {

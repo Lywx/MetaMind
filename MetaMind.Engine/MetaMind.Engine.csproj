@@ -95,7 +95,7 @@
     <Compile Include="Guis\Widgets\Items\ItemRootFrame.cs" />
     <Compile Include="Guis\Widgets\Items\ItemSettings.cs" />
     <Compile Include="Guis\Widgets\Items\ItemState.cs" />
-    <Compile Include="Guis\Widgets\IInputObject.cs" />
+    <Compile Include="Guis\Widgets\IWidget.cs" />
     <Compile Include="Guis\Widgets\ViewItems\IViewItemControl1D.cs" />
     <Compile Include="Guis\Widgets\ViewItems\IViewItemData.cs" />
     <Compile Include="Guis\Widgets\ViewItems\IViewItemFactory.cs" />

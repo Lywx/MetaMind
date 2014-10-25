@@ -68,19 +68,19 @@
     <Compile Include="Guis\Particles\FloatParticleContainer.cs" />
     <Compile Include="Guis\Particles\FloatParticle.cs" />
     <Compile Include="Guis\Particles\Particle.cs" />
-    <Compile Include="Guis\Widgets\FeelingItems\FeelingItemControl.cs" />
-    <Compile Include="Guis\Widgets\FeelingItems\FeelingItemData.cs" />
-    <Compile Include="Guis\Widgets\FeelingItems\FeelingItemFactory.cs" />
-    <Compile Include="Guis\Widgets\FeelingItems\FeelingItemGraphics.cs" />
-    <Compile Include="Guis\Widgets\FeelingItems\FeelingItemSettings.cs" />
-    <Compile Include="Guis\Widgets\FeelingItems\FeelingItemSymbolControl.cs" />
-    <Compile Include="Guis\Widgets\FeelingItems\FeelingItemSymbolFrameControl.cs" />
-    <Compile Include="Guis\Widgets\FeelingItems\FeelingItemSymbolGraphics.cs" />
-    <Compile Include="Guis\Widgets\FeelingItems\FeelingType.cs" />
-    <Compile Include="Guis\Widgets\Feelings\FeelingWidget.cs" />
-    <Compile Include="Guis\Widgets\FeelingViews\FeelingViewControl.cs" />
-    <Compile Include="Guis\Widgets\FeelingViews\FeelingViewFactory.cs" />
-    <Compile Include="Guis\Widgets\FeelingViews\FeelingViewGraphics.cs" />
+    <Compile Include="Guis\Widgets\FeelingWidgets\FeelingItemControl.cs" />
+    <Compile Include="Guis\Widgets\FeelingWidgets\FeelingItemData.cs" />
+    <Compile Include="Guis\Widgets\FeelingWidgets\FeelingItemFactory.cs" />
+    <Compile Include="Guis\Widgets\FeelingWidgets\FeelingItemGraphics.cs" />
+    <Compile Include="Guis\Widgets\FeelingWidgets\FeelingItemSettings.cs" />
+    <Compile Include="Guis\Widgets\FeelingWidgets\FeelingItemSymbolControl.cs" />
+    <Compile Include="Guis\Widgets\FeelingWidgets\FeelingItemSymbolFrameControl.cs" />
+    <Compile Include="Guis\Widgets\FeelingWidgets\FeelingItemSymbolGraphics.cs" />
+    <Compile Include="Guis\Widgets\FeelingWidgets\FeelingType.cs" />
+    <Compile Include="Guis\Widgets\FeelingWidgets\FeelingViewControl.cs" />
+    <Compile Include="Guis\Widgets\FeelingWidgets\FeelingViewFactory.cs" />
+    <Compile Include="Guis\Widgets\FeelingWidgets\FeelingViewGraphics.cs" />
+    <Compile Include="Guis\Widgets\FeelingWidgets\FeelingWidget.cs" />
     <Compile Include="Guis\Widgets\SynchronizationHuds\SynchronizationHud.cs" />
     <Compile Include="Guis\Widgets\SynchronizationHuds\SynchronizationHudMonitor.cs" />
     <Compile Include="Guis\Widgets\SynchronizationHuds\SynchronizationHudSettings.cs" />
@@ -94,13 +94,10 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screens\BackgroundScreen.cs" />
-    <Compile Include="Screens\ComputingScreen.cs" />
     <Compile Include="Screens\MotivationScreen.cs" />
+    <Compile Include="Screens\SummaryScreen.cs" />
     <Compile Include="Sessions\Adventure.cs" />
     <Compile Include="Sessions\AdventureEventType.cs" />
-    <Compile Include="Guis\ComputingGui.cs" />
-    <Compile Include="Sessions\AdventureSleepStartedEventListener.cs" />
-    <Compile Include="Sessions\AdventureSleepStoppedEventListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -138,6 +135,9 @@
       <Project>{39ad1482-1881-4852-a05d-dc61b0d3446a}</Project>
       <Name>C3.Primitives2D</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

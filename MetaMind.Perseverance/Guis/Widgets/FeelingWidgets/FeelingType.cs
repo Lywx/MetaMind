@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Perseverance.Guis.Widgets.FeelingItems
+﻿namespace MetaMind.Perseverance.Guis.Widgets.FeelingWidgets
 {
     public enum FeelingType
     {

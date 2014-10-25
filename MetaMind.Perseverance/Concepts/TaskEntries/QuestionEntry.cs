@@ -90,8 +90,6 @@ namespace MetaMind.Perseverance.Concepts.TaskEntries
         {
             Symbol = "QS";
             Children = new SortedList<int, QuestionEntry>();
-
-            SetupFolder();
         }
 
         #endregion Constructors

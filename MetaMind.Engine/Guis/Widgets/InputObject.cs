@@ -1,6 +1,6 @@
 namespace MetaMind.Engine.Guis.Widgets
 {
-    public abstract class InputObject : EngineObject, IInputObject
+    public abstract class InputObject : EngineObject, IWidget
     {
         #region Input Handling Counter
 

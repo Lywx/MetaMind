@@ -19,3 +19,5 @@ MetaMind.Engined/bin/
 MetaMind.Engined/obj/x86/Debug/MetaMind.Engine.csproj.FileListAbsolute.txt
 MetaMind.PerseveranceUnitTest/obj/
 *.dll
+MetaMind.PerseveranceUnitTest/bin/
+MetaMind.PerseveranceBuilder/MetaMind.PerseveranceBuilderContent/Textures/Screens/Background/Thumbs.db

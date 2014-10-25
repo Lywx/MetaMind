@@ -136,8 +136,6 @@ namespace MetaMind.Perseverance.Concepts.TaskEntries
 
             Children = new SortedList<int, FutureEntry>();
             Downgrades = new List<DirectionEntry>();
-
-            SetupFolder();
         }
 
         #endregion Constructors
