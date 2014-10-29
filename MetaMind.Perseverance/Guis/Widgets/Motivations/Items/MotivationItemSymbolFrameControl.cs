@@ -7,55 +7,56 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 {
-    public class MotivationItemSymbolFrameControl : ViewItemComponent
+    public class MotivationItemSymbolFrameControl : ViewItemFrameControl
     {
-        private const float IncrementFactor = 0.2f;
+        private TimeSpan selectedTime;
 
-        private MimicFrame symbolFrame;
-        private TimeSpan   selectedTime;
+        public MotivationItemSymbolFrameControl( IViewItem item )
+            : base( item )
+        {
+            SymbolFrame = new PickableFrame();
+        }
+
+        public PickableFrame SymbolFrame { get; private set; }
 
         private Point SymbolFrameSize
         {
             get
             {
                 return new Point(
-                    ( int ) ( ItemControl.RootFrame.Rectangle.Width * ( 1 + IncrementFactor * Math.Abs( Math.Atan( SelectedTime.TotalSeconds ) ) ) ),
-                    ( int ) ( ItemControl.RootFrame.Rectangle.Height * ( 1 + IncrementFactor * Math.Abs( Math.Atan( SelectedTime.TotalSeconds ) ) ) ) );
+                    ( int ) ( RootFrame.Rectangle.Width * ( 1 + ItemSettings.SymbolFrameIncrementFactor * Math.Abs( Math.Atan( selectedTime.TotalSeconds ) ) ) ),
+                    ( int ) ( RootFrame.Rectangle.Height * ( 1 + ItemSettings.SymbolFrameIncrementFactor * Math.Abs( Math.Atan( selectedTime.TotalSeconds ) ) ) ) );
             }
         }
 
-        public MotivationItemSymbolFrameControl( IViewItem item )
-            : base( item )
+        public override void Update( GameTime gameTime )
         {
-            symbolFrame = new MimicFrame();
-            selectedTime = TimeSpan.Zero;
+            base.Update( gameTime );
+
+            UpdateSelection( gameTime );
         }
 
-        public MimicFrame SymbolFrame
+        protected override void UpdateFrames( GameTime gameTime )
         {
-            get { return symbolFrame; }
+            base.UpdateFrames( gameTime );
+
+            SymbolFrame.Mimic( RootFrame, SymbolFrameSize );
         }
 
-        public TimeSpan SelectedTime
-        {
-            get { return selectedTime; }
-        }
-
-        public void Update( GameTime gameTime )
+        private void UpdateSelection( GameTime gameTime )
         {
             if ( Item.IsEnabled( ItemState.Item_Selected ) &&
                 !Item.IsEnabled( ItemState.Item_Dragging ) )
             {
-                selectedTime = SelectedTime + gameTime.DeltaTimeSpan( 2 );
+                selectedTime = selectedTime + gameTime.DeltaTimeSpan( 2 );
             }
             else
             {
-                if ( SelectedTime.Ticks > 0 )
-                    selectedTime = SelectedTime - gameTime.DeltaTimeSpan( 5 );
+                if ( selectedTime.Ticks > 0 )
+                    selectedTime = selectedTime - gameTime.DeltaTimeSpan( 5 );
                 else
                     selectedTime = TimeSpan.Zero;
             }
-            symbolFrame.Mimic( ItemControl.RootFrame, SymbolFrameSize );
         }
     }
 }

@@ -5,18 +5,17 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 {
     public class ViewItemControl1D : ViewItemComponent
     {
-        private readonly ViewItemFrameControl  frameControl;
-        private readonly ViewItemViewControl1D viewControl;
-        private readonly ViewItemDataControl   dataControl;
+        private readonly ViewItemViewControl1D itemViewControl;
+        private readonly ViewItemDataControl   itemDataControl;
 
         #region Constructors
 
-        public ViewItemControl1D(IViewItem item)
+        public ViewItemControl1D( IViewItem item )
             : base(item)
         {
-            frameControl = new ViewItemFrameControl( item );
-            viewControl  = new ViewItemViewControl1D( item );
-            dataControl  = new ViewItemDataControl( item );
+            ItemFrameControl = new ViewItemFrameControl( item );
+            itemViewControl  = new ViewItemViewControl1D( item );
+            itemDataControl  = new ViewItemDataControl( item );
         }
 
         #endregion
@@ -27,8 +26,10 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         public IItemRootFrame RootFrame
         {
-            get { return frameControl.RootFrame; }
+            get { return ItemFrameControl.RootFrame; }
         }
+
+        protected ViewItemFrameControl ItemFrameControl { get; set; }
 
         #endregion Public Properties
 
@@ -36,22 +37,22 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         public void SelectIt()
         {
-            viewControl.SelectIt();
+            itemViewControl.SelectIt();
         }
 
         public void SwapIt( IViewItem draggingItem )
         {
-            viewControl.SwapIt( draggingItem );
+            itemViewControl.SwapIt( draggingItem );
         }
 
         public void UnSelectIt()
         {
-            viewControl.UnSelectIt();
+            itemViewControl.UnSelectIt();
         }
 
         public void EditIt()
         {
-            dataControl.EditLabel();
+            itemDataControl.EditLabel( ViewItemLabelType.Name );
         }
 
         #endregion Operations
@@ -60,8 +61,8 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         public virtual void Update( GameTime gameTime )
         {
-            viewControl .Update( gameTime );
-            frameControl.Update( gameTime );
+            itemViewControl .Update( gameTime );
+            ItemFrameControl.Update( gameTime );
         }
 
         #endregion Update

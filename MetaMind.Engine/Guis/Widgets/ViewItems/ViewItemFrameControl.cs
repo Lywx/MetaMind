@@ -42,7 +42,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         #region Update
 
-        public void Update( GameTime gameTime )
+        public virtual void Update( GameTime gameTime )
         {
             UpdateFrames( gameTime );
             UpdateFrameLogics();
@@ -55,7 +55,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
         /// All the frame states change except event type, which should be implemented in custom frame class,
         /// has to be done here to enforce code readability.
         /// </remarks>
-        public void UpdateFrameLogics()
+        protected virtual void UpdateFrameLogics()
         {
             if ( Item.IsEnabled( ItemState.Item_Active ) && !Item.IsEnabled( ItemState.Item_Dragging ) )
             {
@@ -85,7 +85,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
             }
         }
 
-        public void UpdateFrames( GameTime gameTime )
+        protected virtual void UpdateFrames( GameTime gameTime )
         {
             if ( !Item.IsEnabled( ItemState.Item_Dragging ) && !Item.IsEnabled( ItemState.Item_Swaping ) )
             {

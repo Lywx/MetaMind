@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
+using C3.Primtive2DXna;
 using MetaMind.Engine.Guis.Widgets.Items;
 using Microsoft.Xna.Framework;
-using C3.Primtive2DXna;
 
 namespace MetaMind.Engine.Guis.Widgets.ViewItems
 {
@@ -33,11 +33,15 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
                 Primitives2D.FillRectangle( spriteBatch, ItemControl.RootFrame.Rectangle, ItemSettings.RootFrameColor );
                 Primitives2D.FillRectangle( spriteBatch, ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameRegularColor );
             }
-            // id
+            DrawId();
+        }
+
+        protected void DrawId()
+        {
             FontManager.DrawCenteredText( ItemSettings.IdFont, ItemControl.Id.ToString( new CultureInfo( "en-US" ) ), IdPosition, ItemSettings.IdColor, ItemSettings.IdSize );
         }
 
-        protected Vector2 IdPosition
+        protected virtual Vector2 IdPosition
         {
             get { return new Vector2( ItemControl.RootFrame.Rectangle.Right + 10, ItemControl.RootFrame.Rectangle.Top - 10 ); }
         }

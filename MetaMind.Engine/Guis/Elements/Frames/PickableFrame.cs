@@ -1,6 +1,7 @@
 ﻿using System;
 using MetaMind.Engine.Components;
 using MetaMind.Engine.Components.Inputs;
+using MetaMind.Engine.Extensions;
 using Microsoft.Xna.Framework;
 
 namespace MetaMind.Engine.Guis.Elements.Frames
@@ -15,7 +16,7 @@ namespace MetaMind.Engine.Guis.Elements.Frames
             Initialize( rectangle );
         }
 
-        protected PickableFrame()
+        public PickableFrame()
         {
             InputEventManager.MouseDoubleClick += DetectMouseLeftDoubleClick;
             InputEventManager.MouseDoubleClick += DetectMouseRightDoubleClick;

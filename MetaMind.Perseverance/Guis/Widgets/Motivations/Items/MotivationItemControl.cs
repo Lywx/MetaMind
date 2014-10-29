@@ -12,7 +12,9 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
         public MotivationItemControl( IViewItem item )
             : base( item )
         {
-            symbolControl = new MotivationItemSymbolControl( item );
+            ItemFrameControl = new MotivationItemSymbolFrameControl( item );
+
+            symbolControl    = new MotivationItemSymbolControl( item );
         }
 
         public MotivationType Type
@@ -22,12 +24,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 
         public IPickableFrame SymbolFrame
         {
-            get { return symbolControl.SymbolFrame; }
-        }
-
-        public TimeSpan SelectedTime
-        {
-            get { return symbolControl.SelectedTime; }
+            get { return ( ( MotivationItemSymbolFrameControl ) ItemFrameControl ).SymbolFrame; }
         }
 
         public override void Update( GameTime gameTime )

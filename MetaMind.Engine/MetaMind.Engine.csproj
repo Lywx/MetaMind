@@ -74,7 +74,6 @@
     <Compile Include="Guis\Elements\Frames\IDraggableFrame.cs" />
     <Compile Include="Guis\Elements\Frames\IPickableFrame.cs" />
     <Compile Include="Guis\Elements\Frames\IPressableFrame.cs" />
-    <Compile Include="Guis\Elements\Frames\MimicFrame.cs" />
     <Compile Include="Guis\Elements\Frames\PickableFrame.cs" />
     <Compile Include="Guis\Elements\Frames\PressableFrame.cs" />
     <Compile Include="Guis\Elements\Regions\IRegion.cs" />

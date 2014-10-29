@@ -36,11 +36,9 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 
         private void DrawHeart( Vector2 origin )
         {
-            IPickableFrame symbolFrame = ItemControl.SymbolFrame;
-
             var flipped     = Math.Cos( rotation ) > 0;
-            var size        = new Point( ( int ) ( Math.Abs( Math.Cos( rotation ) ) * symbolFrame.Rectangle.Width ), symbolFrame.Rectangle.Height );
-            var destination = symbolFrame.DestinationWithSize( size );
+            var size        = new Point( ( int ) ( Math.Abs( Math.Cos( rotation ) ) * ( ( IPickableFrame ) ItemControl.SymbolFrame ).Rectangle.Width ), ( ( IPickableFrame ) ItemControl.SymbolFrame ).Rectangle.Height );
+            var destination = ( ( IPickableFrame ) ItemControl.SymbolFrame ).DestinationWithSize( size );
 
             switch ( ( ( MotivationItemControl ) ItemControl ).Type )
             {
@@ -60,7 +58,9 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 
         private void DrawShadow( Vector2 origin )
         {
-            var scrollCenter = ViewControl.Scroll.RootCenterPoint( Item.ItemControl.Id );
+            var scrollCenter = ViewControl.Scroll.RootCenterPoint( ItemControl.Id );
+            //ItemControl.RootFrame.Rectangle.
+            //new Rectangle().
             var destination = new Rectangle( scrollCenter.X, scrollCenter.Y, ItemControl.RootFrame.Rectangle.Width, ItemControl.RootFrame.Rectangle.Height );
 
             ScreenManager.SpriteBatch.Draw( heartTexture, destination, null, ColorPalette.TransparentColor3, 0f, origin, SpriteEffects.None, 0f );

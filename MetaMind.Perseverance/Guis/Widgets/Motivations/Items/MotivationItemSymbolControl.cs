@@ -10,23 +10,16 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
     public class MotivationItemSymbolControl : ViewItemComponent
     {
         private MotivationType type;
-        private MotivationItemSymbolFrameControl frame;
 
         public MotivationItemSymbolControl( IViewItem item )
             : base( item )
         {
             type  = MotivationType.Neutral;
-            frame = new MotivationItemSymbolFrameControl( item );
         }
 
         public MotivationType Type
         {
             get { return type; }
-        }
-
-        public TimeSpan SelectedTime
-        {
-            get { return frame.SelectedTime; }
         }
 
         public void Update( GameTime gameTime )
@@ -37,7 +30,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 
         private void UpdateStructure( GameTime gameTime )
         {
-            frame.Update( gameTime );
+            
         }
 
         private void UpdateInput( GameTime gameTime )
@@ -59,11 +52,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
         public void BecomeFear()
         {
             type = MotivationType.Fear;
-        }
-
-        public IPickableFrame SymbolFrame
-        {
-            get { return frame.SymbolFrame; }
         }
     }
 }

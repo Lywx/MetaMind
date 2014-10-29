@@ -58,7 +58,7 @@ namespace MetaMind.Engine.Guis.Elements.Frames
 
         public void Initialize( Point center, Point size )
         {
-            Initialize( new Rectangle( center.X - size.X / 2, center.Y - size.Y / 2, size.X, size.Y ) );
+            Initialize( center.ToCenterRectangle( size ) );
         }
 
         #endregion Constructors
@@ -243,5 +243,26 @@ namespace MetaMind.Engine.Guis.Elements.Frames
         }
 
         #endregion Update
+
+        #region Operations
+
+        public void Mimic( IPressableFrame frame )
+        {
+            Initialize( frame.Rectangle.Center, new Point( frame.Rectangle.Width, frame.Rectangle.Height ) );
+        }
+
+        public void Mimic( IPressableFrame frame, Point size )
+        {
+            Initialize( frame.Rectangle.Center, size );
+        }
+
+        public void MimicBottom( IPressableFrame frame, Point size )
+        {
+            Initialize(
+                ( frame.Rectangle.Center.ToVector2() - new Vector2( 0, size.Y - frame.Rectangle.Height ) ).ToPoint(), size );
+        }
+
+        #endregion
+
     }
 }

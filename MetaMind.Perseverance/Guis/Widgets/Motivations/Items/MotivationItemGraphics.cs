@@ -6,19 +6,22 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 {
     public class MotivationItemGraphics : ViewItemBasicGraphics
     {
-        private MotivationItemSymbolGraphics symbol;
-        public MotivationItemGraphics(IViewItem item) : base(item)
+        private readonly MotivationItemSymbolGraphics symbol;
+
+        public MotivationItemGraphics( IViewItem item )
+            : base( item )
         {
             symbol = new MotivationItemSymbolGraphics( item );
         }
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw( GameTime gameTime )
         {
             symbol.Draw( gameTime );
-            FontManager.DrawCenteredText( ItemSettings.IdFont, ItemControl.Id.ToString( new CultureInfo( "en-US" ) ), IdPosition, ItemSettings.IdColor, ItemSettings.IdSize );
-        }
 
-        public override void Update(GameTime gameTime)
+                   DrawId();
+        }
+        
+        public override void Update( GameTime gameTime )
         {
             symbol.Update( gameTime );
         }

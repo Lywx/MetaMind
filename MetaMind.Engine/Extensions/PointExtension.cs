@@ -18,5 +18,10 @@ namespace MetaMind.Engine.Extensions
         {
             return new Rectangle( position.X, position.Y, size.X, size.Y );
         }
+
+        public static Rectangle ToCenterRectangle( this Point center, Point size )
+        {
+            return new Point( center.X - size.X / 2, center.Y - size.Y / 2 ).ToRectangle( size );
+        }
     }
 }
