@@ -24,7 +24,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 
         public IPickableFrame SymbolFrame
         {
-            get { return ( ( MotivationItemSymbolFrameControl ) ItemFrameControl ).SymbolFrame; }
+            get { return ItemFrameControl.SymbolFrame; }
         }
 
         public override void Update( GameTime gameTime )

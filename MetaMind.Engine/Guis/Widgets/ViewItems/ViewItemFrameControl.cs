@@ -6,39 +6,15 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Engine.Guis.Widgets.ViewItems
 {
-    public class ViewItemFrameControl: ViewItemComponent
+    public class ViewItemFrameControl : ViewItemComponent
     {
-        private Point[] frameSizes = new Point[ ( int ) ItemFrameType.TypeNum ];
-
         public ViewItemFrameControl( IViewItem item )
             : base( item )
         {
-            CollectFrameSizeInfo();
-
             RootFrame = new ItemRootFrame( item );
         }
 
         public ItemRootFrame RootFrame { get; private set; }
-
-        #region Initializations
-
-        private void CollectFrameSizeInfo()
-        {
-            var fields = typeof( ItemSettings ).GetFields();
-            foreach ( var frameName in Enum.GetNames( typeof( ItemFrameType ) ).Except( new[ ] { "TypeNum" } ) )
-            {
-                var sizeName = frameName + "Size";
-                foreach ( var field in fields.Where( field => field.Name == sizeName ) )
-                {
-                    ItemFrameType frameType;
-                    var succeed = Enum.TryParse( frameName, out frameType );
-                    if ( succeed )
-                        SetFrameSize( frameType, ( Point ) field.GetValue( ItemSettings ) );
-                }
-            }
-        }
-
-        #endregion Initializations
 
         #region Update
 
@@ -89,29 +65,16 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
         {
             if ( !Item.IsEnabled( ItemState.Item_Dragging ) && !Item.IsEnabled( ItemState.Item_Swaping ) )
             {
-                RootFrame.Initialize( ViewControl.Scroll.RootCenterPoint( ItemControl.Id ), GetFrameSize( ItemFrameType.RootFrame ) );
+                RootFrame.Initialize( ViewControl.Scroll.RootCenterPoint( ItemControl.Id ),ItemSettings.RootFrameSize );
             }
             else if ( Item.IsEnabled( ItemState.Item_Swaping ) )
             {
-                RootFrame.Initialize( ViewControl.Swap.RootCenterPoint(), GetFrameSize( ItemFrameType.RootFrame ) );
+                RootFrame.Initialize( ViewControl.Swap.RootCenterPoint(), ItemSettings.RootFrameSize );
             }
             RootFrame.Update( gameTime );
         }
 
         #endregion Update
 
-        #region Frame Operation
-
-        protected Point GetFrameSize( ItemFrameType type )
-        {
-            return type.GetFrom( frameSizes );
-        }
-
-        protected void SetFrameSize( ItemFrameType type, Point size )
-        {
-            type.SetIn( frameSizes, size );
-        }
-
-        #endregion Frame Operation
     }
 }
