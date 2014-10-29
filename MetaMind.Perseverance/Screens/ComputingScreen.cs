@@ -1,13 +1,15 @@
 ﻿using System;
+using MetaMind.Engine.Guis.Widgets;
 using MetaMind.Engine.Screens;
 using MetaMind.Perseverance.Guis.Modules;
+using MetaMind.Perseverance.Guis.Widgets.Tasks;
 using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Screens
 {
     public class ComputingScreen : GameScreen
     {
-        private IModule planning;
+        private IWidget planning;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ComputingScreen"/> class.
@@ -18,7 +20,7 @@ namespace MetaMind.Perseverance.Screens
             TransitionOnTime = TimeSpan.FromSeconds( 0.5 );
             TransitionOffTime = TimeSpan.FromSeconds( 0.5 );
 
-            planning = new PlanningModule( PlanningModuleSettings.Default );
+            planning = new TaskOrganizer();
         }
 
         public override void Draw( GameTime gameTime )
@@ -26,18 +28,18 @@ namespace MetaMind.Perseverance.Screens
             ScreenManager.SpriteBatch.Begin();
 
             MessageManager.Draw( gameTime );
-
-            planning.Draw( gameTime );
+            
+            planning      .Draw( gameTime, TransitionAlpha);
 
             ScreenManager.SpriteBatch.End();
         }
 
         public override void HandleInput()
         {
-            InputEventManager.HandleInput();
+            InputEventManager   .HandleInput();
             InputSequenceManager.HandleInput();
-
-            planning.HandleInput();
+            
+            planning            .HandleInput();
         }
 
         public override void LoadContent()
@@ -49,9 +51,12 @@ namespace MetaMind.Perseverance.Screens
         {
             if ( IsActive && !coveredByOtherScreen )
             {
-                Perseverance.Adventure.Update( gameTime );
-                MessageManager.Update( gameTime );
+                InputEventManager   .Update(gameTime);
+                InputSequenceManager.Update(gameTime);
+                MessageManager      .Update( gameTime );
 
+                Perseverance.Adventure.Update( gameTime );
+                
                 planning.Update( gameTime );
             }
 

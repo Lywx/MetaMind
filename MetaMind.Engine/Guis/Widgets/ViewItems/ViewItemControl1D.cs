@@ -3,29 +3,31 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Engine.Guis.Widgets.ViewItems
 {
-    public class ViewItemControl1D : ViewItemComponent, IViewItemControl1D
+    public class ViewItemControl1D : ViewItemComponent
     {
-        private int id;
+        private readonly ViewItemFrameControl  frameControl;
+        private readonly ViewItemViewControl1D viewControl;
+        private readonly ViewItemDataControl   dataControl;
 
-        private readonly ViewItemFrameControl defaultFrameControl;
+        #region Constructors
 
-        public ViewItemControl1D( IViewItem item )
-            : base( item )
+        public ViewItemControl1D(IViewItem item)
+            : base(item)
         {
-            defaultFrameControl = new ViewItemFrameControl( item );
+            frameControl = new ViewItemFrameControl( item );
+            viewControl  = new ViewItemViewControl1D( item );
+            dataControl  = new ViewItemDataControl( item );
         }
+
+        #endregion
 
         #region Public Properties
 
-        public int Id
-        {
-            get { return id; }
-            set { id = value; }
-        }
+        public int Id { get; set; }
 
         public IItemRootFrame RootFrame
         {
-            get { return defaultFrameControl.RootFrame; }
+            get { return frameControl.RootFrame; }
         }
 
         #endregion Public Properties
@@ -34,27 +36,22 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         public void SelectIt()
         {
-            ViewControl.Selection.Select( Id );
+            viewControl.SelectIt();
         }
 
         public void SwapIt( IViewItem draggingItem )
         {
-            if ( Item.IsEnabled( ItemState.Item_Swaping ) )
-                return;
-            else
-                Item.Enable( ItemState.Item_Swaping );
-
-            var originCenter = this        .ViewControl.Scroll.RootCenterPoint( this        .ItemControl.Id );
-            var targetCenter = draggingItem.ViewControl.Scroll.RootCenterPoint( draggingItem.ItemControl.Id );
-            this                           .ViewControl.Swap.Initialize( originCenter, targetCenter );
-
-            ProcessManager.AttachProcess( new ViewItemSwapProcess( draggingItem, Item ) );
+            viewControl.SwapIt( draggingItem );
         }
 
         public void UnSelectIt()
         {
-            if ( ViewControl.Selection.IsSelected( Id ) )
-                ViewControl.Selection.Clear();
+            viewControl.UnSelectIt();
+        }
+
+        public void EditIt()
+        {
+            dataControl.EditLabel();
         }
 
         #endregion Operations
@@ -63,48 +60,8 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         public virtual void Update( GameTime gameTime )
         {
-            UpdateViewScroll();
-            UpdateViewSelection();
-            UpdateViewSwap();
-
-            defaultFrameControl.Update( gameTime );
-        }
-
-        private void UpdateViewScroll()
-        {
-            Id = View.Items.IndexOf( Item );
-
-            if ( ViewControl.Scroll.CanDisplay( Id ) )
-            {
-                Item.Enable( ItemState.Item_Active );
-            }
-            else
-            {
-                Item.Disable( ItemState.Item_Active );
-            }
-        }
-
-        private void UpdateViewSelection()
-        {
-            if ( ViewControl.Selection.IsSelected( Id ) )
-            {
-                Item.Enable( ItemState.Item_Selected );
-            }
-            else
-            {
-                Item.Disable( ItemState.Item_Selected );
-            }
-        }
-
-        private void UpdateViewSwap()
-        {
-            if ( Item.IsEnabled( ItemState.Item_Dragging ) )
-            {
-                foreach ( var observor in ViewControl.Swap.Observors )
-                {
-                    ViewControl.Swap.ObserveSwapFrom( Item, observor );
-                }
-            }
+            viewControl .Update( gameTime );
+            frameControl.Update( gameTime );
         }
 
         #endregion Update

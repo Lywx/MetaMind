@@ -39,7 +39,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         #region Update and Draw
 
-        public override void Draw( GameTime gameTime )
+        public override void Draw(GameTime gameTime, byte alpha)
         {
             if ( !enabled )
                 return;

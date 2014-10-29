@@ -12,7 +12,6 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
     public class ViewItemDataControl : ViewItemComponent, IViewItemDataControl
     {
         private IViewItemModifier labelModifier;
-        //private ViewItemLabelType 
 
         public ViewItemDataControl( IViewItem item)
             : base( item )
@@ -35,10 +34,8 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         private void RefreshEditing( object sender, ViewItemDataEventArgs e )
         {
-            // make sure name is exactly the same as the displayed name
-            //ItemData.Labels = FontManager.GetDisaplayableCharacters( ItemSettings.NameFont, e.NewValue );
-            // width contains extra double space margin
-            //AdaptWidth();
+            //make sure name is exactly the same as the displayed name
+            ItemData.Labels = FontManager.GetDisaplayableCharacters( ItemSettings.NameFont, e.NewValue );
         }
 
         private void TerminateEditing( object sender, EventArgs e )

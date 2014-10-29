@@ -8,13 +8,13 @@ namespace MetaMind.Perseverance.Concepts.TaskEntries
     {
         //---------------------------------------------------------------------
 
-        #region Plannning Data
+        #region Plannning entry
 
         public List<QuestionEntry>  Questions { get; set; }
         public List<DirectionEntry> Directions { get; set; }
         public List<FutureEntry>    Futures { get; set; }
 
-        #endregion Plannning Data
+        #endregion Plannning entry
 
         //---------------------------------------------------------------------
 
@@ -31,25 +31,25 @@ namespace MetaMind.Perseverance.Concepts.TaskEntries
 
         #region Operations
 
-        public QuestionEntry NewQuestion()
+        public QuestionEntry CreateQuestion()
         {
-            var data = new QuestionEntry();
-            Questions.Add( data );
-            return data;
+            var entry = new QuestionEntry();
+            Questions.Add( entry );
+            return entry;
         }
 
-        public DirectionEntry NewDirection()
+        public DirectionEntry CreateDirection()
         {
-            var data = new DirectionEntry();
-            Directions.Add( data );
-            return data;
+            var entry = new DirectionEntry();
+            Directions.Add( entry );
+            return entry;
         }
 
-        public FutureEntry NewFuture()
+        public FutureEntry CreateFuture()
         {
-            var data = new FutureEntry();
-            Futures.Add( data );
-            return data;
+            var entry = new FutureEntry();
+            Futures.Add( entry );
+            return entry;
         }
 
         public void RemoveQuestion( QuestionEntry entry )

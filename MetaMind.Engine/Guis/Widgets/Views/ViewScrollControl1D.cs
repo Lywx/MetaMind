@@ -58,7 +58,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         public Point RootCenterPoint( int id )
         {
             return new Point(
-                ViewSettings.StartPoint.X - ( scroll * ViewSettings.RootMargin.X ) + id * ViewSettings.RootMargin.X,
+                ViewSettings.Direction == ViewSettings1D.ScrollDirection.Right ?
+                ViewSettings.StartPoint.X - ( scroll * ViewSettings.RootMargin.X ) + id * ViewSettings.RootMargin.X :
+                ViewSettings.StartPoint.X + ( ( scroll + 1 - View.Items.Count ) * ViewSettings.RootMargin.X ) + id * ViewSettings.RootMargin.X,
                 ViewSettings.StartPoint.Y );
         }
     }

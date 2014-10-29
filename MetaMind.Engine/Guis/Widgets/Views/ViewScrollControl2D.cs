@@ -53,8 +53,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public bool CanDisplay( int id )
         {
-            var row = Control.RowFrom( id );
-            var column = Control.ColumnFrom( id );
+            var row = ViewControl.RowFrom( id );
+            var column = ViewControl.ColumnFrom( id );
             return XOffset <= column && column < ViewSettings.ColumnNumDisplay + XOffset &&
                    YOffset <= row && row < ViewSettings.RowNumDisplay + YOffset;
         }
@@ -105,8 +105,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public Point RootCenterPoint( int id )
         {
-            var row = Control.RowFrom( id );
-            var column = Control.ColumnFrom( id );
+            var row = ViewControl.RowFrom( id );
+            var column = ViewControl.ColumnFrom( id );
             return new Point(
                 ViewSettings.StartPoint.X - XOffset * ViewSettings.RootMargin.X + column * ViewSettings.RootMargin.X,
                 ViewSettings.StartPoint.Y - YOffset * ViewSettings.RootMargin.Y + row * ViewSettings.RootMargin.Y );

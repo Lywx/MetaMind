@@ -17,7 +17,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         bool IsEnabled( ViewState state );
     }
 
-    public class ViewObject : InputObject, IViewObject
+    public class ViewObject : Widget, IViewObject
     {
         private ICloneable viewSettings;
         private ICloneable itemSettings;
@@ -35,7 +35,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         private bool[] states = new bool[ ( int ) ViewState.StateNum ];
         public bool[ ] States { get { return states; } }
 
-        public override void Draw( GameTime gameTime )
+        public override void Draw(GameTime gameTime, byte alpha)
         {
         }
 

@@ -6,8 +6,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 {
     public interface IViewComponent
     {
-        dynamic Control { get; }
-        IViewGraphics Graphics { get; }
+        dynamic ViewControl { get; }
         IView View { get; }
         dynamic ViewSettings { get; }
         dynamic ItemSettings { get; }
@@ -19,8 +18,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         private readonly dynamic viewSettings;
         private readonly dynamic itemSettings;
 
-        public dynamic Control { get { return view.Control; } }
-        public IViewGraphics Graphics { get { return view.Graphics; } }
+        public dynamic ViewControl { get { return view.Control; } }
 
         public IView View { get { return view; } }
         public dynamic ViewSettings { get { return viewSettings; } }

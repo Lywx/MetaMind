@@ -49,6 +49,8 @@
     <Compile Include="Concepts\Cognitions\SynchronizationStartedEventArgs.cs" />
     <Compile Include="Concepts\Cognitions\SynchronizationStoppedEventArgs.cs" />
     <Compile Include="Concepts\Cognitions\SynchronizationTimer.cs" />
+    <Compile Include="Concepts\MotivationEntries\MotivationEntry.cs" />
+    <Compile Include="Concepts\MotivationEntries\Motivationlist.cs" />
     <Compile Include="Concepts\TaskEntries\Tasklist.cs" />
     <Compile Include="Concepts\TaskEntries\DirectionEntry.cs" />
     <Compile Include="Concepts\TaskEntries\Experience.cs" />
@@ -68,32 +70,44 @@
     <Compile Include="Guis\Particles\FloatParticleContainer.cs" />
     <Compile Include="Guis\Particles\FloatParticle.cs" />
     <Compile Include="Guis\Particles\Particle.cs" />
-    <Compile Include="Guis\Widgets\FeelingWidgets\FeelingItemControl.cs" />
-    <Compile Include="Guis\Widgets\FeelingWidgets\FeelingItemData.cs" />
-    <Compile Include="Guis\Widgets\FeelingWidgets\FeelingItemFactory.cs" />
-    <Compile Include="Guis\Widgets\FeelingWidgets\FeelingItemGraphics.cs" />
-    <Compile Include="Guis\Widgets\FeelingWidgets\FeelingItemSettings.cs" />
-    <Compile Include="Guis\Widgets\FeelingWidgets\FeelingItemSymbolControl.cs" />
-    <Compile Include="Guis\Widgets\FeelingWidgets\FeelingItemSymbolFrameControl.cs" />
-    <Compile Include="Guis\Widgets\FeelingWidgets\FeelingItemSymbolGraphics.cs" />
-    <Compile Include="Guis\Widgets\FeelingWidgets\FeelingType.cs" />
-    <Compile Include="Guis\Widgets\FeelingWidgets\FeelingViewControl.cs" />
-    <Compile Include="Guis\Widgets\FeelingWidgets\FeelingViewFactory.cs" />
-    <Compile Include="Guis\Widgets\FeelingWidgets\FeelingViewGraphics.cs" />
-    <Compile Include="Guis\Widgets\FeelingWidgets\FeelingWidget.cs" />
-    <Compile Include="Guis\Widgets\SynchronizationHuds\SynchronizationHud.cs" />
-    <Compile Include="Guis\Widgets\SynchronizationHuds\SynchronizationHudMonitor.cs" />
-    <Compile Include="Guis\Widgets\SynchronizationHuds\SynchronizationHudSettings.cs" />
-    <Compile Include="Guis\Widgets\SynchronizationHuds\SynchronizationHudSynchronizationStartListener.cs" />
-    <Compile Include="Guis\Widgets\SynchronizationHuds\SynchronizationHudSynchronizationStopListener.cs" />
-    <Compile Include="Guis\Widgets\TimelineHuds\TimelineHud.cs" />
-    <Compile Include="Guis\Widgets\TimelineHuds\TimelineLight.cs" />
-    <Compile Include="Guis\Widgets\TimelineHuds\TimelineText.cs" />
-    <Compile Include="Guis\Widgets\RibbonHuds\RibbonHud.cs" />
+    <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemControl.cs" />
+    <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemData.cs" />
+    <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemFactory.cs" />
+    <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemGraphics.cs" />
+    <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemSettings.cs" />
+    <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemSymbolControl.cs" />
+    <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemSymbolFrameControl.cs" />
+    <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemSymbolGraphics.cs" />
+    <Compile Include="Guis\Widgets\Motivations\MotivationType.cs" />
+    <Compile Include="Guis\Widgets\Motivations\Views\MotivationViewControl.cs" />
+    <Compile Include="Guis\Widgets\Motivations\Views\MotivationViewFactory.cs" />
+    <Compile Include="Guis\Widgets\Motivations\Views\MotivationViewGraphics.cs" />
+    <Compile Include="Guis\Widgets\Motivations\MotivationExchange.cs" />
+    <Compile Include="Guis\Widgets\Tasks\Items\TaskItemSettings.cs" />
+    <Compile Include="Guis\Widgets\Tasks\TaskOrganizer.cs" />
+    <Compile Include="Guis\Widgets\Synchronization\SynchronizationHud.cs" />
+    <Compile Include="Guis\Widgets\Synchronization\SynchronizationHudMonitor.cs" />
+    <Compile Include="Guis\Widgets\Synchronization\SynchronizationHudSettings.cs" />
+    <Compile Include="Guis\Widgets\Synchronization\SynchronizationHudSynchronizationStartListener.cs" />
+    <Compile Include="Guis\Widgets\Synchronization\SynchronizationHudSynchronizationStopListener.cs" />
+    <Compile Include="Guis\Widgets\Motivations\Banners\TimelineFlash.cs" />
+    <Compile Include="Guis\Widgets\Motivations\Banners\TimelineText.cs" />
+    <Compile Include="Guis\Widgets\Motivations\Banners\Banner.cs" />
+    <Compile Include="Guis\Widgets\Tasks\Items\TaskItemControl.cs" />
+    <Compile Include="Guis\Widgets\Tasks\Items\TaskItemFactory.cs" />
+    <Compile Include="Guis\Widgets\Tasks\Items\TaskItemGraphics.cs" />
+    <Compile Include="Guis\Widgets\Tasks\Views\TaskViewControl.cs" />
+    <Compile Include="Guis\Widgets\Tasks\Views\TaskViewFactory.cs" />
+    <Compile Include="Guis\Widgets\Tasks\Views\TaskViewGraphics.cs" />
+    <Compile Include="Guis\Widgets\Tasks\Views\TaskViewRegion.cs" />
+    <Compile Include="Guis\Widgets\Tasks\Views\TaskViewScrollBar.cs" />
+    <Compile Include="Guis\Widgets\Tasks\Views\TaskViewSettings.cs" />
+    <Compile Include="Guis\Widgets\Tasks\Views\TaskViewScrollBarSettings.cs" />
     <Compile Include="Perseverance.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screens\BackgroundScreen.cs" />
+    <Compile Include="Screens\ComputingScreen.cs" />
     <Compile Include="Screens\MotivationScreen.cs" />
     <Compile Include="Screens\SummaryScreen.cs" />
     <Compile Include="Sessions\Adventure.cs" />
@@ -135,9 +149,6 @@
       <Project>{39ad1482-1881-4852-a05d-dc61b0d3446a}</Project>
       <Name>C3.Primitives2D</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

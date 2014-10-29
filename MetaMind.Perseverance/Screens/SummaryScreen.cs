@@ -21,7 +21,7 @@ namespace MetaMind.Perseverance.Screens
             summary = new SummaryModule(
                 Perseverance.Adventure.Cognition.Synchronization,
                 Perseverance.Adventure.Cognition.Consciousness,
-                SummaryModuleSettings.Default );
+                new SummaryModuleSettings() );
         }
 
         public override void Draw( GameTime gameTime )
@@ -30,7 +30,7 @@ namespace MetaMind.Perseverance.Screens
 
             MessageManager.Draw( gameTime );
 
-            summary.Draw( gameTime );
+            summary.Draw( gameTime, TransitionAlpha);
 
             ScreenManager.SpriteBatch.End();
         }

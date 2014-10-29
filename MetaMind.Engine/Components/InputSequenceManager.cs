@@ -7,7 +7,7 @@ namespace MetaMind.Engine.Components
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class InputSequenceManager : InputObject
+    public class InputSequenceManager : Widget
     {
         #region Singleton
 
@@ -50,7 +50,7 @@ namespace MetaMind.Engine.Components
 
         #region Update
 
-        public override void Draw( GameTime gameTime )
+        public override void Draw(GameTime gameTime, byte alpha)
         {
         }
 

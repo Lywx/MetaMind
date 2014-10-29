@@ -10,8 +10,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         public ViewControl1D( IView view, ICloneable viewSettings, ICloneable itemSettings )
             : base( view, viewSettings, itemSettings )
         {
-            Swap = new ViewSwapControl( View, ViewSettings, ItemSettings );
-            Scroll = new ViewScrollControl1D( View, ViewSettings, ItemSettings );
+            Swap      = new ViewSwapControl( View, ViewSettings, ItemSettings );
+            Scroll    = new ViewScrollControl1D( View, ViewSettings, ItemSettings );
             Selection = new ViewSelectionControl1D( View, ViewSettings, ItemSettings );
         }
 
@@ -66,6 +66,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
                 //------------------------------------------------------------------
                 // keyboard
+                // left right esc
                 if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Left ) )
                     Selection.MoveLeft();
                 if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Right ) )
@@ -78,7 +79,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         public void UpdateStrucutre( GameTime gameTime )
         {
             UpdateViewLogics();
-
             UpdateItems( gameTime );
         }
 

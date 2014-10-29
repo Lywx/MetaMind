@@ -5,23 +5,12 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MetaMind.Engine.Settings
 {
-    public class MessageSettings
+    public static class MessageSettings
     {
-        public Font MessageFont = Font.UiRegularFont;
-        public float MessageSize = 1f;
-        public Color MessageColor = Color.White;
-        public TimeSpan MessageLastingPeriod = TimeSpan.FromSeconds( 1.5 );
-        public Vector2 MessagePosition = new Vector2( 5, 5 );
-
-        /// <summary>
-        /// Gets the default message setting
-        /// </summary>
-        /// <remarks>
-        /// Must create instance after <seealso cref="FontManager"/>
-        /// </remarks>
-        public static MessageSettings Default
-        {
-            get { return new MessageSettings(); }
-        }
+        public static Font     MessageFont          = Font.UiRegularFont;
+        public static float    MessageSize          = 1f;
+        public static Color    MessageColor         = Color.White;
+        public static Vector2  MessagePosition      = new Vector2( 5, 5 );
+        public static TimeSpan MessageLastingPeriod = TimeSpan.FromSeconds( 1.5 );
     }
 }

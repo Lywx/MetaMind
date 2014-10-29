@@ -84,7 +84,7 @@ namespace MetaMind.Engine.Components
         }
     }
 
-    public class InputEventManager : InputObject
+    public class InputEventManager : Widget
     {
         #region Singleton
 
@@ -430,7 +430,7 @@ namespace MetaMind.Engine.Components
 
         #region Update and Draw
 
-        public override void Draw( GameTime gameTime )
+        public override void Draw(GameTime gameTime, byte alpha)
         {
         }
 

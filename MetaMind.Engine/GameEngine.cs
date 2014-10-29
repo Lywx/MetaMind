@@ -93,8 +93,9 @@ namespace MetaMind.Engine
             //------------------------------------------------------------------
             // message
             Debug.Assert( MessageManager == null );
-            MessageManager = MessageManager.GetInstance( MessageSettings.Default );
+            MessageManager = MessageManager.GetInstance();
             //---------------------------------------------------------------------
+            // runner
             Debug.Assert( RunnerManager == null );
             RunnerManager = RunnerManager.GetInstance( this );
         }

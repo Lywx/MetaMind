@@ -3,136 +3,67 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Engine.Guis.Widgets.ViewItems
 {
-    public interface IViewItemControl2D : IViewItemControl1D
+    public class ViewItemControl2D : ViewItemComponent
     {
-        int Row { get; set; }
-    }
+        //---------------------------------------------------------------------
+        private readonly ViewItemFrameControl  itemFrameControl;
+        private readonly ViewItemViewControl2D itemViewControl;
 
-    public class ViewItemControl2D : ViewItemComponent, IViewItemControl2D
-    {
         //---------------------------------------------------------------------
-        private readonly ViewItemFrameControl defaultFrameControl;
-        
-        //---------------------------------------------------------------------
-        private int column;
-        private int id;
-        private int row;
 
         #region Constructors
 
-        public ViewItemControl2D(IViewItem item)
-            : base(item)
+        public ViewItemControl2D( IViewItem item )
+            : base( item )
         {
-            defaultFrameControl = new ViewItemFrameControl(item);
+            itemFrameControl = new ViewItemFrameControl( item );
+            itemViewControl = new ViewItemViewControl2D( item );
         }
 
-        #endregion
+        #endregion Constructors
 
         #region Public Properties
 
-        public int Column
-        {
-            get { return column; }
-            set { column = value; }
-        }
+        public int Column { get; set; }
 
-        public int Id
-        {
-            get { return id; }
-            set { id = value; }
-        }
+        public int Id { get; set; }
 
         public IItemRootFrame RootFrame
         {
-            get { return defaultFrameControl.RootFrame; }
+            get { return itemFrameControl.RootFrame; }
         }
 
-        public int Row
-        {
-            get { return row; }
-            set { row = value; }
-        }
+        public int Row { get; set; }
 
-        #endregion
-
-        #region Update
-
-        public void Update( GameTime gameTime )
-        {
-            UpdateViewScroll();
-            UpdateViewSelection();
-            UpdateViewSwap();
-
-            defaultFrameControl.Update( gameTime );
-        }
-
-        private void UpdateViewScroll()
-        {
-            Id     = View.Items  .IndexOf( Item );
-            Row    = View.Control.RowFrom( Id );
-            Column = View.Control.ColumnFrom( Id );
-
-            if ( ViewControl.Scroll.CanDisplay( Id ) )
-            {
-                Item.Enable( ItemState.Item_Active );
-            }
-            else
-            {
-                Item.Disable( ItemState.Item_Active );
-            }
-        }
-
-        private void UpdateViewSelection()
-        {
-            if ( ViewControl.Selection.IsSelected( Id ) )
-            {
-                Item.Enable( ItemState.Item_Selected );
-            }
-            else
-            {
-                Item.Disable( ItemState.Item_Selected );
-            }
-        }
-
-        private void UpdateViewSwap()
-        {
-            if ( Item.IsEnabled( ItemState.Item_Dragging ) )
-            {
-                foreach ( var observor in ViewControl.Swap.Observors )
-                {
-                    ViewControl.Swap.ObserveSwapFrom( Item, observor );
-                }
-            }
-        }
-
-        #endregion Update
+        #endregion Public Properties
 
         #region Operations
 
         public void SelectIt()
         {
-            ViewControl.Selection.Select( Id );
+            itemViewControl.SelectIt();
         }
 
         public void SwapIt( IViewItem draggingItem )
         {
-            if ( Item.IsEnabled( ItemState.Item_Swaping ) )
-                return;
-            else
-                Item.Enable( ItemState.Item_Swaping );
-
-            var originCenter = this        .ViewControl.Scroll.RootCenterPoint( this        .ItemControl.Id );
-            var targetCenter = draggingItem.ViewControl.Scroll.RootCenterPoint( draggingItem.ItemControl.Id );
-            this        .ViewControl.Swap.Initialize( originCenter, targetCenter );
-
-            ProcessManager.AttachProcess( new ViewItemSwapProcess( draggingItem, Item ) );
+            itemViewControl.SwapIt( draggingItem );
         }
+
         public void UnSelectIt()
         {
-            if ( ViewControl.Selection.IsSelected( Id ) )
-                ViewControl.Selection.Clear();
+            itemViewControl.UnSelectIt();
         }
 
         #endregion Operations
+
+        #region Update
+
+        public void Update( GameTime gameTime )
+        {
+            itemViewControl.Update( gameTime );
+            itemFrameControl.Update( gameTime );
+        }
+
+        #endregion Update
     }
 }

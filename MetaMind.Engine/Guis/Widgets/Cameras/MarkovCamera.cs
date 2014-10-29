@@ -4,7 +4,12 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MetaMind.Engine.Guis.Widgets.Cameras
 {
-    public class MarkovCamera : InputObject, IMarkovCamera
+    public interface IMarkovCamera : IWidget
+    {
+        Vector2 Movement { get; set; }
+    }
+
+    public class MarkovCamera : Widget, IMarkovCamera
     {
         //---------------------------------------------------------------------
         private CameraSettings settings;
@@ -16,7 +21,7 @@ namespace MetaMind.Engine.Guis.Widgets.Cameras
 
         public Vector2 Movement { get; set; }
 
-        public override void Draw( GameTime gameTime )
+        public override void Draw(GameTime gameTime, byte alpha)
         {
         }
 

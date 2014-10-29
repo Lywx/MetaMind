@@ -1,8 +1,10 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Runtime.Serialization;
 using System.Xml;
 using MetaMind.Engine.Components;
 using MetaMind.Perseverance.Concepts.Cognitions;
+using MetaMind.Perseverance.Concepts.MotivationEntries;
 using MetaMind.Perseverance.Concepts.TaskEntries;
 using Microsoft.Xna.Framework;
 
@@ -39,7 +41,16 @@ namespace MetaMind.Perseverance.Sessions
         [DataMember]
         private Tasklist tasklist;
 
+        [DataMember]
+        private Motivationlist motivationlist;
+
         #endregion Concepts
+
+        #region Random Number Generator
+
+        private readonly Random random = new Random( ( int ) DateTime.Now.Ticks );
+
+        #endregion
 
         //---------------------------------------------------------------------
 
@@ -47,8 +58,9 @@ namespace MetaMind.Perseverance.Sessions
 
         private Adventure()
         {
-            tasklist = new Tasklist();
-            cognition = new Cognition();
+            tasklist       = new Tasklist();
+            motivationlist = new Motivationlist();
+            cognition      = new Cognition();
         }
 
         #endregion Constructors
@@ -60,6 +72,8 @@ namespace MetaMind.Perseverance.Sessions
         public Cognition Cognition { get { return cognition; } }
 
         public Tasklist Tasklist { get { return tasklist; } }
+        
+        public Random Random { get { return random; } }
 
         #endregion Public Properties
 

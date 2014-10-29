@@ -9,49 +9,48 @@ namespace MetaMind.Perseverance.Guis.Modules
         IModuleGraphics Graphics { get; }
 
         void Load( IModuleData data );
-        void Unload();
         void Reload( IModuleData data );
+
+        void Unload();
     }
 
     /// <summary>
-    /// Compatible with previous InputObject implementation, as long as
+    /// Compatible with previous Widget implementation, as long as
     /// the derived class override the widget implementation.
     /// </summary>
-    public class Module<TModuleSettings> : InputObject, IModule
+    public class Module<TModuleSettings> : Widget, IModule
     {
         public IModuleControl Control { get; protected set; }
         public IModuleGraphics Graphics { get; protected set; }
         public TModuleSettings Settings { get; protected set; }
 
-        public override void Draw( GameTime gameTime )
+        public override void Draw(GameTime gameTime, byte alpha)
         {
             Graphics.Draw( gameTime );
         }
 
-        public void Load(IModuleData data)
+        public override void HandleInput()
+        {
+            if ( Control == null )
+                return;
+
+            base.HandleInput();
+            Control.HandleInput();
+        }
+
+        public void Load( IModuleData data )
         {
             Control.Load( data ); 
         }
-
-        public override void HandleInput()
+        public void Reload( IModuleData data )
         {
-            if ( Control == null ) 
-                return;
-
-            base   .HandleInput();
-            Control.HandleInput();
+            Control.Load( data );
         }
 
         public void Unload()
         {
             Control.Unload();
         }
-
-        public void Reload( IModuleData data )
-        {
-            Control.Load( data );
-        }
-
         public override void UpdateInput( GameTime gameTime )
         {
             Control.UpdateInput( gameTime );

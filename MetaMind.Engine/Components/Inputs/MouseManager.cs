@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MetaMind.Engine.Components.Inputs
 {
-    public class MouseManager : InputObject
+    public class MouseManager : Widget
     {
         #region Singleton
 
@@ -120,7 +120,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         #region Update
 
-        public override void Draw( GameTime gameTime )
+        public override void Draw(GameTime gameTime, byte alpha)
         {
         }
 

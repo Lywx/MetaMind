@@ -40,13 +40,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             if ( !currentId.HasValue )
                 SelectInit();
-            else if ( !IsBottommost( Control.RowFrom( currentId.Value ) ) )
+            else if ( !IsBottommost( ViewControl.RowFrom( currentId.Value ) ) )
             {
-                var row = Control.RowFrom( currentId.Value ) + 1;
-                var column = Control.ColumnFrom( currentId.Value );
+                var row = ViewControl.RowFrom( currentId.Value ) + 1;
+                var column = ViewControl.ColumnFrom( currentId.Value );
                 Select( row, column );
-                if ( Control.Scroll.IsDownToDisplay( row ) )
-                    Control.Scroll.MoveDown();
+                if ( ViewControl.Scroll.IsDownToDisplay( row ) )
+                    ViewControl.Scroll.MoveDown();
             }
         }
 
@@ -54,13 +54,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             if ( !currentId.HasValue )
                 SelectInit();
-            else if ( !IsLeftmost( Control.ColumnFrom( currentId.Value ) ) )
+            else if ( !IsLeftmost( ViewControl.ColumnFrom( currentId.Value ) ) )
             {
-                var row = Control.RowFrom( currentId.Value );
-                var column = Control.ColumnFrom( currentId.Value ) - 1;
+                var row = ViewControl.RowFrom( currentId.Value );
+                var column = ViewControl.ColumnFrom( currentId.Value ) - 1;
                 Select( row, column );
-                if ( Control.Scroll.IsLeftToDisplay( column ) )
-                    Control.Scroll.MoveLeft();
+                if ( ViewControl.Scroll.IsLeftToDisplay( column ) )
+                    ViewControl.Scroll.MoveLeft();
             }
         }
 
@@ -68,13 +68,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             if ( !currentId.HasValue )
                 SelectInit();
-            else if ( !IsRightmost( Control.ColumnFrom( currentId.Value ) ) )
+            else if ( !IsRightmost( ViewControl.ColumnFrom( currentId.Value ) ) )
             {
-                var row = Control.RowFrom( currentId.Value );
-                var column = Control.ColumnFrom( currentId.Value ) + 1;
+                var row = ViewControl.RowFrom( currentId.Value );
+                var column = ViewControl.ColumnFrom( currentId.Value ) + 1;
                 Select( row, column );
-                if ( Control.Scroll.IsRightToDisplay( column ) )
-                    Control.Scroll.MoveRight();
+                if ( ViewControl.Scroll.IsRightToDisplay( column ) )
+                    ViewControl.Scroll.MoveRight();
             }
         }
 
@@ -82,13 +82,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             if ( !currentId.HasValue )
                 SelectInit();
-            else if ( !IsTopmost( Control.RowFrom( currentId.Value ) ) )
+            else if ( !IsTopmost( ViewControl.RowFrom( currentId.Value ) ) )
             {
-                var row = Control.RowFrom( currentId.Value ) - 1;
-                var column = Control.ColumnFrom( currentId.Value );
+                var row = ViewControl.RowFrom( currentId.Value ) - 1;
+                var column = ViewControl.ColumnFrom( currentId.Value );
                 Select( row, column );
-                if ( Control.Scroll.IsUpToDisplay( row ) )
-                    Control.Scroll.MoveUp();
+                if ( ViewControl.Scroll.IsUpToDisplay( row ) )
+                    ViewControl.Scroll.MoveUp();
             }
         }
 
@@ -101,12 +101,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         private void Select( int row, int column )
         {
             previousId = currentId;
-            currentId = Control.IdFrom( row, column );
+            currentId = ViewControl.IdFrom( row, column );
         }
 
         private bool IsBottommost( int row )
         {
-            return row >= Control.RowNum - 1;
+            return row >= ViewControl.RowNum - 1;
         }
 
         private bool IsLeftmost( int column )
@@ -116,7 +116,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         private bool IsRightmost( int column )
         {
-            return column >= Control.ColumnNum - 1;
+            return column >= ViewControl.ColumnNum - 1;
         }
 
         private bool IsTopmost( int row )

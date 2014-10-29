@@ -9,43 +9,31 @@ namespace MetaMind.Engine.Components
 {
     public class MessageManager : EngineObject
     {
-        #region Message Settings
-
-        public MessageSettings Settings { get; set; }
-
-        #endregion Message Settings
-
-        #region Message Data
+        #region Singleton
 
         private static MessageManager singleton;
+
+        public static MessageManager GetInstance()
+        {
+            return singleton ?? ( singleton = new MessageManager() );
+        }
+
+        #endregion Singleton
+
+        #region Messages
+
         private List<FlashMessage> messages;
 
-        #endregion Message Data
+        #endregion Messages
 
         #region Constructors
 
-        public MessageManager( MessageSettings settings )
-        {
-            Settings = settings;
-
-            ResetMessages();
-        }
-
-        #endregion Constructors
-
-        #region Initialization
-
-        public static MessageManager GetInstance( MessageSettings setting )
-        {
-            return singleton ?? ( singleton = new MessageManager( setting ) );
-        }
-
-        public void ResetMessages()
+        public MessageManager()
         {
             messages = new List<FlashMessage>();
         }
 
-        #endregion Initialization
+        #endregion Constructors
 
         #region Update and Draw
 
@@ -56,22 +44,23 @@ namespace MetaMind.Engine.Components
 
             for ( var i = 0 ; i < messages.Count ; i++ )
             {
-                var dm = messages[ i ];
+                var message = messages[ i ];
 
-                if ( string.IsNullOrEmpty( dm.CurrentMessage ) )
+                if ( string.IsNullOrEmpty( message.CurrentMessage ) )
                     continue;
 
-                dm.DrawnMessage += dm.CurrentMessage[ dm.CurrentIndex ].ToString( new CultureInfo( "en-US" ) );
+                message.DrawnMessage += message.CurrentMessage[ message.CurrentIndex ].ToString( new CultureInfo( "en-US" ) );
 
-                var messagePosition = new Vector2( dm.Position.X, dm.Position.Y + 30 * i );
-                var messageColor = new Color( dm.FontColor.R - 100 + 15 * i, dm.FontColor.G - 100 + 15 * i, dm.FontColor.B - 100 + 15 * i, dm.FontColor.A - 100 + 50 * i );
-                FontManager.DrawText( Settings.MessageFont, dm.DrawnMessage, messagePosition, messageColor, Settings.MessageSize );
+                var messagePosition = new Vector2( message.Position.X, message.Position.Y + 30 * i );
+                var messageColor = new Color( message.FontColor.R - 100 + 15 * i, message.FontColor.G - 100 + 15 * i, message.FontColor.B - 100 + 15 * i, message.FontColor.A - 100 + 50 * i );
 
-                if ( dm.CurrentIndex == dm.CurrentMessage.Length - 1 )
+                FontManager.DrawText( MessageSettings.MessageFont, message.DrawnMessage, messagePosition, messageColor, MessageSettings.MessageSize );
+
+                if ( message.CurrentIndex == message.CurrentMessage.Length - 1 )
                     continue;
 
-                dm.CurrentIndex++;
-                messages[ i ] = dm;
+                message.CurrentIndex++;
+                messages[ i ] = message;
             }
         }
 
@@ -82,12 +71,12 @@ namespace MetaMind.Engine.Components
 
             for ( var i = 0 ; i < messages.Count ; i++ )
             {
-                var dm = messages[ i ];
-                dm.DisplayTime -= gameTime.ElapsedGameTime;
-                if ( dm.DisplayTime <= TimeSpan.Zero )
+                var message = messages[ i ];
+                message.DisplayTime -= gameTime.ElapsedGameTime;
+                if ( message.DisplayTime <= TimeSpan.Zero )
                     messages.RemoveAt( i );
                 else
-                    messages[ i ] = dm;
+                    messages[ i ] = message;
             }
         }
 
@@ -102,17 +91,17 @@ namespace MetaMind.Engine.Components
 
         public void PopMessages( string message, Vector2 postion, Color color )
         {
-            messages.Add( new FlashMessage( message, Settings.MessageLastingPeriod, postion, color ) );
+            messages.Add( new FlashMessage( message, MessageSettings.MessageLastingPeriod, postion, color ) );
         }
 
         public void PopMessages( string message, Color color )
         {
-            messages.Add( new FlashMessage( message, Settings.MessageLastingPeriod, Settings.MessagePosition, color ) );
+            messages.Add( new FlashMessage( message, MessageSettings.MessageLastingPeriod, MessageSettings.MessagePosition, color ) );
         }
 
         public void PopMessages( string message )
         {
-            messages.Add( new FlashMessage( message, Settings.MessageLastingPeriod, Settings.MessagePosition, Settings.MessageColor ) );
+            messages.Add( new FlashMessage( message, MessageSettings.MessageLastingPeriod, MessageSettings.MessagePosition, MessageSettings.MessageColor ) );
         }
 
         #endregion Operations

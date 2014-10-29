@@ -1,19 +1,17 @@
 ﻿using System;
 using MetaMind.Engine.Components;
 using MetaMind.Engine.Guis.Widgets;
+using MetaMind.Engine.Guis.Widgets.Views;
 using MetaMind.Engine.Screens;
-using MetaMind.Perseverance.Guis.Widgets.FeelingWidgets;
-using MetaMind.Perseverance.Guis.Widgets.RibbonHuds;
-using MetaMind.Perseverance.Guis.Widgets.TimelineHuds;
+using MetaMind.Engine.Settings;
+using MetaMind.Perseverance.Guis.Widgets.Motivations;
 using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Screens
 {
     public class MotivationScreen : GameScreen
     {
-        private RibbonHud   ribbonHud   = new RibbonHud();
-        private TimelineHud timelineHud = new TimelineHud( new Vector2( 130, 670 - 230 ) );
-        private IWidget     feeling     = new FeelingWidget();
+        private IWidget     feeling     = new MotivationExchange();
 
         public MotivationScreen()
         {
@@ -26,10 +24,7 @@ namespace MetaMind.Perseverance.Screens
             ScreenManager.SpriteBatch.Begin();
 
             MessageManager.Draw( gameTime );
-            
-            ribbonHud     .Draw( gameTime, TransitionAlpha );
-            timelineHud   .Draw( gameTime );
-            feeling       .Draw( gameTime );
+            feeling       .Draw( gameTime, TransitionAlpha);
 
             ScreenManager.SpriteBatch.End();
         }
@@ -58,9 +53,7 @@ namespace MetaMind.Perseverance.Screens
 
                 Perseverance.Adventure.Update( gameTime );
 
-                ribbonHud  .Update( gameTime );
-                timelineHud.Update( gameTime );
-                feeling    .Update( gameTime );
+                feeling.Update( gameTime );
 
             }
             base.Update( gameTime, otherScreenHasFocus, coveredByOtherScreen );

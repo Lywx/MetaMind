@@ -26,7 +26,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             items = new List<IViewItem>();
 
-            control = factory.CreateControl( this, viewSettings, itemSettings );
+            control  = factory.CreateControl( this, viewSettings, itemSettings );
             graphics = factory.CreateGraphics( this, viewSettings, itemSettings );
         }
 
@@ -47,7 +47,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             set { items = value; }
         }
 
-        public override void Draw( GameTime gameTime )
+        public override void Draw(GameTime gameTime, byte alpha)
         {
             graphics.Draw( gameTime );
         }

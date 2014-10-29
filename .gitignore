@@ -21,3 +21,5 @@ MetaMind.PerseveranceUnitTest/obj/
 *.dll
 MetaMind.PerseveranceUnitTest/bin/
 MetaMind.PerseveranceBuilder/MetaMind.PerseveranceBuilderContent/Textures/Screens/Background/Thumbs.db
+MetaMind.Design/
+MetaMind.PerseveranceBuilder/MetaMind.PerseveranceBuilderContent/Textures/UIs/Thumbs.db

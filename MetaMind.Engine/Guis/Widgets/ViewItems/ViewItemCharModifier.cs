@@ -33,9 +33,9 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
         public ViewItemCharModifier( IViewItem item )
             : base( item )
         {
-            InputEventManager.CharEntered += InputEventManager_DetectCharEntered;
-            InputEventManager.KeyDown += DetectEnterKeyDown;
-            InputEventManager.KeyDown += DetectEscapeKeyDown;
+            InputEventManager.CharEntered += DetectCharEntered;
+            InputEventManager.KeyDown     += DetectEnterKeyDown;
+            InputEventManager.KeyDown     += DetectEscapeKeyDown;
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
             inputString = new StringBuilder( cleaned );
         }
 
-        private void InputEventManager_DetectCharEntered( object sender, CharacterEventArgs e )
+        private void DetectCharEntered( object sender, CharacterEventArgs e )
         {
             if ( !Item.IsEnabled( ItemState.Item_Editing ) )
                 return;

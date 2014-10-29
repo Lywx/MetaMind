@@ -62,8 +62,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             else if ( !IsLeftmost( currentColumn.Value ) )
             {
                 Select( currentColumn.Value - 1 );
-                if ( Control.Scroll.IsLeftToDisplay( currentColumn.Value - 1 ) )
-                    Control.Scroll.MoveLeft();
+                if ( ViewControl.Scroll.IsLeftToDisplay( currentColumn.Value - 1 ) )
+                    ViewControl.Scroll.MoveLeft();
             }
             else
                 Select( currentColumn.Value );
@@ -76,8 +76,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             else if ( !IsRightmost( currentColumn.Value ) )
             {
                 Select( currentColumn.Value + 1 );
-                if ( Control.Scroll.IsRightToDisplay( currentColumn.Value + 1 ) )
-                    Control.Scroll.MoveRight();
+                if ( ViewControl.Scroll.IsRightToDisplay( currentColumn.Value + 1 ) )
+                    ViewControl.Scroll.MoveRight();
             }
             else
                 Select( currentColumn.Value );

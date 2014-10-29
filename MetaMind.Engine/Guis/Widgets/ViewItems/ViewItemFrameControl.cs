@@ -6,50 +6,34 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Engine.Guis.Widgets.ViewItems
 {
-    public interface IViewItemFrameControl
-    {
-        ItemRootFrame RootFrame { get; }
-
-        void Update( GameTime gameTime );
-    }
-
-    public class ViewItemFrameControl : ViewItemComponent, IViewItemFrameControl
+    public class ViewItemFrameControl: ViewItemComponent
     {
         private Point[] frameSizes = new Point[ ( int ) ItemFrameType.TypeNum ];
 
         public ViewItemFrameControl( IViewItem item )
             : base( item )
         {
-            InitializeFrameSizes();
-            InitializeFrames( item );
+            CollectFrameSizeInfo();
+
+            RootFrame = new ItemRootFrame( item );
         }
 
         public ItemRootFrame RootFrame { get; private set; }
 
         #region Initializations
 
-        private void InitializeFrames( IViewItem item )
+        private void CollectFrameSizeInfo()
         {
-            RootFrame = new ItemRootFrame( item );
-        }
-
-        private void InitializeFrameSizes()
-        {
+            var fields = typeof( ItemSettings ).GetFields();
             foreach ( var frameName in Enum.GetNames( typeof( ItemFrameType ) ).Except( new[ ] { "TypeNum" } ) )
             {
                 var sizeName = frameName + "Size";
-
-                var settingFields = typeof( ItemSettings ).GetFields();
-                foreach ( var field in settingFields )
+                foreach ( var field in fields.Where( field => field.Name == sizeName ) )
                 {
-                    if ( field.Name == sizeName )
-                    {
-                        ItemFrameType frameType;
-
-                        var succeed = Enum.TryParse( frameName, out frameType );
-                        if ( succeed )
-                            SetFrameSize( frameType, ( Point ) field.GetValue( ItemSettings ) );
-                    }
+                    ItemFrameType frameType;
+                    var succeed = Enum.TryParse( frameName, out frameType );
+                    if ( succeed )
+                        SetFrameSize( frameType, ( Point ) field.GetValue( ItemSettings ) );
                 }
             }
         }
@@ -118,12 +102,12 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         #region Frame Operation
 
-        private Point GetFrameSize( ItemFrameType type )
+        protected Point GetFrameSize( ItemFrameType type )
         {
             return type.GetFrom( frameSizes );
         }
 
-        private void SetFrameSize( ItemFrameType type, Point size )
+        protected void SetFrameSize( ItemFrameType type, Point size )
         {
             type.SetIn( frameSizes, size );
         }
