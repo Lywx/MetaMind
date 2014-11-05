@@ -10,7 +10,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             return new MotivationItemControl( item );
         }
 
-        public IViewItemData CreateData( IViewItem item )
+        public dynamic CreateData( IViewItem item )
         {
             return new MotivationItemData( item );
         }

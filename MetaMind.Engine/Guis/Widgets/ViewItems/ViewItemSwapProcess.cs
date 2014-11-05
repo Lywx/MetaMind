@@ -55,6 +55,10 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
                 swappingItemExchangable.ExchangeTo( draggedItemView, draggedItem.ItemControl.Id );
             }
 
+            // refine selection to make sure the overall effect is smooth
+            draggedItem.ItemControl.SelectIt();
+
+            // stop swapping state
             swappingItem.Disable( ItemState.Item_Swaping );
         }
 

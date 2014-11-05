@@ -55,6 +55,7 @@
     <Compile Include="Components\ProcessManager.cs" />
     <Compile Include="Components\RunnerManager.cs" />
     <Compile Include="Components\ScreenManager.cs" />
+    <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="GameEngine.cs" />
     <Compile Include="EngineObject.cs" />
     <Compile Include="EngineRunner.cs" />
@@ -94,14 +95,12 @@
     <Compile Include="Guis\Widgets\Items\ItemRootFrame.cs" />
     <Compile Include="Guis\Widgets\Items\ItemSettings.cs" />
     <Compile Include="Guis\Widgets\Items\ItemState.cs" />
-    <Compile Include="Guis\Widgets\ViewItems\IViewItemData.cs" />
     <Compile Include="Guis\Widgets\ViewItems\IViewItemFactory.cs" />
     <Compile Include="Guis\Widgets\ViewItems\IViewItemModifier.cs" />
-    <Compile Include="Guis\Widgets\ViewItems\ViewItemBasicData.cs" />
+    <Compile Include="Guis\Widgets\ViewItems\ViewItemData.cs" />
     <Compile Include="Guis\Widgets\ViewItems\ViewItemBasicFactory1D.cs" />
     <Compile Include="Guis\Widgets\ViewItems\ViewItemBasicFactory2D.cs" />
     <Compile Include="Guis\Widgets\ViewItems\ViewItemBasicGraphics.cs" />
-    <Compile Include="Guis\Widgets\ViewItems\ViewItemCharInteractor.cs" />
     <Compile Include="Guis\Widgets\ViewItems\ViewItemCharModifier.cs" />
     <Compile Include="Guis\Widgets\ViewItems\ViewItemComponent.cs" />
     <Compile Include="Guis\Widgets\ViewItems\ViewItemControl1D.cs" />
@@ -111,7 +110,6 @@
     <Compile Include="Guis\Widgets\ViewItems\ViewItemExchangable.cs" />
     <Compile Include="Guis\Widgets\ViewItems\ViewItemExchangeless.cs" />
     <Compile Include="Guis\Widgets\ViewItems\ViewItemFrameControl.cs" />
-    <Compile Include="Guis\Widgets\ViewItems\ViewItemLabelType.cs" />
     <Compile Include="Guis\Widgets\ViewItems\ViewItemSwapProcess.cs" />
     <Compile Include="Guis\Widgets\ViewItems\ViewItemViewControl1D.cs" />
     <Compile Include="Guis\Widgets\ViewItems\ViewItemViewControl2D.cs" />

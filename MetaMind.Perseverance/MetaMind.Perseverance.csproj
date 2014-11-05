@@ -57,7 +57,6 @@
     <Compile Include="Concepts\TaskEntries\FutureEntry.cs" />
     <Compile Include="Concepts\TaskEntries\TaskEntry.cs" />
     <Compile Include="Concepts\TaskEntries\QuestionEntry.cs" />
-    <Compile Include="Concepts\Thing.cs" />
     <Compile Include="Extensions\ColorExtension.cs" />
     <Compile Include="Guis\Modules\IModuleData.cs" />
     <Compile Include="Guis\Modules\Module.cs" />

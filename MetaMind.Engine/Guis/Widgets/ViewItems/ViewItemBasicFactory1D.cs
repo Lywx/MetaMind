@@ -9,9 +9,9 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
             return new ViewItemControl1D(item);
         }
 
-        public IViewItemData CreateData(IViewItem item)
+        public dynamic CreateData(IViewItem item)
         {
-            return new ViewItemBasicData(item);
+            return new ViewItemData(item);
         }
 
         public IItemGraphics CreateGraphics(IViewItem item)

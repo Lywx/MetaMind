@@ -10,7 +10,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
         #region Item Components
 
         IViewItem Item { get; }
-        IViewItemData ItemData { get; }
+        dynamic ItemData { get; }
         dynamic ItemControl { get; }
         IItemGraphics ItemGraphics { get; }
         dynamic ItemSettings { get; }
@@ -38,7 +38,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
         private IViewItem item;
         public IViewItem Item { get { return item; } }
 
-        public IViewItemData ItemData
+        public dynamic ItemData
         {
             get { return item.ItemData; }
             

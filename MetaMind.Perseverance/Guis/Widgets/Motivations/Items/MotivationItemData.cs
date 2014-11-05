@@ -2,9 +2,11 @@
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 {
-    public class MotivationItemData : ViewItemBasicData
+    public class MotivationItemData : ViewItemData
     {
-        public MotivationItemData(IViewItem item) : base(item)
+        public string Description;
+        public MotivationItemData( IViewItem item )
+            : base( item )
         {
         }
     }

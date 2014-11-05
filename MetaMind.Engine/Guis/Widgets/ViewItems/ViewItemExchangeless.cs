@@ -5,7 +5,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 {
     public interface IViewItem : IItemObject
     {
-        IViewItemData ItemData { get; }
+        dynamic ItemData { get; }
         dynamic ItemControl { get; set; }
         IItemGraphics ItemGraphics { get; set; }
         dynamic View { get; }
@@ -29,7 +29,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
             ItemGraphics = itemFactory.CreateGraphics( this );
         }
 
-        public IViewItemData ItemData { get; set; }
+        public dynamic       ItemData { get; set; }
         public dynamic       ItemControl { get; set; }
         public IItemGraphics ItemGraphics { get; set; }
 

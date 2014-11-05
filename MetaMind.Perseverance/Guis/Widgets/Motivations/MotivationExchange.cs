@@ -39,7 +39,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
             };
             futureViewSettings = new ViewSettings1D
             {
-                ColumnNumDisplay = 10,
+                ColumnNumDisplay = 9,
                 StartPoint = new Point( 662, GraphicsSettings.Height / 2 )
             };
             

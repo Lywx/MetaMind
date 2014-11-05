@@ -2,14 +2,13 @@ using System;
 using System.Linq;
 using System.Text;
 using MetaMind.Engine.Components;
-using MetaMind.Engine.Components.Inputs;
 using MetaMind.Engine.Guis.Widgets.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace MetaMind.Engine.Guis.Widgets.ViewItems
 {
-    public class ViewItemCharModifier : ViewItemCharInteractor, IViewItemModifier
+    public class ViewItemCharModifier : ViewItemComponent, IViewItemModifier
     {
         #region Input Settings
 
@@ -26,17 +25,17 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         #region Constructors
 
-        #endregion Constructors
-
-        #region Events
-
         public ViewItemCharModifier( IViewItem item )
             : base( item )
         {
             InputEventManager.CharEntered += DetectCharEntered;
-            InputEventManager.KeyDown     += DetectEnterKeyDown;
-            InputEventManager.KeyDown     += DetectEscapeKeyDown;
+            InputEventManager.KeyDown += DetectEnterKeyDown;
+            InputEventManager.KeyDown += DetectEscapeKeyDown;
         }
+
+        #endregion Constructors
+
+        #region Events
 
         /// <summary>
         /// Occurs when modification ends as an explicitly implemented event
@@ -55,10 +54,12 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
                 modificationEnded -= value;
             }
         }
+
         /// <summary>
         /// Occurs when value is modified.
         /// </summary>
         public event EventHandler<ViewItemDataEventArgs> ValueModified;
+
         /// <summary>
         /// Occurs when modification ends as a private event, which is explicitly implemented
         /// by ModificationEnded.
@@ -69,7 +70,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         #region Hooks
 
-        public override void Cancel()
+        public virtual void Cancel()
         {
             if ( ValueModified != null )
                 ValueModified( this, new ViewItemDataEventArgs( oldString ) );
@@ -90,7 +91,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
             inputString = new StringBuilder( oldString );
         }
 
-        public override void Release()
+        public virtual void Release()
         {
             if ( ValueModified != null )
                 ValueModified( this, new ViewItemDataEventArgs( inputString.ToString() ) );
@@ -111,7 +112,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         #region Event Handlers
 
-        protected override void DetectEnterKeyDown( object sender, KeyEventArgs e )
+        private void DetectEnterKeyDown( object sender, KeyEventArgs e )
         {
             if ( !Item.IsEnabled( ItemState.Item_Editing ) )
                 return;
@@ -120,7 +121,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
                 Release();
         }
 
-        protected override void DetectEscapeKeyDown( object sender, KeyEventArgs e )
+        private void DetectEscapeKeyDown( object sender, KeyEventArgs e )
         {
             if ( !Item.IsEnabled( ItemState.Item_Editing ) )
                 return;
@@ -173,11 +174,11 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         #region Update and Draw
 
-        public override void Draw( GameTime gameTime )
+        public virtual void Draw( GameTime gameTime )
         {
         }
 
-        public override void Update( GameTime gameTime )
+        public virtual void Update( GameTime gameTime )
         {
         }
 

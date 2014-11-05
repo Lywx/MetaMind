@@ -51,7 +51,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         #region Update
 
-        public void UpdateInput( GameTime gameTime )
+        public virtual void UpdateInput( GameTime gameTime )
         {
             if ( View.IsEnabled( ViewState.View_Active ) &&
                 View.IsEnabled( ViewState.View_Has_Focus ) &&

@@ -1,50 +1,53 @@
 using System;
+using System.Diagnostics;
+using System.Reflection;
 using MetaMind.Engine.Guis.Widgets.Items;
+using MetaMind.Engine.Guis.Widgets.Views;
 using Microsoft.Xna.Framework;
 
 namespace MetaMind.Engine.Guis.Widgets.ViewItems
 {
-    public interface IViewItemDataControl
+    public class ViewItemDataControl : ViewItemComponent
     {
-        void Update( GameTime gameTime );
-    }
+        private string fieldName;
 
-    public class ViewItemDataControl : ViewItemComponent, IViewItemDataControl
-    {
-        private IViewItemModifier labelModifier;
-
-        public ViewItemDataControl( IViewItem item)
+        public ViewItemDataControl( IViewItem item )
             : base( item )
         {
-            labelModifier = new ViewItemCharModifier( item );
+            LabelModifier = new ViewItemCharModifier( item );
         }
 
-        public void EditLabel( ViewItemLabelType type )
-        {
-            // no need for mouse invocation
-            // but do need for keyboard invocation
-            Item.Enable( ItemState.Item_Editing );
+        private IViewItemModifier LabelModifier { get; set; }
 
-            labelModifier.Initialize( type.GetLabelFrom( ItemData ) );
+        public void Update( GameTime gameTime )
+        {
+        }
+
+        public void EditString( string targetName )
+        {
+            fieldName = targetName;
+            Item.Enable( ItemState.Item_Editing );
+            View.Enable( ViewState.Item_Editting );
+
+            FieldInfo field = ItemData.GetType().GetField( targetName );
+            LabelModifier.Initialize( field.GetValue( ItemData ) );
             // every time modification ends, ValueModified event will release all the delegate
             // which makes sure that subscriber will only receive EventArgs during modification
-            labelModifier.ValueModified += RefreshEditing;
-            labelModifier.ModificationEnded += TerminateEditing;
+            LabelModifier.ValueModified += RefreshEditing;
+            LabelModifier.ModificationEnded += TerminateEditing;
         }
 
-        private void RefreshEditing( object sender, ViewItemDataEventArgs e )
+        protected void RefreshEditing( object sender, ViewItemDataEventArgs e )
         {
             //make sure name is exactly the same as the displayed name
-            ItemData.Labels = FontManager.GetDisaplayableCharacters( ItemSettings.NameFont, e.NewValue );
+            FieldInfo field = ItemData.GetType().GetField( fieldName );
+            field.SetValue( ItemData, FontManager.GetDisaplayableCharacters( ItemSettings.NameFont, e.NewValue ) );
         }
 
         private void TerminateEditing( object sender, EventArgs e )
         {
             Item.Disable( ItemState.Item_Editing );
-        }
-
-        public void Update( GameTime gameTime )
-        {
+            View.Disable( ViewState.Item_Editting );
         }
     }
 }

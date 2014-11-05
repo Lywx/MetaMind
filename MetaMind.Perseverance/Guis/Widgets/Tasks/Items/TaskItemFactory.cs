@@ -10,7 +10,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
             return new TaskItemControl( item );
         }
 
-        public override IViewItemData CreateData( IViewItem item )
+        public override dynamic CreateData( IViewItem item )
         {
             return base.CreateData( item );
         }

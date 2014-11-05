@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MetaMind.Engine.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -71,10 +73,21 @@ namespace MetaMind.Engine.Components
 
         #region Text Helper Methods
 
+        public static string ConcatText( string text, int maxLength )
+        {
+            return text.Length < maxLength ? text : string.Concat( text.Substring( 0, maxLength ), "..." );
+        }
+
+        /// <summary>
+        /// break text using word by word method.
+        /// </summary>
+        /// <param name="font"></param>
+        /// <param name="text"></param>
+        /// <param name="maxlinewidth"></param>
+        /// <returns></returns>
         public static string BreakTextIntoLines( SpriteFont font, string text, float maxLineWidth )
         {
             var stringBuilder = new StringBuilder();
-
             var lines = text.Split( '\n' );
             foreach ( var line in lines )
             {
@@ -98,6 +111,75 @@ namespace MetaMind.Engine.Components
                 stringBuilder.Append( "\n" );
             }
             return stringBuilder.ToString();
+        }
+
+        /// <summary>
+        /// Break text using letter by letter method.
+        /// </summary>
+        /// <param name="font"></param>
+        /// <param name="size"></param>
+        /// <param name="text"></param>
+        /// <param name="maxLineWidth"></param>
+        /// <returns></returns>
+        private static List<string> BreakTextIntoList( SpriteFont font, float size, string text, float maxLineWidth )
+        {
+            var textList  = new List<string>();
+            var line      = new StringBuilder();
+            var lineWidth = 0;
+            var index     = 0;
+            while ( index < text.Length )
+            {
+                while ( lineWidth < maxLineWidth )
+                {
+                    // add current letter
+                    line.Append( text[ index ] );
+                    // measure length and decide whether to go into next line
+                    if ( NextExist( text, index ) )
+                    {
+                        lineWidth = ( int ) ( font.MeasureString( string.Concat( line.ToString(), text[ index + 1 ] ) ).X * size );
+                        index++;
+                    }
+                    else
+                    {
+                        lineWidth = ( int ) ( font.MeasureString( line ).X * size );
+                        index++;
+                        break;
+                    }
+                }
+                textList.Add( line.ToString() );
+                // initialize next line
+                if ( NextExist( text, index ) )
+                {
+                    if ( NextContinuation( text, index - 1 ) )
+                    {
+                        line = new StringBuilder( "-" );
+                        lineWidth = 0;
+                    }
+                    else
+                    {
+                        line = new StringBuilder();
+                        lineWidth = 0;
+                    }
+                }
+                else
+                    break;
+            }
+            return textList;
+        }
+
+        private static bool NextExist( string text, int index )
+        {
+            return index + 1 < text.Count();
+        }
+
+        private static bool NextContinuation( string text, int index )
+        {
+            return text.Substring( index, 1 ).IsAscii() && !char.IsWhiteSpace( text[ index ] ) && !char.IsWhiteSpace( text[ index + 1 ] );
+        }
+
+        public List<string> BreakTextIntoList( Font font, float size, string text, float maxLineWidth )
+        {
+            return BreakTextIntoList( this[ font ], size, text, maxLineWidth );
         }
 
         #endregion Text Helper Methods

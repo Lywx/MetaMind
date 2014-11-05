@@ -35,12 +35,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
         #endregion Public Properties
 
         #region Operations
-
-        public void EditIt()
-        {
-            ItemDataControl.EditLabel( ViewItemLabelType.Name );
-        }
-
+        
         public void SelectIt()
         {
             ItemViewControl.SelectIt();
@@ -62,7 +57,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         public virtual void Update( GameTime gameTime )
         {
-            ItemViewControl.Update( gameTime );
+            ItemViewControl .Update( gameTime );
             ItemFrameControl.Update( gameTime );
         }
 

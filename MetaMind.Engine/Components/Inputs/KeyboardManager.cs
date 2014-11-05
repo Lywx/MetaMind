@@ -230,7 +230,7 @@ namespace MetaMind.Engine.Components.Inputs
 
             actionMaps[ ( int ) Actions.EditItem ] = new KeyboardActionMap();
             actionMaps[ ( int ) Actions.EditItem ].Keys.Add(
-                Keys.Delete );
+                Keys.E );
 
             //-----------------------------------------------------------------
             // general

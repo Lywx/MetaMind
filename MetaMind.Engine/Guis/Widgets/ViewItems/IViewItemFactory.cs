@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
     {
         dynamic CreateControl( IViewItem item );
 
-        IViewItemData CreateData( IViewItem item );
+        dynamic CreateData( IViewItem item );
 
         IItemGraphics CreateGraphics( IViewItem item );
     }
