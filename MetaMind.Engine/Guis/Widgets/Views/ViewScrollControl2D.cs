@@ -105,7 +105,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public Point RootCenterPoint( int id )
         {
-            var row = ViewControl.RowFrom( id );
+            var row    = ViewControl.RowFrom( id );
             var column = ViewControl.ColumnFrom( id );
             return new Point(
                 ViewSettings.StartPoint.X - XOffset * ViewSettings.RootMargin.X + column * ViewSettings.RootMargin.X,

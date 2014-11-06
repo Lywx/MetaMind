@@ -1,4 +1,3 @@
-
 using System;
 using System.Linq;
 using MetaMind.Engine.Components.Inputs;
@@ -19,7 +18,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         #region Components
 
         public IViewSwapControl Swap { get; private set; }
+
         public dynamic Scroll { get; private set; }
+
         public dynamic Selection { get; private set; }
 
         #endregion Components
@@ -31,17 +32,17 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             switch ( sortMode )
             {
                 case ViewSortMode.Name:
-                {
-                    View.Items = View.Items.OrderBy( item => item.ItemData.Labels ).ToList();
-                    View.Items.ForEach( item => item.ItemControl.Id = View.Items.IndexOf( item ) );
-                }
+                    {
+                        View.Items = View.Items.OrderBy( item => item.ItemData.Labels ).ToList();
+                        View.Items.ForEach( item => item.ItemControl.Id = View.Items.IndexOf( item ) );
+                    }
                     break;
 
                 case ViewSortMode.Id:
-                {
-                    View.Items = View.Items.OrderBy( item => item.ItemControl.Id ).ToList();
-                    View.Items.ForEach( item => item.ItemControl.Id = View.Items.IndexOf( item ) );
-                }
+                    {
+                        View.Items = View.Items.OrderBy( item => item.ItemControl.Id ).ToList();
+                        View.Items.ForEach( item => item.ItemControl.Id = View.Items.IndexOf( item ) );
+                    }
                     break;
             }
         }
@@ -69,9 +70,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views
                     Selection.MoveLeft();
                 if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Right ) )
                     Selection.MoveRight();
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Up) )
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Up ) )
                     Selection.MoveUp();
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Down) )
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Down ) )
                     Selection.MoveDown();
                 if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Esc ) )
                     Selection.Clear();
@@ -84,25 +85,16 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             UpdateItems( gameTime );
         }
 
-        private void UpdateViewLogics()
+        protected virtual void UpdateViewLogics()
         {
             if ( Selection.HasSelected )
-            {
                 View.Enable( ViewState.View_Has_Selection );
-            }
             else
-            {
                 View.Disable( ViewState.View_Has_Selection );
-            }
-
             if ( View.IsEnabled( ViewState.View_Has_Selection ) )
-            {
                 View.Enable( ViewState.View_Has_Focus );
-            }
             else
-            {
                 View.Disable( ViewState.View_Has_Focus );
-            }
         }
 
         private void UpdateItems( GameTime gameTime )
@@ -114,9 +106,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         }
 
         #endregion Update
-        
+
         #region Helper Methods
-        
+
         public int ColumnFrom( int id )
         {
             return id % ViewSettings.ColumnNumMax;
@@ -152,6 +144,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             get { return RowNum > 1 ? ViewSettings.ColumnNumMax : View.Items.Count; }
         }
 
-        #endregion
+        #endregion Helper Methods
     }
 }

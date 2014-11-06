@@ -227,7 +227,7 @@ namespace MetaMind.Perseverance.Concepts.TaskEntries
                 Upgrade = null;
             }
             // remove data from center data
-            Tasklist.RemoveDirection( this );
+            Perseverance.Adventure.Tasklist.RemoveDirection( this );
         }
 
         public override bool Finish()

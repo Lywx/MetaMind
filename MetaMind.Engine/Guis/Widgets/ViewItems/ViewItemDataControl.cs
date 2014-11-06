@@ -37,7 +37,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
             LabelModifier.ModificationEnded += TerminateEditing;
         }
 
-        protected void RefreshEditing( object sender, ViewItemDataEventArgs e )
+        private void RefreshEditing( object sender, ViewItemDataEventArgs e )
         {
             //make sure name is exactly the same as the displayed name
             FieldInfo field = ItemData.GetType().GetField( fieldName );

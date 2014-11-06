@@ -1,5 +1,6 @@
 ﻿using System;
 using MetaMind.Engine.Guis.Elements.Frames;
+using Microsoft.Xna.Framework;
 
 namespace MetaMind.Engine.Guis.Widgets.Items
 {

@@ -1,6 +1,4 @@
-﻿using System;
-using MetaMind.Engine.Components.Inputs;
-using MetaMind.Engine.Guis.Elements.Frames;
+﻿using MetaMind.Engine.Components.Inputs;
 using MetaMind.Engine.Guis.Widgets.Items;
 using MetaMind.Engine.Guis.Widgets.ViewItems;
 using Microsoft.Xna.Framework;
@@ -9,17 +7,9 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 {
     public class MotivationItemSymbolControl : ViewItemComponent
     {
-        private MotivationType type;
-
         public MotivationItemSymbolControl( IViewItem item )
             : base( item )
         {
-            type  = MotivationType.Neutral;
-        }
-
-        public MotivationType Type
-        {
-            get { return type; }
         }
 
         public void Update( GameTime gameTime )
@@ -28,14 +18,14 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             UpdateStructure( gameTime );
         }
 
-        private void UpdateStructure( GameTime gameTime )
+        public void UpdateStructure( GameTime gameTime )
         {
-            
         }
 
-        private void UpdateInput( GameTime gameTime )
+        public void UpdateInput( GameTime gameTime )
         {
-            if ( Item.IsEnabled( ItemState.Item_Selected ) )
+            if ( Item.IsEnabled( ItemState.Item_Selected ) &&
+                !Item.IsEnabled( ItemState.Item_Editing ) )
             {
                 if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Up ) )
                     BecomeWish();
@@ -46,12 +36,12 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 
         public void BecomeWish()
         {
-            type = MotivationType.Wish;
+            ItemData.Property = "Wish";
         }
 
         public void BecomeFear()
         {
-            type = MotivationType.Fear;
+            ItemData.Property = "Fear";
         }
     }
 }

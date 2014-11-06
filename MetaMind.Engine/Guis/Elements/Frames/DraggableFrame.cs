@@ -23,7 +23,7 @@ namespace MetaMind.Engine.Guis.Elements.Frames
             Initialize( rectangle );
         }
 
-        protected DraggableFrame()
+        public DraggableFrame()
         {
             MouseLeftPressed += RecordPressPosition;
             MouseLeftReleased += ResetRecordPosition;

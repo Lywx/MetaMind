@@ -30,7 +30,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Banners
 
         public void Draw( GameTime gameTime )
         {
-            Primitives2D.FillRectangle( ScreenManager.SpriteBatch, position.ToRectangle( size ), color );
+            Primitives2D.FillRectangle( ScreenManager.SpriteBatch, position.ToPoint().PinRectangle( size.ToPoint() ), color );
         }
 
         public void Update( GameTime gameTime )
@@ -41,7 +41,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Banners
                 state = LightState.Decrement;
             if ( state == LightState.Decrement && progress < 0f )
                 state = LightState.Static;
-
             if ( state == LightState.Increment )
             {
                 progress += 0.02f;

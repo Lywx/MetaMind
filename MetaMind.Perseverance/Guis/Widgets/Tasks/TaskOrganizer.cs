@@ -16,12 +16,11 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks
         {
             var viewFactory = new TaskViewFactory();
             questionView = new View( new TaskViewSettings(), new TaskItemSettings(), viewFactory );
-
         }
 
         public override void Draw(GameTime gameTime, byte alpha)
         {
-            questionView .Draw( gameTime, alpha);
+            questionView.Draw( gameTime, alpha);
             //directionView.Draw( gameTime );
             //futureView   .Draw( gameTime );
         }

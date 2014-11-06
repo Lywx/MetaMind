@@ -7,18 +7,8 @@ namespace MetaMind.Engine.Guis.Elements.Regions
     {
         private IPickableFrame frame;
 
-        private int height;
-        private int width;
-        private int x;
-        private int y;
-
         public Region( Rectangle rectangle )
         {
-            x = rectangle.X;
-            y = rectangle.Y;
-            width = rectangle.Width;
-            height = rectangle.Height;
-
             frame = new PickableFrame( rectangle );
         }
 
@@ -32,47 +22,34 @@ namespace MetaMind.Engine.Guis.Elements.Regions
             get { return frame; }
             set { frame = value; }
         }
+
         public int Height
         {
-            get { return height; }
-            set
-            {
-                height = value;
-                Frame.Rectangle = new Rectangle( x, y, width, height );
-            }
+            get { return Frame.Height; }
+            set { Frame.Height = value; }
         }
+
         public Rectangle Rectangle
         {
             set { frame.Rectangle = value; }
         }
+
         public int Width
         {
-            get { return width; }
-            set
-            {
-                width = value;
-                Frame.Rectangle = new Rectangle( x, y, width, height );
-            }
+            get { return Frame.Width; }
+            set { Frame.Width = value; }
         }
 
         public int X
         {
-            get { return x; }
-            set
-            {
-                x = value;
-                Frame.Rectangle = new Rectangle( x, y, width, height );
-            }
+            get { return Frame.X; }
+            set { Frame.X = value; }
         }
 
         public int Y
         {
-            get { return y; }
-            set
-            {
-                y = value;
-                Frame.Rectangle = new Rectangle( x, y, width, height );
-            }
+            get { return Frame.Y; }
+            set { Frame.Y = value; }
         }
 
         public virtual void Update( GameTime gameTime )

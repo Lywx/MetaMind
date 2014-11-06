@@ -9,7 +9,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 
         public TaskViewSettings()
         {
-            ColumnNumDisplay = 2;
+            ColumnNumDisplay = 3;
             StartPoint = new Point( 100, 100 );
             RootMargin = new Point( 100, 100 );
         }

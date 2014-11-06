@@ -17,10 +17,10 @@ namespace MetaMind.Perseverance.Screens
         /// </summary>
         public ComputingScreen()
         {
-            TransitionOnTime = TimeSpan.FromSeconds( 0.5 );
+            TransitionOnTime  = TimeSpan.FromSeconds( 0.5 );
             TransitionOffTime = TimeSpan.FromSeconds( 0.5 );
-
-            planning = new TaskOrganizer();
+            
+            planning          = new TaskOrganizer();
         }
 
         public override void Draw( GameTime gameTime )

@@ -6,8 +6,8 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
     public class ViewItemControl2D : ViewItemComponent
     {
         //---------------------------------------------------------------------
-        private readonly ViewItemFrameControl  itemFrameControl;
-        private readonly ViewItemViewControl2D itemViewControl;
+        public ViewItemFrameControl ItemFrameControl { get; protected set; }
+        public ViewItemViewControl2D ItemViewControl { get; protected set; }
 
         //---------------------------------------------------------------------
 
@@ -16,8 +16,8 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
         public ViewItemControl2D( IViewItem item )
             : base( item )
         {
-            itemFrameControl = new ViewItemFrameControl( item );
-            itemViewControl = new ViewItemViewControl2D( item );
+            ItemFrameControl = new ViewItemFrameControl( item );
+            ItemViewControl  = new ViewItemViewControl2D( item );
         }
 
         #endregion Constructors
@@ -28,9 +28,9 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         public int Id { get; set; }
 
-        public IItemRootFrame RootFrame
+        public ItemRootFrame RootFrame
         {
-            get { return itemFrameControl.RootFrame; }
+            get { return ItemFrameControl.RootFrame; }
         }
 
         public int Row { get; set; }
@@ -41,17 +41,17 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         public void SelectIt()
         {
-            itemViewControl.SelectIt();
+            ItemViewControl.SelectIt();
         }
 
         public void SwapIt( IViewItem draggingItem )
         {
-            itemViewControl.SwapIt( draggingItem );
+            ItemViewControl.SwapIt( draggingItem );
         }
 
         public void UnSelectIt()
         {
-            itemViewControl.UnSelectIt();
+            ItemViewControl.UnSelectIt();
         }
 
         #endregion Operations
@@ -60,8 +60,8 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         public void Update( GameTime gameTime )
         {
-            itemViewControl.Update( gameTime );
-            itemFrameControl.Update( gameTime );
+            ItemViewControl.Update( gameTime );
+            ItemFrameControl.Update( gameTime );
         }
 
         #endregion Update

@@ -4,20 +4,12 @@ using MetaMind.Engine;
 
 namespace MetaMind.Perseverance.Concepts.TaskEntries
 {
-    
     [DataContract,
      KnownType( typeof( QuestionEntry ) ),
      KnownType( typeof( DirectionEntry ) ),
      KnownType( typeof( FutureEntry ) )]
     public abstract class TaskEntry : EngineObject
     {
-        #region Data Source
-
-        protected Tasklist Tasklist { get { return Perseverance.Adventure.Tasklist; } }
-
-        #endregion Data Source
-
-        #region Display State
 
         public bool IsLaidOut { get; set; }
 
@@ -27,8 +19,7 @@ namespace MetaMind.Perseverance.Concepts.TaskEntries
         {
             get
             {
-                if ( HasParent &&
-                    Parent.IsHighlighted )
+                if ( HasParent && Parent.IsHighlighted )
                     return true;
                 return IsHighlighted;
             }
@@ -37,21 +28,12 @@ namespace MetaMind.Perseverance.Concepts.TaskEntries
         [DataMember]
         public bool IsRunning { get; set; }
 
-        #endregion Display State
-
-        #region Folder Data
-
         [DataMember]
         public int GlobalId { get; set; }
 
         [DataMember]
         public string Symbol { get; set; }
 
-        #endregion Folder Data
-
-        #region Item Data
-
-        #region Parent
 
         [DataMember]
         public virtual TaskEntry Parent { get; set; }
@@ -61,33 +43,15 @@ namespace MetaMind.Perseverance.Concepts.TaskEntries
             get { return Parent != null; }
         }
 
-        #endregion Parent
+        [DataMember] public string Name;
 
-        #region Concepts
-
-        [DataMember]
-        public string Name { get; set; }
-
-        [DataMember]
-        public Experience Experience { get; set; }
-
-        #endregion Concepts
-
-        #endregion Item Data
-
-        #region Constructors
+        [DataMember] public Experience Experience; 
 
         protected TaskEntry()
         {
-            // empty name
-            Name = string.Empty;
-            // zero experience
+            Name       = string.Empty;
             Experience = new Experience( DateTime.Now, TimeSpan.FromHours( 0 ), DateTime.Now );
         }
-
-        #endregion Constructors
-
-        #region Operations
 
         public abstract void AddChildData( TaskEntry child );
 
@@ -109,7 +73,5 @@ namespace MetaMind.Perseverance.Concepts.TaskEntries
             MessageManager.PopMessages( "Repository is not ready." );
             return false;
         }
-
-        #endregion Operations
     }
 }

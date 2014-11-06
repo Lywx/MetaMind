@@ -8,10 +8,5 @@ namespace MetaMind.Engine.Extensions
         {
             return new Point( ( int ) vector2.X, ( int ) vector2.Y );
         }
-
-        public static Rectangle ToRectangle( this Vector2 position, Vector2 size )
-        {
-            return position.ToPoint().ToRectangle( size.ToPoint() );
-        }
     }
 }

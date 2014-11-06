@@ -14,14 +14,14 @@ namespace MetaMind.Engine.Extensions
             return new Vector2( point.X, point.Y );
         }
 
-        public static Rectangle ToRectangle( this Point position, Point size )
+        public static Rectangle PinRectangle( this Point position, Point size )
         {
             return new Rectangle( position.X, position.Y, size.X, size.Y );
         }
 
-        public static Rectangle ToCenterRectangle( this Point center, Point size )
+        public static Rectangle PinRectangleCenter( this Point center, Point size )
         {
-            return new Point( center.X - size.X / 2, center.Y - size.Y / 2 ).ToRectangle( size );
+            return new Point( center.X - size.X / 2, center.Y - size.Y / 2 ).PinRectangle( size );
         }
     }
 }

@@ -40,27 +40,17 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             var size        = new Point( ( int ) ( Math.Abs( Math.Cos( rotation ) ) * ( ( IPickableFrame ) ItemControl.SymbolFrame ).Rectangle.Width ), ( ( IPickableFrame ) ItemControl.SymbolFrame ).Rectangle.Height );
             var destination = ( ( IPickableFrame ) ItemControl.SymbolFrame ).DestinationWithSize( size );
 
-            switch ( ( ( MotivationItemControl ) ItemControl ).Type )
-            {
-                case MotivationType.Neutral:
-                    ScreenManager.SpriteBatch.Draw( heartTexture, destination, null, Item.IsEnabled( ItemState.Item_Selected ) ? ColorPalette.TransparentColor5 : ColorPalette.TransparentColor3, 0f, origin, flipped ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f );
-                    break;
-
-                case MotivationType.Wish:
-                    ScreenManager.SpriteBatch.Draw( heartTexture, destination, null, ItemSettings.WishColor, 0f, origin, flipped ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f );
-                    break;
-
-                case MotivationType.Fear:
-                    ScreenManager.SpriteBatch.Draw( heartTexture, destination, null, ItemSettings.FearColor, 0f, origin, flipped ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f );
-                    break;
-            }
+            if ( ItemData.Property == "Neutral" )
+                ScreenManager.SpriteBatch.Draw( heartTexture, destination, null, Item.IsEnabled( ItemState.Item_Selected ) ? ColorPalette.TransparentColor5 : ColorPalette.TransparentColor3, 0f, origin, flipped ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f );
+            else if ( ItemData.Property == "Wish" )
+                ScreenManager.SpriteBatch.Draw( heartTexture, destination, null, ItemSettings.WishColor, 0f, origin, flipped ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f );
+            else if ( ItemData.Property == "Fear" )
+                ScreenManager.SpriteBatch.Draw( heartTexture, destination, null, ItemSettings.FearColor, 0f, origin, flipped ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f );
         }
 
         private void DrawShadow( Vector2 origin )
         {
             var scrollCenter = ViewControl.Scroll.RootCenterPoint( ItemControl.Id );
-            //ItemControl.RootFrame.Rectangle.
-            //new Rectangle().
             var destination = new Rectangle( scrollCenter.X, scrollCenter.Y, ItemControl.RootFrame.Rectangle.Width, ItemControl.RootFrame.Rectangle.Height );
 
             ScreenManager.SpriteBatch.Draw( heartTexture, destination, null, ColorPalette.TransparentColor3, 0f, origin, SpriteEffects.None, 0f );

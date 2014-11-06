@@ -3,7 +3,7 @@ using MetaMind.Engine.Guis.Widgets.ViewItems;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 {
-    public class TaskItemFactory : ViewItemBasicFactory2D, IViewItemFactory
+    public class TaskItemFactory : ViewItemBasicFactory2D
     {
         public override dynamic CreateControl( IViewItem item )
         {
@@ -12,7 +12,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
         public override dynamic CreateData( IViewItem item )
         {
-            return base.CreateData( item );
+            return Perseverance.Adventure.Tasklist.CreateQuestion();
         }
 
         public override IItemGraphics CreateGraphics( IViewItem item )

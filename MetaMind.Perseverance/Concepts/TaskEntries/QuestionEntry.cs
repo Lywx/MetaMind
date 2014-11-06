@@ -129,7 +129,7 @@ namespace MetaMind.Perseverance.Concepts.TaskEntries
                 Upgrade = null;
             }
             // remove data from center data
-            Tasklist.RemoveQuestion( this );
+            Perseverance.Adventure.Tasklist.RemoveQuestion( this );
         }
 
         public override bool Finish()

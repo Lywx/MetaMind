@@ -87,6 +87,7 @@
     <Compile Include="Guis\Groups\GroupGraphics.cs" />
     <Compile Include="Guis\Widgets\Cameras\CameraSettings.cs" />
     <Compile Include="Guis\Widgets\Cameras\MarkovCamera.cs" />
+    <Compile Include="Guis\Widgets\ViewItems\ViewItemModifier.cs" />
     <Compile Include="Guis\Widgets\Widget.cs" />
     <Compile Include="Guis\Widgets\Items\IItemGraphics.cs" />
     <Compile Include="Guis\Widgets\Items\ItemEntryFrame.cs" />
@@ -96,7 +97,6 @@
     <Compile Include="Guis\Widgets\Items\ItemSettings.cs" />
     <Compile Include="Guis\Widgets\Items\ItemState.cs" />
     <Compile Include="Guis\Widgets\ViewItems\IViewItemFactory.cs" />
-    <Compile Include="Guis\Widgets\ViewItems\IViewItemModifier.cs" />
     <Compile Include="Guis\Widgets\ViewItems\ViewItemData.cs" />
     <Compile Include="Guis\Widgets\ViewItems\ViewItemBasicFactory1D.cs" />
     <Compile Include="Guis\Widgets\ViewItems\ViewItemBasicFactory2D.cs" />

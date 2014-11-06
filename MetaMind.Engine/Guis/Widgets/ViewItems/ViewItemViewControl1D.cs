@@ -17,7 +17,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         public void SwapIt( IViewItem draggingItem )
         {
-            if (Item.IsEnabled( ItemState.Item_Swaping ) )
+            if ( Item.IsEnabled( ItemState.Item_Swaping ) )
                 return;
             else
                 Item.Enable( ItemState.Item_Swaping );
@@ -53,24 +53,16 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
         private void UpdateViewSelection()
         {
             if ( ViewControl.Selection.IsSelected( ItemControl.Id ) )
-            {
                 Item.Enable( ItemState.Item_Selected );
-            }
             else
-            {
                 Item.Disable( ItemState.Item_Selected );
-            }
         }
 
         private void UpdateViewSwap()
         {
             if (Item.IsEnabled( ItemState.Item_Dragging ) )
-            {
                 foreach ( var observor in ViewControl.Swap.Observors )
-                {
                     ViewControl.Swap.ObserveSwapFrom(Item, observor );
-                }
-            }
         }
 
         public void Update( GameTime gameTime )

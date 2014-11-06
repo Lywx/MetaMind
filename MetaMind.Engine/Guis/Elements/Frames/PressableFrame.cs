@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using MetaMind.Engine.Components;
-using MetaMind.Engine.Components.Inputs;
 using MetaMind.Engine.Extensions;
 using Microsoft.Xna.Framework;
 
@@ -13,6 +12,7 @@ namespace MetaMind.Engine.Guis.Elements.Frames
     public class PressableFrame : FrameObject, IPressableFrame
     {
         private Rectangle rectangle;
+
         public Rectangle Rectangle
         {
             get { return rectangle; }
@@ -46,9 +46,12 @@ namespace MetaMind.Engine.Guis.Elements.Frames
             InputEventManager.MouseUp += DetectMouseRightRelease;
 
             FrameMoved += DetectMouseOver;
+
+            // dummy intialization
+            Initialize( new Rectangle() );
         }
 
-        public void Initialize( Rectangle rectangle )
+        protected void Initialize( Rectangle rectangle )
         {
             this.rectangle = rectangle;
 
@@ -56,24 +59,74 @@ namespace MetaMind.Engine.Guis.Elements.Frames
             Enable( FrameState.Frame_Active );
         }
 
-        public void Initialize( Point center, Point size )
+        protected void Initialize( Point center, Point size )
         {
-            Initialize( center.ToCenterRectangle( size ) );
+            Initialize( center.PinRectangleCenter( size ) );
         }
 
         #endregion Constructors
 
+        #region Public Properties
+
+        public int Height
+        {
+            get { return Rectangle.Height; }
+            set { Rectangle = new Rectangle( Rectangle.X, Rectangle.Y, Rectangle.Width, value ); }
+        }
+
+        public int Width
+        {
+            get { return Rectangle.Width; }
+            set { Rectangle = new Rectangle( Rectangle.X, Rectangle.Y, value, Rectangle.Height ); }
+        }
+
+        public int X
+        {
+            get { return Rectangle.X; }
+            set { Rectangle = new Rectangle( value, Rectangle.Y, Rectangle.Width, Rectangle.Height ); }
+        }
+
+        public int Y
+        {
+            get { return Rectangle.Y; }
+            set { Rectangle = new Rectangle( Rectangle.X, value, Rectangle.Width, Rectangle.Height ); }
+        }
+
+        public Point Center
+        {
+            get { return Rectangle.Center; }
+            set { Initialize( value, Size ); }
+        }
+
+        public Point Size
+        {
+            get { return new Point( Rectangle.Width, Rectangle.Height ); }
+            set { Initialize( Center, value ); }
+        }
+
+        public Point Location
+        {
+            get { return Rectangle.Location; }
+            set { Initialize( new Rectangle( value.X, value.Y, Rectangle.Width, Rectangle.Height ) ); }
+        }
+        #endregion Public Properties
+
         #region Events
 
         public event EventHandler<FrameEventArgs> MouseEnter;
+
         public event EventHandler<FrameEventArgs> MouseLeave;
 
         public event EventHandler<FrameEventArgs> MouseLeftPressed;
+
         public event EventHandler<FrameEventArgs> MouseLeftReleased;
+
         public event EventHandler<FrameEventArgs> MouseLeftDraggedOutside;
 
         public event EventHandler<FrameEventArgs> MouseRightPressed;
+
         public event EventHandler<FrameEventArgs> MouseRightReleased;
+
         public event EventHandler<FrameEventArgs> MouseRightDraggedOutside;
 
         public event EventHandler<FrameEventArgs> FrameMoved;
@@ -243,26 +296,5 @@ namespace MetaMind.Engine.Guis.Elements.Frames
         }
 
         #endregion Update
-
-        #region Operations
-
-        public void Mimic( IPressableFrame frame )
-        {
-            Initialize( frame.Rectangle.Center, new Point( frame.Rectangle.Width, frame.Rectangle.Height ) );
-        }
-
-        public void Mimic( IPressableFrame frame, Point size )
-        {
-            Initialize( frame.Rectangle.Center, size );
-        }
-
-        public void MimicBottom( IPressableFrame frame, Point size )
-        {
-            Initialize(
-                ( frame.Rectangle.Center.ToVector2() - new Vector2( 0, size.Y - frame.Rectangle.Height ) ).ToPoint(), size );
-        }
-
-        #endregion
-
     }
 }

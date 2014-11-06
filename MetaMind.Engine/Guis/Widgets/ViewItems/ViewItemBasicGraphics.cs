@@ -38,10 +38,15 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         protected void DrawId()
         {
-            FontManager.DrawCenteredText( ItemSettings.IdFont, ItemControl.Id.ToString( new CultureInfo( "en-US" ) ), IdPosition, ItemSettings.IdColor, ItemSettings.IdSize );
+            FontManager.DrawCenteredText( ItemSettings.IdFont, ItemControl.Id.ToString( new CultureInfo( "en-US" ) ), IdCenter, ItemSettings.IdColor, ItemSettings.IdSize );
         }
 
-        protected virtual Vector2 IdPosition
+        protected Point Center
+        {
+            get { return ItemControl.RootFrame.Rectangle.Center; }
+        }
+        
+        protected virtual Vector2 IdCenter
         {
             get { return new Vector2( ItemControl.RootFrame.Rectangle.Right + 10, ItemControl.RootFrame.Rectangle.Top - 10 ); }
         }

@@ -75,6 +75,8 @@ namespace MetaMind.Perseverance.Sessions
         
         public Random Random { get { return random; } }
 
+        public Motivationlist Motivationlist { get { return motivationlist; } }
+
         #endregion Public Properties
 
         //---------------------------------------------------------------------

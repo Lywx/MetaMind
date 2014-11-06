@@ -1,5 +1,6 @@
 using System;
 using C3.Primtive2DXna;
+using MetaMind.Engine.Extensions;
 using MetaMind.Engine.Guis.Elements.Frames;
 using MetaMind.Engine.Guis.Widgets.Items;
 using MetaMind.Engine.Guis.Widgets.ViewItems;
@@ -7,7 +8,7 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 {
-    public class TaskItemGraphics : ViewItemComponent, IItemGraphics
+    public class TaskItemGraphics : ViewItemBasicGraphics, IItemGraphics
     {
         #region Constructors
 
@@ -18,12 +19,54 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
         #endregion
 
-        protected Rectangle DisplayWithMargin( Rectangle rectangle )
+        #region Structure Position
+
+        private Rectangle HighLightRandomFrame(GameTime gameTime, int flashLength)
         {
-            return new Rectangle( rectangle.X,
-                rectangle.Y + ItemSettings.IdFrameMargin.Y,
-                rectangle.Width - ItemSettings.IdFrameMargin.X * 2,
-                rectangle.Height - ItemSettings.IdFrameMargin.Y * 2 );
+            var baseRectanle = ItemControl.NameFrame.Rectangle.Crop();
+            var random = new Random();
+            var thick = random.Next(flashLength);
+            return new Rectangle(
+                baseRectanle.X - thick,
+                baseRectanle.Y - thick,
+                baseRectanle.Width + thick*2,
+                baseRectanle.Height + thick*2
+                );
+        }
+
+        private Rectangle HighLightSinFrame(GameTime gameTime, int flashLength)
+        {
+            var baseRectanle = ItemControl.NameFrame.Rectangle.Crop();
+            var thick = (int) (flashLength*Math.Abs(Math.Sin(gameTime.TotalGameTime.TotalSeconds*30)));
+            return new Rectangle(
+                baseRectanle.X - thick,
+                baseRectanle.Y - thick,
+                baseRectanle.Width + thick*2,
+                baseRectanle.Height + thick*2
+                );
+        }
+
+        protected virtual Vector2 IdPositionC
+        {
+            get
+            {
+                return new Vector2(
+                    TileIdRectangle.Center.X,
+                    TileIdRectangle.Center.Y
+                    );
+            }
+        }
+
+        protected virtual Rectangle TileIdRectangle
+        {
+            get
+            {
+                return new Rectangle(
+                    Center.X,
+                    Center.Y + ItemSettings.IdFrameMargin.Y - ItemSettings.IdFrameSize.Y,
+                    ItemSettings.IdFrameSize.X - ItemSettings.IdFrameMargin.X,
+                    ItemSettings.IdFrameSize.Y - ItemSettings.IdFrameMargin.Y*2);
+            }
         }
 
         protected Vector2 NamePositionLT
@@ -37,10 +80,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
             }
         }
 
-        protected Point Center
-        {
-            get { return ItemControl.RootFrame.Rectangle.Center; }
-        }
 
         protected Vector2 ExperiencePositionC
         {
@@ -48,7 +87,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
             {
                 return new Vector2(
                     ExperienceRectangle.Center.X,
-                    ExperienceRectangle.Center.Y );
+                    ExperienceRectangle.Center.Y);
             }
         }
 
@@ -59,11 +98,14 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
                 return new Rectangle(
                     Center.X + ItemSettings.IdFrameSize.X,
                     Center.Y + ItemSettings.ExperienceFrameMargin.Y - ItemSettings.ExperienceFrameSize.Y,
-                    ItemSettings.ExperienceFrameSize.X - ItemSettings.ExperienceFrameMargin.X * 2,
-                    ItemSettings.ExperienceFrameSize.Y - ItemSettings.ExperienceFrameMargin.Y * 2
+                    ItemSettings.ExperienceFrameSize.X - ItemSettings.ExperienceFrameMargin.X*2,
+                    ItemSettings.ExperienceFrameSize.Y - ItemSettings.ExperienceFrameMargin.Y*2
                     );
             }
         }
+
+
+        #endregion
 
         public virtual void Draw( GameTime gameTime )
         {
@@ -145,16 +187,18 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
         private void FillNameFrame( Color color )
         {
-            Primitives2D.FillRectangle( ScreenManager.SpriteBatch, DisplayWithMargin( ItemControl.NameFrame.Rectangle ), color );
+            Primitives2D.FillRectangle( ScreenManager.SpriteBatch, ItemControl.NameFrame.Rectangle.Crop( ItemSettings.NameFrameMargin ), color );
         }
 
         private void DrawNameFrame( Color color )
         {
-            Primitives2D.FillRectangle( ScreenManager.SpriteBatch, DisplayWithMargin( ItemControl.NameFrame.Rectangle ), color, 1f );
+            Primitives2D.FillRectangle( ScreenManager.SpriteBatch, ItemControl.NameFrame.Rectangle.Crop( ItemSettings.NameFrameMargin ), color, 1f );
         }
 
         private void DrawNameFrame()
         {
+            Primitives2D.DrawCircle( ScreenManager.SpriteBatch, ( ( Rectangle ) ItemControl.RootFrame.Rectangle ).Center.ToVector2(), 5f, 20, Color.White );
+            
             if ( Item.IsEnabled( ItemState.Item_Mouse_Over ) && Item.IsEnabled( ItemState.Item_Editing ) )
             {
                 FillNameFrame( ItemSettings.NameFrameModificationColor );
@@ -191,52 +235,5 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
         //    }
         //}
 
-        private Rectangle HighLightRandomFrame( GameTime gameTime, int flashLength )
-        {
-            var baseRectanle = DisplayWithMargin( ItemControl.NameFrame.Rectangle );
-            var random = new Random();
-            var thick = random.Next( flashLength );
-            return new Rectangle(
-                baseRectanle.X - thick,
-                baseRectanle.Y - thick,
-                baseRectanle.Width + thick * 2,
-                baseRectanle.Height + thick * 2
-                );
-        }
-
-        private Rectangle HighLightSinFrame( GameTime gameTime, int flashLength )
-        {
-            var baseRectanle = DisplayWithMargin( ItemControl.NameFrame.Rectangle );
-            var thick = ( int ) ( flashLength * Math.Abs( Math.Sin( gameTime.TotalGameTime.TotalSeconds * 30 ) ) );
-            return new Rectangle(
-                baseRectanle.X - thick,
-                baseRectanle.Y - thick,
-                baseRectanle.Width + thick * 2,
-                baseRectanle.Height + thick * 2
-                );
-        }
-
-        protected virtual Vector2 IdPositionC // TODO Think about ID Widget and Hs Widget
-        {
-            get
-            {
-                return new Vector2(
-                    TileIdRectangle.Center.X,
-                    TileIdRectangle.Center.Y
-                    );
-            }
-        }
-
-        protected virtual Rectangle TileIdRectangle
-        {
-            get
-            {
-                return new Rectangle(
-                    Center.X,
-                    Center.Y + ItemSettings.IdFrameMargin.Y - ItemSettings.IdFrameSize.Y,
-                    ItemSettings.IdFrameSize.X - ItemSettings.IdFrameMargin.X,
-                    ItemSettings.IdFrameSize.Y - ItemSettings.IdFrameMargin.Y * 2 );
-            }
-        }
     }
 }

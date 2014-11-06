@@ -11,7 +11,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
         public TaskViewRegion( IView view, ICloneable viewSettings, ICloneable itemSettings )
             : base( StartRectangle( viewSettings, itemSettings ) )
         {
-            View = view;
+            View         = view;
             ViewSettings = viewSettings;
             ItemSettings = itemSettings;
         }

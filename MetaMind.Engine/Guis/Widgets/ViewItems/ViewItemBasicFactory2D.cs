@@ -11,7 +11,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         public virtual dynamic CreateData( IViewItem item )
         {
-            return new ViewItemData( item );
+            return new ViewItemData();
         }
 
         public virtual IItemGraphics CreateGraphics( IViewItem item )

@@ -14,6 +14,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
         public Color NameColor                     = Color.White;
         public Font  NameFont                      = Font.InfoSimSunFont;
         public Point NameFrameSize                 = new Point( 256, 34 );
+        public Point NameFrameMargin               = new Point( 2, 2 );
 
         //---------------------------------------------------------------------
         public int   NameXLMargin                  = 10;

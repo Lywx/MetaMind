@@ -16,7 +16,12 @@ namespace MetaMind.Engine.Extensions
 
         public static Rectangle DestinationWithOffset( this Rectangle rectangle, Point offset )
         {
-            return new Rectangle( rectangle.Center.X + offset.X, rectangle.Center.Y + offset.Y, rectangle.Width, rectangle.Height );
+            return new Rectangle( rectangle.Center.X + offset.X, rectangle.Center.Y + offset.Y, rectangle.Width, rectangle.Height ); 
+        }
+        
+        public static Rectangle Crop( this Rectangle rectangle, Point margin )
+        {
+            return new Rectangle( rectangle.X, rectangle.Y + margin.Y, rectangle.Width - margin.X * 2, rectangle.Height - margin.Y * 2 );
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MetaMind.Engine.Guis.Widgets.Items;
+﻿using MetaMind.Engine.Components.Inputs;
+using MetaMind.Engine.Guis.Widgets.Items;
 using Microsoft.Xna.Framework;
 
 namespace MetaMind.Engine.Guis.Widgets.ViewItems
@@ -35,7 +36,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
         #endregion Public Properties
 
         #region Operations
-        
+
         public void SelectIt()
         {
             ItemViewControl.SelectIt();
@@ -55,10 +56,26 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         #region Update
 
-        public virtual void Update( GameTime gameTime )
+        public void Update( GameTime gameTime )
+        {
+            UpdateInput( gameTime );
+            UpdateStructure( gameTime );
+        }
+
+        protected virtual void UpdateStructure( GameTime gameTime )
         {
             ItemViewControl .Update( gameTime );
             ItemFrameControl.Update( gameTime );
+        }
+
+        protected virtual void UpdateInput( GameTime gameTime )
+        {
+            if ( Item.IsEnabled( ItemState.Item_Selected ) &&
+                !Item.IsEnabled( ItemState.Item_Editing ) )
+            {
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.EditItem ) )
+                    ItemDataControl.EditString( "Name" );
+            }
         }
 
         #endregion Update

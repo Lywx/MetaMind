@@ -24,8 +24,8 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             get
             {
                 return new Point(
-                    ( int ) ( RootFrame.Rectangle.Width * ( 1 + ItemSettings.SymbolFrameIncrementFactor * Math.Abs( Math.Atan( selectedTime.TotalSeconds ) ) ) ),
-                    ( int ) ( RootFrame.Rectangle.Height * ( 1 + ItemSettings.SymbolFrameIncrementFactor * Math.Abs( Math.Atan( selectedTime.TotalSeconds ) ) ) ) );
+                    ( int ) ( RootFrame.Width * ( 1 + ItemSettings.SymbolFrameIncrementFactor * Math.Abs( Math.Atan( selectedTime.TotalSeconds ) ) ) ),
+                    ( int ) ( RootFrame.Height * ( 1 + ItemSettings.SymbolFrameIncrementFactor * Math.Abs( Math.Atan( selectedTime.TotalSeconds ) ) ) ) );
             }
         }
 
@@ -40,7 +40,8 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
         {
             base.UpdateFrames( gameTime );
 
-            SymbolFrame.Mimic( RootFrame, SymbolFrameSize );
+            SymbolFrame.Center = RootFrame.Center;
+            SymbolFrame.Size   = SymbolFrameSize;
         }
 
         private void UpdateSelection( GameTime gameTime )

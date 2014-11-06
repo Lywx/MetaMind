@@ -9,34 +9,25 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 {
     public class TaskViewControl : ViewControl2D
     {
-        private TaskViewRegion    region;
-        private TaskViewScrollBar scrollBar;
-        private TaskItemFactory   itemFactory;
-
         #region Constructors
 
         public TaskViewControl( IView view, TaskViewSettings viewSettings, TaskItemSettings itemSettings )
             : base( view, viewSettings, itemSettings )
         {
-            itemFactory = new TaskItemFactory();
-
-            region = new TaskViewRegion( view, viewSettings, itemSettings );
-            scrollBar = new TaskViewScrollBar( view, viewSettings, itemSettings, viewSettings.ScrollBarSettings );
+            Region      = new TaskViewRegion( view, viewSettings, itemSettings );
+            ScrollBar   = new TaskViewScrollBar( view, viewSettings, itemSettings, viewSettings.ScrollBarSettings );
+            ItemFactory = new TaskItemFactory();
         }
 
         #endregion Constructors
 
         #region Public Properties
 
-        public TaskViewRegion Region
-        {
-            get { return region; }
-        }
+        public TaskItemFactory ItemFactory { get; private set; }
 
-        public TaskViewScrollBar ScrollBar
-        {
-            get { return scrollBar; }
-        }
+        public TaskViewRegion Region { get; private set; }
+
+        public TaskViewScrollBar ScrollBar { get; private set; }
 
         #endregion Public Properties
 
@@ -44,7 +35,8 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 
         public override void UpdateInput( GameTime gameTime )
         {
-            if ( View.IsEnabled( ViewState.View_Active ) && View.IsEnabled( ViewState.View_Has_Focus ) &&
+            if ( View.IsEnabled( ViewState.View_Active ) &&
+                View.IsEnabled( ViewState.View_Has_Focus ) &&
                 !View.IsEnabled( ViewState.Item_Editting ) )
             {
                 //------------------------------------------------------------------
@@ -82,29 +74,29 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
                 //-----------------------------------------------------------------
                 if ( InputSequenceManager.Keyboard.CtrlDown &&
                     InputSequenceManager.Keyboard.IsActionTriggered( Actions.CreateItem ) )
-                {
                     AddItem();
-                }
                 if ( View.IsEnabled( ViewState.View_Has_Selection ) )
                 {
                     if ( InputSequenceManager.Keyboard.CtrlDown &&
                         InputSequenceManager.Keyboard.IsActionTriggered( Actions.CreateChildItem ) )
-                    {
                         AddChildItem();
-                    }
                 }
             }
         }
 
         public override void UpdateStrucutre( GameTime gameTime )
         {
-            base.UpdateStrucutre( gameTime );
+            base     .UpdateStrucutre( gameTime );
+            ScrollBar.Upadte( gameTime );
+            Region   .Update( gameTime );
+        }
+
+        protected override void UpdateViewLogics()
+        {
+            base.UpdateViewLogics();
 
             if ( Region.IsEnabled( RegionState.Region_Hightlighted ) )
                 View.Enable( ViewState.View_Has_Focus );
-
-            ScrollBar.Upadte( gameTime );
-            Region.Update( gameTime );
         }
 
         #endregion Update
@@ -113,7 +105,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 
         public virtual void AddItem()
         {
-            View.Items.Add( new ViewItemExchangable( View, ViewSettings, ItemSettings, itemFactory ) );
+            View.Items.Add( new ViewItemExchangable( View, ViewSettings, ItemSettings, ItemFactory ) );
         }
 
         private void AddChildItem()

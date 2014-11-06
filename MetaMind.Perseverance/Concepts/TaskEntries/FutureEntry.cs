@@ -134,7 +134,7 @@ namespace MetaMind.Perseverance.Concepts.TaskEntries
         {
             Symbol = "FT";
 
-            Children = new SortedList<int, FutureEntry>();
+            Children   = new SortedList<int, FutureEntry>();
             Downgrades = new List<DirectionEntry>();
         }
 
@@ -152,9 +152,7 @@ namespace MetaMind.Perseverance.Concepts.TaskEntries
         {
             // delete children
             foreach ( var child in Children.Values.ToArray() )
-            {
                 child.Delete();
-            }
             Children.Clear();
             // remove data from parent
             if ( HasParent )
@@ -165,12 +163,10 @@ namespace MetaMind.Perseverance.Concepts.TaskEntries
             }
             // delete downgrades
             foreach ( var child in Downgrades.ToArray() )
-            {
                 child.Delete();
-            }
             Downgrades.Clear();
             // remove data from center data
-            Tasklist.RemoveFuture( this );
+            Perseverance.Adventure.Tasklist.RemoveFuture( this );
         }
 
         public override bool Finish()

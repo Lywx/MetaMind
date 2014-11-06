@@ -70,7 +70,6 @@
     <Compile Include="Guis\Particles\FloatParticle.cs" />
     <Compile Include="Guis\Particles\Particle.cs" />
     <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemControl.cs" />
-    <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemData.cs" />
     <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemFactory.cs" />
     <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemGraphics.cs" />
     <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemSettings.cs" />
@@ -82,6 +81,10 @@
     <Compile Include="Guis\Widgets\Motivations\Views\MotivationViewFactory.cs" />
     <Compile Include="Guis\Widgets\Motivations\Views\MotivationViewGraphics.cs" />
     <Compile Include="Guis\Widgets\Motivations\MotivationExchange.cs" />
+    <Compile Include="Guis\Widgets\Tasks\Items\DirectionItemFactory.cs" />
+    <Compile Include="Guis\Widgets\Tasks\Items\FutureItemFactory.cs" />
+    <Compile Include="Guis\Widgets\Tasks\Items\QuestionItemFactory.cs" />
+    <Compile Include="Guis\Widgets\Tasks\Items\TaskItemFrameControl.cs" />
     <Compile Include="Guis\Widgets\Tasks\Items\TaskItemSettings.cs" />
     <Compile Include="Guis\Widgets\Tasks\TaskOrganizer.cs" />
     <Compile Include="Guis\Widgets\Synchronization\SynchronizationHud.cs" />

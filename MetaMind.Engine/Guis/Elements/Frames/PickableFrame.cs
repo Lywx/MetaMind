@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Authentication.ExtendedProtection;
 using MetaMind.Engine.Components;
 using MetaMind.Engine.Components.Inputs;
 using MetaMind.Engine.Extensions;
