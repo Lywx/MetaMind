@@ -109,6 +109,7 @@ namespace MetaMind.Engine.Guis.Elements.Frames
             get { return Rectangle.Location; }
             set { Initialize( new Rectangle( value.X, value.Y, Rectangle.Width, Rectangle.Height ) ); }
         }
+
         #endregion Public Properties
 
         #region Events

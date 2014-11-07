@@ -95,7 +95,7 @@ namespace MetaMind.Perseverance.Guis.Modules
         
     }
 
-    internal static class Int32Extension
+    internal static class Int32Ext
     {
         public static string ToSummary( this int hour )
         {

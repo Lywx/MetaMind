@@ -17,21 +17,20 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
             if ( !Item.IsEnabled( ItemState.Item_Active ) && !Item.IsEnabled( ItemState.Item_Dragging ) )
                 return;
 
-            var spriteBatch = ScreenManager.SpriteBatch;
             if ( Item.IsEnabled( ItemState.Item_Selected ) )
             {
-                Primitives2D.FillRectangle( spriteBatch, ItemControl.RootFrame.Rectangle, ItemSettings.RootFrameColor );
-                Primitives2D.FillRectangle( spriteBatch, ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameHighlightColor );
+                Primitives2D.FillRectangle( ScreenManager.SpriteBatch, ItemControl.RootFrame.Rectangle, ItemSettings.RootFrameColor );
+                Primitives2D.FillRectangle( ScreenManager.SpriteBatch, ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameHighlightColor );
             }
             else if ( Item.IsEnabled( ItemState.Item_Editing ) )
             {
-                Primitives2D.FillRectangle( spriteBatch, ItemControl.RootFrame.Rectangle, ItemSettings.RootFrameColor );
-                Primitives2D.FillRectangle( spriteBatch, ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameModificationColor );
+                Primitives2D.FillRectangle( ScreenManager.SpriteBatch, ItemControl.RootFrame.Rectangle, ItemSettings.RootFrameColor );
+                Primitives2D.FillRectangle( ScreenManager.SpriteBatch, ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameModificationColor );
             }
             else
             {
-                Primitives2D.FillRectangle( spriteBatch, ItemControl.RootFrame.Rectangle, ItemSettings.RootFrameColor );
-                Primitives2D.FillRectangle( spriteBatch, ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameRegularColor );
+                Primitives2D.FillRectangle( ScreenManager.SpriteBatch, ItemControl.RootFrame.Rectangle, ItemSettings.RootFrameColor );
+                Primitives2D.FillRectangle( ScreenManager.SpriteBatch, ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameRegularColor );
             }
             DrawId();
         }
@@ -43,7 +42,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         protected Point Center
         {
-            get { return ItemControl.RootFrame.Rectangle.Center; }
+            get { return ItemControl.RootFrame.Center; }
         }
         
         protected virtual Vector2 IdCenter

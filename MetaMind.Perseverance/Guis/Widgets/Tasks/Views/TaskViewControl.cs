@@ -42,10 +42,17 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
                 //------------------------------------------------------------------
                 // mouse
                 if ( InputSequenceManager.Mouse.IsWheelScrolledUp )
+                {
+                    ScrollBar.Trigger();
                     Scroll.MoveUp();
+                    
+                }
                 if ( InputSequenceManager.Mouse.IsWheelScrolledDown )
+                {
                     Scroll.MoveDown();
-
+                    ScrollBar.Trigger();
+                    
+                }
                 //------------------------------------------------------------------
                 // keyboard
                 // up down left right esc

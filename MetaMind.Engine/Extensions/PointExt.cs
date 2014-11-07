@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Engine.Extensions
 {
-    public static class PointExtension
+    public static class PointExt
     {
         public static Vector2 DistanceFrom( this Point first, Point second )
         {

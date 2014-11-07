@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using MetaMind.Engine.Guis.Elements.Frames;
 using MetaMind.Engine.Guis.Widgets.Items;
 using Microsoft.Xna.Framework;
@@ -52,13 +51,9 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
         protected virtual void UpdateFrames( GameTime gameTime )
         {
             if ( !Item.IsEnabled( ItemState.Item_Dragging ) && !Item.IsEnabled( ItemState.Item_Swaping ) )
-            {
                 RootFrame.Center = ViewControl.Scroll.RootCenterPoint( ItemControl.Id );
-            }
             else if ( Item.IsEnabled( ItemState.Item_Swaping ) )
-            {
                 RootFrame.Center = ViewControl.Swap.RootCenterPoint();
-            }
             RootFrame.Update( gameTime );
         }
 

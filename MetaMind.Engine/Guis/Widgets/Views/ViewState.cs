@@ -17,7 +17,7 @@
         StateNum,
     }
 
-    public static class ViewStateExtensions
+    public static class ViewStateExt
     {
         public static void EnableStateIn( this ViewState state, bool[ ] states )
         {

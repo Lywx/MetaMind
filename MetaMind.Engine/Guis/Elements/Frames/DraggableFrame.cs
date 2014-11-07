@@ -81,18 +81,6 @@ namespace MetaMind.Engine.Guis.Elements.Frames
             var mouse = InputSequenceManager.Mouse.CurrentState;
             var mouseLocation = new Point( mouse.X, mouse.Y );
 
-            UpdateFrameDraggingRectangle( mouseLocation );
-        }
-
-        protected override void UpdateStates( Point mouseLocation )
-        {
-            base.UpdateStates( mouseLocation );
-
-            UpdateFrameDraggingState( mouseLocation );
-        }
-
-        private void UpdateFrameDraggingRectangle( Point mouseLocation )
-        {
             if ( IsEnabled( FrameState.Frame_Dragging ) )
             {
                 // keep up rectangle position with the mouse position
@@ -105,8 +93,10 @@ namespace MetaMind.Engine.Guis.Elements.Frames
             }
         }
 
-        private void UpdateFrameDraggingState( Point mouseLocation )
+        protected override void UpdateStates( Point mouseLocation )
         {
+            base.UpdateStates( mouseLocation );
+
             var isWithinHoldLen = ( mouseLocation.DistanceFrom( PressedPosition ) ).Length() > holdLen;
 
             // decide whether is dragging

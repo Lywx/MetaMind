@@ -22,7 +22,7 @@ namespace MetaMind.Engine.Components
         FontNum,
     }
 
-    public static class FontExtension
+    public static class FontExt
     {
         public static Vector2 MeasureString( this Font font, string text )
         {

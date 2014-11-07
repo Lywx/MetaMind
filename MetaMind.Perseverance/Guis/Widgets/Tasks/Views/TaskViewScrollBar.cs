@@ -1,7 +1,7 @@
 ﻿using System;
 using C3.Primtive2DXna;
+using MetaMind.Engine.Extensions;
 using MetaMind.Engine.Guis.Widgets.Views;
-using MetaMind.Perseverance.Extensions;
 using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
 using Microsoft.Xna.Framework;
 
@@ -38,7 +38,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
         public void Draw( GameTime gameTime )
         {
             if ( ViewControl.RowNum > ViewSettings.RowNumDisplay )
-                Primitives2D.FillRectangle( ScreenManager.SpriteBatch, ScrollBarRectangle, settings.Color.UpdateByTransitionAlpha( transitionAlpha ) );
+                Primitives2D.FillRectangle( ScreenManager.SpriteBatch, ScrollBarRectangle, settings.Color.MakeTransparent( transitionAlpha ) );
         }
 
         public void Trigger()

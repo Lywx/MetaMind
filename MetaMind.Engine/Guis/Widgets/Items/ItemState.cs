@@ -22,7 +22,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         StateNum,
     }
 
-    public static class ItemStateExtensions
+    public static class ItemStateExt
     {
         public static void EnableStateIn( this ItemState state, bool[ ] states )
         {

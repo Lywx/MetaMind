@@ -2,7 +2,7 @@
 
 namespace MetaMind.Engine.Extensions
 {
-    public static class StringExtension
+    public static class StringExt
     {
         public static bool IsAscii( this string  value )
         {

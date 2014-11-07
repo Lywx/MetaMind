@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Engine.Guis.Elements.Frames
 {
-    public static class PickableFrameExtension
+    public static class PickableFrameExt
     {
         public static Rectangle DestinationWithSize( this IPickableFrame frame, Point size )
         {

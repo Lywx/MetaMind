@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Engine.Extensions
 {
-    public static class GameTimeExtension
+    public static class GameTimeExt
     {
         public static TimeSpan DeltaTimeSpan( this GameTime gameTime, float multiple )
         {

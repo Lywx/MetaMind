@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Engine.Extensions
 {
-    public static class RectangleExtension
+    public static class RectangleExt
     {
         public static Rectangle Destination( this Rectangle rectangle )
         {
@@ -21,7 +21,7 @@ namespace MetaMind.Engine.Extensions
         
         public static Rectangle Crop( this Rectangle rectangle, Point margin )
         {
-            return new Rectangle( rectangle.X, rectangle.Y + margin.Y, rectangle.Width - margin.X * 2, rectangle.Height - margin.Y * 2 );
+            return new Rectangle( rectangle.X + margin.X, rectangle.Y + margin.Y, rectangle.Width - margin.X * 2, rectangle.Height - margin.Y * 2 );
         }
     }
 }

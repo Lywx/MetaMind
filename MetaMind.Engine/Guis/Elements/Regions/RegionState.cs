@@ -8,7 +8,7 @@
         StateNum,
     }
 
-    public static class RegionStateExtensions
+    public static class RegionStateExt
     {
         public static void EnableStateIn( this RegionState state, bool[ ] states )
         {

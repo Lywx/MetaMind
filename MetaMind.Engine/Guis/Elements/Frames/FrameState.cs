@@ -35,7 +35,7 @@ namespace MetaMind.Engine.Guis.Elements.Frames
         StateNum,
     }
 
-    public static class FrameStateExtensions
+    public static class FrameStateExt
     {
         public static void EnableStateIn( this FrameState state, bool[ ] states )
         {

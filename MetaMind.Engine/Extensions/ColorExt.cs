@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using Microsoft.Xna.Framework;
 
-namespace MetaMind.Perseverance.Extensions
+namespace MetaMind.Engine.Extensions
 {
-    public static class ColorExtension
+    public static class ColorExt
     {
-        public static Color DecreaseBrightnessBy( this Color color, int value )
+        public static Color DecrementBrightnessBy( this Color color, int value )
         {
             if ( color.R <= color.G && color.R <= color.B )
                 color.R -= ( byte ) value;
@@ -16,7 +16,7 @@ namespace MetaMind.Perseverance.Extensions
             return color;
         }
 
-        public static Color IncreaseBrightnessBy( this Color color, int value )
+        public static Color IncrementBrightnessBy( this Color color, int value )
         {
             if ( color.R >= color.G && color.R >= color.B )
                 color.R += ( byte ) value;
@@ -27,30 +27,12 @@ namespace MetaMind.Perseverance.Extensions
             return color;
         }
 
-        public static Color IncreaseHueBy( this Color color, float value )
+        public static Color MakeTransparent( this Color color, byte alpha )
         {
-            float h, s, v;
-
-            RgbToHsv( color.R, color.G, color.B, out h, out s, out v );
-            h += value;
-
-            float r, g, b;
-
-            HsvToRgb( h, s, v, out r, out g, out b );
-
-            color.R = ( byte ) ( r );
-            color.G = ( byte ) ( g );
-            color.B = ( byte ) ( b );
-
-            return color;
-        }
-
-        public static Color UpdateByTransitionAlpha( this Color color, byte transitionAlpha )
-        {
-            color.A = ( byte ) ( transitionAlpha * color.A / 255 );
-            color.R = ( byte ) ( transitionAlpha * color.R / 255 );
-            color.G = ( byte ) ( transitionAlpha * color.G / 255 );
-            color.B = ( byte ) ( transitionAlpha * color.B / 255 );
+            color.A = ( byte ) ( alpha * color.A / 255 );
+            color.R = ( byte ) ( alpha * color.R / 255 );
+            color.G = ( byte ) ( alpha * color.G / 255 );
+            color.B = ( byte ) ( alpha * color.B / 255 );
             return color;
         }
 

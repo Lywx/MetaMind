@@ -2,7 +2,7 @@
 
 namespace MetaMind.Engine.Extensions
 {
-    public static class Vector2Extension
+    public static class Vector2Ext
     {
         public static Point ToPoint( this Vector2 vector2 )
         {

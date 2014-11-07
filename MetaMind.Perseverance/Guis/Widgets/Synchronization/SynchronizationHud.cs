@@ -1,10 +1,10 @@
 ﻿using System;
 using C3.Primtive2DXna;
+using MetaMind.Engine.Extensions;
 using MetaMind.Engine.Guis.Widgets;
 using MetaMind.Engine.Settings;
 using MetaMind.Perseverance.Concepts.Cognitions;
 using MetaMind.Perseverance.Concepts.TaskEntries;
-using MetaMind.Perseverance.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -218,7 +218,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.SynchronizationHuds
                     settings.MessageFont, 
                     "Look like you are gonna be more happier from today.", 
                     MessagePosition, 
-                    settings.BarFrameAscendColor.UpdateByTransitionAlpha( alpha ),
+                    settings.BarFrameAscendColor.MakeTransparent( alpha ),
                     settings.MessageSize );
             }
             else
@@ -227,7 +227,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.SynchronizationHuds
                     settings.MessageFont,
                     "Look like you are gonna be less happier from today.",
                     MessagePosition,
-                    settings.BarFrameDescendColor.UpdateByTransitionAlpha( alpha ),
+                    settings.BarFrameDescendColor.MakeTransparent( alpha ),
                     settings.MessageSize );
             }
         }

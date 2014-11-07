@@ -1,5 +1,4 @@
 ﻿using MetaMind.Engine.Guis.Widgets.Items;
-using MetaMind.Engine.Settings;
 using Microsoft.Xna.Framework;
 
 namespace MetaMind.Engine.Guis.Widgets.Views
@@ -8,15 +7,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     {
         private int scroll;
 
-        public ViewScrollControl1D( IView view, ViewSettings1D viewSettings, ItemSettings itemSettings )
+        public ViewScrollControl1D(IView view, ViewSettings1D viewSettings, ItemSettings itemSettings)
             : base( view, viewSettings, itemSettings )
         {
+
         }
 
-        public int XOffset
-        {
-            get { return scroll; }
-        }
+        public int XOffset { get { return scroll; } }
 
         private bool CanMoveLeft
         {
