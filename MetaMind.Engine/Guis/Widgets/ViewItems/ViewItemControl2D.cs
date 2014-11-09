@@ -1,4 +1,5 @@
-﻿using MetaMind.Engine.Guis.Widgets.Items;
+﻿using MetaMind.Engine.Components.Inputs;
+using MetaMind.Engine.Guis.Widgets.Items;
 using Microsoft.Xna.Framework;
 
 namespace MetaMind.Engine.Guis.Widgets.ViewItems
@@ -6,9 +7,11 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
     public class ViewItemControl2D : ViewItemComponent
     {
         //---------------------------------------------------------------------
-        public ViewItemFrameControl ItemFrameControl { get; protected set; }
-        public ViewItemViewControl2D ItemViewControl { get; protected set; }
 
+        protected dynamic               ItemFrameControl { get; set; }
+        protected ViewItemViewControl2D ItemViewControl  { get; set; }
+        protected ViewItemDataControl   ItemDataControl  { get; set; }
+        
         //---------------------------------------------------------------------
 
         #region Constructors
@@ -18,22 +21,18 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
         {
             ItemFrameControl = new ViewItemFrameControl( item );
             ItemViewControl  = new ViewItemViewControl2D( item );
+            ItemDataControl  = new ViewItemDataControl( item );
         }
+
 
         #endregion Constructors
 
         #region Public Properties
 
-        public int Column { get; set; }
-
-        public int Id { get; set; }
-
-        public ItemRootFrame RootFrame
-        {
-            get { return ItemFrameControl.RootFrame; }
-        }
-
-        public int Row { get; set; }
+        public int           Column    { get; set; }
+        public int           Id        { get; set; }
+        public int           Row       { get; set; }
+        public ItemRootFrame RootFrame { get { return ItemFrameControl.RootFrame; } }
 
         #endregion Public Properties
 
@@ -49,9 +48,9 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
             ItemViewControl.SwapIt( draggingItem );
         }
 
-        public void UnSelectIt()
+        public void UnselectIt()
         {
-            ItemViewControl.UnSelectIt();
+            ItemViewControl.UnselectIt();
         }
 
         #endregion Operations
@@ -60,8 +59,25 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         public void Update( GameTime gameTime )
         {
-            ItemViewControl.Update( gameTime );
+            UpdateInput( gameTime );
+            UpdateStructure( gameTime );
+        }
+
+        protected virtual void UpdateInput( GameTime gameTime )
+        {
+            if ( Item.IsEnabled( ItemState.Item_Selected ) &&
+                !Item.IsEnabled( ItemState.Item_Editing ) )
+            {
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.EditItem ) )
+                    ItemDataControl.EditString( "Name" );
+            }
+        }
+
+        protected virtual void UpdateStructure( GameTime gameTime )
+        {
+            ItemViewControl .Update( gameTime );
             ItemFrameControl.Update( gameTime );
+            ItemDataControl .Update( gameTime );
         }
 
         #endregion Update

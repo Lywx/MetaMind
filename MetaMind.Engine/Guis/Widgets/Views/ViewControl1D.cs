@@ -17,11 +17,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         #region Components
 
-        public IViewSwapControl Swap { get; private set; }
-
-        public dynamic Scroll { get; private set; }
-
-        public dynamic Selection { get; private set; }
+        public IViewSwapControl Swap      { get; private set; }
+        public dynamic          Scroll    { get; private set; }
+        public dynamic          Selection { get; private set; }
 
         #endregion Components
 
@@ -54,25 +52,50 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         public virtual void UpdateInput( GameTime gameTime )
         {
             if ( View.IsEnabled( ViewState.View_Active ) &&
-                View.IsEnabled( ViewState.View_Has_Focus ) &&
+                 View.IsEnabled( ViewState.View_Has_Focus ) &&
                 !View.IsEnabled( ViewState.Item_Editting ) )
             {
                 //------------------------------------------------------------------
                 // mouse
                 if ( InputSequenceManager.Mouse.IsWheelScrolledUp )
+                {
                     Scroll.MoveLeft();
+                }
                 if ( InputSequenceManager.Mouse.IsWheelScrolledDown )
+                {
                     Scroll.MoveRight();
-
+                }
                 //------------------------------------------------------------------
                 // keyboard
                 // left right esc
                 if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Left ) )
-                    Selection.MoveLeft();
+                {
+                    if ( ViewSettings.Direction == ViewSettings1D.ScrollDirection.Left )
+                    {
+                        // invert for left scrolling view
+                        Selection.MoveRight();
+                    }
+                    else
+                    {
+                        Selection.MoveLeft();
+                    }
+                }
                 if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Right ) )
-                    Selection.MoveRight();
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Esc ) )
+                {
+                    if ( ViewSettings.Direction == ViewSettings1D.ScrollDirection.Left )
+                    {
+                        // invert for left scrolling view
+                        Selection.MoveLeft();
+                    }
+                    else
+                    {
+                        Selection.MoveRight();
+                    }
+                }
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Escape ) )
+                {
                     Selection.Clear();
+                }
             }
         }
 
@@ -105,7 +128,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         private void UpdateItems( GameTime gameTime )
         {
-            foreach ( var item in View.Items )
+            foreach ( var item in View.Items.ToArray() )
             {
                 item.Update( gameTime );
             }

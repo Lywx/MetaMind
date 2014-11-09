@@ -5,14 +5,14 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
 {
     public class MotivationViewFactory : IViewFactory
     {
-        public dynamic CreateControl(IView view, ICloneable viewSettings, ICloneable itemSettings)
+        public dynamic CreateControl( IView view, ICloneable viewSettings, ICloneable itemSettings )
         {
-            return new MotivationViewControl(view, viewSettings, itemSettings);
+            return new MotivationViewControl( view, viewSettings, itemSettings );
         }
 
-        public IViewGraphics CreateGraphics(IView view, ICloneable viewSettings, ICloneable itemSettings)
+        public IViewGraphics CreateGraphics( IView view, ICloneable viewSettings, ICloneable itemSettings )
         {
-            return new MotivationViewGraphics(view, viewSettings, itemSettings);
+            return new MotivationViewGraphics( view, viewSettings, itemSettings );
         }
     }
 }

@@ -2,7 +2,9 @@
 using System.IO;
 using System.Runtime.Serialization;
 using System.Xml;
+using MetaMind.Engine;
 using MetaMind.Engine.Components;
+using MetaMind.Engine.Components.Inputs;
 using MetaMind.Perseverance.Concepts.Cognitions;
 using MetaMind.Perseverance.Concepts.MotivationEntries;
 using MetaMind.Perseverance.Concepts.TaskEntries;
@@ -11,7 +13,7 @@ using Microsoft.Xna.Framework;
 namespace MetaMind.Perseverance.Sessions
 {
     [DataContract]
-    public class Adventure
+    public class Adventure : EngineObject
     {
         #region File Storage
 
@@ -48,7 +50,7 @@ namespace MetaMind.Perseverance.Sessions
 
         #region Random Number Generator
 
-        private readonly Random random = new Random( ( int ) DateTime.Now.Ticks );
+        private Random random = new Random( ( int ) DateTime.Now.Ticks );
 
         #endregion
 
@@ -82,6 +84,12 @@ namespace MetaMind.Perseverance.Sessions
         //---------------------------------------------------------------------
 
         #region Load and Save
+
+        [OnDeserialized]
+        public void OnDeserialized( StreamingContext context )
+        {
+            random = new Random( ( int ) DateTime.Now.Ticks );
+        }
 
         public static Adventure LoadSave()
         {
@@ -137,7 +145,20 @@ namespace MetaMind.Perseverance.Sessions
 
         public void Update( GameTime gameTime )
         {
-            cognition.Update( gameTime );
+            UpdateInput( gameTime );
+            UpdateStructure( gameTime );
+        }
+
+        private void UpdateInput( GameTime gameTime )
+        {
+            if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.LastScreen ) )
+            {
+            }
+        }
+
+        private void UpdateStructure(GameTime gameTime)
+        {
+            cognition.Update(gameTime);
         }
 
         #endregion Update and Draw

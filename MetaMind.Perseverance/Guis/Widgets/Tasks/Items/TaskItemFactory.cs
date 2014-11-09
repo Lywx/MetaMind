@@ -12,7 +12,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
         public override dynamic CreateData( IViewItem item )
         {
-            return Perseverance.Adventure.Tasklist.CreateQuestion();
+            return Perseverance.Adventure.Tasklist.Create();
         }
 
         public override IItemGraphics CreateGraphics( IViewItem item )

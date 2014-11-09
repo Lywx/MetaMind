@@ -3,7 +3,7 @@ using MetaMind.Engine.Components;
 using MetaMind.Engine.Settings;
 using Microsoft.Xna.Framework;
 
-namespace MetaMind.Perseverance.Guis.Widgets.SynchronizationHuds
+namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
 {
     public class SynchronizationHudSettings : ICloneable
     {

@@ -35,7 +35,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
             DrawId();
         }
 
-        protected void DrawId()
+        protected virtual void DrawId()
         {
             FontManager.DrawCenteredText( ItemSettings.IdFont, ItemControl.Id.ToString( new CultureInfo( "en-US" ) ), IdCenter, ItemSettings.IdColor, ItemSettings.IdSize );
         }

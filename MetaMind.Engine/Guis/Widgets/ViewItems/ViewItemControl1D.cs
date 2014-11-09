@@ -6,16 +6,20 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 {
     public class ViewItemControl1D : ViewItemComponent
     {
+        //---------------------------------------------------------------------
         protected ViewItemViewControl1D ItemViewControl { get; set; }
+        protected ViewItemDataControl   ItemDataControl { get; set; }
+        protected dynamic               ItemFrameControl { get; set; }
 
+        //---------------------------------------------------------------------
         #region Constructors
 
         public ViewItemControl1D( IViewItem item )
             : base( item )
         {
             ItemFrameControl = new ViewItemFrameControl( item );
-            ItemViewControl = new ViewItemViewControl1D( item );
-            ItemDataControl = new ViewItemDataControl( item );
+            ItemViewControl  = new ViewItemViewControl1D( item );
+            ItemDataControl  = new ViewItemDataControl( item );
         }
 
         #endregion Constructors
@@ -29,27 +33,24 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
             get { return ItemFrameControl.RootFrame; }
         }
 
-        protected ViewItemDataControl ItemDataControl { get; set; }
-
-        protected dynamic ItemFrameControl { get; set; }
 
         #endregion Public Properties
 
         #region Operations
 
-        public void SelectIt()
+        public virtual void SelectIt()
         {
             ItemViewControl.SelectIt();
         }
 
-        public void SwapIt( IViewItem draggingItem )
+        public virtual void SwapIt( IViewItem draggingItem )
         {
             ItemViewControl.SwapIt( draggingItem );
         }
 
-        public void UnSelectIt()
+        public virtual void UnselectIt()
         {
-            ItemViewControl.UnSelectIt();
+            ItemViewControl.UnselectIt();
         }
 
         #endregion Operations
@@ -62,12 +63,6 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
             UpdateStructure( gameTime );
         }
 
-        protected virtual void UpdateStructure( GameTime gameTime )
-        {
-            ItemViewControl .Update( gameTime );
-            ItemFrameControl.Update( gameTime );
-        }
-
         protected virtual void UpdateInput( GameTime gameTime )
         {
             if ( Item.IsEnabled( ItemState.Item_Selected ) &&
@@ -78,6 +73,12 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
             }
         }
 
+        protected virtual void UpdateStructure( GameTime gameTime )
+        {
+            ItemViewControl .Update( gameTime );
+            ItemFrameControl.Update( gameTime );
+            ItemDataControl .Update( gameTime );
+        }
         #endregion Update
     }
 }

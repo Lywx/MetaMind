@@ -10,40 +10,9 @@ namespace MetaMind.Engine.Components
 {
     public class ScreenManager : DrawableGameComponent
     {
+        #region Singleton
+
         private static ScreenManager singleton;
-        private bool isInitialized;
-        private List<GameScreen> screens = new List<GameScreen>();
-        private List<GameScreen> screensToUpdate = new List<GameScreen>();
-        private SpriteBatch spriteBatch;
-        private bool traceEnabled;
-
-        /// <summary>
-        /// Constructs a new screen manager component.
-        /// </summary>
-        private ScreenManager( Game game )
-            : base( game )
-        {
-        }
-
-        /// <summary>
-        /// A default SpriteBatch shared by all the screens. This saves
-        /// each screen having to bother creating their own local instance.
-        /// </summary>
-        public SpriteBatch SpriteBatch
-        {
-            get { return spriteBatch; }
-        }
-
-        /// <summary>
-        /// If true, the manager prints out a list of all the screens
-        /// each time it is updated. This can be useful for making sure
-        /// everything is being added and removed at the right times.
-        /// </summary>
-        public bool TraceEnabled
-        {
-            get { return traceEnabled; }
-            set { traceEnabled = value; }
-        }
 
         public static ScreenManager GetInstance( Game game )
         {
@@ -54,41 +23,35 @@ namespace MetaMind.Engine.Components
             return singleton;
         }
 
-        /// <summary>
-        /// Adds a new screen to the screen manager.
-        /// </summary>
-        public void AddScreen( GameScreen screen )
-        {
-            screen.IsExiting = false;
+        #endregion Singleton
 
-            // If we have a graphics device, tell the screen to load content.
-            if ( isInitialized )
-            {
-                screen.LoadContent();
-            }
+        #region Screens
 
-            screens.Add( screen );
-        }
+        private Texture2D        blankTexture;
 
-        /// <summary>
-        /// Tells each screen to draw itself.
-        /// </summary>
-        public override void Draw( GameTime gameTime )
-        {
-            foreach ( var screen in screens.Where( screen => screen.ScreenState != ScreenState.Hidden ) )
-            {
-                screen.Draw( gameTime );
-            }
-        }
+        private bool             isInitialized;
+
+        private List<GameScreen> screens         = new List<GameScreen>();
+        private List<GameScreen> screensToUpdate = new List<GameScreen>();
+
+        private SpriteBatch      spriteBatch;
+
+        #endregion Screens
+
+        #region Trace
+
+        private bool traceEnabled;
+
+        #endregion Trace
+
+        #region Constructors
 
         /// <summary>
-        /// Expose an array holding all the screens. We return a copy rather
-        /// than the real master list, because screens should only ever be added
-        /// or removed using the AddScreen and RemoveScreen methods.
+        /// Constructs a new screen manager component.
         /// </summary>
-        public GameScreen[ ] GetScreens()
+        private ScreenManager( Game game )
+            : base( game )
         {
-            return screens.ToArray();
         }
 
         /// <summary>
@@ -102,21 +65,48 @@ namespace MetaMind.Engine.Components
         }
 
         /// <summary>
-        /// Removes a screen from the screen manager. You should normally
-        /// use Screen.ExitScreen instead of calling this directly, so
-        /// the screen can gradually transition off rather than just being
-        /// instantly removed.
+        /// Load your graphics content.
         /// </summary>
-        public void RemoveScreen( GameScreen screen )
+        protected override void LoadContent()
         {
-            // If we have a graphics device, tell the screen to unload content.
-            if ( isInitialized )
+            // Load content belonging to the screen manager.
+            var content = Game.Content;
+            blankTexture = content.Load<Texture2D>( @"Textures\Screens\Blank" );
+
+            spriteBatch = new SpriteBatch( GraphicsDevice );
+
+            // Tell each of the screens to load their content.
+            foreach ( var screen in screens )
+            {
+                screen.LoadContent();
+            }
+        }
+
+        /// <summary>
+        /// Unload your graphics content.
+        /// </summary>
+        protected override void UnloadContent()
+        {
+            // Tell each of the screens to unload their content.
+            foreach ( var screen in screens )
             {
                 screen.UnloadContent();
             }
+        }
 
-            screens.Remove( screen );
-            screensToUpdate.Remove( screen );
+        #endregion Constructors
+
+        #region Update and Draw
+
+        /// <summary>
+        /// Tells each screen to draw itself.
+        /// </summary>
+        public override void Draw( GameTime gameTime )
+        {
+            foreach ( var screen in screens.Where( screen => screen.ScreenState != ScreenState.Hidden ) )
+            {
+                screen.Draw( gameTime );
+            }
         }
 
         /// <summary>
@@ -169,33 +159,74 @@ namespace MetaMind.Engine.Components
                 TraceScreens();
         }
 
+        #endregion Update and Draw
+
+        #region Public Properties
+
         /// <summary>
-        /// Load your graphics content.
+        /// Expose an array holding all the screens. We return a copy rather
+        /// than the real master list, because screens should only ever be added
+        /// or removed using the AddScreen and RemoveScreen methods.
         /// </summary>
-        protected override void LoadContent()
+        public GameScreen[ ] Screens
         {
-            // Load content belonging to the screen manager.
-            ContentManager content = Game.Content;
-
-            spriteBatch = new SpriteBatch( GraphicsDevice );
-
-            // Tell each of the screens to load their content.
-            foreach ( GameScreen screen in screens )
-            {
-                screen.LoadContent();
-            }
+            get { return screens.ToArray(); }
         }
 
         /// <summary>
-        /// Unload your graphics content.
+        /// A default SpriteBatch shared by all the screens. This saves
+        /// each screen having to bother creating their own local instance.
         /// </summary>
-        protected override void UnloadContent()
+        public SpriteBatch SpriteBatch
         {
-            // Tell each of the screens to unload their content.
-            foreach ( GameScreen screen in screens )
+            get { return spriteBatch; }
+        }
+
+        /// <summary>
+        /// If true, the manager prints out a list of all the screens
+        /// each time it is updated. This can be useful for making sure
+        /// everything is being added and removed at the right times.
+        /// </summary>
+        public bool TraceEnabled
+        {
+            get { return traceEnabled; }
+            set { traceEnabled = value; }
+        }
+
+        #endregion Public Properties
+
+        #region Operations
+
+        /// <summary>
+        /// Adds a new screen to the screen manager.
+        /// </summary>
+        public void AddScreen( GameScreen screen )
+        {
+            screen.IsExiting = false;
+
+            // If we have a graphics device, tell the screen to load content.
+            if ( isInitialized )
+            {
+                screen.LoadContent();
+            }
+            screens.Add( screen );
+        }
+
+        /// <summary>
+        /// Removes a screen from the screen manager. You should normally
+        /// use Screen.ExitScreen instead of calling this directly, so
+        /// the screen can gradually transition off rather than just being
+        /// instantly removed.
+        /// </summary>
+        public void RemoveScreen( GameScreen screen )
+        {
+            // If we have a graphics device, tell the screen to unload content.
+            if ( isInitialized )
             {
                 screen.UnloadContent();
             }
+            screens        .Remove( screen );
+            screensToUpdate.Remove( screen );
         }
 
         /// <summary>
@@ -203,12 +234,30 @@ namespace MetaMind.Engine.Components
         /// </summary>
         private void TraceScreens()
         {
-            List<string> screenNames = new List<string>();
+            var screenNames = new List<string>();
 
-            foreach ( GameScreen screen in screens )
+            foreach ( var screen in screens )
+            {
                 screenNames.Add( screen.GetType().Name );
-
+            }
             Trace.WriteLine( string.Join( ", ", screenNames.ToArray() ) );
         }
+
+        /// <summary>
+        /// Helper draws a translucent black fullscreen sprite, used for fading
+        /// screens in and out, and for darkening the background behind popups.
+        /// </summary>
+        public void FadeBackBufferToBlack( float alpha )
+        {
+            var viewport = GraphicsDevice.Viewport;
+
+            spriteBatch.Begin();
+
+            spriteBatch.Draw( blankTexture, new Rectangle( 0, 0, viewport.Width, viewport.Height ), Color.Black * alpha );
+
+            spriteBatch.End();
+        }
+
+        #endregion Operations
     }
 }

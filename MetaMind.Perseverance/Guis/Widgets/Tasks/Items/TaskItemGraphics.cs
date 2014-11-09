@@ -1,15 +1,19 @@
 using System;
+using System.Windows.Forms;
 using C3.Primtive2DXna;
 using MetaMind.Engine.Extensions;
 using MetaMind.Engine.Guis.Elements.Frames;
 using MetaMind.Engine.Guis.Widgets.Items;
 using MetaMind.Engine.Guis.Widgets.ViewItems;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 {
     public class TaskItemGraphics : ViewItemBasicGraphics, IItemGraphics
     {
+        private const string HelpInformation = "N-ame D-one E-xperience L-oad";
+
         #region Constructors
 
         public TaskItemGraphics( IViewItem item )
@@ -21,25 +25,20 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
         #region Structure Position
 
-        protected Vector2 ExperienceCenter
-        {
-            get
-            {
-                return new Vector2(
-                    ItemControl.ExperienceFrame.Center.X,
-                    ItemControl.ExperienceFrame.Center.Y
-                    );
-            }
-        }
-
         protected override Vector2 IdCenter
         {
-            get
-            {
-                return new Vector2( ItemControl.IdFrame.Rectangle.Center.X, ItemControl.IdFrame.Rectangle.Center.Y );
-            }
+            get { return PointExt.ToVector2( ItemControl.IdFrame.Center ); }
         }
 
+        private Vector2 ExperienceCenter
+        {
+            get { return PointExt.ToVector2( ItemControl.ExperienceFrame.Center ); }
+        }
+
+        private Vector2 HelpLocation
+        {
+            get { return NameLocation; }
+        }
         private Vector2 NameLocation
         {
             get
@@ -50,10 +49,14 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
                     );
             }
         }
+
+        private Vector2 ProgressLocation
+        {
+            get { return PointExt.ToVector2( ItemControl.ProgressFrame.Center ); }
+        }
         private Rectangle RandomHighlight( GameTime gameTime, int flashLength, Rectangle rectangle )
         {
-            var random = new Random();
-            var thick = random.Next( flashLength );
+            var thick = Perseverance.Adventure.Random.Next( flashLength );
             return new Rectangle(
                 rectangle.X - thick,
                 rectangle.Y - thick,
@@ -82,7 +85,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
         }
 
         #endregion Update
-
+        
         #region Draw
 
 
@@ -96,22 +99,15 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
             DrawIdFrame();
             DrawId();
             DrawExperienceFrame();
+            DrawExperience();
             DrawProgressFrame();
-            //DrawHourIndicator();
-            //DrawHighlight( gameTime );
+            DrawProgress();
             //DrawSynchronization( gameTime );
         }
 
-        protected virtual void DrawHighlight( GameTime gameTime )
+        private void DrawExperience()
         {
-            //var questionData = ( ( QuestionData ) LivingData );
-            //if ( questionData.IsHighlightedAsDowngrade ||
-            //    questionData.IsHighlightedAsParent ||
-            //    questionData.IsHighlightedAsChild
-            //    )
-            {
-                Primitives2D.FillRectangle( ScreenManager.SpriteBatch, RandomHighlight( gameTime, 3, RectangleExt.Crop( ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin ) ), ItemSettings.NameFrameHighlightColor );
-            }
+            FontManager.DrawCenteredText( ItemSettings.IdFont, string.Format( "Hs: {0}", ItemData.Experience.Duration.TotalHours.ToString( "F0" ) ), ExperienceCenter, ItemSettings.ExperienceColor, ItemSettings.ExperienceSize );
         }
 
         private void DrawExperienceFrame()
@@ -121,48 +117,65 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
         private void DrawIdFrame()
         {
-            Primitives2D.FillRectangle( ScreenManager.SpriteBatch, RectangleExt.Crop( ItemControl.IdFrame.Rectangle, ItemSettings.IdFrameMargin ), ItemSettings.IdFrameColor );
+            if ( Item.IsEnabled( ItemState.Item_Pending ) )
+                Primitives2D.FillRectangle( ScreenManager.SpriteBatch, RectangleExt.Crop( ItemControl.IdFrame.Rectangle, ItemSettings.IdFrameMargin ), ItemSettings.IdFramePendingColor );
+            else if ( !ItemData.Rationalized )
+                Primitives2D.FillRectangle( ScreenManager.SpriteBatch, RectangleExt.Crop( ItemControl.IdFrame.Rectangle, ItemSettings.IdFrameMargin ), ItemSettings.IdFrameNotDocumentedColor );
+            else
+                Primitives2D.FillRectangle( ScreenManager.SpriteBatch, RectangleExt.Crop( ItemControl.IdFrame.Rectangle, ItemSettings.IdFrameMargin ), ItemSettings.IdFrameColor );
         }
 
         private void DrawName()
         {
-            //FontManager.DrawText( ItemSettings.NameFont, ItemData.Name, NameLocation, ItemSettings.NameColor, ItemSettings.NameSize );
-            FontManager.DrawText( ItemSettings.NameFont, "TEMP Test samos jafso jsaof jo", NameLocation, ItemSettings.NameColor, ItemSettings.NameSize );
-        }
-
-        private void DrawNameFrame( Color color )
-        {
-            Primitives2D.DrawRectangle( ScreenManager.SpriteBatch, RectangleExt.Crop( ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin ), color, 1f );
+            if ( Item.IsEnabled( ItemState.Item_Pending ) )
+                FontManager.DrawText( ItemSettings.HelpFont, HelpInformation, HelpLocation, ItemSettings.HelpColor, ItemSettings.HelpSize );
+            else
+                FontManager.DrawText( ItemSettings.NameFont, ItemData.Name, NameLocation, ItemSettings.NameColor, ItemSettings.NameSize );
         }
 
         private void DrawNameFrame()
         {
             if ( Item.IsEnabled( ItemState.Item_Mouse_Over ) && Item.IsEnabled( ItemState.Item_Editing ) )
             {
-                FillNameFrame( ItemSettings.NameFrameModificationColor );
-                DrawNameFrame( ItemSettings.NameFrameMouseOverColor );
+                FillNameFrameWith( ItemSettings.NameFrameModificationColor );
+                DrawNameFrameWith( ItemSettings.NameFrameMouseOverColor );
             }
             else if ( !ItemControl.NameFrame.IsEnabled( FrameState.Mouse_Over ) && Item.IsEnabled( ItemState.Item_Editing ) )
             {
-                FillNameFrame( ItemSettings.NameFrameModificationColor );
+                FillNameFrameWith( ItemSettings.NameFrameModificationColor );
             }
             else if ( ItemControl.NameFrame.IsEnabled( FrameState.Mouse_Over ) && Item.IsEnabled( ItemState.Item_Selected ) )
             {
-                FillNameFrame( ItemSettings.NameFrameSelectionColor );
-                DrawNameFrame( ItemSettings.NameFrameMouseOverColor );
+                FillNameFrameWith( ItemSettings.NameFrameSelectionColor );
+                DrawNameFrameWith( ItemSettings.NameFrameMouseOverColor );
             }
             else if ( ItemControl.NameFrame.IsEnabled( FrameState.Mouse_Over ) && !Item.IsEnabled( ItemState.Item_Selected ) )
             {
-                DrawNameFrame( ItemSettings.NameFrameMouseOverColor );
+                DrawNameFrameWith( ItemSettings.NameFrameMouseOverColor );
             }
             else if ( Item.IsEnabled( ItemState.Item_Selected ) )
             {
-                FillNameFrame( ItemSettings.NameFrameSelectionColor );
+                FillNameFrameWith( ItemSettings.NameFrameSelectionColor );
             }
             else
             {
-                FillNameFrame( ItemSettings.NameFrameRegularColor );
+                FillNameFrameWith( ItemSettings.NameFrameRegularColor );
             }
+        }
+
+        private void DrawNameFrameWith( Color color )
+        {
+            Primitives2D.DrawRectangle( ScreenManager.SpriteBatch, RectangleExt.Crop( ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin ), color, 1f );
+        }
+
+        private void DrawProgress()
+        {
+            var progressRatio = MathHelper.Clamp( ( float ) ItemData.Done / ( float ) ( ItemData.Load + 0.1f ), 0f, 1f );
+            var progressBar   = RectangleExt.Crop( ItemControl.ProgressFrame.Rectangle, ItemSettings.ProgressFrameMargin );
+            progressBar.Width = ( int ) ( progressBar.Width * progressRatio );
+
+            Primitives2D.FillRectangle( ScreenManager.SpriteBatch, progressBar, ItemSettings.ProgressBarColor );
+            FontManager.DrawCenteredText( ItemSettings.ProgressFont, string.Format( "{0} / {1} = {2}", ItemData.Done, ItemData.Load, progressRatio.ToString( "F1" ) ), ProgressLocation, ItemSettings.ProgressColor, ItemSettings.ProgressSize );
         }
 
         private void DrawProgressFrame()
@@ -170,42 +183,17 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
             Primitives2D.FillRectangle( ScreenManager.SpriteBatch, RectangleExt.Crop( ItemControl.ProgressFrame.Rectangle, ItemSettings.ProgressFrameMargin ), ItemSettings.ProgressFrameColor );
         }
 
-        //protected virtual void DrawHourIndicator()
-        //{
-        //    var questionData = ( QuestionData ) LivingData;
-        //    if ( !questionData.HasUpgrade )
-        //        // no direction indicator
-        //        FontManager.DrawCenteredText(
-        //            ItemSettings.IdFont,
-        //            "?",
-        //            ExperienceCenter,
-        //            ItemSettings.ErrorColor,
-        //            ItemSettings.ExperienceSize
-        //            );
-        //    else
-        //        // hour
-        //        FontManager.DrawCenteredText(
-        //            ItemSettings.IdFont,
-        //            string.Format( "Hs: {0}", questionData.TotalExperience.Duration.TotalHours.ToString( "F0" ) ),
-        //            ExperienceCenter,
-        //            ItemSettings.ExperienceColor,
-        //            ItemSettings.ExperienceSize
-        //            );
-        //}
-
-        private void FillNameFrame( Color color )
+        private void DrawSynchronization( GameTime gameTime )
+        {
+            if ( ItemData.IsRunning )
+            {
+                Primitives2D.DrawRectangle( ScreenManager.SpriteBatch, SinwaveHighlight( gameTime, 10, RectangleExt.Crop( ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin ) ), ItemSettings.NameFrameSynchronizationColor, 2f );
+            }
+        }
+        private void FillNameFrameWith( Color color )
         {
             Primitives2D.FillRectangle( ScreenManager.SpriteBatch, RectangleExt.Crop( ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin ), color );
         }
-
-        //protected virtual void DrawSynchronization( GameTime gameTime )
-        //{
-        //    if ( LivingData.IsRunning )
-        //    {
-        //        Primitives2D.DrawRectangle( ScreenManager.SpriteBatch, SinwaveHighlight( gameTime, 10 ), ItemSettings.NameFrameSynchronizationColor, 2f );
-        //    }
-        //}
-
         #endregion Draw
     }
 }

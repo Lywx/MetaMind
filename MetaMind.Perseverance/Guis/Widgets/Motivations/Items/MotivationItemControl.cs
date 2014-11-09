@@ -1,30 +1,82 @@
-﻿using MetaMind.Engine.Guis.Elements.Frames;
+﻿using MetaMind.Engine.Components.Inputs;
+using MetaMind.Engine.Guis.Elements.Frames;
+using MetaMind.Engine.Guis.Widgets;
+using MetaMind.Engine.Guis.Widgets.Items;
 using MetaMind.Engine.Guis.Widgets.ViewItems;
+using MetaMind.Engine.Guis.Widgets.Views;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 {
     public class MotivationItemControl : ViewItemControl1D
     {
-        private MotivationItemSymbolControl ItemSymbolControl { get; set; }
-
         public MotivationItemControl( IViewItem item )
             : base( item )
         {
-            ItemFrameControl = new MotivationItemSymbolFrameControl( item );
+            ItemFrameControl  = new MotivationItemFrameControl( item );
+            
             ItemSymbolControl = new MotivationItemSymbolControl( item );
-            ItemDataControl = new ViewItemDataControl( item );
+            ItemTaskControl   = new MotivationItemTaskControl( item );
         }
 
-        public IPickableFrame SymbolFrame
+        public MotivationItemTaskControl ItemTaskControl { get; set; }
+
+        public IPickableFrame SymbolFrame { get { return ItemFrameControl.SymbolFrame; } }
+        public IWidget        Tracer      { get { return ItemTaskControl.Tracer; } }
+
+        private MotivationItemSymbolControl ItemSymbolControl { get; set; }
+
+        public void DeleteIt()
         {
-            get { return ItemFrameControl.SymbolFrame; }
+            View.Items.Remove( Item );
         }
 
+        public override void SelectIt()
+        {
+            base           .SelectIt();
+            ItemTaskControl.SelectIt();
+        }
+
+        public override void UnselectIt()
+        {
+            if ( ItemTaskControl.UnselectIt() )
+                base.UnselectIt();
+        }
         protected override void UpdateInput( GameTime gameTime )
         {
-            base             .UpdateInput( gameTime );
-            ItemSymbolControl.Update( gameTime );
+            if ( Item.IsEnabled( ItemState.Item_Selected ) &&
+                !Item.IsEnabled( ItemState.Item_Editing ) )
+            {
+                // normal status
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.EditItem ) )
+                {
+                    View.Enable( ViewState.Item_Editting );
+                    Item.Enable( ItemState.Item_Pending );
+                }
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.DeleteItem ) )
+                    DeleteIt();
+                // in pending status
+                if ( Item.IsEnabled( ItemState.Item_Pending ) )
+                {
+                    if ( InputSequenceManager.Keyboard.IsKeyTriggered( Keys.N ) )
+                        ItemDataControl.EditString( "Name" );
+                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Escape ) )
+                    {
+                        View.Disable( ViewState.Item_Editting );
+                        Item.Disable( ItemState.Item_Pending );
+                    }
+                }
+            }
+            ItemSymbolControl.UpdateInput( gameTime );
+            ItemTaskControl  .UpdateInput( gameTime );
+        }
+
+        protected override void UpdateStructure( GameTime gameTime )
+        {
+            base             .UpdateStructure( gameTime );
+            ItemSymbolControl.UpdateStructure( gameTime );
+            ItemTaskControl  .UpdateStructure( gameTime );
         }
     }
 }

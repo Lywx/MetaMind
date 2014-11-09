@@ -29,7 +29,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             get
             {
                 return ( ViewSettings.ColumnNumDisplay * ( ViewSettings.RowNumDisplay + YOffset ) < ViewSettings.ColumnNumDisplay * ViewSettings.RowNumMax ) &&
-                        ( ViewSettings.ColumnNumMax * ( ViewSettings.RowNumDisplay + YOffset ) < View.Items.Count );
+                       ( ViewSettings.ColumnNumMax     * ( ViewSettings.RowNumDisplay + YOffset ) < View.Items.Count );
             }
         }
 
@@ -109,7 +109,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             var column = ViewControl.ColumnFrom( id );
             return new Point(
                 ViewSettings.StartPoint.X - XOffset * ViewSettings.RootMargin.X + column * ViewSettings.RootMargin.X,
-                ViewSettings.StartPoint.Y - YOffset * ViewSettings.RootMargin.Y + row * ViewSettings.RootMargin.Y );
+                ViewSettings.StartPoint.Y - YOffset * ViewSettings.RootMargin.Y + row    * ViewSettings.RootMargin.Y 
+                );
         }
     }
 }

@@ -12,12 +12,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
         {
         }
 
-        public void Update( GameTime gameTime )
-        {
-            UpdateInput( gameTime );
-            UpdateStructure( gameTime );
-        }
-
         public void UpdateStructure( GameTime gameTime )
         {
         }

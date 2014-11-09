@@ -1,30 +1,35 @@
 ﻿using System;
-using MetaMind.Engine.Components;
 using MetaMind.Engine.Guis.Widgets;
-using MetaMind.Engine.Guis.Widgets.Views;
 using MetaMind.Engine.Screens;
-using MetaMind.Engine.Settings;
 using MetaMind.Perseverance.Guis.Widgets.Motivations;
+using MetaMind.Perseverance.Guis.Widgets.Synchronizations;
+using MetaMind.Perseverance.Guis.Widgets.Tasks;
 using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Screens
 {
     public class MotivationScreen : GameScreen
     {
-        private IWidget     feeling     = new MotivationExchange();
+        private readonly IWidget synchronization    = new SynchronizationHud( Perseverance.Adventure.Cognition.Synchronization, new SynchronizationHudSettings() );
+        private readonly IWidget motivation         = new MotivationExchange();
 
         public MotivationScreen()
         {
             TransitionOnTime = TimeSpan.FromSeconds( 0.5 );
             TransitionOffTime = TimeSpan.FromSeconds( 0.5 );
+            
+            IsPopup = true;
         }
 
         public override void Draw( GameTime gameTime )
         {
+            base.Draw( gameTime );
+
             ScreenManager.SpriteBatch.Begin();
 
-            MessageManager.Draw( gameTime );
-            feeling       .Draw( gameTime, TransitionAlpha);
+            MessageManager .Draw( gameTime );
+            motivation     .Draw( gameTime, TransitionAlpha );
+            synchronization.Draw( gameTime, TransitionAlpha );
 
             ScreenManager.SpriteBatch.End();
         }
@@ -34,16 +39,10 @@ namespace MetaMind.Perseverance.Screens
             InputEventManager   .HandleInput();
             InputSequenceManager.HandleInput();
             
-            feeling             .HandleInput();
+            motivation          .HandleInput();
         }
 
-        public override void LoadContent()
-        {
-            ScreenManager.Game.ResetElapsedTime();
-        }
-
-        public override void Update( GameTime gameTime, bool otherScreenHasFocus,
-                                                       bool coveredByOtherScreen )
+        public override void Update( GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen )
         {
             if ( IsActive && !coveredByOtherScreen )
             {
@@ -53,8 +52,8 @@ namespace MetaMind.Perseverance.Screens
 
                 Perseverance.Adventure.Update( gameTime );
 
-                feeling.Update( gameTime );
-
+                motivation     .Update( gameTime );
+                synchronization.Update( gameTime );
             }
             base.Update( gameTime, otherScreenHasFocus, coveredByOtherScreen );
         }

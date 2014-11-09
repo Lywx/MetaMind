@@ -26,24 +26,24 @@ namespace MetaMind.Engine.Components.Inputs
         //---------------------------------------------------------------------
         // list management
         CreateItem,
-        CreateChildItem,
+        DeleteItem,
         EditItem,
 
         //---------------------------------------------------------------------
         // general
         Enter,
-        Esc,
+        Escape,
 
         //---------------------------------------------------------------------
-        ActionNum
+        ActionNum,
     }
 
     public class KeyboardActionMap
     {
         /// <summary>
-        /// List of Keyboard controls to be mapped to a given action.
+        /// Dictionary of key, modifier pair to be mapped to a given action.
         /// </summary>
-        public List<Keys> Keys = new List<Keys>();
+        public Dictionary<Keys, List<Keys>> Bindings = new Dictionary<Keys, List<Keys>>();
     }
 
     public class KeyboardManager : Widget
@@ -130,7 +130,7 @@ namespace MetaMind.Engine.Components.Inputs
         /// </summary>
         private bool IsActionMapPressed( KeyboardActionMap actionMap )
         {
-            return actionMap.Keys.Any( IsKeyPressed );
+            return actionMap.Bindings.Any( binding => IsKeyPressed( binding.Key ) && ( binding.Value.Count == 0 || binding.Value.Any( IsKeyPressed ) ) );
         }
 
         /// <summary>
@@ -138,14 +138,7 @@ namespace MetaMind.Engine.Components.Inputs
         /// </summary>
         private bool IsActionMapTriggered( KeyboardActionMap actionMap )
         {
-            for ( var i = 0 ; i < actionMap.Keys.Count ; i++ )
-            {
-                if ( IsKeyTriggered( actionMap.Keys[ i ] ) )
-                {
-                    return true;
-                }
-            }
-            return false;
+            return actionMap.Bindings.Any( binding => IsKeyTriggered( binding.Key ) && ( binding.Value.Count == 0 || binding.Value.Any( IsKeyPressed ) ) );
         }
 
         #endregion Action States
@@ -184,7 +177,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         /// <summary>
         /// The action mappings for the game.
-        /// The action system hierarchy: Action - KeyboardActionMap - Keys
+        /// The action system hierarchy: Action - KeyboardActionMap - Bindings
         /// </summary>
         private static KeyboardActionMap[] actionMaps;
 
@@ -203,44 +196,40 @@ namespace MetaMind.Engine.Components.Inputs
             //-----------------------------------------------------------------
             // cursor movement
             actionMaps[ ( int ) Actions.Up ] = new KeyboardActionMap();
-            actionMaps[ ( int ) Actions.Up ].Keys.Add(
-                Keys.W );
+            actionMaps[ ( int ) Actions.Up ].Bindings.Add( Keys.K, new List<Keys>() );
 
             actionMaps[ ( int ) Actions.Down ] = new KeyboardActionMap();
-            actionMaps[ ( int ) Actions.Down ].Keys.Add(
-                Keys.S );
+            actionMaps[ ( int ) Actions.Down ].Bindings.Add( Keys.J, new List<Keys>() );
 
             actionMaps[ ( int ) Actions.Left ] = new KeyboardActionMap();
-            actionMaps[ ( int ) Actions.Left ].Keys.Add(
-                Keys.A );
+            actionMaps[ ( int ) Actions.Left ].Bindings.Add( Keys.H, new List<Keys>() );
 
             actionMaps[ ( int ) Actions.Right ] = new KeyboardActionMap();
-            actionMaps[ ( int ) Actions.Right ].Keys.Add(
-                Keys.D );
+            actionMaps[ ( int ) Actions.Right ].Bindings.Add( Keys.L, new List<Keys>() );
 
             //-----------------------------------------------------------------
             // list management
             actionMaps[ ( int ) Actions.CreateItem ] = new KeyboardActionMap();
-            actionMaps[ ( int ) Actions.CreateItem ].Keys.Add(
-                Keys.N );
+            actionMaps[ ( int ) Actions.CreateItem ].Bindings.Add( Keys.O, new List<Keys> { Keys.LeftControl } );
 
-            actionMaps[ ( int ) Actions.CreateChildItem ] = new KeyboardActionMap();
-            actionMaps[ ( int ) Actions.CreateChildItem ].Keys.Add(
-                Keys.C );
+            actionMaps[ ( int ) Actions.DeleteItem ] = new KeyboardActionMap();
+            actionMaps[ ( int ) Actions.DeleteItem ].Bindings.Add( Keys.D, new List<Keys> { Keys.LeftControl } );
 
             actionMaps[ ( int ) Actions.EditItem ] = new KeyboardActionMap();
-            actionMaps[ ( int ) Actions.EditItem ].Keys.Add(
-                Keys.E );
+            actionMaps[ ( int ) Actions.EditItem ].Bindings.Add( Keys.I, new List<Keys>() );
 
             //-----------------------------------------------------------------
+            actionMaps[ ( int ) Actions.LastScreen ] = new KeyboardActionMap();
+            actionMaps[ ( int ) Actions.NextScreen ] = new KeyboardActionMap();
+
+            //---------------------------------------------------------------------
             // general
-            actionMaps[ ( int ) Actions.Esc ] = new KeyboardActionMap();
-            actionMaps[ ( int ) Actions.Esc ].Keys.Add(
-                Keys.Escape );
+            actionMaps[ ( int ) Actions.Escape ] = new KeyboardActionMap();
+            actionMaps[ ( int ) Actions.Escape ].Bindings.Add( Keys.C, new List<Keys> { Keys.LeftControl } );
+            actionMaps[ ( int ) Actions.Escape ].Bindings.Add( Keys.Escape, new List<Keys>() );
 
             actionMaps[ ( int ) Actions.Enter ] = new KeyboardActionMap();
-            actionMaps[ ( int ) Actions.Enter ].Keys.Add(
-                Keys.Enter );
+            actionMaps[ ( int ) Actions.Enter ].Bindings.Add( Keys.Enter, new List<Keys>() );
         }
 
         #endregion Keyboard Action Mappings

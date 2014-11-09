@@ -8,13 +8,13 @@ using MetaMind.Perseverance.Concepts.TaskEntries;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MetaMind.Perseverance.Guis.Widgets.SynchronizationHuds
+namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
 {
-    public class SynchronizationHud : Widget // refactoring to graphics components
+    public class SynchronizationHud : Widget 
     {
         //---------------------------------------------------------------------
-        private Synchronization           synchronization;
-        private SynchronizationHudSettings settings;
+        private Synchronization                                synchronization;
+        private SynchronizationHudSettings                     settings;
 
         //---------------------------------------------------------------------
         private SynchronizationHudSynchronizationStartListener synchronizationStartListener;
@@ -29,7 +29,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.SynchronizationHuds
         public SynchronizationHud( Synchronization synchronization, SynchronizationHudSettings settings )
         {
             this.synchronization = synchronization;
-            this.settings = settings;
+            this.settings        = settings;
 
             synchronizationStartListener = new SynchronizationHudSynchronizationStartListener( synchronization, this );
             EventManager.AddListener( synchronizationStartListener );
@@ -44,50 +44,50 @@ namespace MetaMind.Perseverance.Guis.Widgets.SynchronizationHuds
 
         //---------------------------------------------------------------------
 
-        #region Positions
+        #region Locations
 
-        private Vector2 AccelerationPrefixPosition
+        private Vector2 AccelerationPrefixLocation
         {
             get
             {
                 return new Vector2(
-                    StatusPosition.X + settings.AccelerationMargin.X,
-                    StatusPosition.Y + settings.AccelerationMargin.Y
+                    StatusLocation.X + settings.AccelerationMargin.X,
+                    StatusLocation.Y + settings.AccelerationMargin.Y
                     );
             }
         }
 
-        private Vector2 AccelerationSubfixPosition
+        private Vector2 AccelerationSubfixLocation
         {
             get
             {
                 const int xSymbolWidth = 43;
                 return new Vector2(
-                    AccelerationPrefixPosition.X + xSymbolWidth,
-                    AccelerationPrefixPosition.Y
+                    AccelerationPrefixLocation.X + xSymbolWidth,
+                    AccelerationPrefixLocation.Y
                     );
             }
         }
 
-        private Vector2 AccumulationPrefixPosition
+        private Vector2 AccumulationPrefixLocation
         {
             get
             {
                 return new Vector2(
-                    StatePosition.X + settings.AccumulationMargin.X,
-                    StatePosition.Y + settings.AccumulationMargin.Y
+                    StateLocation.X + settings.AccumulationMargin.X,
+                    StateLocation.Y + settings.AccumulationMargin.Y
                     );
             }
         }
 
-        private Vector2 AccumulationSubfixPosition
+        private Vector2 AccumulationSubfixLocation
         {
             get
             {
                 const int plusSymbolWidth = 42;
                 return new Vector2(
-                    AccumulationPrefixPosition.X + plusSymbolWidth,
-                    AccumulationPrefixPosition.Y
+                    AccumulationPrefixLocation.X + plusSymbolWidth,
+                    AccumulationPrefixLocation.Y
                     );
             }
         }
@@ -105,12 +105,12 @@ namespace MetaMind.Perseverance.Guis.Widgets.SynchronizationHuds
             }
         }
 
-        private Vector2 MessagePosition
+        private Vector2 MessageLocation
         {
             get
             {
                 return new Vector2(
-                    (int) StatePosition.X,
+                    (int) StateLocation.X,
                     GraphicsSettings.Height - 15);
             }
         }
@@ -128,7 +128,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.SynchronizationHuds
             }
         }
 
-        private Vector2 StatePosition
+        private Vector2 StateLocation
         {
             get
             {
@@ -139,7 +139,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.SynchronizationHuds
             }
         }
 
-        private Vector2 StatusPosition
+        private Vector2 StatusLocation
         {
             get
             {
@@ -156,7 +156,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.SynchronizationHuds
 
         #region Update and Draw
 
-        public override void Draw(GameTime gameTime, byte alpha)
+        public override void Draw( GameTime gameTime, byte alpha )
         {
             DrawProgressFrame();
             DrawStateInformation();
@@ -186,50 +186,23 @@ namespace MetaMind.Perseverance.Guis.Widgets.SynchronizationHuds
 
         private void DrawAccelerationIndicator()
         {
-            FontManager.DrawCenteredText( 
-                settings.AccelerationFont, 
-                "x", 
-                AccelerationPrefixPosition, 
-                settings.AccelerationColor, 1f );
-            FontManager.DrawCenteredText( 
-                settings.AccelerationFont, 
-                string.Format( "{0}", synchronization.Acceleration.ToString( "F1" ) ), 
-                AccelerationSubfixPosition, 
-                settings.AccelerationColor, 
-                settings.AccelerationSize );
+            FontManager.DrawCenteredText( settings.AccelerationFont, "x", AccelerationPrefixLocation, settings.AccelerationColor, 1f ); FontManager.DrawCenteredText( settings.AccelerationFont, string.Format( "{0}", synchronization.Acceleration.ToString( "F1" ) ), AccelerationSubfixLocation, settings.AccelerationColor, settings.AccelerationSize );
         }
 
         private void DrawAccumulationIndicator()
         {
-            FontManager.DrawCenteredText(
-                settings.AccumulationFont,
-                string.Format( "{0}", synchronization.ElapsedTimeSinceTransition.ToString( "hh':'mm':'ss" ) ),
-                AccumulationSubfixPosition,
-                settings.AccumulationColor,
-                settings.AccumulationSize );
+            FontManager.DrawCenteredText( settings.AccumulationFont, string.Format( "{0}", synchronization.ElapsedTimeSinceTransition.ToString( "hh':'mm':'ss" ) ), AccumulationSubfixLocation, settings.AccumulationColor, settings.AccumulationSize );
         }
 
         private void DrawMassage( GameTime gameTime )
         {
-            var alpha = ( byte ) ( 255 * Math.Abs( Math.Sin( ( gameTime.TotalGameTime.TotalSeconds * 3 ) ) ) );
-            if ( synchronization.SynchronizedHourToday >= synchronization.SynchronizedHourYesterday )
-            {
-                FontManager.DrawCenteredText( 
-                    settings.MessageFont, 
-                    "Look like you are gonna be more happier from today.", 
-                    MessagePosition, 
-                    settings.BarFrameAscendColor.MakeTransparent( alpha ),
-                    settings.MessageSize );
-            }
-            else
-            {
-                FontManager.DrawCenteredText(
-                    settings.MessageFont,
-                    "Look like you are gonna be less happier from today.",
-                    MessagePosition,
-                    settings.BarFrameDescendColor.MakeTransparent( alpha ),
-                    settings.MessageSize );
-            }
+            var alpha  = ( byte ) ( 255 * Math.Abs( Math.Sin( ( gameTime.TotalGameTime.TotalSeconds * 3 ) ) ) );
+            var better = synchronization.SynchronizedHourToday >= synchronization.SynchronizedHourYesterday;
+
+            const string happyNotice   = "Look like you are gonna be more happier from today.";
+            const string unhappyNotice = "Look like you are gonna be less happier from today.";
+            
+            FontManager.DrawCenteredText( settings.MessageFont, better ? happyNotice : unhappyNotice, MessageLocation, ( better ? settings.BarFrameAscendColor : settings.BarFrameDescendColor ).MakeTransparent( alpha ), settings.MessageSize );
         }
 
         private void DrawProgressContent()
@@ -244,48 +217,38 @@ namespace MetaMind.Perseverance.Guis.Widgets.SynchronizationHuds
 
         private void DrawStateInformation()
         {
-            FontManager.DrawCenteredText( settings.StateFont, synchronization.Enabled ? "Synchronizing" : "Losing Synchronicity", StatePosition, settings.StateColor, settings.StateSize );
+            const string syncTrueInfo  = "Synchronizing";
+            const string syncFalseInfo = "Losing Synchronicity";
+            FontManager.DrawCenteredText( settings.StateFont, synchronization.Enabled ? syncTrueInfo : syncFalseInfo, StateLocation, settings.StateColor, settings.StateSize );
         }
 
         private void DrawStatusInformation()
         {
-            FontManager.DrawCenteredText( settings.StateFont, string.Format( "Level {0}: {1}", synchronization.Level, synchronization.State ), StatusPosition, settings.StatusColor, settings.StatusSize );
+            FontManager.DrawCenteredText( settings.StateFont, string.Format( "Level {0}: {1}", synchronization.Level, synchronization.State ), StatusLocation, settings.StatusColor, settings.StatusSize );
         }
 
         private void DrawSynchronizedPointContent()
         {
             // left side content
             for ( var i = 0 ; i < synchronization.SynchronizedHourToday ; ++i )
-            {
-                Primitives2D.FillCenterRectangle( ScreenManager.SpriteBatch, new Rectangle( ( int ) StatePosition.X - 275 - 15 * i, ( int ) StatePosition.Y - 1, settings.BarFrameSize.Y, settings.BarFrameSize.Y ), settings.BarFrameAscendColor );
-            }
+                Primitives2D.FillCenterRectangle( ScreenManager.SpriteBatch, new Rectangle( ( int ) StateLocation.X - 275 - 15 * i, ( int ) StateLocation.Y - 1, settings.BarFrameSize.Y, settings.BarFrameSize.Y ), settings.BarFrameAscendColor );
             for ( var i = 0 ; i < synchronization.SynchronizedHourYesterday ; ++i )
-            {
-                Primitives2D.FillCenterRectangle( ScreenManager.SpriteBatch, new Rectangle( ( int ) StatePosition.X - 275 - 15 * i, ( int ) StatePosition.Y - 1, settings.BarFrameSize.Y, settings.BarFrameSize.Y ), settings.BarFrameDescendColor );
-            }
+                Primitives2D.FillCenterRectangle( ScreenManager.SpriteBatch, new Rectangle( ( int ) StateLocation.X - 275 - 15 * i, ( int ) StateLocation.Y - 1, settings.BarFrameSize.Y, settings.BarFrameSize.Y ), settings.BarFrameDescendColor );
             // right side content
             for ( var i = 0 ; i < synchronization.SynchronizedHourToday ; ++i )
-            {
-                Primitives2D.FillCenterRectangle( ScreenManager.SpriteBatch, new Rectangle( ( int ) StatePosition.X + 275 + 15 * i, ( int ) StatePosition.Y - 1, settings.BarFrameSize.Y, settings.BarFrameSize.Y ), settings.BarFrameAscendColor );
-            }
+                Primitives2D.FillCenterRectangle( ScreenManager.SpriteBatch, new Rectangle( ( int ) StateLocation.X + 275 + 15 * i, ( int ) StateLocation.Y - 1, settings.BarFrameSize.Y, settings.BarFrameSize.Y ), settings.BarFrameAscendColor );
             for ( var i = 0 ; i < synchronization.SynchronizedHourYesterday ; ++i )
-            {
-                Primitives2D.FillCenterRectangle( ScreenManager.SpriteBatch, new Rectangle( ( int ) StatePosition.X + 275 + 15 * i, ( int ) StatePosition.Y - 1, settings.BarFrameSize.Y, settings.BarFrameSize.Y ), settings.BarFrameDescendColor );
-            }
+                Primitives2D.FillCenterRectangle( ScreenManager.SpriteBatch, new Rectangle( ( int ) StateLocation.X + 275 + 15 * i, ( int ) StateLocation.Y - 1, settings.BarFrameSize.Y, settings.BarFrameSize.Y ), settings.BarFrameDescendColor );
         }
 
         private void DrawSynchronizedPointFrame()
         {
             // left side frame
             for ( var i = 0 ; i < synchronization.SynchronizedHourMax ; ++i )
-            {
-                Primitives2D.FillCenterRectangle( ScreenManager.SpriteBatch, new Rectangle( ( int ) StatePosition.X - 275 - 15 * i, ( int ) StatePosition.Y - 1, settings.BarFrameSize.Y, settings.BarFrameSize.Y ), settings.HourFrameColor );
-            }
+                Primitives2D.FillCenterRectangle( ScreenManager.SpriteBatch, new Rectangle( ( int ) StateLocation.X - 275 - 15 * i, ( int ) StateLocation.Y - 1, settings.BarFrameSize.Y, settings.BarFrameSize.Y ), settings.HourFrameColor );
             // right side frame
             for ( var i = 0 ; i < synchronization.SynchronizedHourMax ; ++i )
-            {
-                Primitives2D.FillCenterRectangle( ScreenManager.SpriteBatch, new Rectangle( ( int ) StatePosition.X + 275 + 15 * i, ( int ) StatePosition.Y - 1, settings.BarFrameSize.Y, settings.BarFrameSize.Y ), settings.HourFrameColor );
-            }
+                Primitives2D.FillCenterRectangle( ScreenManager.SpriteBatch, new Rectangle( ( int ) StateLocation.X + 275 + 15 * i, ( int ) StateLocation.Y - 1, settings.BarFrameSize.Y, settings.BarFrameSize.Y ), settings.HourFrameColor );
         }
 
         #endregion Update and Draw
@@ -295,13 +258,13 @@ namespace MetaMind.Perseverance.Guis.Widgets.SynchronizationHuds
         public void StartSynchronizing( TaskEntry target )
         {
             synchronization.Start( target );
-            monitor.Activate();
+            monitor        .Activate();
         }
 
         public void StopSynchronizing()
         {
             synchronization.Stop();
-            monitor.Deactivate();
+            monitor        .Deactivate();
         }
 
         #endregion Operations

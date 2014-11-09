@@ -11,6 +11,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         Item_Mouse_Over,
 
         Item_Selected,
+        Item_Pending,
         Item_Editing,
 
         Item_Swaping,

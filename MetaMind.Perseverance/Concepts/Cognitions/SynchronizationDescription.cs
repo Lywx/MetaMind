@@ -19,9 +19,9 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
         public readonly int[] LevelSeconds =
         {
-            0,      // level 0 LevelSeconds[0]
-            10,     // level 1 LevelSeconds[1]
-            100,    // level 2 LevelSeconds[2]
+            0,      // level 0 
+            10,     // level 1 
+            100,    // level 2 
             1000,   // level 3
             10000,  // level 4
             100000, // level 5

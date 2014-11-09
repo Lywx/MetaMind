@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using MetaMind.Engine.Components;
 using MetaMind.Engine.Extensions;
 using MetaMind.Engine.Guis.Widgets.Items;
@@ -17,6 +18,11 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             symbol = new MotivationItemSymbolGraphics( item );
         }
 
+        private Vector2 NamePosition
+        {
+            get { return ( ( Rectangle ) ItemControl.RootFrame.Rectangle ).Center.ToVector2() + new Vector2( 0, 50 ); }
+        }
+
         public override void Draw( GameTime gameTime )
         {
             DrawSymbol( gameTime );
@@ -25,16 +31,21 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
         }
 
 
-        private void DrawSymbol( GameTime gameTime )
+        public override void Update( GameTime gameTime )
         {
-            symbol.Draw( gameTime );
+            symbol.Update( gameTime );
+        }
+
+        protected override void DrawId()
+        {
+            FontManager.DrawCenteredText( ItemSettings.IdFont, ItemControl.Id.ToString( new CultureInfo( "en-US" ) ), IdCenter, Item.IsEnabled( ItemState.Item_Pending ) ? ItemSettings.IdPendingColor : ItemSettings.IdColor, ItemSettings.IdSize );
         }
 
         private void DrawName()
         {
-            if (!Item.IsEnabled(ItemState.Item_Selected))
+            if ( !Item.IsEnabled( ItemState.Item_Selected ) )
                 return;
-            
+
             List<string> text = FontManager.BreakTextIntoList( ItemSettings.NameFont, ItemSettings.NameSize, ItemData.Name, ( float ) ViewSettings.RootMargin.X * 4 );
             for ( var i = 0 ; i < text.Count ; i++ )
             {
@@ -42,14 +53,9 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             }
         }
 
-        private Vector2 NamePosition
+        private void DrawSymbol( GameTime gameTime )
         {
-            get { return ( ( Rectangle ) ItemControl.RootFrame.Rectangle ).Center.ToVector2() + new Vector2( 0, 50 ); }
-        }
-
-        public override void Update( GameTime gameTime )
-        {
-            symbol.Update( gameTime );
+            symbol.Draw( gameTime );
         }
     }
 }

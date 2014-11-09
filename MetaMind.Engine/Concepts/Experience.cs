@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace MetaMind.Perseverance.Concepts.TaskEntries
+namespace MetaMind.Engine.Concepts
 {
     [DataContract]
     public class Experience
     {
+        public static Experience Zero { get { return new Experience( DateTime.Now, TimeSpan.FromHours( 0 ), DateTime.Now ); } }
+
         #region Time Data
 
         [DataMember]
@@ -118,6 +120,11 @@ namespace MetaMind.Perseverance.Concepts.TaskEntries
                 throw new InvalidOperationException( "At least one experience has to be ended." );
 
             return exp;
+        }
+
+        public override string ToString()
+        {
+            return ( ( int ) Duration.TotalHours ).ToString();
         }
 
         #endregion Overloadings

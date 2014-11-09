@@ -1,3 +1,4 @@
+using MetaMind.Engine.Components.Inputs;
 using MetaMind.Engine.Guis.Widgets;
 using MetaMind.Engine.Guis.Widgets.ViewItems;
 using MetaMind.Engine.Guis.Widgets.Views;
@@ -18,33 +19,31 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
         private readonly IView pastView;
         private readonly IView nowView;
         private readonly IView futureView;
+
+        private readonly Banner                 viewBanner;
         
-        private readonly MotivationViewFactory  viewFactory;
-        private readonly MotivationItemSettings itemSettings;
-        
-        private readonly Banner viewBanner;
+        private readonly MotivationItemFactory  itemFactory  = new MotivationItemFactory();
+        private readonly MotivationViewFactory  viewFactory  = new MotivationViewFactory();
+        private readonly MotivationItemSettings itemSettings = new MotivationItemSettings();
 
         public MotivationExchange()
         {
             pastViewSettings = new ViewSettings1D
             {
                 ColumnNumDisplay = 10,
-                StartPoint = new Point( 160, GraphicsSettings.Height / 2 ),
-                Direction = ViewSettings1D.ScrollDirection.Left
+                StartPoint       = new Point( 160, 160 ),
+                Direction        = ViewSettings1D.ScrollDirection.Left
             };
             nowViewSettings = new ViewSettings1D
             {
                 ColumnNumDisplay = 1,
-                StartPoint = new Point( 421, GraphicsSettings.Height / 2 )
+                StartPoint       = new Point( 160 + 270, 160 ),
             };
             futureViewSettings = new ViewSettings1D
             {
                 ColumnNumDisplay = 9,
-                StartPoint = new Point( 662, GraphicsSettings.Height / 2 )
+                StartPoint       = new Point( 160 + 270 * 2, 160 ),
             };
-            
-            viewFactory  = new MotivationViewFactory();
-            itemSettings = new MotivationItemSettings();
 
             pastView   = new View( pastViewSettings,   itemSettings, viewFactory );
             nowView    = new View( nowViewSettings,    itemSettings, viewFactory );
@@ -57,37 +56,12 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
             futureView.Control.Swap.AddObserver( pastView   );
             futureView.Control.Swap.AddObserver( nowView    );
 
-            var itemFactory = new MotivationItemFactory();
-            pastView  .Items.Add( new ViewItemExchangable( pastView,   pastView  .ViewSettings, pastView  .ItemSettings, itemFactory ) );
-            pastView  .Items.Add( new ViewItemExchangable( pastView,   pastView  .ViewSettings, pastView  .ItemSettings, itemFactory ) );
             pastView  .Items.Add( new ViewItemExchangable( pastView,   pastView  .ViewSettings, pastView  .ItemSettings, itemFactory ) );
             nowView   .Items.Add( new ViewItemExchangable( nowView,    nowView   .ViewSettings, nowView   .ItemSettings, itemFactory ) );
             futureView.Items.Add( new ViewItemExchangable( futureView, futureView.ViewSettings, futureView.ItemSettings, itemFactory ) );
-            futureView.Items.Add( new ViewItemExchangable( futureView, futureView.ViewSettings, futureView.ItemSettings, itemFactory ) );
-            futureView.Items.Add( new ViewItemExchangable( futureView, futureView.ViewSettings, futureView.ItemSettings, itemFactory ) );
-            futureView.Items.Add( new ViewItemExchangable( futureView, futureView.ViewSettings, futureView.ItemSettings, itemFactory ) );
-            futureView.Items.Add( new ViewItemExchangable( futureView, futureView.ViewSettings, futureView.ItemSettings, itemFactory ) );
-            futureView.Items.Add( new ViewItemExchangable( futureView, futureView.ViewSettings, futureView.ItemSettings, itemFactory ) );
-            futureView.Items.Add( new ViewItemExchangable( futureView, futureView.ViewSettings, futureView.ItemSettings, itemFactory ) );
-            futureView.Items.Add( new ViewItemExchangable( futureView, futureView.ViewSettings, futureView.ItemSettings, itemFactory ) );
-            futureView.Items.Add( new ViewItemExchangable( futureView, futureView.ViewSettings, futureView.ItemSettings, itemFactory ) );
-            futureView.Items.Add( new ViewItemExchangable( futureView, futureView.ViewSettings, futureView.ItemSettings, itemFactory ) );
-            futureView.Items.Add( new ViewItemExchangable( futureView, futureView.ViewSettings, futureView.ItemSettings, itemFactory ) );
-            futureView.Items.Add( new ViewItemExchangable( futureView, futureView.ViewSettings, futureView.ItemSettings, itemFactory ) );
-            futureView.Items.Add( new ViewItemExchangable( futureView, futureView.ViewSettings, futureView.ItemSettings, itemFactory ) );
-            futureView.Items.Add( new ViewItemExchangable( futureView, futureView.ViewSettings, futureView.ItemSettings, itemFactory ) );
-            futureView.Items.Add( new ViewItemExchangable( futureView, futureView.ViewSettings, futureView.ItemSettings, itemFactory ) );
-            futureView.Items.Add( new ViewItemExchangable( futureView, futureView.ViewSettings, futureView.ItemSettings, itemFactory ) );
-            futureView.Items.Add( new ViewItemExchangable( futureView, futureView.ViewSettings, futureView.ItemSettings, itemFactory ) );
-            futureView.Items.Add( new ViewItemExchangable( futureView, futureView.ViewSettings, futureView.ItemSettings, itemFactory ) );
-            futureView.Items.Add( new ViewItemExchangable( futureView, futureView.ViewSettings, futureView.ItemSettings, itemFactory ) );
-            futureView.Items.Add( new ViewItemExchangable( futureView, futureView.ViewSettings, futureView.ItemSettings, itemFactory ) );
 
-            //-----------------------------------------------------------------
             viewBanner = new Banner( pastViewSettings );
         }
-
-        //---------------------------------------------------------------------
 
         #region Update and Draw
 
@@ -103,31 +77,34 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
 
         public override void HandleInput()
         {
-            base.HandleInput();
-
+            base      .HandleInput();
+            
             pastView  .HandleInput();
             nowView   .HandleInput();
             futureView.HandleInput();
         }
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void UpdateInput( GameTime gameTime )
         {
-            pastView  .UpdateInput(gameTime);
-            nowView   .UpdateInput(gameTime);
-            futureView.UpdateInput(gameTime);
+            pastView  .UpdateInput( gameTime );
+            nowView   .UpdateInput( gameTime );
+            futureView.UpdateInput( gameTime );
+
+            if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.CreateItem ) )
+            {
+                //pastView.Control.
+            }
         }
 
         public override void UpdateStructure(GameTime gameTime)
         {
-            pastView  .UpdateStructure(gameTime);
-            nowView   .UpdateStructure(gameTime);
-            futureView.UpdateStructure(gameTime);
+            pastView  .UpdateStructure( gameTime );
+            nowView   .UpdateStructure( gameTime );
+            futureView.UpdateStructure( gameTime );
 
             viewBanner.Update( gameTime );
         }
 
         #endregion
-
-        //---------------------------------------------------------------------
     }
 }

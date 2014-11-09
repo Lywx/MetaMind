@@ -55,6 +55,7 @@
     <Compile Include="Components\ProcessManager.cs" />
     <Compile Include="Components\RunnerManager.cs" />
     <Compile Include="Components\ScreenManager.cs" />
+    <Compile Include="Concepts\Experience.cs" />
     <Compile Include="Extensions\StringExt.cs" />
     <Compile Include="GameEngine.cs" />
     <Compile Include="EngineObject.cs" />
@@ -87,7 +88,6 @@
     <Compile Include="Guis\Groups\GroupGraphics.cs" />
     <Compile Include="Guis\Widgets\Cameras\CameraSettings.cs" />
     <Compile Include="Guis\Widgets\Cameras\MarkovCamera.cs" />
-    <Compile Include="Guis\Widgets\ViewItems\ViewItemModifier.cs" />
     <Compile Include="Guis\Widgets\Widget.cs" />
     <Compile Include="Guis\Widgets\Items\IItemGraphics.cs" />
     <Compile Include="Guis\Widgets\Items\ItemEntryFrame.cs" />

@@ -53,8 +53,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public virtual void UpdateInput( GameTime gameTime )
         {
-            if ( View.IsEnabled( ViewState.View_Active ) && View.IsEnabled( ViewState.View_Has_Focus ) &&
-                 !View.IsEnabled( ViewState.Item_Editting ) )
+            if ( View.IsEnabled( ViewState.View_Active ) && 
+                 View.IsEnabled( ViewState.View_Has_Focus ) &&
+                !View.IsEnabled( ViewState.Item_Editting ) )
             {
                 //------------------------------------------------------------------
                 // mouse
@@ -74,7 +75,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
                     Selection.MoveUp();
                 if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Down ) )
                     Selection.MoveDown();
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Esc ) )
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Escape ) )
                     Selection.Clear();
             }
         }
@@ -99,7 +100,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         private void UpdateItems( GameTime gameTime )
         {
-            foreach ( var item in View.Items )
+            foreach ( var item in View.Items.ToArray() )
             {
                 item.Update( gameTime );
             }

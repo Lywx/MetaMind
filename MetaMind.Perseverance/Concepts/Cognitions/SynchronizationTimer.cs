@@ -8,14 +8,10 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
     public class SynchronizationTimer
     {
         //---------------------------------------------------------------------
-        [DataMember]
-        private DateTime currentMoment = DateTime.Now;
-        [DataMember]
-        private DateTime previousMoment;
-        [DataMember]
-        private DateTime transitionMoment;
-        [DataMember]
-        private bool     enabled;
+        [DataMember] private DateTime currentMoment = DateTime.Now;
+        [DataMember] private DateTime previousMoment;
+        [DataMember] private DateTime transitionMoment;
+        [DataMember] private bool     enabled;
 
         //---------------------------------------------------------------------
         public SynchronizationTimer()

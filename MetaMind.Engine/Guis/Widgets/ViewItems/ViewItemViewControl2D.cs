@@ -11,7 +11,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
         {
             base.UpdateViewScroll();
 
-            ItemControl.Row = ItemControl.View.Control.RowFrom( ItemControl.Id );
+            ItemControl.Row    = ItemControl.View.Control.RowFrom   ( ItemControl.Id );
             ItemControl.Column = ItemControl.View.Control.ColumnFrom( ItemControl.Id );
         }
     }

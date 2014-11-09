@@ -20,7 +20,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             foreach ( var item in View.Items )
             {
-                if (item.IsEnabled(ItemState.Item_Active))
+                if ( item.IsEnabled( ItemState.Item_Active ) )
                     item.Draw( gameTime );
             }
         }

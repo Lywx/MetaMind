@@ -1,20 +1,19 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
+using MetaMind.Perseverance.Concepts.TaskEntries;
 
 namespace MetaMind.Perseverance.Concepts.MotivationEntries
 {
     [DataContract]
     public class MotivationEntry
     {
-        [DataMember]
-        public string Name;
+        [DataMember] public string          Name = "";
+        [DataMember] public string          Property = "Neutral";
 
-        [DataMember]
-        public string Property;
+        [DataMember] public List<TaskEntry> Tasks = new List<TaskEntry>();
 
         public MotivationEntry()
         {
-            Name     = "";
-            Property = "Neutral";
         }
     }
 }

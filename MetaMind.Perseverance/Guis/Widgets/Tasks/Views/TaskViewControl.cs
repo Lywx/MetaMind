@@ -2,8 +2,10 @@ using MetaMind.Engine.Components.Inputs;
 using MetaMind.Engine.Guis.Elements.Regions;
 using MetaMind.Engine.Guis.Widgets.ViewItems;
 using MetaMind.Engine.Guis.Widgets.Views;
+using MetaMind.Perseverance.Concepts.TaskEntries;
 using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 {
@@ -35,8 +37,8 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 
         public override void UpdateInput( GameTime gameTime )
         {
-            if ( View.IsEnabled( ViewState.View_Active ) &&
-                View.IsEnabled( ViewState.View_Has_Focus ) &&
+            if ( View.IsEnabled( ViewState.View_Active ) && 
+                 View.IsEnabled( ViewState.View_Has_Focus ) && 
                 !View.IsEnabled( ViewState.Item_Editting ) )
             {
                 //------------------------------------------------------------------
@@ -45,13 +47,11 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
                 {
                     ScrollBar.Trigger();
                     Scroll.MoveUp();
-                    
                 }
                 if ( InputSequenceManager.Mouse.IsWheelScrolledDown )
                 {
                     Scroll.MoveDown();
                     ScrollBar.Trigger();
-                    
                 }
                 //------------------------------------------------------------------
                 // keyboard
@@ -76,18 +76,11 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
                     ScrollBar.Trigger();
                     Selection.MoveDown();
                 }
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Esc ) )
-                    Selection.Clear();
                 //-----------------------------------------------------------------
-                if ( InputSequenceManager.Keyboard.CtrlDown &&
-                    InputSequenceManager.Keyboard.IsActionTriggered( Actions.CreateItem ) )
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.CreateItem ) )
                     AddItem();
-                if ( View.IsEnabled( ViewState.View_Has_Selection ) )
-                {
-                    if ( InputSequenceManager.Keyboard.CtrlDown &&
-                        InputSequenceManager.Keyboard.IsActionTriggered( Actions.CreateChildItem ) )
-                        AddChildItem();
-                }
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Escape ) )
+                    Selection.Clear();
             }
         }
 
@@ -110,13 +103,14 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 
         #region Operations
 
+        public virtual void AddItem( TaskEntry entry )
+        {
+            View.Items.Add( new ViewItemExchangable( View, ViewSettings, ItemSettings, ItemFactory, entry ) );
+        }
+
         public virtual void AddItem()
         {
             View.Items.Add( new ViewItemExchangable( View, ViewSettings, ItemSettings, ItemFactory ) );
-        }
-
-        private void AddChildItem()
-        {
         }
 
         #endregion Operations

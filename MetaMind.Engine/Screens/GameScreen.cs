@@ -41,8 +41,8 @@ namespace MetaMind.Engine.Screens
             get
             {
                 return !otherScreenHasFocus &&
-                       (screenState == ScreenState.TransitionOn ||
-                        screenState == ScreenState.Active);
+                       ( screenState == ScreenState.TransitionOn ||
+                        screenState == ScreenState.Active );
             }
         }
 
@@ -61,9 +61,9 @@ namespace MetaMind.Engine.Screens
             {
                 bool fireEvent = !isExiting && value;
                 isExiting = value;
-                if (fireEvent && (Exiting != null))
+                if ( fireEvent && ( Exiting != null ) )
                 {
-                    Exiting(this, EventArgs.Empty);
+                    Exiting( this, EventArgs.Empty );
                 }
             }
         }
@@ -95,7 +95,7 @@ namespace MetaMind.Engine.Screens
         /// </summary>
         public byte TransitionAlpha
         {
-            get { return (byte)(255 - TransitionPosition * 255); }
+            get { return ( byte ) ( 255 - TransitionPosition * 255 ); }
         }
 
         /// <summary>
@@ -132,9 +132,9 @@ namespace MetaMind.Engine.Screens
         /// <summary>
         /// This is called when the screen should draw itself.
         /// </summary>
-        public virtual void Draw(GameTime gameTime)
+        public virtual void Draw( GameTime gameTime )
         {
-            if (!isPopup)
+            if ( !isPopup )
             {
             }
         }
@@ -150,9 +150,9 @@ namespace MetaMind.Engine.Screens
             IsExiting = true;
 
             // If the screen has a zero transition time, remove it immediately.
-            if (TransitionOffTime == TimeSpan.Zero)
+            if ( TransitionOffTime == TimeSpan.Zero )
             {
-                ScreenManager.RemoveScreen(this);
+                ScreenManager.RemoveScreen( this );
             }
         }
 
@@ -184,26 +184,26 @@ namespace MetaMind.Engine.Screens
         /// Unlike HandleInput, this method is called regardless of whether the screen
         /// is active, hidden, or in the middle of a transition.
         /// </summary>
-        public virtual void Update(GameTime gameTime, bool otherScreenHasFocus,
-            bool coveredByOtherScreen)
+        public virtual void Update( GameTime gameTime, bool otherScreenHasFocus,
+            bool coveredByOtherScreen )
         {
             this.otherScreenHasFocus = otherScreenHasFocus;
 
-            if (IsExiting)
+            if ( IsExiting )
             {
                 // If the screen is going away to die, it should transition off.
                 screenState = ScreenState.TransitionOff;
 
-                if (!UpdateTransition(gameTime, transitionOffTime, 1))
+                if ( !UpdateTransition( gameTime, transitionOffTime, 1 ) )
                 {
                     // When the transition finishes, remove the screen.
-                    ScreenManager.RemoveScreen(this);
+                    ScreenManager.RemoveScreen( this );
                 }
             }
-            else if (coveredByOtherScreen)
+            else if ( coveredByOtherScreen )
             {
                 // If the screen is covered by another, it should transition off.
-                if (UpdateTransition(gameTime, transitionOffTime, 1))
+                if ( UpdateTransition( gameTime, transitionOffTime, 1 ) )
                 {
                     // Still busy transitioning.
                     screenState = ScreenState.TransitionOff;
@@ -217,7 +217,7 @@ namespace MetaMind.Engine.Screens
             else
             {
                 // Otherwise the screen should transition on and become active.
-                if (UpdateTransition(gameTime, transitionOnTime, -1))
+                if ( UpdateTransition( gameTime, transitionOnTime, -1 ) )
                 {
                     // Still busy transitioning.
                     screenState = ScreenState.TransitionOn;
@@ -233,24 +233,24 @@ namespace MetaMind.Engine.Screens
         /// <summary>
         /// Helper for updating the screen transition position.
         /// </summary>
-        private bool UpdateTransition(GameTime gameTime, TimeSpan time, int direction)
+        private bool UpdateTransition( GameTime gameTime, TimeSpan time, int direction )
         {
             // How much should we move by?
             float transitionDelta;
 
-            if (time == TimeSpan.Zero)
+            if ( time == TimeSpan.Zero )
                 transitionDelta = 1;
             else
-                transitionDelta = (float)(gameTime.ElapsedGameTime.TotalMilliseconds /
-                                          time.TotalMilliseconds);
+                transitionDelta = ( float ) ( gameTime.ElapsedGameTime.TotalMilliseconds /
+                                          time.TotalMilliseconds );
 
             // Update the transition position.
             transitionPosition += transitionDelta * direction;
 
             // Did we reach the end of the transition?
-            if ((transitionPosition <= 0) || (transitionPosition >= 1))
+            if ( ( transitionPosition <= 0 ) || ( transitionPosition >= 1 ) )
             {
-                transitionPosition = MathHelper.Clamp(transitionPosition, 0, 1);
+                transitionPosition = MathHelper.Clamp( transitionPosition, 0, 1 );
                 return false;
             }
 

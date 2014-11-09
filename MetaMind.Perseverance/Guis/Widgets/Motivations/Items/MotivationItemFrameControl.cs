@@ -7,11 +7,11 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 {
-    public class MotivationItemSymbolFrameControl : ViewItemFrameControl
+    public class MotivationItemFrameControl : ViewItemFrameControl
     {
         private TimeSpan selectedTime;
 
-        public MotivationItemSymbolFrameControl( IViewItem item )
+        public MotivationItemFrameControl( IViewItem item )
             : base( item )
         {
             SymbolFrame = new PickableFrame();

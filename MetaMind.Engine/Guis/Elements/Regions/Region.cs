@@ -29,6 +29,11 @@ namespace MetaMind.Engine.Guis.Elements.Regions
             set { Frame.Height = value; }
         }
 
+        public Point Location
+        {
+            get { return frame.Location; } 
+            set { frame.Location = value; }
+        }
         public Rectangle Rectangle
         {
             set { frame.Rectangle = value; }

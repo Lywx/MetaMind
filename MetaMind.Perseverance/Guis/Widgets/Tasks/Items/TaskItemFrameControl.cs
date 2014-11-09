@@ -1,4 +1,3 @@
-using System.Windows.Forms.VisualStyles;
 using MetaMind.Engine.Extensions;
 using MetaMind.Engine.Guis.Widgets.Items;
 using MetaMind.Engine.Guis.Widgets.ViewItems;
@@ -66,7 +65,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
         private Vector2 IdFrameLocation
         {
-            get { return PointExt.ToVector2( ItemControl.NameFrame.Center ) + new Vector2( -ItemSettings.NameFrameSize.X / 2, -ItemSettings.NameFrameSize.Y / 2 - ItemSettings.IdFrameSize.Y ); }
+            get { return NameFrameLocation + new Vector2( 0, -ItemSettings.IdFrameSize.Y ); }
         }
 
         private Vector2 NameFrameLocation

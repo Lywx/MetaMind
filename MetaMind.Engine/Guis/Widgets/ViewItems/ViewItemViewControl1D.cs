@@ -18,21 +18,26 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
         public void SwapIt( IViewItem draggingItem )
         {
             if ( Item.IsEnabled( ItemState.Item_Swaping ) )
+            {
                 return;
-            else
-                Item.Enable( ItemState.Item_Swaping );
+            }
+
+            Item.Enable( ItemState.Item_Swaping );
 
             var originCenter = this        .ViewControl.Scroll.RootCenterPoint( this        .ItemControl.Id );
             var targetCenter = draggingItem.ViewControl.Scroll.RootCenterPoint( draggingItem.ItemControl.Id );
-            this                           .ViewControl.Swap.Initialize( originCenter, targetCenter );
+
+                               this        .ViewControl.Swap  .Initialize( originCenter, targetCenter );
 
             ProcessManager.AttachProcess( new ViewItemSwapProcess( draggingItem, Item ) );
         }
 
-        public void UnSelectIt()
+        public void UnselectIt()
         {
             if ( ViewControl.Selection.IsSelected( ItemControl.Id ) )
+            {
                 ViewControl.Selection.Clear();
+            }
         }
 
         protected virtual void UpdateViewScroll()
@@ -53,16 +58,35 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
         private void UpdateViewSelection()
         {
             if ( ViewControl.Selection.IsSelected( ItemControl.Id ) )
+            {
+                // unify mouse and keyboard selection
+                // not sure whether fired only once
+                if ( !Item.IsEnabled( ItemState.Item_Selected ) )
+                {
+                    ItemControl.SelectIt();
+                }
                 Item.Enable( ItemState.Item_Selected );
+            }
             else
+            {
+                // unify mouse and keyboard selection
+                // not sure whether fired only once
+                if ( Item.IsEnabled( ItemState.Item_Selected ) )
+                {
+                    ItemControl.UnselectIt();
+                }
                 Item.Disable( ItemState.Item_Selected );
+            }
         }
-
         private void UpdateViewSwap()
         {
-            if (Item.IsEnabled( ItemState.Item_Dragging ) )
+            if ( Item.IsEnabled( ItemState.Item_Dragging ) )
+            {
                 foreach ( var observor in ViewControl.Swap.Observors )
-                    ViewControl.Swap.ObserveSwapFrom(Item, observor );
+                {
+                    ViewControl.Swap.ObserveSwapFrom( Item, observor );
+                }
+            }
         }
 
         public void Update( GameTime gameTime )

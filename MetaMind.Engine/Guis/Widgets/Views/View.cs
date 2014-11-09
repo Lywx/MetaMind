@@ -9,58 +9,40 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 {
     public interface IView : IViewObject
     {
-        dynamic Control { get; set; }
-        IViewGraphics Graphics { get; set; }
-        List<IViewItem> Items { get; set; }
+        dynamic         Control  { get; set; }
+        IViewGraphics   Graphics { get; set; }
+        List<IViewItem> Items    { get; set; }
     }
 
     public class View : ViewObject, IView
     {
-        private dynamic control;
-        private IViewGraphics graphics;
-
-        private List<IViewItem> items;
-
         public View( ICloneable viewSettings, ICloneable itemSettings, IViewFactory factory )
             : base( viewSettings, itemSettings )
         {
-            items = new List<IViewItem>();
+            Items    = new List<IViewItem>();
 
-            control  = factory.CreateControl( this, viewSettings, itemSettings );
-            graphics = factory.CreateGraphics( this, viewSettings, itemSettings );
-        }
-
-        public dynamic Control
-        {
-            get { return control; }
-            set { control = value; }
-        }
-        public IViewGraphics Graphics
-        {
-            get { return graphics; }
-            set { graphics = value; }
+            Control  = factory.CreateControl( this, viewSettings, itemSettings );
+            Graphics = factory.CreateGraphics( this, viewSettings, itemSettings );
         }
 
-        public List<IViewItem> Items
-        {
-            get { return items; }
-            set { items = value; }
-        }
+        public dynamic         Control  { get; set; }
+        public IViewGraphics   Graphics { get; set; }
+        public List<IViewItem> Items    { get; set; }
 
         public override void Draw(GameTime gameTime, byte alpha)
         {
-            graphics.Draw( gameTime );
+            Graphics.Draw( gameTime );
         }
 
         public override void UpdateInput( GameTime gameTime )
         {
-            control.UpdateInput( gameTime );
+            Control.UpdateInput( gameTime );
         }
 
         public override void UpdateStructure( GameTime gameTime )
         {
-            control .UpdateStrucutre( gameTime );
-            graphics.Update( gameTime );
+            Control .UpdateStrucutre( gameTime );
+            Graphics.Update( gameTime );
         }
     }
 }

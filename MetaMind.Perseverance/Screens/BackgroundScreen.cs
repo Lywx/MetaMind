@@ -1,8 +1,8 @@
 ﻿using System;
 using MetaMind.Engine.Screens;
 using MetaMind.Perseverance.Guis.Particles;
+using MetaMind.Perseverance.Guis.Widgets.Synchronizations;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MetaMind.Perseverance.Screens
@@ -13,10 +13,10 @@ namespace MetaMind.Perseverance.Screens
 
         #region Graphicalc Data
 
-        private Texture2D backgroundTexture;
+        private const int ParticleNumber = 1500;
 
-        private const int particleNumber = 1500;
-        private FloatParticleContainer particleContainer = new FloatParticleContainer( particleNumber );
+        private readonly FloatParticleContainer particles = new FloatParticleContainer( ParticleNumber );
+        private          Texture2D              backgroundTexture;
 
         #endregion Graphicalc Data
 
@@ -72,8 +72,8 @@ namespace MetaMind.Perseverance.Screens
 
             spriteBatch.Begin();
 
-            spriteBatch      .Draw( backgroundTexture, fullscreen, new Color( 0, 0, TransitionAlpha / 2 ) );
-            particleContainer.Draw( gameTime );
+            spriteBatch.Draw( backgroundTexture, fullscreen, new Color( 0, 0, TransitionAlpha / 2 ) );
+            particles  .Draw( gameTime );
 
             spriteBatch.End();
         }
@@ -87,9 +87,8 @@ namespace MetaMind.Perseverance.Screens
         /// </summary>
         public override void Update( GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen )
         {
-            particleContainer.Update( gameTime );
-
-            base.Update( gameTime, otherScreenHasFocus, false );
+            particles.Update( gameTime );
+            base     .Update( gameTime, otherScreenHasFocus, false );
         }
 
         #endregion Update and Draw

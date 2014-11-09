@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using MouseKeyboardActivityMonitor;
 using MouseKeyboardActivityMonitor.WinApi;
 
-namespace MetaMind.Perseverance.Guis.Widgets.SynchronizationHuds
+namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
 {
     /// <summary>
     /// An attention monitor during synchronization

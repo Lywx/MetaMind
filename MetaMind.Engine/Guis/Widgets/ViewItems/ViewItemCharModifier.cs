@@ -2,13 +2,31 @@ using System;
 using System.Linq;
 using System.Text;
 using MetaMind.Engine.Components;
+using MetaMind.Engine.Components.Inputs;
 using MetaMind.Engine.Guis.Widgets.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace MetaMind.Engine.Guis.Widgets.ViewItems
 {
-    public class ViewItemCharModifier : ViewItemComponent, IViewItemModifier
+    public interface IViewItemCharModifier
+    {
+        event EventHandler<ViewItemDataEventArgs> ModificationEnded;
+
+        event EventHandler<ViewItemDataEventArgs> ValueModified;
+
+        void Cancel();
+
+        void Draw(GameTime gameTime);
+
+        void Initialize(string oldString);
+
+        void Release();
+
+        void Update(GameTime gameTime);
+    }
+
+    public class ViewItemCharModifier : ViewItemComponent, IViewItemCharModifier
     {
         #region Input Settings
 
@@ -70,7 +88,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         #region Hooks
 
-        public virtual void Cancel()
+        public void Cancel()
         {
             if ( ValueModified != null )
                 ValueModified( this, new ViewItemDataEventArgs( oldString ) );
@@ -91,7 +109,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
             inputString = new StringBuilder( oldString );
         }
 
-        public virtual void Release()
+        public void Release()
         {
             if ( ValueModified != null )
                 ValueModified( this, new ViewItemDataEventArgs( inputString.ToString() ) );
@@ -126,7 +144,9 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
             if ( !Item.IsEnabled( ItemState.Item_Editing ) )
                 return;
 
-            if ( e.KeyCode == Keys.Escape )
+            // mixed two manager together, might not be good
+            if ( e.KeyCode == Keys.Escape ||
+               ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Escape ) ) )
                 Cancel();
         }
 
@@ -174,11 +194,11 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         #region Update and Draw
 
-        public virtual void Draw( GameTime gameTime )
+        public void Draw( GameTime gameTime )
         {
         }
 
-        public virtual void Update( GameTime gameTime )
+        public void Update( GameTime gameTime )
         {
         }
 

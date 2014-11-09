@@ -6,65 +6,29 @@ namespace MetaMind.Perseverance.Concepts.TaskEntries
     [Serializable]
     public class Tasklist
     {
-        //---------------------------------------------------------------------
-
-        #region Plannning entry
-
-        public List<QuestionEntry>  Questions { get; set; }
-        public List<DirectionEntry> Directions { get; set; }
-        public List<FutureEntry>    Futures { get; set; }
-
-        #endregion Plannning entry
-
-        //---------------------------------------------------------------------
+        public List<TaskEntry> Tasks { get; private set; }
 
         #region Constructors
 
         public Tasklist()
         {
-            Questions  = new List<QuestionEntry>();
-            Directions = new List<DirectionEntry>();
-            Futures    = new List<FutureEntry>();
+            Tasks = new List<TaskEntry>();
         }
 
         #endregion Constructors
 
         #region Operations
 
-        public QuestionEntry CreateQuestion()
+        public TaskEntry Create()
         {
-            var entry = new QuestionEntry();
-            Questions.Add( entry );
+            var entry = new TaskEntry();
+            Tasks.Add( entry );
             return entry;
         }
 
-        public DirectionEntry CreateDirection()
+        public void Remove( TaskEntry entry )
         {
-            var entry = new DirectionEntry();
-            Directions.Add( entry );
-            return entry;
-        }
-
-        public FutureEntry CreateFuture()
-        {
-            var entry = new FutureEntry();
-            Futures.Add( entry );
-            return entry;
-        }
-
-        public void RemoveQuestion( QuestionEntry entry )
-        {
-            Questions.Remove( entry );
-        }
-
-        public void RemoveDirection( DirectionEntry entry )
-        {
-            Directions.Remove( entry );
-        }
-
-        public void RemoveFuture( FutureEntry entry )
-        {
-            Futures.Remove( entry );
+            Tasks.Remove( entry );
         }
 
         #endregion Operations

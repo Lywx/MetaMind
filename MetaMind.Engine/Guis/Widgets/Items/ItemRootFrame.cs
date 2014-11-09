@@ -19,13 +19,13 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         {
             this.item = item;
 
-            MouseLeftClicked += SelectItsItem;
-            MouseLeftClickedOutside += UnSelectItsItem;
+            MouseLeftClicked        += SelectItsItem;
+            MouseLeftClickedOutside += UnselectItsItem;
         }
 
-        private void UnSelectItsItem( object sender, FrameEventArgs e )
+        private void UnselectItsItem( object sender, FrameEventArgs e )
         {
-            item.ItemControl.UnSelectIt();
+            item.ItemControl.UnselectIt();
         }
 
         public void Disable()

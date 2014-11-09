@@ -23,3 +23,7 @@ MetaMind.PerseveranceUnitTest/bin/
 MetaMind.PerseveranceBuilder/MetaMind.PerseveranceBuilderContent/Textures/Screens/Background/Thumbs.db
 MetaMind.Design/
 MetaMind.PerseveranceBuilder/MetaMind.PerseveranceBuilderContent/Textures/UIs/Thumbs.db
+MetaMind.EngineUnitTest/bin/
+MetaMind.EngineBuilder/MetaMind.EngineBuilderContent/Textures/Screens/Thumbs.db
+MetaMind.EngineBuilder/MetaMind.EngineBuilderContent/Textures/Thumbs.db
+MetaMind.EngineUnitTest/obj/

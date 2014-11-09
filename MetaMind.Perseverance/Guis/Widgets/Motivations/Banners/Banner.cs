@@ -24,8 +24,8 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Banners
             bannerSetting = new ViewBannerSetting();
 
             past   = new TimelineText(  "Past",    TextLeftmostPosition );
-            now    = new TimelineText(  "Now",     TextLeftmostPosition + new Vector2( 260, 0 ) );
-            future = new TimelineText(  "Future",  TextLeftmostPosition + new Vector2( 250, 0 ) * 2 );
+            now    = new TimelineText(  "Now",     TextLeftmostPosition + new Vector2( 270, 0 ) );
+            future = new TimelineText(  "Future",  TextLeftmostPosition + new Vector2( 270, 0 ) * 2 );
             flash  = new TimelineFlash(          ( TextLeftmostPosition + new Vector2( 0, 10 ) ) );
         }
 

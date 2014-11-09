@@ -13,6 +13,8 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
         public Point NameFrameSize                 = new Point( 256, 34 );
         public int   NameLineMargin                = 20;
         //---------------------------------------------------------------------
+        public Color IdPendingColor           = new Color( 200, 200, 0, 2 );
+        //---------------------------------------------------------------------
         public Color WishColor                     = new Color( 255, 255, 255, 128 );
         public Color FearColor                     = new Color( 51, 204, 204, 223 );
         //---------------------------------------------------------------------

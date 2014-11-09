@@ -2,16 +2,16 @@
 using MetaMind.Perseverance.Concepts.Cognitions;
 using MetaMind.Perseverance.Sessions;
 
-namespace MetaMind.Perseverance.Guis.Widgets.SynchronizationHuds
+namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
 {
     internal class SynchronizationHudSynchronizationStartListener : ListenerBase
     {
-        private Synchronization synchronization;
-        private readonly SynchronizationHud hud;
+        private readonly Synchronization    synchronization;
+        private readonly SynchronizationHud synchronizationHud;
 
-        public SynchronizationHudSynchronizationStartListener( Synchronization synchronization, SynchronizationHud hud )
+        public SynchronizationHudSynchronizationStartListener( Synchronization synchronization, SynchronizationHud synchronizationHud )
         {
-            this.hud = hud;
+            this.synchronizationHud = synchronizationHud;
             this.synchronization = synchronization;
 
             RegisteredEvents.Add( ( int ) AdventureEventType.SyncStarted );
@@ -25,7 +25,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.SynchronizationHuds
             if ( synchronization.Enabled )
                 return true;
 
-            hud.StartSynchronizing( data );
+            synchronizationHud.StartSynchronizing( data );
 
             return true;
         }

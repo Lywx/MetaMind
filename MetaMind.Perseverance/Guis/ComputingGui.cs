@@ -16,30 +16,7 @@ namespace MetaMind.Perseverance.Guis
         private AdventureSleepStoppedEventListener sleepStoppedEventListener;
 
         //---------------------------------------------------------------------
-        private IWidget view = new View( PlanningViewSettings.Default, ItemSettings.Default, new PlanningViewFactory() );
-
         private SynchronizationHud synchronizationHud;
-
-        //---------------------------------------------------------------------
-
-        #region Constructors
-
-        public ComputingGui()
-        {
-        }
-
-        #endregion Constructors
-
-        //---------------------------------------------------------------------
-
-        #region Public Properties
-
-        public SynchronizationHud SynchronizationHud
-        {
-            get { return synchronizationHud; }
-        }
-
-        #endregion Public Properties
 
         //---------------------------------------------------------------------
 

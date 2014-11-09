@@ -1,15 +1,14 @@
 ﻿using MetaMind.Engine.Components.Events;
-using MetaMind.Perseverance.Concepts.Cognitions;
 using MetaMind.Perseverance.Sessions;
 
-namespace MetaMind.Perseverance.Guis.Widgets.SynchronizationHuds
+namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
 {
     internal class SynchronizationHudSynchronizationStopListener : ListenerBase
     {
-        private readonly Synchronization   synchronization;
+        private readonly Concepts.Cognitions.Synchronization   synchronization;
         private readonly SynchronizationHud synchronizationHud;
 
-        public SynchronizationHudSynchronizationStopListener(Synchronization synchronization, SynchronizationHud synchronizationHud)
+        public SynchronizationHudSynchronizationStopListener(Concepts.Cognitions.Synchronization synchronization, SynchronizationHud synchronizationHud)
         {
             this.synchronization    = synchronization;
             this.synchronizationHud = synchronizationHud;

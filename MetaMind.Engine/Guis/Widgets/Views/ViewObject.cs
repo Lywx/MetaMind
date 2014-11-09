@@ -7,8 +7,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 {
     public interface IViewObject : IWidget
     {
-        ICloneable ViewSettings { get; }
-        ICloneable ItemSettings { get; }
+        dynamic ViewSettings { get; }
+        dynamic ItemSettings { get; }
 
         void Disable( ViewState state );
 
@@ -19,15 +19,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     public class ViewObject : Widget, IViewObject
     {
-        private ICloneable viewSettings;
-        private ICloneable itemSettings;
-        public ICloneable ViewSettings { get { return viewSettings; } }
-        public ICloneable ItemSettings { get { return itemSettings; } }
+        public dynamic ViewSettings { get; private set; }
+        public dynamic ItemSettings { get; private set; }
 
         protected ViewObject( ICloneable viewSettings, ICloneable itemSettings )
         {
-            this.viewSettings = viewSettings;
-            this.itemSettings = itemSettings;
+            ViewSettings = viewSettings;
+            ItemSettings = itemSettings;
 
             Enable( ViewState.View_Active );
         }
