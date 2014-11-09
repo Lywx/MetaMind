@@ -29,9 +29,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         public IViewGraphics   Graphics { get; set; }
         public List<IViewItem> Items    { get; set; }
 
-        public override void Draw(GameTime gameTime, byte alpha)
+        public override void Draw( GameTime gameTime, byte alpha )
         {
-            Graphics.Draw( gameTime );
+            Graphics.Draw( gameTime, alpha );
         }
 
         public override void UpdateInput( GameTime gameTime )

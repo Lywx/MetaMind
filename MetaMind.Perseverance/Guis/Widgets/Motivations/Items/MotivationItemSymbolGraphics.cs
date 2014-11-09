@@ -23,7 +23,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             get { return new Vector2( symbolTexture.Width / 2f, symbolTexture.Height / 2f ); }
         }
 
-        public void Draw( GameTime gameTime )
+        public void Draw(GameTime gameTime, byte alpha)
         {
             if ( !Item.IsEnabled( ItemState.Item_Active ) )
             {
@@ -33,15 +33,15 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             {
                 DrawShadow();
             }
-            DrawHeart();
-            DrawTracer( gameTime );
+            DrawHeart( alpha );
+            DrawTracer( gameTime, alpha );
         }
         public void Update( GameTime gameTime )
         {
             UpdateRotation();
         }
 
-        private void DrawHeart()
+        private void DrawHeart( byte alpha )
         {
             var flipped     = Math.Cos( rotation ) > 0;
             var size        = new Point( ( int ) ( Math.Abs( Math.Cos( rotation ) ) * ( ( IPickableFrame ) ItemControl.SymbolFrame ).Rectangle.Width ), ( ( IPickableFrame ) ItemControl.SymbolFrame ).Rectangle.Height );
@@ -63,11 +63,11 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             ScreenManager.SpriteBatch.Draw( symbolTexture, destination, null, ColorPalette.TransparentColor3, 0f, SymbolOrigin, SpriteEffects.None, 0f );
         }
 
-        private void DrawTracer( GameTime gameTime )
+        private void DrawTracer( GameTime gameTime, byte alpha )
         {
-            if ( ItemControl.Tracer != null && Item.IsEnabled( ItemState.Item_Selected ) )
+            if ( ItemControl.Tracer != null )
             {
-                ItemControl.Tracer.Draw( gameTime, ( byte) ( rotation / MathHelper.Pi * 255 ) );
+                ItemControl.Tracer.Draw( gameTime, alpha );
             }
         }
         private void UpdateRotation()

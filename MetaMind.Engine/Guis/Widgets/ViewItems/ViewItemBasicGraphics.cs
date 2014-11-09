@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using C3.Primtive2DXna;
+using MetaMind.Engine.Extensions;
 using MetaMind.Engine.Guis.Widgets.Items;
 using Microsoft.Xna.Framework;
 
@@ -12,7 +13,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
         {
         }
 
-        public virtual void Draw( GameTime gameTime )
+        public virtual void Draw(GameTime gameTime, byte alpha)
         {
             if ( !Item.IsEnabled( ItemState.Item_Active ) && !Item.IsEnabled( ItemState.Item_Dragging ) )
                 return;
@@ -32,12 +33,12 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
                 Primitives2D.FillRectangle( ScreenManager.SpriteBatch, ItemControl.RootFrame.Rectangle, ItemSettings.RootFrameColor );
                 Primitives2D.FillRectangle( ScreenManager.SpriteBatch, ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameRegularColor );
             }
-            DrawId();
+            DrawId( alpha );
         }
 
-        protected virtual void DrawId()
+        protected virtual void DrawId( byte alpha )
         {
-            FontManager.DrawCenteredText( ItemSettings.IdFont, ItemControl.Id.ToString( new CultureInfo( "en-US" ) ), IdCenter, ItemSettings.IdColor, ItemSettings.IdSize );
+            FontManager.DrawCenteredText( ItemSettings.IdFont, ItemControl.Id.ToString( new CultureInfo( "en-US" ) ), IdCenter, ColorExt.MakeTransparent( ItemSettings.IdColor, alpha ), ItemSettings.IdSize );
         }
 
         protected Point Center

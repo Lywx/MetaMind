@@ -13,7 +13,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
         private readonly MotivationItemControl itemControl;
         
         private readonly IView                 view;
-        private readonly Vector2               viewMargin;
 
         private TaskItemSettings itemSettings = new TaskItemSettings();
         private TaskViewFactory  viewFactory  = new TaskViewFactory();
@@ -31,7 +30,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
             this.itemControl = itemControl;
 
             view       = new View( viewSettings, itemSettings, viewFactory );
-            viewMargin = new Vector2( -itemSettings.NameFrameSize.X / 2f, 80 );
 
             foreach ( var task in itemControl.ItemData.Tasks )
             {
@@ -67,8 +65,8 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
         public override void UpdateStructure( GameTime gameTime )
         {
             // make sure that task region and task items all follow the host location changes
-            View.ViewSettings.StartPoint = Vector2Ext.ToPoint( itemControl.RootFrame.Center.ToVector2() + viewMargin );
-            View.Control.Region.Location = Vector2Ext.ToPoint( itemControl.RootFrame.Center.ToVector2() + viewMargin );
+            View.ViewSettings.StartPoint = Vector2Ext.ToPoint( itemControl.RootFrame.Center.ToVector2() + itemControl.ViewSettings.TracerMargin );
+            View.Control.Region.Location = Vector2Ext.ToPoint( itemControl.RootFrame.Center.ToVector2() + itemControl.ViewSettings.TracerMargin );
 
             View.UpdateStructure( gameTime );
         }

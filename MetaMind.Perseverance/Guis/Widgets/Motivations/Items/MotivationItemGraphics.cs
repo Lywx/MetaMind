@@ -23,11 +23,11 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             get { return ( ( Rectangle ) ItemControl.RootFrame.Rectangle ).Center.ToVector2() + new Vector2( 0, 50 ); }
         }
 
-        public override void Draw( GameTime gameTime )
+        public override void Draw(GameTime gameTime, byte alpha)
         {
-            DrawSymbol( gameTime );
-            DrawName();
-            DrawId();
+            DrawSymbol( gameTime, alpha );
+            DrawName( alpha );
+            DrawId( alpha );
         }
 
 
@@ -36,12 +36,12 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             symbol.Update( gameTime );
         }
 
-        protected override void DrawId()
+        protected override void DrawId( byte alpha )
         {
             FontManager.DrawCenteredText( ItemSettings.IdFont, ItemControl.Id.ToString( new CultureInfo( "en-US" ) ), IdCenter, Item.IsEnabled( ItemState.Item_Pending ) ? ItemSettings.IdPendingColor : ItemSettings.IdColor, ItemSettings.IdSize );
         }
 
-        private void DrawName()
+        private void DrawName( byte alpha )
         {
             if ( !Item.IsEnabled( ItemState.Item_Selected ) )
                 return;
@@ -49,13 +49,13 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             List<string> text = FontManager.BreakTextIntoList( ItemSettings.NameFont, ItemSettings.NameSize, ItemData.Name, ( float ) ViewSettings.RootMargin.X * 4 );
             for ( var i = 0 ; i < text.Count ; i++ )
             {
-                FontManager.DrawText( ItemSettings.NameFont, text[ i ], NamePosition + new Vector2( 0, ItemSettings.NameLineMargin ) * i, ItemSettings.NameColor, ItemSettings.NameSize );
+                FontManager.DrawCenteredText( ItemSettings.NameFont, text[ i ], NamePosition + new Vector2( 0, ItemSettings.NameLineMargin ) * i, ColorExt.MakeTransparent( ItemSettings.NameColor, alpha ), ItemSettings.NameSize );
             }
         }
 
-        private void DrawSymbol( GameTime gameTime )
+        private void DrawSymbol(GameTime gameTime, byte alpha)
         {
-            symbol.Draw( gameTime );
+            symbol.Draw( gameTime, alpha );
         }
     }
 }

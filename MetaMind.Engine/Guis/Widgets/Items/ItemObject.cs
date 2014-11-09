@@ -8,7 +8,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
     {
         ICloneable ItemSettings { get; }
 
-        void Draw( GameTime gameTime );
+        void Draw( GameTime gameTime, byte alpha );
 
         void Update( GameTime gameTime );
 
@@ -59,7 +59,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         #region Update and Draw
 
-        public abstract void Draw( GameTime gameTime );
+        public abstract void Draw(GameTime gameTime, byte alpha);
 
         public abstract void Update( GameTime gameTime );
 

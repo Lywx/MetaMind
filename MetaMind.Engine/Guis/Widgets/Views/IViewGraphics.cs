@@ -6,6 +6,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     {
         void Update( GameTime gameTime );
 
-        void Draw( GameTime gameTime );
+        void Draw( GameTime gameTime, byte alpha );
     }
 }

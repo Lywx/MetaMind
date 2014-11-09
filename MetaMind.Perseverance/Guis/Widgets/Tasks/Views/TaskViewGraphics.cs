@@ -16,18 +16,18 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
         {
         }
 
-        public override void Draw( GameTime gameTime )
+        public override void Draw( GameTime gameTime, byte alpha )
         {
             // draw active items
-            base.Draw( gameTime );
+            base.Draw( gameTime, ( byte ) frameAlpha );
 
             DrawRegion( gameTime );
             DrawScrollBar( gameTime );
         }
 
-        private void DrawScrollBar(GameTime gameTime)
+        private void DrawScrollBar( GameTime gameTime )
         {
-            ViewControl.ScrollBar.Draw(gameTime);
+            ViewControl.ScrollBar.Draw( gameTime );
         }
 
         private void DrawRegion( GameTime gameTime )

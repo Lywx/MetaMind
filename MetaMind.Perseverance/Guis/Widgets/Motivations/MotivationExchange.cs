@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations
 {
+
     public class MotivationExchange : Widget
     {
         private readonly ViewSettings1D pastViewSettings;
@@ -28,18 +29,18 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
 
         public MotivationExchange()
         {
-            pastViewSettings = new ViewSettings1D
+            pastViewSettings = new MotivationViewSettings
             {
                 ColumnNumDisplay = 10,
                 StartPoint       = new Point( 160, 160 ),
                 Direction        = ViewSettings1D.ScrollDirection.Left
             };
-            nowViewSettings = new ViewSettings1D
+            nowViewSettings = new MotivationViewSettings
             {
                 ColumnNumDisplay = 1,
                 StartPoint       = new Point( 160 + 270, 160 ),
             };
-            futureViewSettings = new ViewSettings1D
+            futureViewSettings = new MotivationViewSettings
             {
                 ColumnNumDisplay = 9,
                 StartPoint       = new Point( 160 + 270 * 2, 160 ),
@@ -89,11 +90,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
             pastView  .UpdateInput( gameTime );
             nowView   .UpdateInput( gameTime );
             futureView.UpdateInput( gameTime );
-
-            if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.CreateItem ) )
-            {
-                //pastView.Control.
-            }
         }
 
         public override void UpdateStructure(GameTime gameTime)

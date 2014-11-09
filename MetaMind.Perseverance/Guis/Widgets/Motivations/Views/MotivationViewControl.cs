@@ -25,14 +25,81 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
 
         public override void UpdateInput( GameTime gameTime )
         {
-            base.UpdateInput( gameTime );
-
             if ( View.IsEnabled( ViewState.View_Active ) &&
                  View.IsEnabled( ViewState.View_Has_Focus ) &&
                 !View.IsEnabled( ViewState.Item_Editting ) )
             {
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.CreateItem ) )
+                //------------------------------------------------------------------
+                // mouse
+                if ( InputSequenceManager.Mouse.IsWheelScrolledUp )
+                {
+                    Scroll.MoveLeft();
+                }
+                if ( InputSequenceManager.Mouse.IsWheelScrolledDown )
+                {
+                    Scroll.MoveRight();
+                }
+                //------------------------------------------------------------------
+                // keyboard
+                // screen movement
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Left ) )
+                {
+                    MoveLeft();
+                }
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Right ) )
+                {
+                    MoveRight();
+                }
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.SLeft ) )
+                {
+                    for ( var i = 0 ; i < ViewSettings.ColumnNumDisplay; i++ )
+                    {
+                       MoveLeft();
+                    }
+                }
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.SRight ) )
+                {
+                    for ( var i = 0 ; i < ViewSettings.ColumnNumDisplay; i++ )
+                    {
+                        MoveRight();
+                    }
+                }//---------------------------------------------------------------------
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Escape ) )
+                {
+                    Selection.Clear();
+                }
+                //---------------------------------------------------------------------
+                // list management
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.MotivationCreateItem ) )
+                {
                     AddItem();
+                }
+            }
+        }
+
+        private void MoveRight()
+        {
+            if ( ViewSettings.Direction == ViewSettings1D.ScrollDirection.Left )
+            {
+                // invert for left scrolling view
+                Selection.MoveLeft();
+            }
+            else
+            {
+                Selection.MoveRight();
+            }
+        }
+
+        private void MoveLeft()
+        {
+            if ( ViewSettings.Direction == ViewSettings1D.ScrollDirection.Left )
+            {
+                // invert for left scrolling view
+                Selection.MoveRight();
+            }
+            else
+            {
+                Selection.MoveLeft();
             }
         }
     }

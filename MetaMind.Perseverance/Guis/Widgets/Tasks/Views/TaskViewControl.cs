@@ -58,30 +58,64 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
                 // up down left right esc
                 if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Left ) )
                 {
-                    ScrollBar.Trigger();
-                    Selection.MoveLeft();
+                    MoveLeft();
                 }
                 if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Right ) )
                 {
-                    ScrollBar.Trigger();
-                    Selection.MoveRight();
+                    MoveRight();
                 }
                 if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Up ) )
                 {
-                    ScrollBar.Trigger();
-                    Selection.MoveUp();
+                    MoveUp();
                 }
                 if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Down ) )
                 {
-                    ScrollBar.Trigger();
-                    Selection.MoveDown();
+                    MoveDown();
+                }
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.SUp ) )
+                {
+                    for ( var i = 0 ; i < ViewSettings.RowNumDisplay; i++ )
+                    {
+                        MoveUp();
+                    }
+                }
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.SDown ) )
+                {
+                    for ( var i = 0 ; i < ViewSettings.RowNumDisplay; i++ )
+                    {
+                        MoveDown();
+                    }
                 }
                 //-----------------------------------------------------------------
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.CreateItem ) )
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.TaskCreateItem ) )
                     AddItem();
                 if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Escape ) )
                     Selection.Clear();
             }
+        }
+
+        private void MoveDown()
+        {
+            ScrollBar.Trigger();
+            Selection.MoveDown();
+        }
+
+        private void MoveUp()
+        {
+            ScrollBar.Trigger();
+            Selection.MoveUp();
+        }
+
+        private void MoveRight()
+        {
+            ScrollBar.Trigger();
+            Selection.MoveRight();
+        }
+
+        private void MoveLeft()
+        {
+            ScrollBar.Trigger();
+            Selection.MoveLeft();
         }
 
         public override void UpdateStrucutre( GameTime gameTime )

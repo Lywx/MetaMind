@@ -11,9 +11,9 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
         {
         }
 
-        public override void Draw( GameTime gameTime )
+        public override void Draw(GameTime gameTime, byte alpha)
         {
-            base.Draw( gameTime );
+            base.Draw( gameTime, alpha);
         }
     }
 }

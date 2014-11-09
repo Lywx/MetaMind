@@ -16,12 +16,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
         }
 
-        public virtual void Draw( GameTime gameTime )
+        public virtual void Draw(GameTime gameTime, byte alpha)
         {
             foreach ( var item in View.Items )
             {
                 if ( item.IsEnabled( ItemState.Item_Active ) )
-                    item.Draw( gameTime );
+                    item.Draw( gameTime, alpha );
             }
         }
     }

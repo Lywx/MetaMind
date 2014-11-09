@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Windows.Forms;
 using MetaMind.Engine.Guis.Widgets;
+using MetaMind.Engine.Guis.Widgets.Items;
 using MetaMind.Engine.Guis.Widgets.ViewItems;
 using MetaMind.Engine.Guis.Widgets.Views;
 using Microsoft.Xna.Framework;
@@ -31,18 +32,16 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             {
                 return true;
             }
-
             if ( Tracer.View.IsEnabled( ViewState.View_Has_Focus ) )
             {
                 Tracer.Close();
-                return false;
             }
             return true;
         }
 
         public void UpdateStructure( GameTime gameTime )
         {
-            if ( Tracer != null )
+            if ( Tracer != null ) 
             {
                 Tracer.UpdateStructure( gameTime );
             }
@@ -50,7 +49,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 
         public void UpdateInput( GameTime gameTime )
         {
-            if ( Tracer != null )
+            if ( Tracer != null && Item.IsEnabled( ItemState.Item_Selected ) )
             {
                 Tracer.UpdateInput( gameTime );
             }

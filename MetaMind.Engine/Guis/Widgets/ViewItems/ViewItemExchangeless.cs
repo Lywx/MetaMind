@@ -1,5 +1,6 @@
 ﻿using System;
 using MetaMind.Engine.Guis.Widgets.Items;
+using Microsoft.Xna.Framework;
 
 namespace MetaMind.Engine.Guis.Widgets.ViewItems
 {
@@ -47,9 +48,9 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         public dynamic ViewSettings { get; protected set; }
 
-        public override void Draw( Microsoft.Xna.Framework.GameTime gameTime )
+        public override void Draw(GameTime gameTime, byte alpha)
         {
-            ItemGraphics.Draw( gameTime );
+            ItemGraphics.Draw( gameTime, alpha );
         }
 
         public override void Update( Microsoft.Xna.Framework.GameTime gameTime )

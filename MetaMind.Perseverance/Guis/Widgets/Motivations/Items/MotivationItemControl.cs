@@ -49,12 +49,12 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
                 !Item.IsEnabled( ItemState.Item_Editing ) )
             {
                 // normal status
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.EditItem ) )
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.MotivationEditItem ) )
                 {
                     View.Enable( ViewState.Item_Editting );
                     Item.Enable( ItemState.Item_Pending );
                 }
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.DeleteItem ) )
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.MotivationDeleteItem ) )
                     DeleteIt();
                 // in pending status
                 if ( Item.IsEnabled( ItemState.Item_Pending ) )

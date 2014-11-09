@@ -23,11 +23,20 @@ namespace MetaMind.Engine.Components.Inputs
         Left,
         Right,
 
+        SUp,
+        SDown,
+        SLeft,
+        SRight,
+
         //---------------------------------------------------------------------
         // list management
-        CreateItem,
-        DeleteItem,
-        EditItem,
+        MotivationCreateItem,
+        MotivationDeleteItem,
+        MotivationEditItem,
+        
+        TaskCreateItem,
+        TaskDeleteItem,
+        TaskEditItem,
 
         //---------------------------------------------------------------------
         // general
@@ -130,7 +139,7 @@ namespace MetaMind.Engine.Components.Inputs
         /// </summary>
         private bool IsActionMapPressed( KeyboardActionMap actionMap )
         {
-            return actionMap.Bindings.Any( binding => IsKeyPressed( binding.Key ) && ( binding.Value.Count == 0 || binding.Value.Any( IsKeyPressed ) ) );
+            return actionMap.Bindings.Any( binding => IsKeyPressed( binding.Key ) && ( binding.Value.Count == 0 || binding.Value.All( IsKeyPressed ) ) );
         }
 
         /// <summary>
@@ -207,16 +216,40 @@ namespace MetaMind.Engine.Components.Inputs
             actionMaps[ ( int ) Actions.Right ] = new KeyboardActionMap();
             actionMaps[ ( int ) Actions.Right ].Bindings.Add( Keys.L, new List<Keys>() );
 
+            actionMaps[ ( int ) Actions.SUp ] = new KeyboardActionMap();
+            actionMaps[ ( int ) Actions.SUp ].Bindings.Add( Keys.K, new List<Keys> { Keys.LeftControl } );
+
+            actionMaps[ ( int ) Actions.SDown ] = new KeyboardActionMap();
+            actionMaps[ ( int ) Actions.SDown ].Bindings.Add( Keys.J, new List<Keys> { Keys.LeftControl } );
+
+            actionMaps[ ( int ) Actions.SLeft ] = new KeyboardActionMap();
+            actionMaps[ ( int ) Actions.SLeft ].Bindings.Add( Keys.H, new List<Keys> { Keys.LeftControl } );
+
+            actionMaps[ ( int ) Actions.SRight ] = new KeyboardActionMap();
+            actionMaps[ ( int ) Actions.SRight ].Bindings.Add( Keys.L, new List<Keys> { Keys.LeftControl } );
+
             //-----------------------------------------------------------------
             // list management
-            actionMaps[ ( int ) Actions.CreateItem ] = new KeyboardActionMap();
-            actionMaps[ ( int ) Actions.CreateItem ].Bindings.Add( Keys.O, new List<Keys> { Keys.LeftControl } );
+            
+            // motivation
+            actionMaps[ ( int ) Actions.MotivationCreateItem] = new KeyboardActionMap();
+            actionMaps[ ( int ) Actions.MotivationCreateItem ].Bindings.Add( Keys.O, new List<Keys> { Keys.LeftShift } );
 
-            actionMaps[ ( int ) Actions.DeleteItem ] = new KeyboardActionMap();
-            actionMaps[ ( int ) Actions.DeleteItem ].Bindings.Add( Keys.D, new List<Keys> { Keys.LeftControl } );
+            actionMaps[ ( int ) Actions.MotivationDeleteItem ] = new KeyboardActionMap();
+            actionMaps[ ( int ) Actions.MotivationDeleteItem ].Bindings.Add( Keys.D, new List<Keys> { Keys.LeftShift } );
 
-            actionMaps[ ( int ) Actions.EditItem ] = new KeyboardActionMap();
-            actionMaps[ ( int ) Actions.EditItem ].Bindings.Add( Keys.I, new List<Keys>() );
+            actionMaps[ ( int ) Actions.MotivationEditItem ] = new KeyboardActionMap();
+            actionMaps[ ( int ) Actions.MotivationEditItem ].Bindings.Add( Keys.I, new List<Keys>{ Keys.LeftShift } );
+
+            // task
+            actionMaps[ ( int ) Actions.TaskCreateItem ] = new KeyboardActionMap();
+            actionMaps[ ( int ) Actions.TaskCreateItem ].Bindings.Add( Keys.O, new List<Keys> { Keys.LeftControl } );
+                                        
+            actionMaps[ ( int ) Actions.TaskDeleteItem ] = new KeyboardActionMap();
+            actionMaps[ ( int ) Actions.TaskDeleteItem ].Bindings.Add( Keys.D, new List<Keys> { Keys.LeftControl } );
+
+            actionMaps[ ( int ) Actions.TaskEditItem ] = new KeyboardActionMap();
+            actionMaps[ ( int ) Actions.TaskEditItem ].Bindings.Add( Keys.I, new List<Keys> { Keys.LeftControl } );
 
             //-----------------------------------------------------------------
             actionMaps[ ( int ) Actions.LastScreen ] = new KeyboardActionMap();

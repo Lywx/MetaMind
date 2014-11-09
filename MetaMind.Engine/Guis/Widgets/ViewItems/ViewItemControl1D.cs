@@ -68,8 +68,6 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
             if ( Item.IsEnabled( ItemState.Item_Selected ) &&
                 !Item.IsEnabled( ItemState.Item_Editing ) )
             {
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.EditItem ) )
-                    ItemDataControl.EditString( "Name" );
             }
         }
 

@@ -19,7 +19,8 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
         public void UpdateInput( GameTime gameTime )
         {
             if ( Item.IsEnabled( ItemState.Item_Selected ) &&
-                !Item.IsEnabled( ItemState.Item_Editing ) )
+                !Item.IsEnabled( ItemState.Item_Editing ) &&
+                 Item.IsEnabled( ItemState.Item_Pending ) )
             {
                 if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Up ) )
                     BecomeWish();
