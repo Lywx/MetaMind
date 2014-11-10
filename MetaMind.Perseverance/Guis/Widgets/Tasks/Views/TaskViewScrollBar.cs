@@ -11,13 +11,13 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
     public class TaskViewScrollBar : ViewComponent
     {
         private readonly TaskViewScrollBarSettings settings;
-        private byte transitionAlpha;
+        private          byte                      alpha;
 
         public TaskViewScrollBar( IView view, TaskViewSettings viewSettings, TaskItemSettings itemSettings, TaskViewScrollBarSettings scrollBarSettings )
             : base( view, viewSettings, itemSettings )
         {
             settings = scrollBarSettings;
-            transitionAlpha = 0;
+            alpha = 0;
         }
 
         private Rectangle ScrollBarRectangle
@@ -38,20 +38,26 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
         public void Draw( GameTime gameTime )
         {
             if ( ViewControl.RowNum > ViewSettings.RowNumDisplay )
-                Primitives2D.FillRectangle( ScreenManager.SpriteBatch, ScrollBarRectangle, settings.Color.MakeTransparent( transitionAlpha ) );
+            {
+                Primitives2D.FillRectangle( ScreenManager.SpriteBatch, ScrollBarRectangle, settings.Color.MakeTransparent( alpha ) );
+            }
         }
 
         public void Trigger()
         {
-            transitionAlpha = settings.BrightnessMax;
+            alpha = settings.BrightnessMax;
         }
 
         public void Upadte( GameTime gameTime )
         {
-            if ( transitionAlpha > 2 )
-                transitionAlpha -= settings.BrightnessTransitionRate;
+            if ( alpha > 2 )
+            {
+                alpha -= settings.BrightnessTransitionRate;
+            }
             else
-                transitionAlpha = 0;
+            {
+                alpha = 0;
+            }
         }
     }
 }

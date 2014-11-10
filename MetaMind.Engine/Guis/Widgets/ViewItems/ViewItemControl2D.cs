@@ -6,14 +6,10 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 {
     public class ViewItemControl2D : ViewItemComponent
     {
-        //---------------------------------------------------------------------
-
         protected dynamic               ItemFrameControl { get; set; }
         protected ViewItemViewControl2D ItemViewControl  { get; set; }
         protected ViewItemDataControl   ItemDataControl  { get; set; }
         
-        //---------------------------------------------------------------------
-
         #region Constructors
 
         public ViewItemControl2D( IViewItem item )
@@ -57,13 +53,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         #region Update
 
-        public void Update( GameTime gameTime )
-        {
-            UpdateInput( gameTime );
-            UpdateStructure( gameTime );
-        }
-
-        protected virtual void UpdateInput( GameTime gameTime )
+        public virtual void UpdateInput( GameTime gameTime )
         {
             if ( Item.IsEnabled( ItemState.Item_Selected ) &&
                 !Item.IsEnabled( ItemState.Item_Editing ) )
@@ -71,7 +61,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
             }
         }
 
-        protected virtual void UpdateStructure( GameTime gameTime )
+        public virtual void UpdateStructure( GameTime gameTime )
         {
             ItemViewControl .Update( gameTime );
             ItemFrameControl.Update( gameTime );

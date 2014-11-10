@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using MetaMind.Engine.Components.Inputs;
+using MetaMind.Engine.Guis.Widgets.Items;
 using Microsoft.Xna.Framework;
 
 namespace MetaMind.Engine.Guis.Widgets.Views
@@ -10,8 +11,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         public ViewControl1D( IView view, ICloneable viewSettings, ICloneable itemSettings )
             : base( view, viewSettings, itemSettings )
         {
-            Swap      = new ViewSwapControl( View, ViewSettings, ItemSettings );
-            Scroll    = new ViewScrollControl1D( View, ViewSettings, ItemSettings );
+            Swap      = new ViewSwapControl       ( View, ViewSettings, ItemSettings );
+            Scroll    = new ViewScrollControl1D   ( View, ViewSettings, ItemSettings );
             Selection = new ViewSelectionControl1D( View, ViewSettings, ItemSettings );
         }
 
@@ -57,44 +58,56 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             {
                 //------------------------------------------------------------------
                 // mouse
-                if ( InputSequenceManager.Mouse.IsWheelScrolledUp )
                 {
-                    Scroll.MoveLeft();
-                }
-                if ( InputSequenceManager.Mouse.IsWheelScrolledDown )
-                {
-                    Scroll.MoveRight();
-                }
+                    if ( InputSequenceManager.Mouse.IsWheelScrolledUp )
+                    {
+                        Scroll.MoveLeft();
+                    }
+                    if ( InputSequenceManager.Mouse.IsWheelScrolledDown )
+                    {
+                        Scroll.MoveRight();
+                    }
+                }  
                 //------------------------------------------------------------------
                 // keyboard
-                // left right esc
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Left ) )
                 {
-                    if ( ViewSettings.Direction == ViewSettings1D.ScrollDirection.Left )
+                    //--------------------------------------------------------------
+                    // movement
+                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Left ) )
                     {
-                        // invert for left scrolling view
-                        Selection.MoveRight();
+                        if ( ViewSettings.Direction == ViewSettings1D.ScrollDirection.Left )
+                        {
+                            // invert for left scrolling view
+                            Selection.MoveRight();
+                        }
+                        else
+                        {
+                            Selection.MoveLeft();
+                        }
                     }
-                    else
+                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Right ) )
                     {
-                        Selection.MoveLeft();
+                        if ( ViewSettings.Direction == ViewSettings1D.ScrollDirection.Left )
+                        {
+                            // invert for left scrolling view
+                            Selection.MoveLeft();
+                        }
+                        else
+                        {
+                            Selection.MoveRight();
+                        }
+                    }
+                    //------------------------------------------------------------
+                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Escape ) )
+                    {
+                        Selection.Clear();
                     }
                 }
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Right ) )
+                //-----------------------------------------------------------------
+                // item input
+                foreach ( var item in View.Items.ToArray() )
                 {
-                    if ( ViewSettings.Direction == ViewSettings1D.ScrollDirection.Left )
-                    {
-                        // invert for left scrolling view
-                        Selection.MoveLeft();
-                    }
-                    else
-                    {
-                        Selection.MoveRight();
-                    }
-                }
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Escape ) )
-                {
-                    Selection.Clear();
+                    item.UpdateInput( gameTime );
                 }
             }
         }
@@ -102,38 +115,55 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         public void UpdateStrucutre( GameTime gameTime )
         {
             UpdateViewLogics();
-            UpdateItems( gameTime );
+            UpdateItemLogics( gameTime );
         }
 
-        private void UpdateViewLogics()
+        protected virtual void UpdateItemLogics( GameTime gameTime )
         {
-            if ( Selection.HasSelected )
+            if ( View.IsEnabled( ViewState.View_Active ) )
             {
-                View.Enable( ViewState.View_Has_Selection );
+                foreach ( var item in View.Items.ToArray() )
+                {
+                    item.UpdateStructure( gameTime );
+                }
             }
             else
             {
-                View.Disable( ViewState.View_Has_Selection );
+                foreach ( var item in View.Items )
+                {
+                    item.Disable( ItemState.Item_Active ); 
+                }
             }
+        }
 
-            if ( View.IsEnabled( ViewState.View_Has_Selection ) )
+        protected virtual void UpdateViewLogics()
+        {
+            if ( View.IsEnabled( ViewState.View_Active ) )
             {
-                View.Enable( ViewState.View_Has_Focus );
+                if ( Selection.HasSelected )
+                {
+                    View.Enable( ViewState.View_Has_Selection );
+                }
+                else
+                {
+                    View.Disable( ViewState.View_Has_Selection );
+                }
+                if ( View.IsEnabled( ViewState.View_Has_Selection ) )
+                {
+                    View.Enable( ViewState.View_Has_Focus );
+                }
+                else
+                {
+                    View.Disable( ViewState.View_Has_Focus );
+                }
             }
             else
             {
                 View.Disable( ViewState.View_Has_Focus );
+                View.Disable( ViewState.View_Has_Selection );
             }
         }
-
-        private void UpdateItems( GameTime gameTime )
-        {
-            foreach ( var item in View.Items.ToArray() )
-            {
-                item.Update( gameTime );
-            }
-        }
-
+        
         #endregion Update
     }
 }

@@ -59,11 +59,20 @@ namespace MetaMind.Engine.Guis.Elements.Regions
 
         public virtual void Update( GameTime gameTime )
         {
-            if ( frame.IsEnabled( FrameState.Mouse_Left_Clicked ) || frame.IsEnabled( FrameState.Mouse_Left_Double_Clicked ) ||
-                frame.IsEnabled( FrameState.Mouse_Right_Clicked ) || frame.IsEnabled( FrameState.Mouse_Right_Double_Clicked ) )
-                Enable( RegionState.Region_Hightlighted );
-            else
-                Disable( RegionState.Region_Hightlighted );
+            if ( frame.IsEnabled( FrameState.Frame_Active ) )
+            {
+                if ( frame.IsEnabled( FrameState.Mouse_Left_Clicked ) || 
+                     frame.IsEnabled( FrameState.Mouse_Left_Double_Clicked ) ||
+                     frame.IsEnabled( FrameState.Mouse_Right_Clicked ) ||
+                     frame.IsEnabled( FrameState.Mouse_Right_Double_Clicked ) )
+                {
+                    Enable( RegionState.Region_Hightlighted );
+                }
+                else
+                {
+                    Disable( RegionState.Region_Hightlighted );
+                }
+            }
         }
     }
 }

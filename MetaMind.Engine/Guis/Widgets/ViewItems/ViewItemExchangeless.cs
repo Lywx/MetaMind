@@ -38,24 +38,26 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
             ItemGraphics = itemFactory.CreateGraphics( this );
         }
 
-        public dynamic       ItemData { get; set; }
-        public dynamic       ItemControl { get; set; }
+        public dynamic       ItemData     { get; set; }
+        public dynamic       ItemControl  { get; set; }
         public IItemGraphics ItemGraphics { get; set; }
+        public dynamic       View         { get; protected set; }
+        public dynamic       ViewControl  { get { return View.Control; } }
+        public dynamic       ViewSettings { get; protected set; }
 
-        public dynamic View { get; protected set; }
-
-        public dynamic ViewControl { get { return View.Control; } }
-
-        public dynamic ViewSettings { get; protected set; }
-
-        public override void Draw(GameTime gameTime, byte alpha)
+        public override void Draw( GameTime gameTime, byte alpha )
         {
             ItemGraphics.Draw( gameTime, alpha );
         }
 
-        public override void Update( Microsoft.Xna.Framework.GameTime gameTime )
+        public override void UpdateInput( GameTime gameTime )
         {
-            ItemControl .Update( gameTime );
+            ItemControl.UpdateInput( gameTime );
+        }
+
+        public override void UpdateStructure( GameTime gameTime )
+        {
+            ItemControl .UpdateStructure( gameTime );
             ItemGraphics.Update( gameTime );
         }
     }

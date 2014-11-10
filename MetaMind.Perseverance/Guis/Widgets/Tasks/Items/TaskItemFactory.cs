@@ -19,5 +19,10 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
         {
             return new TaskItemGraphics( item );
         }
+
+        public void RemoveData( IViewItem item )
+        {
+            Perseverance.Adventure.Motivationlist.Remove( item.ItemData );
+        }
     }
 }

@@ -25,12 +25,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
             DrawScrollBar( gameTime );
         }
 
-        private void DrawScrollBar( GameTime gameTime )
-        {
-            ViewControl.ScrollBar.Draw( gameTime );
-        }
-
-        private void DrawRegion( GameTime gameTime )
+        public override void Update( GameTime gameTime )
         {
             if ( View.IsEnabled( ViewState.View_Has_Focus ) )
             {
@@ -48,8 +43,17 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
                     frameAlpha = 0;
                 }
             }
+
+        }
+        private void DrawRegion( GameTime gameTime )
+        {
             Primitives2D.DrawRectangle( ScreenManager.SpriteBatch, RectangleExt.Extend( ViewControl.Region.Frame.Rectangle, ViewSettings.BorderMargin ), ColorExt.MakeTransparent( ViewSettings.CurrentColor, ( byte ) frameAlpha ), 2f );
             Primitives2D.FillRectangle( ScreenManager.SpriteBatch, ViewControl.Region.Frame.Rectangle, ColorExt.MakeTransparent( ViewSettings.CurrentColor, ( byte ) frameAlpha ) );
+        }
+
+        private void DrawScrollBar( GameTime gameTime )
+        {
+            ViewControl.ScrollBar.Draw( gameTime );
         }
     }
 }

@@ -30,6 +30,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
         public void DeleteIt()
         {
             View.Items.Remove( Item );
+            View.Control.ItemFactory.RemoveData( Item );
         }
 
         public override void SelectIt()
@@ -43,7 +44,8 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             if ( ItemTaskControl.UnselectIt() )
                 base.UnselectIt();
         }
-        protected override void UpdateInput( GameTime gameTime )
+
+        public override void UpdateInput( GameTime gameTime )
         {
             if ( Item.IsEnabled( ItemState.Item_Selected ) &&
                 !Item.IsEnabled( ItemState.Item_Editing ) )
@@ -72,7 +74,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             ItemTaskControl  .UpdateInput( gameTime );
         }
 
-        protected override void UpdateStructure( GameTime gameTime )
+        public override void UpdateStructure( GameTime gameTime )
         {
             base             .UpdateStructure( gameTime );
             ItemSymbolControl.UpdateStructure( gameTime );

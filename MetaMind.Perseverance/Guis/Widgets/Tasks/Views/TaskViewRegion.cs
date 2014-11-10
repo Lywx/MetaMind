@@ -20,13 +20,17 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
         }
 
         public dynamic ItemSettings { get; private set; }
-
-        public IView View { get; private set; }
-
-        public dynamic ViewControl { get { return View.Control; } }
-
+        public IView   View         { get; private set; }
+        public dynamic ViewControl  { get { return View.Control; } }
         public dynamic ViewSettings { get; private set; }
- 
+
+        public override void Update(GameTime gameTime)
+        {
+            Location = ViewSettings.StartPoint;
+
+            base.Update( gameTime );
+        }
+
         private static Rectangle StartRectangle( dynamic viewSettings, dynamic itemSettings )
         {
             return new Rectangle(

@@ -25,7 +25,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
         public TaskItemErrorControl ItemErrorControl { get; private set; }
 
-        protected override void UpdateInput( GameTime gameTime )
+        public override void UpdateInput( GameTime gameTime )
         {
             if ( Item.IsEnabled( ItemState.Item_Selected ) &&
                 !Item.IsEnabled( ItemState.Item_Editing ) )

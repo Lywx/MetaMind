@@ -12,7 +12,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
         }
 
-        public void Update( GameTime gameTime )
+        public virtual void Update( GameTime gameTime )
         {
         }
 

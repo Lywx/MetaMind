@@ -8,15 +8,17 @@ namespace MetaMind.Engine.Guis.Widgets.Items
     {
         ICloneable ItemSettings { get; }
 
-        void Draw( GameTime gameTime, byte alpha );
-
-        void Update( GameTime gameTime );
-
         void Disable( ItemState state );
+
+        void Draw( GameTime gameTime, byte alpha );
 
         void Enable( ItemState state );
 
         bool IsEnabled( ItemState state );
+
+        void UpdateInput( GameTime gameTime );
+
+        void UpdateStructure( GameTime gameTime );
     }
 
     public abstract class ItemObject : EngineObject, IItemObject
@@ -59,9 +61,10 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         #region Update and Draw
 
-        public abstract void Draw(GameTime gameTime, byte alpha);
+        public abstract void Draw( GameTime gameTime, byte alpha );
 
-        public abstract void Update( GameTime gameTime );
+        public abstract void UpdateInput( GameTime gameTime );
+        public abstract void UpdateStructure( GameTime gameTime );
 
         #endregion Update and Draw
     }

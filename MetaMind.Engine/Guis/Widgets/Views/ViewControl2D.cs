@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using MetaMind.Engine.Components.Inputs;
+using MetaMind.Engine.Guis.Widgets.Items;
 using Microsoft.Xna.Framework;
 
 namespace MetaMind.Engine.Guis.Widgets.Views
@@ -59,50 +60,82 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             {
                 //------------------------------------------------------------------
                 // mouse
-                if ( InputSequenceManager.Mouse.IsWheelScrolledUp )
-                    Scroll.MoveUp();
-                if ( InputSequenceManager.Mouse.IsWheelScrolledDown )
-                    Scroll.MoveDown();
-
+                {
+                    if ( InputSequenceManager.Mouse.IsWheelScrolledUp )
+                        Scroll.MoveUp();
+                    if ( InputSequenceManager.Mouse.IsWheelScrolledDown )
+                        Scroll.MoveDown();
+                }
                 //------------------------------------------------------------------
                 // keyboard
-                // up down left right esc
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Left ) )
-                    Selection.MoveLeft();
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Right ) )
-                    Selection.MoveRight();
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Up ) )
-                    Selection.MoveUp();
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Down ) )
-                    Selection.MoveDown();
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Escape ) )
-                    Selection.Clear();
+                {
+                    //--------------------------------------------------------------
+                    // movement 
+                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Left ) )
+                        Selection.MoveLeft();
+                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Right ) )
+                        Selection.MoveRight();
+                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Up ) )
+                        Selection.MoveUp();
+                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Down ) )
+                        Selection.MoveDown();
+                    //--------------------------------------------------------------
+                    // escape
+                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Escape ) )
+                        Selection.Clear();
+                }
             }
         }
 
         public virtual void UpdateStrucutre( GameTime gameTime )
         {
             UpdateViewLogics();
-            UpdateItems( gameTime );
+            UpdateItemLogics( gameTime );
+        }
+
+        protected virtual void UpdateItemLogics( GameTime gameTime )
+        {
+            if ( View.IsEnabled( ViewState.View_Active ) )
+            {
+                foreach ( var item in View.Items.ToArray() )
+                {
+                    item.UpdateStructure( gameTime );
+                }
+            }
+            else
+            {
+                foreach ( var item in View.Items )
+                {
+                    item.Disable( ItemState.Item_Active ); 
+                }
+            }
         }
 
         protected virtual void UpdateViewLogics()
         {
-            if ( Selection.HasSelected )
-                View.Enable( ViewState.View_Has_Selection );
-            else
-                View.Disable( ViewState.View_Has_Selection );
-            if ( View.IsEnabled( ViewState.View_Has_Selection ) )
-                View.Enable( ViewState.View_Has_Focus );
-            else
-                View.Disable( ViewState.View_Has_Focus );
-        }
-
-        private void UpdateItems( GameTime gameTime )
-        {
-            foreach ( var item in View.Items.ToArray() )
+            if ( View.IsEnabled( ViewState.View_Active ) )
             {
-                item.Update( gameTime );
+                if ( Selection.HasSelected )
+                {
+                    View.Enable( ViewState.View_Has_Selection );
+                }
+                else
+                {
+                    View.Disable( ViewState.View_Has_Selection );
+                }
+                if ( View.IsEnabled( ViewState.View_Has_Selection ) )
+                {
+                    View.Enable( ViewState.View_Has_Focus );
+                }
+                else
+                {
+                    View.Disable( ViewState.View_Has_Focus );
+                }
+            }
+            else
+            {
+                View.Disable( ViewState.View_Has_Focus );
+                View.Disable( ViewState.View_Has_Selection );
             }
         }
 

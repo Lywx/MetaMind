@@ -43,84 +43,74 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
             {
                 //------------------------------------------------------------------
                 // mouse
-                if ( InputSequenceManager.Mouse.IsWheelScrolledUp )
                 {
-                    ScrollBar.Trigger();
-                    Scroll.MoveUp();
-                }
-                if ( InputSequenceManager.Mouse.IsWheelScrolledDown )
-                {
-                    Scroll.MoveDown();
-                    ScrollBar.Trigger();
+                    if ( InputSequenceManager.Mouse.IsWheelScrolledUp )
+                    {
+                        ScrollBar.Trigger();
+                        Scroll   .MoveUp();
+                    }
+                    if ( InputSequenceManager.Mouse.IsWheelScrolledDown )
+                    {
+                        Scroll   .MoveDown();
+                        ScrollBar.Trigger();
+                    }
                 }
                 //------------------------------------------------------------------
                 // keyboard
-                // up down left right esc
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Left ) )
                 {
-                    MoveLeft();
-                }
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Right ) )
-                {
-                    MoveRight();
-                }
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Up ) )
-                {
-                    MoveUp();
-                }
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Down ) )
-                {
-                    MoveDown();
-                }
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.SUp ) )
-                {
-                    for ( var i = 0 ; i < ViewSettings.RowNumDisplay; i++ )
+                    // movement
+                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Left ) )
+                    {
+                        MoveLeft();
+                    }
+                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Right ) )
+                    {
+                        MoveRight();
+                    }
+                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Up ) )
                     {
                         MoveUp();
                     }
-                }
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.SDown ) )
-                {
-                    for ( var i = 0 ; i < ViewSettings.RowNumDisplay; i++ )
+                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Down ) )
                     {
                         MoveDown();
                     }
+                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.SUp ) )
+                    {
+                        for ( var i = 0 ; i < ViewSettings.RowNumDisplay; i++ )
+                        {
+                            MoveUp();
+                        }
+                    }
+                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.SDown ) )
+                    {
+                        for ( var i = 0 ; i < ViewSettings.RowNumDisplay; i++ )
+                        {
+                            MoveDown();
+                        }
+                    }
+                    //--------------------------------------------------------------
+                    // escape
+                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Escape ) )
+                        Selection.Clear();
+                    //-------------------------------------------------------------
+                    // list management
+                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.TaskCreateItem ) )
+                        AddItem();
                 }
-                //-----------------------------------------------------------------
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.TaskCreateItem ) )
-                    AddItem();
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Escape ) )
-                    Selection.Clear();
             }
-        }
-
-        private void MoveDown()
-        {
-            ScrollBar.Trigger();
-            Selection.MoveDown();
-        }
-
-        private void MoveUp()
-        {
-            ScrollBar.Trigger();
-            Selection.MoveUp();
-        }
-
-        private void MoveRight()
-        {
-            ScrollBar.Trigger();
-            Selection.MoveRight();
-        }
-
-        private void MoveLeft()
-        {
-            ScrollBar.Trigger();
-            Selection.MoveLeft();
+            //-----------------------------------------------------------------
+            // item input
+            foreach ( var item in View.Items.ToArray() )
+            {
+                item.UpdateInput( gameTime );
+            }
         }
 
         public override void UpdateStrucutre( GameTime gameTime )
         {
             base     .UpdateStrucutre( gameTime );
+            // TODO: may be better to separate scroll bar graphical update
             ScrollBar.Upadte( gameTime );
             Region   .Update( gameTime );
         }
@@ -133,6 +123,30 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
                 View.Enable( ViewState.View_Has_Focus );
         }
 
+        private void MoveDown()
+        {
+            ScrollBar.Trigger();
+            Selection.MoveDown();
+        }
+
+        private void MoveLeft()
+        {
+            ScrollBar.Trigger();
+            Selection.MoveLeft();
+        }
+
+        private void MoveRight()
+        {
+            ScrollBar.Trigger();
+            Selection.MoveRight();
+        }
+
+        private void MoveUp()
+        {
+            ScrollBar.Trigger();
+            Selection.MoveUp();
+        }
+        
         #endregion Update
 
         #region Operations

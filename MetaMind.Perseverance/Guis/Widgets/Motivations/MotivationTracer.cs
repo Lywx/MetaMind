@@ -29,11 +29,11 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
         {
             this.itemControl = itemControl;
 
-            view       = new View( viewSettings, itemSettings, viewFactory );
-
+            // initialize view items
+            view = new View( viewSettings, itemSettings, viewFactory );
             foreach ( var task in itemControl.ItemData.Tasks )
             {
-                View.Control.AddItem( task );
+                view.Control.AddItem( task );
             }
         }
 
@@ -44,7 +44,9 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
 
         public void Close()
         {
+            // clear highlight
             View.Control.Selection.Clear();
+            View.Disable( ViewState.View_Active );
         }
 
         public override void Draw( GameTime gameTime, byte alpha )
@@ -54,6 +56,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
 
         public void Show()
         {
+            View.Enable( ViewState.View_Active );
             // show up tracer
             View.Control.Selection.Select( 0 );
         }
@@ -66,8 +69,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
         {
             // make sure that task region and task items all follow the host location changes
             View.ViewSettings.StartPoint = Vector2Ext.ToPoint( itemControl.RootFrame.Center.ToVector2() + itemControl.ViewSettings.TracerMargin );
-            View.Control.Region.Location = Vector2Ext.ToPoint( itemControl.RootFrame.Center.ToVector2() + itemControl.ViewSettings.TracerMargin );
-
             View.UpdateStructure( gameTime );
         }
     }
