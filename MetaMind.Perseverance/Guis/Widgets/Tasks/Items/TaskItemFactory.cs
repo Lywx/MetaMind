@@ -22,7 +22,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
         public void RemoveData( IViewItem item )
         {
-            Perseverance.Adventure.Motivationlist.Remove( item.ItemData );
+            Perseverance.Adventure.Tasklist.Remove( item.ItemData );
         }
     }
 }

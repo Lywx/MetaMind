@@ -12,7 +12,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 
         public dynamic CreateData( IViewItem item )
         {
-            return Perseverance.Adventure.Motivationlist.Create();
+            return Perseverance.Adventure.Motivationlist.Create( item.ViewSettings.Space );
         }
 
         public IItemGraphics CreateGraphics( IViewItem item )
@@ -21,7 +21,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
         }
         public void RemoveData( IViewItem item )
         {
-            Perseverance.Adventure.Motivationlist.Remove( item.ItemData );
+            Perseverance.Adventure.Motivationlist.Remove( item.ItemData, item.ViewSettings.Space );
         }
     }
 }

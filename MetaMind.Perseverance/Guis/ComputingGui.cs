@@ -17,9 +17,6 @@ namespace MetaMind.Perseverance.Guis
         private AdventureSleepStoppedEventListener sleepStoppedEventListener;
 
         //---------------------------------------------------------------------
-        private SynchronizationHud synchronizationHud;
-
-        //---------------------------------------------------------------------
 
         #region Load and Unload
 
@@ -54,8 +51,6 @@ namespace MetaMind.Perseverance.Guis
             Debug.Assert( synchronizationHud == null );
             Debug.Assert( planning           == null );
             Debug.Assert( tactic             == null );
-
-            synchronizationHud = new SynchronizationHud( Concepts.Cognition.Synchronization, SynchronizationHudSettings.Default );
 
             planning = new PlanningModule( PlanningModuleSettings.Default );
             tactic = new TacticModule( TacticModuleSettings.Default );

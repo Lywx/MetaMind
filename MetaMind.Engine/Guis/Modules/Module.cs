@@ -5,17 +5,17 @@ namespace MetaMind.Engine.Guis.Modules
 {
     public interface IModule : IWidget
     {
-        IModuleControl Control { get; }
+        IModuleControl  Control { get; }
         IModuleGraphics Graphics { get; }
 
-        void Load( dynamic data );
-        void Reload( dynamic data );
-
+        void Load();
+        void Reload();
         void Unload();
     }
 
     /// <summary>
-    /// 
+    /// Module is the most outer shell of gui object that load and unload
+    /// data from data source. The behavior is of maximum abstraction.
     /// </summary>
     /// <remarks>
     /// Compatible with previous Widget implementation, as long as
@@ -23,9 +23,14 @@ namespace MetaMind.Engine.Guis.Modules
     /// </remarks>>
     public class Module<TModuleSettings> : Widget, IModule
     {
-        public IModuleControl Control { get; protected set; }
+        public IModuleControl  Control  { get; protected set; }
         public IModuleGraphics Graphics { get; protected set; }
         public TModuleSettings Settings { get; protected set; }
+
+        public Module( TModuleSettings settings )
+        {
+            Settings = settings;
+        }
 
         public override void Draw( GameTime gameTime, byte alpha )
         {
@@ -34,23 +39,23 @@ namespace MetaMind.Engine.Guis.Modules
 
         public override void HandleInput()
         {
-            if ( Control == null )
-                return;
-
-            base   .HandleInput();
-            Control.HandleInput();
+            if ( Control != null )
+            {
+                Control.HandleInput();
+            }
+            base.HandleInput();
         }
 
-        public void Load( dynamic data )
+        public virtual void Load() 
         {
-            Control.Load( data ); 
+            Control.Load(); 
         }
-        public void Reload( dynamic data )
+        public virtual void Reload()
         {
-            Control.Load( data );
+            Control.Load();
         }
 
-        public void Unload()
+        public virtual void Unload()
         {
             Control.Unload();
         }

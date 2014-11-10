@@ -37,14 +37,9 @@ namespace MetaMind.Perseverance.Sessions
 
         #region Concepts
 
-        [DataMember]
-        private Cognition cognition;
-
-        [DataMember]
-        private Tasklist tasklist;
-
-        [DataMember]
-        private Motivationlist motivationlist;
+        [DataMember] private Cognition      cognition; 
+        [DataMember] private Tasklist       tasklist;
+        [DataMember] private Motivationlist motivationlist;
 
         #endregion Concepts
 
@@ -71,12 +66,9 @@ namespace MetaMind.Perseverance.Sessions
 
         #region Public Properties
 
-        public Cognition Cognition { get { return cognition; } }
-
-        public Tasklist Tasklist { get { return tasklist; } }
-        
-        public Random Random { get { return random; } }
-
+        public Cognition      Cognition      { get { return cognition; } }
+        public Tasklist       Tasklist       { get { return tasklist; } }
+        public Random         Random         { get { return random; } }
         public Motivationlist Motivationlist { get { return motivationlist; } }
 
         #endregion Public Properties

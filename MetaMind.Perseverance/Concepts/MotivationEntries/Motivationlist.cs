@@ -1,31 +1,71 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-using MetaMind.Perseverance.Concepts.TaskEntries;
 
 namespace MetaMind.Perseverance.Concepts.MotivationEntries
 {
+    public enum MotivationSpace
+    {
+        Past, Now, Future,
+    }
+
     [DataContract]
     public class Motivationlist
     {
-        [DataMember]
-        public List<MotivationEntry> Motivations { get; private set; }
-
         public Motivationlist()
         {
-            Motivations = new List<MotivationEntry>();
+            PastMotivations   = new List<MotivationEntry>();
+            NowMotivations    = new List<MotivationEntry>();
+            FutureMotivations = new List<MotivationEntry>();
         }
 
+        [DataMember] public List<MotivationEntry> FutureMotivations { get; private set; }
+        [DataMember] public List<MotivationEntry> NowMotivations    { get; private set; }
+        [DataMember] public List<MotivationEntry> PastMotivations   { get; private set; }
 
-        public MotivationEntry Create()
+        public MotivationEntry Create( MotivationSpace space )
         {
             var entry = new MotivationEntry();
-            Motivations.Add( entry );
+            switch ( space )
+            {
+                case MotivationSpace.Past:
+                {
+                    PastMotivations.Add( entry );
+                    break;
+                }
+                case MotivationSpace.Now:
+                {
+                    NowMotivations.Add( entry );
+                    break;
+                }
+                case MotivationSpace.Future:
+                {
+                    FutureMotivations.Add( entry );
+                    break;
+                }
+            }
             return entry;
         }
 
-        public void Remove( MotivationEntry entry )
+        public void Remove( MotivationEntry entry, MotivationSpace space )
         {
-            Motivations.Remove( entry );
+            switch ( space )
+            {
+                case MotivationSpace.Past:
+                {
+                    PastMotivations.Remove( entry );
+                    break;
+                }
+                case MotivationSpace.Now:
+                {
+                    NowMotivations.Remove( entry );
+                    break;
+                }
+                case MotivationSpace.Future:
+                {
+                    FutureMotivations.Remove( entry );
+                    break;
+                }
+            }
         }
     }
 }

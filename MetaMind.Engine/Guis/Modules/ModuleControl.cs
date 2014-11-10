@@ -5,7 +5,7 @@ namespace MetaMind.Engine.Guis.Modules
     public interface IModuleControl
     {
         void HandleInput();
-        void Load( dynamic data );
+        void Load();
         void Unload();
         void UpdateInput( GameTime gameTime );
         void UpdateStructure( GameTime gameTime );
@@ -21,7 +21,7 @@ namespace MetaMind.Engine.Guis.Modules
         }
 
         public abstract void HandleInput();
-        public abstract void Load( dynamic data );
+        public abstract void Load();
         public abstract void Unload();
         public abstract void UpdateInput(GameTime gameTime);
         public abstract void UpdateStructure(GameTime gameTime);

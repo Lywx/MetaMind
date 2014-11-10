@@ -60,7 +60,10 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
         private void DeleteIt()
         {
+            // remove from gui
             View.Items.Remove( Item );
+            // remove from data source
+            View.Control.ItemFactory.RemoveData( Item );
         }
 
         #endregion Constructors

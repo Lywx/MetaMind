@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetaMind.Engine.Guis.Widgets;
 using MetaMind.Engine.Guis.Widgets.Items;
@@ -15,43 +16,44 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
         {
         }
 
-        public MotivationTracer Tracer { get; private set; }
+        public MotivationTaskTracer TaskTracer { get; private set; }
 
         public void SelectIt()
         {
-            if ( Tracer == null )
+            if ( TaskTracer == null )
             {
-                Tracer = new MotivationTracer( ItemControl );
+                TaskTracer = new MotivationTaskTracer( ItemControl, new MotivationTaskTracerSettings() );
+                TaskTracer.Load();
             }
-            Tracer.Show();
+            TaskTracer.Show();
         }
 
         public bool UnselectIt()
         {
-            if ( Tracer == null )
+            if ( TaskTracer == null )
             {
                 return true;
             }
-            if ( Tracer.View.IsEnabled( ViewState.View_Has_Focus ) )
+            if ( TaskTracer.View.IsEnabled( ViewState.View_Has_Focus ) )
             {
-                Tracer.Close();
+                TaskTracer.Close();
             }
             return true;
         }
 
         public void UpdateStructure( GameTime gameTime )
         {
-            if ( Tracer != null ) 
+            if ( TaskTracer != null ) 
             {
-                Tracer.UpdateStructure( gameTime );
+                TaskTracer.UpdateStructure( gameTime );
             }
         }
 
         public void UpdateInput( GameTime gameTime )
         {
-            if ( Tracer != null && Item.IsEnabled( ItemState.Item_Selected ) )
+            if ( TaskTracer != null && Item.IsEnabled( ItemState.Item_Selected ) )
             {
-                Tracer.UpdateInput( gameTime );
+                TaskTracer.UpdateInput( gameTime );
             }
         }
     }

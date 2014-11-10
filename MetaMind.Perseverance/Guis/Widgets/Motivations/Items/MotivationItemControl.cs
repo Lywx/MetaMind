@@ -1,5 +1,6 @@
 ﻿using MetaMind.Engine.Components.Inputs;
 using MetaMind.Engine.Guis.Elements.Frames;
+using MetaMind.Engine.Guis.Modules;
 using MetaMind.Engine.Guis.Widgets;
 using MetaMind.Engine.Guis.Widgets.Items;
 using MetaMind.Engine.Guis.Widgets.ViewItems;
@@ -23,13 +24,15 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
         public MotivationItemTaskControl ItemTaskControl { get; set; }
 
         public IPickableFrame SymbolFrame { get { return ItemFrameControl.SymbolFrame; } }
-        public IWidget        Tracer      { get { return ItemTaskControl.Tracer; } }
+        public IModule        Tracer      { get { return ItemTaskControl.TaskTracer; } }
 
         private MotivationItemSymbolControl ItemSymbolControl { get; set; }
 
         public void DeleteIt()
         {
+            // remove from gui
             View.Items.Remove( Item );
+            // remove from data source
             View.Control.ItemFactory.RemoveData( Item );
         }
 

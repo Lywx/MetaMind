@@ -8,7 +8,7 @@ namespace MetaMind.Perseverance.Screens
 {
     public class SummaryScreen : GameScreen
     {
-        private IModule summary;
+        private readonly IModule summary = new SummaryModule( new SummaryModuleSettings() );
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SummaryScreen"/> class.
@@ -18,11 +18,6 @@ namespace MetaMind.Perseverance.Screens
         {
             TransitionOnTime = TimeSpan.FromSeconds( 0.5 );
             TransitionOffTime = TimeSpan.FromSeconds( 0.5 );
-
-            summary = new SummaryModule(
-                Perseverance.Adventure.Cognition.Synchronization,
-                Perseverance.Adventure.Cognition.Consciousness,
-                new SummaryModuleSettings() );
         }
 
         public override void Draw( GameTime gameTime )
@@ -38,7 +33,7 @@ namespace MetaMind.Perseverance.Screens
 
         public override void HandleInput()
         {
-            InputEventManager.HandleInput();
+            InputEventManager   .HandleInput();
             InputSequenceManager.HandleInput();
         }
 
@@ -51,8 +46,10 @@ namespace MetaMind.Perseverance.Screens
         {
             if ( IsActive && !coveredByOtherScreen )
             {
-                Perseverance.Adventure.Update( gameTime );
+                // TODO: not sure it is gonna work
                 MessageManager.Update( gameTime );
+
+                Perseverance.Adventure.Update( gameTime );
                 
                 summary.Update( gameTime );
             }

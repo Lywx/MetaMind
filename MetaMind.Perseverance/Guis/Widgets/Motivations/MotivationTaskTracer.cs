@@ -1,37 +1,34 @@
+using System.Reflection;
 using MetaMind.Engine.Extensions;
+using MetaMind.Engine.Guis.Modules;
 using MetaMind.Engine.Guis.Widgets;
 using MetaMind.Engine.Guis.Widgets.Views;
 using MetaMind.Perseverance.Guis.Widgets.Motivations.Items;
-using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
-using MetaMind.Perseverance.Guis.Widgets.Tasks.Views;
 using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations
 {
-    public class MotivationTracer : Widget 
+    public class MotivationTaskTracer : Module<MotivationTaskTracerSettings>
     {
-        private readonly MotivationItemControl itemControl;
+        private readonly MotivationItemControl hostControl;
         
         private readonly IView                 view;
 
-        private TaskItemSettings itemSettings = new TaskItemSettings();
-        private TaskViewFactory  viewFactory  = new TaskViewFactory();
-        private TaskViewSettings viewSettings = new TaskViewSettings
+        public MotivationTaskTracer( MotivationItemControl itemControl, MotivationTaskTracerSettings settings )
+            : base( settings )
         {
-            ColumnNumDisplay = 1, 
-            ColumnNumMax     = 1, 
-            RowNumDisplay    = 9, 
-            RowNumMax        = 100,
-        };
+            hostControl = itemControl;
+            view        = new View( Settings.ViewSettings, Settings.ItemSettings, Settings.ViewFactory );
+        }
 
-
-        public MotivationTracer( MotivationItemControl itemControl)
+        public override void Load()
         {
-            this.itemControl = itemControl;
+            LoadData();
+        }
 
-            // initialize view items
-            view = new View( viewSettings, itemSettings, viewFactory );
-            foreach ( var task in itemControl.ItemData.Tasks )
+        private void LoadData() 
+        {
+            foreach ( var task in hostControl.ItemData.Tasks )
             {
                 view.Control.AddItem( task );
             }
@@ -68,7 +65,8 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
         public override void UpdateStructure( GameTime gameTime )
         {
             // make sure that task region and task items all follow the host location changes
-            View.ViewSettings.StartPoint = Vector2Ext.ToPoint( itemControl.RootFrame.Center.ToVector2() + itemControl.ViewSettings.TracerMargin );
+            View.ViewSettings.StartPoint = Vector2Ext.ToPoint( hostControl.RootFrame.Center.ToVector2() + hostControl.ViewSettings.TracerMargin );
+
             View.UpdateStructure( gameTime );
         }
     }

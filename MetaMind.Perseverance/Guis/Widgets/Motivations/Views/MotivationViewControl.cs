@@ -2,8 +2,8 @@ using System;
 using MetaMind.Engine.Components.Inputs;
 using MetaMind.Engine.Guis.Widgets.ViewItems;
 using MetaMind.Engine.Guis.Widgets.Views;
+using MetaMind.Perseverance.Concepts.MotivationEntries;
 using MetaMind.Perseverance.Guis.Widgets.Motivations.Items;
-using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
 using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
@@ -18,6 +18,10 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
 
         protected MotivationItemFactory ItemFactory { get; set; }
 
+        public void AddItem( MotivationEntry entry )
+        {
+            View.Items.Add( new ViewItemExchangable( View, ViewSettings, ItemSettings, ItemFactory, entry ) );
+        }
         public void AddItem()
         {
             View.Items.Add( new ViewItemExchangable( View, ViewSettings, ItemSettings, ItemFactory ) );
@@ -87,19 +91,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
             }
         }
 
-        private void MoveRight()
-        {
-            if ( ViewSettings.Direction == ViewSettings1D.ScrollDirection.Left )
-            {
-                // invert for left scrolling view
-                Selection.MoveLeft();
-            }
-            else
-            {
-                Selection.MoveRight();
-            }
-        }
-
         private void MoveLeft()
         {
             if ( ViewSettings.Direction == ViewSettings1D.ScrollDirection.Left )
@@ -110,6 +101,19 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
             else
             {
                 Selection.MoveLeft();
+            }
+        }
+
+        private void MoveRight()
+        {
+            if ( ViewSettings.Direction == ViewSettings1D.ScrollDirection.Left )
+            {
+                // invert for left scrolling view
+                Selection.MoveLeft();
+            }
+            else
+            {
+                Selection.MoveRight();
             }
         }
     }

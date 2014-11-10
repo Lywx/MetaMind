@@ -1,7 +1,10 @@
 ﻿using System;
+using MetaMind.Engine.Guis.Modules;
 using MetaMind.Engine.Guis.Widgets;
 using MetaMind.Engine.Screens;
+using MetaMind.Perseverance.Guis.Modules;
 using MetaMind.Perseverance.Guis.Widgets.Motivations;
+using MetaMind.Perseverance.Guis.Widgets.Motivations.Items;
 using MetaMind.Perseverance.Guis.Widgets.Synchronizations;
 using MetaMind.Perseverance.Guis.Widgets.Tasks;
 using Microsoft.Xna.Framework;
@@ -11,14 +14,16 @@ namespace MetaMind.Perseverance.Screens
     public class MotivationScreen : GameScreen
     {
         private readonly IWidget synchronization    = new SynchronizationHud( Perseverance.Adventure.Cognition.Synchronization, new SynchronizationHudSettings() );
-        private readonly IWidget motivation         = new MotivationExchange();
+        private readonly IModule motivation         = new MotivationExchange( new MotivationExchangeSettings() );
 
         public MotivationScreen()
         {
-            TransitionOnTime = TimeSpan.FromSeconds( 0.5 );
+            TransitionOnTime  = TimeSpan.FromSeconds( 0.5 );
             TransitionOffTime = TimeSpan.FromSeconds( 0.5 );
             
             IsPopup = true;
+
+            motivation.Load();
         }
 
         public override void Draw( GameTime gameTime )

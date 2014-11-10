@@ -120,9 +120,9 @@ namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
             get
             {
                 return new Rectangle(
-                    settings.BarFrameXC - settings.BarFrameSize.X/2,
-                    settings.BarFrameYC - settings.BarFrameSize.Y/2,
-                    (int) (synchronization.ProgressPercent*settings.BarFrameSize.X),
+                    settings.BarFrameXC - settings.BarFrameSize.X / 2,
+                    settings.BarFrameYC - settings.BarFrameSize.Y / 2,
+                    ( int ) ( synchronization.ProgressPercent * settings.BarFrameSize.X ),
                     settings.BarFrameSize.Y
                     );
             }
@@ -245,10 +245,14 @@ namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
         {
             // left side frame
             for ( var i = 0 ; i < synchronization.SynchronizedHourMax ; ++i )
+            {
                 Primitives2D.FillCenterRectangle( ScreenManager.SpriteBatch, new Rectangle( ( int ) StateLocation.X - 275 - 15 * i, ( int ) StateLocation.Y - 1, settings.BarFrameSize.Y, settings.BarFrameSize.Y ), settings.HourFrameColor );
+            }
             // right side frame
             for ( var i = 0 ; i < synchronization.SynchronizedHourMax ; ++i )
+            {
                 Primitives2D.FillCenterRectangle( ScreenManager.SpriteBatch, new Rectangle( ( int ) StateLocation.X + 275 + 15 * i, ( int ) StateLocation.Y - 1, settings.BarFrameSize.Y, settings.BarFrameSize.Y ), settings.HourFrameColor );
+            }
         }
 
         #endregion Update and Draw
