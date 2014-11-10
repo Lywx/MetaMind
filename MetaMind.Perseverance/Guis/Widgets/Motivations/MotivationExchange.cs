@@ -1,4 +1,6 @@
+using System;
 using MetaMind.Engine.Components.Inputs;
+using MetaMind.Engine.Guis.Modules;
 using MetaMind.Engine.Guis.Widgets;
 using MetaMind.Engine.Guis.Widgets.ViewItems;
 using MetaMind.Engine.Guis.Widgets.Views;
@@ -10,23 +12,18 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations
 {
-
-    public class MotivationExchange : Widget
+    public class MotivationExchange : Module<MotivationExchangeSettings>
     {
-        private readonly ViewSettings1D pastViewSettings;
-        private readonly ViewSettings1D nowViewSettings;
-        private readonly ViewSettings1D futureViewSettings;
-
-        private readonly IView pastView;
-        private readonly IView nowView;
-        private readonly IView futureView;
-
-        private readonly Banner                 viewBanner;
-        
+        private readonly IView                  futureView;
+        private readonly MotivationViewSettings futureViewSettings;
         private readonly MotivationItemFactory  itemFactory  = new MotivationItemFactory();
-        private readonly MotivationViewFactory  viewFactory  = new MotivationViewFactory();
         private readonly MotivationItemSettings itemSettings = new MotivationItemSettings();
-
+        private readonly IView                  nowView;
+        private readonly MotivationViewSettings nowViewSettings;
+        private readonly IView                  pastView;
+        private readonly MotivationViewSettings pastViewSettings;
+        private readonly Banner                 viewBanner;
+        private readonly MotivationViewFactory  viewFactory  = new MotivationViewFactory();
         public MotivationExchange()
         {
             pastViewSettings = new MotivationViewSettings
@@ -102,5 +99,13 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
         }
 
         #endregion
+    }
+
+    public class MotivationExchangeSettings : ICloneable
+    {
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 }

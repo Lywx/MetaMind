@@ -12,8 +12,8 @@ namespace MetaMind.Engine.Guis.Groups
     }
 
     public class GroupControl<TGroup, TGroupSettings, TGroupControl> : GroupComponent<TGroup, TGroupSettings, TGroupControl>, IGroupControl
-        where TGroup : Group<TGroupSettings>
-        where TGroupControl : GroupControl<TGroup, TGroupSettings, TGroupControl>
+        where                 TGroup                                 : Group         <TGroupSettings>
+        where                 TGroupControl                          : GroupControl  <TGroup, TGroupSettings, TGroupControl>
     {
         public GroupControl( TGroup group )
             : base( group )

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using MetaMind.Engine.Guis.Modules;
 using MetaMind.Engine.Guis.Widgets.Cameras;
 using MetaMind.Engine.Settings;
 using Microsoft.Xna.Framework;

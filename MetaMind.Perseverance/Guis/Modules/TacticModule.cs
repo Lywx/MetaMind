@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MetaMind.Engine.Guis.Modules;
 using MetaMind.Perseverance.Sessions;
 using Microsoft.Xna.Framework;
 
@@ -10,7 +11,7 @@ namespace MetaMind.Perseverance.Guis.Modules
         {
             Settings = settings;
 
-            Control = new TacticModuleControl( this );
+            Control  = new TacticModuleControl( this );
             Graphics = new TacticModuleGraphics( this );
         }
     }

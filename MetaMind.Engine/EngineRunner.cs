@@ -21,7 +21,7 @@ namespace MetaMind.Engine
             GameEngine.Run();
         }
 
-        public virtual void Exit()
+        public virtual void OnExiting()
         {
         }
     }

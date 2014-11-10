@@ -86,6 +86,10 @@
     <Compile Include="Guis\Groups\GroupComponent.cs" />
     <Compile Include="Guis\Groups\GroupControl.cs" />
     <Compile Include="Guis\Groups\GroupGraphics.cs" />
+    <Compile Include="Guis\Modules\Module.cs" />
+    <Compile Include="Guis\Modules\ModuleComponent.cs" />
+    <Compile Include="Guis\Modules\ModuleControl.cs" />
+    <Compile Include="Guis\Modules\ModuleGraphics.cs" />
     <Compile Include="Guis\Widgets\Cameras\CameraSettings.cs" />
     <Compile Include="Guis\Widgets\Cameras\MarkovCamera.cs" />
     <Compile Include="Guis\Widgets\Widget.cs" />

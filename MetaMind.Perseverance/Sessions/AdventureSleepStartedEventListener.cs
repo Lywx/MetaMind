@@ -1,27 +1,26 @@
 ﻿using MetaMind.Engine.Components.Events;
 using MetaMind.Perseverance.Components;
 using MetaMind.Perseverance.Concepts.Cognitions;
-using MetaMind.Perseverance.Extensions;
 using MetaMind.Perseverance.Guis;
 using MetaMind.Perseverance.Guis.Modules;
-using MetaMind.Perseverance.Guis.Widgets.SynchronizationHuds;
+using MetaMind.Perseverance.Guis.Widgets.Synchronizations;
 
 namespace MetaMind.Perseverance.Sessions
 {
     internal class AdventureSleepStartedEventListener : ListenerBase
     {
         //---------------------------------------------------------------------
-        private readonly Synchronization   synchronization;
+        private readonly Synchronization    synchronization;
         private readonly SynchronizationHud synchronizationHud;
 
         private readonly IModule            planning;
         private readonly IModule            tactic;
         
-        public AdventureSleepStartedEventListener( AdventureConcept concepts, ComputingGui guis )
+        public AdventureSleepStartedEventListener( )
         {
             //-----------------------------------------------------------------
-            synchronization    = synchronization;
-            synchronizationHud = guis.SynchronizationHud;
+            synchronization    = Perseverance.Adventure.Cognition.Synchronization;
+            synchronizationHud = synchronizationHud;
 
             //-----------------------------------------------------------------
             planning           = guis.PlanningModule;

@@ -25,11 +25,9 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 
         #region Public Properties
 
-        public TaskItemFactory ItemFactory { get; private set; }
-
-        public TaskViewRegion Region { get; private set; }
-
-        public TaskViewScrollBar ScrollBar { get; private set; }
+        public TaskItemFactory   ItemFactory { get; private set; }
+        public TaskViewRegion    Region      { get; private set; }
+        public TaskViewScrollBar ScrollBar   { get; private set; }
 
         #endregion Public Properties
 

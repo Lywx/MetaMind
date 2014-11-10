@@ -1,9 +1,10 @@
 ﻿using System.Diagnostics;
+using MetaMind.Engine.Components;
 using MetaMind.Engine.Guis.Widgets;
 using MetaMind.Engine.Guis.Widgets.Items;
 using MetaMind.Engine.Guis.Widgets.Views;
 using MetaMind.Perseverance.Guis.Modules;
-using MetaMind.Perseverance.Guis.Widgets.SynchronizationHuds;
+using MetaMind.Perseverance.Guis.Widgets.Synchronizations;
 using MetaMind.Perseverance.Sessions;
 using Microsoft.Xna.Framework;
 
@@ -51,8 +52,8 @@ namespace MetaMind.Perseverance.Guis
             // should not create a new instance when sleep stop
             // which casue duplicaate event listeners are created
             Debug.Assert( synchronizationHud == null );
-            Debug.Assert( planning == null );
-            Debug.Assert( tactic == null );
+            Debug.Assert( planning           == null );
+            Debug.Assert( tactic             == null );
 
             synchronizationHud = new SynchronizationHud( Concepts.Cognition.Synchronization, SynchronizationHudSettings.Default );
 
@@ -62,7 +63,7 @@ namespace MetaMind.Perseverance.Guis
             if ( Concepts.Cognition.Awake )
             {
                 planning.Load( new PlanningModuleData( Concepts.Tasklist ) );
-                tactic.Load( new TacticModuleData( Concepts.Tasklist ) );
+                tactic  .Load( new TacticModuleData( Concepts.Tasklist ) );
             }
         }
 

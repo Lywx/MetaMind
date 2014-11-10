@@ -6,10 +6,10 @@ namespace MetaMind.Engine.Guis.Groups
     public abstract class Group<TGroupSettings> : Widget
     {
         public TGroupSettings Settings { get; protected set; }
-        public IGroupControl Control { get; protected set; }
+        public IGroupControl  Control  { get; protected set; }
         public IGroupGraphics Graphics { get; protected set; }
 
-        protected Group(TGroupSettings settings)
+        protected Group( TGroupSettings settings )
         {
             Settings = settings;
         }
@@ -20,7 +20,7 @@ namespace MetaMind.Engine.Guis.Groups
             Control.HandleInput();
         }
 
-        public override void Draw(GameTime gameTime, byte alpha)
+        public override void Draw( GameTime gameTime, byte alpha )
         {
             Graphics.Draw( gameTime );
         }

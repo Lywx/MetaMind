@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 
-namespace MetaMind.Perseverance.Guis.Modules
+namespace MetaMind.Engine.Guis.Modules
 {
     public interface IModuleGraphics
     {
@@ -10,8 +10,8 @@ namespace MetaMind.Perseverance.Guis.Modules
     }
 
     public abstract class ModuleGraphics<TModule, TModuleSettings, TModuleControl> : ModuleComponent<TModule, TModuleSettings, TModuleControl>, IModuleGraphics
-        where TModule : Module<TModuleSettings>
-        where TModuleControl : ModuleControl<TModule, TModuleSettings, TModuleControl>
+        where                            TModule                                   : Module         <TModuleSettings>
+        where                            TModuleControl                            : ModuleControl  <TModule, TModuleSettings, TModuleControl>
     {
         protected ModuleGraphics( TModule module )
             : base( module )

@@ -16,8 +16,8 @@ namespace MetaMind.Engine.Components
 
         #endregion Singleton
 
-        private readonly List<EngineRunner> runners = new List<EngineRunner>();
         private readonly GameComponentCollection components;
+        private readonly List<EngineRunner>      runners = new List<EngineRunner>();
 
         private RunnerManager( GameEngine engine )
         {
@@ -30,9 +30,9 @@ namespace MetaMind.Engine.Components
             components.Add( runner );
         }
 
-        public void Exit()
+        public void OnExiting()
         {
-            runners.ForEach( component => component.Exit() );
+            runners.ForEach( component => component.OnExiting() );
         }
     }
 }

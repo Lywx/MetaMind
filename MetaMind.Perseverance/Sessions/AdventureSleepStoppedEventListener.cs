@@ -1,7 +1,6 @@
 ﻿using MetaMind.Engine.Components.Events;
 using MetaMind.Perseverance.Components;
 using MetaMind.Perseverance.Concepts.TaskEntries;
-using MetaMind.Perseverance.Extensions;
 using MetaMind.Perseverance.Guis;
 using MetaMind.Perseverance.Guis.Modules;
 

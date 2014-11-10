@@ -12,11 +12,8 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
     {
         #region Components
 
-        [DataMember]
-        public IConsciousness Consciousness { get; set; }
-
-        [DataMember]
-        public Synchronization Synchronization { get; set; }
+        [DataMember] public Consciousness   Consciousness   { get; set; }
+        [DataMember] public Synchronization Synchronization { get; set; }
 
         public bool Awake { get { return Consciousness.AwakeCondition; } }
 
@@ -26,7 +23,7 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
         public Cognition()
         {
-            Consciousness = new ConsciousnessAwake();
+            Consciousness   = new ConsciousnessAwake();
             Synchronization = new Synchronization();
         }
 

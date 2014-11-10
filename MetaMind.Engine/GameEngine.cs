@@ -12,29 +12,18 @@ namespace MetaMind.Engine
     {
         #region Components
 
-        public static AudioManager AudioManager { get; private set; }
-
-        public static ContentManager ContentManager { get; private set; }
-
-        public static EventManager EventManager { get; private set; }
-
-        public static FontManager FontManager { get; private set; }
-
-        public static GraphicsDeviceManager GraphicsManager { get; private set; }
-
-        public static InputEventManager InputEventManager { get; private set; }
-
-        public static InputSequenceManager InputSequenceManager { get; private set; }
-
-        public static MessageManager MessageManager { get; private set; }
-
-        public static ProcessManager ProcessManager { get; private set; }
-
-        public static RunnerManager RunnerManager { get; private set; }
-
-        public static ScreenManager ScreenManager { get; private set; }
-
-        private static FolderManager FolderManager { get; set; }
+        public  static AudioManager          AudioManager         { get; private set; }
+        public  static ContentManager        ContentManager       { get; private set; }
+        public  static EventManager          EventManager         { get; private set; }
+        public  static FontManager           FontManager          { get; private set; }
+        public  static GraphicsDeviceManager GraphicsManager      { get; private set; }
+        public  static InputEventManager     InputEventManager    { get; private set; }
+        public  static InputSequenceManager  InputSequenceManager { get; private set; }
+        public  static MessageManager        MessageManager       { get; private set; }
+        public  static ProcessManager        ProcessManager       { get; private set; }
+        public  static RunnerManager         RunnerManager        { get; private set; }
+        public  static ScreenManager         ScreenManager        { get; private set; }
+        private static FolderManager         FolderManager        { get; set; }
 
         #endregion Components
 
@@ -115,13 +104,13 @@ namespace MetaMind.Engine
         protected override void LoadContent()
         {
             FontManager.LoadContent();
-            base.LoadContent();
+            base       .LoadContent();
         }
 
         protected override void UnloadContent()
         {
             FontManager.UnloadContent();
-            base.UnloadContent();
+            base       .UnloadContent();
         }
 
         #endregion Initializations
@@ -131,7 +120,7 @@ namespace MetaMind.Engine
         protected override void Draw( GameTime gameTime )
         {
             GraphicsDevice.Clear( Color.CornflowerBlue );
-            base.Draw( gameTime );
+            base          .Draw( gameTime );
         }
 
         #endregion Update and Draw
@@ -140,8 +129,8 @@ namespace MetaMind.Engine
 
         protected override void OnExiting( Object sender, EventArgs args )
         {
-            RunnerManager.Exit();
-            base.OnExiting( sender, args );
+            RunnerManager.OnExiting();
+            base         .OnExiting( sender, args );
         }
 
         #endregion System

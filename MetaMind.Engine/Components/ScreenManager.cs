@@ -119,8 +119,9 @@ namespace MetaMind.Engine.Components
             screensToUpdate.Clear();
 
             foreach ( var screen in screens )
+            {
                 screensToUpdate.Add( screen );
-
+            }
             var otherScreenHasFocus = !Game.IsActive;
             var coveredByOtherScreen = false;
 
@@ -156,7 +157,9 @@ namespace MetaMind.Engine.Components
 
             // Print debug trace?
             if ( traceEnabled )
+            {
                 TraceScreens();
+            }
         }
 
         #endregion Update and Draw
