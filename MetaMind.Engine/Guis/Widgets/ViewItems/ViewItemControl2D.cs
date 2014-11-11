@@ -1,7 +1,4 @@
-﻿using MetaMind.Engine.Components.Inputs;
-using MetaMind.Engine.Guis.Widgets.Items;
-using Microsoft.Xna.Framework;
-
+﻿
 namespace MetaMind.Engine.Guis.Widgets.ViewItems
 {
     public class ViewItemControl2D : ViewItemControl1D

@@ -71,11 +71,11 @@ namespace MetaMind.Engine.Guis.Widgets
             handlingInputCount = 0;
         }
 
-        public abstract void UpdateInput( Microsoft.Xna.Framework.GameTime gameTime );
+        public abstract void UpdateInput( GameTime gameTime );
 
-        public abstract void UpdateStructure( Microsoft.Xna.Framework.GameTime gameTime );
+        public abstract void UpdateStructure( GameTime gameTime );
 
-        public void Update( Microsoft.Xna.Framework.GameTime gameTime )
+        public void Update( GameTime gameTime )
         {
             if ( !IsUpdating )
                 return;

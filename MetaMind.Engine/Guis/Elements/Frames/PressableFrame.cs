@@ -1,8 +1,8 @@
-﻿using System;
-using System.Diagnostics;
-using MetaMind.Engine.Components;
+﻿using MetaMind.Engine.Components;
 using MetaMind.Engine.Extensions;
 using Microsoft.Xna.Framework;
+using System;
+using System.Diagnostics;
 
 namespace MetaMind.Engine.Guis.Elements.Frames
 {

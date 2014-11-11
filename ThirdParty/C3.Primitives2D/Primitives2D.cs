@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
 
 namespace C3.Primtive2DXna
 {
@@ -225,32 +225,6 @@ namespace C3.Primtive2DXna
 
         #endregion FillRectangle
 
-        #region FillCenterRectangle
-
-        public static void FillCenterRectangle( SpriteBatch spriteBatch, float x, float y, float w, float h,
-            Color color, float angle )
-        {
-            FillRectangle( spriteBatch, new Vector2( x - w / 2, y - h / 2 ), new Vector2( w, h ), color, angle );
-        }
-
-        public static void FillCenterRectangle( this SpriteBatch spriteBatch, Rectangle rect, Color? color, float angle )
-        {
-            if ( color == null )
-                return;
-
-            FillCenterRectangle( spriteBatch, rect.X, rect.Y, rect.Width, rect.Height, ( Color ) color, angle );
-        }
-
-        public static void FillCenterRectangle( SpriteBatch spriteBatch, Rectangle rect, Color? color )
-        {
-            if ( color == null )
-                return;
-
-            FillCenterRectangle( spriteBatch, rect, color, 0f );
-        }
-
-        #endregion FillCenterRectangle
-
         #region DrawRectangle
 
         /// <summary>
@@ -348,23 +322,6 @@ namespace C3.Primtive2DXna
         }
 
         #endregion DrawRectangle
-
-        #region DrawCenterRectangle
-
-        public static void DrawCenterRectangle( SpriteBatch spriteBatch, Rectangle rect, Color? color, float thickness )
-        {
-            if ( color == null )
-                return;
-
-            DrawRectangle( spriteBatch, new Rectangle( rect.X - rect.Width / 2, rect.Y - rect.Height / 2, rect.Width, rect.Height ), ( Color ) color, thickness );
-        }
-
-        public static void DrawCenterRectangle( SpriteBatch spriteBatch, Vector2 location, Vector2 size, Color color, float thickness )
-        {
-            DrawRectangle( spriteBatch, new Vector2( location.X - size.X / 2, location.Y - size.Y / 2 ), size, color, thickness );
-        }
-
-        #endregion DrawCenterRectangle
 
         #region DrawLine
 

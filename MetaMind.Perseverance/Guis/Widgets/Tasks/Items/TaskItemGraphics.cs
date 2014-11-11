@@ -1,12 +1,9 @@
-using System;
-using System.Windows.Forms;
 using C3.Primtive2DXna;
 using MetaMind.Engine.Extensions;
-using MetaMind.Engine.Guis.Elements.Frames;
 using MetaMind.Engine.Guis.Widgets.Items;
 using MetaMind.Engine.Guis.Widgets.ViewItems;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 {

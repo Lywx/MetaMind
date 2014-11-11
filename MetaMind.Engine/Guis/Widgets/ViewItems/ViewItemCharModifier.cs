@@ -1,11 +1,11 @@
-using System;
-using System.Linq;
-using System.Text;
 using MetaMind.Engine.Components;
 using MetaMind.Engine.Components.Inputs;
 using MetaMind.Engine.Guis.Widgets.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Linq;
+using System.Text;
 
 namespace MetaMind.Engine.Guis.Widgets.ViewItems
 {

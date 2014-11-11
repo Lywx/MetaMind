@@ -42,23 +42,27 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public void MoveLeft()
         {
-            if ( CanMoveLeft )
+            if (CanMoveLeft)
+            {
                 --scroll;
+            }
         }
 
         public void MoveRight()
         {
-            if ( CanMoveRight )
+            if (CanMoveRight)
+            {
                 ++scroll;
+            }
         }
 
         public Point RootCenterPoint( int id )
         {
             return new Point(
                 ViewSettings.Direction == ViewSettings1D.ScrollDirection.Right ?
-                ViewSettings.StartPoint.X - ( scroll * ViewSettings.RootMargin.X ) + id * ViewSettings.RootMargin.X :
-                ViewSettings.StartPoint.X + ( scroll * ViewSettings.RootMargin.X ) - id * ViewSettings.RootMargin.X,
-                ViewSettings.StartPoint.Y );
+                ViewSettings.StartPoint.X - (scroll * ViewSettings.RootMargin.X) + id * ViewSettings.RootMargin.X :
+                ViewSettings.StartPoint.X + (scroll * ViewSettings.RootMargin.X) - id * ViewSettings.RootMargin.X,
+                ViewSettings.StartPoint.Y);
         }
     }
 }

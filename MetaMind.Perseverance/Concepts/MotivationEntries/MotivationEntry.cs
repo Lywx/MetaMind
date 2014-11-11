@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using MetaMind.Perseverance.Concepts.TaskEntries;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
-using MetaMind.Perseverance.Concepts.TaskEntries;
 
 namespace MetaMind.Perseverance.Concepts.MotivationEntries
 {

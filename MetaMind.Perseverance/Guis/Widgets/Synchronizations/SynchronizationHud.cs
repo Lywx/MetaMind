@@ -1,5 +1,4 @@
-﻿using System;
-using C3.Primtive2DXna;
+﻿using C3.Primtive2DXna;
 using MetaMind.Engine.Extensions;
 using MetaMind.Engine.Guis.Widgets;
 using MetaMind.Engine.Settings;
@@ -7,6 +6,7 @@ using MetaMind.Perseverance.Concepts.Cognitions;
 using MetaMind.Perseverance.Concepts.TaskEntries;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
 {
@@ -231,14 +231,22 @@ namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
         {
             // left side content
             for ( var i = 0 ; i < synchronization.SynchronizedHourToday ; ++i )
-                Primitives2D.FillCenterRectangle( ScreenManager.SpriteBatch, new Rectangle( ( int ) StateLocation.X - 275 - 15 * i, ( int ) StateLocation.Y - 1, settings.BarFrameSize.Y, settings.BarFrameSize.Y ), settings.BarFrameAscendColor );
+            {
+                Primitives2D.FillRectangle(ScreenManager.SpriteBatch, RectangleExt.Rectangle( ( int ) StateLocation.X - 275 - 15 * i, ( int ) StateLocation.Y - 1, settings.BarFrameSize.Y, settings.BarFrameSize.Y ), color: settings.BarFrameAscendColor );
+            }
             for ( var i = 0 ; i < synchronization.SynchronizedHourYesterday ; ++i )
-                Primitives2D.FillCenterRectangle( ScreenManager.SpriteBatch, new Rectangle( ( int ) StateLocation.X - 275 - 15 * i, ( int ) StateLocation.Y - 1, settings.BarFrameSize.Y, settings.BarFrameSize.Y ), settings.BarFrameDescendColor );
+            {
+                Primitives2D.FillRectangle( ScreenManager.SpriteBatch, RectangleExt.Rectangle( ( int ) StateLocation.X - 275 - 15 * i, ( int ) StateLocation.Y - 1, settings.BarFrameSize.Y, settings.BarFrameSize.Y ), settings.BarFrameDescendColor );
+            }            
             // right side content
             for ( var i = 0 ; i < synchronization.SynchronizedHourToday ; ++i )
-                Primitives2D.FillCenterRectangle( ScreenManager.SpriteBatch, new Rectangle( ( int ) StateLocation.X + 275 + 15 * i, ( int ) StateLocation.Y - 1, settings.BarFrameSize.Y, settings.BarFrameSize.Y ), settings.BarFrameAscendColor );
+            {
+                Primitives2D.FillRectangle( ScreenManager.SpriteBatch, RectangleExt.Rectangle( ( int ) StateLocation.X + 275 + 15 * i, ( int ) StateLocation.Y - 1, settings.BarFrameSize.Y, settings.BarFrameSize.Y ), settings.BarFrameAscendColor );
+            }
             for ( var i = 0 ; i < synchronization.SynchronizedHourYesterday ; ++i )
-                Primitives2D.FillCenterRectangle( ScreenManager.SpriteBatch, new Rectangle( ( int ) StateLocation.X + 275 + 15 * i, ( int ) StateLocation.Y - 1, settings.BarFrameSize.Y, settings.BarFrameSize.Y ), settings.BarFrameDescendColor );
+            {
+                Primitives2D.FillRectangle( ScreenManager.SpriteBatch, RectangleExt.Rectangle( ( int ) StateLocation.X + 275 + 15 * i, ( int ) StateLocation.Y - 1, settings.BarFrameSize.Y, settings.BarFrameSize.Y ), settings.BarFrameDescendColor );
+            }
         }
 
         private void DrawSynchronizedPointFrame()
@@ -246,12 +254,12 @@ namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
             // left side frame
             for ( var i = 0 ; i < synchronization.SynchronizedHourMax ; ++i )
             {
-                Primitives2D.FillCenterRectangle( ScreenManager.SpriteBatch, new Rectangle( ( int ) StateLocation.X - 275 - 15 * i, ( int ) StateLocation.Y - 1, settings.BarFrameSize.Y, settings.BarFrameSize.Y ), settings.HourFrameColor );
+                Primitives2D.FillRectangle( ScreenManager.SpriteBatch, RectangleExt.Rectangle( ( int ) StateLocation.X - 275 - 15 * i, ( int ) StateLocation.Y - 1, settings.BarFrameSize.Y, settings.BarFrameSize.Y ), settings.HourFrameColor );
             }
             // right side frame
             for ( var i = 0 ; i < synchronization.SynchronizedHourMax ; ++i )
             {
-                Primitives2D.FillCenterRectangle( ScreenManager.SpriteBatch, new Rectangle( ( int ) StateLocation.X + 275 + 15 * i, ( int ) StateLocation.Y - 1, settings.BarFrameSize.Y, settings.BarFrameSize.Y ), settings.HourFrameColor );
+                Primitives2D.FillRectangle( ScreenManager.SpriteBatch, RectangleExt.Rectangle( ( int ) StateLocation.X + 275 + 15 * i, ( int ) StateLocation.Y - 1, settings.BarFrameSize.Y, settings.BarFrameSize.Y ), settings.HourFrameColor );
             }
         }
 

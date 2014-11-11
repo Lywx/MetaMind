@@ -1,14 +1,14 @@
-﻿using System;
-using System.IO;
-using System.Runtime.Serialization;
-using System.Xml;
-using MetaMind.Engine;
+﻿using MetaMind.Engine;
 using MetaMind.Engine.Components;
 using MetaMind.Engine.Components.Inputs;
 using MetaMind.Perseverance.Concepts.Cognitions;
 using MetaMind.Perseverance.Concepts.MotivationEntries;
 using MetaMind.Perseverance.Concepts.TaskEntries;
 using Microsoft.Xna.Framework;
+using System;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Xml;
 
 namespace MetaMind.Perseverance.Sessions
 {

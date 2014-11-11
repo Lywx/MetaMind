@@ -1,9 +1,9 @@
-using System;
 using MetaMind.Engine.Extensions;
 using MetaMind.Engine.Guis.Elements.Frames;
 using MetaMind.Engine.Guis.Widgets.Items;
 using MetaMind.Engine.Guis.Widgets.ViewItems;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 {

@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using MetaMind.Engine.Guis.Widgets.Items;
-using MetaMind.Engine.Settings;
+﻿using MetaMind.Engine.Guis.Widgets.Items;
 
 namespace MetaMind.Engine.Guis.Widgets.Views
 {

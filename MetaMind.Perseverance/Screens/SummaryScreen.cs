@@ -1,8 +1,8 @@
-﻿using System;
-using MetaMind.Engine.Guis.Modules;
+﻿using MetaMind.Engine.Guis.Modules;
 using MetaMind.Engine.Screens;
 using MetaMind.Perseverance.Guis.Modules;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace MetaMind.Perseverance.Screens
 {

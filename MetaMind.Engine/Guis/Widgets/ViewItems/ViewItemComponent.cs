@@ -1,5 +1,3 @@
-using System;
-using MetaMind.Engine.Guis.Groups;
 using MetaMind.Engine.Guis.Widgets.Items;
 using MetaMind.Engine.Guis.Widgets.Views;
 

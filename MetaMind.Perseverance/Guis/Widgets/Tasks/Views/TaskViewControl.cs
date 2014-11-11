@@ -5,20 +5,28 @@ using MetaMind.Engine.Guis.Widgets.Views;
 using MetaMind.Perseverance.Concepts.TaskEntries;
 using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 {
     public class TaskViewControl : ViewControl2D
     {
         #region Constructors
-
         public TaskViewControl( IView view, TaskViewSettings viewSettings, TaskItemSettings itemSettings )
             : base( view, viewSettings, itemSettings )
         {
-            Region      = new TaskViewRegion( view, viewSettings, itemSettings );
+            Region      = new ViewRegion( view, viewSettings, itemSettings, RegionPositioning );
             ScrollBar   = new TaskViewScrollBar( view, viewSettings, itemSettings, viewSettings.ScrollBarSettings );
             ItemFactory = new TaskItemFactory();
+        }
+
+        private Rectangle RegionPositioning( dynamic viewSettings, dynamic itemSettings )
+        {
+            return new Rectangle(
+                viewSettings.StartPoint.X,
+                viewSettings.StartPoint.Y,
+                viewSettings.ColumnNumDisplay * ( itemSettings.NameFrameSize.X ),
+                viewSettings.RowNumDisplay    * ( itemSettings.NameFrameSize.Y + itemSettings.IdFrameSize.Y )
+                );
         }
 
         #endregion Constructors
@@ -26,7 +34,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
         #region Public Properties
 
         public TaskItemFactory   ItemFactory { get; protected set; }
-        public TaskViewRegion    Region      { get; protected set; }
+        public ViewRegion        Region      { get; protected set; }
         public TaskViewScrollBar ScrollBar   { get; protected set; }
 
         #endregion Public Properties
@@ -112,6 +120,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
         public override void UpdateStrucutre( GameTime gameTime )
         {
             base     .UpdateStrucutre( gameTime );
+            Region   .UpdateStructure( gameTime );
             ScrollBar.Upadte( gameTime );
         }
 

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using MetaMind.Engine.Guis.Widgets;
+﻿using MetaMind.Engine.Guis.Widgets;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Runtime.InteropServices;
 
 namespace MetaMind.Engine.Components
 {

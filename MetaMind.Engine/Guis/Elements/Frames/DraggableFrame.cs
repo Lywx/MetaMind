@@ -1,6 +1,6 @@
-﻿using System;
-using MetaMind.Engine.Extensions;
+﻿using MetaMind.Engine.Extensions;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace MetaMind.Engine.Guis.Elements.Frames
 {

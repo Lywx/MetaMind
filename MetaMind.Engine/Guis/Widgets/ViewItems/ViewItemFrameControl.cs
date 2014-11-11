@@ -73,7 +73,8 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         protected virtual void UpdateFrameGeometry()
         {
-            if ( !Item.IsEnabled( ItemState.Item_Dragging ) && !Item.IsEnabled( ItemState.Item_Swaping ) )
+            if ( !Item.IsEnabled( ItemState.Item_Dragging ) && 
+                 !Item.IsEnabled( ItemState.Item_Swaping ) )
             {
                 RootFrame.Center = ViewControl.Scroll.RootCenterPoint( ItemControl.Id );
             }

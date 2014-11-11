@@ -1,10 +1,9 @@
-using System;
-using System.Diagnostics;
-using System.Reflection;
 using MetaMind.Engine.Concepts;
 using MetaMind.Engine.Guis.Widgets.Items;
 using MetaMind.Engine.Guis.Widgets.Views;
 using Microsoft.Xna.Framework;
+using System;
+using System.Reflection;
 
 namespace MetaMind.Engine.Guis.Widgets.ViewItems
 {

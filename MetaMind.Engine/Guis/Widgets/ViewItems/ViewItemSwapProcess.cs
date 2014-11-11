@@ -1,8 +1,8 @@
-using System.Diagnostics;
 using MetaMind.Engine.Components.Processes;
 using MetaMind.Engine.Guis.Widgets.Items;
 using MetaMind.Engine.Guis.Widgets.Views;
 using Microsoft.Xna.Framework;
+using System.Diagnostics;
 
 namespace MetaMind.Engine.Guis.Widgets.ViewItems
 {

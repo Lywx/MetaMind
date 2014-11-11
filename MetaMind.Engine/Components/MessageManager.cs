@@ -1,9 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Globalization;
 using MetaMind.Engine.Components.Messages;
 using MetaMind.Engine.Settings;
 using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace MetaMind.Engine.Components
 {

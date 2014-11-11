@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
-using MetaMind.Engine.Components;
+﻿using MetaMind.Engine.Components;
 using MetaMind.Engine.Extensions;
 using MetaMind.Engine.Guis.Widgets.Items;
 using MetaMind.Engine.Guis.Widgets.ViewItems;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 {
@@ -28,8 +28,16 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             DrawSymbol( gameTime, alpha );
             DrawName( alpha );
             DrawId( alpha );
+            DrawTracer( gameTime, alpha );
         }
 
+        private void DrawTracer( GameTime gameTime, byte alpha )
+        {
+            if ( ItemControl.Tracer != null )
+            {
+                ItemControl.Tracer.Draw( gameTime, alpha );
+            }
+        }
 
         public override void Update( GameTime gameTime )
         {

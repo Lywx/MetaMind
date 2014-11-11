@@ -1,7 +1,6 @@
-using System;
 using MetaMind.Engine;
-using MetaMind.Engine.Components;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace MetaMind.Perseverance.Components
 {

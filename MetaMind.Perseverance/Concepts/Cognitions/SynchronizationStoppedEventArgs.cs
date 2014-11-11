@@ -1,5 +1,5 @@
-﻿using System;
-using MetaMind.Perseverance.Concepts.TaskEntries;
+﻿using MetaMind.Perseverance.Concepts.TaskEntries;
+using System;
 
 namespace MetaMind.Perseverance.Concepts.Cognitions
 {

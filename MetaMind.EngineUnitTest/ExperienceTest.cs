@@ -1,6 +1,6 @@
-﻿using System;
-using MetaMind.Engine.Concepts;
+﻿using MetaMind.Engine.Concepts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace MetaMind.EngineUnitTest
 {

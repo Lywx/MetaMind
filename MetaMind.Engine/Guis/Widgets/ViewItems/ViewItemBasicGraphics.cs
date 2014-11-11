@@ -1,8 +1,8 @@
-﻿using System.Globalization;
-using C3.Primtive2DXna;
+﻿using C3.Primtive2DXna;
 using MetaMind.Engine.Extensions;
 using MetaMind.Engine.Guis.Widgets.Items;
 using Microsoft.Xna.Framework;
+using System.Globalization;
 
 namespace MetaMind.Engine.Guis.Widgets.ViewItems
 {
@@ -13,7 +13,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
         {
         }
 
-        public virtual void Draw(GameTime gameTime, byte alpha)
+        public virtual void Draw( GameTime gameTime, byte alpha )
         {
             if ( !Item.IsEnabled( ItemState.Item_Active ) && !Item.IsEnabled( ItemState.Item_Dragging ) )
                 return;

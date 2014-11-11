@@ -1,12 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using MetaMind.Engine.Guis.Widgets.ViewItems;
 using MetaMind.Engine.Guis.Widgets.Views;
 using MetaMind.Perseverance.Concepts.MotivationEntries;
 using MetaMind.Perseverance.Guis.Widgets.Motivations.Items;
 using MetaMind.Perseverance.Guis.Widgets.Motivations.Views;
 using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
 
 namespace MetaMind.Perseverance.Guis.Modules
 {

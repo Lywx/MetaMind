@@ -1,4 +1,3 @@
-using System.Reflection;
 using MetaMind.Engine.Components.Inputs;
 using MetaMind.Engine.Extensions;
 using MetaMind.Engine.Guis.Elements.Regions;
@@ -13,12 +12,12 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
     {
         private readonly MotivationItemControl hostControl;
 
-        public MotivationTaskTracer( MotivationItemControl itemControl, MotivationTaskTracerSettings settings )
-            : base( settings )
+        public MotivationTaskTracer(MotivationItemControl itemControl, MotivationTaskTracerSettings settings)
+            : base(settings)
         {
             hostControl = itemControl;
 
-            View = new View( Settings.ViewSettings, Settings.ItemSettings, Settings.ViewFactory );
+            View = new View(Settings.ViewSettings, Settings.ItemSettings, Settings.ViewFactory);
         }
 
         public IView View { get; private set; }
@@ -26,44 +25,46 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
         public void Close()
         {
             // clear highlight
-            View.Control.Region.Disable( RegionState.Region_Hightlighted );
-            View.Disable( ViewState.View_Active );
+            View.Control.Region.Disable(RegionState.Region_Hightlighted);
+            View               .Disable(ViewState.View_Active);
         }
 
-        public override void Draw( GameTime gameTime, byte alpha )
+        public override void Draw(GameTime gameTime, byte alpha)
         {
-            View.Draw( gameTime, alpha );
+            View.Draw(gameTime, alpha);
         }
 
         public override void Load()
         {
-            foreach ( var task in hostControl.ItemData.Tasks )
+            foreach (var task in hostControl.ItemData.Tasks)
             {
-                View.Control.AddItem( task );
+                View.Control.AddItem(task);
             }
         }
 
         public void Show()
         {
             // show up tracer
-            View.Enable( ViewState.View_Active );
-            View.Control.Region.Enable( RegionState.Region_Hightlighted );
+            View.Control.Region.Enable(RegionState.Region_Hightlighted);
+            View               .Enable(ViewState.View_Active);
         }
 
-        public override void UpdateInput( GameTime gameTime )
+        public override void UpdateInput(GameTime gameTime)
         {
-            View.Control.Region.UpdateInput( gameTime );
+            View.Control.Region.UpdateInput(gameTime);
+
             // directly update through view control
-            if ( View.Control.AcceptInput )
+            if (View.Control.AcceptInput)
             {
                 // mouse
                 //---------------------------------------------------------------------
-                if ( InputSequenceManager.Mouse.IsWheelScrolledUp )
+                if (InputSequenceManager.Mouse.IsWheelScrolledUp)
                 {
                     View.Control.ScrollBar.Trigger();
                     View.Control.Scroll.MoveUp();
                 }
-                if ( InputSequenceManager.Mouse.IsWheelScrolledDown )
+
+                if (InputSequenceManager.Mouse.IsWheelScrolledDown)
                 {
                     View.Control.Scroll.MoveDown();
                     View.Control.ScrollBar.Trigger();
@@ -72,66 +73,78 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
                 // keyboard
                 //---------------------------------------------------------------------
                 // movement
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Left ) )
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
                 {
                     View.Control.MoveLeft();
                 }
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Right ) )
+
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
                 {
                     View.Control.MoveRight();
                 }
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Up ) )
+
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Up))
                 {
                     View.Control.MoveUp();
                 }
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Down ) )
+
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Down))
                 {
                     View.Control.MoveDown();
                 }
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.SUp ) )
+
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SUp))
                 {
-                    for ( var i = 0 ; i < View.ViewSettings.RowNumDisplay ; i++ )
+                    for (var i = 0; i < View.ViewSettings.RowNumDisplay; i++)
                     {
                         View.Control.MoveUp();
                     }
                 }
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.SDown ) )
+
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SDown))
                 {
-                    for ( var i = 0 ; i < View.ViewSettings.RowNumDisplay ; i++ )
+                    for (var i = 0; i < View.ViewSettings.RowNumDisplay; i++)
                     {
                         View.Control.MoveDown();
                     }
                 }
+
                 // escape
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Escape ) )
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
                 {
                     View.Control.Selection.Clear();
                 }
+
                 // list management
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.TaskCreateItem ) )
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskCreateItem))
                 {
-                    var task = View.Control.ItemFactory.CreateData( null );
+                    var task = View.Control.ItemFactory.CreateData(null);
+
                     // add to task gui
-                    View.Control.AddItem( task );
+                    View.Control.AddItem(task);
+
                     // add to host motivation's tasks
-                    hostControl.ItemData.Tasks.Add( task );
+                    hostControl.ItemData.Tasks.Add(task);
                 }
             }
 
             // item input
             //-----------------------------------------------------------------
-            foreach ( var item in View.Items.ToArray() )
+            if (View.IsEnabled(ViewState.View_Has_Focus))
             {
-                item.UpdateInput( gameTime );
+                foreach (var item in View.Items.ToArray())
+                {
+                    item.UpdateInput(gameTime);
+                }
             }
         }
 
-        public override void UpdateStructure( GameTime gameTime )
+        public override void UpdateStructure(GameTime gameTime)
         {
             // make sure that task region and task items all follow the host location changes
-            View.ViewSettings.StartPoint = Vector2Ext.ToPoint( hostControl.RootFrame.Center.ToVector2() + hostControl.ViewSettings.TracerMargin );
+            View.ViewSettings.StartPoint = Vector2Ext.ToPoint(hostControl.RootFrame.Center.ToVector2() + hostControl.ViewSettings.TracerMargin);
 
-            View.UpdateStructure( gameTime );
+            View.UpdateStructure(gameTime);
         }
     }
 }

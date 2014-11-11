@@ -1,7 +1,6 @@
-﻿using System;
-using System.Runtime.Serialization;
-using MetaMind.Engine;
+﻿using MetaMind.Engine;
 using Microsoft.Xna.Framework;
+using System.Runtime.Serialization;
 
 namespace MetaMind.Perseverance.Concepts.Cognitions
 {

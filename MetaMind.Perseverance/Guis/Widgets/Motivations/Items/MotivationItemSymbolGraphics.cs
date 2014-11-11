@@ -1,10 +1,10 @@
-using System;
-using MetaMind.Engine.Guis.Elements.Frames;
+using MetaMind.Engine.Extensions;
 using MetaMind.Engine.Guis.Widgets.Items;
 using MetaMind.Engine.Guis.Widgets.ViewItems;
 using MetaMind.Engine.Settings;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 {
@@ -23,7 +23,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             get { return new Vector2( symbolTexture.Width / 2f, symbolTexture.Height / 2f ); }
         }
 
-        public void Draw(GameTime gameTime, byte alpha)
+        public void Draw( GameTime gameTime, byte alpha )
         {
             if ( !Item.IsEnabled( ItemState.Item_Active ) )
             {
@@ -34,7 +34,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
                 DrawShadow();
             }
             DrawHeart( alpha );
-            DrawTracer( gameTime, alpha );
         }
         public void Update( GameTime gameTime )
         {
@@ -44,15 +43,21 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
         private void DrawHeart( byte alpha )
         {
             var flipped     = Math.Cos( rotation ) > 0;
-            var size        = new Point( ( int ) ( Math.Abs( Math.Cos( rotation ) ) * ( ( IPickableFrame ) ItemControl.SymbolFrame ).Rectangle.Width ), ( ( IPickableFrame ) ItemControl.SymbolFrame ).Rectangle.Height );
-            var destination = ( ( IPickableFrame ) ItemControl.SymbolFrame ).DestinationWithSize( size );
+            var size        = new Point( ( int ) ( Math.Abs( Math.Cos( rotation ) ) * ItemControl.SymbolFrame.Rectangle.Width ), ItemControl.SymbolFrame.Rectangle.Height );
+            var destination = RectangleExt.DestinationWithSize( ItemControl.SymbolFrame.Rectangle, size );
 
             if ( ItemData.Property == "Neutral" )
+            {
                 ScreenManager.SpriteBatch.Draw( symbolTexture, destination, null, Item.IsEnabled( ItemState.Item_Selected ) ? ColorPalette.TransparentColor5 : ColorPalette.TransparentColor3, 0f, SymbolOrigin, flipped ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f );
+            }
             else if ( ItemData.Property == "Wish" )
+            {
                 ScreenManager.SpriteBatch.Draw( symbolTexture, destination, null, ItemSettings.WishColor, 0f, SymbolOrigin, flipped ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f );
+            }
             else if ( ItemData.Property == "Fear" )
+            {
                 ScreenManager.SpriteBatch.Draw( symbolTexture, destination, null, ItemSettings.FearColor, 0f, SymbolOrigin, flipped ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f );
+            }
         }
 
         private void DrawShadow()
@@ -63,13 +68,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             ScreenManager.SpriteBatch.Draw( symbolTexture, destination, null, ColorPalette.TransparentColor3, 0f, SymbolOrigin, SpriteEffects.None, 0f );
         }
 
-        private void DrawTracer( GameTime gameTime, byte alpha )
-        {
-            if ( ItemControl.Tracer != null )
-            {
-                ItemControl.Tracer.Draw( gameTime, alpha );
-            }
-        }
         private void UpdateRotation()
         {
             if ( Item.IsEnabled( ItemState.Item_Selected ) )

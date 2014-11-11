@@ -28,5 +28,10 @@ namespace MetaMind.Engine.Extensions
         {
             return new Rectangle( rectangle.X + margin.X, rectangle.Y + margin.Y, rectangle.Width - margin.X * 2, rectangle.Height - margin.Y * 2 );
         }
+
+        public static Rectangle Rectangle( int xCenter, int yCenter, int width, int height )
+        {
+            return new Rectangle( xCenter - width / 2, yCenter - height / 2, width, height );
+        }
     }
 }

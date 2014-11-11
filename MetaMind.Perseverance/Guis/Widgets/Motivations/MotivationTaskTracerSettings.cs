@@ -1,6 +1,6 @@
-using System;
 using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
 using MetaMind.Perseverance.Guis.Widgets.Tasks.Views;
+using System;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations
 {

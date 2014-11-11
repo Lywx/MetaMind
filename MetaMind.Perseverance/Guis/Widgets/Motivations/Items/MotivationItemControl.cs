@@ -1,7 +1,6 @@
 ﻿using MetaMind.Engine.Components.Inputs;
 using MetaMind.Engine.Guis.Elements.Frames;
 using MetaMind.Engine.Guis.Modules;
-using MetaMind.Engine.Guis.Widgets;
 using MetaMind.Engine.Guis.Widgets.Items;
 using MetaMind.Engine.Guis.Widgets.ViewItems;
 using MetaMind.Engine.Guis.Widgets.Views;
@@ -45,11 +44,19 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
         public override void UnselectIt()
         {
             if ( ItemTaskControl.UnselectIt() )
+            {
                 base.UnselectIt();
+            }
         }
 
         public override void UpdateInput( GameTime gameTime )
         {
+            // mouse
+            //-----------------------------------------------------------------
+            ItemFrameControl .UpdateInput( gameTime );
+
+            // keyboard
+            //-----------------------------------------------------------------
             if ( Item.IsEnabled( ItemState.Item_Selected ) &&
                 !Item.IsEnabled( ItemState.Item_Editing ) )
             {

@@ -1,8 +1,6 @@
-using System;
-using System.Linq;
 using MetaMind.Engine.Components.Inputs;
-using MetaMind.Engine.Guis.Widgets.Items;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace MetaMind.Engine.Guis.Widgets.Views
 {

@@ -1,6 +1,6 @@
-﻿using System;
-using MetaMind.Engine.Guis.Widgets.Items;
+﻿using MetaMind.Engine.Guis.Widgets.Items;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace MetaMind.Engine.Guis.Widgets.ViewItems
 {

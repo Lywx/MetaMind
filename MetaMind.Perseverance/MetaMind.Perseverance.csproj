@@ -32,7 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Components\SaveManager.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Guis\Particles\FloatParticleContainer.cs" />
     <Compile Include="Guis\Particles\FloatParticle.cs" />
     <Compile Include="Guis\Particles\Particle.cs" />
+    <Compile Include="Guis\Widgets\Motivations\Banners\ViewBannerSetting.cs" />
     <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemControl.cs" />
     <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemFactory.cs" />
     <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemGraphics.cs" />
@@ -93,7 +95,6 @@
     <Compile Include="Guis\Widgets\Tasks\Views\TaskViewControl.cs" />
     <Compile Include="Guis\Widgets\Tasks\Views\TaskViewFactory.cs" />
     <Compile Include="Guis\Widgets\Tasks\Views\TaskViewGraphics.cs" />
-    <Compile Include="Guis\Widgets\Tasks\Views\TaskViewRegion.cs" />
     <Compile Include="Guis\Widgets\Tasks\Views\TaskViewScrollBar.cs" />
     <Compile Include="Guis\Widgets\Tasks\Views\TaskViewSettings.cs" />
     <Compile Include="Guis\Widgets\Tasks\Views\TaskViewScrollBarSettings.cs" />
@@ -120,9 +121,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Content\" />
     <Folder Include="Extensions\" />
   </ItemGroup>
@@ -143,6 +141,9 @@
       <Project>{39ad1482-1881-4852-a05d-dc61b0d3446a}</Project>
       <Name>C3.Primitives2D</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

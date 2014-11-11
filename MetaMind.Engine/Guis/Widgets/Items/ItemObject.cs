@@ -1,6 +1,5 @@
-using System;
-using MetaMind.Engine.Settings;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace MetaMind.Engine.Guis.Widgets.Items
 {

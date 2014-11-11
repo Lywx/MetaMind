@@ -1,4 +1,3 @@
-using MetaMind.Engine.Guis.Widgets;
 
 namespace MetaMind.Engine.Guis.Modules
 {

@@ -46,8 +46,8 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
         
         private void DrawRegion( GameTime gameTime )
         {
-            Primitives2D.DrawRectangle( ScreenManager.SpriteBatch, RectangleExt.Extend( ViewControl.Region.Frame.Rectangle, ViewSettings.BorderMargin ), ColorExt.MakeTransparent( ViewSettings.CurrentColor, ( byte ) frameAlpha ), 2f );
-            Primitives2D.FillRectangle( ScreenManager.SpriteBatch, ViewControl.Region.Frame.Rectangle, ColorExt.MakeTransparent( ViewSettings.CurrentColor, ( byte ) frameAlpha ) );
+            Primitives2D.DrawRectangle( ScreenManager.SpriteBatch, RectangleExt.Extend( ViewControl.Region.Frame.Rectangle, ViewSettings.BorderMargin ), ColorExt.MakeTransparent( ViewSettings.HighlightColor, ( byte ) frameAlpha ), 2f );
+            Primitives2D.FillRectangle( ScreenManager.SpriteBatch, ViewControl.Region.Frame.Rectangle, ColorExt.MakeTransparent( ViewSettings.HighlightColor, ( byte ) frameAlpha ) );
         }
 
         private void DrawScrollBar( GameTime gameTime )

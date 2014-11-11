@@ -1,7 +1,7 @@
-﻿using System;
-using System.Runtime.Serialization;
-using MetaMind.Engine.Components.Events;
+﻿using MetaMind.Engine.Components.Events;
 using MetaMind.Perseverance.Sessions;
+using System;
+using System.Runtime.Serialization;
 
 namespace MetaMind.Perseverance.Concepts.Cognitions
 {

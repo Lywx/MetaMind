@@ -1,8 +1,8 @@
+using MetaMind.Engine.Components.Events;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MetaMind.Engine.Components.Events;
-using Microsoft.Xna.Framework;
 
 namespace MetaMind.Engine.Components
 {

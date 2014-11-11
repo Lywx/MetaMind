@@ -1,6 +1,6 @@
-using System;
 using MetaMind.Engine.Guis.Widgets.Views;
 using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
+using System;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 {

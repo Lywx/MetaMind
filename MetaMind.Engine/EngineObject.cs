@@ -1,7 +1,7 @@
-using System.Runtime.Serialization;
 using MetaMind.Engine.Components;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using System.Runtime.Serialization;
 
 namespace MetaMind.Engine
 {

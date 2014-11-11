@@ -1,13 +1,10 @@
-﻿using System;
-using MetaMind.Engine.Guis.Modules;
+﻿using MetaMind.Engine.Guis.Modules;
 using MetaMind.Engine.Guis.Widgets;
 using MetaMind.Engine.Screens;
 using MetaMind.Perseverance.Guis.Modules;
-using MetaMind.Perseverance.Guis.Widgets.Motivations;
-using MetaMind.Perseverance.Guis.Widgets.Motivations.Items;
 using MetaMind.Perseverance.Guis.Widgets.Synchronizations;
-using MetaMind.Perseverance.Guis.Widgets.Tasks;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace MetaMind.Perseverance.Screens
 {

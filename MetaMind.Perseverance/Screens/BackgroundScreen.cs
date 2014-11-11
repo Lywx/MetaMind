@@ -1,9 +1,8 @@
-﻿using System;
-using MetaMind.Engine.Screens;
+﻿using MetaMind.Engine.Screens;
 using MetaMind.Perseverance.Guis.Particles;
-using MetaMind.Perseverance.Guis.Widgets.Synchronizations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace MetaMind.Perseverance.Screens
 {

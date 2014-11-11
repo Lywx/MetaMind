@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
-using MetaMind.Engine.Components.Inputs;
+﻿using MetaMind.Engine.Components.Inputs;
 using MetaMind.Engine.Guis.Widgets.Items;
 using Microsoft.Xna.Framework;
+using System;
+using System.Linq;
 
 namespace MetaMind.Engine.Guis.Widgets.Views
 {
@@ -134,6 +134,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         public virtual void UpdateStrucutre( GameTime gameTime )
         {
             UpdateViewLogics();
+            // TODO: this name is not right
             UpdateItemLogics( gameTime );
         }
 

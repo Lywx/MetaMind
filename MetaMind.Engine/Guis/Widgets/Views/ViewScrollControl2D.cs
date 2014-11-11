@@ -1,5 +1,4 @@
 ﻿using MetaMind.Engine.Guis.Widgets.Items;
-using MetaMind.Engine.Settings;
 using Microsoft.Xna.Framework;
 
 namespace MetaMind.Engine.Guis.Widgets.Views

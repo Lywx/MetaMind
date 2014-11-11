@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using MetaMind.Engine.Components.Processes;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace MetaMind.Engine.Components
 {

@@ -32,7 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Components\AudioManager.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Guis\Widgets\Cameras\CameraSettings.cs" />
     <Compile Include="Guis\Widgets\Cameras\MarkovCamera.cs" />
     <Compile Include="Guis\Widgets\Views\IViewFactory.cs" />
+    <Compile Include="Guis\Widgets\Views\ViewRegion.cs" />
     <Compile Include="Guis\Widgets\Widget.cs" />
     <Compile Include="Guis\Widgets\Items\IItemGraphics.cs" />
     <Compile Include="Guis\Widgets\Items\ItemEntryFrame.cs" />
@@ -157,9 +159,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Content\" />
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +170,9 @@
       <Project>{39ad1482-1881-4852-a05d-dc61b0d3446a}</Project>
       <Name>C3.Primitives2D</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

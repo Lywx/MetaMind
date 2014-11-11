@@ -1,8 +1,8 @@
-﻿using System;
-using MetaMind.Engine.Components;
+﻿using MetaMind.Engine.Components;
 using Microsoft.Xna.Framework;
 using MouseKeyboardActivityMonitor;
 using MouseKeyboardActivityMonitor.WinApi;
+using System;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
 {

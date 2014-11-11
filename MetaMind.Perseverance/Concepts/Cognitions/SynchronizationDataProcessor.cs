@@ -1,7 +1,7 @@
-﻿using System;
-using MetaMind.Engine.Concepts;
+﻿using MetaMind.Engine.Concepts;
 using MetaMind.Perseverance.Concepts.TaskEntries;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace MetaMind.Perseverance.Concepts.Cognitions
 {

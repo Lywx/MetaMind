@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using System.Linq;
 using MetaMind.Engine.Guis.Widgets;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MetaMind.Engine.Components.Inputs
 {

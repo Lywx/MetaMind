@@ -1,7 +1,7 @@
-using System;
 using MetaMind.Engine.Components;
 using MetaMind.Engine.Settings;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace MetaMind.Engine.Guis.Widgets.Views
 {
