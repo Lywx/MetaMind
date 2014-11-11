@@ -1,12 +1,14 @@
 using MetaMind.Engine.Extensions;
 using MetaMind.Engine.Guis.Elements.Frames;
-using MetaMind.Engine.Guis.Widgets.Items;
-using MetaMind.Engine.Guis.Widgets.ViewItems;
+
 using Microsoft.Xna.Framework;
 using System;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 {
+    using MetaMind.Engine.Guis.Elements.Items;
+    using MetaMind.Engine.Guis.Elements.ViewItems;
+
     public class MotivationItemFrameControl : ViewItemFrameControl
     {
         private TimeSpan selectedTime;

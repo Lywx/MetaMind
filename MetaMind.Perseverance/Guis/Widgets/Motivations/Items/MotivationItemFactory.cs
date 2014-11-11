@@ -1,8 +1,8 @@
-﻿using MetaMind.Engine.Guis.Widgets.Items;
-using MetaMind.Engine.Guis.Widgets.ViewItems;
-
-namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
+﻿namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 {
+    using MetaMind.Engine.Guis.Elements.Items;
+    using MetaMind.Engine.Guis.Elements.ViewItems;
+
     public class MotivationItemFactory : IViewItemFactory
     {
         public dynamic CreateControl( IViewItem item )

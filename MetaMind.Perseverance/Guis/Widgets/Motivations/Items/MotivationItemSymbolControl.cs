@@ -1,10 +1,12 @@
 ﻿using MetaMind.Engine.Components.Inputs;
-using MetaMind.Engine.Guis.Widgets.Items;
-using MetaMind.Engine.Guis.Widgets.ViewItems;
+
 using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 {
+    using MetaMind.Engine.Guis.Elements.Items;
+    using MetaMind.Engine.Guis.Elements.ViewItems;
+
     public class MotivationItemSymbolControl : ViewItemComponent
     {
         public MotivationItemSymbolControl( IViewItem item )

@@ -1,10 +1,11 @@
 using MetaMind.Engine.Guis.Modules;
-using MetaMind.Engine.Guis.Widgets.Views;
 using MetaMind.Perseverance.Guis.Widgets.Motivations.Banners;
 using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Guis.Modules
 {
+    using MetaMind.Engine.Guis.Elements.Views;
+
     public class MotivationExchange : Module<MotivationExchangeSettings>
     {
         private readonly IView  futureView;

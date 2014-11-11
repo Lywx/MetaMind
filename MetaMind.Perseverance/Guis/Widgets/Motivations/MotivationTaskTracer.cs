@@ -2,12 +2,13 @@ using MetaMind.Engine.Components.Inputs;
 using MetaMind.Engine.Extensions;
 using MetaMind.Engine.Guis.Elements.Regions;
 using MetaMind.Engine.Guis.Modules;
-using MetaMind.Engine.Guis.Widgets.Views;
 using MetaMind.Perseverance.Guis.Widgets.Motivations.Items;
 using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations
 {
+    using MetaMind.Engine.Guis.Elements.Views;
+
     public class MotivationTaskTracer : Module<MotivationTaskTracerSettings>
     {
         private readonly MotivationItemControl hostControl;

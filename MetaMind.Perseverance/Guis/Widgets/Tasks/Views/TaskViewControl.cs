@@ -1,13 +1,14 @@
 using MetaMind.Engine.Components.Inputs;
 using MetaMind.Engine.Guis.Elements.Regions;
-using MetaMind.Engine.Guis.Widgets.ViewItems;
-using MetaMind.Engine.Guis.Widgets.Views;
 using MetaMind.Perseverance.Concepts.TaskEntries;
 using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
 using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 {
+    using MetaMind.Engine.Guis.Elements.ViewItems;
+    using MetaMind.Engine.Guis.Elements.Views;
+
     public class TaskViewControl : ViewControl2D
     {
         #region Constructors

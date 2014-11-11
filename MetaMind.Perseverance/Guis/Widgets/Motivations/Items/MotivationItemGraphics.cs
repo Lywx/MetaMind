@@ -1,13 +1,15 @@
 ﻿using MetaMind.Engine.Components;
 using MetaMind.Engine.Extensions;
-using MetaMind.Engine.Guis.Widgets.Items;
-using MetaMind.Engine.Guis.Widgets.ViewItems;
+
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Globalization;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 {
+    using MetaMind.Engine.Guis.Elements.Items;
+    using MetaMind.Engine.Guis.Elements.ViewItems;
+
     public class MotivationItemGraphics : ViewItemBasicGraphics
     {
         private readonly MotivationItemSymbolGraphics symbol;

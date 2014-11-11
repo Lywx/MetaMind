@@ -1,8 +1,8 @@
-using MetaMind.Engine.Guis.Widgets.Items;
-using MetaMind.Engine.Guis.Widgets.ViewItems;
-
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 {
+    using MetaMind.Engine.Guis.Elements.Items;
+    using MetaMind.Engine.Guis.Elements.ViewItems;
+
     public class TaskItemFactory : ViewItemBasicFactory2D
     {
         public override dynamic CreateControl( IViewItem item )

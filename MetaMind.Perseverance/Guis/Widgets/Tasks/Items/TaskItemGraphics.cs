@@ -1,12 +1,14 @@
 using C3.Primtive2DXna;
 using MetaMind.Engine.Extensions;
-using MetaMind.Engine.Guis.Widgets.Items;
-using MetaMind.Engine.Guis.Widgets.ViewItems;
+
 using Microsoft.Xna.Framework;
 using System;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 {
+    using MetaMind.Engine.Guis.Elements.Items;
+    using MetaMind.Engine.Guis.Elements.ViewItems;
+
     public class TaskItemGraphics : ViewItemBasicGraphics
     {
         private const string HelpInformation = "N-ame D-one E-xperience L-oad";

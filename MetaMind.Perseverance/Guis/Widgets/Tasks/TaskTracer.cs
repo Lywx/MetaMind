@@ -1,11 +1,12 @@
 ﻿using MetaMind.Engine.Guis.Widgets;
-using MetaMind.Engine.Guis.Widgets.Views;
 using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
 using MetaMind.Perseverance.Guis.Widgets.Tasks.Views;
 using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks
 {
+    using MetaMind.Engine.Guis.Elements.Views;
+
     public class TaskTracer : Widget
     {
         private IView            view;

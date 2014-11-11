@@ -1,11 +1,12 @@
 using C3.Primtive2DXna;
 using MetaMind.Engine.Extensions;
-using MetaMind.Engine.Guis.Widgets.Views;
 using MetaMind.Perseverance.Guis.Widgets.Motivations.Items;
 using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
 {
+    using MetaMind.Engine.Guis.Elements.Views;
+
     public class MotivationViewGraphics : ViewBasicGraphics
     {
         private int frameAlpha;

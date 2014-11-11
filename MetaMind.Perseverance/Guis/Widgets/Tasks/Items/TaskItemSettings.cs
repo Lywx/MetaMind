@@ -1,10 +1,11 @@
 using MetaMind.Engine.Components;
-using MetaMind.Engine.Guis.Widgets.Items;
 using MetaMind.Engine.Settings;
 using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 {
+    using MetaMind.Engine.Guis.Elements.Items;
+
     public class TaskItemSettings : ItemSettings
     {
         //---------------------------------------------------------------------
@@ -61,14 +62,17 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
         {
             //-----------------------------------------------------------------
             RootFrameSize        = NameFrameSize;
+
             //-----------------------------------------------------------------
-            NameXLMargin         = ( int ) ( NameXLMargin * NameSize );
-            NameXRMargin         = ( int ) ( NameXRMargin * NameSize );
-            NameYTMargin         = ( int ) ( NameYTMargin * NameSize );
+            NameXLMargin         = (int)(NameXLMargin * NameSize);
+            NameXRMargin         = (int)(NameXRMargin * NameSize);
+            NameYTMargin         = (int)(NameYTMargin * NameSize);
+
             //-----------------------------------------------------------------
             IdSize               = 0.7f;
             IdFrameSize          = new Point( 24, 24 );
             IdFrameColor         = ColorPalette.TransparentColor1;
+
             //-----------------------------------------------------------------
             ExperienceFrameColor = ColorPalette.TransparentColor1;
             ProgressFrameColor   = ColorPalette.TransparentColor1;

@@ -1,12 +1,13 @@
 ﻿using C3.Primtive2DXna;
 using MetaMind.Engine;
 using MetaMind.Engine.Extensions;
-using MetaMind.Engine.Guis.Widgets.Views;
 
 using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Banners
 {
+    using MetaMind.Engine.Guis.Elements.Views;
+
     public class Banner : EngineObject
     {
         private ViewSettings1D    viewSettings;

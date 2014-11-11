@@ -1,10 +1,12 @@
 using MetaMind.Engine.Extensions;
-using MetaMind.Engine.Guis.Widgets.Items;
-using MetaMind.Engine.Guis.Widgets.ViewItems;
+
 using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 {
+    using MetaMind.Engine.Guis.Elements.Items;
+    using MetaMind.Engine.Guis.Elements.ViewItems;
+
     public class TaskItemFrameControl : ViewItemFrameControl
     {
         public ItemEntryFrame  NameFrame { get; private set; }

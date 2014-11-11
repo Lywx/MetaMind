@@ -1,6 +1,4 @@
 using MetaMind.Engine.Extensions;
-using MetaMind.Engine.Guis.Widgets.Items;
-using MetaMind.Engine.Guis.Widgets.ViewItems;
 using MetaMind.Engine.Settings;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,6 +6,9 @@ using System;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 {
+    using MetaMind.Engine.Guis.Elements.Items;
+    using MetaMind.Engine.Guis.Elements.ViewItems;
+
     public class MotivationItemSymbolGraphics : ViewItemComponent
     {
         private readonly Texture2D symbolTexture;

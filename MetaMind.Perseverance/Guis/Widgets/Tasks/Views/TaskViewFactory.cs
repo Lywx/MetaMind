@@ -1,9 +1,10 @@
-using MetaMind.Engine.Guis.Widgets.Views;
 using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
 using System;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 {
+    using MetaMind.Engine.Guis.Elements.Views;
+
     public class TaskViewFactory : ViewBasicFactory2D
     {
         protected override dynamic CreateControl( IView view, ViewSettings2D viewSettings, ICloneable itemSettings )

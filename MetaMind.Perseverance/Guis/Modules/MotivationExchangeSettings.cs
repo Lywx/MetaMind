@@ -1,4 +1,3 @@
-using MetaMind.Engine.Guis.Widgets.Views;
 using MetaMind.Perseverance.Concepts.MotivationEntries;
 using MetaMind.Perseverance.Guis.Widgets.Motivations.Items;
 using MetaMind.Perseverance.Guis.Widgets.Motivations.Views;
@@ -8,6 +7,8 @@ using System.Collections.Generic;
 
 namespace MetaMind.Perseverance.Guis.Modules
 {
+    using MetaMind.Engine.Guis.Elements.Views;
+
     public class MotivationExchangeSettings : ICloneable
     {
         public readonly MotivationItemSettings ItemSettings = new MotivationItemSettings();

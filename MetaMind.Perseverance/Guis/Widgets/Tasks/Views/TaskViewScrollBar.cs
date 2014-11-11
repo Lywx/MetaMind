@@ -1,12 +1,12 @@
 ﻿using C3.Primtive2DXna;
 using MetaMind.Engine.Extensions;
-using MetaMind.Engine.Guis.Widgets.Views;
 using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
 using Microsoft.Xna.Framework;
 using System;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 {
+    using MetaMind.Engine.Guis.Elements.Views;
 
     public class TaskViewScrollBar : ViewComponent
     {
