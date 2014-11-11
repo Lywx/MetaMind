@@ -134,9 +134,13 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
         private void DrawName( byte alpha )
         {
             if ( Item.IsEnabled( ItemState.Item_Pending ) )
+            {
                 FontManager.DrawText( ItemSettings.HelpFont, HelpInformation, HelpLocation, ColorExt.MakeTransparent(ItemSettings.HelpColor, alpha ), ItemSettings.HelpSize );
+            }
             else
+            {
                 FontManager.DrawText( ItemSettings.NameFont, ItemData.Name, NameLocation, ColorExt.MakeTransparent( ItemSettings.NameColor, alpha ), ItemSettings.NameSize );
+            }
         }
 
         private void DrawNameFrame( byte alpha )
@@ -146,16 +150,16 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
                 FillNameFrameWith( ItemSettings.NameFrameModificationColor );
                 DrawNameFrameWith( ItemSettings.NameFrameMouseOverColor );
             }
-            else if ( !ItemControl.NameFrame.IsEnabled( FrameState.Mouse_Over ) && Item.IsEnabled( ItemState.Item_Editing ) )
+            else if ( !Item.IsEnabled( ItemState.Item_Mouse_Over ) && Item.IsEnabled( ItemState.Item_Editing ) )
             {
                 FillNameFrameWith( ItemSettings.NameFrameModificationColor );
             }
-            else if ( ItemControl.NameFrame.IsEnabled( FrameState.Mouse_Over ) && Item.IsEnabled( ItemState.Item_Selected ) )
+            else if ( Item.IsEnabled( ItemState.Item_Mouse_Over ) && Item.IsEnabled( ItemState.Item_Selected ) )
             {
                 FillNameFrameWith( ItemSettings.NameFrameSelectionColor );
                 DrawNameFrameWith( ItemSettings.NameFrameMouseOverColor );
             }
-            else if ( ItemControl.NameFrame.IsEnabled( FrameState.Mouse_Over ) && !Item.IsEnabled( ItemState.Item_Selected ) )
+            else if ( Item.IsEnabled( ItemState.Item_Mouse_Over ) && !Item.IsEnabled( ItemState.Item_Selected ) )
             {
                 DrawNameFrameWith( ItemSettings.NameFrameMouseOverColor );
             }
@@ -196,6 +200,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
                 Primitives2D.DrawRectangle( ScreenManager.SpriteBatch, SinwaveHighlight( gameTime, 10, RectangleExt.Crop( ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin ) ), ColorExt.MakeTransparent( ItemSettings.NameFrameSynchronizationColor, alpha ), 2f );
             }
         }
+
         private void FillNameFrameWith( Color color )
         {
             Primitives2D.FillRectangle( ScreenManager.SpriteBatch, RectangleExt.Crop( ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin ), color );

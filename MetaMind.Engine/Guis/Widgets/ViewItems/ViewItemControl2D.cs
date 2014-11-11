@@ -4,19 +4,15 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Engine.Guis.Widgets.ViewItems
 {
-    public class ViewItemControl2D : ViewItemComponent
+    public class ViewItemControl2D : ViewItemControl1D
     {
-        protected dynamic               ItemFrameControl { get; set; }
-        protected ViewItemViewControl2D ItemViewControl  { get; set; }
-        protected ViewItemDataControl   ItemDataControl  { get; set; }
-        
         #region Constructors
 
-        public ViewItemControl2D( IViewItem item )
+        public ViewItemControl2D( IViewItem item ) 
             : base( item )
         {
-            ItemFrameControl = new ViewItemFrameControl( item );
             ItemViewControl  = new ViewItemViewControl2D( item );
+            ItemFrameControl = new ViewItemFrameControl( item );
             ItemDataControl  = new ViewItemDataControl( item );
         }
 
@@ -26,48 +22,8 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
         #region Public Properties
 
         public int           Column    { get; set; }
-        public int           Id        { get; set; }
         public int           Row       { get; set; }
-        public ItemRootFrame RootFrame { get { return ItemFrameControl.RootFrame; } }
 
         #endregion Public Properties
-
-        #region Operations
-
-        public void SelectIt()
-        {
-            ItemViewControl.SelectIt();
-        }
-
-        public void SwapIt( IViewItem draggingItem )
-        {
-            ItemViewControl.SwapIt( draggingItem );
-        }
-
-        public void UnselectIt()
-        {
-            ItemViewControl.UnselectIt();
-        }
-
-        #endregion Operations
-
-        #region Update
-
-        public virtual void UpdateInput( GameTime gameTime )
-        {
-            if ( Item.IsEnabled( ItemState.Item_Selected ) &&
-                !Item.IsEnabled( ItemState.Item_Editing ) )
-            {
-            }
-        }
-
-        public virtual void UpdateStructure( GameTime gameTime )
-        {
-            ItemViewControl .Update( gameTime );
-            ItemFrameControl.Update( gameTime );
-            ItemDataControl .Update( gameTime );
-        }
-
-        #endregion Update
     }
 }

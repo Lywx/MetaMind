@@ -92,6 +92,7 @@
     <Compile Include="Guis\Modules\ModuleGraphics.cs" />
     <Compile Include="Guis\Widgets\Cameras\CameraSettings.cs" />
     <Compile Include="Guis\Widgets\Cameras\MarkovCamera.cs" />
+    <Compile Include="Guis\Widgets\Views\IViewFactory.cs" />
     <Compile Include="Guis\Widgets\Widget.cs" />
     <Compile Include="Guis\Widgets\Items\IItemGraphics.cs" />
     <Compile Include="Guis\Widgets\Items\ItemEntryFrame.cs" />
@@ -117,7 +118,6 @@
     <Compile Include="Guis\Widgets\ViewItems\ViewItemViewControl1D.cs" />
     <Compile Include="Guis\Widgets\ViewItems\ViewItemViewControl2D.cs" />
     <Compile Include="Guis\Widgets\Views\IViewControl.cs" />
-    <Compile Include="Guis\Widgets\Views\IViewFactory.cs" />
     <Compile Include="Guis\Widgets\Views\IViewGraphics.cs" />
     <Compile Include="Guis\Widgets\Views\IViewScrollControlHorizontal.cs" />
     <Compile Include="Guis\Widgets\Views\IViewScrollControlVertical.cs" />

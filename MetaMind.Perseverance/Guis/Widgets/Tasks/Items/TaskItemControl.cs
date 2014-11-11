@@ -23,6 +23,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
             ItemErrorControl = new TaskItemErrorControl( item );
         }
 
+        // TODO: not implemented 
         public TaskItemErrorControl ItemErrorControl { get; private set; }
 
         public override void UpdateInput( GameTime gameTime )

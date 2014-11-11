@@ -1,12 +1,13 @@
 using System;
 using MetaMind.Engine.Guis.Widgets.Views;
+using MetaMind.Perseverance.Guis.Widgets.Motivations.Items;
 using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
 {
     public class MotivationViewGraphics : ViewBasicGraphics
     {
-        public MotivationViewGraphics( IView view, ICloneable viewSettings, ICloneable itemSettings )
+        public MotivationViewGraphics( IView view, MotivationViewSettings viewSettings, MotivationItemSettings itemSettings )
             : base( view, viewSettings, itemSettings )
         {
         }

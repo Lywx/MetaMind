@@ -3,7 +3,6 @@ using MetaMind.Engine.Extensions;
 using MetaMind.Engine.Guis.Widgets.Views;
 using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 {
@@ -43,8 +42,8 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
                     frameAlpha = 0;
                 }
             }
-
         }
+        
         private void DrawRegion( GameTime gameTime )
         {
             Primitives2D.DrawRectangle( ScreenManager.SpriteBatch, RectangleExt.Extend( ViewControl.Region.Frame.Rectangle, ViewSettings.BorderMargin ), ColorExt.MakeTransparent( ViewSettings.CurrentColor, ( byte ) frameAlpha ), 2f );

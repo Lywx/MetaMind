@@ -247,9 +247,9 @@ namespace MetaMind.Engine.Guis.Elements.Frames
 
         #region Update
 
-        public virtual void Update( GameTime gameTime )
+        public virtual void UpdateInput( GameTime gameTime )
         {
-            var mouse = InputSequenceManager.Mouse.CurrentState;
+            var mouse         = InputSequenceManager.Mouse.CurrentState;
             var mouseLocation = new Point( mouse.X, mouse.Y );
 
             UpdateStates( mouseLocation );

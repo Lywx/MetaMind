@@ -1,6 +1,7 @@
 using System;
 using C3.Primtive2DXna;
 using MetaMind.Engine.Extensions;
+using MetaMind.Engine.Guis.Elements.Frames;
 using MetaMind.Engine.Guis.Elements.Regions;
 using MetaMind.Engine.Guis.Widgets.Views;
 using Microsoft.Xna.Framework;
@@ -24,11 +25,14 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
         public dynamic ViewControl  { get { return View.Control; } }
         public dynamic ViewSettings { get; private set; }
 
-        public override void Update(GameTime gameTime)
+        public override void UpdateStructure( GameTime gameTime )
         {
             Location = ViewSettings.StartPoint;
-
-            base.Update( gameTime );
+            // TODO
+            if ( !Frame.IsEnabled( FrameState.Frame_Active ) )
+            {
+               //View.Items 
+            }
         }
 
         private static Rectangle StartRectangle( dynamic viewSettings, dynamic itemSettings )
@@ -36,7 +40,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
             return new Rectangle(
                 viewSettings.StartPoint.X,
                 viewSettings.StartPoint.Y,
-                viewSettings.ColumnNumDisplay * itemSettings.NameFrameSize.X,
+                viewSettings.ColumnNumDisplay * ( itemSettings.NameFrameSize.X ),
                 viewSettings.RowNumDisplay    * ( itemSettings.NameFrameSize.Y + itemSettings.IdFrameSize.Y )
                 );
         }

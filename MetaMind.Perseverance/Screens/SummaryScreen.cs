@@ -33,8 +33,6 @@ namespace MetaMind.Perseverance.Screens
 
         public override void HandleInput()
         {
-            InputEventManager   .HandleInput();
-            InputSequenceManager.HandleInput();
         }
 
         public override void LoadContent()
@@ -46,8 +44,9 @@ namespace MetaMind.Perseverance.Screens
         {
             if ( IsActive && !coveredByOtherScreen )
             {
-                // TODO: not sure it is gonna work
-                MessageManager.Update( gameTime );
+                InputEventManager   .Update( gameTime );
+                InputSequenceManager.Update( gameTime );
+                MessageManager      .Update( gameTime );
 
                 Perseverance.Adventure.Update( gameTime );
                 

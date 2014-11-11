@@ -24,27 +24,34 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             get
             {
                 return new Point(
-                    ( int ) ( RootFrame.Width * ( 1 + ItemSettings.SymbolFrameIncrementFactor * Math.Abs( Math.Atan( selectedTime.TotalSeconds ) ) ) ),
+                    ( int ) ( RootFrame.Width  * ( 1 + ItemSettings.SymbolFrameIncrementFactor * Math.Abs( Math.Atan( selectedTime.TotalSeconds ) ) ) ),
                     ( int ) ( RootFrame.Height * ( 1 + ItemSettings.SymbolFrameIncrementFactor * Math.Abs( Math.Atan( selectedTime.TotalSeconds ) ) ) ) );
             }
         }
 
-        public override void Update( GameTime gameTime )
-        {
-            base.Update( gameTime );
 
-            UpdateSelection( gameTime );
+        public override void UpdateStructure(GameTime gameTime)
+        {
+            base.UpdateStructure( gameTime );
+            
+            UpdateFrameSelection( gameTime );
         }
 
-        protected override void UpdateFrames( GameTime gameTime )
+        protected override void UpdateFrameGeometry()
         {
-            base.UpdateFrames( gameTime );
+            base.UpdateFrameGeometry();
 
             SymbolFrame.Center = RootFrame.Center;
             SymbolFrame.Size   = SymbolFrameSize;
         }
 
-        private void UpdateSelection( GameTime gameTime )
+        public override void UpdateInput(GameTime gameTime)
+        {
+            base       .UpdateInput( gameTime );
+            SymbolFrame.UpdateInput( gameTime );
+        }
+
+        private void UpdateFrameSelection( GameTime gameTime )
         {
             if ( Item.IsEnabled( ItemState.Item_Selected ) &&
                 !Item.IsEnabled( ItemState.Item_Dragging ) )
@@ -54,9 +61,13 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             else
             {
                 if ( selectedTime.Ticks > 0 )
+                {
                     selectedTime = selectedTime - gameTime.DeltaTimeSpan( 5 );
+                }
                 else
+                {
                     selectedTime = TimeSpan.Zero;
+                }
             }
         }
     }

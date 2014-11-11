@@ -1,7 +1,3 @@
-using System.Diagnostics;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using MetaMind.Engine.Guis.Widgets;
 using MetaMind.Engine.Guis.Widgets.Items;
 using MetaMind.Engine.Guis.Widgets.ViewItems;
 using MetaMind.Engine.Guis.Widgets.Views;

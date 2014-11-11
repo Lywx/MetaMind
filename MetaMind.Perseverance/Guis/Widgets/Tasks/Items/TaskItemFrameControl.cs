@@ -21,7 +21,17 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
             ProgressFrame   = new ItemEntryFrame( item );
         }
 
-        protected override void UpdateFrames( GameTime gameTime )
+        public override void UpdateInput(GameTime gameTime)
+        {
+            base           .UpdateInput( gameTime );
+
+            NameFrame      .UpdateInput( gameTime );
+            IdFrame        .UpdateInput( gameTime );
+            ExperienceFrame.UpdateInput( gameTime );
+            ProgressFrame  .UpdateInput( gameTime );
+        }
+
+        protected override void UpdateFrameGeometry()
         {
             ( ( TaskItemSettings ) ItemSettings ).ExperienceFrameSize.X = ( ItemSettings.NameFrameSize.X - ItemSettings.IdFrameSize.X ) / 2;
             ( ( TaskItemSettings ) ItemSettings ).ProgressFrameSize  .X = ( ItemSettings.NameFrameSize.X - ItemSettings.IdFrameSize.X ) / 2;
@@ -37,12 +47,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
             IdFrame        .Size = ItemSettings.IdFrameSize;
             ExperienceFrame.Size = ItemSettings.ExperienceFrameSize;
             ProgressFrame  .Size = ItemSettings.ProgressFrameSize;
-
-            RootFrame      .Update( gameTime );
-            NameFrame      .Update( gameTime );
-            IdFrame        .Update( gameTime );
-            ExperienceFrame.Update( gameTime );
-            ProgressFrame  .Update( gameTime );
         }
 
         private Vector2 RootFrameLocation

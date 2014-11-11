@@ -25,10 +25,10 @@ namespace MetaMind.Engine.Guis.Elements.Frames
 
         public DraggableFrame()
         {
-            MouseLeftPressed += RecordPressPosition;
-            MouseLeftReleased += ResetRecordPosition;
+            MouseLeftPressed   += RecordPressPosition;
+            MouseLeftReleased  += ResetRecordPosition;
 
-            MouseRightPressed += RecordPressPosition;
+            MouseRightPressed  += RecordPressPosition;
             MouseRightReleased += ResetRecordPosition;
         }
 
@@ -74,9 +74,9 @@ namespace MetaMind.Engine.Guis.Elements.Frames
 
         #region Update
 
-        public override void Update( GameTime gameTime )
+        public override void UpdateInput( GameTime gameTime )
         {
-            base.Update( gameTime );
+            base.UpdateInput( gameTime );
 
             var mouse = InputSequenceManager.Mouse.CurrentState;
             var mouseLocation = new Point( mouse.X, mouse.Y );

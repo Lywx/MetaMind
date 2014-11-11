@@ -6,142 +6,84 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Engine.Guis.Widgets.Views
 {
-    public class ViewControl2D : ViewComponent, IViewControl
+    public class ViewControl2D : ViewControl1D
     {
-        public ViewControl2D( IView view, ICloneable viewSettings, ICloneable itemSettings )
+        public ViewControl2D( IView view, ViewSettings2D viewSettings, ICloneable itemSettings )
             : base( view, viewSettings, itemSettings )
         {
-            Swap      = new ViewSwapControl( View, ViewSettings, ItemSettings );
-            Scroll    = new ViewScrollControl2D( View, ViewSettings, ItemSettings );
+            Swap      = new ViewSwapControl       ( View, ViewSettings, ItemSettings );
+            Scroll    = new ViewScrollControl2D   ( View, ViewSettings, ItemSettings );
             Selection = new ViewSelectionControl2D( View, ViewSettings, ItemSettings );
         }
 
-        #region Components
-
-        public IViewSwapControl Swap { get; private set; }
-
-        public dynamic Scroll { get; private set; }
-
-        public dynamic Selection { get; private set; }
-
-        #endregion Components
-
-        #region Operations
-
-        public void SortItems( ViewSortMode sortMode )
-        {
-            switch ( sortMode )
-            {
-                case ViewSortMode.Name:
-                    {
-                        View.Items = View.Items.OrderBy( item => item.ItemData.Labels ).ToList();
-                        View.Items.ForEach( item => item.ItemControl.Id = View.Items.IndexOf( item ) );
-                    }
-                    break;
-
-                case ViewSortMode.Id:
-                    {
-                        View.Items = View.Items.OrderBy( item => item.ItemControl.Id ).ToList();
-                        View.Items.ForEach( item => item.ItemControl.Id = View.Items.IndexOf( item ) );
-                    }
-                    break;
-            }
-        }
-
-        #endregion Operations
-
         #region Update
 
-        public virtual void UpdateInput( GameTime gameTime )
+        public override void UpdateInput( GameTime gameTime )
         {
-            if ( View.IsEnabled( ViewState.View_Active ) && 
-                 View.IsEnabled( ViewState.View_Has_Focus ) &&
-                !View.IsEnabled( ViewState.Item_Editting ) )
+            if ( AcceptInput )
             {
-                //------------------------------------------------------------------
                 // mouse
+                //---------------------------------------------------------------------
+                if ( InputSequenceManager.Mouse.IsWheelScrolledUp )
                 {
-                    if ( InputSequenceManager.Mouse.IsWheelScrolledUp )
-                        Scroll.MoveUp();
-                    if ( InputSequenceManager.Mouse.IsWheelScrolledDown )
-                        Scroll.MoveDown();
+                    Scroll.MoveUp();
                 }
-                //------------------------------------------------------------------
+                if ( InputSequenceManager.Mouse.IsWheelScrolledDown )
+                {
+                    Scroll.MoveDown();
+                }
+
                 // keyboard
+                //--------------------------------------------------------------
+                // movement 
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Left ) )
                 {
-                    //--------------------------------------------------------------
-                    // movement 
-                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Left ) )
-                        Selection.MoveLeft();
-                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Right ) )
-                        Selection.MoveRight();
-                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Up ) )
-                        Selection.MoveUp();
-                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Down ) )
-                        Selection.MoveDown();
-                    //--------------------------------------------------------------
-                    // escape
-                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Escape ) )
-                        Selection.Clear();
+                    Selection.MoveLeft();
                 }
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Right ) )
+                {
+                    Selection.MoveRight();
+                }
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Up ) )
+                {
+                    Selection.MoveUp();
+                }
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Down ) )
+                {
+                    Selection.MoveDown();
+                }
+                // escape
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Escape ) )
+                {
+                    Selection.Clear();
+                }
+            }
+
+            // item input
+            //-----------------------------------------------------------------
+            foreach ( var item in View.Items.ToArray() )
+            {
+                item.UpdateInput( gameTime );
             }
         }
-
-        public virtual void UpdateStrucutre( GameTime gameTime )
-        {
-            UpdateViewLogics();
-            UpdateItemLogics( gameTime );
-        }
-
-        protected virtual void UpdateItemLogics( GameTime gameTime )
-        {
-            if ( View.IsEnabled( ViewState.View_Active ) )
-            {
-                foreach ( var item in View.Items.ToArray() )
-                {
-                    item.UpdateStructure( gameTime );
-                }
-            }
-            else
-            {
-                foreach ( var item in View.Items )
-                {
-                    item.Disable( ItemState.Item_Active ); 
-                }
-            }
-        }
-
-        protected virtual void UpdateViewLogics()
-        {
-            if ( View.IsEnabled( ViewState.View_Active ) )
-            {
-                if ( Selection.HasSelected )
-                {
-                    View.Enable( ViewState.View_Has_Selection );
-                }
-                else
-                {
-                    View.Disable( ViewState.View_Has_Selection );
-                }
-                if ( View.IsEnabled( ViewState.View_Has_Selection ) )
-                {
-                    View.Enable( ViewState.View_Has_Focus );
-                }
-                else
-                {
-                    View.Disable( ViewState.View_Has_Focus );
-                }
-            }
-            else
-            {
-                View.Disable( ViewState.View_Has_Focus );
-                View.Disable( ViewState.View_Has_Selection );
-            }
-        }
-
+       
         #endregion Update
 
         #region Helper Methods
+
+        public int ColumnNum
+        {
+            get { return RowNum > 1 ? ViewSettings.ColumnNumMax : View.Items.Count; }
+        }
+
+        public int RowNum
+        {
+            get
+            {
+                var lastId = View.Items.Count - 1;
+                return RowFrom( lastId ) + 1;
+            }
+        }
 
         public int ColumnFrom( int id )
         {
@@ -163,21 +105,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
             return ViewSettings.RowNumMax - 1;
         }
-
-        public int RowNum
-        {
-            get
-            {
-                var lastId = View.Items.Count - 1;
-                return RowFrom( lastId ) + 1;
-            }
-        }
-
-        public int ColumnNum
-        {
-            get { return RowNum > 1 ? ViewSettings.ColumnNumMax : View.Items.Count; }
-        }
-
         #endregion Helper Methods
     }
 }

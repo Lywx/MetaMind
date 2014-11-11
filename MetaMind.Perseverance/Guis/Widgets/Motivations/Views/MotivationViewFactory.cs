@@ -1,18 +1,19 @@
 using System;
 using MetaMind.Engine.Guis.Widgets.Views;
+using MetaMind.Perseverance.Guis.Widgets.Motivations.Items;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
 {
-    public class MotivationViewFactory : IViewFactory
+    public class MotivationViewFactory : ViewBasicFactory1D
     {
-        public dynamic CreateControl( IView view, ICloneable viewSettings, ICloneable itemSettings )
+        protected override dynamic CreateControl( IView view, ViewSettings1D viewSettings, ICloneable itemSettings )
         {
-            return new MotivationViewControl( view, viewSettings, itemSettings );
+            return new MotivationViewControl( view, ( MotivationViewSettings ) viewSettings, ( MotivationItemSettings ) itemSettings );
         }
 
-        public IViewGraphics CreateGraphics( IView view, ICloneable viewSettings, ICloneable itemSettings )
+        protected override IViewGraphics CreateGraphics( IView view, ViewSettings1D viewSettings, ICloneable itemSettings )
         {
-            return new MotivationViewGraphics( view, viewSettings, itemSettings );
+            return new MotivationViewGraphics( view, ( MotivationViewSettings ) viewSettings, ( MotivationItemSettings ) itemSettings );
         }
     }
 }

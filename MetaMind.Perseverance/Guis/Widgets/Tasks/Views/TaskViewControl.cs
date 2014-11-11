@@ -25,9 +25,9 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 
         #region Public Properties
 
-        public TaskItemFactory   ItemFactory { get; private set; }
-        public TaskViewRegion    Region      { get; private set; }
-        public TaskViewScrollBar ScrollBar   { get; private set; }
+        public TaskItemFactory   ItemFactory { get; protected set; }
+        public TaskViewRegion    Region      { get; protected set; }
+        public TaskViewScrollBar ScrollBar   { get; protected set; }
 
         #endregion Public Properties
 
@@ -35,70 +35,74 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 
         public override void UpdateInput( GameTime gameTime )
         {
-            if ( View.IsEnabled( ViewState.View_Active ) && 
-                 View.IsEnabled( ViewState.View_Has_Focus ) && 
-                !View.IsEnabled( ViewState.Item_Editting ) )
+            // mouse
+            //-----------------------------------------------------------------
+            // region
+            Region.UpdateInput( gameTime );
+
+            if ( AcceptInput )
             {
-                //------------------------------------------------------------------
                 // mouse
+                //---------------------------------------------------------------------
+                // scroll
+                if ( InputSequenceManager.Mouse.IsWheelScrolledUp )
                 {
-                    if ( InputSequenceManager.Mouse.IsWheelScrolledUp )
-                    {
-                        ScrollBar.Trigger();
-                        Scroll   .MoveUp();
-                    }
-                    if ( InputSequenceManager.Mouse.IsWheelScrolledDown )
-                    {
-                        Scroll   .MoveDown();
-                        ScrollBar.Trigger();
-                    }
+                    ScrollBar.Trigger();
+                    Scroll.MoveUp();
                 }
-                //------------------------------------------------------------------
-                // keyboard
+                if ( InputSequenceManager.Mouse.IsWheelScrolledDown )
                 {
-                    // movement
-                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Left ) )
-                    {
-                        MoveLeft();
-                    }
-                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Right ) )
-                    {
-                        MoveRight();
-                    }
-                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Up ) )
+                    Scroll.MoveDown();
+                    ScrollBar.Trigger();
+                }
+
+                // keyboard
+                //---------------------------------------------------------------------
+                // movement
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Left ) )
+                {
+                    MoveLeft();
+                }
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Right ) )
+                {
+                    MoveRight();
+                }
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Up ) )
+                {
+                    MoveUp();
+                }
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Down ) )
+                {
+                    MoveDown();
+                }
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.SUp ) )
+                {
+                    for ( var i = 0 ; i < ViewSettings.RowNumDisplay ; i++ )
                     {
                         MoveUp();
                     }
-                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Down ) )
+                }
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.SDown ) )
+                {
+                    for ( var i = 0 ; i < ViewSettings.RowNumDisplay ; i++ )
                     {
                         MoveDown();
                     }
-                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.SUp ) )
-                    {
-                        for ( var i = 0 ; i < ViewSettings.RowNumDisplay; i++ )
-                        {
-                            MoveUp();
-                        }
-                    }
-                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.SDown ) )
-                    {
-                        for ( var i = 0 ; i < ViewSettings.RowNumDisplay; i++ )
-                        {
-                            MoveDown();
-                        }
-                    }
-                    //--------------------------------------------------------------
-                    // escape
-                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Escape ) )
-                        Selection.Clear();
-                    //-------------------------------------------------------------
-                    // list management
-                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.TaskCreateItem ) )
-                        AddItem();
+                }
+                // escape
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Escape ) )
+                {
+                    Selection.Clear();
+                }                
+                // list management
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.TaskCreateItem ) )
+                {
+                    AddItem();
                 }
             }
-            //-----------------------------------------------------------------
+
             // item input
+            //-----------------------------------------------------------------
             foreach ( var item in View.Items.ToArray() )
             {
                 item.UpdateInput( gameTime );
@@ -108,43 +112,28 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
         public override void UpdateStrucutre( GameTime gameTime )
         {
             base     .UpdateStrucutre( gameTime );
-            // TODO: may be better to separate scroll bar graphical update
             ScrollBar.Upadte( gameTime );
-            Region   .Update( gameTime );
         }
 
-        protected override void UpdateViewLogics()
+        protected override void UpdateViewFocus()
         {
-            base.UpdateViewLogics();
-
-            if ( Region.IsEnabled( RegionState.Region_Hightlighted ) )
-                View.Enable( ViewState.View_Has_Focus );
+            if ( View.IsEnabled( ViewState.View_Active ) )
+            {
+                if ( Region.IsEnabled( RegionState.Region_Hightlighted ) )
+                {
+                    View.Enable( ViewState.View_Has_Focus );
+                }
+                else
+                {
+                    View.Disable( ViewState.View_Has_Focus );
+                }
+            }
+            else
+            {
+                View.Disable( ( ViewState.View_Has_Focus ) );
+            }
         }
 
-        private void MoveDown()
-        {
-            ScrollBar.Trigger();
-            Selection.MoveDown();
-        }
-
-        private void MoveLeft()
-        {
-            ScrollBar.Trigger();
-            Selection.MoveLeft();
-        }
-
-        private void MoveRight()
-        {
-            ScrollBar.Trigger();
-            Selection.MoveRight();
-        }
-
-        private void MoveUp()
-        {
-            ScrollBar.Trigger();
-            Selection.MoveUp();
-        }
-        
         #endregion Update
 
         #region Operations
@@ -157,6 +146,30 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
         public virtual void AddItem()
         {
             View.Items.Add( new ViewItemExchangable( View, ViewSettings, ItemSettings, ItemFactory ) );
+        }
+
+        public void MoveDown()
+        {
+            ScrollBar.Trigger();
+            Selection.MoveDown();
+        }
+
+        public override void MoveLeft()
+        {
+            ScrollBar.Trigger();
+            Selection.MoveLeft();
+        }
+
+        public override void MoveRight()
+        {
+            ScrollBar.Trigger();
+            Selection.MoveRight();
+        }
+
+        public void MoveUp()
+        {
+            ScrollBar.Trigger();
+            Selection.MoveUp();
         }
 
         #endregion Operations

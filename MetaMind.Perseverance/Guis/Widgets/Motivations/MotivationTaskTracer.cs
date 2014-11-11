@@ -1,7 +1,8 @@
 using System.Reflection;
+using MetaMind.Engine.Components.Inputs;
 using MetaMind.Engine.Extensions;
+using MetaMind.Engine.Guis.Elements.Regions;
 using MetaMind.Engine.Guis.Modules;
-using MetaMind.Engine.Guis.Widgets;
 using MetaMind.Engine.Guis.Widgets.Views;
 using MetaMind.Perseverance.Guis.Widgets.Motivations.Items;
 using Microsoft.Xna.Framework;
@@ -11,38 +12,21 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
     public class MotivationTaskTracer : Module<MotivationTaskTracerSettings>
     {
         private readonly MotivationItemControl hostControl;
-        
-        private readonly IView                 view;
 
         public MotivationTaskTracer( MotivationItemControl itemControl, MotivationTaskTracerSettings settings )
             : base( settings )
         {
             hostControl = itemControl;
-            view        = new View( Settings.ViewSettings, Settings.ItemSettings, Settings.ViewFactory );
+
+            View = new View( Settings.ViewSettings, Settings.ItemSettings, Settings.ViewFactory );
         }
 
-        public override void Load()
-        {
-            LoadData();
-        }
-
-        private void LoadData() 
-        {
-            foreach ( var task in hostControl.ItemData.Tasks )
-            {
-                view.Control.AddItem( task );
-            }
-        }
-
-        public IView View
-        {
-            get { return view; }
-        }
+        public IView View { get; private set; }
 
         public void Close()
         {
             // clear highlight
-            View.Control.Selection.Clear();
+            View.Control.Region.Disable( RegionState.Region_Hightlighted );
             View.Disable( ViewState.View_Active );
         }
 
@@ -51,15 +35,95 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
             View.Draw( gameTime, alpha );
         }
 
+        public override void Load()
+        {
+            foreach ( var task in hostControl.ItemData.Tasks )
+            {
+                View.Control.AddItem( task );
+            }
+        }
+
         public void Show()
         {
-            View.Enable( ViewState.View_Active );
             // show up tracer
-            View.Control.Selection.Select( 0 );
+            View.Enable( ViewState.View_Active );
+            View.Control.Region.Enable( RegionState.Region_Hightlighted );
         }
+
         public override void UpdateInput( GameTime gameTime )
         {
-            View.UpdateInput( gameTime );
+            View.Control.Region.UpdateInput( gameTime );
+            // directly update through view control
+            if ( View.Control.AcceptInput )
+            {
+                // mouse
+                //---------------------------------------------------------------------
+                if ( InputSequenceManager.Mouse.IsWheelScrolledUp )
+                {
+                    View.Control.ScrollBar.Trigger();
+                    View.Control.Scroll.MoveUp();
+                }
+                if ( InputSequenceManager.Mouse.IsWheelScrolledDown )
+                {
+                    View.Control.Scroll.MoveDown();
+                    View.Control.ScrollBar.Trigger();
+                }
+
+                // keyboard
+                //---------------------------------------------------------------------
+                // movement
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Left ) )
+                {
+                    View.Control.MoveLeft();
+                }
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Right ) )
+                {
+                    View.Control.MoveRight();
+                }
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Up ) )
+                {
+                    View.Control.MoveUp();
+                }
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Down ) )
+                {
+                    View.Control.MoveDown();
+                }
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.SUp ) )
+                {
+                    for ( var i = 0 ; i < View.ViewSettings.RowNumDisplay ; i++ )
+                    {
+                        View.Control.MoveUp();
+                    }
+                }
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.SDown ) )
+                {
+                    for ( var i = 0 ; i < View.ViewSettings.RowNumDisplay ; i++ )
+                    {
+                        View.Control.MoveDown();
+                    }
+                }
+                // escape
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Escape ) )
+                {
+                    View.Control.Selection.Clear();
+                }
+                // list management
+                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.TaskCreateItem ) )
+                {
+                    var task = View.Control.ItemFactory.CreateData( null );
+                    // add to task gui
+                    View.Control.AddItem( task );
+                    // add to host motivation's tasks
+                    hostControl.ItemData.Tasks.Add( task );
+                }
+            }
+
+            // item input
+            //-----------------------------------------------------------------
+            foreach ( var item in View.Items.ToArray() )
+            {
+                item.UpdateInput( gameTime );
+            }
         }
 
         public override void UpdateStructure( GameTime gameTime )

@@ -89,7 +89,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
             }
         }
 
-        public void Update( GameTime gameTime )
+        public void UpdateStructure( GameTime gameTime )
         {
             UpdateViewScroll();
             UpdateViewSelection();

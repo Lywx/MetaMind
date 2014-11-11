@@ -26,7 +26,7 @@ namespace MetaMind.Engine.Guis.Elements.Frames
 
         #endregion Public Properties
 
-        void Update( GameTime gameTime );
+        void UpdateInput( GameTime gameTime );
 
         bool IsEnabled( FrameState state );
     }

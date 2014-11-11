@@ -57,7 +57,7 @@ namespace MetaMind.Engine.Guis.Elements.Regions
             set { Frame.Y = value; }
         }
 
-        public virtual void Update( GameTime gameTime )
+        public virtual void UpdateInput( GameTime gameTime )
         {
             if ( frame.IsEnabled( FrameState.Frame_Active ) )
             {
@@ -73,6 +73,14 @@ namespace MetaMind.Engine.Guis.Elements.Regions
                     Disable( RegionState.Region_Hightlighted );
                 }
             }
+            else
+            {
+                Disable( RegionState.Region_Hightlighted );
+            }
+        }
+
+        public virtual void UpdateStructure( GameTime gameTime )
+        {
         }
     }
 }

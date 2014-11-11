@@ -43,9 +43,11 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
             CharModifier.ModificationEnded += TerminateEditing;
         }
 
-        public void Update( GameTime gameTime )
+        public void UpdateStructure( GameTime gameTime )
         {
+            // TODO: add input allowance structure
         }
+        
         private void EditStart( string targetName )
         {
             fieldName = targetName;

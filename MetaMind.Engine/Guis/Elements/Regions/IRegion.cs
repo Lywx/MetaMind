@@ -13,7 +13,7 @@ namespace MetaMind.Engine.Guis.Elements.Regions
         int Height { get; set; }
         int Width { get; set; }
 
-        void Update(GameTime gameTime);
+        void UpdateInput(GameTime gameTime);
 
         bool IsEnabled(RegionState state);
     }

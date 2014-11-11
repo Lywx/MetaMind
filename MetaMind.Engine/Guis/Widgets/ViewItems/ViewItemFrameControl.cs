@@ -4,7 +4,13 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Engine.Guis.Widgets.ViewItems
 {
-    public class ViewItemFrameControl : ViewItemComponent
+    public interface IViewItemFrameControl
+    {
+        void UpdateInput( GameTime gameTime );
+        void UpdateStructure( GameTime gameTime );
+    }
+
+    public class ViewItemFrameControl : ViewItemComponent, IViewItemFrameControl
     {
         public ViewItemFrameControl( IViewItem item )
             : base( item )
@@ -16,9 +22,30 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         #region Update
 
-        public virtual void Update( GameTime gameTime )
+        public virtual void UpdateInput( GameTime gameTime )
         {
-            UpdateFrames( gameTime );
+            if ( RootFrame.IsEnabled( FrameState.Mouse_Over ) )
+            {
+                Item.Enable( ItemState.Item_Mouse_Over );
+            }
+            else
+            {
+                Item.Disable( ItemState.Item_Mouse_Over );
+            }
+            if ( RootFrame.IsEnabled( FrameState.Frame_Dragging ) )
+            {
+                Item.Enable( ItemState.Item_Dragging );
+            }
+            else
+            {
+                Item.Disable( ItemState.Item_Dragging );
+            }
+            RootFrame.UpdateInput( gameTime );
+        }
+
+        public virtual void UpdateStructure( GameTime gameTime )
+        {
+            UpdateFrameGeometry();
             UpdateFrameLogics();
         }
 
@@ -32,29 +59,28 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
         protected virtual void UpdateFrameLogics()
         {
             // frame activation 
-            if ( Item.IsEnabled( ItemState.Item_Active ) && !Item.IsEnabled( ItemState.Item_Dragging ) )
+            if ( Item.IsEnabled( ItemState.Item_Active ) &&
+                !Item.IsEnabled( ItemState.Item_Dragging ) )
+            {
                 RootFrame.Enable();
-            else if ( !Item.IsEnabled( ItemState.Item_Active ) && !Item.IsEnabled( ItemState.Item_Dragging ) )
+            }
+            else if ( !Item.IsEnabled( ItemState.Item_Active ) &&
+                      !Item.IsEnabled( ItemState.Item_Dragging ) )
+            {
                 RootFrame.Disable();
-
-            // item related
-            if ( RootFrame.IsEnabled( FrameState.Mouse_Over ) )
-                Item.Enable( ItemState.Item_Mouse_Over );
-            else
-                Item.Disable( ItemState.Item_Mouse_Over );
-            if ( RootFrame.IsEnabled( FrameState.Frame_Dragging ) )
-                Item.Enable( ItemState.Item_Dragging );
-            else
-                Item.Disable( ItemState.Item_Dragging );
+            }
         }
 
-        protected virtual void UpdateFrames( GameTime gameTime )
+        protected virtual void UpdateFrameGeometry()
         {
             if ( !Item.IsEnabled( ItemState.Item_Dragging ) && !Item.IsEnabled( ItemState.Item_Swaping ) )
+            {
                 RootFrame.Center = ViewControl.Scroll.RootCenterPoint( ItemControl.Id );
+            }
             else if ( Item.IsEnabled( ItemState.Item_Swaping ) )
+            {
                 RootFrame.Center = ViewControl.Swap.RootCenterPoint();
-            RootFrame.Update( gameTime );
+            }
         }
 
         #endregion Update
