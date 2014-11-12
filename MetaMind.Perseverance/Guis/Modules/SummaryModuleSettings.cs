@@ -2,6 +2,8 @@ using MetaMind.Engine.Components;
 
 namespace MetaMind.Perseverance.Guis.Modules
 {
+    using MetaMind.Engine.Components.Fonts;
+
     public class SummaryModuleSettings
     {
         //---------------------------------------------------------------------

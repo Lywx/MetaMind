@@ -1,15 +1,21 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ViewItemCharModifier.cs" company="UESTC">
+//   Copyright (c) 2014 Lin Wuxiang
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace MetaMind.Engine.Guis.Elements.ViewItems
 {
-    using System;
-    using System.Linq;
-    using System.Text;
-
     using MetaMind.Engine.Components;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Elements.Items;
-
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
+    using System;
+    using System.IO;
+    using System.Linq;
+    using System.Text;
 
     public interface IViewItemCharModifier
     {
@@ -32,25 +38,26 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
     {
         #region Input Settings
 
-        private Encoding IMEEncoding = Encoding.GetEncoding( 54936 ); // GB2312-80 for Sougou IME
+        private readonly Encoding imeEncoding = Encoding.GetEncoding(54936); // GB2312-80 for Sougou IME
 
         #endregion Input Settings
 
         #region Input Data
 
-        private string oldString = string.Empty;
         private StringBuilder inputString = new StringBuilder();
+
+        private string oldString = string.Empty;
 
         #endregion Input Data
 
         #region Constructors
 
-        public ViewItemCharModifier( IViewItem item )
-            : base( item )
+        public ViewItemCharModifier(IViewItem item)
+            : base(item)
         {
-            this.InputEventManager.CharEntered += this.DetectCharEntered;
-            this.InputEventManager.KeyDown += this.DetectEnterKeyDown;
-            this.InputEventManager.KeyDown += this.DetectEscapeKeyDown;
+            InputEventManager.CharEntered += this.DetectCharEntered;
+            InputEventManager.KeyDown += this.DetectEnterKeyDown;
+            InputEventManager.KeyDown += this.DetectEscapeKeyDown;
         }
 
         #endregion Constructors
@@ -69,6 +76,7 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
                 this.modificationEnded -= value;
                 this.modificationEnded += value;
             }
+
             remove
             {
                 this.modificationEnded -= value;
@@ -88,14 +96,20 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
 
         #endregion Events
 
-        #region Hooks
+        #region Input Control
 
         public void Cancel()
         {
-            if ( this.ValueModified != null )
-                this.ValueModified( this, new ViewItemDataEventArgs( this.oldString ) );
-            if ( this.modificationEnded != null )
-                this.modificationEnded( this, new ViewItemDataEventArgs( this.oldString ) );
+            if (this.ValueModified != null)
+            {
+                this.ValueModified(this, new ViewItemDataEventArgs(this.oldString));
+            }
+
+            if (this.modificationEnded != null)
+            {
+                this.modificationEnded(this, new ViewItemDataEventArgs(this.oldString));
+            }
+
             // only need to clear ValueModified, assuming ModificationEnded delegates
             // are not needing multiple time operations.
             this.ValueModified = null;
@@ -105,64 +119,104 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
         /// Initializes input string.
         /// </summary>
         /// <param name="oldString">The old string.</param>
-        public void Initialize( string oldString )
+        public void Initialize(string oldString)
         {
             this.oldString = oldString;
-            this.inputString = new StringBuilder( oldString );
+            this.inputString = new StringBuilder(oldString);
         }
 
         public void Release()
         {
-            if ( this.ValueModified != null )
-                this.ValueModified( this, new ViewItemDataEventArgs( this.inputString.ToString() ) );
-            if ( this.modificationEnded != null )
-                this.modificationEnded( this, new ViewItemDataEventArgs( this.inputString.ToString() ) );
+            if (this.ValueModified != null)
+            {
+                this.ValueModified(this, new ViewItemDataEventArgs(this.inputString.ToString()));
+            }
+
+            if (this.modificationEnded != null)
+            {
+                this.modificationEnded(this, new ViewItemDataEventArgs(this.inputString.ToString()));
+            }
+
             // only need to clear ValueModified, assuming ModificationEnded delegates
             // are not needing multiple time operations.
             this.ValueModified = null;
         }
 
-        private void Modify()
+        private void Modified()
         {
-            if ( this.ValueModified != null )
-                this.ValueModified( this, new ViewItemDataEventArgs( this.inputString.ToString() ) );
+            if (this.ValueModified != null)
+            {
+                this.ValueModified(this, new ViewItemDataEventArgs(this.inputString.ToString()));
+            }
         }
 
-        #endregion Hooks
+        #endregion Input Control
 
         #region Event Handlers
 
-        private void DetectEnterKeyDown( object sender, KeyEventArgs e )
+        private void DetectCharEntered(object sender, CharacterEventArgs e)
         {
-            if ( !this.Item.IsEnabled( ItemState.Item_Editing ) )
+            if (!this.Item.IsEnabled(ItemState.Item_Editing))
+            {
                 return;
+            }
 
-            if ( e.KeyCode == Keys.Enter )
-                this.Release();
+            var newChar = this.imeEncoding.GetString(e.Character);
+            if (newChar.ToCharArray().Contains('\b'))
+            {
+                this.HandleBackspace();
+            }
+            else if (newChar.ToCharArray().Contains('\t'))
+            {
+                this.HandleTab();
+            }
+            else
+            {
+                this.inputString.Append(newChar);
+            }
+
+            this.HandleUnprintable();
+            this.Modified();
         }
 
-        private void DetectEscapeKeyDown( object sender, KeyEventArgs e )
+        private void DetectEnterKeyDown(object sender, KeyEventArgs e)
         {
-            if ( !this.Item.IsEnabled( ItemState.Item_Editing ) )
+            if (!this.Item.IsEnabled(ItemState.Item_Editing))
+            {
                 return;
+            }
+
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.Release();
+            }
+        }
+
+        private void DetectEscapeKeyDown(object sender, KeyEventArgs e)
+        {
+            if (!this.Item.IsEnabled(ItemState.Item_Editing))
+            {
+                return;
+            }
 
             // mixed two manager together, might not be good
-            if ( e.KeyCode == Keys.Escape ||
-               ( this.InputSequenceManager.Keyboard.IsActionTriggered( Actions.Escape ) ) )
+            if (e.KeyCode == Keys.Escape || InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
+            {
                 this.Cancel();
+            }
         }
 
         private void HandleBackspace()
         {
-            if ( this.inputString.Length > 0 )
+            if (this.inputString.Length > 0)
             {
-                this.inputString.Remove( this.inputString.Length - 1, 1 );
+                this.inputString.Remove(this.inputString.Length - 1, 1);
             }
         }
 
         private void HandleTab()
         {
-            this.inputString.Append( "    " );
+            this.inputString.Append("    ");
         }
 
         /// <summary>
@@ -170,37 +224,19 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
         /// </summary>
         private void HandleUnprintable()
         {
-            var invalid = System.IO.Path.GetInvalidFileNameChars();
-            var cleaned = new string( this.inputString.ToString().Where( c => !invalid.Contains( c ) ).ToArray() );
-            this.inputString = new StringBuilder( cleaned );
+            var invalid = Path.GetInvalidFileNameChars();
+            var cleaned = new string(this.inputString.ToString().Where(c => !invalid.Contains(c)).ToArray());
+            this.inputString = new StringBuilder(cleaned);
         }
-
-        private void DetectCharEntered( object sender, CharacterEventArgs e )
-        {
-            if ( !this.Item.IsEnabled( ItemState.Item_Editing ) )
-                return;
-
-            var newChar = this.IMEEncoding.GetString( e.Character );
-            if ( newChar.ToCharArray().Contains( '\b' ) )
-                this.HandleBackspace();
-            else if ( newChar.ToCharArray().Contains( '\t' ) )
-                this.HandleTab();
-            else
-                this.inputString.Append( newChar );
-
-            this.HandleUnprintable();
-            this.Modify();
-        }
-
         #endregion Event Handlers
 
         #region Update and Draw
 
-        public void Draw( GameTime gameTime )
+        public void Draw(GameTime gameTime)
         {
         }
 
-        public void Update( GameTime gameTime )
+        public void Update(GameTime gameTime)
         {
         }
 

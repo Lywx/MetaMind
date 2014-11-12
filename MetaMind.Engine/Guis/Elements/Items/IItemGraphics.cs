@@ -1,11 +1,21 @@
-﻿namespace MetaMind.Engine.Guis.Elements.Items
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="IItemGraphics.cs" company="UESTC">
+//   Copyright (c) 2014 Lin Wuxiang
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+namespace MetaMind.Engine.Guis.Elements.Items
 {
     using Microsoft.Xna.Framework;
 
     public interface IItemGraphics
     {
-        void Draw( GameTime gameTime, byte alpha );
+        #region Public Methods and Operators
 
-        void Update( GameTime gameTime );
+        void Draw(GameTime gameTime, byte alpha);
+
+        void Update(GameTime gameTime);
+
+        #endregion
     }
 }

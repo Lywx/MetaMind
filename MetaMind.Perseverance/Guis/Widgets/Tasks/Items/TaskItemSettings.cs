@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 {
+    using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Guis.Elements.Items;
 
     public class TaskItemSettings : ItemSettings

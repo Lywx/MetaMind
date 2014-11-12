@@ -4,6 +4,8 @@ using System;
 
 namespace MetaMind.Engine.Settings
 {
+    using MetaMind.Engine.Components.Fonts;
+
     public static class MessageSettings
     {
         public static Font     MessageFont          = Font.UiRegularFont;

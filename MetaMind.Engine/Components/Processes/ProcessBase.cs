@@ -1,51 +1,68 @@
-﻿using Microsoft.Xna.Framework;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ProcessBase.cs" company="UESTC">
+//   Copyright (c) 2014 Lin Wuxiang
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace MetaMind.Engine.Components.Processes
 {
+    using Microsoft.Xna.Framework;
+
     public abstract class ProcessBase : IProcess
     {
         #region Process Data
 
         private IProcess child;
 
+        private ProcessState state;
+
         public IProcess Child
         {
-            get { return child; }
+            get
+            {
+                return child;
+            }
         }
-        private ProcessState state;
 
         public ProcessState State
         {
-            get { return state; }
+            get
+            {
+                return state;
+            }
         }
 
         public bool IsAlive
         {
-            get 
-            { 
-                return (state == ProcessState.Running || 
-                        state == ProcessState.Paused); 
+            get
+            {
+                return state == ProcessState.Running || state == ProcessState.Paused;
             }
         }
 
         public bool IsDead
         {
-            get 
-            { 
-                return (state == ProcessState.Succeeded || 
-                        state == ProcessState.Failed || 
-                        state == ProcessState.Aborted); 
+            get
+            {
+                return state == ProcessState.Succeeded || state == ProcessState.Failed || state == ProcessState.Aborted;
             }
         }
 
         public bool IsPaused
         {
-            get { return state == ProcessState.Paused; }
+            get
+            {
+                return state == ProcessState.Paused;
+            }
         }
 
         public bool IsRemoved
         {
-            get { return state == ProcessState.Removed; }
+            get
+            {
+                return state == ProcessState.Removed;
+            }
         }
 
         #endregion Process Data
@@ -63,7 +80,10 @@ namespace MetaMind.Engine.Components.Processes
 
         ~ProcessBase()
         {
-            if (child != null) child.OnAbort();
+            if (child != null)
+            {
+                child.OnAbort();
+            }
         }
 
         #endregion Deconstructors
@@ -78,9 +98,13 @@ namespace MetaMind.Engine.Components.Processes
         public void AttachChild(IProcess process)
         {
             if (child != null)
+            {
                 child.AttachChild(process);
+            }
             else
+            {
                 child = process;
+            }
         }
 
         public void Fail()
@@ -90,7 +114,10 @@ namespace MetaMind.Engine.Components.Processes
 
         public void Pause()
         {
-            if (state == ProcessState.Running) state = ProcessState.Paused;
+            if (state == ProcessState.Running)
+            {
+                state = ProcessState.Paused;
+            }
         }
 
         public IProcess RemoveChild()
@@ -101,11 +128,16 @@ namespace MetaMind.Engine.Components.Processes
                 child = null;
                 return removedChild;
             }
+
             return null;
         }
+
         public void Resume()
         {
-            if (state == ProcessState.Paused) state = ProcessState.Running;
+            if (state == ProcessState.Paused)
+            {
+                state = ProcessState.Running;
+            }
         }
 
         public void Succeed()

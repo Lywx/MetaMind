@@ -1,9 +1,18 @@
-using MetaMind.Engine.Components.Processes;
-using Microsoft.Xna.Framework;
-using System.Collections.Generic;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ProcessManager.cs" company="UESTC">
+//   Copyright (c) 2014 Lin Wuxiang
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace MetaMind.Engine.Components
 {
+    using System.Collections.Generic;
+
+    using MetaMind.Engine.Components.Processes;
+
+    using Microsoft.Xna.Framework;
+
     public class ProcessManager : GameComponent
     {
         #region Process Data
@@ -19,9 +28,15 @@ namespace MetaMind.Engine.Components
         public static ProcessManager GetInstance(Game game)
         {
             if (singleton == null)
+            {
                 singleton = new ProcessManager(game);
+            }
+
             if (game != null)
+            {
                 game.Components.Add(singleton);
+            }
+
             return singleton;
         }
 
@@ -52,10 +67,10 @@ namespace MetaMind.Engine.Components
         {
             base.Update(gameTime);
 
-            var i = 0;
+            int i = 0;
             while (i < processes.Count)
             {
-                var process = processes[i];
+                IProcess process = processes[i];
 
                 if (process.State == ProcessState.Uninitilized)
                 {
@@ -74,9 +89,12 @@ namespace MetaMind.Engine.Components
                         case ProcessState.Succeeded:
                             {
                                 process.OnSuccess();
-                                var child = process.RemoveChild();
+                                IProcess child = process.RemoveChild();
                                 if (child != null)
+                                {
                                     processes.Add(child);
+                                }
+
                                 break;
                             }
 
@@ -92,6 +110,7 @@ namespace MetaMind.Engine.Components
                                 break;
                             }
                     }
+
                     processes.Remove(process);
                 }
                 else
@@ -107,11 +126,11 @@ namespace MetaMind.Engine.Components
 
         public void AbortAllProcesses(bool immediate)
         {
-            var i = 0;
+            int i = 0;
 
             while (i < processes.Count)
             {
-                var process = processes[i];
+                IProcess process = processes[i];
                 process.Abort();
 
                 if (immediate)

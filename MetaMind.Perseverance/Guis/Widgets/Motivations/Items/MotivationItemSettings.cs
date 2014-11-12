@@ -7,6 +7,7 @@
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 {
     using MetaMind.Engine.Components;
+    using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Guis.Elements.Items;
 
     using Microsoft.Xna.Framework;

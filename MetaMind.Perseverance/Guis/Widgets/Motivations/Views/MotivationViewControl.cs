@@ -103,12 +103,12 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
             {
                 // mouse
                 // ------------------------------------------------------------------
-                if (this.InputSequenceManager.Mouse.IsWheelScrolledUp)
+                if (InputSequenceManager.Mouse.IsWheelScrolledUp)
                 {
                     this.Scroll.MoveLeft();
                 }
 
-                if (this.InputSequenceManager.Mouse.IsWheelScrolledDown)
+                if (InputSequenceManager.Mouse.IsWheelScrolledDown)
                 {
                     this.Scroll.MoveRight();
                 }
@@ -116,17 +116,17 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
                 // keyboard
                 // ------------------------------------------------------------------
                 // screen movement
-                if (this.InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
                 {
                     this.MoveLeft();
                 }
 
-                if (this.InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
                 {
                     this.MoveRight();
                 }
 
-                if (this.InputSequenceManager.Keyboard.IsActionTriggered(Actions.SLeft))
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SLeft))
                 {
                     for (var i = 0; i < this.ViewSettings.ColumnNumDisplay; i++)
                     {
@@ -134,7 +134,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
                     }
                 }
 
-                if (this.InputSequenceManager.Keyboard.IsActionTriggered(Actions.SRight))
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SRight))
                 {
                     for (var i = 0; i < this.ViewSettings.ColumnNumDisplay; i++)
                     {
@@ -143,13 +143,13 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
                 }
 
                 // escape
-                if (this.InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
                 {
                     this.Selection.Clear();
                 }
 
                 // list management
-                if (this.InputSequenceManager.Keyboard.IsActionTriggered(Actions.MotivationCreateItem))
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.MotivationCreateItem))
                 {
                     this.AddItem();
                 }

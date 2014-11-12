@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Banners
 {
+    using MetaMind.Engine.Components.Fonts;
+
     public class TimelineText : EngineObject
     {
         private string  name;

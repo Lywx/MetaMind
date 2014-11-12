@@ -1,7 +1,14 @@
-using System.IO;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="FolderManager.cs" company="UESTC">
+//   Copyright (c) 2014 Lin Wuxiang
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace MetaMind.Engine.Components
 {
+    using System.IO;
+
     public class FolderManager
     {
         #region Directory Settings
@@ -18,7 +25,7 @@ namespace MetaMind.Engine.Components
 
         public static FolderManager GetInstance()
         {
-            return singleton ?? ( singleton = new FolderManager() );
+            return singleton ?? (singleton = new FolderManager());
         }
 
         #endregion Singleton
@@ -32,14 +39,16 @@ namespace MetaMind.Engine.Components
 
         private void CreateDirectory()
         {
-            if ( !Directory.Exists( SaveFolderPath ) )
+            if (!Directory.Exists(SaveFolderPath))
             {
                 // if it doesn't exist, create
-                Directory.CreateDirectory( SaveFolderPath );
+                Directory.CreateDirectory(SaveFolderPath);
             }
 
-            if ( !Directory.Exists( DataFolderPath ) )
-                Directory.CreateDirectory( DataFolderPath );
+            if (!Directory.Exists(DataFolderPath))
+            {
+                Directory.CreateDirectory(DataFolderPath);
+            }
         }
 
         #endregion Constructors

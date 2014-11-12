@@ -1,234 +1,270 @@
-using MetaMind.Engine.Components.Events;
-using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="EventManager.cs" company="UESTC">
+//   Copyright (c) 2014 Lin Wuxiang
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace MetaMind.Engine.Components
 {
-    public class EventManager : Microsoft.Xna.Framework.GameComponent
+    using MetaMind.Engine.Components.Events;
+    using Microsoft.Xna.Framework;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    public class EventManager : GameComponent
     {
-        //---------------------------------------------------------------------
-        private static EventManager singleton;
+        // ---------------------------------------------------------------------
 
-        //---------------------------------------------------------------------
+        // ---------------------------------------------------------------------
+        private List<EventBase> activeEvents;
 
-        private List<int>          knownEvents;
-        private List<EventBase>    activeEvents;
-        private List<EventBase>    queuedEvents;
+        private List<int> knownEvents;
+
         private List<ListenerBase> listeners;
+
+        private List<EventBase> queuedEvents;
 
         public List<int> KnownEvents
         {
-            get { return knownEvents; }
+            get
+            {
+                return this.knownEvents;
+            }
         }
 
         public List<ListenerBase> Listeners
         {
-            get { return listeners; }
+            get
+            {
+                return this.listeners;
+            }
         }
 
-        public bool ValidateEvent( int eventType )
+        #region Singleton
+
+        private static EventManager singleton;
+
+        public static EventManager GetInstance(Game game)
         {
-            return knownEvents.Contains( eventType );
+            if (singleton == null)
+            {
+                singleton = new EventManager(game);
+            }
+
+            if (game != null)
+            {
+                game.Components.Add(singleton);
+            }
+
+            return singleton;
         }
 
-        //---------------------------------------------------------------------
+        #endregion Singleton
 
         #region Constructors
 
         /// <summary>
         /// Handles all events
-        private EventManager( Game game )
-            : base( game )
+        private EventManager(Game game)
+            : base(game)
         {
         }
 
         #endregion Constructors
 
-        //---------------------------------------------------------------------
-
         #region Initialization
-
-        public static EventManager GetInstance( Game game )
-        {
-            if ( singleton == null )
-                singleton = new EventManager( game );
-            if ( game != null )
-                game.Components.Add( singleton );
-            return singleton;
-        }
 
         public override void Initialize()
         {
-            knownEvents = new List<int>();
-            queuedEvents = new List<EventBase>();
-            activeEvents = new List<EventBase>();
-            listeners = new List<ListenerBase>();
+            this.knownEvents = new List<int>();
+            this.queuedEvents = new List<EventBase>();
+            this.activeEvents = new List<EventBase>();
+            this.listeners = new List<ListenerBase>();
         }
 
         #endregion Initialization
 
-        #region Operations
+        #region Listener Operations
 
-        public void AddListener( ListenerBase listener )
+        public void AddListener(ListenerBase listener)
         {
-            if ( !listeners.Contains( listener ) )
+            if (!this.listeners.Contains(listener))
             {
-                listeners.Add( listener );
-                foreach ( int eventType in listener.RegisteredEvents )
+                this.listeners.Add(listener);
+                foreach (var eventType in listener.RegisteredEvents)
                 {
-                    AddKnownEvent( eventType );
+                    this.AddKnownEvent(eventType);
                 }
             }
         }
 
-        public void RemoveListener( ListenerBase listener)
+        public void RemoveListener(ListenerBase listener)
         {
-            if ( !listeners.Contains( listener ) )
+            if (!this.listeners.Contains(listener))
             {
-                listeners.Remove( listener );
+                this.listeners.Remove(listener);
             }
         }
 
-        public void QueueEvent( EventBase @event )
+        #endregion Listener Operations
+
+        #region Event Operations
+
+        public void QueueEvent(EventBase @event)
         {
-            if ( ValidateEvent( @event.EventType ) )
+            if (this.ValidateEvent(@event.EventType))
             {
                 @event.CreationTime = DateTime.Now.Ticks;
-                queuedEvents.Add( @event );
+                this.queuedEvents.Add(@event);
             }
         }
 
-        public void QueueUniqueEvent( EventBase @event )
+        public void QueueUniqueEvent(EventBase @event)
         {
-            if ( ValidateEvent( @event.EventType ) )
+            if (this.ValidateEvent(@event.EventType))
             {
-                for ( int x = queuedEvents.Count - 1 ; x >= 0 ; x-- )
+                for (var x = this.queuedEvents.Count - 1; x >= 0; x--)
                 {
-                    if ( queuedEvents[ x ].EventType == @event.EventType )
+                    if (this.queuedEvents[x].EventType == @event.EventType)
                     {
-                        queuedEvents.RemoveAt( x );
+                        this.queuedEvents.RemoveAt(x);
                     }
                 }
-                queuedEvents.Add( @event );
+
+                this.queuedEvents.Add(@event);
             }
         }
 
-        public void RemoveQueuedEvent( EventBase @event, bool allOccurances )
+        public void RemoveQueuedEvent(EventBase @event, bool allOccurances)
         {
-            if ( queuedEvents.Contains( @event ) )
+            if (this.queuedEvents.Contains(@event))
             {
-                if ( allOccurances )
+                if (allOccurances)
                 {
-                    for ( int x = queuedEvents.Count ; x >= 0 ; x-- )
+                    for (var x = this.queuedEvents.Count; x >= 0; x--)
                     {
-                        queuedEvents.RemoveAt( x );
+                        this.queuedEvents.RemoveAt(x);
                     }
                 }
                 else
                 {
-                    queuedEvents.Remove( @event );
+                    this.queuedEvents.Remove(@event);
                 }
             }
         }
 
-        public void TriggerEvent( EventBase @event )
+        public void TriggerEvent(EventBase @event)
         {
-            if ( ValidateEvent( @event.EventType ) )
+            if (this.ValidateEvent(@event.EventType))
             {
-                foreach ( var listener in listeners.Where( listener => listener.RegisteredEvents.Contains( @event.EventType ) ).ToList() )
+                foreach (var listener in
+                    this.listeners.Where(listener => listener.RegisteredEvents.Contains(@event.EventType)).ToList())
                 {
-                    listener.HandleEvent( @event );
+                    listener.HandleEvent(@event);
                 }
             }
         }
 
-        private void AddKnownEvent( int eventType )
+        public bool ValidateEvent(int eventType)
         {
-            if ( !knownEvents.Contains( eventType ) )
+            return this.knownEvents.Contains(eventType);
+        }
+
+        private void AddKnownEvent(int eventType)
+        {
+            if (!this.knownEvents.Contains(eventType))
             {
-                knownEvents.Add( eventType );
+                this.knownEvents.Add(eventType);
             }
         }
 
-        #endregion Operations
+        #endregion Event Operations
 
         #region Update
 
-        public override void Update( GameTime gameTime )
+        public override void Update(GameTime gameTime)
         {
-            if ( queuedEvents.Count == 0 )
+            if (this.queuedEvents.Count == 0)
+            {
                 return;
+            }
 
             var startTime = DateTime.Now.Ticks;
 
-            //Max of 5 milliseconds of processing time. 1ms = 10,000ticks
+            // Max of 5 milliseconds of processing time. 1ms = 10,000ticks
             var stopTime = startTime + 50000;
 
-            //Copy the queued events to the active events list
-            activeEvents = new List<EventBase>( queuedEvents );
-            queuedEvents.Clear();
+            // Copy the queued events to the active events list
+            this.activeEvents = new List<EventBase>(this.queuedEvents);
+            this.queuedEvents.Clear();
 
-            //Process at least one event..or so Mr. McShaffry says
-            var counter = activeEvents.Count - 1;
+            // Process at least one event..or so Mr. McShaffry says
+            var counter = this.activeEvents.Count - 1;
             do
             {
-                if ( counter < 0 )
+                if (counter < 0)
                 {
                     break;
                 }
+
                 var currentTime = DateTime.Now.Ticks;
-                var @event = activeEvents[ counter ];
+                var @event = this.activeEvents[counter];
 
                 @event.HandleAttempts++;
 
-                for ( var x = listeners.Count - 1 ; x >= 0 ; x-- )
+                for (var x = this.listeners.Count - 1; x >= 0; x--)
                 {
-                    if ( listeners[ x ].RegisteredEvents.Contains( @event.EventType ) &&
-                        listeners[ x ].HandleEvent( @event ) )
+                    if (this.listeners[x].RegisteredEvents.Contains(@event.EventType)
+                        && this.listeners[x].HandleEvent(@event))
                     {
                         @event.Handled = true;
                     }
                 }
 
-                //If an event has been around for longer than 3 seconds, remove it
-                //should change to 2 attempts?
-                if ( currentTime >= @event.CreationTime + SecondsToTicks( @event.LifeTime ) )
+                // If an event has been around for longer than 3 seconds, remove it
+                // should change to 2 attempts?
+                if (currentTime >= @event.CreationTime + this.SecondsToTicks(@event.LifeTime))
                 {
                     @event.Handled = true;
                 }
 
-                if ( @event.Handled )
+                if (@event.Handled)
                 {
-                    activeEvents.Remove( @event );
+                    this.activeEvents.Remove(@event);
                     @event = null;
                 }
 
                 counter--;
 
-                if ( DateTime.Now.Ticks >= stopTime )
+                if (DateTime.Now.Ticks >= stopTime)
                 {
                     break;
                 }
-            } while ( activeEvents.Count > 0 );
+            }
+            while (this.activeEvents.Count > 0);
 
-            //Add back any unhandled events
-            if ( activeEvents.Count > 0 )
+            // Add back any unhandled events
+            if (this.activeEvents.Count > 0)
             {
-                queuedEvents.AddRange( activeEvents );
+                this.queuedEvents.AddRange(this.activeEvents);
             }
         }
 
         #endregion Update
 
-        #region Helper
+        #region Time Helper
 
-        private long SecondsToTicks( int second )
+        private long SecondsToTicks(int second)
         {
             return second * TimeSpan.TicksPerSecond;
         }
 
-        #endregion Helper
+        #endregion Time Helper
+
+        // ---------------------------------------------------------------------
+
+        // ---------------------------------------------------------------------
     }
 }

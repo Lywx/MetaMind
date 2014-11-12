@@ -1,3 +1,10 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="EventBase.cs" company="UESTC">
+//   Copyright (c) 2014 Lin Wuxiang
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace MetaMind.Engine.Components.Events
 {
     public class EventBase
@@ -10,48 +17,22 @@ namespace MetaMind.Engine.Components.Events
         /// <param name="lifeTime">The length in Seconds the event should stay alive if not picked up</param>
         public EventBase(int eventType, object data, int lifeTime = 1, int handleAttempts = 0)
         {
-            this.eventType      = eventType;
-            this.data           = data;
-            this.lifeTime       = lifeTime;
-            this.handleAttempts = handleAttempts;
+            this.EventType = eventType;
+            this.Data = data;
+            this.LifeTime = lifeTime;
+            this.HandleAttempts = handleAttempts;
         }
 
-        private int    eventType;
-        private object data;
-        private long   creationTime;
-        private int    lifeTime;
-        private bool   handled;
-        private int    handleAttempts;
+        public int EventType { get; set; }
 
-        public int EventType
-        {
-            get { return eventType; }
-            set { eventType = value; }
-        }
-        public object Data
-        {
-            get { return data; }
-            set { data = value; }
-        }
-        public long CreationTime
-        {
-            get { return creationTime; }
-            set { creationTime = value; }
-        }
-        public int LifeTime
-        {
-            get { return lifeTime; }
-            set { lifeTime = value; }
-        }
-        public bool Handled
-        {
-            get { return handled; }
-            set { handled = value; }
-        }
-        public int HandleAttempts
-        {
-            get { return handleAttempts; }
-            set { handleAttempts = value; }
-        }
+        public object Data { get; set; }
+
+        public long CreationTime { get; set; }
+
+        public int LifeTime { get; set; }
+
+        public bool Handled { get; set; }
+
+        public int HandleAttempts { get; set; }
     }
 }

@@ -5,6 +5,8 @@ using System;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
 {
+    using MetaMind.Engine.Components.Fonts;
+
     public class SynchronizationHudSettings : ICloneable
     {
         //---------------------------------------------------------------------

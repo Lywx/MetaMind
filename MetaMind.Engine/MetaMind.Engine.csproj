@@ -42,6 +42,7 @@
     <Compile Include="Components\Events\ListenerBase.cs" />
     <Compile Include="Components\FolderManager.cs" />
     <Compile Include="Components\FontManager.cs" />
+    <Compile Include="Components\Fonts\Font.cs" />
     <Compile Include="Components\InputEventManager.cs" />
     <Compile Include="Components\InputSequenceManager.cs" />
     <Compile Include="Components\Inputs\KeyboardManager.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Components\ProcessManager.cs" />
     <Compile Include="Components\RunnerManager.cs" />
     <Compile Include="Components\ScreenManager.cs" />
+    <Compile Include="Components\Fonts\Text.cs" />
     <Compile Include="Concepts\Experience.cs" />
     <Compile Include="Extensions\StringExt.cs" />
     <Compile Include="GameEngine.cs" />

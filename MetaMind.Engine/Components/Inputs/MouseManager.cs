@@ -1,9 +1,17 @@
-using MetaMind.Engine.Guis.Widgets;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="MouseManager.cs" company="UESTC">
+//   Copyright (c) 2014 Lin Wuxiang
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace MetaMind.Engine.Components.Inputs
 {
+    using MetaMind.Engine.Guis.Widgets;
+
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Input;
+
     public class MouseManager : Widget
     {
         #region Singleton
@@ -12,7 +20,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         public static MouseManager GetInstance()
         {
-            return singleton ?? ( singleton = new MouseManager() );
+            return singleton ?? (singleton = new MouseManager());
         }
 
         #endregion Singleton
@@ -26,16 +34,23 @@ namespace MetaMind.Engine.Components.Inputs
         #region Latch State
 
         private MouseState currentState;
+
         private MouseState previousState;
 
         public MouseState CurrentState
         {
-            get { return currentState; }
+            get
+            {
+                return currentState;
+            }
         }
 
         public MouseState PreviousState
         {
-            get { return previousState; }
+            get
+            {
+                return previousState;
+            }
         }
 
         #endregion Latch State
@@ -46,11 +61,12 @@ namespace MetaMind.Engine.Components.Inputs
         {
             get
             {
-                if ( currentState.LeftButton == ButtonState.Released &&
-                     previousState.LeftButton == ButtonState.Pressed )
+                if (currentState.LeftButton == ButtonState.Released && previousState.LeftButton == ButtonState.Pressed)
+                {
                     return true;
-                else
-                    return false;
+                }
+
+                return false;
             }
         }
 
@@ -58,11 +74,12 @@ namespace MetaMind.Engine.Components.Inputs
         {
             get
             {
-                if ( currentState.RightButton == ButtonState.Released &&
-                     previousState.RightButton == ButtonState.Pressed )
+                if (currentState.RightButton == ButtonState.Released && previousState.RightButton == ButtonState.Pressed)
+                {
                     return true;
-                else
-                    return false;
+                }
+
+                return false;
             }
         }
 
@@ -70,10 +87,12 @@ namespace MetaMind.Engine.Components.Inputs
         {
             get
             {
-                if ( currentState.ScrollWheelValue < previousState.ScrollWheelValue )
+                if (currentState.ScrollWheelValue < previousState.ScrollWheelValue)
+                {
                     return true;
-                else
-                    return false;
+                }
+
+                return false;
             }
         }
 
@@ -81,10 +100,12 @@ namespace MetaMind.Engine.Components.Inputs
         {
             get
             {
-                if ( currentState.ScrollWheelValue > previousState.ScrollWheelValue )
+                if (currentState.ScrollWheelValue > previousState.ScrollWheelValue)
+                {
                     return true;
-                else
-                    return false;
+                }
+
+                return false;
             }
         }
 
@@ -92,8 +113,8 @@ namespace MetaMind.Engine.Components.Inputs
         {
             get
             {
-                var state = Mouse.GetState();
-                return new Point( state.X, state.Y );
+                MouseState state = Mouse.GetState();
+                return new Point(state.X, state.Y);
             }
         }
 
@@ -101,10 +122,12 @@ namespace MetaMind.Engine.Components.Inputs
         {
             get
             {
-                if ( IsWheelScrolledUp )
-                    return ( currentState.ScrollWheelValue - previousState.ScrollWheelValue ) / WheelUnit;
-                else
-                    return -( currentState.ScrollWheelValue - previousState.ScrollWheelValue ) / WheelUnit;
+                if (IsWheelScrolledUp)
+                {
+                    return (currentState.ScrollWheelValue - previousState.ScrollWheelValue) / WheelUnit;
+                }
+
+                return -(this.currentState.ScrollWheelValue - this.previousState.ScrollWheelValue) / WheelUnit;
             }
         }
 
@@ -124,13 +147,13 @@ namespace MetaMind.Engine.Components.Inputs
         {
         }
 
-        public override void UpdateInput( GameTime gameTime )
+        public override void UpdateInput(GameTime gameTime)
         {
             previousState = currentState;
             currentState = Mouse.GetState();
         }
 
-        public override void UpdateStructure( GameTime gameTime )
+        public override void UpdateStructure(GameTime gameTime)
         {
         }
 

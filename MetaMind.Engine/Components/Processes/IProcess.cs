@@ -1,7 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="IProcess.cs" company="UESTC">
+//   Copyright (c) 2014 Lin Wuxiang
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace MetaMind.Engine.Components.Processes
 {
+    using Microsoft.Xna.Framework;
+
     public interface IProcess
     {
         #region Process Data
@@ -9,9 +16,13 @@ namespace MetaMind.Engine.Components.Processes
         IProcess Child { get; }
 
         bool IsAlive { get; }
+
         bool IsDead { get; }
+
         bool IsPaused { get; }
+
         bool IsRemoved { get; }
+
         ProcessState State { get; }
 
         #endregion Process Data

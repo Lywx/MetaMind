@@ -1,19 +1,29 @@
-using System.Collections.Generic;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ListenerBase.cs" company="UESTC">
+//   Copyright (c) 2014 Lin Wuxiang
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace MetaMind.Engine.Components.Events
 {
+    using System.Collections.Generic;
+
     public class ListenerBase : EngineObject
     {
+        private readonly List<int> registeredEvents;
+
         protected ListenerBase()
         {
             registeredEvents = new List<int>();
         }
 
-        private List<int> registeredEvents;
-
         public List<int> RegisteredEvents
         {
-            get { return registeredEvents; }
+            get
+            {
+                return registeredEvents;
+            }
         }
 
         public virtual bool HandleEvent(EventBase @event)

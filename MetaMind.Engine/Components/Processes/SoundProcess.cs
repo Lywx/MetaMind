@@ -1,12 +1,20 @@
-using Microsoft.Xna.Framework.Audio;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="SoundProcess.cs" company="UESTC">
+//   Copyright (c) 2014 Lin Wuxiang
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace MetaMind.Engine.Components.Processes
 {
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Audio;
+
     public class SoundProcess : ProcessBase
     {
         private readonly SoundEffectInstance soundInstance;
 
-        public SoundProcess( SoundEffect sound )
+        public SoundProcess(SoundEffect sound)
         {
             soundInstance = sound.CreateInstance();
         }
@@ -29,10 +37,12 @@ namespace MetaMind.Engine.Components.Processes
         {
         }
 
-        public override void OnUpdate( Microsoft.Xna.Framework.GameTime gameTime )
+        public override void OnUpdate(GameTime gameTime)
         {
-            if ( soundInstance.IsDisposed || soundInstance.State == SoundState.Stopped )
+            if (soundInstance.IsDisposed || soundInstance.State == SoundState.Stopped)
+            {
                 Succeed();
+            }
         }
     }
 }

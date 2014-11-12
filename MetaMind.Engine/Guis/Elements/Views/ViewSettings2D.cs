@@ -3,6 +3,7 @@ namespace MetaMind.Engine.Guis.Elements.Views
     using System;
 
     using MetaMind.Engine.Components;
+    using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Settings;
 
     using Microsoft.Xna.Framework;
