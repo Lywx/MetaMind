@@ -9,8 +9,8 @@
         private int xOffset;
         private int yOffset;
 
-        public ViewScrollControl2D( IView view, ViewSettings2D viewSettings, ItemSettings itemSettings )
-            : base( view, viewSettings, itemSettings )
+        public ViewScrollControl2D(IView view, ViewSettings2D viewSettings, ItemSettings itemSettings)
+            : base(view, viewSettings, itemSettings)
         {
         }
 
@@ -28,8 +28,8 @@
         {
             get
             {
-                return ( this.ViewSettings.ColumnNumDisplay * ( this.ViewSettings.RowNumDisplay + this.YOffset ) < this.ViewSettings.ColumnNumDisplay * this.ViewSettings.RowNumMax ) &&
-                       ( this.ViewSettings.ColumnNumMax     * ( this.ViewSettings.RowNumDisplay + this.YOffset ) < this.View.Items.Count );
+                return (ViewSettings.ColumnNumDisplay * (ViewSettings.RowNumDisplay + this.YOffset) < ViewSettings.ColumnNumDisplay * ViewSettings.RowNumMax) &&
+                       (ViewSettings.ColumnNumMax     * (ViewSettings.RowNumDisplay + this.YOffset) < View.Items.Count);
             }
         }
 
@@ -42,7 +42,7 @@
         {
             get
             {
-                return ( this.ViewSettings.RowNumDisplay * ( this.ViewSettings.ColumnNumDisplay + this.XOffset ) < this.ViewSettings.RowNumDisplay * this.ViewSettings.ColumnNumMax );
+                return ViewSettings.RowNumDisplay * (ViewSettings.ColumnNumDisplay + this.XOffset) < ViewSettings.RowNumDisplay * ViewSettings.ColumnNumMax;
             }
         }
 
@@ -51,66 +51,73 @@
             get { return this.YOffset > 0; }
         }
 
-        public bool CanDisplay( int id )
+        public bool CanDisplay(int id)
         {
-            var row = this.ViewControl.RowFrom( id );
-            var column = this.ViewControl.ColumnFrom( id );
-            return this.XOffset <= column && column < this.ViewSettings.ColumnNumDisplay + this.XOffset &&
-                   this.YOffset <= row && row < this.ViewSettings.RowNumDisplay + this.YOffset;
+            var row = ViewControl.RowFrom(id);
+            var column = ViewControl.ColumnFrom(id);
+            return this.XOffset <= column && column < ViewSettings.ColumnNumDisplay + this.XOffset &&
+                   this.YOffset <= row    && row    < ViewSettings.RowNumDisplay    + this.YOffset;
         }
 
-        public bool IsDownToDisplay( int row )
+        public bool IsDownToDisplay(int row)
         {
             return row > this.ViewSettings.RowNumDisplay + this.YOffset - 1;
         }
 
-        public bool IsLeftToDisplay( int column )
+        public bool IsLeftToDisplay(int column)
         {
             return column < this.XOffset;
         }
 
-        public bool IsRightToDisplay( int column )
+        public bool IsRightToDisplay(int column)
         {
             return column > this.ViewSettings.ColumnNumDisplay + this.XOffset - 1;
         }
 
-        public bool IsUpToDisplay( int row )
+        public bool IsUpToDisplay(int row)
         {
             return row < this.YOffset;
         }
 
         public void MoveDown()
         {
-            if ( this.CanMoveDown )
+            if (this.CanMoveDown)
+            {
                 this.yOffset = this.YOffset + 1;
+            }
         }
 
         public void MoveLeft()
         {
-            if ( this.CanMoveLeft )
+            if (this.CanMoveLeft)
+            {
                 this.xOffset = this.XOffset - 1;
+            }
         }
 
         public void MoveRight()
         {
-            if ( this.CanMoveRight )
+            if (this.CanMoveRight)
+            {
                 this.xOffset = this.XOffset + 1;
+            }
         }
 
         public void MoveUp()
         {
-            if ( this.CanMoveUp )
+            if (this.CanMoveUp)
+            {
                 this.yOffset = this.YOffset - 1;
+            }
         }
 
-        public Point RootCenterPoint( int id )
+        public Point RootCenterPoint(int id)
         {
-            var row    = this.ViewControl.RowFrom( id );
-            var column = this.ViewControl.ColumnFrom( id );
+            var row    = ViewControl.RowFrom(id);
+            var column = ViewControl.ColumnFrom(id);
             return new Point(
-                this.ViewSettings.StartPoint.X - this.XOffset * this.ViewSettings.RootMargin.X + column * this.ViewSettings.RootMargin.X,
-                this.ViewSettings.StartPoint.Y - this.YOffset * this.ViewSettings.RootMargin.Y + row    * this.ViewSettings.RootMargin.Y 
-                );
+                ViewSettings.StartPoint.X - this.XOffset * ViewSettings.RootMargin.X + column * ViewSettings.RootMargin.X,
+                ViewSettings.StartPoint.Y - this.YOffset * ViewSettings.RootMargin.Y + row    * ViewSettings.RootMargin.Y);
         }
     }
 }

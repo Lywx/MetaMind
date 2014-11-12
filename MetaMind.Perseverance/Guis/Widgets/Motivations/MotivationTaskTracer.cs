@@ -1,13 +1,21 @@
-using MetaMind.Engine.Components.Inputs;
-using MetaMind.Engine.Extensions;
-using MetaMind.Engine.Guis.Elements.Regions;
-using MetaMind.Engine.Guis.Modules;
-using MetaMind.Perseverance.Guis.Widgets.Motivations.Items;
-using Microsoft.Xna.Framework;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="MotivationTaskTracer.cs" company="UESTC">
+//   Copyright (c) 2014 Lin Wuxiang
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations
 {
+    using MetaMind.Engine.Components.Inputs;
+    using MetaMind.Engine.Extensions;
+    using MetaMind.Engine.Guis.Elements.Regions;
     using MetaMind.Engine.Guis.Elements.Views;
+    using MetaMind.Engine.Guis.Modules;
+    using MetaMind.Perseverance.Guis.Widgets.Motivations.Items;
+
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Media;
 
     public class MotivationTaskTracer : Module<MotivationTaskTracerSettings>
     {
@@ -16,9 +24,9 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
         public MotivationTaskTracer(MotivationItemControl itemControl, MotivationTaskTracerSettings settings)
             : base(settings)
         {
-            hostControl = itemControl;
+            this.hostControl = itemControl;
 
-            View = new View(Settings.ViewSettings, Settings.ItemSettings, Settings.ViewFactory);
+            this.View = new View(this.Settings.ViewSettings, this.Settings.ItemSettings, this.Settings.ViewFactory);
         }
 
         public IView View { get; private set; }
@@ -26,114 +34,120 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
         public void Close()
         {
             // clear highlight
-            View.Control.Region.Disable(RegionState.Region_Hightlighted);
-            View               .Disable(ViewState.View_Active);
+            this.View.Disable(ViewState.View_Active);
+            this.View.Disable(ViewState.View_Has_Focus);
+            this.View.Control.Selection.Clear();
         }
 
         public override void Draw(GameTime gameTime, byte alpha)
         {
-            View.Draw(gameTime, alpha);
+            this.View.Draw(gameTime, alpha);
         }
 
         public override void Load()
         {
-            foreach (var task in hostControl.ItemData.Tasks)
+            foreach (var task in this.hostControl.ItemData.Tasks)
             {
-                View.Control.AddItem(task);
+                this.View.Control.AddItem(task);
             }
         }
 
         public void Show()
         {
             // show up tracer
-            View.Control.Region.Enable(RegionState.Region_Hightlighted);
-            View               .Enable(ViewState.View_Active);
+            this.View.Enable(ViewState.View_Active);
+            this.View.Control.Selection.Select(0);
         }
 
         public override void UpdateInput(GameTime gameTime)
         {
-            View.Control.Region.UpdateInput(gameTime);
+            // mouse
+            //-----------------------------------------------------------------
+            if (View.Control.Active)
+            {
+                this.View.Control.Region.UpdateInput(gameTime);
+            }
 
             // directly update through view control
-            if (View.Control.AcceptInput)
+            if (this.View.Control.AcceptInput)
             {
                 // mouse
-                //---------------------------------------------------------------------
+                // ---------------------------------------------------------------------
                 if (InputSequenceManager.Mouse.IsWheelScrolledUp)
                 {
-                    View.Control.ScrollBar.Trigger();
-                    View.Control.Scroll.MoveUp();
+                    this.View.Control.ScrollBar.Trigger();
+                    this.View.Control.Scroll.MoveUp();
                 }
 
                 if (InputSequenceManager.Mouse.IsWheelScrolledDown)
                 {
-                    View.Control.Scroll.MoveDown();
-                    View.Control.ScrollBar.Trigger();
+                    this.View.Control.Scroll.MoveDown();
+                    this.View.Control.ScrollBar.Trigger();
                 }
 
                 // keyboard
-                //---------------------------------------------------------------------
+                // ---------------------------------------------------------------------
                 // movement
                 if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
                 {
-                    View.Control.MoveLeft();
+                    this.View.Control.MoveLeft();
                 }
 
                 if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
                 {
-                    View.Control.MoveRight();
+                    this.View.Control.MoveRight();
                 }
 
                 if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Up))
                 {
-                    View.Control.MoveUp();
+                    this.View.Control.MoveUp();
                 }
 
                 if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Down))
                 {
-                    View.Control.MoveDown();
+                    this.View.Control.MoveDown();
                 }
 
                 if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SUp))
                 {
-                    for (var i = 0; i < View.ViewSettings.RowNumDisplay; i++)
+                    for (var i = 0; i < this.View.ViewSettings.RowNumDisplay; i++)
                     {
-                        View.Control.MoveUp();
+                        this.View.Control.MoveUp();
                     }
                 }
 
                 if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SDown))
                 {
-                    for (var i = 0; i < View.ViewSettings.RowNumDisplay; i++)
+                    for (var i = 0; i < this.View.ViewSettings.RowNumDisplay; i++)
                     {
-                        View.Control.MoveDown();
+                        this.View.Control.MoveDown();
                     }
                 }
 
                 // escape
                 if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
                 {
-                    View.Control.Selection.Clear();
+                    this.View.Control.Selection.Clear();
                 }
 
                 // list management
                 if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskCreateItem))
                 {
-                    var task = View.Control.ItemFactory.CreateData(null);
+                    var task = this.View.Control.ItemFactory.CreateData(null);
 
                     // add to task gui
-                    View.Control.AddItem(task);
+                    this.View.Control.AddItem(task);
 
                     // add to host motivation's tasks
-                    hostControl.ItemData.Tasks.Add(task);
+                    this.hostControl.ItemData.Tasks.Add(task);
                 }
             }
 
             // item input
-            //-----------------------------------------------------------------
-            if (View.IsEnabled(ViewState.View_Has_Focus))
+            // -----------------------------------------------------------------
+            if (this.View.IsEnabled(ViewState.View_Has_Focus))
             {
-                foreach (var item in View.Items.ToArray())
+                foreach (var item in this.View.Items.ToArray())
                 {
                     item.UpdateInput(gameTime);
                 }
@@ -143,9 +157,9 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
         public override void UpdateStructure(GameTime gameTime)
         {
             // make sure that task region and task items all follow the host location changes
-            View.ViewSettings.StartPoint = Vector2Ext.ToPoint(hostControl.RootFrame.Center.ToVector2() + hostControl.ViewSettings.TracerMargin);
+            this.View.ViewSettings.StartPoint = Vector2Ext.ToPoint(this.hostControl.RootFrame.Center.ToVector2() + this.hostControl.ViewSettings.TracerMargin);
 
-            View.UpdateStructure(gameTime);
+            this.View.UpdateStructure(gameTime);
         }
     }
 }

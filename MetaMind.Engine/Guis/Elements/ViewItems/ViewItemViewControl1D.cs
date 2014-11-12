@@ -8,6 +8,7 @@
 namespace MetaMind.Engine.Guis.Elements.ViewItems
 {
     using MetaMind.Engine.Guis.Elements.Items;
+    using MetaMind.Engine.Guis.Elements.Views;
 
     using Microsoft.Xna.Framework;
 
@@ -18,7 +19,7 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
         {
         }
 
-        public void SelectIt()
+        public void MouseSelectIt()
         {
             this.ViewControl.Selection.Select(this.ItemControl.Id);
         }
@@ -40,7 +41,7 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
             ProcessManager.AttachProcess(new ViewItemSwapProcess(draggingItem, this.Item));
         }
 
-        public void UnselectIt()
+        public void MouseUnselectIt()
         {
             if (this.ViewControl.Selection.IsSelected(this.ItemControl.Id))
             {
@@ -48,12 +49,19 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
             }
         }
 
+        public virtual void UpdateStructure(GameTime gameTime)
+        {
+            this.UpdateViewScroll();
+            this.UpdateViewSelection();
+            this.UpdateViewSwap();
+        }
+
         protected virtual void UpdateViewScroll()
         {
             this.ItemControl.Id = this.View.Items.IndexOf(this.Item);
 
-            // dynamic binding here
-            if (this.ViewControl.Scroll.CanDisplay(this.ItemControl.Id))
+            if (View.IsEnabled(ViewState.View_Active) && 
+                ViewControl.Scroll.CanDisplay(ItemControl.Id))
             {
                 this.Item.Enable(ItemState.Item_Active);
             }
@@ -62,7 +70,10 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
                 this.Item.Disable(ItemState.Item_Active);
             }
         }
-
+            
+        /// <summary>
+        /// Item active state determination based on selection and view state 
+        /// </summary>
         private void UpdateViewSelection()
         {
             if (this.ViewControl.Selection.IsSelected(this.ItemControl.Id))
@@ -71,7 +82,7 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
                 // not sure whether fired only once
                 if (!this.Item.IsEnabled(ItemState.Item_Selected))
                 {
-                    this.ItemControl.SelectIt();
+                    this.ItemControl.CommonSelectIt();
                 }
 
                 this.Item.Enable(ItemState.Item_Selected);
@@ -82,7 +93,7 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
                 // not sure whether fired only once
                 if (this.Item.IsEnabled(ItemState.Item_Selected))
                 {
-                    this.ItemControl.UnselectIt();
+                    this.ItemControl.CommonUnselectIt();
                 }
 
                 this.Item.Disable(ItemState.Item_Selected);
@@ -98,13 +109,6 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
                     this.ViewControl.Swap.ObserveSwapFrom(this.Item, observor);
                 }
             }
-        }
-
-        public void UpdateStructure(GameTime gameTime)
-        {
-            this.UpdateViewScroll();
-            this.UpdateViewSelection();
-            this.UpdateViewSwap();
         }
     }
 }

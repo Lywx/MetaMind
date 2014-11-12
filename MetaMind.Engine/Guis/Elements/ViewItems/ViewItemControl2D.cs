@@ -5,12 +5,12 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
     {
         #region Constructors
 
-        public ViewItemControl2D( IViewItem item ) 
-            : base( item )
+        public ViewItemControl2D(IViewItem item)
+            : base(item)
         {
-            this.ItemViewControl  = new ViewItemViewControl2D( item );
-            this.ItemFrameControl = new ViewItemFrameControl( item );
-            this.ItemDataControl  = new ViewItemDataControl( item );
+            this.ItemViewControl  = new ViewItemViewControl2D(item);
+            this.ItemFrameControl = new ViewItemFrameControl(item);
+            this.ItemDataControl  = new ViewItemDataControl(item);
         }
 
 

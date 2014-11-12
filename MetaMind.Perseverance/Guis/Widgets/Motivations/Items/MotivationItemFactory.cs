@@ -5,23 +5,24 @@
 
     public class MotivationItemFactory : IViewItemFactory
     {
-        public dynamic CreateControl( IViewItem item )
+        public dynamic CreateControl(IViewItem item)
         {
-            return new MotivationItemControl( item );
+            return new MotivationItemControl(item);
         }
 
-        public dynamic CreateData( IViewItem item )
+        public dynamic CreateData(IViewItem item)
         {
-            return Perseverance.Adventure.Motivationlist.Create( item.ViewSettings.Space );
+            return Perseverance.Adventure.Motivationlist.Create(item.ViewSettings.Space);
         }
 
-        public IItemGraphics CreateGraphics( IViewItem item )
+        public IItemGraphics CreateGraphics(IViewItem item)
         {
-            return new MotivationItemGraphics( item );
+            return new MotivationItemGraphics(item);
         }
-        public void RemoveData( IViewItem item )
+
+        public void RemoveData(IViewItem item)
         {
-            Perseverance.Adventure.Motivationlist.Remove( item.ItemData, item.ViewSettings.Space );
+            Perseverance.Adventure.Motivationlist.Remove(item.ItemData, item.ViewSettings.Space);
         }
     }
 }

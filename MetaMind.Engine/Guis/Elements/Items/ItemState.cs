@@ -5,6 +5,7 @@ namespace MetaMind.Engine.Guis.Elements.Items
         //------------------------------------------------------------------
         // whether is inside view region
         Item_Active,
+
         Item_Visible,
 
         //------------------------------------------------------------------
@@ -25,19 +26,19 @@ namespace MetaMind.Engine.Guis.Elements.Items
 
     public static class ItemStateExt
     {
-        public static void EnableStateIn( this ItemState state, bool[ ] states )
+        public static void EnableStateIn(this ItemState state, bool[] states)
         {
-            states[ ( int ) state ] = true;
+            states[(int)state] = true;
         }
 
-        public static void DisableStateIn( this ItemState state, bool[ ] states )
+        public static void DisableStateIn(this ItemState state, bool[] states)
         {
-            states[ ( int ) state ] = false;
+            states[(int)state] = false;
         }
 
-        public static bool IsStateEnabledIn( this ItemState state, bool[ ] states )
+        public static bool IsStateEnabledIn(this ItemState state, bool[] states)
         {
-            return states[ ( int ) state ];
+            return states[(int)state];
         }
     }
 }

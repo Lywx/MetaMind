@@ -18,7 +18,7 @@
 
         public virtual void Draw(GameTime gameTime, byte alpha)
         {
-            if (!this.Item.IsEnabled(ItemState.Item_Active) && !this.Item.IsEnabled(ItemState.Item_Dragging))
+            if (!ItemControl.Active && !Item.IsEnabled(ItemState.Item_Dragging))
             {
                 return;
             }
@@ -38,6 +38,7 @@
                 Primitives2D.FillRectangle(ScreenManager.SpriteBatch, this.ItemControl.RootFrame.Rectangle, this.ItemSettings.RootFrameColor);
                 Primitives2D.FillRectangle(ScreenManager.SpriteBatch, this.ItemControl.NameFrame.Rectangle, this.ItemSettings.NameFrameRegularColor);
             }
+
             this.DrawId(alpha);
         }
 

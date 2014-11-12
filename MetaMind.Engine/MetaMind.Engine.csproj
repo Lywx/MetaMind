@@ -91,6 +91,7 @@
     <Compile Include="Guis\Elements\Regions\Region.cs" />
     <Compile Include="Guis\Elements\Regions\RegionObject.cs" />
     <Compile Include="Guis\Elements\Regions\RegionState.cs" />
+    <Compile Include="Tests\StateTestGraphics.cs" />
     <Compile Include="Guis\Elements\ViewItems\IViewItemFactory.cs" />
     <Compile Include="Guis\Elements\ViewItems\ViewItemBasicFactory1D.cs" />
     <Compile Include="Guis\Elements\ViewItems\ViewItemBasicFactory2D.cs" />

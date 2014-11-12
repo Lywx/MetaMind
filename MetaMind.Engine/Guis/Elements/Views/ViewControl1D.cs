@@ -48,16 +48,16 @@ namespace MetaMind.Engine.Guis.Elements.Views
             {
                 case ViewSortMode.Name:
                     {
-                        this.View.Items = this.View.Items.OrderBy(item => item.ItemData.Labels).ToList();
-                        this.View.Items.ForEach(item => item.ItemControl.Id = this.View.Items.IndexOf(item));
+                        View.Items = View.Items.OrderBy(item => item.ItemData.Labels).ToList();
+                        View.Items.ForEach(item => item.ItemControl.Id = View.Items.IndexOf(item));
                     }
 
                     break;
 
                 case ViewSortMode.Id:
                     {
-                        this.View.Items = this.View.Items.OrderBy(item => item.ItemControl.Id).ToList();
-                        this.View.Items.ForEach(item => item.ItemControl.Id = this.View.Items.IndexOf(item));
+                        View.Items = View.Items.OrderBy(item => item.ItemControl.Id).ToList();
+                        View.Items.ForEach(item => item.ItemControl.Id = View.Items.IndexOf(item));
                     }
 
                     break;
@@ -66,7 +66,7 @@ namespace MetaMind.Engine.Guis.Elements.Views
 
         public virtual void MoveLeft()
         {
-            if (this.ViewSettings.Direction == ViewSettings1D.ScrollDirection.Left)
+            if (ViewSettings.Direction == ViewSettings1D.ScrollDirection.Left)
             {
                 // invert for left scrolling view
                 this.Selection.MoveRight();
@@ -79,7 +79,7 @@ namespace MetaMind.Engine.Guis.Elements.Views
 
         public virtual void MoveRight()
         {
-            if (this.ViewSettings.Direction == ViewSettings1D.ScrollDirection.Left)
+            if (ViewSettings.Direction == ViewSettings1D.ScrollDirection.Left)
             {
                 // invert for left scrolling view
                 this.Selection.MoveLeft();
@@ -94,12 +94,18 @@ namespace MetaMind.Engine.Guis.Elements.Views
 
         #region Update
 
+        public bool Active
+        {
+            get { return this.View.IsEnabled(ViewState.View_Active); }
+        }
+
         public virtual bool AcceptInput
         {
             get
             {
-                return this.View.IsEnabled(ViewState.View_Active) && this.View.IsEnabled(ViewState.View_Has_Focus)
-                       && !this.View.IsEnabled(ViewState.Item_Editting);
+                return this.View.IsEnabled(ViewState.View_Active) && 
+                       this.View.IsEnabled(ViewState.View_Has_Focus) && 
+                      !this.View.IsEnabled(ViewState.Item_Editting);
             }
         }
 
@@ -147,48 +153,32 @@ namespace MetaMind.Engine.Guis.Elements.Views
             }
         }
 
-        public virtual void UpdateStrucutre(GameTime gameTime)
+        public virtual void UpdateStructure(GameTime gameTime)
         {
-            this.UpdateViewLogics();
-
-            // TODO: this name is not right
-            this.UpdateItemLogics(gameTime);
+            if (View.IsEnabled(ViewState.View_Active))
+            {
+                this.UpdateViewLogics();
+                this.UpdateItemStructure(gameTime);
+            }
         }
 
-        protected virtual void UpdateItemLogics(GameTime gameTime)
+        protected void UpdateItemStructure(GameTime gameTime)
         {
-            if (this.View.IsEnabled(ViewState.View_Active))
+            foreach (var item in this.View.Items.ToArray())
             {
-                foreach (var item in this.View.Items.ToArray())
-                {
-                    item.UpdateStructure(gameTime);
-                }
-            }
-            else
-            {
-                foreach (var item in this.View.Items)
-                {
-                    item.Disable(ItemState.Item_Active);
-                }
+                item.UpdateStructure(gameTime);
             }
         }
 
         protected virtual void UpdateViewFocus()
         {
-            if (this.View.IsEnabled(ViewState.View_Active))
+            if (View.IsEnabled(ViewState.View_Has_Selection))
             {
-                if (this.View.IsEnabled(ViewState.View_Has_Selection))
-                {
-                    this.View.Enable(ViewState.View_Has_Focus);
-                }
-                else
-                {
-                    this.View.Disable(ViewState.View_Has_Focus);
-                }
+                View.Enable(ViewState.View_Has_Focus);
             }
             else
             {
-                this.View.Disable(ViewState.View_Has_Focus);
+                View.Disable(ViewState.View_Has_Focus);
             }
         }
 
@@ -200,20 +190,13 @@ namespace MetaMind.Engine.Guis.Elements.Views
 
         protected virtual void UpdateViewSelection()
         {
-            if (this.View.IsEnabled(ViewState.View_Active))
+            if (Selection.HasSelected)
             {
-                if (this.Selection.HasSelected)
-                {
-                    this.View.Enable(ViewState.View_Has_Selection);
-                }
-                else
-                {
-                    this.View.Disable(ViewState.View_Has_Selection);
-                }
+                View.Enable(ViewState.View_Has_Selection);
             }
             else
             {
-                this.View.Disable(ViewState.View_Has_Selection);
+                View.Disable(ViewState.View_Has_Selection);
             }
         }
 

@@ -5,32 +5,38 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 {
+    using MetaMind.Engine.Guis.Elements.Regions;
     using MetaMind.Engine.Guis.Elements.Views;
 
     public class TaskViewGraphics : ViewBasicGraphics
     {
         private int frameAlpha;
 
-        public TaskViewGraphics( IView view, TaskViewSettings viewSettings, TaskItemSettings itemSettings )
-            : base( view, viewSettings, itemSettings )
+        public TaskViewGraphics(IView view, TaskViewSettings viewSettings, TaskItemSettings itemSettings)
+            : base(view, viewSettings, itemSettings)
         {
         }
 
-        public override void Draw( GameTime gameTime, byte alpha )
+        public override void Draw(GameTime gameTime, byte alpha)
         {
             // draw active items
-            base.Draw( gameTime, ( byte ) frameAlpha );
+            base.Draw(gameTime, (byte)frameAlpha);
 
-            DrawRegion( gameTime );
-            DrawScrollBar( gameTime );
+            // TODO: REMOVE
+            // draw state test 
+            var test = new StateTestGraphics(View.States, typeof(ViewState));
+            test.DrawStates(ViewSettings.StartPoint, 300, 25);
+
+            DrawRegion(gameTime);
+            DrawScrollBar(gameTime);
         }
 
-        public override void Update( GameTime gameTime )
+        public override void Update(GameTime gameTime)
         {
-            if ( View.IsEnabled( ViewState.View_Has_Focus ) )
+            if (View.IsEnabled(ViewState.View_Has_Focus))
             {
                 frameAlpha += 15;
-                if ( frameAlpha > 255 )
+                if (frameAlpha > 255)
                 {
                     frameAlpha = 255;
                 }
@@ -38,22 +44,34 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
             else
             {
                 frameAlpha -= 15;
-                if ( frameAlpha < 0 )
+                if (frameAlpha < 0)
                 {
                     frameAlpha = 0;
                 }
             }
         }
-        
-        private void DrawRegion( GameTime gameTime )
+
+        private void DrawRegion(GameTime gameTime)
         {
-            Primitives2D.DrawRectangle( ScreenManager.SpriteBatch, RectangleExt.Extend( ViewControl.Region.Frame.Rectangle, ViewSettings.BorderMargin ), ColorExt.MakeTransparent( ViewSettings.HighlightColor, ( byte ) frameAlpha ), 2f );
-            Primitives2D.FillRectangle( ScreenManager.SpriteBatch, ViewControl.Region.Frame.Rectangle, ColorExt.MakeTransparent( ViewSettings.HighlightColor, ( byte ) frameAlpha ) );
+            // TODO: REMOVE
+            // draw state test 
+            var test = new StateTestGraphics(View.Control.Region.States, typeof(RegionState));
+            test.DrawStates(ViewSettings.StartPoint, -200, 25);
+            
+            Primitives2D.DrawRectangle(
+                ScreenManager.SpriteBatch,
+                RectangleExt.Extend(ViewControl.Region.Frame.Rectangle, ViewSettings.BorderMargin),
+                ColorExt.MakeTransparent(ViewSettings.HighlightColor, (byte)this.frameAlpha),
+                2f);
+            Primitives2D.FillRectangle(
+                ScreenManager.SpriteBatch,
+                ViewControl.Region.Frame.Rectangle,
+                ColorExt.MakeTransparent(ViewSettings.HighlightColor, (byte)this.frameAlpha));
         }
 
-        private void DrawScrollBar( GameTime gameTime )
+        private void DrawScrollBar(GameTime gameTime)
         {
-            ViewControl.ScrollBar.Draw( gameTime );
+            ViewControl.ScrollBar.Draw(gameTime);
         }
     }
 }

@@ -1,146 +1,158 @@
-using MetaMind.Engine.Components.Inputs;
-using MetaMind.Engine.Guis.Elements.Regions;
-using MetaMind.Perseverance.Concepts.TaskEntries;
-using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
-using Microsoft.Xna.Framework;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="TaskViewControl.cs" company="UESTC">
+//   Copyright (c) 2014 Lin Wuxiang
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 {
+    using MetaMind.Engine.Components.Inputs;
+    using MetaMind.Engine.Guis.Elements.Regions;
     using MetaMind.Engine.Guis.Elements.ViewItems;
     using MetaMind.Engine.Guis.Elements.Views;
+    using MetaMind.Perseverance.Concepts.TaskEntries;
+    using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
+
+    using Microsoft.Xna.Framework;
 
     public class TaskViewControl : ViewControl2D
     {
         #region Constructors
-        public TaskViewControl( IView view, TaskViewSettings viewSettings, TaskItemSettings itemSettings )
-            : base( view, viewSettings, itemSettings )
-        {
-            Region      = new ViewRegion( view, viewSettings, itemSettings, RegionPositioning );
-            ScrollBar   = new TaskViewScrollBar( view, viewSettings, itemSettings, viewSettings.ScrollBarSettings );
-            ItemFactory = new TaskItemFactory();
-        }
 
-        private Rectangle RegionPositioning( dynamic viewSettings, dynamic itemSettings )
+        public TaskViewControl(IView view, TaskViewSettings viewSettings, TaskItemSettings itemSettings)
+            : base(view, viewSettings, itemSettings)
         {
-            return new Rectangle(
-                viewSettings.StartPoint.X,
-                viewSettings.StartPoint.Y,
-                viewSettings.ColumnNumDisplay * ( itemSettings.NameFrameSize.X ),
-                viewSettings.RowNumDisplay    * ( itemSettings.NameFrameSize.Y + itemSettings.IdFrameSize.Y )
-                );
+            this.Region      = new ViewRegion(view, viewSettings, itemSettings, this.RegionPositioning);
+            this.ScrollBar   = new TaskViewScrollBar(view, viewSettings, itemSettings, viewSettings.ScrollBarSettings);
+            this.ItemFactory = new TaskItemFactory();
         }
 
         #endregion Constructors
 
         #region Public Properties
 
-        public TaskItemFactory   ItemFactory { get; protected set; }
-        public ViewRegion        Region      { get; protected set; }
-        public TaskViewScrollBar ScrollBar   { get; protected set; }
+        public TaskItemFactory ItemFactory { get; protected set; }
+
+        public ViewRegion Region { get; protected set; }
+
+        public TaskViewScrollBar ScrollBar { get; protected set; }
 
         #endregion Public Properties
 
         #region Update
 
-        public override void UpdateInput( GameTime gameTime )
+        public override void UpdateInput(GameTime gameTime)
         {
             // mouse
-            //-----------------------------------------------------------------
+            // -----------------------------------------------------------------
             // region
-            Region.UpdateInput( gameTime );
+            if (this.Active)
+            {
+                this.Region.UpdateInput(gameTime);
+            }
 
-            if ( AcceptInput )
+            if (this.AcceptInput)
             {
                 // mouse
-                //---------------------------------------------------------------------
+                // ---------------------------------------------------------------------
                 // scroll
-                if ( InputSequenceManager.Mouse.IsWheelScrolledUp )
+                if (InputSequenceManager.Mouse.IsWheelScrolledUp)
                 {
-                    ScrollBar.Trigger();
-                    Scroll.MoveUp();
+                    this.ScrollBar.Trigger();
+                    this.Scroll.MoveUp();
                 }
-                if ( InputSequenceManager.Mouse.IsWheelScrolledDown )
+
+                if (InputSequenceManager.Mouse.IsWheelScrolledDown)
                 {
-                    Scroll.MoveDown();
-                    ScrollBar.Trigger();
+                    this.Scroll.MoveDown();
+                    this.ScrollBar.Trigger();
                 }
 
                 // keyboard
-                //---------------------------------------------------------------------
+                // ---------------------------------------------------------------------
                 // movement
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Left ) )
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
                 {
-                    MoveLeft();
+                    this.MoveLeft();
                 }
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Right ) )
+
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
                 {
-                    MoveRight();
+                    this.MoveRight();
                 }
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Up ) )
+
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Up))
                 {
-                    MoveUp();
+                    this.MoveUp();
                 }
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Down ) )
+
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Down))
                 {
-                    MoveDown();
+                    this.MoveDown();
                 }
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.SUp ) )
+
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SUp))
                 {
-                    for ( var i = 0 ; i < ViewSettings.RowNumDisplay ; i++ )
+                    for (var i = 0; i < this.ViewSettings.RowNumDisplay; i++)
                     {
-                        MoveUp();
+                        this.MoveUp();
                     }
                 }
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.SDown ) )
+
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SDown))
                 {
-                    for ( var i = 0 ; i < ViewSettings.RowNumDisplay ; i++ )
+                    for (var i = 0; i < this.ViewSettings.RowNumDisplay; i++)
                     {
-                        MoveDown();
+                        this.MoveDown();
                     }
                 }
+
                 // escape
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Escape ) )
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
                 {
-                    Selection.Clear();
-                }                
+                    this.Selection.Clear();
+                }
+
                 // list management
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.TaskCreateItem ) )
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskCreateItem))
                 {
-                    AddItem();
+                    this.AddItem();
                 }
             }
 
             // item input
-            //-----------------------------------------------------------------
-            foreach ( var item in View.Items.ToArray() )
+            // -----------------------------------------------------------------
+            foreach (var item in this.View.Items.ToArray())
             {
-                item.UpdateInput( gameTime );
+                item.UpdateInput(gameTime);
             }
         }
 
-        public override void UpdateStrucutre( GameTime gameTime )
+        /// <remarks>
+        /// All state change should be inside this methods. 
+        /// </remarks>>
+        /// <param name="gameTime"></param>
+        public override void UpdateStructure(GameTime gameTime)
         {
-            base     .UpdateStrucutre( gameTime );
-            Region   .UpdateStructure( gameTime );
-            ScrollBar.Upadte( gameTime );
+            base          .UpdateStructure(gameTime);
+            this.Region   .UpdateStructure(gameTime);
+            this.ScrollBar.Update(gameTime);
         }
 
         protected override void UpdateViewFocus()
         {
-            if ( View.IsEnabled( ViewState.View_Active ) )
+            if (this.Region.IsEnabled(RegionState.Region_Hightlighted))
             {
-                if ( Region.IsEnabled( RegionState.Region_Hightlighted ) )
-                {
-                    View.Enable( ViewState.View_Has_Focus );
-                }
-                else
-                {
-                    View.Disable( ViewState.View_Has_Focus );
-                }
+                View.Enable(ViewState.View_Has_Focus);
+            }
+            else if (this.View.IsEnabled(ViewState.View_Has_Selection))
+            {
+                View.Enable(ViewState.View_Has_Focus);
             }
             else
             {
-                View.Disable( ( ViewState.View_Has_Focus ) );
+                View.Disable(ViewState.View_Has_Focus); 
             }
         }
 
@@ -148,40 +160,56 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 
         #region Operations
 
-        public virtual void AddItem( TaskEntry entry )
+        public virtual void AddItem(TaskEntry entry)
         {
-            View.Items.Add( new ViewItemExchangable( View, ViewSettings, ItemSettings, ItemFactory, entry ) );
+            this.View.Items.Add(
+                new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory, entry));
         }
 
         public virtual void AddItem()
         {
-            View.Items.Add( new ViewItemExchangable( View, ViewSettings, ItemSettings, ItemFactory ) );
+            this.View.Items.Add(
+                new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory));
         }
 
         public void MoveDown()
         {
-            ScrollBar.Trigger();
-            Selection.MoveDown();
+            this.ScrollBar.Trigger();
+            this.Selection.MoveDown();
         }
 
         public override void MoveLeft()
         {
-            ScrollBar.Trigger();
-            Selection.MoveLeft();
+            this.ScrollBar.Trigger();
+            this.Selection.MoveLeft();
         }
 
         public override void MoveRight()
         {
-            ScrollBar.Trigger();
-            Selection.MoveRight();
+            this.ScrollBar.Trigger();
+            this.Selection.MoveRight();
         }
 
         public void MoveUp()
         {
-            ScrollBar.Trigger();
-            Selection.MoveUp();
+            this.ScrollBar.Trigger();
+            this.Selection.MoveUp();
         }
 
         #endregion Operations
+
+        #region Configurations
+
+        private Rectangle RegionPositioning(dynamic viewSettings, dynamic itemSettings)
+        {
+            return new Rectangle(
+                viewSettings.StartPoint.X,
+                viewSettings.StartPoint.Y,
+                viewSettings.ColumnNumDisplay * itemSettings.NameFrameSize.X,
+                viewSettings.RowNumDisplay    * (itemSettings.NameFrameSize.Y + itemSettings.IdFrameSize.Y));
+        }
+
+
+        #endregion
     }
 }

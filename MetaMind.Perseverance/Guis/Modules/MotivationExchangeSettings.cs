@@ -18,7 +18,7 @@ namespace MetaMind.Perseverance.Guis.Modules
         public readonly MotivationViewSettings PastViewSettings = new MotivationViewSettings
         {
             ColumnNumDisplay = 1,
-            StartPoint       = new Point( 160, 160 ),
+            StartPoint       = new Point(160, 160),
             Direction        = ViewSettings1D.ScrollDirection.Left,
             Space            = MotivationSpace.Past,
         };
@@ -26,14 +26,14 @@ namespace MetaMind.Perseverance.Guis.Modules
         public readonly MotivationViewSettings NowViewSettings = new MotivationViewSettings
         {
             ColumnNumDisplay = 1,
-            StartPoint       = new Point( 160 + 270, 160 ),
+            StartPoint       = new Point(160 + 270, 160),
             Space            = MotivationSpace.Now,
         };
 
         public readonly MotivationViewSettings FutureViewSettings = new MotivationViewSettings
         {
             ColumnNumDisplay = 9,
-            StartPoint       = new Point( 160 + 270 * 2, 160 ),
+            StartPoint       = new Point(160 + 270 * 2, 160),
             Space            = MotivationSpace.Future,
         };
 

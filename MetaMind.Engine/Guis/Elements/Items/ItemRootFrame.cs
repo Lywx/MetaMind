@@ -14,32 +14,32 @@ namespace MetaMind.Engine.Guis.Elements.Items
     {
         private IViewItem item;
 
-        public ItemRootFrame( IViewItem item )
+        public ItemRootFrame(IViewItem item)
         {
             this.item = item;
 
-            this.MouseLeftClicked        += this.SelectItsItem;
+            this.MouseLeftClicked += this.SelectItsItem;
             this.MouseLeftClickedOutside += this.UnselectItsItem;
         }
 
-        private void UnselectItsItem( object sender, FrameEventArgs e )
+        private void UnselectItsItem(object sender, FrameEventArgs e)
         {
-            this.item.ItemControl.UnselectIt();
+            this.item.ItemControl.MouseUnselectIt();
         }
 
         public void Disable()
         {
-            this.Disable( FrameState.Frame_Active );
+            this.Disable(FrameState.Frame_Active);
         }
 
         public void Enable()
         {
-            this.Enable( FrameState.Frame_Active );
+            this.Enable(FrameState.Frame_Active);
         }
 
-        private void SelectItsItem( object sender, FrameEventArgs e )
+        private void SelectItsItem(object sender, FrameEventArgs e)
         {
-            this.item.ItemControl.SelectIt();
+            this.item.ItemControl.MouseSelectIt();
         }
     }
 }

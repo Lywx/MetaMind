@@ -29,11 +29,6 @@ namespace MetaMind.Perseverance.Guis.Modules
             nowView   .Control.Swap.AddObserver(futureView);
             futureView.Control.Swap.AddObserver(pastView  );
             futureView.Control.Swap.AddObserver(nowView   );
-
-            // TODO:fixed regional trigger of views
-            //pastView  .Items.Add( new ViewItemExchangable( pastView,   pastView  .ViewSettings, pastView  .ItemSettings, Settings.ItemFactory ) );
-            //nowView   .Items.Add( new ViewItemExchangable( nowView,    nowView   .ViewSettings, nowView   .ItemSettings, Settings.ItemFactory ) );
-            //futureView.Items.Add( new ViewItemExchangable( futureView, futureView.ViewSettings, futureView.ItemSettings, Settings.ItemFactory ) );
         }
 
         public override void Load()

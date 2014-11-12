@@ -6,20 +6,20 @@
 
     public class ViewItemControl1D : ViewItemComponent
     {
-        //---------------------------------------------------------------------
-        protected dynamic             ItemViewControl  { get; set; }
-        protected dynamic             ItemFrameControl { get; set; }
-        protected ViewItemDataControl ItemDataControl  { get; set; }
+        protected ViewItemDataControl ItemDataControl { get; set; }
 
-        //---------------------------------------------------------------------
+        protected dynamic ItemFrameControl { get; set; }
+
+        protected dynamic ItemViewControl { get; set; }
+
         #region Constructors
 
-        public ViewItemControl1D( IViewItem item )
-            : base( item )
+        public ViewItemControl1D(IViewItem item)
+            : base(item)
         {
-            this.ItemFrameControl = new ViewItemFrameControl( item );
-            this.ItemViewControl  = new ViewItemViewControl1D( item );
-            this.ItemDataControl  = new ViewItemDataControl( item );
+            this.ItemFrameControl = new ViewItemFrameControl(item);
+            this.ItemViewControl = new ViewItemViewControl1D(item);
+            this.ItemDataControl = new ViewItemDataControl(item);
         }
 
         #endregion Constructors
@@ -37,42 +37,83 @@
 
         #region Operations
 
-        public virtual void SelectIt()
+        /// <summary>
+        /// Only used by root frame event handler, which will cause common
+        /// select method to be called. as a result unifying the mouse and
+        /// keyboard selection effect.
+        /// </summary>
+        public void MouseSelectIt()
         {
-            this.ItemViewControl.SelectIt();
+            ItemViewControl.MouseSelectIt();
         }
 
-        public virtual void SwapIt( IViewItem draggingItem )
+        /// <summary>
+        /// Only used by root frame event handler, which will cause common
+        /// unselect method to be called. as a result unifying the mouse and
+        /// keyboard unselection effect.
+        /// </summary>
+        public void MouseUnselectIt()
         {
-            this.ItemViewControl.SwapIt( draggingItem );
+            this.ItemViewControl.MouseUnselectIt();
         }
 
-        public virtual void UnselectIt()
+        public virtual void SwapIt(IViewItem draggingItem)
         {
-            this.ItemViewControl.UnselectIt();
+            this.ItemViewControl.SwapIt(draggingItem);
+        }
+
+        /// <summary>
+        /// Only used by item view control. This method is called both by
+        /// mouse and keyboard selection.
+        /// </summary>
+        public virtual void CommonSelectIt()
+        {
+        }
+
+        /// <summary>
+        /// Only used by item view control. This method is called both by
+        /// mouse and keyboard selection.
+        /// </summary>
+        public virtual void CommonUnselectIt()
+        {
         }
 
         #endregion Operations
 
         #region Update
 
-        public virtual void UpdateInput( GameTime gameTime )
+        public bool AcceptInput
         {
-            // mouse
-            this.ItemFrameControl.UpdateInput( gameTime );
-            // keyboard
-            if ( this.Item.IsEnabled( ItemState.Item_Selected ) &&
-                !this.Item.IsEnabled( ItemState.Item_Editing ) )
+            get
             {
+                return Item.IsEnabled(ItemState.Item_Active) && 
+                       Item.IsEnabled(ItemState.Item_Selected) && 
+                      !Item.IsEnabled(ItemState.Item_Editing);
             }
         }
 
-        public virtual void UpdateStructure( GameTime gameTime )
+        public bool Active
         {
-            this.ItemViewControl .UpdateStructure( gameTime );
-            this.ItemFrameControl.UpdateStructure( gameTime );
-            this.ItemDataControl .UpdateStructure( gameTime );
+            get { return Item.IsEnabled(ItemState.Item_Active); }
         }
+
+        public virtual void UpdateInput(GameTime gameTime)
+        {
+            if (Active)
+            {
+                // mouse
+                this.ItemFrameControl.UpdateInput(gameTime);
+            }
+        }
+
+        public virtual void UpdateStructure(GameTime gameTime)
+        {
+            // view activation is controlled by item view control
+            this.ItemViewControl.UpdateStructure(gameTime);
+            this.ItemFrameControl.UpdateStructure(gameTime);
+            this.ItemDataControl.UpdateStructure(gameTime);
+        }
+
         #endregion Update
     }
 }

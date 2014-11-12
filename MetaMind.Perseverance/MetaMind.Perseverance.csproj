@@ -69,6 +69,7 @@
     <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemFrameControl.cs" />
     <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemSymbolGraphics.cs" />
     <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemTaskControl.cs" />
+    <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemTaskGraphics.cs" />
     <Compile Include="Guis\Widgets\Motivations\MotivationTaskTracer.cs" />
     <Compile Include="Guis\Modules\MotivationExchangeSettings.cs" />
     <Compile Include="Guis\Widgets\Motivations\MotivationTaskTracerSettings.cs" />

@@ -1,16 +1,20 @@
-using C3.Primtive2DXna;
-using MetaMind.Engine.Extensions;
-using MetaMind.Perseverance.Guis.Widgets.Motivations.Items;
-using Microsoft.Xna.Framework;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="MotivationViewGraphics.cs" company="UESTC">
+//   Copyright (c) 2014 Lin Wuxiang
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
 {
     using MetaMind.Engine.Guis.Elements.Views;
+    using MetaMind.Perseverance.Guis.Widgets.Motivations.Items;
+    using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
+
+    using Microsoft.Xna.Framework;
 
     public class MotivationViewGraphics : ViewBasicGraphics
     {
-        private int frameAlpha;
-
         public MotivationViewGraphics(IView view, MotivationViewSettings viewSettings, MotivationItemSettings itemSettings)
             : base(view, viewSettings, itemSettings)
         {
@@ -19,33 +23,11 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
         public override void Draw(GameTime gameTime, byte alpha)
         {
             base.Draw(gameTime, alpha);
-
-            DrawRegion(gameTime);
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            if (View.IsEnabled(ViewState.View_Has_Focus))
-            {
-                frameAlpha += 15;
-                if (frameAlpha > 255)
-                {
-                    frameAlpha = 255;
-                }
-            }
-            else
-            {
-                frameAlpha -= 15;
-                if (frameAlpha < 0)
-                {
-                    frameAlpha = 0;
-                }
-            }
-        }
-
-        private void DrawRegion(GameTime gameTime)
-        {
-            Primitives2D.FillRectangle(ScreenManager.SpriteBatch, ViewControl.Region.Frame.Rectangle, ColorExt.MakeTransparent(ViewSettings.HighlightColor, (byte)frameAlpha));
+            
+            // TODO: REMOVE
+            // draw state test 
+            var test = new StateTestGraphics(View.States, typeof(ViewState));
+            test.DrawStates(ViewSettings.StartPoint, 300, 25);
         }
     }
 }

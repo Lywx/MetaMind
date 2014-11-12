@@ -1,9 +1,18 @@
-﻿using MetaMind.Engine.Extensions;
-using Microsoft.Xna.Framework;
-using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="DraggableFrame.cs" company="UESTC">
+//   Copyright (c) 2014 Lin Wuxiang
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace MetaMind.Engine.Guis.Elements.Frames
 {
+    using System;
+
+    using MetaMind.Engine.Extensions;
+
+    using Microsoft.Xna.Framework;
+
     public class DraggableFrame : PickableFrame, IDraggableFrame
     {
         #region Control Data
@@ -11,25 +20,26 @@ namespace MetaMind.Engine.Guis.Elements.Frames
         private const int holdLen = 6;
 
         private Point PressedPosition { get; set; }
+
         private Point RelativePosition { get; set; }
 
         #endregion Control Data
 
         #region Constructors
 
-        public DraggableFrame( Rectangle rectangle )
+        public DraggableFrame(Rectangle rectangle)
             : this()
         {
-            Initialize( rectangle );
+            this.Initialize(rectangle);
         }
 
         public DraggableFrame()
         {
-            MouseLeftPressed   += RecordPressPosition;
-            MouseLeftReleased  += ResetRecordPosition;
+            this.MouseLeftPressed += this.RecordPressPosition;
+            this.MouseLeftReleased += this.ResetRecordPosition;
 
-            MouseRightPressed  += RecordPressPosition;
-            MouseRightReleased += ResetRecordPosition;
+            this.MouseRightPressed += this.RecordPressPosition;
+            this.MouseRightReleased += this.ResetRecordPosition;
         }
 
         #endregion Constructors
@@ -37,78 +47,84 @@ namespace MetaMind.Engine.Guis.Elements.Frames
         #region Events
 
         public event EventHandler<FrameEventArgs> MouseDragged;
+
         public event EventHandler<FrameEventArgs> MouseDropped;
 
-        private void RecordPressPosition( object sender, EventArgs e )
+        private void RecordPressPosition(object sender, EventArgs e)
         {
             var mouse = InputSequenceManager.Mouse.CurrentState;
 
             // origin for deciding whether is dragging
-            PressedPosition = new Point( mouse.X, mouse.Y );
+            this.PressedPosition = new Point(mouse.X, mouse.Y);
 
             // save relative position of mouse compared to rectangle
             // mouse y-axis value is fixed at y-axis center of the rectangle
-            RelativePosition = new Point( mouse.X - Rectangle.X, mouse.Y - Rectangle.Y );
+            this.RelativePosition = new Point(mouse.X - this.Rectangle.X, mouse.Y - this.Rectangle.Y);
 
             // ready to decide
-            Enable( FrameState.Frame_Holding );
+            this.Enable(FrameState.Frame_Holding);
 
             // cancel with another button
-            if ( IsEnabled( FrameState.Frame_Dragging ) )
+            if (this.IsEnabled(FrameState.Frame_Dragging))
             {
-                Disable( FrameState.Frame_Holding );
-                Disable( FrameState.Frame_Dragging );
+                this.Disable(FrameState.Frame_Holding);
+                this.Disable(FrameState.Frame_Dragging);
             }
         }
 
-        private void ResetRecordPosition( object sender, EventArgs e )
+        private void ResetRecordPosition(object sender, EventArgs e)
         {
-            if ( IsEnabled( FrameState.Frame_Dragging ) && MouseDropped != null )
-                MouseDropped( this, new FrameEventArgs( FrameEventType.Frame_Dropped ) );
+            if (this.IsEnabled(FrameState.Frame_Dragging) && this.MouseDropped != null)
+            {
+                this.MouseDropped(this, new FrameEventArgs(FrameEventType.Frame_Dropped));
+            }
+
             // stop deciding
-            Disable( FrameState.Frame_Holding );
-            Disable( FrameState.Frame_Dragging );
+            this.Disable(FrameState.Frame_Holding);
+            this.Disable(FrameState.Frame_Dragging);
         }
 
         #endregion Events
 
         #region Update
 
-        public override void UpdateInput( GameTime gameTime )
+        public override void UpdateInput(GameTime gameTime)
         {
-            base.UpdateInput( gameTime );
+            base.UpdateInput(gameTime);
 
             var mouse = InputSequenceManager.Mouse.CurrentState;
-            var mouseLocation = new Point( mouse.X, mouse.Y );
+            var mouseLocation = new Point(mouse.X, mouse.Y);
 
-            if ( IsEnabled( FrameState.Frame_Dragging ) )
+            if (this.IsEnabled(FrameState.Frame_Dragging))
             {
                 // keep up rectangle position with the mouse position
-                Rectangle = new Rectangle(
-                    mouseLocation.X - RelativePosition.X,
-                    mouseLocation.Y - RelativePosition.Y,
-                    Rectangle.Width,
-                    Rectangle.Height
-                    );
+                this.Rectangle = new Rectangle(
+                    mouseLocation.X - this.RelativePosition.X, 
+                    mouseLocation.Y - this.RelativePosition.Y, 
+                    this.Rectangle.Width, 
+                    this.Rectangle.Height);
             }
         }
 
-        protected override void UpdateStates( Point mouseLocation )
+        protected override void UpdateStates(Point mouseLocation)
         {
-            base.UpdateStates( mouseLocation );
+            base.UpdateStates(mouseLocation);
 
-            var isWithinHoldLen = ( mouseLocation.DistanceFrom( PressedPosition ) ).Length() > holdLen;
+            var isWithinHoldLen = mouseLocation.DistanceFrom(this.PressedPosition).Length() > holdLen;
 
             // decide whether is dragging
-            if ( IsEnabled( FrameState.Frame_Holding ) && isWithinHoldLen )
+            if (this.IsEnabled(FrameState.Frame_Holding) && isWithinHoldLen)
             {
                 // stop deciding
-                Disable( FrameState.Frame_Holding );
-                // successfully drag
-                Enable( FrameState.Frame_Dragging );
+                this.Disable(FrameState.Frame_Holding);
 
-                if ( MouseDragged != null )
-                    MouseDragged( this, new FrameEventArgs( FrameEventType.Frame_Dragged ) );
+                // successfully drag
+                this.Enable(FrameState.Frame_Dragging);
+
+                if (this.MouseDragged != null)
+                {
+                    this.MouseDragged(this, new FrameEventArgs(FrameEventType.Frame_Dragged));
+                }
             }
         }
 

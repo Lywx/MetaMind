@@ -9,40 +9,43 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
     public class TaskItemFrameControl : ViewItemFrameControl
     {
-        public ItemEntryFrame  NameFrame { get; private set; }
+        public ItemEntryFrame NameFrame { get; private set; }
+
         public ItemEntryFrame IdFrame { get; private set; }
+
         public ItemEntryFrame ProgressFrame { get; private set; }
+
         public ItemEntryFrame ExperienceFrame { get; private set; }
 
-        public TaskItemFrameControl( IViewItem item )
-            : base( item )
+        public TaskItemFrameControl(IViewItem item)
+            : base(item)
         {
-            NameFrame       = new ItemEntryFrame( item );
-            IdFrame         = new ItemEntryFrame( item );
-            ExperienceFrame = new ItemEntryFrame( item );
-            ProgressFrame   = new ItemEntryFrame( item );
+            NameFrame       = new ItemEntryFrame(item);
+            IdFrame         = new ItemEntryFrame(item);
+            ExperienceFrame = new ItemEntryFrame(item);
+            ProgressFrame   = new ItemEntryFrame(item);
         }
 
         public override void UpdateInput(GameTime gameTime)
         {
-            base           .UpdateInput( gameTime );
+            base.UpdateInput(gameTime);
 
-            NameFrame      .UpdateInput( gameTime );
-            IdFrame        .UpdateInput( gameTime );
-            ExperienceFrame.UpdateInput( gameTime );
-            ProgressFrame  .UpdateInput( gameTime );
+            NameFrame      .UpdateInput(gameTime);
+            IdFrame        .UpdateInput(gameTime);
+            ExperienceFrame.UpdateInput(gameTime);
+            ProgressFrame  .UpdateInput(gameTime);
         }
 
         protected override void UpdateFrameGeometry()
         {
-            ( ( TaskItemSettings ) ItemSettings ).ExperienceFrameSize.X = ( ItemSettings.NameFrameSize.X - ItemSettings.IdFrameSize.X ) / 2;
-            ( ( TaskItemSettings ) ItemSettings ).ProgressFrameSize  .X = ( ItemSettings.NameFrameSize.X - ItemSettings.IdFrameSize.X ) / 2;
+            ((TaskItemSettings)ItemSettings).ExperienceFrameSize.X = (ItemSettings.NameFrameSize.X - ItemSettings.IdFrameSize.X) / 2;
+            ((TaskItemSettings)ItemSettings).ProgressFrameSize.X = (ItemSettings.NameFrameSize.X - ItemSettings.IdFrameSize.X) / 2;
 
-            RootFrame      .Location = Vector2Ext.ToPoint( RootFrameLocation );
-            NameFrame      .Location = Vector2Ext.ToPoint( NameFrameLocation );
-            IdFrame        .Location = Vector2Ext.ToPoint( IdFrameLocation );
-            ExperienceFrame.Location = Vector2Ext.ToPoint( ExperienceFrameLocation );
-            ProgressFrame  .Location = Vector2Ext.ToPoint( ProgressFrameLocation );
+            RootFrame      .Location = Vector2Ext.ToPoint(RootFrameLocation);
+            NameFrame      .Location = Vector2Ext.ToPoint(NameFrameLocation);
+            IdFrame        .Location = Vector2Ext.ToPoint(IdFrameLocation);
+            ExperienceFrame.Location = Vector2Ext.ToPoint(ExperienceFrameLocation);
+            ProgressFrame  .Location = Vector2Ext.ToPoint(ProgressFrameLocation);
 
             RootFrame      .Size = ItemSettings.RootFrameSize;
             NameFrame      .Size = ItemSettings.NameFrameSize;
@@ -55,23 +58,29 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
         {
             get
             {
-                if ( !Item.IsEnabled( ItemState.Item_Dragging ) && !Item.IsEnabled( ItemState.Item_Swaping ) )
-                    return PointExt.ToVector2( ViewControl.Scroll.RootCenterPoint( ItemControl.Id ) ) + new Vector2( 0, ItemSettings.IdFrameSize.Y );
-                else if ( Item.IsEnabled( ItemState.Item_Swaping ) )
-                    return ViewControl.Swap.RootCenterPoint().ToVector2() + new Vector2( 0, ItemSettings.IdFrameSize.Y );
+                if (!Item.IsEnabled(ItemState.Item_Dragging) && !Item.IsEnabled(ItemState.Item_Swaping))
+                {
+                    return PointExt.ToVector2(ViewControl.Scroll.RootCenterPoint(ItemControl.Id)) + new Vector2(0, ItemSettings.IdFrameSize.Y);
+                }
+                else if (Item.IsEnabled(ItemState.Item_Swaping))
+                {
+                    return ViewControl.Swap.RootCenterPoint().ToVector2() + new Vector2(0, ItemSettings.IdFrameSize.Y);
+                }
                 else
-                    return RootFrame.Location.ToVector2(); 
+                {
+                    return RootFrame.Location.ToVector2();
+                }
             }
         }
 
         private Vector2 ProgressFrameLocation
         {
-            get { return ExperienceFrameLocation + new Vector2( ItemSettings.ExperienceFrameSize.X, 0 ); }
+            get { return ExperienceFrameLocation + new Vector2(ItemSettings.ExperienceFrameSize.X, 0); }
         }
 
         private Vector2 IdFrameLocation
         {
-            get { return NameFrameLocation + new Vector2( 0, -ItemSettings.IdFrameSize.Y ); }
+            get { return NameFrameLocation + new Vector2(0, -ItemSettings.IdFrameSize.Y); }
         }
 
         private Vector2 NameFrameLocation
@@ -81,7 +90,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
         private Vector2 ExperienceFrameLocation
         {
-            get { return IdFrameLocation + new Vector2( ItemSettings.IdFrameSize.X, 0 ); }
+            get { return IdFrameLocation + new Vector2(ItemSettings.IdFrameSize.X, 0); }
         }
     }
 }

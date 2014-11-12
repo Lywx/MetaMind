@@ -4,7 +4,7 @@ namespace MetaMind.Engine.Guis.Widgets
 {
     public interface IWidget
     {
-        void Draw( GameTime gameTime, byte alpha );
+        void Draw(GameTime gameTime, byte alpha);
 
         /// <summary>
         /// Trigger to update the input part of updating.
@@ -15,15 +15,15 @@ namespace MetaMind.Engine.Guis.Widgets
         /// Handles the input part of updating.
         /// </summary>
         /// <param name="gameTime">The game time.</param>
-        void UpdateInput( GameTime gameTime );
+        void UpdateInput(GameTime gameTime);
 
         /// <summary>
         /// Handles the structure part of updating.
         /// </summary>
         /// <param name="gameTime">The game time.</param>
-        void UpdateStructure( GameTime gameTime );
+        void UpdateStructure(GameTime gameTime);
 
-        void Update( GameTime gameTime );
+        void Update(GameTime gameTime);
     }
 
     public abstract class Widget : EngineObject, IWidget
@@ -63,7 +63,7 @@ namespace MetaMind.Engine.Guis.Widgets
 
         #region Update and Draw
 
-        public abstract void Draw( GameTime gameTime, byte alpha );
+        public abstract void Draw(GameTime gameTime, byte alpha);
 
         public virtual void HandleInput()
         {
@@ -71,28 +71,34 @@ namespace MetaMind.Engine.Guis.Widgets
             handlingInputCount = 0;
         }
 
-        public abstract void UpdateInput( GameTime gameTime );
+        public abstract void UpdateInput(GameTime gameTime);
 
-        public abstract void UpdateStructure( GameTime gameTime );
+        public abstract void UpdateStructure(GameTime gameTime);
 
-        public void Update( GameTime gameTime )
+        public void Update(GameTime gameTime)
         {
-            if ( !IsUpdating )
+            if (!IsUpdating)
+            {
                 return;
+            }
 
             ++handlingInputCount;
+
             // use this mechanism to make sure when HandleInput is used
             // Update method won't set the IsActive to false, which happens is cases
             // of not using HandleInput in GameScreen class.
-            if ( handlingInputCount > HandlingInputCountOut )
+            if (handlingInputCount > HandlingInputCountOut)
             {
                 IsHandlingInput = false;
                 handlingInputCount = 0;
             }
 
-            if ( IsHandlingInput )
-                UpdateInput( gameTime );
-            UpdateStructure( gameTime );
+            if (IsHandlingInput)
+            {
+                UpdateInput(gameTime);
+            }
+
+            UpdateStructure(gameTime);
         }
 
         #endregion Update and Draw

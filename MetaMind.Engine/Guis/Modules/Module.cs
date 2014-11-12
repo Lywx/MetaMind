@@ -5,11 +5,14 @@ namespace MetaMind.Engine.Guis.Modules
 {
     public interface IModule : IWidget
     {
-        IModuleControl  Control { get; }
+        IModuleControl Control { get; }
+
         IModuleGraphics Graphics { get; }
 
         void Load();
+
         void Reload();
+
         void Unload();
     }
 
@@ -23,33 +26,37 @@ namespace MetaMind.Engine.Guis.Modules
     /// </remarks>>
     public class Module<TModuleSettings> : Widget, IModule
     {
-        public IModuleControl  Control  { get; protected set; }
-        public IModuleGraphics Graphics { get; protected set; }
-        public TModuleSettings Settings { get; protected set; }
-
-        public Module( TModuleSettings settings )
+        protected Module(TModuleSettings settings)
         {
             Settings = settings;
         }
 
-        public override void Draw( GameTime gameTime, byte alpha )
+        public IModuleControl Control { get; protected set; }
+
+        public IModuleGraphics Graphics { get; protected set; }
+
+        public TModuleSettings Settings { get; protected set; }
+
+        public override void Draw(GameTime gameTime, byte alpha)
         {
-            Graphics.Draw( gameTime );
+            Graphics.Draw(gameTime);
         }
 
         public override void HandleInput()
         {
-            if ( Control != null )
+            if (Control != null)
             {
                 Control.HandleInput();
             }
+
             base.HandleInput();
         }
 
-        public virtual void Load() 
+        public virtual void Load()
         {
-            Control.Load(); 
+            Control.Load();
         }
+
         public virtual void Reload()
         {
             Control.Load();
@@ -60,15 +67,15 @@ namespace MetaMind.Engine.Guis.Modules
             Control.Unload();
         }
 
-        public override void UpdateInput( GameTime gameTime )
+        public override void UpdateInput(GameTime gameTime)
         {
-            Control.UpdateInput( gameTime );
+            Control.UpdateInput(gameTime);
         }
 
         public override void UpdateStructure( GameTime gameTime )
         {
-            Control .UpdateStructure( gameTime );
-            Graphics.Update( gameTime );
+            Control .UpdateStructure(gameTime);
+            Graphics.Update(gameTime);
         }
     }
 }

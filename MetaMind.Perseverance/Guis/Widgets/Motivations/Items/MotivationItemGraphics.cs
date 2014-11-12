@@ -21,26 +21,34 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
     {
         private readonly MotivationItemSymbolGraphics symbol;
 
+        private readonly MotivationItemTaskGraphics task;
+
         public MotivationItemGraphics(IViewItem item)
             : base(item)
         {
             this.symbol = new MotivationItemSymbolGraphics(item);
+            this.task   = new MotivationItemTaskGraphics(item);
         }
 
         private Vector2 NamePosition
         {
-            get
-            {
-                return ((Rectangle)this.ItemControl.RootFrame.Rectangle).Center.ToVector2() + new Vector2(0, 50);
-            }
+            get { return PointExt.ToVector2(ItemControl.RootFrame.Rectangle.Center) + new Vector2(0, 50); }
         }
 
         public override void Draw(GameTime gameTime, byte alpha)
         {
+            if (!ItemControl.Active)
+            {
+                return;
+            }
+
+            // main motivation item
             this.DrawSymbol(gameTime, alpha);
             this.DrawName(alpha);
             this.DrawId(alpha);
-            this.DrawTracer(gameTime, alpha);
+            
+            // sub task view
+            this.DrawTasks(gameTime, alpha);
         }
 
         public override void Update(GameTime gameTime)
@@ -88,12 +96,9 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             this.symbol.Draw(gameTime, alpha);
         }
 
-        private void DrawTracer(GameTime gameTime, byte alpha)
+        private void DrawTasks(GameTime gameTime, byte alpha)
         {
-            if (this.ItemControl.Tracer != null)
-            {
-                this.ItemControl.Tracer.Draw(gameTime, alpha);
-            }
+            this.task.Draw(gameTime, alpha);
         }
     }
 }

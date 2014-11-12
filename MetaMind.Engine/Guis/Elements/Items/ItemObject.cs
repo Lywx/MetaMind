@@ -7,12 +7,13 @@
 
 namespace MetaMind.Engine.Guis.Elements.Items
 {
-    using System;
-
     using Microsoft.Xna.Framework;
+    using System;
 
     public interface IItemObject
     {
+        bool[] States { get; }
+
         ICloneable ItemSettings { get; }
 
         void Disable(ItemState state);
@@ -39,6 +40,7 @@ namespace MetaMind.Engine.Guis.Elements.Items
         }
 
         public ICloneable ItemSettings { get; protected set; }
+
         public bool[] States
         {
             get

@@ -1,15 +1,23 @@
-using Microsoft.Xna.Framework;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="MotivationItemTaskControl.cs" company="UESTC">
+//   Copyright (c) 2014 Lin Wuxiang
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 {
     using MetaMind.Engine.Guis.Elements.Items;
+    using MetaMind.Engine.Guis.Elements.Regions;
     using MetaMind.Engine.Guis.Elements.ViewItems;
     using MetaMind.Engine.Guis.Elements.Views;
 
+    using Microsoft.Xna.Framework;
+
     public class MotivationItemTaskControl : ViewItemComponent
     {
-        public MotivationItemTaskControl( IViewItem item )
-            : base( item )
+        public MotivationItemTaskControl(IViewItem item)
+            : base(item)
         {
         }
 
@@ -17,40 +25,51 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 
         public void SelectIt()
         {
-            if ( TaskTracer == null )
+            if (this.TaskTracer == null)
             {
-                TaskTracer = new MotivationTaskTracer( ItemControl, new MotivationTaskTracerSettings() );
-                TaskTracer.Load();
+                this.TaskTracer = new MotivationTaskTracer(this.ItemControl, new MotivationTaskTracerSettings());
+                this.TaskTracer.Load();
             }
-            TaskTracer.Show();
+
+            this.TaskTracer.Show();
         }
 
         public bool UnselectIt()
         {
-            if ( TaskTracer == null )
+            if (this.TaskTracer == null)
             {
                 return true;
             }
-            if ( TaskTracer.View.IsEnabled( ViewState.View_Has_Focus ) )
-            {
-                TaskTracer.Close();
-            }
-            return true;
-        }
 
-        public void UpdateStructure( GameTime gameTime )
-        {
-            if ( TaskTracer != null ) 
+            if (this.TaskTracer.View.IsEnabled(ViewState.View_Has_Focus) && 
+                this.TaskTracer.View.Control.Region.IsEnabled(RegionState.Region_Hightlighted))
             {
-                TaskTracer.UpdateStructure( gameTime );
+                return false;
+            }
+            else
+            {
+                this.TaskTracer.Close();
+                return true;
             }
         }
 
-        public void UpdateInput( GameTime gameTime )
+        public void UpdateStructure(GameTime gameTime)
         {
-            if ( TaskTracer != null && Item.IsEnabled( ItemState.Item_Selected ) )
+            if (this.TaskTracer != null)
             {
-                TaskTracer.UpdateInput( gameTime );
+                this.TaskTracer.UpdateStructure(gameTime);
+                if (!this.TaskTracer.View.IsEnabled(ViewState.View_Has_Focus))
+                {
+                    this.TaskTracer.Close();
+                }
+            }
+        }
+
+        public void UpdateInput(GameTime gameTime)
+        {
+            if (this.TaskTracer != null )
+            {
+                this.TaskTracer.UpdateInput(gameTime);
             }
         }
     }

@@ -11,51 +11,75 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
     public class TaskItemControl : ViewItemControl2D
     {
-        public ItemEntryFrame NameFrame       { get { return ( ( TaskItemFrameControl ) ItemFrameControl ).NameFrame; } }
-        public ItemEntryFrame IdFrame         { get { return ( ( TaskItemFrameControl ) ItemFrameControl ).IdFrame; } }
-        public ItemEntryFrame ExperienceFrame { get { return ( ( TaskItemFrameControl ) ItemFrameControl ).ExperienceFrame; } }
-        public ItemEntryFrame ProgressFrame   { get { return ( ( TaskItemFrameControl ) ItemFrameControl ).ProgressFrame; } }
-
         #region Constructors
 
-        public TaskItemControl( IViewItem item )
-            : base( item )
+        public TaskItemControl(IViewItem item)
+            : base(item)
         {
-            ItemFrameControl = new TaskItemFrameControl( item );
-            ItemErrorControl = new TaskItemErrorControl( item );
+            this.ItemFrameControl = new TaskItemFrameControl(item);
+            this.ItemErrorControl = new TaskItemErrorControl(item);
         }
 
-        // TODO: not implemented 
+        public ItemEntryFrame ExperienceFrame { get { return ((TaskItemFrameControl)ItemFrameControl).ExperienceFrame; } }
+
+        public ItemEntryFrame IdFrame { get { return ((TaskItemFrameControl)ItemFrameControl).IdFrame; } }
+
+        public ItemEntryFrame NameFrame { get { return ((TaskItemFrameControl)ItemFrameControl).NameFrame; } }
+
+        public ItemEntryFrame ProgressFrame { get { return ((TaskItemFrameControl)ItemFrameControl).ProgressFrame; } }
+
+        // TODO: not implemented
         public TaskItemErrorControl ItemErrorControl { get; private set; }
 
-        public override void UpdateInput( GameTime gameTime )
+        public override void UpdateInput(GameTime gameTime)
         {
-            if ( Item.IsEnabled( ItemState.Item_Selected ) &&
-                !Item.IsEnabled( ItemState.Item_Editing ) )
+            // mouse
+            //-----------------------------------------------------------------
+            base.UpdateInput(gameTime);
+
+            // keyboard
+            //-----------------------------------------------------------------
+            if (AcceptInput)
             {
                 // normal status
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.TaskEditItem ) )
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskEditItem))
                 {
-                    View.Enable( ViewState.Item_Editting );
-                    Item.Enable( ItemState.Item_Pending );
+                    View.Enable(ViewState.Item_Editting);
+                    Item.Enable(ItemState.Item_Pending);
                 }
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.TaskDeleteItem ) )
-                    DeleteIt();
-                // in pending status
-                if ( Item.IsEnabled( ItemState.Item_Pending ) )
+
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskDeleteItem))
                 {
-                    if ( InputSequenceManager.Keyboard.IsKeyTriggered( Keys.N ) )
-                        ItemDataControl.EditString( "Name" );
-                    if ( InputSequenceManager.Keyboard.IsKeyTriggered( Keys.D ) )
-                        ItemDataControl.EditInt( "Done" );
-                    if ( InputSequenceManager.Keyboard.IsKeyTriggered( Keys.E ) )
-                        ItemDataControl.EditExperience( "Experience" );
-                    if ( InputSequenceManager.Keyboard.IsKeyTriggered( Keys.L ) )
-                        ItemDataControl.EditInt( "Load" );
-                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Escape ) )
+                    this.DeleteIt();
+                }
+
+                // in pending status
+                if (this.Item.IsEnabled(ItemState.Item_Pending))
+                {
+                    if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.N))
                     {
-                        View.Disable( ViewState.Item_Editting );
-                        Item.Disable( ItemState.Item_Pending );
+                        this.ItemDataControl.EditString("Name");
+                    }
+
+                    if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.D))
+                    {
+                        this.ItemDataControl.EditInt("Done");
+                    }
+
+                    if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.E))
+                    {
+                        this.ItemDataControl.EditExperience("Experience");
+                    }
+
+                    if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.L))
+                    {
+                        this.ItemDataControl.EditInt("Load");
+                    }
+
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
+                    {
+                        View.Disable(ViewState.Item_Editting);
+                        Item.Disable(ItemState.Item_Pending);
                     }
                 }
             }
@@ -64,9 +88,10 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
         private void DeleteIt()
         {
             // remove from gui
-            View.Items.Remove( Item );
+            View.Items.Remove(Item);
+
             // remove from data source
-            View.Control.ItemFactory.RemoveData( Item );
+            View.Control.ItemFactory.RemoveData(Item);
         }
 
         #endregion Constructors

@@ -13,84 +13,119 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 
     public class MotivationItemControl : ViewItemControl1D
     {
-        public MotivationItemControl( IViewItem item )
-            : base( item )
+        public MotivationItemControl(IViewItem item)
+            : base(item)
         {
-            ItemFrameControl  = new MotivationItemFrameControl( item );
-            
-            ItemSymbolControl = new MotivationItemSymbolControl( item );
-            ItemTaskControl   = new MotivationItemTaskControl( item );
+            ItemFrameControl = new MotivationItemFrameControl(item);
+
+            ItemSymbolControl = new MotivationItemSymbolControl(item);
+            ItemTaskControl   = new MotivationItemTaskControl(item);
         }
 
         public MotivationItemTaskControl ItemTaskControl { get; set; }
 
-        public IPickableFrame SymbolFrame { get { return ItemFrameControl.SymbolFrame; } }
-        public IModule        Tracer      { get { return ItemTaskControl.TaskTracer; } }
+        public IPickableFrame SymbolFrame
+        {
+            get { return ItemFrameControl.SymbolFrame; }
+        }
+
+        public IModule Tracer
+        {
+            get { return ItemTaskControl.TaskTracer; }
+        }
 
         private MotivationItemSymbolControl ItemSymbolControl { get; set; }
+
+        #region Operations
+
+        public override void CommonSelectIt()
+        {
+            ItemTaskControl.SelectIt();
+        }
+
+        public override void CommonUnselectIt()
+        {
+            ItemTaskControl.UnselectIt();
+        }
 
         public void DeleteIt()
         {
             // remove from gui
-            View.Items.Remove( Item );
+            View.Items.Remove(Item);
+
             // remove from data source
-            View.Control.ItemFactory.RemoveData( Item );
+            View.Control.ItemFactory.RemoveData(Item);
         }
 
-        public override void SelectIt()
-        {
-            base           .SelectIt();
-            ItemTaskControl.SelectIt();
-        }
 
-        public override void UnselectIt()
+        #endregion
+
+        #region Update
+
+        public bool Locked
         {
-            if ( ItemTaskControl.UnselectIt() )
+            get
             {
-                base.UnselectIt();
+                return Item.IsEnabled(ItemState.Item_Editing) || 
+                       Item.IsEnabled(ItemState.Item_Pending);
             }
         }
 
-        public override void UpdateInput( GameTime gameTime )
+        public override void UpdateInput(GameTime gameTime)
         {
             // mouse
             //-----------------------------------------------------------------
-            ItemFrameControl .UpdateInput( gameTime );
+            base.UpdateInput(gameTime);
 
             // keyboard
             //-----------------------------------------------------------------
-            if ( Item.IsEnabled( ItemState.Item_Selected ) &&
-                !Item.IsEnabled( ItemState.Item_Editing ) )
+            if (AcceptInput)
             {
                 // normal status
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.MotivationEditItem ) )
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.MotivationEditItem))
                 {
-                    View.Enable( ViewState.Item_Editting );
-                    Item.Enable( ItemState.Item_Pending );
+                    View.Enable(ViewState.Item_Editting);
+                    Item.Enable(ItemState.Item_Pending);
                 }
-                if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.MotivationDeleteItem ) )
-                    DeleteIt();
-                // in pending status
-                if ( Item.IsEnabled( ItemState.Item_Pending ) )
+
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.MotivationDeleteItem))
                 {
-                    if ( InputSequenceManager.Keyboard.IsKeyTriggered( Keys.N ) )
-                        ItemDataControl.EditString( "Name" );
-                    if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.Escape ) )
+                    this.DeleteIt();
+                }
+
+                // in pending status
+                if (Item.IsEnabled(ItemState.Item_Pending))
+                {
+                    if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.N))
                     {
-                        View.Disable( ViewState.Item_Editting );
-                        Item.Disable( ItemState.Item_Pending );
+                        this.ItemDataControl.EditString("Name");
+                    }
+
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
+                    {
+                        View.Disable(ViewState.Item_Editting);
+                        Item.Disable(ItemState.Item_Pending);
                     }
                 }
+
+                this.ItemSymbolControl.UpdateInput(gameTime);
             }
-            ItemSymbolControl.UpdateInput( gameTime );
-            ItemTaskControl  .UpdateInput( gameTime );
+
+            if (!Locked)
+            {
+                // should be outside of the accepting input state
+                // task view is paralled with item input
+                this.ItemTaskControl.UpdateInput(gameTime);
+            }
         }
 
-        public override void UpdateStructure( GameTime gameTime )
+        public override void UpdateStructure(GameTime gameTime)
         {
-            base             .UpdateStructure( gameTime );
-            ItemSymbolControl.UpdateStructure( gameTime );
-            ItemTaskControl  .UpdateStructure( gameTime );
+            base                  .UpdateStructure(gameTime);
+            this.ItemSymbolControl.UpdateStructure(gameTime);
+            this.ItemTaskControl  .UpdateStructure(gameTime);
         }
+
+        #endregion
     }
 }

@@ -18,10 +18,12 @@ namespace MetaMind.Engine.Guis.Elements.Frames
             get { return rectangle; }
             set
             {
-                var deltaLocation = rectangle.Location.DistanceFrom( value.Location );
+                var deltaLocation = rectangle.Location.DistanceFrom(value.Location);
                 var rectanleMoved = deltaLocation.Length() > 0f;
-                if ( rectanleMoved && FrameMoved != null )
-                    FrameMoved( this, new FrameEventArgs( FrameEventType.Frame_Moved ) );
+                if (rectanleMoved && FrameMoved != null)
+                {
+                    FrameMoved(this, new FrameEventArgs(FrameEventType.Frame_Moved));
+                }
 
                 rectangle = value;
             }
@@ -29,10 +31,10 @@ namespace MetaMind.Engine.Guis.Elements.Frames
 
         #region Constructors
 
-        public PressableFrame( Rectangle rectangle )
+        public PressableFrame(Rectangle rectangle)
             : this()
         {
-            Initialize( rectangle );
+            Initialize(rectangle);
         }
 
         protected PressableFrame()
@@ -48,20 +50,20 @@ namespace MetaMind.Engine.Guis.Elements.Frames
             FrameMoved += DetectMouseOver;
 
             // dummy intialization
-            Initialize( new Rectangle() );
+            Initialize(new Rectangle());
         }
 
-        protected void Initialize( Rectangle rectangle )
+        protected void Initialize(Rectangle rectangle)
         {
             this.rectangle = rectangle;
 
-            Enable( FrameState.Frame_Initialized );
-            Enable( FrameState.Frame_Active );
+            Enable(FrameState.Frame_Initialized);
+            Enable(FrameState.Frame_Active);
         }
 
-        protected void Initialize( Point center, Point size )
+        protected void Initialize(Point center, Point size)
         {
-            Initialize( center.PinRectangleCenter( size ) );
+            Initialize(center.PinRectangleCenter(size));
         }
 
         #endregion Constructors
@@ -71,43 +73,43 @@ namespace MetaMind.Engine.Guis.Elements.Frames
         public int Height
         {
             get { return Rectangle.Height; }
-            set { Rectangle = new Rectangle( Rectangle.X, Rectangle.Y, Rectangle.Width, value ); }
+            set { Rectangle = new Rectangle(Rectangle.X, Rectangle.Y, Rectangle.Width, value); }
         }
 
         public int Width
         {
             get { return Rectangle.Width; }
-            set { Rectangle = new Rectangle( Rectangle.X, Rectangle.Y, value, Rectangle.Height ); }
+            set { Rectangle = new Rectangle(Rectangle.X, Rectangle.Y, value, Rectangle.Height); }
         }
 
         public int X
         {
             get { return Rectangle.X; }
-            set { Rectangle = new Rectangle( value, Rectangle.Y, Rectangle.Width, Rectangle.Height ); }
+            set { Rectangle = new Rectangle(value, Rectangle.Y, Rectangle.Width, Rectangle.Height); }
         }
 
         public int Y
         {
             get { return Rectangle.Y; }
-            set { Rectangle = new Rectangle( Rectangle.X, value, Rectangle.Width, Rectangle.Height ); }
+            set { Rectangle = new Rectangle(Rectangle.X, value, Rectangle.Width, Rectangle.Height); }
         }
 
         public Point Center
         {
             get { return Rectangle.Center; }
-            set { Initialize( value, Size ); }
+            set { Initialize(value, Size); }
         }
 
         public Point Size
         {
-            get { return new Point( Rectangle.Width, Rectangle.Height ); }
-            set { Initialize( Center, value ); }
+            get { return new Point(Rectangle.Width, Rectangle.Height); }
+            set { Initialize(Center, value); }
         }
 
         public Point Location
         {
             get { return Rectangle.Location; }
-            set { Initialize( new Rectangle( value.X, value.Y, Rectangle.Width, Rectangle.Height ) ); }
+            set { Initialize(new Rectangle(value.X, value.Y, Rectangle.Width, Rectangle.Height)); }
         }
 
         #endregion Public Properties
@@ -132,113 +134,119 @@ namespace MetaMind.Engine.Guis.Elements.Frames
 
         public event EventHandler<FrameEventArgs> FrameMoved;
 
-        protected virtual void DetectMouseLeftPressed( object sender, MouseEventArgs e )
+        protected virtual void DetectMouseLeftPressed(object sender, MouseEventArgs e)
         {
-            if ( IsEnabled( FrameState.Mouse_Over ) && MouseLeftPress( e ) )
+            if (this.IsEnabled(FrameState.Mouse_Over) && this.MouseLeftPress(e))
             {
-                Disable( FrameState.Mouse_Left_Released );
-                Disable( FrameState.Mouse_Right_Pressed );
-                Disable( FrameState.Mouse_Right_Released );
+                this.Disable(FrameState.Mouse_Left_Released);
+                this.Disable(FrameState.Mouse_Right_Pressed);
+                this.Disable(FrameState.Mouse_Right_Released);
 
-                Enable( FrameState.Mouse_Left_Pressed );
-                if ( MouseLeftPressed != null )
-                    MouseLeftPressed( this, new FrameEventArgs( FrameEventType.Mouse_Left_Pressed ) );
-            }
-            else if ( !IsEnabled( FrameState.Mouse_Over ) && MouseLeftPress( e ) )
-            {
-                Disable( FrameState.Mouse_Left_Pressed );
-            }
-        }
-
-        protected virtual void DetectMouseLeftRelease( object sender, MouseEventArgs e )
-        {
-            if ( IsEnabled( FrameState.Mouse_Over ) && IsEnabled( FrameState.Mouse_Left_Pressed ) )
-            {
-                Disable( FrameState.Mouse_Left_Pressed );
-
-                Enable( FrameState.Mouse_Left_Released );
-                if ( MouseLeftReleased != null )
-                    MouseLeftReleased( this, new FrameEventArgs( FrameEventType.Mouse_Left_Released ) );
-            }
-            else
-            {
-                Disable( FrameState.Mouse_Left_Released );
-                Disable( FrameState.Mouse_Left_Dragged_Out );
-            }
-        }
-
-        private void DetectMouseOver( object sender, MouseEventArgs e )
-        {
-            var previouslyInside = IsEnabled( FrameState.Mouse_Over );
-            var currentlyInside = MouseInside( e.Location );
-
-            UpdateStates( e.Location );
-
-            if ( !previouslyInside && currentlyInside &&
-                MouseEnter != null )
-                MouseEnter( this, new FrameEventArgs( FrameEventType.Mouse_Enter ) );
-            else if ( previouslyInside && !currentlyInside &&
-                MouseLeave != null )
-                MouseLeave( this, new FrameEventArgs( FrameEventType.Mouse_Leave ) );
-        }
-
-        private void DetectMouseOver( object sender, EventArgs e )
-        {
-            var mouse = InputSequenceManager.Mouse.CurrentState;
-            DetectMouseOver( null, new MouseEventArgs( MouseButton.None, 0, mouse.X, mouse.Y, 0 ) );
-        }
-
-        protected virtual void DetectMouseRightPressed( object sender, MouseEventArgs e )
-        {
-            if ( IsEnabled( FrameState.Mouse_Over ) && MouseRightPress( e ) )
-            {
-                Disable( FrameState.Mouse_Right_Released );
-                Disable( FrameState.Mouse_Left_Pressed );
-                Disable( FrameState.Mouse_Left_Released );
-
-                Enable( FrameState.Mouse_Right_Pressed );
-                if ( MouseRightPressed != null )
-                    MouseRightPressed( this, new FrameEventArgs( FrameEventType.Mouse_Right_Pressed ) );
-            }
-            else if ( !IsEnabled( FrameState.Mouse_Over ) && MouseRightPress( e ) )
-            {
-                Disable( FrameState.Mouse_Right_Pressed );
-            }
-        }
-
-        protected virtual void DetectMouseRightRelease( object sender, MouseEventArgs e )
-        {
-            if ( IsEnabled( FrameState.Mouse_Over ) && IsEnabled( FrameState.Mouse_Right_Pressed ) )
-            {
-                Disable( FrameState.Mouse_Right_Pressed );
-
-                Enable( FrameState.Mouse_Right_Released );
-                if ( MouseRightReleased != null )
+                this.Enable(FrameState.Mouse_Left_Pressed);
+                if (this.MouseLeftPressed != null)
                 {
-                    MouseRightReleased( this, new FrameEventArgs( FrameEventType.Mouse_Right_Released ) );
+                    this.MouseLeftPressed(this, new FrameEventArgs(FrameEventType.Mouse_Left_Pressed));
+                }
+            }
+            else if (!this.IsEnabled(FrameState.Mouse_Over) && this.MouseLeftPress(e))
+            {
+                this.Disable(FrameState.Mouse_Left_Pressed);
+            }
+        }
+
+        protected virtual void DetectMouseLeftRelease(object sender, MouseEventArgs e)
+        {
+            if (this.IsEnabled(FrameState.Mouse_Over) && this.IsEnabled(FrameState.Mouse_Left_Pressed))
+            {
+                this.Disable(FrameState.Mouse_Left_Pressed);
+
+                this.Enable(FrameState.Mouse_Left_Released);
+                if (this.MouseLeftReleased != null)
+                {
+                    this.MouseLeftReleased(this, new FrameEventArgs(FrameEventType.Mouse_Left_Released));
                 }
             }
             else
             {
-                Disable( FrameState.Mouse_Right_Released );
-                Disable( FrameState.Mouse_Right_Dragged_Out );
+                this.Disable(FrameState.Mouse_Left_Released);
+                this.Disable(FrameState.Mouse_Left_Dragged_Out);
             }
         }
 
-        protected bool MouseInside( Point mouseLocation )
+        private void DetectMouseOver(object sender, MouseEventArgs e)
         {
-            Debug.Assert( IsEnabled( FrameState.Frame_Initialized ) );
-            Debug.Assert( rectangle != null );
+            var previouslyInside = this.IsEnabled(FrameState.Mouse_Over);
+            var currentlyInside = this.MouseInside(e.Location);
 
-            return IsEnabled( FrameState.Frame_Active ) && rectangle.Contains( mouseLocation );
+            this.UpdateStates(e.Location);
+
+            if (!previouslyInside && currentlyInside && this.MouseEnter != null)
+            {
+                this.MouseEnter(this, new FrameEventArgs(FrameEventType.Mouse_Enter));
+            }
+            else if (previouslyInside && !currentlyInside && this.MouseLeave != null)
+            {
+                this.MouseLeave(this, new FrameEventArgs(FrameEventType.Mouse_Leave));
+            }
         }
 
-        protected bool MouseLeftPress( MouseEventArgs e )
+        private void DetectMouseOver(object sender, EventArgs e)
+        {
+            var mouse = InputSequenceManager.Mouse.CurrentState;
+            this.DetectMouseOver(null, new MouseEventArgs(MouseButton.None, 0, mouse.X, mouse.Y, 0));
+        }
+
+        protected virtual void DetectMouseRightPressed(object sender, MouseEventArgs e)
+        {
+            if (this.IsEnabled(FrameState.Mouse_Over) && this.MouseRightPress(e))
+            {
+                this.Disable(FrameState.Mouse_Right_Released);
+                this.Disable(FrameState.Mouse_Left_Pressed);
+                this.Disable(FrameState.Mouse_Left_Released);
+
+                this.Enable(FrameState.Mouse_Right_Pressed);
+                if (this.MouseRightPressed != null)
+                    this.MouseRightPressed(this, new FrameEventArgs(FrameEventType.Mouse_Right_Pressed));
+            }
+            else if (!this.IsEnabled(FrameState.Mouse_Over) && this.MouseRightPress(e))
+            {
+                this.Disable(FrameState.Mouse_Right_Pressed);
+            }
+        }
+
+        protected virtual void DetectMouseRightRelease(object sender, MouseEventArgs e)
+        {
+            if (this.IsEnabled(FrameState.Mouse_Over) && this.IsEnabled(FrameState.Mouse_Right_Pressed))
+            {
+                this.Disable(FrameState.Mouse_Right_Pressed);
+
+                this.Enable(FrameState.Mouse_Right_Released);
+                if (this.MouseRightReleased != null)
+                {
+                    this.MouseRightReleased(this, new FrameEventArgs(FrameEventType.Mouse_Right_Released));
+                }
+            }
+            else
+            {
+                this.Disable(FrameState.Mouse_Right_Released);
+                this.Disable(FrameState.Mouse_Right_Dragged_Out);
+            }
+        }
+
+        protected bool MouseInside(Point mouseLocation)
+        {
+            Debug.Assert(this.IsEnabled(FrameState.Frame_Initialized));
+            Debug.Assert(this.rectangle != null);
+
+            return this.IsEnabled(FrameState.Frame_Active) && this.rectangle.Contains(mouseLocation);
+        }
+
+        protected bool MouseLeftPress(MouseEventArgs e)
         {
             return e.Button == MouseButton.Left;
         }
 
-        protected bool MouseRightPress( MouseEventArgs e )
+        protected bool MouseRightPress(MouseEventArgs e)
         {
             return e.Button == MouseButton.Right;
         }
@@ -247,52 +255,52 @@ namespace MetaMind.Engine.Guis.Elements.Frames
 
         #region Update
 
-        public virtual void UpdateInput( GameTime gameTime )
+        public virtual void UpdateInput(GameTime gameTime)
         {
             var mouse         = InputSequenceManager.Mouse.CurrentState;
-            var mouseLocation = new Point( mouse.X, mouse.Y );
+            var mouseLocation = new Point(mouse.X, mouse.Y);
 
-            UpdateStates( mouseLocation );
+            this.UpdateStates(mouseLocation);
         }
 
-        protected virtual void UpdateStates( Point mouseLocation )
+        protected virtual void UpdateStates(Point mouseLocation)
         {
-            if ( MouseInside( mouseLocation ) )
+            if (this.MouseInside(mouseLocation))
             {
-                Enable( FrameState.Mouse_Over );
+                this.Enable(FrameState.Mouse_Over);
             }
 
-            if ( !MouseInside( mouseLocation ) && IsEnabled( FrameState.Mouse_Left_Pressed ) )
+            if (!this.MouseInside(mouseLocation) && this.IsEnabled(FrameState.Mouse_Left_Pressed))
             {
                 // non-applicable for draggable frame
-                if ( !IsEnabled( FrameState.Frame_Dragging ) && !IsEnabled( FrameState.Frame_Holding ) )
+                if (!this.IsEnabled(FrameState.Frame_Dragging) && !this.IsEnabled(FrameState.Frame_Holding))
                 {
-                    Disable( FrameState.Mouse_Left_Pressed );
-                    Enable( FrameState.Mouse_Left_Dragged_Out );
-                    if ( MouseLeftDraggedOutside != null )
-                        MouseLeftDraggedOutside( this, new FrameEventArgs( FrameEventType.Mouse_Left_Dragged_Out ) );
+                    this.Disable(FrameState.Mouse_Left_Pressed);
+                    this.Enable(FrameState.Mouse_Left_Dragged_Out);
+                    if (this.MouseLeftDraggedOutside != null)
+                        this.MouseLeftDraggedOutside(this, new FrameEventArgs(FrameEventType.Mouse_Left_Dragged_Out));
                 }
             }
 
-            if ( !MouseInside( mouseLocation ) && IsEnabled( FrameState.Mouse_Right_Pressed ) )
+            if (!this.MouseInside(mouseLocation) && this.IsEnabled(FrameState.Mouse_Right_Pressed))
             {
                 // non-applicable for draggable frame
-                if ( !IsEnabled( FrameState.Frame_Dragging ) && !IsEnabled( FrameState.Frame_Holding ) )
+                if (!this.IsEnabled(FrameState.Frame_Dragging) && !this.IsEnabled(FrameState.Frame_Holding))
                 {
-                    Disable( FrameState.Mouse_Right_Pressed );
-                    Enable( FrameState.Mouse_Right_Dragged_Out );
-                    if ( MouseRightDraggedOutside != null )
-                        MouseRightDraggedOutside( this, new FrameEventArgs( FrameEventType.Mouse_Right_Dragged_Out ) );
+                    this.Disable(FrameState.Mouse_Right_Pressed);
+                    this.Enable(FrameState.Mouse_Right_Dragged_Out);
+                    if (this.MouseRightDraggedOutside != null)
+                        this.MouseRightDraggedOutside(this, new FrameEventArgs(FrameEventType.Mouse_Right_Dragged_Out));
                 }
             }
 
-            if ( !MouseInside( mouseLocation ) && !IsEnabled( FrameState.Mouse_Left_Pressed ) && !IsEnabled( FrameState.Mouse_Right_Pressed ) )
+            if (!this.MouseInside(mouseLocation) && !this.IsEnabled(FrameState.Mouse_Left_Pressed) && !this.IsEnabled(FrameState.Mouse_Right_Pressed))
             {
-                Disable( FrameState.Mouse_Over );
-                Disable( FrameState.Mouse_Left_Pressed );
-                Disable( FrameState.Mouse_Left_Released );
-                Disable( FrameState.Mouse_Right_Pressed );
-                Disable( FrameState.Mouse_Right_Released );
+                this.Disable(FrameState.Mouse_Over);
+                this.Disable(FrameState.Mouse_Left_Pressed);
+                this.Disable(FrameState.Mouse_Left_Released);
+                this.Disable(FrameState.Mouse_Right_Pressed);
+                this.Disable(FrameState.Mouse_Right_Released);
             }
         }
 

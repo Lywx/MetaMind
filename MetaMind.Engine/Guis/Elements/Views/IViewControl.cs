@@ -13,6 +13,6 @@
 
         void UpdateInput( GameTime gameTime );
 
-        void UpdateStrucutre( GameTime gameTime );
+        void UpdateStructure( GameTime gameTime );
     }
 }

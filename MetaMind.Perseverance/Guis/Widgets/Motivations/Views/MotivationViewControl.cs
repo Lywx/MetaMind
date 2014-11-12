@@ -36,10 +36,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
         /// <param name="itemSettings">
         /// The item settings.
         /// </param>
-        public MotivationViewControl(
-            IView view, 
-            MotivationViewSettings viewSettings, 
-            MotivationItemSettings itemSettings)
+        public MotivationViewControl(IView view, MotivationViewSettings viewSettings, MotivationItemSettings itemSettings)
             : base(view, viewSettings, itemSettings)
         {
             this.Region = new ViewRegion(view, viewSettings, itemSettings, this.RegionPositioning);
@@ -169,9 +166,9 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
         /// <param name="gameTime">
         /// The game time.
         /// </param>
-        public override void UpdateStrucutre(GameTime gameTime)
+        public override void UpdateStructure(GameTime gameTime)
         {
-            base.UpdateStrucutre(gameTime);
+            base.UpdateStructure(gameTime);
             this.Region.UpdateStructure(gameTime);
         }
 

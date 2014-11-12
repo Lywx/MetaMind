@@ -9,9 +9,8 @@
         private int scroll;
 
         public ViewScrollControl1D(IView view, ViewSettings1D viewSettings, ItemSettings itemSettings)
-            : base( view, viewSettings, itemSettings )
+            : base(view, viewSettings, itemSettings)
         {
-
         }
 
         public int XOffset { get { return this.scroll; } }
@@ -23,22 +22,22 @@
 
         private bool CanMoveRight
         {
-            get { return ( this.ViewSettings.ColumnNumDisplay + this.scroll ) < this.View.Items.Count; }
+            get { return (ViewSettings.ColumnNumDisplay + this.scroll) < View.Items.Count; }
         }
 
-        public bool CanDisplay( int id )
+        public bool CanDisplay(int id)
         {
-            return this.scroll <= id && id < this.ViewSettings.ColumnNumDisplay + this.scroll;
+            return this.scroll <= id && id < ViewSettings.ColumnNumDisplay + this.scroll;
         }
 
-        public bool IsLeftToDisplay( int column )
+        public bool IsLeftToDisplay(int column)
         {
             return column < this.scroll - 1;
         }
 
-        public bool IsRightToDisplay( int column )
+        public bool IsRightToDisplay(int column)
         {
-            return column > this.ViewSettings.ColumnNumDisplay + this.scroll;
+            return column > ViewSettings.ColumnNumDisplay + this.scroll;
         }
 
         public void MoveLeft()
@@ -57,13 +56,13 @@
             }
         }
 
-        public Point RootCenterPoint( int id )
+        public Point RootCenterPoint(int id)
         {
             return new Point(
-                this.ViewSettings.Direction == ViewSettings1D.ScrollDirection.Right ?
-                this.ViewSettings.StartPoint.X - (this.scroll * this.ViewSettings.RootMargin.X) + id * this.ViewSettings.RootMargin.X :
-                this.ViewSettings.StartPoint.X + (this.scroll * this.ViewSettings.RootMargin.X) - id * this.ViewSettings.RootMargin.X,
-                this.ViewSettings.StartPoint.Y);
+                ViewSettings.Direction == ViewSettings1D.ScrollDirection.Right ?
+                ViewSettings.StartPoint.X - (this.scroll * ViewSettings.RootMargin.X) + id * ViewSettings.RootMargin.X :
+                ViewSettings.StartPoint.X + (this.scroll * ViewSettings.RootMargin.X) - id * ViewSettings.RootMargin.X,
+                ViewSettings.StartPoint.Y);
         }
     }
 }
