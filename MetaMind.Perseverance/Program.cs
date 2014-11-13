@@ -18,9 +18,9 @@ namespace MetaMind.Perseverance
         [STAThread]
         static void Main()
         {
-            using ( var engine = new Engine.GameEngine() )
+            using (var engine = new Engine.GameEngine())
             {
-                var runner = new Perseverance( engine );
+                var runner = new Perseverance(engine);
                 runner.Run();
             }
         }
