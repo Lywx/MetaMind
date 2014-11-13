@@ -109,16 +109,14 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
         {
             FontManager.DrawCenteredText(
                 ItemSettings.IdFont,
-                string.Format("Hs: {0}", ItemData.Experience.Duration.TotalSeconds.ToString("F0")),
+                string.Format(
+                    "{0} : {1} : {2}",
+                    ItemData.Experience.Duration.TotalHours.ToString("F0"),
+                    ItemData.Experience.Duration.Minutes.ToString(),
+                    ItemData.Experience.Duration.Seconds.ToString()),
                 ExperienceCenter,
                 ColorExt.MakeTransparent(ItemSettings.ExperienceColor, alpha),
                 ItemSettings.ExperienceSize);
-            //FontManager.DrawCenteredText(
-            //    ItemSettings.IdFont,
-            //    string.Format("Hs: {0}", ItemData.Experience.Duration.TotalHours.ToString("F0")),
-            //    ExperienceCenter,
-            //    ColorExt.MakeTransparent(ItemSettings.ExperienceColor, alpha),
-            //    ItemSettings.ExperienceSize);
         }
 
         private void DrawExperienceFrame(byte alpha)
