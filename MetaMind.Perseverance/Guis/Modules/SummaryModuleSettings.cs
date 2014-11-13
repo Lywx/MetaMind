@@ -22,12 +22,12 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         public int   LoftyProfessionHour = 4;
 
-        public Consciousness Consciousness
+        public IConsciousness Consciousness
         {
             get { return Perseverance.Adventure.Cognition.Consciousness; }
         }
 
-        public Synchronization Synchronization
+        public ISynchronization Synchronization
         {
             get { return Perseverance.Adventure.Cognition.Synchronization; }
         }

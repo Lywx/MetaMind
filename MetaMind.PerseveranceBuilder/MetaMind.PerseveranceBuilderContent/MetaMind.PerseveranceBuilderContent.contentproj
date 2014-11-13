@@ -62,7 +62,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Textures\Screens\Gradient\" />
+    <Compile Include="Audio\Audio.xap">
+      <Name>Audio</Name>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Audio\Wav\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--

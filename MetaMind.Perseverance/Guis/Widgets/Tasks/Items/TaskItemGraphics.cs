@@ -62,19 +62,17 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
                 rectangle.X - thick,
                 rectangle.Y - thick,
                 rectangle.Width + thick * 2,
-                rectangle.Height + thick * 2
-                );
+                rectangle.Height + thick * 2);
         }
 
         private Rectangle SinwaveHighlight(GameTime gameTime, int flashLength, Rectangle rectangle)
         {
-            var thick = (int)(flashLength * Math.Abs(Math.Sin(gameTime.TotalGameTime.TotalSeconds * 30)));
+            var thick = (int)(flashLength * Math.Abs(Math.Sin(gameTime.TotalGameTime.TotalSeconds * 2)));
             return new Rectangle(
                 rectangle.X - thick,
                 rectangle.Y - thick,
                 rectangle.Width + thick * 2,
-                rectangle.Height + thick * 2
-                );
+                rectangle.Height + thick * 2);
         }
 
         #endregion Structure Position
@@ -104,32 +102,55 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
             DrawExperience(alpha);
             DrawProgressFrame(alpha);
             DrawProgress(alpha);
-            //DrawSynchronization( gameTime );
+            DrawSynchronization(gameTime, alpha);
         }
 
         private void DrawExperience(byte alpha)
         {
-            FontManager.DrawCenteredText(ItemSettings.IdFont, string.Format("Hs: {0}", ItemData.Experience.Duration.TotalHours.ToString("F0")), ExperienceCenter, ColorExt.MakeTransparent(ItemSettings.ExperienceColor, alpha), ItemSettings.ExperienceSize);
+            FontManager.DrawCenteredText(
+                ItemSettings.IdFont,
+                string.Format("Hs: {0}", ItemData.Experience.Duration.TotalSeconds.ToString("F0")),
+                ExperienceCenter,
+                ColorExt.MakeTransparent(ItemSettings.ExperienceColor, alpha),
+                ItemSettings.ExperienceSize);
+            //FontManager.DrawCenteredText(
+            //    ItemSettings.IdFont,
+            //    string.Format("Hs: {0}", ItemData.Experience.Duration.TotalHours.ToString("F0")),
+            //    ExperienceCenter,
+            //    ColorExt.MakeTransparent(ItemSettings.ExperienceColor, alpha),
+            //    ItemSettings.ExperienceSize);
         }
 
         private void DrawExperienceFrame(byte alpha)
         {
-            Primitives2D.FillRectangle(ScreenManager.SpriteBatch, RectangleExt.Crop(ItemControl.ExperienceFrame.Rectangle, ItemSettings.ExperienceFrameMargin), ColorExt.MakeTransparent(ItemSettings.ExperienceFrameColor, alpha));
+            Primitives2D.FillRectangle(
+                ScreenManager.SpriteBatch,
+                RectangleExt.Crop(ItemControl.ExperienceFrame.Rectangle, ItemSettings.ExperienceFrameMargin),
+                ColorExt.MakeTransparent(ItemSettings.ExperienceFrameColor, alpha));
         }
 
         private void DrawIdFrame(byte alpha)
         {
             if (Item.IsEnabled(ItemState.Item_Pending))
             {
-                Primitives2D.FillRectangle(ScreenManager.SpriteBatch, RectangleExt.Crop(ItemControl.IdFrame.Rectangle, ItemSettings.IdFrameMargin), ColorExt.MakeTransparent(ItemSettings.IdFramePendingColor, alpha));
+                Primitives2D.FillRectangle(
+                    ScreenManager.SpriteBatch,
+                    RectangleExt.Crop(ItemControl.IdFrame.Rectangle, ItemSettings.IdFrameMargin),
+                    ColorExt.MakeTransparent(ItemSettings.IdFramePendingColor, alpha));
             }
             else if (!ItemData.Rationalized)
             {
-                Primitives2D.FillRectangle(ScreenManager.SpriteBatch, RectangleExt.Crop(ItemControl.IdFrame.Rectangle, ItemSettings.IdFrameMargin), ColorExt.MakeTransparent(ItemSettings.IdFrameNotDocumentedColor, alpha));
+                Primitives2D.FillRectangle(
+                    ScreenManager.SpriteBatch,
+                    RectangleExt.Crop(ItemControl.IdFrame.Rectangle, ItemSettings.IdFrameMargin),
+                    ColorExt.MakeTransparent(ItemSettings.IdFrameNotDocumentedColor, alpha));
             }
             else
             {
-                Primitives2D.FillRectangle(ScreenManager.SpriteBatch, RectangleExt.Crop(ItemControl.IdFrame.Rectangle, ItemSettings.IdFrameMargin), ColorExt.MakeTransparent(ItemSettings.IdFrameColor, alpha));
+                Primitives2D.FillRectangle(
+                    ScreenManager.SpriteBatch,
+                    RectangleExt.Crop(ItemControl.IdFrame.Rectangle, ItemSettings.IdFrameMargin),
+                    ColorExt.MakeTransparent(ItemSettings.IdFrameColor, alpha));
             }
         }
 
@@ -137,31 +158,45 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
         {
             if (Item.IsEnabled(ItemState.Item_Pending))
             {
-                FontManager.DrawText(ItemSettings.HelpFont, HelpInformation, HelpLocation, ColorExt.MakeTransparent(ItemSettings.HelpColor, alpha), ItemSettings.HelpSize);
+                FontManager.DrawText(
+                    ItemSettings.HelpFont,
+                    HelpInformation,
+                    HelpLocation,
+                    ColorExt.MakeTransparent(ItemSettings.HelpColor, alpha),
+                    ItemSettings.HelpSize);
             }
             else
             {
-                FontManager.DrawText(ItemSettings.NameFont, ItemData.Name, NameLocation, ColorExt.MakeTransparent(ItemSettings.NameColor, alpha), ItemSettings.NameSize);
+                FontManager.DrawText(
+                    ItemSettings.NameFont,
+                    ItemData.Name,
+                    NameLocation,
+                    ColorExt.MakeTransparent(ItemSettings.NameColor, alpha),
+                    ItemSettings.NameSize);
             }
         }
 
         private void DrawNameFrame(byte alpha)
         {
-            if (Item.IsEnabled(ItemState.Item_Mouse_Over) && Item.IsEnabled(ItemState.Item_Editing))
+            if (Item.IsEnabled(ItemState.Item_Mouse_Over) && 
+                Item.IsEnabled(ItemState.Item_Editing))
             {
                 FillNameFrameWith(ItemSettings.NameFrameModificationColor);
                 DrawNameFrameWith(ItemSettings.NameFrameMouseOverColor);
             }
-            else if (!Item.IsEnabled(ItemState.Item_Mouse_Over) && Item.IsEnabled(ItemState.Item_Editing))
+            else if (!Item.IsEnabled(ItemState.Item_Mouse_Over) && 
+                      Item.IsEnabled(ItemState.Item_Editing))
             {
                 FillNameFrameWith(ItemSettings.NameFrameModificationColor);
             }
-            else if (Item.IsEnabled(ItemState.Item_Mouse_Over) && Item.IsEnabled(ItemState.Item_Selected))
+            else if (Item.IsEnabled(ItemState.Item_Mouse_Over) && 
+                     Item.IsEnabled(ItemState.Item_Selected))
             {
                 FillNameFrameWith(ItemSettings.NameFrameSelectionColor);
                 DrawNameFrameWith(ItemSettings.NameFrameMouseOverColor);
             }
-            else if (Item.IsEnabled(ItemState.Item_Mouse_Over) && !Item.IsEnabled(ItemState.Item_Selected))
+            else if (Item.IsEnabled(ItemState.Item_Mouse_Over) && 
+                    !Item.IsEnabled(ItemState.Item_Selected))
             {
                 DrawNameFrameWith(ItemSettings.NameFrameMouseOverColor);
             }
@@ -197,9 +232,16 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
         private void DrawSynchronization(GameTime gameTime, byte alpha)
         {
-            if (ItemData.IsRunning)
+            if (ItemData.Synchronizing)
             {
-                Primitives2D.DrawRectangle(ScreenManager.SpriteBatch, SinwaveHighlight(gameTime, 10, RectangleExt.Crop(ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin)), ColorExt.MakeTransparent(ItemSettings.NameFrameSynchronizationColor, alpha), 2f);
+                Primitives2D.DrawRectangle(
+                    ScreenManager.SpriteBatch,
+                    SinwaveHighlight(
+                        gameTime,
+                        5,
+                        RectangleExt.Crop(ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin)),
+                    ColorExt.MakeTransparent(ItemSettings.NameFrameSynchronizationColor, alpha),
+                    2f);
             }
         }
 

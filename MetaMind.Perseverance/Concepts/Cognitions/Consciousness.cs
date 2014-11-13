@@ -7,19 +7,21 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 {
     public interface IConsciousness
     {
-        Consciousness Update( GameTime gameTime );
+        Consciousness Update(GameTime gameTime);
+
         bool AwakeCondition { get; }
     }
 
     [DataContract,
-     KnownType( typeof( ConsciousnessAwake ) ),
-     KnownType( typeof( ConsciousnessSleepy ) )]
+     KnownType(typeof(ConsciousnessAwake)),
+     KnownType(typeof(ConsciousnessSleepy))]
     public class Consciousness : EngineObject, IConsciousness
     {
         #region Consciousness Data
-        
+
         [DataMember]
         public static int AwakeHour = 7;
+
         [DataMember]
         public static int AwakeMinute = 59;
 
@@ -49,7 +51,7 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
             get
             {
                 var now = DateTime.Now;
-                return now - DateTime.Today.AddHours( AwakeHour ).AddMinutes( AwakeMinute ) > TimeSpan.Zero;
+                return now - DateTime.Today.AddHours(AwakeHour).AddMinutes(AwakeMinute) > TimeSpan.Zero;
             }
         }
 
@@ -59,8 +61,8 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
         public Consciousness()
         {
-            SleepEndTime        = DateTime.MinValue;
-            SleepStartTime      = DateTime.MinValue;
+            SleepEndTime = DateTime.MinValue;
+            SleepStartTime = DateTime.MinValue;
             HistoricalAwakeSpan = TimeSpan.Zero;
             HistoricalSleepSpan = TimeSpan.Zero;
         }
@@ -69,18 +71,18 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
         #region Update
 
-        public Consciousness Update( GameTime gameTime )
+        public Consciousness Update(GameTime gameTime)
         {
-            if ( !AwakeCondition &&
-                this is ConsciousnessAwake )
+            if (!AwakeCondition &&
+                this is ConsciousnessAwake)
             {
-                return ( ( ConsciousnessAwake ) this ).StartSleeping();
+                return ((ConsciousnessAwake)this).StartSleeping();
             }
 
-            if ( AwakeCondition &&
-                this is ConsciousnessSleepy )
+            if (AwakeCondition &&
+                this is ConsciousnessSleepy)
             {
-                return ( ( ConsciousnessSleepy ) this ).StopSleeping();
+                return ((ConsciousnessSleepy)this).StopSleeping();
             }
 
             return this;

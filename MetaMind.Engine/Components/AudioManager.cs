@@ -65,29 +65,29 @@ namespace MetaMind.Engine.Components
             try
             {
                 audioEngine = new AudioEngine(settingsFile);
-                waveBank = new WaveBank(audioEngine, waveBankFile);
-                soundBank = new SoundBank(audioEngine, soundBankFile);
+                waveBank    = new WaveBank(audioEngine, waveBankFile);
+                soundBank   = new SoundBank(audioEngine, soundBankFile);
             }
             catch (NoAudioHardwareException)
             {
                 // silently fall back to silence
                 audioEngine = null;
-                waveBank = null;
-                soundBank = null;
+                waveBank    = null;
+                soundBank   = null;
             }
             catch (InvalidOperationException)
             {
                 // no audio prepared
                 // silently fall back to silence
                 audioEngine = null;
-                waveBank = null;
-                soundBank = null;
+                waveBank    = null;
+                soundBank   = null;
             }
             catch (NotImplementedException)
             {
                 audioEngine = null;
-                waveBank = null;
-                soundBank = null;
+                waveBank    = null;
+                soundBank   = null;
             }
         }
 

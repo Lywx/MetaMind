@@ -20,14 +20,8 @@ namespace MetaMind.Engine.Components.Inputs
     /// </summary>
     public enum Actions
     {
-        // ---------------------------------------------------------------------
-        // screen movement
-        NextScreen, 
-
-        LastScreen, 
-
-        // ---------------------------------------------------------------------
         // cursor movement
+        // ---------------------------------------------------------------------
         Up, 
 
         Down, 
@@ -44,8 +38,8 @@ namespace MetaMind.Engine.Components.Inputs
 
         SRight, 
 
-        // ---------------------------------------------------------------------
         // list management
+        // ---------------------------------------------------------------------
         MotivationCreateItem, 
 
         MotivationDeleteItem, 
@@ -58,8 +52,8 @@ namespace MetaMind.Engine.Components.Inputs
 
         TaskEditItem, 
 
-        // ---------------------------------------------------------------------
         // general
+        // ---------------------------------------------------------------------
         Enter, 
 
         Escape, 
@@ -287,10 +281,6 @@ namespace MetaMind.Engine.Components.Inputs
             actionMaps[(int)Actions.TaskEditItem] = new KeyboardActionMap();
             actionMaps[(int)Actions.TaskEditItem].Bindings.Add(Keys.I, new List<Keys> { Keys.LeftControl });
 
-            // -----------------------------------------------------------------
-            actionMaps[(int)Actions.LastScreen] = new KeyboardActionMap();
-            actionMaps[(int)Actions.NextScreen] = new KeyboardActionMap();
-
             // general
             // ---------------------------------------------------------------------
             actionMaps[(int)Actions.Escape] = new KeyboardActionMap();
@@ -298,7 +288,7 @@ namespace MetaMind.Engine.Components.Inputs
             actionMaps[(int)Actions.Escape].Bindings.Add(Keys.Escape, new List<Keys>());
 
             actionMaps[(int)Actions.Enter] = new KeyboardActionMap();
-            actionMaps[(int)Actions.Enter].Bindings.Add(Keys.Enter, new List<Keys>());
+            actionMaps[(int)Actions.Enter].Bindings.Add(Keys.Space, new List<Keys>());
         }
 
         #endregion Keyboard Action Mappings

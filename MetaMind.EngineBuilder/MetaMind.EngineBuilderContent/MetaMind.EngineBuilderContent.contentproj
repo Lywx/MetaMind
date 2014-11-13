@@ -48,11 +48,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\Audio.xap">
-      <Name>Audio</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </Compile>
     <Compile Include="Fonts\Bitmaps\RegularFont.bmp">
       <Name>RegularFont</Name>
       <Importer>TextureImporter</Importer>
@@ -71,7 +66,9 @@
       <Processor>ChineseCharProcessor</Processor>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Audio\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MetaMind.EngineProcessor\MetaMind.EngineProcessor.csproj">
       <Project>{0a5d6a10-f746-4b7d-9bca-09269f593d6a}</Project>

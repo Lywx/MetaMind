@@ -22,12 +22,15 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
         public void Accept(TaskEntry task)
         {
             this.target = task;
+            this.target.Synchronizing = true;
             this.target.Experience += new Experience();
         }
 
         public void Release(out TimeSpan timePassed)
         {
             timePassed = this.target.Experience.End();
+
+            this.target.Synchronizing = false;
             this.target = null;
         }
 

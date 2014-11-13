@@ -9,27 +9,35 @@ namespace MetaMind.Perseverance.Concepts.TaskEntries
     {
         #region Name
 
-        [DataMember] public string Name = "";
+        [DataMember]
+        public string Name = string.Empty;
 
-        #endregion
+        #endregion Name
 
         #region Experience
 
-        [DataMember] public Experience Experience;
+        [DataMember]
+        public Experience Experience;
+
+        [DataMember]
+        public bool Synchronizing;
 
         #endregion Experience
 
         #region Error
 
-        [DataMember] public bool Rationalized;
+        [DataMember]
+        public bool Rationalized;
 
         #endregion Error
 
         #region Progress
 
-        [DataMember] public int Done;
+        [DataMember]
+        public int Done;
 
-        [DataMember] public int Load;
+        [DataMember]
+        public int Load;
 
         #endregion Progress
 

@@ -18,6 +18,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
         {
             this.ItemFrameControl = new TaskItemFrameControl(item);
             this.ItemErrorControl = new TaskItemErrorControl(item);
+            this.ItemSyncControl  = new TaskItemSyncControl(item);
         }
 
         public ItemEntryFrame ExperienceFrame { get { return ((TaskItemFrameControl)ItemFrameControl).ExperienceFrame; } }
@@ -30,6 +31,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
         // TODO: not implemented
         public TaskItemErrorControl ItemErrorControl { get; private set; }
+        public TaskItemSyncControl ItemSyncControl { get; private set; }
 
         #endregion Constructors
 
@@ -106,6 +108,16 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
                     {
                         View.Disable(ViewState.Item_Editting);
                         Item.Disable(ItemState.Item_Pending);
+                    }
+                }
+
+                // enter synchronization when
+                // accepting input but not locked
+                if (!this.Locked)
+                {
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Enter))
+                    {
+                        this.ItemSyncControl.SwitchSync();
                     }
                 }
             }

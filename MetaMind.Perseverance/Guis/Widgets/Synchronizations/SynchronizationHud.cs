@@ -12,7 +12,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
 {
     public class SynchronizationHud : Widget
     {
-        private Synchronization                                synchronization;
+        private ISynchronization                               synchronization;
         private SynchronizationHudSettings                     settings;
 
         private SynchronizationHudSynchronizationStartListener synchronizationStartListener;
@@ -22,7 +22,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
 
         #region Constructors
 
-        public SynchronizationHud(Synchronization synchronization, SynchronizationHudSettings settings)
+        public SynchronizationHud(ISynchronization synchronization, SynchronizationHudSettings settings)
         {
             this.synchronization = synchronization;
             this.settings = settings;
@@ -54,9 +54,9 @@ namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
         {
             get
             {
-                const int xSymbolWidth = 43;
+                const int XSymbolWidth = 43;
                 return new Vector2(
-                    AccelerationPrefixLocation.X + xSymbolWidth,
+                    AccelerationPrefixLocation.X + XSymbolWidth,
                     AccelerationPrefixLocation.Y);
             }
         }
@@ -75,9 +75,9 @@ namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
         {
             get
             {
-                const int plusSymbolWidth = 42;
+                const int PlusSymbolWidth = 42;
                 return new Vector2(
-                    AccumulationPrefixLocation.X + plusSymbolWidth,
+                    AccumulationPrefixLocation.X + PlusSymbolWidth,
                     AccumulationPrefixLocation.Y);
             }
         }
@@ -315,14 +315,14 @@ namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
 
         public void StartSynchronizing(TaskEntry target)
         {
-            synchronization.Start(target);
-            monitor.Activate();
+            synchronization.TryStart(target);
+            monitor        .Start();
         }
 
         public void StopSynchronizing()
         {
             synchronization.Stop();
-            monitor.Deactivate();
+            monitor        .Stop();
         }
 
         #endregion Operations

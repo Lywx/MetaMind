@@ -110,7 +110,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
                 this.ItemSymbolControl.UpdateInput(gameTime);
             }
 
-            if (!Locked)
+            if (!this.Locked)
             {
                 // should be outside of the accepting input state
                 // task view is paralled with item input

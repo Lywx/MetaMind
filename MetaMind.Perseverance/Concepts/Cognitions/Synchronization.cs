@@ -6,8 +6,39 @@ using System.Runtime.Serialization;
 
 namespace MetaMind.Perseverance.Concepts.Cognitions
 {
+    public interface ISynchronization
+    {
+        double Acceleration { get; }
+
+        TimeSpan ElapsedTimeSinceTransition { get; }
+
+        bool Enabled { get; }
+
+        int Level { get; }
+
+        double ProgressPercent { get; }
+
+        string State { get; }
+
+        int SynchronizedHourMax { get; }
+
+        int SynchronizedHourToday { get; }
+
+        int SynchronizedHourYesterday { get; }
+
+        void ResetForTomorrow();
+
+        void TryStart(TaskEntry target);
+
+        void Start(TaskEntry target);
+
+        void Stop();
+
+        void Update(GameTime gameTime);
+    }
+
     [DataContract]
-    public class Synchronization : EngineObject
+    public class Synchronization : EngineObject, ISynchronization
     {
         #region Components
 
@@ -119,9 +150,19 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
             statistics.Reset();
         }
 
+        public void TryStart(TaskEntry target)
+        {
+            if (this.Enabled)
+            {
+                this.Stop();
+            }
+
+            this.Start(target);
+        }
+
         public void Start(TaskEntry target)
         {
-            data.Accept(target);
+            data .Accept(target);
             timer.Start();
         }
 
@@ -129,15 +170,15 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
         {
             TimeSpan timePassed;
 
-            data.Release(out timePassed);
+            data      .Release(out timePassed);
             statistics.Add(timePassed);
-            timer.Stop();
+            timer     .Stop();
         }
 
         public void Update(GameTime gameTime)
         {
             timer.Update(gameTime);
-            data.Update(gameTime, timer.Enabled, Acceleration);
+            data .Update(gameTime, timer.Enabled, Acceleration);
         }
 
         #endregion Operations

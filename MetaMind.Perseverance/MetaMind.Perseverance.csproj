@@ -85,7 +85,6 @@
     <Compile Include="Guis\Modules\MotivationTaskTracerSettings.cs" />
     <Compile Include="Guis\Modules\SummaryModule.cs" />
     <Compile Include="Guis\Modules\SummaryModuleSettings.cs" />
-    <Compile Include="Guis\Particles\FloatParticleSettings.cs" />
     <Compile Include="Guis\Particles\ShapelessParticle.cs" />
     <Compile Include="Guis\Particles\FloatParticleContainer.cs" />
     <Compile Include="Guis\Particles\FloatParticle.cs" />
@@ -111,6 +110,7 @@
     <Compile Include="Guis\Widgets\Tasks\Items\TaskItemErrorControl.cs" />
     <Compile Include="Guis\Widgets\Tasks\Items\TaskItemFrameControl.cs" />
     <Compile Include="Guis\Widgets\Tasks\Items\TaskItemSettings.cs" />
+    <Compile Include="Guis\Widgets\Tasks\Items\TaskItemSyncControl.cs" />
     <Compile Include="Guis\Widgets\Tasks\TaskTracer.cs" />
     <Compile Include="Guis\Widgets\Synchronizations\SynchronizationHud.cs" />
     <Compile Include="Guis\Widgets\Synchronizations\SynchronizationHudMonitor.cs" />

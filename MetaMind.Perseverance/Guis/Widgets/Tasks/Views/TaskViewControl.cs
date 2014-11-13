@@ -8,7 +8,6 @@
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 {
     using MetaMind.Engine.Components.Inputs;
-    using MetaMind.Engine.Guis.Elements.Items;
     using MetaMind.Engine.Guis.Elements.Regions;
     using MetaMind.Engine.Guis.Elements.ViewItems;
     using MetaMind.Engine.Guis.Elements.Views;

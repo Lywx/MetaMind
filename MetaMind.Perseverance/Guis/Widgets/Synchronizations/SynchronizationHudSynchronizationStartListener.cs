@@ -6,26 +6,28 @@ namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
 {
     internal class SynchronizationHudSynchronizationStartListener : ListenerBase
     {
-        private readonly Synchronization    synchronization;
+        private readonly ISynchronization   synchronization;
         private readonly SynchronizationHud synchronizationHud;
 
-        public SynchronizationHudSynchronizationStartListener( Synchronization synchronization, SynchronizationHud synchronizationHud )
+        public SynchronizationHudSynchronizationStartListener(ISynchronization synchronization, SynchronizationHud synchronizationHud)
         {
             this.synchronizationHud = synchronizationHud;
             this.synchronization = synchronization;
 
-            RegisteredEvents.Add( ( int ) AdventureEventType.SyncStarted );
+            RegisteredEvents.Add((int)AdventureEventType.SyncStarted);
         }
 
-        public override bool HandleEvent( EventBase @event )
+        public override bool HandleEvent(EventBase @event)
         {
-            var synchronizationStartedEventArgs = ( SynchronizationStartedEventArgs ) @event.Data;
+            var synchronizationStartedEventArgs = (SynchronizationStartedEventArgs)@event.Data;
             var data = synchronizationStartedEventArgs.TaskEntry;
 
-            if ( synchronization.Enabled )
+            if (synchronization.Enabled)
+            {
                 return true;
+            }
 
-            synchronizationHud.StartSynchronizing( data );
+            synchronizationHud.StartSynchronizing(data);
 
             return true;
         }
