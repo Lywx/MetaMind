@@ -1,73 +1,84 @@
-using C3.Primtive2DXna;
-using MetaMind.Engine.Settings;
-using Microsoft.Xna.Framework;
-using System;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="FloatParticle.cs" company="UESTC">
+//   Copyright (c) 2014 Lin Wuxiang
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace MetaMind.Perseverance.Guis.Particles
 {
+    using System;
+
+    using C3.Primtive2DXna;
+
+    using MetaMind.Engine.Extensions;
+    using MetaMind.Engine.Settings;
+
+    using Microsoft.Xna.Framework;
+
     public class FloatParticle : Particle
     {
-        private enum Direction
-        {
-            Left,
-            Right,
-        }
-
         private const int BubbleSeconds = 20;
         private const int Height        = 2;
         private const int Width         = 8;
+
+        private static readonly Random Random = Perseverance.Adventure.Random;
         
-        private       Point     pressure = new Point( 10, 10 );
-        private       Point     position;
-        private       Direction direction;
+        private Point pressure = new Point(10, 10);
 
-        private FloatParticle( Direction direction, Vector2 a, Vector2 v, float lastingSeconds, Color color, float size ) :
-            base( a, v, 0f, 0f, 0f, lastingSeconds, color, size )
+        private FloatParticle(Direction direction, Vector2 a, Vector2 v, float lastingSeconds, Color color, float scale)
+            : base(a, v, 0f, 0f, 0f, lastingSeconds, color, scale)
         {
-            this.direction = direction;
-            var random = new Random( ( int ) DateTime.Now.Ticks );
-
             // anywhere on the sides of screen
-            position = new Point( this.direction == Direction.Left ? ( int ) ( -Width * Size ) : ScreenManager.GraphicsDevice.Viewport.Width, random.Next( GraphicsSettings.Height ) );
+            var width = (int)(Width * this.Scale);
+            this.Position = PointExt.ToVector2(new Point(
+                    direction == Direction.Left ? -width : GraphicsSettings.Width,
+                    Random.Next(GraphicsSettings.Height)));
+        }
 
-            Position = position.ToVector2();
+        private enum Direction
+        {
+            Left,
+
+            Right,
         }
 
         public bool IsOutsideScreen
         {
             get
             {
-                return ( Position.X + Width * Size < 0 )
-                    || ( Position.X > GraphicsSettings.Width )
-                    || ( Position.Y + Height * Size < 0 )
-                    || ( Position.Y > GraphicsSettings.Height );
+                return Position.X + Width * this.Scale < 0 ||
+                       Position.Y + Height * this.Scale < 0 ||
+                       Position.X > GraphicsSettings.Width ||
+                       Position.Y > GraphicsSettings.Height;
             }
         }
 
         public static FloatParticle RandParticle()
         {
-            var random    = new Random( ( int ) DateTime.Now.Ticks );
-            var direction = ( Direction ) random.Next( 2 );
-            var deep      = random.Next( 1, 10 );
+            var direction = (Direction)Random.Next(2);
+            var deep      = Random.Next(1, 10);
             var size      = deep;
 
             Vector2 acceleration;
             Vector2 velocity;
 
-            switch ( direction )
+            switch (direction)
             {
                 case Direction.Left:
                     {
-                        acceleration = new Vector2( random.Next( 5, 10 ), 0 );
-                        velocity = new Vector2( random.Next( 30, 50 ), 0 );
+                        acceleration = new Vector2(Random.Next(5, 10), 0);
+                        velocity = new Vector2(Random.Next(30, 50), 0);
                     }
+
                     break;
 
                 case Direction.Right:
                     {
-                        acceleration = new Vector2( random.Next( -10, -5 ), 0 );
-                        velocity = new Vector2( random.Next( -50, -30 ), 0 );
+                        acceleration = new Vector2(Random.Next(-10, -5), 0);
+                        velocity = new Vector2(Random.Next(-50, -30), 0);
                     }
+
                     break;
 
                 default:
@@ -75,30 +86,37 @@ namespace MetaMind.Perseverance.Guis.Particles
                         acceleration = Vector2.Zero;
                         velocity = Vector2.Zero;
                     }
+
                     break;
             }
 
-            var remainingSeconds = random.Next( BubbleSeconds, 2 * BubbleSeconds );
-            var color = new Color( random.Next( 0, 100 ) / deep, 50 / deep, 50 / deep, 50 / deep );
-            var particle = new FloatParticle( direction, acceleration, velocity, remainingSeconds, color, size );
+            var remainingSeconds = Random.Next(BubbleSeconds, 2 * BubbleSeconds);
+            var color            = new Color(Random.Next(0, 100) / deep, 50 / deep, 50 / deep, 50 / deep);
+            var particle         = new FloatParticle(direction, acceleration, velocity, remainingSeconds, color, size);
 
             return particle;
         }
 
-        public override void Draw( GameTime gameTime )
+        public override void Draw(GameTime gameTime)
         {
-            ScreenManager.SpriteBatch.FillRectangle( Position, new Vector2( Width * Size, Height * Size ), Color, Angle );
+            var size = new Vector2(Width * this.Scale, Height * this.Scale);
+            ScreenManager.SpriteBatch.FillRectangle(Position, size, Color, Angle);
         }
 
-        public override void Update( GameTime gameTime )
+        public override void Update(GameTime gameTime)
         {
-            var random = new Random( ( int ) DateTime.Now.Ticks );
             // smooth disappearance
-            if ( LastingSeconds < BubbleSeconds )
-                Size = Math.Min( LastingSeconds, Size );
+            if (LastingSeconds < BubbleSeconds)
+            {
+                this.Scale = Math.Min(LastingSeconds, this.Scale);
+            }
+
             // random water movements
-            Acceleration = new Vector2( random.Next( -pressure.X, pressure.X ), random.Next( -pressure.Y, pressure.Y ) );
-            base.Update( gameTime );
+            Acceleration = new Vector2(
+                Random.Next(-pressure.X, pressure.X),
+                Random.Next(-pressure.Y, pressure.Y));
+
+            base.Update(gameTime);
         }
     }
 }

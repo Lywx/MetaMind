@@ -5,7 +5,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Perseverance.Guis.Widgets.Motivations
+namespace MetaMind.Perseverance.Guis.Modules
 {
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Extensions;
@@ -41,9 +41,9 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
 
         public override void Load()
         {
-            if (!loadFinished && this.HostControl.ItemData.Tasks.Count != 0)
+            if (!this.loadFinished && this.HostControl.ItemData.Tasks.Count != 0)
             {
-                this.View.Control.AddItem(this.HostControl.ItemData.Tasks[loadIndex]);
+                this.View.Control.AddItem(this.HostControl.ItemData.Tasks[this.loadIndex]);
                 ++this.loadIndex;
             }
 

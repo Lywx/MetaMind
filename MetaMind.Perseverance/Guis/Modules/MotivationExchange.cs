@@ -12,40 +12,40 @@ namespace MetaMind.Perseverance.Guis.Modules
         private readonly IView  nowView;
         private readonly IView  pastView;
         
-        private readonly Banner viewBanner;
+        private readonly Banner banner;
 
         public MotivationExchange(MotivationExchangeSettings settings)
             : base(settings)
         {
-            viewBanner = new Banner(Settings.PastViewSettings, new ViewBannerSetting());
+            this.banner = new Banner(Settings.PastViewSettings, new BannerSetting());
 
-            pastView   = new View(Settings.PastViewSettings  , Settings.ItemSettings, Settings.ViewFactory);
-            nowView    = new View(Settings.NowViewSettings   , Settings.ItemSettings, Settings.ViewFactory);
-            futureView = new View(Settings.FutureViewSettings, Settings.ItemSettings, Settings.ViewFactory);
+            this.pastView   = new View(Settings.PastViewSettings  , Settings.ItemSettings, Settings.ViewFactory);
+            this.nowView    = new View(Settings.NowViewSettings   , Settings.ItemSettings, Settings.ViewFactory);
+            this.futureView = new View(Settings.FutureViewSettings, Settings.ItemSettings, Settings.ViewFactory);
 
-            pastView  .Control.Swap.AddObserver(nowView   );
-            pastView  .Control.Swap.AddObserver(futureView);
-            nowView   .Control.Swap.AddObserver(pastView  );
-            nowView   .Control.Swap.AddObserver(futureView);
-            futureView.Control.Swap.AddObserver(pastView  );
-            futureView.Control.Swap.AddObserver(nowView   );
+            this.pastView  .Control.Swap.AddObserver(this.nowView   );
+            this.pastView  .Control.Swap.AddObserver(this.futureView);
+            this.nowView   .Control.Swap.AddObserver(this.pastView  );
+            this.nowView   .Control.Swap.AddObserver(this.futureView);
+            this.futureView.Control.Swap.AddObserver(this.pastView  );
+            this.futureView.Control.Swap.AddObserver(this.nowView   );
         }
 
         public override void Load()
         {
             foreach (var entry in MotivationExchangeSettings.GetPastMotivations())
             {
-                pastView.Control.AddItem(entry);
+                this.pastView.Control.AddItem(entry);
             }
 
             foreach (var entry in MotivationExchangeSettings.GetNowMotivations())
             {
-                nowView.Control.AddItem(entry);
+                this.nowView.Control.AddItem(entry);
             }
 
             foreach (var entry in MotivationExchangeSettings.GetFutureMotivations())
             {
-                futureView.Control.AddItem(entry);
+                this.futureView.Control.AddItem(entry);
             }
         }
 
@@ -53,37 +53,37 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         public override void Draw( GameTime gameTime, byte alpha )
         {
-            pastView  .Draw(gameTime, alpha);
-            nowView   .Draw(gameTime, alpha);
-            futureView.Draw(gameTime, alpha);
+            this.pastView  .Draw(gameTime, alpha);
+            this.nowView   .Draw(gameTime, alpha);
+            this.futureView.Draw(gameTime, alpha);
 
-            viewBanner.Draw(gameTime, alpha);
+            this.banner.Draw(gameTime, alpha);
         }
 
 
         public override void HandleInput()
         {
-            base      .HandleInput();
+            base.HandleInput();
             
-            pastView  .HandleInput();
-            nowView   .HandleInput();
-            futureView.HandleInput();
+            this.pastView  .HandleInput();
+            this.nowView   .HandleInput();
+            this.futureView.HandleInput();
         }
 
         public override void UpdateInput(GameTime gameTime)
         {
-            pastView  .UpdateInput(gameTime);
-            nowView   .UpdateInput(gameTime);
-            futureView.UpdateInput(gameTime);
+            this.pastView  .UpdateInput(gameTime);
+            this.nowView   .UpdateInput(gameTime);
+            this.futureView.UpdateInput(gameTime);
         }
 
         public override void UpdateStructure(GameTime gameTime)
         {
-            pastView  .UpdateStructure(gameTime);
-            nowView   .UpdateStructure(gameTime);
-            futureView.UpdateStructure(gameTime);
+            this.pastView  .UpdateStructure(gameTime);
+            this.nowView   .UpdateStructure(gameTime);
+            this.futureView.UpdateStructure(gameTime);
 
-            viewBanner.Update(gameTime);
+            this.banner.Update(gameTime);
         }
 
         #endregion

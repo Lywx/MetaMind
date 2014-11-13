@@ -8,7 +8,7 @@ namespace MetaMind.Perseverance.Screens
 {
     public class SummaryScreen : GameScreen
     {
-        private readonly IModule summary = new SummaryModule( new SummaryModuleSettings() );
+        private readonly IModule summary = new SummaryModule(new SummaryModuleSettings());
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SummaryScreen"/> class.
@@ -16,17 +16,17 @@ namespace MetaMind.Perseverance.Screens
         /// </summary>
         public SummaryScreen()
         {
-            TransitionOnTime = TimeSpan.FromSeconds( 0.5 );
-            TransitionOffTime = TimeSpan.FromSeconds( 0.5 );
+            TransitionOnTime = TimeSpan.FromSeconds(0.5);
+            TransitionOffTime = TimeSpan.FromSeconds(0.5);
         }
 
-        public override void Draw( GameTime gameTime )
+        public override void Draw(GameTime gameTime)
         {
             ScreenManager.SpriteBatch.Begin();
 
-            MessageManager.Draw( gameTime );
+            MessageManager.Draw(gameTime);
 
-            summary.Draw( gameTime, TransitionAlpha);
+            summary.Draw(gameTime, TransitionAlpha);
 
             ScreenManager.SpriteBatch.End();
         }
@@ -40,20 +40,20 @@ namespace MetaMind.Perseverance.Screens
             ScreenManager.Game.ResetElapsedTime();
         }
 
-        public override void Update( GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen )
+        public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
-            if ( IsActive && !coveredByOtherScreen )
+            if (IsActive && !coveredByOtherScreen)
             {
-                InputEventManager   .Update( gameTime );
-                InputSequenceManager.Update( gameTime );
-                MessageManager      .Update( gameTime );
+                InputEventManager   .Update(gameTime);
+                InputSequenceManager.Update(gameTime);
+                MessageManager      .Update(gameTime);
 
-                Perseverance.Adventure.Update( gameTime );
-                
-                summary.Update( gameTime );
+                Perseverance.Adventure.Update(gameTime);
+
+                summary.Update(gameTime);
             }
 
-            base.Update( gameTime, otherScreenHasFocus, coveredByOtherScreen );
+            base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
         }
     }
 }

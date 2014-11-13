@@ -10,8 +10,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
     using System.Collections.Generic;
     using System.Globalization;
 
-    using C3.Primtive2DXna;
-
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Elements.Items;

@@ -175,7 +175,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
 
         private Rectangle RegionPositioning(dynamic viewSettings, dynamic itemSettings)
         {
-            var bannerSetting = new ViewBannerSetting();
+            var bannerSetting = new BannerSetting();
             return
                 RectangleExt.Rectangle(
                     viewSettings.StartPoint.X + viewSettings.RootMargin.X * (viewSettings.ColumnNumDisplay / 2), 

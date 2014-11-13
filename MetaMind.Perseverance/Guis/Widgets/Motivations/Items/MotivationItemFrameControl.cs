@@ -13,8 +13,8 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
     {
         private TimeSpan selectedTime;
 
-        public MotivationItemFrameControl( IViewItem item )
-            : base( item )
+        public MotivationItemFrameControl(IViewItem item)
+            : base(item)
         {
             SymbolFrame = new PickableFrame();
         }
@@ -26,17 +26,16 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             get
             {
                 return new Point(
-                    ( int ) ( RootFrame.Width  * ( 1 + ItemSettings.SymbolFrameIncrementFactor * Math.Abs( Math.Atan( selectedTime.TotalSeconds ) ) ) ),
-                    ( int ) ( RootFrame.Height * ( 1 + ItemSettings.SymbolFrameIncrementFactor * Math.Abs( Math.Atan( selectedTime.TotalSeconds ) ) ) ) );
+                    (int)(RootFrame.Width * (1 + ItemSettings.SymbolFrameIncrementFactor * Math.Abs(Math.Atan(selectedTime.TotalSeconds)))),
+                    (int)(RootFrame.Height * (1 + ItemSettings.SymbolFrameIncrementFactor * Math.Abs(Math.Atan(selectedTime.TotalSeconds)))));
             }
         }
 
-
         public override void UpdateStructure(GameTime gameTime)
         {
-            base.UpdateStructure( gameTime );
-            
-            UpdateFrameSelection( gameTime );
+            base.UpdateStructure(gameTime);
+
+            UpdateFrameSelection(gameTime);
         }
 
         protected override void UpdateFrameGeometry()
@@ -49,22 +48,22 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 
         public override void UpdateInput(GameTime gameTime)
         {
-            base       .UpdateInput( gameTime );
-            SymbolFrame.UpdateInput( gameTime );
+            base       .UpdateInput(gameTime);
+            SymbolFrame.UpdateInput(gameTime);
         }
 
-        private void UpdateFrameSelection( GameTime gameTime )
+        private void UpdateFrameSelection(GameTime gameTime)
         {
-            if ( Item.IsEnabled( ItemState.Item_Selected ) &&
-                !Item.IsEnabled( ItemState.Item_Dragging ) )
+            if (Item.IsEnabled(ItemState.Item_Selected) &&
+                !Item.IsEnabled(ItemState.Item_Dragging))
             {
-                selectedTime = selectedTime + gameTime.DeltaTimeSpan( 2 );
+                selectedTime = selectedTime + gameTime.DeltaTimeSpan(2);
             }
             else
             {
-                if ( selectedTime.Ticks > 0 )
+                if (selectedTime.Ticks > 0)
                 {
-                    selectedTime = selectedTime - gameTime.DeltaTimeSpan( 5 );
+                    selectedTime = selectedTime - gameTime.DeltaTimeSpan(5);
                 }
                 else
                 {

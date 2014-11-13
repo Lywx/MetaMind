@@ -6,10 +6,8 @@ using System;
 
 namespace MetaMind.Perseverance.Screens
 {
-    internal class BackgroundScreen : GameScreen
+    public class BackgroundScreen : GameScreen
     {
-        //---------------------------------------------------------------------
-
         #region Graphicalc Data
 
         private const int ParticleNumber = 1500;
@@ -18,8 +16,6 @@ namespace MetaMind.Perseverance.Screens
         private          Texture2D              backgroundTexture;
 
         #endregion Graphicalc Data
-
-        //---------------------------------------------------------------------
 
         #region Constructors
 

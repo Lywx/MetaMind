@@ -4,7 +4,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Banners
 
     using Microsoft.Xna.Framework;
 
-    public class ViewBannerSetting
+    public class BannerSetting
     {
         public int Width  = GraphicsSettings.Width;
         public int Height = 103;

@@ -11,27 +11,27 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks
     {
         private IView            view;
         private TaskViewFactory  viewFactory  = new TaskViewFactory();
-        private TaskViewSettings viewSettings = new TaskViewSettings { StartPoint = new Point( 15, 15 ) };
+        private TaskViewSettings viewSettings = new TaskViewSettings { StartPoint = new Point(15, 15) };
         private TaskItemSettings itemSettings = new TaskItemSettings();
 
         public TaskTracer()
         {
-            view = new View( viewSettings, itemSettings, viewFactory );
+            view = new View(viewSettings, itemSettings, viewFactory);
         }
 
-        public override void Draw( GameTime gameTime, byte alpha )
+        public override void Draw(GameTime gameTime, byte alpha)
         {
-            view.Draw( gameTime, alpha );
+            view.Draw(gameTime, alpha);
         }
 
-        public override void UpdateInput( GameTime gameTime )
+        public override void UpdateInput(GameTime gameTime)
         {
-            view.UpdateInput( gameTime );
+            view.UpdateInput(gameTime);
         }
 
-        public override void UpdateStructure( GameTime gameTime )
+        public override void UpdateStructure(GameTime gameTime)
         {
-            view.UpdateStructure( gameTime );
+            view.UpdateStructure(gameTime);
         }
     }
 }

@@ -6,11 +6,17 @@ namespace MetaMind.Perseverance.Guis.Particles
     public interface IAbstractParticle
     {
         float Angle { get; set; }
+
         float AngularAcceleration { get; set; }
+
         float AngularVelocity { get; set; }
+
         Vector2 Position { get; set; }
+
         Vector2 Acceleration { get; set; }
+
         Vector2 Velocity { get; set; }
+
         float LastingSeconds { get; set; }
 
         void Update(GameTime gameTime);

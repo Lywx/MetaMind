@@ -11,7 +11,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Banners
     public class Banner : EngineObject
     {
         private ViewSettings1D    viewSettings;
-        private ViewBannerSetting bannerSetting;
+        private BannerSetting bannerSetting;
 
         private TimelineText past;
         private TimelineText now;
@@ -19,7 +19,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Banners
         
         private TimelineFlash flash;
 
-        public Banner(ViewSettings1D viewSettings, ViewBannerSetting bannerSetting)
+        public Banner(ViewSettings1D viewSettings, BannerSetting bannerSetting)
         {
             this.viewSettings  = viewSettings;
             this.bannerSetting = bannerSetting;

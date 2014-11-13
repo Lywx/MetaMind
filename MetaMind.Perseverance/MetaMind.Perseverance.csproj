@@ -81,13 +81,16 @@
     <Compile Include="Concepts\MotivationEntries\Motivationlist.cs" />
     <Compile Include="Concepts\TaskEntries\Tasklist.cs" />
     <Compile Include="Concepts\TaskEntries\TaskEntry.cs" />
+    <Compile Include="Guis\Modules\MotivationTaskTracer.cs" />
+    <Compile Include="Guis\Modules\MotivationTaskTracerSettings.cs" />
     <Compile Include="Guis\Modules\SummaryModule.cs" />
     <Compile Include="Guis\Modules\SummaryModuleSettings.cs" />
+    <Compile Include="Guis\Particles\FloatParticleSettings.cs" />
     <Compile Include="Guis\Particles\ShapelessParticle.cs" />
     <Compile Include="Guis\Particles\FloatParticleContainer.cs" />
     <Compile Include="Guis\Particles\FloatParticle.cs" />
     <Compile Include="Guis\Particles\Particle.cs" />
-    <Compile Include="Guis\Widgets\Motivations\Banners\ViewBannerSetting.cs" />
+    <Compile Include="Guis\Widgets\Motivations\Banners\BannerSetting.cs" />
     <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemControl.cs" />
     <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemFactory.cs" />
     <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemGraphics.cs" />
@@ -99,9 +102,7 @@
     <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemTaskControl.cs" />
     <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemTaskGraphics.cs" />
     <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemViewControl.cs" />
-    <Compile Include="Guis\Modules\MotivationTaskTracer.cs" />
     <Compile Include="Guis\Modules\MotivationExchangeSettings.cs" />
-    <Compile Include="Guis\Modules\MotivationTaskTracerSettings.cs" />
     <Compile Include="Guis\Widgets\Motivations\Views\MotivationViewControl.cs" />
     <Compile Include="Guis\Widgets\Motivations\Views\MotivationViewFactory.cs" />
     <Compile Include="Guis\Widgets\Motivations\Views\MotivationViewGraphics.cs" />
