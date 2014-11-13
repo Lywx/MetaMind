@@ -12,7 +12,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
         public override dynamic CreateData(IViewItem item)
         {
-            //TODO: not useful container
             return Perseverance.Adventure.Tasklist.Create();
         }
 

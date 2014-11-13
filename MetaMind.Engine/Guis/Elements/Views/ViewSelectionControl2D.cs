@@ -32,15 +32,20 @@ namespace MetaMind.Engine.Guis.Elements.Views
             get { return this.currentId != null; }
         }
 
+        public int? SelectedId
+        {
+            get { return currentId; }
+        }
+
         public void Clear()
         {
             this.previousId = this.currentId;
             this.currentId = null;
-            
+
             // TODO: may not be a good design
             View.Disable(ViewState.View_Has_Selection);
-            
-            if (View.Items.Count != 0 && 
+
+            if (View.Items.Count != 0 &&
                 this.previousId.HasValue)
             {
                 View.Items[this.previousId.Value].Disable(ItemState.Item_Selected);
@@ -130,12 +135,6 @@ namespace MetaMind.Engine.Guis.Elements.Views
             this.currentId = id;
         }
 
-        private void Select(int row, int column)
-        {
-            this.previousId = this.currentId;
-            this.currentId = this.ViewControl.IdFrom(row, column);
-        }
-
         private bool IsBottommost(int row)
         {
             return row >= this.ViewControl.RowNum - 1;
@@ -156,6 +155,11 @@ namespace MetaMind.Engine.Guis.Elements.Views
             return row <= 0;
         }
 
+        private void Select(int row, int column)
+        {
+            this.previousId = this.currentId;
+            this.currentId = this.ViewControl.IdFrom(row, column);
+        }
         private void SelectInit()
         {
             this.Select(this.previousId.HasValue ? this.previousId.Value : 0);

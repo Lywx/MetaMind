@@ -43,13 +43,13 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 
         #region Operations
 
-        public virtual void AddItem(TaskEntry entry)
+        public void AddItem(TaskEntry entry)
         {
             View.Items.Add(
                 new ViewItemExchangable(View, ViewSettings, ItemSettings, this.ItemFactory, entry));
         }
 
-        public virtual void AddItem()
+        public void AddItem()
         {
             View.Items.Add(
                 new ViewItemExchangable(View, ViewSettings, ItemSettings, this.ItemFactory));

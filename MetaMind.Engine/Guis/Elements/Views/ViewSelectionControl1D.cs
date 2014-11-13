@@ -13,6 +13,8 @@ namespace MetaMind.Engine.Guis.Elements.Views
     {
         bool HasSelected { get; }
 
+        int? SelectedId { get; }
+
         void Clear();
 
         /// <summary>
@@ -49,11 +51,16 @@ namespace MetaMind.Engine.Guis.Elements.Views
             get { return this.currentColumn != null; }
         }
 
+        public int? SelectedId
+        {
+            get { return currentColumn; }
+        }
+
         public void Clear()
         {
             this.previousColumn = this.currentColumn;
             this.currentColumn = null;
-            
+
             // TODO: may not be a good design
             // TODO: not consistent with 2D
             View.Disable(ViewState.View_Has_Selection);

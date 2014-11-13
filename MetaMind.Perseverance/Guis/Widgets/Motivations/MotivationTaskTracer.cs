@@ -150,6 +150,18 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
                     // add to host motivation's tasks
                     this.HostControl.ItemData.Tasks.Add(task);
                 }
+
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskDeleteItem))
+                {
+                    // item deletion was processed by item control
+                    // which is unaware of motivation
+
+                    // get the deleted item data
+                    var task = this.View.Items[(int)this.View.Control.Selection.SelectedId].ItemData;
+
+                    // remove from host motivation's tasks
+                    this.HostControl.ItemData.Tasks.Remove(task);
+                }
             }
 
             // item input
