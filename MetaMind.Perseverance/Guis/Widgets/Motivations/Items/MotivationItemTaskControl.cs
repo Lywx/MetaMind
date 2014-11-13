@@ -28,7 +28,8 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             if (this.TaskTracer == null)
             {
                 this.TaskTracer = new MotivationTaskTracer(ItemControl, new MotivationTaskTracerSettings());
-                this.TaskTracer.Load();
+                // TODO:
+                //this.TaskTracer.Load();
             }
 
             this.TaskTracer.Show();
@@ -58,6 +59,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             if (this.TaskTracer != null)
             {
                 this.TaskTracer.UpdateStructure(gameTime);
+                this.TaskTracer.Load();
 
                 if (!this.TaskTracer.View.IsEnabled(ViewState.View_Has_Focus))
                 {

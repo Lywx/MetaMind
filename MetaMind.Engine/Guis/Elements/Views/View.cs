@@ -1,17 +1,17 @@
 namespace MetaMind.Engine.Guis.Elements.Views
 {
+    using MetaMind.Engine.Guis.Elements.ViewItems;
+    using Microsoft.Xna.Framework;
     using System;
     using System.Collections.Generic;
 
-    using MetaMind.Engine.Guis.Elements.ViewItems;
-
-    using Microsoft.Xna.Framework;
-
     public interface IView : IViewObject
     {
-        dynamic         Control  { get; set; }
-        IViewGraphics   Graphics { get; set; }
-        List<IViewItem> Items    { get; set; }
+        dynamic Control { get; set; }
+
+        IViewGraphics Graphics { get; set; }
+
+        List<IViewItem> Items { get; set; }
     }
 
     public class View : ViewObject, IView
@@ -19,10 +19,10 @@ namespace MetaMind.Engine.Guis.Elements.Views
         public View(ICloneable viewSettings, ICloneable itemSettings, IViewFactory factory)
             : base(viewSettings, itemSettings)
         {
-            this.Items    = new List<IViewItem>();
+            this.Items = new List<IViewItem>();
 
-            this.Control  = factory.CreateControl( this, viewSettings, itemSettings );
-            this.Graphics = factory.CreateGraphics( this, viewSettings, itemSettings );
+            this.Control = factory.CreateControl(this, viewSettings, itemSettings);
+            this.Graphics = factory.CreateGraphics(this, viewSettings, itemSettings);
         }
 
         public dynamic Control { get; set; }

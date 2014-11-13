@@ -45,14 +45,14 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 
         public virtual void AddItem(TaskEntry entry)
         {
-            this.View.Items.Add(
-                new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory, entry));
+            View.Items.Add(
+                new ViewItemExchangable(View, ViewSettings, ItemSettings, this.ItemFactory, entry));
         }
 
         public virtual void AddItem()
         {
-            this.View.Items.Add(
-                new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory));
+            View.Items.Add(
+                new ViewItemExchangable(View, ViewSettings, ItemSettings, this.ItemFactory));
         }
 
         public void MoveDown()

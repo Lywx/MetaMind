@@ -17,6 +17,10 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
 
     public class MotivationTaskTracer : Module<MotivationTaskTracerSettings>
     {
+        private bool loadFinished;
+
+        private int loadIndex;
+
         public MotivationTaskTracer(MotivationItemControl itemControl, MotivationTaskTracerSettings settings)
             : base(settings)
         {
@@ -37,9 +41,15 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
 
         public override void Load()
         {
-            foreach (var task in this.HostControl.ItemData.Tasks)
+            if (!loadFinished && this.HostControl.ItemData.Tasks.Count != 0)
             {
-                this.View.Control.AddItem(task);
+                this.View.Control.AddItem(this.HostControl.ItemData.Tasks[loadIndex]);
+                ++this.loadIndex;
+            }
+
+            if (this.loadIndex >= this.HostControl.ItemData.Tasks.Count)
+            {
+                this.loadFinished = true;
             }
         }
 

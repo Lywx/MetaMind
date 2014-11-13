@@ -164,7 +164,6 @@
     <Compile Include="Settings\ColorPalette.cs" />
     <Compile Include="Settings\GraphicsSettings.cs" />
     <Compile Include="Settings\MessageSettings.cs" />
-    <Compile Include="Settings\WindowSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />

@@ -6,11 +6,7 @@
 
     public class ViewItemControl1D : ViewItemComponent
     {
-        protected ViewItemDataControl ItemDataControl { get; set; }
-
-        protected dynamic ItemFrameControl { get; set; }
-
-        protected dynamic ItemViewControl { get; set; }
+        private bool frameInitialized;
 
         #region Constructors
 
@@ -24,8 +20,6 @@
 
         #endregion Constructors
 
-        #region Public Properties
-
         public int Id { get; set; }
 
         public IItemRootFrame RootFrame
@@ -33,9 +27,29 @@
             get { return this.ItemFrameControl.RootFrame; }
         }
 
-        #endregion Public Properties
+        protected ViewItemDataControl ItemDataControl { get; set; }
+
+        protected dynamic ItemFrameControl { get; set; }
+
+        protected dynamic ItemViewControl { get; set; }
 
         #region Operations
+
+        /// <summary>
+        /// Only used by item view control. This method is called both by
+        /// mouse and keyboard selection.
+        /// </summary>
+        public virtual void CommonSelectIt()
+        {
+        }
+
+        /// <summary>
+        /// Only used by item view control. This method is called both by
+        /// mouse and keyboard selection.
+        /// </summary>
+        public virtual void CommonUnselectIt()
+        {
+        }
 
         /// <summary>
         /// Only used by root frame event handler, which will cause common
@@ -62,22 +76,6 @@
             this.ItemViewControl.SwapIt(draggingItem);
         }
 
-        /// <summary>
-        /// Only used by item view control. This method is called both by
-        /// mouse and keyboard selection.
-        /// </summary>
-        public virtual void CommonSelectIt()
-        {
-        }
-
-        /// <summary>
-        /// Only used by item view control. This method is called both by
-        /// mouse and keyboard selection.
-        /// </summary>
-        public virtual void CommonUnselectIt()
-        {
-        }
-
         #endregion Operations
 
         #region Update
@@ -86,8 +84,8 @@
         {
             get
             {
-                return Item.IsEnabled(ItemState.Item_Active) && 
-                       Item.IsEnabled(ItemState.Item_Selected) && 
+                return Item.IsEnabled(ItemState.Item_Active) &&
+                       Item.IsEnabled(ItemState.Item_Selected) &&
                       !Item.IsEnabled(ItemState.Item_Editing);
             }
         }
@@ -110,8 +108,20 @@
         {
             // view activation is controlled by item view control
             this.ItemViewControl.UpdateStructure(gameTime);
-            this.ItemFrameControl.UpdateStructure(gameTime);
-            this.ItemDataControl.UpdateStructure(gameTime);
+
+            // reduce lagging graphics 
+            if (!this.frameInitialized)
+            {
+                this.ItemFrameControl.UpdateStructure(gameTime);
+                this.frameInitialized = true;
+            }
+
+            // to improve performance
+            if (this.Active)
+            {
+                this.ItemFrameControl.UpdateStructure(gameTime);
+                this.ItemDataControl.UpdateStructure(gameTime);
+            }
         }
 
         #endregion Update

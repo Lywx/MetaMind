@@ -41,7 +41,7 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
 
             this.Item.Enable(ItemState.Item_Swaping);
 
-            var originCenter = this        .ViewControl.Scroll.RootCenterPoint(this        .ItemControl.Id);
+            var originCenter = this.ViewControl.Scroll.RootCenterPoint(this.ItemControl.Id);
             var targetCenter = draggingItem.ViewControl.Scroll.RootCenterPoint(draggingItem.ItemControl.Id);
 
             this.ViewControl.Swap.Initialize(originCenter, targetCenter);
@@ -52,15 +52,20 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
         public virtual void UpdateStructure(GameTime gameTime)
         {
             this.UpdateViewScroll();
-            this.UpdateViewSelection();
-            this.UpdateViewSwap();
+
+            // to improve performance
+            if (ItemControl.Active)
+            {
+                this.UpdateViewSelection();
+                this.UpdateViewSwap();
+            }
         }
 
         protected virtual void UpdateViewScroll()
         {
             this.ItemControl.Id = this.View.Items.IndexOf(this.Item);
 
-            if (View.IsEnabled(ViewState.View_Active) && 
+            if (View.IsEnabled(ViewState.View_Active) &&
                 ViewControl.Scroll.CanDisplay(ItemControl.Id))
             {
                 this.Item.Enable(ItemState.Item_Active);
@@ -70,9 +75,9 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
                 this.Item.Disable(ItemState.Item_Active);
             }
         }
-            
+
         /// <summary>
-        /// Item active state determination based on selection and view state 
+        /// Item active state determination based on selection and view state
         /// </summary>
         private void UpdateViewSelection()
         {
