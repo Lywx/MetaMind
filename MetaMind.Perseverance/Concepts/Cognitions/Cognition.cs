@@ -5,14 +5,17 @@ using System.Runtime.Serialization;
 namespace MetaMind.Perseverance.Concepts.Cognitions
 {
     [DataContract,
-    KnownType( typeof( Consciousness ) ),
-    KnownType( typeof( Synchronization ) )]
+    KnownType(typeof(Consciousness)),
+    KnownType(typeof(Synchronization))]
     public class Cognition : EngineObject
     {
         #region Components
 
-        [DataMember] public Consciousness   Consciousness   { get; set; }
-        [DataMember] public Synchronization Synchronization { get; set; }
+        [DataMember]
+        public Consciousness Consciousness { get; set; }
+
+        [DataMember]
+        public Synchronization Synchronization { get; set; }
 
         public bool Awake { get { return Consciousness.AwakeCondition; } }
 
@@ -30,13 +33,12 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
         #region Update
 
-        public void Update( GameTime gameTime )
+        public void Update(GameTime gameTime)
         {
-            Consciousness = Consciousness.Update( gameTime );
-            Synchronization              .Update( gameTime );
+            Consciousness = Consciousness.Update(gameTime);
+            Synchronization              .Update(gameTime);
         }
 
         #endregion Update
-
     }
 }

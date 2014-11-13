@@ -17,10 +17,10 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
         {
         }
 
-        public ConsciousnessAwake( ConsciousnessSleepy state )
+        public ConsciousnessAwake(ConsciousnessSleepy state)
         {
-            SleepEndTime = state.SleepEndTime;
-            SleepStartTime = state.SleepStartTime;
+            SleepEndTime        = state.SleepEndTime;
+            SleepStartTime      = state.SleepStartTime;
             HistoricalAwakeSpan = state.HistoricalAwakeSpan;
             HistoricalSleepSpan = state.HistoricalSleepSpan;
         }
@@ -32,21 +32,22 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
         public ConsciousnessSleepy StartSleeping()
         {
             SleepStartTime = DateTime.Now;
-            if ( HasEverSlept )
+            if (HasEverSlept)
             {
                 AwakeSpan = SleepStartTime - SleepEndTime;
                 HistoricalAwakeSpan += AwakeSpan;
             }
+
             // add to event queue
-            var sleepStartedEvent = new EventBase( ( int )
-                AdventureEventType.SleepStarted,
-                new ConsciousnessSleepStartedEventArgs( this ) );
-            EventManager.TriggerEvent( sleepStartedEvent );
-            if ( HasEverSlept )
+            var sleepStartedEvent = new EventBase(
+                (int)AdventureEventType.SleepStarted,
+                new ConsciousnessSleepStartedEventArgs(this));
+            EventManager.TriggerEvent(sleepStartedEvent);
+            if (HasEverSlept)
             {
-                MessageManager.PopMessages( "Awake for " + AwakeSpan.ToString( "hh':'mm':'ss''" ) );
+                MessageManager.PopMessages("Awake for " + AwakeSpan.ToString("hh':'mm':'ss''"));
             }
-            return new ConsciousnessSleepy( this );
+            return new ConsciousnessSleepy(this);
         }
 
         #endregion Conversion

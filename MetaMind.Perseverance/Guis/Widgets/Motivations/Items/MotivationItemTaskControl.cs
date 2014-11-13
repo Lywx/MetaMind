@@ -11,6 +11,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
     using MetaMind.Engine.Guis.Elements.Regions;
     using MetaMind.Engine.Guis.Elements.ViewItems;
     using MetaMind.Engine.Guis.Elements.Views;
+    using MetaMind.Perseverance.Guis.Modules;
 
     using Microsoft.Xna.Framework;
 
@@ -28,8 +29,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             if (this.TaskTracer == null)
             {
                 this.TaskTracer = new MotivationTaskTracer(ItemControl, new MotivationTaskTracerSettings());
-                // TODO:
-                //this.TaskTracer.Load();
             }
 
             this.TaskTracer.Show();

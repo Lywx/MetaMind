@@ -160,6 +160,7 @@ namespace MetaMind.Engine.Guis.Elements.Views
             this.previousId = this.currentId;
             this.currentId = this.ViewControl.IdFrom(row, column);
         }
+
         private void SelectInit()
         {
             this.Select(this.previousId.HasValue ? this.previousId.Value : 0);

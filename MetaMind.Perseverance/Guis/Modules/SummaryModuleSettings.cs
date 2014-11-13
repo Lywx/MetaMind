@@ -22,8 +22,6 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         public int   LoftyProfessionHour = 4;
 
-        #region Source
-
         public Consciousness Consciousness
         {
             get { return Perseverance.Adventure.Cognition.Consciousness; }
@@ -33,7 +31,5 @@ namespace MetaMind.Perseverance.Guis.Modules
         {
             get { return Perseverance.Adventure.Cognition.Synchronization; }
         }
-
-        #endregion Source
     }
 }

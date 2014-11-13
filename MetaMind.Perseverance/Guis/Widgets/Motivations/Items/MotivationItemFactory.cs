@@ -2,6 +2,7 @@
 {
     using MetaMind.Engine.Guis.Elements.Items;
     using MetaMind.Engine.Guis.Elements.ViewItems;
+    using MetaMind.Perseverance.Concepts.MotivationEntries;
 
     public class MotivationItemFactory : IViewItemFactory
     {
@@ -22,7 +23,13 @@
 
         public void RemoveData(IViewItem item)
         {
+            MotivationEntry motivation = item.ItemData;
+            
+            // remove from source
             Perseverance.Adventure.Motivationlist.Remove(item.ItemData, item.ViewSettings.Space);
+            
+            // remove sub-tasks
+            motivation.Tasks.ForEach(task => Perseverance.Adventure.Tasklist.Remove(task));
         }
     }
 }

@@ -9,28 +9,27 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
     [DataContract]
     public class Synchronization : EngineObject
     {
-        //---------------------------------------------------------------------
-
         #region Components
 
         [DataMember]
         private readonly SynchronizationDataProcessor   data        = new SynchronizationDataProcessor();
+
         [DataMember]
         private readonly SynchronizationDescription     description = new SynchronizationDescription();
+
         [DataMember]
         private readonly SynchronizationDailyStatistics statistics  = new SynchronizationDailyStatistics();
+
         [DataMember]
         private readonly SynchronizationTimer           timer       = new SynchronizationTimer();
-        
-        #endregion Components
 
-        //---------------------------------------------------------------------
+        #endregion Components
 
         #region Read-only Properties
 
         public double Acceleration
         {
-            get { return description.LevelAcceleration[ Level ]; }
+            get { return description.LevelAcceleration[Level]; }
         }
 
         public TimeSpan ElapsedTimeSinceTransition
@@ -48,10 +47,12 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
             get
             {
                 var level = 0;
-                for ( var i = 0 ; i < description.LevelSeconds.Length ; ++i )
+                for (var i = 0; i < description.LevelSeconds.Length; ++i)
                 {
-                    if ( timer.AccumulatedTime.TotalSeconds > description.LevelSeconds[ i ] )
+                    if (timer.AccumulatedTime.TotalSeconds > description.LevelSeconds[i])
+                    {
                         level = i;
+                    }
                 }
                 return level;
             }
@@ -59,7 +60,7 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
         public double LevelSeconds
         {
-            get { return description.LevelSeconds[ Level ]; }
+            get { return description.LevelSeconds[Level]; }
         }
 
         public int NextLevel
@@ -69,7 +70,7 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
         public double NextLevelSeconds
         {
-            get { return description.LevelSeconds[ NextLevel ]; }
+            get { return description.LevelSeconds[NextLevel]; }
         }
 
         public double ProgressPercent
@@ -80,9 +81,10 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
                 var right  = NextLevelSeconds;
                 var middle = Seconds;
 
-                return ( middle - left ) / ( right - left );
+                return (middle - left) / (right - left);
             }
         }
+
         public double Seconds
         {
             get { return timer.AccumulatedTime.TotalSeconds; }
@@ -90,7 +92,7 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
         public string State
         {
-            get { return description.LevelStates[ Level ]; }
+            get { return description.LevelStates[Level]; }
         }
 
         public int SynchronizedHourMax
@@ -110,8 +112,6 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
         #endregion Read-only Properties
 
-        //---------------------------------------------------------------------
-
         #region Operations
 
         public void ResetForTomorrow()
@@ -119,9 +119,9 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
             statistics.Reset();
         }
 
-        public void Start( TaskEntry target )
+        public void Start(TaskEntry target)
         {
-            data .Accept( target );
+            data.Accept(target);
             timer.Start();
         }
 
@@ -129,19 +129,17 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
         {
             TimeSpan timePassed;
 
-            data      .Release( out timePassed );
-            statistics.Add( timePassed );
-            timer     .Stop();
+            data.Release(out timePassed);
+            statistics.Add(timePassed);
+            timer.Stop();
         }
 
-        public void Update( GameTime gameTime )
+        public void Update(GameTime gameTime)
         {
-            timer.Update( gameTime );
-            data .Update( gameTime, timer.Enabled, Acceleration );
+            timer.Update(gameTime);
+            data.Update(gameTime, timer.Enabled, Acceleration);
         }
 
         #endregion Operations
-
-        //---------------------------------------------------------------------
     }
 }

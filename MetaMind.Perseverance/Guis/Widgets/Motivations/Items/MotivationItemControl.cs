@@ -49,10 +49,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             ItemTaskControl.UnselectIt();
         }
 
-        public void RemoveData()
-        {
-        }
-
         public void DeleteIt()
         {
             // remove from gui

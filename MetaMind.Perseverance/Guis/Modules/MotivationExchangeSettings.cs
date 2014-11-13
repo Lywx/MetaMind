@@ -12,7 +12,6 @@ namespace MetaMind.Perseverance.Guis.Modules
     public class MotivationExchangeSettings : ICloneable
     {
         public readonly MotivationItemSettings ItemSettings = new MotivationItemSettings();
-        public readonly MotivationItemFactory  ItemFactory  = new MotivationItemFactory();
         public readonly MotivationViewFactory  ViewFactory  = new MotivationViewFactory();
 
         public readonly MotivationViewSettings PastViewSettings = new MotivationViewSettings

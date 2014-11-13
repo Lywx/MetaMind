@@ -10,12 +10,18 @@ namespace MetaMind.Perseverance.Components
 
         private static SaveManager singleton;
 
-        public static SaveManager GetInstance( Game game )
+        public static SaveManager GetInstance(Game game)
         {
-            if ( singleton == null )
-                singleton = new SaveManager( game );
-            if ( game != null )
-                game.Components.Add( singleton );
+            if (singleton == null)
+            {
+                singleton = new SaveManager(game);
+            }
+
+            if (game != null)
+            {
+                game.Components.Add(singleton);
+            }
+
             return singleton;
         }
 
@@ -39,8 +45,8 @@ namespace MetaMind.Perseverance.Components
 
         #region Constructors
 
-        private SaveManager( Game game )
-            : base( game )
+        private SaveManager(Game game)
+            : base(game)
         {
         }
 
@@ -48,14 +54,18 @@ namespace MetaMind.Perseverance.Components
 
         #region Update
 
-        public override void Update( GameTime gameTime )
+        public override void Update(GameTime gameTime)
         {
-            if ( AutoSaveCondition )
+            if (AutoSaveCondition)
+            {
                 AutoSave();
+            }
             else
+            {
                 autoSaved = false;
+            }
 
-            base.Update( gameTime );
+            base.Update(gameTime);
         }
 
         #endregion Update
@@ -64,11 +74,13 @@ namespace MetaMind.Perseverance.Components
 
         private void AutoSave()
         {
-            if ( autoSaved )
+            if (autoSaved)
+            {
                 return;
+            }
 
             Perseverance.Adventure.Save();
-            GameEngine.MessageManager.PopMessages( "Progress saved." );
+            GameEngine.MessageManager.PopMessages("Progress saved.");
 
             autoSaved = true;
         }
