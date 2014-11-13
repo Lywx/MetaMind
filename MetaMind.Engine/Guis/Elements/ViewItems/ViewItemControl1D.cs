@@ -82,7 +82,7 @@
 
         #region Update
 
-        public bool AcceptInput
+        public virtual bool AcceptInput
         {
             get
             {

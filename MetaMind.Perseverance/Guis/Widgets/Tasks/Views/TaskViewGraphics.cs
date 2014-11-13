@@ -22,11 +22,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
             // draw active items
             base.Draw(gameTime, (byte)frameAlpha);
 
-            // TODO: REMOVE
-            // draw state test 
-            var test = new StateTestGraphics(View.States, typeof(ViewState));
-            test.DrawStates(ViewSettings.StartPoint, 300, 25);
-
             DrawRegion(gameTime);
             DrawScrollBar(gameTime);
         }
@@ -53,11 +48,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 
         private void DrawRegion(GameTime gameTime)
         {
-            // TODO: REMOVE
-            // draw state test 
-            var test = new StateTestGraphics(View.Control.Region.States, typeof(RegionState));
-            test.DrawStates(ViewSettings.StartPoint, -200, 25);
-            
             Primitives2D.DrawRectangle(
                 ScreenManager.SpriteBatch,
                 RectangleExt.Extend(ViewControl.Region.Frame.Rectangle, ViewSettings.BorderMargin),

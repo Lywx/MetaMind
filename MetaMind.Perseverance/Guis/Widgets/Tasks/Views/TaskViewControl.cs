@@ -8,6 +8,7 @@
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 {
     using MetaMind.Engine.Components.Inputs;
+    using MetaMind.Engine.Guis.Elements.Items;
     using MetaMind.Engine.Guis.Elements.Regions;
     using MetaMind.Engine.Guis.Elements.ViewItems;
     using MetaMind.Engine.Guis.Elements.Views;
@@ -81,6 +82,11 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
         #endregion Operations
 
         #region Update
+
+        public bool Locked
+        {
+            get { return View.IsEnabled(ViewState.Item_Editting); }
+        }
 
         public override void UpdateInput(GameTime gameTime)
         {

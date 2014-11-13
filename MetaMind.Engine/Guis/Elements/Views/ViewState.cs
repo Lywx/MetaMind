@@ -3,7 +3,6 @@
     public enum ViewState
     {
         // ReSharper disable InconsistentNaming
-
         View_Active,
 
         View_Has_Focus,
@@ -13,7 +12,6 @@
         Item_Dragging,
 
         // ReSharper restore InconsistentNaming
-
         StateNum,
     }
 

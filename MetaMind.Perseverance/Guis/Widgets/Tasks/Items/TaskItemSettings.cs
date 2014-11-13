@@ -71,7 +71,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
             //-----------------------------------------------------------------
             IdSize               = 0.7f;
-            IdFrameSize          = new Point( 24, 24 );
+            IdFrameSize          = new Point(24, 24);
             IdFrameColor         = ColorPalette.TransparentColor1;
 
             //-----------------------------------------------------------------

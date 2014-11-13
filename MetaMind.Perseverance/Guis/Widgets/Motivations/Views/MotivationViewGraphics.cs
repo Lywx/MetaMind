@@ -19,15 +19,5 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
             : base(view, viewSettings, itemSettings)
         {
         }
-
-        public override void Draw(GameTime gameTime, byte alpha)
-        {
-            base.Draw(gameTime, alpha);
-            
-            // TODO: REMOVE
-            // draw state test 
-            var test = new StateTestGraphics(View.States, typeof(ViewState));
-            test.DrawStates(ViewSettings.StartPoint, 300, 25);
-        }
     }
 }

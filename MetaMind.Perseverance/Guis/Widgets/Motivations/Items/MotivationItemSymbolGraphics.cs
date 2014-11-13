@@ -94,9 +94,21 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
         private void DrawShadow()
         {
             var scrollCenter = ViewControl.Scroll.RootCenterPoint(ItemControl.Id);
-            var destination  = new Rectangle(scrollCenter.X, scrollCenter.Y, ItemControl.RootFrame.Rectangle.Width, ItemControl.RootFrame.Rectangle.Height);
+            var destination = new Rectangle(
+                scrollCenter.X,
+                scrollCenter.Y,
+                ItemControl.RootFrame.Rectangle.Width,
+                ItemControl.RootFrame.Rectangle.Height);
 
-            ScreenManager.SpriteBatch.Draw(symbolTexture, destination, null, ColorPalette.TransparentColor3, 0f, this.SymbolOrigin, SpriteEffects.None, 0f);
+            ScreenManager.SpriteBatch.Draw(
+                symbolTexture,
+                destination,
+                null,
+                ColorPalette.TransparentColor3,
+                0f,
+                this.SymbolOrigin,
+                SpriteEffects.None,
+                0f);
         }
 
         private void UpdateRotation()

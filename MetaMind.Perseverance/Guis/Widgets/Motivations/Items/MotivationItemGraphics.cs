@@ -10,6 +10,8 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
     using System.Collections.Generic;
     using System.Globalization;
 
+    using C3.Primtive2DXna;
+
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Elements.Items;
@@ -28,6 +30,16 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
         {
             this.symbol = new MotivationItemSymbolGraphics(item);
             this.task   = new MotivationItemTaskGraphics(item);
+        }
+
+        protected override Vector2 IdCenter
+        {
+            get
+            {
+                return new Vector2(
+                    ItemControl.RootFrame.Rectangle.Center.X,
+                    ItemControl.RootFrame.Rectangle.Top - 15);
+            }
         }
 
         private Vector2 NamePosition
@@ -59,35 +71,33 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
         protected override void DrawId(byte alpha)
         {
             FontManager.DrawCenteredText(
-                this.ItemSettings.IdFont, 
-                this.ItemControl.Id.ToString(new CultureInfo("en-US")),
+                ItemSettings.IdFont, 
+                ItemControl.Id.ToString(new CultureInfo("en-US")),
                 this.IdCenter,
-                this.Item.IsEnabled(ItemState.Item_Pending)
-                    ? this.ItemSettings.IdPendingColor
-                    : this.ItemSettings.IdColor, 
-                this.ItemSettings.IdSize);
+                !Item.IsEnabled(ItemState.Item_Pending) ? ItemSettings.IdColor : ItemSettings.IdPendingColor, 
+                ItemSettings.IdSize);
         }
 
         private void DrawName(byte alpha)
         {
-            if (!this.Item.IsEnabled(ItemState.Item_Selected))
+            if (!Item.IsEnabled(ItemState.Item_Selected))
             {
                 return;
             }
 
             List<string> text = Text.BreakTextIntoList(
-                this.ItemSettings.NameFont, 
-                this.ItemSettings.NameSize, 
-                this.ItemData.Name, 
-                (float)this.ViewSettings.RootMargin.X * 4);
+                ItemSettings.NameFont, 
+                ItemSettings.NameSize, 
+                ItemData.Name, 
+                (float)ViewSettings.RootMargin.X * 6);
             for (var i = 0; i < text.Count; i++)
             {
                 FontManager.DrawCenteredText(
-                    this.ItemSettings.NameFont, 
+                    ItemSettings.NameFont, 
                     text[i], 
-                    this.NamePosition + new Vector2(0, this.ItemSettings.NameLineMargin) * i, 
-                    ColorExt.MakeTransparent(this.ItemSettings.NameColor, alpha), 
-                    this.ItemSettings.NameSize);
+                    this.NamePosition + new Vector2(0, ItemSettings.NameLineMargin) * i, 
+                    ColorExt.MakeTransparent(ItemSettings.NameColor, alpha), 
+                    ItemSettings.NameSize);
             }
         }
 

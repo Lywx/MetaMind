@@ -82,7 +82,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 
             // keyboard
             //-----------------------------------------------------------------
-            if (AcceptInput)
+            if (this.AcceptInput)
             {
                 // normal status
                 if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.MotivationEditItem))

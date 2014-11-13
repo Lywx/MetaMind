@@ -31,6 +31,32 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
         // TODO: not implemented
         public TaskItemErrorControl ItemErrorControl { get; private set; }
 
+        #endregion Constructors
+
+        #region Operations
+
+        private void DeleteIt()
+        {
+            // remove from gui
+            View.Items.Remove(Item);
+
+            // remove from data source
+            View.Control.ItemFactory.RemoveData(Item);
+        }
+
+        #endregion Operations
+
+        #region Update
+
+        public bool Locked
+        {
+            get
+            {
+                return Item.IsEnabled(ItemState.Item_Editing) || 
+                       Item.IsEnabled(ItemState.Item_Pending);
+            }
+        }
+
         public override void UpdateInput(GameTime gameTime)
         {
             // mouse
@@ -39,7 +65,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
             // keyboard
             //-----------------------------------------------------------------
-            if (AcceptInput)
+            if (this.AcceptInput)
             {
                 // normal status
                 if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskEditItem))
@@ -54,7 +80,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
                 }
 
                 // in pending status
-                if (this.Item.IsEnabled(ItemState.Item_Pending))
+                if (Item.IsEnabled(ItemState.Item_Pending))
                 {
                     if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.N))
                     {
@@ -85,15 +111,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
             }
         }
 
-        private void DeleteIt()
-        {
-            // remove from gui
-            View.Items.Remove(Item);
-
-            // remove from data source
-            View.Control.ItemFactory.RemoveData(Item);
-        }
-
-        #endregion Constructors
+        #endregion Update
     }
 }

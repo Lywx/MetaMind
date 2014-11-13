@@ -15,6 +15,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
     using MetaMind.Perseverance.Concepts.MotivationEntries;
     using MetaMind.Perseverance.Guis.Widgets.Motivations.Banners;
     using MetaMind.Perseverance.Guis.Widgets.Motivations.Items;
+    using MetaMind.Perseverance.Guis.Widgets.Tasks;
 
     using Microsoft.Xna.Framework;
 
@@ -58,6 +59,22 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
         #endregion
 
         #region Update
+
+        /// <summary>
+        /// Make view reject input when editing task view.
+        /// </summary>
+        public override bool AcceptInput
+        {
+            get
+            {
+                return base.AcceptInput
+                       && !View.Items.Exists(
+                           item =>
+                           item.ItemControl.ItemTaskControl.TaskTracer != null
+                               ? item.ItemControl.ItemTaskControl.TaskTracer.View.Control.Locked
+                               : false);
+            }
+        }
 
         public override void UpdateInput(GameTime gameTime)
         {
