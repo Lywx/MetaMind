@@ -14,12 +14,11 @@ namespace MetaMind.Engine
 
         public GameEngine()
         {
-            //-----------------------------------------------------------------
             IsMouseVisible = true;
             IsFixedTimeStep = true;
 
-            //-----------------------------------------------------------------
             // graphics
+            //-----------------------------------------------------------------
             GraphicsManager = new GraphicsDeviceManager(this)
             {
                 PreferredBackBufferWidth = GraphicsSettings.Width,
@@ -27,13 +26,13 @@ namespace MetaMind.Engine
             };
             GraphicsManager.ApplyChanges();
 
-            //-----------------------------------------------------------------
             // content
+            //-----------------------------------------------------------------
             Content.RootDirectory = "Content";
             ContentManager = Content;
 
-            //------------------------------------------------------------------
             // audio
+            //------------------------------------------------------------------
             Debug.Assert(AudioManager == null);
             AudioManager = AudioManager.GetInstance(
                 this,
@@ -41,45 +40,45 @@ namespace MetaMind.Engine
                 @"Content\Audio\Wave Bank.xwb",
                 @"Content\Audio\Sound Bank.xsb");
 
-            //-----------------------------------------------------------------
             // folder
+            //-----------------------------------------------------------------
             Debug.Assert(FolderManager == null);
             FolderManager = FolderManager.GetInstance();
 
-            //------------------------------------------------------------------
             // screen
+            //------------------------------------------------------------------
             Debug.Assert(ScreenManager == null);
             ScreenManager = ScreenManager.GetInstance(this);
 
-            //------------------------------------------------------------------
             // process
+            //------------------------------------------------------------------
             Debug.Assert(ProcessManager == null);
             ProcessManager = ProcessManager.GetInstance(this);
 
-            //------------------------------------------------------------------
             // event
+            //------------------------------------------------------------------
             Debug.Assert(EventManager == null);
             EventManager = EventManager.GetInstance(this);
 
-            //------------------------------------------------------------------
             // input
+            //------------------------------------------------------------------
             Debug.Assert(InputEventManager == null);
             InputEventManager = InputEventManager.GetInstance(this);
             Debug.Assert(InputSequenceManager == null);
             InputSequenceManager = InputSequenceManager.GetInstance();
 
-            //------------------------------------------------------------------
             // font
+            //------------------------------------------------------------------
             Debug.Assert(FontManager == null);
             FontManager = FontManager.GetInstance();
 
-            //------------------------------------------------------------------
             // message
+            //------------------------------------------------------------------
             Debug.Assert(MessageManager == null);
             MessageManager = MessageManager.GetInstance();
 
-            //---------------------------------------------------------------------
             // runner
+            //---------------------------------------------------------------------
             Debug.Assert(RunnerManager == null);
             RunnerManager = RunnerManager.GetInstance(this);
         }
