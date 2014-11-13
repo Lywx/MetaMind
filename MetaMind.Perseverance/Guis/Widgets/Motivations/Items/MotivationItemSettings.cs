@@ -1,12 +1,15 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MotivationItemSettings.cs" company="Cogn">
+// <copyright file="MotivationItemSettings.cs" company="UESTC">
 //   Copyright (c) 2014 Lin Wuxiang
 //   All Rights Reserved.
 // </copyright>
+// <summary>
+//   
+// </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 {
-    using MetaMind.Engine.Components;
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Guis.Elements.Items;
 

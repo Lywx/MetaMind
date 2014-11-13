@@ -13,58 +13,68 @@ namespace MetaMind.Perseverance.Concepts.MotivationEntries
     {
         public Motivationlist()
         {
-            PastMotivations   = new List<MotivationEntry>();
-            NowMotivations    = new List<MotivationEntry>();
-            FutureMotivations = new List<MotivationEntry>();
+            this.PastMotivations   = new List<MotivationEntry>();
+            this.NowMotivations    = new List<MotivationEntry>();
+            this.FutureMotivations = new List<MotivationEntry>();
         }
 
-        [DataMember] public List<MotivationEntry> FutureMotivations { get; private set; }
-        [DataMember] public List<MotivationEntry> NowMotivations    { get; private set; }
-        [DataMember] public List<MotivationEntry> PastMotivations   { get; private set; }
+        [DataMember]
+        public List<MotivationEntry> FutureMotivations { get; private set; }
 
-        public MotivationEntry Create( MotivationSpace space )
+        [DataMember]
+        public List<MotivationEntry> NowMotivations { get; private set; }
+
+        [DataMember]
+        public List<MotivationEntry> PastMotivations { get; private set; }
+
+        public MotivationEntry Create(MotivationSpace space)
         {
             var entry = new MotivationEntry();
-            switch ( space )
+            switch (space)
             {
                 case MotivationSpace.Past:
-                {
-                    PastMotivations.Add( entry );
-                    break;
-                }
+                    {
+                        this.PastMotivations.Add(entry);
+                        break;
+                    }
+
                 case MotivationSpace.Now:
-                {
-                    NowMotivations.Add( entry );
-                    break;
-                }
+                    {
+                        this.NowMotivations.Add(entry);
+                        break;
+                    }
+
                 case MotivationSpace.Future:
-                {
-                    FutureMotivations.Add( entry );
-                    break;
-                }
+                    {
+                        this.FutureMotivations.Add(entry);
+                        break;
+                    }
             }
+
             return entry;
         }
 
-        public void Remove( MotivationEntry entry, MotivationSpace space )
+        public void Remove(MotivationEntry entry, MotivationSpace space)
         {
-            switch ( space )
+            switch (space)
             {
                 case MotivationSpace.Past:
-                {
-                    PastMotivations.Remove( entry );
-                    break;
-                }
+                    {
+                        this.PastMotivations.Remove(entry);
+                        break;
+                    }
+
                 case MotivationSpace.Now:
-                {
-                    NowMotivations.Remove( entry );
-                    break;
-                }
+                    {
+                        this.NowMotivations.Remove(entry);
+                        break;
+                    }
+
                 case MotivationSpace.Future:
-                {
-                    FutureMotivations.Remove( entry );
-                    break;
-                }
+                    {
+                        this.FutureMotivations.Remove(entry);
+                        break;
+                    }
             }
         }
     }

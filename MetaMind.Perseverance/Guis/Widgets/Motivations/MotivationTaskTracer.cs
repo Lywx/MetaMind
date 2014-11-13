@@ -9,44 +9,35 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
 {
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Extensions;
-    using MetaMind.Engine.Guis.Elements.Regions;
     using MetaMind.Engine.Guis.Elements.Views;
     using MetaMind.Engine.Guis.Modules;
     using MetaMind.Perseverance.Guis.Widgets.Motivations.Items;
 
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Media;
 
     public class MotivationTaskTracer : Module<MotivationTaskTracerSettings>
     {
-        private readonly MotivationItemControl hostControl;
-
         public MotivationTaskTracer(MotivationItemControl itemControl, MotivationTaskTracerSettings settings)
             : base(settings)
         {
-            this.hostControl = itemControl;
-
-            this.View = new View(this.Settings.ViewSettings, this.Settings.ItemSettings, this.Settings.ViewFactory);
+            this.HostControl = itemControl;
+            this.View        = new View(this.Settings.ViewSettings, this.Settings.ItemSettings, this.Settings.ViewFactory);
         }
 
         public IView View { get; private set; }
 
+        private MotivationItemControl HostControl { get; set; }
+
         public void Close()
         {
-            // clear highlight
             this.View.Disable(ViewState.View_Active);
             this.View.Disable(ViewState.View_Has_Focus);
             this.View.Control.Selection.Clear();
         }
 
-        public override void Draw(GameTime gameTime, byte alpha)
-        {
-            this.View.Draw(gameTime, alpha);
-        }
-
         public override void Load()
         {
-            foreach (var task in this.hostControl.ItemData.Tasks)
+            foreach (var task in this.HostControl.ItemData.Tasks)
             {
                 this.View.Control.AddItem(task);
             }
@@ -54,16 +45,24 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
 
         public void Show()
         {
-            // show up tracer
             this.View.Enable(ViewState.View_Active);
+
+            // trigger selection to focus
             this.View.Control.Selection.Select(0);
+        }
+
+        #region Update and Draw
+
+        public override void Draw(GameTime gameTime, byte alpha)
+        {
+            this.View.Draw(gameTime, alpha);
         }
 
         public override void UpdateInput(GameTime gameTime)
         {
             // mouse
             //-----------------------------------------------------------------
-            if (View.Control.Active)
+            if (this.View.Control.Active)
             {
                 this.View.Control.Region.UpdateInput(gameTime);
             }
@@ -139,7 +138,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
                     this.View.Control.AddItem(task);
 
                     // add to host motivation's tasks
-                    this.hostControl.ItemData.Tasks.Add(task);
+                    this.HostControl.ItemData.Tasks.Add(task);
                 }
             }
 
@@ -157,9 +156,10 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations
         public override void UpdateStructure(GameTime gameTime)
         {
             // make sure that task region and task items all follow the host location changes
-            this.View.ViewSettings.StartPoint = Vector2Ext.ToPoint(this.hostControl.RootFrame.Center.ToVector2() + this.hostControl.ViewSettings.TracerMargin);
+            this.View.ViewSettings.StartPoint = Vector2Ext.ToPoint(this.HostControl.RootFrame.Center.ToVector2() + this.HostControl.ViewSettings.TracerMargin);
 
             this.View.UpdateStructure(gameTime);
         }
+        #endregion
     }
 }

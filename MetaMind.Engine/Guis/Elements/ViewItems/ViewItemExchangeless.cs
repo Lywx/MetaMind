@@ -8,59 +8,71 @@
 
     public interface IViewItem : IItemObject
     {
-        dynamic       ItemData     { get; }
-        dynamic       ItemControl  { get; set; }
+        dynamic ItemControl { get; set; }
+
+        dynamic ItemData { get; set; }
         IItemGraphics ItemGraphics { get; set; }
-        dynamic       View         { get; }
-        dynamic       ViewControl  { get; }
-        dynamic       ViewSettings { get; }
+
+        dynamic View { get; }
+
+        dynamic ViewControl { get; }
+
+        dynamic ViewSettings { get; }
     }
 
     public class ViewItemExchangeless : ItemObject, IViewItem
     {
-        public ViewItemExchangeless( dynamic view, ICloneable viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory )
-            : base( itemSettings )
+        public ViewItemExchangeless(dynamic view, ICloneable viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
+            : base(itemSettings)
         {
             this.View         = view;
             this.ViewSettings = viewSettings;
 
-            this.ItemData     = itemFactory.CreateData( this );
-            this.ItemControl  = itemFactory.CreateControl( this );
-            this.ItemGraphics = itemFactory.CreateGraphics( this );
+            this.ItemData     = itemFactory.CreateData(this);
+            this.ItemControl  = itemFactory.CreateControl(this);
+            this.ItemGraphics = itemFactory.CreateGraphics(this);
         }
 
-        public ViewItemExchangeless( dynamic view, ICloneable viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory, dynamic itemData )
-            : base( itemSettings )
+        public ViewItemExchangeless(dynamic view, ICloneable viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory, dynamic itemData)
+            : base(itemSettings)
         {
             this.View         = view;
             this.ViewSettings = viewSettings;
 
             this.ItemData     = itemData;
-            this.ItemControl  = itemFactory.CreateControl( this );
-            this.ItemGraphics = itemFactory.CreateGraphics( this );
+            this.ItemControl  = itemFactory.CreateControl(this);
+            this.ItemGraphics = itemFactory.CreateGraphics(this);
         }
 
-        public dynamic       ItemData     { get; set; }
-        public dynamic       ItemControl  { get; set; }
+        public dynamic ItemControl { get; set; }
+
+        public dynamic ItemData { get; set; }
+
         public IItemGraphics ItemGraphics { get; set; }
-        public dynamic       View         { get; protected set; }
-        public dynamic       ViewControl  { get { return this.View.Control; } }
-        public dynamic       ViewSettings { get; protected set; }
 
-        public override void Draw( GameTime gameTime, byte alpha )
+        public dynamic View { get; protected set; }
+
+        public dynamic ViewControl
         {
-            this.ItemGraphics.Draw( gameTime, alpha );
+            get { return this.View.Control; }
         }
 
-        public override void UpdateInput( GameTime gameTime )
+        public dynamic ViewSettings { get; protected set; }
+
+        public override void Draw(GameTime gameTime, byte alpha)
         {
-            this.ItemControl.UpdateInput( gameTime );
+            this.ItemGraphics.Draw(gameTime, alpha);
         }
 
-        public override void UpdateStructure( GameTime gameTime )
+        public override void UpdateInput(GameTime gameTime)
         {
-            this.ItemControl .UpdateStructure( gameTime );
-            this.ItemGraphics.Update( gameTime );
+            this.ItemControl.UpdateInput(gameTime);
+        }
+
+        public override void UpdateStructure(GameTime gameTime)
+        {
+            this.ItemControl. UpdateStructure(gameTime);
+            this.ItemGraphics.Update(gameTime);
         }
     }
 }

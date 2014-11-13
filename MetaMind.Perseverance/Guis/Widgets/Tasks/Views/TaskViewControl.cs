@@ -40,6 +40,46 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 
         #endregion Public Properties
 
+        #region Operations
+
+        public virtual void AddItem(TaskEntry entry)
+        {
+            this.View.Items.Add(
+                new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory, entry));
+        }
+
+        public virtual void AddItem()
+        {
+            this.View.Items.Add(
+                new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory));
+        }
+
+        public void MoveDown()
+        {
+            this.ScrollBar.Trigger();
+            this.Selection.MoveDown();
+        }
+
+        public override void MoveLeft()
+        {
+            this.ScrollBar.Trigger();
+            this.Selection.MoveLeft();
+        }
+
+        public override void MoveRight()
+        {
+            this.ScrollBar.Trigger();
+            this.Selection.MoveRight();
+        }
+
+        public void MoveUp()
+        {
+            this.ScrollBar.Trigger();
+            this.Selection.MoveUp();
+        }
+
+        #endregion Operations
+
         #region Update
 
         public override void UpdateInput(GameTime gameTime)
@@ -146,7 +186,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
             {
                 View.Enable(ViewState.View_Has_Focus);
             }
-            else if (this.View.IsEnabled(ViewState.View_Has_Selection))
+            else if (View.IsEnabled(ViewState.View_Has_Selection))
             {
                 View.Enable(ViewState.View_Has_Focus);
             }
@@ -157,46 +197,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
         }
 
         #endregion Update
-
-        #region Operations
-
-        public virtual void AddItem(TaskEntry entry)
-        {
-            this.View.Items.Add(
-                new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory, entry));
-        }
-
-        public virtual void AddItem()
-        {
-            this.View.Items.Add(
-                new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory));
-        }
-
-        public void MoveDown()
-        {
-            this.ScrollBar.Trigger();
-            this.Selection.MoveDown();
-        }
-
-        public override void MoveLeft()
-        {
-            this.ScrollBar.Trigger();
-            this.Selection.MoveLeft();
-        }
-
-        public override void MoveRight()
-        {
-            this.ScrollBar.Trigger();
-            this.Selection.MoveRight();
-        }
-
-        public void MoveUp()
-        {
-            this.ScrollBar.Trigger();
-            this.Selection.MoveUp();
-        }
-
-        #endregion Operations
 
         #region Configurations
 

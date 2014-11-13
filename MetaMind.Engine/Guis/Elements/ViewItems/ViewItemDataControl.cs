@@ -54,7 +54,6 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
 
         public void UpdateStructure(GameTime gameTime)
         {
-            // TODO: add input allowance structure
         }
 
         private void EditStart(string targetName)

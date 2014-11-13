@@ -44,8 +44,6 @@ namespace MetaMind.Engine.Guis.Elements.Views
         {
         }
 
-        #region IViewSelectionControl1D Members
-
         public bool HasSelected
         {
             get { return this.currentColumn != null; }
@@ -56,6 +54,8 @@ namespace MetaMind.Engine.Guis.Elements.Views
             this.previousColumn = this.currentColumn;
             this.currentColumn = null;
             
+            // TODO: may not be a good design
+            // TODO: not consistent with 2D
             View.Disable(ViewState.View_Has_Selection);
         }
 
@@ -109,8 +109,6 @@ namespace MetaMind.Engine.Guis.Elements.Views
             this.previousColumn = this.currentColumn;
             this.currentColumn = id;
         }
-
-        #endregion
 
         private bool IsLeftmost(int column)
         {

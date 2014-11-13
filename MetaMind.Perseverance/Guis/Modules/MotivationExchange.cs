@@ -33,17 +33,17 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         public override void Load()
         {
-            foreach (var entry in Settings.GetPastMotivations())
+            foreach (var entry in MotivationExchangeSettings.GetPastMotivations())
             {
                 pastView.Control.AddItem(entry);
             }
 
-            foreach (var entry in Settings.GetNowMotivations())
+            foreach (var entry in MotivationExchangeSettings.GetNowMotivations())
             {
                 nowView.Control.AddItem(entry);
             }
 
-            foreach (var entry in Settings.GetFutureMotivations())
+            foreach (var entry in MotivationExchangeSettings.GetFutureMotivations())
             {
                 futureView.Control.AddItem(entry);
             }

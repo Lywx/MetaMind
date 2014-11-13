@@ -24,7 +24,15 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
             this.ViewControl.Selection.Select(this.ItemControl.Id);
         }
 
-        public void SwapIt(IViewItem draggingItem)
+        public void MouseUnselectIt()
+        {
+            if (this.ViewControl.Selection.IsSelected(this.ItemControl.Id))
+            {
+                this.ViewControl.Selection.Clear();
+            }
+        }
+
+        public virtual void SwapIt(IViewItem draggingItem)
         {
             if (this.Item.IsEnabled(ItemState.Item_Swaping))
             {
@@ -39,14 +47,6 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
             this.ViewControl.Swap.Initialize(originCenter, targetCenter);
 
             ProcessManager.AttachProcess(new ViewItemSwapProcess(draggingItem, this.Item));
-        }
-
-        public void MouseUnselectIt()
-        {
-            if (this.ViewControl.Selection.IsSelected(this.ItemControl.Id))
-            {
-                this.ViewControl.Selection.Clear();
-            }
         }
 
         public virtual void UpdateStructure(GameTime gameTime)

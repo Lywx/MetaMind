@@ -17,6 +17,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             : base(item)
         {
             ItemFrameControl = new MotivationItemFrameControl(item);
+            ItemViewControl  = new MotivationItemViewControl(item);
 
             ItemSymbolControl = new MotivationItemSymbolControl(item);
             ItemTaskControl   = new MotivationItemTaskControl(item);
@@ -48,15 +49,17 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             ItemTaskControl.UnselectIt();
         }
 
+        public void RemoveData()
+        {
+        }
+
         public void DeleteIt()
         {
             // remove from gui
             View.Items.Remove(Item);
 
-            // remove from data source
             View.Control.ItemFactory.RemoveData(Item);
         }
-
 
         #endregion
 

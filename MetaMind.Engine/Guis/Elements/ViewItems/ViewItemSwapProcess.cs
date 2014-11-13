@@ -1,25 +1,28 @@
 namespace MetaMind.Engine.Guis.Elements.ViewItems
 {
+    using System.Diagnostics;
+
     using MetaMind.Engine.Components.Processes;
     using MetaMind.Engine.Guis.Elements.Items;
     using MetaMind.Engine.Guis.Elements.Views;
     using Microsoft.Xna.Framework;
-    using System.Diagnostics;
 
     public class ViewItemSwapProcess : ProcessBase
     {
-        private const int updateNum = 6;
-
-        private readonly IViewItem draggedItem;
-        private readonly IViewItem swappingItem;
-        private readonly IViewSwapControl swapControl;
+        private const int UpdateNum = 6;
 
         public ViewItemSwapProcess(IViewItem draggedItem, IViewItem swappingItem)
         {
-            this.draggedItem = draggedItem;
-            this.swappingItem = swappingItem;
-            this.swapControl = swappingItem.ViewControl.Swap;
+            this.DraggedItem = draggedItem;
+            this.SwappingItem = swappingItem;
+            this.SwapControl = swappingItem.ViewControl.Swap;
         }
+
+        protected IViewItem DraggedItem { get; private set; }
+
+        protected IViewSwapControl SwapControl { get; private set; }
+
+        protected IViewItem SwappingItem { get; private set; }
 
         public override void OnAbort()
         {
@@ -31,45 +34,62 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
 
         public override void OnSuccess()
         {
-            var inSameView = ReferenceEquals(this.swappingItem.View, this.draggedItem.View);
+            var inSameView = ReferenceEquals(this.SwappingItem.View, this.DraggedItem.View);
             if (inSameView)
             {
-                // swap id then sort
-                var swappingId = this.swappingItem.ItemControl.Id;
-                this.swappingItem.ItemControl.Id = this.draggedItem.ItemControl.Id;
-                this.draggedItem.ItemControl.Id = swappingId;
-
-                this.swappingItem.View.Control.SortItems(ViewSortMode.Id);
+                this.SwapInView();
             }
             else
             {
-                var draggedItemExchangable = this.draggedItem as IViewItemExchangable;
-                var swappingItemExchangable = this.swappingItem as IViewItemExchangable;
-                Debug.Assert(draggedItemExchangable != null && swappingItemExchangable != null, "Not all item are exchangeable.");
-
-                // replace each another in their origial view
-                var swappingItemView = this.swappingItem.View;
-                var draggedItemView = this.draggedItem.View;
-
-                draggedItemExchangable.ExchangeTo(swappingItemView, this.swappingItem.ItemControl.Id);
-                swappingItemExchangable.ExchangeTo(draggedItemView, this.draggedItem.ItemControl.Id);
+                this.SwapAroundView();
             }
 
-            // refine selection to make sure the overall effect is smooth
-            this.draggedItem.ItemControl.MouseSelectIt();
-
-            // stop swapping state
-            this.swappingItem.Disable(ItemState.Item_Swaping);
+            this.EndSwap();
         }
 
         public override void OnUpdate(GameTime gameTime)
         {
-            this.swapControl.Progress += 1f / updateNum;
+            this.SwapControl.Progress += 1f / UpdateNum;
 
-            if (this.swapControl.Progress > 1)
+            if (this.SwapControl.Progress > 1)
             {
                 this.Succeed();
             }
+        }
+
+        protected void EndSwap()
+        {
+            // refine selection to make sure the overall effect is smooth
+            this.DraggedItem.ItemControl.MouseSelectIt();
+
+            // stop swapping state
+            this.SwappingItem.Disable(ItemState.Item_Swaping);
+        }
+
+        protected virtual void SwapAroundView()
+        {
+            var draggedExchangable = this.DraggedItem as IViewItemExchangable;
+            var swappingExchangable = this.SwappingItem as IViewItemExchangable;
+
+            Debug.Assert(draggedExchangable != null && swappingExchangable != null, "Not all item are exchangeable.");
+
+            // replace each another in their origial view
+            var swappingItemView = this.SwappingItem.View;
+            var draggedItemView = this.DraggedItem.View;
+
+            draggedExchangable.ExchangeTo(swappingItemView, this.SwappingItem.ItemControl.Id);
+            swappingExchangable.ExchangeTo(draggedItemView, this.DraggedItem.ItemControl.Id);
+        }
+
+        protected void SwapInView()
+        {
+            // swap id then sort
+            var swappingId = this.SwappingItem.ItemControl.Id;
+
+            this.SwappingItem.ItemControl.Id = this.DraggedItem.ItemControl.Id;
+            this.DraggedItem.ItemControl.Id = swappingId;
+
+            this.SwappingItem.View.Control.SortItems(ViewSortMode.Id);
         }
     }
 }

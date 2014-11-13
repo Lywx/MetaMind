@@ -1,99 +1,81 @@
 namespace MetaMind.Engine.Guis.Elements.Views
 {
+    using MetaMind.Engine.Guis.Elements.Items;
+    using MetaMind.Engine.Guis.Elements.ViewItems;
+    using Microsoft.Xna.Framework;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
 
-    using MetaMind.Engine.Guis.Elements.Items;
-    using MetaMind.Engine.Guis.Elements.ViewItems;
-
-    using Microsoft.Xna.Framework;
-
     public interface IViewSwapControl
     {
-        IEnumerable<IView> Observors { get; }
-
-        void AddObserver( IView view );
+        List<IView> Observors { get; }
 
         float Progress { get; set; }
 
-        void Initialize( Point origin, Point target );
+        void AddObserver(IView view);
 
-        void ObserveSwapFrom( IViewItem draggingItem, IView view );
+        void Initialize(Point origin, Point target);
+
+        void ObserveSwapFrom(IViewItem draggingItem, IView view);
 
         Point RootCenterPoint();
     }
 
     public class ViewSwapControl : ViewComponent, IViewSwapControl
     {
-        private List<IView> observors;
+        private bool initialized;
 
-        private float progress;
-        private Point origin;
-        private Point target;
-        private bool isInitialized;
-
-        public ViewSwapControl( IView view, ICloneable viewSettings, ItemSettings itemSettings )
-            : base( view, viewSettings, itemSettings )
+        public ViewSwapControl(IView view, ICloneable viewSettings, ItemSettings itemSettings)
+            : base(view, viewSettings, itemSettings)
         {
-            this.observors = new List<IView> { view };
+            this.Observors = new List<IView> { view };
         }
 
-        public Point Origin
+        public List<IView> Observors { get; private set; }
+
+        public Point Origin { get; set; }
+
+        public float Progress { get; set; }
+
+        public Point Target { get; set; }
+
+        public void AddObserver(IView view)
         {
-            get { return this.origin; }
-            set { this.origin = value; }
+            this.Observors.Add(view);
         }
 
-        public IEnumerable<IView> Observors { get { return this.observors; } }
-
-        public void AddObserver( IView view )
+        public void Initialize(Point origin, Point target)
         {
-            this.observors.Add( view );
+            this.Origin = origin;
+            this.Target = target;
+
+            this.Progress = 0f;
+
+            this.initialized = true;
         }
 
-        public float Progress
+        public void ObserveSwapFrom(IViewItem draggingItem, IView view)
         {
-            get { return this.progress; }
-            set { this.progress = value; }
-        }
-        public Point Target
-        {
-            get { return this.target; }
-            set { this.target = value; }
-        }
+            Predicate<IViewItem> touched = t => t.IsEnabled(ItemState.Item_Mouse_Over);
+            Predicate<IViewItem> another = t => !ReferenceEquals(t, draggingItem);
 
-        public void Initialize( Point origin, Point target )
-        {
-            this.origin = origin;
-            this.target = target;
+            var active   = view.Items.FindAll(t => t.IsEnabled(ItemState.Item_Active));
+            var swapping = active.FindAll(touched).Find(another);
 
-            this.progress = 0f;
-
-            this.isInitialized = true;
+            if (swapping != null && !swapping.IsEnabled(ItemState.Item_Swaping))
+            {
+                swapping.ItemControl.SwapIt(draggingItem);
+            }
         }
 
         public Point RootCenterPoint()
         {
-            Debug.Assert( this.isInitialized );
+            Debug.Assert(this.initialized, "Swap was not initialized.");
 
             return new Point(
-                this.origin.X + ( int ) ( ( this.target.X - this.origin.X ) * this.progress ),
-                this.origin.Y + ( int ) ( ( this.target.Y - this.origin.Y ) * this.progress ) );
-        }
-
-        public void ObserveSwapFrom( IViewItem draggingItem, IView view )
-        {
-            Predicate<IViewItem> touched = ( t => t.IsEnabled( ItemState.Item_Mouse_Over ) );
-            Predicate<IViewItem> another = ( t => !ReferenceEquals( t, draggingItem ) );
-
-            var active = view.Items.FindAll( t => t.IsEnabled( ItemState.Item_Active ) );
-            var swapping = active.FindAll( touched ).Find( another );
-
-            if ( swapping != null && !swapping.IsEnabled( ItemState.Item_Swaping ) )
-            {
-                swapping.ItemControl.SwapIt( draggingItem );
-            }
+                this.Origin.X + (int)((this.Target.X - this.Origin.X) * this.Progress),
+                this.Origin.Y + (int)((this.Target.Y - this.Origin.Y) * this.Progress));
         }
     }
 }

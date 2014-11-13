@@ -27,8 +27,6 @@ namespace MetaMind.Engine.Guis.Elements.Views
         {
         }
 
-        #region IViewSelectionControl2D Members
-
         public bool HasSelected
         {
             get { return this.currentId != null; }
@@ -39,6 +37,7 @@ namespace MetaMind.Engine.Guis.Elements.Views
             this.previousId = this.currentId;
             this.currentId = null;
             
+            // TODO: may not be a good design
             View.Disable(ViewState.View_Has_Selection);
             
             if (View.Items.Count != 0 && 
@@ -130,8 +129,6 @@ namespace MetaMind.Engine.Guis.Elements.Views
             this.previousId = this.currentId;
             this.currentId = id;
         }
-
-        #endregion
 
         private void Select(int row, int column)
         {

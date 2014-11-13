@@ -37,17 +37,17 @@ namespace MetaMind.Perseverance.Guis.Modules
             Space            = MotivationSpace.Future,
         };
 
-        public List<MotivationEntry> GetPastMotivations()
+        public static List<MotivationEntry> GetPastMotivations()
         {
             return Perseverance.Adventure.Motivationlist.PastMotivations;
         }
 
-        public List<MotivationEntry> GetNowMotivations()
+        public static List<MotivationEntry> GetNowMotivations()
         {
             return Perseverance.Adventure.Motivationlist.NowMotivations;
         }
 
-        public List<MotivationEntry> GetFutureMotivations()
+        public static List<MotivationEntry> GetFutureMotivations()
         {
             return Perseverance.Adventure.Motivationlist.FutureMotivations;
         }

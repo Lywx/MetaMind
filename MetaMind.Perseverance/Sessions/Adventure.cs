@@ -25,77 +25,60 @@ namespace MetaMind.Perseverance.Sessions
 
         #endregion File Storage
 
-        //---------------------------------------------------------------------
-
         #region Singleton
 
         private static Adventure singleton;
 
         #endregion Singleton
 
-        //---------------------------------------------------------------------
-
-        #region Concepts
-
-        [DataMember] private Cognition      cognition; 
-        [DataMember] private Tasklist       tasklist;
-        [DataMember] private Motivationlist motivationlist;
-
-        #endregion Concepts
-
-        #region Random Number Generator
-
-        private Random random = new Random( ( int ) DateTime.Now.Ticks );
-
-        #endregion
-
-        //---------------------------------------------------------------------
-
         #region Constructors
 
         private Adventure()
         {
-            tasklist       = new Tasklist();
-            motivationlist = new Motivationlist();
-            cognition      = new Cognition();
+            this.Random         = new Random((int)DateTime.Now.Ticks);
+            this.Tasklist       = new Tasklist();
+            this.Motivationlist = new Motivationlist();
+            this.Cognition      = new Cognition();
         }
 
         #endregion Constructors
 
-        //---------------------------------------------------------------------
-
         #region Public Properties
 
-        public Cognition      Cognition      { get { return cognition; } }
-        public Tasklist       Tasklist       { get { return tasklist; } }
-        public Random         Random         { get { return random; } }
-        public Motivationlist Motivationlist { get { return motivationlist; } }
+        [DataMember]
+        public Cognition Cognition { get; private set; }
+
+        [DataMember]
+        public Tasklist Tasklist { get; private set; }
+
+        public Random Random { get; private set; }
+
+        [DataMember]
+        public Motivationlist Motivationlist { get; private set; }
 
         #endregion Public Properties
-
-        //---------------------------------------------------------------------
 
         #region Load and Save
 
         [OnDeserialized]
-        public void OnDeserialized( StreamingContext context )
+        public void OnDeserialized(StreamingContext context)
         {
-            random = new Random( ( int ) DateTime.Now.Ticks );
+            this.Random = new Random((int)DateTime.Now.Ticks);
         }
 
         public static Adventure LoadSave()
         {
-            if ( File.Exists( XmlPath ) )
+            if (File.Exists(XmlPath))
             {
                 // auto-backup the old file
-                File.Copy( XmlPath, XmlPath + ".bak", true );
+                File.Copy(XmlPath, XmlPath + ".bak", true);
                 // load from save
-                LoadSave( XmlPath );
+                LoadSave(XmlPath);
             }
-            else if ( File.Exists( XmlPath + ".bak" ) )
+            else if (File.Exists(XmlPath + ".bak"))
             {
                 // load from the backup
-                LoadSave( XmlPath + ".bak" );
+                LoadSave(XmlPath + ".bak");
             }
             else
             {
@@ -107,22 +90,26 @@ namespace MetaMind.Perseverance.Sessions
 
         public void Save()
         {
-            var serializer = new DataContractSerializer( typeof( Adventure ), null, int.MaxValue, false, true, null );
-            using ( var file = File.Create( XmlPath ) )
+            var serializer = new DataContractSerializer(typeof(Adventure), null, int.MaxValue, false, true, null);
+            using (var file = File.Create(XmlPath))
+            {
                 serializer.WriteObject( file, singleton );
+            }
         }
 
-        private static void LoadSave( string path )
+        private static void LoadSave(string path)
         {
-            using ( var file = File.OpenRead( path ) )
+            using (var file = File.OpenRead(path))
             {
                 try
                 {
-                    var deserializer = new DataContractSerializer( typeof( Adventure ) );
-                    using ( var reader = XmlDictionaryReader.CreateTextReader( file, new XmlDictionaryReaderQuotas() ) )
-                        singleton = ( Adventure ) deserializer.ReadObject( reader, true );
+                    var deserializer = new DataContractSerializer(typeof(Adventure));
+                    using (var reader = XmlDictionaryReader.CreateTextReader(file, new XmlDictionaryReaderQuotas()))
+                    {
+                        singleton = (Adventure)deserializer.ReadObject(reader, true);
+                    }
                 }
-                catch ( SerializationException )
+                catch (SerializationException)
                 {
                     singleton = new Adventure();
                 }
@@ -131,26 +118,21 @@ namespace MetaMind.Perseverance.Sessions
 
         #endregion Load and Save
 
-        //---------------------------------------------------------------------
-
         #region Update and Draw
 
-        public void Update( GameTime gameTime )
+        public void Update(GameTime gameTime)
         {
-            UpdateInput( gameTime );
-            UpdateStructure( gameTime );
+            UpdateInput(gameTime);
+            UpdateStructure(gameTime);
         }
 
-        private void UpdateInput( GameTime gameTime )
+        private void UpdateInput(GameTime gameTime)
         {
-            if ( InputSequenceManager.Keyboard.IsActionTriggered( Actions.LastScreen ) )
-            {
-            }
         }
 
         private void UpdateStructure(GameTime gameTime)
         {
-            cognition.Update(gameTime);
+            this.Cognition.Update(gameTime);
         }
 
         #endregion Update and Draw

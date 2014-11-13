@@ -27,7 +27,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
         {
             if (this.TaskTracer == null)
             {
-                this.TaskTracer = new MotivationTaskTracer(this.ItemControl, new MotivationTaskTracerSettings());
+                this.TaskTracer = new MotivationTaskTracer(ItemControl, new MotivationTaskTracerSettings());
                 this.TaskTracer.Load();
             }
 
@@ -41,7 +41,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
                 return true;
             }
 
-            if (this.TaskTracer.View.IsEnabled(ViewState.View_Has_Focus) && 
+            if (this.TaskTracer.View               .IsEnabled(ViewState.View_Has_Focus) && 
                 this.TaskTracer.View.Control.Region.IsEnabled(RegionState.Region_Hightlighted))
             {
                 return false;
@@ -58,6 +58,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             if (this.TaskTracer != null)
             {
                 this.TaskTracer.UpdateStructure(gameTime);
+
                 if (!this.TaskTracer.View.IsEnabled(ViewState.View_Has_Focus))
                 {
                     this.TaskTracer.Close();
