@@ -31,6 +31,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
         // TODO: not implemented
         public TaskItemErrorControl ItemErrorControl { get; private set; }
+
         public TaskItemSyncControl ItemSyncControl { get; private set; }
 
         #endregion Constructors

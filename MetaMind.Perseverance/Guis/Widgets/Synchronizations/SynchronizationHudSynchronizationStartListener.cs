@@ -22,10 +22,8 @@ namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
             var synchronizationStartedEventArgs = (SynchronizationStartedEventArgs)@event.Data;
             var data = synchronizationStartedEventArgs.TaskEntry;
 
-            if (synchronization.Enabled)
-            {
-                return true;
-            }
+            // uncomment this to enforce fixed entry start/stop
+            // if (synchronization.Enabled) return true;
 
             synchronizationHud.StartSynchronizing(data);
 

@@ -316,7 +316,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
         public void StartSynchronizing(TaskEntry target)
         {
             synchronization.TryStart(target);
-            monitor        .Start();
+            monitor        .TryStart();
         }
 
         public void StopSynchronizing()

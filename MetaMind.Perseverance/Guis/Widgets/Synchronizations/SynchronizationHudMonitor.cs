@@ -33,6 +33,14 @@ namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
 
         #endregion Constructors
 
+        public void TryStart()
+        {
+            if (!isActived)
+            {
+                this.Start();
+            }
+        }
+
         public void Start()
         {
             // Note: for an application hook, use the AppHooker class instead
