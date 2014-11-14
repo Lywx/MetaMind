@@ -6,16 +6,16 @@
     {
         int YOffset { get; }
 
-        bool CanDisplay( int id );
+        bool CanDisplay(int id);
 
-        bool IsDownToDisplay( int row );
+        bool IsDownToDisplay(int row);
 
-        bool IsUpToDisplay( int row );
+        bool IsUpToDisplay(int row);
 
         void MoveDown();
 
         void MoveUp();
 
-        Point RootCenterPoint( int id );
+        Point RootCenterPoint(int id);
     }
 }

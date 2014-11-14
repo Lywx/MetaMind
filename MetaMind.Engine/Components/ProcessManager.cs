@@ -13,7 +13,7 @@ namespace MetaMind.Engine.Components
 
     using Microsoft.Xna.Framework;
 
-    public class ProcessManager : GameComponent
+    public class ProcessManager : DrawableGameComponent
     {
         #region Process Data
 
@@ -79,7 +79,7 @@ namespace MetaMind.Engine.Components
 
                 if (process.State == ProcessState.Running)
                 {
-                    process.OnUpdate(gameTime);
+                    process.Update(gameTime);
                 }
 
                 if (process.IsDead)
@@ -121,6 +121,23 @@ namespace MetaMind.Engine.Components
         }
 
         #endregion Update
+
+        public override void Draw(GameTime gameTime)
+        {
+            base.Draw(gameTime);
+
+            GameEngine.ScreenManager.SpriteBatch.Begin();
+
+            foreach (var process in processes)
+            {
+                if (process.State == ProcessState.Running)
+                {
+                    process.Draw(gameTime);
+                }
+            }
+
+            GameEngine.ScreenManager.SpriteBatch.End();
+        }
 
         #region Operations
 

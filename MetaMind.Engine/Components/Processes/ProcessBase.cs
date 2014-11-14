@@ -157,7 +157,12 @@ namespace MetaMind.Engine.Components.Processes
 
         public abstract void OnSuccess();
 
-        public abstract void OnUpdate(GameTime gameTime);
+        public abstract void Update(GameTime gameTime);
+
+        public virtual void Draw(GameTime gameTime)
+        {
+        }
+
 
         #endregion Transition
     }

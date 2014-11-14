@@ -20,8 +20,8 @@ namespace MetaMind.Engine.Guis.Elements.Views
         public ViewControl1D(IView view, ViewSettings1D viewSettings, ICloneable itemSettings)
             : base(view, viewSettings, itemSettings)
         {
-            this.Swap = new ViewSwapControl(this.View, this.ViewSettings, this.ItemSettings);
-            this.Scroll = new ViewScrollControl1D(this.View, this.ViewSettings, this.ItemSettings);
+            this.Swap      = new ViewSwapControl(this.View, this.ViewSettings, this.ItemSettings);
+            this.Scroll    = new ViewScrollControl1D(this.View, this.ViewSettings, this.ItemSettings);
             this.Selection = new ViewSelectionControl1D(this.View, this.ViewSettings, this.ItemSettings);
         }
 

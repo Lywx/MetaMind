@@ -29,6 +29,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             if (this.TaskTracer == null)
             {
                 this.TaskTracer = new MotivationTaskTracer(ItemControl, new MotivationTaskTracerSettings());
+                this.TaskTracer.Load();
             }
 
             this.TaskTracer.Show();

@@ -37,7 +37,9 @@ namespace MetaMind.Engine.Components.Processes
 
         void OnSuccess();
 
-        void OnUpdate(GameTime gameTime);
+        void Update(GameTime gameTime);
+
+        void Draw(GameTime gameTime);
 
         #endregion Transition
 

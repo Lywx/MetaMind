@@ -12,6 +12,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Elements.Views;
     using MetaMind.Perseverance.Guis.Widgets.Motivations.Items;
+    using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
 
     using Microsoft.Xna.Framework;
 
@@ -53,7 +54,10 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
 
         private void DrawRegion(GameTime gameTime)
         {
-            Primitives2D.FillRectangle(ScreenManager.SpriteBatch, ViewControl.Region.Frame.Rectangle, ColorExt.MakeTransparent(ViewSettings.HighlightColor, (byte)frameAlpha));
+            Primitives2D.FillRectangle(
+                ScreenManager.SpriteBatch,
+                ViewControl.Region.Frame.Rectangle,
+                ColorExt.MakeTransparent(ViewSettings.HighlightColor, (byte)frameAlpha));
         }
     }
 }

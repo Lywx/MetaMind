@@ -6,6 +6,8 @@ using System;
 
 namespace MetaMind.Perseverance
 {
+    using System.Linq;
+
 #if WINDOWS || LINUX
     /// <summary>
     /// The main class.
@@ -16,11 +18,13 @@ namespace MetaMind.Perseverance
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(String[] args)
         {
             using (var engine = new Engine.GameEngine())
             {
-                var runner = new Perseverance(engine);
+                var fullscreen = args.Count() != 0 && args[0] == "--fullscreen";
+                var runner     = new Perseverance(engine, fullscreen);
+
                 runner.Run();
             }
         }

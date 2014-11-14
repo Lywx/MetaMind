@@ -7,6 +7,8 @@
 
 namespace MetaMind.Perseverance.Guis.Modules
 {
+    using FastMember;
+
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Elements.Views;
@@ -24,13 +26,18 @@ namespace MetaMind.Perseverance.Guis.Modules
         public MotivationTaskTracer(MotivationItemControl itemControl, MotivationTaskTracerSettings settings)
             : base(settings)
         {
-            this.HostControl = itemControl;
-            this.View        = new View(this.Settings.ViewSettings, this.Settings.ItemSettings, this.Settings.ViewFactory);
+            this.View = new View(this.Settings.ViewSettings, this.Settings.ItemSettings, this.Settings.ViewFactory);
+
+            // faster dynamic accessor with fast member
+            this.FastHostControl = ObjectAccessor.Create(itemControl);
+            this.FastHostData    = ObjectAccessor.Create(this.FastHostControl["ItemData"]);
         }
 
         public IView View { get; private set; }
 
-        private MotivationItemControl HostControl { get; set; }
+        private dynamic FastHostData { get; set; }
+
+        private dynamic FastHostControl { get; set; }
 
         public void Close()
         {
@@ -39,26 +46,29 @@ namespace MetaMind.Perseverance.Guis.Modules
             this.View.Control.Selection.Clear();
         }
 
-        public override void Load()
-        {
-            if (!this.loadFinished && this.HostControl.ItemData.Tasks.Count != 0)
-            {
-                this.View.Control.AddItem(this.HostControl.ItemData.Tasks[this.loadIndex]);
-                ++this.loadIndex;
-            }
-
-            if (this.loadIndex >= this.HostControl.ItemData.Tasks.Count)
-            {
-                this.loadFinished = true;
-            }
-        }
-
         public void Show()
         {
             this.View.Enable(ViewState.View_Active);
 
             // trigger selection to focus
             this.View.Control.Selection.Select(0);
+        }
+
+        public override void Load()
+        {
+            // TODO:
+            // performance penalty due to dynmaic type
+            // performance is still bad even with fast member
+            if (!this.loadFinished && this.FastHostData["Tasks"].Count != 0)
+            {
+                this.View.Control.AddItem(this.FastHostData["Tasks"][this.loadIndex]);
+                ++this.loadIndex;
+            }
+
+            if (this.loadIndex >= this.FastHostData["Tasks"].Count)
+            {
+                this.loadFinished = true;
+            }
         }
 
         #region Update and Draw
@@ -148,7 +158,7 @@ namespace MetaMind.Perseverance.Guis.Modules
                     this.View.Control.AddItem(task);
 
                     // add to host motivation's tasks
-                    this.HostControl.ItemData.Tasks.Add(task);
+                    this.FastHostData["Tasks"].Add(task);
                 }
 
                 if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskDeleteItem))
@@ -160,7 +170,7 @@ namespace MetaMind.Perseverance.Guis.Modules
                     var task = this.View.Items[(int)this.View.Control.Selection.SelectedId].ItemData;
 
                     // remove from host motivation's tasks
-                    this.HostControl.ItemData.Tasks.Remove(task);
+                    this.FastHostData["Tasks"].Remove(task);
                 }
             }
 
@@ -178,10 +188,11 @@ namespace MetaMind.Perseverance.Guis.Modules
         public override void UpdateStructure(GameTime gameTime)
         {
             // make sure that task region and task items all follow the host location changes
-            this.View.ViewSettings.StartPoint = Vector2Ext.ToPoint(this.HostControl.RootFrame.Center.ToVector2() + this.HostControl.ViewSettings.TracerMargin);
+            this.View.ViewSettings.StartPoint = Vector2Ext.ToPoint(this.FastHostControl["RootFrame"].Center.ToVector2() + this.FastHostControl["ViewSettings"].TracerMargin);
 
             this.View.UpdateStructure(gameTime);
         }
-        #endregion
+
+        #endregion Update and Draw
     }
 }

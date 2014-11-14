@@ -6,16 +6,16 @@
     {
         int XOffset { get; }
 
-        bool CanDisplay( int id );
+        bool CanDisplay(int id);
 
-        bool IsLeftToDisplay( int column );
+        bool IsLeftToDisplay(int column);
 
-        bool IsRightToDisplay( int column );
+        bool IsRightToDisplay(int column);
 
         void MoveLeft();
 
         void MoveRight();
 
-        Point RootCenterPoint( int id );
+        Point RootCenterPoint(int id);
     }
 }

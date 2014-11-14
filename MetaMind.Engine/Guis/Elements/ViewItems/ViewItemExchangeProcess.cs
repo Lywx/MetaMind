@@ -1,13 +1,14 @@
 namespace MetaMind.Engine.Guis.Elements.ViewItems
 {
-    using MetaMind.Engine.Components;
+    using System.Diagnostics;
+
     using MetaMind.Engine.Components.Processes;
     using MetaMind.Engine.Guis.Elements.Frames;
     using MetaMind.Engine.Guis.Elements.Items;
     using MetaMind.Engine.Guis.Elements.Regions;
     using MetaMind.Engine.Guis.Elements.Views;
+
     using Microsoft.Xna.Framework;
-    using System.Diagnostics;
 
     public class ViewItemExchangeProcess : ProcessBase
     {
@@ -48,16 +49,11 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
 
         public override void OnSuccess()
         {
-            this.ExchangeToView();
             this.EndExchange();
         }
 
-        public override void OnUpdate(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
-            if (targetRegion.IsEnabled(RegionState.Region_Mouse_Over))
-            {
-                MessageManager.PopMessages("ASDASD");
-            }
         }
 
         protected virtual void ExchangeToView()
@@ -76,6 +72,10 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
         {
             if (targetRegion.IsEnabled(RegionState.Region_Mouse_Over))
             {
+                // this is a event driven method
+                // which does not obey the normal update process
+                // or it will cause sudden graphical changes in screen
+                this.ExchangeToView();
                 this.Succeed();
             }
             else

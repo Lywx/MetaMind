@@ -47,7 +47,7 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
             this.EndSwap();
         }
 
-        public override void OnUpdate(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             this.SwapControl.Progress += 1f / UpdateNum;
 
@@ -74,11 +74,14 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
             Debug.Assert(draggedExchangable != null && swappingExchangable != null, "Not all item are exchangeable.");
 
             // replace each another in their origial view
-            var swappingItemView = this.SwappingItem.View;
-            var draggedItemView  = this.DraggedItem.View;
+            var originalSwappingItemView = this.SwappingItem.View;
+            var orignialDraggedItemView  = this.DraggedItem.View;
 
-            draggedExchangable .ExchangeTo(swappingItemView, this.SwappingItem.ItemControl.Id);
-            swappingExchangable.ExchangeTo(draggedItemView , this.DraggedItem.ItemControl.Id);
+            // 
+            //orignialDraggedItemView.Control.Selection.Clear();
+
+            draggedExchangable .ExchangeTo(originalSwappingItemView, this.SwappingItem.ItemControl.Id);
+            swappingExchangable.ExchangeTo(orignialDraggedItemView , this.DraggedItem.ItemControl.Id);
         }
 
         protected void SwapInView()
