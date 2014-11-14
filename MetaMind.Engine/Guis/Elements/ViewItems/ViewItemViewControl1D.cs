@@ -7,9 +7,10 @@
 
 namespace MetaMind.Engine.Guis.Elements.ViewItems
 {
+    using System;
+
     using MetaMind.Engine.Guis.Elements.Items;
     using MetaMind.Engine.Guis.Elements.Views;
-
     using Microsoft.Xna.Framework;
 
     public class ViewItemViewControl1D : ViewItemComponent
@@ -21,32 +22,44 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
 
         public void MouseSelectIt()
         {
-            this.ViewControl.Selection.Select(this.ItemControl.Id);
+            ViewControl.Selection.Select(ItemControl.Id);
         }
 
         public void MouseUnselectIt()
         {
-            if (this.ViewControl.Selection.IsSelected(this.ItemControl.Id))
+            if (ViewControl.Selection.IsSelected(ItemControl.Id))
             {
-                this.ViewControl.Selection.Clear();
+                ViewControl.Selection.Clear();
             }
         }
 
-        public virtual void SwapIt(IViewItem draggingItem)
+        public virtual void ExchangeIt(IViewItem draggingItem, IView targetView)
         {
-            if (this.Item.IsEnabled(ItemState.Item_Swaping))
+            if (Item.IsEnabled(ItemState.Item_Exchanging))
             {
                 return;
             }
 
-            this.Item.Enable(ItemState.Item_Swaping);
+            Item.Enable(ItemState.Item_Exchanging);
+
+            ProcessManager.AttachProcess(new ViewItemExchangeProcess(draggingItem, targetView));
+        }
+
+        public virtual void SwapIt(IViewItem draggingItem)
+        {
+            if (Item.IsEnabled(ItemState.Item_Swaping))
+            {
+                return;
+            }
+
+            Item.Enable(ItemState.Item_Swaping);
 
             var originCenter = this.ViewControl.Scroll.RootCenterPoint(this.ItemControl.Id);
             var targetCenter = draggingItem.ViewControl.Scroll.RootCenterPoint(draggingItem.ItemControl.Id);
 
-            this.ViewControl.Swap.Initialize(originCenter, targetCenter);
+            ViewControl.Swap.Initialize(originCenter, targetCenter);
 
-            ProcessManager.AttachProcess(new ViewItemSwapProcess(draggingItem, this.Item));
+            ProcessManager.AttachProcess(new ViewItemSwapProcess(draggingItem, Item));
         }
 
         public virtual void UpdateStructure(GameTime gameTime)
@@ -63,16 +76,16 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
 
         protected virtual void UpdateViewScroll()
         {
-            this.ItemControl.Id = this.View.Items.IndexOf(this.Item);
+            ItemControl.Id = View.Items.IndexOf(Item);
 
             if (View.IsEnabled(ViewState.View_Active) &&
                 ViewControl.Scroll.CanDisplay(ItemControl.Id))
             {
-                this.Item.Enable(ItemState.Item_Active);
+                Item.Enable(ItemState.Item_Active);
             }
             else
             {
-                this.Item.Disable(ItemState.Item_Active);
+                Item.Disable(ItemState.Item_Active);
             }
         }
 
@@ -81,37 +94,43 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
         /// </summary>
         private void UpdateViewSelection()
         {
-            if (this.ViewControl.Selection.IsSelected(this.ItemControl.Id))
+            if (ViewControl.Selection.IsSelected(ItemControl.Id))
             {
                 // unify mouse and keyboard selection
                 // not sure whether fired only once
-                if (!this.Item.IsEnabled(ItemState.Item_Selected))
+                if (!Item.IsEnabled(ItemState.Item_Selected))
                 {
-                    this.ItemControl.CommonSelectIt();
+                    ItemControl.CommonSelectIt();
                 }
 
-                this.Item.Enable(ItemState.Item_Selected);
+                Item.Enable(ItemState.Item_Selected);
             }
             else
             {
                 // unify mouse and keyboard selection
                 // not sure whether fired only once
-                if (this.Item.IsEnabled(ItemState.Item_Selected))
+                if (Item.IsEnabled(ItemState.Item_Selected))
                 {
-                    this.ItemControl.CommonUnselectIt();
+                    ItemControl.CommonUnselectIt();
                 }
 
-                this.Item.Disable(ItemState.Item_Selected);
+                Item.Disable(ItemState.Item_Selected);
             }
         }
 
         private void UpdateViewSwap()
         {
-            if (this.Item.IsEnabled(ItemState.Item_Dragging))
+            if (Item.IsEnabled(ItemState.Item_Dragging))
             {
-                foreach (var observor in this.ViewControl.Swap.Observors)
+                foreach (var observor in ViewControl.Swap.Observors)
                 {
-                    this.ViewControl.Swap.ObserveSwapFrom(this.Item, observor);
+                    ViewControl.Swap.WatchSwapFrom(Item, observor);
+                }
+
+                Predicate<IView> another = view => !ReferenceEquals(view, View);
+                foreach (var observor in ViewControl.Swap.Observors.FindAll(another))
+                {
+                    ViewControl.Swap.WatchExchangeIn(Item, observor);
                 }
             }
         }

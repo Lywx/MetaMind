@@ -11,18 +11,14 @@ namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
     /// </summary>
     public class SynchronizationHudMonitor : GameComponent
     {
-        //---------------------------------------------------------------------
         private readonly TimeSpan attentionSpan            = TimeSpan.FromSeconds(5);
 
         private          DateTime attentionTriggeredMoment = DateTime.Now;
         private          DateTime musicPlayedMoment        = DateTime.Now;
 
-        //---------------------------------------------------------------------
         private MouseHookListener globalMouseListener;
 
         private bool isActived;
-
-        //---------------------------------------------------------------------
 
         #region Constructors
 

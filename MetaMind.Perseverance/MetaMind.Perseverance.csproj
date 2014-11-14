@@ -91,6 +91,7 @@
     <Compile Include="Guis\Particles\Particle.cs" />
     <Compile Include="Guis\Widgets\Motivations\Banners\BannerSetting.cs" />
     <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemControl.cs" />
+    <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemExchangeProcess.cs" />
     <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemFactory.cs" />
     <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemGraphics.cs" />
     <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemSettings.cs" />

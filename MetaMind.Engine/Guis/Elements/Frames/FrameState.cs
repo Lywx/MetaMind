@@ -2,10 +2,8 @@ namespace MetaMind.Engine.Guis.Elements.Frames
 {
     public enum FrameState
     {
-        // basic
         Mouse_Over,
 
-        // left
         Mouse_Left_Pressed,
         Mouse_Left_Released,
 
@@ -15,7 +13,6 @@ namespace MetaMind.Engine.Guis.Elements.Frames
 
         Mouse_Left_Dragged_Out,
 
-        // right 6
         Mouse_Right_Pressed,
         Mouse_Right_Released,
 
@@ -25,11 +22,16 @@ namespace MetaMind.Engine.Guis.Elements.Frames
 
         Mouse_Right_Dragged_Out,
 
-        // change
         Frame_Initialized,
         Frame_Active,
+
+        // whether frame position is being moved
         Frame_Moved,
-        Frame_Holding, // prepare to drag
+
+        // whether frame is prepare to be dragged
+        Frame_Holding,
+
+        // whether frame is dragged by mouse
         Frame_Dragging,
 
         StateNum,
@@ -37,19 +39,19 @@ namespace MetaMind.Engine.Guis.Elements.Frames
 
     public static class FrameStateExt
     {
-        public static void EnableStateIn( this FrameState state, bool[ ] states )
+        public static void EnableStateIn(this FrameState state, bool[] states)
         {
-            states[ ( int ) state ] = true;
+            states[(int)state] = true;
         }
 
-        public static void DisableStateIn( this FrameState state, bool[ ] states )
+        public static void DisableStateIn(this FrameState state, bool[] states)
         {
-            states[ ( int ) state ] = false;
+            states[(int)state] = false;
         }
 
-        public static bool IsStateEnabledIn( this FrameState state, bool[ ] states )
+        public static bool IsStateEnabledIn(this FrameState state, bool[] states)
         {
-            return states[ ( int ) state ];
+            return states[(int)state];
         }
     }
 }

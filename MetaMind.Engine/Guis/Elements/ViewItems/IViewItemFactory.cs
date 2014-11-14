@@ -4,10 +4,10 @@
 
     public interface IViewItemFactory
     {
-        dynamic CreateControl( IViewItem item );
+        dynamic CreateControl(IViewItem item);
 
-        dynamic CreateData( IViewItem item );
+        dynamic CreateData(IViewItem item);
 
-        IItemGraphics CreateGraphics( IViewItem item );
+        IItemGraphics CreateGraphics(IViewItem item);
     }
 }

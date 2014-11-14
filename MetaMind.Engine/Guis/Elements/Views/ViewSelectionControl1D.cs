@@ -9,30 +9,11 @@ namespace MetaMind.Engine.Guis.Elements.Views
 {
     using MetaMind.Engine.Guis.Elements.Items;
 
-    public interface IViewSelectionControl1D
+    public interface IViewSelectionControl1D : IViewSelectionControl
     {
-        bool HasSelected { get; }
-
-        int? SelectedId { get; }
-
-        void Clear();
-
-        /// <summary>
-        /// Whether specific id is selected.
-        /// </summary>
-        bool IsSelected(int id);
-
         void MoveLeft();
 
         void MoveRight();
-
-        /// <summary>
-        /// Selects the specified id.
-        /// </summary>
-        /// <remarks>
-        /// All the selection has to be done by this function to ensure uniformity.
-        /// </remarks>
-        void Select(int id);
     }
 
     public class ViewSelectionControl1D : ViewComponent, IViewSelectionControl1D
@@ -46,14 +27,24 @@ namespace MetaMind.Engine.Guis.Elements.Views
         {
         }
 
+        public bool HasPreviouslySelected
+        {
+            get { return this.previousColumn != null; }
+        }
+
         public bool HasSelected
         {
             get { return this.currentColumn != null; }
         }
 
+        public int? PreviousSelectedId
+        {
+            get { return this.previousColumn; }
+        }
+
         public int? SelectedId
         {
-            get { return currentColumn; }
+            get { return this.currentColumn; }
         }
 
         public void Clear()

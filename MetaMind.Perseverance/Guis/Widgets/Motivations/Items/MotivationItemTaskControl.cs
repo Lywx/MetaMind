@@ -42,7 +42,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             }
 
             if (this.TaskTracer.View               .IsEnabled(ViewState.View_Has_Focus) && 
-                this.TaskTracer.View.Control.Region.IsEnabled(RegionState.Region_Hightlighted))
+                this.TaskTracer.View.Control.Region.IsEnabled(RegionState.Region_Has_Focus))
             {
                 return false;
             }

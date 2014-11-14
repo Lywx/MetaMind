@@ -55,16 +55,25 @@ namespace MetaMind.Engine.Guis.Elements.Regions
 
         public virtual void UpdateInput(GameTime gameTime)
         {
-            if (this.Frame.IsEnabled(FrameState.Mouse_Left_Clicked) ||
+            if (this.Frame.IsEnabled(FrameState.Mouse_Over))
+            {
+                this.Enable(RegionState.Region_Mouse_Over);
+            }
+            else
+            {
+                this.Disable(RegionState.Region_Mouse_Over);
+            }
+
+            if (this.Frame.IsEnabled(FrameState.Mouse_Left_Clicked) || 
                 this.Frame.IsEnabled(FrameState.Mouse_Left_Double_Clicked) ||
                 this.Frame.IsEnabled(FrameState.Mouse_Right_Clicked) ||
                 this.Frame.IsEnabled(FrameState.Mouse_Right_Double_Clicked))
             {
-                Enable(RegionState.Region_Hightlighted);
+                Enable(RegionState.Region_Has_Focus);
             }
             else
             {
-                Disable(RegionState.Region_Hightlighted);
+                Disable(RegionState.Region_Has_Focus);
             }
         }
 

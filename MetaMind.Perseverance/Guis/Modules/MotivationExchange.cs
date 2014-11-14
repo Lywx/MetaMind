@@ -33,6 +33,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         public override void Load()
         {
+            // performance penalty is not severe for one-off loading
             foreach (var entry in MotivationExchangeSettings.GetPastMotivations())
             {
                 this.pastView.Control.AddItem(entry);
@@ -51,7 +52,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         #region Update and Draw
 
-        public override void Draw( GameTime gameTime, byte alpha )
+        public override void Draw(GameTime gameTime, byte alpha)
         {
             this.pastView  .Draw(gameTime, alpha);
             this.nowView   .Draw(gameTime, alpha);

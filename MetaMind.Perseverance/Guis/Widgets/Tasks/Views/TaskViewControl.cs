@@ -187,7 +187,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 
         protected override void UpdateViewFocus()
         {
-            if (this.Region.IsEnabled(RegionState.Region_Hightlighted))
+            if (this.Region.IsEnabled(RegionState.Region_Has_Focus))
             {
                 View.Enable(ViewState.View_Has_Focus);
             }

@@ -17,7 +17,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 
             // now the data source clean
             
-            // change data source
+            // change data position
             this.SwappingItem.ItemData.CopyTo(this.DraggedItem .ViewSettings.Space, this.DraggedItem .ItemControl.Id);
             this.DraggedItem .ItemData.CopyTo(this.SwappingItem.ViewSettings.Space, this.SwappingItem.ItemControl.Id);
 

@@ -1,6 +1,7 @@
 ﻿namespace MetaMind.Engine.Guis.Elements.ViewItems
 {
     using MetaMind.Engine.Guis.Elements.Items;
+    using MetaMind.Engine.Guis.Elements.Views;
 
     using Microsoft.Xna.Framework;
 
@@ -69,6 +70,11 @@
         public void MouseUnselectIt()
         {
             this.ItemViewControl.MouseUnselectIt();
+        }
+
+        public virtual void ExchangeIt(IViewItem draggingItem, IView targetView)
+        {
+            this.ItemViewControl.ExchangeIt(draggingItem, targetView);
         }
 
         public virtual void SwapIt(IViewItem draggingItem)

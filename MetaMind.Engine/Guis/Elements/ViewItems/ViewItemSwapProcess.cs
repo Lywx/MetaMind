@@ -13,9 +13,9 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
 
         public ViewItemSwapProcess(IViewItem draggedItem, IViewItem swappingItem)
         {
-            this.DraggedItem = draggedItem;
+            this.DraggedItem  = draggedItem;
             this.SwappingItem = swappingItem;
-            this.SwapControl = swappingItem.ViewControl.Swap;
+            this.SwapControl  = swappingItem.ViewControl.Swap;
         }
 
         protected IViewItem DraggedItem { get; private set; }
@@ -68,17 +68,17 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
 
         protected virtual void SwapAroundView()
         {
-            var draggedExchangable = this.DraggedItem as IViewItemExchangable;
+            var draggedExchangable  = this.DraggedItem  as IViewItemExchangable;
             var swappingExchangable = this.SwappingItem as IViewItemExchangable;
 
             Debug.Assert(draggedExchangable != null && swappingExchangable != null, "Not all item are exchangeable.");
 
             // replace each another in their origial view
             var swappingItemView = this.SwappingItem.View;
-            var draggedItemView = this.DraggedItem.View;
+            var draggedItemView  = this.DraggedItem.View;
 
-            draggedExchangable.ExchangeTo(swappingItemView, this.SwappingItem.ItemControl.Id);
-            swappingExchangable.ExchangeTo(draggedItemView, this.DraggedItem.ItemControl.Id);
+            draggedExchangable .ExchangeTo(swappingItemView, this.SwappingItem.ItemControl.Id);
+            swappingExchangable.ExchangeTo(draggedItemView , this.DraggedItem.ItemControl.Id);
         }
 
         protected void SwapInView()

@@ -27,9 +27,19 @@ namespace MetaMind.Engine.Guis.Elements.Views
         {
         }
 
+        public bool HasPreviouslySelected
+        {
+            get { return this.previousId != null; }
+        }
+
         public bool HasSelected
         {
             get { return this.currentId != null; }
+        }
+
+        public int? PreviousSelectedId
+        {
+            get { return this.previousId; }
         }
 
         public int? SelectedId

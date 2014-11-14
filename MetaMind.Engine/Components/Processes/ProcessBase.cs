@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Components.Processes
 {
     using Microsoft.Xna.Framework;
 
-    public abstract class ProcessBase : IProcess
+    public abstract class ProcessBase : EngineObject, IProcess
     {
         #region Process Data
 
@@ -19,25 +19,20 @@ namespace MetaMind.Engine.Components.Processes
 
         public IProcess Child
         {
-            get
-            {
-                return child;
-            }
+            get { return child; }
         }
 
         public ProcessState State
         {
-            get
-            {
-                return state;
-            }
+            get { return state; }
         }
 
         public bool IsAlive
         {
             get
             {
-                return state == ProcessState.Running || state == ProcessState.Paused;
+                return state == ProcessState.Running || 
+                       state == ProcessState.Paused;
             }
         }
 
@@ -45,7 +40,9 @@ namespace MetaMind.Engine.Components.Processes
         {
             get
             {
-                return state == ProcessState.Succeeded || state == ProcessState.Failed || state == ProcessState.Aborted;
+                return state == ProcessState.Succeeded || 
+                       state == ProcessState.Failed || 
+                       state == ProcessState.Aborted;
             }
         }
 
