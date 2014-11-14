@@ -65,11 +65,11 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
         public virtual void UpdateStructure(GameTime gameTime)
         {
             this.UpdateViewScroll();
+            this.UpdateViewSelection();
 
             // to improve performance
             if (ItemControl.Active)
             {
-                this.UpdateViewSelection();
                 this.UpdateViewSwap();
             }
         }
@@ -97,7 +97,6 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
             if (ViewControl.Selection.IsSelected(ItemControl.Id))
             {
                 // unify mouse and keyboard selection
-                // not sure whether fired only once
                 if (!Item.IsEnabled(ItemState.Item_Selected))
                 {
                     ItemControl.CommonSelectIt();
@@ -108,7 +107,6 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
             else
             {
                 // unify mouse and keyboard selection
-                // not sure whether fired only once
                 if (Item.IsEnabled(ItemState.Item_Selected))
                 {
                     ItemControl.CommonUnselectIt();

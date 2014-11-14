@@ -56,7 +56,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         public override void Load()
         {
-            // TODO:
+            // TODO: improve minor laggy graphics
             // performance penalty due to dynmaic type
             // performance is still bad even with fast member
             if (!this.loadFinished && this.FastHostData["Tasks"].Count != 0)

@@ -7,7 +7,6 @@
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 {
-    using MetaMind.Engine.Guis.Elements.Items;
     using MetaMind.Engine.Guis.Elements.Regions;
     using MetaMind.Engine.Guis.Elements.ViewItems;
     using MetaMind.Engine.Guis.Elements.Views;

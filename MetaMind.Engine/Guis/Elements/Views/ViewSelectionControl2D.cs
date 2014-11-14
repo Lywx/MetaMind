@@ -52,14 +52,14 @@ namespace MetaMind.Engine.Guis.Elements.Views
             this.previousId = this.currentId;
             this.currentId = null;
 
-            // TODO: may not be a good design
-            View.Disable(ViewState.View_Has_Selection);
+            //// TODO: may not be a good design
+            //if (View.Items.Count != 0 &&
+            //    this.previousId != null)
+            //{
+            //    View.Items[this.previousId.Value].Disable(ItemState.Item_Selected);
+            //}
 
-            if (View.Items.Count != 0 &&
-                this.previousId.HasValue)
-            {
-                View.Items[this.previousId.Value].Disable(ItemState.Item_Selected);
-            }
+            View.Disable(ViewState.View_Has_Selection);
         }
 
         public bool IsSelected(int id)

@@ -77,8 +77,11 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
             var originalSwappingItemView = this.SwappingItem.View;
             var orignialDraggedItemView  = this.DraggedItem.View;
 
-            // 
-            //orignialDraggedItemView.Control.Selection.Clear();
+            orignialDraggedItemView.Control.Selection.Clear();
+            orignialDraggedItemView.Disable(ViewState.View_Has_Focus);
+
+            originalSwappingItemView.Control.Selection.Select(0);
+            originalSwappingItemView.Enable(ViewState.View_Has_Focus);
 
             draggedExchangable .ExchangeTo(originalSwappingItemView, this.SwappingItem.ItemControl.Id);
             swappingExchangable.ExchangeTo(orignialDraggedItemView , this.DraggedItem.ItemControl.Id);

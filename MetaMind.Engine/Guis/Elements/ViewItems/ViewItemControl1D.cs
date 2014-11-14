@@ -37,25 +37,33 @@
         #region Operations
 
         /// <summary>
-        /// Only used by item view control. This method is called both by
-        /// mouse and keyboard selection.
+        ///     Must only be called by ViewItemViewControl. This method is called both by
+        ///     mouse and keyboard selection. In the case of mouse selection, MouseSelectIt
+        ///     method calls selection control to modify existing selection record. This
+        ///     effect causes ViewItemViewControl(keyboard uses this route) to update item
+        ///     state and call CommonSelectIt.
         /// </summary>
+        /// <remarks>
+        ///     This method is unified only when selection control won't modify Item_Selected state.
+        /// </remarks>
         public virtual void CommonSelectIt()
         {
         }
 
         /// <summary>
-        /// Only used by item view control. This method is called both by
-        /// mouse and keyboard selection.
+        ///     Same as CommonSelectIt. Only used by ViewItemViewControl. This method is called
+        ///     both by mouse and keyboard selection.
         /// </summary>
+        /// <remarks>
+        ///     This method is unified only when selection control won't modify Item_Selected state.
+        /// </remarks>
         public virtual void CommonUnselectIt()
         {
         }
 
         /// <summary>
-        /// Only used by root frame event handler, which will cause common
-        /// select method to be called. as a result unifying the mouse and
-        /// keyboard selection effect.
+        ///     Only used by root frame event handler, which will cause common select method to be called. as a result unifying the
+        ///     mouse and keyboard selection effect.
         /// </summary>
         public void MouseSelectIt()
         {
@@ -63,9 +71,8 @@
         }
 
         /// <summary>
-        /// Only used by root frame event handler, which will cause common
-        /// unselect method to be called. as a result unifying the mouse and
-        /// keyboard unselection effect.
+        ///     Same as MouseSelectIt. Only used by root frame event handler, which will cause common unselect method to be called.
+        ///     As a result unifying the mouse and keyboard un-selection effect.
         /// </summary>
         public void MouseUnselectIt()
         {

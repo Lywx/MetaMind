@@ -176,11 +176,20 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
         private Rectangle RegionPositioning(dynamic viewSettings, dynamic itemSettings)
         {
             var bannerSetting = new BannerSetting();
+            if (ViewSettings.Direction == ViewSettings1D.ScrollDirection.Left)
+            {
+                return
+                    RectangleExt.Rectangle(
+                        viewSettings.StartPoint.X - viewSettings.RootMargin.X * (viewSettings.ColumnNumDisplay / 2),
+                        viewSettings.StartPoint.Y,
+                        viewSettings.RootMargin.X * viewSettings.ColumnNumDisplay,
+                        bannerSetting.Height);
+            }
             return
                 RectangleExt.Rectangle(
-                    viewSettings.StartPoint.X + viewSettings.RootMargin.X * (viewSettings.ColumnNumDisplay / 2), 
-                    viewSettings.StartPoint.Y, 
-                    viewSettings.RootMargin.X * viewSettings.ColumnNumDisplay, 
+                    viewSettings.StartPoint.X + viewSettings.RootMargin.X * (viewSettings.ColumnNumDisplay / 2),
+                    viewSettings.StartPoint.Y,
+                    viewSettings.RootMargin.X * viewSettings.ColumnNumDisplay,
                     bannerSetting.Height);
         }
 

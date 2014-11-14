@@ -1,8 +1,5 @@
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 {
-    using System.Diagnostics;
-
-    using MetaMind.Engine.Components.Processes;
     using MetaMind.Engine.Guis.Elements.Items;
     using MetaMind.Engine.Guis.Elements.ViewItems;
     using MetaMind.Engine.Guis.Elements.Views;
