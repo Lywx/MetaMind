@@ -26,6 +26,8 @@ namespace MetaMind.Engine.Guis.Elements.Items
 
         void UpdateInput(GameTime gameTime);
 
+        void UpdateStructureForView(GameTime gameTime);
+
         void UpdateStructure(GameTime gameTime);
     }
 
@@ -73,6 +75,8 @@ namespace MetaMind.Engine.Guis.Elements.Items
         public abstract void Draw(GameTime gameTime, byte alpha);
 
         public abstract void UpdateInput(GameTime gameTime);
+
+        public abstract void UpdateStructureForView(GameTime gameTime);
 
         public abstract void UpdateStructure(GameTime gameTime);
 

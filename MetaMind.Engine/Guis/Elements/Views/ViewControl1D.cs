@@ -160,6 +160,13 @@ namespace MetaMind.Engine.Guis.Elements.Views
                 this.UpdateViewLogics();
                 this.UpdateItemStructure(gameTime);
             }
+            else
+            {
+                foreach (var item in View.Items)
+                {
+                    item.UpdateStructureForView(gameTime);
+                }
+            }
         }
 
         protected void UpdateItemStructure(GameTime gameTime)

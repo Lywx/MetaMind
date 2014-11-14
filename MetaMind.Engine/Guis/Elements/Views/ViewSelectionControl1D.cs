@@ -52,13 +52,7 @@ namespace MetaMind.Engine.Guis.Elements.Views
             this.previousColumn = this.currentColumn;
             this.currentColumn = null;
 
-            //// TODO: may not be a good design
-            //if (View.Items.Count != 0 &&
-            //    this.previousColumn != null)
-            //{
-            //    View.Items[this.previousColumn.Value].Disable(ItemState.Item_Selected);
-            //}
-
+            //TODO: may not be needed
             View.Disable(ViewState.View_Has_Selection);
         }
 

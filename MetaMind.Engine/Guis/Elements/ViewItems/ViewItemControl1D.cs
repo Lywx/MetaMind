@@ -119,8 +119,7 @@
 
         public virtual void UpdateStructure(GameTime gameTime)
         {
-            // view activation is controlled by item view control
-            this.ItemViewControl.UpdateStructure(gameTime);
+            this.UpdateStructureForView(gameTime);
 
             // reduce lagging graphics 
             if (!this.frameInitialized)
@@ -135,6 +134,12 @@
                 this.ItemFrameControl.UpdateStructure(gameTime);
                 this.ItemDataControl.UpdateStructure(gameTime);
             }
+        }
+
+        public void UpdateStructureForView(GameTime gameTime)
+        {
+            // view activation is controlled by item view control
+            this.ItemViewControl.UpdateStructure(gameTime);
         }
 
         #endregion Update

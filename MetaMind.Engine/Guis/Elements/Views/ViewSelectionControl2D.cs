@@ -52,13 +52,7 @@ namespace MetaMind.Engine.Guis.Elements.Views
             this.previousId = this.currentId;
             this.currentId = null;
 
-            //// TODO: may not be a good design
-            //if (View.Items.Count != 0 &&
-            //    this.previousId != null)
-            //{
-            //    View.Items[this.previousId.Value].Disable(ItemState.Item_Selected);
-            //}
-
+            //TODO: may not be needed?
             View.Disable(ViewState.View_Has_Selection);
         }
 

@@ -69,6 +69,11 @@
             this.ItemControl.UpdateInput(gameTime);
         }
 
+        public override void UpdateStructureForView(GameTime gameTime)
+        {
+            this.ItemControl.UpdateStructureForView(gameTime);
+        }
+
         public override void UpdateStructure(GameTime gameTime)
         {
             this.ItemControl. UpdateStructure(gameTime);
