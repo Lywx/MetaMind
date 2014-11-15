@@ -10,6 +10,7 @@ namespace MetaMind.Engine.Components
     using System.Linq;
 
     using MetaMind.Engine.Components.Fonts;
+    using MetaMind.Engine.Settings;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -85,14 +86,15 @@ namespace MetaMind.Engine.Components
                 return;
             }
 
-            var spriteFont = FontManager[font];
+            var spriteFont    = FontManager[font];
             var avaliableText = GetDisaplayableCharacters(spriteFont, text);
-            var textSize = spriteFont.MeasureString(avaliableText);
-            var centeredPosition = new Vector2(
-                position.X - (int)textSize.X * size / 2, 
-                position.Y - (int)textSize.Y * size / 2);
 
-            ScreenManager.SpriteBatch.DrawString(spriteFont, avaliableText, centeredPosition, color, 0f, Vector2.Zero, size, SpriteEffects.None, 1f - position.Y / 720f);
+            var textSize         = spriteFont.MeasureString(avaliableText);
+            var centeredPosition = new Vector2(
+                position.X - (int)textSize.X * size / 2,
+                position.Y - (int)textSize.Y * size / 2); 
+
+            ScreenManager.SpriteBatch.DrawString(spriteFont, avaliableText, centeredPosition, color, 0f, Vector2.Zero, size, SpriteEffects.None, 0);
         }
 
         /// <summary>
@@ -114,6 +116,7 @@ namespace MetaMind.Engine.Components
 
             var spriteFont    = FontManager[font];
             var avaliableText = GetDisaplayableCharacters(spriteFont, text);
+
             ScreenManager.SpriteBatch.DrawString(spriteFont, avaliableText, position, color, 0f, Vector2.Zero, size, SpriteEffects.None, 0);
         }
 

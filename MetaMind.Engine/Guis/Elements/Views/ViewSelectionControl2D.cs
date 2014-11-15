@@ -52,7 +52,6 @@ namespace MetaMind.Engine.Guis.Elements.Views
             this.previousId = this.currentId;
             this.currentId = null;
 
-            //TODO: may not be needed?
             View.Disable(ViewState.View_Has_Selection);
         }
 

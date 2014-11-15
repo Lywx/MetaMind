@@ -230,41 +230,10 @@ namespace C3.Primtive2DXna
         /// </summary>
         /// <param name="spriteBatch">The destination drawing surface</param>
         /// <param name="rect">The rectangle to draw</param>
-        /// <param name="color">The nullable color to draw the rectangle in</param>
-        public static void DrawRectangle(SpriteBatch spriteBatch, Rectangle rect, Color? color)
-        {
-            if (color != null)
-            {
-                DrawRectangle(spriteBatch, rect, (Color)color);
-            }
-        }
-
-        /// <summary>
-        /// Draws a rectangle with the thickness provided
-        /// </summary>
-        /// <param name="spriteBatch">The destination drawing surface</param>
-        /// <param name="rect">The rectangle to draw</param>
         /// <param name="color">The color to draw the rectangle in</param>
         public static void DrawRectangle(SpriteBatch spriteBatch, Rectangle rect, Color color)
         {
             DrawRectangle(spriteBatch, rect, color, 1.0f);
-        }
-
-        /// <summary>
-        /// Draws a rectangle with the thickness provided
-        /// </summary>
-        /// <param name="spriteBatch">The destination drawing surface</param>
-        /// <param name="rect">The rectangle to draw</param>
-        /// <param name="color">The nullable color to draw the rectangle in</param>
-        /// <param name="thickness">The thickness of the lines</param>
-        public static void DrawRectangle(SpriteBatch spriteBatch, Rectangle rect, Color? color, float thickness)
-        {
-            if (color == null)
-            {
-                return;
-            }
-
-            DrawRectangle(spriteBatch, rect, (Color)color, thickness);
         }
 
         /// <summary>
