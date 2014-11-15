@@ -43,7 +43,6 @@ namespace MetaMind.Perseverance.Guis.Modules
         {
             this.View.Disable(ViewState.View_Active);
             this.View.Disable(ViewState.View_Has_Focus);
-            this.View.Control.Selection.Clear();
         }
 
         public void Show()
@@ -51,7 +50,17 @@ namespace MetaMind.Perseverance.Guis.Modules
             this.View.Enable(ViewState.View_Active);
 
             // trigger selection to focus
-            this.View.Control.Selection.Select(0);
+            int? current  = this.View.Control.Selection.SelectedId;
+            int? previous = this.View.Control.Selection.PreviousSelectedId;
+            if (current  != null || 
+                previous != null)
+            {
+                this.View.Control.Selection.Select(current != null ? (int)current : (int)previous);
+            }
+            else
+            {
+                this.View.Control.Selection.Select(0);
+            }
         }
 
         public override void Load()
@@ -109,11 +118,13 @@ namespace MetaMind.Perseverance.Guis.Modules
                 // movement
                 if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
                 {
+                    // won't trigger scroll bar
                     this.View.Control.Selection.MoveLeft();
                 }
 
                 if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
                 {
+                    // won't trigger scroll bar
                     this.View.Control.Selection.MoveRight();
                 }
 

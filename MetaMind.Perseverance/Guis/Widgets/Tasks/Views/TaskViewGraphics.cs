@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 {
-    using MetaMind.Engine.Guis.Elements.Regions;
     using MetaMind.Engine.Guis.Elements.Views;
 
     public class TaskViewGraphics : ViewBasicGraphics
