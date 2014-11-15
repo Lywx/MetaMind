@@ -26,13 +26,15 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
         int SynchronizedHourYesterday { get; }
 
-        void ResetForTomorrow();
+        TimeSpan SynchronizedTimeToday { get; }
 
-        void TryStart(TaskEntry target);
+        void ResetForTomorrow();
 
         void Start(TaskEntry target);
 
         void Stop();
+
+        void TryStart(TaskEntry target);
 
         void Update(GameTime gameTime);
     }
@@ -141,6 +143,10 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
             get { return statistics.AccumulatedHourYesterday; }
         }
 
+        public TimeSpan SynchronizedTimeToday
+        {
+            get { return statistics.AccumulatedTimeToday; }
+        }
         #endregion Read-only Properties
 
         #region Operations
@@ -148,16 +154,6 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
         public void ResetForTomorrow()
         {
             statistics.Reset();
-        }
-
-        public void TryStart(TaskEntry target)
-        {
-            if (this.Enabled)
-            {
-                this.Stop();
-            }
-
-            this.Start(target);
         }
 
         public void Start(TaskEntry target)
@@ -173,6 +169,16 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
             data      .Release(out timePassed);
             statistics.Add(timePassed);
             timer     .Stop();
+        }
+
+        public void TryStart(TaskEntry target)
+        {
+            if (this.Enabled)
+            {
+                this.Stop();
+            }
+
+            this.Start(target);
         }
 
         public void Update(GameTime gameTime)

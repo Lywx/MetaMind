@@ -8,34 +8,33 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
     [DataContract]
     public class ConsciousnessAwake : Consciousness
     {
-        [DataMember]
-        public TimeSpan AwakeSpan { get; set; }
-
-        #region Constructors
-
         public ConsciousnessAwake()
         {
         }
 
         public ConsciousnessAwake(ConsciousnessSleepy state)
         {
-            SleepEndTime        = state.SleepEndTime;
-            SleepStartTime      = state.SleepStartTime;
-            HistoricalAwakeSpan = state.HistoricalAwakeSpan;
-            HistoricalSleepSpan = state.HistoricalSleepSpan;
+            this.SleepEndTime        = state.SleepEndTime;
+            this.SleepStartTime      = state.SleepStartTime;
+            this.HistoricalAwakeSpan = state.HistoricalAwakeSpan;
+            this.HistoricalSleepSpan = state.HistoricalSleepSpan;
         }
 
-        #endregion Constructors
-
-        #region Conversion
+        public TimeSpan AwakeSpan
+        {
+            get { return DateTime.Now - this.SleepEndTime; }
+        }
 
         public ConsciousnessSleepy StartSleeping()
         {
             SleepStartTime = DateTime.Now;
+
             if (HasEverSlept)
             {
-                AwakeSpan = SleepStartTime - SleepEndTime;
-                HistoricalAwakeSpan += AwakeSpan;
+                var totalAwakeSpan = this.SleepStartTime - this.SleepEndTime;
+                this.HistoricalAwakeSpan += totalAwakeSpan;
+
+                MessageManager.PopMessages("Awake for " + totalAwakeSpan.ToString("hh':'mm':'ss''"));
             }
 
             // add to event queue
@@ -43,13 +42,8 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
                 (int)AdventureEventType.SleepStarted,
                 new ConsciousnessSleepStartedEventArgs(this));
             EventManager.TriggerEvent(sleepStartedEvent);
-            if (HasEverSlept)
-            {
-                MessageManager.PopMessages("Awake for " + AwakeSpan.ToString("hh':'mm':'ss''"));
-            }
+
             return new ConsciousnessSleepy(this);
         }
-
-        #endregion Conversion
     }
 }

@@ -168,7 +168,7 @@ namespace MetaMind.Engine.Components
         /// Plays the desired music, clearing the stack of music cues.
         /// </summary>
         /// <param name="cueName">The name of the music cue to play.</param>
-        public static void PlayMusic(string cueName)
+        public void PlayMusic(string cueName)
         {
             // start the new music cue
             if (singleton != null)

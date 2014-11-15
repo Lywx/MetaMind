@@ -10,8 +10,9 @@ namespace MetaMind.Perseverance.Screens
 {
     public class MotivationScreen : GameScreen
     {
-        private readonly IWidget synchronization  = new SynchronizationHud(Perseverance.Adventure.Cognition.Synchronization, new SynchronizationHudSettings());
-        private readonly IModule motivation       = new MotivationExchange(new MotivationExchangeSettings());
+        private readonly IWidget synchronization;
+
+        private readonly IModule motivation;
 
         public MotivationScreen()
         {
@@ -20,6 +21,12 @@ namespace MetaMind.Perseverance.Screens
 
             IsPopup = true;
 
+            synchronization = new SynchronizationHud(
+                Perseverance.Adventure.Cognition.Synchronization,
+                Perseverance.Adventure.Cognition.Consciousness,
+                new SynchronizationHudSettings());
+
+            motivation = new MotivationExchange(new MotivationExchangeSettings());
             motivation.Load();
         }
 

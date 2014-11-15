@@ -1,106 +1,130 @@
-﻿using C3.Primtive2DXna;
-using MetaMind.Engine.Extensions;
-using MetaMind.Engine.Guis.Widgets;
-using MetaMind.Engine.Settings;
-using MetaMind.Perseverance.Concepts.Cognitions;
-using MetaMind.Perseverance.Concepts.TaskEntries;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-
-namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
+﻿namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
 {
+    using System;
+
+    using C3.Primtive2DXna;
+
+    using MetaMind.Engine.Extensions;
+    using MetaMind.Engine.Guis.Widgets;
+    using MetaMind.Engine.Settings;
+    using MetaMind.Perseverance.Concepts.Cognitions;
+    using MetaMind.Perseverance.Concepts.TaskEntries;
+
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+
     public class SynchronizationHud : Widget
     {
-        private ISynchronization                               synchronization;
+        private IConsciousness                                 consciousness;
+        private SynchronizationHudMonitor                      monitor;
         private SynchronizationHudSettings                     settings;
-
+        private ISynchronization                               synchronization;
         private SynchronizationHudSynchronizationStartListener synchronizationStartListener;
         private SynchronizationHudSynchronizationStopListener  synchronizationStopListener;
 
-        private SynchronizationHudMonitor                      monitor;
-
         #region Constructors
 
-        public SynchronizationHud(ISynchronization synchronization, SynchronizationHudSettings settings)
+        public SynchronizationHud(ISynchronization synchronization, IConsciousness consciousness, SynchronizationHudSettings settings)
         {
             this.synchronization = synchronization;
-            this.settings = settings;
+            this.consciousness   = consciousness;
+            this.settings        = settings;
+
+            this.monitor = new SynchronizationHudMonitor(ScreenManager.Game, synchronization);
 
             synchronizationStartListener = new SynchronizationHudSynchronizationStartListener(synchronization, this);
+            synchronizationStopListener  = new SynchronizationHudSynchronizationStopListener(synchronization, this);
+
             EventManager.AddListener(synchronizationStartListener);
-
-            synchronizationStopListener = new SynchronizationHudSynchronizationStopListener(synchronization, this);
             EventManager.AddListener(synchronizationStopListener);
-
-            monitor = new SynchronizationHudMonitor(ScreenManager.Game);
         }
 
         #endregion Constructors
 
         #region Locations
 
-        private Vector2 AccelerationPrefixLocation
+        private Vector2 AccelerationPrefixCenter
         {
             get
             {
                 return new Vector2(
-                    StatusLocation.X + settings.AccelerationMargin.X,
-                    StatusLocation.Y + settings.AccelerationMargin.Y);
+                    this.StatusInfoCenter.X + this.settings.AccelerationMargin.X,
+                    this.StatusInfoCenter.Y + this.settings.AccelerationMargin.Y);
             }
         }
 
-        private Vector2 AccelerationSubfixLocation
+        private Vector2 AccelerationSubfixCenter
         {
             get
             {
                 const int XSymbolWidth = 43;
                 return new Vector2(
-                    AccelerationPrefixLocation.X + XSymbolWidth,
-                    AccelerationPrefixLocation.Y);
+                    this.AccelerationPrefixCenter.X + XSymbolWidth,
+                    this.AccelerationPrefixCenter.Y);
             }
         }
 
-        private Vector2 AccumulationPrefixLocation
+        private Vector2 AccumulationPrefixCenter
         {
             get
             {
                 return new Vector2(
-                    StateLocation.X + settings.AccumulationMargin.X,
-                    StateLocation.Y + settings.AccumulationMargin.Y);
+                    this.StateInfoCenter.X + this.settings.AccumulationMargin.X,
+                    this.StateInfoCenter.Y + this.settings.AccumulationMargin.Y);
             }
         }
 
-        private Vector2 AccumulationSubfixLocation
+        private Vector2 AccumulationSubfixCenter
         {
             get
             {
                 const int PlusSymbolWidth = 42;
                 return new Vector2(
-                    AccumulationPrefixLocation.X + PlusSymbolWidth,
-                    AccumulationPrefixLocation.Y);
+                    this.AccumulationPrefixCenter.X + PlusSymbolWidth,
+                    this.AccumulationPrefixCenter.Y);
             }
         }
 
-        private Rectangle BackgroundFrameRectangle
-        {
-            get
-            {
-                return new Rectangle(
-                    settings.BarFrameXC - settings.BarFrameSize.X / 2,
-                    settings.BarFrameYC - settings.BarFrameSize.Y / 2,
-                    settings.BarFrameSize.X,
-                    settings.BarFrameSize.Y);
-            }
-        }
-
-        private Vector2 MessageLocation
+        private Vector2 DailySyncHourPrefixCenter
         {
             get
             {
                 return new Vector2(
-                    (int)StateLocation.X,
+                    this.StatusInfoCenter.X - this.settings.SynchronizationRateMargin.X,
+                    this.StatusInfoCenter.Y + this.settings.SynchronizationRateMargin.Y);
+            }
+        }
+
+        private Vector2 DailySyncHourSubfixCenter
+        {
+            get
+            {
+                const int PercentNumWidth = 50;
+                return new Vector2(
+                    this.DailySyncHourPrefixCenter.X + PercentNumWidth,
+                    this.DailySyncHourPrefixCenter.Y);
+            }
+        }
+
+        private Vector2 MessageCenter
+        {
+            get
+            {
+                return new Vector2(
+                    (int)this.StateInfoCenter.X,
                     GraphicsSettings.Height - 15);
+            }
+        }
+
+        private Rectangle ProgressBarRectangle
+        {
+            get
+            {
+                return new Rectangle(
+                    this.settings.BarFrameXC - this.settings.BarFrameSize.X / 2,
+                    this.settings.BarFrameYC - this.settings.BarFrameSize.Y / 2,
+                    (int)(synchronization.ProgressPercent * this.settings.BarFrameSize.X),
+                    this.settings.BarFrameSize.Y);
             }
         }
 
@@ -109,52 +133,72 @@ namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
             get
             {
                 return new Rectangle(
-                    settings.BarFrameXC - settings.BarFrameSize.X / 2,
-                    settings.BarFrameYC - settings.BarFrameSize.Y / 2,
-                    (int)(synchronization.ProgressPercent * settings.BarFrameSize.X),
-                    settings.BarFrameSize.Y);
+                    this.settings.BarFrameXC - this.settings.BarFrameSize.X / 2,
+                    this.settings.BarFrameYC - this.settings.BarFrameSize.Y / 2,
+                    this.settings.BarFrameSize.X,
+                    this.settings.BarFrameSize.Y);
             }
         }
 
-        private Vector2 StateLocation
+        private Vector2 StateInfoCenter
         {
             get
             {
                 return new Vector2(
-                    settings.BarFrameXC,
-                    settings.BarFrameYC + settings.StateMargin.Y);
+                    this.settings.BarFrameXC,
+                    this.settings.BarFrameYC + this.settings.StateMargin.Y);
             }
         }
 
-        private Vector2 StatusLocation
+        private Vector2 StatusInfoCenter
         {
             get
             {
                 return new Vector2(
-                    settings.BarFrameXC,
-                    settings.BarFrameYC + settings.InformationMargin.Y);
+                    this.settings.BarFrameXC,
+                    this.settings.BarFrameYC + this.settings.InformationMargin.Y);
             }
         }
 
         #endregion Locations
 
+        #region Operations
+
+        public void StartSynchronizing(TaskEntry target)
+        {
+            this.synchronization.TryStart(target);
+        }
+
+        public void StopSynchronizing()
+        {
+            this.synchronization.Stop();
+            this.monitor        .Stop();
+        }
+
+        #endregion Operations
+
         #region Update and Draw
 
         public override void Draw(GameTime gameTime, byte alpha)
         {
-            DrawProgressFrame();
-            DrawStateInformation();
-            DrawStatusInformation();
-            DrawAccelerationIndicator();
-            DrawAccumulationIndicator();
-            DrawSynchronizedPointFrame();
-            DrawMassage(gameTime);
+            this.DrawProgressFrame();
+            this.DrawSynchronizationDotFrame();
+
+            this.DrawStateInformation();
+            this.DrawStatusInformation();
+            this.DrawAccelerationIndicator();
+            this.DrawAccumulationIndicator();
+
+            this.DrawDailySyncRateIndicator();
+
+            this.DrawMassage(gameTime);
 
             ScreenManager.SpriteBatch.End();
+
             ScreenManager.SpriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.Additive);
 
-            DrawProgressContent();
-            DrawSynchronizedPointContent();
+            this.DrawProgressBar();
+            this.DrawSynchronizationDot();
 
             ScreenManager.SpriteBatch.End();
             ScreenManager.SpriteBatch.Begin();
@@ -166,32 +210,56 @@ namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
 
         public override void UpdateStructure(GameTime gameTime)
         {
+            monitor.TryStart();
         }
 
         private void DrawAccelerationIndicator()
         {
             FontManager.DrawCenteredText(
-                settings.AccelerationFont,
+                this.settings.AccelerationFont,
                 "x",
-                AccelerationPrefixLocation,
-                settings.AccelerationColor,
+                this.AccelerationPrefixCenter,
+                this.settings.AccelerationColor,
                 1f);
             FontManager.DrawCenteredText(
-                settings.AccelerationFont,
+                this.settings.AccelerationFont,
                 string.Format("{0}", synchronization.Acceleration.ToString("F1")),
-                AccelerationSubfixLocation,
-                settings.AccelerationColor,
-                settings.AccelerationSize);
+                this.AccelerationSubfixCenter,
+                this.settings.AccelerationColor,
+                this.settings.AccelerationSize);
         }
 
         private void DrawAccumulationIndicator()
         {
             FontManager.DrawCenteredText(
-                settings.AccumulationFont,
+                this.settings.AccumulationFont,
                 string.Format("{0}", synchronization.ElapsedTimeSinceTransition.ToString("hh':'mm':'ss")),
-                AccumulationSubfixLocation,
-                settings.AccumulationColor,
-                settings.AccumulationSize);
+                this.AccumulationSubfixCenter,
+                this.settings.AccumulationColor,
+                this.settings.AccumulationSize);
+        }
+
+        private void DrawDailySyncRateIndicator()
+        {
+            var awake = (ConsciousnessAwake)this.consciousness;
+            var awakeTime = awake.AwakeSpan;
+
+            var synchronizedTime = synchronization.SynchronizedTimeToday + (synchronization.Enabled ? synchronization.ElapsedTimeSinceTransition : TimeSpan.Zero);
+            var syncRate = synchronizedTime.TotalSeconds / awakeTime.TotalSeconds; 
+
+            FontManager.DrawCenteredText(
+                this.settings.SynchronizationRateFont,
+                (syncRate * 100).ToString("F0"),
+                this.DailySyncHourPrefixCenter,
+                this.settings.SynchronizationRateColor,
+                this.settings.SynchronizationRateSize);
+
+            FontManager.DrawCenteredText(
+                this.settings.SynchronizationRateFont,
+                "%",
+                this.DailySyncHourSubfixCenter,
+                this.settings.SynchronizationRateColor,
+                1f);
         }
 
         private void DrawMassage(GameTime gameTime)
@@ -202,32 +270,50 @@ namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
             const string HappyNotice   = "Look like you are gonna be more happier from today.";
             const string UnhappyNotice = "Look like you are gonna be less happier from today.";
 
-            FontManager.DrawCenteredText(settings.MessageFont, better ? HappyNotice : UnhappyNotice, MessageLocation, (better ? settings.BarFrameAscendColor : settings.BarFrameDescendColor).MakeTransparent(alpha), settings.MessageSize);
+            FontManager.DrawCenteredText(
+                this.settings.MessageFont,
+                better ? HappyNotice : UnhappyNotice,
+                this.MessageCenter,
+                (better ? this.settings.BarFrameAscendColor : this.settings.BarFrameDescendColor).MakeTransparent(alpha),
+                this.settings.MessageSize);
         }
 
-        private void DrawProgressContent()
+        private void DrawProgressBar()
         {
-            Primitives2D.FillRectangle(ScreenManager.SpriteBatch, ProgressFrameRectangle, synchronization.Enabled ? settings.BarFrameAscendColor : settings.BarFrameDescendColor);
+            Primitives2D.FillRectangle(
+                ScreenManager.SpriteBatch,
+                this.ProgressBarRectangle,
+                synchronization.Enabled ? this.settings.BarFrameAscendColor : this.settings.BarFrameDescendColor);
         }
 
         private void DrawProgressFrame()
         {
-            Primitives2D.FillRectangle(ScreenManager.SpriteBatch, BackgroundFrameRectangle, settings.BarFrameBackgroundColor);
+            Primitives2D.FillRectangle(ScreenManager.SpriteBatch, this.ProgressFrameRectangle, this.settings.BarFrameBackgroundColor);
         }
 
         private void DrawStateInformation()
         {
             const string SyncTrueInfo  = "Synchronizing";
             const string SyncFalseInfo = "Losing Synchronicity";
-            FontManager.DrawCenteredText(settings.StateFont, synchronization.Enabled ? SyncTrueInfo : SyncFalseInfo, StateLocation, settings.StateColor, settings.StateSize);
+            FontManager.DrawCenteredText(
+                this.settings.StateFont,
+                synchronization.Enabled ? SyncTrueInfo : SyncFalseInfo,
+                this.StateInfoCenter,
+                this.settings.StateColor,
+                this.settings.StateSize);
         }
 
         private void DrawStatusInformation()
         {
-            FontManager.DrawCenteredText(settings.StateFont, string.Format("Level {0}: {1}", synchronization.Level, synchronization.State), StatusLocation, settings.StatusColor, settings.StatusSize);
+            FontManager.DrawCenteredText(
+                this.settings.StateFont,
+                string.Format("Level {0}: {1}", synchronization.Level, synchronization.State),
+                this.StatusInfoCenter,
+                this.settings.StatusColor,
+                this.settings.StatusSize);
         }
 
-        private void DrawSynchronizedPointContent()
+        private void DrawSynchronizationDot()
         {
             // left side content
             for (var i = 0; i < synchronization.SynchronizedHourToday; ++i)
@@ -235,11 +321,11 @@ namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
                 Primitives2D.FillRectangle(
                     ScreenManager.SpriteBatch,
                     RectangleExt.Rectangle(
-                        (int)StateLocation.X - 275 - 15 * i,
-                        (int)StateLocation.Y - 1,
-                        settings.BarFrameSize.Y,
-                        settings.BarFrameSize.Y),
-                    settings.BarFrameAscendColor);
+                        (int)this.StateInfoCenter.X - 275 - 15 * i,
+                        (int)this.StateInfoCenter.Y - 1,
+                        this.settings.BarFrameSize.Y,
+                        this.settings.BarFrameSize.Y),
+                    this.settings.BarFrameAscendColor);
             }
 
             for (var i = 0; i < synchronization.SynchronizedHourYesterday; ++i)
@@ -247,11 +333,11 @@ namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
                 Primitives2D.FillRectangle(
                     ScreenManager.SpriteBatch,
                     RectangleExt.Rectangle(
-                        (int)StateLocation.X - 275 - 15 * i,
-                        (int)StateLocation.Y - 1,
-                        settings.BarFrameSize.Y,
-                        settings.BarFrameSize.Y),
-                    settings.BarFrameDescendColor);
+                        (int)this.StateInfoCenter.X - 275 - 15 * i,
+                        (int)this.StateInfoCenter.Y - 1,
+                        this.settings.BarFrameSize.Y,
+                        this.settings.BarFrameSize.Y),
+                    this.settings.BarFrameDescendColor);
             }
 
             // right side content
@@ -260,11 +346,11 @@ namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
                 Primitives2D.FillRectangle(
                     ScreenManager.SpriteBatch,
                     RectangleExt.Rectangle(
-                        (int)StateLocation.X + 275 + 15 * i,
-                        (int)StateLocation.Y - 1,
-                        settings.BarFrameSize.Y,
-                        settings.BarFrameSize.Y),
-                    settings.BarFrameAscendColor);
+                        (int)this.StateInfoCenter.X + 275 + 15 * i,
+                        (int)this.StateInfoCenter.Y - 1,
+                        this.settings.BarFrameSize.Y,
+                        this.settings.BarFrameSize.Y),
+                    this.settings.BarFrameAscendColor);
             }
 
             for (var i = 0; i < synchronization.SynchronizedHourYesterday; ++i)
@@ -272,15 +358,15 @@ namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
                 Primitives2D.FillRectangle(
                     ScreenManager.SpriteBatch,
                     RectangleExt.Rectangle(
-                        (int)StateLocation.X + 275 + 15 * i,
-                        (int)StateLocation.Y - 1,
-                        settings.BarFrameSize.Y,
-                        settings.BarFrameSize.Y),
-                    settings.BarFrameDescendColor);
+                        (int)this.StateInfoCenter.X + 275 + 15 * i,
+                        (int)this.StateInfoCenter.Y - 1,
+                        this.settings.BarFrameSize.Y,
+                        this.settings.BarFrameSize.Y),
+                    this.settings.BarFrameDescendColor);
             }
         }
 
-        private void DrawSynchronizedPointFrame()
+        private void DrawSynchronizationDotFrame()
         {
             // left side frame
             for (var i = 0; i < synchronization.SynchronizedHourMax; ++i)
@@ -288,11 +374,11 @@ namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
                 Primitives2D.FillRectangle(
                     ScreenManager.SpriteBatch,
                     RectangleExt.Rectangle(
-                        (int)StateLocation.X - 275 - 15 * i,
-                        (int)StateLocation.Y - 1,
-                        settings.BarFrameSize.Y,
-                        settings.BarFrameSize.Y),
-                    settings.HourFrameColor);
+                        (int)this.StateInfoCenter.X - 275 - 15 * i,
+                        (int)this.StateInfoCenter.Y - 1,
+                        this.settings.BarFrameSize.Y,
+                        this.settings.BarFrameSize.Y),
+                    this.settings.SynchronizationDotFrameColor);
             }
 
             // right side frame
@@ -301,30 +387,14 @@ namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
                 Primitives2D.FillRectangle(
                     ScreenManager.SpriteBatch,
                     RectangleExt.Rectangle(
-                        (int)StateLocation.X + 275 + 15 * i,
-                        (int)StateLocation.Y - 1,
-                        settings.BarFrameSize.Y,
-                        settings.BarFrameSize.Y),
-                    settings.HourFrameColor);
+                        (int)this.StateInfoCenter.X + 275 + 15 * i,
+                        (int)this.StateInfoCenter.Y - 1,
+                        this.settings.BarFrameSize.Y,
+                        this.settings.BarFrameSize.Y),
+                    this.settings.SynchronizationDotFrameColor);
             }
         }
 
         #endregion Update and Draw
-
-        #region Operations
-
-        public void StartSynchronizing(TaskEntry target)
-        {
-            synchronization.TryStart(target);
-            monitor        .TryStart();
-        }
-
-        public void StopSynchronizing()
-        {
-            synchronization.Stop();
-            monitor        .Stop();
-        }
-
-        #endregion Operations
     }
 }

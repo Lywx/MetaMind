@@ -284,13 +284,13 @@ namespace MetaMind.Engine.Components
         /// Helper draws a translucent black fullscreen sprite, used for fading
         /// screens in and out, and for darkening the background behind popups.
         /// </summary>
-        public void FadeBackBufferToBlack(float alpha)
+        public void FadeBackBuffer(float alpha, Color color)
         {
             Viewport viewport = GraphicsDevice.Viewport;
 
             spriteBatch.Begin();
 
-            spriteBatch.Draw(blankTexture, new Rectangle(0, 0, viewport.Width, viewport.Height), Color.Black * alpha);
+            spriteBatch.Draw(blankTexture, new Rectangle(0, 0, viewport.Width, viewport.Height), color * alpha);
 
             spriteBatch.End();
         }

@@ -1,33 +1,38 @@
-﻿using MetaMind.Engine.Components;
-using Microsoft.Xna.Framework;
-using MouseKeyboardActivityMonitor;
-using MouseKeyboardActivityMonitor.WinApi;
-using System;
-
-namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
+﻿namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
 {
+    using System;
+
+    using MetaMind.Engine;
+    using MetaMind.Perseverance.Concepts.Cognitions;
+
+    using Microsoft.Xna.Framework;
+
+    using MouseKeyboardActivityMonitor;
+    using MouseKeyboardActivityMonitor.WinApi;
+
     /// <summary>
     /// An attention monitor during synchronization
     /// </summary>
     public class SynchronizationHudMonitor : GameComponent
     {
+        private readonly ISynchronization synchronization;
+
         private readonly TimeSpan attentionSpan            = TimeSpan.FromSeconds(5);
 
         private          DateTime attentionTriggeredMoment = DateTime.Now;
-        private          DateTime musicPlayedMoment        = DateTime.Now;
 
         private MouseHookListener globalMouseListener;
 
-        private bool isActived;
+        private bool              isActived;
 
-        #region Constructors
 
-        public SynchronizationHudMonitor(Game game)
+        public SynchronizationHudMonitor(Game game, ISynchronization synchronization)
             : base(game)
         {
-        }
+            this.synchronization = synchronization;
 
-        #endregion Constructors
+            Game.Components.Add(this);
+        }
 
         public void TryStart()
         {
@@ -47,7 +52,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
             globalMouseListener.MouseMoveExt += TriggerAttention;
 
             isActived = true;
-            Game.Components.Add(this);
         }
 
         public void Stop()
@@ -58,19 +62,21 @@ namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
             }
 
             isActived = false;
-            Game.Components.Remove(this);
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (!isActived)
+            if (synchronization.Enabled && 
+                DateTime.Now - attentionTriggeredMoment > attentionSpan)
             {
-                return;
-            }
+                GameEngine.AudioManager.PlayMusic("Windows Proximity Notification");
 
-            if (DateTime.Now - attentionTriggeredMoment > attentionSpan)
+                attentionTriggeredMoment = DateTime.Now;
+            }
+            else if (!synchronization.Enabled)
             {
-                AudioManager.PlayMusic("Windows Proximity Notification");
+                GameEngine.AudioManager.PlayMusic("Windows Proximity Connection");
+
                 attentionTriggeredMoment = DateTime.Now;
             }
         }
