@@ -1,8 +1,10 @@
+using System;
+
 using C3.Primtive2DXna;
+
 using MetaMind.Engine.Extensions;
 
 using Microsoft.Xna.Framework;
-using System;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 {
@@ -76,14 +78,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
         }
 
         #endregion Structure Position
-
-        #region Update
-
-        public override void Update(GameTime gameTime)
-        {
-        }
-
-        #endregion Update
 
         #region Draw
 

@@ -109,12 +109,12 @@ namespace MetaMind.Perseverance.Guis.Modules
                 // movement
                 if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
                 {
-                    this.View.Control.MoveLeft();
+                    this.View.Control.Selection.MoveLeft();
                 }
 
                 if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
                 {
-                    this.View.Control.MoveRight();
+                    this.View.Control.Selection.MoveRight();
                 }
 
                 if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Up))

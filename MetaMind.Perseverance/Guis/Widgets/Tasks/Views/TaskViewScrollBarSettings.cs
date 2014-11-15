@@ -6,7 +6,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
     {
         public Color Color                    = Color.White;
         public byte  BrightnessMax            = 200;
-        public byte  BrightnessTransitionRate = 3;
+        public byte  BrightnessTransitionRate = 10;
         public int   Width                    = 5;
     }
 }

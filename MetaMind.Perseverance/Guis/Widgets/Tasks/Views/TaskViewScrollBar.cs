@@ -7,25 +7,27 @@
 
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 {
+    using System;
+
     using C3.Primtive2DXna;
+
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Elements.Views;
     using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
+
     using Microsoft.Xna.Framework;
-    using System;
 
     public class TaskViewScrollBar : ViewComponent
     {
-        private byte alpha;
+        private readonly TaskViewScrollBarSettings settings;
+
+        private          int                       alpha;
 
         public TaskViewScrollBar(IView view, TaskViewSettings viewSettings, TaskItemSettings itemSettings, TaskViewScrollBarSettings scrollBarSettings)
             : base(view, viewSettings, itemSettings)
         {
-            this.Settings = scrollBarSettings;
-            this.alpha = 0;
+            this.settings = scrollBarSettings;
         }
-
-        public TaskViewScrollBarSettings Settings { get; private set; }
 
         private Rectangle ScrollBarRectangle
         {
@@ -40,7 +42,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
                 return new Rectangle(
                     ViewControl.Region.X + ViewControl.Region.Width,
                     ViewControl.Region.Y + (int)Math.Ceiling(distance),
-                    this.Settings.Width,
+                    this.settings.Width,
                     ViewControl.Region.Height * ViewSettings.RowNumDisplay / ViewControl.RowNum);
             }
         }
@@ -49,22 +51,22 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
         {
             if (ViewControl.RowNum > ViewSettings.RowNumDisplay)
             {
-                Primitives2D.FillRectangle(ScreenManager.SpriteBatch, this.ScrollBarRectangle, this.Settings.Color.MakeTransparent(this.alpha));
+                Primitives2D.FillRectangle(
+                    ScreenManager.SpriteBatch,
+                    this.ScrollBarRectangle,
+                    this.settings.Color.MakeTransparent((byte)this.alpha));
             }
         }
 
         public void Trigger()
         {
-            this.alpha = this.Settings.BrightnessMax;
+            this.alpha = this.settings.BrightnessMax;
         }
 
         public void Update(GameTime gameTime)
         {
-            if (this.alpha > 2)
-            {
-                this.alpha -= this.Settings.BrightnessTransitionRate;
-            }
-            else
+            this.alpha -= this.settings.BrightnessTransitionRate;
+            if (this.alpha < 0)
             {
                 this.alpha = 0;
             }
