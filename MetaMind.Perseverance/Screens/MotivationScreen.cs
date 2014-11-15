@@ -25,8 +25,7 @@
             IsPopup = true;
 
             synchronization = new SynchronizationModule(
-                Perseverance.Adventure.Cognition.Synchronization,
-                Perseverance.Adventure.Cognition.Consciousness,
+                Perseverance.Adventure.Cognition,
                 new SynchronizationHudSettings());
             synchronization.Load();
 

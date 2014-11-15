@@ -5,6 +5,7 @@
 
     using C3.Primtive2DXna;
 
+    using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Modules;
     using MetaMind.Engine.Settings;
@@ -16,8 +17,8 @@
 
     public class SynchronizationModule : Module<SynchronizationHudSettings>
     {
+        private ICognition                                     cognition;
         private ISynchronization                               synchronization;
-        private IConsciousness                                 consciousness;
 
         private SynchronizationHudMonitor                      monitor;
 
@@ -28,11 +29,11 @@
 
         #region Constructors
 
-        public SynchronizationModule(ISynchronization synchronization, IConsciousness consciousness, SynchronizationHudSettings settings)
+        public SynchronizationModule(Cognition cognition, SynchronizationHudSettings settings)
             : base(settings)
         {
-            this.synchronization = synchronization;
-            this.consciousness   = consciousness;
+            this.cognition       = cognition;
+            this.synchronization = cognition.Synchronization;
 
             this.monitor = new SynchronizationHudMonitor(ScreenManager.Game, synchronization);
         }
@@ -90,17 +91,6 @@
                 return new Vector2(
                     this.StatusInfoCenter.X - this.Settings.SynchronizationRateMargin.X,
                     this.StatusInfoCenter.Y + this.Settings.SynchronizationRateMargin.Y);
-            }
-        }
-
-        private Vector2 DailySyncHourSubfixCenter
-        {
-            get
-            {
-                const int PercentNumWidth = 50;
-                return new Vector2(
-                    this.DailySyncHourPrefixCenter.X + PercentNumWidth,
-                    this.DailySyncHourPrefixCenter.Y);
             }
         }
 
@@ -282,7 +272,7 @@
 
         private void DrawDailySyncRateIndicator()
         {
-            var awake = this.consciousness as ConsciousnessAwake;
+            var awake = this.cognition.Consciousness as ConsciousnessAwake;
             if (awake != null)
             {
                 var awakeTime = awake.AwakeSpan;
@@ -293,18 +283,26 @@
                                               : TimeSpan.Zero);
 
                 var syncRate = synchronizedTime.TotalSeconds / awakeTime.TotalSeconds;
+                var rateText = (syncRate * 100).ToString("F0");
 
                 FontManager.DrawCenteredText(
                     this.Settings.SynchronizationRateFont,
-                    (syncRate * 100).ToString("F0"),
+                    rateText,
                     this.DailySyncHourPrefixCenter,
                     this.Settings.SynchronizationRateColor,
                     this.Settings.SynchronizationRateSize);
 
+                const int PercentSymbolMargin = 10;
+                var rateTextMargin =
+                    new Vector2(
+                        this.Settings.SynchronizationRateFont.MeasureString(rateText).X / 2
+                        * this.Settings.SynchronizationRateSize + PercentSymbolMargin,
+                        0);
+
                 FontManager.DrawCenteredText(
                     this.Settings.SynchronizationRateFont,
                     "%",
-                    this.DailySyncHourSubfixCenter,
+                    this.DailySyncHourPrefixCenter + rateTextMargin,
                     this.Settings.SynchronizationRateColor,
                     1f);
             }

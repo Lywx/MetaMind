@@ -1,11 +1,10 @@
-﻿using MetaMind.Engine;
-using MetaMind.Engine.Components;
-using Microsoft.Xna.Framework;
-
-namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Banners
+﻿namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Banners
 {
+    using MetaMind.Engine;
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Extensions;
+
+    using Microsoft.Xna.Framework;
 
     public class TimelineText : EngineObject
     {

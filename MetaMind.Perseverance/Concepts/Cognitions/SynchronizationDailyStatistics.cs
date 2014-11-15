@@ -43,7 +43,8 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
             this.AccumulatedHourYesterday = this.AccumulatedHourToday;
             this.AccumulatedTimeYesterday = this.AccumulatedTimeToday;
 
-            //
+            // shift forward record
+            // 0-index is lastest, 6-index is oldest
             Array.Copy(this.AccumulatedTimeWeekday, 0, this.AccumulatedTimeWeekday, 1, this.DayMax - 1);
             this.AccumulatedTimeWeekday[0] = this.AccumulatedTimeYesterday;
             

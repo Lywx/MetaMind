@@ -17,7 +17,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
             : base(item)
         {
             this.ItemFrameControl = new TaskItemFrameControl(item);
-            this.ItemErrorControl = new TaskItemErrorControl(item);
             this.ItemSyncControl  = new TaskItemSyncControl(item);
         }
 
@@ -29,8 +28,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
         public ItemEntryFrame ProgressFrame { get { return ((TaskItemFrameControl)ItemFrameControl).ProgressFrame; } }
 
-        // TODO: not implemented
-        public TaskItemErrorControl ItemErrorControl { get; private set; }
+        public ItemEntryFrame RationaleFrame { get { return ((TaskItemFrameControl)ItemFrameControl).RationaleFrame; } }
 
         public TaskItemSyncControl ItemSyncControl { get; private set; }
 
@@ -103,6 +101,11 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
                     if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.L))
                     {
                         this.ItemDataControl.EditInt("Load");
+                    }
+
+                    if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.R))
+                    {
+                        this.ItemDataControl.EditInt("RationaleScale");
                     }
 
                     if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))

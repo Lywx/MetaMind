@@ -7,17 +7,16 @@
 
 namespace MetaMind.Engine.Components
 {
-    using MetaMind.Engine.Components.Events;
-    using Microsoft.Xna.Framework;
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
+    using MetaMind.Engine.Components.Events;
+
+    using Microsoft.Xna.Framework;
+
     public class EventManager : GameComponent
     {
-        // ---------------------------------------------------------------------
-
-        // ---------------------------------------------------------------------
         private List<EventBase> activeEvents;
 
         private List<int> knownEvents;
@@ -65,8 +64,6 @@ namespace MetaMind.Engine.Components
 
         #region Constructors
 
-        /// <summary>
-        /// Handles all events
         private EventManager(Game game)
             : base(game)
         {

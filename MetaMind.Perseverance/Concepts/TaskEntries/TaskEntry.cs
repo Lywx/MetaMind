@@ -1,9 +1,10 @@
-﻿using MetaMind.Engine;
-using MetaMind.Engine.Concepts;
-using System.Runtime.Serialization;
-
-namespace MetaMind.Perseverance.Concepts.TaskEntries
+﻿namespace MetaMind.Perseverance.Concepts.TaskEntries
 {
+    using System.Runtime.Serialization;
+
+    using MetaMind.Engine;
+    using MetaMind.Engine.Concepts;
+
     [DataContract]
     public class TaskEntry : EngineObject
     {
@@ -27,7 +28,7 @@ namespace MetaMind.Perseverance.Concepts.TaskEntries
         #region Error
 
         [DataMember]
-        public bool Rationalized;
+        public int RationaleScale;
 
         #endregion Error
 

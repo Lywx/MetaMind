@@ -1,13 +1,26 @@
-﻿using System.Runtime.Serialization;
-
-using MetaMind.Engine;
-
-namespace MetaMind.Perseverance.Concepts.Cognitions
+﻿namespace MetaMind.Perseverance.Concepts.Cognitions
 {
+    using System.Runtime.Serialization;
+
+    using MetaMind.Engine;
+
+    public interface ICognition
+    {
+        [DataMember]
+        IConsciousness Consciousness { get; set; }
+
+        [DataMember]
+        ISynchronization Synchronization { get; set; }
+
+        bool Awake { get; }
+
+        void Update();
+    }
+
     [DataContract,
     KnownType(typeof(Consciousness)),
     KnownType(typeof(Synchronization))]
-    public class Cognition : EngineObject
+    public class Cognition : EngineObject, ICognition
     {
         #region Components
 

@@ -1,11 +1,12 @@
-using MetaMind.Engine;
-using MetaMind.Perseverance.Concepts.TaskEntries;
-using Microsoft.Xna.Framework;
-using System;
-using System.Runtime.Serialization;
-
 namespace MetaMind.Perseverance.Concepts.Cognitions
 {
+    using System;
+    using System.Linq;
+    using System.Runtime.Serialization;
+
+    using MetaMind.Engine;
+    using MetaMind.Perseverance.Concepts.TaskEntries;
+
     public interface ISynchronization
     {
         double Acceleration { get; }
@@ -27,6 +28,8 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
         int SynchronizedHourYesterday { get; }
 
         TimeSpan SynchronizedTimeToday { get; }
+
+        TimeSpan SynchronizedTimeRecentWeek { get; }
 
         TimeSpan SynchronizedTimeYesterday { get; }
 
@@ -148,6 +151,14 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
         public TimeSpan SynchronizedTimeToday
         {
             get { return statistics.AccumulatedTimeToday; }
+        }
+
+        public TimeSpan SynchronizedTimeRecentWeek
+        {
+            get
+            {
+                return new TimeSpan(this.statistics.AccumulatedTimeWeekday.Sum(r => r.Duration().Ticks));
+            }
         }
 
         public TimeSpan SynchronizedTimeYesterday

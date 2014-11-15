@@ -1,38 +1,30 @@
-using C3.Primtive2DXna;
-using MetaMind.Engine.Guis.Modules;
-using MetaMind.Engine.Settings;
-using Microsoft.Xna.Framework;
-
 namespace MetaMind.Perseverance.Guis.Modules
 {
+    using C3.Primtive2DXna;
+
+    using MetaMind.Engine.Guis.Modules;
+    using MetaMind.Engine.Settings;
     using MetaMind.Perseverance.Concepts.Cognitions;
+
+    using Microsoft.Xna.Framework;
 
     public class SummaryModule : Module<SummaryModuleSettings>
     {
-        private IConsciousness   consciousness;
+        private ICognition       cognition;
         private ISynchronization synchronization;
 
         private SummaryModuleSleepStoppedEventListener sleepStoppedEventListener;
 
         #region Constructors
 
-        public SummaryModule(Cognition cognition, SummaryModuleSettings settings)
+        public SummaryModule(ICognition cognition, SummaryModuleSettings settings)
             : base(settings)
         {
+            this.cognition       = cognition;
             this.synchronization = cognition.Synchronization;
-            this.consciousness   = cognition.Consciousness;
         }
 
         #endregion Constructors
-
-        #region Graphical Position
-
-        private Vector2 TitleCenter
-        {
-            get { return new Vector2(GraphicsSettings.Width / 2f, 100); }
-        }
-
-        #endregion
 
         #region Load and Unload
 
@@ -78,23 +70,49 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         public override void Draw(GameTime gameTime, byte alpha)
         {
-            if (this.consciousness.AwakeCondition)
+            if (this.cognition.Awake)
             {
                 return;
             }
             
             this.DrawSummaryTitle (   Color.White, "Summary");
+            
+            // daily statistics
             this.DrawSummaryEntity(1, Color.White, "Hours in Synchronization:" , this.synchronization.SynchronizedHourYesterday.ToSummary());
             this.DrawSummaryBlank (2);
-            this.DrawSummaryEntity(3, Color.Red  , "Hours in Good Profession:" , -this.Settings.GoodPrefessionHour);
-            this.DrawSummaryEntity(4, Color.Red  , "Hours in Lofty Profession:", -this.Settings.LoftyProfessionHour);
+            this.DrawSummaryEntity(3, Color.Red,   "Hours in Good Profession:" , -this.Settings.GoodPrefessionHour);
+            this.DrawSummaryEntity(4, Color.Red,   "Hours in Lofty Profession:", -this.Settings.LoftyProfessionHour);
             this.DrawSummarySplit (5, Color.Red);
-            this.DrawSummaryResult(6, Color.White, Color.Red, string.Empty);
+
+            var dailyLeftHour = this.synchronization.SynchronizedHourYesterday - this.Settings.GoodPrefessionHour - this.Settings.LoftyProfessionHour;
+            this.DrawSummaryResult(6, Color.White, Color.Red, string.Empty, dailyLeftHour);
+            
+            this.DrawSummaryBlank (7);
+
+            // weekly statistics
+            var weeklyHour = (int)this.synchronization.SynchronizedTimeRecentWeek.TotalHours;
+            var weeklyLeftHour = weeklyHour - this.Settings.WorldRecordHour;
+
+            this.DrawSummaryEntity(8, Color.White, "Hours in Synchronization In Recent 7 Days:", weeklyHour.ToSummary());
+            this.DrawSummaryBlank (9);
+            this.DrawSummaryEntity(10, Color.Red,   "Len Bosack's Records in 7 Days:", -this.Settings.WorldRecordHour);
+            this.DrawSummarySplit (11, Color.Red);
+
+            this.DrawSummaryResult(12, Color.Gold, Color.Red, string.Empty, weeklyLeftHour);
         }
 
         private void DrawSummaryBlank(int line)
         {
             this.DrawSummaryEntity(line, Color.White, string.Empty, string.Empty);
+        }
+
+        private void DrawSummaryEntity(int line, Color color, string caption, string presentation)
+        {
+            var captionPosition = new Vector2(GraphicsSettings.Width / 2f - 300, 150 + line * Settings.LineHeight);
+            var contentPosition = new Vector2(GraphicsSettings.Width / 2f + 260, 150 + line * Settings.LineHeight);
+
+            FontManager.DrawText(Settings.EntityFont, caption     , captionPosition, color, Settings.EntitySize);
+            FontManager.DrawText(Settings.EntityFont, presentation, contentPosition, color, Settings.EntitySize);
         }
 
         private void DrawSummaryEntity(int line, Color color, string caption, object presentedData)
@@ -107,10 +125,9 @@ namespace MetaMind.Perseverance.Guis.Modules
             FontManager.DrawText(Settings.EntityFont, contentString, contentPosition, color, Settings.EntitySize);
         }
 
-        private void DrawSummaryResult(int line, Color goodColor, Color badColor, string caption)
+        private void DrawSummaryResult(int line, Color goodColor, Color badColor, string caption, int computation)
         {
-            var leftHour = this.synchronization.SynchronizedHourYesterday - Settings.GoodPrefessionHour - Settings.LoftyProfessionHour;
-            this.DrawSummaryEntity(line, leftHour >= 0 ? goodColor : badColor, caption, leftHour.ToSummary());
+            this.DrawSummaryEntity(line, computation >= 0 ? goodColor : badColor, caption, computation.ToSummary());
         }
 
         private void DrawSummarySplit(int line, Color color)
@@ -123,7 +140,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         private void DrawSummaryTitle(Color color, string title)
         {
-            FontManager.DrawCenteredText(Settings.TitleFont, title, TitleCenter, color, Settings.TitleSize);
+            FontManager.DrawCenteredText(Settings.TitleFont, title, this.Settings.TitleCenter, color, Settings.TitleSize);
         }
 
         #endregion 
