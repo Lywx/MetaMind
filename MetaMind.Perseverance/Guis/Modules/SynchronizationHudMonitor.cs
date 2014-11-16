@@ -23,20 +23,21 @@
 
         private MouseHookListener globalMouseListener;
 
-        private bool              isActived;
+        private bool              actived;
+        private bool              listened;
 
-
-        public SynchronizationHudMonitor(Game game, ISynchronization synchronization)
+        public SynchronizationHudMonitor(Game game, ISynchronization synchronization, bool listen)
             : base(game)
         {
             this.synchronization = synchronization;
+            this.listened = listen;
 
             this.Game.Components.Add(this);
         }
 
         public void TryStart()
         {
-            if (!this.isActived)
+            if (!this.actived)
             {
                 this.Start();
             }
@@ -44,24 +45,31 @@
 
         public void Start()
         {
-            // Note: for an application hook, use the AppHooker class instead
-            this.globalMouseListener = new MouseHookListener(new GlobalHooker()) { Enabled = true };
+            // only create mouse hook when listening
+            if (listened)
+            {
+                // Note: for an application hook, use the AppHooker class instead
+                this.globalMouseListener = new MouseHookListener(new GlobalHooker()) { Enabled = true };
 
-            // Set the event handler
-            // recommended to use the Extended handlers, which allow input suppression among other additional information
-            this.globalMouseListener.MouseMoveExt += this.TriggerAttention;
+                // Set the event handler
+                // recommended to use the Extended handlers, which allow input suppression among other additional information
+                this.globalMouseListener.MouseMoveExt += this.TriggerAttention;
+            }
 
-            this.isActived = true;
+            this.actived = true;
         }
 
         public void Stop()
         {
-            if (this.globalMouseListener != null)
+            if (listened)
             {
-                this.globalMouseListener.Dispose();
+                if (this.globalMouseListener != null)
+                {
+                    this.globalMouseListener.Dispose();
+                }
             }
 
-            this.isActived = false;
+            this.actived = false;
         }
 
         public override void Update(GameTime gameTime)

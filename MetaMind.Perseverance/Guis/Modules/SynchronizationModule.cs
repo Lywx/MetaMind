@@ -35,7 +35,9 @@
             this.cognition       = cognition;
             this.synchronization = cognition.Synchronization;
 
-            this.monitor = new SynchronizationHudMonitor(ScreenManager.Game, synchronization);
+            // best close the mouse listener
+            // which may casue severe mouse performance issues
+            this.monitor = new SynchronizationHudMonitor(ScreenManager.Game, synchronization, false);
         }
 
         #endregion Constructors
