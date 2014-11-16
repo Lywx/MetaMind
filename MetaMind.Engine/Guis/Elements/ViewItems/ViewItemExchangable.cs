@@ -23,6 +23,13 @@
 
         public void ExchangeTo(IView towards, int position)
         {
+            // avoid possible self exchanging which is problematic
+            // when there is a tempoarary id mismatach
+            if (object.ReferenceEquals(this.View, towards))
+            {
+                return;
+            }
+
             this.View.Items.Remove(this);
 
             this.View = towards;

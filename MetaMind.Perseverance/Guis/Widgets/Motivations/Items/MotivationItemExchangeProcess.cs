@@ -24,8 +24,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 
             this.DraggingItem.ItemData.CopyTo(targetSpace, position);
 
-            //this.DraggingItem.ItemControl.ItemTaskControl.TaskTracer.Close();
-
             base.ExchangeToView();
         }
     }
