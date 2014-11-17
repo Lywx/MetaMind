@@ -8,6 +8,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
     using MetaMind.Engine.Guis.Elements.Items;
     using MetaMind.Engine.Guis.Elements.ViewItems;
     using MetaMind.Engine.Guis.Elements.Views;
+    using MetaMind.Perseverance.Guis.Modules;
 
     public class TaskItemControl : ViewItemControl2D
     {
@@ -18,6 +19,13 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
         {
             this.ItemFrameControl = new TaskItemFrameControl(item);
             this.ItemSyncControl  = new TaskItemSyncControl(item);
+
+            // only add this control when 
+            if (item.View.Parent is MotivationTaskTracer)
+            {
+                this.ItemViewControl = new TaskItemViewControlInMotivation(item);
+            }
+
         }
 
         public ItemEntryFrame ExperienceFrame { get { return ((TaskItemFrameControl)ItemFrameControl).ExperienceFrame; } }

@@ -26,7 +26,7 @@ namespace MetaMind.Perseverance.Guis.Modules
         public MotivationTaskTracer(MotivationItemControl itemControl, MotivationTaskTracerSettings settings)
             : base(settings)
         {
-            this.View = new View(this.Settings.ViewSettings, this.Settings.ItemSettings, this.Settings.ViewFactory);
+            this.View = new View(this.Settings.ViewSettings, this.Settings.ItemSettings, this.Settings.ViewFactory, this);
 
             // faster dynamic accessor with fast member
             this.FastHostControl = ObjectAccessor.Create(itemControl);
@@ -35,7 +35,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         public IView View { get; private set; }
 
-        private dynamic FastHostData { get; set; }
+        public dynamic FastHostData { get; set; }
 
         private dynamic FastHostControl { get; set; }
 

@@ -25,5 +25,20 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             // but the item not in the right view
             base.SwapAroundView();
         }
+
+        protected override void SwapInView()
+        {
+            // remove data in original view
+            this.SwappingItem.ViewControl.ItemFactory.RemoveData(this.SwappingItem);
+            this.DraggedItem .ViewControl.ItemFactory.RemoveData(this.DraggedItem);
+
+            // now the data source clean
+            
+            // change data position
+            this.SwappingItem.ItemData.CopyTo(this.DraggedItem .View, this.DraggedItem .ItemControl.Id);
+            this.DraggedItem .ItemData.CopyTo(this.SwappingItem.View, this.SwappingItem.ItemControl.Id);
+
+            base.SwapInView();
+        }
     }
 }

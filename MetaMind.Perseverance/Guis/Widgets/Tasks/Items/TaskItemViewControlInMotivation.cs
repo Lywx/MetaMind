@@ -1,26 +1,13 @@
-namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
+namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 {
     using MetaMind.Engine.Guis.Elements.Items;
     using MetaMind.Engine.Guis.Elements.ViewItems;
-    using MetaMind.Engine.Guis.Elements.Views;
 
-    public class MotivationItemViewControl : ViewItemViewControl1D
+    public class TaskItemViewControlInMotivation : ViewItemViewControl2D
     {
-        public MotivationItemViewControl(IViewItem item)
+        public TaskItemViewControlInMotivation(IViewItem item)
             : base(item)
         {
-        }
-
-        public override void ExchangeIt(IViewItem draggingItem, IView targetView)
-        {
-            if (Item.IsEnabled(ItemState.Item_Exchanging))
-            {
-                return;
-            }
-
-            Item.Enable(ItemState.Item_Exchanging);
-
-            ProcessManager.AttachProcess(new MotivationItemExchangeProcess(draggingItem, targetView));
         }
 
         public override void SwapIt(IViewItem draggingItem)
@@ -37,7 +24,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 
             this.ViewControl.Swap.Initialize(originCenter, targetCenter);
 
-            ProcessManager.AttachProcess(new MotivationItemSwapProcess(draggingItem, this.Item));
+            ProcessManager.AttachProcess(new TaskItemSwapProcessInMotivation(draggingItem, this.Item));
         }
     }
 }

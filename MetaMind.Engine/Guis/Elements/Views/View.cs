@@ -16,13 +16,15 @@ namespace MetaMind.Engine.Guis.Elements.Views
 
     public class View : ViewObject, IView
     {
-        public View(ICloneable viewSettings, ICloneable itemSettings, IViewFactory factory)
+        public View(ICloneable viewSettings, ICloneable itemSettings, IViewFactory factory, dynamic parent = null)
             : base(viewSettings, itemSettings)
         {
             this.Items = new List<IViewItem>();
 
             this.Control = factory.CreateControl(this, viewSettings, itemSettings);
             this.Graphics = factory.CreateGraphics(this, viewSettings, itemSettings);
+
+            this.Parent = parent;
         }
 
         public dynamic Control { get; set; }
@@ -30,6 +32,8 @@ namespace MetaMind.Engine.Guis.Elements.Views
         public IViewGraphics Graphics { get; set; }
 
         public List<IViewItem> Items { get; set; }
+
+        public dynamic Parent { get; private set; }
 
         public override void Draw(GameTime gameTime, byte alpha)
         {

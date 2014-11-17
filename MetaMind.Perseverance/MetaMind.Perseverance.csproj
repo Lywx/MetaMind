@@ -115,6 +115,7 @@
     <Compile Include="Guis\Widgets\Tasks\Items\TaskItemErrorControl.cs" />
     <Compile Include="Guis\Widgets\Tasks\Items\TaskItemFrameControl.cs" />
     <Compile Include="Guis\Widgets\Tasks\Items\TaskItemSettings.cs" />
+    <Compile Include="Guis\Widgets\Tasks\Items\TaskItemSwapProcessInMotivation.cs" />
     <Compile Include="Guis\Widgets\Tasks\Items\TaskItemSyncControl.cs" />
     <Compile Include="Guis\Modules\SynchronizationModule.cs" />
     <Compile Include="Guis\Modules\SynchronizationHudMonitor.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="Guis\Widgets\Tasks\Items\TaskItemControl.cs" />
     <Compile Include="Guis\Widgets\Tasks\Items\TaskItemFactory.cs" />
     <Compile Include="Guis\Widgets\Tasks\Items\TaskItemGraphics.cs" />
+    <Compile Include="Guis\Widgets\Tasks\Items\TaskItemViewControlInMotivation.cs" />
     <Compile Include="Guis\Widgets\Tasks\Views\TaskViewControl.cs" />
     <Compile Include="Guis\Widgets\Tasks\Views\TaskViewFactory.cs" />
     <Compile Include="Guis\Widgets\Tasks\Views\TaskViewGraphics.cs" />

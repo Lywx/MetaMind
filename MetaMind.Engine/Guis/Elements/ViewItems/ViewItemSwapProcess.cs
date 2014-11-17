@@ -87,7 +87,7 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
             swappingExchangable.ExchangeTo(orignialDraggedItemView , this.DraggedItem.ItemControl.Id);
         }
 
-        protected void SwapInView()
+        protected virtual void SwapInView()
         {
             // swap id then sort
             var swappingId = this.SwappingItem.ItemControl.Id;
