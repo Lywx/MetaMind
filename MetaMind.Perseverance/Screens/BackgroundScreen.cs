@@ -1,19 +1,20 @@
-﻿using MetaMind.Engine.Screens;
-using MetaMind.Perseverance.Guis.Particles;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-
-namespace MetaMind.Perseverance.Screens
+﻿namespace MetaMind.Perseverance.Screens
 {
+    using System;
+
+    using MetaMind.Engine.Screens;
+    using MetaMind.Perseverance.Guis.Modules;
+    using MetaMind.Perseverance.Guis.Particles;
+
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+
     public class BackgroundScreen : GameScreen
     {
         #region Graphicalc Data
 
-        private const int ParticleNumber = 1500;
-
-        private readonly FloatParticleContainer particles = new FloatParticleContainer( ParticleNumber );
-        private          Texture2D              backgroundTexture;
+        private readonly ChaosModule particles = new ChaosModule(new ChaosModuleSettings());
+        private          Texture2D   backgroundTexture;
 
         #endregion Graphicalc Data
 
@@ -24,8 +25,8 @@ namespace MetaMind.Perseverance.Screens
         /// </summary>
         public BackgroundScreen()
         {
-            TransitionOnTime = TimeSpan.FromSeconds( 0.5 );
-            TransitionOffTime = TimeSpan.FromSeconds( 0.5 );
+            TransitionOnTime = TimeSpan.FromSeconds(0.5);
+            TransitionOffTime = TimeSpan.FromSeconds(0.5);
         }
 
         #endregion Constructors
@@ -41,7 +42,7 @@ namespace MetaMind.Perseverance.Screens
         /// </summary>
         public override void LoadContent()
         {
-            backgroundTexture = ContentManager.Load<Texture2D>( @"Textures\Screens\Background\Sea Of Mind" );
+            backgroundTexture = ContentManager.Load<Texture2D>(@"Textures\Screens\Background\Sea Of Mind");
         }
 
         /// <summary>
@@ -59,16 +60,16 @@ namespace MetaMind.Perseverance.Screens
         /// <summary>
         /// Draws the background screen.
         /// </summary>
-        public override void Draw( GameTime gameTime )
+        public override void Draw(GameTime gameTime)
         {
             var spriteBatch = ScreenManager.SpriteBatch;
             var viewport    = ScreenManager.GraphicsDevice.Viewport;
-            var fullscreen  = new Rectangle( 0, 0, viewport.Width, viewport.Height );
+            var fullscreen  = new Rectangle(0, 0, viewport.Width, viewport.Height);
 
             spriteBatch.Begin();
 
-            spriteBatch.Draw( backgroundTexture, fullscreen, new Color( 0, 0, TransitionAlpha / 2 ) );
-            particles  .Draw( gameTime );
+            spriteBatch.Draw(backgroundTexture, fullscreen, new Color(0, 0, TransitionAlpha / 2));
+            particles  .Draw(gameTime);
 
             spriteBatch.End();
         }
@@ -80,10 +81,13 @@ namespace MetaMind.Perseverance.Screens
         /// coveredByOtherScreen parameter to false in order to stop the base
         /// Update method wanting to transition off.
         /// </summary>
-        public override void Update( GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen )
+        public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
-            particles.Update( gameTime );
-            base     .Update( gameTime, otherScreenHasFocus, false );
+            // forced input update
+            particles.HandleInput();
+            particles.Update(gameTime);
+
+            base     .Update(gameTime, otherScreenHasFocus, false);
         }
 
         #endregion Update and Draw

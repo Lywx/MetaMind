@@ -11,8 +11,6 @@ namespace MetaMind.Engine.Guis.Modules
 
         void Load();
 
-        void Reload();
-
         void Unload();
     }
 
@@ -53,11 +51,6 @@ namespace MetaMind.Engine.Guis.Modules
         }
 
         public virtual void Load()
-        {
-            Control.Load();
-        }
-
-        public virtual void Reload()
         {
             Control.Load();
         }

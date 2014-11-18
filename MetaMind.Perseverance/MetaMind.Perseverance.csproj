@@ -89,8 +89,9 @@
     <Compile Include="Guis\Modules\MotivationTaskTracerSettings.cs" />
     <Compile Include="Guis\Modules\SummaryModule.cs" />
     <Compile Include="Guis\Modules\SummaryModuleSettings.cs" />
+    <Compile Include="Guis\Modules\ChaosModuleSettings.cs" />
     <Compile Include="Guis\Particles\ShapelessParticle.cs" />
-    <Compile Include="Guis\Particles\FloatParticleContainer.cs" />
+    <Compile Include="Guis\Modules\ChaosModule.cs" />
     <Compile Include="Guis\Particles\FloatParticle.cs" />
     <Compile Include="Guis\Particles\Particle.cs" />
     <Compile Include="Guis\Widgets\Motivations\Banners\BannerSetting.cs" />

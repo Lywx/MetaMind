@@ -23,12 +23,15 @@ namespace MetaMind.Perseverance.Guis.Particles
         private const int Width         = 8;
 
         private static readonly Random Random = Perseverance.Adventure.Random;
-        
-        private Point pressure = new Point(10, 10);
 
-        private FloatParticle(Direction direction, Vector2 a, Vector2 v, float lastingSeconds, Color color, float scale)
+        private Point pressure = new Point(10, 10);
+        private int   deep;
+
+        private FloatParticle(int deep, Direction direction, Vector2 a, Vector2 v, float lastingSeconds, Color color, float scale)
             : base(a, v, 0f, 0f, 0f, lastingSeconds, color, scale)
         {
+            this.deep = deep;
+
             // anywhere on the sides of screen
             var width = (int)(Width * this.Scale);
             this.Position = PointExt.ToVector2(new Point(
@@ -92,7 +95,7 @@ namespace MetaMind.Perseverance.Guis.Particles
 
             var remainingSeconds = Random.Next(BubbleSeconds, 2 * BubbleSeconds);
             var color            = new Color(Random.Next(0, 100) / deep, 50 / deep, 50 / deep, 50 / deep);
-            var particle         = new FloatParticle(direction, acceleration, velocity, remainingSeconds, color, size);
+            var particle         = new FloatParticle(deep, direction, acceleration, velocity, remainingSeconds, color, size);
 
             return particle;
         }
@@ -117,6 +120,15 @@ namespace MetaMind.Perseverance.Guis.Particles
                 Random.Next(-pressure.Y, pressure.Y));
 
             base.Update(gameTime);
+        }
+
+        public void Colorize()
+        {
+            Color = new Color(
+                Random.Next(0, 255) / deep,
+                Random.Next(0, 255) / deep,
+                Random.Next(0, 255) / deep,
+                Random.Next(0, 255) / deep);
         }
     }
 }
