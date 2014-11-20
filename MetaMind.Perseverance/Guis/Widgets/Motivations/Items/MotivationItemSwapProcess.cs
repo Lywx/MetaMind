@@ -18,8 +18,8 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             // now the data source clean
             
             // change data position
-            this.SwappingItem.ItemData.CopyTo(this.DraggedItem .ViewSettings.Space, this.DraggedItem .ItemControl.Id);
-            this.DraggedItem .ItemData.CopyTo(this.SwappingItem.ViewSettings.Space, this.SwappingItem.ItemControl.Id);
+            this.SwappingItem.ItemData.CopyToSpace(this.DraggedItem .ViewSettings.Space, this.DraggedItem .ItemControl.Id);
+            this.DraggedItem .ItemData.CopyToSpace(this.SwappingItem.ViewSettings.Space, this.SwappingItem.ItemControl.Id);
 
             // now the data source ready
             // but the item not in the right view
@@ -28,15 +28,8 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 
         protected override void SwapInView()
         {
-            // remove data in original view
-            this.SwappingItem.ViewControl.ItemFactory.RemoveData(this.SwappingItem);
-            this.DraggedItem .ViewControl.ItemFactory.RemoveData(this.DraggedItem);
-
-            // now the data source clean
-            
             // change data position
-            this.SwappingItem.ItemData.CopyTo(this.DraggedItem .View, this.DraggedItem .ItemControl.Id);
-            this.DraggedItem .ItemData.CopyTo(this.SwappingItem.View, this.SwappingItem.ItemControl.Id);
+            this.SwappingItem.ItemData.SwapWithInSpace(this.DraggedItem .ViewSettings.Space, this.DraggedItem.ItemData);
 
             base.SwapInView();
         }

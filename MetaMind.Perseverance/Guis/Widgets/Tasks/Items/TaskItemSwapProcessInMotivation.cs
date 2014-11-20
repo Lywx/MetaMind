@@ -15,7 +15,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
         protected override void SwapInView()
         {
-            // change data position
+            // change data position in motivation's tasks
             MotivationTaskTracer parent = this.DraggedItem.View.Parent;
             List<TaskEntry>      tasks  = parent.FastHostData["Tasks"];
 

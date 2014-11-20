@@ -1,9 +1,9 @@
-﻿using MetaMind.Perseverance.Concepts.TaskEntries;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-
-namespace MetaMind.Perseverance.Concepts.MotivationEntries
+﻿namespace MetaMind.Perseverance.Concepts.MotivationEntries
 {
+    using System.Collections.Generic;
+    using System.Runtime.Serialization;
+
+    using MetaMind.Perseverance.Concepts.TaskEntries;
     using MetaMind.Perseverance.Guis.Modules;
 
     [DataContract]
@@ -22,26 +22,29 @@ namespace MetaMind.Perseverance.Concepts.MotivationEntries
         {
         }
 
-        public void CopyTo(MotivationSpace space, int position)
+        public void CopyToSpace(MotivationSpace space, int position)
         {
-            switch (space)
+            var source = MotivationExchangeSettings.GetMotivationSource(space);
+            if (source != null)
             {
-                case MotivationSpace.Past:
-                    {
-                        MotivationExchangeSettings.GetPastMotivations().Insert(position, this);
-                        break;
-                    }
-                case MotivationSpace.Now:
-                    {
-                        MotivationExchangeSettings.GetNowMotivations().Insert(position, this);
-                        break;
-                    }
-                case MotivationSpace.Future:
-                    {
-                        MotivationExchangeSettings.GetFutureMotivations().Insert(position, this);
-                        break;
-                    }
+                source.Insert(position, this);
             }
         }
+
+        public void SwapWithInSpace(MotivationSpace space, MotivationEntry target)
+        {
+            var source = MotivationExchangeSettings.GetMotivationSource(space);
+            if (source != null && 
+                source.Contains(this) && 
+                source.Contains(target))
+            {
+                var thisIndex   = source.IndexOf(this);
+                var targetIndex = source.IndexOf(target);
+
+                source[thisIndex]   = target;
+                source[targetIndex] = this;
+            }
+        }
+
     }
 }

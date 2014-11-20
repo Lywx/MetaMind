@@ -38,7 +38,6 @@
         private Adventure()
         {
             this.Random         = new Random((int)DateTime.Now.Ticks);
-            this.Tasklist       = new Tasklist();
             this.Motivationlist = new Motivationlist();
             this.Cognition      = new Cognition();
         }
@@ -49,9 +48,6 @@
 
         [DataMember]
         public Cognition Cognition { get; private set; }
-
-        [DataMember]
-        public Tasklist Tasklist { get; private set; }
 
         public Random Random { get; private set; }
 

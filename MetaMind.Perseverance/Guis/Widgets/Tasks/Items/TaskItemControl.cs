@@ -46,11 +46,9 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
         private void DeleteIt()
         {
-            // remove from gui
+            // only need to remove from gui
+            // tasks are not stored centralizedly
             View.Items.Remove(Item);
-
-            // remove from data source
-            View.Control.ItemFactory.RemoveData(Item);
         }
 
         #endregion Operations

@@ -1,11 +1,9 @@
 ﻿namespace MetaMind.Perseverance.Concepts.TaskEntries
 {
-    using System.Collections.Generic;
     using System.Runtime.Serialization;
 
     using MetaMind.Engine;
     using MetaMind.Engine.Concepts;
-    using MetaMind.Perseverance.Concepts.MotivationEntries;
 
     [DataContract]
     public class TaskEntry : EngineObject

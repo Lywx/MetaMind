@@ -22,7 +22,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
                                ? (int)this.TargetSelection.PreviousSelectedId
                                : 0;
 
-            this.DraggingItem.ItemData.CopyTo(targetSpace, position);
+            this.DraggingItem.ItemData.CopyToSpace(targetSpace, position);
 
             base.ExchangeToView();
         }

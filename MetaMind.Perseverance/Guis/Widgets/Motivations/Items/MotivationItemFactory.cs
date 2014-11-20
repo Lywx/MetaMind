@@ -23,13 +23,7 @@
 
         public void RemoveData(IViewItem item)
         {
-            MotivationEntry motivation = item.ItemData;
-            
-            // remove from source
             Perseverance.Adventure.Motivationlist.Remove(item.ItemData, item.ViewSettings.Space);
-            
-            // remove sub-tosks
-            motivation.Tasks.ForEach(task => Perseverance.Adventure.Tasklist.Remove(task));
         }
     }
 }

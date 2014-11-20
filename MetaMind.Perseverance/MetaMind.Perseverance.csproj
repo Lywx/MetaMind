@@ -83,7 +83,6 @@
     <Compile Include="Concepts\Cognitions\SynchronizationTimer.cs" />
     <Compile Include="Concepts\MotivationEntries\MotivationEntry.cs" />
     <Compile Include="Concepts\MotivationEntries\Motivationlist.cs" />
-    <Compile Include="Concepts\TaskEntries\Tasklist.cs" />
     <Compile Include="Concepts\TaskEntries\TaskEntry.cs" />
     <Compile Include="Guis\Modules\MotivationTaskTracer.cs" />
     <Compile Include="Guis\Modules\MotivationTaskTracerSettings.cs" />

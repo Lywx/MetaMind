@@ -50,15 +50,39 @@ namespace MetaMind.Perseverance.Guis.Modules
             }
         }
 
-        public MotivationViewSettings PastViewSettings { get; private set; }
+        public MotivationViewSettings FutureViewSettings { get; private set; }
 
         public MotivationViewSettings NowViewSettings { get; private set; }
 
-        public MotivationViewSettings FutureViewSettings { get; private set; }
+        public MotivationViewSettings PastViewSettings { get; private set; }
 
-        public static List<MotivationEntry> GetPastMotivations()
+        public static List<MotivationEntry> GetFutureMotivations()
         {
-            return Perseverance.Adventure.Motivationlist.PastMotivations;
+            return Perseverance.Adventure.Motivationlist.FutureMotivations;
+        }
+
+        public static List<MotivationEntry> GetMotivationSource(MotivationSpace space)
+        {
+            switch (space)
+            {
+                case MotivationSpace.Past:
+                    {
+                        return GetPastMotivations();
+                    }
+
+                case MotivationSpace.Now:
+                    {
+                        return GetNowMotivations();
+                    }
+
+                case MotivationSpace.Future:
+                    {
+                        return GetFutureMotivations();
+                    }
+
+                default:
+                    return null;
+            }
         }
 
         public static List<MotivationEntry> GetNowMotivations()
@@ -66,9 +90,9 @@ namespace MetaMind.Perseverance.Guis.Modules
             return Perseverance.Adventure.Motivationlist.NowMotivations;
         }
 
-        public static List<MotivationEntry> GetFutureMotivations()
+        public static List<MotivationEntry> GetPastMotivations()
         {
-            return Perseverance.Adventure.Motivationlist.FutureMotivations;
+            return Perseverance.Adventure.Motivationlist.PastMotivations;
         }
 
         public object Clone()
