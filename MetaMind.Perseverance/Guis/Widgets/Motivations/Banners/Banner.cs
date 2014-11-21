@@ -1,12 +1,12 @@
-﻿using C3.Primtive2DXna;
-using MetaMind.Engine;
-using MetaMind.Engine.Extensions;
-
-using Microsoft.Xna.Framework;
-
-namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Banners
+﻿namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Banners
 {
+    using C3.Primtive2DXna;
+
+    using MetaMind.Engine;
+    using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Elements.Views;
+
+    using Microsoft.Xna.Framework;
 
     public class Banner : EngineObject
     {
@@ -24,9 +24,9 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Banners
             this.viewSettings  = viewSettings;
             this.bannerSetting = bannerSetting;
 
-            this.past   = new TimelineText("Past"  , this.TextLeftmostPosition);
-            this.now    = new TimelineText("Now"   , this.TextLeftmostPosition + new Vector2(270, 0));
-            this.future = new TimelineText("Future", this.TextLeftmostPosition + new Vector2(270, 0) * 2);
+            this.past   = new TimelineText("Past"  , this.TextLeftmostPosition, 1f);
+            this.now    = new TimelineText("Now"   , this.TextLeftmostPosition + new Vector2(270, 0), 1f);
+            this.future = new TimelineText("Future", this.TextLeftmostPosition + new Vector2(270, 0) * 2, 1f);
 
             this.flash = new TimelineFlash(this.TextLeftmostPosition + new Vector2(0, 10));
         }
@@ -43,10 +43,10 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Banners
 
         public void Update(GameTime gameTime)
         {
-            flash .Update(gameTime);
-            past  .Update(gameTime);
-            now   .Update(gameTime);
-            future.Update(gameTime);
+            this.flash .Update(gameTime);
+            this.past  .Update(gameTime);
+            this.now   .Update(gameTime);
+            this.future.Update(gameTime);
         }
 
         public void Draw(GameTime gameTime, byte alpha)
@@ -61,10 +61,10 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Banners
             Primitives2D.FillRectangle(spriteBatch, lowerBorder , bannerSetting.Color.MakeTransparent(alpha));
             Primitives2D.FillRectangle(spriteBatch, middleRegion, bannerSetting.Color.MakeTransparent(alpha));
 
-            flash .Draw(gameTime, alpha);
-            past  .Draw(gameTime, alpha);
-            now   .Draw(gameTime, alpha);
-            future.Draw(gameTime, alpha);
+            this.flash .Draw(gameTime, alpha);
+            this.past  .Draw(gameTime, alpha);
+            this.now   .Draw(gameTime, alpha);
+            this.future.Draw(gameTime, alpha);
         }
     }
 }

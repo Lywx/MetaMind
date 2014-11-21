@@ -34,7 +34,7 @@ namespace MetaMind.Engine.Components
 
         private FolderManager()
         {
-            CreateDirectory();
+            this.CreateDirectory();
         }
 
         private void CreateDirectory()

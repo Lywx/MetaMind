@@ -1,10 +1,10 @@
-using MetaMind.Engine.Guis.Modules;
-using MetaMind.Perseverance.Guis.Widgets.Motivations.Banners;
-using Microsoft.Xna.Framework;
-
 namespace MetaMind.Perseverance.Guis.Modules
 {
     using MetaMind.Engine.Guis.Elements.Views;
+    using MetaMind.Engine.Guis.Modules;
+    using MetaMind.Perseverance.Guis.Widgets.Motivations.Banners;
+
+    using Microsoft.Xna.Framework;
 
     public class MotivationExchange : Module<MotivationExchangeSettings>
     {
