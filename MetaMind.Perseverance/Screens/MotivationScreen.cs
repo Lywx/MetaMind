@@ -17,20 +17,20 @@
 
         public MotivationScreen()
         {
-            TransitionOnTime = TimeSpan.FromSeconds(0.5);
-            TransitionOffTime = TimeSpan.FromSeconds(0.5);
+            this.TransitionOnTime = TimeSpan.FromSeconds(0.5);
+            this.TransitionOffTime = TimeSpan.FromSeconds(0.5);
 
-            Exiting += this.MotivationScreenExiting;
+            this.Exiting += this.MotivationScreenExiting;
 
-            IsPopup = true;
+            this.IsPopup = true;
 
-            synchronization = new SynchronizationModule(
+            this.synchronization = new SynchronizationModule(
                 Perseverance.Adventure.Cognition,
                 new SynchronizationHudSettings());
-            synchronization.Load();
+            this.synchronization.Load();
 
-            motivation = new MotivationExchange(new MotivationExchangeSettings());
-            motivation.Load();
+            this.motivation = new MotivationExchange(new MotivationExchangeSettings());
+            this.motivation.Load();
         }
 
         public override void Draw(GameTime gameTime)
@@ -41,8 +41,8 @@
 
             MessageManager.Draw(gameTime);
 
-            motivation.Draw(gameTime, TransitionAlpha);
-            synchronization.Draw(gameTime, TransitionAlpha);
+            this.motivation.Draw(gameTime, TransitionAlpha);
+            this.synchronization.Draw(gameTime, TransitionAlpha);
 
             ScreenManager.SpriteBatch.End();
         }
@@ -52,29 +52,31 @@
             InputEventManager.HandleInput();
             InputSequenceManager.HandleInput();
 
-            motivation.HandleInput();
+            this.motivation     .HandleInput();
+            this.synchronization.HandleInput();
         }
 
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
             if (IsActive && !coveredByOtherScreen)
             {
-                InputEventManager.Update(gameTime);
+                InputEventManager   .Update(gameTime);
                 InputSequenceManager.Update(gameTime);
-                MessageManager.Update(gameTime);
+                MessageManager      .Update(gameTime);
 
                 Perseverance.Adventure.Update();
 
-                motivation.Update(gameTime);
+                motivation     .Update(gameTime);
                 synchronization.Update(gameTime);
             }
+
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
         }
 
         private void MotivationScreenExiting(object sender, EventArgs e)
         {
-            motivation     .Unload();
-            synchronization.Unload();
+            this.motivation     .Unload();
+            this.synchronization.Unload();
         }
     }
 }

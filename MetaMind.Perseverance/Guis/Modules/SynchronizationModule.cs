@@ -6,6 +6,7 @@
     using C3.Primtive2DXna;
 
     using MetaMind.Engine.Components.Fonts;
+    using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Modules;
     using MetaMind.Engine.Settings;
@@ -14,6 +15,7 @@
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using Microsoft.Xna.Framework.Input;
 
     public class SynchronizationModule : Module<SynchronizationHudSettings>
     {
@@ -239,6 +241,10 @@
 
         public override void UpdateInput(GameTime gameTime)
         {
+            if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.ForceReset))
+            {
+                this.synchronization.ResetForTomorrow();
+            }
         }
 
         public override void UpdateStructure(GameTime gameTime)

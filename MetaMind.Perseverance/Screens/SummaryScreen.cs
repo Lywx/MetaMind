@@ -18,10 +18,10 @@
         /// </summary>
         public SummaryScreen()
         {
-            TransitionOnTime = TimeSpan.FromSeconds(0.5);
-            TransitionOffTime = TimeSpan.FromSeconds(0.5);
+            this.TransitionOnTime = TimeSpan.FromSeconds(0.5);
+            this.TransitionOffTime = TimeSpan.FromSeconds(0.5);
 
-            Exiting += this.SummaryScreenExiting;
+            this.Exiting += this.SummaryScreenExiting;
 
             this.summary = new SummaryModule(Perseverance.Adventure.Cognition, new SummaryModuleSettings());
             this.summary.Load();
@@ -40,6 +40,10 @@
 
         public override void HandleInput()
         {
+            InputEventManager   .HandleInput();
+            InputSequenceManager.HandleInput();
+
+            this.summary.HandleInput();
         }
 
         public override void LoadContent()
@@ -50,9 +54,9 @@
         {
             if (IsActive && !coveredByOtherScreen)
             {
-                InputEventManager.Update(gameTime);
+                InputEventManager   .Update(gameTime);
                 InputSequenceManager.Update(gameTime);
-                MessageManager.Update(gameTime);
+                MessageManager      .Update(gameTime);
 
                 Perseverance.Adventure.Update();
 

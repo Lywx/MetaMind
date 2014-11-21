@@ -52,6 +52,10 @@ namespace MetaMind.Engine.Components.Inputs
 
         TaskEditItem, 
 
+        // synchronization
+        // ---------------------------------------------------------------------
+        ForceReset,
+
         // general
         // ---------------------------------------------------------------------
         Enter, 
@@ -280,6 +284,11 @@ namespace MetaMind.Engine.Components.Inputs
 
             actionMaps[(int)Actions.TaskEditItem] = new KeyboardActionMap();
             actionMaps[(int)Actions.TaskEditItem].Bindings.Add(Keys.I, new List<Keys> { Keys.LeftControl });
+
+            // sychronization
+            // ---------------------------------------------------------------------
+            actionMaps[(int)Actions.ForceReset] = new KeyboardActionMap();
+            actionMaps[(int)Actions.ForceReset].Bindings.Add(Keys.R, new List<Keys> { Keys.Escape });
 
             // general
             // ---------------------------------------------------------------------

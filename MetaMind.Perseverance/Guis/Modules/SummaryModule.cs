@@ -2,11 +2,13 @@ namespace MetaMind.Perseverance.Guis.Modules
 {
     using C3.Primtive2DXna;
 
+    using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Modules;
     using MetaMind.Engine.Settings;
     using MetaMind.Perseverance.Concepts.Cognitions;
 
     using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Input;
 
     public class SummaryModule : Module<SummaryModuleSettings>
     {
@@ -58,6 +60,10 @@ namespace MetaMind.Perseverance.Guis.Modules
         /// <param name="gameTime"></param>
         public override void UpdateInput(GameTime gameTime)
         {
+            if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.ForceReset))
+            {
+                this.synchronization.ResetForTomorrow();
+            }
         }
 
         public override void UpdateStructure(GameTime gameTime)

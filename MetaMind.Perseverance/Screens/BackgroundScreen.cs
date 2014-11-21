@@ -25,8 +25,8 @@
         /// </summary>
         public BackgroundScreen()
         {
-            TransitionOnTime = TimeSpan.FromSeconds(0.5);
-            TransitionOffTime = TimeSpan.FromSeconds(0.5);
+            this.TransitionOnTime = TimeSpan.FromSeconds(0.5);
+            this.TransitionOffTime = TimeSpan.FromSeconds(0.5);
         }
 
         #endregion Constructors
@@ -68,8 +68,8 @@
 
             spriteBatch.Begin();
 
-            spriteBatch.Draw(backgroundTexture, fullscreen, new Color(0, 0, TransitionAlpha / 2));
-            particles  .Draw(gameTime);
+            spriteBatch   .Draw(backgroundTexture, fullscreen, new Color(0, 0, TransitionAlpha / 2));
+            this.particles.Draw(gameTime);
 
             spriteBatch.End();
         }
@@ -84,10 +84,10 @@
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
             // forced input update
-            particles.HandleInput();
-            particles.Update(gameTime);
+            this.particles.HandleInput();
+            this.particles.Update(gameTime);
 
-            base     .Update(gameTime, otherScreenHasFocus, false);
+            base.Update(gameTime, otherScreenHasFocus, false);
         }
 
         #endregion Update and Draw
