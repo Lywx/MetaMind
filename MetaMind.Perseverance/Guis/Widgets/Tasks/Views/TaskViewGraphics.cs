@@ -1,11 +1,12 @@
-using C3.Primtive2DXna;
-using MetaMind.Engine.Extensions;
-using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
-using Microsoft.Xna.Framework;
-
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 {
+    using C3.Primtive2DXna;
+
+    using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Elements.Views;
+    using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
+
+    using Microsoft.Xna.Framework;
 
     public class TaskViewGraphics : ViewBasicGraphics
     {

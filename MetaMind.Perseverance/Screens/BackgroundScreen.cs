@@ -4,7 +4,6 @@
 
     using MetaMind.Engine.Screens;
     using MetaMind.Perseverance.Guis.Modules;
-    using MetaMind.Perseverance.Guis.Particles;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;

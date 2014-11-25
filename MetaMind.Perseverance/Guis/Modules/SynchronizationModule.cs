@@ -20,15 +20,11 @@
     public class SynchronizationModule : Module<SynchronizationHudSettings>
     {
         private ICognition                                     cognition;
-        private ISynchronization                               synchronization;
-
         private SynchronizationHudMonitor                      monitor;
-
+        private SynchronizationHudSleepStartedEventListener    sleepStartedEventListener;
+        private ISynchronization                               synchronization;
         private SynchronizationHudSynchronizationStartListener synchronizationStartListener;
         private SynchronizationHudSynchronizationStopListener  synchronizationStopListener;
-
-        private SynchronizationHudSleepStartedEventListener    sleepStartedEventListener;
-
         #region Constructors
 
         public SynchronizationModule(Cognition cognition, SynchronizationHudSettings settings)
@@ -98,13 +94,19 @@
             }
         }
 
-        private Vector2 MessageCenter
+        private Vector2 Message1Center
         {
             get
             {
-                return new Vector2(
-                    (int)this.StateInfoCenter.X,
-                    GraphicsSettings.Height - 15);
+                return new Vector2(GraphicsSettings.Width / 2f, this.StatusInfoCenter.Y + 30);
+            }
+        }
+
+        private Vector2 Message2Center
+        {
+            get
+            {
+                return new Vector2((int)this.StateInfoCenter.X, GraphicsSettings.Height - 15);
             }
         }
 
@@ -327,8 +329,16 @@
             FontManager.DrawCenteredText(
                 this.Settings.MessageFont,
                 better ? HappyNotice : UnhappyNotice,
-                this.MessageCenter,
+                this.Message2Center,
                 (better ? this.Settings.BarFrameAscendColor : this.Settings.BarFrameDescendColor).MakeTransparent(alpha),
+                this.Settings.MessageSize);
+
+            var changeNotice = "Feel free to change your mind";
+            FontManager.DrawCenteredText(
+                this.Settings.MessageFont,
+                changeNotice,
+                this.Message1Center,
+                this.Settings.BarFrameAscendColor.MakeTransparent(alpha),
                 this.Settings.MessageSize);
         }
 

@@ -1,9 +1,11 @@
-using MetaMind.Engine;
-using Microsoft.Xna.Framework;
-using System;
-
 namespace MetaMind.Perseverance.Components
 {
+    using System;
+
+    using MetaMind.Engine;
+
+    using Microsoft.Xna.Framework;
+
     public class SaveManager : GameComponent
     {
         #region Singleton
@@ -80,6 +82,7 @@ namespace MetaMind.Perseverance.Components
             }
 
             Perseverance.Adventure.Save();
+
             GameEngine.MessageManager.PopMessages("Progress saved.");
 
             autoSaved = true;

@@ -30,3 +30,8 @@ MetaMind.EngineUnitTest/obj/
 MetaMind.PerseveranceBuilder/MetaMind.PerseveranceBuilderContent/bin/
 MetaMind.PerseveranceBuilder/MetaMind.PerseveranceBuilderContent/Audio/
 packages/
+MetaMind.Acutance/bin/
+MetaMind.AcutanceBuilder/MetaMind.AcutanceBuilder/obj/
+MetaMind.AcutanceBuilder/MetaMind.AcutanceBuilderContent/obj/
+MetaMind.AcutanceBuilder/MetaMind.AcutanceBuilder/bin/Windows/Content/Audio/Audio.xgs
+MetaMind.Acutance/obj/

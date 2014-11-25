@@ -4,24 +4,28 @@ using Microsoft.Xna.Framework;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 {
+    using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Guis.Elements.Views;
 
     public class TaskViewSettings : ViewSettings2D
     {
-        //---------------------------------------------------------------------
-        public Color                     HighlightColor    = ColorPalette.TransparentColor1;
+        public Font  NotificationFont  = Font.UiStatisticsFont;
 
-        //---------------------------------------------------------------------
-        public Point                     BorderMargin      = new Point(4, 4);
+        public float NotificationSize  = 0.7f;
 
-        //---------------------------------------------------------------------
+        public Color NotificationColor = Color.White;
+
+        public Color HighlightColor    = ColorPalette.TransparentColor1;
+
+        public Point BorderMargin      = new Point(4, 4);
+
         public TaskViewScrollBarSettings ScrollBarSettings = new TaskViewScrollBarSettings();
 
         public TaskViewSettings()
         {
             var itemSettings = new TaskItemSettings();
-            
-            RootMargin = new Point( itemSettings.NameFrameSize.X , itemSettings.NameFrameSize.Y + itemSettings.IdFrameSize.Y);
+
+            RootMargin = new Point(itemSettings.NameFrameSize.X, itemSettings.NameFrameSize.Y + itemSettings.IdFrameSize.Y);
         }
     }
 }

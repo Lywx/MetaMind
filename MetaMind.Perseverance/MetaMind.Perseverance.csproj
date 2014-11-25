@@ -67,6 +67,7 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Acutance.cs" />
     <Compile Include="Components\SaveManager.cs" />
     <Compile Include="Concepts\Cognitions\Cognition.cs" />
     <Compile Include="Concepts\Cognitions\Consciousness.cs" />

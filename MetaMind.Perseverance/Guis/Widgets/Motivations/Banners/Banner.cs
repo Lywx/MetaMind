@@ -3,8 +3,10 @@
     using C3.Primtive2DXna;
 
     using MetaMind.Engine;
+    using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Elements.Views;
+    using MetaMind.Engine.Settings;
 
     using Microsoft.Xna.Framework;
 
@@ -16,18 +18,19 @@
         private TimelineText   past;
         private TimelineText   now;
         private TimelineText   future;
-        
+
         private TimelineFlash  flash;
+
 
         public Banner(ViewSettings1D viewSettings, BannerSetting bannerSetting)
         {
             this.viewSettings  = viewSettings;
             this.bannerSetting = bannerSetting;
 
-            this.past   = new TimelineText("Past"  , this.TextLeftmostPosition, 1f);
-            this.now    = new TimelineText("Now"   , this.TextLeftmostPosition + new Vector2(270, 0), 1f);
-            this.future = new TimelineText("Future", this.TextLeftmostPosition + new Vector2(270, 0) * 2, 1f);
-
+            this.past   = new TimelineText("Past"  , this.TextLeftmostPosition,                           1f, Font.UiRegularFont);
+            this.now    = new TimelineText("Now"   , this.TextLeftmostPosition + new Vector2(270, 0),     1f, Font.UiRegularFont);
+            this.future = new TimelineText("Future", this.TextLeftmostPosition + new Vector2(270, 0) * 2, 1f, Font.UiRegularFont);
+                
             this.flash = new TimelineFlash(this.TextLeftmostPosition + new Vector2(0, 10));
         }
 
@@ -43,10 +46,7 @@
 
         public void Update(GameTime gameTime)
         {
-            this.flash .Update(gameTime);
-            this.past  .Update(gameTime);
-            this.now   .Update(gameTime);
-            this.future.Update(gameTime);
+            this.flash.Update(gameTime);
         }
 
         public void Draw(GameTime gameTime, byte alpha)
@@ -64,6 +64,7 @@
             this.flash .Draw(gameTime, alpha);
             this.past  .Draw(gameTime, alpha);
             this.now   .Draw(gameTime, alpha);
+
             this.future.Draw(gameTime, alpha);
         }
     }

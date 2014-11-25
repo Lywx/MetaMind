@@ -2,7 +2,6 @@ namespace MetaMind.Engine.Guis.Elements.Views
 {
     using System;
 
-    using MetaMind.Engine.Guis.Elements.Frames;
     using MetaMind.Engine.Guis.Elements.Regions;
 
     using Microsoft.Xna.Framework;

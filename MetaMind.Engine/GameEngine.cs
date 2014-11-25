@@ -1,13 +1,15 @@
-﻿using MetaMind.Engine.Components;
-using MetaMind.Engine.Settings;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Diagnostics;
-
-namespace MetaMind.Engine
+﻿namespace MetaMind.Engine
 {
+    using System;
+    using System.Diagnostics;
+
+    using MetaMind.Engine.Components;
+    using MetaMind.Engine.Settings;
+
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Content;
+    using Microsoft.Xna.Framework.Graphics;
+
     public class GameEngine : Game
     {
         #region Consructors

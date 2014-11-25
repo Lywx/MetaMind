@@ -9,7 +9,6 @@
     using MetaMind.Engine.Components;
     using MetaMind.Perseverance.Concepts.Cognitions;
     using MetaMind.Perseverance.Concepts.MotivationEntries;
-    using MetaMind.Perseverance.Concepts.TaskEntries;
 
     /// <summary>
     /// Adventure is a data class.
