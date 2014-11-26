@@ -1,13 +1,14 @@
-using MetaMind.Engine.Extensions;
-using MetaMind.Engine.Settings;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 {
+    using System;
+
+    using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Elements.Items;
     using MetaMind.Engine.Guis.Elements.ViewItems;
+    using MetaMind.Engine.Settings;
+
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
 
     public class MotivationItemSymbolGraphics : ViewItemComponent
     {
@@ -48,7 +49,9 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
         private void DrawHeart(byte alpha)
         {
             var flipped     = Math.Cos(rotation) > 0;
-            var size        = new Point((int)(Math.Abs(Math.Cos(rotation)) * ItemControl.SymbolFrame.Rectangle.Width), ItemControl.SymbolFrame.Rectangle.Height);
+            var width       = ItemControl.SymbolFrame.Rectangle.Width + ItemData.Attraction;
+            var height      = ItemControl.SymbolFrame.Rectangle.Height + ItemData.Attraction;
+            var size        = new Point((int)(Math.Abs(Math.Cos(rotation)) * width), height);
             var destination = RectangleExt.DestinationWithSize(ItemControl.SymbolFrame.Rectangle, size);
 
             if (ItemData.Property == "Neutral")

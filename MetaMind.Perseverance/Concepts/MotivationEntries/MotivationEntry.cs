@@ -16,6 +16,9 @@
         public string Property = "Neutral";
 
         [DataMember]
+        public int Attraction;
+
+        [DataMember]
         public List<TaskEntry> Tasks = new List<TaskEntry>();
 
         public MotivationEntry()

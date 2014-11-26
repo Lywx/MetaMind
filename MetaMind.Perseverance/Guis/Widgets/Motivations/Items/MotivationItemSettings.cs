@@ -36,6 +36,12 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 
         public Color WishColor = new Color(255, 255, 255, 128);
 
+        public Font HelpFont = Font.UiStatisticsFont;
+
+        public float HelpSize = 0.75f;
+
+        public Color HelpColor = Color.White;
+
         public MotivationItemSettings()
         {
         }

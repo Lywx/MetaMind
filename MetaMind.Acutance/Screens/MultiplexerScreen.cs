@@ -1,10 +1,10 @@
-namespace MetaMind.Acutance.Sessions
+namespace MetaMind.Acutance.Screens
 {
     using System;
 
+    using MetaMind.Acutance.Guis;
     using MetaMind.Engine.Guis.Modules;
     using MetaMind.Engine.Screens;
-    using MetaMind.Perseverance;
     using MetaMind.Perseverance.Guis.Modules;
 
     using Microsoft.Xna.Framework;
@@ -22,7 +22,7 @@ namespace MetaMind.Acutance.Sessions
 
             this.IsPopup = true;
 
-            this.multiplexer = new MotivationExchange(new MotivationExchangeSettings());
+            this.multiplexer = new Multiplexer(new MultiplexerSettings());
             this.multiplexer.Load();
         }
 

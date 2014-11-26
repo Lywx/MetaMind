@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/MetaMind.Perseverance.Concepts.TaskEntries" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/MetaMind.Perseverance.Concepts.TaskEntries" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:8733/Design_Time_Addresses/MetaMind.PerseveranceService/SynchronizationService/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/MetaMind.Engine.Concepts" />
+  <xs:import schemaLocation="http://localhost:8733/Design_Time_Addresses/MetaMind.PerseveranceService/SynchronizationService/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/MetaMind.Engine" />
+  <xs:complexType name="TaskEntry">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/MetaMind.Engine" base="q1:EngineObject">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Done" type="xs:int" />
+          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/MetaMind.Engine.Concepts" minOccurs="0" name="Experience" nillable="true" type="q2:Experience" />
+          <xs:element minOccurs="0" name="Load" type="xs:int" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RationaleScale" type="xs:int" />
+          <xs:element minOccurs="0" name="Synchronizing" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="TaskEntry" nillable="true" type="tns:TaskEntry" />
+</xs:schema>

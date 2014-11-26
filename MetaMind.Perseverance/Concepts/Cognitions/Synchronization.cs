@@ -27,12 +27,12 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
         int SynchronizedHourYesterday { get; }
 
-        TimeSpan SynchronizedTimeToday { get; }
+        TaskEntry SynchronizedTask { get; }
 
         TimeSpan SynchronizedTimeRecentWeek { get; }
 
+        TimeSpan SynchronizedTimeToday { get; }
         TimeSpan SynchronizedTimeYesterday { get; }
-
         void ResetForTomorrow();
 
         void Start(TaskEntry target);
@@ -148,9 +148,9 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
             get { return statistics.AccumulatedHourYesterday; }
         }
 
-        public TimeSpan SynchronizedTimeToday
+        public TaskEntry SynchronizedTask
         {
-            get { return statistics.AccumulatedTimeToday; }
+            get { return data.Target; }
         }
 
         public TimeSpan SynchronizedTimeRecentWeek
@@ -159,6 +159,11 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
             {
                 return new TimeSpan(this.statistics.AccumulatedTimeWeekday.Sum(r => r.Duration().Ticks));
             }
+        }
+
+        public TimeSpan SynchronizedTimeToday
+        {
+            get { return statistics.AccumulatedTimeToday; }
         }
 
         public TimeSpan SynchronizedTimeYesterday

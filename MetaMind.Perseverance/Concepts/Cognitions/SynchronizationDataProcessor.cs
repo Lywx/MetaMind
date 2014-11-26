@@ -17,28 +17,28 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
     [Serializable]
     public class SynchronizationDataProcessor
     {
-        private TaskEntry target;
+        public TaskEntry Target { get; private set; }
 
         public void Accept(TaskEntry task)
         {
-            this.target = task;
-            this.target.Synchronizing = true;
-            this.target.Experience += new Experience();
+            this.Target = task;
+            this.Target.Synchronizing = true;
+            this.Target.Experience += new Experience();
         }
 
         public void Release(out TimeSpan timePassed)
         {
-            timePassed = this.target.Experience.End();
+            timePassed = this.Target.Experience.End();
 
-            this.target.Synchronizing = false;
-            this.target = null;
+            this.Target.Synchronizing = false;
+            this.Target = null;
         }
 
         public void Update(bool enabled, double acceleration)
         {
             if (enabled)
             {
-                this.target.Experience.Accelaration = acceleration;
+                this.Target.Experience.Accelaration = acceleration;
             }
         }
     }

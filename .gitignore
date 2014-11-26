@@ -35,3 +35,7 @@ MetaMind.AcutanceBuilder/MetaMind.AcutanceBuilder/obj/
 MetaMind.AcutanceBuilder/MetaMind.AcutanceBuilderContent/obj/
 MetaMind.AcutanceBuilder/MetaMind.AcutanceBuilder/bin/Windows/Content/Audio/Audio.xgs
 MetaMind.Acutance/obj/
+MetaMind.PerseveranceHost/bin/
+MetaMind.PerseveranceService/bin/
+MetaMind.PerseveranceService/obj/
+MetaMind.PerseveranceHost/obj/

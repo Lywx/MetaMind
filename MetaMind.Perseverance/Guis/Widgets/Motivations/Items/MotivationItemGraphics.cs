@@ -23,6 +23,8 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 
         private readonly MotivationItemTaskGraphics task;
 
+        private const string HelpInformation = "N-ame A-ttraction J-Fear K-Wish";
+
         public MotivationItemGraphics(IViewItem item)
             : base(item)
         {
@@ -40,9 +42,14 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
             }
         }
 
-        private Vector2 NamePosition
+        private Vector2 NameLocation
         {
             get { return PointExt.ToVector2(ItemControl.RootFrame.Rectangle.Center) + new Vector2(0, 50); }
+        }
+
+        private Vector2 HelpLocation
+        {
+            get { return this.NameLocation; }
         }
 
         public override void Draw(GameTime gameTime, byte alpha)
@@ -83,19 +90,31 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
                 return;
             }
 
-            List<string> text = Text.BreakTextIntoList(
-                ItemSettings.NameFont, 
-                ItemSettings.NameSize, 
-                ItemData.Name, 
-                (float)ViewSettings.RootMargin.X * 6);
-            for (var i = 0; i < text.Count; i++)
+            if (Item.IsEnabled(ItemState.Item_Pending))
             {
-                FontManager.DrawCenteredText(
-                    ItemSettings.NameFont, 
-                    text[i], 
-                    this.NamePosition + new Vector2(0, ItemSettings.NameLineMargin) * i, 
-                    ColorExt.MakeTransparent(ItemSettings.NameColor, alpha), 
-                    ItemSettings.NameSize);
+                FontManager.DrawText(
+                    ItemSettings.HelpFont,
+                    HelpInformation,
+                    this.HelpLocation,
+                    ColorExt.MakeTransparent(ItemSettings.HelpColor, alpha),
+                    ItemSettings.HelpSize);
+            }
+            else
+            {
+                List<string> text = Text.BreakTextIntoList(
+                    ItemSettings.NameFont,
+                    ItemSettings.NameSize,
+                    ItemData.Name,
+                    (float)ViewSettings.RootMargin.X * 6);
+                for (var i = 0; i < text.Count; i++)
+                {
+                    FontManager.DrawCenteredText(
+                        ItemSettings.NameFont,
+                        text[i],
+                        this.NameLocation + new Vector2(0, ItemSettings.NameLineMargin) * i,
+                        ColorExt.MakeTransparent(ItemSettings.NameColor, alpha),
+                        ItemSettings.NameSize);
+                }
             }
         }
 

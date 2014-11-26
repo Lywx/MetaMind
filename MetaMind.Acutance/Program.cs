@@ -1,7 +1,10 @@
 ﻿namespace MetaMind.Acutance
 {
     using System;
-    using System.Linq;
+    using System.ServiceModel;
+
+    using MetaMind.Acutance.PerseveranceServiceReference;
+    using MetaMind.PerseveranceService.Settings;
 
     /// <summary>
     /// The main class.
@@ -12,12 +15,23 @@
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
+            var binding = new BasicHttpBinding();
+            var address = new EndpointAddress(ServiceSettings.Address);
+            var client  = new SynchronizationServiceClient(binding, address);
+
+            try
+            {
+                client.GetSynchronizedTask();
+            }
+            catch (ServerTooBusyException)
+            {
+                
+            }
             using (var engine = new Engine.GameEngine())
             {
-                var fullscreen = args.Count() != 0 && args[0] == "--fullscreen";
-                var runner     = new Acutance(engine, fullscreen);
+                var runner = new Acutance(engine, client);
 
                 runner.Run();
             }

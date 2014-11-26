@@ -5,7 +5,7 @@
 
     public static class GraphicsSettings
     {
-        public static Screen Screen     = Screen.AllScreens.First(e => e.Primary);
+        public static Screen Screen = Screen.AllScreens.First(e => e.Primary);
 
         public static bool   Fullscreen = false;
         

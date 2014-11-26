@@ -100,6 +100,11 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
                         this.ItemDataControl.EditString("Name");
                     }
 
+                    if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.A))
+                    {
+                        this.ItemDataControl.EditInt("Attraction");
+                    }
+
                     if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
                     {
                         View.Disable(ViewState.Item_Editting);
