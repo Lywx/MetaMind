@@ -17,17 +17,18 @@
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
 
-    public class SynchronizationModule : Module<SynchronizationHudSettings>
+    public class SynchronizationModule : Module<SynchronizationModuleSettings>
     {
         private ICognition                                     cognition;
+        private ISynchronization                               synchronization;
         private SynchronizationHudMonitor                      monitor;
         private SynchronizationHudSleepStartedEventListener    sleepStartedEventListener;
-        private ISynchronization                               synchronization;
         private SynchronizationHudSynchronizationStartListener synchronizationStartListener;
         private SynchronizationHudSynchronizationStopListener  synchronizationStopListener;
+
         #region Constructors
 
-        public SynchronizationModule(Cognition cognition, SynchronizationHudSettings settings)
+        public SynchronizationModule(Cognition cognition, SynchronizationModuleSettings settings)
             : base(settings)
         {
             this.cognition       = cognition;
@@ -323,20 +324,21 @@
             var alpha  = (byte)(255 * Math.Abs(Math.Sin(gameTime.TotalGameTime.TotalSeconds * 3)));
             var better = this.synchronization.SynchronizedHourToday >= this.synchronization.SynchronizedHourYesterday;
 
-            const string HappyNotice   = "Look like you are gonna be more happier from today.";
-            const string UnhappyNotice = "Look like you are gonna be less happier from today.";
+            const string IncreaseMessage = "Motivation Synchronization Ratio increases";
+            const string DecreaseMessage = "Motivation Synchronization Ratio decreases";
 
             FontManager.DrawCenteredText(
                 this.Settings.MessageFont,
-                better ? HappyNotice : UnhappyNotice,
+                better ? IncreaseMessage : DecreaseMessage,
                 this.Message2Center,
                 (better ? this.Settings.BarFrameAscendColor : this.Settings.BarFrameDescendColor).MakeTransparent(alpha),
                 this.Settings.MessageSize);
 
-            var changeNotice = "Feel free to change your mind";
+            const string ChangeMessage = "Guide and Change your Motivation";
+
             FontManager.DrawCenteredText(
                 this.Settings.MessageFont,
-                changeNotice,
+                ChangeMessage,
                 this.Message1Center,
                 this.Settings.BarFrameAscendColor.MakeTransparent(alpha),
                 this.Settings.MessageSize);

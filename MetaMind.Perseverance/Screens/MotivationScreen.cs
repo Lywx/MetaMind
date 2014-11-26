@@ -25,7 +25,7 @@
 
             this.synchronization = new SynchronizationModule(
                 Perseverance.Adventure.Cognition,
-                new SynchronizationHudSettings());
+                new SynchronizationModuleSettings());
             this.synchronization.Load();
 
             this.motivation = new MotivationExchange(new MotivationExchangeSettings());
@@ -57,16 +57,19 @@
 
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
+            if (!coveredByOtherScreen)
+            {
+                Perseverance.Adventure.Update();
+            }
+
             if (IsActive && !coveredByOtherScreen)
             {
                 InputEventManager   .Update(gameTime);
                 InputSequenceManager.Update(gameTime);
                 MessageManager      .Update(gameTime);
 
-                Perseverance.Adventure.Update();
-
-                motivation     .Update(gameTime);
-                synchronization.Update(gameTime);
+                this.motivation     .Update(gameTime);
+                this.synchronization.Update(gameTime);
             }
 
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);

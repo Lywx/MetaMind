@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TaskViewScrollBar.cs" company="UESTC">
+// <copyright file="ViewScrollBar.cs" company="UESTC">
 //   Copyright (c) 2014 Lin Wuxiang
 //   All Rights Reserved.
 // </copyright>
@@ -17,13 +17,13 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 
     using Microsoft.Xna.Framework;
 
-    public class TaskViewScrollBar : ViewComponent
+    public class ViewScrollBar : ViewComponent
     {
-        private readonly TaskViewScrollBarSettings settings;
+        private readonly ViewScrollBarSettings settings;
 
-        private          int                       alpha;
+        private          int                   alpha;
 
-        public TaskViewScrollBar(IView view, TaskViewSettings viewSettings, TaskItemSettings itemSettings, TaskViewScrollBarSettings scrollBarSettings)
+        public ViewScrollBar(IView view, TaskViewSettings viewSettings, ICloneable itemSettings, ViewScrollBarSettings scrollBarSettings)
             : base(view, viewSettings, itemSettings)
         {
             this.settings = scrollBarSettings;

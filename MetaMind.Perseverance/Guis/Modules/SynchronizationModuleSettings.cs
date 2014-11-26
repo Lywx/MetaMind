@@ -7,7 +7,7 @@
 
     using Microsoft.Xna.Framework;
 
-    public class SynchronizationHudSettings : ICloneable
+    public class SynchronizationModuleSettings : ICloneable
     {
         //---------------------------------------------------------------------
         public int   BarFrameXC              = GraphicsSettings.Width / 2;

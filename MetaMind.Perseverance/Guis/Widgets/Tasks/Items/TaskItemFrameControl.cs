@@ -66,17 +66,17 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
         {
             get
             {
-                if (!Item.IsEnabled(ItemState.Item_Dragging) && !Item.IsEnabled(ItemState.Item_Swaping))
+                if (!this.Item.IsEnabled(ItemState.Item_Dragging) && !this.Item.IsEnabled(ItemState.Item_Swaping))
                 {
-                    return PointExt.ToVector2(ViewControl.Scroll.RootCenterPoint(ItemControl.Id)) + new Vector2(0, ItemSettings.IdFrameSize.Y);
+                    return PointExt.ToVector2(this.ViewControl.Scroll.RootCenterPoint(this.ItemControl.Id)) + new Vector2(0, this.ItemSettings.IdFrameSize.Y);
                 }
-                else if (Item.IsEnabled(ItemState.Item_Swaping))
+                else if (this.Item.IsEnabled(ItemState.Item_Swaping))
                 {
-                    return ViewControl.Swap.RootCenterPoint().ToVector2() + new Vector2(0, ItemSettings.IdFrameSize.Y);
+                    return this.ViewControl.Swap.RootCenterPoint().ToVector2() + new Vector2(0, this.ItemSettings.IdFrameSize.Y);
                 }
                 else
                 {
-                    return RootFrame.Location.ToVector2();
+                    return this.RootFrame.Location.ToVector2();
                 }
             }
         }

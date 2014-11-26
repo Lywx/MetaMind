@@ -1,11 +1,4 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TaskViewControl.cs" company="UESTC">
-//   Copyright (c) 2014 Lin Wuxiang
-//   All Rights Reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
+namespace MetaMind.Acutance.Guis.Widgets
 {
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Elements.Regions;
@@ -13,26 +6,27 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
     using MetaMind.Engine.Guis.Elements.Views;
     using MetaMind.Perseverance.Concepts.TaskEntries;
     using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
+    using MetaMind.Perseverance.Guis.Widgets.Tasks.Views;
 
     using Microsoft.Xna.Framework;
 
-    public class TaskViewControl : ViewControl2D
+    public class TraceViewControl : ViewControl2D
     {
         #region Constructors
 
-        public TaskViewControl(IView view, TaskViewSettings viewSettings, TaskItemSettings itemSettings)
+        public TraceViewControl(IView view, TaskViewSettings viewSettings, TaskItemSettings itemSettings)
             : base(view, viewSettings, itemSettings)
         {
             this.Region      = new ViewRegion(view, viewSettings, itemSettings, this.RegionPositioning);
             this.ScrollBar   = new ViewScrollBar(view, viewSettings, itemSettings, viewSettings.ScrollBarSettings);
-            this.ItemFactory = new TaskItemFactory();
+            this.ItemFactory = new TraceItemFactory();
         }
 
         #endregion Constructors
 
         #region Public Properties
 
-        public TaskItemFactory ItemFactory { get; protected set; }
+        public TraceItemFactory ItemFactory { get; protected set; }
 
         public ViewRegion Region { get; protected set; }
 
@@ -44,14 +38,14 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 
         public void AddItem(TaskEntry entry)
         {
-            View.Items.Add(
-                new ViewItemExchangable(View, ViewSettings, ItemSettings, this.ItemFactory, entry));
+            this.View.Items.Add(
+                new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory, entry));
         }
 
         public void AddItem()
         {
-            View.Items.Add(
-                new ViewItemExchangable(View, ViewSettings, ItemSettings, this.ItemFactory));
+            this.View.Items.Add(
+                new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory));
         }
 
         public void MoveDown()
@@ -84,7 +78,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 
         public bool Locked
         {
-            get { return View.IsEnabled(ViewState.Item_Editting); }
+            get { return this.View.IsEnabled(ViewState.Item_Editting); }
         }
 
         public override void UpdateInput(GameTime gameTime)
@@ -189,15 +183,15 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
         {
             if (this.Region.IsEnabled(RegionState.Region_Has_Focus))
             {
-                View.Enable(ViewState.View_Has_Focus);
+                this.View.Enable(ViewState.View_Has_Focus);
             }
-            else if (View.IsEnabled(ViewState.View_Has_Selection))
+            else if (this.View.IsEnabled(ViewState.View_Has_Selection))
             {
-                View.Enable(ViewState.View_Has_Focus);
+                this.View.Enable(ViewState.View_Has_Focus);
             }
             else
             {
-                View.Disable(ViewState.View_Has_Focus); 
+                this.View.Disable(ViewState.View_Has_Focus); 
             }
         }
 
@@ -210,8 +204,8 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
             return new Rectangle(
                 viewSettings.StartPoint.X,
                 viewSettings.StartPoint.Y,
-                viewSettings.ColumnNumDisplay * itemSettings.NameFrameSize.X,
-                viewSettings.RowNumDisplay    * (itemSettings.NameFrameSize.Y + itemSettings.IdFrameSize.Y));
+                viewSettings.ColumnNumDisplay * (itemSettings.NameFrameSize.X + itemSettings.IdFrameSize.X),
+                viewSettings.RowNumDisplay    * itemSettings.NameFrameSize.Y);
         }
 
 

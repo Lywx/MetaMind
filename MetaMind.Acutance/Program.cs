@@ -4,6 +4,7 @@
     using System.ServiceModel;
 
     using MetaMind.Acutance.PerseveranceServiceReference;
+    using MetaMind.Engine;
     using MetaMind.PerseveranceService.Settings;
 
     /// <summary>
@@ -19,17 +20,12 @@
         {
             var binding = new BasicHttpBinding();
             var address = new EndpointAddress(ServiceSettings.Address);
-            var client  = new SynchronizationServiceClient(binding, address);
+            var client = new SynchronizationServiceClient(binding, address)
+                             {
+                                 InnerChannel = { OperationTimeout = TimeSpan.FromMilliseconds(20) }
+                             };
 
-            try
-            {
-                client.GetSynchronizedTask();
-            }
-            catch (ServerTooBusyException)
-            {
-                
-            }
-            using (var engine = new Engine.GameEngine())
+            using (var engine = new GameEngine())
             {
                 var runner = new Acutance(engine, client);
 

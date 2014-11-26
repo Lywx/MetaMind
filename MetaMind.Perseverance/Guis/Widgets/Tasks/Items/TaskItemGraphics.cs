@@ -13,7 +13,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
     public class TaskItemGraphics : ViewItemBasicGraphics
     {
-        private const string HelpInformation = "N-ame D-one E-xp L-oad R-ationale";
+        private const string HelpInformation = "N D-one E-xp L-oad R-ationale";
 
         #region Constructors
 
@@ -251,7 +251,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
                 ItemSettings.RationaleFont, 
                 ItemData.RationaleScale.ToString(new CultureInfo("en-US")),
                 this.RationaleCenter,
-                ItemSettings.RationaleColor, 
+                ColorExt.MakeTransparent(ItemSettings.RationaleColor, alpha),
                 ItemSettings.IdSize);
         }
 
@@ -262,6 +262,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
                 RectangleExt.Crop(ItemControl.RationaleFrame.Rectangle, ItemSettings.RationaleFrameMargin),
                 ColorExt.MakeTransparent(ItemSettings.RationaleFrameColor, alpha));
         }
+
         private void DrawSynchronization(GameTime gameTime, byte alpha)
         {
             if (ItemData.Synchronizing)

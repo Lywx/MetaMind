@@ -15,11 +15,29 @@ namespace MetaMind.Acutance.PerseveranceServiceReference {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="PerseveranceServiceReference.ISynchronizationService")]
     public interface ISynchronizationService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISynchronizationService/GetSynchronizedTask", ReplyAction="http://tempuri.org/ISynchronizationService/GetSynchronizedTaskResponse")]
-        MetaMind.Perseverance.Concepts.TaskEntries.TaskEntry GetSynchronizedTask();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISynchronizationService/Fetch", ReplyAction="http://tempuri.org/ISynchronizationService/FetchResponse")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MetaMind.Perseverance.Concepts.Cognitions.Synchronization))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MetaMind.Perseverance.Concepts.Cognitions.SynchronizationDataProcessor))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MetaMind.Perseverance.Concepts.Cognitions.SynchronizationDescription))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MetaMind.Perseverance.Concepts.Cognitions.SynchronizationDailyStatistics))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MetaMind.Perseverance.Concepts.Cognitions.SynchronizationTimer))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MetaMind.Engine.EngineObject))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MetaMind.Perseverance.Concepts.TaskEntries.TaskEntry))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MetaMind.Engine.Concepts.Experience))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(double[]))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(int[]))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(string[]))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.TimeSpan[]))]
+        object Fetch();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISynchronizationService/GetSynchronizedTask", ReplyAction="http://tempuri.org/ISynchronizationService/GetSynchronizedTaskResponse")]
-        System.Threading.Tasks.Task<MetaMind.Perseverance.Concepts.TaskEntries.TaskEntry> GetSynchronizedTaskAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISynchronizationService/Fetch", ReplyAction="http://tempuri.org/ISynchronizationService/FetchResponse")]
+        System.Threading.Tasks.Task<object> FetchAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISynchronizationService/FetchTask", ReplyAction="http://tempuri.org/ISynchronizationService/FetchTaskResponse")]
+        MetaMind.Perseverance.Concepts.TaskEntries.TaskEntry FetchTask();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISynchronizationService/FetchTask", ReplyAction="http://tempuri.org/ISynchronizationService/FetchTaskResponse")]
+        System.Threading.Tasks.Task<MetaMind.Perseverance.Concepts.TaskEntries.TaskEntry> FetchTaskAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -49,12 +67,20 @@ namespace MetaMind.Acutance.PerseveranceServiceReference {
                 base(binding, remoteAddress) {
         }
         
-        public MetaMind.Perseverance.Concepts.TaskEntries.TaskEntry GetSynchronizedTask() {
-            return base.Channel.GetSynchronizedTask();
+        public object Fetch() {
+            return base.Channel.Fetch();
         }
         
-        public System.Threading.Tasks.Task<MetaMind.Perseverance.Concepts.TaskEntries.TaskEntry> GetSynchronizedTaskAsync() {
-            return base.Channel.GetSynchronizedTaskAsync();
+        public System.Threading.Tasks.Task<object> FetchAsync() {
+            return base.Channel.FetchAsync();
+        }
+        
+        public MetaMind.Perseverance.Concepts.TaskEntries.TaskEntry FetchTask() {
+            return base.Channel.FetchTask();
+        }
+        
+        public System.Threading.Tasks.Task<MetaMind.Perseverance.Concepts.TaskEntries.TaskEntry> FetchTaskAsync() {
+            return base.Channel.FetchTaskAsync();
         }
     }
 }

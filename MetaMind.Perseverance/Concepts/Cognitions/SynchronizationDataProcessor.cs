@@ -8,15 +8,15 @@
 namespace MetaMind.Perseverance.Concepts.Cognitions
 {
     using System;
+    using System.Runtime.Serialization;
 
     using MetaMind.Engine.Concepts;
     using MetaMind.Perseverance.Concepts.TaskEntries;
 
-    using Microsoft.Xna.Framework;
-
-    [Serializable]
+    [DataContract]
     public class SynchronizationDataProcessor
     {
+        [DataMember(Name = "Target")]
         public TaskEntry Target { get; private set; }
 
         public void Accept(TaskEntry task)

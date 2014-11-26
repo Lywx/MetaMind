@@ -32,7 +32,9 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
         TimeSpan SynchronizedTimeRecentWeek { get; }
 
         TimeSpan SynchronizedTimeToday { get; }
+
         TimeSpan SynchronizedTimeYesterday { get; }
+
         void ResetForTomorrow();
 
         void Start(TaskEntry target);

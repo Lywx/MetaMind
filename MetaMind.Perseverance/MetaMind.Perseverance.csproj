@@ -85,7 +85,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Acutance.cs" />
     <Compile Include="Components\SaveManager.cs" />
     <Compile Include="Concepts\Cognitions\Cognition.cs" />
     <Compile Include="Concepts\Cognitions\Consciousness.cs" />
@@ -138,7 +137,7 @@
     <Compile Include="Guis\Widgets\Tasks\Items\TaskItemSyncControl.cs" />
     <Compile Include="Guis\Modules\SynchronizationModule.cs" />
     <Compile Include="Guis\Modules\SynchronizationHudMonitor.cs" />
-    <Compile Include="Guis\Modules\SynchronizationHudSettings.cs" />
+    <Compile Include="Guis\Modules\SynchronizationModuleSettings.cs" />
     <Compile Include="Guis\Modules\SynchronizationHudSynchronizationStartListener.cs" />
     <Compile Include="Guis\Modules\SynchronizationHudSynchronizationStopListener.cs" />
     <Compile Include="Guis\Widgets\Motivations\Banners\TimelineFlash.cs" />
@@ -151,9 +150,9 @@
     <Compile Include="Guis\Widgets\Tasks\Views\TaskViewControl.cs" />
     <Compile Include="Guis\Widgets\Tasks\Views\TaskViewFactory.cs" />
     <Compile Include="Guis\Widgets\Tasks\Views\TaskViewGraphics.cs" />
-    <Compile Include="Guis\Widgets\Tasks\Views\TaskViewScrollBar.cs" />
+    <Compile Include="Guis\Widgets\Tasks\Views\ViewScrollBar.cs" />
     <Compile Include="Guis\Widgets\Tasks\Views\TaskViewSettings.cs" />
-    <Compile Include="Guis\Widgets\Tasks\Views\TaskViewScrollBarSettings.cs" />
+    <Compile Include="Guis\Widgets\Tasks\Views\ViewScrollBarSettings.cs" />
     <Compile Include="Perseverance.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

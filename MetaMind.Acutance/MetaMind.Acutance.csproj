@@ -62,7 +62,14 @@
   <ItemGroup>
     <Compile Include="Acutance.cs" />
     <Compile Include="Concepts\Tasklist.cs" />
-    <Compile Include="Guis\Multiplexer.cs" />
+    <Compile Include="Guis\Modules\MultiplexerModule.cs" />
+    <Compile Include="Guis\Widgets\TraceItemControl.cs" />
+    <Compile Include="Guis\Widgets\TraceItemFactory.cs" />
+    <Compile Include="Guis\Widgets\TraceItemFrameControl.cs" />
+    <Compile Include="Guis\Widgets\TraceItemGraphics.cs" />
+    <Compile Include="Guis\Widgets\TraceItemSettings.cs" />
+    <Compile Include="Guis\Widgets\TraceViewControl.cs" />
+    <Compile Include="Guis\Widgets\TraceViewFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screens\BackgroundScreen.cs" />
@@ -75,6 +82,7 @@
     <Compile Include="Screens\MultiplexerScreen.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MSBuildProgramFiles32)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
@@ -93,25 +101,30 @@
     </None>
     <None Include="Service References\PerseveranceServiceReference\configuration.svcinfo" />
     <None Include="Service References\PerseveranceServiceReference\configuration91.svcinfo" />
-    <None Include="Service References\PerseveranceServiceReference\item.disco" />
     <None Include="Properties\DataSources\MetaMind.Perseverance.Concepts.TaskEntries.TaskEntry.datasource" />
     <None Include="Properties\DataSources\MetaMind.PerseveranceService.CompositeType.datasource" />
-    <None Include="Service References\PerseveranceServiceReference\item.xsd">
+    <None Include="Service References\PerseveranceServiceReference\Arrays.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\PerseveranceServiceReference\item1.xsd">
+    <None Include="Service References\PerseveranceServiceReference\MetaMind.Engine.Concepts.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\PerseveranceServiceReference\item2.xsd">
+    <None Include="Service References\PerseveranceServiceReference\MetaMind.Engine.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\PerseveranceServiceReference\item3.xsd">
+    <None Include="Service References\PerseveranceServiceReference\MetaMind.Perseverance.Concepts.Cognitions.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\PerseveranceServiceReference\item4.xsd">
+    <None Include="Service References\PerseveranceServiceReference\MetaMind.Perseverance.Concepts.TaskEntries.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\PerseveranceServiceReference\SynchronizationService.wsdl" />
+    <None Include="Service References\PerseveranceServiceReference\service.wsdl" />
+    <None Include="Service References\PerseveranceServiceReference\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerseveranceServiceReference\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\" />
@@ -125,10 +138,6 @@
       <Project>{8944c3ab-1865-49cf-9e84-1ecc42ad2c3e}</Project>
       <Name>MetaMind.Engine</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MetaMind.PerseveranceHost\MetaMind.PerseveranceHost.csproj">
-      <Project>{7ab9fc74-c671-41b1-9d26-9fbf03e275b4}</Project>
-      <Name>MetaMind.PerseveranceHost</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MetaMind.PerseveranceService\MetaMind.PerseveranceService.csproj">
       <Project>{61829F1D-D89D-4B13-BB47-4B13DAFFB205}</Project>
       <Name>MetaMind.PerseveranceService</Name>
@@ -137,9 +146,13 @@
       <Project>{91a424b6-e62b-4b7a-b30d-331c7e3af5f0}</Project>
       <Name>MetaMind.Perseverance</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ThirdParty\C3.Primitives2D\C3.Primitives2D.csproj">
+      <Project>{39AD1482-1881-4852-A05D-DC61B0D3446A}</Project>
+      <Name>C3.Primitives2D</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

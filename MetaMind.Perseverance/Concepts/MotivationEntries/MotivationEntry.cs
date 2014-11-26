@@ -15,7 +15,7 @@
         [DataMember]
         public string Property = "Neutral";
 
-        [DataMember]
+        [DataMember(IsRequired = false)]
         public int Attraction;
 
         [DataMember]

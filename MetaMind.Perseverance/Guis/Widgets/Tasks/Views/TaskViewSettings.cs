@@ -19,7 +19,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 
         public Point BorderMargin      = new Point(4, 4);
 
-        public TaskViewScrollBarSettings ScrollBarSettings = new TaskViewScrollBarSettings();
+        public ViewScrollBarSettings ScrollBarSettings = new ViewScrollBarSettings();
 
         public TaskViewSettings()
         {

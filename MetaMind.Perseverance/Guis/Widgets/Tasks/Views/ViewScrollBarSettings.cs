@@ -2,7 +2,7 @@
 
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 {
-    public class TaskViewScrollBarSettings
+    public class ViewScrollBarSettings
     {
         public Color Color                    = Color.White;
         public byte  BrightnessMax            = 200;

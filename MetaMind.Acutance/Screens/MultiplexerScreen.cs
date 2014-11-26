@@ -3,9 +3,9 @@ namespace MetaMind.Acutance.Screens
     using System;
 
     using MetaMind.Acutance.Guis;
+    using MetaMind.Acutance.Guis.Modules;
     using MetaMind.Engine.Guis.Modules;
     using MetaMind.Engine.Screens;
-    using MetaMind.Perseverance.Guis.Modules;
 
     using Microsoft.Xna.Framework;
 
@@ -22,7 +22,7 @@ namespace MetaMind.Acutance.Screens
 
             this.IsPopup = true;
 
-            this.multiplexer = new Multiplexer(new MultiplexerSettings());
+            this.multiplexer = new MultiplexerModule(new MultiplexerModuleSettings());
             this.multiplexer.Load();
         }
 

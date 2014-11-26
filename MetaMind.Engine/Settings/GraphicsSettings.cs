@@ -7,7 +7,7 @@
     {
         public static Screen Screen = Screen.AllScreens.First(e => e.Primary);
 
-        public static bool   Fullscreen = false;
+        public static bool   Fullscreen;
         
         public static int Width
         {

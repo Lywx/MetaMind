@@ -52,13 +52,16 @@
 
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
+            if (!coveredByOtherScreen)
+            {
+                Perseverance.Adventure.Update();
+            }
+
             if (IsActive && !coveredByOtherScreen)
             {
                 InputEventManager   .Update(gameTime);
                 InputSequenceManager.Update(gameTime);
                 MessageManager      .Update(gameTime);
-
-                Perseverance.Adventure.Update();
 
                 this.summary.Update(gameTime);
             }

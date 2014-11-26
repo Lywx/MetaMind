@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="c1355739-8e68-4c77-99bb-131eefd42aa0" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="575b5ebe-6ebf-4ea8-87be-a769140b1d36" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,16 +19,17 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/MetaMind.PerseveranceService/SynchronizationService/" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/MetaMind.PerseveranceService/SynchronizationService/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="c4db434d-7a5b-4c5d-949b-991f8616b231" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MetaMind.PerseveranceService/SynchronizationService/?xsd=xsd0" />
-    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="38c4103a-0f45-4cbc-8037-44fee0fcd5e7" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MetaMind.PerseveranceService/SynchronizationService/?xsd=xsd3" />
-    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="e3444fdc-6a34-4a89-91ff-a9a5308e4e47" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MetaMind.PerseveranceService/SynchronizationService/?xsd=xsd2" />
-    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="3c8f47b5-1dfc-4c90-b2ff-2c5a6b479b2d" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MetaMind.PerseveranceService/SynchronizationService/?disco" />
-    <MetadataFile FileName="SynchronizationService.wsdl" MetadataType="Wsdl" ID="ee4d8201-6336-4dfc-9176-0de92b9f8f0c" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MetaMind.PerseveranceService/SynchronizationService/?wsdl" />
-    <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="ac22eadc-42de-42ed-9da1-ce6cd52e37fa" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MetaMind.PerseveranceService/SynchronizationService/?xsd=xsd4" />
-    <MetadataFile FileName="item4.xsd" MetadataType="Schema" ID="6ccb1c79-6d19-41fa-8d0f-2ee691901c15" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MetaMind.PerseveranceService/SynchronizationService/?xsd=xsd1" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="ce950b2b-6d4a-4b19-88b4-a6b02e21cce1" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MetaMind.PerseveranceService/SynchronizationService/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="eec0f51f-df5a-466d-8891-ab7c9137422d" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MetaMind.PerseveranceService/SynchronizationService/mex" />
+    <MetadataFile FileName="MetaMind.Perseverance.Concepts.Cognitions.xsd" MetadataType="Schema" ID="4f5f6943-338c-4351-bbc7-314c77506b72" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MetaMind.PerseveranceService/SynchronizationService/mex" />
+    <MetadataFile FileName="MetaMind.Engine.xsd" MetadataType="Schema" ID="a0d867ea-f074-497a-9314-32b573b0760f" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MetaMind.PerseveranceService/SynchronizationService/mex" />
+    <MetadataFile FileName="MetaMind.Perseverance.Concepts.TaskEntries.xsd" MetadataType="Schema" ID="a6403cf7-e397-4a0d-ab16-e2ef176f84af" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MetaMind.PerseveranceService/SynchronizationService/mex" />
+    <MetadataFile FileName="MetaMind.Engine.Concepts.xsd" MetadataType="Schema" ID="0589cfea-0d5a-4656-9a21-0aa14da22643" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MetaMind.PerseveranceService/SynchronizationService/mex" />
+    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="506c9383-ee89-4c7b-be9a-5bd7fefe445f" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MetaMind.PerseveranceService/SynchronizationService/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="9c62f5d7-a591-448c-87db-f61cc3118f81" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MetaMind.PerseveranceService/SynchronizationService/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
