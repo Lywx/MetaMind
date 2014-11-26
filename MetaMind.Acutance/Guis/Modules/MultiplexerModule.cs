@@ -89,7 +89,8 @@
         {
             if (this.synchronization != null)
             {
-                this.DrawSynchronization(this.synchronization);
+                this.DrawSynchronizationName(this.synchronization);
+                this.DrawSynchronizationTime(this.synchronization);
             }
             
             this.DrawTrace(gameTime, alpha);
@@ -115,7 +116,7 @@
 
         public override void UpdateStructure(GameTime gameTime)
         {
-            if (synchronizationTimer < TimeSpan.FromMilliseconds(100))
+            if (this.synchronizationTimer < TimeSpan.FromMilliseconds(100))
             {
                 try
                 {
@@ -149,7 +150,17 @@
             this.view.UpdateStructure(gameTime);
         }
 
-        private void DrawSynchronization(ISynchronization synchronization)
+        private void DrawSynchronizationTime(ISynchronization synchronization)
+        {
+            FontManager.DrawCenteredText(
+                this.Settings.SynchronizationTimeFont,
+                synchronization.ElapsedTimeSinceTransition.ToString(),
+                this.SynchronizationTimeCenter,
+                this.Settings.SynchronizationColor,
+                this.Settings.SynchronizationTimeSize);
+        }
+
+        private void DrawSynchronizationName(ISynchronization synchronization)
         {
             Primitives2D.FillRectangle(
                 ScreenManager.SpriteBatch,
@@ -165,19 +176,12 @@
             if (task != null)
             {
                 FontManager.DrawCenteredText(
-                    this.Settings.SynchronizationFont,
+                    this.Settings.SynchronizationNameFont,
                     task.Name,
                     this.SynchronizationNameCenter,
                     this.Settings.SynchronizationColor,
                     this.Settings.SynchronizationNameSize);
             }
-            
-            FontManager.DrawCenteredText(
-                this.Settings.SynchronizationFont,
-                synchronization.ElapsedTimeSinceTransition.ToString(),
-                this.SynchronizationTimeCenter,
-                this.Settings.SynchronizationColor,
-                this.Settings.SynchronizationTimeSize);
         }
     }
 
@@ -198,10 +202,12 @@
         //---------------------------------------------------------------------
         public Color   SynchronizationColor    = Color.White;
 
-        public Font    SynchronizationFont     = Font.UiRegularFont;
+        public Font    SynchronizationNameFont = Font.InfoSimSunFont;
 
         public float   SynchronizationNameSize = 0.7f;
 
         public float   SynchronizationTimeSize = 0.7f;
+
+        public Font    SynchronizationTimeFont = Font.UiRegularFont;
     }
 }
