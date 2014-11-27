@@ -13,7 +13,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Elements.Views;
-    using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
 
     using Microsoft.Xna.Framework;
 
@@ -23,7 +22,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 
         private          int                   alpha;
 
-        public ViewScrollBar(IView view, TaskViewSettings viewSettings, ICloneable itemSettings, ViewScrollBarSettings scrollBarSettings)
+        public ViewScrollBar(IView view, ViewSettings2D viewSettings, ICloneable itemSettings, ViewScrollBarSettings scrollBarSettings)
             : base(view, viewSettings, itemSettings)
         {
             this.settings = scrollBarSettings;

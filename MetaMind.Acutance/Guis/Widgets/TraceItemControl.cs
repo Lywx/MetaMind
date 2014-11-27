@@ -30,15 +30,17 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public ItemEntryFrame NameFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).NameFrame; } }
 
+        public ItemEntryFrame ExperienceFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).ExperienceFrame; } }
+
         #endregion Constructors
 
         #region Operations
 
         private void DeleteIt()
         {
-            // only need to remove from gui
-            // tasks are not stored centralizedly
-            this.View.Items.Remove(this.Item);
+            View.Items.Remove(this.Item);
+
+            View.Control.ItemFactory.RemoveData(Item);
         }
 
         #endregion Operations
@@ -52,6 +54,12 @@ namespace MetaMind.Acutance.Guis.Widgets
                 return this.Item.IsEnabled(ItemState.Item_Editing) || 
                        this.Item.IsEnabled(ItemState.Item_Pending);
             }
+        }
+
+        public override void UpdateStructure(GameTime gameTime)
+        {
+            base    .UpdateStructure(gameTime);
+            ItemData.Update();
         }
 
         public override void UpdateInput(GameTime gameTime)

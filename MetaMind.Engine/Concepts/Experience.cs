@@ -1,12 +1,12 @@
-﻿using System;
-using System.Runtime.Serialization;
-
-namespace MetaMind.Engine.Concepts
+﻿namespace MetaMind.Engine.Concepts
 {
+    using System;
+    using System.Runtime.Serialization;
+
     [DataContract]
     public class Experience
     {
-        public static Experience Zero { get { return new Experience( DateTime.Now, TimeSpan.FromHours( 0 ), DateTime.Now ); } }
+        public static Experience Zero { get { return new Experience(DateTime.Now, TimeSpan.FromHours(0), DateTime.Now); } }
 
         #region Time Data
 
@@ -19,7 +19,7 @@ namespace MetaMind.Engine.Concepts
             {
                 return HasEnded ?
                     CertainDuration :
-                    CertainDuration + TimeSpan.FromSeconds( ( long ) ( ( DateTime.Now - RecentStartTime ).TotalSeconds * Accelaration ) );
+                    CertainDuration + TimeSpan.FromSeconds((long)((DateTime.Now - RecentStartTime).TotalSeconds * Accelaration));
             }
         }
 
@@ -36,7 +36,7 @@ namespace MetaMind.Engine.Concepts
         public DateTime RecentStartTime { get; set; }
 
         #endregion Time Data
-        
+
         #region State Data
 
         [DataMember]
@@ -54,7 +54,7 @@ namespace MetaMind.Engine.Concepts
             HasEnded = false;
         }
 
-        public Experience( DateTime historicalStartTime, DateTime recentStartTime, TimeSpan certainDuration )
+        public Experience(DateTime historicalStartTime, DateTime recentStartTime, TimeSpan certainDuration)
         {
             HistoricalStartTime = historicalStartTime;
             RecentStartTime = recentStartTime;
@@ -63,7 +63,7 @@ namespace MetaMind.Engine.Concepts
             HasEnded = false;
         }
 
-        public Experience( DateTime historicalStartTime, TimeSpan certainDuration, DateTime endTime )
+        public Experience(DateTime historicalStartTime, TimeSpan certainDuration, DateTime endTime)
         {
             HistoricalStartTime = historicalStartTime;
             EndTime = endTime;
@@ -76,55 +76,73 @@ namespace MetaMind.Engine.Concepts
 
         #region Overloadings
 
-        public static Experience operator -( Experience expX, Experience expY )
+        public static Experience operator -(Experience lhs, TimeSpan rhs)
+        {
+            lhs.CertainDuration -= rhs;
+            return lhs;
+        }
+
+        public static Experience operator +(Experience lhs, TimeSpan rhs)
+        {
+            lhs.CertainDuration += rhs;
+            return lhs;
+        }
+
+        public static Experience operator -(Experience lhs, Experience rhs)
         {
             Experience exp;
-            if ( expX.HasEnded && expY.HasEnded )
+            if (lhs.HasEnded && rhs.HasEnded)
             {
                 exp = new Experience(
-                    historicalStartTime: expX.HistoricalStartTime,
-                    endTime: expX.EndTime,
-                    certainDuration: expX.CertainDuration - expY.CertainDuration );
+                    historicalStartTime: lhs.HistoricalStartTime,
+                    endTime: lhs.EndTime,
+                    certainDuration: lhs.CertainDuration - rhs.CertainDuration);
             }
-            else if ( !expX.HasEnded )
+            else if (!lhs.HasEnded)
             {
                 exp = new Experience(
-                    historicalStartTime: expX.HistoricalStartTime,
-                    recentStartTime: expX.RecentStartTime,
-                    certainDuration: expX.CertainDuration - expY.CertainDuration );
+                    historicalStartTime: lhs.HistoricalStartTime,
+                    recentStartTime: lhs.RecentStartTime,
+                    certainDuration: lhs.CertainDuration - rhs.CertainDuration);
             }
             else
-                throw new InvalidOperationException( "At least one experience has to be ended." );
+            {
+                throw new InvalidOperationException("At least one experience has to be ended.");
+            }
 
             return exp;
         }
 
-        public static Experience operator +( Experience expX, Experience expY )
+        public static Experience operator +(Experience lhs, Experience rhs)
         {
             Experience exp;
-            if ( expX.HasEnded && expY.HasEnded )
+            if (lhs.HasEnded && rhs.HasEnded)
             {
                 exp = new Experience(
-                historicalStartTime: expX.HistoricalStartTime < expY.HistoricalStartTime ? expX.HistoricalStartTime : expY.HistoricalStartTime, // first starter
-                endTime: expX.EndTime > expY.EndTime ? expX.EndTime : expY.EndTime, // last ender
-                certainDuration: expX.CertainDuration + expY.CertainDuration );
+                    // first starter
+                    historicalStartTime: lhs.HistoricalStartTime < rhs.HistoricalStartTime ? lhs.HistoricalStartTime : rhs.HistoricalStartTime,
+                    // last ender
+                    endTime            : lhs.EndTime > rhs.EndTime ? lhs.EndTime : rhs.EndTime, 
+                    certainDuration    : lhs.CertainDuration + rhs.CertainDuration);
             }
-            else if ( expX.HasEnded ^ expY.HasEnded )
+            else if (lhs.HasEnded ^ rhs.HasEnded)
             {
                 exp = new Experience(
-                historicalStartTime: expX.HistoricalStartTime < expY.HistoricalStartTime ? expX.HistoricalStartTime : expY.HistoricalStartTime,
-                recentStartTime: !expX.HasEnded ? expX.RecentStartTime : expY.RecentStartTime,
-                certainDuration: expX.CertainDuration + expY.CertainDuration );
+                    historicalStartTime: lhs.HistoricalStartTime < rhs.HistoricalStartTime ? lhs.HistoricalStartTime : rhs.HistoricalStartTime,
+                    recentStartTime    : !lhs.HasEnded ? lhs.RecentStartTime : rhs.RecentStartTime,
+                    certainDuration    : lhs.CertainDuration + rhs.CertainDuration);
             }
             else
-                throw new InvalidOperationException( "At least one experience has to be ended." );
+            {
+                throw new InvalidOperationException("At least one experience has to be ended.");
+            }
 
             return exp;
         }
 
         public override string ToString()
         {
-            return ( ( int ) Duration.TotalHours ).ToString();
+            return ((int)Duration.TotalHours).ToString();
         }
 
         #endregion Overloadings
@@ -134,7 +152,7 @@ namespace MetaMind.Engine.Concepts
         public TimeSpan End()
         {
             EndTime = DateTime.Now;
-            var recentDuration = TimeSpan.FromSeconds( ( long ) ( ( EndTime - RecentStartTime ).TotalSeconds * Accelaration ) );
+            var recentDuration = TimeSpan.FromSeconds((long)((EndTime - RecentStartTime).TotalSeconds * Accelaration));
             CertainDuration = CertainDuration + recentDuration;
             HasEnded = true;
             return recentDuration;

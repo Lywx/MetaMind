@@ -1,56 +1,31 @@
 ﻿namespace MetaMind.Acutance.Guis.Modules
 {
     using System;
+    using System.Globalization;
     using System.ServiceModel;
 
     using C3.Primtive2DXna;
 
-    using MetaMind.Acutance.Guis.Widgets;
-    using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Guis.Elements.Views;
     using MetaMind.Engine.Guis.Modules;
-    using MetaMind.Engine.Settings;
     using MetaMind.Perseverance.Concepts.Cognitions;
-    using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
-    using MetaMind.Perseverance.Guis.Widgets.Tasks.Views;
 
     using Microsoft.Xna.Framework;
 
     public class MultiplexerModule : Module<MultiplexerModuleSettings>
     {
-        private readonly IView view;
-
-        private readonly TaskItemSettings itemSettings = new TaskItemSettings
-                                                             {
-                                                                 NameFrameSize = new Point(288, 24),
-                                                             };
-
-        private readonly TraceViewFactory viewFactory = new TraceViewFactory();
-
-        private readonly TaskViewSettings viewSettings;
+        private readonly IView traceView;
+        private readonly IView knowledgeView;
 
         private ISynchronization synchronization;
 
-        private TimeSpan synchronizationTimer = TimeSpan.Zero;
+        private TimeSpan         synchronizationTimer = TimeSpan.Zero;
 
         public MultiplexerModule(MultiplexerModuleSettings settings)
             : base(settings)
         {
-            this.viewSettings = new TaskViewSettings
-                                    {
-                                        StartPoint = new Point(15, 15),
-                                        RootMargin = new Point(
-                                            this.itemSettings.NameFrameSize.X + this.itemSettings.IdFrameSize.X,
-                                            this.itemSettings.NameFrameSize.Y),
-
-                                        ColumnNumMax     = 4,
-                                        ColumnNumDisplay = 4,
-
-                                        RowNumDisplay = 29,
-                                        RowNumMax     = 100,
-                                    };
-
-            this.view = new View(this.viewSettings, this.itemSettings, this.viewFactory);
+            this.traceView     = new View(this.Settings.TraceViewSettings, this.Settings.TraceItemSettings, this.Settings.TraceViewFactory);
+            this.knowledgeView = new View(this.Settings.KnowledgeViewSettings, this.Settings.KnowledgeItemSettings, this.Settings.KnowledgeViewFactory);
         }
 
         public Vector2 SynchronizationNameCenter
@@ -98,11 +73,16 @@
 
         private void DrawTrace(GameTime gameTime, byte alpha)
         {
-            this.view.Draw(gameTime, alpha);
+            this.traceView    .Draw(gameTime, alpha);
+            this.knowledgeView.Draw(gameTime, alpha);
         }
 
         public override void Load()
         {
+            foreach (var trace in Acutance.Adventure.Tracelist.Traces.ToArray())
+            {
+                this.traceView.Control.AddItem(trace);
+            }
         }
 
         public override void Unload()
@@ -111,7 +91,8 @@
 
         public override void UpdateInput(GameTime gameTime)
         {
-            this.view.UpdateInput(gameTime);
+            this.traceView    .UpdateInput(gameTime);
+            //this.knowledgeView.UpdateInput(gameTime);
         }
 
         public override void UpdateStructure(GameTime gameTime)
@@ -137,6 +118,11 @@
                     this.synchronizationTimer += gameTime.ElapsedGameTime;
                     this.synchronization = null;
                 }
+                catch (CommunicationObjectAbortedException)
+                {
+                    this.synchronizationTimer += gameTime.ElapsedGameTime;
+                    this.synchronization = null;
+                }
             }
             else
             {
@@ -147,14 +133,15 @@
                 }
             }
 
-            this.view.UpdateStructure(gameTime);
+            this.traceView    .UpdateStructure(gameTime);
+            this.knowledgeView.UpdateStructure(gameTime);
         }
 
         private void DrawSynchronizationTime(ISynchronization synchronization)
         {
             FontManager.DrawCenteredText(
                 this.Settings.SynchronizationTimeFont,
-                synchronization.ElapsedTimeSinceTransition.ToString(),
+                string.Format("{0:hh\\:mm\\:ss}:{1}", synchronization.ElapsedTimeSinceTransition, synchronization.ElapsedTimeSinceTransition.Milliseconds.ToString("00")),
                 this.SynchronizationTimeCenter,
                 this.Settings.SynchronizationColor,
                 this.Settings.SynchronizationTimeSize);
@@ -177,37 +164,11 @@
             {
                 FontManager.DrawCenteredText(
                     this.Settings.SynchronizationNameFont,
-                    task.Name,
+                    task.Name.ToUpper(),
                     this.SynchronizationNameCenter,
                     this.Settings.SynchronizationColor,
                     this.Settings.SynchronizationNameSize);
             }
         }
-    }
-
-    public class MultiplexerModuleSettings
-    {
-        public Point BarFrameSize            = new Point(500, 8);
-
-        public int   BarFrameXC              = GraphicsSettings.Width / 2;
-
-        public int   BarFrameYC              = 32;
-
-        public Color BarFrameBackgroundColor = new Color(30, 30, 40, 10);
-
-        public Color BarFrameAscendColor     = new Color(78, 255, 27, 200);
-
-        public Color BarFrameDescendColor    = new Color(255, 0, 27, 200);
-        
-        //---------------------------------------------------------------------
-        public Color   SynchronizationColor    = Color.White;
-
-        public Font    SynchronizationNameFont = Font.InfoSimSunFont;
-
-        public float   SynchronizationNameSize = 0.7f;
-
-        public float   SynchronizationTimeSize = 0.7f;
-
-        public Font    SynchronizationTimeFont = Font.UiRegularFont;
     }
 }

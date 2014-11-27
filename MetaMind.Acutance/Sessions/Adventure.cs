@@ -35,8 +35,8 @@ namespace MetaMind.Acutance.Sessions
 
         private Adventure()
         {
-            this.Random   = new Random((int)DateTime.Now.Ticks);
-            this.Tasklist = new Tasklist();
+            this.Random    = new Random((int)DateTime.Now.Ticks);
+            this.Tracelist = new Tracelist();
         }
 
         #endregion Constructors
@@ -44,7 +44,7 @@ namespace MetaMind.Acutance.Sessions
         #region Public Properties
 
         [DataMember]
-        public Tasklist Tasklist { get; private set; }
+        public Tracelist Tracelist { get; private set; }
 
         public Random Random { get; private set; }
 
@@ -64,6 +64,7 @@ namespace MetaMind.Acutance.Sessions
             {
                 // auto-backup the old file
                 File.Copy(XmlPath, XmlPath + ".bak", true);
+
                 // load from save
                 LoadSave(XmlPath);
             }
@@ -77,6 +78,7 @@ namespace MetaMind.Acutance.Sessions
                 // create a new singleton
                 singleton = new Adventure();
             }
+
             return singleton;
         }
 
@@ -114,6 +116,7 @@ namespace MetaMind.Acutance.Sessions
 
         public void Update()
         {
+            this.Tracelist.Update();
         }
 
         #endregion Update 

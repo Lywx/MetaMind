@@ -92,6 +92,7 @@
     <Compile Include="Components\Processes\WaitProcess.cs" />
     <Compile Include="Components\ProcessManager.cs" />
     <Compile Include="Components\RunnerManager.cs" />
+    <Compile Include="Components\SaveManager.cs" />
     <Compile Include="Components\ScreenManager.cs" />
     <Compile Include="Components\Fonts\Text.cs" />
     <Compile Include="Concepts\Experience.cs" />

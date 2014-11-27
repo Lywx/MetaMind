@@ -8,9 +8,13 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
         #region Item Components
 
         IViewItem Item { get; }
+
         dynamic ItemData { get; }
+
         dynamic ItemControl { get; }
+
         IItemGraphics ItemGraphics { get; }
+
         dynamic ItemSettings { get; }
 
         #endregion Item Components
@@ -18,7 +22,9 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
         #region View Components
 
         IView View { get; }
+
         IViewControl ViewControl { get; }
+
         dynamic ViewSettings { get; }
 
         #endregion View Components
@@ -26,7 +32,7 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
 
     public class ViewItemComponent : EngineObject, IViewItemComponent
     {
-        public ViewItemComponent( IViewItem item )
+        public ViewItemComponent(IViewItem item)
         {
             this.item = item;
         }
@@ -34,12 +40,12 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
         #region Item Components
 
         private IViewItem item;
+
         public IViewItem Item { get { return this.item; } }
 
         public dynamic ItemData
         {
             get { return this.item.ItemData; }
-            
         }
 
         public dynamic ItemControl
@@ -51,6 +57,7 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
         {
             get { return this.item.ItemGraphics; }
         }
+
         public dynamic ItemSettings
         {
             get { return this.item.ItemSettings; }
@@ -69,6 +76,7 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
         {
             get { return this.View.Control; }
         }
+
         public dynamic ViewSettings
         {
             get { return this.item.ViewSettings; }

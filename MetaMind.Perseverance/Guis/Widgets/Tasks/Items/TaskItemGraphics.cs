@@ -13,7 +13,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
     public class TaskItemGraphics : ViewItemBasicGraphics
     {
-        private const string HelpInformation = "N D-one E-xp L-oad R-ationale";
+        private const string HelpInformation = "N D:one E:xp L:oad R:ationale";
 
         #region Constructors
 
@@ -47,8 +47,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
             {
                 return new Vector2(
                     ItemControl.NameFrame.Location.X + ItemSettings.NameXLMargin,
-                    ItemControl.NameFrame.Location.Y + ItemSettings.NameYTMargin
-                    );
+                    ItemControl.NameFrame.Location.Y + ItemSettings.NameYTMargin);
             }
         }
 
@@ -176,46 +175,52 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
             }
         }
 
+
         private void DrawNameFrame(byte alpha)
         {
-            if (Item.IsEnabled(ItemState.Item_Mouse_Over) &&
-                Item.IsEnabled(ItemState.Item_Editing))
+            if (Item.IsEnabled(ItemState.Item_Pending))
             {
-                this.FillNameFrameWith(ItemSettings.NameFrameModificationColor);
-                this.DrawNameFrameWith(ItemSettings.NameFrameMouseOverColor);
+                this.FillNameFrameWith(ItemSettings.NameFramePendingColor, alpha);
+            }
+            else if (Item.IsEnabled(ItemState.Item_Mouse_Over) &&
+                     Item.IsEnabled(ItemState.Item_Editing))
+            {
+                this.FillNameFrameWith(ItemSettings.NameFrameModificationColor, alpha);
+                this.DrawNameFrameWith(ItemSettings.NameFrameMouseOverColor, alpha);
             }
             else if (!Item.IsEnabled(ItemState.Item_Mouse_Over) &&
-                      Item.IsEnabled(ItemState.Item_Editing))
+                     Item.IsEnabled(ItemState.Item_Editing))
             {
-                this.FillNameFrameWith(ItemSettings.NameFrameModificationColor);
+                this.FillNameFrameWith(ItemSettings.NameFrameModificationColor, alpha);
             }
             else if (Item.IsEnabled(ItemState.Item_Mouse_Over) &&
                      Item.IsEnabled(ItemState.Item_Selected))
             {
-                this.FillNameFrameWith(ItemSettings.NameFrameSelectionColor);
-                this.DrawNameFrameWith(ItemSettings.NameFrameMouseOverColor);
+                this.FillNameFrameWith(ItemSettings.NameFrameSelectionColor, alpha);
+                this.DrawNameFrameWith(ItemSettings.NameFrameMouseOverColor, alpha);
             }
             else if (Item.IsEnabled(ItemState.Item_Mouse_Over) &&
-                    !Item.IsEnabled(ItemState.Item_Selected))
+                     !Item.IsEnabled(ItemState.Item_Selected))
             {
-                this.DrawNameFrameWith(ItemSettings.NameFrameMouseOverColor);
+                this.FillNameFrameWith(ItemSettings.NameFrameRegularColor, alpha);
+                this.DrawNameFrameWith(ItemSettings.NameFrameMouseOverColor, alpha);
             }
             else if (Item.IsEnabled(ItemState.Item_Selected))
             {
-                this.FillNameFrameWith(ItemSettings.NameFrameSelectionColor);
+                this.FillNameFrameWith(ItemSettings.NameFrameSelectionColor, alpha);
             }
             else
             {
-                this.FillNameFrameWith(ItemSettings.NameFrameRegularColor);
+                this.FillNameFrameWith(ItemSettings.NameFrameRegularColor, alpha);
             }
         }
 
-        private void DrawNameFrameWith(Color color)
+        private void DrawNameFrameWith(Color color, byte alpha)
         {
             Primitives2D.DrawRectangle(
                 ScreenManager.SpriteBatch,
                 RectangleExt.Crop(ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin),
-                color,
+                color.MakeTransparent(alpha),
                 1f);
         }
 
@@ -278,12 +283,12 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
             }
         }
 
-        private void FillNameFrameWith(Color color)
+        private void FillNameFrameWith(Color color, byte alpha)
         {
             Primitives2D.FillRectangle(
                 ScreenManager.SpriteBatch,
                 RectangleExt.Crop(ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin),
-                color);
+                color.MakeTransparent(alpha));
         }
 
         #endregion Draw

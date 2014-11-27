@@ -19,7 +19,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 
     public class MotivationItemGraphics : ViewItemBasicGraphics
     {
-        private const string HelpInformation = "N A-ttraction J-Fear K-Wish";
+        private const string HelpInformation = "N A:ttraction J:Fear K:Wish";
 
         private readonly MotivationItemSymbolGraphics symbol;
 

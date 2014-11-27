@@ -21,7 +21,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
         //---------------------------------------------------------------------
         public int   NameXLMargin                  = 10;
-
         public int   NameXRMargin                  = 30;
         public int   NameYTMargin                  = 5;
 
@@ -29,6 +28,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
         public Color NameFrameRegularColor         = new Color(0, 0, 0, 0);
 
         public Color NameFrameMouseOverColor       = new Color(23, 41, 61, 2);
+        public Color NameFramePendingColor         = new Color(200, 200, 0, 2);
         public Color NameFrameModificationColor    = new Color(0, 0, 0, 0);
         public Color NameFrameSelectionColor       = new Color(0, 20, 250, 2);
         public Color NameFrameSynchronizationColor = new Color(0, 20, 250, 2);

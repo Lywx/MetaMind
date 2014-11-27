@@ -10,8 +10,6 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
     using System;
     using System.Runtime.Serialization;
 
-    using Microsoft.Xna.Framework;
-
     [DataContract]
     public class SynchronizationTimer
     {

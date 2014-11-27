@@ -1,12 +1,10 @@
 namespace MetaMind.Perseverance.Components
 {
-    using System;
-
     using MetaMind.Engine;
 
     using Microsoft.Xna.Framework;
 
-    public class SaveManager : GameComponent
+    public class SaveManager : Engine.Components.SaveManager
     {
         #region Singleton
 
@@ -29,22 +27,6 @@ namespace MetaMind.Perseverance.Components
 
         #endregion Singleton
 
-        #region Save Data
-
-        private bool autoSaved;
-
-        private bool AutoSaveCondition
-        {
-            get
-            {
-                var now = DateTime.Now;
-                return now.Minute == 0 || now.Minute == 15 ||
-                       now.Minute == 30 || now.Minute == 45;
-            }
-        }
-
-        #endregion Save Data
-
         #region Constructors
 
         private SaveManager(Game game)
@@ -54,41 +36,9 @@ namespace MetaMind.Perseverance.Components
 
         #endregion Constructors
 
-        #region Update
-
-        public override void Update(GameTime gameTime)
-        {
-            if (AutoSaveCondition)
-            {
-                AutoSave();
-            }
-            else
-            {
-                autoSaved = false;
-            }
-
-            base.Update(gameTime);
-        }
-
-        #endregion Update
-
         #region Operations
 
-        private void AutoSave()
-        {
-            if (autoSaved)
-            {
-                return;
-            }
-
-            Perseverance.Adventure.Save();
-
-            GameEngine.MessageManager.PopMessages("Progress saved.");
-
-            autoSaved = true;
-        }
-
-        public void Save()
+        public override void Save()
         {
             Perseverance.Adventure.Save();
         }

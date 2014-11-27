@@ -1,11 +1,21 @@
-using System.Collections.Generic;
-using System.Runtime.Serialization;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Motivationlist.cs" company="UESTC">
+//   Copyright (c) 2014 Lin Wuxiang
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace MetaMind.Perseverance.Concepts.MotivationEntries
 {
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Runtime.Serialization;
+
     public enum MotivationSpace
     {
-        Past, Now, Future,
+        Past, 
+        Now, 
+        Future, 
     }
 
     [DataContract]
@@ -60,21 +70,33 @@ namespace MetaMind.Perseverance.Concepts.MotivationEntries
             {
                 case MotivationSpace.Past:
                     {
-                        this.PastMotivations.Remove(entry);
+                        this.RemoveInMotivations(this.PastMotivations, entry);
                         break;
                     }
 
                 case MotivationSpace.Now:
                     {
-                        this.NowMotivations.Remove(entry);
+                        this.RemoveInMotivations(this.NowMotivations, entry);
                         break;
                     }
 
                 case MotivationSpace.Future:
                     {
-                        this.FutureMotivations.Remove(entry);
+                        this.RemoveInMotivations(this.FutureMotivations, entry);
                         break;
                     }
+            }
+        }
+
+        private void RemoveInMotivations(List<MotivationEntry> motivations, MotivationEntry entry)
+        {
+            if (motivations.Contains(entry))
+            {
+                motivations.Remove(entry);
+            }
+            else
+            {
+                Debug.WriteLine("Warning: Unnecessary removal of entry {0} in motivation {1}", motivations, entry.Name);
             }
         }
     }

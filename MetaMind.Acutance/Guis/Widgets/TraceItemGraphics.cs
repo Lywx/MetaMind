@@ -1,20 +1,17 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
-    using System;
-    using System.Globalization;
-
     using C3.Primtive2DXna;
 
+    using MetaMind.Engine.Concepts;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Elements.Items;
     using MetaMind.Engine.Guis.Elements.ViewItems;
-    using MetaMind.Perseverance;
 
     using Microsoft.Xna.Framework;
 
     public class TraceItemGraphics : ViewItemBasicGraphics
     {
-        private const string HelpInformation = "N-ame ";
+        private const string HelpInformation = "N:ame";
 
         #region Constructors
 
@@ -29,7 +26,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         protected override Vector2 IdCenter
         {
-            get { return PointExt.ToVector2(this.ItemControl.IdFrame.Center); }
+            get { return PointExt.ToVector2(ItemControl.IdFrame.Center); }
         }
 
         private Vector2 HelpLocation
@@ -37,36 +34,22 @@ namespace MetaMind.Acutance.Guis.Widgets
             get { return this.NameLocation; }
         }
 
+        private Vector2 ExperienceLocation
+        {
+            get { return PointExt.ToVector2(ItemControl.ExperienceFrame.Center); }
+        }
+
+
         private Vector2 NameLocation
         {
             get
             {
                 return new Vector2(
-                    this.ItemControl.NameFrame.Location.X + this.ItemSettings.NameXLMargin,
-                    this.ItemControl.NameFrame.Location.Y + this.ItemSettings.NameYTMargin
-                    );
+                    ItemControl.NameFrame.Location.X + ItemSettings.NameXLMargin,
+                    ItemControl.NameFrame.Location.Y + ItemSettings.NameYTMargin);
             }
         }
 
-        private Rectangle RandomHighlight(GameTime gameTime, int flashLength, Rectangle rectangle)
-        {
-            var thick = Perseverance.Adventure.Random.Next(flashLength);
-            return new Rectangle(
-                rectangle.X - thick,
-                rectangle.Y - thick,
-                rectangle.Width + thick * 2,
-                rectangle.Height + thick * 2);
-        }
-
-        private Rectangle SinwaveHighlight(GameTime gameTime, int flashLength, Rectangle rectangle)
-        {
-            var thick = (int)(flashLength * Math.Abs(Math.Sin(gameTime.TotalGameTime.TotalSeconds * 2)));
-            return new Rectangle(
-                rectangle.X - thick,
-                rectangle.Y - thick,
-                rectangle.Width + thick * 2,
-                rectangle.Height + thick * 2);
-        }
 
         #endregion Structure Position
 
@@ -74,97 +57,124 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public override void Draw(GameTime gameTime, byte alpha)
         {
-            if (!this.ItemControl.Active && !this.Item.IsEnabled(ItemState.Item_Dragging))
+            if (!ItemControl.Active && !Item.IsEnabled(ItemState.Item_Dragging))
             {
                 return;
             }
 
             this.DrawNameFrame(alpha);
             this.DrawName(alpha);
+            this.DrawExperienceFrame(alpha);
+            this.DrawExperience(alpha);
             this.DrawIdFrame(alpha);
             this.DrawId(alpha);
+        }
+
+        private void DrawExperienceFrame(byte alpha)
+        {
+            Primitives2D.FillRectangle(
+                ScreenManager.SpriteBatch,
+                RectangleExt.Crop(ItemControl.ExperienceFrame.Rectangle, ItemSettings.ExperienceFrameMargin),
+                ColorExt.MakeTransparent(ItemSettings.ExperienceFrameColor, alpha));
+
+        }
+
+        private void DrawExperience(byte alpha)
+        {
+                FontManager.DrawCenteredText(
+                    ItemSettings.ExperienceFont,
+                    string.Format("{0:hh\\:mm\\:ss}", ((Experience)ItemData.Experience).Duration),
+                    this.ExperienceLocation,
+                    ColorExt.MakeTransparent(ItemSettings.ExperienceColor, alpha),
+                    ItemSettings.ExperienceSize);
         }
 
         private void DrawIdFrame(byte alpha)
         {
             Primitives2D.FillRectangle(
                 ScreenManager.SpriteBatch,
-                RectangleExt.Crop(this.ItemControl.IdFrame.Rectangle, this.ItemSettings.IdFrameMargin),
-                this.Item.IsEnabled(ItemState.Item_Pending)
-                    ? ColorExt.MakeTransparent(this.ItemSettings.IdFramePendingColor, alpha)
-                    : ColorExt.MakeTransparent(this.ItemSettings.IdFrameColor, alpha));
+                RectangleExt.Crop(ItemControl.IdFrame.Rectangle, ItemSettings.IdFrameMargin),
+                Item.IsEnabled(ItemState.Item_Pending)
+                    ? ColorExt.MakeTransparent(ItemSettings.IdFramePendingColor, alpha)
+                    : ColorExt.MakeTransparent(ItemSettings.IdFrameColor, alpha));
         }
 
         private void DrawName(byte alpha)
         {
-            if (this.Item.IsEnabled(ItemState.Item_Pending))
+            if (Item.IsEnabled(ItemState.Item_Pending))
             {
                 FontManager.DrawText(
-                    this.ItemSettings.HelpFont,
+                    ItemSettings.HelpFont,
                     HelpInformation,
                     this.HelpLocation,
-                    ColorExt.MakeTransparent(this.ItemSettings.HelpColor, alpha),
-                    this.ItemSettings.HelpSize);
+                    ColorExt.MakeTransparent(ItemSettings.HelpColor, alpha),
+                    ItemSettings.HelpSize);
             }
             else
             {
                 FontManager.DrawText(
-                    this.ItemSettings.NameFont,
-                    this.ItemData.Name,
+                    ItemSettings.NameFont,
+                    ItemData.Name,
                     this.NameLocation,
-                    ColorExt.MakeTransparent(this.ItemSettings.NameColor, alpha),
-                    this.ItemSettings.NameSize);
+                    ColorExt.MakeTransparent(ItemSettings.NameColor, alpha),
+                    ItemSettings.NameSize);
             }
         }
 
         private void DrawNameFrame(byte alpha)
         {
-            if (this.Item.IsEnabled(ItemState.Item_Mouse_Over) &&
-                this.Item.IsEnabled(ItemState.Item_Editing))
+            if (Item.IsEnabled(ItemState.Item_Pending))
             {
-                this.FillNameFrameWith(this.ItemSettings.NameFrameModificationColor);
-                this.DrawNameFrameWith(this.ItemSettings.NameFrameMouseOverColor);
+                this.FillNameFrameWith(ItemSettings.NameFramePendingColor, alpha);
             }
-            else if (!this.Item.IsEnabled(ItemState.Item_Mouse_Over) &&
-                     this.Item.IsEnabled(ItemState.Item_Editing))
+            else if (Item.IsEnabled(ItemState.Item_Mouse_Over) &&
+                     Item.IsEnabled(ItemState.Item_Editing))
             {
-                this.FillNameFrameWith(this.ItemSettings.NameFrameModificationColor);
+                this.FillNameFrameWith(ItemSettings.NameFrameModificationColor, alpha);
+                this.DrawNameFrameWith(ItemSettings.NameFrameMouseOverColor, alpha);
             }
-            else if (this.Item.IsEnabled(ItemState.Item_Mouse_Over) &&
-                     this.Item.IsEnabled(ItemState.Item_Selected))
+            else if (!Item.IsEnabled(ItemState.Item_Mouse_Over) &&
+                     Item.IsEnabled(ItemState.Item_Editing))
             {
-                this.FillNameFrameWith(this.ItemSettings.NameFrameSelectionColor);
-                this.DrawNameFrameWith(this.ItemSettings.NameFrameMouseOverColor);
+                this.FillNameFrameWith(ItemSettings.NameFrameModificationColor, alpha);
             }
-            else if (this.Item.IsEnabled(ItemState.Item_Mouse_Over) &&
-                     !this.Item.IsEnabled(ItemState.Item_Selected))
+            else if (Item.IsEnabled(ItemState.Item_Mouse_Over) &&
+                     Item.IsEnabled(ItemState.Item_Selected))
             {
-                this.DrawNameFrameWith(this.ItemSettings.NameFrameMouseOverColor);
+                this.FillNameFrameWith(ItemSettings.NameFrameSelectionColor, alpha);
+                this.DrawNameFrameWith(ItemSettings.NameFrameMouseOverColor, alpha);
             }
-            else if (this.Item.IsEnabled(ItemState.Item_Selected))
+            else if (Item.IsEnabled(ItemState.Item_Mouse_Over) &&
+                     !Item.IsEnabled(ItemState.Item_Selected))
             {
-                this.FillNameFrameWith(this.ItemSettings.NameFrameSelectionColor);
+                this.FillNameFrameWith(ItemSettings.NameFrameRegularColor, alpha);
+                this.DrawNameFrameWith(ItemSettings.NameFrameMouseOverColor, alpha);
+            }
+            else if (Item.IsEnabled(ItemState.Item_Selected))
+            {
+                this.FillNameFrameWith(ItemSettings.NameFrameSelectionColor, alpha);
             }
             else
             {
-                this.FillNameFrameWith(this.ItemSettings.NameFrameRegularColor);
+                this.FillNameFrameWith(ItemSettings.NameFrameRegularColor, alpha);
             }
         }
 
-        private void DrawNameFrameWith(Color color)
+        private void DrawNameFrameWith(Color color, byte alpha)
         {
             Primitives2D.DrawRectangle(
                 ScreenManager.SpriteBatch,
-                RectangleExt.Crop(this.ItemControl.NameFrame.Rectangle, this.ItemSettings.NameFrameMargin),
-                color,
+                RectangleExt.Crop(ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin),
+                color.MakeTransparent(alpha),
                 1f);
         }
-        private void FillNameFrameWith(Color color)
+
+        private void FillNameFrameWith(Color color, byte alpha)
         {
             Primitives2D.FillRectangle(
                 ScreenManager.SpriteBatch,
-                RectangleExt.Crop(this.ItemControl.NameFrame.Rectangle, this.ItemSettings.NameFrameMargin),
-                color);
+                RectangleExt.Crop(ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin),
+                color.MakeTransparent(alpha));
         }
 
         #endregion Draw

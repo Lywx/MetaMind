@@ -1,10 +1,10 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
+    using MetaMind.Acutance.Concepts;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Elements.Regions;
     using MetaMind.Engine.Guis.Elements.ViewItems;
     using MetaMind.Engine.Guis.Elements.Views;
-    using MetaMind.Perseverance.Concepts.TaskEntries;
     using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
     using MetaMind.Perseverance.Guis.Widgets.Tasks.Views;
 
@@ -14,7 +14,7 @@ namespace MetaMind.Acutance.Guis.Widgets
     {
         #region Constructors
 
-        public TraceViewControl(IView view, TaskViewSettings viewSettings, TaskItemSettings itemSettings)
+        public TraceViewControl(IView view, TraceViewSettings viewSettings, TraceItemSettings itemSettings)
             : base(view, viewSettings, itemSettings)
         {
             this.Region      = new ViewRegion(view, viewSettings, itemSettings, this.RegionPositioning);
@@ -36,7 +36,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Operations
 
-        public void AddItem(TaskEntry entry)
+        public void AddItem(TraceEntry entry)
         {
             this.View.Items.Add(
                 new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory, entry));
@@ -181,18 +181,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         protected override void UpdateViewFocus()
         {
-            if (this.Region.IsEnabled(RegionState.Region_Has_Focus))
-            {
-                this.View.Enable(ViewState.View_Has_Focus);
-            }
-            else if (this.View.IsEnabled(ViewState.View_Has_Selection))
-            {
-                this.View.Enable(ViewState.View_Has_Focus);
-            }
-            else
-            {
-                this.View.Disable(ViewState.View_Has_Focus); 
-            }
+            View.Enable(ViewState.View_Has_Focus); 
         }
 
         #endregion Update
@@ -204,7 +193,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             return new Rectangle(
                 viewSettings.StartPoint.X,
                 viewSettings.StartPoint.Y,
-                viewSettings.ColumnNumDisplay * (itemSettings.NameFrameSize.X + itemSettings.IdFrameSize.X),
+                viewSettings.ColumnNumDisplay * (itemSettings.NameFrameSize.X + itemSettings.IdFrameSize.X + itemSettings.ExperienceFrameSize.X),
                 viewSettings.RowNumDisplay    * itemSettings.NameFrameSize.Y);
         }
 
