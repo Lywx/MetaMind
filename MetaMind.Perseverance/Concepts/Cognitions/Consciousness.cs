@@ -11,7 +11,7 @@
     {
         bool AwakeCondition { get; }
 
-        Consciousness Update(GameTime gameTime);
+        Consciousness Update();
     }
 
     [DataContract,
@@ -75,7 +75,7 @@
 
         #region Update
 
-        public Consciousness Update(GameTime gameTime)
+        public Consciousness Update()
         {
             if (!AwakeCondition &&
                 this is ConsciousnessAwake)

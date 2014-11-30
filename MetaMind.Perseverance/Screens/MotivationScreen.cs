@@ -1,30 +1,34 @@
-﻿using MetaMind.Engine.Guis.Modules;
-using MetaMind.Engine.Guis.Widgets;
-using MetaMind.Engine.Screens;
-using MetaMind.Perseverance.Guis.Modules;
-using MetaMind.Perseverance.Guis.Widgets.Synchronizations;
-using Microsoft.Xna.Framework;
-using System;
-
-namespace MetaMind.Perseverance.Screens
+﻿namespace MetaMind.Perseverance.Screens
 {
+    using System;
+
+    using MetaMind.Engine.Guis.Modules;
+    using MetaMind.Engine.Guis.Widgets;
+    using MetaMind.Engine.Screens;
+    using MetaMind.Perseverance.Guis.Modules;
+
+    using Microsoft.Xna.Framework;
+
     public class MotivationScreen : GameScreen
     {
-        private readonly IWidget synchronization;
-
         private readonly IModule motivation;
+
+        private readonly IModule synchronization;
 
         public MotivationScreen()
         {
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
 
+            Exiting += this.MotivationScreenExiting;
+
             IsPopup = true;
 
-            synchronization = new SynchronizationHud(
+            synchronization = new SynchronizationModule(
                 Perseverance.Adventure.Cognition.Synchronization,
                 Perseverance.Adventure.Cognition.Consciousness,
                 new SynchronizationHudSettings());
+            synchronization.Load();
 
             motivation = new MotivationExchange(new MotivationExchangeSettings());
             motivation.Load();
@@ -38,7 +42,7 @@ namespace MetaMind.Perseverance.Screens
 
             MessageManager.Draw(gameTime);
 
-            motivation     .Draw(gameTime, TransitionAlpha);
+            motivation.Draw(gameTime, TransitionAlpha);
             synchronization.Draw(gameTime, TransitionAlpha);
 
             ScreenManager.SpriteBatch.End();
@@ -46,7 +50,7 @@ namespace MetaMind.Perseverance.Screens
 
         public override void HandleInput()
         {
-            InputEventManager   .HandleInput();
+            InputEventManager.HandleInput();
             InputSequenceManager.HandleInput();
 
             motivation.HandleInput();
@@ -56,16 +60,22 @@ namespace MetaMind.Perseverance.Screens
         {
             if (IsActive && !coveredByOtherScreen)
             {
-                InputEventManager   .Update(gameTime);
+                InputEventManager.Update(gameTime);
                 InputSequenceManager.Update(gameTime);
-                MessageManager      .Update(gameTime);
+                MessageManager.Update(gameTime);
 
-                Perseverance.Adventure.Update(gameTime);
+                Perseverance.Adventure.Update();
 
-                motivation     .Update(gameTime);
+                motivation.Update(gameTime);
                 synchronization.Update(gameTime);
             }
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+        }
+
+        private void MotivationScreenExiting(object sender, EventArgs e)
+        {
+            motivation     .Unload();
+            synchronization.Unload();
         }
     }
 }

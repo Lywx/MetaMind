@@ -1,6 +1,6 @@
-﻿using MetaMind.Engine;
-using Microsoft.Xna.Framework;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
+
+using MetaMind.Engine;
 
 namespace MetaMind.Perseverance.Concepts.Cognitions
 {
@@ -33,10 +33,10 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
         #region Update
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
-            Consciousness = Consciousness.Update(gameTime);
-            Synchronization              .Update(gameTime);
+            Consciousness = Consciousness.Update();
+            Synchronization              .Update();
         }
 
         #endregion Update

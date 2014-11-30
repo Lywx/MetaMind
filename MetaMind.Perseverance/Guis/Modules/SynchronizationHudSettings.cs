@@ -1,9 +1,11 @@
-﻿namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
+﻿namespace MetaMind.Perseverance.Guis.Modules
 {
+    using System;
+
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Settings;
+
     using Microsoft.Xna.Framework;
-    using System;
 
     public class SynchronizationHudSettings : ICloneable
     {
@@ -73,7 +75,7 @@
 
         public object Clone()
         {
-            return MemberwiseClone();
+            return this.MemberwiseClone();
         }
     }
 }

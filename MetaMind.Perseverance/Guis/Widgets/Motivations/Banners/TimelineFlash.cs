@@ -46,9 +46,9 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Banners
             Decrement,
         }
 
-        public void Draw(GameTime gameTime)
+        public void Draw(GameTime gameTime, byte alpha)
         {
-            Primitives2D.FillRectangle(ScreenManager.SpriteBatch, position.ToPoint().PinRectangle(size.ToPoint()), color);
+            Primitives2D.FillRectangle(ScreenManager.SpriteBatch, position.ToPoint().PinRectangle(size.ToPoint()), color.MakeTransparent(alpha));
         }
 
         public void Update(GameTime gameTime)

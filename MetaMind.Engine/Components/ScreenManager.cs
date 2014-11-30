@@ -88,7 +88,7 @@ namespace MetaMind.Engine.Components
             // Load content belonging to the screen manager.
             ContentManager content = Game.Content;
             blankTexture = content.Load<Texture2D>(@"Textures\Screens\Blank");
-
+            
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Tell each of the screens to load their content.
@@ -277,7 +277,7 @@ namespace MetaMind.Engine.Components
                 screenNames.Add(screen.GetType().Name);
             }
 
-            Trace.WriteLine(string.Join(", ", screenNames.ToArray()));
+            Debug.WriteLine(string.Join(", ", screenNames.ToArray()));
         }
 
         /// <summary>

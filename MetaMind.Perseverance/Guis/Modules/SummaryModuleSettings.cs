@@ -1,7 +1,6 @@
 namespace MetaMind.Perseverance.Guis.Modules
 {
     using MetaMind.Engine.Components.Fonts;
-    using MetaMind.Perseverance.Concepts.Cognitions;
 
     public class SummaryModuleSettings
     {
@@ -18,18 +17,8 @@ namespace MetaMind.Perseverance.Guis.Modules
         public int   LineHeight          = 25;
 
         //---------------------------------------------------------------------
-        public int   GoodPrefessionHour  = 8;
+        public int   GoodPrefessionHour  = 10;
 
-        public int   LoftyProfessionHour = 4;
-
-        public IConsciousness Consciousness
-        {
-            get { return Perseverance.Adventure.Cognition.Consciousness; }
-        }
-
-        public ISynchronization Synchronization
-        {
-            get { return Perseverance.Adventure.Cognition.Synchronization; }
-        }
+        public int   LoftyProfessionHour = 6;
     }
 }

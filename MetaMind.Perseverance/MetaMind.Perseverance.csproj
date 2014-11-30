@@ -117,11 +117,11 @@
     <Compile Include="Guis\Widgets\Tasks\Items\TaskItemSettings.cs" />
     <Compile Include="Guis\Widgets\Tasks\Items\TaskItemSyncControl.cs" />
     <Compile Include="Guis\Widgets\Tasks\TaskTracer.cs" />
-    <Compile Include="Guis\Widgets\Synchronizations\SynchronizationHud.cs" />
-    <Compile Include="Guis\Widgets\Synchronizations\SynchronizationHudMonitor.cs" />
-    <Compile Include="Guis\Widgets\Synchronizations\SynchronizationHudSettings.cs" />
-    <Compile Include="Guis\Widgets\Synchronizations\SynchronizationHudSynchronizationStartListener.cs" />
-    <Compile Include="Guis\Widgets\Synchronizations\SynchronizationHudSynchronizationStopListener.cs" />
+    <Compile Include="Guis\Modules\SynchronizationModule.cs" />
+    <Compile Include="Guis\Modules\SynchronizationHudMonitor.cs" />
+    <Compile Include="Guis\Modules\SynchronizationHudSettings.cs" />
+    <Compile Include="Guis\Modules\SynchronizationHudSynchronizationStartListener.cs" />
+    <Compile Include="Guis\Modules\SynchronizationHudSynchronizationStopListener.cs" />
     <Compile Include="Guis\Widgets\Motivations\Banners\TimelineFlash.cs" />
     <Compile Include="Guis\Widgets\Motivations\Banners\TimelineText.cs" />
     <Compile Include="Guis\Widgets\Motivations\Banners\Banner.cs" />
@@ -142,6 +142,10 @@
     <Compile Include="Screens\SummaryScreen.cs" />
     <Compile Include="Sessions\Adventure.cs" />
     <Compile Include="Sessions\AdventureEventType.cs" />
+    <Compile Include="Guis\Modules\SynchronizationHudSleepStartedEventListener.cs" />
+    <Compile Include="Guis\Modules\SummaryModuleSleepStoppedEventListener.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FastMember">

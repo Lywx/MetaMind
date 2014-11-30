@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
+﻿namespace MetaMind.Perseverance.Guis.Modules
 {
     using System;
 
@@ -31,12 +31,12 @@
         {
             this.synchronization = synchronization;
 
-            Game.Components.Add(this);
+            this.Game.Components.Add(this);
         }
 
         public void TryStart()
         {
-            if (!isActived)
+            if (!this.isActived)
             {
                 this.Start();
             }
@@ -45,45 +45,45 @@
         public void Start()
         {
             // Note: for an application hook, use the AppHooker class instead
-            globalMouseListener = new MouseHookListener(new GlobalHooker()) { Enabled = true };
+            this.globalMouseListener = new MouseHookListener(new GlobalHooker()) { Enabled = true };
 
             // Set the event handler
             // recommended to use the Extended handlers, which allow input suppression among other additional information
-            globalMouseListener.MouseMoveExt += TriggerAttention;
+            this.globalMouseListener.MouseMoveExt += this.TriggerAttention;
 
-            isActived = true;
+            this.isActived = true;
         }
 
         public void Stop()
         {
-            if (globalMouseListener != null)
+            if (this.globalMouseListener != null)
             {
-                globalMouseListener.Dispose();
+                this.globalMouseListener.Dispose();
             }
 
-            isActived = false;
+            this.isActived = false;
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (synchronization.Enabled && 
-                DateTime.Now - attentionTriggeredMoment > attentionSpan)
+            if (this.synchronization.Enabled && 
+                DateTime.Now - this.attentionTriggeredMoment > this.attentionSpan)
             {
                 GameEngine.AudioManager.PlayMusic("Windows Proximity Notification");
 
-                attentionTriggeredMoment = DateTime.Now;
+                this.attentionTriggeredMoment = DateTime.Now;
             }
-            else if (!synchronization.Enabled)
+            else if (!this.synchronization.Enabled)
             {
                 GameEngine.AudioManager.PlayMusic("Windows Proximity Connection");
 
-                attentionTriggeredMoment = DateTime.Now;
+                this.attentionTriggeredMoment = DateTime.Now;
             }
         }
 
         private void TriggerAttention(object sender, MouseEventExtArgs e)
         {
-            attentionTriggeredMoment = DateTime.Now;
+            this.attentionTriggeredMoment = DateTime.Now;
         }
     }
 }

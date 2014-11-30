@@ -78,10 +78,10 @@ namespace MetaMind.Engine.Components
 
         public override void Initialize()
         {
-            this.knownEvents = new List<int>();
+            this.knownEvents  = new List<int>();
             this.queuedEvents = new List<EventBase>();
             this.activeEvents = new List<EventBase>();
-            this.listeners = new List<ListenerBase>();
+            this.listeners    = new List<ListenerBase>();
         }
 
         #endregion Initialization
@@ -102,7 +102,7 @@ namespace MetaMind.Engine.Components
 
         public void RemoveListener(ListenerBase listener)
         {
-            if (!this.listeners.Contains(listener))
+            if (this.listeners.Contains(listener))
             {
                 this.listeners.Remove(listener);
             }

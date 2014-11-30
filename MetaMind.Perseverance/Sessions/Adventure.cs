@@ -1,17 +1,19 @@
-﻿using MetaMind.Engine;
-using MetaMind.Engine.Components;
-using MetaMind.Engine.Components.Inputs;
-using MetaMind.Perseverance.Concepts.Cognitions;
-using MetaMind.Perseverance.Concepts.MotivationEntries;
-using MetaMind.Perseverance.Concepts.TaskEntries;
-using Microsoft.Xna.Framework;
-using System;
-using System.IO;
-using System.Runtime.Serialization;
-using System.Xml;
-
-namespace MetaMind.Perseverance.Sessions
+﻿namespace MetaMind.Perseverance.Sessions
 {
+    using System;
+    using System.IO;
+    using System.Runtime.Serialization;
+    using System.Xml;
+
+    using MetaMind.Engine;
+    using MetaMind.Engine.Components;
+    using MetaMind.Perseverance.Concepts.Cognitions;
+    using MetaMind.Perseverance.Concepts.MotivationEntries;
+    using MetaMind.Perseverance.Concepts.TaskEntries;
+
+    /// <summary>
+    /// Adventure is a data class.
+    /// </summary>
     [DataContract]
     public class Adventure : EngineObject
     {
@@ -118,24 +120,14 @@ namespace MetaMind.Perseverance.Sessions
 
         #endregion Load and Save
 
-        #region Update and Draw
+        #region Update 
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
-            UpdateInput(gameTime);
-            UpdateStructure(gameTime);
+            this.Cognition.Update();
         }
 
-        private void UpdateInput(GameTime gameTime)
-        {
-        }
-
-        private void UpdateStructure(GameTime gameTime)
-        {
-            this.Cognition.Update(gameTime);
-        }
-
-        #endregion Update and Draw
+        #endregion Update 
 
         //---------------------------------------------------------------------
     }

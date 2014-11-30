@@ -60,7 +60,7 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
             this.Transition();
         }
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
             // record time regardless whether update get called
             this.previousMoment = this.currentMoment;

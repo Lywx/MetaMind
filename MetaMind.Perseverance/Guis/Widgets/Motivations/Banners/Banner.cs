@@ -61,10 +61,10 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Banners
             Primitives2D.FillRectangle(spriteBatch, lowerBorder , bannerSetting.Color.MakeTransparent(alpha));
             Primitives2D.FillRectangle(spriteBatch, middleRegion, bannerSetting.Color.MakeTransparent(alpha));
 
-            flash .Draw(gameTime);
-            past  .Draw(gameTime);
-            now   .Draw(gameTime);
-            future.Draw(gameTime);
+            flash .Draw(gameTime, alpha);
+            past  .Draw(gameTime, alpha);
+            now   .Draw(gameTime, alpha);
+            future.Draw(gameTime, alpha);
         }
     }
 }

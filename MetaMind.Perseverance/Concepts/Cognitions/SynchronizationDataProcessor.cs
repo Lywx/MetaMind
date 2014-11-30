@@ -34,7 +34,7 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
             this.target = null;
         }
 
-        public void Update(GameTime gameTime, bool enabled, double acceleration)
+        public void Update(bool enabled, double acceleration)
         {
             if (enabled)
             {

@@ -31,6 +31,8 @@ namespace MetaMind.Perseverance.Guis.Modules
             this.futureView.Control.Swap.AddObserver(this.nowView   );
         }
 
+        #region Load and Unload
+
         public override void Load()
         {
             // performance penalty is not severe for one-off loading
@@ -49,6 +51,12 @@ namespace MetaMind.Perseverance.Guis.Modules
                 this.futureView.Control.AddItem(entry);
             }
         }
+
+        public override void Unload()
+        {
+        }
+
+        #endregion
 
         #region Update and Draw
 

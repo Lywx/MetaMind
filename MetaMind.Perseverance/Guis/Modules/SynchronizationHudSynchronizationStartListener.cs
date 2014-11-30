@@ -1,20 +1,20 @@
-﻿using MetaMind.Engine.Components.Events;
-using MetaMind.Perseverance.Concepts.Cognitions;
-using MetaMind.Perseverance.Sessions;
-
-namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
+﻿namespace MetaMind.Perseverance.Guis.Modules
 {
+    using MetaMind.Engine.Components.Events;
+    using MetaMind.Perseverance.Concepts.Cognitions;
+    using MetaMind.Perseverance.Sessions;
+
     internal class SynchronizationHudSynchronizationStartListener : ListenerBase
     {
         private readonly ISynchronization   synchronization;
-        private readonly SynchronizationHud synchronizationHud;
+        private readonly SynchronizationModule synchronizationModule;
 
-        public SynchronizationHudSynchronizationStartListener(ISynchronization synchronization, SynchronizationHud synchronizationHud)
+        public SynchronizationHudSynchronizationStartListener(ISynchronization synchronization, SynchronizationModule synchronizationModule)
         {
-            this.synchronizationHud = synchronizationHud;
+            this.synchronizationModule = synchronizationModule;
             this.synchronization = synchronization;
 
-            RegisteredEvents.Add((int)AdventureEventType.SyncStarted);
+            this.RegisteredEvents.Add((int)AdventureEventType.SyncStarted);
         }
 
         public override bool HandleEvent(EventBase @event)
@@ -25,7 +25,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Synchronizations
             // uncomment this to enforce fixed entry start/stop
             //// if (synchronization.Enabled) return true;
 
-            synchronizationHud.StartSynchronizing(data);
+            this.synchronizationModule.StartSynchronizing(data);
 
             return true;
         }
