@@ -17,16 +17,12 @@
 
     public class SynchronizationModule : Module<SynchronizationModuleSettings>
     {
-        public const string SyncTrueInfo  = "Synchronizing";
-
         public const string SyncFalseInfo = "Losing Synchronicity";
-
+        public const string SyncTrueInfo  = "Synchronizing";
         private readonly ICognition       cognition;
 
-        private readonly ISynchronization synchronization;
-
         private readonly SynchronizationMonitor monitor;
-
+        private readonly ISynchronization synchronization;
         private SynchronizationModuleSleepStartedEventListener    sleepStartedEventListener;
 
         private SynchronizationModuleSynchronizationStartListener synchronizationStartListener;
@@ -396,11 +392,7 @@
             {
                 Primitives2D.FillRectangle(
                     ScreenManager.SpriteBatch,
-                    RectangleExt.Rectangle(
-                        (int)this.StateInfoCenter.X - 275 - 15 * i,
-                        (int)this.StateInfoCenter.Y - 1,
-                        this.Settings.BarFrameSize.Y,
-                        this.Settings.BarFrameSize.Y),
+                    this.SynchronizationDotRectangle(i, true),
                     this.Settings.BarFrameAscendColor);
             }
 
@@ -408,11 +400,7 @@
             {
                 Primitives2D.FillRectangle(
                     ScreenManager.SpriteBatch,
-                    RectangleExt.Rectangle(
-                        (int)this.StateInfoCenter.X - 275 - 15 * i,
-                        (int)this.StateInfoCenter.Y - 1,
-                        this.Settings.BarFrameSize.Y,
-                        this.Settings.BarFrameSize.Y),
+                    this.SynchronizationDotRectangle(i, true),
                     this.Settings.BarFrameDescendColor);
             }
 
@@ -421,11 +409,7 @@
             {
                 Primitives2D.FillRectangle(
                     ScreenManager.SpriteBatch,
-                    RectangleExt.Rectangle(
-                        (int)this.StateInfoCenter.X + 275 + 15 * i,
-                        (int)this.StateInfoCenter.Y - 1,
-                        this.Settings.BarFrameSize.Y,
-                        this.Settings.BarFrameSize.Y),
+                    this.SynchronizationDotRectangle(i, false),
                     this.Settings.BarFrameAscendColor);
             }
 
@@ -433,11 +417,7 @@
             {
                 Primitives2D.FillRectangle(
                     ScreenManager.SpriteBatch,
-                    RectangleExt.Rectangle(
-                        (int)this.StateInfoCenter.X + 275 + 15 * i,
-                        (int)this.StateInfoCenter.Y - 1,
-                        this.Settings.BarFrameSize.Y,
-                        this.Settings.BarFrameSize.Y),
+                    this.SynchronizationDotRectangle(i, false),
                     this.Settings.BarFrameDescendColor);
             }
         }
@@ -447,28 +427,52 @@
             // left side frame
             for (var i = 0; i < this.synchronization.SynchronizedHourMax; ++i)
             {
+                var dotFrame = this.SynchronizationDotRectangle(i, true);
+
                 Primitives2D.FillRectangle(
                     ScreenManager.SpriteBatch,
-                    RectangleExt.Rectangle(
-                        (int)this.StateInfoCenter.X - 275 - 15 * i,
-                        (int)this.StateInfoCenter.Y - 1,
-                        this.Settings.BarFrameSize.Y,
-                        this.Settings.BarFrameSize.Y),
+                    dotFrame,
                     this.Settings.SynchronizationDotFrameColor);
+
+                FontManager.DrawCenteredText(
+                    this.Settings.SynchronizationRateFont,
+                    ((i + 1) % 10).ToString("F0"),
+                    this.SynchronizationDotTextCenter(dotFrame),
+                    this.Settings.SynchronizationRateColor,
+                    0.7f);
             }
 
             // right side frame
             for (var i = 0; i < this.synchronization.SynchronizedHourMax; ++i)
             {
+                var dotFrame = this.SynchronizationDotRectangle(i, false);
+
                 Primitives2D.FillRectangle(
                     ScreenManager.SpriteBatch,
-                    RectangleExt.Rectangle(
-                        (int)this.StateInfoCenter.X + 275 + 15 * i,
-                        (int)this.StateInfoCenter.Y - 1,
-                        this.Settings.BarFrameSize.Y,
-                        this.Settings.BarFrameSize.Y),
+                    dotFrame,
                     this.Settings.SynchronizationDotFrameColor);
+
+                FontManager.DrawCenteredText(
+                    this.Settings.SynchronizationRateFont,
+                    ((i + 1) % 10).ToString("F0"),
+                    this.SynchronizationDotTextCenter(dotFrame),
+                    this.Settings.SynchronizationRateColor,
+                    0.7f);
             }
+        }
+
+        private Vector2 SynchronizationDotTextCenter(Rectangle dotFrame)
+        {
+            return dotFrame.Center.ToVector2() + new Vector2(0, this.Settings.BarFrameSize.Y * 2);
+        }
+
+        private Rectangle SynchronizationDotRectangle(int i, bool leftsided)
+        {
+            return RectangleExt.Rectangle(
+                leftsided ? (int)this.StateInfoCenter.X - 275 - 15 * i : (int)this.StateInfoCenter.X + 275 + 15 * i,
+                (int)this.StateInfoCenter.Y - 1,
+                this.Settings.BarFrameSize.Y,
+                this.Settings.BarFrameSize.Y);
         }
 
         #endregion Update and Draw

@@ -147,6 +147,22 @@ namespace MetaMind.Acutance.Guis.Widgets
                     }
                 }
 
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SLeft))
+                {
+                    for (var i = 0; i < this.ViewSettings.ColumnNumDisplay; i++)
+                    {
+                        this.MoveLeft();
+                    }
+                }
+
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SRight))
+                {
+                    for (var i = 0; i < this.ViewSettings.ColumnNumDisplay; i++)
+                    {
+                        this.MoveRight();
+                    }
+                }
+
                 // escape
                 if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
                 {
@@ -157,6 +173,9 @@ namespace MetaMind.Acutance.Guis.Widgets
                 if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskCreateItem))
                 {
                     this.AddItem();
+
+                    // auto select new item
+                    this.Selection.Select(View.Items.Count - 1);
                 }
             }
 

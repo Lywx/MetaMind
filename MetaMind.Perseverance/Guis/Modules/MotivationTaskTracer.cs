@@ -170,6 +170,9 @@ namespace MetaMind.Perseverance.Guis.Modules
 
                     // add to host motivation's tasks
                     this.FastHostData["Tasks"].Add(task);
+                    
+                    // auto-select new item
+                    this.View.Control.Selection.Select(this.View.Items.Count - 1);
                 }
 
                 if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskDeleteItem))

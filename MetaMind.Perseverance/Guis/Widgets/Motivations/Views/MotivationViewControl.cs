@@ -136,6 +136,9 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
                 if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.MotivationCreateItem))
                 {
                     this.AddItem();
+
+                    // auto select new item
+                    this.Selection.Select(View.Items.Count - 1);
                 }
             }
 

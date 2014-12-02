@@ -163,6 +163,9 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
                 if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskCreateItem))
                 {
                     this.AddItem();
+
+                    // auto select new item
+                    this.Selection.Select(View.Items.Count - 1);
                 }
             }
 
