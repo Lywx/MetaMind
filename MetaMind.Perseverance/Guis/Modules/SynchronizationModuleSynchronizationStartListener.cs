@@ -4,12 +4,12 @@
     using MetaMind.Perseverance.Concepts.Cognitions;
     using MetaMind.Perseverance.Sessions;
 
-    internal class SynchronizationHudSynchronizationStartListener : ListenerBase
+    internal class SynchronizationModuleSynchronizationStartListener : ListenerBase
     {
         private readonly ISynchronization   synchronization;
         private readonly SynchronizationModule synchronizationModule;
 
-        public SynchronizationHudSynchronizationStartListener(ISynchronization synchronization, SynchronizationModule synchronizationModule)
+        public SynchronizationModuleSynchronizationStartListener(ISynchronization synchronization, SynchronizationModule synchronizationModule)
         {
             this.synchronizationModule = synchronizationModule;
             this.synchronization = synchronization;

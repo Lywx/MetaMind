@@ -2,7 +2,6 @@ namespace MetaMind.Acutance.Screens
 {
     using System;
 
-    using MetaMind.Acutance.Guis;
     using MetaMind.Acutance.Guis.Modules;
     using MetaMind.Engine.Guis.Modules;
     using MetaMind.Engine.Screens;

@@ -1,13 +1,8 @@
 namespace MetaMind.Acutance.Guis.Modules
 {
-    using System;
-
     using MetaMind.Acutance.Guis.Widgets;
     using MetaMind.Engine.Components.Fonts;
-    using MetaMind.Engine.Guis.Elements.Views;
     using MetaMind.Engine.Settings;
-    using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
-    using MetaMind.Perseverance.Guis.Widgets.Tasks.Views;
 
     using Microsoft.Xna.Framework;
 
@@ -15,14 +10,24 @@ namespace MetaMind.Acutance.Guis.Modules
     {
         //---------------------------------------------------------------------
         public readonly TraceViewFactory  TraceViewFactory = new TraceViewFactory();
+        
         public readonly TraceViewSettings TraceViewSettings;
+
         public readonly TraceItemSettings TraceItemSettings;
 
         public readonly TraceViewFactory  KnowledgeViewFactory = new TraceViewFactory();
+
         public readonly TraceViewSettings KnowledgeViewSettings;
+
         public readonly TraceItemSettings KnowledgeItemSettings;
 
+        public readonly Point TraceStartPoint =  new Point(0, 108);
 
+        public readonly int TraceColumnNumDisplay           = 3;
+
+        public readonly int TraceColumnNumDisplayFullscreen = 4;
+
+        //---------------------------------------------------------------------
         public Color BarFrameAscendColor     = new Color(78, 255, 27, 200);
 
         public Color BarFrameBackgroundColor = new Color(30, 30, 40, 10);
@@ -33,22 +38,32 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public int   BarFrameXC              = GraphicsSettings.Width / 2;
 
-        public int   BarFrameYC              = 32;
+        public int   BarFrameYC              = 16;
 
         //---------------------------------------------------------------------
-        public Color   SynchronizationColor    = Color.White;
+        public Point StateMargin             = new Point(0, 1);
 
-        public Font    SynchronizationNameFont = Font.InfoSimSunFont;
+        public Font  StateFont               = Font.UiRegularFont;
 
-        public float   SynchronizationNameSize = 0.7f;
+        public float StateSize               = 1.1f;
+
+        public Color StateColor              = Color.White;
+
+        //---------------------------------------------------------------------
+        public float TaskSize              = 0.7f;
+
+        public Font  TaskFont               = Font.InfoSimSunFont;
+
+        public Color TaskColor             = Color.White;
+
+        public Point TaskMargin            = new Point(0, 34);
+
+        //---------------------------------------------------------------------
+        public Color   SynchronizationTimeColor    = Color.White;
 
         public Font    SynchronizationTimeFont = Font.UiRegularFont;
 
         public float   SynchronizationTimeSize = 0.7f;
-
-        private const int TraceColumnNumDisplay = 3;
-
-        private const int TraceColumnNumDisplayFullscreen = 4;
 
         public MultiplexerModuleSettings()
         {
@@ -60,8 +75,8 @@ namespace MetaMind.Acutance.Guis.Modules
                                          };
 
             var averageWidth = GraphicsSettings.Width / (GraphicsSettings.Fullscreen
-                                                             ? TraceColumnNumDisplayFullscreen
-                                                             : TraceColumnNumDisplay);
+                                                             ? this.TraceColumnNumDisplayFullscreen
+                                                             : this.TraceColumnNumDisplay);
             var fixedWidth = this.TraceItemSettings.ExperienceFrameSize.X + this.TraceItemSettings.IdFrameSize.X;
 
             this.TraceItemSettings.NameFrameSize = new Point(averageWidth - fixedWidth, 24);
@@ -70,15 +85,15 @@ namespace MetaMind.Acutance.Guis.Modules
             //-----------------------------------------------------------------
             this.TraceViewSettings = new TraceViewSettings
                                          {
-                                             StartPoint = new Point(0, 75),
+                                             StartPoint = this.TraceStartPoint,
                                              RootMargin = new Point(averageWidth, this.TraceItemSettings.NameFrameSize.Y),
 
                                              ColumnNumMax = GraphicsSettings.Fullscreen
-                                                     ? TraceColumnNumDisplayFullscreen
-                                                     : TraceColumnNumDisplay,
+                                                     ? this.TraceColumnNumDisplayFullscreen
+                                                     : this.TraceColumnNumDisplay,
                                              ColumnNumDisplay = GraphicsSettings.Fullscreen
-                                                     ? TraceColumnNumDisplayFullscreen
-                                                     : TraceColumnNumDisplay,
+                                                     ? this.TraceColumnNumDisplayFullscreen
+                                                     : this.TraceColumnNumDisplay,
 
                                              RowNumDisplay = 10,
                                              RowNumMax     = 100,
@@ -95,7 +110,7 @@ namespace MetaMind.Acutance.Guis.Modules
             const int ViewMargin = 15;
             this.KnowledgeViewSettings = new TraceViewSettings
                                          {
-                                             StartPoint = new Point(0, 75 + this.TraceViewSettings.RowNumDisplay * 24 + ViewMargin),
+                                             StartPoint = this.TraceStartPoint + new Point(0, this.TraceViewSettings.RowNumDisplay * 24 + ViewMargin),
                                              RootMargin = new Point(averageWidth, this.TraceItemSettings.NameFrameSize.Y),
 
                                              ColumnNumMax     = 1,

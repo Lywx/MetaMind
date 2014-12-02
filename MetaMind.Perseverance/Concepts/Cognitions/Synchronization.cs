@@ -35,9 +35,9 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
         TimeSpan SynchronizedTimeYesterday { get; }
 
-        void ResetForTomorrow();
+        void TryAbort();
 
-        void Start(TaskEntry target);
+        void ResetForTomorrow();
 
         void Stop();
 
@@ -179,22 +179,36 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
         public void ResetForTomorrow()
         {
-            statistics.Reset();
+            this.statistics.Reset();
         }
 
         public void Start(TaskEntry target)
         {
-            data .Accept(target);
-            timer.Start();
+            this.data .Accept(target);
+            this.timer.Start();
+        }
+
+        public void Abort()
+        {
+            this.data .Abort();
+            this.timer.Stop();
+        }
+
+        public void TryAbort()
+        {
+            if (this.Enabled)
+            {
+                this.Abort();
+            }
         }
 
         public void Stop()
         {
             TimeSpan timePassed;
 
-            data      .Release(out timePassed);
-            statistics.Add(timePassed);
-            timer     .Stop();
+            this.data      .Release(out timePassed);
+            this.statistics.Add(timePassed);
+            this.timer     .Stop();
         }
 
         public void TryStart(TaskEntry target)
@@ -209,8 +223,8 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
         public void Update()
         {
-            timer.Update();
-            data .Update(timer.Enabled, Acceleration);
+            this.timer.Update();
+            this.data .Update(timer.Enabled, Acceleration);
         }
 
         #endregion Operations

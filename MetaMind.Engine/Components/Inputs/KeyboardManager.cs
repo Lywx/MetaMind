@@ -23,43 +23,33 @@ namespace MetaMind.Engine.Components.Inputs
         // cursor movement
         // ---------------------------------------------------------------------
         Up, 
-
         Down, 
-
         Left, 
-
         Right, 
 
         SUp, 
-
         SDown, 
-
         SLeft, 
-
         SRight, 
 
         // list management
         // ---------------------------------------------------------------------
         MotivationCreateItem, 
-
         MotivationDeleteItem, 
-
         MotivationEditItem, 
 
         TaskCreateItem, 
-
         TaskDeleteItem, 
-
         TaskEditItem, 
 
         // synchronization
         // ---------------------------------------------------------------------
         ForceReset,
+        ForceReverse,
 
         // general
         // ---------------------------------------------------------------------
         Enter, 
-
         Escape, 
 
         // ---------------------------------------------------------------------
@@ -179,7 +169,7 @@ namespace MetaMind.Engine.Components.Inputs
             return
                 actionMap.Bindings.Any(
                     binding =>
-                    IsKeyTriggered(binding.Key) && (binding.Value.Count == 0 || binding.Value.Any(IsKeyPressed)));
+                    IsKeyTriggered(binding.Key) && (binding.Value.Count == 0 || binding.Value.All(IsKeyPressed)));
         }
 
         #endregion Action States
@@ -266,13 +256,13 @@ namespace MetaMind.Engine.Components.Inputs
             // -----------------------------------------------------------------
             // motivation
             actionMaps[(int)Actions.MotivationCreateItem] = new KeyboardActionMap();
-            actionMaps[(int)Actions.MotivationCreateItem].Bindings.Add(Keys.O, new List<Keys> { Keys.LeftShift });
+            actionMaps[(int)Actions.MotivationCreateItem].Bindings.Add(Keys.O, new List<Keys> { Keys.Tab });
 
             actionMaps[(int)Actions.MotivationDeleteItem] = new KeyboardActionMap();
-            actionMaps[(int)Actions.MotivationDeleteItem].Bindings.Add(Keys.D, new List<Keys> { Keys.LeftShift });
+            actionMaps[(int)Actions.MotivationDeleteItem].Bindings.Add(Keys.D, new List<Keys> { Keys.Tab });
 
             actionMaps[(int)Actions.MotivationEditItem] = new KeyboardActionMap();
-            actionMaps[(int)Actions.MotivationEditItem].Bindings.Add(Keys.I, new List<Keys> { Keys.LeftShift });
+            actionMaps[(int)Actions.MotivationEditItem].Bindings.Add(Keys.I, new List<Keys> { Keys.Tab });
 
             // task
             //-----------------------------------------------------------------
@@ -288,7 +278,10 @@ namespace MetaMind.Engine.Components.Inputs
             // sychronization
             // ---------------------------------------------------------------------
             actionMaps[(int)Actions.ForceReset] = new KeyboardActionMap();
-            actionMaps[(int)Actions.ForceReset].Bindings.Add(Keys.R, new List<Keys> { Keys.Escape });
+            actionMaps[(int)Actions.ForceReset].Bindings.Add(Keys.R, new List<Keys> { Keys.LeftControl, Keys.LeftShift });
+
+            actionMaps[(int)Actions.ForceReverse] = new KeyboardActionMap();
+            actionMaps[(int)Actions.ForceReverse].Bindings.Add(Keys.Space, new List<Keys> { Keys.LeftControl, Keys.LeftShift });
 
             // general
             // ---------------------------------------------------------------------

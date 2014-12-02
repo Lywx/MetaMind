@@ -1,7 +1,6 @@
 ﻿namespace MetaMind.Perseverance.Guis.Modules
 {
     using System;
-    using System.Runtime.Remoting.Messaging;
 
     using C3.Primtive2DXna;
 
@@ -15,16 +14,24 @@
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Microsoft.Xna.Framework.Input;
 
     public class SynchronizationModule : Module<SynchronizationModuleSettings>
     {
-        private ICognition                                     cognition;
-        private ISynchronization                               synchronization;
-        private SynchronizationHudMonitor                      monitor;
-        private SynchronizationHudSleepStartedEventListener    sleepStartedEventListener;
-        private SynchronizationHudSynchronizationStartListener synchronizationStartListener;
-        private SynchronizationHudSynchronizationStopListener  synchronizationStopListener;
+        public const string SyncTrueInfo  = "Synchronizing";
+
+        public const string SyncFalseInfo = "Losing Synchronicity";
+
+        private readonly ICognition       cognition;
+
+        private readonly ISynchronization synchronization;
+
+        private readonly SynchronizationMonitor monitor;
+
+        private SynchronizationModuleSleepStartedEventListener    sleepStartedEventListener;
+
+        private SynchronizationModuleSynchronizationStartListener synchronizationStartListener;
+
+        private SynchronizationModuleSynchronizationStopListener  synchronizationStopListener;
 
         #region Constructors
 
@@ -36,7 +43,7 @@
 
             // best close the mouse listener
             // which may casue severe mouse performance issues
-            this.monitor = new SynchronizationHudMonitor(ScreenManager.Game, synchronization, false);
+            this.monitor = new SynchronizationMonitor(ScreenManager.Game, synchronization, false);
         }
 
         #endregion Constructors
@@ -151,7 +158,7 @@
             {
                 return new Vector2(
                     this.Settings.BarFrameXC,
-                    this.Settings.BarFrameYC + this.Settings.InformationMargin.Y);
+                    this.Settings.BarFrameYC + this.Settings.StatusMargin.Y);
             }
         }
 
@@ -165,9 +172,9 @@
                 this.synchronizationStopListener  == null || 
                 this.sleepStartedEventListener    == null)
             {
-                this.synchronizationStartListener = new SynchronizationHudSynchronizationStartListener(this.synchronization, this);
-                this.synchronizationStopListener  = new SynchronizationHudSynchronizationStopListener(this.synchronization, this);
-                this.sleepStartedEventListener    = new SynchronizationHudSleepStartedEventListener(this.synchronization, this);
+                this.synchronizationStartListener = new SynchronizationModuleSynchronizationStartListener(this.synchronization, this);
+                this.synchronizationStopListener  = new SynchronizationModuleSynchronizationStopListener(this.synchronization, this);
+                this.sleepStartedEventListener    = new SynchronizationModuleSleepStartedEventListener(this.synchronization, this);
             }
 
             EventManager.AddListener(this.synchronizationStartListener);
@@ -247,6 +254,11 @@
             if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.ForceReset))
             {
                 this.synchronization.ResetForTomorrow();
+            }
+
+            if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.ForceReverse))
+            {
+                this.synchronization.TryAbort();
             }
         }
 
@@ -359,8 +371,6 @@
 
         private void DrawStateInformation()
         {
-            const string SyncTrueInfo  = "Synchronizing";
-            const string SyncFalseInfo = "Losing Synchronicity";
             FontManager.DrawCenteredText(
                 this.Settings.StateFont,
                 this.synchronization.Enabled ? SyncTrueInfo : SyncFalseInfo,

@@ -13,40 +13,36 @@
     /// <summary>
     /// An attention monitor during synchronization
     /// </summary>
-    public class SynchronizationHudMonitor : GameComponent
+    public class SynchronizationMonitor : GameComponent
     {
-        private readonly ISynchronization synchronization;
+        public TimeSpan AttentionSpan = TimeSpan.FromSeconds(5);
 
-        private readonly TimeSpan attentionSpan            = TimeSpan.FromSeconds(5);
+        public string SynchronizingCue    = "Windows Proximity Notification";
 
-        private          DateTime attentionTriggeredMoment = DateTime.Now;
+        public string NotSynchronizingCue = "Windows Proximity Connection";
+
+        private readonly bool listening;
+
+        private bool     actived;
+        private DateTime alertMoment = DateTime.Now;
 
         private MouseHookListener globalMouseListener;
 
-        private bool              actived;
-        private bool              listened;
-
-        public SynchronizationHudMonitor(Game game, ISynchronization synchronization, bool listen)
+        public SynchronizationMonitor(Game game, ISynchronization synchronization, bool listening)
             : base(game)
         {
-            this.synchronization = synchronization;
-            this.listened = listen;
+            this.listening = listening;
+            this.Synchronization = synchronization;
 
             this.Game.Components.Add(this);
         }
 
-        public void TryStart()
-        {
-            if (!this.actived)
-            {
-                this.Start();
-            }
-        }
+        public ISynchronization Synchronization { get; set; }
 
         public void Start()
         {
             // only create mouse hook when listening
-            if (listened)
+            if (this.listening)
             {
                 // Note: for an application hook, use the AppHooker class instead
                 this.globalMouseListener = new MouseHookListener(new GlobalHooker()) { Enabled = true };
@@ -61,7 +57,7 @@
 
         public void Stop()
         {
-            if (listened)
+            if (this.listening)
             {
                 if (this.globalMouseListener != null)
                 {
@@ -72,26 +68,34 @@
             this.actived = false;
         }
 
+        public void TryStart()
+        {
+            if (!this.actived)
+            {
+                this.Start();
+            }
+        }
+
         public override void Update(GameTime gameTime)
         {
-            if (this.synchronization.Enabled && 
-                DateTime.Now - this.attentionTriggeredMoment > this.attentionSpan)
+            if (this.Synchronization.Enabled && 
+                DateTime.Now - this.alertMoment > this.AttentionSpan)
             {
-                GameEngine.AudioManager.PlayMusic("Windows Proximity Notification");
+                GameEngine.AudioManager.PlayMusic(this.SynchronizingCue);
 
-                this.attentionTriggeredMoment = DateTime.Now;
+                this.alertMoment = DateTime.Now;
             }
-            else if (!this.synchronization.Enabled)
+            else if (!this.Synchronization.Enabled)
             {
-                GameEngine.AudioManager.PlayMusic("Windows Proximity Connection");
+                GameEngine.AudioManager.PlayMusic(this.NotSynchronizingCue);
 
-                this.attentionTriggeredMoment = DateTime.Now;
+                this.alertMoment = DateTime.Now;
             }
         }
 
         private void TriggerAttention(object sender, MouseEventExtArgs e)
         {
-            this.attentionTriggeredMoment = DateTime.Now;
+            this.alertMoment = DateTime.Now;
         }
     }
 }

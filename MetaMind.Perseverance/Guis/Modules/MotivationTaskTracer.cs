@@ -174,14 +174,16 @@ namespace MetaMind.Perseverance.Guis.Modules
 
                 if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskDeleteItem))
                 {
-                    // item deletion was processed by item control
-                    // which is unaware of motivation
+                    // item deletion was processed by item control which is unaware of motivation
 
                     // get the deleted item data
-                    var task = this.View.Items[(int)this.View.Control.Selection.SelectedId].ItemData;
+                    if (this.View.Items.Count != 0)
+                    {
+                        var task = this.View.Items[(int)this.View.Control.Selection.SelectedId].ItemData;
 
-                    // remove from host motivation's tasks
-                    this.FastHostData["Tasks"].Remove(task);
+                        // remove from host motivation's tasks
+                        this.FastHostData["Tasks"].Remove(task);
+                    }
                 }
             }
 

@@ -36,6 +36,8 @@
 
         public Color StatusColor             = Color.White;
 
+        public Point StatusMargin            = new Point(0, 34);
+
         //---------------------------------------------------------------------
         public Font  AccumulationFont        = Font.UiStatisticsFont;
 
@@ -58,9 +60,6 @@
         public Font  MessageFont             = Font.UiStatisticsFont;
 
         public float MessageSize             = 0.7f;
-
-        //---------------------------------------------------------------------
-        public Point InformationMargin       = new Point(0, 34);
 
         //---------------------------------------------------------------------
         public Color SynchronizationDotFrameColor = new Color(10, 10, 40, 40);

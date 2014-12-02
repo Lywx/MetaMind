@@ -16,7 +16,8 @@
 
         public static int Height
         {
-            get { return Fullscreen ? Screen.Bounds.Height : 720; }         
+            // allow taskbar to show
+            get { return Fullscreen ? Screen.Bounds.Height - 1 : 720; }         
         } 
     }
 }

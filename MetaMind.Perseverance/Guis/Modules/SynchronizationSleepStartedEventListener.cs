@@ -8,12 +8,12 @@
     using MetaMind.Perseverance.Screens;
     using MetaMind.Perseverance.Sessions;
 
-    public class SynchronizationHudSleepStartedEventListener : ListenerBase
+    public class SynchronizationModuleSleepStartedEventListener : ListenerBase
     {
         private readonly ISynchronization synchronization;
         private readonly SynchronizationModule synchronizationModule;
         
-        public SynchronizationHudSleepStartedEventListener(ISynchronization synchronization, SynchronizationModule synchronizationModule )
+        public SynchronizationModuleSleepStartedEventListener(ISynchronization synchronization, SynchronizationModule synchronizationModule )
         {
             this.synchronization    = synchronization;
             this.synchronizationModule = synchronizationModule;

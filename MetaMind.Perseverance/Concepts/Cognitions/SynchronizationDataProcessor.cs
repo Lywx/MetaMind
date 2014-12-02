@@ -34,6 +34,13 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
             this.Target = null;
         }
 
+        public void Abort()
+        {
+            this.Target.Experience.Abort();
+            this.Target.Synchronizing = false;
+            this.Target = null;
+        }
+
         public void Update(bool enabled, double acceleration)
         {
             if (enabled)

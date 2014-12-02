@@ -1,9 +1,11 @@
 namespace MetaMind.Engine.Guis.Elements.Views
 {
-    using MetaMind.Engine.Guis.Elements.ViewItems;
-    using Microsoft.Xna.Framework;
     using System;
     using System.Collections.Generic;
+
+    using MetaMind.Engine.Guis.Elements.ViewItems;
+
+    using Microsoft.Xna.Framework;
 
     public interface IView : IViewObject
     {

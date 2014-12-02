@@ -18,6 +18,10 @@ namespace MetaMind.Perseverance.Guis.Modules
         public ChaosModule(ChaosModuleSettings settings)
             : base(settings)
         {
+            FloatParticle.Random   = settings.Random;
+            FloatParticle.Generate = settings.Generate;
+            FloatParticle.Width    = settings.Width;
+            FloatParticle.Height   = settings.Height;
         }
 
         public override void Load()
@@ -81,7 +85,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
             if (this.particles.Count < this.Settings.ParticleNum)
             {
-                this.particles.Add(FloatParticle.RandParticle());
+                this.particles.Add(FloatParticle.RandomParticle());
             }
         }
     }

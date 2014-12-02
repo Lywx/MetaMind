@@ -95,15 +95,15 @@
             {
                 exp = new Experience(
                     historicalStartTime: lhs.HistoricalStartTime,
-                    endTime: lhs.EndTime,
-                    certainDuration: lhs.CertainDuration - rhs.CertainDuration);
+                    endTime            : lhs.EndTime,
+                    certainDuration    : lhs.CertainDuration - rhs.CertainDuration);
             }
             else if (!lhs.HasEnded)
             {
                 exp = new Experience(
                     historicalStartTime: lhs.HistoricalStartTime,
-                    recentStartTime: lhs.RecentStartTime,
-                    certainDuration: lhs.CertainDuration - rhs.CertainDuration);
+                    recentStartTime    : lhs.RecentStartTime,
+                    certainDuration    : lhs.CertainDuration - rhs.CertainDuration);
             }
             else
             {
@@ -119,8 +119,10 @@
             if (lhs.HasEnded && rhs.HasEnded)
             {
                 exp = new Experience(
+
                     // first starter
                     historicalStartTime: lhs.HistoricalStartTime < rhs.HistoricalStartTime ? lhs.HistoricalStartTime : rhs.HistoricalStartTime,
+
                     // last ender
                     endTime            : lhs.EndTime > rhs.EndTime ? lhs.EndTime : rhs.EndTime, 
                     certainDuration    : lhs.CertainDuration + rhs.CertainDuration);
@@ -142,7 +144,7 @@
 
         public override string ToString()
         {
-            return ((int)Duration.TotalHours).ToString();
+            return ((int)this.Duration.TotalHours).ToString();
         }
 
         #endregion Overloadings
@@ -151,11 +153,19 @@
 
         public TimeSpan End()
         {
-            EndTime = DateTime.Now;
-            var recentDuration = TimeSpan.FromSeconds((long)((EndTime - RecentStartTime).TotalSeconds * Accelaration));
-            CertainDuration = CertainDuration + recentDuration;
-            HasEnded = true;
+            this.EndTime = DateTime.Now;
+
+            var recentDuration = TimeSpan.FromSeconds((long)((this.EndTime - this.RecentStartTime).TotalSeconds * this.Accelaration));
+            this.CertainDuration = this.CertainDuration + recentDuration;
+
+            this.HasEnded = true;
             return recentDuration;
+        }
+
+        public void Abort()
+        {
+            this.EndTime = DateTime.Now;
+            this.HasEnded = true;
         }
 
         #endregion Operations
