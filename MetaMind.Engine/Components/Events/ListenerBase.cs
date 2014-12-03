@@ -15,14 +15,14 @@ namespace MetaMind.Engine.Components.Events
 
         protected ListenerBase()
         {
-            registeredEvents = new List<int>();
+            this.registeredEvents = new List<int>();
         }
 
         public List<int> RegisteredEvents
         {
             get
             {
-                return registeredEvents;
+                return this.registeredEvents;
             }
         }
 

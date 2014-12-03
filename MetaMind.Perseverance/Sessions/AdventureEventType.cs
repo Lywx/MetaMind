@@ -7,5 +7,7 @@
         
         SyncStarted = 0x35e3,
         SyncStopped = 0x95db,
+
+        SyncAlerted = 0xe4e1,
     }
 }

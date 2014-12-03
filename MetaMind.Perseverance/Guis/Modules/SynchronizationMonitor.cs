@@ -3,12 +3,19 @@
     using System;
 
     using MetaMind.Engine;
+    using MetaMind.Engine.Components;
+    using MetaMind.Engine.Components.Events;
     using MetaMind.Perseverance.Concepts.Cognitions;
+    using MetaMind.Perseverance.Sessions;
 
     using Microsoft.Xna.Framework;
 
     using MouseKeyboardActivityMonitor;
     using MouseKeyboardActivityMonitor.WinApi;
+
+    public class SynchronizationAlertedEventArgs : EventArgs
+    {
+    }
 
     /// <summary>
     /// An attention monitor during synchronization
@@ -17,10 +24,8 @@
     {
         public TimeSpan AttentionSpan = TimeSpan.FromSeconds(5);
 
-        public string SynchronizingCue    = "Windows Proximity Notification";
-
         public string NotSynchronizingCue = "Windows Proximity Connection";
-
+        public string SynchronizingCue    = "Windows Proximity Notification";
         private readonly bool listening;
 
         private bool     actived;
@@ -49,7 +54,7 @@
 
                 // Set the event handler
                 // recommended to use the Extended handlers, which allow input suppression among other additional information
-                this.globalMouseListener.MouseMoveExt += this.TriggerAttention;
+                this.globalMouseListener.MouseMoveExt += this.AttentionConfirmed;
             }
 
             this.actived = true;
@@ -83,19 +88,32 @@
             {
                 GameEngine.AudioManager.PlayMusic(this.SynchronizingCue);
 
-                this.alertMoment = DateTime.Now;
+                this.AttentionConfirmed();
+                this.Alert();
             }
             else if (!this.Synchronization.Enabled)
             {
                 GameEngine.AudioManager.PlayMusic(this.NotSynchronizingCue);
 
-                this.alertMoment = DateTime.Now;
+                this.AttentionConfirmed();
+                this.Alert();
             }
         }
 
-        private void TriggerAttention(object sender, MouseEventExtArgs e)
+        private void Alert()
+        {
+            var alertedEvent = new EventBase((int)AdventureEventType.SyncAlerted, new SynchronizationAlertedEventArgs());
+            GameEngine.EventManager.QueueEvent(alertedEvent);
+        }
+
+        private void AttentionConfirmed()
         {
             this.alertMoment = DateTime.Now;
+        }
+        
+        private void AttentionConfirmed(object sender, MouseEventExtArgs e)
+        {
+            this.AttentionConfirmed();
         }
     }
 }

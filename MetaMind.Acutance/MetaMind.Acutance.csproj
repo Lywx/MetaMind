@@ -66,6 +66,7 @@
     <Compile Include="Concepts\Tracelist.cs" />
     <Compile Include="Guis\Modules\MultiplexerModule.cs" />
     <Compile Include="Guis\Modules\MultiplexerModuleSettings.cs" />
+    <Compile Include="Guis\Modules\MultiplexerModuleSynchronizationAlertedListener.cs" />
     <Compile Include="Guis\Widgets\TraceItemControl.cs" />
     <Compile Include="Guis\Widgets\TraceItemFactory.cs" />
     <Compile Include="Guis\Widgets\TraceItemFrameControl.cs" />

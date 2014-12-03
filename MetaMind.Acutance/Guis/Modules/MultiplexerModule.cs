@@ -2,7 +2,6 @@
 {
     using System;
     using System.ServiceModel;
-    using System.Windows.Forms.VisualStyles;
 
     using C3.Primtive2DXna;
 
@@ -18,9 +17,12 @@
     {
         private readonly IView knowledgeView;
         private readonly IView traceView;
+
+        private ISynchronization       synchronization;
+        private TimeSpan               synchronizationTimer = TimeSpan.Zero;
         private SynchronizationMonitor monitor;
-        private ISynchronization synchronization;
-        private TimeSpan         synchronizationTimer = TimeSpan.Zero;
+
+        private MultiplexerModuleSynchronizationAlertedListener synchronizationAlertedListener;
 
         public MultiplexerModule(MultiplexerModuleSettings settings)
             : base(settings)
@@ -88,10 +90,23 @@
             {
                 this.traceView.Control.AddItem(trace);
             }
+
+            if (this.synchronizationAlertedListener == null)
+            {
+                this.synchronizationAlertedListener = new MultiplexerModuleSynchronizationAlertedListener(this.traceView);
+            }
+
+            EventManager.AddListener(this.synchronizationAlertedListener);
         }
 
         public override void Unload()
         {
+            if (this.synchronizationAlertedListener != null)
+            {
+                EventManager.RemoveListener(this.synchronizationAlertedListener);
+            }
+
+            this.synchronizationAlertedListener = null;
         }
 
         public override void UpdateInput(GameTime gameTime)

@@ -177,6 +177,17 @@ namespace MetaMind.Acutance.Guis.Widgets
                     // auto select new item
                     this.Selection.Select(View.Items.Count - 1);
                 }
+
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskDeleteItem))
+                {
+                    // itme deletion is handled by item control
+                    // auto select last item
+                    if (View.Items.Count > 1)
+                    {
+                        // this will be called before item deletion
+                        this.Selection.Select(View.Items.Count - 2);
+                    }
+                }
             }
 
             // item input
