@@ -83,20 +83,22 @@
 
         public override void Update(GameTime gameTime)
         {
-            if (this.Synchronization.Enabled && 
-                DateTime.Now - this.alertMoment > this.AttentionSpan)
+            if (DateTime.Now - this.alertMoment > this.AttentionSpan)
             {
-                GameEngine.AudioManager.PlayMusic(this.SynchronizingCue);
+                if (this.Synchronization.Enabled)
+                {
+                    GameEngine.AudioManager.PlayMusic(this.SynchronizingCue);
 
-                this.AttentionConfirmed();
-                this.Alert();
-            }
-            else if (!this.Synchronization.Enabled)
-            {
-                GameEngine.AudioManager.PlayMusic(this.NotSynchronizingCue);
+                    this.AttentionConfirmed();
+                    this.Alert();
+                }
+                else
+                {
+                    GameEngine.AudioManager.PlayMusic(this.NotSynchronizingCue);
 
-                this.AttentionConfirmed();
-                this.Alert();
+                    this.AttentionConfirmed();
+                    this.Alert();
+                }
             }
         }
 
