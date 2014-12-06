@@ -10,19 +10,18 @@ namespace MetaMind.Acutance.Screens
 
     public class MultiplexerScreen : GameScreen
     {
-        private readonly IModule multiplexer;
+        private readonly MultiplexerModule multiplexer;
 
         public MultiplexerScreen()
         {
             this.TransitionOnTime = TimeSpan.FromSeconds(0.5);
             this.TransitionOffTime = TimeSpan.FromSeconds(0.5);
 
-            this.Exiting += this.MotivationScreenExiting;
+            this.Exiting += this.MultiplexerScreenExiting;
 
             this.IsPopup = true;
 
-            this.multiplexer = new MultiplexerModule(new MultiplexerModuleSettings());
-            this.multiplexer.Load();
+            this.multiplexer = new MultiplexerModule();
         }
 
         public override void Draw(GameTime gameTime)
@@ -65,7 +64,7 @@ namespace MetaMind.Acutance.Screens
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
         }
 
-        private void MotivationScreenExiting(object sender, EventArgs e)
+        private void MultiplexerScreenExiting(object sender, EventArgs e)
         {
             this.multiplexer.Unload();
         }

@@ -4,12 +4,12 @@
     using MetaMind.Engine.Guis.Elements.Views;
     using MetaMind.Perseverance.Sessions;
 
-    public class MultiplexerModuleSynchronizationAlertedListener : ListenerBase
+    public class SynchroizationModuleSynchronizationAlertedListener : ListenerBase
     {
 
         private readonly IView traceView;
 
-        public MultiplexerModuleSynchronizationAlertedListener(IView traceView)
+        public SynchroizationModuleSynchronizationAlertedListener(IView traceView)
         {
             this.traceView = traceView;
 

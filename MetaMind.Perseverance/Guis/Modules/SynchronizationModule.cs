@@ -7,6 +7,7 @@
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Extensions;
+    using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Modules;
     using MetaMind.Engine.Settings;
     using MetaMind.Perseverance.Concepts.Cognitions;
@@ -19,10 +20,12 @@
     {
         public const string SyncFalseInfo = "Losing Synchronicity";
         public const string SyncTrueInfo  = "Synchronizing";
+
         private readonly ICognition       cognition;
+        private readonly ISynchronization synchronization;
 
         private readonly SynchronizationMonitor monitor;
-        private readonly ISynchronization synchronization;
+
         private SynchronizationModuleSleepStartedEventListener    sleepStartedEventListener;
 
         private SynchronizationModuleSynchronizationStartListener synchronizationStartListener;

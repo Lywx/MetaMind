@@ -14,7 +14,6 @@ namespace MetaMind.Engine.Components
     using MetaMind.Engine.Screens;
 
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
 
     public class ScreenManager : DrawableGameComponent
@@ -86,13 +85,12 @@ namespace MetaMind.Engine.Components
         protected override void LoadContent()
         {
             // Load content belonging to the screen manager.
-            ContentManager content = Game.Content;
-            blankTexture = content.Load<Texture2D>(@"Textures\Screens\Blank");
+            this.blankTexture = this.Game.Content.Load<Texture2D>(@"Textures\Screens\Blank");
             
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Tell each of the screens to load their content.
-            foreach (GameScreen screen in screens)
+            foreach (var screen in screens)
             {
                 screen.LoadContent();
             }

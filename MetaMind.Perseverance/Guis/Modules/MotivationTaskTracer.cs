@@ -11,6 +11,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Extensions;
+    using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Elements.Views;
     using MetaMind.Engine.Guis.Modules;
     using MetaMind.Perseverance.Guis.Widgets.Motivations.Items;

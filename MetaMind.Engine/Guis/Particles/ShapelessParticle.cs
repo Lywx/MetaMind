@@ -1,8 +1,7 @@
-using MetaMind.Engine;
-using Microsoft.Xna.Framework;
-
-namespace MetaMind.Perseverance.Guis.Particles
+namespace MetaMind.Engine.Guis.Particles
 {
+    using Microsoft.Xna.Framework;
+
     public interface IAbstractParticle
     {
         float Angle { get; set; }
@@ -46,15 +45,15 @@ namespace MetaMind.Perseverance.Guis.Particles
 
         public ShapelessParticle(Vector2 a, Vector2 v, float angle, float angluarA, float angluarV, float lastingSeconds)
         {
-            Position = Vector2.Zero;
-            Acceleration = a;
-            Velocity = v;
+            this.Position = Vector2.Zero;
+            this.Acceleration = a;
+            this.Velocity = v;
 
-            Angle = angle;
-            AngularAcceleration = angluarA;
-            AngularVelocity = angluarV;
+            this.Angle = angle;
+            this.AngularAcceleration = angluarA;
+            this.AngularVelocity = angluarV;
 
-            LastingSeconds = lastingSeconds;
+            this.LastingSeconds = lastingSeconds;
         }
 
         #endregion Constructors
@@ -63,13 +62,13 @@ namespace MetaMind.Perseverance.Guis.Particles
 
         public virtual void Update(GameTime gameTime)
         {
-            AngularVelocity += (float)gameTime.ElapsedGameTime.TotalSeconds * AngularAcceleration;
-            Angle += (float)gameTime.ElapsedGameTime.TotalSeconds * AngularVelocity;
+            this.AngularVelocity += (float)gameTime.ElapsedGameTime.TotalSeconds * this.AngularAcceleration;
+            this.Angle += (float)gameTime.ElapsedGameTime.TotalSeconds * this.AngularVelocity;
 
-            Velocity += (float)gameTime.ElapsedGameTime.TotalSeconds * Acceleration;
-            Position += (float)gameTime.ElapsedGameTime.TotalSeconds * Velocity;
+            this.Velocity += (float)gameTime.ElapsedGameTime.TotalSeconds * this.Acceleration;
+            this.Position += (float)gameTime.ElapsedGameTime.TotalSeconds * this.Velocity;
 
-            LastingSeconds -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            this.LastingSeconds -= (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
         #endregion Update

@@ -3,28 +3,29 @@ namespace MetaMind.Engine.Guis.Elements.Frames
     public class FrameObject : EngineObject
     {
         private bool[] states;
-        public bool[ ] States { get { return states; } }
 
         protected FrameObject()
         {
-            states = new bool[ ( int ) FrameState.StateNum ];
+            states = new bool[(int)FrameState.StateNum];
         }
+
+        public bool[] States { get { return states; } }
 
         #region Helper Methods
 
-        protected void Disable( FrameState state )
+        public bool IsEnabled(FrameState state)
         {
-            state.DisableStateIn( states );
+            return state.IsStateEnabledIn(states);
         }
 
-        protected void Enable( FrameState state )
+        public void Disable(FrameState state)
         {
-            state.EnableStateIn( states );
+            state.DisableStateIn(states);
         }
 
-        public bool IsEnabled( FrameState state )
+        protected void Enable(FrameState state)
         {
-            return state.IsStateEnabledIn( states );
+            state.EnableStateIn(states);
         }
 
         #endregion Helper Methods

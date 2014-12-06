@@ -53,7 +53,11 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #endregion Structure Position
 
-        #region Draw
+        #region Update and Draw
+
+        public override void Update(GameTime gameTime)
+        {
+        }
 
         public override void Draw(GameTime gameTime, byte alpha)
         {
@@ -99,6 +103,15 @@ namespace MetaMind.Acutance.Guis.Widgets
                     : ColorExt.MakeTransparent(ItemSettings.IdFrameColor, alpha));
         }
 
+        protected override void DrawNameFrame(byte alpha)
+        {
+            base.DrawNameFrame(alpha);
+            if (ItemData.Stopped)
+            {
+               this.FillNameFrameWith(ItemSettings.NameFrameStoppedColor, alpha); 
+            }
+        }
+
         private void DrawName(byte alpha)
         {
             if (Item.IsEnabled(ItemState.Item_Pending))
@@ -119,62 +132,6 @@ namespace MetaMind.Acutance.Guis.Widgets
                     ColorExt.MakeTransparent(ItemSettings.NameColor, alpha),
                     ItemSettings.NameSize);
             }
-        }
-
-        private void DrawNameFrame(byte alpha)
-        {
-            if (Item.IsEnabled(ItemState.Item_Pending))
-            {
-                this.FillNameFrameWith(ItemSettings.NameFramePendingColor, alpha);
-            }
-            else if (Item.IsEnabled(ItemState.Item_Mouse_Over) &&
-                     Item.IsEnabled(ItemState.Item_Editing))
-            {
-                this.FillNameFrameWith(ItemSettings.NameFrameModificationColor, alpha);
-                this.DrawNameFrameWith(ItemSettings.NameFrameMouseOverColor, alpha);
-            }
-            else if (!Item.IsEnabled(ItemState.Item_Mouse_Over) &&
-                     Item.IsEnabled(ItemState.Item_Editing))
-            {
-                this.FillNameFrameWith(ItemSettings.NameFrameModificationColor, alpha);
-            }
-            else if (Item.IsEnabled(ItemState.Item_Mouse_Over) &&
-                     Item.IsEnabled(ItemState.Item_Selected))
-            {
-                this.FillNameFrameWith(ItemSettings.NameFrameSelectionColor, alpha);
-                this.DrawNameFrameWith(ItemSettings.NameFrameMouseOverColor, alpha);
-            }
-            else if (Item.IsEnabled(ItemState.Item_Mouse_Over) &&
-                     !Item.IsEnabled(ItemState.Item_Selected))
-            {
-                this.FillNameFrameWith(ItemSettings.NameFrameRegularColor, alpha);
-                this.DrawNameFrameWith(ItemSettings.NameFrameMouseOverColor, alpha);
-            }
-            else if (Item.IsEnabled(ItemState.Item_Selected))
-            {
-                this.FillNameFrameWith(ItemSettings.NameFrameSelectionColor, alpha);
-            }
-            else
-            {
-                this.FillNameFrameWith(ItemSettings.NameFrameRegularColor, alpha);
-            }
-        }
-
-        private void DrawNameFrameWith(Color color, byte alpha)
-        {
-            Primitives2D.DrawRectangle(
-                ScreenManager.SpriteBatch,
-                RectangleExt.Crop(ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin),
-                color.MakeTransparent(alpha),
-                1f);
-        }
-
-        private void FillNameFrameWith(Color color, byte alpha)
-        {
-            Primitives2D.FillRectangle(
-                ScreenManager.SpriteBatch,
-                RectangleExt.Crop(ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin),
-                color.MakeTransparent(alpha));
         }
 
         #endregion Draw

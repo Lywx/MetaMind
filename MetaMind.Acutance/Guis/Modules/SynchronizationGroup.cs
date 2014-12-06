@@ -6,31 +6,28 @@
     using C3.Primtive2DXna;
 
     using MetaMind.Engine.Extensions;
+    using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Elements.Views;
-    using MetaMind.Engine.Guis.Modules;
     using MetaMind.Perseverance.Concepts.Cognitions;
     using MetaMind.Perseverance.Guis.Modules;
 
     using Microsoft.Xna.Framework;
 
-    public class MultiplexerModule : Module<MultiplexerModuleSettings>
+    public class SynchronizationGroup : Group<SynchronizationGroupSettings>
     {
-        private readonly IView knowledgeView;
-        private readonly IView traceView;
-
         private ISynchronization       synchronization;
-        private TimeSpan               synchronizationTimer = TimeSpan.Zero;
-        private SynchronizationMonitor monitor;
+        private TimeSpan               synchronizationTimer     = TimeSpan.Zero;
+        private TimeSpan               synchronizationRetryTime = TimeSpan.FromSeconds(5);
 
-        private MultiplexerModuleSynchronizationAlertedListener synchronizationAlertedListener;
+        private SynchronizationMonitor      monitor;
+        private SynchronizationGroupClient client;
 
-        public MultiplexerModule(MultiplexerModuleSettings settings)
+        private SynchroizationModuleSynchronizationAlertedListener synchronizationAlertedListener;
+
+        public SynchronizationGroup(SynchronizationGroupClient client, SynchronizationGroupSettings settings)
             : base(settings)
         {
-            this.traceView     = new View(this.Settings.TraceViewSettings, this.Settings.TraceItemSettings, this.Settings.TraceViewFactory);
-
-            // TODO: strategy loading and alternative implementation
-            this.knowledgeView = new View(this.Settings.KnowledgeViewSettings, this.Settings.KnowledgeItemSettings, this.Settings.KnowledgeViewFactory);
+            this.client = client;
         }
 
         private Rectangle SynchronizationFrameRectangle
@@ -79,27 +76,19 @@
                 this.DrawSynchronizationTaskInformation(this.synchronization);
                 this.DrawSynchronizationTime(this.synchronization);
             }
-
-            this.DrawTrace(gameTime, alpha);
-            this.DrawKnowledge(gameTime, alpha);
         }
 
-        public override void Load()
+        public void Load()
         {
-            foreach (var trace in Acutance.Adventure.Tracelist.Traces.ToArray())
-            {
-                this.traceView.Control.AddItem(trace);
-            }
-
             if (this.synchronizationAlertedListener == null)
             {
-                this.synchronizationAlertedListener = new MultiplexerModuleSynchronizationAlertedListener(this.traceView);
+                this.synchronizationAlertedListener = new SynchroizationModuleSynchronizationAlertedListener(client.View);
             }
 
             EventManager.AddListener(this.synchronizationAlertedListener);
         }
 
-        public override void Unload()
+        public void Unload()
         {
             if (this.synchronizationAlertedListener != null)
             {
@@ -111,20 +100,59 @@
 
         public override void UpdateInput(GameTime gameTime)
         {
-            this.traceView.UpdateInput(gameTime);
         }
 
         public override void UpdateStructure(GameTime gameTime)
         {
-            this.TryUpdateSynchronization(gameTime);
+            if (this.synchronizationTimer < TimeSpan.FromMilliseconds(10))
+            {
+                try
+                {
+                    this.synchronization = Acutance.Synchronization.Fetch() as ISynchronization;
 
-            this.traceView.UpdateStructure(gameTime);
-            this.knowledgeView.UpdateStructure(gameTime);
-        }
+                    if (this.monitor == null)
+                    {
+                        this.monitor = new SynchronizationMonitor(ScreenManager.Game, this.synchronization, false)
+                                           {
+                                               AttentionSpan = TimeSpan.FromSeconds(20),
 
-        private void DrawKnowledge(GameTime gameTime, byte alpha)
-        {
-            this.knowledgeView.Draw(gameTime, alpha);
+                                               SynchronizingCue    = "Hit Point Restoring",
+                                               NotSynchronizingCue = "Magic Returning",
+                                           };
+                    }
+
+                    this.monitor.Synchronization = this.synchronization;
+                    this.monitor.TryStart();
+                }
+                catch (TimeoutException)
+                {
+                    this.synchronizationTimer += gameTime.ElapsedGameTime;
+                    this.synchronization = null;
+                }
+                catch (ServerTooBusyException)
+                {
+                    this.synchronizationTimer += gameTime.ElapsedGameTime;
+                    this.synchronization = null;
+                }
+                catch (EndpointNotFoundException)
+                {
+                    this.synchronizationTimer += gameTime.ElapsedGameTime;
+                    this.synchronization = null;
+                }
+                catch (CommunicationObjectAbortedException)
+                {
+                    this.synchronizationTimer += gameTime.ElapsedGameTime;
+                    this.synchronization = null;
+                }
+            }
+            else
+            {
+                this.synchronizationTimer += gameTime.ElapsedGameTime;
+                if (this.synchronizationTimer > this.synchronizationRetryTime)
+                {
+                    this.synchronizationTimer = TimeSpan.Zero;
+                }
+            }
         }
 
         private void DrawSynchronizationProgress(ISynchronization validSynchronization)
@@ -144,7 +172,7 @@
         {
             FontManager.DrawCenteredText(
                 this.Settings.StateFont,
-                validSynchronization.Enabled ? SynchronizationModule.SyncTrueInfo : SynchronizationModule.SyncFalseInfo,
+                validSynchronization.Enabled ? Perseverance.Guis.Modules.SynchronizationModule.SyncTrueInfo : Perseverance.Guis.Modules.SynchronizationModule.SyncFalseInfo,
                 this.SynchronizationStateInfoCenter,
                 this.Settings.StateColor,
                 this.Settings.StateSize);
@@ -175,11 +203,6 @@
                 this.Settings.SynchronizationTimeSize);
         }
 
-        private void DrawTrace(GameTime gameTime, byte alpha)
-        {
-            this.traceView.Draw(gameTime, alpha);
-        }
-
         private Rectangle SynchronizationProgressBarRectangle(ISynchronization validSynchronization)
         {
             return new Rectangle(
@@ -188,58 +211,15 @@
                 (int)(validSynchronization.ProgressPercent * this.Settings.BarFrameSize.X),
                 this.Settings.BarFrameSize.Y);
         }
+    }
 
-        private void TryUpdateSynchronization(GameTime gameTime)
+    public class SynchronizationGroupClient
+    {
+        public void AddView(IView view)
         {
-            if (this.synchronizationTimer < TimeSpan.FromMilliseconds(100))
-            {
-                try
-                {
-                    this.synchronization = Acutance.Synchronization.Fetch() as ISynchronization;
+            this.View = view;
+        } 
 
-                    if (this.monitor == null)
-                    {
-                        this.monitor = new SynchronizationMonitor(ScreenManager.Game, this.synchronization, false)
-                                           {
-                                               AttentionSpan = TimeSpan.FromSeconds(20),
-
-                                               SynchronizingCue    = "Hit Point Restoring",
-                                               NotSynchronizingCue = "Magic Returning",
-                                           };
-                    }
-
-                    this.monitor.Synchronization = this.synchronization;
-                    this.monitor.TryStart();
-                }
-                catch (ServerTooBusyException)
-                {
-                    this.synchronizationTimer += gameTime.ElapsedGameTime;
-                    this.synchronization = null;
-                }
-                catch (EndpointNotFoundException)
-                {
-                    this.synchronizationTimer += gameTime.ElapsedGameTime;
-                    this.synchronization = null;
-                }
-                catch (TimeoutException)
-                {
-                    this.synchronizationTimer += gameTime.ElapsedGameTime;
-                    this.synchronization = null;
-                }
-                catch (CommunicationObjectAbortedException)
-                {
-                    this.synchronizationTimer += gameTime.ElapsedGameTime;
-                    this.synchronization = null;
-                }
-            }
-            else
-            {
-                this.synchronizationTimer += gameTime.ElapsedGameTime;
-                if (this.synchronizationTimer > TimeSpan.FromSeconds(5))
-                {
-                    this.synchronizationTimer = TimeSpan.Zero;
-                }
-            }
-        }
+        public IView View { get; private set; }
     }
 }

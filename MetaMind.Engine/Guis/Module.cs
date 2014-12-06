@@ -1,8 +1,9 @@
-using MetaMind.Engine.Guis.Widgets;
-using Microsoft.Xna.Framework;
-
-namespace MetaMind.Engine.Guis.Modules
+namespace MetaMind.Engine.Guis
 {
+    using MetaMind.Engine.Guis.Widgets;
+
+    using Microsoft.Xna.Framework;
+
     public interface IModule : IWidget
     {
         IModuleControl Control { get; }
@@ -26,7 +27,7 @@ namespace MetaMind.Engine.Guis.Modules
     {
         protected Module(TModuleSettings settings)
         {
-            Settings = settings;
+            this.Settings = settings;
         }
 
         public IModuleControl Control { get; protected set; }
@@ -37,14 +38,14 @@ namespace MetaMind.Engine.Guis.Modules
 
         public override void Draw(GameTime gameTime, byte alpha)
         {
-            Graphics.Draw(gameTime);
+            this.Graphics.Draw(gameTime);
         }
 
         public override void HandleInput()
         {
-            if (Control != null)
+            if (this.Control != null)
             {
-                Control.HandleInput();
+                this.Control.HandleInput();
             }
 
             base.HandleInput();
@@ -52,23 +53,23 @@ namespace MetaMind.Engine.Guis.Modules
 
         public virtual void Load()
         {
-            Control.Load();
+            this.Control.Load();
         }
 
         public virtual void Unload()
         {
-            Control.Unload();
+            this.Control.Unload();
         }
 
         public override void UpdateInput(GameTime gameTime)
         {
-            Control.UpdateInput(gameTime);
+            this.Control.UpdateInput(gameTime);
         }
 
         public override void UpdateStructure( GameTime gameTime )
         {
-            Control .UpdateStructure(gameTime);
-            Graphics.Update(gameTime);
+            this.Control .UpdateStructure(gameTime);
+            this.Graphics.Update(gameTime);
         }
     }
 }

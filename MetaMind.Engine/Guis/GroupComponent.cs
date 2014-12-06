@@ -1,4 +1,4 @@
-namespace MetaMind.Engine.Guis.Groups
+namespace MetaMind.Engine.Guis
 {
     public class GroupComponent<TGroup, TGroupSettings, TGroupControl>
         where TGroup : Group<TGroupSettings>
@@ -11,10 +11,10 @@ namespace MetaMind.Engine.Guis.Groups
             this.group = group;
         }
 
-        protected TGroup Group { get { return group; } }
+        protected TGroup Group { get { return this.@group; } }
 
-        protected TGroupControl Control { get { return ( TGroupControl ) group.Control; } }
-        public TGroupSettings GroupSettings { get { return group.Settings; } }
+        protected TGroupControl Control { get { return ( TGroupControl ) this.@group.Control; } }
+        public TGroupSettings GroupSettings { get { return this.@group.Settings; } }
         
     }
 }

@@ -38,22 +38,7 @@
                 return;
             }
 
-            if (Item.IsEnabled(ItemState.Item_Selected))
-            {
-                Primitives2D.FillRectangle(ScreenManager.SpriteBatch, ItemControl.RootFrame.Rectangle, ItemSettings.RootFrameColor);
-                Primitives2D.FillRectangle(ScreenManager.SpriteBatch, ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameHighlightColor);
-            }
-            else if (Item.IsEnabled(ItemState.Item_Editing))
-            {
-                Primitives2D.FillRectangle(ScreenManager.SpriteBatch, ItemControl.RootFrame.Rectangle, ItemSettings.RootFrameColor);
-                Primitives2D.FillRectangle(ScreenManager.SpriteBatch, ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameModificationColor);
-            }
-            else
-            {
-                Primitives2D.FillRectangle(ScreenManager.SpriteBatch, ItemControl.RootFrame.Rectangle, ItemSettings.RootFrameColor);
-                Primitives2D.FillRectangle(ScreenManager.SpriteBatch, ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameRegularColor);
-            }
-
+            this.DrawNameFrame(alpha);
             this.DrawId(alpha);
         }
 
@@ -69,6 +54,62 @@
                 this.IdCenter,
                 ColorExt.MakeTransparent(ItemSettings.IdColor, alpha),
                 ItemSettings.IdSize);
+        }
+
+        protected virtual void DrawNameFrame(byte alpha)
+        {
+            if (Item.IsEnabled(ItemState.Item_Pending))
+            {
+                this.FillNameFrameWith(ItemSettings.NameFramePendingColor, alpha);
+            }
+            else if (Item.IsEnabled(ItemState.Item_Mouse_Over) &&
+                     Item.IsEnabled(ItemState.Item_Editing))
+            {
+                this.FillNameFrameWith(ItemSettings.NameFrameModificationColor, alpha);
+                this.DrawNameFrameWith(ItemSettings.NameFrameMouseOverColor, alpha);
+            }
+            else if (!Item.IsEnabled(ItemState.Item_Mouse_Over) &&
+                     Item.IsEnabled(ItemState.Item_Editing))
+            {
+                this.FillNameFrameWith(ItemSettings.NameFrameModificationColor, alpha);
+            }
+            else if (Item.IsEnabled(ItemState.Item_Mouse_Over) &&
+                     Item.IsEnabled(ItemState.Item_Selected))
+            {
+                this.FillNameFrameWith(ItemSettings.NameFrameSelectionColor, alpha);
+                this.DrawNameFrameWith(ItemSettings.NameFrameMouseOverColor, alpha);
+            }
+            else if (Item.IsEnabled(ItemState.Item_Mouse_Over) &&
+                     !Item.IsEnabled(ItemState.Item_Selected))
+            {
+                this.FillNameFrameWith(ItemSettings.NameFrameRegularColor, alpha);
+                this.DrawNameFrameWith(ItemSettings.NameFrameMouseOverColor, alpha);
+            }
+            else if (Item.IsEnabled(ItemState.Item_Selected))
+            {
+                this.FillNameFrameWith(ItemSettings.NameFrameSelectionColor, alpha);
+            }
+            else
+            {
+                this.FillNameFrameWith(ItemSettings.NameFrameRegularColor, alpha);
+            }
+        }
+
+        protected void DrawNameFrameWith(Color color, byte alpha)
+        {
+            Primitives2D.DrawRectangle(
+                ScreenManager.SpriteBatch,
+                RectangleExt.Crop(ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin),
+                color.MakeTransparent(alpha),
+                1f);
+        }
+
+        protected void FillNameFrameWith(Color color, byte alpha)
+        {
+            Primitives2D.FillRectangle(
+                ScreenManager.SpriteBatch,
+                RectangleExt.Crop(ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin),
+                color.MakeTransparent(alpha));
         }
     }
 }

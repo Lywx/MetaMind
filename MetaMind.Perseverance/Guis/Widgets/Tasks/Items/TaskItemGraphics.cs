@@ -175,55 +175,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
             }
         }
 
-
-        private void DrawNameFrame(byte alpha)
-        {
-            if (Item.IsEnabled(ItemState.Item_Pending))
-            {
-                this.FillNameFrameWith(ItemSettings.NameFramePendingColor, alpha);
-            }
-            else if (Item.IsEnabled(ItemState.Item_Mouse_Over) &&
-                     Item.IsEnabled(ItemState.Item_Editing))
-            {
-                this.FillNameFrameWith(ItemSettings.NameFrameModificationColor, alpha);
-                this.DrawNameFrameWith(ItemSettings.NameFrameMouseOverColor, alpha);
-            }
-            else if (!Item.IsEnabled(ItemState.Item_Mouse_Over) &&
-                     Item.IsEnabled(ItemState.Item_Editing))
-            {
-                this.FillNameFrameWith(ItemSettings.NameFrameModificationColor, alpha);
-            }
-            else if (Item.IsEnabled(ItemState.Item_Mouse_Over) &&
-                     Item.IsEnabled(ItemState.Item_Selected))
-            {
-                this.FillNameFrameWith(ItemSettings.NameFrameSelectionColor, alpha);
-                this.DrawNameFrameWith(ItemSettings.NameFrameMouseOverColor, alpha);
-            }
-            else if (Item.IsEnabled(ItemState.Item_Mouse_Over) &&
-                     !Item.IsEnabled(ItemState.Item_Selected))
-            {
-                this.FillNameFrameWith(ItemSettings.NameFrameRegularColor, alpha);
-                this.DrawNameFrameWith(ItemSettings.NameFrameMouseOverColor, alpha);
-            }
-            else if (Item.IsEnabled(ItemState.Item_Selected))
-            {
-                this.FillNameFrameWith(ItemSettings.NameFrameSelectionColor, alpha);
-            }
-            else
-            {
-                this.FillNameFrameWith(ItemSettings.NameFrameRegularColor, alpha);
-            }
-        }
-
-        private void DrawNameFrameWith(Color color, byte alpha)
-        {
-            Primitives2D.DrawRectangle(
-                ScreenManager.SpriteBatch,
-                RectangleExt.Crop(ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin),
-                color.MakeTransparent(alpha),
-                1f);
-        }
-
         private void DrawProgress(byte alpha)
         {
             var progressRatio = MathHelper.Clamp((float)ItemData.Done / (float)(ItemData.Load + 0.1f), 0f, 1f);
@@ -281,14 +232,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
                     ColorExt.MakeTransparent(ItemSettings.NameFrameSynchronizationColor, alpha),
                     2f);
             }
-        }
-
-        private void FillNameFrameWith(Color color, byte alpha)
-        {
-            Primitives2D.FillRectangle(
-                ScreenManager.SpriteBatch,
-                RectangleExt.Crop(ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin),
-                color.MakeTransparent(alpha));
         }
 
         #endregion Draw

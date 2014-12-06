@@ -1,10 +1,10 @@
-namespace MetaMind.Perseverance.Guis.Modules
+namespace MetaMind.Engine.Guis.Modules
 {
     using System;
 
-    using MetaMind.Perseverance.Guis.Particles;
+    using MetaMind.Engine.Guis.Particles;
 
-    public class ChaosModuleSettings : ICloneable
+    public class ParticleModuleSettings : ICloneable
     {
         public Random           Random;
         public GenerateParticle Generate;
@@ -15,7 +15,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         public int Height;
 
-        public ChaosModuleSettings(Random random, GenerateParticle generate, int width, int height)
+        public ParticleModuleSettings(Random random, GenerateParticle generate, int width, int height)
         {
             this.Random   = random;
             this.Generate = generate;

@@ -64,17 +64,23 @@ namespace MetaMind.Engine.Guis.Elements.Views
         {
             if (!this.currentId.HasValue)
             {
-                this.SelectInit();
+                this.Reverse();
+                return;
             }
-            else if (!this.IsBottommost(this.ViewControl.RowFrom(this.currentId.Value)))
+
+            var id     = this.currentId.Value;
+            var column = this.ViewControl.ColumnFrom(id);
+            var row    = this.ViewControl.RowFrom(id);
+
+            if (!this.IsBottommost(row))
             {
-                var row = this.ViewControl.RowFrom(this.currentId.Value) + 1;
-                var column = this.ViewControl.ColumnFrom(this.currentId.Value);
+                row = row + 1;
                 this.Select(row, column);
-                if (this.ViewControl.Scroll.IsDownToDisplay(row))
-                {
-                    this.ViewControl.Scroll.MoveDown();
-                }
+            }
+
+            if (this.ViewControl.Scroll.IsDownToDisplay(row))
+            {
+                this.ViewControl.Scroll.MoveDown();
             }
         }
 
@@ -82,17 +88,23 @@ namespace MetaMind.Engine.Guis.Elements.Views
         {
             if (!this.currentId.HasValue)
             {
-                this.SelectInit();
+                this.Reverse();
+                return;
             }
-            else if (!this.IsLeftmost(this.ViewControl.ColumnFrom(this.currentId.Value)))
+
+            var id     = this.currentId.Value;
+            var column = this.ViewControl.ColumnFrom(id);
+            var row    = this.ViewControl.RowFrom(id);
+
+            if (!this.IsLeftmost(column))
             {
-                var row = this.ViewControl.RowFrom(this.currentId.Value);
-                var column = this.ViewControl.ColumnFrom(this.currentId.Value) - 1;
+                column = column - 1;
                 this.Select(row, column);
-                if (this.ViewControl.Scroll.IsLeftToDisplay(column))
-                {
-                    this.ViewControl.Scroll.MoveLeft();
-                }
+            }
+
+            if (this.ViewControl.Scroll.IsLeftToDisplay(column))
+            {
+                this.ViewControl.Scroll.MoveLeft();
             }
         }
 
@@ -100,17 +112,23 @@ namespace MetaMind.Engine.Guis.Elements.Views
         {
             if (!this.currentId.HasValue)
             {
-                this.SelectInit();
+                this.Reverse();
+                return;
             }
-            else if (!this.IsRightmost(this.ViewControl.ColumnFrom(this.currentId.Value)))
+
+            var id     = this.currentId.Value;
+            var column = this.ViewControl.ColumnFrom(id);
+            var row    = this.ViewControl.RowFrom(id);
+
+            if (!this.IsRightmost(column))
             {
-                var row = this.ViewControl.RowFrom(this.currentId.Value);
-                var column = this.ViewControl.ColumnFrom(this.currentId.Value) + 1;
+                column = column + 1;
                 this.Select(row, column);
-                if (this.ViewControl.Scroll.IsRightToDisplay(column))
-                {
-                    this.ViewControl.Scroll.MoveRight();
-                }
+            }
+
+            if (this.ViewControl.Scroll.IsRightToDisplay(column))
+            {
+                this.ViewControl.Scroll.MoveRight();
             }
         }
 
@@ -118,17 +136,23 @@ namespace MetaMind.Engine.Guis.Elements.Views
         {
             if (!this.currentId.HasValue)
             {
-                this.SelectInit();
+                this.Reverse();
+                return;
             }
-            else if (!this.IsTopmost(this.ViewControl.RowFrom(this.currentId.Value)))
+
+            var id     = this.currentId.Value;
+            var column = this.ViewControl.ColumnFrom(id);
+            var row    = this.ViewControl.RowFrom(id);
+
+            if (!this.IsTopmost(row))
             {
-                var row = this.ViewControl.RowFrom(this.currentId.Value) - 1;
-                var column = this.ViewControl.ColumnFrom(this.currentId.Value);
+                row = row - 1;
                 this.Select(row, column);
-                if (this.ViewControl.Scroll.IsUpToDisplay(row))
-                {
-                    this.ViewControl.Scroll.MoveUp();
-                }
+            }
+
+            if (this.ViewControl.Scroll.IsUpToDisplay(row))
+            {
+                this.ViewControl.Scroll.MoveUp();
             }
         }
 
@@ -164,7 +188,7 @@ namespace MetaMind.Engine.Guis.Elements.Views
             this.currentId = this.ViewControl.IdFrom(row, column);
         }
 
-        private void SelectInit()
+        private void Reverse()
         {
             this.Select(this.previousId.HasValue ? this.previousId.Value : 0);
         }

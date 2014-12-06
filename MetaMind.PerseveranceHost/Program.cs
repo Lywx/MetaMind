@@ -30,7 +30,7 @@
                 // by the service.
                 host.Open();
 
-                using (var engine = new GameEngine())
+                using (var engine = GameEngine.GetInstance())
                 {
                     var fullscreen = args.Count() != 0 && args[0] == "--fullscreen";
                     var runner = new Perseverance(engine, fullscreen);

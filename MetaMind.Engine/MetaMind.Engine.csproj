@@ -131,6 +131,11 @@
     <Compile Include="Guis\Elements\Regions\RegionState.cs" />
     <Compile Include="Guis\Elements\ViewItems\ViewItemExchangeProcess.cs" />
     <Compile Include="Guis\Elements\Views\IViewSelectionControl.cs" />
+    <Compile Include="Guis\Modules\ParticleModule.cs" />
+    <Compile Include="Guis\Modules\ParticleModuleSettings.cs" />
+    <Compile Include="Guis\Particles\FloatParticle.cs" />
+    <Compile Include="Guis\Particles\Particle.cs" />
+    <Compile Include="Guis\Particles\ShapelessParticle.cs" />
     <Compile Include="Tests\StateTestGraphics.cs" />
     <Compile Include="Guis\Elements\ViewItems\IViewItemFactory.cs" />
     <Compile Include="Guis\Elements\ViewItems\ViewItemBasicFactory1D.cs" />
@@ -172,17 +177,17 @@
     <Compile Include="Guis\Elements\Views\ViewSortMode.cs" />
     <Compile Include="Guis\Elements\Views\ViewState.cs" />
     <Compile Include="Guis\Elements\Views\ViewSwapControl.cs" />
-    <Compile Include="Guis\Groups\Group.cs" />
-    <Compile Include="Guis\Groups\GroupComponent.cs" />
-    <Compile Include="Guis\Groups\GroupControl.cs" />
-    <Compile Include="Guis\Groups\GroupGraphics.cs" />
-    <Compile Include="Guis\Modules\Module.cs" />
-    <Compile Include="Guis\Modules\ModuleComponent.cs" />
-    <Compile Include="Guis\Modules\ModuleControl.cs" />
-    <Compile Include="Guis\Modules\ModuleGraphics.cs" />
+    <Compile Include="Guis\Group.cs" />
+    <Compile Include="Guis\GroupComponent.cs" />
+    <Compile Include="Guis\GroupControl.cs" />
+    <Compile Include="Guis\GroupGraphics.cs" />
+    <Compile Include="Guis\Module.cs" />
+    <Compile Include="Guis\ModuleComponent.cs" />
+    <Compile Include="Guis\ModuleControl.cs" />
+    <Compile Include="Guis\ModuleGraphics.cs" />
     <Compile Include="Guis\Widgets\Cameras\CameraSettings.cs" />
     <Compile Include="Guis\Widgets\Cameras\MarkovCamera.cs" />
-    <Compile Include="Guis\Widgets\Widget.cs" />
+    <Compile Include="Guis\Widget.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screens\GameScreen.cs" />
@@ -207,6 +212,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\" />
+    <Folder Include="Guis\Groups\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MetaMind.EngineBuilder\MetaMind.EngineBuilder\MetaMind.EngineBuilder.csproj">

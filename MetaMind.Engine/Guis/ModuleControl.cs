@@ -1,7 +1,7 @@
-using Microsoft.Xna.Framework;
-
-namespace MetaMind.Engine.Guis.Modules
+namespace MetaMind.Engine.Guis
 {
+    using Microsoft.Xna.Framework;
+
     public interface IModuleControl
     {
         void HandleInput();

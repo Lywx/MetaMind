@@ -2,6 +2,7 @@ namespace MetaMind.Engine.Guis.Elements.Views
 {
     using System;
 
+    using MetaMind.Engine.Guis.Elements.Frames;
     using MetaMind.Engine.Guis.Elements.Regions;
 
     using Microsoft.Xna.Framework;
@@ -30,17 +31,25 @@ namespace MetaMind.Engine.Guis.Elements.Views
             this.Positioning = positioning;
         }
 
-        public ViewRegionPositioning Positioning { get; private set; }
+        public dynamic ItemSettings { get; private set; }
 
         public IView View { get; private set; }
-
-        public dynamic ViewSettings { get; private set; }
-
-        public dynamic ItemSettings { get; private set; }
 
         public dynamic ViewControl
         {
             get { return this.View.Control; }
+        }
+
+        public dynamic ViewSettings { get; private set; }
+
+        private ViewRegionPositioning Positioning { get; set; }
+
+        public void Clear()
+        {
+            this.Frame.Disable(FrameState.Mouse_Left_Clicked);
+            this.Frame.Disable(FrameState.Mouse_Left_Double_Clicked);
+            this.Frame.Disable(FrameState.Mouse_Right_Clicked);
+            this.Frame.Disable(FrameState.Mouse_Right_Double_Clicked);
         }
 
         public override void UpdateStructure(GameTime gameTime)

@@ -10,6 +10,7 @@ namespace MetaMind.Engine.Components.Inputs
     using System.Collections.Generic;
     using System.Linq;
 
+    using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Widgets;
 
     using Microsoft.Xna.Framework;
@@ -41,6 +42,11 @@ namespace MetaMind.Engine.Components.Inputs
         TaskCreateItem, 
         TaskDeleteItem, 
         TaskEditItem, 
+
+        TraceCreateItem, 
+        TraceDeleteItem, 
+        TraceEditItem, 
+        TraceClearItem, 
 
         // synchronization
         // ---------------------------------------------------------------------
@@ -274,6 +280,20 @@ namespace MetaMind.Engine.Components.Inputs
 
             actionMaps[(int)Actions.TaskEditItem] = new KeyboardActionMap();
             actionMaps[(int)Actions.TaskEditItem].Bindings.Add(Keys.I, new List<Keys> { Keys.LeftControl });
+
+            // trace
+            //-----------------------------------------------------------------
+            actionMaps[(int)Actions.TraceCreateItem] = new KeyboardActionMap();
+            actionMaps[(int)Actions.TraceCreateItem].Bindings.Add(Keys.O, new List<Keys> { Keys.LeftControl });
+
+            actionMaps[(int)Actions.TraceDeleteItem] = new KeyboardActionMap();
+            actionMaps[(int)Actions.TraceDeleteItem].Bindings.Add(Keys.D, new List<Keys> { Keys.LeftControl });
+
+            actionMaps[(int)Actions.TraceEditItem] = new KeyboardActionMap();
+            actionMaps[(int)Actions.TraceEditItem].Bindings.Add(Keys.I, new List<Keys> { Keys.LeftControl });
+
+            actionMaps[(int)Actions.TraceClearItem] = new KeyboardActionMap();
+            actionMaps[(int)Actions.TraceClearItem].Bindings.Add(Keys.C, new List<Keys> { Keys.LeftControl });
 
             // sychronization
             // ---------------------------------------------------------------------

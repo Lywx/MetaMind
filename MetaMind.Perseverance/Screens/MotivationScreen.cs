@@ -2,6 +2,7 @@
 {
     using System;
 
+    using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Modules;
     using MetaMind.Engine.Screens;
     using MetaMind.Perseverance.Guis.Modules;
@@ -40,7 +41,7 @@
 
             MessageManager.Draw(gameTime);
 
-            this.motivation.Draw(gameTime, TransitionAlpha);
+            this.motivation     .Draw(gameTime, TransitionAlpha);
             this.synchronization.Draw(gameTime, TransitionAlpha);
 
             ScreenManager.SpriteBatch.End();

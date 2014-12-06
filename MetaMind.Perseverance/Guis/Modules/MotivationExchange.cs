@@ -1,7 +1,11 @@
 namespace MetaMind.Perseverance.Guis.Modules
 {
+    using System.Linq;
+
+    using MetaMind.Engine.Components.Inputs;
+    using MetaMind.Engine.Guis;
+    using MetaMind.Engine.Guis.Elements.Items;
     using MetaMind.Engine.Guis.Elements.Views;
-    using MetaMind.Engine.Guis.Modules;
     using MetaMind.Perseverance.Guis.Widgets.Motivations.Banners;
 
     using Microsoft.Xna.Framework;
@@ -11,8 +15,10 @@ namespace MetaMind.Perseverance.Guis.Modules
         private readonly IView  futureView;
         private readonly IView  nowView;
         private readonly IView  pastView;
-        
+
         private readonly Banner banner;
+
+        private bool[] readyMoving = new bool[(int)Views.ViewNum];
 
         public MotivationExchange(MotivationExchangeSettings settings)
             : base(settings)
@@ -29,7 +35,18 @@ namespace MetaMind.Perseverance.Guis.Modules
             this.nowView   .Control.Swap.AddObserver(this.futureView);
             this.futureView.Control.Swap.AddObserver(this.pastView  );
             this.futureView.Control.Swap.AddObserver(this.nowView   );
+
+            // auto-select after startup
+            this.nowView.Control.Selection.Select(0);
         }
+
+        private enum Views
+        {
+            Past, Now, Future, 
+
+            ViewNum
+        }
+
 
         #region Load and Unload
 
@@ -92,9 +109,72 @@ namespace MetaMind.Perseverance.Guis.Modules
             this.nowView   .UpdateStructure(gameTime);
             this.futureView.UpdateStructure(gameTime);
 
+            this.BetweenViewUpdateStructure(gameTime);
+
             this.banner.Update(gameTime);
         }
 
+        private void BetweenViewUpdateStructure(GameTime gameTime)
+        {
+            if (this.readyMoving[(int)Views.Past])
+            {
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
+                {
+                    this.pastView.Control.Selection.Clear();
+                    this.pastView.Control.Region   .Clear();
+                    this.nowView .Control.Selection.Select(0);
+                }
+
+                this.readyMoving[(int)Views.Past] = false;
+            }
+
+            if (this.readyMoving[(int)Views.Now])
+            {
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
+                {
+                    this.nowView .Control.Selection.Clear();
+                    this.nowView .Control.Region   .Clear();
+                    this.pastView.Control.Selection.Select(0);
+                }
+                else if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
+                {
+                    this.nowView   .Control.Selection.Clear();
+                    this.nowView   .Control.Region   .Clear();
+                    this.futureView.Control.Selection.Select(0);
+                }
+
+                this.readyMoving[(int)Views.Now] = false;
+            }
+
+            if (this.readyMoving[(int)Views.Future])
+            {
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
+                {
+                    this.futureView.Control.Selection.Clear();
+                    this.futureView.Control.Region   .Clear();
+                    this.nowView   .Control.Selection.Select(0);
+                }
+
+                this.readyMoving[(int)Views.Future] = false;
+            }
+
+            if (this.pastView.Items.First().IsEnabled(ItemState.Item_Selected))
+            {
+                this.readyMoving[(int)Views.Past] = true;
+            }
+
+            if (this.nowView.Items.First().IsEnabled(ItemState.Item_Selected))
+            {
+                this.readyMoving[(int)Views.Now] = true;
+            }
+
+            if (this.futureView.Items.First().IsEnabled(ItemState.Item_Selected))
+            {
+                this.readyMoving[(int)Views.Future] = true;
+            }
+        }
+
         #endregion
+
     }
 }

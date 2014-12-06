@@ -12,12 +12,25 @@
 
     public class GameEngine : Game
     {
+        private int fps;
+
+        #region Singleton
+
+        private static GameEngine singleton;
+
+        public static GameEngine GetInstance()
+        {
+            return singleton ?? (singleton = new GameEngine());
+        }
+
+        #endregion
+
         #region Consructors
 
-        public GameEngine()
+        private GameEngine()
         {
-            IsMouseVisible = true;
-            IsFixedTimeStep = true;
+            this.IsMouseVisible = true;
+            this.IsFixedTimeStep = true;
 
             // graphics
             //-----------------------------------------------------------------
@@ -30,8 +43,8 @@
 
             // content
             //-----------------------------------------------------------------
-            Content.RootDirectory = "Content";
-            ContentManager = Content;
+            this.Content.RootDirectory = "Content";
+            ContentManager = this.Content;
 
             // audio
             //------------------------------------------------------------------
@@ -87,6 +100,23 @@
 
         #endregion Consructors
 
+        #region Public Properties
+
+        public static int Fps
+        {
+            get { return singleton.fps; }
+            set
+            {
+                singleton.fps = value;
+
+                singleton.TargetElapsedTime = TimeSpan.FromMilliseconds(1000 / (double)singleton.fps);
+                singleton.IsFixedTimeStep = true;
+            }
+        }
+
+        #endregion
+
+
         #region Components
 
         public static AudioManager AudioManager { get; private set; }
@@ -117,10 +147,24 @@
 
         #region Initializations
 
+        public void TriggerCenter()
+        {
+            // center game window
+            var screen = GraphicsSettings.Screen;
+            singleton.Window.Position = new Point(
+                screen.Bounds.X + (screen.Bounds.Width - GraphicsSettings.Width) / 2,
+                screen.Bounds.Y + (screen.Bounds.Height - GraphicsSettings.Height) / 2);
+
+            // set width and height
+            GraphicsManager.PreferredBackBufferWidth = GraphicsSettings.Width;
+            GraphicsManager.PreferredBackBufferHeight = GraphicsSettings.Height;
+            GraphicsManager.ApplyChanges();
+        }
+
         protected override void Initialize()
         {
             // fixed drawing order in 3d graphics
-            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            this.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
             base.Initialize();
         }
@@ -136,14 +180,13 @@
             FontManager.UnloadContent();
             base       .UnloadContent();
         }
-
         #endregion Initializations
 
         #region Update and Draw
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            this.GraphicsDevice.Clear(Color.CornflowerBlue);
             base.Draw(gameTime);
         }
 

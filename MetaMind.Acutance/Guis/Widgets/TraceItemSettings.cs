@@ -31,6 +31,8 @@ namespace MetaMind.Acutance.Guis.Widgets
         public Color NameFrameModificationColor    = new Color(0, 20, 250, 2);
         public Color NameFrameSelectionColor       = new Color(0, 20, 250, 2);
 
+        public Color NameFrameStoppedColor            = new Color(100, 0, 0, 2);
+
         //---------------------------------------------------------------------
         public Color IdFramePendingColor           = new Color(200, 200, 0, 2);
 

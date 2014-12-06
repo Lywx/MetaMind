@@ -52,7 +52,6 @@ namespace MetaMind.Engine.Guis.Elements.Views
             this.previousColumn = this.currentColumn;
             this.currentColumn = null;
 
-            //TODO: may not be needed
             View.Disable(ViewState.View_Has_Selection);
         }
 
@@ -65,19 +64,22 @@ namespace MetaMind.Engine.Guis.Elements.Views
         {
             if (!this.currentColumn.HasValue)
             {
-                this.Select(this.previousColumn.HasValue ? this.previousColumn.Value : 0);
+                this.Reverse();
+
+                return;
             }
-            else if (!this.IsLeftmost(this.currentColumn.Value))
+
+            var column = this.currentColumn.Value;
+
+            if (!this.IsLeftmost(column))
             {
-                this.Select(this.currentColumn.Value - 1);
-                if (this.ViewControl.Scroll.IsLeftToDisplay(this.currentColumn.Value - 1))
-                {
-                    this.ViewControl.Scroll.MoveLeft();
-                }
+                column = column - 1;
+                this.Select(column);
             }
-            else
+
+            if (this.ViewControl.Scroll.IsLeftToDisplay(column))
             {
-                this.Select(this.currentColumn.Value);
+                this.ViewControl.Scroll.MoveLeft();
             }
         }
 
@@ -85,19 +87,21 @@ namespace MetaMind.Engine.Guis.Elements.Views
         {
             if (!this.currentColumn.HasValue)
             {
-                this.Select(this.previousColumn.HasValue ? this.previousColumn.Value : 0);
+                this.Reverse();
+                return;
             }
-            else if (!this.IsRightmost(this.currentColumn.Value))
+
+            var column = this.currentColumn.Value;
+
+            if (!this.IsRightmost(column))
             {
-                this.Select(this.currentColumn.Value + 1);
-                if (this.ViewControl.Scroll.IsRightToDisplay(this.currentColumn.Value + 1))
-                {
-                    this.ViewControl.Scroll.MoveRight();
-                }
+                column = column + 1;
+                this.Select(column);
             }
-            else
+
+            if (this.ViewControl.Scroll.IsRightToDisplay(column))
             {
-                this.Select(this.currentColumn.Value);
+                this.ViewControl.Scroll.MoveRight();
             }
         }
 
@@ -115,6 +119,11 @@ namespace MetaMind.Engine.Guis.Elements.Views
         private bool IsRightmost(int column)
         {
             return column >= this.View.Items.Count - 1;
+        }
+
+        private void Reverse()
+        {
+            this.Select(this.previousColumn.HasValue ? this.previousColumn.Value : 0);
         }
     }
 }

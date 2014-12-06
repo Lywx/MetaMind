@@ -12,7 +12,7 @@ namespace MetaMind.Engine
         [STAThread]
         private static void Main(string[] args)
         {
-            using (var engine = new GameEngine())
+            using (var engine = GameEngine.GetInstance())
             {
                 engine.Run();
             }

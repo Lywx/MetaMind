@@ -1,7 +1,7 @@
-using Microsoft.Xna.Framework;
-
-namespace MetaMind.Engine.Guis.Widgets
+namespace MetaMind.Engine.Guis
 {
+    using Microsoft.Xna.Framework;
+
     public interface IWidget
     {
         void Draw(GameTime gameTime, byte alpha);
@@ -55,8 +55,8 @@ namespace MetaMind.Engine.Guis.Widgets
 
         protected Widget()
         {
-            IsUpdating = true;
-            IsHandlingInput = false;
+            this.IsUpdating = true;
+            this.IsHandlingInput = false;
         }
 
         #endregion Contructors
@@ -67,8 +67,8 @@ namespace MetaMind.Engine.Guis.Widgets
 
         public virtual void HandleInput()
         {
-            IsHandlingInput = true;
-            handlingInputCount = 0;
+            this.IsHandlingInput = true;
+            this.handlingInputCount = 0;
         }
 
         public abstract void UpdateInput(GameTime gameTime);
@@ -77,28 +77,28 @@ namespace MetaMind.Engine.Guis.Widgets
 
         public void Update(GameTime gameTime)
         {
-            if (!IsUpdating)
+            if (!this.IsUpdating)
             {
                 return;
             }
 
-            ++handlingInputCount;
+            ++this.handlingInputCount;
 
             // use this mechanism to make sure when HandleInput is used
             // Update method won't set the IsActive to false, which happens is cases
             // of not using HandleInput in GameScreen class.
-            if (handlingInputCount > HandlingInputCountOut)
+            if (this.handlingInputCount > HandlingInputCountOut)
             {
-                IsHandlingInput = false;
-                handlingInputCount = 0;
+                this.IsHandlingInput = false;
+                this.handlingInputCount = 0;
             }
 
-            if (IsHandlingInput)
+            if (this.IsHandlingInput)
             {
-                UpdateInput(gameTime);
+                this.UpdateInput(gameTime);
             }
 
-            UpdateStructure(gameTime);
+            this.UpdateStructure(gameTime);
         }
 
         #endregion Update and Draw

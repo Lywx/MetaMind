@@ -10,7 +10,7 @@ namespace MetaMind.Engine.Components
     using System;
     using System.Runtime.InteropServices;
 
-    using MetaMind.Engine.Guis.Widgets;
+    using MetaMind.Engine.Guis;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;

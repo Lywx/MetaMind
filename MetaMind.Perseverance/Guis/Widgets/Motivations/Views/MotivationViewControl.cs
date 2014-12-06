@@ -15,7 +15,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
     using MetaMind.Perseverance.Concepts.MotivationEntries;
     using MetaMind.Perseverance.Guis.Widgets.Motivations.Banners;
     using MetaMind.Perseverance.Guis.Widgets.Motivations.Items;
-    using MetaMind.Perseverance.Guis.Widgets.Tasks;
 
     using Microsoft.Xna.Framework;
 
@@ -188,6 +187,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
                         viewSettings.RootMargin.X * viewSettings.ColumnNumDisplay,
                         bannerSetting.Height);
             }
+
             return
                 RectangleExt.Rectangle(
                     viewSettings.StartPoint.X + viewSettings.RootMargin.X * (viewSettings.ColumnNumDisplay / 2),

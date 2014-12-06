@@ -98,11 +98,7 @@ namespace MetaMind.Engine.Components
         /// <param name="settingsFile">The filename of the XACT settings file.</param>
         /// <param name="waveBankFile">The filename of the XACT wavebank file.</param>
         /// <param name="soundBankFile">The filename of the XACT soundbank file.</param>
-        public static AudioManager GetInstance(
-            Game game, 
-            string settingsFile, 
-            string waveBankFile, 
-            string soundBankFile)
+        public static AudioManager GetInstance(Game game, string settingsFile, string waveBankFile, string soundBankFile)
         {
             if (singleton == null)
             {
@@ -128,8 +124,11 @@ namespace MetaMind.Engine.Components
         /// <returns>The cue corresponding to the name provided.</returns>
         public static Cue GetCue(string cueName)
         {
-            if (string.IsNullOrEmpty(cueName) || (singleton == null) || (singleton.audioEngine == null)
-                || (singleton.soundBank == null) || (singleton.waveBank == null))
+            if (string.IsNullOrEmpty(cueName) ||
+                singleton == null ||
+                singleton.audioEngine == null ||
+                singleton.soundBank == null ||
+                singleton.waveBank == null)
             {
                 return null;
             }

@@ -1,5 +1,7 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
+    using System.Linq;
+
     using MetaMind.Acutance.Concepts;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Elements.Regions;
@@ -170,23 +172,28 @@ namespace MetaMind.Acutance.Guis.Widgets
                 }
 
                 // list management
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskCreateItem))
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceCreateItem))
                 {
                     this.AddItem();
 
                     // auto select new item
-                    this.Selection.Select(View.Items.Count - 1);
+                    this.Selection.Select(this.View.Items.Count - 1);
                 }
 
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskDeleteItem))
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceDeleteItem))
                 {
                     // itme deletion is handled by item control
                     // auto select last item
-                    if (View.Items.Count > 1)
+                    if (this.View.Items.Count > 1)
                     {
                         // this will be called before item deletion
-                        this.Selection.Select(View.Items.Count - 2);
+                        this.Selection.Select(this.View.Items.Count - 2);
                     }
+                }
+
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceClearItem))
+                {
+                    this.Selection.Select(this.View.Items.Count(item => !string.IsNullOrEmpty(item.ItemData.Name)) - 1);
                 }
             }
 

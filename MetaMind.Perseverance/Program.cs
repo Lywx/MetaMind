@@ -25,7 +25,7 @@ namespace MetaMind.Perseverance
         [STAThread]
         private static void Main(string[] args)
         {
-            using (var engine = new GameEngine())
+            using (var engine = GameEngine.GetInstance())
             {
                 var fullscreen = args.Count() != 0 && args[0] == "--fullscreen";
                 var runner = new Perseverance(engine, fullscreen);

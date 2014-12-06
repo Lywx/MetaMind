@@ -8,6 +8,7 @@
 namespace MetaMind.Engine.Components
 {
     using MetaMind.Engine.Components.Inputs;
+    using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Widgets;
 
     using Microsoft.Xna.Framework;

@@ -12,7 +12,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Elements.Views;
     using MetaMind.Perseverance.Guis.Widgets.Motivations.Items;
-    using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
 
     using Microsoft.Xna.Framework;
 

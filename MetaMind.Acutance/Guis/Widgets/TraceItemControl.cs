@@ -1,5 +1,7 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
+    using System;
+
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Elements.Items;
     using MetaMind.Engine.Guis.Elements.ViewItems;
@@ -64,6 +66,16 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public override void UpdateInput(GameTime gameTime)
         {
+            // special
+            //----------------------------------------------------------------- 
+            if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceClearItem))
+            {
+                if (string.IsNullOrWhiteSpace(ItemData.Name))
+                {
+                    this.DeleteIt();
+                }
+            }
+
             // mouse
             //-----------------------------------------------------------------
             base.UpdateInput(gameTime);
@@ -73,13 +85,13 @@ namespace MetaMind.Acutance.Guis.Widgets
             if (this.AcceptInput)
             {
                 // normal status
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskEditItem))
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceEditItem))
                 {
                     this.View.Enable(ViewState.Item_Editting);
                     this.Item.Enable(ItemState.Item_Pending);
                 }
 
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskDeleteItem))
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceDeleteItem))
                 {
                     this.DeleteIt();
                 }

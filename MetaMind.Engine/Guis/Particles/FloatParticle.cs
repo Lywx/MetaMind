@@ -5,7 +5,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Perseverance.Guis.Particles
+namespace MetaMind.Engine.Guis.Particles
 {
     using System;
 
@@ -15,7 +15,7 @@ namespace MetaMind.Perseverance.Guis.Particles
 
     using Microsoft.Xna.Framework;
 
-    public delegate FloatParticle GenerateParticle();
+    public delegate FloatParticle GenerateParticle(int factor);
 
     public enum FloatDirection
     {
@@ -58,27 +58,27 @@ namespace MetaMind.Perseverance.Guis.Particles
         {
             get
             {
-                return Position.X + this.Size.X < 0 ||
-                       Position.Y + this.Size.Y < 0 ||
-                       Position.X > GraphicsSettings.Width ||
-                       Position.Y > GraphicsSettings.Height;
+                return this.Position.X + this.Size.X < 0 ||
+                       this.Position.Y + this.Size.Y < 0 ||
+                       this.Position.X > GraphicsSettings.Width ||
+                       this.Position.Y > GraphicsSettings.Height;
             }
         }
 
         public Vector2 Size { get; private set; }
 
-        public static FloatParticle RandomParticle()
+        public static FloatParticle RandomParticle(int factor)
         {
-            return Generate();
+            return Generate(factor);
         }
 
         public void Colorize()
         {
             this.Color = new Color(
-                Random.Next(0, 255) / deep,
-                Random.Next(0, 255) / deep,
-                Random.Next(0, 255) / deep,
-                Random.Next(0, 255) / deep);
+                Random.Next(0, 255) / this.deep,
+                Random.Next(0, 255) / this.deep,
+                Random.Next(0, 255) / this.deep,
+                Random.Next(0, 255) / this.deep);
         }
 
         public override void Draw(GameTime gameTime)
@@ -89,24 +89,24 @@ namespace MetaMind.Perseverance.Guis.Particles
         public override void Update(GameTime gameTime)
         {
             // smooth disappearance
-            if (LastingSeconds < BubbleSeconds)
+            if (this.LastingSeconds < BubbleSeconds)
             {
-                this.Scale = Math.Min(LastingSeconds, this.Scale);
+                this.Scale = Math.Min(this.LastingSeconds, this.Scale);
             }
 
             this.Size = new Vector2(Width * this.Scale, Height * this.Scale);
 
             // random water movements
             this.Acceleration = new Vector2(
-                Random.Next((int)-pressure.X, (int)pressure.X),
-                Random.Next((int)-pressure.Y, (int)pressure.Y));
+                Random.Next((int)-this.pressure.X, (int)this.pressure.X),
+                Random.Next((int)-this.pressure.Y, (int)this.pressure.Y));
 
             base.Update(gameTime);
         }
 
         #region Particle Configuration
 
-        public static FloatParticle ParticleFromSide()
+        public static FloatParticle ParticleFromSide(int factor)
         {
             // direction only could be left or right 
             var direction = (FloatDirection)Random.Next(2);
@@ -114,7 +114,7 @@ namespace MetaMind.Perseverance.Guis.Particles
             var scale = deep;
 
             var acceleration   = new Vector2(direction == FloatDirection.Left ? Random.Next(5, 10) : Random.Next(-10, -5), 0);
-            var velocity       = new Vector2(direction == FloatDirection.Left ? Random.Next(30, 50) : Random.Next(-50, -30), 0);
+            var velocity       = new Vector2(direction == FloatDirection.Left ? Random.Next(30 * factor, 50 * factor) : Random.Next(-50 * factor, -30 * factor), 0);
             var lastingSeconds = Random.Next(BubbleSeconds, 2 * BubbleSeconds);
 
             var color    = new Color(Random.Next(0, 100) / deep, 50 / deep, 50 / deep, 50 / deep);
@@ -129,13 +129,13 @@ namespace MetaMind.Perseverance.Guis.Particles
             return particle;
         }
 
-        public static FloatParticle ParticleFromBelow()
+        public static FloatParticle ParticleFromBelow(int factor)
         {
             var deep  = Random.Next(1, 5);
             var scale = deep;
 
             var acceleration   = new Vector2(0, Random.Next(-10, -1));
-            var velocity       = new Vector2(0, Random.Next(-80, -30));
+            var velocity       = new Vector2(0, Random.Next(-80 * factor, -30 * factor));
             var lastingSeconds = Random.Next(BubbleSeconds, 2 * BubbleSeconds);
 
             var color = new Color(50 / deep, 50 / deep, Random.Next(0, 50) / deep, 50 / deep);

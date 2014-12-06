@@ -2,23 +2,23 @@
 {
     using System;
 
+    using MetaMind.Engine.Guis.Particles;
     using MetaMind.Engine.Screens;
     using MetaMind.Perseverance.Guis.Modules;
-    using MetaMind.Perseverance.Guis.Particles;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
     public class BackgroundScreen : GameScreen
     {
-        private readonly ChaosModule particles = new ChaosModule(new ChaosModuleSettings(Perseverance.Adventure.Random, FloatParticle.ParticleFromSide, 8, 2));
-        private          Texture2D   backgroundTexture;
+        private readonly ParticleModule particles = new ParticleModule(new Engine.Guis.Modules.ParticleModuleSettings(Perseverance.Adventure.Random, FloatParticle.ParticleFromSide, 8, 2));
+        private          Texture2D      backgroundTexture;
 
         #region Constructors
 
         public BackgroundScreen()
         {
-            this.TransitionOnTime = TimeSpan.FromSeconds(0.5);
+            this.TransitionOnTime  = TimeSpan.FromSeconds(0.5);
             this.TransitionOffTime = TimeSpan.FromSeconds(0.5);
         }
 

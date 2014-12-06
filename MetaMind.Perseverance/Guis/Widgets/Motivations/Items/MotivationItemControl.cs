@@ -1,12 +1,12 @@
 ﻿using MetaMind.Engine.Components.Inputs;
 using MetaMind.Engine.Guis.Elements.Frames;
-using MetaMind.Engine.Guis.Modules;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 {
+    using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Elements.Items;
     using MetaMind.Engine.Guis.Elements.ViewItems;
     using MetaMind.Engine.Guis.Elements.Views;

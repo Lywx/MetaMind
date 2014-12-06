@@ -7,13 +7,14 @@ namespace MetaMind.Engine.Guis.Elements.Frames
     {
         #region Public Properties
 
-        bool[ ] States { get; }
+        bool[] States { get; }
 
         Point Center { get; set; }
 
         Point Size { get; set; }
 
         Point Location { get; set; }
+
         int X { get; set; }
 
         int Y { get; set; }
@@ -26,8 +27,10 @@ namespace MetaMind.Engine.Guis.Elements.Frames
 
         #endregion Public Properties
 
-        void UpdateInput( GameTime gameTime );
+        void UpdateInput(GameTime gameTime);
 
-        bool IsEnabled( FrameState state );
+        bool IsEnabled(FrameState state);
+
+        void Disable(FrameState state);
     }
 }

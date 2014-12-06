@@ -1,5 +1,5 @@
 
-namespace MetaMind.Engine.Guis.Modules
+namespace MetaMind.Engine.Guis
 {
     public abstract class ModuleComponent<TModule, TModuleSettings, TModuleControl> : EngineObject 
         where                             TModule                                   : Module<TModuleSettings>
@@ -12,8 +12,8 @@ namespace MetaMind.Engine.Guis.Modules
             this.module = module;
         }
 
-        protected TModuleControl  Control        { get { return ( TModuleControl ) module.Control; } }
-        protected TModule         Module         { get { return module; } }
-        public    TModuleSettings ModuleSettings { get { return module.Settings; } }
+        protected TModuleControl  Control        { get { return ( TModuleControl ) this.module.Control; } }
+        protected TModule         Module         { get { return this.module; } }
+        public    TModuleSettings ModuleSettings { get { return this.module.Settings; } }
     }
 }

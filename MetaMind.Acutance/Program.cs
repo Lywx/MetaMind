@@ -20,7 +20,7 @@
                                   InnerChannel = { OperationTimeout = TimeSpan.FromMilliseconds(20) }
                               };
 
-            using (var engine = new GameEngine())
+            using (var engine = GameEngine.GetInstance())
             {
                 var fullscreen = args.Count() != 0 && args[0] == "--fullscreen";
                 var runner     = new Acutance(engine, client, fullscreen);

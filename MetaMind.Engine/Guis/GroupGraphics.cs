@@ -1,7 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-
-namespace MetaMind.Engine.Guis.Groups
+﻿namespace MetaMind.Engine.Guis
 {
+    using Microsoft.Xna.Framework;
+
     public interface IGroupGraphics
     {
         void Draw( GameTime gameTime );

@@ -3,6 +3,7 @@ namespace MetaMind.Perseverance.Guis.Modules
     using C3.Primtive2DXna;
 
     using MetaMind.Engine.Components.Inputs;
+    using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Modules;
     using MetaMind.Engine.Settings;
     using MetaMind.Perseverance.Concepts.Cognitions;

@@ -2,16 +2,16 @@
 {
     using System;
 
+    using MetaMind.Acutance.Guis.Modules;
+    using MetaMind.Engine.Guis.Particles;
     using MetaMind.Engine.Screens;
-    using MetaMind.Perseverance.Guis.Modules;
-    using MetaMind.Perseverance.Guis.Particles;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
     public class BackgroundScreen : GameScreen
     {
-        private readonly ChaosModule particles = new ChaosModule(new ChaosModuleSettings(Acutance.Adventure.Random, FloatParticle.ParticleFromBelow, 8, 2));
+        private readonly ParticleModule particles = new ParticleModule(new Engine.Guis.Modules.ParticleModuleSettings(Acutance.Adventure.Random, FloatParticle.ParticleFromBelow, 8, 2));
 
         private Texture2D backgroundTexture;
 
@@ -57,6 +57,8 @@
 
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
+            // forced input update
+            this.particles.HandleInput();
             this.particles.Update(gameTime);
             base          .Update(gameTime, otherScreenHasFocus, false);
         }

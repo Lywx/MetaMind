@@ -1,7 +1,7 @@
-using Microsoft.Xna.Framework;
-
-namespace MetaMind.Perseverance.Guis.Particles
+namespace MetaMind.Engine.Guis.Particles
 {
+    using Microsoft.Xna.Framework;
+
     public interface IParticle
     {
         Vector2 Acceleration { get; set; }
@@ -32,7 +32,7 @@ namespace MetaMind.Perseverance.Guis.Particles
         protected Particle(Vector2 a, Vector2 v, float angle, float angularA, float angularV, float lastingSeconds, Color color, float scale)
             : base(a, v, angle, angularA, angularV, lastingSeconds)
         {
-            Color = color;
+            this.Color = color;
             this.Scale = scale;
         }
 
