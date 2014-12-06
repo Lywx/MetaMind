@@ -66,16 +66,6 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public override void UpdateInput(GameTime gameTime)
         {
-            // special
-            //----------------------------------------------------------------- 
-            if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceClearItem))
-            {
-                if (string.IsNullOrWhiteSpace(ItemData.Name))
-                {
-                    this.DeleteIt();
-                }
-            }
-
             // mouse
             //-----------------------------------------------------------------
             base.UpdateInput(gameTime);
@@ -84,18 +74,6 @@ namespace MetaMind.Acutance.Guis.Widgets
             //-----------------------------------------------------------------
             if (this.AcceptInput)
             {
-                // normal status
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceEditItem))
-                {
-                    this.View.Enable(ViewState.Item_Editting);
-                    this.Item.Enable(ItemState.Item_Pending);
-                }
-
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceDeleteItem))
-                {
-                    this.DeleteIt();
-                }
-
                 // in pending status
                 if (this.Item.IsEnabled(ItemState.Item_Pending))
                 {
@@ -110,7 +88,36 @@ namespace MetaMind.Acutance.Guis.Widgets
                         this.Item.Disable(ItemState.Item_Pending);
                     }
                 }
+
+                if (!this.Locked)
+                {
+                    // normal status
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceEditItem))
+                    {
+                        this.View.Enable(ViewState.Item_Editting);
+                        this.Item.Enable(ItemState.Item_Pending);
+                    }
+
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceDeleteItem))
+                    {
+                        this.DeleteIt();
+                    }
+                }
             }
+
+            // special
+            //----------------------------------------------------------------- 
+            if (!this.Locked)
+            {
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceClearItem))
+                {
+                    if (string.IsNullOrWhiteSpace(ItemData.Name))
+                    {
+                        this.DeleteIt();
+                    }
+                }
+            }
+
         }
 
         #endregion Update

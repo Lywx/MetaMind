@@ -74,18 +74,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
             //-----------------------------------------------------------------
             if (this.AcceptInput)
             {
-                // normal status
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskEditItem))
-                {
-                    View.Enable(ViewState.Item_Editting);
-                    Item.Enable(ItemState.Item_Pending);
-                }
-
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskDeleteItem))
-                {
-                    this.DeleteIt();
-                }
-
                 // in pending status
                 if (Item.IsEnabled(ItemState.Item_Pending))
                 {
@@ -125,6 +113,18 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
                 // accepting input but not locked
                 if (!this.Locked)
                 {
+                    // normal status
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskEditItem))
+                    {
+                        View.Enable(ViewState.Item_Editting);
+                        Item.Enable(ItemState.Item_Pending);
+                    }
+
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskDeleteItem))
+                    {
+                        this.DeleteIt();
+                    }
+
                     if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Enter))
                     {
                         this.ItemSyncControl.SwitchSync();

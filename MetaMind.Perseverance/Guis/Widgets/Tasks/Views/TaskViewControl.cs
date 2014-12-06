@@ -105,12 +105,12 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
                 if (InputSequenceManager.Mouse.IsWheelScrolledUp)
                 {
                     this.ScrollBar.Trigger();
-                    this.Scroll.MoveUp();
+                    this.Scroll   .MoveUp();
                 }
 
                 if (InputSequenceManager.Mouse.IsWheelScrolledDown)
                 {
-                    this.Scroll.MoveDown();
+                    this.Scroll   .MoveDown();
                     this.ScrollBar.Trigger();
                 }
 
