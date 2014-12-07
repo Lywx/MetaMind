@@ -50,6 +50,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         // synchronization
         // ---------------------------------------------------------------------
+        ForceFlip,
         ForceReset,
         ForceReverse,
 
@@ -59,7 +60,7 @@ namespace MetaMind.Engine.Components.Inputs
         Escape, 
 
         // ---------------------------------------------------------------------
-        ActionNum, 
+        ActionNum,
     }
 
     public class KeyboardActionMap
@@ -302,6 +303,9 @@ namespace MetaMind.Engine.Components.Inputs
 
             actionMaps[(int)Actions.ForceReverse] = new KeyboardActionMap();
             actionMaps[(int)Actions.ForceReverse].Bindings.Add(Keys.Space, new List<Keys> { Keys.LeftControl, Keys.LeftShift });
+
+            actionMaps[(int)Actions.ForceFlip] = new KeyboardActionMap();
+            actionMaps[(int)Actions.ForceFlip].Bindings.Add(Keys.Enter, new List<Keys> { Keys.LeftControl, Keys.LeftShift });
 
             // general
             // ---------------------------------------------------------------------

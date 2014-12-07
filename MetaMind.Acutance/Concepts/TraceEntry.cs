@@ -10,10 +10,7 @@ namespace MetaMind.Acutance.Concepts
     [DataContract]
     public class TraceEntry : EngineObject
     {
-        [DataMember]
-        public bool Correct;
-
-        [DataMember]
+        [DataMember(IsRequired = true)]
         public Experience Experience;
 
         [DataMember]
@@ -60,7 +57,7 @@ namespace MetaMind.Acutance.Concepts
 
             this.timer.Restart();
 
-            if (this.TransExperience.Duration >= TimeSpan.FromSeconds(10))
+            if (this.TransExperience.CertainDuration >= TimeSpan.FromSeconds(20))
             {
                 Stopped = true;
             }

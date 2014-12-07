@@ -97,6 +97,18 @@ namespace MetaMind.Engine.Components
             ScreenManager.SpriteBatch.DrawString(spriteFont, avaliableText, centeredPosition, color, 0f, Vector2.Zero, size, SpriteEffects.None, 0);
         }
 
+        public void DrawVCenteredText(Font font, string text, Vector2 position, Color color, float size)
+        {
+            position += new Vector2(font.MeasureString(text).X * size / 2, 0);
+            this.DrawCenteredText(font, text, position, color, size);
+        }
+
+        public void DrawHCenteredText(Font font, string text, Vector2 position, Color color, float size)
+        {
+            position += new Vector2(0, font.MeasureString(text).Y * size / 2);
+            this.DrawCenteredText(font, text, position, color, size);
+        }
+
         /// <summary>
         /// Draws the left-top text at particular position.
         /// </summary>

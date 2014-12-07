@@ -17,8 +17,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
         public ItemEntryFrame ExperienceFrame { get; private set; }
 
-        public ItemEntryFrame RationaleFrame { get; private set; }
-
         public TaskItemFrameControl(IViewItem item)
             : base(item)
         {
@@ -26,7 +24,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
             this.IdFrame         = new ItemEntryFrame(item);
             this.ExperienceFrame = new ItemEntryFrame(item);
             this.ProgressFrame   = new ItemEntryFrame(item);
-            this.RationaleFrame  = new ItemEntryFrame(item);
         }
 
         public override void UpdateInput(GameTime gameTime)
@@ -37,12 +34,11 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
             this.IdFrame        .UpdateInput(gameTime);
             this.ExperienceFrame.UpdateInput(gameTime);
             this.ProgressFrame  .UpdateInput(gameTime);
-            this.RationaleFrame .UpdateInput(gameTime);
         }
 
         protected override void UpdateFrameGeometry()
         {
-            int middleWidth = (ItemSettings.NameFrameSize.X - ItemSettings.IdFrameSize.X - ItemSettings.RationaleFrameSize.X) / 2;
+            int middleWidth = (ItemSettings.NameFrameSize.X - ItemSettings.IdFrameSize.X) / 2;
 
             ((TaskItemSettings)ItemSettings).ExperienceFrameSize.X = middleWidth;
             ((TaskItemSettings)ItemSettings).ProgressFrameSize.X   = middleWidth;
@@ -52,14 +48,12 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
             this.IdFrame           .Location = Vector2Ext.ToPoint(IdFrameLocation);
             this.ExperienceFrame   .Location = Vector2Ext.ToPoint(ExperienceFrameLocation);
             this.ProgressFrame     .Location = Vector2Ext.ToPoint(ProgressFrameLocation);
-            this.RationaleFrame    .Location = Vector2Ext.ToPoint(RationFrameLocation);
 
             this.RootFrame         .Size = ItemSettings.RootFrameSize;
             this.NameFrame         .Size = ItemSettings.NameFrameSize;
             this.IdFrame           .Size = ItemSettings.IdFrameSize;
             this.ExperienceFrame   .Size = ItemSettings.ExperienceFrameSize;
             this.ProgressFrame     .Size = ItemSettings.ProgressFrameSize;
-            this.RationaleFrame    .Size = ItemSettings.RationaleFrameSize;
         }
 
         private Vector2 RootFrameLocation

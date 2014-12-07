@@ -34,8 +34,6 @@ namespace MetaMind.Engine.Guis.Particles
 
         private readonly int deep;
 
-        private Vector2 pressure = new Vector2(10, 10);
-
         public FloatParticle(Vector2 position, Vector2 a, Vector2 v, float lastingSeconds, Color color, int deep, float scale)
             : base(a, v, 0f, 0f, 0f, lastingSeconds, color, scale)
         {
@@ -49,9 +47,11 @@ namespace MetaMind.Engine.Guis.Particles
                 throw new InvalidOperationException("Random is not set.");
             }
             
-            this.deep = deep;
-            this.Size = new Vector2(Width, Height) * scale;
+            this.deep     = deep;
             this.Position = position;
+            
+            this.Size     = new Vector2(Width, Height) * scale;
+            this.Pressure = new Vector2(10, 10);
         }
 
         public bool IsOutsideScreen
@@ -66,6 +66,8 @@ namespace MetaMind.Engine.Guis.Particles
         }
 
         public Vector2 Size { get; private set; }
+
+        public Vector2 Pressure { get; set; }
 
         public static FloatParticle RandomParticle(int factor)
         {
@@ -98,8 +100,8 @@ namespace MetaMind.Engine.Guis.Particles
 
             // random water movements
             this.Acceleration = new Vector2(
-                Random.Next((int)-this.pressure.X, (int)this.pressure.X),
-                Random.Next((int)-this.pressure.Y, (int)this.pressure.Y));
+                Random.Next((int)-this.Pressure.X, (int)this.Pressure.X),
+                Random.Next((int)-this.Pressure.Y, (int)this.Pressure.Y));
 
             base.Update(gameTime);
         }

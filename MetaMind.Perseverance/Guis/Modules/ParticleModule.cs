@@ -4,12 +4,14 @@ namespace MetaMind.Perseverance.Guis.Modules
     using MetaMind.Engine.Guis.Modules;
 
     using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Input;
 
     public class ParticleModule : Engine.Guis.Modules.ParticleModule
     {
         public ParticleModule(ParticleModuleSettings settings)
             : base(settings)
         {
+            SpawnSpeed = 2;
         }
 
         public override void UpdateInput(GameTime gameTime)
@@ -18,14 +20,14 @@ namespace MetaMind.Perseverance.Guis.Modules
                 InputSequenceManager.Keyboard.IsActionPressed(Actions.SRight))
             {
                 this.Refresh = true;
-                this.Plain = true;
+                this.Plain   = true;
             }
 
             if (InputSequenceManager.Keyboard.IsActionPressed(Actions.SUp) &&
                 InputSequenceManager.Keyboard.IsActionPressed(Actions.SDown))
             {
                 this.Refresh = false;
-                this.Plain = false;
+                this.Plain   = false;
             }
         }
     }

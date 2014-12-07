@@ -8,7 +8,6 @@
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis;
-    using MetaMind.Engine.Guis.Modules;
     using MetaMind.Engine.Settings;
     using MetaMind.Perseverance.Concepts.Cognitions;
     using MetaMind.Perseverance.Concepts.TaskEntries;
@@ -25,6 +24,8 @@
         private readonly ISynchronization synchronization;
 
         private readonly SynchronizationMonitor monitor;
+
+        private readonly SynchronizationValve valve;
 
         private SynchronizationModuleSleepStartedEventListener    sleepStartedEventListener;
 
@@ -43,6 +44,7 @@
             // best close the mouse listener
             // which may casue severe mouse performance issues
             this.monitor = new SynchronizationMonitor(ScreenManager.Game, synchronization, false);
+            this.valve   = new SynchronizationValve();
         }
 
         #endregion Constructors
@@ -101,15 +103,7 @@
             }
         }
 
-        private Vector2 Message1Center
-        {
-            get
-            {
-                return new Vector2(GraphicsSettings.Width / 2f, this.StatusInfoCenter.Y + 30);
-            }
-        }
-
-        private Vector2 Message2Center
+        private Vector2 MessageCenter
         {
             get
             {
@@ -161,6 +155,34 @@
             }
         }
 
+        private Rectangle ValveFrameRectangle
+        {
+            get
+            {
+                return new Rectangle(
+                    this.Settings.ValveFrameX - this.Settings.ValveFrameSize.X / 2,
+                    this.Settings.ValveFrameY - this.Settings.ValveFrameSize.Y / 2,
+                    this.Settings.ValveFrameSize.X,
+                    this.Settings.ValveFrameSize.Y);
+            }
+        }
+
+        private Vector2 ValveStateInfoPrefixCenter
+        {
+            get
+            {
+                return new Vector2(GraphicsSettings.Width / 2f, this.StatusInfoCenter.Y + 30);
+            }
+        }
+
+        private Vector2 ValveStateInfoSubfixCenter
+        {
+            get
+            {
+                return this.ValveStateInfoPrefixCenter + new Vector2(0, 82);
+            }
+        }
+
         #endregion Locations
 
         #region Load and Unload
@@ -209,44 +231,24 @@
 
         public void StartSynchronizing(TaskEntry target)
         {
-            this.synchronization.TryStart(target);
+            if (valve.Opened)
+            {
+                this.synchronization.TryStart(target);
+            }
         }
 
         public void StopSynchronizing()
         {
-            this.synchronization.Stop();
-            this.monitor        .Stop();
+            if (valve.Opened)
+            {
+                this.synchronization.Stop();
+                this.monitor        .Stop();
+            }
         }
 
         #endregion Operations
 
-        #region Update and Draw
-
-        public override void Draw(GameTime gameTime, byte alpha)
-        {
-            this.DrawProgressFrame();
-            this.DrawSynchronizationDotFrame();
-
-            this.DrawStateInformation();
-            this.DrawStatusInformation();
-
-            this.DrawAccelerationIndicator();
-
-            this.DrawAccumulationIndicator();
-            
-            this.DrawDailySyncRateIndicator();
-
-            this.DrawMassage(gameTime);
-
-            ScreenManager.SpriteBatch.End();
-            ScreenManager.SpriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.Additive);
-
-            this.DrawProgressBar();
-            this.DrawSynchronizationDot();
-
-            ScreenManager.SpriteBatch.End();
-            ScreenManager.SpriteBatch.Begin();
-        }
+        #region Update
 
         public override void UpdateInput(GameTime gameTime)
         {
@@ -259,6 +261,11 @@
             {
                 this.synchronization.TryAbort();
             }
+
+            if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.ForceFlip))
+            {
+                this.valve.Flip();
+            }
         }
 
         public override void UpdateStructure(GameTime gameTime)
@@ -266,7 +273,38 @@
             this.monitor.TryStart();
         }
 
-        private void DrawAccelerationIndicator()
+        #endregion
+
+        #region Draw
+
+        public override void Draw(GameTime gameTime, byte alpha)
+        {
+            this.DrawProgressFrame();
+            this.DrawDotFrame();
+
+            this.DrawStateInfo();
+            this.DrawStatusInfo();
+
+            this.DrawValveStatusInfo();
+
+            this.DrawAccelerationInfo();
+            this.DrawAccumulationInfo();
+            
+            this.DrawDailyRateInfo();
+
+            this.DrawMassage(gameTime);
+
+            ScreenManager.SpriteBatch.End();
+            ScreenManager.SpriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.Additive);
+
+            this.DrawProgressBar();
+            this.DrawDot();
+
+            ScreenManager.SpriteBatch.End();
+            ScreenManager.SpriteBatch.Begin();
+        }
+
+        private void DrawAccelerationInfo()
         {
             FontManager.DrawCenteredText(
                 this.Settings.AccelerationFont,
@@ -282,7 +320,7 @@
                 this.Settings.AccelerationSize);
         }
 
-        private void DrawAccumulationIndicator()
+        private void DrawAccumulationInfo()
         {
             FontManager.DrawCenteredText(
                 this.Settings.AccumulationFont,
@@ -292,7 +330,7 @@
                 this.Settings.AccumulationSize);
         }
 
-        private void DrawDailySyncRateIndicator()
+        private void DrawDailyRateInfo()
         {
             var awake = this.cognition.Consciousness as ConsciousnessAwake;
             if (awake != null)
@@ -305,90 +343,33 @@
                                               : TimeSpan.Zero);
 
                 var syncRate = synchronizedTime.TotalSeconds / awakeTime.TotalSeconds;
-                var rateText = (syncRate * 100).ToString("F0");
+                var syncRateText = (syncRate * 100).ToString("F0");
 
+                // draw rate digits
                 FontManager.DrawCenteredText(
                     this.Settings.SynchronizationRateFont,
-                    rateText,
+                    syncRateText,
                     this.DailySyncHourPrefixCenter,
                     this.Settings.SynchronizationRateColor,
                     this.Settings.SynchronizationRateSize);
 
-                const int PercentSymbolMargin = 10;
-                var rateTextMargin =
-                    new Vector2(
-                        this.Settings.SynchronizationRateFont.MeasureString(rateText).X / 2
-                        * this.Settings.SynchronizationRateSize + PercentSymbolMargin,
-                        0);
+                const int    SymbolMargin = 10;
+                const string Symbol = "%";
 
+                var syncRateTextWidth = this.Settings.SynchronizationRateFont.MeasureString(syncRateText).X;
+                var syncRateTextMargin = new Vector2(syncRateTextWidth / 2 * this.Settings.SynchronizationRateSize + SymbolMargin, 0);
+
+                // draw % after rate digits
                 FontManager.DrawCenteredText(
                     this.Settings.SynchronizationRateFont,
-                    "%",
-                    this.DailySyncHourPrefixCenter + rateTextMargin,
+                    Symbol,
+                    this.DailySyncHourPrefixCenter + syncRateTextMargin,
                     this.Settings.SynchronizationRateColor,
                     1f);
             }
         }
 
-        private void DrawMassage(GameTime gameTime)
-        {
-            var alpha  = (byte)(255 * Math.Abs(Math.Sin(gameTime.TotalGameTime.TotalSeconds * 3)));
-            var better = this.synchronization.SynchronizedHourToday >= this.synchronization.SynchronizedHourYesterday;
-
-            const string IncreaseMessage = "Motivation Synchronization Ratio increases";
-            const string DecreaseMessage = "Motivation Synchronization Ratio decreases";
-
-            FontManager.DrawCenteredText(
-                this.Settings.MessageFont,
-                better ? IncreaseMessage : DecreaseMessage,
-                this.Message2Center,
-                (better ? this.Settings.BarFrameAscendColor : this.Settings.BarFrameDescendColor).MakeTransparent(alpha),
-                this.Settings.MessageSize);
-
-            const string ChangeMessage = "Guide and Change your Motivation";
-
-            FontManager.DrawCenteredText(
-                this.Settings.MessageFont,
-                ChangeMessage,
-                this.Message1Center,
-                this.Settings.BarFrameAscendColor.MakeTransparent(alpha),
-                this.Settings.MessageSize);
-        }
-
-        private void DrawProgressBar()
-        {
-            Primitives2D.FillRectangle(
-                ScreenManager.SpriteBatch,
-                this.ProgressBarRectangle,
-                this.synchronization.Enabled ? this.Settings.BarFrameAscendColor : this.Settings.BarFrameDescendColor);
-        }
-
-        private void DrawProgressFrame()
-        {
-            Primitives2D.FillRectangle(ScreenManager.SpriteBatch, this.ProgressFrameRectangle, this.Settings.BarFrameBackgroundColor);
-        }
-
-        private void DrawStateInformation()
-        {
-            FontManager.DrawCenteredText(
-                this.Settings.StateFont,
-                this.synchronization.Enabled ? SyncTrueInfo : SyncFalseInfo,
-                this.StateInfoCenter,
-                this.Settings.StateColor,
-                this.Settings.StateSize);
-        }
-
-        private void DrawStatusInformation()
-        {
-            FontManager.DrawCenteredText(
-                this.Settings.StateFont,
-                string.Format("Level {0}: {1}", this.synchronization.Level, this.synchronization.State),
-                this.StatusInfoCenter,
-                this.Settings.StatusColor,
-                this.Settings.StatusSize);
-        }
-
-        private void DrawSynchronizationDot()
+        private void DrawDot()
         {
             // left side content
             for (var i = 0; i < this.synchronization.SynchronizedHourToday; ++i)
@@ -425,7 +406,7 @@
             }
         }
 
-        private void DrawSynchronizationDotFrame()
+        private void DrawDotFrame()
         {
             // left side frame
             for (var i = 0; i < this.synchronization.SynchronizedHourMax; ++i)
@@ -464,9 +445,71 @@
             }
         }
 
-        private Vector2 SynchronizationDotTextCenter(Rectangle dotFrame)
+        private void DrawMassage(GameTime gameTime)
         {
-            return dotFrame.Center.ToVector2() + new Vector2(0, this.Settings.BarFrameSize.Y * 2);
+            var alpha  = (byte)(255 * Math.Abs(Math.Sin(gameTime.TotalGameTime.TotalSeconds * 3)));
+            var better = this.synchronization.SynchronizedHourToday >= this.synchronization.SynchronizedHourYesterday;
+
+            const string IncreaseMessage = "Computational Motivation Synchronization Ratio increases";
+            const string DecreaseMessage = "Computational Motivation Synchronization Ratio decreases";
+
+            FontManager.DrawCenteredText(
+                this.Settings.MessageFont,
+                better ? IncreaseMessage : DecreaseMessage,
+                this.MessageCenter,
+                (better ? this.Settings.BarFrameAscendColor : this.Settings.BarFrameDescendColor).MakeTransparent(alpha),
+                this.Settings.MessageSize);
+        }
+
+        private void DrawProgressBar()
+        {
+            Primitives2D.FillRectangle(
+                ScreenManager.SpriteBatch,
+                this.ProgressBarRectangle,
+                this.synchronization.Enabled ? this.Settings.BarFrameAscendColor : this.Settings.BarFrameDescendColor);
+        }
+
+        private void DrawProgressFrame()
+        {
+            Primitives2D.FillRectangle(ScreenManager.SpriteBatch, this.ProgressFrameRectangle, this.Settings.BarFrameBackgroundColor);
+        }
+
+        private void DrawStateInfo()
+        {
+            FontManager.DrawCenteredText(
+                this.Settings.StateFont,
+                this.synchronization.Enabled ? SyncTrueInfo : SyncFalseInfo,
+                this.StateInfoCenter,
+                this.Settings.StateColor,
+                this.Settings.StateSize);
+        }
+
+        private void DrawStatusInfo()
+        {
+            FontManager.DrawCenteredText(
+                this.Settings.StateFont,
+                string.Format("Level {0}: {1}", this.synchronization.Level, this.synchronization.State),
+                this.StatusInfoCenter,
+                this.Settings.StatusColor,
+                this.Settings.StatusSize);
+        }
+
+        private void DrawValveStatusInfo()
+        {
+            const string PrefixText = "Approximated Motive Toward Current Moitivation: ";
+            FontManager.DrawCenteredText(
+                this.Settings.ValveStateFont,
+                PrefixText + (this.valve.Opened ? "On" : "Off"),
+                this.ValveStateInfoPrefixCenter,
+                this.Settings.ValueStatusColor,
+                0.7f);
+
+            FontManager.DrawCenteredText(
+                this.Settings.ValveStateFont,
+                "[   ]",
+                this.ValveStateInfoSubfixCenter,
+                this.valve.Opened ? this.Settings.BarFrameAscendColor : this.Settings.BarFrameDescendColor,
+                this.Settings.ValueStatusSize);
         }
 
         private Rectangle SynchronizationDotRectangle(int i, bool leftsided)
@@ -476,6 +519,11 @@
                 (int)this.StateInfoCenter.Y - 1,
                 this.Settings.BarFrameSize.Y,
                 this.Settings.BarFrameSize.Y);
+        }
+
+        private Vector2 SynchronizationDotTextCenter(Rectangle dotFrame)
+        {
+            return dotFrame.Center.ToVector2() + new Vector2(0, this.Settings.BarFrameSize.Y * 2);
         }
 
         #endregion Update and Draw

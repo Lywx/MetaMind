@@ -18,7 +18,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         private readonly Banner banner;
 
-        private bool[] readyMoving = new bool[(int)Views.ViewNum];
+        private bool[] readyMoving = new bool[(int)ViewEnum.ViewNum];
 
         public MotivationExchange(MotivationExchangeSettings settings)
             : base(settings)
@@ -40,7 +40,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             this.nowView.Control.Selection.Select(0);
         }
 
-        private enum Views
+        private enum ViewEnum
         {
             Past, Now, Future, 
 
@@ -116,61 +116,75 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         private void BetweenViewUpdateStructure(GameTime gameTime)
         {
-            if (this.readyMoving[(int)Views.Past])
+            if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
             {
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
+                if (this.IsMoving(ViewEnum.Now))
+                {
+                    this.nowView   .Control.Selection.Clear();
+                    this.nowView   .Control.Region   .Clear();
+                    this.pastView  .Control.Selection.Select(0);
+                    this.futureView.Control.Selection.Clear();
+                    this.futureView.Control.Region   .Clear();
+                }
+                else if (this.IsMoving(ViewEnum.Future))
+                {
+                    this.nowView   .Control.Selection.Select(0);
+                    this.futureView.Control.Selection.Clear();
+                    this.futureView.Control.Region   .Clear();
+                }
+            }
+            else if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
+            {
+                if (this.IsMoving(ViewEnum.Past))
                 {
                     this.pastView.Control.Selection.Clear();
                     this.pastView.Control.Region   .Clear();
                     this.nowView .Control.Selection.Select(0);
                 }
-
-                this.readyMoving[(int)Views.Past] = false;
-            }
-
-            if (this.readyMoving[(int)Views.Now])
-            {
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
+                else if (this.IsMoving(ViewEnum.Now))
                 {
-                    this.nowView .Control.Selection.Clear();
-                    this.nowView .Control.Region   .Clear();
-                    this.pastView.Control.Selection.Select(0);
-                }
-                else if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
-                {
+                    this.pastView  .Control.Selection.Clear();
+                    this.pastView  .Control.Region   .Clear();
                     this.nowView   .Control.Selection.Clear();
                     this.nowView   .Control.Region   .Clear();
                     this.futureView.Control.Selection.Select(0);
                 }
-
-                this.readyMoving[(int)Views.Now] = false;
             }
 
-            if (this.readyMoving[(int)Views.Future])
-            {
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
-                {
-                    this.futureView.Control.Selection.Clear();
-                    this.futureView.Control.Region   .Clear();
-                    this.nowView   .Control.Selection.Select(0);
-                }
+            this.ResetMoving();
 
-                this.readyMoving[(int)Views.Future] = false;
-            }
+            this.CheckMoving(pastView  , ViewEnum.Past);
+            this.CheckMoving(nowView   , ViewEnum.Now);
+            this.CheckMoving(futureView, ViewEnum.Future);
+        }
 
-            if (this.pastView.Items.First().IsEnabled(ItemState.Item_Selected))
-            {
-                this.readyMoving[(int)Views.Past] = true;
-            }
+        private bool IsMoving(ViewEnum e)
+        {
+            return this.readyMoving[(int)e];
+        }
 
-            if (this.nowView.Items.First().IsEnabled(ItemState.Item_Selected))
-            {
-                this.readyMoving[(int)Views.Now] = true;
-            }
+        private void CompeteMoving(ViewEnum e)
+        {
+            this.ResetMoving();
+            this.EnableMoving(e);
+        }
 
-            if (this.futureView.Items.First().IsEnabled(ItemState.Item_Selected))
+        private void EnableMoving(ViewEnum e)
+        {
+            this.readyMoving[(int)e] = true;
+        }
+
+        private void ResetMoving()
+        {
+            this.readyMoving = new bool[(int)ViewEnum.ViewNum];
+        }
+
+        private void CheckMoving(IView view, ViewEnum e)
+        {
+            var items = view.Items;
+            if (items.Count != 0 && items.First().IsEnabled(ItemState.Item_Selected))
             {
-                this.readyMoving[(int)Views.Future] = true;
+                this.CompeteMoving(e);
             }
         }
 

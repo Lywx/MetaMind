@@ -167,6 +167,17 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
                     // auto select new item
                     this.Selection.Select(View.Items.Count - 1);
                 }
+
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskDeleteItem))
+                {
+                    // itme deletion is handled by item control
+                    // auto select last item
+                    if (this.View.Items.Count > 1)
+                    {
+                        // this will be called before item deletion
+                        this.Selection.Select(this.View.Items.Count - 2);
+                    }
+                }
             }
 
             // item input

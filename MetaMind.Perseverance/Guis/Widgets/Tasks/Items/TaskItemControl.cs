@@ -36,8 +36,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
         public ItemEntryFrame ProgressFrame { get { return ((TaskItemFrameControl)ItemFrameControl).ProgressFrame; } }
 
-        public ItemEntryFrame RationaleFrame { get { return ((TaskItemFrameControl)ItemFrameControl).RationaleFrame; } }
-
         public TaskItemSyncControl ItemSyncControl { get; private set; }
 
         #endregion Constructors

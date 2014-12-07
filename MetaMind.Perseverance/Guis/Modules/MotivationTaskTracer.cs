@@ -181,12 +181,21 @@ namespace MetaMind.Perseverance.Guis.Modules
                     // item deletion was processed by item control which is unaware of motivation
 
                     // get the deleted item data
-                    if (this.View.Items.Count != 0)
+                    var id = (int)this.View.Control.Selection.SelectedId;
+                    if (id < this.View.Items.Count)
                     {
-                        var task = this.View.Items[(int)this.View.Control.Selection.SelectedId].ItemData;
+                        var task = this.View.Items[id].ItemData;
 
                         // remove from host motivation's tasks
                         this.FastHostData["Tasks"].Remove(task);
+                    }
+
+                    // itme deletion is handled by item control
+                    // auto select last item
+                    if (this.View.Items.Count > 1)
+                    {
+                        // this will be called before item deletion
+                        this.View.Control.Selection.Select(this.View.Items.Count - 2);
                     }
                 }
             }

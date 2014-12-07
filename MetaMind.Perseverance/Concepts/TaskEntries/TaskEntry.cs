@@ -25,13 +25,6 @@
 
         #endregion Experience
 
-        #region Error
-
-        [DataMember]
-        public int RationaleScale;
-
-        #endregion Error
-
         #region Progress
 
         [DataMember]

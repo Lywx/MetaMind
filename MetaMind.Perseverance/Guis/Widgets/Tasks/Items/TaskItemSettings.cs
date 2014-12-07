@@ -26,7 +26,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
         //---------------------------------------------------------------------
         public Color NameFrameRegularColor         = new Color(0, 0, 0, 0);
-
         public Color NameFrameMouseOverColor       = new Color(23, 41, 61, 2);
         public Color NameFramePendingColor         = new Color(200, 200, 0, 2);
         public Color NameFrameModificationColor    = new Color(0, 0, 0, 0);
@@ -35,7 +34,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
         //---------------------------------------------------------------------
         public Color IdFramePendingColor           = new Color(200, 200, 0, 2);
-        public Color IdFrameNotDocumentedColor     = new Color(139, 0, 0, 2);
 
         //---------------------------------------------------------------------
         public float ExperienceSize                = 0.7f;
@@ -53,14 +51,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
         public Color ProgressFrameColor            = new Color(16, 32, 32, 2);
         public Point ProgressFrameMargin           = new Point(2, 2);
         public Color ProgressBarColor              = ColorPalette.TransparentColor2;
-
-        //---------------------------------------------------------------------
-        public float RationaleSize                 = 1f;
-        public Color RationaleColor                = Color.White;
-        public Font  RationaleFont                 = Font.UiStatisticsFont;
-        public Point RationaleFrameSize            = new Point(24, 24);
-        public Color RationaleFrameColor           = new Color(124, 42, 175, 2);
-        public Point RationaleFrameMargin          = new Point(2, 2);
 
         //---------------------------------------------------------------------
         public Font  HelpFont                      = Font.UiStatisticsFont;

@@ -100,8 +100,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
             this.DrawExperience(alpha);
             this.DrawProgressFrame(alpha);
             this.DrawProgress(alpha);
-            this.DrawRationaleFrame(alpha);
-            this.DrawRationale(alpha);
 
             this.DrawSynchronization(gameTime, alpha);
         }
@@ -136,13 +134,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
                     ScreenManager.SpriteBatch,
                     RectangleExt.Crop(ItemControl.IdFrame.Rectangle, ItemSettings.IdFrameMargin),
                     ColorExt.MakeTransparent(ItemSettings.IdFramePendingColor, alpha));
-            }
-            else if (ItemData.RationaleScale == 0)
-            {
-                Primitives2D.FillRectangle(
-                    ScreenManager.SpriteBatch,
-                    RectangleExt.Crop(ItemControl.IdFrame.Rectangle, ItemSettings.IdFrameMargin),
-                    ColorExt.MakeTransparent(ItemSettings.IdFrameNotDocumentedColor, alpha));
             }
             else
             {
@@ -199,24 +190,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
                 ScreenManager.SpriteBatch,
                 RectangleExt.Crop(ItemControl.ProgressFrame.Rectangle, ItemSettings.ProgressFrameMargin),
                 ColorExt.MakeTransparent(ItemSettings.ProgressFrameColor, alpha));
-        }
-
-        private void DrawRationale(byte alpha)
-        {
-            FontManager.DrawCenteredText(
-                ItemSettings.RationaleFont, 
-                ItemData.RationaleScale.ToString(new CultureInfo("en-US")),
-                this.RationaleCenter,
-                ColorExt.MakeTransparent(ItemSettings.RationaleColor, alpha),
-                ItemSettings.IdSize);
-        }
-
-        private void DrawRationaleFrame(byte alpha)
-        {
-            Primitives2D.FillRectangle(
-                ScreenManager.SpriteBatch,
-                RectangleExt.Crop(ItemControl.RationaleFrame.Rectangle, ItemSettings.RationaleFrameMargin),
-                ColorExt.MakeTransparent(ItemSettings.RationaleFrameColor, alpha));
         }
 
         private void DrawSynchronization(GameTime gameTime, byte alpha)

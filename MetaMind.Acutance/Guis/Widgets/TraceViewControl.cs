@@ -40,13 +40,13 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public void AddItem(TraceEntry entry)
         {
-            this.View.Items.Add(
+            View.Items.Add(
                 new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory, entry));
         }
 
         public void AddItem()
         {
-            this.View.Items.Add(
+            View.Items.Add(
                 new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory));
         }
 
@@ -80,7 +80,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public bool Locked
         {
-            get { return this.View.IsEnabled(ViewState.Item_Editting); }
+            get { return View.IsEnabled(ViewState.Item_Editting); }
         }
 
         public override void UpdateInput(GameTime gameTime)
