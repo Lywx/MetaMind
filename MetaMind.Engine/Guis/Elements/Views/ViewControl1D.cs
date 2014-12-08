@@ -115,33 +115,40 @@ namespace MetaMind.Engine.Guis.Elements.Views
             {
                 // mouse
                 // ------------------------------------------------------------------
-                if (InputSequenceManager.Mouse.IsWheelScrolledUp)
+                if (ViewSettings.MouseEnabled)
                 {
-                    this.Scroll.MoveLeft();
-                }
+                    if (InputSequenceManager.Mouse.IsWheelScrolledUp)
+                    {
+                        this.Scroll.MoveLeft();
+                    }
 
-                if (InputSequenceManager.Mouse.IsWheelScrolledDown)
-                {
-                    this.Scroll.MoveRight();
+                    if (InputSequenceManager.Mouse.IsWheelScrolledDown)
+                    {
+                        this.Scroll.MoveRight();
+                    }
+                    
                 }
 
                 // keyboard
                 // ------------------------------------------------------------------
-                // movement
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
+                if (ViewSettings.KeyboardEnabled)
                 {
-                    this.MoveLeft();
-                }
+                    // movement
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
+                    {
+                        this.MoveLeft();
+                    }
 
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
-                {
-                    this.MoveRight();
-                }
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
+                    {
+                        this.MoveRight();
+                    }
 
-                // escape
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
-                {
-                    this.Selection.Clear();
+                    // escape
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
+                    {
+                        this.Selection.Clear();
+                    }
                 }
             }
 

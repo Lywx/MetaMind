@@ -70,62 +70,65 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
             // keyboard
             //-----------------------------------------------------------------
-            if (this.AcceptInput)
+            if (this.ViewSettings.KeyboardEnabled)
             {
-                // in pending status
-                if (Item.IsEnabled(ItemState.Item_Pending))
+                if (this.AcceptInput)
                 {
-                    if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.N))
+                    // in pending status
+                    if (Item.IsEnabled(ItemState.Item_Pending))
                     {
-                        this.ItemDataControl.EditString("Name");
+                        if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.N))
+                        {
+                            this.ItemDataControl.EditString("Name");
+                        }
+
+                        if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.D))
+                        {
+                            this.ItemDataControl.EditInt("Done");
+                        }
+
+                        if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.E))
+                        {
+                            this.ItemDataControl.EditExperience("Experience");
+                        }
+
+                        if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.L))
+                        {
+                            this.ItemDataControl.EditInt("Load");
+                        }
+
+                        if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.R))
+                        {
+                            this.ItemDataControl.EditInt("RationaleScale");
+                        }
+
+                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
+                        {
+                            View.Disable(ViewState.Item_Editting);
+                            Item.Disable(ItemState.Item_Pending);
+                        }
                     }
 
-                    if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.D))
+                    // enter synchronization when
+                    // accepting input but not locked
+                    if (!this.Locked)
                     {
-                        this.ItemDataControl.EditInt("Done");
-                    }
+                        // normal status
+                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskEditItem))
+                        {
+                            View.Enable(ViewState.Item_Editting);
+                            Item.Enable(ItemState.Item_Pending);
+                        }
 
-                    if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.E))
-                    {
-                        this.ItemDataControl.EditExperience("Experience");
-                    }
+                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskDeleteItem))
+                        {
+                            this.DeleteIt();
+                        }
 
-                    if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.L))
-                    {
-                        this.ItemDataControl.EditInt("Load");
-                    }
-
-                    if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.R))
-                    {
-                        this.ItemDataControl.EditInt("RationaleScale");
-                    }
-
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
-                    {
-                        View.Disable(ViewState.Item_Editting);
-                        Item.Disable(ItemState.Item_Pending);
-                    }
-                }
-
-                // enter synchronization when
-                // accepting input but not locked
-                if (!this.Locked)
-                {
-                    // normal status
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskEditItem))
-                    {
-                        View.Enable(ViewState.Item_Editting);
-                        Item.Enable(ItemState.Item_Pending);
-                    }
-
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskDeleteItem))
-                    {
-                        this.DeleteIt();
-                    }
-
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Enter))
-                    {
-                        this.ItemSyncControl.SwitchSync();
+                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Enter))
+                        {
+                            this.ItemSyncControl.SwitchSync();
+                        }
                     }
                 }
             }

@@ -66,12 +66,12 @@ namespace MetaMind.Acutance.Guis.Widgets
                 return;
             }
 
-            this.DrawNameFrame(alpha);
-            this.DrawName(alpha);
-            this.DrawExperienceFrame(alpha);
-            this.DrawExperience(alpha);
-            this.DrawIdFrame(alpha);
-            this.DrawId(alpha);
+            this.DrawNameFrame(255);
+            this.DrawName(255);
+            this.DrawExperienceFrame(255);
+            this.DrawExperience(255);
+            this.DrawIdFrame(255);
+            this.DrawId(255);
         }
 
         private void DrawExperienceFrame(byte alpha)

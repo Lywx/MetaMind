@@ -110,9 +110,15 @@
 
         public virtual void UpdateInput(GameTime gameTime)
         {
-            if (Active)
+            if (!this.Active)
             {
-                // mouse
+                return;
+            }
+
+            // mouse
+            //-----------------------------------------------------------------
+            if (this.ViewSettings.MouseEnabled)
+            {
                 this.ItemFrameControl.UpdateInput(gameTime);
             }
         }

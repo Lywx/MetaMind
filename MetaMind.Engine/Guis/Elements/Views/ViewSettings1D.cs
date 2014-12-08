@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Guis.Elements.Views
 
     using Microsoft.Xna.Framework;
 
-    public class ViewSettings1D : ICloneable
+    public class ViewSettings1D : ViewSettings
     {
         //---------------------------------------------------------------------
         public Point           StartPoint          = new Point(160, GraphicsSettings.Height / 2);
@@ -21,12 +21,6 @@ namespace MetaMind.Engine.Guis.Elements.Views
         public enum ScrollDirection
         {
             Left, Right
-        }
-        
-
-        public object Clone()
-        {
-            return this.MemberwiseClone();
         }
     }
 }

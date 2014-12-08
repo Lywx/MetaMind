@@ -1,10 +1,18 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
+    using MetaMind.Acutance.Concepts;
     using MetaMind.Engine.Guis.Elements.Items;
     using MetaMind.Engine.Guis.Elements.ViewItems;
 
     public class TraceItemFactory : ViewItemBasicFactory2D
     {
+        public bool Positive;
+
+        public TraceItemFactory(bool positive)
+        {
+            this.Positive = positive;
+        }
+
         public override dynamic CreateControl(IViewItem item)
         {
             return new TraceItemControl(item);
@@ -12,7 +20,9 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public override dynamic CreateData(IViewItem item)
         {
-            return Acutance.Adventure.Tracelist.Create();
+            var trace = Acutance.Adventure.Tracelist.Create();
+            trace.Positive = this.Positive;
+            return trace;
         }
 
         public override IItemGraphics CreateGraphics(IViewItem item)

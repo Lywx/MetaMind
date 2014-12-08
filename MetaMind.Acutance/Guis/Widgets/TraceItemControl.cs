@@ -1,7 +1,5 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
-    using System;
-
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Elements.Items;
     using MetaMind.Engine.Guis.Elements.ViewItems;
@@ -72,38 +70,40 @@ namespace MetaMind.Acutance.Guis.Widgets
 
             // keyboard
             //-----------------------------------------------------------------
-            if (this.AcceptInput)
+            if (ViewSettings.KeyboardEnabled)
             {
-                // in pending status
-                if (this.Item.IsEnabled(ItemState.Item_Pending))
+                if (this.AcceptInput)
                 {
-                    if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.N))
+                    // in pending status
+                    if (this.Item.IsEnabled(ItemState.Item_Pending))
                     {
-                        this.ItemDataControl.EditString("Name");
+                        if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.N))
+                        {
+                            this.ItemDataControl.EditString("Name");
+                        }
+
+                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
+                        {
+                            this.View.Disable(ViewState.Item_Editting);
+                            this.Item.Disable(ItemState.Item_Pending);
+                        }
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
+                    if (!this.Locked)
                     {
-                        this.View.Disable(ViewState.Item_Editting);
-                        this.Item.Disable(ItemState.Item_Pending);
+                        // normal status
+                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceEditItem))
+                        {
+                            this.View.Enable(ViewState.Item_Editting);
+                            this.Item.Enable(ItemState.Item_Pending);
+                        }
+
+                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceDeleteItem))
+                        {
+                            this.DeleteIt();
+                        }
                     }
                 }
-
-                if (!this.Locked)
-                {
-                    // normal status
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceEditItem))
-                    {
-                        this.View.Enable(ViewState.Item_Editting);
-                        this.Item.Enable(ItemState.Item_Pending);
-                    }
-
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceDeleteItem))
-                    {
-                        this.DeleteIt();
-                    }
-                }
-            }
 
             // special
             //----------------------------------------------------------------- 
@@ -117,8 +117,8 @@ namespace MetaMind.Acutance.Guis.Widgets
                     }
                 }
             }
-
         }
+    }
 
         #endregion Update
     }

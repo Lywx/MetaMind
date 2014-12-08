@@ -19,7 +19,7 @@
         private TimeSpan               synchronizationTimer     = TimeSpan.Zero;
         private TimeSpan               synchronizationRetryTime = TimeSpan.FromSeconds(5);
 
-        private SynchronizationMonitor      monitor;
+        private SynchronizationMonitor     monitor;
         private SynchronizationGroupClient client;
 
         private SynchroizationModuleSynchronizationAlertedListener synchronizationAlertedListener;
@@ -144,6 +144,11 @@
                     this.synchronizationTimer += gameTime.ElapsedGameTime;
                     this.synchronization = null;
                 }
+                catch (CommunicationException)
+                {
+                    this.synchronizationTimer += gameTime.ElapsedGameTime;
+                    this.synchronization = null;
+                }
             }
             else
             {
@@ -172,15 +177,15 @@
         {
             FontManager.DrawCenteredText(
                 this.Settings.StateFont,
-                validSynchronization.Enabled ? Perseverance.Guis.Modules.SynchronizationModule.SyncTrueInfo : Perseverance.Guis.Modules.SynchronizationModule.SyncFalseInfo,
+                validSynchronization.Enabled ? SynchronizationModule.SyncTrueInfo : SynchronizationModule.SyncFalseInfo,
                 this.SynchronizationStateInfoCenter,
                 this.Settings.StateColor,
                 this.Settings.StateSize);
         }
 
-        private void DrawSynchronizationTaskInformation(ISynchronization synchronization)
+        private void DrawSynchronizationTaskInformation(ISynchronization validSynchronization)
         {
-            var task = synchronization.SynchronizedTask;
+            var task = validSynchronization.SynchronizedTask;
             if (task != null)
             {
                 var text = task.Name;

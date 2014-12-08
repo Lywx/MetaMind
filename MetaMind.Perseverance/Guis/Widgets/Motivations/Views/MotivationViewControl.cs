@@ -86,58 +86,64 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
             {
                 // mouse
                 // ------------------------------------------------------------------
-                if (InputSequenceManager.Mouse.IsWheelScrolledUp)
+                if (ViewSettings.MouseEnabled)
                 {
-                    this.Scroll.MoveLeft();
-                }
+                    if (InputSequenceManager.Mouse.IsWheelScrolledUp)
+                    {
+                        this.Scroll.MoveLeft();
+                    }
 
-                if (InputSequenceManager.Mouse.IsWheelScrolledDown)
-                {
-                    this.Scroll.MoveRight();
+                    if (InputSequenceManager.Mouse.IsWheelScrolledDown)
+                    {
+                        this.Scroll.MoveRight();
+                    }
                 }
 
                 // keyboard
                 // ------------------------------------------------------------------
-                // screen movement
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
+                if (ViewSettings.KeyboardEnabled)
                 {
-                    this.MoveLeft();
-                }
-
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
-                {
-                    this.MoveRight();
-                }
-
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SLeft))
-                {
-                    for (var i = 0; i < this.ViewSettings.ColumnNumDisplay; i++)
+                    // screen movement
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
                     {
                         this.MoveLeft();
                     }
-                }
 
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SRight))
-                {
-                    for (var i = 0; i < this.ViewSettings.ColumnNumDisplay; i++)
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
                     {
                         this.MoveRight();
                     }
-                }
 
-                // escape
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
-                {
-                    this.Selection.Clear();
-                }
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SLeft))
+                    {
+                        for (var i = 0; i < this.ViewSettings.ColumnNumDisplay; i++)
+                        {
+                            this.MoveLeft();
+                        }
+                    }
 
-                // list management
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.MotivationCreateItem))
-                {
-                    this.AddItem();
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SRight))
+                    {
+                        for (var i = 0; i < this.ViewSettings.ColumnNumDisplay; i++)
+                        {
+                            this.MoveRight();
+                        }
+                    }
 
-                    // auto select new item
-                    this.Selection.Select(View.Items.Count - 1);
+                    // escape
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
+                    {
+                        this.Selection.Clear();
+                    }
+
+                    // list management
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.MotivationCreateItem))
+                    {
+                        this.AddItem();
+
+                        // auto select new item
+                        this.Selection.Select(View.Items.Count - 1);
+                    }
                 }
             }
 
@@ -151,7 +157,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Views
 
         public override void UpdateStructure(GameTime gameTime)
         {
-            base.UpdateStructure(gameTime);
+            base       .UpdateStructure(gameTime);
             this.Region.UpdateStructure(gameTime);
         }
 

@@ -21,7 +21,7 @@ namespace MetaMind.Acutance.Screens
             this.multiplexer.Load();
 
             this.synchronizationClient = new SynchronizationGroupClient();
-            this.synchronizationClient.AddView(multiplexer.TraceView);
+            this.synchronizationClient.AddView(multiplexer.PTraceView);
              
             this.synchronization = new SynchronizationGroup(this.synchronizationClient, new SynchronizationGroupSettings());
             this.synchronization.Load();
@@ -29,7 +29,7 @@ namespace MetaMind.Acutance.Screens
 
         public override void Draw(GameTime gameTime, byte alpha)
         {
-            this.multiplexer.Draw(gameTime, alpha);
+            this.multiplexer    .Draw(gameTime, alpha);
             this.synchronization.Draw(gameTime, alpha);
         }
 

@@ -179,7 +179,7 @@
         {
             get
             {
-                return this.ValveStateInfoPrefixCenter + new Vector2(0, 82);
+                return this.ValveStateInfoPrefixCenter + new Vector2(0, 83);
             }
         }
 
@@ -496,19 +496,19 @@
 
         private void DrawValveStatusInfo()
         {
-            const string PrefixText = "Approximated Motive Toward Current Moitivation: ";
+            const string PrefixText = "Approximated Motive";
             FontManager.DrawCenteredText(
                 this.Settings.ValveStateFont,
-                PrefixText + (this.valve.Opened ? "On" : "Off"),
+                PrefixText,
                 this.ValveStateInfoPrefixCenter,
-                this.Settings.ValueStatusColor,
+                this.valve.Opened ? this.Settings.ValueAscendColor : this.Settings.ValueDescendColor,
                 0.7f);
 
             FontManager.DrawCenteredText(
                 this.Settings.ValveStateFont,
                 "[   ]",
                 this.ValveStateInfoSubfixCenter,
-                this.valve.Opened ? this.Settings.BarFrameAscendColor : this.Settings.BarFrameDescendColor,
+                this.valve.Opened ? this.Settings.ValueAscendColor : this.Settings.ValueDescendColor,
                 this.Settings.ValueStatusSize);
         }
 

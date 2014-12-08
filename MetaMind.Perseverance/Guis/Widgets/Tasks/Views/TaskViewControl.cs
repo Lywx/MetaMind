@@ -101,81 +101,87 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
             {
                 // mouse
                 // ---------------------------------------------------------------------
-                // scroll
-                if (InputSequenceManager.Mouse.IsWheelScrolledUp)
+                if (ViewSettings.MouseEnabled)
                 {
-                    this.ScrollBar.Trigger();
-                    this.Scroll   .MoveUp();
-                }
+                    // scroll
+                    if (InputSequenceManager.Mouse.IsWheelScrolledUp)
+                    {
+                        this.ScrollBar.Trigger();
+                        this.Scroll   .MoveUp();
+                    }
 
-                if (InputSequenceManager.Mouse.IsWheelScrolledDown)
-                {
-                    this.Scroll   .MoveDown();
-                    this.ScrollBar.Trigger();
+                    if (InputSequenceManager.Mouse.IsWheelScrolledDown)
+                    {
+                        this.Scroll   .MoveDown();
+                        this.ScrollBar.Trigger();
+                    }
                 }
 
                 // keyboard
                 // ---------------------------------------------------------------------
-                // movement
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
+                if (ViewSettings.KeyboardEnabled)
                 {
-                    this.MoveLeft();
-                }
+                    // movement
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
+                    {
+                        this.MoveLeft();
+                    }
 
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
-                {
-                    this.MoveRight();
-                }
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
+                    {
+                        this.MoveRight();
+                    }
 
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Up))
-                {
-                    this.MoveUp();
-                }
-
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Down))
-                {
-                    this.MoveDown();
-                }
-
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SUp))
-                {
-                    for (var i = 0; i < this.ViewSettings.RowNumDisplay; i++)
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Up))
                     {
                         this.MoveUp();
                     }
-                }
 
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SDown))
-                {
-                    for (var i = 0; i < this.ViewSettings.RowNumDisplay; i++)
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Down))
                     {
                         this.MoveDown();
                     }
-                }
 
-                // escape
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
-                {
-                    this.Selection.Clear();
-                }
-
-                // list management
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskCreateItem))
-                {
-                    this.AddItem();
-
-                    // auto select new item
-                    this.Selection.Select(View.Items.Count - 1);
-                }
-
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskDeleteItem))
-                {
-                    // itme deletion is handled by item control
-                    // auto select last item
-                    if (this.View.Items.Count > 1)
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SUp))
                     {
-                        // this will be called before item deletion
-                        this.Selection.Select(this.View.Items.Count - 2);
+                        for (var i = 0; i < this.ViewSettings.RowNumDisplay; i++)
+                        {
+                            this.MoveUp();
+                        }
+                    }
+
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SDown))
+                    {
+                        for (var i = 0; i < this.ViewSettings.RowNumDisplay; i++)
+                        {
+                            this.MoveDown();
+                        }
+                    }
+
+                    // escape
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
+                    {
+                        this.Selection.Clear();
+                    }
+
+                    // list management
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskCreateItem))
+                    {
+                        this.AddItem();
+
+                        // auto select new item
+                        this.Selection.Select(View.Items.Count - 1);
+                    }
+
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskDeleteItem))
+                    {
+                        // itme deletion is handled by item control
+                        // auto select last item
+                        if (this.View.Items.Count > 1)
+                        {
+                            // this will be called before item deletion
+                            this.Selection.Select(this.View.Items.Count - 2);
+                        }
                     }
                 }
             }

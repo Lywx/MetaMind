@@ -118,7 +118,7 @@ namespace MetaMind.Perseverance.Guis.Modules
         {
             if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
             {
-                if (this.IsMoving(ViewEnum.Now))
+                if (this.IsMoving(ViewEnum.Now) && this.nowView.Control.AcceptInput)
                 {
                     this.nowView   .Control.Selection.Clear();
                     this.nowView   .Control.Region   .Clear();
@@ -126,7 +126,7 @@ namespace MetaMind.Perseverance.Guis.Modules
                     this.futureView.Control.Selection.Clear();
                     this.futureView.Control.Region   .Clear();
                 }
-                else if (this.IsMoving(ViewEnum.Future))
+                else if (this.IsMoving(ViewEnum.Future) && this.futureView.Control.AcceptInput)
                 {
                     this.nowView   .Control.Selection.Select(0);
                     this.futureView.Control.Selection.Clear();
@@ -135,13 +135,13 @@ namespace MetaMind.Perseverance.Guis.Modules
             }
             else if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
             {
-                if (this.IsMoving(ViewEnum.Past))
+                if (this.IsMoving(ViewEnum.Past) && this.pastView.Control.AcceptInput)
                 {
                     this.pastView.Control.Selection.Clear();
                     this.pastView.Control.Region   .Clear();
                     this.nowView .Control.Selection.Select(0);
                 }
-                else if (this.IsMoving(ViewEnum.Now))
+                else if (this.IsMoving(ViewEnum.Now) && this.nowView.Control.AcceptInput)
                 {
                     this.pastView  .Control.Selection.Clear();
                     this.pastView  .Control.Region   .Clear();

@@ -8,6 +8,8 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     public class TraceViewSettings : ViewSettings2D
     {
+        public bool  Positive;
+
         public Color HighlightColor    = ColorPalette.TransparentColor1;
 
         public Point BorderMargin      = new Point(4, 4);

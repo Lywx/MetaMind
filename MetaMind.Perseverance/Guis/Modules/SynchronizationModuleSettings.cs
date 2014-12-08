@@ -73,17 +73,19 @@
         public Point SynchronizationRateMargin    = new Point(210, 0);
 
         /// ---------------------------------------------------------------------
-        public int   ValveFrameX      = 5;
+        public int   ValveFrameX       = 5;
 
-        public int   ValveFrameY      = 16;
+        public int   ValveFrameY       = 16;
 
-        public Point ValveFrameSize   = new Point(400, 8);
+        public Point ValveFrameSize    = new Point(400, 8);
 
-        public Color ValueStatusColor = Color.White;
+        public Color ValueAscendColor  = new Color(78, 255, 27, 200);
 
-        public float ValueStatusSize  = 2.0f;
+        public Color ValueDescendColor = Color.Yellow;
 
-        public Font  ValveStateFont   = Font.UiStatisticsFont;
+        public float ValueStatusSize   = 2.0f;
+
+        public Font  ValveStateFont    = Font.UiStatisticsFont;
 
         public object Clone()
         {

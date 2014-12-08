@@ -107,6 +107,7 @@
     <Compile Include="Guis\Modules\SummaryModule.cs" />
     <Compile Include="Guis\Modules\SummaryModuleSettings.cs" />
     <Compile Include="Guis\Modules\ParticleModule.cs" />
+    <Compile Include="Guis\Modules\SynchronizationValve.cs" />
     <Compile Include="Guis\Widgets\Motivations\Banners\BannerSetting.cs" />
     <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemControl.cs" />
     <Compile Include="Guis\Widgets\Motivations\Items\MotivationItemExchangeProcess.cs" />

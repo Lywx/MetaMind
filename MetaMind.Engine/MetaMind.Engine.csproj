@@ -131,6 +131,7 @@
     <Compile Include="Guis\Elements\Regions\RegionState.cs" />
     <Compile Include="Guis\Elements\ViewItems\ViewItemExchangeProcess.cs" />
     <Compile Include="Guis\Elements\Views\IViewSelectionControl.cs" />
+    <Compile Include="Guis\Elements\Views\ViewSettings.cs" />
     <Compile Include="Guis\Modules\ParticleModule.cs" />
     <Compile Include="Guis\Modules\ParticleModuleSettings.cs" />
     <Compile Include="Guis\Particles\FloatParticle.cs" />

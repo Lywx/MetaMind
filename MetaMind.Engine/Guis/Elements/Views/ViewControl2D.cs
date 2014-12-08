@@ -31,43 +31,49 @@ namespace MetaMind.Engine.Guis.Elements.Views
             {
                 // mouse
                 // ---------------------------------------------------------------------
-                if (InputSequenceManager.Mouse.IsWheelScrolledUp)
+                if (ViewSettings.MouseEnabled)
                 {
-                    this.Scroll.MoveUp();
-                }
+                    if (InputSequenceManager.Mouse.IsWheelScrolledUp)
+                    {
+                        this.Scroll.MoveUp();
+                    }
 
-                if (InputSequenceManager.Mouse.IsWheelScrolledDown)
-                {
-                    this.Scroll.MoveDown();
+                    if (InputSequenceManager.Mouse.IsWheelScrolledDown)
+                    {
+                        this.Scroll.MoveDown();
+                    }
                 }
 
                 // keyboard
                 // --------------------------------------------------------------
-                // movement
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
+                if (ViewSettings.KeyboardEnabled)
                 {
-                    this.Selection.MoveLeft();
-                }
+                    // movement
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
+                    {
+                        this.Selection.MoveLeft();
+                    }
 
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
-                {
-                    this.Selection.MoveRight();
-                }
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
+                    {
+                        this.Selection.MoveRight();
+                    }
 
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Up))
-                {
-                    this.Selection.MoveUp();
-                }
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Up))
+                    {
+                        this.Selection.MoveUp();
+                    }
 
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Down))
-                {
-                    this.Selection.MoveDown();
-                }
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Down))
+                    {
+                        this.Selection.MoveDown();
+                    }
 
-                // escape
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
-                {
-                    this.Selection.Clear();
+                    // escape
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
+                    {
+                        this.Selection.Clear();
+                    }
                 }
             }
 

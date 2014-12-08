@@ -4,8 +4,6 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Elements.Views;
-    using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
-    using MetaMind.Perseverance.Guis.Widgets.Tasks.Views;
 
     using Microsoft.Xna.Framework;
 
@@ -23,7 +21,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             // draw active items
             base.Draw(gameTime, (byte)this.frameAlpha);
 
-            this.DrawRegion(gameTime);
+            this.DrawRegion(gameTime, alpha);
             this.DrawScrollBar(gameTime);
         }
 
@@ -47,17 +45,17 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
         }
 
-        private void DrawRegion(GameTime gameTime)
+        private void DrawRegion(GameTime gameTime, byte alpha)
         {
             Primitives2D.DrawRectangle(
                 ScreenManager.SpriteBatch,
                 RectangleExt.Extend(this.ViewControl.Region.Frame.Rectangle, this.ViewSettings.BorderMargin),
-                ColorExt.MakeTransparent(this.ViewSettings.HighlightColor, (byte)this.frameAlpha),
+                ColorExt.MakeTransparent(this.ViewSettings.HighlightColor, alpha),
                 2f);
             Primitives2D.FillRectangle(
                 ScreenManager.SpriteBatch,
                 this.ViewControl.Region.Frame.Rectangle,
-                ColorExt.MakeTransparent(this.ViewSettings.HighlightColor, (byte)this.frameAlpha));
+                ColorExt.MakeTransparent(this.ViewSettings.HighlightColor, alpha));
         }
 
         private void DrawScrollBar(GameTime gameTime)

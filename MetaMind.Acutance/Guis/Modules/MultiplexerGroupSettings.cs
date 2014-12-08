@@ -1,7 +1,6 @@
 namespace MetaMind.Acutance.Guis.Modules
 {
     using MetaMind.Acutance.Guis.Widgets;
-    using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Settings;
 
     using Microsoft.Xna.Framework;
@@ -9,11 +8,17 @@ namespace MetaMind.Acutance.Guis.Modules
     public class MultiplexerGroupSettings
     {
         //---------------------------------------------------------------------
-        public readonly TraceViewFactory  TraceViewFactory = new TraceViewFactory();
+        public readonly TraceViewFactory  PTraceViewFactory = new TraceViewFactory();
         
-        public readonly TraceViewSettings TraceViewSettings;
+        public readonly TraceViewSettings PTraceViewSettings;
 
-        public readonly TraceItemSettings TraceItemSettings;
+        public readonly TraceItemSettings PTraceItemSettings;
+
+        public readonly TraceViewFactory  NTraceViewFactory = new TraceViewFactory();
+        
+        public readonly TraceViewSettings NTraceViewSettings;
+
+        public readonly TraceItemSettings NTraceItemSettings;
 
         public readonly TraceViewFactory  KnowledgeViewFactory = new TraceViewFactory();
 
@@ -29,25 +34,37 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public MultiplexerGroupSettings()
         {
-            this.TraceItemSettings = new TraceItemSettings
+            this.PTraceItemSettings = new TraceItemSettings
                                          {
-                                             NameFrameRegularColor = ColorPalette.TransparentColor1,
+                                             NameFrameRegularColor   = ColorPalette.TransparentColor1,
                                              NameFrameMouseOverColor = ColorPalette.TransparentColor2,
+                                         };
+
+            this.NTraceItemSettings = new TraceItemSettings
+                                         {
+                                             NameFrameRegularColor   = ColorPalette.TransparentColor1,
+                                             NameFrameMouseOverColor = ColorPalette.TransparentColor2,
+                                             NameFrameStoppedColor   = new Color(0, 120, 20, 20),
                                          };
 
             var averageWidth = GraphicsSettings.Width / (GraphicsSettings.Fullscreen
                                       ? this.TraceColumnNumDisplayFullscreen
                                       : this.TraceColumnNumDisplay);
-            var fixedWidth = this.TraceItemSettings.ExperienceFrameSize.X + this.TraceItemSettings.IdFrameSize.X;
+            var fixedWidth = this.PTraceItemSettings.ExperienceFrameSize.X + this.PTraceItemSettings.IdFrameSize.X;
 
-            this.TraceItemSettings.NameFrameSize = new Point(averageWidth - fixedWidth, 24);
-            this.TraceItemSettings.RootFrameSize = this.TraceItemSettings.NameFrameSize;
+            this.PTraceItemSettings.NameFrameSize = new Point(averageWidth - fixedWidth, 24);
+            this.PTraceItemSettings.RootFrameSize = this.PTraceItemSettings.NameFrameSize;
+
+            this.NTraceItemSettings.NameFrameSize = new Point(averageWidth - fixedWidth, 24);
+            this.NTraceItemSettings.RootFrameSize = this.NTraceItemSettings.NameFrameSize;
 
             //-----------------------------------------------------------------
-            this.TraceViewSettings = new TraceViewSettings
+            this.PTraceViewSettings = new TraceViewSettings
                                          {
+                                             Positive = true,
+
                                              StartPoint = this.TraceStartPoint,
-                                             RootMargin = new Point(averageWidth, this.TraceItemSettings.NameFrameSize.Y),
+                                             RootMargin = new Point(averageWidth, this.PTraceItemSettings.NameFrameSize.Y),
 
                                              ColumnNumMax = GraphicsSettings.Fullscreen
                                                      ? this.TraceColumnNumDisplayFullscreen
@@ -59,26 +76,48 @@ namespace MetaMind.Acutance.Guis.Modules
                                              RowNumDisplay = 10,
                                              RowNumMax     = 100,
                                          };
+            const int ViewMargin = 15;
+
+            this.NTraceViewSettings = new TraceViewSettings
+                                         {
+                                             Positive = false,
+
+                                             StartPoint = this.PTraceViewSettings.StartPoint + new Point(0, this.PTraceViewSettings.RowNumDisplay * this.PTraceViewSettings.RootMargin.Y + ViewMargin),
+                                             RootMargin = new Point(averageWidth, this.NTraceItemSettings.NameFrameSize.Y),
+
+                                             ColumnNumMax = GraphicsSettings.Fullscreen
+                                                     ? this.TraceColumnNumDisplayFullscreen
+                                                     : this.TraceColumnNumDisplay,
+                                             ColumnNumDisplay = GraphicsSettings.Fullscreen
+                                                     ? this.TraceColumnNumDisplayFullscreen
+                                                     : this.TraceColumnNumDisplay,
+
+                                             RowNumDisplay = 2,
+                                             RowNumMax     = 100,
+                                         };
 
             //-----------------------------------------------------------------
             this.KnowledgeItemSettings = new TraceItemSettings
                                              {
-                                                 NameFrameSize = new Point(GraphicsSettings.Width - fixedWidth, 24)
+                                                 NameFrameSize = new Point(GraphicsSettings.Width - fixedWidth, 24),
+
+                                                 NameFrameStoppedColor = Color.Transparent,
                                              };
             this.KnowledgeItemSettings.RootFrameSize = this.KnowledgeItemSettings.NameFrameSize;
 
             //-----------------------------------------------------------------m
-            const int ViewMargin = 15;
             this.KnowledgeViewSettings = new TraceViewSettings
                                              {
-                                                 StartPoint = this.TraceStartPoint + new Point(0, this.TraceViewSettings.RowNumDisplay * 24 + ViewMargin),
-                                                 RootMargin = new Point(averageWidth, this.TraceItemSettings.NameFrameSize.Y),
+                                                 StartPoint = this.NTraceViewSettings.StartPoint + new Point(0, this.NTraceViewSettings.RowNumDisplay * this.NTraceViewSettings.RootMargin.Y + ViewMargin),
+                                                 RootMargin = new Point(averageWidth, this.PTraceItemSettings.NameFrameSize.Y),
 
                                                  ColumnNumMax     = 1,
                                                  ColumnNumDisplay = 1,
 
-                                                 RowNumDisplay = GraphicsSettings.Fullscreen ? 22 : 14,
+                                                 RowNumDisplay = GraphicsSettings.Fullscreen ? 19 : 11,
                                                  RowNumMax     = 100,
+
+                                                 KeyboardEnabled = false,
                                              };
         }
     }

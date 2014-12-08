@@ -78,48 +78,51 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 
             // keyboard
             //-----------------------------------------------------------------
-            if (this.AcceptInput)
+            if (this.ViewSettings.KeyboardEnabled)
             {
-                // normal status
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.MotivationEditItem))
+                if (this.AcceptInput)
                 {
-                    View.Enable(ViewState.Item_Editting);
-                    Item.Enable(ItemState.Item_Pending);
-                }
-
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.MotivationDeleteItem))
-                {
-                    this.DeleteIt();
-                }
-
-                // in pending status
-                if (Item.IsEnabled(ItemState.Item_Pending))
-                {
-                    if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.N))
+                    // normal status
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.MotivationEditItem))
                     {
-                        this.ItemDataControl.EditString("Name");
+                        View.Enable(ViewState.Item_Editting);
+                        Item.Enable(ItemState.Item_Pending);
                     }
 
-                    if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.A))
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.MotivationDeleteItem))
                     {
-                        this.ItemDataControl.EditInt("Attraction");
+                        this.DeleteIt();
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
+                    // in pending status
+                    if (Item.IsEnabled(ItemState.Item_Pending))
                     {
-                        View.Disable(ViewState.Item_Editting);
-                        Item.Disable(ItemState.Item_Pending);
+                        if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.N))
+                        {
+                            this.ItemDataControl.EditString("Name");
+                        }
+
+                        if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.A))
+                        {
+                            this.ItemDataControl.EditInt("Attraction");
+                        }
+
+                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
+                        {
+                            View.Disable(ViewState.Item_Editting);
+                            Item.Disable(ItemState.Item_Pending);
+                        }
                     }
+
+                    this.ItemSymbolControl.UpdateInput(gameTime);
                 }
 
-                this.ItemSymbolControl.UpdateInput(gameTime);
-            }
-
-            if (!this.Locked)
-            {
-                // should be outside of the accepting input state
-                // task view is paralled with item input
-                this.ItemTaskControl.UpdateInput(gameTime);
+                if (!this.Locked)
+                {
+                    // should be outside of the accepting input state
+                    // task view is paralled with item input
+                    this.ItemTaskControl.UpdateInput(gameTime);
+                }
             }
         }
 

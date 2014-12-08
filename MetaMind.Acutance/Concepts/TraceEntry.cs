@@ -14,6 +14,9 @@ namespace MetaMind.Acutance.Concepts
         public Experience Experience;
 
         [DataMember]
+        public bool Positive = true;
+
+        [DataMember]
         public string Name = string.Empty;
 
         [DataMember]
