@@ -1,14 +1,15 @@
-using MetaMind.Perseverance.Concepts.MotivationEntries;
-using MetaMind.Perseverance.Guis.Widgets.Motivations.Items;
-using MetaMind.Perseverance.Guis.Widgets.Motivations.Views;
-using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-
 namespace MetaMind.Perseverance.Guis.Modules
 {
+    using System;
+    using System.Collections.Generic;
+
     using MetaMind.Engine.Guis.Elements.Views;
     using MetaMind.Engine.Settings;
+    using MetaMind.Perseverance.Concepts.MotivationEntries;
+    using MetaMind.Perseverance.Guis.Widgets.Motivations.Items;
+    using MetaMind.Perseverance.Guis.Widgets.Motivations.Views;
+
+    using Microsoft.Xna.Framework;
 
     public class MotivationExchangeSettings : ICloneable
     {
@@ -17,16 +18,14 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         public MotivationExchangeSettings()
         {
-            this.PastViewSettings   = new MotivationViewSettings();
-            this.NowViewSettings    = new MotivationViewSettings();
-            this.FutureViewSettings = new MotivationViewSettings();
+            this.PastViewSettings   = new MotivationViewSettings
+                                          {
+                                              Space     = MotivationSpace.Past,
 
-            this.FutureViewSettings.Space            = MotivationSpace.Future;
-
-            this.NowViewSettings.Space               = MotivationSpace.Now;
-            
-            this.PastViewSettings.Direction          = ViewSettings1D.ScrollDirection.Left;
-            this.PastViewSettings.Space              = MotivationSpace.Past;
+                                              Direction = ViewSettings1D.ScrollDirection.Left
+                                          };
+            this.NowViewSettings    = new MotivationViewSettings { Space = MotivationSpace.Now };
+            this.FutureViewSettings = new MotivationViewSettings { Space = MotivationSpace.Future };
 
             if (GraphicsSettings.Fullscreen)
             {

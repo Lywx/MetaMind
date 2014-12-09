@@ -52,8 +52,13 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
             this.CharModifier.ModificationEnded += this.TerminateEditing;
         }
 
-        public void UpdateStructure(GameTime gameTime)
+        public virtual void UpdateStructure(GameTime gameTime)
         {
+        }
+
+        public virtual void UpdateInput(GameTime gameTime)
+        {
+            this.CharModifier.UpdateInput(gameTime);
         }
 
         private void EditStart(string targetName)

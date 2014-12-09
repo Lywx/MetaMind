@@ -4,8 +4,6 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Engine.Guis.Elements.Items;
     using MetaMind.Engine.Guis.Elements.ViewItems;
     using MetaMind.Engine.Guis.Elements.Views;
-    using MetaMind.Perseverance.Guis.Modules;
-    using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
@@ -18,12 +16,8 @@ namespace MetaMind.Acutance.Guis.Widgets
             : base(item)
         {
             this.ItemFrameControl = new TraceItemFrameControl(item);
-
-            // only add this control when 
-            if (item.View.Parent is MotivationTaskTracer)
-            {
-                this.ItemViewControl = new TaskItemViewControlInMotivation(item);
-            }
+            this.ItemDataControl  = new TraceItemDataControl(item);
+            this.ItemViewControl  = new TraceItemViewControl(item);
         }
 
         public ItemEntryFrame IdFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).IdFrame; } }
@@ -56,15 +50,9 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
         }
 
-        public override void UpdateStructure(GameTime gameTime)
-        {
-            base    .UpdateStructure(gameTime);
-            ItemData.Update();
-        }
-
         public override void UpdateInput(GameTime gameTime)
         {
-            // mouse
+            // mouse and keyboard in modifier
             //-----------------------------------------------------------------
             base.UpdateInput(gameTime);
 

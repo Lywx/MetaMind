@@ -121,6 +121,13 @@
             {
                 this.ItemFrameControl.UpdateInput(gameTime);
             }
+
+            // keyboard
+            //-----------------------------------------------------------------
+            if (this.ViewSettings.KeyboardEnabled)
+            {
+                this.ItemDataControl.UpdateInput(gameTime);
+            }
         }
 
         public virtual void UpdateStructure(GameTime gameTime)
@@ -138,7 +145,7 @@
             if (this.Active)
             {
                 this.ItemFrameControl.UpdateStructure(gameTime);
-                this.ItemDataControl.UpdateStructure(gameTime);
+                this.ItemDataControl .UpdateStructure(gameTime);
             }
         }
 

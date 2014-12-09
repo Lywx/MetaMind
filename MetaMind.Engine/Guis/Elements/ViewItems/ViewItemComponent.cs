@@ -32,7 +32,7 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
 
     public class ViewItemComponent : EngineObject, IViewItemComponent
     {
-        public ViewItemComponent(IViewItem item)
+        protected ViewItemComponent(IViewItem item)
         {
             this.item = item;
         }

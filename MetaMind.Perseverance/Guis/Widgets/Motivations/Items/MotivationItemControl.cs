@@ -72,7 +72,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Motivations.Items
 
         public override void UpdateInput(GameTime gameTime)
         {
-            // mouse
+            // mouse and keyboard in modifier
             //-----------------------------------------------------------------
             base.UpdateInput(gameTime);
 

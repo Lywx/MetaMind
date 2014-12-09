@@ -13,7 +13,7 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
     using System;
-    using System.IO;
+    using System.Globalization;
     using System.Linq;
     using System.Text;
 
@@ -27,26 +27,36 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
 
         void Draw(GameTime gameTime);
 
-        void Initialize(string oldString);
+        void Initialize(string prevString);
 
         void Release();
 
-        void Update(GameTime gameTime);
+        void UpdateInput(GameTime gameTime);
+
+        void UpdateStructure(GameTime gameTime);
     }
 
     public class ViewItemCharModifier : ViewItemComponent, IViewItemCharModifier
     {
         #region Input Settings
 
-        private readonly Encoding imeEncoding = Encoding.GetEncoding(54936); // GB2312-80 for Sougou IME
+        private readonly string cursorCharacter = "][";
+
+        // GB2312-80 for Sougou IME
+        private readonly Encoding imeEncoding = Encoding.GetEncoding(54936);
+
+        private readonly char[] invalidChars = Enumerable.Range(0, char.MaxValue + 1)
+                                                         .Select(i => (char)i)
+                                                         .Where(char.IsControl)
+                                                         .ToArray();
 
         #endregion Input Settings
 
         #region Input Data
 
-        private StringBuilder inputString = new StringBuilder();
-
-        private string oldString = string.Empty;
+        private StringBuilder currentString = new StringBuilder();
+        private int           cursorIndex;
+        private string        previousString = string.Empty;
 
         #endregion Input Data
 
@@ -96,18 +106,18 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
 
         #endregion Events
 
-        #region Input Control
+        #region State Control
 
         public void Cancel()
         {
             if (this.ValueModified != null)
             {
-                this.ValueModified(this, new ViewItemDataEventArgs(this.oldString));
+                this.ValueModified(this, new ViewItemDataEventArgs(this.previousString));
             }
 
             if (this.modificationEnded != null)
             {
-                this.modificationEnded(this, new ViewItemDataEventArgs(this.oldString));
+                this.modificationEnded(this, new ViewItemDataEventArgs(this.previousString));
             }
 
             // only need to clear ValueModified, assuming ModificationEnded delegates
@@ -115,26 +125,27 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
             this.ValueModified = null;
         }
 
-        /// <summary>
-        /// Initializes input string.
-        /// </summary>
-        /// <param name="oldString">The old string.</param>
-        public void Initialize(string oldString)
+        public void Initialize(string prevString)
         {
-            this.oldString = oldString;
-            this.inputString = new StringBuilder(oldString);
+            this.previousString = prevString;
+
+            this.currentString = new StringBuilder(prevString);
+            this.cursorIndex = currentString.Length;
         }
 
         public void Release()
         {
+            // remove index character after editing
+            this.RemoveCursor();
+
             if (this.ValueModified != null)
             {
-                this.ValueModified(this, new ViewItemDataEventArgs(this.inputString.ToString()));
+                this.ValueModified(this, new ViewItemDataEventArgs(this.currentString.ToString()));
             }
 
             if (this.modificationEnded != null)
             {
-                this.modificationEnded(this, new ViewItemDataEventArgs(this.inputString.ToString()));
+                this.modificationEnded(this, new ViewItemDataEventArgs(this.currentString.ToString()));
             }
 
             // only need to clear ValueModified, assuming ModificationEnded delegates
@@ -146,11 +157,11 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
         {
             if (this.ValueModified != null)
             {
-                this.ValueModified(this, new ViewItemDataEventArgs(this.inputString.ToString()));
+                this.ValueModified(this, new ViewItemDataEventArgs(this.currentString.ToString()));
             }
         }
 
-        #endregion Input Control
+        #endregion State Control
 
         #region Event Handlers
 
@@ -161,21 +172,15 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
                 return;
             }
 
-            var newChar = this.imeEncoding.GetString(e.Character);
-            if (newChar.ToCharArray().Contains('\b'))
-            {
-                this.HandleBackspace();
-            }
-            else if (newChar.ToCharArray().Contains('\t'))
-            {
-                this.HandleTab();
-            }
-            else
-            {
-                this.inputString.Append(newChar);
-            }
+            var newChars = this.imeEncoding.GetString(e.Character);
 
-            this.HandleUnprintable();
+            // clean index character before processing
+            this.RemoveCursor();
+
+            this.HandleControl(newChars);
+
+            this.InsertCursor();
+
             this.Modified();
         }
 
@@ -200,35 +205,146 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
             }
 
             // mixed two manager together, might not be good
-            if (e.KeyCode == Keys.Escape || InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
+            if (e.KeyCode == Keys.Escape)
             {
                 this.Cancel();
             }
         }
 
+        #endregion Event Handlers
+
+        #region Index Processing
+
+        private void DecrementCursor(int n = 1)
+        {
+            for (var i = 0; i < n; i++)
+            {
+                this.cursorIndex--;
+            }
+        }
+
+        private void IncrementCursor(int n = 1)
+        {
+            for (var i = 0; i < n; i++)
+            {
+                this.cursorIndex++;
+            }
+        }
+
+        private void InsertCursor()
+        {
+            if (this.cursorIndex < this.currentString.Length + 1)
+            {
+                this.currentString.Insert(this.cursorIndex, this.cursorCharacter);
+            }
+        }
+
+        private void RemoveCursor()
+        {
+            if (this.currentString.Length > 0 &&
+
+                // make sure input characters contain cursor characters
+                this.cursorIndex + this.cursorCharacter.Length < this.currentString.Length + 1 &&
+                this.currentString.ToString().Substring(this.cursorIndex, this.cursorCharacter.Length).ToString(CultureInfo.InvariantCulture) == this.cursorCharacter)
+            {
+                this.currentString.Remove(this.cursorIndex, this.cursorCharacter.Length);
+            }
+        }
+
+        #endregion Index Processing
+
+        #region Operations
+
+        private void DeleteNextChar()
+        {
+            this.RemoveCursor();
+            this.HandleDelete();
+            this.InsertCursor();
+            this.Modified();
+        }
+
         private void HandleBackspace()
         {
-            if (this.inputString.Length > 0)
+            if (this.currentString.Length > 0 &&
+                this.cursorIndex > 0)
             {
-                this.inputString.Remove(this.inputString.Length - 1, 1);
+                this.currentString.Remove(this.cursorIndex - 1, 1);
+                this.DecrementCursor();
+            }
+        }
+
+        private void HandleControl(string chars)
+        {
+            if (chars.ToCharArray().Contains('\b'))
+            {
+                this.HandleBackspace();
+            }
+            else if (chars.ToCharArray().Contains('\t'))
+            {
+                this.HandleTab();
+            }
+            else
+            {
+                this.HandleRegular(chars);
+            }
+        }
+
+        private void HandleDelete()
+        {
+            if (this.currentString.Length > 0 &&
+                this.cursorIndex < this.currentString.Length)
+            {
+                this.currentString.Remove(this.cursorIndex, 1);
+            }
+        }
+
+        private void HandleRegular(string chars)
+        {
+            var previousLength = this.currentString.Length;
+
+            this.currentString.Insert(this.cursorIndex, chars);
+
+            // remove invalid characters
+            this.currentString = new StringBuilder(new string(this.currentString.ToString()
+                                                                                .Where(c => !this.invalidChars.Contains(c))
+                                                                                .ToArray()));
+
+            // only increment when actually contains printable characters
+            if (this.currentString.Length > previousLength)
+            {
+                this.IncrementCursor();
             }
         }
 
         private void HandleTab()
         {
-            this.inputString.Append("    ");
+            this.currentString.Append("    ");
+            this.IncrementCursor(4);
         }
 
-        /// <summary>
-        /// Handles the unprintable and filter out the invalid file characters.
-        /// </summary>
-        private void HandleUnprintable()
+        private void MoveCursorLeft()
         {
-            var invalid = Path.GetInvalidFileNameChars();
-            var cleaned = new string(this.inputString.ToString().Where(c => !invalid.Contains(c)).ToArray());
-            this.inputString = new StringBuilder(cleaned);
+            if (this.cursorIndex > 0)
+            {
+                this.RemoveCursor();
+                this.DecrementCursor();
+                this.InsertCursor();
+                this.Modified();
+            }
         }
-        #endregion Event Handlers
+
+        private void MoveCursorRight()
+        {
+            if (this.cursorIndex < this.currentString.Length - this.cursorCharacter.Length)
+            {
+                this.RemoveCursor();
+                this.IncrementCursor();
+                this.InsertCursor();
+                this.Modified();
+            }
+        }
+
+        #endregion Operations
 
         #region Update and Draw
 
@@ -236,8 +352,38 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
         {
         }
 
-        public void Update(GameTime gameTime)
+        public void UpdateInput(GameTime gameTime)
         {
+            var keyboard = InputSequenceManager.Keyboard;
+
+            if (keyboard.IsActionTriggered(Actions.Escape))
+            {
+                this.Cancel();
+            }
+
+            if (this.ComboTriggered(keyboard, Keys.Left))
+            {
+                this.MoveCursorLeft();
+            }
+
+            if (this.ComboTriggered(keyboard, Keys.Right))
+            {
+                this.MoveCursorRight();
+            }
+
+            if (this.ComboTriggered(keyboard, Keys.Delete))
+            {
+                this.DeleteNextChar();
+            }
+        }
+
+        public void UpdateStructure(GameTime gameTime)
+        {
+        }
+
+        private bool ComboTriggered(KeyboardManager keyboard, Keys key)
+        {
+            return (keyboard.IsKeyPressed(key) && keyboard.CtrlDown) || keyboard.IsKeyTriggered(key);
         }
 
         #endregion Update and Draw

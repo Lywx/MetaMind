@@ -17,6 +17,10 @@ namespace MetaMind.Acutance.Guis.Modules
         {
             this.PTraceView    = new View(this.Settings.PTraceViewSettings,     this.Settings.PTraceItemSettings,     this.Settings.PTraceViewFactory);
             this.NTraceView    = new View(this.Settings.NTraceViewSettings,     this.Settings.NTraceItemSettings,     this.Settings.NTraceViewFactory);
+
+            this.PTraceView.Control.Swap.AddObserver(this.NTraceView);
+            this.NTraceView.Control.Swap.AddObserver(this.PTraceView);
+
             this.KnowledgeView = new View(this.Settings.KnowledgeViewSettings,  this.Settings.KnowledgeItemSettings,  this.Settings.KnowledgeViewFactory);
         }
 

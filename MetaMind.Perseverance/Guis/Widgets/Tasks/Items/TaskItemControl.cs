@@ -64,7 +64,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
         public override void UpdateInput(GameTime gameTime)
         {
-            // mouse
+            // mouse and keyboard in modifier
             //-----------------------------------------------------------------
             base.UpdateInput(gameTime);
 
@@ -95,11 +95,6 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
                         if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.L))
                         {
                             this.ItemDataControl.EditInt("Load");
-                        }
-
-                        if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.R))
-                        {
-                            this.ItemDataControl.EditInt("RationaleScale");
                         }
 
                         if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))

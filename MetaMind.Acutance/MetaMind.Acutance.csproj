@@ -71,10 +71,13 @@
     <Compile Include="Guis\Modules\MultiplexerGroupSettings.cs" />
     <Compile Include="Guis\Modules\SynchroizationModuleSynchronizationAlertedListener.cs" />
     <Compile Include="Guis\Widgets\TraceItemControl.cs" />
+    <Compile Include="Guis\Widgets\TraceItemDataControl.cs" />
     <Compile Include="Guis\Widgets\TraceItemFactory.cs" />
     <Compile Include="Guis\Widgets\TraceItemFrameControl.cs" />
     <Compile Include="Guis\Widgets\TraceItemGraphics.cs" />
     <Compile Include="Guis\Widgets\TraceItemSettings.cs" />
+    <Compile Include="Guis\Widgets\TraceItemSwapProcess.cs" />
+    <Compile Include="Guis\Widgets\TraceItemViewControl.cs" />
     <Compile Include="Guis\Widgets\TraceViewControl.cs" />
     <Compile Include="Guis\Widgets\TraceViewFactory.cs" />
     <Compile Include="Guis\Widgets\TraceViewGraphics.cs" />

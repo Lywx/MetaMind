@@ -5,6 +5,7 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
     using MetaMind.Engine.Components.Processes;
     using MetaMind.Engine.Guis.Elements.Items;
     using MetaMind.Engine.Guis.Elements.Views;
+
     using Microsoft.Xna.Framework;
 
     public class ViewItemSwapProcess : ProcessBase
@@ -13,9 +14,9 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
 
         public ViewItemSwapProcess(IViewItem draggedItem, IViewItem swappingItem)
         {
-            this.DraggedItem  = draggedItem;
+            this.DraggedItem = draggedItem;
             this.SwappingItem = swappingItem;
-            this.SwapControl  = swappingItem.ViewControl.Swap;
+            this.SwapControl = swappingItem.ViewControl.Swap;
         }
 
         protected IViewItem DraggedItem { get; private set; }
@@ -68,7 +69,7 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
 
         protected virtual void SwapAroundView()
         {
-            var draggedExchangable  = this.DraggedItem  as IViewItemExchangable;
+            var draggedExchangable  = this.DraggedItem as IViewItemExchangable;
             var swappingExchangable = this.SwappingItem as IViewItemExchangable;
 
             Debug.Assert(draggedExchangable != null && swappingExchangable != null, "Not all item are exchangeable.");
@@ -83,8 +84,17 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
             originalSwappingItemView.Control.Selection.Select(0);
             originalSwappingItemView.Enable(ViewState.View_Has_Focus);
 
-            draggedExchangable .ExchangeTo(originalSwappingItemView, this.SwappingItem.ItemControl.Id);
-            swappingExchangable.ExchangeTo(orignialDraggedItemView , this.DraggedItem.ItemControl.Id);
+            draggedExchangable.ExchangeTo(originalSwappingItemView, this.SwappingItem.ItemControl.Id);
+            swappingExchangable.ExchangeTo(orignialDraggedItemView, this.DraggedItem.ItemControl.Id);
+        }
+
+        protected virtual void SwapDataInList(dynamic source)
+        {
+            int draggingPosition = source.IndexOf(this.DraggedItem.ItemData);
+            int swappingPosition = source.IndexOf(this.SwappingItem.ItemData);
+
+            source[draggingPosition] = this.SwappingItem.ItemData;
+            source[swappingPosition] = this.DraggedItem.ItemData;
         }
 
         protected virtual void SwapInView()

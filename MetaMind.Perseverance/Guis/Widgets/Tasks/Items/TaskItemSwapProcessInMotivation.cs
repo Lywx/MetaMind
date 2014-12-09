@@ -19,13 +19,10 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
             MotivationTaskTracer parent = this.DraggedItem.View.Parent;
             List<TaskEntry>      tasks  = parent.FastHostData["Tasks"];
 
-            int draggingPosition = tasks.IndexOf(this.DraggedItem .ItemData);
-            int swappingPosition = tasks.IndexOf(this.SwappingItem.ItemData);
+            this.SwapDataInList(tasks);
 
-            tasks[draggingPosition] = this.SwappingItem.ItemData;
-            tasks[swappingPosition] = this.DraggedItem .ItemData;
-            
             base.SwapInView();
         }
+
     }
 }
