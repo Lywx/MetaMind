@@ -23,6 +23,5 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 
             base.SwapInView();
         }
-
     }
 }

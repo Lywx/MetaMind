@@ -39,14 +39,14 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public void AddItem(TraceEntry entry)
         {
-            View.Items.Add(
-                new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory, entry));
+            var item = new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory, entry);
+            View.Items.Add(item);
         }
 
         public void AddItem()
         {
-            View.Items.Add(
-                new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory));
+            var item = new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory);
+            View.Items.Add(item);
         }
 
         public void MoveDown()
@@ -96,7 +96,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             {
                 // mouse
                 // ---------------------------------------------------------------------
-                if (ViewSettings.MouseEnabled)
+                if (this.ViewSettings.MouseEnabled)
                 {
                     // scroll
                     if (InputSequenceManager.Mouse.IsWheelScrolledUp)
@@ -114,7 +114,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
                 // keyboard
                 // ---------------------------------------------------------------------
-                if (ViewSettings.KeyboardEnabled)
+                if (this.ViewSettings.KeyboardEnabled)
                 {
                     // movement
                     if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
@@ -197,7 +197,15 @@ namespace MetaMind.Acutance.Guis.Widgets
 
                     if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceClearItem))
                     {
-                        this.Selection.Select(this.View.Items.Count(item => !string.IsNullOrEmpty(item.ItemData.Name)) - 1);
+                        var notEmpty = this.View.Items.Count(item => !string.IsNullOrEmpty(item.ItemData.Name));
+                        if (notEmpty > 0)
+                        {
+                            this.Selection.Select(notEmpty - 1);
+                        }
+                        else
+                        {
+                            this.Selection.Select(0);
+                        }
                     }
                 }
             }
@@ -216,8 +224,8 @@ namespace MetaMind.Acutance.Guis.Widgets
         /// <param name="gameTime"></param>
         public override void UpdateStructure(GameTime gameTime)
         {
-            base          .UpdateStructure(gameTime);
-            this.Region   .UpdateStructure(gameTime);
+            base.UpdateStructure(gameTime);
+            this.Region.UpdateStructure(gameTime);
             this.ScrollBar.Update(gameTime);
         }
 
@@ -229,7 +237,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
             else
             {
-                View.Disable(ViewState.View_Has_Focus); 
+                View.Disable(ViewState.View_Has_Focus);
             }
         }
 
@@ -243,7 +251,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                 viewSettings.StartPoint.X,
                 viewSettings.StartPoint.Y,
                 viewSettings.ColumnNumDisplay * (itemSettings.NameFrameSize.X + itemSettings.IdFrameSize.X + itemSettings.ExperienceFrameSize.X),
-                viewSettings.RowNumDisplay    * itemSettings.NameFrameSize.Y);
+                viewSettings.RowNumDisplay * itemSettings.NameFrameSize.Y);
         }
 
 
