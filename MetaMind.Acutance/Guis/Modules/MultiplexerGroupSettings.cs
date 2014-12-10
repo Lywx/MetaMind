@@ -97,13 +97,7 @@ namespace MetaMind.Acutance.Guis.Modules
                                          };
 
             //-----------------------------------------------------------------
-            this.KnowledgeItemSettings = new KnowledgeItemSettings
-                                             {
-                                                 NameFrameSize = new Point(GraphicsSettings.Width - fixedWidth, 24),
-
-                                                 NameFrameStoppedColor = Color.Transparent,
-                                             };
-            this.KnowledgeItemSettings.RootFrameSize = this.KnowledgeItemSettings.NameFrameSize;
+            this.KnowledgeItemSettings = new KnowledgeItemSettings();
 
             //-----------------------------------------------------------------m
             this.KnowledgeViewSettings = new KnowledgeViewSettings

@@ -16,10 +16,6 @@ namespace MetaMind.Acutance.Guis.Widgets
             this.NameFrameRegularColor   = ColorPalette.TransparentColor1;
             this.NameFrameMouseOverColor = ColorPalette.TransparentColor2;
 
-            this.NameXLMargin = (int)(this.NameXLMargin * this.NameSize);
-            this.NameXRMargin = (int)(this.NameXRMargin * this.NameSize);
-            this.NameYTMargin = (int)(this.NameYTMargin * this.NameSize);
-
             //-----------------------------------------------------------------
             this.IdSize       = 0.7f;
             this.IdFrameSize  = new Point(24, 24);
