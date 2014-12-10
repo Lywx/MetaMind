@@ -3,8 +3,8 @@ namespace MetaMind.Acutance.Guis.Widgets
     using C3.Primtive2DXna;
 
     using MetaMind.Engine.Extensions;
-    using MetaMind.Engine.Guis.Elements.Views;
-    using MetaMind.Perseverance.Guis.Widgets.Tasks.Views;
+    using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Perseverance.Guis.Widgets;
 
     using Microsoft.Xna.Framework;
 

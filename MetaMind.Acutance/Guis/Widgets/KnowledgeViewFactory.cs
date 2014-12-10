@@ -2,7 +2,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 {
     using System;
 
-    using MetaMind.Engine.Guis.Elements.Views;
+    using MetaMind.Engine.Guis.Widgets.Views;
 
     public class KnowledgeViewFactory : ViewBasicFactory2D
     {

@@ -1,6 +1,6 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
-    using MetaMind.Engine.Guis.Elements.Views;
+    using MetaMind.Engine.Guis.Widgets.Views;
 
     public class KnowledgeViewGraphics : TraceViewGraphics
     {

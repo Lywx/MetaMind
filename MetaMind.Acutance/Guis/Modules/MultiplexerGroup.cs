@@ -6,7 +6,7 @@ namespace MetaMind.Acutance.Guis.Modules
     using MetaMind.Acutance.Concepts;
     using MetaMind.Engine.Components;
     using MetaMind.Engine.Guis;
-    using MetaMind.Engine.Guis.Elements.Views;
+    using MetaMind.Engine.Guis.Widgets.Views;
 
     using Microsoft.Xna.Framework;
 
@@ -48,7 +48,7 @@ namespace MetaMind.Acutance.Guis.Modules
             var lines = File.ReadLines(Path.Combine(FolderManager.DataFolderPath, "Basic.txt"));
             foreach (var line in lines.Where(line => !string.IsNullOrWhiteSpace(line)))
             {
-                KnowledgeView.Control.AddItem(new KnowledgeEntry{ Name = line });
+                KnowledgeView.Control.AddItem(new KnowledgeEntry { Name = line });
             }
         }
 

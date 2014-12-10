@@ -1,6 +1,6 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
-    using MetaMind.Perseverance.Guis.Widgets.Tasks.Views;
+    using MetaMind.Perseverance.Guis.Widgets;
 
     public class TraceViewSettings : TaskViewSettings
     {

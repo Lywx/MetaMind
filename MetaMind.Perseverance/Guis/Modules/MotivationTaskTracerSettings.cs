@@ -10,8 +10,8 @@ namespace MetaMind.Perseverance.Guis.Modules
     using System;
 
     using MetaMind.Engine.Settings;
+    using MetaMind.Perseverance.Guis.Widgets;
     using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
-    using MetaMind.Perseverance.Guis.Widgets.Tasks.Views;
 
     public class MotivationTaskTracerSettings : ICloneable
     {

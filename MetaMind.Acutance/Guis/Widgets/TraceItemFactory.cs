@@ -1,7 +1,7 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
-    using MetaMind.Engine.Guis.Elements.Items;
-    using MetaMind.Engine.Guis.Elements.ViewItems;
+    using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Guis.Widgets.ViewItems;
 
     public class TraceItemFactory : ViewItemBasicFactory2D
     {

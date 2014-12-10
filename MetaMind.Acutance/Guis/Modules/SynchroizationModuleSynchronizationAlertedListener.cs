@@ -1,7 +1,7 @@
 ﻿namespace MetaMind.Acutance.Guis.Modules
 {
     using MetaMind.Engine.Components.Events;
-    using MetaMind.Engine.Guis.Elements.Views;
+    using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Perseverance.Sessions;
 
     public class SynchroizationModuleSynchronizationAlertedListener : ListenerBase

@@ -7,7 +7,7 @@
 
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis;
-    using MetaMind.Engine.Guis.Elements.Views;
+    using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Perseverance.Concepts.Cognitions;
     using MetaMind.Perseverance.Guis.Modules;
 

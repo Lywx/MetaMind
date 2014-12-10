@@ -26,7 +26,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public readonly KnowledgeItemSettings KnowledgeItemSettings;
 
-        public readonly Point TraceStartPoint                 =  new Point(0, 108);
+        public readonly Point TraceStartPoint                 = new Point(0, 108);
 
         public readonly int   TraceColumnNumDisplay           = 3;
 

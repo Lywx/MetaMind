@@ -1,15 +1,13 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
-    using System.Collections.Generic;
-    using System.Globalization;
     using System.Linq;
 
     using MetaMind.Acutance.Concepts;
     using MetaMind.Engine.Components.Inputs;
-    using MetaMind.Engine.Guis.Elements.Regions;
-    using MetaMind.Engine.Guis.Elements.ViewItems;
-    using MetaMind.Engine.Guis.Elements.Views;
-    using MetaMind.Perseverance.Guis.Widgets.Tasks.Views;
+    using MetaMind.Engine.Guis.Widgets.Regions;
+    using MetaMind.Engine.Guis.Widgets.ViewItems;
+    using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Perseverance.Guis.Widgets;
 
     using Microsoft.Xna.Framework;
 

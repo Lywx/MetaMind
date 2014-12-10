@@ -4,9 +4,9 @@ namespace MetaMind.Perseverance.Guis.Modules
 
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis;
-    using MetaMind.Engine.Guis.Elements.Items;
-    using MetaMind.Engine.Guis.Elements.Views;
-    using MetaMind.Perseverance.Guis.Widgets.Motivations.Banners;
+    using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Perseverance.Guis.Widgets;
 
     using Microsoft.Xna.Framework;
 

@@ -1,9 +1,9 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
     using MetaMind.Engine.Components.Inputs;
-    using MetaMind.Engine.Guis.Elements.Items;
-    using MetaMind.Engine.Guis.Elements.ViewItems;
-    using MetaMind.Engine.Guis.Elements.Views;
+    using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Guis.Widgets.ViewItems;
+    using MetaMind.Engine.Guis.Widgets.Views;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
