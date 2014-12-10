@@ -30,7 +30,7 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
 
         public void EditInt(string targetName)
         {
-            this.EditStart(targetName);
+            this.EditStart(targetName, false);
 
             this.CharModifier.ValueModified += this.RefreshEditingInt;
             this.CharModifier.ModificationEnded += this.TerminateEditing;
@@ -38,7 +38,7 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
 
         public void EditExperience(string targetName)
         {
-            this.EditStart(targetName);
+            this.EditStart(targetName, false);
 
             this.CharModifier.ValueModified += this.RefreshEditingExperience;
             this.CharModifier.ModificationEnded += this.TerminateEditing;
@@ -46,7 +46,7 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
 
         public void EditString(string targetName)
         {
-            this.EditStart(targetName);
+            this.EditStart(targetName, true);
 
             this.CharModifier.ValueModified += this.RefreshEditingString;
             this.CharModifier.ModificationEnded += this.TerminateEditing;
@@ -61,7 +61,7 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
             this.CharModifier.UpdateInput(gameTime);
         }
 
-        private void EditStart(string targetName)
+        private void EditStart(string targetName, bool showCursor)
         {
             this.fieldName = targetName;
 
@@ -70,7 +70,7 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
             this.View.Enable(ViewState.Item_Editting);
 
             FieldInfo field = this.ItemData.GetType().GetField(targetName);
-            this.CharModifier.Initialize(field.GetValue(this.ItemData).ToString());
+            this.CharModifier.Initialize(field.GetValue(this.ItemData).ToString(), showCursor);
         }
 
         private void RefreshEditingExperience(object sender, ViewItemDataEventArgs e)

@@ -48,7 +48,7 @@ namespace MetaMind.Acutance.Guis.Modules
             var lines = File.ReadLines(Path.Combine(FolderManager.DataFolderPath, "Basic.txt"));
             foreach (var line in lines.Where(line => !string.IsNullOrWhiteSpace(line)))
             {
-                KnowledgeView.Control.AddItem(new TraceEntry { Name = line });
+                KnowledgeView.Control.AddItem(new KnowledgeEntry{ Name = line });
             }
         }
 

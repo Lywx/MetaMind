@@ -20,17 +20,17 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public readonly TraceItemSettings NTraceItemSettings;
 
-        public readonly TraceViewFactory  KnowledgeViewFactory = new TraceViewFactory();
+        public readonly KnowledgeViewFactory  KnowledgeViewFactory = new KnowledgeViewFactory();
 
-        public readonly TraceViewSettings KnowledgeViewSettings;
+        public readonly KnowledgeViewSettings KnowledgeViewSettings;
 
-        public readonly TraceItemSettings KnowledgeItemSettings;
+        public readonly KnowledgeItemSettings KnowledgeItemSettings;
 
-        public readonly Point TraceStartPoint =  new Point(0, 108);
+        public readonly Point TraceStartPoint                 =  new Point(0, 108);
 
-        public readonly int TraceColumnNumDisplay           = 3;
+        public readonly int   TraceColumnNumDisplay           = 3;
 
-        public readonly int TraceColumnNumDisplayFullscreen = 4;
+        public readonly int   TraceColumnNumDisplayFullscreen = 4;
 
         public MultiplexerGroupSettings()
         {
@@ -97,7 +97,7 @@ namespace MetaMind.Acutance.Guis.Modules
                                          };
 
             //-----------------------------------------------------------------
-            this.KnowledgeItemSettings = new TraceItemSettings
+            this.KnowledgeItemSettings = new KnowledgeItemSettings
                                              {
                                                  NameFrameSize = new Point(GraphicsSettings.Width - fixedWidth, 24),
 
@@ -106,7 +106,7 @@ namespace MetaMind.Acutance.Guis.Modules
             this.KnowledgeItemSettings.RootFrameSize = this.KnowledgeItemSettings.NameFrameSize;
 
             //-----------------------------------------------------------------m
-            this.KnowledgeViewSettings = new TraceViewSettings
+            this.KnowledgeViewSettings = new KnowledgeViewSettings
                                              {
                                                  StartPoint = this.NTraceViewSettings.StartPoint + new Point(0, this.NTraceViewSettings.RowNumDisplay * this.NTraceViewSettings.RootMargin.Y + ViewMargin),
                                                  RootMargin = new Point(averageWidth, this.PTraceItemSettings.NameFrameSize.Y),

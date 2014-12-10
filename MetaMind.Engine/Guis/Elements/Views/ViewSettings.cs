@@ -8,6 +8,8 @@ namespace MetaMind.Engine.Guis.Elements.Views
 
         public bool KeyboardEnabled  = true;
 
+        public bool Exchangeable     = true;
+
         public object Clone()
         {
             return this.MemberwiseClone();

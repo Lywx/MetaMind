@@ -1,21 +1,19 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
+    using MetaMind.Engine.Components.Fonts;
+    using MetaMind.Engine.Guis.Elements.Items;
     using MetaMind.Engine.Settings;
-    using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
 
     using Microsoft.Xna.Framework;
 
-    public class TraceItemSettings : TaskItemSettings
+    public class KnowledgeItemSettings : TraceItemSettings
     {
-        public Color NameFrameStoppedColor = new Color(100, 0, 0, 2);
-
-        public TraceItemSettings()
+        public KnowledgeItemSettings()
         {
+            //-----------------------------------------------------------------
             this.RootFrameSize = this.NameFrameSize;
 
-            this.NameFrameRegularColor   = ColorPalette.TransparentColor1;
-            this.NameFrameMouseOverColor = ColorPalette.TransparentColor2;
-
+            //-----------------------------------------------------------------
             this.NameXLMargin = (int)(this.NameXLMargin * this.NameSize);
             this.NameXRMargin = (int)(this.NameXRMargin * this.NameSize);
             this.NameYTMargin = (int)(this.NameYTMargin * this.NameSize);
@@ -24,9 +22,6 @@ namespace MetaMind.Acutance.Guis.Widgets
             this.IdSize       = 0.7f;
             this.IdFrameSize  = new Point(24, 24);
             this.IdFrameColor = ColorPalette.TransparentColor1;
-
-            //-----------------------------------------------------------------
-            this.ExperienceFrameColor = ColorPalette.TransparentColor1;
         }
     }
 }

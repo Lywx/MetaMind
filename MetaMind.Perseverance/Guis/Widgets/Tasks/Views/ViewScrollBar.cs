@@ -20,7 +20,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
     {
         private readonly ViewScrollBarSettings settings;
 
-        private          int                   alpha;
+        private int alpha;
 
         public ViewScrollBar(IView view, ViewSettings2D viewSettings, ICloneable itemSettings, ViewScrollBarSettings scrollBarSettings)
             : base(view, viewSettings, itemSettings)

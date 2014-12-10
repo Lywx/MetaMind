@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Acutance.cs" />
     <Compile Include="Components\SaveManager.cs" />
+    <Compile Include="Concepts\KnowledgeEntry.cs" />
     <Compile Include="Concepts\TraceEntry.cs" />
     <Compile Include="Concepts\Tracelist.cs" />
     <Compile Include="Guis\Modules\ParticleModule.cs" />
@@ -70,6 +71,15 @@
     <Compile Include="Guis\Modules\SynchronizationGroup.cs" />
     <Compile Include="Guis\Modules\MultiplexerGroupSettings.cs" />
     <Compile Include="Guis\Modules\SynchroizationModuleSynchronizationAlertedListener.cs" />
+    <Compile Include="Guis\Widgets\KnowledgeItemControl.cs" />
+    <Compile Include="Guis\Widgets\KnowledgeItemFactory.cs" />
+    <Compile Include="Guis\Widgets\KnowledgeItemFrameControl.cs" />
+    <Compile Include="Guis\Widgets\KnowledgeItemGraphics.cs" />
+    <Compile Include="Guis\Widgets\KnowledgeItemSettings.cs" />
+    <Compile Include="Guis\Widgets\KnowledgeViewControl.cs" />
+    <Compile Include="Guis\Widgets\KnowledgeViewFactory.cs" />
+    <Compile Include="Guis\Widgets\KnowledgeViewGraphics.cs" />
+    <Compile Include="Guis\Widgets\KnowledgeViewSettings.cs" />
     <Compile Include="Guis\Widgets\TraceItemControl.cs" />
     <Compile Include="Guis\Widgets\TraceItemDataControl.cs" />
     <Compile Include="Guis\Widgets\TraceItemFactory.cs" />

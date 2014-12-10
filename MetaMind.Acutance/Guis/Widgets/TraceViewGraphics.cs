@@ -4,13 +4,12 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Elements.Views;
+    using MetaMind.Perseverance.Guis.Widgets.Tasks.Views;
 
     using Microsoft.Xna.Framework;
 
-    public class TraceViewGraphics : ViewBasicGraphics
+    public class TraceViewGraphics : TaskViewGraphics
     {
-        private int frameAlpha;
-
         public TraceViewGraphics(IView view, TraceViewSettings viewSettings, TraceItemSettings itemSettings)
             : base(view, viewSettings, itemSettings)
         {
@@ -18,34 +17,12 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public override void Draw(GameTime gameTime, byte alpha)
         {
-            // draw active items
-            base.Draw(gameTime, (byte)this.frameAlpha);
-
+            this.DrawItems(gameTime, (byte)this.FocusAlpha);
             this.DrawRegion(gameTime, alpha);
             this.DrawScrollBar(gameTime);
         }
 
-        public override void Update(GameTime gameTime)
-        {
-            if (this.View.IsEnabled(ViewState.View_Has_Focus))
-            {
-                this.frameAlpha += 15;
-                if (this.frameAlpha > 255)
-                {
-                    this.frameAlpha = 255;
-                }
-            }
-            else
-            {
-                this.frameAlpha -= 15;
-                if (this.frameAlpha < 0)
-                {
-                    this.frameAlpha = 0;
-                }
-            }
-        }
-
-        private void DrawRegion(GameTime gameTime, byte alpha)
+        protected override void DrawRegion(GameTime gameTime, byte alpha)
         {
             Primitives2D.DrawRectangle(
                 ScreenManager.SpriteBatch,
@@ -56,11 +33,6 @@ namespace MetaMind.Acutance.Guis.Widgets
                 ScreenManager.SpriteBatch,
                 this.ViewControl.Region.Frame.Rectangle,
                 ColorExt.MakeTransparent(this.ViewSettings.HighlightColor, alpha));
-        }
-
-        private void DrawScrollBar(GameTime gameTime)
-        {
-            this.ViewControl.ScrollBar.Draw(gameTime);
         }
     }
 }

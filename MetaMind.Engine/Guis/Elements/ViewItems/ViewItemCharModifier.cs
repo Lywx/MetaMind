@@ -7,15 +7,17 @@
 
 namespace MetaMind.Engine.Guis.Elements.ViewItems
 {
-    using MetaMind.Engine.Components;
-    using MetaMind.Engine.Components.Inputs;
-    using MetaMind.Engine.Guis.Elements.Items;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Input;
     using System;
     using System.Globalization;
     using System.Linq;
     using System.Text;
+
+    using MetaMind.Engine.Components;
+    using MetaMind.Engine.Components.Inputs;
+    using MetaMind.Engine.Guis.Elements.Items;
+
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Input;
 
     public interface IViewItemCharModifier
     {
@@ -27,7 +29,7 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
 
         void Draw(GameTime gameTime);
 
-        void Initialize(string prevString);
+        void Initialize(string prevString, bool showCursor);
 
         void Release();
 
@@ -40,7 +42,9 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
     {
         #region Input Settings
 
-        private readonly string cursorCharacter = "][";
+        private readonly string cursorSymbol = "][";
+
+        private string cursorCharacter = string.Empty;
 
         // GB2312-80 for Sougou IME
         private readonly Encoding imeEncoding = Encoding.GetEncoding(54936);
@@ -125,8 +129,10 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
             this.ValueModified = null;
         }
 
-        public void Initialize(string prevString)
+        public void Initialize(string prevString, bool showCursor)
         {
+            this.cursorCharacter = showCursor ? this.cursorSymbol : string.Empty;
+
             this.previousString = prevString;
 
             this.currentString = new StringBuilder(prevString);

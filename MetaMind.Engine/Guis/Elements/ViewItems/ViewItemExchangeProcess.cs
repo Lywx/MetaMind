@@ -12,9 +12,9 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
 
     public class ViewItemExchangeProcess : ProcessBase
     {
-        private IItemRootFrame        draggingFrame;
+        private readonly IItemRootFrame draggingFrame;
 
-        private IRegion               targetRegion;
+        private readonly IRegion targetRegion;
 
         public ViewItemExchangeProcess(IViewItem draggingItem, IView targetView)
         {

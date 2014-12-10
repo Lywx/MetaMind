@@ -54,7 +54,7 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
 
             Item.Enable(ItemState.Item_Swaping);
 
-            var originCenter = this.ViewControl.Scroll.RootCenterPoint(this.ItemControl.Id);
+            var originCenter = this        .ViewControl.Scroll.RootCenterPoint(this        .ItemControl.Id);
             var targetCenter = draggingItem.ViewControl.Scroll.RootCenterPoint(draggingItem.ItemControl.Id);
 
             ViewControl.Swap.Initialize(originCenter, targetCenter);

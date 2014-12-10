@@ -1,8 +1,10 @@
 namespace MetaMind.Engine.Guis.Elements.Views
 {
-    using MetaMind.Engine.Guis.Elements.Items;
-    using Microsoft.Xna.Framework;
     using System;
+
+    using MetaMind.Engine.Guis.Elements.Items;
+
+    using Microsoft.Xna.Framework;
 
     public class ViewBasicGraphics : ViewComponent, IViewGraphics
     {
@@ -11,11 +13,16 @@ namespace MetaMind.Engine.Guis.Elements.Views
         {
         }
 
+        public virtual void Draw(GameTime gameTime, byte alpha)
+        {
+            this.DrawItems(gameTime, alpha);
+        }
+
         public virtual void Update(GameTime gameTime)
         {
         }
 
-        public virtual void Draw(GameTime gameTime, byte alpha)
+        protected void DrawItems(GameTime gameTime, byte alpha)
         {
             foreach (var item in this.View.Items)
             {

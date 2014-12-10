@@ -1,7 +1,6 @@
 namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
 {
     using System;
-    using System.Globalization;
 
     using C3.Primtive2DXna;
 
@@ -198,10 +197,7 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Items
             {
                 Primitives2D.DrawRectangle(
                     ScreenManager.SpriteBatch,
-                    SinwaveHighlight(
-                        gameTime,
-                        5,
-                        RectangleExt.Crop(ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin)),
+                    this.SinwaveHighlight(gameTime, 5, RectangleExt.Crop(ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin)),
                     ColorExt.MakeTransparent(ItemSettings.NameFrameSynchronizationColor, alpha),
                     2f);
             }

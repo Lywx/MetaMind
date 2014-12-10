@@ -10,19 +10,18 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
 
     public class TaskViewGraphics : ViewBasicGraphics
     {
-        private int frameAlpha;
-
         public TaskViewGraphics(IView view, TaskViewSettings viewSettings, TaskItemSettings itemSettings)
             : base(view, viewSettings, itemSettings)
         {
         }
 
+        protected int FocusAlpha { get; set; }
+
         public override void Draw(GameTime gameTime, byte alpha)
         {
             // draw active items
-            base.Draw(gameTime, (byte)frameAlpha);
-
-            this.DrawRegion(gameTime);
+            this.DrawItems(gameTime, (byte)this.FocusAlpha);
+            this.DrawRegion(gameTime, (byte)this.FocusAlpha);
             this.DrawScrollBar(gameTime);
         }
 
@@ -30,36 +29,36 @@ namespace MetaMind.Perseverance.Guis.Widgets.Tasks.Views
         {
             if (View.IsEnabled(ViewState.View_Has_Focus))
             {
-                frameAlpha += 15;
-                if (frameAlpha > 255)
+                this.FocusAlpha += 15;
+                if (this.FocusAlpha > 255)
                 {
-                    frameAlpha = 255;
+                    this.FocusAlpha = 255;
                 }
             }
             else
             {
-                frameAlpha -= 15;
-                if (frameAlpha < 0)
+                this.FocusAlpha -= 15;
+                if (this.FocusAlpha < 0)
                 {
-                    frameAlpha = 0;
+                    this.FocusAlpha = 0;
                 }
             }
         }
 
-        private void DrawRegion(GameTime gameTime)
+        protected virtual void DrawRegion(GameTime gameTime, byte alpha)
         {
             Primitives2D.DrawRectangle(
                 ScreenManager.SpriteBatch,
                 RectangleExt.Extend(ViewControl.Region.Frame.Rectangle, ViewSettings.BorderMargin),
-                ColorExt.MakeTransparent(ViewSettings.HighlightColor, (byte)this.frameAlpha),
+                ColorExt.MakeTransparent(ViewSettings.HighlightColor, alpha),
                 2f);
             Primitives2D.FillRectangle(
                 ScreenManager.SpriteBatch,
                 ViewControl.Region.Frame.Rectangle,
-                ColorExt.MakeTransparent(ViewSettings.HighlightColor, (byte)this.frameAlpha));
+                ColorExt.MakeTransparent(ViewSettings.HighlightColor, alpha));
         }
 
-        private void DrawScrollBar(GameTime gameTime)
+        protected virtual void DrawScrollBar(GameTime gameTime)
         {
             ViewControl.ScrollBar.Draw(gameTime);
         }

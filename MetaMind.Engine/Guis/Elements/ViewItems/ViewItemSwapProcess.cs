@@ -90,6 +90,12 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
 
         protected virtual void SwapDataInList(dynamic source)
         {
+            if (!source.Contains(this.DraggedItem.ItemData) || 
+                !source.Contains(this.SwappingItem.ItemData))
+            {
+                return;
+            }
+
             int draggingPosition = source.IndexOf(this.DraggedItem.ItemData);
             int swappingPosition = source.IndexOf(this.SwappingItem.ItemData);
 
@@ -103,7 +109,7 @@ namespace MetaMind.Engine.Guis.Elements.ViewItems
             var swappingId = this.SwappingItem.ItemControl.Id;
 
             this.SwappingItem.ItemControl.Id = this.DraggedItem.ItemControl.Id;
-            this.DraggedItem.ItemControl.Id = swappingId;
+            this.DraggedItem .ItemControl.Id = swappingId;
 
             this.SwappingItem.View.Control.SortItems(ViewSortMode.Id);
         }

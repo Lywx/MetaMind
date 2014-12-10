@@ -1,5 +1,7 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
+    using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
 
     using MetaMind.Acutance.Concepts;
@@ -11,23 +13,23 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     using Microsoft.Xna.Framework;
 
-    public class TraceViewControl : ViewControl2D
+    public class KnowledgeViewControl : ViewControl2D
     {
         #region Constructors
 
-        public TraceViewControl(IView view, TraceViewSettings viewSettings, TraceItemSettings itemSettings)
+        public KnowledgeViewControl(IView view, KnowledgeViewSettings viewSettings, KnowledgeItemSettings itemSettings)
             : base(view, viewSettings, itemSettings)
         {
             this.Region      = new ViewRegion(view, viewSettings, itemSettings, this.RegionPositioning);
             this.ScrollBar   = new ViewScrollBar(view, viewSettings, itemSettings, viewSettings.ScrollBarSettings);
-            this.ItemFactory = new TraceItemFactory(viewSettings.Positive);
+            this.ItemFactory = new KnowledgeItemFactory();
         }
 
         #endregion Constructors
 
         #region Public Properties
 
-        public TraceItemFactory ItemFactory { get; protected set; }
+        public KnowledgeItemFactory ItemFactory { get; protected set; }
 
         public ViewRegion Region { get; protected set; }
 
@@ -37,16 +39,16 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Operations
 
-        public void AddItem(TraceEntry entry)
+        public void AddItem(KnowledgeEntry entry)
         {
-            var item = new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory, entry);
-            View.Items.Add(item);
+            var item = new ViewItemExchangeless(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory, entry);
+            this.View.Items.Add(item);
         }
 
         public void AddItem()
         {
-            var item = new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory);
-            View.Items.Add(item);
+            var item = new ViewItemExchangeless(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory);
+            this.View.Items.Add(item);
         }
 
         public void MoveDown()
@@ -79,7 +81,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public bool Locked
         {
-            get { return View.IsEnabled(ViewState.Item_Editting); }
+            get { return this.View.IsEnabled(ViewState.Item_Editting); }
         }
 
         public override void UpdateInput(GameTime gameTime)
@@ -233,11 +235,11 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             if (this.Region.IsEnabled(RegionState.Region_Has_Focus))
             {
-                View.Enable(ViewState.View_Has_Focus);
+                this.View.Enable(ViewState.View_Has_Focus);
             }
             else
             {
-                View.Disable(ViewState.View_Has_Focus);
+                this.View.Disable(ViewState.View_Has_Focus);
             }
         }
 

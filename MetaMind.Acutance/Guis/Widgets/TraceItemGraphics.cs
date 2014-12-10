@@ -74,7 +74,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             this.DrawId(255);
         }
 
-        private void DrawExperienceFrame(byte alpha)
+        protected void DrawExperienceFrame(byte alpha)
         {
             Primitives2D.FillRectangle(
                 ScreenManager.SpriteBatch,
@@ -83,7 +83,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         }
 
-        private void DrawExperience(byte alpha)
+        protected void DrawExperience(byte alpha)
         {
                 FontManager.DrawCenteredText(
                     ItemSettings.ExperienceFont,
@@ -93,7 +93,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                     ItemSettings.ExperienceSize);
         }
 
-        private void DrawIdFrame(byte alpha)
+        protected void DrawIdFrame(byte alpha)
         {
             Primitives2D.FillRectangle(
                 ScreenManager.SpriteBatch,
@@ -103,16 +103,17 @@ namespace MetaMind.Acutance.Guis.Widgets
                     : ColorExt.MakeTransparent(ItemSettings.IdFrameColor, alpha));
         }
 
-        protected override void DrawNameFrame(byte alpha)
+        private new void DrawNameFrame(byte alpha)
         {
             base.DrawNameFrame(alpha);
+
             if (ItemData.Stopped)
             {
                this.FillNameFrameWith(ItemSettings.NameFrameStoppedColor, alpha); 
             }
-        }
+        } 
 
-        private void DrawName(byte alpha)
+        protected void DrawName(byte alpha)
         {
             if (Item.IsEnabled(ItemState.Item_Pending))
             {
