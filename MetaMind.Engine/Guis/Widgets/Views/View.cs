@@ -1,8 +1,8 @@
 namespace MetaMind.Engine.Guis.Widgets.Views
 {
-    using System;
     using System.Collections.Generic;
 
+    using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.ViewItems;
 
     using Microsoft.Xna.Framework;
@@ -18,12 +18,23 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     public class View : ViewObject, IView
     {
-        public View(ICloneable viewSettings, ICloneable itemSettings, IViewFactory factory, dynamic parent = null)
+        public View(ViewSettings1D viewSettings, ItemSettings itemSettings, IViewFactory factory, dynamic parent = null)
             : base(viewSettings, itemSettings)
         {
-            this.Items = new List<IViewItem>();
+            this.Items = new List<IViewItem>(viewSettings.ColumnNumMax);
 
-            this.Control = factory.CreateControl(this, viewSettings, itemSettings);
+            this.Control  = factory.CreateControl(this, viewSettings, itemSettings);
+            this.Graphics = factory.CreateGraphics(this, viewSettings, itemSettings);
+
+            this.Parent = parent;
+        }
+
+        public View(ViewSettings2D viewSettings, ItemSettings itemSettings, IViewFactory factory, dynamic parent = null)
+            : base(viewSettings, itemSettings)
+        {
+            this.Items = new List<IViewItem>(viewSettings.RowNumMax * viewSettings.ColumnNumMax);
+
+            this.Control  = factory.CreateControl(this, viewSettings, itemSettings);
             this.Graphics = factory.CreateGraphics(this, viewSettings, itemSettings);
 
             this.Parent = parent;
@@ -49,7 +60,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public override void UpdateStructure(GameTime gameTime)
         {
-            this.Control.UpdateStructure(gameTime);
+            this.Control .UpdateStructure(gameTime);
             this.Graphics.Update(gameTime);
         }
     }

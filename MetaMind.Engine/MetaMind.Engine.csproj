@@ -137,7 +137,7 @@
     <Compile Include="Guis\Particles\FloatParticle.cs" />
     <Compile Include="Guis\Particles\Particle.cs" />
     <Compile Include="Guis\Particles\ShapelessParticle.cs" />
-    <Compile Include="Tests\StateTestGraphics.cs" />
+    <Compile Include="Guis\Testers\StateTestGraphics.cs" />
     <Compile Include="Guis\Widgets\ViewItems\IViewItemFactory.cs" />
     <Compile Include="Guis\Widgets\ViewItems\ViewItemBasicFactory1D.cs" />
     <Compile Include="Guis\Widgets\ViewItems\ViewItemBasicFactory2D.cs" />

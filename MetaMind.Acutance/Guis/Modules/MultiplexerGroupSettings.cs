@@ -110,8 +110,6 @@ namespace MetaMind.Acutance.Guis.Modules
 
                                                  RowNumDisplay = GraphicsSettings.Fullscreen ? 19 : 11,
                                                  RowNumMax     = 100,
-
-                                                 KeyboardEnabled = false,
                                              };
         }
     }

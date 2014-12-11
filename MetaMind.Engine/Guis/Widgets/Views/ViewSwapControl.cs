@@ -83,8 +83,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         /// <remarks>
         /// Valid only for view has a region in view control.
         /// </remarks>
-        /// <param name="draggingItem"></param>
-        /// <param name="targetView"></param>
         public void WatchExchangeIn(IViewItem draggingItem, IView targetView)
         {
             Type control  = targetView.Control.GetType();
@@ -105,8 +103,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         /// <remarks>
         /// Valid universally.
         /// </remarks>
-        /// <param name="draggingItem"></param>
-        /// <param name="targetView"></param>
         public void WatchSwapFrom(IViewItem draggingItem, IView targetView)
         {
             Predicate<IViewItem> touched = t => t.IsEnabled(ItemState.Item_Mouse_Over);

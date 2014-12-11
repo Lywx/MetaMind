@@ -1,9 +1,15 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Text;
+
+    using CodeProject.FileSearcher;
 
     using MetaMind.Acutance.Concepts;
-    using MetaMind.Engine.Components.Inputs;
+    using MetaMind.Engine.Components;
     using MetaMind.Engine.Guis.Widgets.Regions;
     using MetaMind.Engine.Guis.Widgets.ViewItems;
     using MetaMind.Engine.Guis.Widgets.Views;
@@ -13,6 +19,12 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     public class KnowledgeViewControl : ViewControl2D
     {
+        private readonly int maxDirectoryNum = 10;
+
+        private readonly int maxLineNum = 200;
+
+        private readonly int maxResultNum = 30;
+
         #region Constructors
 
         public KnowledgeViewControl(IView view, KnowledgeViewSettings viewSettings, KnowledgeItemSettings itemSettings)
@@ -21,6 +33,11 @@ namespace MetaMind.Acutance.Guis.Widgets
             this.Region      = new ViewRegion(view, viewSettings, itemSettings, this.RegionPositioning);
             this.ScrollBar   = new ViewScrollBar(view, viewSettings, itemSettings, viewSettings.ScrollBarSettings);
             this.ItemFactory = new KnowledgeItemFactory();
+
+            this.AddFileItem();
+            this.AddBlankItem();
+
+            Searcher.FoundInfo += this.RefreshSearchResult;
         }
 
         #endregion Constructors
@@ -35,42 +52,163 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #endregion Public Properties
 
+        #region Private Properties
+
+        private IViewItem BlankItem
+        {
+            get { return View.Items.Count > 0 ? View.Items.First(item => item.ItemData.IsBlank) : null; }
+        }
+
+        private IViewItem FileItem
+        {
+            get { return View.Items.Count > 0 ? View.Items.First(item => item.ItemData.IsFile) : null; }
+        }
+
+        #endregion Private Properties
+
         #region Operations
 
-        public void AddItem(KnowledgeEntry entry)
+        public void LoadResult(string relativePath)
+        {
+            this.ClearNonControlItems();
+            this.ClearResultItems();
+
+            this.FileItem.ItemControl.SetName(Path.GetFileName(relativePath));
+
+            try
+            {
+                var path      = Path.Combine(FolderManager.DataFolderPath, relativePath);
+                var attribute = File.GetAttributes(path);
+
+                var isFile = (attribute & FileAttributes.Directory) != FileAttributes.Directory;
+                if (isFile)
+                {
+                    this.LoadResultFromFile(path);
+                    this.Scroll.MoveUpToTop();
+                }
+                else
+                {
+                    this.LoadResultFromDirectory(path);
+                    this.Scroll.MoveUpToTop();
+                }
+            }
+            catch (FileNotFoundException)
+            {
+            }
+        }
+
+        public void Search(string fileName)
+        {
+            if (FileItem == null)
+            {
+                return;
+            }
+
+            this.ClearNonControlItems();
+            this.ClearResultItems();
+
+            var fileNames = new List<string>(1) { "*" + fileName + "*" };
+
+            Searcher.Start(
+                new SearcherParams(
+                    FolderManager.DataFolderPath,
+                    true,
+                    fileNames,
+                    false,
+                    DateTime.MinValue,
+                    false,
+                    DateTime.MinValue,
+                    false,
+                    string.Empty,
+                    Encoding.Unicode));
+        }
+
+        private void AddBlankItem()
+        {
+            var blankItem = new KnowledgeEntry { Name = string.Empty, IsControl = true, IsBlank = true };
+            this.AddItem(blankItem);
+        }
+
+        private void AddFileItem()
+        {
+            var fileItem = new KnowledgeEntry { Name = string.Empty, IsControl = true, IsFile = true };
+            this.InsertItem(0, fileItem);
+        }
+
+        private void AddItem(KnowledgeEntry entry)
         {
             var item = new ViewItemExchangeless(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory, entry);
-            this.View.Items.Add(item);
+            View.Items.Add(item);
         }
 
-        public void AddItem()
+        private void ClearNonControlItems()
         {
-            var item = new ViewItemExchangeless(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory);
-            this.View.Items.Add(item);
+            var nonControl = View.Items.FindAll(item => !item.ItemData.IsControl);
+            nonControl.ForEach(item => View.Items.Remove(item));
         }
 
-        public void MoveDown()
+        private void ClearResultItems()
         {
-            this.ScrollBar.Trigger();
-            this.Selection.MoveDown();
+            var result = View.Items.FindAll(item => item.ItemData.IsSearchResult);
+            result.ForEach(item => View.Items.Remove(item));
         }
 
-        public override void MoveLeft()
+        private void InsertBlankItem()
         {
-            this.ScrollBar.Trigger();
-            this.Selection.MoveLeft();
+            var blankItem = new KnowledgeEntry { Name = string.Empty, IsControl = true, IsBlank = true };
+            this.InsertItem(1, blankItem);
         }
 
-        public override void MoveRight()
+        private void InsertItem(int index, KnowledgeEntry entry)
         {
-            this.ScrollBar.Trigger();
-            this.Selection.MoveRight();
+            var item = new ViewItemExchangeless(View, ViewSettings, ItemSettings, ItemFactory, entry);
+            View.Items.Insert(index, item);
         }
 
-        public void MoveUp()
+        private void LoadResultFromDirectory(string path)
         {
-            this.ScrollBar.Trigger();
-            this.Selection.MoveUp();
+            foreach (var dir in Directory.GetDirectories(path).Take(this.maxDirectoryNum))
+            {
+                this.AddItem(
+                    new KnowledgeEntry { Name = FolderManager.RelativePath(dir), IsControl = true, IsSearchResult = true });
+            }
+
+            foreach (var file in Directory.GetFiles(path).Take(this.maxResultNum))
+            {
+                this.AddItem(
+                    new KnowledgeEntry { Name = FolderManager.RelativePath(file), IsControl = true, IsSearchResult = true });
+            }
+        }
+
+        private void LoadResultFromFile(string path)
+        {
+            var lines = File.ReadLines(path);
+            foreach (var line in lines.Where(line => !string.IsNullOrWhiteSpace(line)).Take(this.maxLineNum))
+            {
+                this.AddItem(new KnowledgeEntry { Name = line });
+            }
+        }
+
+        private void RefreshSearchResult(FoundInfoEventArgs e)
+        {
+            if (View.Items.Count > this.maxResultNum)
+            {
+                return;
+            }
+
+            var relativePath = FolderManager.RelativePath(e.Info.FullName);
+
+            this.RemoveBlankItem();
+            this.AddItem(new KnowledgeEntry { Name = relativePath, IsControl = true, IsSearchResult = true });
+            this.AddBlankItem();
+        }
+
+        private void RemoveBlankItem()
+        {
+            if (this.BlankItem != null)
+            {
+                View.Items.Remove(this.BlankItem);
+            }
         }
 
         #endregion Operations
@@ -111,121 +249,26 @@ namespace MetaMind.Acutance.Guis.Widgets
                         this.ScrollBar.Trigger();
                     }
                 }
-
-                // keyboard
-                // ---------------------------------------------------------------------
-                if (this.ViewSettings.KeyboardEnabled)
-                {
-                    // movement
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
-                    {
-                        this.MoveLeft();
-                    }
-
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
-                    {
-                        this.MoveRight();
-                    }
-
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Up))
-                    {
-                        this.MoveUp();
-                    }
-
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Down))
-                    {
-                        this.MoveDown();
-                    }
-
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SUp))
-                    {
-                        for (var i = 0; i < this.ViewSettings.RowNumDisplay; i++)
-                        {
-                            this.MoveUp();
-                        }
-                    }
-
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SDown))
-                    {
-                        for (var i = 0; i < this.ViewSettings.RowNumDisplay; i++)
-                        {
-                            this.MoveDown();
-                        }
-                    }
-
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SLeft))
-                    {
-                        for (var i = 0; i < this.ViewSettings.ColumnNumDisplay; i++)
-                        {
-                            this.MoveLeft();
-                        }
-                    }
-
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SRight))
-                    {
-                        for (var i = 0; i < this.ViewSettings.ColumnNumDisplay; i++)
-                        {
-                            this.MoveRight();
-                        }
-                    }
-
-                    // escape
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
-                    {
-                        this.Selection.Clear();
-                    }
-
-                    // list management
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceCreateItem))
-                    {
-                        this.AddItem();
-
-                        // auto select new item
-                        this.Selection.Select(this.View.Items.Count - 1);
-                    }
-
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceDeleteItem))
-                    {
-                        // itme deletion is handled by item control
-                        // auto select last item
-                        if (this.View.Items.Count > 1)
-                        {
-                            // this will be called before item deletion
-                            this.Selection.Select(this.View.Items.Count - 2);
-                        }
-                    }
-
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceClearItem))
-                    {
-                        var notEmpty = this.View.Items.Count(item => !string.IsNullOrEmpty(item.ItemData.Name));
-                        if (notEmpty > 0)
-                        {
-                            this.Selection.Select(notEmpty - 1);
-                        }
-                        else
-                        {
-                            this.Selection.Select(0);
-                        }
-                    }
-                }
             }
 
             // item input
             // -----------------------------------------------------------------
-            foreach (var item in this.View.Items.ToArray())
+            if (View.Items.Count > 0)
             {
-                item.UpdateInput(gameTime);
+                foreach (var item in View.Items.FindAll(item => item.ItemData.IsControl).ToArray())
+                {
+                    item.UpdateInput(gameTime);
+                }
             }
         }
 
         /// <remarks>
-        /// All state change should be inside this methods. 
+        /// All state change should be inside this methods.
         /// </remarks>>
-        /// <param name="gameTime"></param>
         public override void UpdateStructure(GameTime gameTime)
         {
-            base          .UpdateStructure(gameTime);
-            this.Region   .UpdateStructure(gameTime);
+            base.UpdateStructure(gameTime);
+            this.Region.UpdateStructure(gameTime);
             this.ScrollBar.Update(gameTime);
         }
 
@@ -254,7 +297,6 @@ namespace MetaMind.Acutance.Guis.Widgets
                 viewSettings.RowNumDisplay * itemSettings.NameFrameSize.Y);
         }
 
-
-        #endregion
+        #endregion Configurations
     }
 }

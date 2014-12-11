@@ -16,6 +16,8 @@
 
         void MoveUp();
 
+        void MoveUpToTop();
+
         Point RootCenterPoint(int id);
     }
 }

@@ -14,8 +14,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         //---------------------------------------------------------------------
         public int   ColumnNumDisplay = 3;
-
         public int   ColumnNumMax     = 5;
+
         public int   RowNumDisplay    = 3;
         public int   RowNumMax        = 500;
 

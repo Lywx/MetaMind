@@ -38,13 +38,16 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
         void UpdateStructure(GameTime gameTime);
     }
 
-    public class ViewItemCharModifier : ViewItemComponent, IViewItemCharModifier
+    public interface IViewItemCharPostProcessor
+    {
+        string RemoveCursor(string dirty);
+    }
+
+    public class ViewItemCharModifier : ViewItemComponent, IViewItemCharModifier, IViewItemCharPostProcessor
     {
         #region Input Settings
 
         private readonly string cursorSymbol = "][";
-
-        private string cursorCharacter = string.Empty;
 
         // GB2312-80 for Sougou IME
         private readonly Encoding imeEncoding = Encoding.GetEncoding(54936);
@@ -53,6 +56,8 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
                                                          .Select(i => (char)i)
                                                          .Where(char.IsControl)
                                                          .ToArray();
+
+        private string cursorCharacter = string.Empty;
 
         #endregion Input Settings
 
@@ -70,8 +75,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
             : base(item)
         {
             InputEventManager.CharEntered += this.DetectCharEntered;
-            InputEventManager.KeyDown += this.DetectEnterKeyDown;
-            InputEventManager.KeyDown += this.DetectEscapeKeyDown;
+            InputEventManager.KeyDown     += this.DetectEnterKeyDown;
         }
 
         #endregion Constructors
@@ -203,23 +207,25 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
             }
         }
 
-        private void DetectEscapeKeyDown(object sender, KeyEventArgs e)
-        {
-            if (!this.Item.IsEnabled(ItemState.Item_Editing))
-            {
-                return;
-            }
-
-            // mixed two manager together, might not be good
-            if (e.KeyCode == Keys.Escape)
-            {
-                this.Cancel();
-            }
-        }
-
         #endregion Event Handlers
 
-        #region Index Processing
+        #region Cursor Processing
+
+        public string RemoveCursor(string dirty)
+        {
+            var cleanString = dirty;
+
+            if (dirty.Length > 0 &&
+
+                // make sure input characters contain cursor characters
+                this.cursorIndex + dirty.Length < dirty.Length + 1 &&
+                dirty.Substring(this.cursorIndex, this.cursorCharacter.Length).ToString(CultureInfo.InvariantCulture) == this.cursorCharacter)
+            {
+                return cleanString.Remove(this.cursorIndex, this.cursorCharacter.Length);
+            }
+
+            return cleanString;
+        }
 
         private void DecrementCursor(int n = 1)
         {
@@ -257,7 +263,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
             }
         }
 
-        #endregion Index Processing
+        #endregion Cursor Processing
 
         #region Operations
 
@@ -364,7 +370,10 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
             if (keyboard.IsActionTriggered(Actions.Escape))
             {
-                this.Cancel();
+                if (this.Item.IsEnabled(ItemState.Item_Editing))
+                {
+                    this.Cancel();
+                }
             }
 
             if (this.ComboTriggered(keyboard, Keys.Left))

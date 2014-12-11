@@ -7,6 +7,7 @@
     public class ViewScrollControl2D : ViewComponent, IViewScrollControlHorizontal, IViewScrollControlVertical
     {
         private int xOffset;
+
         private int yOffset;
 
         public ViewScrollControl2D(IView view, ViewSettings2D viewSettings, ItemSettings itemSettings)
@@ -109,6 +110,10 @@
             {
                 this.yOffset = this.YOffset - 1;
             }
+        }
+        public void MoveUpToTop()
+        {
+            this.yOffset = 0;
         }
 
         public Point RootCenterPoint(int id)

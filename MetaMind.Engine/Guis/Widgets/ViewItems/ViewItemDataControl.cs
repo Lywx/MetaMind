@@ -26,15 +26,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
             this.CharModifier = new ViewItemCharModifier(item);
         }
 
-        private IViewItemCharModifier CharModifier { get; set; }
-
-        public void EditInt(string targetName)
-        {
-            this.EditStart(targetName, false);
-
-            this.CharModifier.ValueModified += this.RefreshEditingInt;
-            this.CharModifier.ModificationEnded += this.TerminateEditing;
-        }
+        protected IViewItemCharModifier CharModifier { get; private set; }
 
         public void EditExperience(string targetName)
         {
@@ -44,6 +36,14 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
             this.CharModifier.ModificationEnded += this.TerminateEditing;
         }
 
+        public void EditInt(string targetName)
+        {
+            this.EditStart(targetName, false);
+
+            this.CharModifier.ValueModified += this.RefreshEditingInt;
+            this.CharModifier.ModificationEnded += this.TerminateEditing;
+        }
+        
         public void EditString(string targetName)
         {
             this.EditStart(targetName, true);
@@ -52,13 +52,18 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
             this.CharModifier.ModificationEnded += this.TerminateEditing;
         }
 
-        public virtual void UpdateStructure(GameTime gameTime)
+        public void EditCancel()
         {
+           this.CharModifier.Cancel(); 
         }
 
         public virtual void UpdateInput(GameTime gameTime)
         {
             this.CharModifier.UpdateInput(gameTime);
+        }
+
+        public virtual void UpdateStructure(GameTime gameTime)
+        {
         }
 
         private void EditStart(string targetName, bool showCursor)

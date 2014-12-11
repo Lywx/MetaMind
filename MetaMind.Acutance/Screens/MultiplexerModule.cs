@@ -21,7 +21,8 @@ namespace MetaMind.Acutance.Screens
             this.multiplexer.Load();
 
             this.synchronizationClient = new SynchronizationGroupClient();
-            this.synchronizationClient.AddView(multiplexer.PTraceView);
+            this.synchronizationClient.TraceView     = this.multiplexer.PTraceView;
+            this.synchronizationClient.KnowledgeView = this.multiplexer.KnowledgeView;
              
             this.synchronization = new SynchronizationGroup(this.synchronizationClient, new SynchronizationGroupSettings());
             this.synchronization.Load();

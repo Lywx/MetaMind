@@ -12,7 +12,6 @@ namespace MetaMind.Perseverance.Guis.Modules
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis;
-    using MetaMind.Engine.Guis.Modules;
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Perseverance.Guis.Widgets;
 
@@ -66,7 +65,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         public override void Load()
         {
-            // TODO: improve minor laggy graphics
+            // TODO: Improve minor laggy graphics
             // performance penalty due to dynmaic type
             // performance is still bad even with fast member
             if (!this.loadFinished && this.FastHostData["Tasks"].Count != 0)

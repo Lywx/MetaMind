@@ -2,6 +2,7 @@
 {
     using Microsoft.Xna.Framework;
 
+    // TODO: Encapsulation is broken
     public interface IViewControl
     {
         IViewSwapControl Swap { get; }

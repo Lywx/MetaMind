@@ -82,7 +82,7 @@
         {
             if (this.synchronizationAlertedListener == null)
             {
-                this.synchronizationAlertedListener = new SynchroizationModuleSynchronizationAlertedListener(client.View);
+                this.synchronizationAlertedListener = new SynchroizationModuleSynchronizationAlertedListener(client.TraceView);
             }
 
             EventManager.AddListener(this.synchronizationAlertedListener);
@@ -123,6 +123,8 @@
 
                     this.monitor.Synchronization = this.synchronization;
                     this.monitor.TryStart();
+
+                    //this.client.KnowledgeView.Control.RefreshItems();
                 }
                 catch (TimeoutException)
                 {
@@ -220,11 +222,7 @@
 
     public class SynchronizationGroupClient
     {
-        public void AddView(IView view)
-        {
-            this.View = view;
-        } 
-
-        public IView View { get; private set; }
+        public IView TraceView { get; set; }
+        public IView KnowledgeView { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         protected void DrawItems(GameTime gameTime, byte alpha)
         {
-            foreach (var item in this.View.Items)
+            foreach (var item in this.View.Items.ToArray())
             {
                 if (item.IsEnabled(ItemState.Item_Active))
                 {

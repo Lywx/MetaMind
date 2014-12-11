@@ -72,6 +72,7 @@
     <Compile Include="Guis\Modules\MultiplexerGroupSettings.cs" />
     <Compile Include="Guis\Modules\SynchroizationModuleSynchronizationAlertedListener.cs" />
     <Compile Include="Guis\Widgets\KnowledgeItemControl.cs" />
+    <Compile Include="Guis\Widgets\KnowledgeItemDataControl.cs" />
     <Compile Include="Guis\Widgets\KnowledgeItemFactory.cs" />
     <Compile Include="Guis\Widgets\KnowledgeItemFrameControl.cs" />
     <Compile Include="Guis\Widgets\KnowledgeItemGraphics.cs" />
@@ -176,6 +177,10 @@
     <ProjectReference Include="..\ThirdParty\C3.Primitives2D\C3.Primitives2D.csproj">
       <Project>{39AD1482-1881-4852-A05D-DC61B0D3446A}</Project>
       <Name>C3.Primitives2D</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ThirdParty\CodeProject.FileSearcher\CodeProject.FileSearcher.csproj">
+      <Project>{d345e22b-f312-4e5e-bcb8-f311a2fa5125}</Project>
+      <Name>CodeProject.FileSearcher</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

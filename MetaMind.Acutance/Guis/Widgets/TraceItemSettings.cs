@@ -2,7 +2,6 @@ namespace MetaMind.Acutance.Guis.Widgets
 {
     using MetaMind.Engine.Settings;
     using MetaMind.Perseverance.Guis.Widgets;
-    using MetaMind.Perseverance.Guis.Widgets.Tasks.Items;
 
     using Microsoft.Xna.Framework;
 

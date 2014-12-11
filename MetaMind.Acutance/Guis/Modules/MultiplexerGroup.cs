@@ -1,10 +1,5 @@
 namespace MetaMind.Acutance.Guis.Modules
 {
-    using System.IO;
-    using System.Linq;
-
-    using MetaMind.Acutance.Concepts;
-    using MetaMind.Engine.Components;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Widgets.Views;
 
@@ -44,12 +39,7 @@ namespace MetaMind.Acutance.Guis.Modules
                 }
             }
 
-            // TODO: implement mode selection
-            var lines = File.ReadLines(Path.Combine(FolderManager.DataFolderPath, "Basic.txt"));
-            foreach (var line in lines.Where(line => !string.IsNullOrWhiteSpace(line)))
-            {
-                KnowledgeView.Control.AddItem(new KnowledgeEntry { Name = line });
-            }
+            this.KnowledgeView.Control.LoadResult("Basic.txt");
         }
 
         public void Unload()

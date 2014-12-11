@@ -12,6 +12,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         //---------------------------------------------------------------------
         public int             ColumnNumDisplay    = 10;
+        public int             ColumnNumMax        = 500;
 
         //---------------------------------------------------------------------
         public ScrollDirection Direction           = ScrollDirection.Right;

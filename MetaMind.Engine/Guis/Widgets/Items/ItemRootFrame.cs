@@ -12,20 +12,15 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
     public class ItemRootFrame : DraggableFrame, IItemRootFrame
     {
-        private IViewItem item;
-
         public ItemRootFrame(IViewItem item)
         {
-            this.item = item;
+            this.Item = item;
 
             this.MouseLeftClicked += this.SelectItsItem;
             this.MouseLeftClickedOutside += this.UnselectItsItem;
         }
 
-        private void UnselectItsItem(object sender, FrameEventArgs e)
-        {
-            this.item.ItemControl.MouseUnselectIt();
-        }
+        private IViewItem Item { get; set; }
 
         public void Disable()
         {
@@ -39,7 +34,12 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         private void SelectItsItem(object sender, FrameEventArgs e)
         {
-            this.item.ItemControl.MouseSelectIt();
+            this.Item.ItemControl.MouseSelectIt();
+        }
+
+        private void UnselectItsItem(object sender, FrameEventArgs e)
+        {
+            this.Item.ItemControl.MouseUnselectIt();
         }
     }
 }

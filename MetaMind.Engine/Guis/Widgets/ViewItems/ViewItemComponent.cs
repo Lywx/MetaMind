@@ -23,7 +23,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         IView View { get; }
 
-        IViewControl ViewControl { get; }
+        dynamic ViewControl { get; }
 
         dynamic ViewSettings { get; }
 
@@ -34,33 +34,31 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
     {
         protected ViewItemComponent(IViewItem item)
         {
-            this.item = item;
+            this.Item = item;
         }
 
         #region Item Components
 
-        private IViewItem item;
-
-        public IViewItem Item { get { return this.item; } }
+        public IViewItem Item { get; private set; }
 
         public dynamic ItemData
         {
-            get { return this.item.ItemData; }
+            get { return this.Item.ItemData; }
         }
 
         public dynamic ItemControl
         {
-            get { return this.item.ItemControl; }
+            get { return this.Item.ItemControl; }
         }
 
         public IItemGraphics ItemGraphics
         {
-            get { return this.item.ItemGraphics; }
+            get { return this.Item.ItemGraphics; }
         }
 
         public dynamic ItemSettings
         {
-            get { return this.item.ItemSettings; }
+            get { return this.Item.ItemSettings; }
         }
 
         #endregion Item Components
@@ -69,17 +67,17 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         public IView View
         {
-            get { return this.item.View; }
+            get { return this.Item.View; }
         }
 
-        public IViewControl ViewControl
+        public dynamic ViewControl
         {
             get { return this.View.Control; }
         }
 
         public dynamic ViewSettings
         {
-            get { return this.item.ViewSettings; }
+            get { return this.Item.ViewSettings; }
         }
 
         #endregion View Components

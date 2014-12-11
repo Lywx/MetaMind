@@ -37,6 +37,16 @@ namespace MetaMind.Engine.Components
             this.CreateDirectory();
         }
 
+        #endregion Constructors
+
+        public static string RelativePath(string path)
+        {
+            var dataFullPath = Path.GetFullPath(DataFolderPath);
+            var fullPath     = Path.GetFullPath(path);
+
+            return fullPath.Substring(dataFullPath.Length);
+        }
+
         private void CreateDirectory()
         {
             if (!Directory.Exists(SaveFolderPath))
@@ -50,7 +60,5 @@ namespace MetaMind.Engine.Components
                 Directory.CreateDirectory(DataFolderPath);
             }
         }
-
-        #endregion Constructors
     }
 }

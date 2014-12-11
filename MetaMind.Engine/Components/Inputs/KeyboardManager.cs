@@ -48,6 +48,8 @@ namespace MetaMind.Engine.Components.Inputs
         TraceEditItem, 
         TraceClearItem, 
 
+        KnowledgeEditItem,
+
         // synchronization
         // ---------------------------------------------------------------------
         ForceFlip,
@@ -295,6 +297,11 @@ namespace MetaMind.Engine.Components.Inputs
 
             actionMaps[(int)Actions.TraceClearItem] = new KeyboardActionMap();
             actionMaps[(int)Actions.TraceClearItem].Bindings.Add(Keys.C, new List<Keys> { Keys.LeftControl });
+
+            // knowledge
+            //-----------------------------------------------------------------
+            actionMaps[(int)Actions.KnowledgeEditItem] = new KeyboardActionMap();
+            actionMaps[(int)Actions.KnowledgeEditItem].Bindings.Add(Keys.I, new List<Keys> { Keys.LeftControl });
 
             // sychronization
             // ---------------------------------------------------------------------
