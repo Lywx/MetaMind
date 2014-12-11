@@ -38,26 +38,26 @@
 
         /// <summary>
         ///     Must only be called by ViewItemViewControl. This method is called both by
-        ///     mouse and keyboard selection. In the case of mouse selection, MouseSelectIt
+        ///     mouse and keyboard selection. In the case of mouse selection, MouseSelectsIt
         ///     method calls selection control to modify existing selection record. This
         ///     effect causes ViewItemViewControl(keyboard uses this route) to update item
-        ///     state and call CommonSelectIt.
+        ///     state and call CommonSelectsIt.
         /// </summary>
         /// <remarks>
         ///     This method is unified only when selection control won't modify Item_Selected state.
         /// </remarks>
-        public virtual void CommonSelectIt()
+        public virtual void CommonSelectsIt()
         {
         }
 
         /// <summary>
-        ///     Same as CommonSelectIt. Only used by ViewItemViewControl. This method is called
+        ///     Same as CommonSelectsIt. Only used by ViewItemViewControl. This method is called
         ///     both by mouse and keyboard selection.
         /// </summary>
         /// <remarks>
         ///     This method is unified only when selection control won't modify Item_Selected state.
         /// </remarks>
-        public virtual void CommonUnselectIt()
+        public virtual void CommonUnselectsIt()
         {
         }
 
@@ -65,18 +65,18 @@
         ///     Only used by root frame event handler, which will cause common select method to be called. as a result unifying the
         ///     mouse and keyboard selection effect.
         /// </summary>
-        public void MouseSelectIt()
+        public void MouseSelectsIt()
         {
-            this.ItemViewControl.MouseSelectIt();
+            this.ItemViewControl.MouseSelectsIt();
         }
 
         /// <summary>
-        ///     Same as MouseSelectIt. Only used by root frame event handler, which will cause common unselect method to be called.
+        ///     Same as MouseSelectsIt. Only used by root frame event handler, which will cause common unselect method to be called.
         ///     As a result unifying the mouse and keyboard un-selection effect.
         /// </summary>
-        public void MouseUnselectIt()
+        public void MouseUnselectsIt()
         {
-            this.ItemViewControl.MouseUnselectIt();
+            this.ItemViewControl.MouseUnselectsIt();
         }
 
         public virtual void ExchangeIt(IViewItem draggingItem, IView targetView)

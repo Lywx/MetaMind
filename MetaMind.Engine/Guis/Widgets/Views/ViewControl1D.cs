@@ -177,6 +177,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         protected void UpdateItemStructure(GameTime gameTime)
         {
+            // TODO: Possible thread safety issue
             foreach (var item in this.View.Items.ToArray())
             {
                 item.UpdateStructure(gameTime);

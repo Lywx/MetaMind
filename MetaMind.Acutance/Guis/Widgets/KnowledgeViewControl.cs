@@ -70,10 +70,10 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public void LoadResult(string relativePath)
         {
+            this.FileItem.ItemControl.SetName(Path.GetFileName(relativePath));
+
             this.ClearNonControlItems();
             this.ClearResultItems();
-
-            this.FileItem.ItemControl.SetName(Path.GetFileName(relativePath));
 
             try
             {
@@ -95,6 +95,13 @@ namespace MetaMind.Acutance.Guis.Widgets
             catch (FileNotFoundException)
             {
             }
+        }
+
+        public void SearchStop()
+        {
+            this.FileItem.ItemControl.EditCancel();
+
+            Searcher.Stop();
         }
 
         public void Search(string fileName)

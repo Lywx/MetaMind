@@ -213,18 +213,16 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
 
         public string RemoveCursor(string dirty)
         {
-            var cleanString = dirty;
-
             if (dirty.Length > 0 &&
 
                 // make sure input characters contain cursor characters
-                this.cursorIndex + dirty.Length < dirty.Length + 1 &&
+                this.cursorIndex + this.cursorCharacter.Length < dirty.Length + 1 &&
                 dirty.Substring(this.cursorIndex, this.cursorCharacter.Length).ToString(CultureInfo.InvariantCulture) == this.cursorCharacter)
             {
-                return cleanString.Remove(this.cursorIndex, this.cursorCharacter.Length);
+                return dirty.Remove(this.cursorIndex, this.cursorCharacter.Length);
             }
 
-            return cleanString;
+            return dirty;
         }
 
         private void DecrementCursor(int n = 1)
@@ -266,6 +264,12 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
         #endregion Cursor Processing
 
         #region Operations
+
+        private void Clear()
+        {
+            this.cursorIndex = 0;
+            this.currentString.Clear();
+        }
 
         private void DeleteNextChar()
         {
@@ -374,6 +378,11 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
                 {
                     this.Cancel();
                 }
+            }
+
+            if (keyboard.CtrlDown && keyboard.IsKeyPressed(Keys.Back))
+            {
+                this.Clear();
             }
 
             if (this.ComboTriggered(keyboard, Keys.Left))

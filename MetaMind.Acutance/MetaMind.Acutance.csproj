@@ -72,10 +72,11 @@
     <Compile Include="Guis\Modules\MultiplexerGroupSettings.cs" />
     <Compile Include="Guis\Modules\SynchroizationModuleSynchronizationAlertedListener.cs" />
     <Compile Include="Guis\Widgets\KnowledgeItemControl.cs" />
-    <Compile Include="Guis\Widgets\KnowledgeItemDataControl.cs" />
+    <Compile Include="Guis\Widgets\KnowledgeItemFileDataControl.cs" />
     <Compile Include="Guis\Widgets\KnowledgeItemFactory.cs" />
     <Compile Include="Guis\Widgets\KnowledgeItemFrameControl.cs" />
     <Compile Include="Guis\Widgets\KnowledgeItemGraphics.cs" />
+    <Compile Include="Guis\Widgets\KnowledgeItemResultDataControl.cs" />
     <Compile Include="Guis\Widgets\KnowledgeItemSettings.cs" />
     <Compile Include="Guis\Widgets\KnowledgeViewControl.cs" />
     <Compile Include="Guis\Widgets\KnowledgeViewFactory.cs" />

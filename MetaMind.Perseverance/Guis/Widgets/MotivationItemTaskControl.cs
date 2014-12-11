@@ -23,7 +23,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         public MotivationTaskTracer TaskTracer { get; private set; }
 
-        public void SelectIt()
+        public void SelectsIt()
         {
             if (this.TaskTracer == null)
             {
@@ -34,7 +34,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             this.TaskTracer.Show();
         }
 
-        public bool UnselectIt()
+        public bool UnselectsIt()
         {
             if (this.TaskTracer == null)
             {

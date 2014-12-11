@@ -208,7 +208,9 @@
 
                 this.Enable(FrameState.Mouse_Right_Pressed);
                 if (this.MouseRightPressed != null)
+                {
                     this.MouseRightPressed(this, new FrameEventArgs(FrameEventType.Mouse_Right_Pressed));
+                }
             }
             else if (!this.IsEnabled(FrameState.Mouse_Over) && this.MouseRightPress(e))
             {

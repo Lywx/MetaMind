@@ -21,12 +21,12 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
         {
         }
 
-        public void MouseSelectIt()
+        public void MouseSelectsIt()
         {
             this.ViewControl.Selection.Select(this.ItemControl.Id);
         }
 
-        public void MouseUnselectIt()
+        public void MouseUnselectsIt()
         {
             if (this.ViewControl.Selection.IsSelected(this.ItemControl.Id))
             {
@@ -100,7 +100,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
                 // unify mouse and keyboard selection
                 if (!this.Item.IsEnabled(ItemState.Item_Selected))
                 {
-                    this.ItemControl.CommonSelectIt();
+                    this.ItemControl.CommonSelectsIt();
                 }
 
                 this.Item.Enable(ItemState.Item_Selected);
@@ -110,7 +110,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
                 // unify mouse and keyboard selection
                 if (this.Item.IsEnabled(ItemState.Item_Selected))
                 {
-                    this.ItemControl.CommonUnselectIt();
+                    this.ItemControl.CommonUnselectsIt();
                 }
 
                 this.Item.Disable(ItemState.Item_Selected);

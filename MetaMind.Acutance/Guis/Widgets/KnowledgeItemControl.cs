@@ -1,3 +1,10 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="KnowledgeItemControl.cs" company="UESTC">
+//   Copyright (c) 2014 Lin Wuxiang
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace MetaMind.Acutance.Guis.Widgets
 {
     using MetaMind.Engine.Components.Inputs;
@@ -16,12 +23,26 @@ namespace MetaMind.Acutance.Guis.Widgets
             : base(item)
         {
             this.ItemFrameControl = new KnowledgeItemFrameControl(item);
-            this.ItemDataControl  = new KnowledgeItemDataControl(item);
+
+            if (ItemData.IsFile)
+            {
+                this.ItemDataControl = new KnowledgeItemFileDataControl(item);
+            }
+            else if (ItemData.IsSearchResult)
+            {
+                this.ItemDataControl = new KnowledgeItemResultDataControl(item);
+            }
         }
 
-        public ItemEntryFrame IdFrame { get { return ((KnowledgeItemFrameControl)this.ItemFrameControl).IdFrame; } }
+        public ItemEntryFrame IdFrame
+        {
+            get { return ((KnowledgeItemFrameControl)this.ItemFrameControl).IdFrame; }
+        }
 
-        public ItemEntryFrame NameFrame { get { return ((KnowledgeItemFrameControl)this.ItemFrameControl).NameFrame; } }
+        public ItemEntryFrame NameFrame
+        {
+            get { return ((KnowledgeItemFrameControl)this.ItemFrameControl).NameFrame; }
+        }
 
         #endregion Constructors
 
@@ -29,21 +50,17 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public bool Locked
         {
-            get
-            {
-                return this.Item.IsEnabled(ItemState.Item_Editing) ||
-                       this.Item.IsEnabled(ItemState.Item_Pending);
-            }
+            get { return this.Item.IsEnabled(ItemState.Item_Editing) || this.Item.IsEnabled(ItemState.Item_Pending); }
         }
 
         public override void UpdateInput(GameTime gameTime)
         {
             // mouse and keyboard in modifier
-            //-----------------------------------------------------------------
+            // -----------------------------------------------------------------
             base.UpdateInput(gameTime);
 
             // keyboard
-            //-----------------------------------------------------------------
+            // -----------------------------------------------------------------
             if (ViewSettings.KeyboardEnabled)
             {
                 if (this.AcceptInput)
@@ -53,7 +70,20 @@ namespace MetaMind.Acutance.Guis.Widgets
                     {
                         if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.N))
                         {
+                            // pre-trim to keep consistent prompt display
+                            var fileDataControl = this.ItemDataControl as KnowledgeItemFileDataControl;
+                            if (fileDataControl != null)
+                            {
+                                fileDataControl.TrimPrompt();
+                            }
+
                             this.ItemDataControl.EditString("Name");
+
+                            // compensate for pre-trim
+                            if (fileDataControl != null)
+                            {
+                                fileDataControl.SetName(ItemData.Name);
+                            }
                         }
 
                         if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
@@ -80,11 +110,14 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Operations
 
-        public void SetName(string fileName)
+        public void EditCancel()
         {
             ItemDataControl.EditCancel();
+        }
 
-            var itemDataControl = this.ItemDataControl as KnowledgeItemDataControl;
+        public void SetName(string fileName)
+        {
+            var itemDataControl = this.ItemDataControl as KnowledgeItemFileDataControl;
             if (itemDataControl != null)
             {
                 itemDataControl.SetName(fileName);

@@ -34,12 +34,12 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         private void SelectItsItem(object sender, FrameEventArgs e)
         {
-            this.Item.ItemControl.MouseSelectIt();
+            this.Item.ItemControl.MouseSelectsIt();
         }
 
         private void UnselectItsItem(object sender, FrameEventArgs e)
         {
-            this.Item.ItemControl.MouseUnselectIt();
+            this.Item.ItemControl.MouseUnselectsIt();
         }
     }
 }

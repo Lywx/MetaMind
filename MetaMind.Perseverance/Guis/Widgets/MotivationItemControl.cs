@@ -38,14 +38,14 @@
 
         #region Operations
 
-        public override void CommonSelectIt()
+        public override void CommonSelectsIt()
         {
-            this.ItemTaskControl.SelectIt();
+            this.ItemTaskControl.SelectsIt();
         }
 
-        public override void CommonUnselectIt()
+        public override void CommonUnselectsIt()
         {
-            this.ItemTaskControl.UnselectIt();
+            this.ItemTaskControl.UnselectsIt();
         }
 
         public void DeleteIt()

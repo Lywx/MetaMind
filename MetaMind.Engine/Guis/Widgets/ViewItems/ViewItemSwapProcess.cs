@@ -61,7 +61,7 @@ namespace MetaMind.Engine.Guis.Widgets.ViewItems
         protected void EndSwap()
         {
             // refine selection to make sure the overall effect is smooth
-            this.DraggedItem.ItemControl.MouseSelectIt();
+            this.DraggedItem.ItemControl.MouseSelectsIt();
 
             // stop swapping state
             this.SwappingItem.Disable(ItemState.Item_Swaping);
