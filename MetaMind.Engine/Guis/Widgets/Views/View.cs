@@ -61,7 +61,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         public override void UpdateStructure(GameTime gameTime)
         {
             this.Control .UpdateStructure(gameTime);
-            this.Graphics.Update(gameTime);
+            this.Graphics.UpdateStructure(gameTime);
         }
     }
 }

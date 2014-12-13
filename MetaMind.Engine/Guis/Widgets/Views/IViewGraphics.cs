@@ -4,8 +4,8 @@
 
     public interface IViewGraphics
     {
-        void Update( GameTime gameTime );
+        void UpdateStructure(GameTime gameTime);
 
-        void Draw( GameTime gameTime, byte alpha );
+        void Draw(GameTime gameTime, byte alpha);
     }
 }

@@ -2,11 +2,16 @@
 {
     using System;
 
+    using Microsoft.Xna.Framework;
+
     public interface IViewComponent
     {
         dynamic ViewControl  { get; }
+
         IView   View         { get; }
+
         dynamic ViewSettings { get; }
+
         dynamic ItemSettings { get; }
     }
 
@@ -20,11 +25,19 @@
 
         public dynamic ItemSettings { get; private set; }
 
-        protected ViewComponent( IView view, ICloneable viewSettings, ICloneable itemSettings )
+        protected ViewComponent(IView view, ICloneable viewSettings, ICloneable itemSettings)
         {
             this.View         = view;
             this.ViewSettings = viewSettings;
             this.ItemSettings = itemSettings;
+        }
+
+        public virtual void UpdateStructure(GameTime gameTime)
+        {
+        }
+
+        public virtual void UpdateInput(GameTime gameTime)
+        {
         }
     }
 }

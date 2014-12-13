@@ -226,7 +226,7 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             base          .UpdateStructure(gameTime);
             this.Region   .UpdateStructure(gameTime);
-            this.ScrollBar.Update(gameTime);
+            this.ScrollBar.UpdateStructure(gameTime);
         }
 
         protected override void UpdateViewFocus()
@@ -251,9 +251,8 @@ namespace MetaMind.Acutance.Guis.Widgets
                 viewSettings.StartPoint.X,
                 viewSettings.StartPoint.Y,
                 viewSettings.ColumnNumDisplay * (itemSettings.NameFrameSize.X + itemSettings.IdFrameSize.X + itemSettings.ExperienceFrameSize.X),
-                viewSettings.RowNumDisplay * itemSettings.NameFrameSize.Y);
+                viewSettings.RowNumDisplay    * itemSettings.NameFrameSize.Y);
         }
-
 
         #endregion
     }

@@ -1,6 +1,7 @@
 namespace MetaMind.Engine.Guis.Widgets.Views
 {
     using System;
+    using System.Linq;
 
     using MetaMind.Engine.Guis.Widgets.Items;
 
@@ -16,10 +17,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         public virtual void Draw(GameTime gameTime, byte alpha)
         {
             this.DrawItems(gameTime, alpha);
-        }
-
-        public virtual void Update(GameTime gameTime)
-        {
         }
 
         protected void DrawItems(GameTime gameTime, byte alpha)

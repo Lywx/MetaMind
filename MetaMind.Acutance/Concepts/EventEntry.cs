@@ -5,6 +5,7 @@ namespace MetaMind.Acutance.Concepts
     using System.Runtime.Serialization;
 
     using MetaMind.Engine;
+    using MetaMind.Engine.Concepts;
 
     [DataContract]
     public class EventEntry : EngineObject
@@ -13,7 +14,7 @@ namespace MetaMind.Acutance.Concepts
         public string Name = string.Empty;
 
         [DataMember]
-        public TimeSpan Time;
+        public Experience Experience;
 
         [DataMember]
         private string path = string.Empty;
@@ -59,7 +60,7 @@ namespace MetaMind.Acutance.Concepts
 
         private void Reset()
         {
-            this.Time = TimeSpan.Zero;
+            this.Experience = Experience.Zero;
         }
 
         private void UpdateState()
@@ -68,7 +69,7 @@ namespace MetaMind.Acutance.Concepts
             {
                 case EventState.Running:
                     {
-                        if (this.Time >= this.timeout)
+                        if (this.Experience.CertainDuration >= this.timeout)
                         {
                             this.state = EventState.Transiting;
                         }
@@ -78,7 +79,7 @@ namespace MetaMind.Acutance.Concepts
 
                 case EventState.Transiting:
                     {
-                        if (this.Time >= this.timeout + this.transition)
+                        if (this.Experience.CertainDuration >= this.timeout + this.transition)
                         {
                             this.state = EventState.Running;
 
@@ -92,7 +93,7 @@ namespace MetaMind.Acutance.Concepts
 
         private void UpdateTimer()
         {
-            this.Time += this.timer.Elapsed;
+            this.Experience += this.timer.Elapsed;
 
             this.timer.Restart();
         }

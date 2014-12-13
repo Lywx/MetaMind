@@ -21,10 +21,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         private Vector2 IdFrameLocation
         {
-            get
-            {
-                return this.RootFrameLocation - new Vector2(this.ItemSettings.IdFrameSize.X, 0);
-            }
+            get { return this.RootFrameLocation - new Vector2(this.ItemSettings.IdFrameSize.X, 0); }
         }
 
         private Vector2 NameFrameLocation
@@ -54,7 +51,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public override void UpdateInput(GameTime gameTime)
         {
-            base.UpdateInput(gameTime);
+            base          .UpdateInput(gameTime);
 
             this.NameFrame.UpdateInput(gameTime);
         }

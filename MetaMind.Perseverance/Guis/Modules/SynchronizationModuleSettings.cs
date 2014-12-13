@@ -18,9 +18,9 @@
 
         public Color BarFrameBackgroundColor = new Color(30, 30, 40, 10);
 
-        public Color BarFrameAscendColor     = new Color(78, 255, 27, 200);
+        public Color BarFrameAscendColor     = ColorPalette.LightGreen;
 
-        public Color BarFrameDescendColor    = new Color(255, 0, 27, 200);
+        public Color BarFrameDescendColor    = ColorPalette.LightPink;
 
         //---------------------------------------------------------------------
         public Point StateMargin             = new Point(0, 1);

@@ -16,7 +16,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
     using Microsoft.Xna.Framework;
 
-    public class ViewScrollBar : ViewComponent
+    public class ViewScrollBar : VisualViewComponent
     {
         private readonly ViewScrollBarSettings settings;
 
@@ -46,7 +46,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             }
         }
 
-        public void Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime)
         {
             if (this.ViewControl.RowNum > this.ViewSettings.RowNumDisplay)
             {
@@ -62,7 +62,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             this.alpha = this.settings.BrightnessMax;
         }
 
-        public void Update(GameTime gameTime)
+        public override void UpdateStructure(GameTime gameTime)
         {
             this.alpha -= this.settings.BrightnessTransitionRate;
             if (this.alpha < 0)

@@ -30,7 +30,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             this.DrawRegion(gameTime);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void UpdateStructure(GameTime gameTime)
         {
             if (this.View.IsEnabled(ViewState.View_Has_Focus))
             {

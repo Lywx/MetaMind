@@ -274,9 +274,9 @@ namespace MetaMind.Acutance.Guis.Widgets
         /// </remarks>>
         public override void UpdateStructure(GameTime gameTime)
         {
-            base.UpdateStructure(gameTime);
-            this.Region.UpdateStructure(gameTime);
-            this.ScrollBar.Update(gameTime);
+            base          .UpdateStructure(gameTime);
+            this.Region   .UpdateStructure(gameTime);
+            this.ScrollBar.UpdateStructure(gameTime);
         }
 
         protected override void UpdateViewFocus()

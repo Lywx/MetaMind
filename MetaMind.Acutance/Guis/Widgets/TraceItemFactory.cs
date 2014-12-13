@@ -5,10 +5,6 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     public class TraceItemFactory : ViewItemBasicFactory2D
     {
-        public TraceItemFactory()
-        {
-        }
-
         public override dynamic CreateControl(IViewItem item)
         {
             return new TraceItemControl(item);

@@ -72,6 +72,11 @@
     <Compile Include="Guis\Modules\SynchronizationGroup.cs" />
     <Compile Include="Guis\Modules\MultiplexerGroupSettings.cs" />
     <Compile Include="Guis\Modules\SynchroizationModuleSynchronizationAlertedListener.cs" />
+    <Compile Include="Guis\Widgets\EventItemSettings.cs" />
+    <Compile Include="Guis\Widgets\EventViewControl.cs" />
+    <Compile Include="Guis\Widgets\EventViewFactory.cs" />
+    <Compile Include="Guis\Widgets\EventViewGraphics.cs" />
+    <Compile Include="Guis\Widgets\EventViewSettings.cs" />
     <Compile Include="Guis\Widgets\KnowledgeItemControl.cs" />
     <Compile Include="Guis\Widgets\KnowledgeItemFileDataControl.cs" />
     <Compile Include="Guis\Widgets\KnowledgeItemFactory.cs" />

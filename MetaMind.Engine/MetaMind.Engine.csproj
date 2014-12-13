@@ -189,6 +189,7 @@
     <Compile Include="Guis\Widgets\Cameras\CameraSettings.cs" />
     <Compile Include="Guis\Widgets\Cameras\MarkovCamera.cs" />
     <Compile Include="Guis\Widget.cs" />
+    <Compile Include="Guis\Widgets\Views\VisualViewComponent.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screens\GameScreen.cs" />

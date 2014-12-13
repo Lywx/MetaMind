@@ -108,7 +108,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
         }
 
-        public virtual void UpdateInput(GameTime gameTime)
+        public override void UpdateInput(GameTime gameTime)
         {
             if (this.AcceptInput)
             {
@@ -159,7 +159,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
         }
 
-        public virtual void UpdateStructure(GameTime gameTime)
+        public override void UpdateStructure(GameTime gameTime)
         {
             if (this.View.IsEnabled(ViewState.View_Active))
             {

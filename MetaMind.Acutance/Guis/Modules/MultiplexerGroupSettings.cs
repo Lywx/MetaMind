@@ -32,11 +32,11 @@ namespace MetaMind.Acutance.Guis.Modules
         public readonly int   TraceColumnNumDisplayFullscreen = 4;
 
         //---------------------------------------------------------------------
-        public readonly TraceViewFactory  EventViewFactory = new TraceViewFactory();
+        public readonly EventViewFactory  EventViewFactory = new EventViewFactory();
         
-        public readonly TraceViewSettings EventViewSettings;
+        public readonly EventViewSettings EventViewSettings;
 
-        public readonly TraceItemSettings EventItemSettings;
+        public readonly EventItemSettings EventItemSettings;
 
         public readonly Point EventStartPoint;
 
@@ -79,8 +79,6 @@ namespace MetaMind.Acutance.Guis.Modules
 
             this.TraceViewSettings = new TraceViewSettings
                                          {
-                                             Positive = true,
-
                                              StartPoint = this.TraceStartPoint,
                                              RootMargin = new Point(traceViewColumnWidth, this.TraceItemSettings.NameFrameSize.Y),
 
@@ -98,7 +96,7 @@ namespace MetaMind.Acutance.Guis.Modules
                                          };
 
             //-----------------------------------------------------------------
-            this.EventItemSettings = new TraceItemSettings();
+            this.EventItemSettings = new EventItemSettings();
 
             var eventViewColumnWidth = GraphicsSettings.Width / (GraphicsSettings.Fullscreen
                                               ? this.EventColumnNumDisplayFullscreen
@@ -109,10 +107,8 @@ namespace MetaMind.Acutance.Guis.Modules
             this.EventItemSettings.Reconfigure();
 
             this.EventStartPoint = this.TraceViewSettings.StartPoint + new Point(0, this.TraceViewSettings.RowNumDisplay * this.TraceViewSettings.RootMargin.Y + this.ViewVMargin);
-            this.EventViewSettings = new TraceViewSettings
+            this.EventViewSettings = new EventViewSettings
                                          {
-                                             Positive = false,
-
                                              StartPoint = this.EventStartPoint,
                                              RootMargin = new Point(eventViewColumnWidth, this.EventItemSettings.NameFrameSize.Y),
 

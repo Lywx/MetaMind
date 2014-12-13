@@ -31,7 +31,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         #region Public Properties
 
-        public TaskItemFactory ItemFactory { get; protected set; }
+        public IViewItemFactory ItemFactory { get; protected set; }
 
         public ViewRegion Region { get; protected set; }
 
@@ -43,8 +43,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         public void AddItem(TaskEntry entry)
         {
-            this.View.Items.Add(
-                new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory, entry));
+            this.View.Items.Add(new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory, entry));
         }
 
         public void AddItem()
@@ -201,7 +200,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
         {
             base          .UpdateStructure(gameTime);
             this.Region   .UpdateStructure(gameTime);
-            this.ScrollBar.Update(gameTime);
+            this.ScrollBar.UpdateStructure(gameTime);
         }
 
         protected override void UpdateViewFocus()

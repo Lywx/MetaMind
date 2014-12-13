@@ -4,6 +4,5 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     public class TraceViewSettings : TaskViewSettings
     {
-        public bool  Positive;
     }
 }
