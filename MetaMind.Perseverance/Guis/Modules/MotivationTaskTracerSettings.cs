@@ -12,11 +12,15 @@ namespace MetaMind.Perseverance.Guis.Modules
     using MetaMind.Engine.Settings;
     using MetaMind.Perseverance.Guis.Widgets;
 
+    using Microsoft.Xna.Framework;
+
     public class MotivationTaskTracerSettings : ICloneable
     {
         public readonly TaskItemSettings ItemSettings = new TaskItemSettings();
 
         public readonly TaskViewFactory  ViewFactory  = new TaskViewFactory();
+
+        public readonly TaskViewSettings ViewSettings;
 
         public MotivationTaskTracerSettings()
         {
@@ -24,12 +28,15 @@ namespace MetaMind.Perseverance.Guis.Modules
                                     {
                                         ColumnNumDisplay = 1,
                                         ColumnNumMax     = 1,
+
+                                        RowNumDisplay    = GraphicsSettings.Fullscreen ? 13 : 9,
                                         RowNumMax        = 100,
-                                        RowNumDisplay    = GraphicsSettings.Fullscreen ? 13 : 9
+
+                                        RootMargin = new Point(
+                                            this.ItemSettings.NameFrameSize.X,
+                                            this.ItemSettings.NameFrameSize.Y + this.ItemSettings.IdFrameSize.Y)
                                     };
         }
-
-        public TaskViewSettings ViewSettings { get; private set; }
 
         public object Clone()
         {

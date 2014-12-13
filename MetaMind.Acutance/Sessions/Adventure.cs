@@ -43,20 +43,14 @@ namespace MetaMind.Acutance.Sessions
 
         #region Public Properties
 
+        public Random Random { get; private set; }
+
         [DataMember]
         public Tracelist Tracelist { get; private set; }
-
-        public Random Random { get; private set; }
 
         #endregion Public Properties
 
         #region Load and Save
-
-        [OnDeserialized]
-        public void OnDeserialized(StreamingContext context)
-        {
-            this.Random = new Random((int)DateTime.Now.Ticks);
-        }
 
         public static Adventure LoadSave()
         {
@@ -87,7 +81,7 @@ namespace MetaMind.Acutance.Sessions
             var serializer = new DataContractSerializer(typeof(Adventure), null, int.MaxValue, false, true, null);
             using (var file = File.Create(XmlPath))
             {
-                serializer.WriteObject( file, singleton );
+                serializer.WriteObject(file, singleton);
             }
         }
 
@@ -112,15 +106,23 @@ namespace MetaMind.Acutance.Sessions
 
         #endregion Load and Save
 
-        #region Update 
+        #region Update
 
         public void Update()
         {
             this.Tracelist.Update();
         }
 
-        #endregion Update 
+        #endregion Update
 
-        //---------------------------------------------------------------------
+        #region Serialization
+
+        [OnDeserialized]
+        public void OnDeserialized(StreamingContext context)
+        {
+            this.Random = new Random((int)DateTime.Now.Ticks);
+        }
+
+        #endregion
     }
 }

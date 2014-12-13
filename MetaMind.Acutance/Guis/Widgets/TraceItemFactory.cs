@@ -5,11 +5,8 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     public class TraceItemFactory : ViewItemBasicFactory2D
     {
-        public bool Positive;
-
-        public TraceItemFactory(bool positive)
+        public TraceItemFactory()
         {
-            this.Positive = positive;
         }
 
         public override dynamic CreateControl(IViewItem item)
@@ -19,9 +16,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public override dynamic CreateData(IViewItem item)
         {
-            var trace = Acutance.Adventure.Tracelist.Create();
-            trace.Positive = this.Positive;
-            return trace;
+            return Acutance.Adventure.Tracelist.Create();
         }
 
         public override IItemGraphics CreateGraphics(IViewItem item)

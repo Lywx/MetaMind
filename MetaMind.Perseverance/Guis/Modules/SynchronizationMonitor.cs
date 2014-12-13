@@ -3,7 +3,6 @@
     using System;
 
     using MetaMind.Engine;
-    using MetaMind.Engine.Components;
     using MetaMind.Engine.Components.Events;
     using MetaMind.Perseverance.Concepts.Cognitions;
     using MetaMind.Perseverance.Sessions;
@@ -54,7 +53,7 @@
 
                 // Set the event handler
                 // recommended to use the Extended handlers, which allow input suppression among other additional information
-                this.globalMouseListener.MouseMoveExt += this.AttentionConfirmed;
+                this.globalMouseListener.MouseMoveExt += this.Confirm;
             }
 
             this.actived = true;
@@ -89,14 +88,14 @@
                 {
                     GameEngine.AudioManager.PlayMusic(this.SynchronizingCue);
 
-                    this.AttentionConfirmed();
+                    this.Confirm();
                     this.Alert();
                 }
                 else
                 {
                     GameEngine.AudioManager.PlayMusic(this.NotSynchronizingCue);
 
-                    this.AttentionConfirmed();
+                    this.Confirm();
                     this.Alert();
                 }
             }
@@ -108,14 +107,14 @@
             GameEngine.EventManager.QueueEvent(alertedEvent);
         }
 
-        private void AttentionConfirmed()
+        private void Confirm()
         {
             this.alertMoment = DateTime.Now;
         }
         
-        private void AttentionConfirmed(object sender, MouseEventExtArgs e)
+        private void Confirm(object sender, MouseEventExtArgs e)
         {
-            this.AttentionConfirmed();
+            this.Confirm();
         }
     }
 }

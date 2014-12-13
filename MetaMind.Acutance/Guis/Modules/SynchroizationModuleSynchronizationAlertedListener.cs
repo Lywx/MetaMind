@@ -6,7 +6,6 @@
 
     public class SynchroizationModuleSynchronizationAlertedListener : ListenerBase
     {
-
         private readonly IView traceView;
 
         public SynchroizationModuleSynchronizationAlertedListener(IView traceView)

@@ -2,7 +2,6 @@ namespace MetaMind.Acutance.Screens
 {
     using MetaMind.Acutance.Guis.Modules;
     using MetaMind.Engine.Guis;
-    using MetaMind.Engine.Guis.Modules;
 
     using Microsoft.Xna.Framework;
 
@@ -20,10 +19,8 @@ namespace MetaMind.Acutance.Screens
             this.multiplexer = new MultiplexerGroup(new MultiplexerGroupSettings());
             this.multiplexer.Load();
 
-            this.synchronizationClient = new SynchronizationGroupClient();
-            this.synchronizationClient.TraceView     = this.multiplexer.PTraceView;
-            this.synchronizationClient.KnowledgeView = this.multiplexer.KnowledgeView;
-             
+            this.synchronizationClient = new SynchronizationGroupClient { TraceView = this.multiplexer.TraceView, };
+
             this.synchronization = new SynchronizationGroup(this.synchronizationClient, new SynchronizationGroupSettings());
             this.synchronization.Load();
         }

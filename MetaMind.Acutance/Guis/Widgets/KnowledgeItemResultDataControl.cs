@@ -27,7 +27,6 @@ namespace MetaMind.Acutance.Guis.Widgets
             {
                 // must un-select itself to clear selection or the selection control may 
                 // misuse the selection in next search
-
                 this.ItemControl.MouseUnselectsIt();
 
                 this.View.Control.SearchStop();

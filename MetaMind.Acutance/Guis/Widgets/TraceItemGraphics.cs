@@ -103,16 +103,6 @@ namespace MetaMind.Acutance.Guis.Widgets
                     : ColorExt.MakeTransparent(ItemSettings.IdFrameColor, alpha));
         }
 
-        private new void DrawNameFrame(byte alpha)
-        {
-            base.DrawNameFrame(alpha);
-
-            if (ItemData.Stopped)
-            {
-               this.FillNameFrameWith(ItemSettings.NameFrameStoppedColor, alpha); 
-            }
-        } 
-
         protected void DrawName(byte alpha)
         {
             if (Item.IsEnabled(ItemState.Item_Pending))

@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Acutance.cs" />
     <Compile Include="Components\SaveManager.cs" />
+    <Compile Include="Concepts\EventEntry.cs" />
     <Compile Include="Concepts\KnowledgeEntry.cs" />
     <Compile Include="Concepts\TraceEntry.cs" />
     <Compile Include="Concepts\Tracelist.cs" />

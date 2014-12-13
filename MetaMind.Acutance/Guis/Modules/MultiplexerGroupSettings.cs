@@ -1,5 +1,8 @@
 namespace MetaMind.Acutance.Guis.Modules
 {
+    using System.Collections.Generic;
+
+    using MetaMind.Acutance.Concepts;
     using MetaMind.Acutance.Guis.Widgets;
     using MetaMind.Engine.Settings;
 
@@ -7,64 +10,79 @@ namespace MetaMind.Acutance.Guis.Modules
 
     public class MultiplexerGroupSettings
     {
+        public readonly int ViewVMargin = 15;
+
         //---------------------------------------------------------------------
-        public readonly TraceViewFactory  PTraceViewFactory = new TraceViewFactory();
+        public readonly TraceViewFactory  TraceViewFactory = new TraceViewFactory();
         
-        public readonly TraceViewSettings PTraceViewSettings;
+        public readonly TraceViewSettings TraceViewSettings;
 
-        public readonly TraceItemSettings PTraceItemSettings;
+        public readonly TraceItemSettings TraceItemSettings;
 
-        public readonly TraceViewFactory  NTraceViewFactory = new TraceViewFactory();
+        public readonly Point TraceStartPoint                 = new Point(0, 108);
+
+        public readonly int   TraceRowNumDisplay              = 5;
+
+        public readonly int   TraceRowNumDisplayFullscreen    = 5;
+
+        public readonly int   TraceRowNumMax                  = 100;
+
+        public readonly int   TraceColumnNumDisplay           = 3;
+
+        public readonly int   TraceColumnNumDisplayFullscreen = 4;
+
+        //---------------------------------------------------------------------
+        public readonly TraceViewFactory  EventViewFactory = new TraceViewFactory();
         
-        public readonly TraceViewSettings NTraceViewSettings;
+        public readonly TraceViewSettings EventViewSettings;
 
-        public readonly TraceItemSettings NTraceItemSettings;
+        public readonly TraceItemSettings EventItemSettings;
 
+        public readonly Point EventStartPoint;
+
+        public readonly int   EventRowNumDisplay              = 8;
+
+        public readonly int   EventRowNumDisplayFullscreen    = 8;
+
+        public readonly int   EventRowNumMax                  = 100;
+
+        public readonly int   EventColumnNumDisplay           = 2;
+
+        public readonly int   EventColumnNumDisplayFullscreen = 2;
+
+        //---------------------------------------------------------------------
         public readonly KnowledgeViewFactory  KnowledgeViewFactory = new KnowledgeViewFactory();
 
         public readonly KnowledgeViewSettings KnowledgeViewSettings;
 
         public readonly KnowledgeItemSettings KnowledgeItemSettings;
 
-        public readonly Point TraceStartPoint                 = new Point(0, 108);
+        public readonly int KnowledgeViewRowNumDisplayFullscreen = 19;
 
-        public readonly int   TraceColumnNumDisplay           = 3;
+        public readonly int KnowledgeViewRowNumDisplay           = 11;
 
-        public readonly int   TraceColumnNumDisplayFullscreen = 4;
+        public readonly int KnowledgeViewRowNumMax               = 100;
+
+        public readonly int KnowledgeViewColumnNumDisplay        = 1;
 
         public MultiplexerGroupSettings()
         {
-            this.PTraceItemSettings = new TraceItemSettings
-                                         {
-                                             NameFrameRegularColor   = ColorPalette.TransparentColor1,
-                                             NameFrameMouseOverColor = ColorPalette.TransparentColor2,
-                                         };
+            this.TraceItemSettings = new TraceItemSettings();
 
-            this.NTraceItemSettings = new TraceItemSettings
-                                         {
-                                             NameFrameRegularColor   = ColorPalette.TransparentColor1,
-                                             NameFrameMouseOverColor = ColorPalette.TransparentColor2,
-                                             NameFrameStoppedColor   = new Color(0, 120, 20, 20),
-                                         };
+            var traceViewColumnWidth = GraphicsSettings.Width / (GraphicsSettings.Fullscreen
+                                              ? this.TraceColumnNumDisplayFullscreen
+                                              : this.TraceColumnNumDisplay);
+            var traceItemFixedWidth = this.TraceItemSettings.ExperienceFrameSize.X + this.TraceItemSettings.IdFrameSize.X;
 
-            var averageWidth = GraphicsSettings.Width / (GraphicsSettings.Fullscreen
-                                      ? this.TraceColumnNumDisplayFullscreen
-                                      : this.TraceColumnNumDisplay);
-            var fixedWidth = this.PTraceItemSettings.ExperienceFrameSize.X + this.PTraceItemSettings.IdFrameSize.X;
+            this.TraceItemSettings.NameFrameSize = new Point(traceViewColumnWidth - traceItemFixedWidth, 24);
+            this.TraceItemSettings.Reconfigure();
 
-            this.PTraceItemSettings.NameFrameSize = new Point(averageWidth - fixedWidth, 24);
-            this.PTraceItemSettings.RootFrameSize = this.PTraceItemSettings.NameFrameSize;
-
-            this.NTraceItemSettings.NameFrameSize = new Point(averageWidth - fixedWidth, 24);
-            this.NTraceItemSettings.RootFrameSize = this.NTraceItemSettings.NameFrameSize;
-
-            //-----------------------------------------------------------------
-            this.PTraceViewSettings = new TraceViewSettings
+            this.TraceViewSettings = new TraceViewSettings
                                          {
                                              Positive = true,
 
                                              StartPoint = this.TraceStartPoint,
-                                             RootMargin = new Point(averageWidth, this.PTraceItemSettings.NameFrameSize.Y),
+                                             RootMargin = new Point(traceViewColumnWidth, this.TraceItemSettings.NameFrameSize.Y),
 
                                              ColumnNumMax = GraphicsSettings.Fullscreen
                                                      ? this.TraceColumnNumDisplayFullscreen
@@ -73,44 +91,65 @@ namespace MetaMind.Acutance.Guis.Modules
                                                      ? this.TraceColumnNumDisplayFullscreen
                                                      : this.TraceColumnNumDisplay,
 
-                                             RowNumDisplay = 10,
-                                             RowNumMax     = 100,
+                                             RowNumDisplay = GraphicsSettings.Fullscreen
+                                                     ? this.TraceRowNumDisplayFullscreen
+                                                     : this.TraceRowNumDisplay,
+                                             RowNumMax     = this.TraceRowNumMax,
                                          };
-            const int ViewMargin = 15;
 
-            this.NTraceViewSettings = new TraceViewSettings
+            //-----------------------------------------------------------------
+            this.EventItemSettings = new TraceItemSettings();
+
+            var eventViewColumnWidth = GraphicsSettings.Width / (GraphicsSettings.Fullscreen
+                                              ? this.EventColumnNumDisplayFullscreen
+                                              : this.EventColumnNumDisplay);
+            var eventItemFixedWidth = this.EventItemSettings.ExperienceFrameSize.X + this.EventItemSettings.IdFrameSize.X;
+
+            this.EventItemSettings.NameFrameSize = new Point(eventViewColumnWidth - eventItemFixedWidth, 24);
+            this.EventItemSettings.Reconfigure();
+
+            this.EventStartPoint = this.TraceViewSettings.StartPoint + new Point(0, this.TraceViewSettings.RowNumDisplay * this.TraceViewSettings.RootMargin.Y + this.ViewVMargin);
+            this.EventViewSettings = new TraceViewSettings
                                          {
                                              Positive = false,
 
-                                             StartPoint = this.PTraceViewSettings.StartPoint + new Point(0, this.PTraceViewSettings.RowNumDisplay * this.PTraceViewSettings.RootMargin.Y + ViewMargin),
-                                             RootMargin = new Point(averageWidth, this.NTraceItemSettings.NameFrameSize.Y),
+                                             StartPoint = this.EventStartPoint,
+                                             RootMargin = new Point(eventViewColumnWidth, this.EventItemSettings.NameFrameSize.Y),
 
                                              ColumnNumMax = GraphicsSettings.Fullscreen
-                                                     ? this.TraceColumnNumDisplayFullscreen
-                                                     : this.TraceColumnNumDisplay,
+                                                     ? this.EventColumnNumDisplayFullscreen
+                                                     : this.EventColumnNumDisplay,
                                              ColumnNumDisplay = GraphicsSettings.Fullscreen
-                                                     ? this.TraceColumnNumDisplayFullscreen
-                                                     : this.TraceColumnNumDisplay,
+                                                     ? this.EventColumnNumDisplayFullscreen
+                                                     : this.EventColumnNumDisplay,
 
-                                             RowNumDisplay = 2,
-                                             RowNumMax     = 100,
+                                             RowNumDisplay = GraphicsSettings.Fullscreen
+                                                     ? this.EventRowNumDisplayFullscreen
+                                                     : this.EventRowNumDisplay,
+                                             RowNumMax     = this.EventRowNumMax,
                                          };
 
             //-----------------------------------------------------------------
             this.KnowledgeItemSettings = new KnowledgeItemSettings();
 
-            //-----------------------------------------------------------------m
             this.KnowledgeViewSettings = new KnowledgeViewSettings
                                              {
-                                                 StartPoint = this.NTraceViewSettings.StartPoint + new Point(0, this.NTraceViewSettings.RowNumDisplay * this.NTraceViewSettings.RootMargin.Y + ViewMargin),
-                                                 RootMargin = new Point(averageWidth, this.PTraceItemSettings.NameFrameSize.Y),
+                                                 StartPoint = this.EventViewSettings.StartPoint + new Point(0, this.EventViewSettings.RowNumDisplay * this.EventViewSettings.RootMargin.Y + this.ViewVMargin),
+                                                 RootMargin = new Point(traceViewColumnWidth, this.TraceItemSettings.NameFrameSize.Y),
 
-                                                 ColumnNumMax     = 1,
-                                                 ColumnNumDisplay = 1,
+                                                 ColumnNumMax     = this.KnowledgeViewColumnNumDisplay,
+                                                 ColumnNumDisplay = this.KnowledgeViewColumnNumDisplay,
 
-                                                 RowNumDisplay = GraphicsSettings.Fullscreen ? 19 : 11,
-                                                 RowNumMax     = 100,
+                                                 RowNumDisplay = GraphicsSettings.Fullscreen
+                                                         ? this.KnowledgeViewRowNumDisplayFullscreen
+                                                         : this.KnowledgeViewRowNumDisplay,
+                                                 RowNumMax     = this.KnowledgeViewRowNumMax,
                                              };
+        }
+
+        public List<TraceEntry> Traces
+        {
+            get { return Acutance.Adventure.Tracelist.Traces; }
         }
     }
 }

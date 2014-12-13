@@ -2,8 +2,6 @@ namespace MetaMind.Acutance.Screens
 {
     using System;
 
-    using MetaMind.Acutance.Guis.Modules;
-    using MetaMind.Engine.Guis.Modules;
     using MetaMind.Engine.Screens;
 
     using Microsoft.Xna.Framework;
@@ -30,7 +28,7 @@ namespace MetaMind.Acutance.Screens
 
             ScreenManager.SpriteBatch.Begin();
 
-            MessageManager.Draw(gameTime);
+            MessageManager  .Draw(gameTime);
 
             this.multiplexer.Draw(gameTime, this.TransitionAlpha);
 
@@ -42,7 +40,7 @@ namespace MetaMind.Acutance.Screens
             InputEventManager   .HandleInput();
             InputSequenceManager.HandleInput();
 
-            this.multiplexer.HandleInput();
+            this.multiplexer    .HandleInput();
         }
 
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)

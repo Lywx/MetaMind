@@ -7,17 +7,10 @@
 
     public class TaskViewSettings : ViewSettings2D
     {
-        public Color HighlightColor    = ColorPalette.TransparentColor1;
+        public readonly ViewScrollBarSettings ScrollBarSettings = new ViewScrollBarSettings();
 
         public Point BorderMargin      = new Point(4, 4);
 
-        public ViewScrollBarSettings ScrollBarSettings = new ViewScrollBarSettings();
-
-        public TaskViewSettings()
-        {
-            var itemSettings = new TaskItemSettings();
-
-            this.RootMargin = new Point(itemSettings.NameFrameSize.X, itemSettings.NameFrameSize.Y + itemSettings.IdFrameSize.Y);
-        }
+        public Color HighlightColor    = ColorPalette.TransparentColor1;
     }
 }

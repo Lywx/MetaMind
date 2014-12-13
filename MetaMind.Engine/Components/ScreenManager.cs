@@ -102,7 +102,7 @@ namespace MetaMind.Engine.Components
         protected override void UnloadContent()
         {
             // Tell each of the screens to unload their content.
-            foreach (GameScreen screen in screens)
+            foreach (var screen in screens)
             {
                 screen.UnloadContent();
             }
@@ -117,7 +117,7 @@ namespace MetaMind.Engine.Components
         /// </summary>
         public override void Draw(GameTime gameTime)
         {
-            foreach (GameScreen screen in screens.Where(screen => screen.ScreenState != ScreenState.Hidden))
+            foreach (var screen in screens.Where(screen => screen.ScreenState != ScreenState.Hidden))
             {
                 screen.Draw(gameTime);
             }
@@ -132,19 +132,19 @@ namespace MetaMind.Engine.Components
             // the process of updating one screen adds or removes others.
             screensToUpdate.Clear();
 
-            foreach (GameScreen screen in screens)
+            foreach (var screen in screens)
             {
                 screensToUpdate.Add(screen);
             }
 
-            bool otherScreenHasFocus = !Game.IsActive;
-            bool coveredByOtherScreen = false;
+            var otherScreenHasFocus = !Game.IsActive;
+            var coveredByOtherScreen = false;
 
             // Loop as long as there are screens waiting to be updated.
             while (screensToUpdate.Count > 0)
             {
                 // Pop the topmost screen off the waiting list.
-                GameScreen screen = screensToUpdate[screensToUpdate.Count - 1];
+                var screen = screensToUpdate[screensToUpdate.Count - 1];
 
                 screensToUpdate.RemoveAt(screensToUpdate.Count - 1);
 
@@ -268,7 +268,7 @@ namespace MetaMind.Engine.Components
         /// </summary>
         private void TraceScreens()
         {
-            List<string> screenNames = new List<string>();
+            var screenNames = new List<string>();
 
             foreach (GameScreen screen in screens)
             {

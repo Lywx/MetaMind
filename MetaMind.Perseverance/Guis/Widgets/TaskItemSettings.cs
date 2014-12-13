@@ -60,7 +60,6 @@ namespace MetaMind.Perseverance.Guis.Widgets
         //---------------------------------------------------------------------
         public TaskItemSettings()
         {
-            //-----------------------------------------------------------------
             this.RootFrameSize = this.NameFrameSize;
 
             //-----------------------------------------------------------------
@@ -76,6 +75,11 @@ namespace MetaMind.Perseverance.Guis.Widgets
             //-----------------------------------------------------------------
             this.ExperienceFrameColor = ColorPalette.TransparentColor1;
             this.ProgressFrameColor   = ColorPalette.TransparentColor1;
+        }
+
+        public virtual void Reconfigure()
+        {
+            this.RootFrameSize = this.NameFrameSize;
         }
     }
 }

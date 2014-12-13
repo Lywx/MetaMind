@@ -13,7 +13,6 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public override void UpdateStructure(GameTime gameTime)
         {
-            ItemData.Positive = ViewSettings.Positive;
             ItemData.Update();
         }
     }

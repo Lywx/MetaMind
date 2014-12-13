@@ -7,8 +7,6 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     public class TraceItemSettings : TaskItemSettings
     {
-        public Color NameFrameStoppedColor = new Color(100, 0, 0, 2);
-
         public TraceItemSettings()
         {
             this.RootFrameSize = this.NameFrameSize;

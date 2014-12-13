@@ -123,8 +123,6 @@
 
                     this.monitor.Synchronization = this.synchronization;
                     this.monitor.TryStart();
-
-                    //this.client.KnowledgeView.Control.RefreshItems();
                 }
                 catch (TimeoutException)
                 {
@@ -223,6 +221,5 @@
     public class SynchronizationGroupClient
     {
         public IView TraceView { get; set; }
-        public IView KnowledgeView { get; set; }
     }
 }

@@ -20,7 +20,7 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             this.Region      = new ViewRegion(view, viewSettings, itemSettings, this.RegionPositioning);
             this.ScrollBar   = new ViewScrollBar(view, viewSettings, itemSettings, viewSettings.ScrollBarSettings);
-            this.ItemFactory = new TraceItemFactory(viewSettings.Positive);
+            this.ItemFactory = new TraceItemFactory();
         }
 
         #endregion Constructors

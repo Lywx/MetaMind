@@ -8,9 +8,7 @@ namespace MetaMind.Acutance.Guis.Widgets
     {
         public KnowledgeItemSettings()
         {
-            this.NameFrameSize         = new Point(GraphicsSettings.Width - this.IdFrameSize.X, 24);
-            this.NameFrameStoppedColor = Color.Transparent;
-
+            this.NameFrameSize = new Point(GraphicsSettings.Width - this.IdFrameSize.X, 24);
             this.RootFrameSize = this.NameFrameSize;
         }
     }

@@ -11,6 +11,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.ViewItems;
+    using MetaMind.Engine.Guis.Widgets.Views;
 
     using Microsoft.Xna.Framework;
 
@@ -38,13 +39,20 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public override void UpdateStructure(GameTime gameTime)
         {
+            if (View.IsEnabled(ViewState.View_Has_Focus))
+            {
+                Item.Enable(ItemState.Item_Selected);
+            }
+            else
+            {
+                Item.Disable(ItemState.Item_Selected);
+            }
+
             if (Item.IsEnabled(ItemState.Item_Editing))
             {
                 CharModifier.ValueModified     += this.StartSearch;
                 CharModifier.ModificationEnded += this.StartSearch;
             }
-
-            Item.Enable(ItemState.Item_Selected);
         }
 
         private void SearchEnded(ThreadEndedEventArgs e)

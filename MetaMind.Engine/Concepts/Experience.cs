@@ -1,6 +1,7 @@
 ﻿namespace MetaMind.Engine.Concepts
 {
     using System;
+    using System.Globalization;
     using System.Runtime.Serialization;
 
     [DataContract]
@@ -17,9 +18,9 @@
         {
             get
             {
-                return HasEnded ?
-                    CertainDuration :
-                    CertainDuration + TimeSpan.FromSeconds((long)((DateTime.Now - RecentStartTime).TotalSeconds * Accelaration));
+                return this.HasEnded
+                           ? this.CertainDuration
+                           : this.CertainDuration + TimeSpan.FromSeconds((long)((DateTime.Now - this.RecentStartTime).TotalSeconds * this.Accelaration));
             }
         }
 
@@ -48,28 +49,28 @@
 
         public Experience()
         {
-            HistoricalStartTime = DateTime.Now;
-            RecentStartTime = DateTime.Now;
-            Accelaration = 1f;
-            HasEnded = false;
+            this.HistoricalStartTime = DateTime.Now;
+            this.RecentStartTime     = DateTime.Now;
+            this.Accelaration        = 1f;
+            this.HasEnded            = false;
         }
 
         public Experience(DateTime historicalStartTime, DateTime recentStartTime, TimeSpan certainDuration)
         {
-            HistoricalStartTime = historicalStartTime;
-            RecentStartTime = recentStartTime;
-            CertainDuration = certainDuration;
-            Accelaration = 1f;
-            HasEnded = false;
+            this.HistoricalStartTime = historicalStartTime;
+            this.RecentStartTime     = recentStartTime;
+            this.CertainDuration     = certainDuration;
+            this.Accelaration        = 1f;
+            this.HasEnded            = false;
         }
 
         public Experience(DateTime historicalStartTime, TimeSpan certainDuration, DateTime endTime)
         {
-            HistoricalStartTime = historicalStartTime;
-            EndTime = endTime;
-            CertainDuration = certainDuration;
-            Accelaration = 1f;
-            HasEnded = true;
+            this.HistoricalStartTime = historicalStartTime;
+            this.EndTime             = endTime;
+            this.CertainDuration     = certainDuration;
+            this.Accelaration        = 1f;
+            this.HasEnded            = true;
         }
 
         #endregion Constructors
@@ -95,15 +96,15 @@
             {
                 exp = new Experience(
                     historicalStartTime: lhs.HistoricalStartTime,
-                    endTime            : lhs.EndTime,
-                    certainDuration    : lhs.CertainDuration - rhs.CertainDuration);
+                    endTime:             lhs.EndTime,
+                    certainDuration:     lhs.CertainDuration - rhs.CertainDuration);
             }
             else if (!lhs.HasEnded)
             {
                 exp = new Experience(
                     historicalStartTime: lhs.HistoricalStartTime,
-                    recentStartTime    : lhs.RecentStartTime,
-                    certainDuration    : lhs.CertainDuration - rhs.CertainDuration);
+                    recentStartTime:     lhs.RecentStartTime,
+                    certainDuration:     lhs.CertainDuration - rhs.CertainDuration);
             }
             else
             {
@@ -120,19 +121,21 @@
             {
                 exp = new Experience(
 
-                    // first starter
-                    historicalStartTime: lhs.HistoricalStartTime < rhs.HistoricalStartTime ? lhs.HistoricalStartTime : rhs.HistoricalStartTime,
+                    // first starter set start time
+                    historicalStartTime: lhs.HistoricalStartTime < rhs.HistoricalStartTime
+                            ? lhs.HistoricalStartTime
+                            : rhs.HistoricalStartTime,
 
-                    // last ender
-                    endTime            : lhs.EndTime > rhs.EndTime ? lhs.EndTime : rhs.EndTime, 
-                    certainDuration    : lhs.CertainDuration + rhs.CertainDuration);
+                    // last ender set end time
+                    endTime:         lhs.EndTime > rhs.EndTime ? lhs.EndTime : rhs.EndTime,
+                    certainDuration: lhs.CertainDuration + rhs.CertainDuration);
             }
             else if (lhs.HasEnded ^ rhs.HasEnded)
             {
                 exp = new Experience(
                     historicalStartTime: lhs.HistoricalStartTime < rhs.HistoricalStartTime ? lhs.HistoricalStartTime : rhs.HistoricalStartTime,
-                    recentStartTime    : !lhs.HasEnded ? lhs.RecentStartTime : rhs.RecentStartTime,
-                    certainDuration    : lhs.CertainDuration + rhs.CertainDuration);
+                    recentStartTime:    !lhs.HasEnded ? lhs.RecentStartTime : rhs.RecentStartTime,
+                    certainDuration:     lhs.CertainDuration + rhs.CertainDuration);
             }
             else
             {
@@ -144,7 +147,7 @@
 
         public override string ToString()
         {
-            return ((int)this.Duration.TotalHours).ToString();
+            return ((int)this.Duration.TotalHours).ToString(CultureInfo.InvariantCulture);
         }
 
         #endregion Overloadings
