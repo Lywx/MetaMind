@@ -57,9 +57,9 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public readonly KnowledgeItemSettings KnowledgeItemSettings;
 
-        public readonly int KnowledgeViewRowNumDisplayFullscreen = 19;
+        public readonly int KnowledgeViewRowNumDisplayFullscreen = 18;
 
-        public readonly int KnowledgeViewRowNumDisplay           = 11;
+        public readonly int KnowledgeViewRowNumDisplay           = 10;
 
         public readonly int KnowledgeViewRowNumMax               = 100;
 

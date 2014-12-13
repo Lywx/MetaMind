@@ -19,19 +19,16 @@ namespace MetaMind.Perseverance.Guis.Widgets
     {
         #region Constructors
 
-        public TaskViewControl(IView view, TaskViewSettings viewSettings, TaskItemSettings itemSettings)
-            : base(view, viewSettings, itemSettings)
+        public TaskViewControl(IView view, TaskViewSettings viewSettings, TaskItemSettings itemSettings, TaskItemFactory itemFactory)
+            : base(view, viewSettings, itemSettings, itemFactory)
         {
-            this.Region      = new ViewRegion(view, viewSettings, itemSettings, this.RegionPositioning);
-            this.ScrollBar   = new ViewScrollBar(view, viewSettings, itemSettings, viewSettings.ScrollBarSettings);
-            this.ItemFactory = new TaskItemFactory();
+            this.Region    = new ViewRegion(view, viewSettings, itemSettings, this.RegionPositioning);
+            this.ScrollBar = new ViewScrollBar(view, viewSettings, itemSettings, viewSettings.ScrollBarSettings);
         }
 
         #endregion Constructors
 
         #region Public Properties
-
-        public IViewItemFactory ItemFactory { get; protected set; }
 
         public ViewRegion Region { get; protected set; }
 
@@ -44,12 +41,6 @@ namespace MetaMind.Perseverance.Guis.Widgets
         public void AddItem(TaskEntry entry)
         {
             this.View.Items.Add(new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory, entry));
-        }
-
-        public void AddItem()
-        {
-            this.View.Items.Add(
-                new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory));
         }
 
         public void MoveDown()

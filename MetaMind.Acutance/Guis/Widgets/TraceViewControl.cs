@@ -15,19 +15,16 @@ namespace MetaMind.Acutance.Guis.Widgets
     {
         #region Constructors
 
-        public TraceViewControl(IView view, TraceViewSettings viewSettings, TraceItemSettings itemSettings)
-            : base(view, viewSettings, itemSettings)
+        public TraceViewControl(IView view, TraceViewSettings viewSettings, TraceItemSettings itemSettings, TraceItemFactory itemFactory)
+            : base(view, viewSettings, itemSettings, itemFactory)
         {
-            this.Region      = new ViewRegion(view, viewSettings, itemSettings, this.RegionPositioning);
-            this.ScrollBar   = new ViewScrollBar(view, viewSettings, itemSettings, viewSettings.ScrollBarSettings);
-            this.ItemFactory = new TraceItemFactory();
+            this.Region    = new ViewRegion(view, viewSettings, itemSettings, this.RegionPositioning);
+            this.ScrollBar = new ViewScrollBar(view, viewSettings, itemSettings, viewSettings.ScrollBarSettings);
         }
 
         #endregion Constructors
 
         #region Public Properties
-
-        public TraceItemFactory ItemFactory { get; protected set; }
 
         public ViewRegion Region { get; protected set; }
 
@@ -40,12 +37,6 @@ namespace MetaMind.Acutance.Guis.Widgets
         public void AddItem(TraceEntry entry)
         {
             var item = new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory, entry);
-            View.Items.Add(item);
-        }
-
-        public void AddItem()
-        {
-            var item = new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory);
             View.Items.Add(item);
         }
 

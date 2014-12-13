@@ -10,18 +10,38 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     using System;
 
     using MetaMind.Engine.Components.Inputs;
+    using MetaMind.Engine.Guis.Widgets.ViewItems;
 
     using Microsoft.Xna.Framework;
 
     public class ViewControl2D : ViewControl1D
     {
-        public ViewControl2D(IView view, ViewSettings2D viewSettings, ICloneable itemSettings)
+        public ViewControl2D(IView view, ViewSettings2D viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
             : base(view, viewSettings, itemSettings)
         {
+            this.ItemFactory = itemFactory;
+
             this.Swap      = new ViewSwapControl(this.View, this.ViewSettings, this.ItemSettings);
             this.Scroll    = new ViewScrollControl2D(this.View, this.ViewSettings, this.ItemSettings);
             this.Selection = new ViewSelectionControl2D(this.View, this.ViewSettings, this.ItemSettings);
         }
+
+        #region Public Properties
+
+        public IViewItemFactory ItemFactory { get; protected set; }
+
+
+        #endregion
+
+        #region Operations
+
+        public void AddItem()
+        {
+            var item = new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory);
+            this.View.Items.Add( item);
+        }
+
+        #endregion
 
         #region Update
 

@@ -5,6 +5,7 @@ namespace MetaMind.Acutance.Guis.Widgets
     using System.IO;
     using System.Linq;
     using System.Text;
+    using System.Text.RegularExpressions;
 
     using CodeProject.FileSearcher;
 
@@ -27,12 +28,11 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Constructors
 
-        public KnowledgeViewControl(IView view, KnowledgeViewSettings viewSettings, KnowledgeItemSettings itemSettings)
-            : base(view, viewSettings, itemSettings)
+        public KnowledgeViewControl(IView view, KnowledgeViewSettings viewSettings, KnowledgeItemSettings itemSettings, KnowledgeItemFactory itemFactory)
+            : base(view, viewSettings, itemSettings, itemFactory)
         {
             this.Region      = new ViewRegion(view, viewSettings, itemSettings, this.RegionPositioning);
             this.ScrollBar   = new ViewScrollBar(view, viewSettings, itemSettings, viewSettings.ScrollBarSettings);
-            this.ItemFactory = new KnowledgeItemFactory();
 
             this.AddFileItem();
             this.AddBlankItem();
@@ -43,8 +43,6 @@ namespace MetaMind.Acutance.Guis.Widgets
         #endregion Constructors
 
         #region Public Properties
-
-        public KnowledgeItemFactory ItemFactory { get; protected set; }
 
         public ViewRegion Region { get; protected set; }
 
@@ -132,13 +130,13 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         private void AddBlankItem()
         {
-            var blankItem = new KnowledgeEntry { Name = string.Empty, IsControl = true, IsBlank = true };
+            var blankItem = new KnowledgeEntry(string.Empty) { IsBlank = true };
             this.AddItem(blankItem);
         }
 
         private void AddFileItem()
         {
-            var fileItem = new KnowledgeEntry { Name = string.Empty, IsControl = true, IsFile = true };
+            var fileItem = new KnowledgeEntry(string.Empty) { IsFile = true };
             this.InsertItem(0, fileItem);
         }
 
@@ -162,7 +160,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         private void InsertBlankItem()
         {
-            var blankItem = new KnowledgeEntry { Name = string.Empty, IsControl = true, IsBlank = true };
+            var blankItem = new KnowledgeEntry(string.Empty) { IsBlank = true };
             this.InsertItem(1, blankItem);
         }
 
@@ -176,14 +174,12 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             foreach (var dir in Directory.GetDirectories(path).Take(this.maxDirectoryNum))
             {
-                this.AddItem(
-                    new KnowledgeEntry { Name = FolderManager.RelativePath(dir), IsControl = true, IsSearchResult = true });
+                this.AddItem(new KnowledgeEntry(FolderManager.RelativePath(dir)) { IsSearchResult = true });
             }
 
             foreach (var file in Directory.GetFiles(path).Take(this.maxResultNum))
             {
-                this.AddItem(
-                    new KnowledgeEntry { Name = FolderManager.RelativePath(file), IsControl = true, IsSearchResult = true });
+                this.AddItem(new KnowledgeEntry(FolderManager.RelativePath(file)) { IsSearchResult = true });
             }
         }
 
@@ -192,7 +188,17 @@ namespace MetaMind.Acutance.Guis.Widgets
             var lines = File.ReadLines(path);
             foreach (var line in lines.Where(line => !string.IsNullOrWhiteSpace(line)).Take(this.maxLineNum))
             {
-                this.AddItem(new KnowledgeEntry { Name = line });
+                var match = Regex.Match(line, @"^\[(\d)+\]");
+                if (match.Success)
+                {
+                    int timeout;
+                    int.TryParse(match.Value.Trim('[', ']'), out timeout);
+                    this.AddItem(new KnowledgeEntry(line, timeout));
+                }
+                else
+                {
+                    this.AddItem(new KnowledgeEntry(line, 0));
+                } 
             }
         }
 
@@ -206,7 +212,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             var relativePath = FolderManager.RelativePath(e.Info.FullName);
 
             this.RemoveBlankItem();
-            this.AddItem(new KnowledgeEntry { Name = relativePath, IsControl = true, IsSearchResult = true });
+            this.AddItem(new KnowledgeEntry(relativePath) { IsSearchResult = true });
             this.AddBlankItem();
         }
 

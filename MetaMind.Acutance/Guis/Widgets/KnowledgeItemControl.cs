@@ -24,13 +24,20 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             this.ItemFrameControl = new KnowledgeItemFrameControl(item);
 
-            if (ItemData.IsFile)
+            if (ItemData.IsControl)
             {
-                this.ItemDataControl = new KnowledgeItemFileDataControl(item);
+                if (ItemData.IsFile)
+                {
+                    this.ItemDataControl = new KnowledgeItemFileDataControl(item);
+                }
+                else if (ItemData.IsSearchResult)
+                {
+                    this.ItemDataControl = new KnowledgeItemResultDataControl(item);
+                }
             }
-            else if (ItemData.IsSearchResult)
+            else
             {
-                this.ItemDataControl = new KnowledgeItemResultDataControl(item);
+                this.ItemDataControl = new KnowledgeItemEventDataControl(item);
             }
         }
 

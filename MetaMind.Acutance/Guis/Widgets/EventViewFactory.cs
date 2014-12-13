@@ -8,7 +8,7 @@ namespace MetaMind.Acutance.Guis.Widgets
     {
         protected override dynamic CreateControl(IView view, ViewSettings2D viewSettings, ICloneable itemSettings)
         {
-            return new EventViewControl(view, (EventViewSettings)viewSettings, (EventItemSettings)itemSettings);
+            return new EventViewControl(view, (EventViewSettings)viewSettings, (EventItemSettings)itemSettings, new TraceItemFactory());
         }
 
         protected override IViewGraphics CreateGraphics(IView view, ViewSettings2D viewSettings, ICloneable itemSettings)
