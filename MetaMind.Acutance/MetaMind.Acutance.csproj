@@ -81,8 +81,6 @@
     <Compile Include="Guis\Widgets\CallItemFactory.cs" />
     <Compile Include="Guis\Widgets\CallItemGraphics.cs" />
     <Compile Include="Guis\Widgets\CallItemSettings.cs" />
-    <Compile Include="Guis\Widgets\KnowledgeItemCallDataControl.cs" />
-    <Compile Include="Guis\Widgets\KnowledgeItemResultDataControl.cs" />
     <Compile Include="Guis\Widgets\KnowledgeRetrievedEventArgs.cs" />
     <Compile Include="Guis\Widgets\CallViewControl.cs" />
     <Compile Include="Guis\Widgets\CallViewFactory.cs" />

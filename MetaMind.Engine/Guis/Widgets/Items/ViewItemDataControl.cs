@@ -25,6 +25,28 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             this.CharModifier = new ViewItemCharModifier(item);
         }
 
+        ~ViewItemDataControl()
+        {
+            this.Dispose();
+        }
+
+        public override void Dispose()
+        {
+            try
+            {
+                if (this.CharModifier != null)
+                {
+                    this.CharModifier.Dispose();
+                }
+
+                this.CharModifier = null;
+            }
+            finally
+            {
+                base.Dispose();
+            }
+        }
+
         protected IViewItemCharModifier CharModifier { get; private set; }
 
         public void EditExperience(string targetName)

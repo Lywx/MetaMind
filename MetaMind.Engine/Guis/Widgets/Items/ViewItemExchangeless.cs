@@ -4,11 +4,12 @@
 
     using Microsoft.Xna.Framework;
 
-    public interface IViewItem : IItemObject
+    public interface IViewItem : IItemObject, IDisposable
     {
         dynamic ItemControl { get; set; }
 
         dynamic ItemData { get; set; }
+
         IItemGraphics ItemGraphics { get; set; }
 
         dynamic View { get; }
@@ -76,6 +77,23 @@
         {
             this.ItemControl. UpdateStructure(gameTime);
             this.ItemGraphics.Update(gameTime);
+        }
+
+        public override void Dispose()
+        {
+            try
+            {
+                // don't set item control to null
+                // because the reference is used in the loop
+                // that cannot dispose itself
+                this.ItemControl.Dispose();
+
+                this.ItemGraphics = null;
+            }
+            finally
+            {
+                base.Dispose();
+            }
         }
     }
 }

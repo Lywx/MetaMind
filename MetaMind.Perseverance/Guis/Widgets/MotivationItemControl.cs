@@ -53,6 +53,8 @@
             this.View.Items.Remove(this.Item);
 
             this.View.Control.ItemFactory.RemoveData(this.Item);
+
+            Item.Dispose();
         }
 
         #endregion

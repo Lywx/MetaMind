@@ -18,6 +18,37 @@
             this.ItemDataControl = new ViewItemDataControl(item);
         }
 
+        ~ViewItemControl1D()
+        {
+            this.Dispose();
+        }
+
+        public override void Dispose()
+        {
+            try
+            {
+                if (this.ItemFrameControl != null)
+                {
+                    this.ItemFrameControl.Dispose();
+                }
+
+                this.ItemFrameControl = null;
+
+                this.ItemViewControl  = null;
+
+                if (this.ItemDataControl != null)
+                {
+                    this.ItemDataControl.Dispose();
+                }
+
+                this.ItemDataControl  = null;
+            }
+            finally
+            {
+                base.Dispose();
+            }
+        }
+
         #endregion Constructors
 
         public int Id { get; set; }

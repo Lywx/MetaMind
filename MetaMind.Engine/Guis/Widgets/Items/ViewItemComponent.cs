@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 {
     using MetaMind.Engine.Guis.Widgets.Views;
 
-    public interface IViewItemComponent
+    public interface IViewItemComponent 
     {
         #region Item Components
 
@@ -31,10 +31,19 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
     public class ViewItemComponent : EngineObject, IViewItemComponent
     {
+        #region Constructors and Destructors
+
         protected ViewItemComponent(IViewItem item)
         {
             this.Item = item;
         }
+
+        ~ViewItemComponent()
+        {
+            this.Dispose();
+        }
+
+        #endregion
 
         #region Item Components
 
@@ -80,5 +89,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         }
 
         #endregion View Components
+
     }
 }

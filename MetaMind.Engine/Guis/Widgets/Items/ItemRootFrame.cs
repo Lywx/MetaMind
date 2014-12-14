@@ -1,5 +1,8 @@
 namespace MetaMind.Engine.Guis.Widgets.Items
 {
+    using System;
+    using System.Diagnostics;
+
     using MetaMind.Engine.Guis.Elements;
 
     public interface IItemRootFrame : IDraggableFrame
@@ -15,8 +18,13 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         {
             this.Item = item;
 
-            this.MouseLeftClicked += this.SelectItsItem;
+            this.MouseLeftClicked        += this.SelectItsItem;
             this.MouseLeftClickedOutside += this.UnselectItsItem;
+        }
+
+        ~ItemRootFrame()
+        {
+            this.Dispose();
         }
 
         private IViewItem Item { get; set; }
@@ -24,6 +32,23 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         public void Disable()
         {
             this.Disable(FrameState.Frame_Active);
+        }
+
+        public override void Dispose()
+        {
+            try
+            {
+                this.MouseLeftClicked        -= this.SelectItsItem;
+                this.MouseLeftClickedOutside -= this.UnselectItsItem;
+
+                this.Item = null;
+            }
+            finally
+            {
+                base.Dispose();
+            }
+
+            Debug.WriteLine("ItemRootFrame Destruction");
         }
 
         public void Enable()

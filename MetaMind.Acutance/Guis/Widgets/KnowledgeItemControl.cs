@@ -8,6 +8,7 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
     using MetaMind.Engine.Components.Inputs;
+    using MetaMind.Engine.Guis.Elements;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Views;
 
@@ -29,13 +30,15 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
             else if (ItemData.IsSearchResult)
             {
-                this.ItemDataControl = new KnowledgeItemResultDataControl(item);
+                this.NameFrame.MouseLeftClicked += this.LoadResult;
             }
             else if (ItemData.IsCall)
             {
-                this.ItemDataControl = new KnowledgeItemCallDataControl(item);
+                this.NameFrame.MouseLeftDoubleClicked += this.LoadCall;
             }
         }
+
+        #endregion Constructors
 
         public ItemEntryFrame IdFrame
         {
@@ -47,7 +50,20 @@ namespace MetaMind.Acutance.Guis.Widgets
             get { return ((KnowledgeItemFrameControl)this.ItemFrameControl).NameFrame; }
         }
 
-        #endregion Constructors
+        #region Events
+
+        private void LoadCall(object sender, FrameEventArgs e)
+        {
+            View.Control.LoadCall(ItemData.CallName, ItemData.Path, ItemData.Minutes);
+        }
+
+        private void LoadResult(object sender, FrameEventArgs frameEventArgs)
+        {
+            View.Control.SearchStop();
+            View.Control.LoadResult(ItemData.Name, true);
+        }
+
+        #endregion
 
         #region Update
 

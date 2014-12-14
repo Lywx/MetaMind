@@ -25,7 +25,7 @@ namespace MetaMind.Engine.Guis.Elements
 
         #endregion Control Data
 
-        #region Constructors
+        #region Constructors and Destructors
 
         public DraggableFrame(Rectangle rectangle)
             : this()
@@ -35,11 +35,35 @@ namespace MetaMind.Engine.Guis.Elements
 
         public DraggableFrame()
         {
-            this.MouseLeftPressed += this.RecordPressPosition;
-            this.MouseLeftReleased += this.ResetRecordPosition;
+            this.MouseLeftPressed   += this.RecordPressPosition;
+            this.MouseLeftReleased  += this.ResetRecordPosition;
 
-            this.MouseRightPressed += this.RecordPressPosition;
+            this.MouseRightPressed  += this.RecordPressPosition;
             this.MouseRightReleased += this.ResetRecordPosition;
+        }
+
+        ~DraggableFrame()
+        {
+            this.Dispose();
+        }
+
+        public override void Dispose()
+        {
+            try
+            {
+                this.MouseDragged = null;
+                this.MouseDropped = null;
+
+                this.MouseLeftPressed   -= this.RecordPressPosition;
+                this.MouseLeftReleased  -= this.ResetRecordPosition;
+
+                this.MouseRightPressed  -= this.RecordPressPosition;
+                this.MouseRightReleased -= this.ResetRecordPosition;
+            }
+            finally
+            {
+                base.Dispose();
+            }
         }
 
         #endregion Constructors

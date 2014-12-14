@@ -8,7 +8,7 @@
 
     public class PickableFrame : PressableFrame, IPickableFrame
     {
-        #region Constructors
+        #region Constructors and Destructors
 
         public PickableFrame(Rectangle rectangle)
             : this()
@@ -20,6 +20,31 @@
         {
             InputEventManager.MouseDoubleClick += this.DetectMouseLeftDoubleClick;
             InputEventManager.MouseDoubleClick += this.DetectMouseRightDoubleClick;
+        }
+
+        ~PickableFrame()
+        {
+            this.Dispose();
+        }
+
+        public override void Dispose()
+        {
+            try
+            {
+                this.MouseLeftClicked         = null;
+                this.MouseLeftClickedOutside  = null;
+                this.MouseLeftDoubleClicked   = null;
+                this.MouseRightClicked        = null;
+                this.MouseRightClickedOutside = null;
+                this.MouseRightDoubleClicked  = null;
+
+                InputEventManager.MouseDoubleClick -= this.DetectMouseLeftDoubleClick;
+                InputEventManager.MouseDoubleClick -= this.DetectMouseRightDoubleClick;
+            }
+            finally
+            {
+                base.Dispose();
+            }
         }
 
         #endregion Constructors

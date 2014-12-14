@@ -14,6 +14,35 @@ namespace MetaMind.Acutance.Guis.Widgets
             this.IdFrame   = new ItemEntryFrame(item);
         }
 
+        ~KnowledgeItemFrameControl()
+        {
+            this.Dispose();
+        }
+
+        public override void Dispose()
+        {
+            try
+            {
+                if (this.NameFrame != null)
+                {
+                    this.NameFrame.Dispose();
+                }
+
+                this.NameFrame = null;
+
+                if (this.IdFrame != null)
+                {
+                    this.IdFrame.Dispose();
+                }
+
+                this.IdFrame = null;
+            }
+            finally
+            {
+                base.Dispose();
+            }
+        }
+
         public ItemEntryFrame IdFrame { get; private set; }
 
         public ItemEntryFrame NameFrame { get; private set; }

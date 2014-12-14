@@ -1,5 +1,7 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
+    using System;
+
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Views;
@@ -30,9 +32,11 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         private void DeleteIt()
         {
-            View.Items.Remove(this.Item);
+            View.Items.Remove(Item);
 
             View.Control.ItemFactory.RemoveData(Item);
+
+            Item.Dispose();
         }
 
         #endregion Operations

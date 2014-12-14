@@ -18,6 +18,22 @@ namespace MetaMind.Perseverance.Guis.Widgets
             this.SymbolFrame = new PickableFrame();
         }
 
+        public override void Dispose()
+        {
+            try
+            {
+                if (this.SymbolFrame != null)
+                {
+                    this.SymbolFrame.Dispose();
+                    this.SymbolFrame = null;
+                }
+            }
+            finally
+            {
+                base.Dispose();
+            }
+        }
+
         public PickableFrame SymbolFrame { get; private set; }
 
         private Point SymbolFrameSize

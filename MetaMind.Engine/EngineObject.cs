@@ -7,8 +7,10 @@ using Microsoft.Xna.Framework.Content;
 
 namespace MetaMind.Engine
 {
+    using System;
+
     [DataContract]
-    public class EngineObject
+    public class EngineObject : IDisposable
     {
         protected static FontManager FontManager { get { return GameEngine.FontManager; } }
 
@@ -29,5 +31,9 @@ namespace MetaMind.Engine
         protected static ProcessManager ProcessManager { get { return GameEngine.ProcessManager; } }
 
         protected static ScreenManager ScreenManager { get { return GameEngine.ScreenManager; } }
+
+        public virtual void Dispose()
+        {
+        }
     }
 }

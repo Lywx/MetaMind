@@ -1,56 +1,47 @@
 ﻿namespace MetaMind.Engine.Guis.Widgets.Items
 {
+    using System.Diagnostics;
+
     using MetaMind.Engine.Guis.Elements;
 
     public interface IItemEntryFrame : IPickableFrame
     {
-        void Enable();
-
         void Disable();
+
+        void Enable();
     }
 
     public class ItemEntryFrame : PickableFrame, IItemEntryFrame
     {
-        private IItemObject item;
-
         public ItemEntryFrame(IItemObject item)
         {
-            this.item = item;
-
-            this.MouseRightClicked += this.SwitchEditing;
-            this.MouseRightClickedOutside += this.QuitEditing;
+            this.Item = item;
         }
 
-        public void Enable()
-        {
-            this.Enable(FrameState.Frame_Active);
-        }
+        private IItemObject Item { get; set; }
 
         public void Disable()
         {
             this.Disable(FrameState.Frame_Active);
         }
 
-        private void SwitchEditing(object sender, FrameEventArgs e)
+        public override void Dispose()
         {
-            if (!this.item.IsEnabled(ItemState.Item_Active))
+            try
             {
-                return;
+                this.Item = null;
+            }
+            finally
+            {
+                base.Dispose();
             }
 
-            if (this.item.IsEnabled(ItemState.Item_Editing))
-            {
-                this.item.Disable(ItemState.Item_Editing);
-            }
-            else
-            {
-                this.item.Enable(ItemState.Item_Editing);
-            }
+            Debug.WriteLine("ItemRootFrame Destruction");
         }
 
-        private void QuitEditing(object sender, FrameEventArgs e)
+        public void Enable()
         {
-            this.item.Disable(ItemState.Item_Editing);
+            this.Enable(FrameState.Frame_Active);
         }
     }
 }

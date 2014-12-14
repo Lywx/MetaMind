@@ -8,6 +8,7 @@
 namespace MetaMind.Engine.Guis.Widgets.Items
 {
     using System;
+    using System.Diagnostics;
     using System.Globalization;
     using System.Linq;
     using System.Text;
@@ -18,7 +19,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
-    public interface IViewItemCharModifier
+    public interface IViewItemCharModifier : IDisposable
     {
         event EventHandler<ViewItemDataEventArgs> ModificationEnded;
 
@@ -42,7 +43,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         string RemoveCursor(string dirty);
     }
 
-    public class ViewItemCharModifier : ViewItemComponent, IViewItemCharModifier, IViewItemCharPostProcessor
+    public class ViewItemCharModifier : ViewItemComponent, IViewItemCharModifier, IViewItemCharPostProcessor, IDisposable
     {
         #region Input Settings
 
@@ -68,13 +69,36 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         #endregion Input Data
 
-        #region Constructors
+        #region Constructors and Destructors
 
         public ViewItemCharModifier(IViewItem item)
             : base(item)
         {
             InputEventManager.CharEntered += this.DetectCharEntered;
             InputEventManager.KeyDown     += this.DetectEnterKeyDown;
+        }
+
+        ~ViewItemCharModifier()
+        {
+            this.Dispose();
+        }
+
+        public override void Dispose()
+        {
+            try
+            {
+                this.ValueModified     = null;
+                this.modificationEnded = null;
+
+                InputEventManager.CharEntered -= this.DetectCharEntered;
+                InputEventManager.KeyDown     -= this.DetectEnterKeyDown;
+            }
+            finally
+            {
+                base.Dispose();
+            }
+            
+            Debug.WriteLine("ViewItemCharModifier Destruction");
         }
 
         #endregion Constructors

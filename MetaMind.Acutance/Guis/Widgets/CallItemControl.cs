@@ -16,9 +16,9 @@ namespace MetaMind.Acutance.Guis.Widgets
         public CallItemControl(IViewItem item)
             : base(item)
         {
-            ItemFrameControl = new TraceItemFrameControl(item);
+            this.ItemFrameControl = new TraceItemFrameControl(item);
 
-            NameFrame.MouseLeftDoubleClicked += this.RetrieveKnowledge;
+            this.NameFrame.MouseLeftDoubleClicked += this.RetrieveKnowledge;
         }
 
         #endregion Constructors
@@ -34,11 +34,11 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         private void RetrieveKnowledge(object sender, FrameEventArgs e)
         {
-            var knowledgeRetrieved = new EventBase(
+            var knowledgeRetrievedEvent = new EventBase(
                 (int)AdventureEventType.KnowledgeRetrieved,
                 new KnowledgeRetrievedEventArgs(ItemData.Path));
 
-            GameEngine.EventManager.QueueEvent(knowledgeRetrieved);
+            GameEngine.EventManager.QueueEvent(knowledgeRetrievedEvent);
         }
 
         #endregion

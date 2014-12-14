@@ -23,7 +23,6 @@ namespace MetaMind.Perseverance.Guis.Widgets
             {
                 this.ItemViewControl = new TaskItemViewControlInMotivation(item);
             }
-
         }
 
         public ItemEntryFrame ExperienceFrame { get { return ((TaskItemFrameControl)this.ItemFrameControl).ExperienceFrame; } }
@@ -44,7 +43,9 @@ namespace MetaMind.Perseverance.Guis.Widgets
         {
             // only need to remove from gui
             // tasks are not stored centralizedly
-            this.View.Items.Remove(this.Item);
+            View.Items.Remove(Item);
+
+            Item.Dispose();
         }
 
         #endregion Operations
@@ -68,7 +69,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
             // keyboard
             //-----------------------------------------------------------------
-            if (this.ViewSettings.KeyboardEnabled)
+            if (ViewSettings.KeyboardEnabled)
             {
                 if (this.AcceptInput)
                 {
@@ -97,7 +98,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
                         if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
                         {
-                            this.View.Disable(ViewState.Item_Editting);
+                            View.Disable(ViewState.Item_Editting);
                             this.Item.Disable(ItemState.Item_Pending);
                         }
                     }
@@ -109,7 +110,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
                         // normal status
                         if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskEditItem))
                         {
-                            this.View.Enable(ViewState.Item_Editting);
+                            View.Enable(ViewState.Item_Editting);
                             this.Item.Enable(ItemState.Item_Pending);
                         }
 

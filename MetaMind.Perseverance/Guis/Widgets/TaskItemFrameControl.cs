@@ -24,6 +24,45 @@ namespace MetaMind.Perseverance.Guis.Widgets
             this.ProgressFrame   = new ItemEntryFrame(item);
         }
 
+        ~TaskItemFrameControl()
+        {
+            this.Dispose();
+        }
+
+        public override void Dispose()
+        {
+            try
+            {
+                if (this.NameFrame != null)
+                {
+                    this.NameFrame.Dispose();
+                    this.NameFrame = null;
+                }
+
+                if (this.IdFrame != null)
+                {
+                    this.IdFrame.Dispose();
+                    this.IdFrame = null;
+                }
+
+                if (this.ExperienceFrame != null)
+                {
+                    this.ExperienceFrame.Dispose();
+                    this.ExperienceFrame = null;
+                }
+
+                if (this.ProgressFrame != null)
+                {
+                    this.ProgressFrame.Dispose();
+                    this.ProgressFrame = null;
+                }
+            }
+            finally
+            {
+                base.Dispose();
+            }
+        }
+
         public override void UpdateInput(GameTime gameTime)
         {
             base.UpdateInput(gameTime);

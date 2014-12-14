@@ -7,6 +7,8 @@
 
 namespace MetaMind.Engine.Guis.Widgets.Items
 {
+    using System;
+
     using MetaMind.Engine.Guis.Elements;
 
     using Microsoft.Xna.Framework;
@@ -92,5 +94,22 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         }
 
         #endregion Update
+
+        public override void Dispose()
+        {
+            try
+            {
+                if (this.RootFrame != null)
+                {
+                    this.RootFrame.Dispose();
+                }
+
+                this.RootFrame = null;
+            }
+            finally
+            {
+                base.Dispose();
+            }
+        }
     }
 }

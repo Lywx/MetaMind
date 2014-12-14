@@ -11,7 +11,7 @@
     /// <summary>
     /// Only deals with low level clicked event.
     /// </summary>
-    public class PressableFrame : FrameObject, IPressableFrame
+    public class PressableFrame : FrameObject, IPressableFrame 
     {
         private Rectangle rectangle;
 
@@ -53,6 +53,44 @@
 
             // dummy intialization
             this.Initialize(new Rectangle());
+
+            Debug.WriteLine("PressableFrame Construction");
+        }
+
+        ~PressableFrame()
+        {
+            this.Dispose();
+        }
+
+        public override void Dispose()
+        {
+            try
+            {
+                this.MouseEnter               = null;
+                this.MouseLeave               = null;
+                this.MouseLeftPressed         = null;
+                this.MouseLeftReleased        = null;
+                this.MouseLeftDraggedOutside  = null;
+                this.MouseRightPressed        = null;
+                this.MouseRightReleased       = null;
+                this.MouseRightDraggedOutside = null;
+
+                this.FrameMoved               = null;
+
+                InputEventManager.MouseMove -= this.DetectMouseOver;
+
+                InputEventManager.MouseDown -= this.DetectMouseLeftPressed;
+                InputEventManager.MouseDown -= this.DetectMouseRightPressed;
+
+                InputEventManager.MouseUp   -= this.DetectMouseLeftRelease;
+                InputEventManager.MouseUp   -= this.DetectMouseRightRelease;
+
+                Debug.WriteLine("PressableFrame Destruction");
+            }
+            finally
+            {
+                base.Dispose();
+            } 
         }
 
         protected void Initialize(Rectangle rectangle)

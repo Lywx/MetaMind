@@ -184,14 +184,20 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         private void ClearNonControlItems()
         {
-            var nonControl = View.Items.FindAll(item => !item.ItemData.IsControl);
-            nonControl.ForEach(item => View.Items.Remove(item));
+            foreach (var item in this.View.Items.FindAll(item => !item.ItemData.IsControl))
+            {
+                View.Items.Remove(item);
+                item.Dispose();
+            }
         }
 
         private void ClearResultItems()
         {
-            var result = View.Items.FindAll(item => item.ItemData.IsSearchResult);
-            result.ForEach(item => View.Items.Remove(item));
+            foreach (var item in this.View.Items.FindAll(item => item.ItemData.IsSearchResult))
+            {
+                View.Items.Remove(item);
+                item.Dispose();
+            }
         }
 
         private void InsertBlankItem()
