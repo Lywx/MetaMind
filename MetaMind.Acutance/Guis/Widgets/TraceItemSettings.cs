@@ -7,10 +7,13 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     public class TraceItemSettings : TaskItemSettings
     {
+        public Color NameFrameRunningColor = ColorPalette.LightRed;
+
         public TraceItemSettings()
         {
             this.RootFrameSize = this.NameFrameSize;
 
+            //-----------------------------------------------------------------
             this.NameFrameRegularColor   = ColorPalette.TransparentColor1;
             this.NameFrameMouseOverColor = ColorPalette.TransparentColor2;
 

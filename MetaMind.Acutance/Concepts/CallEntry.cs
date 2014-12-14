@@ -4,7 +4,9 @@ namespace MetaMind.Acutance.Concepts
     using System.Diagnostics;
     using System.Runtime.Serialization;
 
+    using MetaMind.Acutance.Sessions;
     using MetaMind.Engine;
+    using MetaMind.Engine.Components.Events;
     using MetaMind.Engine.Concepts;
 
     public interface IEventEntry
@@ -93,6 +95,11 @@ namespace MetaMind.Acutance.Concepts
                         if (this.Experience.CertainDuration >= this.Timeout)
                         {
                             this.State = EventState.Transiting;
+
+                            var callNotifiedEvent = new EventBase(
+                                (int)AdventureEventType.CallNotified,
+                                new CallNotifiedEventArgs());
+                            GameEngine.EventManager.TriggerEvent(callNotifiedEvent);
                         }
                     }
 

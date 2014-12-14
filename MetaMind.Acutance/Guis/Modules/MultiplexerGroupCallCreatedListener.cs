@@ -1,6 +1,6 @@
 namespace MetaMind.Acutance.Guis.Modules
 {
-    using MetaMind.Acutance.Guis.Widgets;
+    using MetaMind.Acutance.Concepts;
     using MetaMind.Acutance.Sessions;
     using MetaMind.Engine.Components.Events;
     using MetaMind.Engine.Guis.Widgets.Views;

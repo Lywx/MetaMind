@@ -30,7 +30,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     public class ListControl : ViewControl1D, IListControl
     {
         public ListControl(IView view, ViewSettings1D viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
-            : base(view, viewSettings, itemSettings)
+            : base(view, viewSettings, itemSettings, itemFactory)
         {
             this.Region = new ViewRegion(view, viewSettings, itemSettings, this.RegionPositioning);
         }

@@ -61,6 +61,9 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
 
             this.DrawNameFrame(255);
+
+            this.FillNameFrameWith(ItemSettings.NameFrameRunningColor, alpha);
+
             this.DrawName(255);
             this.DrawExperienceFrame(255);
             this.DrawExperience(255);

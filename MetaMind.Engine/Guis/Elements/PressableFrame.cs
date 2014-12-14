@@ -282,7 +282,9 @@
                     this.Disable(FrameState.Mouse_Left_Pressed);
                     this.Enable(FrameState.Mouse_Left_Dragged_Out);
                     if (this.MouseLeftDraggedOutside != null)
+                    {
                         this.MouseLeftDraggedOutside(this, new FrameEventArgs(FrameEventType.Mouse_Left_Dragged_Out));
+                    }
                 }
             }
 
@@ -294,7 +296,9 @@
                     this.Disable(FrameState.Mouse_Right_Pressed);
                     this.Enable(FrameState.Mouse_Right_Dragged_Out);
                     if (this.MouseRightDraggedOutside != null)
+                    {
                         this.MouseRightDraggedOutside(this, new FrameEventArgs(FrameEventType.Mouse_Right_Dragged_Out));
+                    }
                 }
             }
 

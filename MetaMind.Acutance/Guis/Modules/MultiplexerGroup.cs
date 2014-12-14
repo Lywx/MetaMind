@@ -8,6 +8,9 @@ namespace MetaMind.Acutance.Guis.Modules
     public class MultiplexerGroup : Group<MultiplexerGroupSettings>
     {
         private MultiplexerGroupCallCreatedListener            callCreatedListener;
+
+        private MultiplexerGroupKnowledgeRetrievedListener     knowledgeRetrievedListener;
+
         private MultiplexerGroupSynchronizationAlertedListener synchronizationAlertedListener;
 
         public MultiplexerGroup(MultiplexerGroupSettings settings)
@@ -63,6 +66,13 @@ namespace MetaMind.Acutance.Guis.Modules
             }
 
             this.callCreatedListener = null;
+
+            if (this.knowledgeRetrievedListener != null)
+            {
+                EventManager.RemoveListener(this.knowledgeRetrievedListener);
+            }
+
+            this.knowledgeRetrievedListener = null;
         }
 
         public override void UpdateInput(GameTime gameTime)
@@ -91,7 +101,7 @@ namespace MetaMind.Acutance.Guis.Modules
                 this.CallView.Control.AddItem(call);
             }
 
-            this.KnowledgeView.Control.LoadResult("Basic.txt");
+            this.KnowledgeView.Control.LoadResult("Basic.txt", true);
         }
 
         private void LoadEvents()
@@ -109,6 +119,13 @@ namespace MetaMind.Acutance.Guis.Modules
             }
 
             EventManager.AddListener(this.callCreatedListener);
+
+            if (this.knowledgeRetrievedListener == null)
+            {
+                this.knowledgeRetrievedListener = new MultiplexerGroupKnowledgeRetrievedListener(this.KnowledgeView);
+            }
+
+            EventManager.AddListener(this.knowledgeRetrievedListener);
         }
     }
 }

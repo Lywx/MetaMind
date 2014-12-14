@@ -15,7 +15,6 @@ namespace MetaMind.Acutance.Guis.Widgets
             : base(item)
         {
             this.ItemFrameControl = new TraceItemFrameControl(item);
-            this.ItemDataControl  = new TraceItemDataControl(item);
             this.ItemViewControl  = new TraceItemViewControl(item);
         }
 

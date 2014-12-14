@@ -1,11 +1,13 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
+    using MetaMind.Acutance.Sessions;
+    using MetaMind.Engine;
+    using MetaMind.Engine.Components.Events;
     using MetaMind.Engine.Components.Inputs;
+    using MetaMind.Engine.Guis.Elements;
     using MetaMind.Engine.Guis.Widgets.Items;
-    using MetaMind.Engine.Guis.Widgets.Views;
 
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Input;
 
     public class CallItemControl : ViewItemControl2D
     {
@@ -15,8 +17,11 @@ namespace MetaMind.Acutance.Guis.Widgets
             : base(item)
         {
             ItemFrameControl = new TraceItemFrameControl(item);
-            ItemDataControl  = new TraceItemDataControl(item);
+
+            NameFrame.MouseLeftDoubleClicked += this.RetrieveKnowledge;
         }
+
+        #endregion Constructors
 
         public ItemEntryFrame IdFrame { get { return ((TraceItemFrameControl)ItemFrameControl).IdFrame; } }
 
@@ -24,7 +29,20 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public ItemEntryFrame ExperienceFrame { get { return ((TraceItemFrameControl)ItemFrameControl).ExperienceFrame; } }
 
-        #endregion Constructors
+
+        #region Events
+
+        private void RetrieveKnowledge(object sender, FrameEventArgs e)
+        {
+            var knowledgeRetrieved = new EventBase(
+                (int)AdventureEventType.KnowledgeRetrieved,
+                new KnowledgeRetrievedEventArgs(ItemData.Path));
+
+            GameEngine.EventManager.QueueEvent(knowledgeRetrieved);
+        }
+
+        #endregion
+
 
         #region Operations
 

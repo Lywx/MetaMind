@@ -10,6 +10,9 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             this.NameFrameSize = new Point(GraphicsSettings.Width - this.IdFrameSize.X, 24);
             this.RootFrameSize = this.NameFrameSize;
+
+            this.NameFrameRegularColor = ColorPalette.TransparentColor1;
+            this.NameFrameRunningColor = ColorPalette.TransparentColor1;
         }
     }
 }

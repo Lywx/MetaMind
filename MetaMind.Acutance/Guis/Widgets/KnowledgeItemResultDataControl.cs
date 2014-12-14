@@ -29,7 +29,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                 ItemControl.MouseUnselectsIt();
 
                 View.Control.SearchStop();
-                View.Control.LoadResult(ItemData.Name);
+                View.Control.LoadResult(ItemData.Name, true);
             }
         }
     }

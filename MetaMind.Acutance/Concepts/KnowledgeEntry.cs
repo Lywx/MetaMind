@@ -2,14 +2,16 @@
 {
     public class KnowledgeEntry
     {
-        public KnowledgeEntry(string name, string path, int minutes)
+        public KnowledgeEntry(string name, string callName, string path, int minutes)
         {
-            this.Name    = name;
-            this.Path    = path;
-            this.Minutes = minutes;
+            this.Name     = name;
+            this.Path     = path;
+            this.Minutes  = minutes;
+
+            this.CallName = callName;
+            this.IsCall   = this.Minutes > 0;
 
             this.IsControl = false;
-            this.IsCall   = this.Minutes > 0;
         }
 
         public KnowledgeEntry(string name)
@@ -18,6 +20,8 @@
 
             this.IsControl = true;
         }
+
+        public string CallName { get; set; }
 
         public bool IsBlank { get; set; }
 

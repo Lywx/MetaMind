@@ -66,18 +66,22 @@ namespace MetaMind.Acutance.Guis.Widgets
             GameEngine.EventManager.QueueEvent(callCreatedEvent);
         }
 
-        public void LoadResult(string relativePath)
+        public void LoadResult(string path, bool relative)
         {
-            this.FileItem.ItemControl.SetName(Path.GetFileName(relativePath));
+            this.FileItem.ItemControl.SetName(Path.GetFileName(path));
+
+            if (relative)
+            {
+                path = Path.Combine(FolderManager.DataFolderPath, path);
+            }
+
+            var attribute = File.GetAttributes(path);
 
             this.ClearNonControlItems();
             this.ClearResultItems();
 
             try
             {
-                var path      = Path.Combine(FolderManager.DataFolderPath, relativePath);
-                var attribute = File.GetAttributes(path);
-
                 var isFile = (attribute & FileAttributes.Directory) != FileAttributes.Directory;
                 if (isFile)
                 {
@@ -92,6 +96,32 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
             catch (FileNotFoundException)
             {
+            }
+            catch (DirectoryNotFoundException)
+            {
+            }
+        }
+
+        private void LoadResultFromFile(string path)
+        {
+            var lines = File.ReadLines(path);
+            foreach (var line in lines.Where(line => !string.IsNullOrWhiteSpace(line)).Take(this.maxLineNum))
+            {
+                var matchEvent = Regex.Match(line, @"^\[(\d)+\]");
+                if (matchEvent.Success)
+                {
+                    int timeout;
+                    int.TryParse(matchEvent.Value.Trim('[', ']'), out timeout);
+                    this.AddItem(new KnowledgeEntry(line, line.Replace(matchEvent.Value, string.Empty).Trim(' '), path, timeout));
+                }
+                else
+                {
+                    var matchIdea = Regex.Match(line, @"^\|");
+                    if (matchIdea.Success)
+                    {
+                        this.AddItem(new KnowledgeEntry(line, line, path, 0));
+                    }
+                }
             }
         }
 
@@ -189,29 +219,6 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
         }
 
-        private void LoadResultFromFile(string path)
-        {
-            var lines = File.ReadLines(path);
-            foreach (var line in lines.Where(line => !string.IsNullOrWhiteSpace(line)).Take(this.maxLineNum))
-            {
-                var matchEvent = Regex.Match(line, @"^\[(\d)+\]");
-                if (matchEvent.Success)
-                {
-                    int timeout;
-                    int.TryParse(matchEvent.Value.Trim('[', ']'), out timeout);
-                    this.AddItem(new KnowledgeEntry(line.Replace(matchEvent.Value, string.Empty).Trim(' '), path, timeout));
-                }
-                else
-                {
-                    var matchIdea = Regex.Match(line, @"^\|");
-                    if (matchIdea.Success)
-                    {
-                        this.AddItem(new KnowledgeEntry(line, path, 0));
-                    }
-                } 
-            }
-        }
-
         private void RefreshSearchResult(FoundInfoEventArgs e)
         {
             if (View.Items.Count > this.maxResultNum)
@@ -220,6 +227,12 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
 
             var relativePath = FolderManager.RelativePath(e.Info.FullName);
+            
+            // won't load git repository
+            if (relativePath.Contains(".git"))
+            {
+                return;
+            }
 
             this.RemoveBlankItem();
             this.AddItem(new KnowledgeEntry(relativePath) { IsSearchResult = true });

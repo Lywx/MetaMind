@@ -1,4 +1,4 @@
-namespace MetaMind.Acutance.Guis.Widgets
+namespace MetaMind.Acutance.Concepts
 {
     using System;
 

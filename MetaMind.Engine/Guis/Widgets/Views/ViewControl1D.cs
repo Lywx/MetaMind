@@ -17,17 +17,20 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     public class ViewControl1D : ViewComponent, IViewControl
     {
-        public ViewControl1D(IView view, ViewSettings1D viewSettings, ICloneable itemSettings)
+        public ViewControl1D(IView view, ViewSettings1D viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
             : base(view, viewSettings, itemSettings)
         {
+            this.ItemFactory = itemFactory;
+
             this.Swap      = new ViewSwapControl(this.View, this.ViewSettings, this.ItemSettings);
             this.Scroll    = new ViewScrollControl1D(this.View, this.ViewSettings, this.ItemSettings);
             this.Selection = new ViewSelectionControl1D(this.View, this.ViewSettings, this.ItemSettings);
         }
 
-        protected ViewControl1D(IView view, ViewSettings2D viewSettings, ICloneable itemSettings)
+        protected ViewControl1D(IView view, ViewSettings2D viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
             : base(view, viewSettings, itemSettings)
         {
+            this.ItemFactory = itemFactory;
         }
 
         #region Components

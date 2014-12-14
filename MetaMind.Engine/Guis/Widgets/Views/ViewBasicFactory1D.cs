@@ -2,6 +2,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 {
     using System;
 
+    using MetaMind.Engine.Guis.Widgets.Items;
+
     public class ViewBasicFactory1D : IViewFactory
     {
         public dynamic CreateControl(IView view, ICloneable viewSettings, ICloneable itemSettings)
@@ -16,7 +18,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         protected virtual dynamic CreateControl(IView view, ViewSettings1D viewSettings, ICloneable itemSettings)
         {
-            return new ViewControl1D(view, viewSettings, itemSettings);
+            return new ViewControl1D(view, viewSettings, itemSettings, new ViewItemBasicFactory1D());
         }
 
         protected virtual IViewGraphics CreateGraphics(IView view, ViewSettings1D viewSettings, ICloneable itemSettings)

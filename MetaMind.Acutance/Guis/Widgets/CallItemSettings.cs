@@ -8,14 +8,14 @@ namespace MetaMind.Acutance.Guis.Widgets
     {
         public Color NameFrameTransitionColor = ColorPalette.LightPink;
 
-        public Color NameFrameRunningColor    = ColorPalette.LightGrey;
-
         public CallItemSettings()
         {
             this.RootFrameSize = this.NameFrameSize;
 
             this.NameFrameRegularColor   = ColorPalette.TransparentColor1;
             this.NameFrameMouseOverColor = ColorPalette.TransparentColor2;
+
+            this.NameFrameRunningColor   = ColorPalette.LightGrey;
         }
     }
 }

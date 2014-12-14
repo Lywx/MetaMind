@@ -17,10 +17,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     public class ViewControl2D : ViewControl1D, IViewControl2D
     {
         public ViewControl2D(IView view, ViewSettings2D viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
-            : base(view, viewSettings, itemSettings)
+            : base(view, viewSettings, itemSettings, itemFactory)
         {
-            this.ItemFactory = itemFactory;
-
             this.Swap      = new ViewSwapControl(this.View, this.ViewSettings, this.ItemSettings);
             this.Scroll    = new ViewScrollControl2D(this.View, this.ViewSettings, this.ItemSettings);
             this.Selection = new ViewSelectionControl2D(this.View, this.ViewSettings, this.ItemSettings);

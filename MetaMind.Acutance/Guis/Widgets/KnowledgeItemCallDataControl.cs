@@ -21,7 +21,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                 // misuse the selection in next frame
                 ItemControl.MouseUnselectsIt();
 
-                View.Control.LoadCall(ItemData.Name, ItemData.Path, ItemData.Minutes);
+                View.Control.LoadCall(ItemData.CallName, ItemData.Path, ItemData.Minutes);
             }
         }
     }
