@@ -2,7 +2,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 {
     using System.Collections.Generic;
 
-    using MetaMind.Engine.Guis.Widgets.ViewItems;
+    using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Perseverance.Concepts.TaskEntries;
     using MetaMind.Perseverance.Guis.Modules;
 

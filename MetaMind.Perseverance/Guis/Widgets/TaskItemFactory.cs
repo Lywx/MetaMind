@@ -1,7 +1,6 @@
 namespace MetaMind.Perseverance.Guis.Widgets
 {
     using MetaMind.Engine.Guis.Widgets.Items;
-    using MetaMind.Engine.Guis.Widgets.ViewItems;
     using MetaMind.Perseverance.Concepts.TaskEntries;
 
     public class TaskItemFactory : ViewItemBasicFactory2D

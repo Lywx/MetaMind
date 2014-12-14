@@ -13,7 +13,7 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
         public ConsciousnessSleepStoppedEventArgs(ConsciousnessSleepy state)
         {
-            State = state;
+            this.State = state;
         }
     }
 }

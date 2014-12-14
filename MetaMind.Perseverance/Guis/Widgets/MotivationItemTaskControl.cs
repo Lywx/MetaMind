@@ -7,8 +7,8 @@
 
 namespace MetaMind.Perseverance.Guis.Widgets
 {
+    using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Regions;
-    using MetaMind.Engine.Guis.Widgets.ViewItems;
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Perseverance.Guis.Modules;
 

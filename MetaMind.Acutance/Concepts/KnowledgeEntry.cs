@@ -2,31 +2,40 @@
 {
     public class KnowledgeEntry
     {
-        public string Name;
-
-        public int    Timeout;
-
-        public bool   IsControl;
-
-        public bool   IsFile;
-
-        public bool   IsSearchResult;
-
-        public bool   IsBlank;
-
-        public KnowledgeEntry(string name, int timeout)
+        public KnowledgeEntry(string name, string path, int minutes)
         {
-            this.IsControl = false;
-
             this.Name    = name;
-            this.Timeout = timeout;
+            this.Path    = path;
+            this.Minutes = minutes;
+
+            this.IsControl = false;
+            this.IsCall   = this.Minutes > 0;
         }
 
         public KnowledgeEntry(string name)
         {
-            this.IsControl = true;
-
             this.Name = name;
+
+            this.IsControl = true;
         }
+
+        public bool IsBlank { get; set; }
+
+        public bool IsCall { get; set; }
+
+        public bool IsControl { get; set; }
+
+        public bool IsFile { get; set; }
+
+        public bool IsSearchResult { get; set; }
+
+        /// <summary>
+        /// Timeout minutes for call entry creation.
+        /// </summary>
+        public int Minutes { get; set; }
+
+        public string Name { get; set; }
+
+        public string Path { get; private set; }
     }
 }

@@ -1,7 +1,6 @@
 ﻿namespace MetaMind.Perseverance.Guis.Widgets
 {
     using MetaMind.Engine.Guis.Widgets.Items;
-    using MetaMind.Engine.Guis.Widgets.ViewItems;
 
     public class MotivationItemFactory : IViewItemFactory
     {

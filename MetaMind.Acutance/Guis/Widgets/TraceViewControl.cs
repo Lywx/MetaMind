@@ -4,14 +4,13 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     using MetaMind.Acutance.Concepts;
     using MetaMind.Engine.Components.Inputs;
+    using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Regions;
-    using MetaMind.Engine.Guis.Widgets.ViewItems;
     using MetaMind.Engine.Guis.Widgets.Views;
-    using MetaMind.Perseverance.Guis.Widgets;
 
     using Microsoft.Xna.Framework;
 
-    public class TraceViewControl : ViewControl2D
+    public class TraceViewControl : GridControl
     {
         #region Constructors
 
@@ -24,14 +23,6 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #endregion Constructors
 
-        #region Public Properties
-
-        public ViewRegion Region { get; protected set; }
-
-        public ViewScrollBar ScrollBar { get; protected set; }
-
-        #endregion Public Properties
-
         #region Operations
 
         public void AddItem(TraceEntry entry)
@@ -40,132 +31,22 @@ namespace MetaMind.Acutance.Guis.Widgets
             View.Items.Add(item);
         }
 
-        public void MoveDown()
-        {
-            this.ScrollBar.Trigger();
-            this.Selection.MoveDown();
-        }
-
-        public override void MoveLeft()
-        {
-            this.ScrollBar.Trigger();
-            this.Selection.MoveLeft();
-        }
-
-        public override void MoveRight()
-        {
-            this.ScrollBar.Trigger();
-            this.Selection.MoveRight();
-        }
-
-        public void MoveUp()
-        {
-            this.ScrollBar.Trigger();
-            this.Selection.MoveUp();
-        }
-
         #endregion Operations
 
         #region Update
 
-        public bool Locked
-        {
-            get { return View.IsEnabled(ViewState.Item_Editting); }
-        }
-
         public override void UpdateInput(GameTime gameTime)
         {
-            // mouse
-            // -----------------------------------------------------------------
-            // region
-            if (this.Active)
-            {
-                this.Region.UpdateInput(gameTime);
-            }
+            this.UpdateRegionClick(gameTime);
+            this.UpdateMouseScroll();
+            this.UpdateKeyboardMotion(gameTime);
 
             if (this.AcceptInput)
             {
-                // mouse
-                // ---------------------------------------------------------------------
-                if (this.ViewSettings.MouseEnabled)
-                {
-                    // scroll
-                    if (InputSequenceManager.Mouse.IsWheelScrolledUp)
-                    {
-                        this.ScrollBar.Trigger();
-                        this.Scroll.MoveUp();
-                    }
-
-                    if (InputSequenceManager.Mouse.IsWheelScrolledDown)
-                    {
-                        this.Scroll.MoveDown();
-                        this.ScrollBar.Trigger();
-                    }
-                }
-
                 // keyboard
                 // ---------------------------------------------------------------------
                 if (this.ViewSettings.KeyboardEnabled)
                 {
-                    // movement
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
-                    {
-                        this.MoveLeft();
-                    }
-
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
-                    {
-                        this.MoveRight();
-                    }
-
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Up))
-                    {
-                        this.MoveUp();
-                    }
-
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Down))
-                    {
-                        this.MoveDown();
-                    }
-
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SUp))
-                    {
-                        for (var i = 0; i < this.ViewSettings.RowNumDisplay; i++)
-                        {
-                            this.MoveUp();
-                        }
-                    }
-
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SDown))
-                    {
-                        for (var i = 0; i < this.ViewSettings.RowNumDisplay; i++)
-                        {
-                            this.MoveDown();
-                        }
-                    }
-
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SLeft))
-                    {
-                        for (var i = 0; i < this.ViewSettings.ColumnNumDisplay; i++)
-                        {
-                            this.MoveLeft();
-                        }
-                    }
-
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SRight))
-                    {
-                        for (var i = 0; i < this.ViewSettings.ColumnNumDisplay; i++)
-                        {
-                            this.MoveRight();
-                        }
-                    }
-
-                    // escape
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
-                    {
-                        this.Selection.Clear();
-                    }
-
                     // list management
                     if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceCreateItem))
                     {
@@ -201,23 +82,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                 }
             }
 
-            // item input
-            // -----------------------------------------------------------------
-            foreach (var item in this.View.Items.ToArray())
-            {
-                item.UpdateInput(gameTime);
-            }
-        }
-
-        /// <remarks>
-        /// All state change should be inside this methods. 
-        /// </remarks>>
-        /// <param name="gameTime"></param>
-        public override void UpdateStructure(GameTime gameTime)
-        {
-            base          .UpdateStructure(gameTime);
-            this.Region   .UpdateStructure(gameTime);
-            this.ScrollBar.UpdateStructure(gameTime);
+            this.UpdateItemInput(gameTime);
         }
 
         protected override void UpdateViewFocus()
@@ -236,7 +101,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Configurations
 
-        private Rectangle RegionPositioning(dynamic viewSettings, dynamic itemSettings)
+        protected override Rectangle RegionPositioning(dynamic viewSettings, dynamic itemSettings)
         {
             return new Rectangle(
                 viewSettings.StartPoint.X,
@@ -245,6 +110,6 @@ namespace MetaMind.Acutance.Guis.Widgets
                 viewSettings.RowNumDisplay    * itemSettings.NameFrameSize.Y);
         }
 
-        #endregion
+        #endregion Configurations
     }
 }

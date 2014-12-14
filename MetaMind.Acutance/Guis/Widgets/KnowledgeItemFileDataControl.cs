@@ -10,7 +10,6 @@ namespace MetaMind.Acutance.Guis.Widgets
     using CodeProject.FileSearcher;
 
     using MetaMind.Engine.Guis.Widgets.Items;
-    using MetaMind.Engine.Guis.Widgets.ViewItems;
     using MetaMind.Engine.Guis.Widgets.Views;
 
     using Microsoft.Xna.Framework;
@@ -64,7 +63,7 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             if (!ItemData.Name.StartsWith(this.filePrompt))
             {
-                this.ItemData.Name = this.ItemData.Name.Insert(0, this.filePrompt);
+                ItemData.Name = ItemData.Name.Insert(0, this.filePrompt);
             }
 
             if (this.searchEnded)
@@ -77,7 +76,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                     var raw      = processor.RemoveCursor(e.NewValue);
                     var fileName = raw.Replace(this.filePrompt, string.Empty);
 
-                    this.View.Control.Search(fileName);
+                    View.Control.Search(fileName);
                 }
             }
         }

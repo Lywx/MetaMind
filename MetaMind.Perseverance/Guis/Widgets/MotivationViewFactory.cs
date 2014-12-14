@@ -8,7 +8,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
     {
         protected override dynamic CreateControl(IView view, ViewSettings1D viewSettings, ICloneable itemSettings)
         {
-            return new MotivationViewControl(view, (MotivationViewSettings)viewSettings, (MotivationItemSettings)itemSettings);
+            return new MotivationViewControl(view, (MotivationViewSettings)viewSettings, (MotivationItemSettings)itemSettings, new MotivationItemFactory());
         }
 
         protected override IViewGraphics CreateGraphics(IView view, ViewSettings1D viewSettings, ICloneable itemSettings)

@@ -7,7 +7,6 @@
 
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis;
-    using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Perseverance.Concepts.Cognitions;
     using MetaMind.Perseverance.Guis.Modules;
 
@@ -20,14 +19,10 @@
         private TimeSpan               synchronizationRetryTime = TimeSpan.FromSeconds(5);
 
         private SynchronizationMonitor     monitor;
-        private SynchronizationGroupClient client;
 
-        private SynchroizationModuleSynchronizationAlertedListener synchronizationAlertedListener;
-
-        public SynchronizationGroup(SynchronizationGroupClient client, SynchronizationGroupSettings settings)
+        public SynchronizationGroup(SynchronizationGroupSettings settings)
             : base(settings)
         {
-            this.client = client;
         }
 
         private Rectangle SynchronizationFrameRectangle
@@ -80,22 +75,10 @@
 
         public void Load()
         {
-            if (this.synchronizationAlertedListener == null)
-            {
-                this.synchronizationAlertedListener = new SynchroizationModuleSynchronizationAlertedListener(client.TraceView);
-            }
-
-            EventManager.AddListener(this.synchronizationAlertedListener);
         }
 
-        public void Unload()
+        public void Unload() 
         {
-            if (this.synchronizationAlertedListener != null)
-            {
-                EventManager.RemoveListener(this.synchronizationAlertedListener);
-            }
-
-            this.synchronizationAlertedListener = null;
         }
 
         public override void UpdateInput(GameTime gameTime)
@@ -216,10 +199,5 @@
                 (int)(validSynchronization.ProgressPercent * this.Settings.BarFrameSize.X),
                 this.Settings.BarFrameSize.Y);
         }
-    }
-
-    public class SynchronizationGroupClient
-    {
-        public IView TraceView { get; set; }
     }
 }

@@ -10,8 +10,6 @@ namespace MetaMind.Acutance.Screens
         private readonly MultiplexerGroup           multiplexer;
 
         private readonly SynchronizationGroup       synchronization;
-        private readonly SynchronizationGroupClient synchronizationClient;
-
 
         public MultiplexerModule()
             : base(null)
@@ -19,9 +17,7 @@ namespace MetaMind.Acutance.Screens
             this.multiplexer = new MultiplexerGroup(new MultiplexerGroupSettings());
             this.multiplexer.Load();
 
-            this.synchronizationClient = new SynchronizationGroupClient { TraceView = this.multiplexer.TraceView, };
-
-            this.synchronization = new SynchronizationGroup(this.synchronizationClient, new SynchronizationGroupSettings());
+            this.synchronization = new SynchronizationGroup(new SynchronizationGroupSettings());
             this.synchronization.Load();
         }
 

@@ -1,0 +1,15 @@
+namespace MetaMind.Engine.Guis.Widgets.Views
+{
+    using MetaMind.Engine.Settings;
+
+    using Microsoft.Xna.Framework;
+
+    public class GridSettings : ViewSettings2D
+    {
+        public readonly ViewScrollBarSettings ScrollBarSettings = new ViewScrollBarSettings();
+
+        public Point BorderMargin      = new Point(4, 4);
+
+        public Color HighlightColor    = ColorPalette.TransparentColor1;
+    }
+}

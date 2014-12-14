@@ -62,23 +62,29 @@
   <ItemGroup>
     <Compile Include="Acutance.cs" />
     <Compile Include="Components\SaveManager.cs" />
-    <Compile Include="Concepts\EventEntry.cs" />
+    <Compile Include="Concepts\CallEntry.cs" />
+    <Compile Include="Concepts\Calllist.cs" />
     <Compile Include="Concepts\KnowledgeEntry.cs" />
     <Compile Include="Concepts\TraceEntry.cs" />
     <Compile Include="Concepts\Tracelist.cs" />
+    <Compile Include="Guis\Modules\MultiplexerGroupCallCreatedListener.cs" />
     <Compile Include="Guis\Modules\ParticleModule.cs" />
     <Compile Include="Guis\Modules\MultiplexerGroup.cs" />
     <Compile Include="Guis\Modules\SynchronizationGroupSettings.cs" />
     <Compile Include="Guis\Modules\SynchronizationGroup.cs" />
     <Compile Include="Guis\Modules\MultiplexerGroupSettings.cs" />
-    <Compile Include="Guis\Modules\SynchroizationModuleSynchronizationAlertedListener.cs" />
-    <Compile Include="Guis\Widgets\EventItemSettings.cs" />
-    <Compile Include="Guis\Widgets\EventViewControl.cs" />
-    <Compile Include="Guis\Widgets\EventViewFactory.cs" />
-    <Compile Include="Guis\Widgets\EventViewGraphics.cs" />
-    <Compile Include="Guis\Widgets\EventViewSettings.cs" />
+    <Compile Include="Guis\Modules\MultiplexerGroupSynchronizationAlertedListener.cs" />
+    <Compile Include="Guis\Widgets\CallCreatedEventArgs.cs" />
+    <Compile Include="Guis\Widgets\CallItemControl.cs" />
+    <Compile Include="Guis\Widgets\CallItemFactory.cs" />
+    <Compile Include="Guis\Widgets\CallItemGraphics.cs" />
+    <Compile Include="Guis\Widgets\CallItemSettings.cs" />
+    <Compile Include="Guis\Widgets\CallViewControl.cs" />
+    <Compile Include="Guis\Widgets\CallViewFactory.cs" />
+    <Compile Include="Guis\Widgets\CallViewGraphics.cs" />
+    <Compile Include="Guis\Widgets\CallViewSettings.cs" />
     <Compile Include="Guis\Widgets\KnowledgeItemControl.cs" />
-    <Compile Include="Guis\Widgets\KnowledgeItemEventDataControl.cs" />
+    <Compile Include="Guis\Widgets\KnowledgeItemCallDataControl.cs" />
     <Compile Include="Guis\Widgets\KnowledgeItemFileDataControl.cs" />
     <Compile Include="Guis\Widgets\KnowledgeItemFactory.cs" />
     <Compile Include="Guis\Widgets\KnowledgeItemFrameControl.cs" />
@@ -112,6 +118,7 @@
     </Compile>
     <Compile Include="Sessions\Adventure.cs" />
     <Compile Include="Screens\MultiplexerScreen.cs" />
+    <Compile Include="Sessions\AdventureEventType.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />

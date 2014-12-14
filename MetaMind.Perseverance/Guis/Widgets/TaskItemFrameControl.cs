@@ -2,7 +2,6 @@ namespace MetaMind.Perseverance.Guis.Widgets
 {
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Items;
-    using MetaMind.Engine.Guis.Widgets.ViewItems;
 
     using Microsoft.Xna.Framework;
 

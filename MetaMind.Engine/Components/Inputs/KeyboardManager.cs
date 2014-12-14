@@ -50,6 +50,9 @@ namespace MetaMind.Engine.Components.Inputs
 
         KnowledgeEditItem,
 
+        CallClearItem,
+        CallDeleteItem,
+
         // synchronization
         // ---------------------------------------------------------------------
         ForceFlip,
@@ -302,6 +305,14 @@ namespace MetaMind.Engine.Components.Inputs
             //-----------------------------------------------------------------
             actionMaps[(int)Actions.KnowledgeEditItem] = new KeyboardActionMap();
             actionMaps[(int)Actions.KnowledgeEditItem].Bindings.Add(Keys.I, new List<Keys> { Keys.LeftControl });
+
+            // call
+            //-----------------------------------------------------------------
+            actionMaps[(int)Actions.CallClearItem] = new KeyboardActionMap();
+            actionMaps[(int)Actions.CallClearItem].Bindings.Add(Keys.C, new List<Keys> { Keys.LeftControl });
+
+            actionMaps[(int)Actions.CallDeleteItem] = new KeyboardActionMap();
+            actionMaps[(int)Actions.CallDeleteItem].Bindings.Add(Keys.D, new List<Keys> { Keys.LeftControl });
 
             // sychronization
             // ---------------------------------------------------------------------

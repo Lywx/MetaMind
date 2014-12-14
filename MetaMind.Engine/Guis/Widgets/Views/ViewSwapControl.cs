@@ -14,7 +14,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Regions;
-    using MetaMind.Engine.Guis.Widgets.ViewItems;
 
     using Microsoft.Xna.Framework;
 

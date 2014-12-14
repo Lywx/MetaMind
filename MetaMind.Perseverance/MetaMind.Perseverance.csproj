@@ -147,9 +147,7 @@
     <Compile Include="Guis\Widgets\TaskViewControl.cs" />
     <Compile Include="Guis\Widgets\TaskViewFactory.cs" />
     <Compile Include="Guis\Widgets\TaskViewGraphics.cs" />
-    <Compile Include="Guis\Widgets\ViewScrollBar.cs" />
     <Compile Include="Guis\Widgets\TaskViewSettings.cs" />
-    <Compile Include="Guis\Widgets\ViewScrollBarSettings.cs" />
     <Compile Include="Perseverance.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -10,11 +10,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     using System;
 
     using MetaMind.Engine.Components.Inputs;
-    using MetaMind.Engine.Guis.Widgets.ViewItems;
+    using MetaMind.Engine.Guis.Widgets.Items;
 
     using Microsoft.Xna.Framework;
 
-    public class ViewControl2D : ViewControl1D
+    public class ViewControl2D : ViewControl1D, IViewControl2D
     {
         public ViewControl2D(IView view, ViewSettings2D viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
             : base(view, viewSettings, itemSettings)
@@ -26,82 +26,98 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             this.Selection = new ViewSelectionControl2D(this.View, this.ViewSettings, this.ItemSettings);
         }
 
-        #region Public Properties
-
-        public IViewItemFactory ItemFactory { get; protected set; }
-
-
-        #endregion
-
         #region Operations
 
-        public void AddItem()
+        public virtual void MoveDown()
         {
-            var item = new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory);
-            this.View.Items.Add( item);
+            this.Selection.MoveDown();
         }
 
-        #endregion
+        public virtual void MoveUp()
+        {
+            this.Selection.MoveUp();
+        }
 
-        #region Update
+        public virtual void SuperMoveDown()
+        {
+            for (var i = 0; i < this.ViewSettings.RowNumDisplay; i++)
+            {
+                this.MoveDown();
+            }
+        }
+
+        public virtual void SuperMoveUp()
+        {
+            for (var i = 0; i < this.ViewSettings.RowNumDisplay; i++)
+            {
+                this.MoveUp();
+            }
+        }
+
+        #endregion Operations
+
+        #region Update Input
 
         public override void UpdateInput(GameTime gameTime)
         {
+            this.UpdateMouseScroll();
+            this.UpdateKeyboardMotion();
+            this.UpdateItemInput(gameTime);
+        }
+
+        protected override void UpdateKeyboardMotion()
+        {
             if (this.AcceptInput)
             {
-                // mouse
-                // ---------------------------------------------------------------------
-                if (this.ViewSettings.MouseEnabled)
-                {
-                    if (InputSequenceManager.Mouse.IsWheelScrolledUp)
-                    {
-                        this.Scroll.MoveUp();
-                    }
-
-                    if (InputSequenceManager.Mouse.IsWheelScrolledDown)
-                    {
-                        this.Scroll.MoveDown();
-                    }
-                }
-
                 // keyboard
                 // --------------------------------------------------------------
                 if (this.ViewSettings.KeyboardEnabled)
                 {
-                    // movement
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
-                    {
-                        this.Selection.MoveLeft();
-                    }
-
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
-                    {
-                        this.Selection.MoveRight();
-                    }
-
                     if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Up))
                     {
-                        this.Selection.MoveUp();
+                        this.MoveUp();
                     }
 
                     if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Down))
                     {
-                        this.Selection.MoveDown();
+                        this.MoveDown();
                     }
 
-                    // escape
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SUp))
+                    {
+                        this.SuperMoveUp();
+                    }
+
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SDown))
+                    {
+                        this.SuperMoveDown();
+                    }
+
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
+                    {
+                        this.MoveLeft();
+                    }
+
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
+                    {
+                        this.MoveRight();
+                    }
+
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SLeft))
+                    {
+                        this.SuperMoveLeft();
+                    }
+
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SRight))
+                    {
+                        this.SuperMoveRight();
+                    }
+
                     if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
                     {
                         this.Selection.Clear();
                     }
                 }
-            }
-
-            // item input
-            // -----------------------------------------------------------------
-            foreach (var item in this.View.Items.ToArray())
-            {
-                item.UpdateInput(gameTime);
             }
         }
 

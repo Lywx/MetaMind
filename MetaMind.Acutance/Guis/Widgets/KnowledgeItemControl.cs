@@ -9,7 +9,6 @@ namespace MetaMind.Acutance.Guis.Widgets
 {
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Widgets.Items;
-    using MetaMind.Engine.Guis.Widgets.ViewItems;
     using MetaMind.Engine.Guis.Widgets.Views;
 
     using Microsoft.Xna.Framework;
@@ -37,7 +36,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
             else
             {
-                this.ItemDataControl = new KnowledgeItemEventDataControl(item);
+                this.ItemDataControl = new KnowledgeItemCallDataControl(item);
             }
         }
 

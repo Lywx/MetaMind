@@ -5,7 +5,6 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Engine.Concepts;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Items;
-    using MetaMind.Engine.Guis.Widgets.ViewItems;
 
     using Microsoft.Xna.Framework;
 
@@ -24,6 +23,11 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Structure Position
 
+        protected Vector2 ExperienceLocation
+        {
+            get { return PointExt.ToVector2(ItemControl.ExperienceFrame.Center); }
+        }
+
         protected override Vector2 IdCenter
         {
             get { return PointExt.ToVector2(ItemControl.IdFrame.Center); }
@@ -33,12 +37,6 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             get { return this.NameLocation; }
         }
-
-        private Vector2 ExperienceLocation
-        {
-            get { return PointExt.ToVector2(ItemControl.ExperienceFrame.Center); }
-        }
-
 
         private Vector2 NameLocation
         {
@@ -55,10 +53,6 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Update and Draw
 
-        public override void Update(GameTime gameTime)
-        {
-        }
-
         public override void Draw(GameTime gameTime, byte alpha)
         {
             if (!ItemControl.Active && !Item.IsEnabled(ItemState.Item_Dragging))
@@ -74,6 +68,20 @@ namespace MetaMind.Acutance.Guis.Widgets
             this.DrawId(255);
         }
 
+        public override void Update(GameTime gameTime)
+        {
+        }
+
+        protected virtual void DrawExperience(byte alpha)
+        {
+            FontManager.DrawCenteredText(
+                ItemSettings.ExperienceFont,
+                string.Format("{0:hh\\:mm\\:ss}", ((Experience)ItemData.Experience).Duration),
+                this.ExperienceLocation,
+                ColorExt.MakeTransparent(ItemSettings.ExperienceColor, alpha),
+                ItemSettings.ExperienceSize);
+        }
+
         protected void DrawExperienceFrame(byte alpha)
         {
             Primitives2D.FillRectangle(
@@ -81,16 +89,6 @@ namespace MetaMind.Acutance.Guis.Widgets
                 RectangleExt.Crop(ItemControl.ExperienceFrame.Rectangle, ItemSettings.ExperienceFrameMargin),
                 ColorExt.MakeTransparent(ItemSettings.ExperienceFrameColor, alpha));
 
-        }
-
-        protected void DrawExperience(byte alpha)
-        {
-                FontManager.DrawCenteredText(
-                    ItemSettings.ExperienceFont,
-                    string.Format("{0:hh\\:mm\\:ss}", ((Experience)ItemData.Experience).Duration),
-                    this.ExperienceLocation,
-                    ColorExt.MakeTransparent(ItemSettings.ExperienceColor, alpha),
-                    ItemSettings.ExperienceSize);
         }
 
         protected void DrawIdFrame(byte alpha)

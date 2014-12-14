@@ -1,15 +1,18 @@
 ﻿namespace MetaMind.Engine.Guis.Widgets.Views
 {
+    using MetaMind.Engine.Guis.Widgets.Items;
+
     using Microsoft.Xna.Framework;
 
-    // TODO: Encapsulation is broken
     public interface IViewControl
     {
-        IViewSwapControl Swap { get; }
+        IViewItemFactory ItemFactory { get; }
 
         dynamic Scroll { get; }
 
         dynamic Selection { get; }
+
+        IViewSwapControl Swap { get; }
 
         void SortItems(ViewSortMode sortMode);
 

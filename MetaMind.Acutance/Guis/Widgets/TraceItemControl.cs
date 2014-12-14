@@ -2,7 +2,6 @@ namespace MetaMind.Acutance.Guis.Widgets
 {
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Widgets.Items;
-    using MetaMind.Engine.Guis.Widgets.ViewItems;
     using MetaMind.Engine.Guis.Widgets.Views;
 
     using Microsoft.Xna.Framework;
@@ -93,20 +92,23 @@ namespace MetaMind.Acutance.Guis.Widgets
                     }
                 }
 
-            // special
-            //----------------------------------------------------------------- 
-            if (!this.Locked)
-            {
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceClearItem))
+                // special
+                //----------------------------------------------------------------- 
+                if (View.Control.AcceptInput)
                 {
-                    if (string.IsNullOrWhiteSpace(ItemData.Name))
+                    if (!this.Locked)
                     {
-                        this.DeleteIt();
+                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceClearItem))
+                        {
+                            if (string.IsNullOrWhiteSpace(ItemData.Name))
+                            {
+                                this.DeleteIt();
+                            }
+                        }
                     }
                 }
             }
         }
-    }
 
         #endregion Update
     }

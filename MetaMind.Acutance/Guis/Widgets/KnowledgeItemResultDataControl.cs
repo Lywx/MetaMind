@@ -8,7 +8,6 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
     using MetaMind.Engine.Guis.Widgets.Items;
-    using MetaMind.Engine.Guis.Widgets.ViewItems;
 
     using Microsoft.Xna.Framework;
 
@@ -23,14 +22,14 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             base.UpdateInput(gameTime);
 
-            if (this.Item.IsEnabled(ItemState.Item_Selected))
+            if (Item.IsEnabled(ItemState.Item_Selected))
             {
                 // must un-select itself to clear selection or the selection control may 
                 // misuse the selection in next search
-                this.ItemControl.MouseUnselectsIt();
+                ItemControl.MouseUnselectsIt();
 
-                this.View.Control.SearchStop();
-                this.View.Control.LoadResult(this.ItemData.Name);
+                View.Control.SearchStop();
+                View.Control.LoadResult(ItemData.Name);
             }
         }
     }

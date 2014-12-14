@@ -16,6 +16,8 @@ namespace MetaMind.Engine.Settings
 
         public static Color LightGreen        = new Color(78, 255, 27, 200);
 
+        public static Color LightGrey         = new Color(0, 100, 50, 2);
+
         public static Color LightPink         = new Color(255, 0, 27, 200); 
 
         public static Color LightBlue         = new Color(0, 20, 250, 2);

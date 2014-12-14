@@ -10,15 +10,17 @@ namespace MetaMind.Acutance.Guis.Widgets
     using CodeProject.FileSearcher;
 
     using MetaMind.Acutance.Concepts;
+    using MetaMind.Acutance.Sessions;
+    using MetaMind.Engine;
     using MetaMind.Engine.Components;
+    using MetaMind.Engine.Components.Events;
+    using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Regions;
-    using MetaMind.Engine.Guis.Widgets.ViewItems;
     using MetaMind.Engine.Guis.Widgets.Views;
-    using MetaMind.Perseverance.Guis.Widgets;
 
     using Microsoft.Xna.Framework;
 
-    public class KnowledgeViewControl : ViewControl2D
+    public class KnowledgeViewControl : GridControl
     {
         private readonly int maxDirectoryNum = 10;
 
@@ -31,9 +33,6 @@ namespace MetaMind.Acutance.Guis.Widgets
         public KnowledgeViewControl(IView view, KnowledgeViewSettings viewSettings, KnowledgeItemSettings itemSettings, KnowledgeItemFactory itemFactory)
             : base(view, viewSettings, itemSettings, itemFactory)
         {
-            this.Region      = new ViewRegion(view, viewSettings, itemSettings, this.RegionPositioning);
-            this.ScrollBar   = new ViewScrollBar(view, viewSettings, itemSettings, viewSettings.ScrollBarSettings);
-
             this.AddFileItem();
             this.AddBlankItem();
 
@@ -41,14 +40,6 @@ namespace MetaMind.Acutance.Guis.Widgets
         }
 
         #endregion Constructors
-
-        #region Public Properties
-
-        public ViewRegion Region { get; protected set; }
-
-        public ViewScrollBar ScrollBar { get; protected set; }
-
-        #endregion Public Properties
 
         #region Private Properties
 
@@ -65,6 +56,15 @@ namespace MetaMind.Acutance.Guis.Widgets
         #endregion Private Properties
 
         #region Operations
+
+        public void LoadCall(string name, string path, int minutes)
+        {
+            var callCreatedEvent = new EventBase(
+                (int)AdventureEventType.CallCreated,
+                new CallCreatedEventArgs(name, path, minutes));
+
+            GameEngine.EventManager.QueueEvent(callCreatedEvent);
+        }
 
         public void LoadResult(string relativePath)
         {
@@ -95,13 +95,6 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
         }
 
-        public void SearchStop()
-        {
-            this.FileItem.ItemControl.EditCancel();
-
-            Searcher.Stop();
-        }
-
         public void Search(string fileName)
         {
             if (FileItem == null)
@@ -114,18 +107,31 @@ namespace MetaMind.Acutance.Guis.Widgets
 
             var fileNames = new List<string>(1) { "*" + fileName + "*" };
 
-            Searcher.Start(
-                new SearcherParams(
-                    FolderManager.DataFolderPath,
-                    true,
-                    fileNames,
-                    false,
-                    DateTime.MinValue,
-                    false,
-                    DateTime.MinValue,
-                    false,
-                    string.Empty,
-                    Encoding.Unicode));
+            var pars = SearcherParams(fileNames);
+
+            Searcher.Start(pars);
+        }
+
+        public void SearchStop()
+        {
+            this.FileItem.ItemControl.EditCancel();
+
+            Searcher.Stop();
+        }
+
+        private static SearcherParams SearcherParams(List<string> fileNames)
+        {
+            return new SearcherParams(
+                searchDir:             FolderManager.DataFolderPath, 
+                includeSubDirsChecked: true, 
+                fileNames:             fileNames, 
+                newerThanChecked:      false, 
+                newerThanDateTime:     DateTime.MinValue, 
+                olderThanChecked:      false, 
+                olderThanDateTime:     DateTime.MinValue, 
+                containingChecked:     false, 
+                containingText:        string.Empty, 
+                encoding:              Encoding.Unicode);
         }
 
         private void AddBlankItem()
@@ -188,16 +194,20 @@ namespace MetaMind.Acutance.Guis.Widgets
             var lines = File.ReadLines(path);
             foreach (var line in lines.Where(line => !string.IsNullOrWhiteSpace(line)).Take(this.maxLineNum))
             {
-                var match = Regex.Match(line, @"^\[(\d)+\]");
-                if (match.Success)
+                var matchEvent = Regex.Match(line, @"^\[(\d)+\]");
+                if (matchEvent.Success)
                 {
                     int timeout;
-                    int.TryParse(match.Value.Trim('[', ']'), out timeout);
-                    this.AddItem(new KnowledgeEntry(line, timeout));
+                    int.TryParse(matchEvent.Value.Trim('[', ']'), out timeout);
+                    this.AddItem(new KnowledgeEntry(line.Replace(matchEvent.Value, string.Empty).Trim(' '), path, timeout));
                 }
                 else
                 {
-                    this.AddItem(new KnowledgeEntry(line, 0));
+                    var matchIdea = Regex.Match(line, @"^\|");
+                    if (matchIdea.Success)
+                    {
+                        this.AddItem(new KnowledgeEntry(line, path, 0));
+                    }
                 } 
             }
         }
@@ -228,61 +238,18 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Update
 
-        public bool Locked
-        {
-            get { return this.View.IsEnabled(ViewState.Item_Editting); }
-        }
-
         public override void UpdateInput(GameTime gameTime)
         {
-            // mouse
-            // -----------------------------------------------------------------
-            // region
-            if (this.Active)
-            {
-                this.Region.UpdateInput(gameTime);
-            }
+            this.UpdateRegionClick(gameTime);
+            this.UpdateMouseScroll();
 
-            if (this.AcceptInput)
-            {
-                // mouse
-                // ---------------------------------------------------------------------
-                if (this.ViewSettings.MouseEnabled)
-                {
-                    // scroll
-                    if (InputSequenceManager.Mouse.IsWheelScrolledUp)
-                    {
-                        this.ScrollBar.Trigger();
-                        this.Scroll.MoveUp();
-                    }
-
-                    if (InputSequenceManager.Mouse.IsWheelScrolledDown)
-                    {
-                        this.Scroll.MoveDown();
-                        this.ScrollBar.Trigger();
-                    }
-                }
-            }
-
-            // item input
-            // -----------------------------------------------------------------
             if (View.Items.Count > 0)
             {
-                foreach (var item in View.Items.FindAll(item => item.ItemData.IsControl).ToArray())
+                foreach (var item in View.Items.FindAll(item => item.ItemData.IsControl || item.ItemData.IsCall).ToArray())
                 {
                     item.UpdateInput(gameTime);
                 }
             }
-        }
-
-        /// <remarks>
-        /// All state change should be inside this methods.
-        /// </remarks>>
-        public override void UpdateStructure(GameTime gameTime)
-        {
-            base          .UpdateStructure(gameTime);
-            this.Region   .UpdateStructure(gameTime);
-            this.ScrollBar.UpdateStructure(gameTime);
         }
 
         protected override void UpdateViewFocus()
@@ -301,13 +268,13 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Configurations
 
-        private Rectangle RegionPositioning(dynamic viewSettings, dynamic itemSettings)
+        protected override Rectangle RegionPositioning(dynamic viewSettings, dynamic itemSettings)
         {
             return new Rectangle(
                 viewSettings.StartPoint.X,
                 viewSettings.StartPoint.Y,
                 viewSettings.ColumnNumDisplay * (itemSettings.NameFrameSize.X + itemSettings.IdFrameSize.X + itemSettings.ExperienceFrameSize.X),
-                viewSettings.RowNumDisplay * itemSettings.NameFrameSize.Y);
+                viewSettings.RowNumDisplay    * itemSettings.NameFrameSize.Y);
         }
 
         #endregion Configurations

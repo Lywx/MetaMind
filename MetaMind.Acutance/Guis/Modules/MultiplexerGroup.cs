@@ -1,6 +1,5 @@
 namespace MetaMind.Acutance.Guis.Modules
 {
-    using MetaMind.Acutance.Concepts;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Widgets.Views;
 
@@ -8,6 +7,9 @@ namespace MetaMind.Acutance.Guis.Modules
 
     public class MultiplexerGroup : Group<MultiplexerGroupSettings>
     {
+        private MultiplexerGroupCallCreatedListener            callCreatedListener;
+        private MultiplexerGroupSynchronizationAlertedListener synchronizationAlertedListener;
+
         public MultiplexerGroup(MultiplexerGroupSettings settings)
             : base(settings)
         {
@@ -16,10 +18,10 @@ namespace MetaMind.Acutance.Guis.Modules
                 this.Settings.TraceItemSettings,
                 this.Settings.TraceViewFactory);
 
-            this.EventView = new View(
-                this.Settings.EventViewSettings,
-                this.Settings.EventItemSettings,
-                this.Settings.EventViewFactory);
+            this.CallView = new View(
+                this.Settings.CallViewSettings,
+                this.Settings.CallItemSettings,
+                this.Settings.CallViewFactory);
 
             this.KnowledgeView = new View(
                 this.Settings.KnowledgeViewSettings,
@@ -27,45 +29,86 @@ namespace MetaMind.Acutance.Guis.Modules
                 this.Settings.KnowledgeViewFactory);
         }
 
-        public IView EventView { get; private set; }
+        public IView CallView { get; private set; }
 
         public IView KnowledgeView { get; private set; }
 
         public IView TraceView { get; private set; }
 
+        public override void Draw(GameTime gameTime, byte alpha)
+        {
+            this.KnowledgeView.Draw(gameTime, alpha);
+            this.TraceView    .Draw(gameTime, alpha);
+            this.CallView     .Draw(gameTime, alpha);
+        }
+
         public void Load()
         {
-            foreach (var trace in this.Settings.Traces.ToArray())
-            {
-                this.TraceView.Control.AddItem(trace);
-            }
-
-            this.KnowledgeView.Control.LoadResult("Basic.txt");
+            this.LoadData();
+            this.LoadEvents();
         }
 
         public void Unload()
         {
+            if (this.synchronizationAlertedListener != null)
+            {
+                EventManager.RemoveListener(this.synchronizationAlertedListener);
+            }
+
+            this.synchronizationAlertedListener = null;
+
+            if (this.callCreatedListener != null)
+            {
+                EventManager.RemoveListener(this.callCreatedListener);
+            }
+
+            this.callCreatedListener = null;
         }
 
         public override void UpdateInput(GameTime gameTime)
         {
             this.KnowledgeView.UpdateInput(gameTime);
             this.TraceView    .UpdateInput(gameTime);
-            this.EventView    .UpdateInput(gameTime);
+            this.CallView     .UpdateInput(gameTime);
         }
 
         public override void UpdateStructure(GameTime gameTime)
         {
             this.TraceView    .UpdateStructure(gameTime);
-            this.EventView    .UpdateStructure(gameTime);
+            this.CallView     .UpdateStructure(gameTime);
             this.KnowledgeView.UpdateStructure(gameTime);
         }
 
-        public override void Draw(GameTime gameTime, byte alpha)
+        private void LoadData()
         {
-            this.KnowledgeView.Draw(gameTime, alpha);
-            this.TraceView    .Draw(gameTime, alpha);
-            this.EventView    .Draw(gameTime, alpha);
+            foreach (var trace in this.Settings.Traces.ToArray())
+            {
+                this.TraceView.Control.AddItem(trace);
+            }
+
+            foreach (var call in this.Settings.Calls.ToArray())
+            {
+                this.CallView.Control.AddItem(call);
+            }
+
+            this.KnowledgeView.Control.LoadResult("Basic.txt");
+        }
+
+        private void LoadEvents()
+        {
+            if (this.synchronizationAlertedListener == null)
+            {
+                this.synchronizationAlertedListener = new MultiplexerGroupSynchronizationAlertedListener(this.TraceView);
+            }
+
+            EventManager.AddListener(this.synchronizationAlertedListener);
+
+            if (this.callCreatedListener == null)
+            {
+                this.callCreatedListener = new MultiplexerGroupCallCreatedListener(this.CallView);
+            }
+
+            EventManager.AddListener(this.callCreatedListener);
         }
     }
 }

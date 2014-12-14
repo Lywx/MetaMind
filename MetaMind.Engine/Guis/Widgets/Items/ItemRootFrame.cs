@@ -1,7 +1,6 @@
 namespace MetaMind.Engine.Guis.Widgets.Items
 {
     using MetaMind.Engine.Guis.Elements;
-    using MetaMind.Engine.Guis.Widgets.ViewItems;
 
     public interface IItemRootFrame : IDraggableFrame
     {

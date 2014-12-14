@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 {
     using System;
 
-    using MetaMind.Engine.Guis.Widgets.ViewItems;
+    using MetaMind.Engine.Guis.Widgets.Items;
 
     public class ViewBasicFactory2D : IViewFactory
     {

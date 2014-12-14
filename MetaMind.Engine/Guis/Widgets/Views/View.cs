@@ -3,7 +3,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     using System.Collections.Generic;
 
     using MetaMind.Engine.Guis.Widgets.Items;
-    using MetaMind.Engine.Guis.Widgets.ViewItems;
 
     using Microsoft.Xna.Framework;
 
