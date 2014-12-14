@@ -34,14 +34,14 @@
 
                 this.ItemFrameControl = null;
 
-                this.ItemViewControl  = null;
-
                 if (this.ItemDataControl != null)
                 {
                     this.ItemDataControl.Dispose();
                 }
 
                 this.ItemDataControl  = null;
+
+                // don't set item view control to null
             }
             finally
             {

@@ -8,6 +8,7 @@ namespace MetaMind.Acutance.Guis.Modules
     public class MultiplexerGroup : Group<MultiplexerGroupSettings>
     {
         private MultiplexerGroupCallCreatedListener            callCreatedListener;
+        private MultiplexerGroupCallNotifiedListener           callNotifiedListener;
 
         private MultiplexerGroupKnowledgeRetrievedListener     knowledgeRetrievedListener;
 
@@ -67,6 +68,13 @@ namespace MetaMind.Acutance.Guis.Modules
 
             this.callCreatedListener = null;
 
+            if (this.callNotifiedListener != null)
+            {
+                EventManager.RemoveListener(this.callNotifiedListener);
+            }
+
+            this.callNotifiedListener = null;
+
             if (this.knowledgeRetrievedListener != null)
             {
                 EventManager.RemoveListener(this.knowledgeRetrievedListener);
@@ -119,6 +127,13 @@ namespace MetaMind.Acutance.Guis.Modules
             }
 
             EventManager.AddListener(this.callCreatedListener);
+
+            if (this.callNotifiedListener == null)
+            {
+                this.callNotifiedListener = new MultiplexerGroupCallNotifiedListener();
+            }
+
+            EventManager.AddListener(this.callNotifiedListener);
 
             if (this.knowledgeRetrievedListener == null)
             {

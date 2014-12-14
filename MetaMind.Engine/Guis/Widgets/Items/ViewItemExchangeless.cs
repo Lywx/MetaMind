@@ -43,6 +43,11 @@
             this.ItemGraphics = itemFactory.CreateGraphics(this);
         }
 
+        ~ViewItemExchangeless()
+        {
+            this.Dispose();
+        }
+
         public dynamic ItemControl { get; set; }
 
         public dynamic ItemData { get; set; }

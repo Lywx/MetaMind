@@ -33,8 +33,8 @@ namespace MetaMind.Acutance.Concepts
 
         public CallEntry(string name, string path, TimeSpan timeout)
         {
-            this.Name = name;
-            this.Path = path;
+            this.Name    = name;
+            this.Path    = path;
             this.Timeout = timeout;
 
             this.State = EventState.Running;
