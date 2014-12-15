@@ -75,13 +75,12 @@ namespace MetaMind.Acutance.Guis.Widgets
                 path = Path.Combine(FolderManager.DataFolderPath, path);
             }
 
-            var attribute = File.GetAttributes(path);
-
             this.ClearNonControlItems();
             this.ClearResultItems();
 
             try
             {
+                var attribute = File.GetAttributes(path);
                 var isFile = (attribute & FileAttributes.Directory) != FileAttributes.Directory;
                 if (isFile)
                 {

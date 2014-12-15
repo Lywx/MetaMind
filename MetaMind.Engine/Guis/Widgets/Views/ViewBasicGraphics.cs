@@ -1,7 +1,6 @@
 namespace MetaMind.Engine.Guis.Widgets.Views
 {
     using System;
-    using System.Linq;
 
     using MetaMind.Engine.Guis.Widgets.Items;
 
@@ -21,9 +20,10 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         protected void DrawItems(GameTime gameTime, byte alpha)
         {
-            foreach (var item in this.View.Items.ToArray())
+            foreach (var item in View.Items.ToArray())
             {
-                if (item.IsEnabled(ItemState.Item_Active))
+                // item could be null when diposed
+                if (item != null && item.IsEnabled(ItemState.Item_Active))
                 {
                     item.Draw(gameTime, alpha);
                 }
