@@ -76,7 +76,6 @@
     <Compile Include="Guis\Modules\SynchronizationGroupSettings.cs" />
     <Compile Include="Guis\Modules\SynchronizationGroup.cs" />
     <Compile Include="Guis\Modules\MultiplexerGroupSettings.cs" />
-    <Compile Include="Guis\Modules\MultiplexerGroupSynchronizationAlertedListener.cs" />
     <Compile Include="Concepts\CallCreatedEventArgs.cs" />
     <Compile Include="Guis\Widgets\CallItemControl.cs" />
     <Compile Include="Guis\Widgets\CallItemFactory.cs" />

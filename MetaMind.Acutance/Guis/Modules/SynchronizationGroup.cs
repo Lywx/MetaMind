@@ -18,8 +18,6 @@
         private TimeSpan               synchronizationTimer     = TimeSpan.Zero;
         private TimeSpan               synchronizationRetryTime = TimeSpan.FromSeconds(5);
 
-        private SynchronizationMonitor     monitor;
-
         public SynchronizationGroup(SynchronizationGroupSettings settings)
             : base(settings)
         {
@@ -92,20 +90,6 @@
                 try
                 {
                     this.synchronization = Acutance.Synchronization.Fetch() as ISynchronization;
-
-                    if (this.monitor == null)
-                    {
-                        this.monitor = new SynchronizationMonitor(ScreenManager.Game, this.synchronization, false)
-                                           {
-                                               AttentionSpan = TimeSpan.FromSeconds(20),
-
-                                               SynchronizingCue    = "Hit Point Restoring",
-                                               NotSynchronizingCue = "Magic Returning",
-                                           };
-                    }
-
-                    this.monitor.Synchronization = this.synchronization;
-                    this.monitor.TryStart();
                 }
                 catch (TimeoutException)
                 {

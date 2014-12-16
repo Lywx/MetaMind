@@ -12,8 +12,6 @@ namespace MetaMind.Acutance.Guis.Modules
 
         private MultiplexerGroupKnowledgeRetrievedListener     knowledgeRetrievedListener;
 
-        private MultiplexerGroupSynchronizationAlertedListener synchronizationAlertedListener;
-
         public MultiplexerGroup(MultiplexerGroupSettings settings)
             : base(settings)
         {
@@ -54,13 +52,6 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public void Unload()
         {
-            if (this.synchronizationAlertedListener != null)
-            {
-                EventManager.RemoveListener(this.synchronizationAlertedListener);
-            }
-
-            this.synchronizationAlertedListener = null;
-
             if (this.callCreatedListener != null)
             {
                 EventManager.RemoveListener(this.callCreatedListener);
@@ -114,13 +105,6 @@ namespace MetaMind.Acutance.Guis.Modules
 
         private void LoadEvents()
         {
-            if (this.synchronizationAlertedListener == null)
-            {
-                this.synchronizationAlertedListener = new MultiplexerGroupSynchronizationAlertedListener(this.TraceView);
-            }
-
-            EventManager.AddListener(this.synchronizationAlertedListener);
-
             if (this.callCreatedListener == null)
             {
                 this.callCreatedListener = new MultiplexerGroupCallCreatedListener(this.CallView);
