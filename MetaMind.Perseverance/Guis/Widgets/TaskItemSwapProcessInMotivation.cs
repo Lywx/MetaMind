@@ -8,18 +8,14 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
     public class TaskItemSwapProcessInMotivation : ViewItemSwapProcess
     {
-        public TaskItemSwapProcessInMotivation(IViewItem draggedItem, IViewItem swappingItem)
-            : base(draggedItem, swappingItem)
+        public TaskItemSwapProcessInMotivation(IViewItem draggingItem, IViewItem swappingItem, List<TaskEntry> source)
+            : base(draggingItem, swappingItem, source)
         {
         }
 
         protected override void SwapInView()
         {
-            // change data position in motivation's tasks
-            MotivationTaskTracer parent = this.DraggedItem.View.Parent;
-            List<TaskEntry>      tasks  = parent.FastHostData["Tasks"];
-
-            this.SwapDataInList(tasks);
+            this.SwapDataInList();
 
             base.SwapInView();
         }

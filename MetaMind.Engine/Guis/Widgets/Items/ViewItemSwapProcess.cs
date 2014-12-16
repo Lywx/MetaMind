@@ -11,14 +11,18 @@ namespace MetaMind.Engine.Guis.Widgets.Items
     {
         private const int UpdateNum = 6;
 
-        public ViewItemSwapProcess(IViewItem draggedItem, IViewItem swappingItem)
+        public ViewItemSwapProcess(IViewItem draggingItem, IViewItem swappingItem, dynamic source = null)
         {
-            this.DraggedItem = draggedItem;
+            this.DraggingItem  = draggingItem;
             this.SwappingItem = swappingItem;
-            this.SwapControl = swappingItem.ViewControl.Swap;
+            this.SwapControl  = swappingItem.ViewControl.Swap;
+
+            this.Source = source;
         }
 
-        protected IViewItem DraggedItem { get; private set; }
+        protected dynamic Source { get; private set; }
+
+        protected IViewItem DraggingItem { get; private set; }
 
         protected IViewSwapControl SwapControl { get; private set; }
 
@@ -34,7 +38,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         public override void OnSuccess()
         {
-            var inSameView = ReferenceEquals(this.SwappingItem.View, this.DraggedItem.View);
+            var inSameView = ReferenceEquals(this.SwappingItem.View, this.DraggingItem.View);
             if (inSameView)
             {
                 this.SwapInView();
@@ -60,7 +64,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         protected void EndSwap()
         {
             // refine selection to make sure the overall effect is smooth
-            this.DraggedItem.ItemControl.MouseSelectsIt();
+            this.DraggingItem.ItemControl.MouseSelectsIt();
 
             // stop swapping state
             this.SwappingItem.Disable(ItemState.Item_Swaping);
@@ -68,14 +72,14 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         protected virtual void SwapAroundView()
         {
-            var draggedExchangable  = this.DraggedItem as IViewItemExchangable;
+            var draggedExchangable  = this.DraggingItem as IViewItemExchangable;
             var swappingExchangable = this.SwappingItem as IViewItemExchangable;
 
             Debug.Assert(draggedExchangable != null && swappingExchangable != null, "Not all item are exchangeable.");
 
             // replace each another in their origial view
             var originalSwappingItemView = this.SwappingItem.View;
-            var orignialDraggedItemView  = this.DraggedItem.View;
+            var orignialDraggedItemView  = this.DraggingItem.View;
 
             orignialDraggedItemView.Control.Selection.Clear();
             orignialDraggedItemView.Disable(ViewState.View_Has_Focus);
@@ -84,22 +88,23 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             originalSwappingItemView.Enable(ViewState.View_Has_Focus);
 
             draggedExchangable.ExchangeTo(originalSwappingItemView, this.SwappingItem.ItemControl.Id);
-            swappingExchangable.ExchangeTo(orignialDraggedItemView, this.DraggedItem.ItemControl.Id);
+            swappingExchangable.ExchangeTo(orignialDraggedItemView, this.DraggingItem.ItemControl.Id);
         }
 
-        protected virtual void SwapDataInList(dynamic source)
+        protected virtual void SwapDataInList()
         {
-            if (!source.Contains(this.DraggedItem.ItemData) || 
-                !source.Contains(this.SwappingItem.ItemData))
+            if (this.Source == null || 
+               !this.Source.Contains(this.DraggingItem.ItemData) || 
+               !this.Source.Contains(this.SwappingItem.ItemData))
             {
                 return;
             }
 
-            int draggingPosition = source.IndexOf(this.DraggedItem.ItemData);
-            int swappingPosition = source.IndexOf(this.SwappingItem.ItemData);
+            int draggingPosition = this.Source.IndexOf(this.DraggingItem.ItemData);
+            int swappingPosition = this.Source.IndexOf(this.SwappingItem.ItemData);
 
-            source[draggingPosition] = this.SwappingItem.ItemData;
-            source[swappingPosition] = this.DraggedItem.ItemData;
+            this.Source[draggingPosition] = this.SwappingItem.ItemData;
+            this.Source[swappingPosition] = this.DraggingItem.ItemData;
         }
 
         protected virtual void SwapInView()
@@ -107,8 +112,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             // swap id then sort
             var swappingId = this.SwappingItem.ItemControl.Id;
 
-            this.SwappingItem.ItemControl.Id = this.DraggedItem.ItemControl.Id;
-            this.DraggedItem .ItemControl.Id = swappingId;
+            this.SwappingItem.ItemControl.Id = this.DraggingItem.ItemControl.Id;
+            this.DraggingItem.ItemControl.Id = swappingId;
 
             this.SwappingItem.View.Control.SortItems(ViewSortMode.Id);
         }

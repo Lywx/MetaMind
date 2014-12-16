@@ -5,9 +5,9 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Acutance.Concepts;
     using MetaMind.Engine.Guis.Widgets.Items;
 
-    public class TraceItemSwapProcess : ViewItemSwapProcess
+    public class CallItemSwapProcess : ViewItemSwapProcess
     {
-        public TraceItemSwapProcess(IViewItem draggingItem, IViewItem swappingItem, List<TraceEntry> source)
+        public CallItemSwapProcess(IViewItem draggingItem, IViewItem swappingItem, List<CallEntry> source)
             : base(draggingItem, swappingItem, source)
         {
         }

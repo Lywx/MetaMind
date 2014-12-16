@@ -4,8 +4,8 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
     public class MotivationItemSwapProcess : ViewItemSwapProcess
     {
-        public MotivationItemSwapProcess(IViewItem draggedItem, IViewItem swappingItem)
-            : base(draggedItem, swappingItem)
+        public MotivationItemSwapProcess(IViewItem draggingItem, IViewItem swappingItem)
+            : base(draggingItem, swappingItem)
         {
         }
 
@@ -13,13 +13,13 @@ namespace MetaMind.Perseverance.Guis.Widgets
         {
             // remove data in original view
             this.SwappingItem.ViewControl.ItemFactory.RemoveData(this.SwappingItem);
-            this.DraggedItem .ViewControl.ItemFactory.RemoveData(this.DraggedItem);
+            this.DraggingItem.ViewControl.ItemFactory.RemoveData(this.DraggingItem);
 
             // now the data source clean
-            
+
             // change data position
-            this.SwappingItem.ItemData.CopyToSpace(this.DraggedItem .ViewSettings.Space, this.DraggedItem .ItemControl.Id);
-            this.DraggedItem .ItemData.CopyToSpace(this.SwappingItem.ViewSettings.Space, this.SwappingItem.ItemControl.Id);
+            this.SwappingItem.ItemData.CopyToSpace(this.DraggingItem.ViewSettings.Space, this.DraggingItem.ItemControl.Id);
+            this.DraggingItem.ItemData.CopyToSpace(this.SwappingItem.ViewSettings.Space, this.SwappingItem.ItemControl.Id);
 
             // now the data source ready
             // but the item not in the right view
@@ -29,7 +29,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
         protected override void SwapInView()
         {
             // change data position
-            this.SwappingItem.ItemData.SwapWithInSpace(this.DraggedItem .ViewSettings.Space, this.DraggedItem.ItemData);
+            this.SwappingItem.ItemData.SwapWithInSpace(this.DraggingItem .ViewSettings.Space, this.DraggingItem.ItemData);
 
             base.SwapInView();
         }

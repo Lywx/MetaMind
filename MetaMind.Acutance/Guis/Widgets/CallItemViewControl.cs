@@ -2,13 +2,12 @@ namespace MetaMind.Acutance.Guis.Widgets
 {
     using MetaMind.Engine.Guis.Widgets.Items;
 
-    public class TraceItemViewControl : ViewItemViewControl2D
+    public class CallItemViewControl : ViewItemViewControl2D
     {
-        public TraceItemViewControl(IViewItem item)
+        public CallItemViewControl(IViewItem item)
             : base(item)
         {
         }
-
         public override void SwapIt(IViewItem draggingItem)
         {
             if (this.Item.IsEnabled(ItemState.Item_Swaping))
@@ -23,7 +22,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
             this.ViewControl.Swap.Initialize(originCenter, targetCenter);
 
-            ProcessManager.AttachProcess(new TraceItemSwapProcess(draggingItem, Item, Acutance.Adventure.Tracelist.Traces));
+            ProcessManager.AttachProcess(new CallItemSwapProcess(draggingItem, this.Item, Acutance.Adventure.Calllist.Calls));
         }
     }
 }

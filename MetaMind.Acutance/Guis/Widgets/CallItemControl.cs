@@ -17,6 +17,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             : base(item)
         {
             this.ItemFrameControl = new TraceItemFrameControl(item);
+            this.ItemViewControl  = new CallItemViewControl(item);
 
             this.NameFrame.MouseLeftDoubleClicked += this.RetrieveKnowledge;
         }
