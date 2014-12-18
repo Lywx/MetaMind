@@ -45,11 +45,6 @@ namespace MetaMind.Acutance.Screens
 
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
-            if (!coveredByOtherScreen)
-            {
-                Acutance.Adventure.Update();
-            }
-
             if (this.IsActive && !coveredByOtherScreen)
             {
                 InputEventManager   .Update(gameTime);

@@ -3,7 +3,6 @@
     using System;
 
     using MetaMind.Engine.Guis;
-    using MetaMind.Engine.Guis.Modules;
     using MetaMind.Engine.Screens;
     using MetaMind.Perseverance.Guis.Modules;
 
@@ -39,7 +38,7 @@
 
             ScreenManager.SpriteBatch.Begin();
 
-            MessageManager.Draw(gameTime);
+            MessageManager      .Draw(gameTime);
 
             this.motivation     .Draw(gameTime, TransitionAlpha);
             this.synchronization.Draw(gameTime, TransitionAlpha);
@@ -49,7 +48,7 @@
 
         public override void HandleInput()
         {
-            InputEventManager.HandleInput();
+            InputEventManager   .HandleInput();
             InputSequenceManager.HandleInput();
 
             this.motivation     .HandleInput();
@@ -58,11 +57,6 @@
 
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
-            if (!coveredByOtherScreen)
-            {
-                Perseverance.Adventure.Update();
-            }
-
             if (IsActive && !coveredByOtherScreen)
             {
                 InputEventManager   .Update(gameTime);

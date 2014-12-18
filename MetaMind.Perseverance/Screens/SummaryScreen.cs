@@ -53,11 +53,6 @@
 
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
-            if (!coveredByOtherScreen)
-            {
-                Perseverance.Adventure.Update();
-            }
-
             if (IsActive && !coveredByOtherScreen)
             {
                 InputEventManager   .Update(gameTime);

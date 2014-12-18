@@ -7,6 +7,7 @@
 
 namespace MetaMind.Engine.Components
 {
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
@@ -22,11 +23,11 @@ namespace MetaMind.Engine.Components
 
         private static ScreenManager singleton;
 
-        public static ScreenManager GetInstance(Game game)
+        public static ScreenManager GetInstance(Game game, ScreenManagerSettings settings)
         {
             if (singleton == null)
             {
-                singleton = new ScreenManager(game);
+                singleton = new ScreenManager(game, settings);
             }
 
             if (game != null)
@@ -53,7 +54,7 @@ namespace MetaMind.Engine.Components
 
         #endregion Screens
 
-        #region Trace
+        #region Trace and Settings
 
         private bool traceEnabled;
 
@@ -64,9 +65,10 @@ namespace MetaMind.Engine.Components
         /// <summary>
         /// Constructs a new screen manager component.
         /// </summary>
-        private ScreenManager(Game game)
+        private ScreenManager(Game game, ScreenManagerSettings settings)
             : base(game)
         {
+            this.Settings = settings;
         }
 
         /// <summary>
@@ -117,9 +119,12 @@ namespace MetaMind.Engine.Components
         /// </summary>
         public override void Draw(GameTime gameTime)
         {
-            foreach (var screen in screens.Where(screen => screen.ScreenState != ScreenState.Hidden))
+            if (Game.IsActive || this.Settings.AlwaysDraw)
             {
-                screen.Draw(gameTime);
+                foreach (var screen in screens.Where(screen => screen.ScreenState != ScreenState.Hidden))
+                {
+                    screen.Draw(gameTime);
+                }
             }
         }
 
@@ -149,7 +154,10 @@ namespace MetaMind.Engine.Components
                 screensToUpdate.RemoveAt(screensToUpdate.Count - 1);
 
                 // Update the screen.
-                screen.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+                if (Game.IsActive || this.Settings.AlwaysUpdate)
+                {
+                    screen.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+                }
 
                 if (screen.ScreenState == ScreenState.TransitionOn || screen.ScreenState == ScreenState.Active)
                 {
@@ -181,6 +189,8 @@ namespace MetaMind.Engine.Components
         #endregion Update and Draw
 
         #region Public Properties
+
+        public ScreenManagerSettings Settings { get; private set; }
 
         /// <summary>
         /// Expose an array holding all the screens. We return a copy rather
@@ -294,5 +304,17 @@ namespace MetaMind.Engine.Components
         }
 
         #endregion Operations
+    }
+
+    public class ScreenManagerSettings: ICloneable
+    {
+        public bool AlwaysDraw = true;
+
+        public bool AlwaysUpdate = true;
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
     }
 }

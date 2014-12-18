@@ -63,7 +63,7 @@
             // screen
             //------------------------------------------------------------------
             Debug.Assert(ScreenManager == null);
-            ScreenManager = ScreenManager.GetInstance(this);
+            ScreenManager = ScreenManager.GetInstance(this, new ScreenManagerSettings());
 
             // process
             //------------------------------------------------------------------
@@ -186,7 +186,7 @@
 
         protected override void Draw(GameTime gameTime)
         {
-            this.GraphicsDevice.Clear(Color.CornflowerBlue);
+            this.GraphicsDevice.Clear(Color.Black);
             base.Draw(gameTime);
         }
 
