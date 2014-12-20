@@ -103,10 +103,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                     {
                         if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceClearItem))
                         {
-                            if (string.IsNullOrWhiteSpace(ItemData.Name))
-                            {
-                                this.DeleteIt();
-                            }
+                            this.DeleteIt();
                         }
                     }
                 }

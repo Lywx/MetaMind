@@ -10,7 +10,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
     public class MultiplexerGroupSettings
     {
-        public readonly int ViewVMargin = 15;
+        public readonly int ViewVMargin = 28;
 
         //---------------------------------------------------------------------
         public readonly TraceViewFactory  TraceViewFactory = new TraceViewFactory();
@@ -19,7 +19,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public readonly TraceItemSettings TraceItemSettings;
 
-        public readonly Point TraceStartPoint                 = new Point(0, 108);
+        public readonly Point TraceStartPoint                 = new Point(10, 108);
 
         public readonly int   TraceRowNumDisplay              = 5;
 
@@ -46,9 +46,9 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public readonly int   CallRowNumMax                  = 100;
 
-        public readonly int   CallColumnNumDisplay           = 2;
+        public readonly int   CallColumnNumDisplay           = 3;
 
-        public readonly int   CallColumnNumDisplayFullscreen = 2;
+        public readonly int   CallColumnNumDisplayFullscreen = 3;
 
         //---------------------------------------------------------------------
         public readonly KnowledgeViewFactory  KnowledgeViewFactory = new KnowledgeViewFactory();
@@ -57,9 +57,11 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public readonly KnowledgeItemSettings KnowledgeItemSettings;
 
-        public readonly int KnowledgeViewRowNumDisplayFullscreen = 18;
+        public readonly Point KnowledgeStartPoint;
 
-        public readonly int KnowledgeViewRowNumDisplay           = 10;
+        public readonly int KnowledgeViewRowNumDisplayFullscreen = 17;
+
+        public readonly int KnowledgeViewRowNumDisplay           = 9;
 
         public readonly int KnowledgeViewRowNumMax               = 100;
 
@@ -69,7 +71,7 @@ namespace MetaMind.Acutance.Guis.Modules
         {
             this.TraceItemSettings = new TraceItemSettings();
 
-            var traceViewColumnWidth = GraphicsSettings.Width / (GraphicsSettings.Fullscreen
+            var traceViewColumnWidth = this.ViewWidth / (GraphicsSettings.Fullscreen 
                                               ? this.TraceColumnNumDisplayFullscreen
                                               : this.TraceColumnNumDisplay);
             var traceItemFixedWidth = this.TraceItemSettings.ExperienceFrameSize.X + this.TraceItemSettings.IdFrameSize.X;
@@ -98,19 +100,19 @@ namespace MetaMind.Acutance.Guis.Modules
             //-----------------------------------------------------------------
             this.CallItemSettings = new CallItemSettings();
 
-            var eventViewColumnWidth = GraphicsSettings.Width / (GraphicsSettings.Fullscreen
+            var callViewColumnWidth = this.ViewWidth / (GraphicsSettings.Fullscreen 
                                               ? this.CallColumnNumDisplayFullscreen
                                               : this.CallColumnNumDisplay);
-            var eventItemFixedWidth = this.CallItemSettings.ExperienceFrameSize.X + this.CallItemSettings.IdFrameSize.X;
+            var callItemFixedWidth = this.CallItemSettings.ExperienceFrameSize.X + this.CallItemSettings.IdFrameSize.X;
 
-            this.CallItemSettings.NameFrameSize = new Point(eventViewColumnWidth - eventItemFixedWidth, 24);
+            this.CallItemSettings.NameFrameSize = new Point(callViewColumnWidth - callItemFixedWidth, 24);
             this.CallItemSettings.Reconfigure();
 
             this.CallStartPoint = this.TraceViewSettings.StartPoint + new Point(0, this.TraceViewSettings.RowNumDisplay * this.TraceViewSettings.RootMargin.Y + this.ViewVMargin);
-            this.CallViewSettings = new CallViewSettings
+            this.CallViewSettings = new CallViewSettings(this.Calllist)
                                          {
                                              StartPoint = this.CallStartPoint,
-                                             RootMargin = new Point(eventViewColumnWidth, this.CallItemSettings.NameFrameSize.Y),
+                                             RootMargin = new Point(callViewColumnWidth, this.CallItemSettings.NameFrameSize.Y),
 
                                              ColumnNumMax = GraphicsSettings.Fullscreen
                                                      ? this.CallColumnNumDisplayFullscreen
@@ -128,10 +130,20 @@ namespace MetaMind.Acutance.Guis.Modules
             //-----------------------------------------------------------------
             this.KnowledgeItemSettings = new KnowledgeItemSettings();
 
+            var knowledgeViewColumnWidth = this.ViewWidth / this.KnowledgeViewColumnNumDisplay;
+            var knowledgeItemFixedWidth = this.KnowledgeItemSettings.IdFrameSize.X;
+
+            this.KnowledgeItemSettings.NameFrameSize = new Point(knowledgeViewColumnWidth - knowledgeItemFixedWidth, 24);
+            this.KnowledgeItemSettings.Reconfigure();
+
+            this.KnowledgeStartPoint = this.CallViewSettings.StartPoint + new Point(
+                                             0,
+                                             this.CallViewSettings.RowNumDisplay * this.CallViewSettings.RootMargin.Y + this.ViewVMargin);
+
             this.KnowledgeViewSettings = new KnowledgeViewSettings
                                              {
-                                                 StartPoint = this.CallViewSettings.StartPoint + new Point(0, this.CallViewSettings.RowNumDisplay * this.CallViewSettings.RootMargin.Y + this.ViewVMargin),
-                                                 RootMargin = new Point(traceViewColumnWidth, this.TraceItemSettings.NameFrameSize.Y),
+                                                 StartPoint = this.KnowledgeStartPoint,
+                                                 RootMargin = new Point(knowledgeViewColumnWidth, this.TraceItemSettings.NameFrameSize.Y),
 
                                                  ColumnNumMax     = this.KnowledgeViewColumnNumDisplay,
                                                  ColumnNumDisplay = this.KnowledgeViewColumnNumDisplay,
@@ -141,6 +153,16 @@ namespace MetaMind.Acutance.Guis.Modules
                                                          : this.KnowledgeViewRowNumDisplay,
                                                  RowNumMax     = this.KnowledgeViewRowNumMax,
                                              };
+        }
+
+        private int ViewWidth
+        {
+            get { return GraphicsSettings.Width - this.TraceStartPoint.X * 2; }
+        }
+
+        public Calllist Calllist  
+        {
+            get { return Acutance.Adventure.Calllist; }
         }
 
         public List<CallEntry> Calls

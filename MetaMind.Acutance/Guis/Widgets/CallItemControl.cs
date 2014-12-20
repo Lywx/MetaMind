@@ -47,6 +47,11 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Operations
 
+        private void ResetIt()
+        {
+            ItemData.Reset();
+        }
+
         private void DeleteIt()
         {
             View.Items.Remove(Item);
@@ -97,6 +102,11 @@ namespace MetaMind.Acutance.Guis.Widgets
                         if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CallClearItem))
                         {
                             this.DeleteIt();
+                        }
+
+                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CallResetItem))
+                        {
+                            this.ResetIt();
                         }
                     }
                 }

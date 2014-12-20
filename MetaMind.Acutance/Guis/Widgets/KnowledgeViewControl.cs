@@ -291,7 +291,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             return new Rectangle(
                 viewSettings.StartPoint.X,
                 viewSettings.StartPoint.Y,
-                viewSettings.ColumnNumDisplay * (itemSettings.NameFrameSize.X + itemSettings.IdFrameSize.X + itemSettings.ExperienceFrameSize.X),
+                viewSettings.ColumnNumDisplay * (itemSettings.NameFrameSize.X + itemSettings.IdFrameSize.X),
                 viewSettings.RowNumDisplay    * itemSettings.NameFrameSize.Y);
         }
 

@@ -2,7 +2,13 @@ namespace MetaMind.Acutance.Concepts
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Runtime.Serialization;
+
+    public enum CallSortMode
+    {
+        Name, 
+    }
 
     [DataContract]
     public class Calllist
@@ -35,6 +41,19 @@ namespace MetaMind.Acutance.Concepts
             foreach (var @event in this.Calls.ToArray())
             {
                 @event.Update();
+            }
+        }
+
+        public void Sort(CallSortMode sortMode)
+        {
+            switch (sortMode)
+            {
+                case CallSortMode.Name:
+                    {
+                        this.Calls = this.Calls.OrderBy(call => call.Name).ToList();
+                    }
+
+                    break;
             }
         }
     }

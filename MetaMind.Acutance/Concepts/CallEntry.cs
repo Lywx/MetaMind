@@ -4,6 +4,7 @@ namespace MetaMind.Acutance.Concepts
     using System.Diagnostics;
     using System.Runtime.Serialization;
 
+    using MetaMind.Acutance.Guis.Widgets;
     using MetaMind.Acutance.Sessions;
     using MetaMind.Engine;
     using MetaMind.Engine.Components.Events;
@@ -99,7 +100,13 @@ namespace MetaMind.Acutance.Concepts
                             var callNotifiedEvent = new EventBase(
                                 (int)AdventureEventType.CallNotified,
                                 new CallNotifiedEventArgs());
-                            GameEngine.EventManager.TriggerEvent(callNotifiedEvent);
+                            GameEngine.EventManager.QueueEvent(callNotifiedEvent);
+
+                            var knowledgeRetrievedEvent = new EventBase(
+                                (int)AdventureEventType.KnowledgeRetrieved,
+                                new KnowledgeRetrievedEventArgs(this.Path));
+
+                            GameEngine.EventManager.QueueEvent(knowledgeRetrievedEvent);
                         }
                     }
 

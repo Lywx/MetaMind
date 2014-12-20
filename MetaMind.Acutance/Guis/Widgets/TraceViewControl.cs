@@ -69,7 +69,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
                     if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceClearItem))
                     {
-                        var notEmpty = this.View.Items.Count(item => !string.IsNullOrEmpty(item.ItemData.Name));
+                        var notEmpty = View.Items.Count;
                         if (notEmpty > 0)
                         {
                             this.Selection.Select(notEmpty - 1);

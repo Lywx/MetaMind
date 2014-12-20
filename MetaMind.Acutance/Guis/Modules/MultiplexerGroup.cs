@@ -1,7 +1,9 @@
 namespace MetaMind.Acutance.Guis.Modules
 {
+    using MetaMind.Acutance.Guis.Widgets;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Perseverance.Guis.Widgets;
 
     using Microsoft.Xna.Framework;
 
@@ -11,6 +13,8 @@ namespace MetaMind.Acutance.Guis.Modules
         private MultiplexerGroupCallNotifiedListener           callNotifiedListener;
 
         private MultiplexerGroupKnowledgeRetrievedListener     knowledgeRetrievedListener;
+
+        private MultiplexerBanner banner;
 
         public MultiplexerGroup(MultiplexerGroupSettings settings)
             : base(settings)
@@ -29,6 +33,8 @@ namespace MetaMind.Acutance.Guis.Modules
                 this.Settings.KnowledgeViewSettings,
                 this.Settings.KnowledgeItemSettings,
                 this.Settings.KnowledgeViewFactory);
+
+            this.banner = new MultiplexerBanner(settings);
         }
 
         public IView CallView { get; private set; }
@@ -42,6 +48,8 @@ namespace MetaMind.Acutance.Guis.Modules
             this.KnowledgeView.Draw(gameTime, alpha);
             this.TraceView    .Draw(gameTime, alpha);
             this.CallView     .Draw(gameTime, alpha);
+
+            this.banner       .Draw(gameTime, alpha);
         }
 
         public void Load()
@@ -86,6 +94,8 @@ namespace MetaMind.Acutance.Guis.Modules
             this.TraceView    .UpdateStructure(gameTime);
             this.CallView     .UpdateStructure(gameTime);
             this.KnowledgeView.UpdateStructure(gameTime);
+
+            this.banner       .Update(gameTime);
         }
 
         private void LoadData()
@@ -114,7 +124,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
             if (this.callNotifiedListener == null)
             {
-                this.callNotifiedListener = new MultiplexerGroupCallNotifiedListener();
+                this.callNotifiedListener = new MultiplexerGroupCallNotifiedListener(this.TraceView, this.CallView, this.KnowledgeView);
             }
 
             EventManager.AddListener(this.callNotifiedListener);

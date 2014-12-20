@@ -52,6 +52,8 @@ namespace MetaMind.Engine.Components.Inputs
 
         CallClearItem,
         CallDeleteItem,
+        CallResetItem,
+        CallSortItem,
 
         // synchronization
         // ---------------------------------------------------------------------
@@ -313,6 +315,12 @@ namespace MetaMind.Engine.Components.Inputs
 
             actionMaps[(int)Actions.CallDeleteItem] = new KeyboardActionMap();
             actionMaps[(int)Actions.CallDeleteItem].Bindings.Add(Keys.D, new List<Keys> { Keys.LeftControl });
+
+            actionMaps[(int)Actions.CallResetItem] = new KeyboardActionMap();
+            actionMaps[(int)Actions.CallResetItem].Bindings.Add(Keys.R, new List<Keys> { Keys.LeftControl });
+
+            actionMaps[(int)Actions.CallSortItem] = new KeyboardActionMap();
+            actionMaps[(int)Actions.CallSortItem].Bindings.Add(Keys.S, new List<Keys> { Keys.LeftControl });
 
             // sychronization
             // ---------------------------------------------------------------------

@@ -22,9 +22,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             this.ItemFactory = itemFactory;
 
-            this.Swap      = new ViewSwapControl(this.View, this.ViewSettings, this.ItemSettings);
-            this.Scroll    = new ViewScrollControl1D(this.View, this.ViewSettings, this.ItemSettings);
-            this.Selection = new ViewSelectionControl1D(this.View, this.ViewSettings, this.ItemSettings);
+            this.Swap      = new ViewSwapControl(View, ViewSettings, this.ItemSettings);
+            this.Scroll    = new ViewScrollControl1D(View, ViewSettings, this.ItemSettings);
+            this.Selection = new ViewSelectionControl1D(View, ViewSettings, this.ItemSettings);
         }
 
         protected ViewControl1D(IView view, ViewSettings2D viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
@@ -49,13 +49,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public void AddItem()
         {
-            var item = new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory);
-            this.View.Items.Add(item);
+            var item = new ViewItemExchangable(View, ViewSettings, this.ItemSettings, this.ItemFactory);
+            View.Items.Add(item);
         }
 
         public virtual void MoveLeft()
         {
-            if (this.ViewSettings.Direction == ViewSettings1D.ScrollDirection.Left)
+            if (ViewSettings.Direction == ViewSettings1D.ScrollDirection.Left)
             {
                 // invert for left scrolling view
                 this.Selection.MoveRight();
@@ -68,7 +68,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public virtual void MoveRight()
         {
-            if (this.ViewSettings.Direction == ViewSettings1D.ScrollDirection.Left)
+            if (ViewSettings.Direction == ViewSettings1D.ScrollDirection.Left)
             {
                 // invert for left scrolling view
                 this.Selection.MoveLeft();
@@ -79,22 +79,22 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
         }
 
-        public void SortItems(ViewSortMode sortMode)
+        public virtual void SortItems(ViewSortMode sortMode)
         {
             switch (sortMode)
             {
                 case ViewSortMode.Name:
                     {
-                        this.View.Items = this.View.Items.OrderBy(item => item.ItemData.Labels).ToList();
-                        this.View.Items.ForEach(item => item.ItemControl.Id = this.View.Items.IndexOf(item));
+                        View.Items = View.Items.OrderBy(item => item.ItemData.Name).ToList();
+                        View.Items.ForEach(item => item.ItemControl.Id = View.Items.IndexOf(item));
                     }
 
                     break;
 
                 case ViewSortMode.Id:
                     {
-                        this.View.Items = this.View.Items.OrderBy(item => item.ItemControl.Id).ToList();
-                        this.View.Items.ForEach(item => item.ItemControl.Id = this.View.Items.IndexOf(item));
+                        View.Items = View.Items.OrderBy(item => item.ItemControl.Id).ToList();
+                        View.Items.ForEach(item => item.ItemControl.Id = View.Items.IndexOf(item));
                     }
 
                     break;
@@ -103,7 +103,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public void SuperMoveLeft()
         {
-            for (var i = 0; i < this.ViewSettings.ColumnNumDisplay; i++)
+            for (var i = 0; i < ViewSettings.ColumnNumDisplay; i++)
             {
                 this.MoveLeft();
             }
@@ -111,7 +111,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public void SuperMoveRight()
         {
-            for (var i = 0; i < this.ViewSettings.ColumnNumDisplay; i++)
+            for (var i = 0; i < ViewSettings.ColumnNumDisplay; i++)
             {
                 this.MoveRight();
             }
@@ -122,19 +122,19 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public bool Active
         {
-            get { return this.View.IsEnabled(ViewState.View_Active); }
+            get { return View.IsEnabled(ViewState.View_Active); }
         }
 
         public override void UpdateStructure(GameTime gameTime)
         {
-            if (this.View.IsEnabled(ViewState.View_Active))
+            if (View.IsEnabled(ViewState.View_Active))
             {
                 this.UpdateViewLogics();
                 this.UpdateItemStructure(gameTime);
             }
             else
             {
-                foreach (var item in this.View.Items)
+                foreach (var item in View.Items)
                 {
                     item.UpdateStructureForView(gameTime);
                 }
@@ -143,13 +143,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         protected virtual void UpdateViewFocus()
         {
-            if (this.View.IsEnabled(ViewState.View_Has_Selection))
+            if (View.IsEnabled(ViewState.View_Has_Selection))
             {
-                this.View.Enable(ViewState.View_Has_Focus);
+                View.Enable(ViewState.View_Has_Focus);
             }
             else
             {
-                this.View.Disable(ViewState.View_Has_Focus);
+                View.Disable(ViewState.View_Has_Focus);
             }
         }
 
@@ -163,11 +163,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             if (this.Selection.HasSelected)
             {
-                this.View.Enable(ViewState.View_Has_Selection);
+                View.Enable(ViewState.View_Has_Selection);
             }
             else
             {
-                this.View.Disable(ViewState.View_Has_Selection);
+                View.Disable(ViewState.View_Has_Selection);
             }
         }
 
@@ -179,9 +179,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             get
             {
-                return this.View.IsEnabled(ViewState.View_Active) &&
-                       this.View.IsEnabled(ViewState.View_Has_Focus) &&
-                       !this.View.IsEnabled(ViewState.Item_Editting);
+                return View.IsEnabled(ViewState.View_Active) &&
+                       View.IsEnabled(ViewState.View_Has_Focus) &&
+                       !View.IsEnabled(ViewState.Item_Editting);
             }
         }
 
@@ -195,7 +195,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             // item input
             // -----------------------------------------------------------------
-            foreach (var item in this.View.Items.ToArray())
+            foreach (var item in View.Items.ToArray())
             {
                 item.UpdateInput(gameTime);
             }
@@ -204,7 +204,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         protected void UpdateItemStructure(GameTime gameTime)
         {
             // TODO: Possible thread safety issue
-            foreach (var item in this.View.Items.ToArray())
+            foreach (var item in View.Items.ToArray())
             {
                 item.UpdateStructure(gameTime);
             }
@@ -216,7 +216,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             {
                 // keyboard
                 // ---------------------------------------------------------------------
-                if (this.ViewSettings.KeyboardEnabled)
+                if (ViewSettings.KeyboardEnabled)
                 {
                     // movement
                     if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
@@ -254,7 +254,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             {
                 // mouse
                 // ------------------------------------------------------------------
-                if (this.ViewSettings.MouseEnabled)
+                if (ViewSettings.MouseEnabled)
                 {
                     if (InputSequenceManager.Mouse.IsWheelScrolledUp)
                     {

@@ -35,7 +35,21 @@ namespace MetaMind.Acutance.Guis.Widgets
             var item = new ViewItemExchangeless(View, ViewSettings, ItemSettings, ItemFactory, entry);
             View.Items.Add(item);
         }
-        
+
+        public override void SortItems(ViewSortMode sortMode)
+        {
+            base.SortItems(sortMode);
+
+            switch (sortMode)
+            {
+                case ViewSortMode.Name:
+                    {
+                        ViewSettings.Source.Sort(CallSortMode.Name);
+                    }
+
+                    break;
+            } 
+        }
 
         public override void UpdateInput(GameTime gameTime)
         {
@@ -49,17 +63,6 @@ namespace MetaMind.Acutance.Guis.Widgets
                 // ---------------------------------------------------------------------
                 if (ViewSettings.KeyboardEnabled)
                 {
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CallDeleteItem))
-                    {
-                        // itme deletion is handled by item control
-                        // auto select last item
-                        if (View.Items.Count > 1)
-                        {
-                            // this will be called before item deletion
-                            this.Selection.Select(View.Items.Count - 2);
-                        }
-                    }
-
                     if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CallClearItem))
                     {
                         var notEmpty = View.Items.Count;
@@ -71,6 +74,22 @@ namespace MetaMind.Acutance.Guis.Widgets
                         {
                             this.Selection.Select(0);
                         }
+                    }
+
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CallDeleteItem))
+                    {
+                        // itme deletion is handled by item control
+                        // auto select last item
+                        if (View.Items.Count > 1)
+                        {
+                            // this will be called before item deletion
+                            this.Selection.Select(View.Items.Count - 2);
+                        }
+                    }
+
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CallSortItem))
+                    {
+                        this.SortItems(ViewSortMode.Name);
                     }
                 }
             }
