@@ -6,45 +6,44 @@
 
     public class ViewScrollControl1D : ViewComponent, IViewScrollControlHorizontal
     {
-        private int scroll;
-
         public ViewScrollControl1D(IView view, ViewSettings1D viewSettings, ItemSettings itemSettings)
             : base(view, viewSettings, itemSettings)
         {
         }
 
-        public int XOffset { get { return this.scroll; } }
+        public int XOffset { get; private set; }
 
         private bool CanMoveLeft
         {
-            get { return this.scroll > 0; }
+            get { return this.XOffset > 0; }
         }
 
         private bool CanMoveRight
         {
-            get { return (this.ViewSettings.ColumnNumDisplay + this.scroll) < this.View.Items.Count; }
+            get { return (this.ViewSettings.ColumnNumDisplay + this.XOffset) < this.View.Items.Count; }
         }
 
         public bool CanDisplay(int id)
         {
-            return this.scroll <= id && id < this.ViewSettings.ColumnNumDisplay + this.scroll;
+            var column = id;
+            return this.XOffset <= column && column < this.ViewSettings.ColumnNumDisplay + this.XOffset;
         }
 
         public bool IsLeftToDisplay(int column)
         {
-            return column < this.scroll - 1;
+            return column < this.XOffset - 1;
         }
 
         public bool IsRightToDisplay(int column)
         {
-            return column > this.ViewSettings.ColumnNumDisplay + this.scroll;
+            return column > this.ViewSettings.ColumnNumDisplay + this.XOffset;
         }
 
         public void MoveLeft()
         {
             if (this.CanMoveLeft)
             {
-                --this.scroll;
+                --this.XOffset;
             }
         }
 
@@ -52,7 +51,7 @@
         {
             if (this.CanMoveRight)
             {
-                ++this.scroll;
+                ++this.XOffset;
             }
         }
 
@@ -60,9 +59,27 @@
         {
             return new Point(
                 this.ViewSettings.Direction == ViewSettings1D.ScrollDirection.Right ?
-                this.ViewSettings.StartPoint.X - (this.scroll * this.ViewSettings.RootMargin.X) + id * this.ViewSettings.RootMargin.X :
-                this.ViewSettings.StartPoint.X + (this.scroll * this.ViewSettings.RootMargin.X) - id * this.ViewSettings.RootMargin.X,
+                this.ViewSettings.StartPoint.X - (this.XOffset * this.ViewSettings.RootMargin.X) + id * this.ViewSettings.RootMargin.X :
+                this.ViewSettings.StartPoint.X + (this.XOffset * this.ViewSettings.RootMargin.X) - id * this.ViewSettings.RootMargin.X,
                 this.ViewSettings.StartPoint.Y);
+        }
+
+        public void Zoom(int id)
+        {
+            if (!this.CanDisplay(id))
+            {
+                var column = id;
+
+                while (this.IsLeftToDisplay(column))
+                {
+                    this.MoveLeft();
+                }
+
+                while (this.IsRightToDisplay(column))
+                {
+                    this.MoveRight();
+                }
+            }
         }
     }
 }

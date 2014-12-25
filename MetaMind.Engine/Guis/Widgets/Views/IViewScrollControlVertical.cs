@@ -19,5 +19,7 @@
         void MoveUpToTop();
 
         Point RootCenterPoint(int id);
+
+        void Zoom(int id);
     }
 }

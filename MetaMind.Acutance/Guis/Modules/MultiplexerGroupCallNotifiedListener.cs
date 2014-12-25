@@ -1,5 +1,6 @@
 namespace MetaMind.Acutance.Guis.Modules
 {
+    using MetaMind.Acutance.Concepts;
     using MetaMind.Acutance.Sessions;
     using MetaMind.Engine;
     using MetaMind.Engine.Components.Events;
@@ -22,13 +23,24 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public override bool HandleEvent(EventBase @event)
         {
+            var notifiedEventArgs = @event.Data as CallNotifiedEventArgs;
+            if (notifiedEventArgs != null)
+            {
+                var notifiedCall = notifiedEventArgs.NotifiedCall;
+                var notifiedItem = this.callView.Items.Find(item => ReferenceEquals(item.ItemData, notifiedCall));
+
+                int id = notifiedItem.ItemControl.Id;
+
+                this.callView.Control.Selection.Select(id);
+                this.callView.Control.Scroll   .Zoom(id);
+            }
+
             this.traceView    .Control.Selection.Clear();
             this.traceView    .Control.Region   .Clear();
 
-            this.callView     .Control.Selection.Select(0);
-
             this.knowledgeView.Control.Selection.Clear();
             this.knowledgeView.Control.Region   .Clear();
+
 
             GameEngine.AudioManager.PlayMusic("Illusion Mirror");
 

@@ -4,7 +4,12 @@
 
     using Microsoft.Xna.Framework;
 
-    public class ViewScrollControl2D : ViewComponent, IViewScrollControlHorizontal, IViewScrollControlVertical
+    public interface IViewScrollControl2D : IViewScrollControlHorizontal, IViewScrollControlVertical
+    {
+        bool CanDisplay(int row, int column);
+    }
+
+    public class ViewScrollControl2D : ViewComponent, IViewScrollControl2D
     {
         private int xOffset;
 
@@ -52,12 +57,18 @@
             get { return this.YOffset > 0; }
         }
 
-        public bool CanDisplay(int id)
+        public bool CanDisplay(int row, int column)
         {
-            var row = this.ViewControl.RowFrom(id);
-            var column = this.ViewControl.ColumnFrom(id);
             return this.XOffset <= column && column < this.ViewSettings.ColumnNumDisplay + this.XOffset &&
                    this.YOffset <= row    && row    < this.ViewSettings.RowNumDisplay    + this.YOffset;
+        }
+
+        public bool CanDisplay(int id)
+        {
+            var row    = this.ViewControl.RowFrom(id);
+            var column = this.ViewControl.ColumnFrom(id);
+
+            return this.CanDisplay(row, column);
         }
 
         public bool IsDownToDisplay(int row)
@@ -111,6 +122,7 @@
                 this.yOffset = this.YOffset - 1;
             }
         }
+
         public void MoveUpToTop()
         {
             this.yOffset = 0;
@@ -123,6 +135,36 @@
             return new Point(
                 this.ViewSettings.StartPoint.X - this.XOffset * this.ViewSettings.RootMargin.X + column * this.ViewSettings.RootMargin.X,
                 this.ViewSettings.StartPoint.Y - this.YOffset * this.ViewSettings.RootMargin.Y + row    * this.ViewSettings.RootMargin.Y);
+        }
+
+
+        public void Zoom(int id)
+        {
+            var row    = this.ViewControl.RowFrom(id);
+            var column = this.ViewControl.ColumnFrom(id);
+
+            if (!this.CanDisplay(row, column))
+            {
+                while (this.IsLeftToDisplay(column))
+                {
+                    this.MoveLeft();
+                }
+
+                while (this.IsRightToDisplay(column))
+                {
+                    this.MoveRight();
+                }
+
+                while (this.IsUpToDisplay(row))
+                {
+                    this.MoveUp();
+                }
+
+                while (this.IsDownToDisplay(row))
+                {
+                    this.MoveDown();
+                }
+            }
         }
     }
 }

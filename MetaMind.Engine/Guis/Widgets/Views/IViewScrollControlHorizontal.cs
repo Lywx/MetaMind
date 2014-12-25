@@ -17,5 +17,7 @@
         void MoveRight();
 
         Point RootCenterPoint(int id);
+
+        void Zoom(int id);
     }
 }

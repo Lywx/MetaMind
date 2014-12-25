@@ -99,7 +99,7 @@ namespace MetaMind.Acutance.Concepts
 
                             var callNotifiedEvent = new EventBase(
                                 (int)AdventureEventType.CallNotified,
-                                new CallNotifiedEventArgs());
+                                new CallNotifiedEventArgs(this));
                             GameEngine.EventManager.QueueEvent(callNotifiedEvent);
 
                             var knowledgeRetrievedEvent = new EventBase(

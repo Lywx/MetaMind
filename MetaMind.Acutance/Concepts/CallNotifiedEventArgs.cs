@@ -4,5 +4,11 @@ namespace MetaMind.Acutance.Concepts
 
     public class CallNotifiedEventArgs : EventArgs
     {
+        public readonly CallEntry NotifiedCall;
+
+        public CallNotifiedEventArgs(CallEntry notifiedCall)
+        {
+            this.NotifiedCall = notifiedCall;
+        }
     }
 }

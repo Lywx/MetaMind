@@ -2,8 +2,12 @@ namespace MetaMind.Acutance.Guis.Widgets
 {
     using MetaMind.Engine.Settings;
 
+    using Microsoft.Xna.Framework;
+
     public class KnowledgeItemSettings : TraceItemSettings
     {
+        public Color NameFrameCallColor = ColorPalette.LightPink;
+
         public KnowledgeItemSettings()
         {
             this.RootFrameSize = this.NameFrameSize;

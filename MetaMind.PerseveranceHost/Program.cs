@@ -28,17 +28,26 @@
                 // no endpoints are explicitly configured, the runtime will create
                 // one endpoint per base address for each service contract implemented
                 // by the service.
-                host.Open();
-
-                using (var engine = GameEngine.GetInstance())
+                try
                 {
-                    var fullscreen = args.Count() != 0 && args[0] == "--fullscreen";
-                    var runner = new Perseverance(engine, fullscreen);
+                    host.Open();
 
-                    runner.Run();
+                    using (var engine = GameEngine.GetInstance())
+                    {
+                        var fullscreen = args.Count() != 0 && args[0] == "--fullscreen";
+                        var runner = new Perseverance(engine, fullscreen);
+
+                        runner.Run();
+                    }
+
+                    host.Close();
                 }
-
-                host.Close();
+                catch (AddressAlreadyInUseException)
+                {
+                }
+                catch (CommunicationObjectFaultedException)
+                {
+                }
             }
         }
     }
