@@ -1,5 +1,7 @@
 namespace MetaMind.Acutance.Guis.Modules
 {
+    using System.Speech.Synthesis;
+
     using MetaMind.Acutance.Concepts;
     using MetaMind.Acutance.Sessions;
     using MetaMind.Engine;
@@ -33,6 +35,9 @@ namespace MetaMind.Acutance.Guis.Modules
 
                 this.callView.Control.Selection.Select(id);
                 this.callView.Control.Scroll   .Zoom(id);
+
+                // asynchronous speaking
+                Acutance.Synthesizer.SpeakAsync(notifiedCall.Name);
             }
 
             this.traceView    .Control.Selection.Clear();
@@ -40,9 +45,6 @@ namespace MetaMind.Acutance.Guis.Modules
 
             this.knowledgeView.Control.Selection.Clear();
             this.knowledgeView.Control.Region   .Clear();
-
-
-            GameEngine.AudioManager.PlayMusic("Illusion Mirror");
 
             return true;
         }
