@@ -117,9 +117,15 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
             else
             {
-                FontManager.DrawText(
+                string text = FontManager.CropText(
                     ItemSettings.NameFont,
                     ItemData.Name,
+                    ItemSettings.NameSize,
+                    ItemSettings.NameFrameSize.X - ItemSettings.NameXLMargin * 2);
+                
+                FontManager.DrawText(
+                    ItemSettings.NameFont,
+                    text,
                     this.NameLocation,
                     ColorExt.MakeTransparent(ItemSettings.NameColor, alpha),
                     ItemSettings.NameSize);

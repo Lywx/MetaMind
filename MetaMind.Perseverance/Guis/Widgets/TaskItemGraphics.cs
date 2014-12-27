@@ -155,9 +155,15 @@ namespace MetaMind.Perseverance.Guis.Widgets
             }
             else
             {
+                string text = FontManager.CropText(
+                    ItemSettings.NameFont,
+                    ItemData.Name,
+                    ItemSettings.NameSize,
+                    ItemSettings.NameFrameSize.X - ItemSettings.NameXLMargin * 2);
+
                 FontManager.DrawText(
                     this.ItemSettings.NameFont,
-                    this.ItemData.Name,
+                    text,
                     this.NameLocation,
                     ColorExt.MakeTransparent(this.ItemSettings.NameColor, alpha),
                     this.ItemSettings.NameSize);

@@ -7,6 +7,7 @@
 
 namespace MetaMind.Engine.Components
 {
+    using System;
     using System.Linq;
 
     using MetaMind.Engine.Components.Fonts;
@@ -69,6 +70,39 @@ namespace MetaMind.Engine.Components
         #endregion Load and Unload
 
         #region Text Drawing
+
+        public static string CropText(string text, int count)
+        {
+            return text.Length < count ? text : string.Concat(text.Substring(0, count), "...");
+        }
+
+        public string CropText(Font font, string text, float size, int maxLength)
+        {
+            if (maxLength < 1)
+            {
+                throw new ArgumentOutOfRangeException("maxLength");
+            }
+
+            var spriteFont    = FontManager[font];
+            var avaliableText = GetDisaplayableCharacters(spriteFont, text);
+
+            var cropped     = false;
+            var croppedText = avaliableText;
+            var textSize    = spriteFont.MeasureString(croppedText) * size;
+
+            var outsideLength = textSize.X > maxLength;
+
+            while (outsideLength)
+            {
+                cropped     = true;
+                croppedText = croppedText.Substring(0, croppedText.Length - 1);
+                textSize    = spriteFont.MeasureString(croppedText) * size;
+
+                outsideLength = textSize.X > maxLength;
+            }
+
+            return croppedText + (cropped ? "..." : string.Empty);
+        }
 
         /// <summary>
         /// Draws text centered at particular position.
