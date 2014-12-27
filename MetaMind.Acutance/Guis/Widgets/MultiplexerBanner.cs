@@ -14,7 +14,6 @@ namespace MetaMind.Acutance.Guis.Widgets
     {
         private readonly TimelineText call;
         private readonly TimelineText knowledge;
-        private readonly TimelineText trace;
 
         private MultiplexerGroupSettings settings;
 
@@ -22,14 +21,12 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             this.settings  = settings;
 
-            this.trace     = new TimelineText("Trace"         , this.TitlePosition(this.settings.TraceStartPoint)    , 0.8f, Font.UiRegularFont);
             this.call      = new TimelineText("Notification"  , this.TitlePosition(this.settings.CallStartPoint)     , 0.8f, Font.UiRegularFont);
             this.knowledge = new TimelineText("Knowledge Base", this.TitlePosition(this.settings.KnowledgeStartPoint), 0.8f, Font.UiRegularFont);
         }
 
         public void Draw(GameTime gameTime, byte alpha)
         {
-            this.trace    .Draw(gameTime, alpha);
             this.call     .Draw(gameTime, alpha);
             this.knowledge.Draw(gameTime, alpha);
         }

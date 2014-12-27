@@ -19,11 +19,6 @@ namespace MetaMind.Acutance.Guis.Modules
         public MultiplexerGroup(MultiplexerGroupSettings settings)
             : base(settings)
         {
-            this.TraceView = new View(
-                this.Settings.TraceViewSettings,
-                this.Settings.TraceItemSettings,
-                this.Settings.TraceViewFactory);
-
             this.CallView = new View(
                 this.Settings.CallViewSettings,
                 this.Settings.CallItemSettings,
@@ -41,12 +36,9 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public IView KnowledgeView { get; private set; }
 
-        public IView TraceView { get; private set; }
-
         public override void Draw(GameTime gameTime, byte alpha)
         {
             this.KnowledgeView.Draw(gameTime, alpha);
-            this.TraceView    .Draw(gameTime, alpha);
             this.CallView     .Draw(gameTime, alpha);
 
             this.banner       .Draw(gameTime, alpha);
@@ -85,13 +77,11 @@ namespace MetaMind.Acutance.Guis.Modules
         public override void UpdateInput(GameTime gameTime)
         {
             this.KnowledgeView.UpdateInput(gameTime);
-            this.TraceView    .UpdateInput(gameTime);
             this.CallView     .UpdateInput(gameTime);
         }
 
         public override void UpdateStructure(GameTime gameTime)
         {
-            this.TraceView    .UpdateStructure(gameTime);
             this.CallView     .UpdateStructure(gameTime);
             this.KnowledgeView.UpdateStructure(gameTime);
 
@@ -100,11 +90,6 @@ namespace MetaMind.Acutance.Guis.Modules
 
         private void LoadData()
         {
-            foreach (var trace in this.Settings.Traces.ToArray())
-            {
-                this.TraceView.Control.AddItem(trace);
-            }
-
             foreach (var call in this.Settings.Calls.ToArray())
             {
                 this.CallView.Control.AddItem(call);
@@ -124,7 +109,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
             if (this.callNotifiedListener == null)
             {
-                this.callNotifiedListener = new MultiplexerGroupCallNotifiedListener(this.TraceView, this.CallView, this.KnowledgeView);
+                this.callNotifiedListener = new MultiplexerGroupCallNotifiedListener(this.CallView, this.KnowledgeView);
             }
 
             EventManager.AddListener(this.callNotifiedListener);

@@ -21,9 +21,9 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public readonly Point TraceStartPoint                 = new Point(10, 108);
 
-        public readonly int   TraceRowNumDisplay              = 5;
+        public readonly int   TraceRowNumDisplay              = -1;
 
-        public readonly int   TraceRowNumDisplayFullscreen    = 5;
+        public readonly int   TraceRowNumDisplayFullscreen    = -1;
 
         public readonly int   TraceRowNumMax                  = 100;
 
@@ -40,9 +40,9 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public readonly Point CallStartPoint;
 
-        public readonly int   CallRowNumDisplay              = 8;
+        public readonly int   CallRowNumDisplay              = 13;
 
-        public readonly int   CallRowNumDisplayFullscreen    = 8;
+        public readonly int   CallRowNumDisplayFullscreen    = 13;
 
         public readonly int   CallRowNumMax                  = 100;
 
