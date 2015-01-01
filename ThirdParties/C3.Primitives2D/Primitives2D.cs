@@ -247,12 +247,16 @@ namespace C3.Primtive2DXna
         {
             // TODO: Handle rotations
             // TODO: Figure out the pattern for the offsets required and then handle it in the line instead of here
+
             // top
             DrawLine(spriteBatch, new Vector2(rect.X, rect.Y)         , new Vector2(rect.Right, rect.Y)                      , color, thickness);
+
             // left
-            DrawLine(spriteBatch, new Vector2(rect.X + 1f, rect.Y)    , new Vector2(rect.X + 1f, rect.Bottom + thickness)    , color, thickness); 
+            DrawLine(spriteBatch, new Vector2(rect.X + 1f, rect.Y)    , new Vector2(rect.X + 1f, rect.Bottom + thickness)    , color, thickness);
+ 
             // bottom
-            DrawLine(spriteBatch, new Vector2(rect.X, rect.Bottom)    , new Vector2(rect.Right, rect.Bottom)                 , color, thickness); 
+            DrawLine(spriteBatch, new Vector2(rect.X, rect.Bottom)    , new Vector2(rect.Right, rect.Bottom)                 , color, thickness);
+ 
             // right
             DrawLine(spriteBatch, new Vector2(rect.Right + 1f, rect.Y), new Vector2(rect.Right + 1f, rect.Bottom + thickness), color, thickness); 
         }

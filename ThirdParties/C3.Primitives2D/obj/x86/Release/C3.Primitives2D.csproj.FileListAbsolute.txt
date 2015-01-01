@@ -1,0 +1,14 @@
+C:\Users\Wuxiang\Documents\visual studio 2013\Projects\C3.Primitives2D\bin\x86\Release\C3.Primtive2DXna.dll
+C:\Users\Wuxiang\Documents\visual studio 2013\Projects\C3.Primitives2D\bin\x86\Release\C3.Primtive2DXna.pdb
+C:\Users\Wuxiang\Documents\visual studio 2013\Projects\C3.Primitives2D\bin\x86\Release\MonoGame.Framework.dll
+C:\Users\Wuxiang\Documents\visual studio 2013\Projects\C3.Primitives2D\bin\x86\Release\SharpDX.dll
+C:\Users\Wuxiang\Documents\visual studio 2013\Projects\C3.Primitives2D\bin\x86\Release\SharpDX.Direct3D11.dll
+C:\Users\Wuxiang\Documents\visual studio 2013\Projects\C3.Primitives2D\bin\x86\Release\SharpDX.XAudio2.dll
+C:\Users\Wuxiang\Documents\visual studio 2013\Projects\C3.Primitives2D\bin\x86\Release\SharpDX.DXGI.dll
+C:\Users\Wuxiang\Documents\visual studio 2013\Projects\C3.Primitives2D\bin\x86\Release\SharpDX.xml
+C:\Users\Wuxiang\Documents\visual studio 2013\Projects\C3.Primitives2D\bin\x86\Release\SharpDX.Direct3D11.xml
+C:\Users\Wuxiang\Documents\visual studio 2013\Projects\C3.Primitives2D\bin\x86\Release\SharpDX.XAudio2.xml
+C:\Users\Wuxiang\Documents\visual studio 2013\Projects\C3.Primitives2D\bin\x86\Release\SharpDX.DXGI.xml
+C:\Users\Wuxiang\Documents\visual studio 2013\Projects\C3.Primitives2D\obj\x86\Release\C3.Primitives2D.csprojResolveAssemblyReference.cache
+C:\Users\Wuxiang\Documents\visual studio 2013\Projects\C3.Primitives2D\obj\x86\Release\C3.Primtive2DXna.dll
+C:\Users\Wuxiang\Documents\visual studio 2013\Projects\C3.Primitives2D\obj\x86\Release\C3.Primtive2DXna.pdb

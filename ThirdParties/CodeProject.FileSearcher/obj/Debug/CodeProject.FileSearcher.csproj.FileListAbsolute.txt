@@ -1,0 +1,7 @@
+C:\Users\Wuxiang\Documents\Visual Studio 2013\Projects\MetaMind\ThirdParty\CodeProject.FileSearcher\bin\Debug\CodeProject.FileSearcher.pdb
+C:\Users\Wuxiang\Documents\Visual Studio 2013\Projects\MetaMind\ThirdParty\CodeProject.FileSearcher\obj\Debug\CodeProject.FileSearcher.csprojResolveAssemblyReference.cache
+C:\Users\Wuxiang\Documents\Visual Studio 2013\Projects\MetaMind\ThirdParty\CodeProject.FileSearcher\obj\Debug\CodeProject.FileSearcher.Properties.Resources.resources
+C:\Users\Wuxiang\Documents\Visual Studio 2013\Projects\MetaMind\ThirdParty\CodeProject.FileSearcher\obj\Debug\CodeProject.FileSearcher.csproj.GenerateResource.Cache
+C:\Users\Wuxiang\Documents\Visual Studio 2013\Projects\MetaMind\ThirdParty\CodeProject.FileSearcher\obj\Debug\CodeProject.FileSearcher.pdb
+C:\Users\Wuxiang\Documents\Visual Studio 2013\Projects\MetaMind\ThirdParty\CodeProject.FileSearcher\bin\Debug\CodeProject.FileSearcher.dll
+C:\Users\Wuxiang\Documents\Visual Studio 2013\Projects\MetaMind\ThirdParty\CodeProject.FileSearcher\obj\Debug\CodeProject.FileSearcher.dll

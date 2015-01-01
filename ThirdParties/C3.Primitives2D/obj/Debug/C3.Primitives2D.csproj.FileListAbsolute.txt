@@ -1,0 +1,17 @@
+C:\Users\Wuxiang\Documents\Visual Studio 2013\Projects\MetaMind\ThirdParty\C3.Primitives2D\bin\Debug\C3.Primtive2DXna.dll
+C:\Users\Wuxiang\Documents\Visual Studio 2013\Projects\MetaMind\ThirdParty\C3.Primitives2D\bin\Debug\C3.Primtive2DXna.pdb
+C:\Users\Wuxiang\Documents\Visual Studio 2013\Projects\MetaMind\ThirdParty\C3.Primitives2D\bin\Debug\MonoGame.Framework.dll
+C:\Users\Wuxiang\Documents\Visual Studio 2013\Projects\MetaMind\ThirdParty\C3.Primitives2D\bin\Debug\SharpDX.dll
+C:\Users\Wuxiang\Documents\Visual Studio 2013\Projects\MetaMind\ThirdParty\C3.Primitives2D\bin\Debug\SharpDX.Direct3D11.dll
+C:\Users\Wuxiang\Documents\Visual Studio 2013\Projects\MetaMind\ThirdParty\C3.Primitives2D\bin\Debug\SharpDX.XAudio2.dll
+C:\Users\Wuxiang\Documents\Visual Studio 2013\Projects\MetaMind\ThirdParty\C3.Primitives2D\bin\Debug\Microsoft.Xna.Framework.dll
+C:\Users\Wuxiang\Documents\Visual Studio 2013\Projects\MetaMind\ThirdParty\C3.Primitives2D\bin\Debug\SharpDX.DXGI.dll
+C:\Users\Wuxiang\Documents\Visual Studio 2013\Projects\MetaMind\ThirdParty\C3.Primitives2D\bin\Debug\MonoGame.Framework.xml
+C:\Users\Wuxiang\Documents\Visual Studio 2013\Projects\MetaMind\ThirdParty\C3.Primitives2D\bin\Debug\SharpDX.xml
+C:\Users\Wuxiang\Documents\Visual Studio 2013\Projects\MetaMind\ThirdParty\C3.Primitives2D\bin\Debug\SharpDX.Direct3D11.xml
+C:\Users\Wuxiang\Documents\Visual Studio 2013\Projects\MetaMind\ThirdParty\C3.Primitives2D\bin\Debug\SharpDX.XAudio2.xml
+C:\Users\Wuxiang\Documents\Visual Studio 2013\Projects\MetaMind\ThirdParty\C3.Primitives2D\bin\Debug\Microsoft.Xna.Framework.xml
+C:\Users\Wuxiang\Documents\Visual Studio 2013\Projects\MetaMind\ThirdParty\C3.Primitives2D\bin\Debug\SharpDX.DXGI.xml
+C:\Users\Wuxiang\Documents\Visual Studio 2013\Projects\MetaMind\ThirdParty\C3.Primitives2D\obj\Debug\C3.Primitives2D.csprojResolveAssemblyReference.cache
+C:\Users\Wuxiang\Documents\Visual Studio 2013\Projects\MetaMind\ThirdParty\C3.Primitives2D\obj\Debug\C3.Primtive2DXna.dll
+C:\Users\Wuxiang\Documents\Visual Studio 2013\Projects\MetaMind\ThirdParty\C3.Primitives2D\obj\Debug\C3.Primtive2DXna.pdb
