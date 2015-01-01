@@ -15,9 +15,6 @@
         [DataMember]
         public string Property = "Neutral";
 
-        [DataMember(IsRequired = false)]
-        public int Attraction;
-
         [DataMember]
         public List<TaskEntry> Tasks = new List<TaskEntry>();
 

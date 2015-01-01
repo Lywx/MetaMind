@@ -36,14 +36,14 @@ namespace MetaMind.Perseverance.Guis.Widgets
             get
             {
                 return new Vector2(
-                    this.ItemControl.RootFrame.Rectangle.Center.X,
-                    this.ItemControl.RootFrame.Rectangle.Top - 15);
+                    ItemControl.RootFrame.Rectangle.Center.X,
+                    ItemControl.RootFrame.Rectangle.Top - 15);
             }
         }
 
         private Vector2 NameLocation
         {
-            get { return PointExt.ToVector2(this.ItemControl.RootFrame.Rectangle.Center) + new Vector2(0, 50); }
+            get { return PointExt.ToVector2(ItemControl.RootFrame.Rectangle.Center) + new Vector2(0, 50); }
         }
 
         private Vector2 HelpLocation
@@ -53,7 +53,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         public override void Draw(GameTime gameTime, byte alpha)
         {
-            if (!this.ItemControl.Active)
+            if (!ItemControl.Active)
             {
                 return;
             }
@@ -75,44 +75,44 @@ namespace MetaMind.Perseverance.Guis.Widgets
         protected override void DrawId(byte alpha)
         {
             FontManager.DrawCenteredText(
-                this.ItemSettings.IdFont, 
-                this.ItemControl.Id.ToString(new CultureInfo("en-US")),
+                ItemSettings.IdFont, 
+                ItemControl.Id.ToString(new CultureInfo("en-US")),
                 this.IdCenter,
-                !this.Item.IsEnabled(ItemState.Item_Pending) ? this.ItemSettings.IdColor : this.ItemSettings.IdPendingColor, 
-                this.ItemSettings.IdSize);
+                !Item.IsEnabled(ItemState.Item_Pending) ? ItemSettings.IdColor : ItemSettings.IdPendingColor, 
+                ItemSettings.IdSize);
         }
 
         private void DrawName(byte alpha)
         {
-            if (!this.Item.IsEnabled(ItemState.Item_Selected))
+            if (!Item.IsEnabled(ItemState.Item_Selected))
             {
                 return;
             }
 
-            if (this.Item.IsEnabled(ItemState.Item_Pending))
+            if (Item.IsEnabled(ItemState.Item_Pending))
             {
                 FontManager.DrawText(
-                    this.ItemSettings.HelpFont,
+                    ItemSettings.HelpFont,
                     HelpInformation,
                     this.HelpLocation,
-                    ColorExt.MakeTransparent(this.ItemSettings.HelpColor, alpha),
-                    this.ItemSettings.HelpSize);
+                    ColorExt.MakeTransparent(ItemSettings.HelpColor, alpha),
+                    ItemSettings.HelpSize);
             }
             else
             {
                 List<string> text = Text.BreakTextIntoList(
-                    this.ItemSettings.NameFont,
-                    this.ItemSettings.NameSize,
-                    this.ItemData.Name,
+                    ItemSettings.NameFont,
+                    ItemSettings.NameSize,
+                    ItemData.Name,
                     (float)this.ViewSettings.RootMargin.X * 6);
                 for (var i = 0; i < text.Count; i++)
                 {
                     FontManager.DrawCenteredText(
-                        this.ItemSettings.NameFont,
+                        ItemSettings.NameFont,
                         text[i],
-                        this.NameLocation + new Vector2(0, this.ItemSettings.NameLineMargin) * i,
-                        ColorExt.MakeTransparent(this.ItemSettings.NameColor, alpha),
-                        this.ItemSettings.NameSize);
+                        this.NameLocation + new Vector2(0, ItemSettings.NameLineMargin) * i,
+                        ColorExt.MakeTransparent(ItemSettings.NameColor, alpha),
+                        ItemSettings.NameSize);
                 }
             }
         }

@@ -27,12 +27,12 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         public void Draw(GameTime gameTime, byte alpha)
         {
-            if (!this.ItemControl.Active)
+            if (!ItemControl.Active)
             {
                 return;
             }
 
-            if (this.Item.IsEnabled(ItemState.Item_Dragging))
+            if (Item.IsEnabled(ItemState.Item_Dragging))
             {
                 this.DrawShadow();
             }
@@ -48,18 +48,18 @@ namespace MetaMind.Perseverance.Guis.Widgets
         private void DrawHeart(byte alpha)
         {
             var flipped     = Math.Cos(this.rotation) > 0;
-            var width       = this.ItemControl.SymbolFrame.Rectangle.Width + this.ItemData.Attraction;
-            var height      = this.ItemControl.SymbolFrame.Rectangle.Height + this.ItemData.Attraction;
+            var width       = ItemControl.SymbolFrame.Rectangle.Width;
+            var height      = ItemControl.SymbolFrame.Rectangle.Height;
             var size        = new Point((int)(Math.Abs(Math.Cos(this.rotation)) * width), height);
-            var destination = RectangleExt.DestinationWithSize(this.ItemControl.SymbolFrame.Rectangle, size);
+            var destination = RectangleExt.DestinationWithSize(ItemControl.SymbolFrame.Rectangle, size);
 
-            if (this.ItemData.Property == "Neutral")
+            if (ItemData.Property == "Neutral")
             {
                 ScreenManager.SpriteBatch.Draw(
                     this.symbolTexture,
                     destination,
                     null,
-                    this.Item.IsEnabled(ItemState.Item_Selected)
+                    Item.IsEnabled(ItemState.Item_Selected)
                         ? ColorPalette.TransparentColor5
                         : ColorPalette.TransparentColor3,
                     0f,
@@ -67,25 +67,25 @@ namespace MetaMind.Perseverance.Guis.Widgets
                     flipped ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
                     0f);
             }
-            else if (this.ItemData.Property == "Wish")
+            else if (ItemData.Property == "Wish")
             {
                 ScreenManager.SpriteBatch.Draw(
                     this.symbolTexture,
                     destination,
                     null,
-                    this.ItemSettings.WishColor,
+                    ItemSettings.WishColor,
                     0f,
                     this.SymbolOrigin,
                     flipped ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
                     0f);
             }
-            else if (this.ItemData.Property == "Fear")
+            else if (ItemData.Property == "Fear")
             {
                 ScreenManager.SpriteBatch.Draw(
                     this.symbolTexture,
                     destination,
                     null,
-                    this.ItemSettings.FearColor,
+                    ItemSettings.FearColor,
                     0f,
                     this.SymbolOrigin,
                     flipped ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
@@ -95,12 +95,12 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         private void DrawShadow()
         {
-            var scrollCenter = this.ViewControl.Scroll.RootCenterPoint(this.ItemControl.Id);
+            var scrollCenter = this.ViewControl.Scroll.RootCenterPoint(ItemControl.Id);
             var destination = new Rectangle(
                 scrollCenter.X,
                 scrollCenter.Y,
-                this.ItemControl.RootFrame.Rectangle.Width,
-                this.ItemControl.RootFrame.Rectangle.Height);
+                ItemControl.RootFrame.Rectangle.Width,
+                ItemControl.RootFrame.Rectangle.Height);
 
             ScreenManager.SpriteBatch.Draw(
                 this.symbolTexture,
@@ -115,7 +115,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         private void UpdateRotation()
         {
-            if (this.Item.IsEnabled(ItemState.Item_Selected))
+            if (Item.IsEnabled(ItemState.Item_Selected))
             {
                 this.rotation += MathHelper.ToRadians(5);
             }

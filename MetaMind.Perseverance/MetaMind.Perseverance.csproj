@@ -195,7 +195,7 @@
       <Project>{5718d82f-2ac8-42bb-a7f0-5309bed3d883}</Project>
       <Name>MetaMind.PerseveranceBuilder</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ThirdParty\C3.Primitives2D\C3.Primitives2D.csproj">
+    <ProjectReference Include="..\ThirdParties\C3.Primitives2D\C3.Primitives2D.csproj">
       <Project>{39ad1482-1881-4852-a05d-dc61b0d3446a}</Project>
       <Name>C3.Primitives2D</Name>
     </ProjectReference>
