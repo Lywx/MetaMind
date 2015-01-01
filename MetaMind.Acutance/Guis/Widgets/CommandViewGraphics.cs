@@ -2,9 +2,9 @@ namespace MetaMind.Acutance.Guis.Widgets
 {
     using MetaMind.Engine.Guis.Widgets.Views;
 
-    public class CallViewGraphics : TraceViewGraphics
+    public class CommandViewGraphics : TraceViewGraphics
     {
-        public CallViewGraphics(IView view, CallViewSettings viewSettings, CallItemSettings itemSettings)
+        public CommandViewGraphics(IView view, CommandViewSettings viewSettings, CommandItemSettings itemSettings)
             : base(view, viewSettings, itemSettings)
         {
         }

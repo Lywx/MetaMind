@@ -2,7 +2,7 @@ namespace MetaMind.Acutance.Concepts
 {
     using System;
 
-    public class CallCreatedEventArgs : EventArgs
+    public class CommandCreatedEventArgs : EventArgs
     {
         public readonly string Name;
 
@@ -10,7 +10,7 @@ namespace MetaMind.Acutance.Concepts
 
         public readonly int Minutes;
 
-        public CallCreatedEventArgs(string name, string path, int minutes)
+        public CommandCreatedEventArgs(string name, string path, int minutes)
         {
             this.Name    = name;
             this.Path    = path;

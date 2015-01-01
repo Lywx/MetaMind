@@ -9,15 +9,15 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     using Microsoft.Xna.Framework;
 
-    public class CallItemControl : ViewItemControl2D
+    public class CommandItemControl : ViewItemControl2D
     {
         #region Constructors
 
-        public CallItemControl(IViewItem item)
+        public CommandItemControl(IViewItem item)
             : base(item)
         {
             this.ItemFrameControl = new TraceItemFrameControl(item);
-            this.ItemViewControl  = new CallItemViewControl(item);
+            this.ItemViewControl  = new CommandItemViewControl(item);
 
             this.NameFrame.MouseLeftDoubleClicked += this.RetrieveKnowledge;
         }
@@ -86,7 +86,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                 {
                     if (!this.Locked)
                     {
-                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CallDeleteItem))
+                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CommandDeleteItem))
                         {
                             this.DeleteIt();
                         }
@@ -99,12 +99,12 @@ namespace MetaMind.Acutance.Guis.Widgets
                 {
                     if (!this.Locked)
                     {
-                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CallClearItem))
+                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CommandClearItem))
                         {
                             this.DeleteIt();
                         }
 
-                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CallResetItem))
+                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CommandResetItem))
                         {
                             this.ResetIt();
                         }

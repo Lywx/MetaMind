@@ -38,7 +38,7 @@ namespace MetaMind.Acutance.Sessions
             this.Random    = new Random((int)DateTime.Now.Ticks);
 
             this.Tracelist = new Tracelist();
-            this.Calllist = new Calllist();
+            this.Commandlist = new Commandlist();
         }
 
         #endregion Constructors
@@ -50,8 +50,8 @@ namespace MetaMind.Acutance.Sessions
         [DataMember(Name = "Tracelist")]
         public Tracelist Tracelist { get; private set; }
 
-        [DataMember(Name = "Calllist")]
-        public Calllist Calllist { get; private set; }
+        [DataMember(Name = "Commandlist")]
+        public Commandlist Commandlist { get; private set; }
 
         #endregion Public Properties
 
@@ -116,7 +116,7 @@ namespace MetaMind.Acutance.Sessions
         public void Update()
         {
             this.Tracelist.Update();
-            this.Calllist .Update();
+            this.Commandlist .Update();
         }
 
         #endregion Update
@@ -131,9 +131,9 @@ namespace MetaMind.Acutance.Sessions
                 this.Random = new Random((int)DateTime.Now.Ticks);
             }
 
-            if (this.Calllist == null)
+            if (this.Commandlist == null)
             {
-                this.Calllist = new Calllist();
+                this.Commandlist = new Commandlist();
             }
 
             if (this.Tracelist == null)

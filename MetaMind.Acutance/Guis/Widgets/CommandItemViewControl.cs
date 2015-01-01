@@ -2,9 +2,9 @@ namespace MetaMind.Acutance.Guis.Widgets
 {
     using MetaMind.Engine.Guis.Widgets.Items;
 
-    public class CallItemViewControl : ViewItemViewControl2D
+    public class CommandItemViewControl : ViewItemViewControl2D
     {
-        public CallItemViewControl(IViewItem item)
+        public CommandItemViewControl(IViewItem item)
             : base(item)
         {
         }
@@ -22,7 +22,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
             this.ViewControl.Swap.Initialize(originCenter, targetCenter);
 
-            ProcessManager.AttachProcess(new CallItemSwapProcess(draggingItem, this.Item, Acutance.Adventure.Calllist.Calls));
+            ProcessManager.AttachProcess(new CommandItemSwapProcess(draggingItem, this.Item, Acutance.Adventure.Commandlist.Commands));
         }
     }
 }

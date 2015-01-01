@@ -4,11 +4,11 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     using MetaMind.Acutance.Concepts;
 
-    public class CallViewSettings : TraceViewSettings
+    public class CommandViewSettings : TraceViewSettings
     {
-        public Calllist Source;
+        public Commandlist Source;
 
-        public CallViewSettings(Calllist source)
+        public CommandViewSettings(Commandlist source)
         {
             this.Source = source;
         }

@@ -9,9 +9,9 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     using Microsoft.Xna.Framework;
 
-    public class CallItemGraphics : TraceItemGraphics
+    public class CommandItemGraphics : TraceItemGraphics
     {
-        public CallItemGraphics(IViewItem item)
+        public CommandItemGraphics(IViewItem item)
             : base(item)
         {
         }
@@ -25,16 +25,16 @@ namespace MetaMind.Acutance.Guis.Widgets
 
             this.DrawNameFrame(255);
 
-            switch ((CallEntry.EventState)ItemData.State)
+            switch ((CommandState)ItemData.State)
             {
-                case CallEntry.EventState.Running:
+                case CommandState.Running:
                     {
                         this.FillNameFrameWith(ItemSettings.NameFrameRunningColor, alpha);
                     }
 
                     break;
 
-                case CallEntry.EventState.Transiting:
+                case CommandState.Transiting:
                     {
                         this.FillNameFrameWith(ItemSettings.NameFrameTransitionColor, alpha);
                     }

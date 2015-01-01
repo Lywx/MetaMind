@@ -9,11 +9,11 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     using Microsoft.Xna.Framework;
 
-    public class CallViewControl : GridControl
+    public class CommandViewControl : GridControl
     {
         #region Constructors
 
-        public CallViewControl(IView view, CallViewSettings viewSettings, CallItemSettings itemSettings, CallItemFactory itemFactory)
+        public CommandViewControl(IView view, CommandViewSettings viewSettings, CommandItemSettings itemSettings, CommandItemFactory itemFactory)
             : base(view, viewSettings, itemSettings, itemFactory)
         {
         }
@@ -22,15 +22,15 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public void AddItem(string name, string path, int minutes)
         {
-            var callItemFactory = ItemFactory as CallItemFactory;
-            if (callItemFactory != null)
+            var commandItemFactory = ItemFactory as CommandItemFactory;
+            if (commandItemFactory != null)
             {
-                var entry = callItemFactory.CreateData(name, path, minutes);
+                var entry = commandItemFactory.CreateData(name, path, minutes);
                 this.AddItem(entry);
             }
         }
 
-        public void AddItem(CallEntry entry)
+        public void AddItem(CommandEntry entry)
         {
             var item = new ViewItemExchangeless(View, ViewSettings, ItemSettings, ItemFactory, entry);
             View.Items.Add(item);
@@ -44,7 +44,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             {
                 case ViewSortMode.Name:
                     {
-                        ViewSettings.Source.Sort(CallSortMode.Name);
+                        ViewSettings.Source.Sort(CommandSortMode.Name);
                     }
 
                     break;
@@ -63,7 +63,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                 // ---------------------------------------------------------------------
                 if (ViewSettings.KeyboardEnabled)
                 {
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CallClearItem))
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CommandClearItem))
                     {
                         var notEmpty = View.Items.Count;
                         if (notEmpty > 0)
@@ -76,18 +76,18 @@ namespace MetaMind.Acutance.Guis.Widgets
                         }
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CallDeleteItem))
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CommandDeleteItem))
                     {
                         // itme deletion is handled by item control
                         // auto select last item
                         if (View.Items.Count > 1)
                         {
-                            // this will be called before item deletion
+                            // this will be commanded before item deletion
                             this.Selection.Select(View.Items.Count - 2);
                         }
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CallSortItem))
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CommandSortItem))
                     {
                         this.SortItems(ViewSortMode.Name);
                     }

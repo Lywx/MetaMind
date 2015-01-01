@@ -5,9 +5,9 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Acutance.Concepts;
     using MetaMind.Engine.Guis.Widgets.Items;
 
-    public class CallItemSwapProcess : ViewItemSwapProcess
+    public class CommandItemSwapProcess : ViewItemSwapProcess
     {
-        public CallItemSwapProcess(IViewItem draggingItem, IViewItem swappingItem, List<CallEntry> source)
+        public CommandItemSwapProcess(IViewItem draggingItem, IViewItem swappingItem, List<CommandEntry> source)
             : base(draggingItem, swappingItem, source)
         {
         }

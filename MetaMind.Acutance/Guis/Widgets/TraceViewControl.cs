@@ -1,7 +1,5 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
-    using System.Linq;
-
     using MetaMind.Acutance.Concepts;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Widgets.Items;

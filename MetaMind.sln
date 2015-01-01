@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C3.Primitives2D", "ThirdParty\C3.Primitives2D\C3.Primitives2D.csproj", "{39AD1482-1881-4852-A05D-DC61B0D3446A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C3.Primitives2D", "ThirdParties\C3.Primitives2D\C3.Primitives2D.csproj", "{39AD1482-1881-4852-A05D-DC61B0D3446A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaMind.EngineBuilder", "MetaMind.EngineBuilder\MetaMind.EngineBuilder\MetaMind.EngineBuilder.csproj", "{492C04CF-F181-48AF-B919-FCD639ED711C}"
 EndProject
@@ -41,7 +41,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaMind.PerseveranceServic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaMind.PerseveranceHost", "MetaMind.PerseveranceHost\MetaMind.PerseveranceHost.csproj", "{7AB9FC74-C671-41B1-9D26-9FBF03E275B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeProject.FileSearcher", "ThirdParty\CodeProject.FileSearcher\CodeProject.FileSearcher.csproj", "{D345E22B-F312-4E5E-BCB8-F311A2FA5125}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeProject.FileSearcher", "ThirdParties\CodeProject.FileSearcher\CodeProject.FileSearcher.csproj", "{D345E22B-F312-4E5E-BCB8-F311A2FA5125}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaMind.AcutanceUnitTest", "MetaMind.AcutanceUnitTest\MetaMind.AcutanceUnitTest.csproj", "{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -762,6 +764,51 @@ Global
 		{D345E22B-F312-4E5E-BCB8-F311A2FA5125}.Windows8|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{D345E22B-F312-4E5E-BCB8-F311A2FA5125}.Windows8|Mixed Platforms.Build.0 = Release|Any CPU
 		{D345E22B-F312-4E5E-BCB8-F311A2FA5125}.Windows8|x86.ActiveCfg = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Android|Any CPU.ActiveCfg = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Android|Any CPU.Build.0 = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Android|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Android|Mixed Platforms.Build.0 = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Android|x86.ActiveCfg = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.iOS|Any CPU.ActiveCfg = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.iOS|Any CPU.Build.0 = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.iOS|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.iOS|Mixed Platforms.Build.0 = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.iOS|x86.ActiveCfg = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Linux|Any CPU.ActiveCfg = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Linux|Any CPU.Build.0 = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Linux|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Linux|Mixed Platforms.Build.0 = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Linux|x86.ActiveCfg = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.OSX|Any CPU.ActiveCfg = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.OSX|Any CPU.Build.0 = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.OSX|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.OSX|Mixed Platforms.Build.0 = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.OSX|x86.ActiveCfg = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.PSM|Any CPU.ActiveCfg = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.PSM|Any CPU.Build.0 = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.PSM|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.PSM|Mixed Platforms.Build.0 = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.PSM|x86.ActiveCfg = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Release|x86.ActiveCfg = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Windows|Any CPU.ActiveCfg = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Windows|Any CPU.Build.0 = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Windows|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Windows|Mixed Platforms.Build.0 = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Windows|x86.ActiveCfg = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Windows8|Any CPU.ActiveCfg = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Windows8|Any CPU.Build.0 = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Windows8|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Windows8|Mixed Platforms.Build.0 = Release|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Windows8|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

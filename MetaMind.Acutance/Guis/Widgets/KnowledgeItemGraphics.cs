@@ -30,9 +30,9 @@ namespace MetaMind.Acutance.Guis.Widgets
 
             this.DrawNameFrame(255);
 
-            if (ItemData.IsCall)
+            if (ItemData.IsCommand)
             {
-                this.FillNameFrameWith(ItemSettings.NameFrameCallColor, alpha);
+                this.FillNameFrameWith(ItemSettings.NameFrameCommandColor, alpha);
             }
 
             this.FillNameFrameWith(ItemSettings.NameFrameRunningColor, alpha);

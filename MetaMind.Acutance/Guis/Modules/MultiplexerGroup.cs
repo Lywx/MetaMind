@@ -1,47 +1,45 @@
 namespace MetaMind.Acutance.Guis.Modules
 {
+    using System.IO;
+
     using MetaMind.Acutance.Guis.Widgets;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Widgets.Views;
-    using MetaMind.Perseverance.Guis.Widgets;
+    using MetaMind.Engine.Parsers;
 
     using Microsoft.Xna.Framework;
 
     public class MultiplexerGroup : Group<MultiplexerGroupSettings>
     {
-        private MultiplexerGroupCallCreatedListener            callCreatedListener;
-        private MultiplexerGroupCallNotifiedListener           callNotifiedListener;
+        private readonly string commandStartup = @"Configurations/Startup.txt";
+
+        private MultiplexerGroupCommandCreatedListener         commandCreatedListener;
+        private MultiplexerGroupCommandNotifiedListener        commandNotifiedListener;
 
         private MultiplexerGroupKnowledgeRetrievedListener     knowledgeRetrievedListener;
-
-        private MultiplexerBanner banner;
 
         public MultiplexerGroup(MultiplexerGroupSettings settings)
             : base(settings)
         {
-            this.CallView = new View(
-                this.Settings.CallViewSettings,
-                this.Settings.CallItemSettings,
-                this.Settings.CallViewFactory);
+            this.CommandView = new View(
+                this.Settings.CommandViewSettings,
+                this.Settings.CommandItemSettings,
+                this.Settings.CommandViewFactory);
 
             this.KnowledgeView = new View(
                 this.Settings.KnowledgeViewSettings,
                 this.Settings.KnowledgeItemSettings,
                 this.Settings.KnowledgeViewFactory);
-
-            this.banner = new MultiplexerBanner(settings);
         }
 
-        public IView CallView { get; private set; }
+        public IView CommandView { get; private set; }
 
         public IView KnowledgeView { get; private set; }
 
         public override void Draw(GameTime gameTime, byte alpha)
         {
             this.KnowledgeView.Draw(gameTime, alpha);
-            this.CallView     .Draw(gameTime, alpha);
-
-            this.banner       .Draw(gameTime, alpha);
+            this.CommandView  .Draw(gameTime, alpha);
         }
 
         public void Load()
@@ -52,19 +50,19 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public void Unload()
         {
-            if (this.callCreatedListener != null)
+            if (this.commandCreatedListener != null)
             {
-                EventManager.RemoveListener(this.callCreatedListener);
+                EventManager.RemoveListener(this.commandCreatedListener);
             }
 
-            this.callCreatedListener = null;
+            this.commandCreatedListener = null;
 
-            if (this.callNotifiedListener != null)
+            if (this.commandNotifiedListener != null)
             {
-                EventManager.RemoveListener(this.callNotifiedListener);
+                EventManager.RemoveListener(this.commandNotifiedListener);
             }
 
-            this.callNotifiedListener = null;
+            this.commandNotifiedListener = null;
 
             if (this.knowledgeRetrievedListener != null)
             {
@@ -77,42 +75,56 @@ namespace MetaMind.Acutance.Guis.Modules
         public override void UpdateInput(GameTime gameTime)
         {
             this.KnowledgeView.UpdateInput(gameTime);
-            this.CallView     .UpdateInput(gameTime);
+            this.CommandView  .UpdateInput(gameTime);
         }
 
         public override void UpdateStructure(GameTime gameTime)
         {
-            this.CallView     .UpdateStructure(gameTime);
+            this.CommandView  .UpdateStructure(gameTime);
             this.KnowledgeView.UpdateStructure(gameTime);
-
-            this.banner       .Update(gameTime);
         }
 
         private void LoadData()
         {
-            foreach (var call in this.Settings.Calls.ToArray())
+            var commandStartupFile = string.Empty;
+            var scheduleFolder     = string.Empty;
+
+            foreach (var line in File.ReadAllLines(this.commandStartup))
             {
-                this.CallView.Control.AddItem(call);
+                commandStartupFile = Parser.ParseLine(line, @"^Startup=(.*)")       .Replace("Startup=", string.Empty); 
+                scheduleFolder     = Parser.ParseLine(line, @"^ScheduleFolder=(.*)").Replace("ScheduleFolder=", string.Empty); 
             }
 
-            this.KnowledgeView.Control.LoadResult("Basic.txt", true);
+            foreach (var command in this.Settings.Commands.ToArray())
+            {
+                this.CommandView.Control.AddItem(command);
+            }
+
+            if (!string.IsNullOrEmpty(scheduleFolder))
+            {
+            }
+
+            if (!string.IsNullOrEmpty(commandStartupFile))
+            {
+                this.KnowledgeView.Control.LoadResult(commandStartupFile, true);
+            }
         }
 
         private void LoadEvents()
         {
-            if (this.callCreatedListener == null)
+            if (this.commandCreatedListener == null)
             {
-                this.callCreatedListener = new MultiplexerGroupCallCreatedListener(this.CallView);
+                this.commandCreatedListener = new MultiplexerGroupCommandCreatedListener(this.CommandView);
             }
 
-            EventManager.AddListener(this.callCreatedListener);
+            EventManager.AddListener(this.commandCreatedListener);
 
-            if (this.callNotifiedListener == null)
+            if (this.commandNotifiedListener == null)
             {
-                this.callNotifiedListener = new MultiplexerGroupCallNotifiedListener(this.CallView, this.KnowledgeView);
+                this.commandNotifiedListener = new MultiplexerGroupCommandNotifiedListener(this.CommandView, this.KnowledgeView);
             }
 
-            EventManager.AddListener(this.callNotifiedListener);
+            EventManager.AddListener(this.commandNotifiedListener);
 
             if (this.knowledgeRetrievedListener == null)
             {

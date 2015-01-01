@@ -6,7 +6,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     public class KnowledgeItemSettings : TraceItemSettings
     {
-        public Color NameFrameCallColor = ColorPalette.LightPink;
+        public Color NameFrameCommandColor = ColorPalette.LightPink;
 
         public KnowledgeItemSettings()
         {

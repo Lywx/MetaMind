@@ -17,6 +17,7 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Regions;
     using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Engine.Parsers;
 
     using Microsoft.Xna.Framework;
 
@@ -57,13 +58,13 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Operations
 
-        public void LoadCall(string name, string path, int minutes)
+        public void LoadCommand(string name, string path, int minutes)
         {
-            var callCreatedEvent = new EventBase(
-                (int)AdventureEventType.CallCreated,
-                new CallCreatedEventArgs(name, path, minutes));
+            var commandCreatedEvent = new EventBase(
+                (int)AdventureEventType.CommandCreated,
+                new CommandCreatedEventArgs(name, path, minutes));
 
-            GameEngine.EventManager.QueueEvent(callCreatedEvent);
+            GameEngine.EventManager.QueueEvent(commandCreatedEvent);
         }
 
         public void LoadResult(string path, bool relative)
@@ -106,7 +107,11 @@ namespace MetaMind.Acutance.Guis.Widgets
             var lines = File.ReadLines(path);
             foreach (var line in lines.Where(line => !string.IsNullOrWhiteSpace(line)).Take(this.maxLineNum))
             {
-                var matchEvent = Regex.Match(line, @"^\[(\d)+\]");
+                // TODO: Implement parser
+                var knowledgeContent = KnowledgeParser.ParseLine(line);
+                this.AddItem(new KnowledgeEntry(knowledgeContent));
+                var matchEvent = Regex.Match(line, @"^\[(.*)\]");
+                Parser.ParseLine(line, @"^\[(.*)\]");
                 if (matchEvent.Success)
                 {
                     int timeout;
@@ -263,7 +268,10 @@ namespace MetaMind.Acutance.Guis.Widgets
 
             if (View.Items.Count > 0)
             {
-                foreach (var item in View.Items.FindAll(item => item.ItemData.IsControl || item.ItemData.IsCall).ToArray())
+                foreach (var item in View.Items
+                    .FindAll(item => item.ItemData.IsControl || 
+                             item.ItemData.IsCommand)
+                             .ToArray())
                 {
                     item.UpdateInput(gameTime);
                 }

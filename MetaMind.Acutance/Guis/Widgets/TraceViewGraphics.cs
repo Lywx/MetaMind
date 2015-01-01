@@ -18,7 +18,6 @@ namespace MetaMind.Acutance.Guis.Widgets
         public override void Draw(GameTime gameTime, byte alpha)
         {
             this.DrawItems(gameTime, (byte)this.FocusAlpha);
-            this.DrawRegion(gameTime, alpha);
             this.DrawScrollBar(gameTime);
         }
 

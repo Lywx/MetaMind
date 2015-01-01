@@ -62,33 +62,38 @@
   <ItemGroup>
     <Compile Include="Acutance.cs" />
     <Compile Include="Components\SaveManager.cs" />
-    <Compile Include="Concepts\CallEntry.cs" />
-    <Compile Include="Concepts\Calllist.cs" />
-    <Compile Include="Concepts\CallNotifiedEventArgs.cs" />
+    <Compile Include="Concepts\CommandEntry.cs" />
+    <Compile Include="Concepts\Commandlist.cs" />
+    <Compile Include="Concepts\CommandNotifiedEventArgs.cs" />
+    <Compile Include="Concepts\CommandTimer.cs" />
+    <Compile Include="Concepts\CommandTimerByDate.cs" />
+    <Compile Include="Concepts\CommandTimerByTimeout.cs" />
+    <Compile Include="Concepts\KnowledgeContent.cs" />
     <Compile Include="Concepts\KnowledgeEntry.cs" />
     <Compile Include="Concepts\TraceEntry.cs" />
     <Compile Include="Concepts\Tracelist.cs" />
-    <Compile Include="Guis\Modules\MultiplexerGroupCallCreatedListener.cs" />
-    <Compile Include="Guis\Modules\MultiplexerGroupCallNotifiedListener.cs" />
+    <Compile Include="Guis\Modules\MultiplexerGroupCommandCreatedListener.cs" />
+    <Compile Include="Guis\Modules\MultiplexerGroupCommandNotifiedListener.cs" />
     <Compile Include="Guis\Modules\MultiplexerGroupKnowledgeRetrievedListener.cs" />
     <Compile Include="Guis\Modules\ParticleModule.cs" />
     <Compile Include="Guis\Modules\MultiplexerGroup.cs" />
     <Compile Include="Guis\Modules\SynchronizationGroupSettings.cs" />
     <Compile Include="Guis\Modules\SynchronizationGroup.cs" />
     <Compile Include="Guis\Modules\MultiplexerGroupSettings.cs" />
-    <Compile Include="Concepts\CallCreatedEventArgs.cs" />
-    <Compile Include="Guis\Widgets\MultiplexerBanner.cs" />
-    <Compile Include="Guis\Widgets\CallItemControl.cs" />
-    <Compile Include="Guis\Widgets\CallItemFactory.cs" />
-    <Compile Include="Guis\Widgets\CallItemGraphics.cs" />
-    <Compile Include="Guis\Widgets\CallItemSettings.cs" />
-    <Compile Include="Guis\Widgets\CallItemSwapProcess.cs" />
-    <Compile Include="Guis\Widgets\CallItemViewControl.cs" />
+    <Compile Include="Concepts\CommandCreatedEventArgs.cs" />
+    <Compile Include="Guis\Widgets\CommandItemControl.cs" />
+    <Compile Include="Guis\Widgets\CommandItemFactory.cs" />
+    <Compile Include="Guis\Widgets\CommandItemGraphics.cs" />
+    <Compile Include="Guis\Widgets\CommandItemSettings.cs" />
+    <Compile Include="Guis\Widgets\CommandItemSwapProcess.cs" />
+    <Compile Include="Guis\Widgets\CommandItemViewControl.cs" />
+    <Compile Include="Guis\Widgets\CommandParser.cs" />
+    <Compile Include="Guis\Widgets\KnowledgeParser.cs" />
     <Compile Include="Guis\Widgets\KnowledgeRetrievedEventArgs.cs" />
-    <Compile Include="Guis\Widgets\CallViewControl.cs" />
-    <Compile Include="Guis\Widgets\CallViewFactory.cs" />
-    <Compile Include="Guis\Widgets\CallViewGraphics.cs" />
-    <Compile Include="Guis\Widgets\CallViewSettings.cs" />
+    <Compile Include="Guis\Widgets\CommandViewControl.cs" />
+    <Compile Include="Guis\Widgets\CommandViewFactory.cs" />
+    <Compile Include="Guis\Widgets\CommandViewGraphics.cs" />
+    <Compile Include="Guis\Widgets\CommandViewSettings.cs" />
     <Compile Include="Guis\Widgets\KnowledgeItemControl.cs" />
     <Compile Include="Guis\Widgets\KnowledgeItemFileDataControl.cs" />
     <Compile Include="Guis\Widgets\KnowledgeItemFactory.cs" />
@@ -137,6 +142,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Configurations\Startup.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Icon.ico" />
     <None Include="Service References\PerseveranceServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
@@ -193,11 +201,11 @@
       <Project>{91a424b6-e62b-4b7a-b30d-331c7e3af5f0}</Project>
       <Name>MetaMind.Perseverance</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ThirdParty\C3.Primitives2D\C3.Primitives2D.csproj">
+    <ProjectReference Include="..\ThirdParties\C3.Primitives2D\C3.Primitives2D.csproj">
       <Project>{39AD1482-1881-4852-A05D-DC61B0D3446A}</Project>
       <Name>C3.Primitives2D</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ThirdParty\CodeProject.FileSearcher\CodeProject.FileSearcher.csproj">
+    <ProjectReference Include="..\ThirdParties\CodeProject.FileSearcher\CodeProject.FileSearcher.csproj">
       <Project>{d345e22b-f312-4e5e-bcb8-f311a2fa5125}</Project>
       <Name>CodeProject.FileSearcher</Name>
     </ProjectReference>

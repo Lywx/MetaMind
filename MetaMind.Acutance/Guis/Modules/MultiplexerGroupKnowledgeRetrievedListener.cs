@@ -18,10 +18,10 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public override bool HandleEvent(EventBase @event)
         {
-            var callSelectedArgs = @event.Data as KnowledgeRetrievedEventArgs;
-            if (callSelectedArgs != null)
+            var commandSelectedArgs = @event.Data as KnowledgeRetrievedEventArgs;
+            if (commandSelectedArgs != null)
             {
-                this.knowledgeView.Control.LoadResult(callSelectedArgs.Path, false);
+                this.knowledgeView.Control.LoadResult(commandSelectedArgs.Path, false);
             }
 
             return true;

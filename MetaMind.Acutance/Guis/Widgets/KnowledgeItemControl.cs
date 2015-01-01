@@ -32,9 +32,9 @@ namespace MetaMind.Acutance.Guis.Widgets
             {
                 this.NameFrame.MouseLeftClicked += this.LoadResult;
             }
-            else if (ItemData.IsCall)
+            else if (ItemData.IsCommand)
             {
-                this.NameFrame.MouseLeftDoubleClicked += this.LoadCall;
+                this.NameFrame.MouseLeftDoubleClicked += this.LoadCommand;
             }
         }
 
@@ -52,9 +52,9 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Events
 
-        private void LoadCall(object sender, FrameEventArgs e)
+        private void LoadCommand(object sender, FrameEventArgs e)
         {
-            View.Control.LoadCall(ItemData.CallName, ItemData.Path, ItemData.Minutes);
+            View.Control.LoadCommand(ItemData.CommandName, ItemData.Path, ItemData.Minutes);
         }
 
         private void LoadResult(object sender, FrameEventArgs frameEventArgs)

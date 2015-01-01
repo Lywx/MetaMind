@@ -4,11 +4,11 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     using Microsoft.Xna.Framework;
 
-    public class CallItemSettings : TraceItemSettings
+    public class CommandItemSettings : TraceItemSettings
     {
         public Color NameFrameTransitionColor = ColorPalette.LightPink;
 
-        public CallItemSettings()
+        public CommandItemSettings()
         {
             this.RootFrameSize = this.NameFrameSize;
 
