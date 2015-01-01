@@ -306,9 +306,7 @@ namespace MetaMind.Engine.Components
             }
 
             hookProcHandler = HookProc;
-            prevWndProc =
-                (IntPtr)
-                SetWindowLong(window.Handle, GWL_WNDPROC, (int)Marshal.GetFunctionPointerForDelegate(hookProcHandler));
+            prevWndProc = (IntPtr)SetWindowLong(window.Handle, GWL_WNDPROC, (int)Marshal.GetFunctionPointerForDelegate(hookProcHandler));
 
             hIMC = ImmGetContext(window.Handle);
             isInitialized = true;

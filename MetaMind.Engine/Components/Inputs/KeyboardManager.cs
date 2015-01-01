@@ -8,6 +8,7 @@
 namespace MetaMind.Engine.Components.Inputs
 {
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
 
     using MetaMind.Engine.Guis;
@@ -50,10 +51,10 @@ namespace MetaMind.Engine.Components.Inputs
 
         KnowledgeEditItem,
 
-        CallClearItem,
-        CallDeleteItem,
-        CallResetItem,
-        CallSortItem,
+        CommandClearItem,
+        CommandDeleteItem,
+        CommandResetItem,
+        CommandSortItem,
 
         // synchronization
         // ---------------------------------------------------------------------
@@ -212,7 +213,8 @@ namespace MetaMind.Engine.Components.Inputs
 
         private KeyboardManager()
         {
-            ResetActionMaps();
+            this.ResetActionMap();
+            this.LoadActionMapFromFile();
         }
 
         #endregion Constructors
@@ -227,120 +229,65 @@ namespace MetaMind.Engine.Components.Inputs
 
         public static KeyboardActionMap[] ActionMaps
         {
-            get
-            {
-                return actionMaps;
-            }
+            get { return actionMaps; }
         }
 
-        /// <summary>
-        /// Reset the action maps to their default values.
-        /// </summary>
-        private static void ResetActionMaps()
+        private void ResetActionMap()
         {
             actionMaps = new KeyboardActionMap[(int)Actions.ActionNum];
 
-            // cursor movement
-            // -----------------------------------------------------------------
-            actionMaps[(int)Actions.Up] = new KeyboardActionMap();
-            actionMaps[(int)Actions.Up].Bindings.Add(Keys.K, new List<Keys>());
+            for (var i = 0; i < (int)Actions.ActionNum; i++)
+            {
+                actionMaps[i] = new KeyboardActionMap();
+            }
+        }
 
-            actionMaps[(int)Actions.Down] = new KeyboardActionMap();
-            actionMaps[(int)Actions.Down].Bindings.Add(Keys.J, new List<Keys>());
+        private void LoadActionMapFromFile()
+        {
+            var lines = File.ReadAllLines(@"Configurations/Keyboard.txt");
+            foreach (var line in lines)
+            {
+                this.LoadActionMapFromLine(line);
+            }
+        }
 
-            actionMaps[(int)Actions.Left] = new KeyboardActionMap();
-            actionMaps[(int)Actions.Left].Bindings.Add(Keys.H, new List<Keys>());
+        private void LoadActionMapFromLine(string line)
+        {
+            if (string.IsNullOrWhiteSpace(line))
+            {
+                return;
+            }
 
-            actionMaps[(int)Actions.Right] = new KeyboardActionMap();
-            actionMaps[(int)Actions.Right].Bindings.Add(Keys.L, new List<Keys>());
+            var firstSplit  = line.Split('=');
+            var secondSplit = firstSplit[1].Split(':');
 
-            actionMaps[(int)Actions.SUp] = new KeyboardActionMap();
-            actionMaps[(int)Actions.SUp].Bindings.Add(Keys.K, new List<Keys> { Keys.LeftControl });
+            var actionName = firstSplit[0];
+            Actions action;
+            Actions.TryParse(actionName, true, out action);
 
-            actionMaps[(int)Actions.SDown] = new KeyboardActionMap();
-            actionMaps[(int)Actions.SDown].Bindings.Add(Keys.J, new List<Keys> { Keys.LeftControl });
+            var keyName = secondSplit[0];
+            Keys key;
+            Keys.TryParse(keyName, true, out key);
 
-            actionMaps[(int)Actions.SLeft] = new KeyboardActionMap();
-            actionMaps[(int)Actions.SLeft].Bindings.Add(Keys.H, new List<Keys> { Keys.LeftControl });
+            List<Keys> modifiers = new List<Keys>();
 
-            actionMaps[(int)Actions.SRight] = new KeyboardActionMap();
-            actionMaps[(int)Actions.SRight].Bindings.Add(Keys.L, new List<Keys> { Keys.LeftControl });
+            if (secondSplit.Count() > 1)
+            {
+                foreach (var modifierName in secondSplit[1].Split(','))
+                {
+                    if (string.IsNullOrWhiteSpace(modifierName))
+                    {
+                        continue;
+                    }
 
-            // list management
-            // -----------------------------------------------------------------
-            // motivation
-            actionMaps[(int)Actions.MotivationCreateItem] = new KeyboardActionMap();
-            actionMaps[(int)Actions.MotivationCreateItem].Bindings.Add(Keys.O, new List<Keys> { Keys.Tab });
+                    Keys modifier;
+                    Keys.TryParse(modifierName, true, out modifier);
 
-            actionMaps[(int)Actions.MotivationDeleteItem] = new KeyboardActionMap();
-            actionMaps[(int)Actions.MotivationDeleteItem].Bindings.Add(Keys.D, new List<Keys> { Keys.Tab });
+                    modifiers.Add(modifier); 
+                }
+            }
 
-            actionMaps[(int)Actions.MotivationEditItem] = new KeyboardActionMap();
-            actionMaps[(int)Actions.MotivationEditItem].Bindings.Add(Keys.I, new List<Keys> { Keys.Tab });
-
-            // task
-            //-----------------------------------------------------------------
-            actionMaps[(int)Actions.TaskCreateItem] = new KeyboardActionMap();
-            actionMaps[(int)Actions.TaskCreateItem].Bindings.Add(Keys.O, new List<Keys> { Keys.LeftControl });
-
-            actionMaps[(int)Actions.TaskDeleteItem] = new KeyboardActionMap();
-            actionMaps[(int)Actions.TaskDeleteItem].Bindings.Add(Keys.D, new List<Keys> { Keys.LeftControl });
-
-            actionMaps[(int)Actions.TaskEditItem] = new KeyboardActionMap();
-            actionMaps[(int)Actions.TaskEditItem].Bindings.Add(Keys.I, new List<Keys> { Keys.LeftControl });
-
-            // trace
-            //-----------------------------------------------------------------
-            actionMaps[(int)Actions.TraceCreateItem] = new KeyboardActionMap();
-            actionMaps[(int)Actions.TraceCreateItem].Bindings.Add(Keys.O, new List<Keys> { Keys.LeftControl });
-
-            actionMaps[(int)Actions.TraceDeleteItem] = new KeyboardActionMap();
-            actionMaps[(int)Actions.TraceDeleteItem].Bindings.Add(Keys.D, new List<Keys> { Keys.LeftControl });
-
-            actionMaps[(int)Actions.TraceEditItem] = new KeyboardActionMap();
-            actionMaps[(int)Actions.TraceEditItem].Bindings.Add(Keys.I, new List<Keys> { Keys.LeftControl });
-
-            actionMaps[(int)Actions.TraceClearItem] = new KeyboardActionMap();
-            actionMaps[(int)Actions.TraceClearItem].Bindings.Add(Keys.C, new List<Keys> { Keys.LeftControl });
-
-            // knowledge
-            //-----------------------------------------------------------------
-            actionMaps[(int)Actions.KnowledgeEditItem] = new KeyboardActionMap();
-            actionMaps[(int)Actions.KnowledgeEditItem].Bindings.Add(Keys.I, new List<Keys> { Keys.LeftControl });
-
-            // call
-            //-----------------------------------------------------------------
-            actionMaps[(int)Actions.CallClearItem] = new KeyboardActionMap();
-            actionMaps[(int)Actions.CallClearItem].Bindings.Add(Keys.C, new List<Keys> { Keys.LeftControl });
-
-            actionMaps[(int)Actions.CallDeleteItem] = new KeyboardActionMap();
-            actionMaps[(int)Actions.CallDeleteItem].Bindings.Add(Keys.D, new List<Keys> { Keys.LeftControl });
-
-            actionMaps[(int)Actions.CallResetItem] = new KeyboardActionMap();
-            actionMaps[(int)Actions.CallResetItem].Bindings.Add(Keys.R, new List<Keys> { Keys.LeftControl });
-
-            actionMaps[(int)Actions.CallSortItem] = new KeyboardActionMap();
-            actionMaps[(int)Actions.CallSortItem].Bindings.Add(Keys.S, new List<Keys> { Keys.LeftControl });
-
-            // sychronization
-            // ---------------------------------------------------------------------
-            actionMaps[(int)Actions.ForceReset] = new KeyboardActionMap();
-            actionMaps[(int)Actions.ForceReset].Bindings.Add(Keys.R, new List<Keys> { Keys.LeftControl, Keys.LeftShift });
-
-            actionMaps[(int)Actions.ForceReverse] = new KeyboardActionMap();
-            actionMaps[(int)Actions.ForceReverse].Bindings.Add(Keys.Space, new List<Keys> { Keys.LeftControl, Keys.LeftShift });
-
-            actionMaps[(int)Actions.ForceFlip] = new KeyboardActionMap();
-            actionMaps[(int)Actions.ForceFlip].Bindings.Add(Keys.Enter, new List<Keys> { Keys.LeftControl, Keys.LeftShift });
-
-            // general
-            // ---------------------------------------------------------------------
-            actionMaps[(int)Actions.Escape] = new KeyboardActionMap();
-            actionMaps[(int)Actions.Escape].Bindings.Add(Keys.C, new List<Keys> { Keys.LeftControl });
-            actionMaps[(int)Actions.Escape].Bindings.Add(Keys.Escape, new List<Keys>());
-
-            actionMaps[(int)Actions.Enter] = new KeyboardActionMap();
-            actionMaps[(int)Actions.Enter].Bindings.Add(Keys.Space, new List<Keys>());
+            actionMaps[(int)action].Bindings.Add(key, modifiers);
         }
 
         #endregion Keyboard Action Mappings
