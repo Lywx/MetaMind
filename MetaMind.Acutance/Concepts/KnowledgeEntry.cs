@@ -1,43 +1,41 @@
 ﻿namespace MetaMind.Acutance.Concepts
 {
+    using System.Linq;
+
+    using MetaMind.Acutance.Parsers.Elements;
+
     public class KnowledgeEntry
     {
-        public KnowledgeEntry(string name, string commandName, string path, int minutes)
+        public KnowledgeEntry(Knowledge knowledge)
         {
-            this.Name = name;
-            this.Path = path;
+            if (knowledge != null)
+            {
+                this.Name = string.Concat(Enumerable.Repeat("#", (int)knowledge.Title.Level)) + " " + knowledge.Title.Name;
+                this.Knowledge = knowledge;
 
-            //this.Minutes = minutes;
-
-            //this.Content = new KnowledgeContent(name, commandMode);
-            //this.CommandName = commandName;
-
-            //this.IsCommand = this.Minutes > 0;
-
-            this.IsControl = false;
+                this.IsHighlighted = true;
+            }
         }
 
-        public KnowledgeEntry(string name)
+        public KnowledgeEntry(string name, bool isControl)
         {
-            this.Name = name;
+            this.Name      = name;
 
-            this.IsControl = true;
+            this.IsControl = isControl;
         }
 
-        public string Name { get; set; }
+        public Knowledge Knowledge { get; private set; }
 
-        public string Path { get; private set; }
-
-        public KnowledgeContent Content { get; private set; }
+        public bool IsHighlighted { get; set; }
 
         public bool IsBlank { get; set; }
-
-        public bool IsCommand { get; set; }
 
         public bool IsControl { get; set; }
 
         public bool IsFile { get; set; }
 
         public bool IsSearchResult { get; set; }
+
+        public string Name { get; set; }
     }
 }

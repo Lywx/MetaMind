@@ -18,6 +18,24 @@ namespace MetaMind.Acutance.Parsers.Grammers
 
     public class KnowledgeGrammar
     {
+        public static Parser<TimeTag> TimeTagFullParser = 
+            from hours   in Parse.CharExcept(':').Many().Text()
+            from lcolon  in Parse.Char(':')
+            from minutes in Parse.CharExcept(':').Many().Text() 
+            from rcolon  in Parse.Char(':') 
+            from seconds in Parse.CharExcept(':').Many().Text()
+            select new TimeTag(hours, minutes, seconds);
+
+        public static Parser<TimeTag> TimeTagConciseParser = 
+            from minutes in Parse.CharExcept(':').Many().Text() 
+            from rcolon  in Parse.Char(':') 
+            from seconds in Parse.CharExcept(':').Many().Text()
+            select new TimeTag("00", minutes, seconds);
+
+        public static Parser<Parser<TimeTag>> TimeTagStrategyParser =
+            Parse.Regex(@"(\d+:\d+:\d+)", "Hours:Minutes:Seconds").Return(TimeTagFullParser)
+                .Or(Parse.Regex(@"(\d+:\d+)", "Minutes:Seconds").Return(TimeTagConciseParser));
+
         public static Parser<TitleLevel> TitleLevelParser =
             Parse        .String("######").Return(TitleLevel.Six)
                 .Or(Parse.String("#####") .Return(TitleLevel.Five))
@@ -38,20 +56,20 @@ namespace MetaMind.Acutance.Parsers.Grammers
         public static Parser<Title> TitleWithTimeTagParser = from level    in TitleLevelParser
                                                              from sentence in BasicGrammar.SentenceParser
                                                              from text     in BasicGrammar.BracketedTextParser
-                                                             select new Title(level, sentence, TimeTagGrammer.TimeTagStrategyParser.Parse(text).Parse(text));
+                                                             select new Title(level, sentence, TimeTagStrategyParser.Parse(text).Parse(text));
 
-        public static KnowledgeModuleQuery LoadKnowledgeModule(string path)
+        public static KnowledgeFileQuery LoadKnowledgeModule(string path, int lineOffset)
         {
             if (Path.GetExtension(path) != ".md")
             {
                 return null;
             }
 
-            var module = new KnowledgeModule(path);
-            var query  = new KnowledgeModuleQuery(module);
+            var module = new KnowledgeFile(path);
+            var query  = new KnowledgeFileQuery(module);
 
             var lineList = File.ReadLines(path) as IList<string> ?? File.ReadLines(path).ToList();
-            for (var lineNum = 0; lineNum < lineList.Count; lineNum++)
+            for (var lineNum = lineOffset; lineNum < lineList.Count; lineNum++)
             {
                 var line = lineList[lineNum];
 

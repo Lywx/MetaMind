@@ -21,9 +21,16 @@ namespace MetaMind.Acutance.Concepts
         [DataMember]
         public List<CommandEntry> Commands { get; private set; }
 
-        public CommandEntry Create(string name, string path, int minutes)
+        public CommandEntry Create(string name, string path, DateTime date, CommandRepeativity repeativity)
         {
-            var entry = new CommandEntry(name, path, TimeSpan.FromMinutes(minutes));
+            var entry = new CommandEntry(name, path, date, repeativity);
+            this.Commands.Add(entry);
+            return entry;
+        }
+
+        public CommandEntry Create(string name, string path, TimeSpan timeout)
+        {
+            var entry = new CommandEntry(name, path, timeout);
             this.Commands.Add(entry);
             return entry;
         }

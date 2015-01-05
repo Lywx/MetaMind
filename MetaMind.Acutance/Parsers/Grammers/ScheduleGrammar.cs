@@ -1,5 +1,7 @@
 ﻿namespace MetaMind.Acutance.Parsers.Grammers
 {
+    using System.Linq;
+
     using MetaMind.Acutance.Parsers.Elements;
 
     using Sprache;
@@ -29,10 +31,33 @@
         .Or(Parse.String("Sunday").   End().Return(DayTag.Sunday))
         .Or(Parse.String("-").              Return(DayTag.Unspecified));
 
+        public static DateTag DateTag(string input)
+        {
+            var elems = input.Split(' ');
+
+            var repeativity = RepeativityParser                 .Parse(elems[0]);
+            var day         = DayParser                         .Parse(elems[1]);
+            var time        = KnowledgeGrammar.TimeTagFullParser.Parse(elems[2]);
+
+            return new DateTag(repeativity, day, time);
+        }
+
         public static Parser<string> ScheduleUnitParser = 
             Parse.Regex(@"^(?![\[\n])(.)*((.*)?(\n)?(?!\[))*", "Between two [DateTag]");
 
         public static Parser<string> CommandUnitParser = 
-            Parse.Regex(@"Command:((.*)\n?[^\n])*", "Command: ... until an empty line");
+            
+            // this regex is very sensitive to Window \r\n newline expression
+            from regex in Parse.Regex(@"Command:((.*)(\r)?\n)*!?([\r\n:])", "Command: ... until an empty line")
+            from whitespaces in Parse.WhiteSpace.Many().Optional()
+            select regex.Trim();
+
+        public static Parser<Schedule> ScheduleParser = from text in BasicGrammar.BracketedTextParser
+                                                        from spaces in Parse.WhiteSpace.Many().Optional()
+                                                        from unit in ScheduleUnitParser
+                                                        select new Schedule(DateTag(text), unit);
+
+        public static Parser<ScheduleFile> ScheduleFileParser = from schedules in ScheduleParser.AtLeastOnce()
+                                                                select new ScheduleFile(schedules.ToList());
     }
 }

@@ -1,5 +1,9 @@
 ﻿namespace MetaMind.AcutanceUnitTest.Parsers
 {
+    using System;
+    using System.IO;
+    using System.Linq;
+
     using MetaMind.Acutance.Parsers.Elements;
     using MetaMind.Acutance.Parsers.Grammers;
 
@@ -100,15 +104,15 @@
         }
 
         [TestMethod]
-        public void ScheduleComplete()
+        public void ScheduleDate()
         {
             var input = "Everyday - 8:0:0";
 
             var elems = input.Split(' ');
 
-            var repeativity = ScheduleGrammar.RepeativityParser.Parse(elems[0]);
-            var day         = ScheduleGrammar.DayParser        .Parse(elems[1]);
-            var time        = TimeTagGrammer.TimeTagFullParser .Parse(elems[2]);
+            var repeativity = ScheduleGrammar.RepeativityParser .Parse(elems[0]);
+            var day         = ScheduleGrammar.DayParser         .Parse(elems[1]);
+            var time        = KnowledgeGrammar.TimeTagFullParser.Parse(elems[2]);
 
             Assert.AreEqual(RepeativityTag.EveryDay, repeativity);
             Assert.AreEqual(DayTag.Unspecified, day);
@@ -116,5 +120,42 @@
             Assert.AreEqual(0, time.Minutes);
             Assert.AreEqual(0, time.Seconds);
         }
+
+
+        [TestMethod]
+        public void ScheduleASchedule()
+        {
+            var input = TestResources.AScheduleSample;
+
+            var parsed = ScheduleGrammar.ScheduleParser.Parse(input);
+
+            Assert.AreEqual(DayTag.Unspecified, parsed.Date.Day);
+            Assert.AreEqual(8, parsed.Date.Time.Hours);
+            Assert.AreEqual(0, parsed.Date.Time.Minutes);
+            Assert.AreEqual(0, parsed.Date.Time.Seconds);
+            Assert.AreEqual(RepeativityTag.EveryDay, parsed.Date.Repeativity);
+            Assert.AreEqual(TestResources.AScheduleSampleScheduleContent, parsed.Content);
+        }
+
+        [TestMethod]
+        public void ScheduleTwoSchedule()
+        {
+            var input = TestResources.TwoScheduleSample;
+
+            var parsed = ScheduleGrammar.ScheduleFileParser.Parse(input);
+
+            Assert.AreEqual(2, parsed.Schedules.Count);
+        }
+
+        [TestMethod]
+        public void ScheduleCommandExtraction()
+        {
+            var input = TestResources.AScheduleSampleScheduleContent;
+            
+            var parsed = ScheduleGrammar.CommandUnitParser.Parse(input);
+            
+            Assert.AreEqual(TestResources.AScheduleSampleCommandContent, parsed);
+        }
+
     }
 }
