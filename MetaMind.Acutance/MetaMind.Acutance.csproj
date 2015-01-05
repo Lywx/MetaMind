@@ -68,8 +68,10 @@
     <Compile Include="Concepts\CommandTimer.cs" />
     <Compile Include="Concepts\CommandTimerByDate.cs" />
     <Compile Include="Concepts\CommandTimerByTimeout.cs" />
-    <Compile Include="Concepts\KnowledgeContent.cs" />
+    <Compile Include="Concepts\Knowledge.cs" />
     <Compile Include="Concepts\KnowledgeEntry.cs" />
+    <Compile Include="Concepts\KnowledgeModuleQuery.cs" />
+    <Compile Include="Concepts\KnowledgeModule.cs" />
     <Compile Include="Concepts\TraceEntry.cs" />
     <Compile Include="Concepts\Tracelist.cs" />
     <Compile Include="Guis\Modules\MultiplexerGroupCommandCreatedListener.cs" />
@@ -87,8 +89,6 @@
     <Compile Include="Guis\Widgets\CommandItemSettings.cs" />
     <Compile Include="Guis\Widgets\CommandItemSwapProcess.cs" />
     <Compile Include="Guis\Widgets\CommandItemViewControl.cs" />
-    <Compile Include="Guis\Widgets\CommandParser.cs" />
-    <Compile Include="Guis\Widgets\KnowledgeParser.cs" />
     <Compile Include="Guis\Widgets\KnowledgeRetrievedEventArgs.cs" />
     <Compile Include="Guis\Widgets\CommandViewControl.cs" />
     <Compile Include="Guis\Widgets\CommandViewFactory.cs" />
@@ -104,6 +104,7 @@
     <Compile Include="Guis\Widgets\KnowledgeViewFactory.cs" />
     <Compile Include="Guis\Widgets\KnowledgeViewGraphics.cs" />
     <Compile Include="Guis\Widgets\KnowledgeViewSettings.cs" />
+    <Compile Include="Guis\Widgets\ModuleCreatedEventArgs.cs" />
     <Compile Include="Guis\Widgets\TraceItemControl.cs" />
     <Compile Include="Guis\Widgets\TraceItemFactory.cs" />
     <Compile Include="Guis\Widgets\TraceItemFrameControl.cs" />
@@ -115,6 +116,18 @@
     <Compile Include="Guis\Widgets\TraceViewFactory.cs" />
     <Compile Include="Guis\Widgets\TraceViewGraphics.cs" />
     <Compile Include="Guis\Widgets\TraceViewSettings.cs" />
+    <Compile Include="Parsers\Elements\Configuration.cs" />
+    <Compile Include="Parsers\Elements\Sentence.cs" />
+    <Compile Include="Parsers\Elements\TimeTag.cs" />
+    <Compile Include="Parsers\Grammers\BasicGrammar.cs" />
+    <Compile Include="Parsers\Elements\DateTag.cs" />
+    <Compile Include="Parsers\Grammers\ScheduleGrammar.cs" />
+    <Compile Include="Parsers\Grammers\TimeTagGrammer.cs" />
+    <Compile Include="Parsers\Elements\TitleLevel.cs" />
+    <Compile Include="Parsers\StartupGrammar.cs" />
+    <Compile Include="Parsers\Grammers\KnowledgeGrammar.cs" />
+    <Compile Include="Parsers\Elements\Title.cs" />
+    <Compile Include="Parsers\Section.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screens\BackgroundScreen.cs" />
@@ -129,9 +142,16 @@
     <Compile Include="Sessions\AdventureEventType.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="FastMember, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\FastMember.1.0.0.11\lib\net40\FastMember.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MSBuildProgramFiles32)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Sprache">
+      <HintPath>..\ThirdParties\Sprache.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -145,7 +165,9 @@
     <Content Include="Configurations\Startup.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Configurations\Syntax.txt" />
     <Content Include="Icon.ico" />
+    <None Include="packages.config" />
     <None Include="Service References\PerseveranceServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -201,13 +223,9 @@
       <Project>{91a424b6-e62b-4b7a-b30d-331c7e3af5f0}</Project>
       <Name>MetaMind.Perseverance</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ThirdParties\C3.Primitives2D\C3.Primitives2D.csproj">
-      <Project>{39AD1482-1881-4852-A05D-DC61B0D3446A}</Project>
-      <Name>C3.Primitives2D</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ThirdParties\CodeProject.FileSearcher\CodeProject.FileSearcher.csproj">
-      <Project>{d345e22b-f312-4e5e-bcb8-f311a2fa5125}</Project>
-      <Name>CodeProject.FileSearcher</Name>
+    <ProjectReference Include="..\ThirdParties\Primitives2D\ThirdParties.Primitives2D.csproj">
+      <Project>{39ad1482-1881-4852-a05d-dc61b0d3446a}</Project>
+      <Name>ThirdParties.Primitives2D</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
