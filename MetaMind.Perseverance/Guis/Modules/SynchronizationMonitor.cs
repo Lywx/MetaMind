@@ -9,9 +9,6 @@
 
     using Microsoft.Xna.Framework;
 
-    using MouseKeyboardActivityMonitor;
-    using MouseKeyboardActivityMonitor.WinApi;
-
     public class SynchronizationAlertedEventArgs : EventArgs
     {
     }
@@ -30,12 +27,9 @@
         private bool     actived;
         private DateTime alertMoment = DateTime.Now;
 
-        private MouseHookListener globalMouseListener;
-
-        public SynchronizationMonitor(Game game, ISynchronization synchronization, bool listening)
+        public SynchronizationMonitor(Game game, ISynchronization synchronization)
             : base(game)
         {
-            this.listening = listening;
             this.Synchronization = synchronization;
 
             this.Game.Components.Add(this);
@@ -45,30 +39,11 @@
 
         public void Start()
         {
-            // only create mouse hook when listening
-            if (this.listening)
-            {
-                // Note: for an application hook, use the AppHooker class instead
-                this.globalMouseListener = new MouseHookListener(new GlobalHooker()) { Enabled = true };
-
-                // Set the event handler
-                // recommended to use the Extended handlers, which allow input suppression among other additional information
-                this.globalMouseListener.MouseMoveExt += this.Confirm;
-            }
-
             this.actived = true;
         }
 
         public void Stop()
         {
-            if (this.listening)
-            {
-                if (this.globalMouseListener != null)
-                {
-                    this.globalMouseListener.Dispose();
-                }
-            }
-
             this.actived = false;
         }
 
@@ -110,11 +85,6 @@
         private void Confirm()
         {
             this.alertMoment = DateTime.Now;
-        }
-        
-        private void Confirm(object sender, MouseEventExtArgs e)
-        {
-            this.Confirm();
         }
     }
 }

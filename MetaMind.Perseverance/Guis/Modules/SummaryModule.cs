@@ -1,7 +1,5 @@
 namespace MetaMind.Perseverance.Guis.Modules
 {
-    using C3.Primtive2DXna;
-
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Modules;
@@ -10,6 +8,8 @@ namespace MetaMind.Perseverance.Guis.Modules
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
+
+    using Primtives2D;
 
     public class SummaryModule : Module<SummaryModuleSettings>
     {

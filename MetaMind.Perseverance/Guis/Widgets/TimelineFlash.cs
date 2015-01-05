@@ -1,12 +1,12 @@
 ﻿namespace MetaMind.Perseverance.Guis.Widgets
 {
-    using C3.Primtive2DXna;
-
     using MetaMind.Engine;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Settings;
 
     using Microsoft.Xna.Framework;
+
+    using Primtives2D;
 
     public class FlashSettings
     {

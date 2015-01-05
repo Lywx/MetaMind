@@ -2,11 +2,11 @@
 {
     using System.Globalization;
 
-    using C3.Primtive2DXna;
-
     using MetaMind.Engine.Extensions;
 
     using Microsoft.Xna.Framework;
+
+    using Primtives2D;
 
     public class ViewItemBasicGraphics : ViewItemComponent, IItemGraphics
     {

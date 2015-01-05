@@ -2,12 +2,12 @@ namespace MetaMind.Perseverance.Guis.Widgets
 {
     using System;
 
-    using C3.Primtive2DXna;
-
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Items;
 
     using Microsoft.Xna.Framework;
+
+    using Primtives2D;
 
     public class TaskItemGraphics : ViewItemBasicGraphics
     {

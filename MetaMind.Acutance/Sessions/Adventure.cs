@@ -116,7 +116,7 @@ namespace MetaMind.Acutance.Sessions
         public void Update()
         {
             this.Tracelist.Update();
-            this.Commandlist .Update();
+            this.Commandlist.Update();
         }
 
         #endregion Update

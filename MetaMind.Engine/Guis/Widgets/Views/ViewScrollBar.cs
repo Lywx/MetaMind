@@ -9,11 +9,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 {
     using System;
 
-    using C3.Primtive2DXna;
-
     using MetaMind.Engine.Extensions;
 
     using Microsoft.Xna.Framework;
+
+    using Primtives2D;
 
     public class ViewScrollBar : VisualViewComponent
     {

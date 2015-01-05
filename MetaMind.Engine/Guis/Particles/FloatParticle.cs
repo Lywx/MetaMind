@@ -9,11 +9,11 @@ namespace MetaMind.Engine.Guis.Particles
 {
     using System;
 
-    using C3.Primtive2DXna;
-
     using MetaMind.Engine.Settings;
 
     using Microsoft.Xna.Framework;
+
+    using Primtives2D;
 
     public delegate FloatParticle GenerateParticle(int factor);
 

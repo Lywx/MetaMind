@@ -8,7 +8,7 @@ namespace MetaMind.Engine.Parsers
 {
     using System.Text.RegularExpressions;
 
-    public static class Parser
+    public static class RegexParser
     {
         public static string ParseLine(string line, string pattern)
         {

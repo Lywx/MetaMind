@@ -2,8 +2,6 @@
 {
     using System;
 
-    using C3.Primtive2DXna;
-
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Extensions;
@@ -14,6 +12,8 @@
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+
+    using Primtives2D;
 
     public class SynchronizationModule : Module<SynchronizationModuleSettings>
     {
@@ -43,7 +43,7 @@
 
             // best close the mouse listener
             // which may casue severe mouse performance issues
-            this.monitor = new SynchronizationMonitor(ScreenManager.Game, synchronization, false);
+            this.monitor = new SynchronizationMonitor(ScreenManager.Game, synchronization);
             this.valve   = new SynchronizationValve();
         }
 

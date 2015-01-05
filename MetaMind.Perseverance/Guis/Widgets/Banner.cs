@@ -1,13 +1,13 @@
 ﻿namespace MetaMind.Perseverance.Guis.Widgets
 {
-    using C3.Primtive2DXna;
-
     using MetaMind.Engine;
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Views;
 
     using Microsoft.Xna.Framework;
+
+    using Primtives2D;
 
     public class Banner : EngineObject
     {
