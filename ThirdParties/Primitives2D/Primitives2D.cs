@@ -5,7 +5,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace C3.Primtive2DXna
+namespace Primtives2D
 {
     using System;
     using System.Collections.Generic;

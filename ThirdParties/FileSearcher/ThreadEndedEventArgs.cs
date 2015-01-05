@@ -1,4 +1,4 @@
-﻿namespace CodeProject.FileSearcher
+﻿namespace FileSearcher
 {
     using System;
 

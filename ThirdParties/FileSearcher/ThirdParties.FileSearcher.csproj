@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D345E22B-F312-4E5E-BCB8-F311A2FA5125}</ProjectGuid>
+    <ProjectGuid>{B0F2FFCC-02F2-450C-AD5A-B60C685E2112}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CodeProject.FileSearcher</RootNamespace>
-    <AssemblyName>CodeProject.FileSearcher</AssemblyName>
+    <RootNamespace>FileSearcher</RootNamespace>
+    <AssemblyName>ThirdParties.FileSearcher</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
