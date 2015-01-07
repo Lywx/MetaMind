@@ -2,7 +2,7 @@
 {
     public enum SessionEventType
     {
-        CommandCreated     = 0x71c7,
+        CommandAlerted     = 0x71c7,
 
         CommandNotified    = 0x8a8e,
 

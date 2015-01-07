@@ -20,10 +20,14 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public override bool HandleEvent(EventBase @event)
         {
-            var notifiedEventArgs = @event.Data as CommandNotifiedEventArgs;
-            if (notifiedEventArgs != null)
+            var eventArgs = @event.Data as CommandNotifiedEventArgs;
+            if (eventArgs != null)
             {
-                var notifiedCommand = notifiedEventArgs.NotifiedCommand;
+                var notifiedCommand = eventArgs.NotifiedCommand;
+
+                this.commandView.Control.AddItem(notifiedCommand);
+
+                // possibly unnecessary
                 var notifiedItem = this.commandView.Items.Find(item => ReferenceEquals(item.ItemData, notifiedCommand));
 
                 int id = notifiedItem.ItemControl.Id;

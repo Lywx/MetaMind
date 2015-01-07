@@ -27,6 +27,21 @@ namespace MetaMind.Acutance.Guis.Widgets
             this.View.Items.Add(item);
         }
 
+        public override void SortItems(ViewSortMode sortMode)
+        {
+            base.SortItems(sortMode);
+
+            switch (sortMode)
+            {
+                case ViewSortMode.Name:
+                    {
+                        ViewSettings.Source.Sort(ModuleSortMode.Name);
+                    }
+
+                    break;
+            } 
+        }
+
         #endregion Operations
 
         #region Update
@@ -47,10 +62,14 @@ namespace MetaMind.Acutance.Guis.Widgets
                     {
                         // itme deletion is handled by item control
                         // auto select last item
-                        if (this.View.Items.Count > 1)
+                        if (View.Items.Count > 1)
                         {
                             // this will be called before item deletion
-                            this.Selection.Select(this.View.Items.Count - 2);
+                            if (this.Selection.SelectedId != null && 
+                                this.Selection.SelectedId > View.Items.Count - 2)
+                            {
+                                this.Selection.Select(View.Items.Count - 2);
+                            }
                         }
                     }
 
@@ -65,6 +84,11 @@ namespace MetaMind.Acutance.Guis.Widgets
                         {
                             this.Selection.Select(0);
                         }
+                    }
+
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.ModuleSortItem))
+                    {
+                        this.SortItems(ViewSortMode.Name);
                     }
                 }
             }

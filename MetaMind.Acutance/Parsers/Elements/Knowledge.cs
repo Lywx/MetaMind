@@ -2,13 +2,15 @@ namespace MetaMind.Acutance.Parsers.Elements
 {
     using System;
 
+    using MetaMind.Acutance.Concepts;
+
     public class Knowledge
     {
-        public Knowledge(Title title, KnowledgeFile file, int offset)
+        public Knowledge(Title title, string path, int offset)
         {
-            if (file == null)
+            if (path == null)
             {
-                throw new ArgumentNullException("file");
+                throw new ArgumentNullException("path");
             }
 
             if (offset < 0)
@@ -17,16 +19,19 @@ namespace MetaMind.Acutance.Parsers.Elements
             }
 
             this.Title  = title;
-            this.File   = file;
+            this.Path   = path;
             this.Offset = offset;
-
-            this.File.Add(this);
         }
+
+        public string Path { get; private set; }
 
         public Title Title { get; private set; }
 
         public int Offset { get; private set; }
 
-        public KnowledgeFile File { get; set; }
+        public KnowledgeEntry ToKnowledgeEntry()
+        {
+            return new KnowledgeEntry(this);
+        }
     }
 }

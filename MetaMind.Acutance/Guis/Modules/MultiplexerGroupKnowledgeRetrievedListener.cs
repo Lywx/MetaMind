@@ -21,7 +21,7 @@ namespace MetaMind.Acutance.Guis.Modules
             var eventArgs = @event.Data as KnowledgeRetrievedEventArgs;
             if (eventArgs != null)
             {
-                this.knowledgeView.Control.LoadResult(eventArgs.Path, eventArgs.Offset, false, true);
+                this.knowledgeView.Control.LoadResult(eventArgs.Path, false, eventArgs.Offset);
             }
 
             return true;

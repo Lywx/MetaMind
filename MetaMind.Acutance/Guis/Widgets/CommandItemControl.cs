@@ -51,16 +51,17 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Operations
 
-        private void ResetIt()
-        {
-            ItemData.Reset();
-        }
-
-        private void DeleteIt()
+        /// <summary>
+        /// Delete command item from view
+        /// </summary>
+        /// <remarks>
+        /// Delete command item in view won't delete underlying command entry from commandlist.
+        /// Only way to validly delete the entry is to delete corresponding module entry.
+        /// </remarks>
+        private void DenotifyIt()
         {
             View.Items.Remove(Item);
-
-            View.Control.ItemFactory.RemoveData(Item);
+            ItemData.Reset();
         }
 
         #endregion Operations
@@ -92,7 +93,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                     {
                         if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CommandDeleteItem))
                         {
-                            this.DeleteIt();
+                            this.DenotifyIt();
                         }
                     }
                 }
@@ -105,12 +106,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                     {
                         if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CommandClearItem))
                         {
-                            this.DeleteIt();
-                        }
-
-                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CommandResetItem))
-                        {
-                            this.ResetIt();
+                            this.DenotifyIt();
                         }
                     }
                 }

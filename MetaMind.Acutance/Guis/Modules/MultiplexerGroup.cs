@@ -10,7 +10,6 @@ namespace MetaMind.Acutance.Guis.Modules
 
     public class MultiplexerGroup : Group<MultiplexerGroupSettings>, IConfigurationLoader
     {
-        private MultiplexerGroupCommandCreatedListener         commandCreatedListener;
         private MultiplexerGroupCommandNotifiedListener        commandNotifiedListener;
 
         private MultiplexerGroupModuleCreatedListener          moduleCreatedListener;
@@ -65,12 +64,12 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public void Unload()
         {
-            if (this.commandCreatedListener != null)
+            if (this.moduleCreatedListener != null)
             {
-                EventManager.RemoveListener(this.commandCreatedListener);
+                EventManager.RemoveListener(this.moduleCreatedListener);
             }
 
-            this.commandCreatedListener = null;
+            this.moduleCreatedListener = null;
 
             if (this.commandNotifiedListener != null)
             {
@@ -119,12 +118,12 @@ namespace MetaMind.Acutance.Guis.Modules
 
         private void LoadEvents()
         {
-            if (this.commandCreatedListener == null)
+            if (this.moduleCreatedListener == null)
             {
-                this.commandCreatedListener = new MultiplexerGroupCommandCreatedListener(this.CommandView);
+                this.moduleCreatedListener = new MultiplexerGroupModuleCreatedListener(this.ModuleView);
             }
 
-            EventManager.AddListener(this.commandCreatedListener);
+            EventManager.AddListener(this.moduleCreatedListener);
 
             if (this.commandNotifiedListener == null)
             {

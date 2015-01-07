@@ -2,8 +2,6 @@
 
 namespace MetaMind.Acutance.Concepts
 {
-    using MetaMind.Acutance.Parsers.Elements;
-
     public class ScheduleEntry : CommandEntry
     {
         public ScheduleEntry(string name, string path, int offset, DateTime date, CommandRepeativity repeativity)

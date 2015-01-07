@@ -39,8 +39,8 @@ namespace MetaMind.Acutance.Sessions
         {
             this.Random = new Random((int)DateTime.Now.Ticks);
 
-            this.Modulelist  = new Modulelist();
             this.Commandlist = new Commandlist();
+            this.Modulelist  = new Modulelist(this.Commandlist);
         }
 
         #endregion Constructors
@@ -134,15 +134,16 @@ namespace MetaMind.Acutance.Sessions
                 this.Random = new Random((int)DateTime.Now.Ticks);
             }
 
-            if (this.Modulelist == null)
-            {
-                this.Modulelist = new Modulelist();
-            }
-
             if (this.Commandlist == null)
             {
                 this.Commandlist = new Commandlist();
             }
+
+            if (this.Modulelist == null)
+            {
+                this.Modulelist = new Modulelist(this.Commandlist);
+            }
+
         }
 
         #endregion

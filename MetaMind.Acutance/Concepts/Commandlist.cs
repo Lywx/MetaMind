@@ -89,14 +89,19 @@ namespace MetaMind.Acutance.Concepts
             }
         }
 
+
+        #endregion
+
+        #region Update
+
         /// <summary>
         /// Update every instance of commmand entries.
         /// </summary>
         public void Update()
         {
-            foreach (var @event in this.Commands.ToArray())
+            foreach (var command in this.Commands.ToArray())
             {
-                @event.Update();
+                command.Update();
             }
         }
 

@@ -18,6 +18,8 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #endregion Constructors
 
+        #region Operations
+
         public void AddItem(CommandEntry entry)
         {
             var item = new ViewItemExchangeless(View, ViewSettings, ItemSettings, ItemFactory, entry);
@@ -36,8 +38,11 @@ namespace MetaMind.Acutance.Guis.Widgets
                     }
 
                     break;
-            } 
+            }
         }
+
+
+        #endregion
 
         public override void UpdateInput(GameTime gameTime)
         {

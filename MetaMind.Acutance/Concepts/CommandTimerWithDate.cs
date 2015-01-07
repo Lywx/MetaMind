@@ -63,7 +63,7 @@ namespace MetaMind.Acutance.Concepts
             get
             {
                 var delta = DateTime.Now.TimeOfDay - new TimeSpan(0, this.Date.Hour, this.Date.Minute, this.Date.Second);
-                return delta < TimeSpan.FromSeconds(1);
+                return delta.Duration() < TimeSpan.FromSeconds(1);
             }
         }
 

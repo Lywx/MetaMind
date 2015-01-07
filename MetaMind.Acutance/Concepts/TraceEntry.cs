@@ -1,6 +1,5 @@
 namespace MetaMind.Acutance.Concepts
 {
-    using System;
     using System.Diagnostics;
     using System.Runtime.Serialization;
 
@@ -20,10 +19,28 @@ namespace MetaMind.Acutance.Concepts
 
         public TraceEntry()
         {
-            this.Reset();
+            this.Experience = Experience.Zero;
 
             this.timer = new Stopwatch();
             this.timer.Start();
+        }
+
+        ~TraceEntry()
+        {
+            
+        }
+
+        public override void Dispose()
+        {
+            if (this.timer != null)
+            {
+                this.timer.Stop();
+            }
+
+            this.timer = null;
+
+            this.Name       = null;
+            this.Experience = null;
         }
 
         [OnDeserialized]
@@ -33,7 +50,7 @@ namespace MetaMind.Acutance.Concepts
             this.timer.Start();
         }
 
-        public void Reset()
+        public virtual void Reset()
         {
             this.Experience = Experience.Zero;
         }

@@ -1,8 +1,7 @@
 ﻿namespace MetaMind.Acutance.Concepts
 {
-    using System.Linq;
-
     using MetaMind.Acutance.Parsers.Elements;
+    using System.Linq;
 
     public class KnowledgeEntry
     {
@@ -20,14 +19,10 @@
 
         public KnowledgeEntry(string name, bool isControl)
         {
-            this.Name      = name;
+            this.Name = name;
 
             this.IsControl = isControl;
         }
-
-        public Knowledge Knowledge { get; private set; }
-
-        public bool IsTitle { get; set; }
 
         public bool IsBlank { get; set; }
 
@@ -37,12 +32,15 @@
 
         public bool IsResult { get; set; }
 
+        public bool IsTitle { get; set; }
+
+        public Knowledge Knowledge { get; private set; }
+
         public string Name { get; set; }
 
-        //public CommandEntry ToCommmandEntry()
-        //{
-        //    // TODO: how to convert to command entry easier
-        //    return Acutance.Session.Commandlist.Create(CommandType.Knowledge, )
-        //}
+        public CommandEntry ToCommmandEntry()
+        {
+            return new CommandEntry(this.Knowledge.Title.Name, this.Knowledge.Path, this.Knowledge.Offset, this.Knowledge.Title.Tag.ToTimeSpan());
+        }
     }
 }

@@ -30,6 +30,8 @@ namespace MetaMind.Acutance.Guis.Widgets
         public void RemoveData(IViewItem item)
         {
             Tracelist.Remove(item.ItemData);
+
+            item.ItemData.Dispose();
         }
     }
 }

@@ -1,6 +1,7 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
     using MetaMind.Acutance.Concepts;
+    using MetaMind.Acutance.Parsers.Elements;
     using MetaMind.Engine.Guis.Widgets.Items;
 
     public class ModuleItemFactory : ViewItemBasicFactory2D
@@ -12,6 +13,11 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public IModulelist Modulelist { get; set; }
 
+        public dynamic CreateData(KnowledgeFile file)
+        {
+            return this.Modulelist.Create(file);
+        }
+
         public override dynamic CreateControl(IViewItem item)
         {
             return new ModuleItemControl(item, this.Modulelist.Modules);
@@ -19,12 +25,14 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public override IItemGraphics CreateGraphics(IViewItem item)
         {
-            return new TraceItemGraphics(item);
+            return new ModuleItemGraphics(item);
         }
 
         public void RemoveData(IViewItem item)
         {
             this.Modulelist.Remove(item.ItemData);
+
+            item.ItemData.Dispose();
         }
     }
 }

@@ -7,6 +7,8 @@
 
 namespace MetaMind.Acutance.Parsers.Elements
 {
+    using System;
+
     public struct TimeTag
     {
         public readonly int Hours;
@@ -28,6 +30,11 @@ namespace MetaMind.Acutance.Parsers.Elements
         public static TimeTag Zero
         {
             get { return new TimeTag(); }
+        }
+
+        public TimeSpan ToTimeSpan()
+        {
+            return new TimeSpan(this.Hours, this.Minutes, this.Seconds);
         }
     }
 }

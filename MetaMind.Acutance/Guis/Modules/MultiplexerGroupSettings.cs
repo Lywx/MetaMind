@@ -80,7 +80,7 @@ namespace MetaMind.Acutance.Guis.Modules
             this.ModuleItemSettings.Reconfigure();
 
             this.ModuleStartPoint = new Point(GraphicsSettings.Width - this.ViewStartPoint.X - 500, this.ViewStartPoint.Y);
-            this.ModuleViewSettings = new ModuleViewSettings
+            this.ModuleViewSettings = new ModuleViewSettings(this.Modulelist)
                                          {
                                              StartPoint = this.ModuleStartPoint,
                                              RootMargin = new Point(moduleViewColumnWidth, this.ModuleItemSettings.NameFrameSize.Y),
@@ -169,6 +169,11 @@ namespace MetaMind.Acutance.Guis.Modules
         public List<CommandEntry> Commands
         {
             get { return Acutance.Session.Commandlist.Commands; }
+        }
+
+        public IModulelist Modulelist  
+        {
+            get { return Acutance.Session.Modulelist; }
         }
 
         public List<ModuleEntry> Modules

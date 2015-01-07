@@ -15,7 +15,7 @@ namespace MetaMind.Acutance.Parsers.Elements
 
         public string Path { get; private set; }
 
-        public void Add(Knowledge knowledge)
+        public void AddKnowledge(Knowledge knowledge)
         {
             this.Knowledges.Add(knowledge);
         }

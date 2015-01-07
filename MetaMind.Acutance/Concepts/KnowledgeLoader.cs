@@ -39,8 +39,10 @@ namespace MetaMind.Acutance.Concepts
                 if (result.WasSuccessful)
                 {
                     var title     = result.Value;
-                    var knowledge = new Knowledge(title, module, lineNum);
+                    var knowledge = new Knowledge(title, path, lineNum);
                     var entry     = new KnowledgeEntry(knowledge);
+
+                    module.AddKnowledge(knowledge);
                     query.AddEntry(entry);
                 }
                 else
