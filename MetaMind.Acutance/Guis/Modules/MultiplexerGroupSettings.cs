@@ -15,11 +15,11 @@ namespace MetaMind.Acutance.Guis.Modules
         public readonly Point ViewStartPoint = new Point(10, 108);
 
         //---------------------------------------------------------------------
-        public readonly TraceViewFactory  ModuleViewFactory = new TraceViewFactory();
+        public readonly ModuleViewFactory  ModuleViewFactory = new ModuleViewFactory(Acutance.Session.Modulelist);
         
-        public readonly TraceViewSettings ModuleViewSettings;
+        public readonly ModuleViewSettings ModuleViewSettings;
 
-        public readonly TraceItemSettings ModuleItemSettings;
+        public readonly ModuleItemSettings ModuleItemSettings;
 
         public readonly Point ModuleStartPoint;
 
@@ -71,19 +71,19 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public MultiplexerGroupSettings()
         {
-            this.ModuleItemSettings = new TraceItemSettings();
+            this.ModuleItemSettings = new ModuleItemSettings();
 
-            var traceViewColumnWidth = 500;
+            var moduleViewColumnWidth = 500;
             var traceItemFixedWidth = this.ModuleItemSettings.ExperienceFrameSize.X + this.ModuleItemSettings.IdFrameSize.X;
 
-            this.ModuleItemSettings.NameFrameSize = new Point(traceViewColumnWidth - traceItemFixedWidth, 24);
+            this.ModuleItemSettings.NameFrameSize = new Point(moduleViewColumnWidth - traceItemFixedWidth, 24);
             this.ModuleItemSettings.Reconfigure();
 
             this.ModuleStartPoint = new Point(GraphicsSettings.Width - this.ViewStartPoint.X - 500, this.ViewStartPoint.Y);
-            this.ModuleViewSettings = new TraceViewSettings
+            this.ModuleViewSettings = new ModuleViewSettings
                                          {
                                              StartPoint = this.ModuleStartPoint,
-                                             RootMargin = new Point(traceViewColumnWidth, this.ModuleItemSettings.NameFrameSize.Y),
+                                             RootMargin = new Point(moduleViewColumnWidth, this.ModuleItemSettings.NameFrameSize.Y),
 
                                              ColumnNumMax = GraphicsSettings.IsFullscreen
                                                      ? this.ModuleColumnNumDisplayFullscreen

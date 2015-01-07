@@ -1,7 +1,8 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
-    using System;
+    using System.Collections.Generic;
 
+    using MetaMind.Acutance.Concepts;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Views;
@@ -13,11 +14,11 @@ namespace MetaMind.Acutance.Guis.Widgets
     {
         #region Constructors
 
-        public TraceItemControl(IViewItem item)
+        public TraceItemControl(IViewItem item, List<TraceEntry> source)
             : base(item)
         {
             this.ItemFrameControl = new TraceItemFrameControl(item);
-            this.ItemViewControl  = new TraceItemViewControl(item);
+            this.ItemViewControl  = new SmartItemViewControl<SmartItemSwapProcess>(item, source);
         }
 
         public ItemEntryFrame IdFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).IdFrame; } }
