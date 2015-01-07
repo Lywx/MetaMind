@@ -171,9 +171,9 @@ namespace MetaMind.Acutance.Guis.Modules
             get { return Acutance.Session.Commandlist.Commands; }
         }
 
-        public List<TraceEntry> Modules
+        public List<ModuleEntry> Modules
         {
-            get { return Acutance.Session.Tracelist.Traces; }
+            get { return Acutance.Session.Modulelist.Modules; }
         }
     }
 }
