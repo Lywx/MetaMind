@@ -1,12 +1,13 @@
 namespace MetaMind.Acutance.Concepts
 {
+    using System;
+    using System.Runtime.Serialization;
+
     using MetaMind.Acutance.Events;
     using MetaMind.Acutance.Sessions;
     using MetaMind.Engine;
     using MetaMind.Engine.Components.Events;
     using MetaMind.Engine.Concepts;
-    using System;
-    using System.Runtime.Serialization;
 
     public enum CommandState
     {
@@ -61,7 +62,6 @@ namespace MetaMind.Acutance.Concepts
             this.Type   = type;
         }
 
-        [DataMember]
         public Experience Experience
         {
             get { return this.Timer.Experience; }
@@ -84,16 +84,6 @@ namespace MetaMind.Acutance.Concepts
 
         [DataMember]
         protected CommandTimer Timer { get; set; }
-
-        public void Check()
-        {
-            if (this.State != CommandState.Transiting)
-            {
-                return;
-            }
-
-            this.Reset();
-        }
 
         public void Reset()
         {

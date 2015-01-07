@@ -38,11 +38,17 @@ TraceClearItem  = C with LeftControl
 KnowledgeEditItem   = I with LeftControl
 KnowledgeLoadBuffer = L with LeftControl
 
+" Module View Control
+
+ModuleClearItem  = C with LeftControl
+ModuleDeleteItem = D with LeftControl 
+ModuleResetItem  = R with LeftControl
+ModuleSortItem   = S with LeftControl
+
 " Command View Control
 
 CommandClearItem  = C with LeftControl
 CommandDeleteItem = D with LeftControl
-CommandResetItem  = R with LeftControl
 CommandSortItem   = S with LeftControl
 
 " Synchronization Control
