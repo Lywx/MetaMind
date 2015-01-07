@@ -13,6 +13,8 @@ namespace MetaMind.Acutance.Guis.Modules
         private MultiplexerGroupCommandCreatedListener         commandCreatedListener;
         private MultiplexerGroupCommandNotifiedListener        commandNotifiedListener;
 
+        private MultiplexerGroupModuleCreatedListener          moduleCreatedListener;
+
         private MultiplexerGroupKnowledgeRetrievedListener     knowledgeRetrievedListener;
 
         public MultiplexerGroup(MultiplexerGroupSettings settings)
