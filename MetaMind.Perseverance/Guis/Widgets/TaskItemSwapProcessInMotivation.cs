@@ -4,7 +4,6 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Perseverance.Concepts.TaskEntries;
-    using MetaMind.Perseverance.Guis.Modules;
 
     public class TaskItemSwapProcessInMotivation : ViewItemSwapProcess
     {

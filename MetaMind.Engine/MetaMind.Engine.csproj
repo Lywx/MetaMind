@@ -120,6 +120,8 @@
     <Compile Include="Guis\Elements\IPressableFrame.cs" />
     <Compile Include="Guis\Elements\PickableFrame.cs" />
     <Compile Include="Guis\Elements\PressableFrame.cs" />
+    <Compile Include="Guis\Widgets\Items\SmartItemSwapProcess.cs" />
+    <Compile Include="Guis\Widgets\Items\SmartItemViewControl.cs" />
     <Compile Include="Guis\Widgets\Views\GridControl.cs" />
     <Compile Include="Guis\Widgets\Views\GridSettings.cs" />
     <Compile Include="Guis\Widgets\Views\IViewControl2D.cs" />

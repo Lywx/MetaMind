@@ -1,12 +1,14 @@
-namespace MetaMind.Acutance.Guis.Widgets
+namespace MetaMind.Engine.Guis.Widgets.Items
 {
-    using MetaMind.Engine.Guis.Widgets.Items;
-
-    public class TraceItemViewControl : ViewItemViewControl2D
+    public class SmartItemViewControl<TViewItemWSwapProcess> : ViewItemViewControl2D
+        where TViewItemWSwapProcess : ViewItemSwapProcess, new()
     {
-        public TraceItemViewControl(IViewItem item)
+        private dynamic source;
+
+        public SmartItemViewControl(IViewItem item, dynamic source)
             : base(item)
         {
+            this.source = source;
         }
 
         public override void SwapIt(IViewItem draggingItem)
@@ -23,7 +25,8 @@ namespace MetaMind.Acutance.Guis.Widgets
 
             this.ViewControl.Swap.Initialize(originCenter, targetCenter);
 
-            ProcessManager.AttachProcess(new TraceItemSwapProcess(draggingItem, Item, Acutance.Session.Tracelist.Traces));
+            var swapProcess = new TViewItemWSwapProcess().Initalize(draggingItem, this.Item, this.source);
+            ProcessManager.AttachProcess(swapProcess);
         }
     }
 }

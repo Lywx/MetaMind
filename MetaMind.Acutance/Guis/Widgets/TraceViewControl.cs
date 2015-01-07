@@ -15,8 +15,6 @@ namespace MetaMind.Acutance.Guis.Widgets
         public TraceViewControl(IView view, TraceViewSettings viewSettings, TraceItemSettings itemSettings, TraceItemFactory itemFactory)
             : base(view, viewSettings, itemSettings, itemFactory)
         {
-            this.Region    = new ViewRegion(view, viewSettings, itemSettings, this.RegionPositioning);
-            this.ScrollBar = new ViewScrollBar(view, viewSettings, itemSettings, viewSettings.ScrollBarSettings);
         }
 
         #endregion Constructors

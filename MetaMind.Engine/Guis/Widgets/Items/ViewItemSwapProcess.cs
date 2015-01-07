@@ -11,22 +11,49 @@ namespace MetaMind.Engine.Guis.Widgets.Items
     {
         private const int UpdateNum = 6;
 
+        private bool initialized;
+
         public ViewItemSwapProcess(IViewItem draggingItem, IViewItem swappingItem, dynamic source = null)
         {
-            this.DraggingItem  = draggingItem;
+            this.DraggingItem = draggingItem;
             this.SwappingItem = swappingItem;
             this.SwapControl  = swappingItem.ViewControl.Swap;
 
             this.Source = source;
+
+            this.initialized = true;
         }
 
-        protected dynamic Source { get; private set; }
+        protected ViewItemSwapProcess()
+        {
+            this.initialized = false;
+        }
 
         protected IViewItem DraggingItem { get; private set; }
+
+        protected dynamic Source { get; private set; }
 
         protected IViewSwapControl SwapControl { get; private set; }
 
         protected IViewItem SwappingItem { get; private set; }
+
+        public ViewItemSwapProcess Initalize(IViewItem draggingItem, IViewItem swappingItem, dynamic source = null)
+        {
+            if (this.initialized)
+            {
+                return this;
+            }
+
+            this.DraggingItem  = draggingItem;
+            this.SwappingItem  = swappingItem;
+            this.SwapControl   = swappingItem.ViewControl.Swap;
+
+            this.Source = source;
+
+            this.initialized = true;
+
+            return this;
+        }
 
         public override void OnAbort()
         {

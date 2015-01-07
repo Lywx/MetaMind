@@ -1,5 +1,8 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
+    using System.Collections.Generic;
+
+    using MetaMind.Acutance.Concepts;
     using MetaMind.Acutance.Events;
     using MetaMind.Acutance.Sessions;
     using MetaMind.Engine;
@@ -14,11 +17,11 @@ namespace MetaMind.Acutance.Guis.Widgets
     {
         #region Constructors
 
-        public CommandItemControl(IViewItem item)
+        public CommandItemControl(IViewItem item, List<CommandEntry> source )
             : base(item)
         {
             this.ItemFrameControl = new TraceItemFrameControl(item);
-            this.ItemViewControl  = new CommandItemViewControl(item);
+            this.ItemViewControl  = new SmartItemViewControl<SmartItemSwapProcess>(item, source);
 
             this.NameFrame.MouseLeftDoubleClicked += this.RetrieveKnowledge;
         }
