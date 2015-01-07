@@ -65,7 +65,6 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         public override void Load()
         {
-            // TODO: Improve minor laggy graphics
             // performance penalty due to dynmaic type
             // performance is still bad even with fast member
             if (!this.loadFinished && this.FastHostData["Tasks"].Count != 0)
@@ -194,7 +193,11 @@ namespace MetaMind.Perseverance.Guis.Modules
                     if (this.View.Items.Count > 1)
                     {
                         // this will be called before item deletion
-                        this.View.Control.Selection.Select(this.View.Items.Count - 2);
+                        if (this.View.Control.Selection.SelectedId != null && 
+                            this.View.Control.Selection.SelectedId > View.Items.Count - 2)
+                        {
+                            this.View.Control.Selection.Select(View.Items.Count - 2);
+                        }
                     }
                 }
             }
