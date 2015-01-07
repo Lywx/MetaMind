@@ -44,7 +44,12 @@ namespace MetaMind.Engine.Components
 
         #endregion Constructors
 
-        public static string RelativePath(string path)
+        public static string DataPath(string relativePath)
+        {
+            return Path.Combine(DataFolderPath, relativePath);
+        }
+
+        public static string DataRelativePath(string path)
         {
             var dataFullPath = Path.GetFullPath(DataFolderPath);
             var fullPath     = Path.GetFullPath(path);
@@ -52,7 +57,7 @@ namespace MetaMind.Engine.Components
             return fullPath.Substring(dataFullPath.Length);
         }
 
-        public static string ConfigurationPath(ISettingLoader loader)
+        public static string ConfigurationPath(IConfigurationLoader loader)
         {
             return Path.Combine(ConfigurationFolderPath, loader.ConfigurationFile);
         }

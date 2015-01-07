@@ -1,38 +1,71 @@
 namespace MetaMind.Acutance.Concepts
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.Serialization;
 
     public enum CommandSortMode
     {
-        Name, 
+        Name,
+    }
+
+    public interface ICommandlist
+    {
+        [DataMember]
+        List<CommandEntry> Commands { get; }
+
+        void Add(CommandEntry entry);
+
+        void Add(List<CommandEntry> entries);
+
+        void Remove(CommandEntry entry);
+
+        void Sort(CommandSortMode sortMode);
+
+        void Update();
     }
 
     [DataContract]
-    public class Commandlist
+    public class Commandlist : ICommandlist
     {
+        #region Constructors
+
         public Commandlist()
         {
             this.Commands = new List<CommandEntry>();
         }
 
+        #endregion Constructors
+
+        #region Serialization
+
+        [OnSerializing]
+        public void OnSerializing(StreamingContext context)
+        {
+            // won't serialize non-from-knowledge
+            this.Commands = CommandEntryFileter.FilterOutKnowledge(this.Commands);
+        }
+
+        #endregion Serialization
+
+        #region Public Properties
+
         [DataMember]
         public List<CommandEntry> Commands { get; private set; }
 
-        public CommandEntry Create(string name, string path, DateTime date, CommandRepeativity repeativity)
+
+        #endregion
+
+        #region Operations 
+
+        public void Add(List<CommandEntry> entries)
         {
-            var entry = new CommandEntry(name, path, date, repeativity);
-            this.Commands.Add(entry);
-            return entry;
+            this.Commands.AddRange(entries);
         }
 
-        public CommandEntry Create(string name, string path, TimeSpan timeout)
+        public void Add(CommandEntry entry)
         {
-            var entry = new CommandEntry(name, path, timeout);
             this.Commands.Add(entry);
-            return entry;
         }
 
         public void Remove(CommandEntry entry)
@@ -40,14 +73,6 @@ namespace MetaMind.Acutance.Concepts
             if (this.Commands.Contains(entry))
             {
                 this.Commands.Remove(entry);
-            }
-        }
-
-        public void Update()
-        {
-            foreach (var @event in this.Commands.ToArray())
-            {
-                @event.Update();
             }
         }
 
@@ -63,5 +88,18 @@ namespace MetaMind.Acutance.Concepts
                     break;
             }
         }
+
+        /// <summary>
+        /// Update every instance of commmand entries.
+        /// </summary>
+        public void Update()
+        {
+            foreach (var @event in this.Commands.ToArray())
+            {
+                @event.Update();
+            }
+        }
+
+        #endregion
     }
 }

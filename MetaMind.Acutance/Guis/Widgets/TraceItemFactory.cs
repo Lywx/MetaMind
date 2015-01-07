@@ -11,7 +11,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public override dynamic CreateData(IViewItem item)
         {
-            return Acutance.Adventure.Tracelist.Create();
+            return Acutance.Session.Tracelist.Create();
         }
 
         public override IItemGraphics CreateGraphics(IViewItem item)
@@ -21,7 +21,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public void RemoveData(IViewItem item)
         {
-            Acutance.Adventure.Tracelist.Remove(item.ItemData);
+            Acutance.Session.Tracelist.Remove(item.ItemData);
         }
     }
 }

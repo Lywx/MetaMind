@@ -1,6 +1,7 @@
 namespace MetaMind.Acutance.Guis.Modules
 {
     using MetaMind.Engine;
+    using MetaMind.Engine.Components.Graphics;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Modules;
 
@@ -17,8 +18,8 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public override void UpdateInput(GameTime gameTime)
         {
-            if (InputSequenceManager.Keyboard.IsActionPressed(Actions.SLeft) &&
-                InputSequenceManager.Keyboard.IsActionPressed(Actions.SRight))
+            if (InputSequenceManager.Keyboard.IsActionPressed(Actions.FastLeft) &&
+                InputSequenceManager.Keyboard.IsActionPressed(Actions.FastRight))
             {
                 this.accelerating = true;
 
@@ -30,7 +31,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
                 this.Settings.ParticleNum = 2000;
 
-                GameEngine.Fps = 60;
+                GraphicsSettings.Fps = 60;
             }
         }
 

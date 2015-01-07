@@ -35,7 +35,7 @@ namespace MetaMind.Acutance.Parsers.Elements
 
         EveryWeek, 
 
-        EveryMonth, 
+        // EveryMonth, 
 
         Unspecified, 
     }

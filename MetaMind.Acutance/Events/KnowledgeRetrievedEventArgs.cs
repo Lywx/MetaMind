@@ -6,9 +6,12 @@ namespace MetaMind.Acutance.Events
     {
         public readonly string Path;
 
-        public KnowledgeRetrievedEventArgs(string path)
+        public readonly int Offset;
+
+        public KnowledgeRetrievedEventArgs(string path, int offset)
         {
-            this.Path = path;
+            this.Path   = path;
+            this.Offset = offset;
         }
     }
 }

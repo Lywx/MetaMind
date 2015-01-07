@@ -51,7 +51,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         protected override void DrawExperience(byte alpha)
         {
-            var countdown = (TimeSpan)ItemData.Timeout - ((Experience)ItemData.Experience).Duration;
+            var countdown = ((Experience)ItemData.Experience).Duration;
             FontManager.DrawCenteredText(
                 ItemSettings.ExperienceFont,
                 string.Format("{0:hh\\:mm\\:ss}", countdown),

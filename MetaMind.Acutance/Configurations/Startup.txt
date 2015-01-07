@@ -1,2 +1,2 @@
-﻿Startup=Basic.txt
-ScheduleFolder=Schedule Tools
+﻿" Schedule File Container
+ScheduleFolder = Schedule Tools

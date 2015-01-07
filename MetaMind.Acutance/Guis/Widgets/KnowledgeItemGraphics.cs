@@ -30,7 +30,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
             this.DrawNameFrame(255);
 
-            if (ItemData.IsCommand)
+            if (ItemData.IsTitle)
             {
                 this.FillNameFrameWith(ItemSettings.NameFrameCommandColor, alpha);
             }

@@ -3,8 +3,20 @@ namespace MetaMind.Acutance.Concepts
     using System.Collections.Generic;
     using System.Runtime.Serialization;
 
+    public interface ITracelist
+    {
+        [DataMember]
+        List<TraceEntry> Traces { get; }
+
+        TraceEntry Create();
+
+        void Remove(TraceEntry entry);
+
+        void Update();
+    }
+
     [DataContract]
-    public class Tracelist
+    public class Tracelist : ITracelist
     {
         public Tracelist()
         {

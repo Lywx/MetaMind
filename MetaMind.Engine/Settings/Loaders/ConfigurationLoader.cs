@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Settings.Loaders
 
     using Sprache;
 
-    public static class SettingLoader
+    public static class ConfigurationLoader
     {
         public static bool BooleanValue(Dictionary<string, string> dict, string keyName, bool defaultValue)
         {
@@ -23,7 +23,7 @@ namespace MetaMind.Engine.Settings.Loaders
             return value;
         }
 
-        public static Dictionary<string, string> LoadUniquePairs(ISettingLoader loader)
+        public static Dictionary<string, string> LoadUniquePairs(IConfigurationLoader loader)
         {
             var list = new Dictionary<string, string>();
 
@@ -51,7 +51,7 @@ namespace MetaMind.Engine.Settings.Loaders
             return list;
         }
 
-        public static List<KeyValuePair<string, string>> LoadDuplicablePairs(ISettingLoader loader)
+        public static List<KeyValuePair<string, string>> LoadDuplicablePairs(IConfigurationLoader loader)
         {
             var list = new List<KeyValuePair<string, string>>();
 
@@ -94,7 +94,7 @@ namespace MetaMind.Engine.Settings.Loaders
             return value;
         }
 
-        private static string[] LoadAllLine(ISettingLoader loader)
+        private static string[] LoadAllLine(IConfigurationLoader loader)
         {
             return File.ReadAllLines(FolderManager.ConfigurationPath(loader));
         }

@@ -59,42 +59,5 @@ namespace MetaMind.Acutance.Parsers.Grammars
                                                              from text     in BasicGrammar.BracketedTextParser
                                                              select new Title(level, sentence, TimeTagStrategyParser.Parse(text).Parse(text));
 
-        public static KnowledgeFileQuery LoadKnowledgeModule(string path, int lineOffset)
-        {
-            if (Path.GetExtension(path) != ".md")
-            {
-                return null;
-            }
-
-            var module = new KnowledgeFile(path);
-            var query  = new KnowledgeFileQuery(module);
-
-            var lineList = File.ReadLines(path) as IList<string> ?? File.ReadLines(path).ToList();
-            for (var lineNum = lineOffset; lineNum < lineList.Count; lineNum++)
-            {
-                var line = lineList[lineNum];
-
-                if (string.IsNullOrWhiteSpace(line))
-                {
-                    continue;
-                }
-
-                var result = TitleWithTimeTagParser.TryParse(line);
-                if (result.WasSuccessful)
-                {
-                    var title     = result.Value;
-                    var knowledge = new Knowledge(title, module, lineNum);
-                    var entry     = new KnowledgeEntry(knowledge);
-                    query.AddEntry(entry);
-                }
-                else
-                {
-                    var entry = new KnowledgeEntry(line, false);
-                    query.AddEntry(entry);
-                }
-            }
-
-            return query;
-        }
     }
 }

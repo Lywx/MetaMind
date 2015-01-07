@@ -1,6 +1,5 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
-    using MetaMind.Acutance.Concepts;
     using MetaMind.Engine.Guis.Widgets.Items;
 
     public class CommandItemFactory : ViewItemBasicFactory2D
@@ -10,16 +9,11 @@ namespace MetaMind.Acutance.Guis.Widgets
             return new CommandItemControl(item);
         }
 
-        public override dynamic CreateData(IViewItem item)
-        {
-            // here only provide dummy data
-            return Acutance.Adventure.Commandlist.Create(string.Empty, string.Empty, 0);
-        }
-
-        public CommandEntry CreateData(string name, string path, int minutes)
-        {
-            return Acutance.Adventure.Commandlist.Create(name, path, minutes);
-        }
+        // TODO: do I need to generate command entry inside command view?
+        //public CommandEntry CreateData(string name, string path, int lineNum)
+        //{
+        //    return Acutance.Session.Commandlist.Create(name, path);
+        //}
 
         public override IItemGraphics CreateGraphics(IViewItem item)
         {
@@ -28,7 +22,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public void RemoveData(IViewItem item)
         {
-            Acutance.Adventure.Commandlist.Remove(item.ItemData);
+            Acutance.Session.Commandlist.Remove(item.ItemData);
         }
     }
 }

@@ -5,30 +5,25 @@ namespace MetaMind.Acutance.Guis.Widgets
     using System.IO;
     using System.Linq;
     using System.Text;
-    using System.Text.RegularExpressions;
 
-    using CodeProject.FileSearcher;
+    using FileSearcher;
 
     using MetaMind.Acutance.Concepts;
+    using MetaMind.Acutance.Events;
+    using MetaMind.Acutance.Parsers.Elements;
     using MetaMind.Acutance.Sessions;
     using MetaMind.Engine;
     using MetaMind.Engine.Components;
     using MetaMind.Engine.Components.Events;
+    using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Regions;
     using MetaMind.Engine.Guis.Widgets.Views;
-    using MetaMind.Engine.Parsers;
 
     using Microsoft.Xna.Framework;
 
     public class KnowledgeViewControl : GridControl
     {
-        private readonly int maxDirectoryNum = 10;
-
-        private readonly int maxLineNum = 200;
-
-        private readonly int maxResultNum = 30;
-
         #region Constructors
 
         public KnowledgeViewControl(IView view, KnowledgeViewSettings viewSettings, KnowledgeItemSettings itemSettings, KnowledgeItemFactory itemFactory)
@@ -37,156 +32,61 @@ namespace MetaMind.Acutance.Guis.Widgets
             this.AddFileItem();
             this.AddBlankItem();
 
-            Searcher.FoundInfo += this.RefreshSearchResult;
+            this.SearchControl = new KnowledgeViewSearchControl(view,viewSettings, itemSettings);
         }
+
 
         #endregion Constructors
 
         #region Private Properties
 
-        private IViewItem BlankItem
+        private KnowledgeViewSearchControl SearchControl { get; set; }
+
+        #endregion
+
+        #region Public Properties
+
+        public IViewItem BlankItem
         {
-            get { return View.Items.Count > 0 ? View.Items.First(item => item.ItemData.IsBlank) : null; }
+            get { return View.Items.Count > 0 ? View.Items.Where(item => item.ItemData.IsBlank).First() : null; }
         }
 
-        private IViewItem FileItem
+        public KnowledgeFileQuery FileBuffer { get; set; }
+        
+        public IViewItem FileItem
         {
-            get { return View.Items.Count > 0 ? View.Items.First(item => item.ItemData.IsFile) : null; }
+            get { return View.Items.Count > 0 ? View.Items.Where(item => item.ItemData.IsFile).First() : null; }
         }
 
-        #endregion Private Properties
+        #endregion
 
-        #region Operations
+        #region Item Management
 
-        public void LoadCommand(string name, string path, int minutes)
+        public void AddBlankItem()
         {
-            var commandCreatedEvent = new EventBase(
-                (int)AdventureEventType.CommandCreated,
-                new CommandCreatedEventArgs(name, path, minutes));
-
-            GameEngine.EventManager.QueueEvent(commandCreatedEvent);
+            var blankEntry = new KnowledgeEntry(string.Empty, true) { IsBlank = true };
+            this.AddItem(blankEntry);
         }
 
-        public void LoadResult(string path, bool relative)
+        public void AddFileItem()
         {
-            this.FileItem.ItemControl.SetName(Path.GetFileName(path));
-
-            if (relative)
-            {
-                path = Path.Combine(FolderManager.DataFolderPath, path);
-            }
-
-            this.ClearNonControlItems();
-            this.ClearResultItems();
-
-            try
-            {
-                var attribute = File.GetAttributes(path);
-                var isFile = (attribute & FileAttributes.Directory) != FileAttributes.Directory;
-                if (isFile)
-                {
-                    this.LoadResultFromFile(path);
-                    this.Scroll.MoveUpToTop();
-                }
-                else
-                {
-                    this.LoadResultFromDirectory(path);
-                    this.Scroll.MoveUpToTop();
-                }
-            }
-            catch (FileNotFoundException)
-            {
-            }
-            catch (DirectoryNotFoundException)
-            {
-            }
+            var fileEntry = new KnowledgeEntry(string.Empty, true) { IsFile = true };
+            this.InsertItem(0, fileEntry);
         }
 
-        private void LoadResultFromFile(string path)
-        {
-            var lines = File.ReadLines(path);
-            foreach (var line in lines.Where(line => !string.IsNullOrWhiteSpace(line)).Take(this.maxLineNum))
-            {
-                // TODO: Implement parser
-                var knowledgeContent = KnowledgeParser.ParseLine(line);
-                this.AddItem(new KnowledgeEntry(knowledgeContent));
-                var matchEvent = Regex.Match(line, @"^\[(.*)\]");
-                Parser.ParseLine(line, @"^\[(.*)\]");
-                if (matchEvent.Success)
-                {
-                    int timeout;
-                    int.TryParse(matchEvent.Value.Trim('[', ']'), out timeout);
-                    this.AddItem(new KnowledgeEntry(line, line.Replace(matchEvent.Value, string.Empty).Trim(' '), path, timeout));
-                }
-                else
-                {
-                    var matchIdea = Regex.Match(line, @"^\|");
-                    if (matchIdea.Success)
-                    {
-                        this.AddItem(new KnowledgeEntry(line, line, path, 0));
-                    }
-                }
-            }
-        }
-
-        public void Search(string fileName)
-        {
-            if (FileItem == null)
-            {
-                return;
-            }
-
-            this.ClearNonControlItems();
-            this.ClearResultItems();
-
-            var fileNames = new List<string>(1) { "*" + fileName + "*" };
-
-            var pars = SearcherParams(fileNames);
-
-            Searcher.Start(pars);
-        }
-
-        public void SearchStop()
-        {
-            this.FileItem.ItemControl.EditCancel();
-
-            Searcher.Stop();
-        }
-
-        private static SearcherParams SearcherParams(List<string> fileNames)
-        {
-            return new SearcherParams(
-                searchDir:             FolderManager.DataFolderPath, 
-                includeSubDirsChecked: true, 
-                fileNames:             fileNames, 
-                newerThanChecked:      false, 
-                newerThanDateTime:     DateTime.MinValue, 
-                olderThanChecked:      false, 
-                olderThanDateTime:     DateTime.MinValue, 
-                containingChecked:     false, 
-                containingText:        string.Empty, 
-                encoding:              Encoding.Unicode);
-        }
-
-        private void AddBlankItem()
-        {
-            var blankItem = new KnowledgeEntry(string.Empty) { IsBlank = true };
-            this.AddItem(blankItem);
-        }
-
-        private void AddFileItem()
-        {
-            var fileItem = new KnowledgeEntry(string.Empty) { IsFile = true };
-            this.InsertItem(0, fileItem);
-        }
-
-        private void AddItem(KnowledgeEntry entry)
+        public void AddItem(KnowledgeEntry entry)
         {
             var item = new ViewItemExchangeless(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory, entry);
             View.Items.Add(item);
         }
 
-        private void ClearNonControlItems()
+        public void AddResultItem(string relativePath)
+        {
+            var resultEntry = new KnowledgeEntry(relativePath, true) { IsResult = true };
+            this.AddItem(resultEntry);
+        }
+
+        public void ClearNonControlItems()
         {
             foreach (var item in this.View.Items.FindAll(item => !item.ItemData.IsControl))
             {
@@ -195,61 +95,28 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
         }
 
-        private void ClearResultItems()
+        public void ClearResultItems()
         {
-            foreach (var item in this.View.Items.FindAll(item => item.ItemData.IsSearchResult))
+            foreach (var item in this.View.Items.FindAll(item => item.ItemData.IsResult))
             {
                 View.Items.Remove(item);
                 item.Dispose();
             }
         }
 
-        private void InsertBlankItem()
+        public void InsertBlankItem()
         {
-            var blankItem = new KnowledgeEntry(string.Empty) { IsBlank = true };
-            this.InsertItem(1, blankItem);
+            var blankEntry = new KnowledgeEntry(string.Empty, true) { IsBlank = true };
+            this.InsertItem(1, blankEntry);
         }
 
-        private void InsertItem(int index, KnowledgeEntry entry)
+        public void InsertItem(int index, KnowledgeEntry entry)
         {
             var item = new ViewItemExchangeless(View, ViewSettings, ItemSettings, ItemFactory, entry);
             View.Items.Insert(index, item);
         }
 
-        private void LoadResultFromDirectory(string path)
-        {
-            foreach (var dir in Directory.GetDirectories(path).Take(this.maxDirectoryNum))
-            {
-                this.AddItem(new KnowledgeEntry(FolderManager.RelativePath(dir)) { IsSearchResult = true });
-            }
-
-            foreach (var file in Directory.GetFiles(path).Take(this.maxResultNum))
-            {
-                this.AddItem(new KnowledgeEntry(FolderManager.RelativePath(file)) { IsSearchResult = true });
-            }
-        }
-
-        private void RefreshSearchResult(FoundInfoEventArgs e)
-        {
-            if (View.Items.Count > this.maxResultNum)
-            {
-                return;
-            }
-
-            var relativePath = FolderManager.RelativePath(e.Info.FullName);
-            
-            // won't load git repository
-            if (relativePath.Contains(".git"))
-            {
-                return;
-            }
-
-            this.RemoveBlankItem();
-            this.AddItem(new KnowledgeEntry(relativePath) { IsSearchResult = true });
-            this.AddBlankItem();
-        }
-
-        private void RemoveBlankItem()
+        public void RemoveBlankItem()
         {
             if (this.BlankItem != null)
             {
@@ -257,7 +124,38 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
         }
 
-        #endregion Operations
+        #endregion
+
+        #region Operations
+
+        public void LoadBuffer()
+        {
+            if (this.FileBuffer != null)
+            {
+                var moduleCreatedEvent = new EventBase(
+                    (int)SessionEventType.ModuleCreated,
+                    new ModuleCreatedEventArgs(FileBuffer.File));
+
+                EventManager.QueueEvent(moduleCreatedEvent);
+            }
+        }
+
+        public void LoadResult(string path, bool relative, int offset, bool retrieval)
+        {
+            this.SearchControl.LoadResult(path, relative, offset, retrieval);
+        }
+
+        public void Search(string fileName)
+        {
+            this.SearchControl.Search(fileName);
+        }
+
+        public void SearchStop()
+        {
+            this.SearchControl.SearchStop();
+        }
+
+        #endregion
 
         #region Update
 
@@ -266,12 +164,20 @@ namespace MetaMind.Acutance.Guis.Widgets
             this.UpdateRegionClick(gameTime);
             this.UpdateMouseScroll();
 
+            if (this.AcceptInput)
+            {
+                if (this.ViewSettings.KeyboardEnabled)
+                {
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.KnowledgeLoadBuffer))
+                    {
+                        this.LoadBuffer();
+                    }
+                }
+            }
+
             if (View.Items.Count > 0)
             {
-                foreach (var item in View.Items
-                    .FindAll(item => item.ItemData.IsControl || 
-                             item.ItemData.IsCommand)
-                             .ToArray())
+                foreach (var item in View.Items.FindAll(item => item.ItemData.IsControl).ToArray())
                 {
                     item.UpdateInput(gameTime);
                 }

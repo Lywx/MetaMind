@@ -28,39 +28,42 @@ namespace MetaMind.Acutance.Guis.Widgets
             {
                 this.ItemDataControl = new KnowledgeItemFileDataControl(item);
             }
-            else if (ItemData.IsSearchResult)
+            else if (ItemData.IsResult)
             {
-                this.NameFrame.MouseLeftClicked += this.LoadResult;
-            }
-            else if (ItemData.IsCommand)
-            {
-                this.NameFrame.MouseLeftDoubleClicked += this.LoadCommand;
+                this.NameFrame.MouseLeftClicked += this.LoadKnowledge;
             }
         }
 
         #endregion Constructors
 
+        #region Public Properties
+
         public ItemEntryFrame IdFrame
         {
-            get { return ((KnowledgeItemFrameControl)this.ItemFrameControl).IdFrame; }
+            get
+            {
+                return ((KnowledgeItemFrameControl)this.ItemFrameControl).IdFrame;
+            }
         }
 
         public ItemEntryFrame NameFrame
         {
-            get { return ((KnowledgeItemFrameControl)this.ItemFrameControl).NameFrame; }
+            get
+            {
+                return ((KnowledgeItemFrameControl)this.ItemFrameControl).NameFrame;
+            }
         }
+
+        #endregion
 
         #region Events
 
-        private void LoadCommand(object sender, FrameEventArgs e)
+        private void LoadKnowledge(object sender, FrameEventArgs frameEventArgs)
         {
-            View.Control.LoadCommand(ItemData.CommandName, ItemData.Path, ItemData.Minutes);
-        }
+            ViewControl.SearchStop();
 
-        private void LoadResult(object sender, FrameEventArgs frameEventArgs)
-        {
-            View.Control.SearchStop();
-            View.Control.LoadResult(ItemData.Name, true);
+            // load knowledge file from the first line for the first time(not for retrival)
+            ViewControl.LoadResult(ItemData.Name, true, 0, false);
         }
 
         #endregion

@@ -1,12 +1,12 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
-    using C3.Primtive2DXna;
-
     using MetaMind.Engine.Concepts;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Items;
 
     using Microsoft.Xna.Framework;
+
+    using Primtives2D;
 
     public class TraceItemGraphics : ViewItemBasicGraphics
     {

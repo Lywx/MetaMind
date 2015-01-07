@@ -35,7 +35,8 @@ TraceClearItem  = C with LeftControl
 
 " Knowledge View Control
 
-KnowledgeEditItem = I with LeftControl
+KnowledgeEditItem   = I with LeftControl
+KnowledgeLoadBuffer = L with LeftControl
 
 " Command View Control
 

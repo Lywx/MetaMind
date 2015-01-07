@@ -12,7 +12,10 @@ namespace MetaMind.Acutance.Sessions
     /// <summary>
     /// Session is a data class.
     /// </summary>
-    [DataContract]
+    [DataContract,
+    KnownType(typeof(Commandlist)),
+    KnownType(typeof(Tracelist)), // TODO: remove
+    KnownType(typeof(Modulelist))]
     public class Session : EngineObject
     {
         #region File Storage
@@ -37,7 +40,8 @@ namespace MetaMind.Acutance.Sessions
         {
             this.Random = new Random((int)DateTime.Now.Ticks);
 
-            this.Tracelist = new Tracelist();
+            this.Tracelist   = new Tracelist();
+            this.Modulelist  = new Modulelist();
             this.Commandlist = new Commandlist();
         }
 
@@ -47,9 +51,11 @@ namespace MetaMind.Acutance.Sessions
 
         public Random Random { get; private set; }
 
-        //TODO: not necessary now
         [DataMember(Name = "Tracelist")]
         public ITracelist Tracelist { get; private set; }
+
+        [DataMember(Name = "Modulelist")]
+        public IModulelist Modulelist { get; private set; }
 
         [DataMember(Name = "Commandlist")]
         public ICommandlist Commandlist { get; private set; }
@@ -132,14 +138,19 @@ namespace MetaMind.Acutance.Sessions
                 this.Random = new Random((int)DateTime.Now.Ticks);
             }
 
-            if (this.Commandlist == null)
-            {
-                this.Commandlist = new Commandlist();
-            }
-
             if (this.Tracelist == null)
             {
                 this.Tracelist = new Tracelist();
+            }
+
+            if (this.Modulelist == null)
+            {
+                this.Modulelist = new Modulelist();
+            }
+
+            if (this.Commandlist == null)
+            {
+                this.Commandlist = new Commandlist();
             }
         }
 

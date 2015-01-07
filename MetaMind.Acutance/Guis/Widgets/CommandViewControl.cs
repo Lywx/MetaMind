@@ -1,7 +1,5 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
-    using System.Linq;
-
     using MetaMind.Acutance.Concepts;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Widgets.Items;
@@ -20,13 +18,14 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #endregion Constructors
 
-        public void AddItem(string name, string path, int minutes)
+        public void AddItem(string name, string path, int lineNum)
         {
             var commandItemFactory = ItemFactory as CommandItemFactory;
             if (commandItemFactory != null)
             {
-                var entry = commandItemFactory.CreateData(name, path, minutes);
-                this.AddItem(entry);
+                //TODO remove
+                //var entry = commandItemFactory.CreateData(name, path, lineNum);
+                //this.AddItem(entry);
             }
         }
 

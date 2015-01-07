@@ -10,10 +10,11 @@
         {
             if (knowledge != null)
             {
-                this.Name = string.Concat(Enumerable.Repeat("#", (int)knowledge.Title.Level)) + " " + knowledge.Title.Name;
                 this.Knowledge = knowledge;
 
-                this.IsHighlighted = true;
+                this.Name = string.Concat(Enumerable.Repeat("#", (int)knowledge.Title.Level)) + " " + knowledge.Title.Name;
+
+                this.IsTitle = true;
             }
         }
 
@@ -26,7 +27,7 @@
 
         public Knowledge Knowledge { get; private set; }
 
-        public bool IsHighlighted { get; set; }
+        public bool IsTitle { get; set; }
 
         public bool IsBlank { get; set; }
 
@@ -34,8 +35,14 @@
 
         public bool IsFile { get; set; }
 
-        public bool IsSearchResult { get; set; }
+        public bool IsResult { get; set; }
 
         public string Name { get; set; }
+
+        //public CommandEntry ToCommmandEntry()
+        //{
+        //    // TODO: how to convert to command entry easier
+        //    return Acutance.Session.Commandlist.Create(CommandType.Knowledge, )
+        //}
     }
 }

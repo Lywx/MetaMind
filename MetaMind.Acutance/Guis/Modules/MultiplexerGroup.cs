@@ -1,18 +1,15 @@
 namespace MetaMind.Acutance.Guis.Modules
 {
-    using System.IO;
-
-    using MetaMind.Acutance.Guis.Widgets;
+    using MetaMind.Acutance.Concepts;
+    using MetaMind.Acutance.Events;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Widgets.Views;
-    using MetaMind.Engine.Parsers;
+    using MetaMind.Engine.Settings.Loaders;
 
     using Microsoft.Xna.Framework;
 
-    public class MultiplexerGroup : Group<MultiplexerGroupSettings>
+    public class MultiplexerGroup : Group<MultiplexerGroupSettings>, IConfigurationLoader
     {
-        private readonly string commandStartup = @"Configurations/Startup.txt";
-
         private MultiplexerGroupCommandCreatedListener         commandCreatedListener;
         private MultiplexerGroupCommandNotifiedListener        commandNotifiedListener;
 
@@ -21,6 +18,11 @@ namespace MetaMind.Acutance.Guis.Modules
         public MultiplexerGroup(MultiplexerGroupSettings settings)
             : base(settings)
         {
+            this.ModuleView = new View(
+                this.Settings.ModuleViewSettings,
+                this.Settings.ModuleItemSettings,
+                this.Settings.ModuleViewFactory);
+
             this.CommandView = new View(
                 this.Settings.CommandViewSettings,
                 this.Settings.CommandItemSettings,
@@ -34,10 +36,21 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public IView CommandView { get; private set; }
 
+        public string ConfigurationFile
+        {
+            get
+            {
+                return "Startup.txt";
+            }
+        }
+
         public IView KnowledgeView { get; private set; }
+
+        public IView ModuleView { get; set; }
 
         public override void Draw(GameTime gameTime, byte alpha)
         {
+            this.ModuleView   .Draw(gameTime, alpha);
             this.KnowledgeView.Draw(gameTime, alpha);
             this.CommandView  .Draw(gameTime, alpha);
         }
@@ -75,38 +88,30 @@ namespace MetaMind.Acutance.Guis.Modules
         public override void UpdateInput(GameTime gameTime)
         {
             this.KnowledgeView.UpdateInput(gameTime);
+            this.ModuleView   .UpdateInput(gameTime);
             this.CommandView  .UpdateInput(gameTime);
         }
 
         public override void UpdateStructure(GameTime gameTime)
         {
             this.CommandView  .UpdateStructure(gameTime);
+            this.ModuleView   .UpdateStructure(gameTime);
             this.KnowledgeView.UpdateStructure(gameTime);
         }
 
         private void LoadData()
         {
-            var commandStartupFile = string.Empty;
-            var scheduleFolder     = string.Empty;
-
-            foreach (var line in File.ReadAllLines(this.commandStartup))
+            // load modules
+            foreach (var module in this.Settings.Modules.ToArray())
             {
-                commandStartupFile = Parser.ParseLine(line, @"^Startup=(.*)")       .Replace("Startup=", string.Empty); 
-                scheduleFolder     = Parser.ParseLine(line, @"^ScheduleFolder=(.*)").Replace("ScheduleFolder=", string.Empty); 
+                this.ModuleView.Control.AddItem(module);
             }
 
-            foreach (var command in this.Settings.Commands.ToArray())
+            // load schedules
+            foreach (var schedule in ScheduleLoader.Load(this))
             {
-                this.CommandView.Control.AddItem(command);
-            }
-
-            if (!string.IsNullOrEmpty(scheduleFolder))
-            {
-            }
-
-            if (!string.IsNullOrEmpty(commandStartupFile))
-            {
-                this.KnowledgeView.Control.LoadResult(commandStartupFile, true);
+                // won't add to view but add to command list
+                this.Settings.Commands.Add(schedule);
             }
         }
 

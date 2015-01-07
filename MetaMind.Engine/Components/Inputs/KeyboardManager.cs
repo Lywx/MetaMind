@@ -56,10 +56,12 @@ namespace MetaMind.Engine.Components.Inputs
         TraceClearItem, 
 
         KnowledgeEditItem,
-        KnowledgeClearItem,
-        KnowledgeDeleteItem,
-        KnowledgeResetItem,
-        KnowledgeSortItem,
+        KnowledgeLoadBuffer,
+
+        ModuleClearItem,
+        ModuleDeleteItem,
+        ModuleResetItem,
+        ModuleSortItem,
 
         CommandClearItem,
         CommandDeleteItem,
@@ -89,7 +91,7 @@ namespace MetaMind.Engine.Components.Inputs
         public Dictionary<Keys, List<Keys>> Bindings = new Dictionary<Keys, List<Keys>>();
     }
 
-    public class KeyboardManager : Widget, ISettingLoader
+    public class KeyboardManager : Widget, IConfigurationLoader
     {
         #region Configurations
 
@@ -266,7 +268,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         private void LoadActionMap()
         {
-            foreach (var pair in SettingLoader.LoadDuplicablePairs(this))
+            foreach (var pair in ConfigurationLoader.LoadDuplicablePairs(this))
             {
                 this.LoadActionMapPair(pair);
             }

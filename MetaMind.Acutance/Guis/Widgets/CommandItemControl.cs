@@ -1,5 +1,6 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
+    using MetaMind.Acutance.Events;
     using MetaMind.Acutance.Sessions;
     using MetaMind.Engine;
     using MetaMind.Engine.Components.Events;
@@ -36,8 +37,8 @@ namespace MetaMind.Acutance.Guis.Widgets
         private void RetrieveKnowledge(object sender, FrameEventArgs e)
         {
             var knowledgeRetrievedEvent = new EventBase(
-                (int)AdventureEventType.KnowledgeRetrieved,
-                new KnowledgeRetrievedEventArgs(ItemData.Path));
+                (int)SessionEventType.KnowledgeRetrieved,
+                new KnowledgeRetrievedEventArgs(ItemData.Path, ItemData.Offset));
 
             GameEngine.EventManager.QueueEvent(knowledgeRetrievedEvent);
         }

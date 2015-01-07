@@ -7,11 +7,11 @@ namespace MetaMind.Acutance.Concepts
     using MetaMind.Engine.Concepts;
 
     [DataContract]
-    public class CommandTimerByTimeout : CommandTimer
+    public class CommandTimerWithTimeout : CommandTimer
     {
         private Stopwatch timer;
 
-        public CommandTimerByTimeout(TimeSpan timeout)
+        public CommandTimerWithTimeout(TimeSpan timeout)
         {
             this.Timeout = timeout;
         }

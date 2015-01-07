@@ -4,7 +4,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
     using MetaMind.Acutance.Concepts;
     using MetaMind.Acutance.Guis.Widgets;
-    using MetaMind.Engine.Settings;
+    using MetaMind.Engine.Components.Graphics;
 
     using Microsoft.Xna.Framework;
 
@@ -12,24 +12,26 @@ namespace MetaMind.Acutance.Guis.Modules
     {
         public readonly int ViewVMargin = 28;
 
+        public readonly Point ViewStartPoint = new Point(10, 108);
+
         //---------------------------------------------------------------------
-        public readonly TraceViewFactory  TraceViewFactory = new TraceViewFactory();
+        public readonly TraceViewFactory  ModuleViewFactory = new TraceViewFactory();
         
-        public readonly TraceViewSettings TraceViewSettings;
+        public readonly TraceViewSettings ModuleViewSettings;
 
-        public readonly TraceItemSettings TraceItemSettings;
+        public readonly TraceItemSettings ModuleItemSettings;
 
-        public readonly Point TraceStartPoint                 = new Point(10, 108);
+        public readonly Point ModuleStartPoint;
 
-        public readonly int   TraceRowNumDisplay              = -1;
+        public readonly int   ModuleRowNumDisplay              = 13;
 
-        public readonly int   TraceRowNumDisplayFullscreen    = -1;
+        public readonly int   ModuleRowNumDisplayFullscreen    = 13;
 
-        public readonly int   TraceRowNumMax                  = 100;
+        public readonly int   ModuleRowNumMax                  = 100;
 
-        public readonly int   TraceColumnNumDisplay           = 3;
+        public readonly int   ModuleColumnNumDisplay           = 1;
 
-        public readonly int   TraceColumnNumDisplayFullscreen = 4;
+        public readonly int   ModuleColumnNumDisplayFullscreen = 1;
 
         //---------------------------------------------------------------------
         public readonly CommandViewFactory  CommandViewFactory = new CommandViewFactory();
@@ -69,38 +71,37 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public MultiplexerGroupSettings()
         {
-            this.TraceItemSettings = new TraceItemSettings();
+            this.ModuleItemSettings = new TraceItemSettings();
 
-            var traceViewColumnWidth = this.ViewWidth / (GraphicsSettings.Fullscreen 
-                                              ? this.TraceColumnNumDisplayFullscreen
-                                              : this.TraceColumnNumDisplay);
-            var traceItemFixedWidth = this.TraceItemSettings.ExperienceFrameSize.X + this.TraceItemSettings.IdFrameSize.X;
+            var traceViewColumnWidth = 500;
+            var traceItemFixedWidth = this.ModuleItemSettings.ExperienceFrameSize.X + this.ModuleItemSettings.IdFrameSize.X;
 
-            this.TraceItemSettings.NameFrameSize = new Point(traceViewColumnWidth - traceItemFixedWidth, 24);
-            this.TraceItemSettings.Reconfigure();
+            this.ModuleItemSettings.NameFrameSize = new Point(traceViewColumnWidth - traceItemFixedWidth, 24);
+            this.ModuleItemSettings.Reconfigure();
 
-            this.TraceViewSettings = new TraceViewSettings
+            this.ModuleStartPoint = new Point(GraphicsSettings.Width - this.ViewStartPoint.X - 500, this.ViewStartPoint.Y);
+            this.ModuleViewSettings = new TraceViewSettings
                                          {
-                                             StartPoint = this.TraceStartPoint,
-                                             RootMargin = new Point(traceViewColumnWidth, this.TraceItemSettings.NameFrameSize.Y),
+                                             StartPoint = this.ModuleStartPoint,
+                                             RootMargin = new Point(traceViewColumnWidth, this.ModuleItemSettings.NameFrameSize.Y),
 
-                                             ColumnNumMax = GraphicsSettings.Fullscreen
-                                                     ? this.TraceColumnNumDisplayFullscreen
-                                                     : this.TraceColumnNumDisplay,
-                                             ColumnNumDisplay = GraphicsSettings.Fullscreen
-                                                     ? this.TraceColumnNumDisplayFullscreen
-                                                     : this.TraceColumnNumDisplay,
+                                             ColumnNumMax = GraphicsSettings.IsFullscreen
+                                                     ? this.ModuleColumnNumDisplayFullscreen
+                                                     : this.ModuleColumnNumDisplay,
+                                             ColumnNumDisplay = GraphicsSettings.IsFullscreen
+                                                     ? this.ModuleColumnNumDisplayFullscreen
+                                                     : this.ModuleColumnNumDisplay,
 
-                                             RowNumDisplay = GraphicsSettings.Fullscreen
-                                                     ? this.TraceRowNumDisplayFullscreen
-                                                     : this.TraceRowNumDisplay,
-                                             RowNumMax     = this.TraceRowNumMax,
+                                             RowNumDisplay = GraphicsSettings.IsFullscreen
+                                                     ? this.ModuleRowNumDisplayFullscreen
+                                                     : this.ModuleRowNumDisplay,
+                                             RowNumMax     = this.ModuleRowNumMax,
                                          };
 
             //-----------------------------------------------------------------
             this.CommandItemSettings = new CommandItemSettings();
 
-            var commandViewColumnWidth = this.ViewWidth / (GraphicsSettings.Fullscreen 
+            var commandViewColumnWidth = (this.ViewWidthMax - 500) / (GraphicsSettings.IsFullscreen 
                                               ? this.CommandColumnNumDisplayFullscreen
                                               : this.CommandColumnNumDisplay);
             var commandItemFixedWidth = this.CommandItemSettings.ExperienceFrameSize.X + this.CommandItemSettings.IdFrameSize.X;
@@ -108,20 +109,20 @@ namespace MetaMind.Acutance.Guis.Modules
             this.CommandItemSettings.NameFrameSize = new Point(commandViewColumnWidth - commandItemFixedWidth, 24);
             this.CommandItemSettings.Reconfigure();
 
-            this.CommandStartPoint = this.TraceViewSettings.StartPoint + new Point(0, this.TraceViewSettings.RowNumDisplay * this.TraceViewSettings.RootMargin.Y + this.ViewVMargin);
+            this.CommandStartPoint = this.ViewStartPoint;
             this.CommandViewSettings = new CommandViewSettings(this.Commandlist)
                                          {
                                              StartPoint = this.CommandStartPoint,
                                              RootMargin = new Point(commandViewColumnWidth, this.CommandItemSettings.NameFrameSize.Y),
 
-                                             ColumnNumMax = GraphicsSettings.Fullscreen
+                                             ColumnNumMax = GraphicsSettings.IsFullscreen
                                                      ? this.CommandColumnNumDisplayFullscreen
                                                      : this.CommandColumnNumDisplay,
-                                             ColumnNumDisplay = GraphicsSettings.Fullscreen
+                                             ColumnNumDisplay = GraphicsSettings.IsFullscreen
                                                      ? this.CommandColumnNumDisplayFullscreen
                                                      : this.CommandColumnNumDisplay,
 
-                                             RowNumDisplay = GraphicsSettings.Fullscreen
+                                             RowNumDisplay = GraphicsSettings.IsFullscreen
                                                      ? this.CommandRowNumDisplayFullscreen
                                                      : this.CommandRowNumDisplay,
                                              RowNumMax     = this.CommandRowNumMax,
@@ -130,7 +131,7 @@ namespace MetaMind.Acutance.Guis.Modules
             //-----------------------------------------------------------------
             this.KnowledgeItemSettings = new KnowledgeItemSettings();
 
-            var knowledgeViewColumnWidth = this.ViewWidth / this.KnowledgeViewColumnNumDisplay;
+            var knowledgeViewColumnWidth = this.ViewWidthMax / this.KnowledgeViewColumnNumDisplay;
             var knowledgeItemFixedWidth = this.KnowledgeItemSettings.IdFrameSize.X;
 
             this.KnowledgeItemSettings.NameFrameSize = new Point(knowledgeViewColumnWidth - knowledgeItemFixedWidth, 24);
@@ -143,36 +144,36 @@ namespace MetaMind.Acutance.Guis.Modules
             this.KnowledgeViewSettings = new KnowledgeViewSettings
                                              {
                                                  StartPoint = this.KnowledgeStartPoint,
-                                                 RootMargin = new Point(knowledgeViewColumnWidth, this.TraceItemSettings.NameFrameSize.Y),
+                                                 RootMargin = new Point(knowledgeViewColumnWidth, this.ModuleItemSettings.NameFrameSize.Y),
 
                                                  ColumnNumMax     = this.KnowledgeViewColumnNumDisplay,
                                                  ColumnNumDisplay = this.KnowledgeViewColumnNumDisplay,
 
-                                                 RowNumDisplay = GraphicsSettings.Fullscreen
+                                                 RowNumDisplay = GraphicsSettings.IsFullscreen
                                                          ? this.KnowledgeViewRowNumDisplayFullscreen
                                                          : this.KnowledgeViewRowNumDisplay,
                                                  RowNumMax     = this.KnowledgeViewRowNumMax,
                                              };
         }
 
-        private int ViewWidth
+        private int ViewWidthMax
         {
-            get { return GraphicsSettings.Width - this.TraceStartPoint.X * 2; }
+            get { return GraphicsSettings.Width - this.ViewStartPoint.X * 2; }
         }
 
-        public Commandlist Commandlist  
+        public ICommandlist Commandlist  
         {
-            get { return Acutance.Adventure.Commandlist; }
+            get { return Acutance.Session.Commandlist; }
         }
 
         public List<CommandEntry> Commands
         {
-            get { return Acutance.Adventure.Commandlist.Commands; }
+            get { return Acutance.Session.Commandlist.Commands; }
         }
 
-        public List<TraceEntry> Traces
+        public List<TraceEntry> Modules
         {
-            get { return Acutance.Adventure.Tracelist.Traces; }
+            get { return Acutance.Session.Tracelist.Traces; }
         }
     }
 }

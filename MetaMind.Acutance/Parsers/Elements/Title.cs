@@ -1,5 +1,7 @@
 ﻿namespace MetaMind.Acutance.Parsers.Elements
 {
+    using MetaMind.Engine.Parsers.Elements;
+
     public class Title
     {
         private readonly TitleLevel level;

@@ -17,10 +17,10 @@ namespace MetaMind.Acutance.Events
 
         public override bool HandleEvent(EventBase @event)
         {
-            var commandSelectedArgs = @event.Data as KnowledgeRetrievedEventArgs;
-            if (commandSelectedArgs != null)
+            var eventArgs = @event.Data as KnowledgeRetrievedEventArgs;
+            if (eventArgs != null)
             {
-                this.knowledgeView.Control.LoadResult(commandSelectedArgs.Path, false);
+                this.knowledgeView.Control.LoadResult(eventArgs.Path, eventArgs.Offset, false, true);
             }
 
             return true;

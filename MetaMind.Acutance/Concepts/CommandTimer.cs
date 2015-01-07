@@ -7,8 +7,8 @@ namespace MetaMind.Acutance.Concepts
     using MetaMind.Engine.Concepts;
 
     [DataContract]
-    [KnownType(typeof(CommandTimerByDate))]
-    [KnownType(typeof(CommandTimerByTimeout))]
+    [KnownType(typeof(CommandTimerWithDate))]
+    [KnownType(typeof(CommandTimerWithTimeout))]
     public abstract class CommandTimer : EngineObject
     {
         [DataMember]

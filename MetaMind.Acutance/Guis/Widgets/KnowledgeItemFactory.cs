@@ -10,11 +10,6 @@ namespace MetaMind.Acutance.Guis.Widgets
             return new KnowledgeItemControl(item);
         }
 
-        public override dynamic CreateData(IViewItem item)
-        {
-            return new KnowledgeEntry(string.Empty);
-        }
-
         public override IItemGraphics CreateGraphics(IViewItem item)
         {
             return new KnowledgeItemGraphics(item);

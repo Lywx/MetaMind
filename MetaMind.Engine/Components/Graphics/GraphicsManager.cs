@@ -4,7 +4,7 @@ namespace MetaMind.Engine.Components.Graphics
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    public class GraphicsManager : GraphicsDeviceManager, ISettingLoader
+    public class GraphicsManager : GraphicsDeviceManager, IConfigurationLoader
     {
         #region Singleton
 
@@ -56,14 +56,14 @@ namespace MetaMind.Engine.Components.Graphics
 
         public void LoadSettings()
         {
-            var dict = SettingLoader.LoadUniquePairs(this);
+            var dict = ConfigurationLoader.LoadUniquePairs(this);
 
-            var fullscreen = SettingLoader.BooleanValue(dict, "IsFullscreen", false);
-            var width  = SettingLoader.MultipleIntValue(dict, "Resolution", 0, 800);
-            var height = SettingLoader.MultipleIntValue(dict, "Resolution", 1, 600);
-            var fps    = SettingLoader.MultipleIntValue(dict, "Fps", 0, 30);
+            var fullscreen = ConfigurationLoader.BooleanValue(dict, "IsFullscreen", false);
+            var width  = ConfigurationLoader.MultipleIntValue(dict, "Resolution", 0, 800);
+            var height = ConfigurationLoader.MultipleIntValue(dict, "Resolution", 1, 600);
+            var fps    = ConfigurationLoader.MultipleIntValue(dict, "Fps", 0, 30);
 
-            var mouseVisible = SettingLoader.BooleanValue(dict, "IsMouseVisible", true);
+            var mouseVisible = ConfigurationLoader.BooleanValue(dict, "IsMouseVisible", true);
 
             GraphicsSettings.SetScreenProperties(width, height, fullscreen, fps);
             GraphicsSettings.SetMouseProperties(mouseVisible);

@@ -3,14 +3,14 @@
     using System;
     using System.ServiceModel;
 
-    using C3.Primtive2DXna;
-
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis;
     using MetaMind.Perseverance.Concepts.Cognitions;
     using MetaMind.Perseverance.Guis.Modules;
 
     using Microsoft.Xna.Framework;
+
+    using Primtives2D;
 
     public class SynchronizationGroup : Group<SynchronizationGroupSettings>
     {

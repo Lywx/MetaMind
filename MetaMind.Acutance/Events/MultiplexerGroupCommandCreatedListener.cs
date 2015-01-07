@@ -17,10 +17,10 @@ namespace MetaMind.Acutance.Events
 
         public override bool HandleEvent(EventBase @event)
         {
-            var createdEventArgs = @event.Data as CommandCreatedEventArgs;
-            if (createdEventArgs != null)
+            var eventArgs = @event.Data as CommandCreatedEventArgs;
+            if (eventArgs != null)
             {
-                this.commandView.Control.AddItem(createdEventArgs.Name, createdEventArgs.Path);
+                this.commandView.Control.AddItem(eventArgs.Name, eventArgs.Path);
             }
 
             return true;

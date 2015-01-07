@@ -10,6 +10,7 @@ namespace MetaMind.Acutance.Events
 
         public readonly int Minutes;
 
+        // TODO: add this to view
         public CommandCreatedEventArgs(string name, string path, int minutes)
         {
             this.Name    = name;

@@ -1,19 +1,12 @@
 namespace MetaMind.Acutance.Concepts
 {
-    using System;
-    using System.Runtime.Serialization;
-
-    using MetaMind.Acutance.Guis.Widgets;
+    using MetaMind.Acutance.Events;
     using MetaMind.Acutance.Sessions;
     using MetaMind.Engine;
     using MetaMind.Engine.Components.Events;
     using MetaMind.Engine.Concepts;
-
-    public enum CommandMode
-    {
-        TriggeredByTimeout,
-        TriggeredByDate,
-    }
+    using System;
+    using System.Runtime.Serialization;
 
     public enum CommandState
     {
@@ -21,7 +14,13 @@ namespace MetaMind.Acutance.Concepts
         Transiting,
     }
 
-    public interface IEventEntry
+    public enum CommandType
+    {
+        Knowledge,
+        Schedule,
+    }
+
+    public interface ICommandEntry
     {
         [DataMember]
         Experience Experience { get; }
@@ -36,29 +35,30 @@ namespace MetaMind.Acutance.Concepts
     }
 
     [DataContract]
-    public class CommandEntry : EngineObject, IEventEntry
+    public class CommandEntry : EngineObject, ICommandEntry
     {
-        public CommandEntry(string name, string path, DateTime date, CommandRepeativity repeativity)
-            : this(name, path, CommandMode.TriggeredByDate)
+        public CommandEntry(string name, string path, int offset, DateTime date, CommandRepeativity repeativity)
+            : this(name, path, offset, CommandType.Schedule)
         {
-            this.Timer = new CommandTimerByDate(date, repeativity);
+            this.Timer = new CommandTimerWithDate(date, repeativity);
 
             this.Reset();
         }
 
-        public CommandEntry(string name, string path, TimeSpan timeout)
-            : this(name, path, CommandMode.TriggeredByTimeout)
+        public CommandEntry(string name, string path, int offset, TimeSpan timeout)
+            : this(name, path, offset, CommandType.Knowledge)
         {
-            this.Timer = new CommandTimerByTimeout(timeout);
+            this.Timer = new CommandTimerWithTimeout(timeout);
 
             this.Reset();
         }
 
-        private CommandEntry(string name, string path, CommandMode mode)
+        private CommandEntry(string name, string path, int offset, CommandType type)
         {
-            this.Name = name;
-            this.Path = path;
-            this.Mode = mode;
+            this.Name   = name;
+            this.Path   = path;
+            this.Offset = offset;
+            this.Type   = type;
         }
 
         [DataMember]
@@ -68,19 +68,22 @@ namespace MetaMind.Acutance.Concepts
         }
 
         [DataMember]
-        public CommandMode Mode { get; private set; }
-
-        [DataMember]
         public string Name { get; set; }
 
         [DataMember]
         public string Path { get; set; }
 
         [DataMember]
+        public int Offset { get; set; }
+
+        [DataMember]
         public CommandState State { get; private set; }
 
         [DataMember]
-        private CommandTimer Timer { get; set; }
+        public CommandType Type { get; private set; }
+
+        [DataMember]
+        protected CommandTimer Timer { get; set; }
 
         public void Check()
         {
@@ -110,14 +113,14 @@ namespace MetaMind.Acutance.Concepts
             this.State = CommandState.Transiting;
 
             var commandNotifiedEvent = new EventBase(
-                (int)AdventureEventType.CommandNotified,
+                (int)SessionEventType.CommandNotified,
                 new CommandNotifiedEventArgs(this));
 
             GameEngine.EventManager.QueueEvent(commandNotifiedEvent);
 
             var knowledgeRetrievedEvent = new EventBase(
-                (int)AdventureEventType.KnowledgeRetrieved,
-                new KnowledgeRetrievedEventArgs(this.Path));
+                (int)SessionEventType.KnowledgeRetrieved,
+                new KnowledgeRetrievedEventArgs(this.Path, this.Offset));
 
             GameEngine.EventManager.QueueEvent(knowledgeRetrievedEvent);
         }

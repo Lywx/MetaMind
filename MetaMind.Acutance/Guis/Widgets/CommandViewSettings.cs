@@ -6,9 +6,9 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     public class CommandViewSettings : TraceViewSettings
     {
-        public Commandlist Source;
+        public ICommandlist Source;
 
-        public CommandViewSettings(Commandlist source)
+        public CommandViewSettings(ICommandlist source)
         {
             this.Source = source;
         }

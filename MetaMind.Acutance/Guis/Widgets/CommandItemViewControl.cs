@@ -22,7 +22,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
             this.ViewControl.Swap.Initialize(originCenter, targetCenter);
 
-            ProcessManager.AttachProcess(new CommandItemSwapProcess(draggingItem, this.Item, Acutance.Adventure.Commandlist.Commands));
+            ProcessManager.AttachProcess(new CommandItemSwapProcess(draggingItem, this.Item, Acutance.Session.Commandlist.Commands));
         }
     }
 }

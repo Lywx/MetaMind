@@ -8,14 +8,16 @@ namespace MetaMind.Acutance.Concepts
     public enum CommandRepeativity
     {
         EveryDay,
+
         EveryWeek,
-        EveryMonth,
+
+        // EveryMonth,
     }
 
     [DataContract]
-    public class CommandTimerByDate : CommandTimer
+    public class CommandTimerWithDate : CommandTimer
     {
-        public CommandTimerByDate(DateTime date, CommandRepeativity repeativity)
+        public CommandTimerWithDate(DateTime date, CommandRepeativity repeativity)
         {
             this.Date        = date;
             this.Repeativity = repeativity;
@@ -27,8 +29,9 @@ namespace MetaMind.Acutance.Concepts
             {
                 switch (this.Repeativity)
                 {
-                    case CommandRepeativity.EveryMonth:
-                        return this.SameMonthDay && this.SameTime;
+                    // TODO: Not implemented properly with parser because day of week cannot determine day in month
+                    // case CommandRepeativity.EveryMonth:
+                    //     return this.SameMonthDay && this.SameTime;
 
                     case CommandRepeativity.EveryWeek:
                         return this.SameWeekDay && this.SameTime;

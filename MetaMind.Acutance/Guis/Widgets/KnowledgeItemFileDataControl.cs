@@ -7,8 +7,9 @@
 
 namespace MetaMind.Acutance.Guis.Widgets
 {
-    using CodeProject.FileSearcher;
+    using FileSearcher;
 
+    using MetaMind.Engine.Events;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Views;
 
