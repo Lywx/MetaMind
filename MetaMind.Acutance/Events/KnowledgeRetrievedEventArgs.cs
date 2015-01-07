@@ -1,4 +1,4 @@
-namespace MetaMind.Acutance.Guis.Widgets
+namespace MetaMind.Acutance.Events
 {
     using System;
 

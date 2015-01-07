@@ -5,7 +5,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Acutance.Parsers.Elements
+namespace MetaMind.Engine.Parsers.Elements
 {
     using System.Collections.Generic;
 

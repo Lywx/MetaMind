@@ -7,15 +7,21 @@
 
 namespace MetaMind.Engine.Components.Inputs
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
 
     using MetaMind.Engine.Guis;
-    using MetaMind.Engine.Guis.Widgets;
+    using MetaMind.Engine.Parsers.Elements;
+    using MetaMind.Engine.Parsers.Grammars;
+    using MetaMind.Engine.Settings;
+    using MetaMind.Engine.Settings.Loaders;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
+
+    using Sprache;
 
     /// <summary>
     /// The actions that are possible within the game.
@@ -29,10 +35,10 @@ namespace MetaMind.Engine.Components.Inputs
         Left, 
         Right, 
 
-        SUp, 
-        SDown, 
-        SLeft, 
-        SRight, 
+        FastUp, 
+        FastDown, 
+        FastLeft, 
+        FastRight, 
 
         // list management
         // ---------------------------------------------------------------------
@@ -50,6 +56,10 @@ namespace MetaMind.Engine.Components.Inputs
         TraceClearItem, 
 
         KnowledgeEditItem,
+        KnowledgeClearItem,
+        KnowledgeDeleteItem,
+        KnowledgeResetItem,
+        KnowledgeSortItem,
 
         CommandClearItem,
         CommandDeleteItem,
@@ -79,8 +89,20 @@ namespace MetaMind.Engine.Components.Inputs
         public Dictionary<Keys, List<Keys>> Bindings = new Dictionary<Keys, List<Keys>>();
     }
 
-    public class KeyboardManager : Widget
+    public class KeyboardManager : Widget, ISettingLoader
     {
+        #region Configurations
+
+        public string ConfigurationFile
+        {
+            get
+            {
+                return "Control.txt";
+            }
+        }
+
+        #endregion
+
         #region Singleton
 
         private static KeyboardManager singleton;
@@ -213,8 +235,8 @@ namespace MetaMind.Engine.Components.Inputs
 
         private KeyboardManager()
         {
-            this.ResetActionMap();
-            this.LoadActionMapFromFile();
+            this.InitActionMap();
+            this.LoadActionMap();
         }
 
         #endregion Constructors
@@ -232,7 +254,7 @@ namespace MetaMind.Engine.Components.Inputs
             get { return actionMaps; }
         }
 
-        private void ResetActionMap()
+        private void InitActionMap()
         {
             actionMaps = new KeyboardActionMap[(int)Actions.ActionNum];
 
@@ -242,52 +264,59 @@ namespace MetaMind.Engine.Components.Inputs
             }
         }
 
-        private void LoadActionMapFromFile()
+        private void LoadActionMap()
         {
-            var lines = File.ReadAllLines(@"Configurations/Keyboard.txt");
-            foreach (var line in lines)
+            foreach (var pair in SettingLoader.LoadDuplicablePairs(this))
             {
-                this.LoadActionMapFromLine(line);
+                this.LoadActionMapPair(pair);
             }
         }
 
-        private void LoadActionMapFromLine(string line)
+        private void LoadActionMapPair(KeyValuePair<string, string> pair)
         {
-            if (string.IsNullOrWhiteSpace(line))
+            // parse pair action
+            Actions action;
+            var success = Enum.TryParse(pair.Key, true, out action);
+            if (!success)
             {
                 return;
             }
 
-            var firstSplit  = line.Split('=');
-            var secondSplit = firstSplit[1].Split(':');
-
-            var actionName = firstSplit[0];
-            Actions action;
-            Actions.TryParse(actionName, true, out action);
-
-            var keyName = secondSplit[0];
+            // parse pair mapping
             Keys key;
-            Keys.TryParse(keyName, true, out key);
-
             List<Keys> modifiers = new List<Keys>();
 
-            if (secondSplit.Count() > 1)
+            var expression = BasicGrammar.SentenceParser.Parse(pair.Value);
+
+            // parse mapping key
+            key = Key(expression);
+
+            // parse mapping modifier
+            // case insensitive 
+            if (expression.Words.Last() != "alone")
             {
-                foreach (var modifierName in secondSplit[1].Split(','))
+                foreach (var modifierName in expression.Words.Skip(2))
                 {
-                    if (string.IsNullOrWhiteSpace(modifierName))
+                    if (modifierName == "and")
                     {
                         continue;
                     }
 
                     Keys modifier;
-                    Keys.TryParse(modifierName, true, out modifier);
+                    Enum.TryParse(modifierName, true, out modifier);
 
-                    modifiers.Add(modifier); 
+                    modifiers.Add(modifier);
                 }
             }
 
             actionMaps[(int)action].Bindings.Add(key, modifiers);
+        }
+
+        private static Keys Key(Sentence expression)
+        {
+            Keys key;
+            Enum.TryParse(expression.Words[0], true, out key);
+            return key;
         }
 
         #endregion Keyboard Action Mappings
@@ -309,5 +338,6 @@ namespace MetaMind.Engine.Components.Inputs
         }
 
         #endregion Update
+
     }
 }

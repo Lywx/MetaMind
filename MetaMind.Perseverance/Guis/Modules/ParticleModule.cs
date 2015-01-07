@@ -16,15 +16,15 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         public override void UpdateInput(GameTime gameTime)
         {
-            if (InputSequenceManager.Keyboard.IsActionPressed(Actions.SLeft) &&
-                InputSequenceManager.Keyboard.IsActionPressed(Actions.SRight))
+            if (InputSequenceManager.Keyboard.IsActionPressed(Actions.FastLeft) &&
+                InputSequenceManager.Keyboard.IsActionPressed(Actions.FastRight))
             {
                 this.Refresh = true;
                 this.Plain   = true;
             }
 
-            if (InputSequenceManager.Keyboard.IsActionPressed(Actions.SUp) &&
-                InputSequenceManager.Keyboard.IsActionPressed(Actions.SDown))
+            if (InputSequenceManager.Keyboard.IsActionPressed(Actions.FastUp) &&
+                InputSequenceManager.Keyboard.IsActionPressed(Actions.FastDown))
             {
                 this.Refresh = false;
                 this.Plain   = false;

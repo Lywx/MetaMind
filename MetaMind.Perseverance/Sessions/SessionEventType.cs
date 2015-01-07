@@ -1,6 +1,6 @@
 ﻿namespace MetaMind.Perseverance.Sessions
 {
-    public enum AdventureEventType
+    public enum SessionEventType
     {
         SleepStarted = 0xd5e3,
         SleepStopped = 0x7bc6,

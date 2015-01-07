@@ -24,7 +24,7 @@
 
             this.Exiting += this.SummaryScreenExiting;
 
-            this.summary = new SummaryModule(Perseverance.Adventure.Cognition, new SummaryModuleSettings());
+            this.summary = new SummaryModule(Perseverance.Session.Cognition, new SummaryModuleSettings());
             this.summary.Load();
         }
 

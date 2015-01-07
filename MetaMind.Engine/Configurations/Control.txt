@@ -1,0 +1,57 @@
+" Keyboard Settings
+
+" Motion
+
+Up    = K alone
+Down  = J alone
+Left  = H alone
+Right = L alone
+
+" Fast Motion
+
+FastUp    = K with LeftControl
+FastDown  = J with LeftControl
+FastLeft  = H with LeftControl
+FastRight = L with LeftControl
+
+" Motivation View Control
+
+MotivationCreateItem = O with Tab
+MotivationDeleteItem = D with Tab
+MotivationEditItem   = I with Tab
+
+" Task View Control
+
+TaskCreateItem = O with LeftControl
+TaskDeleteItem = D with LeftControl
+TaskEditItem   = I with LeftControl
+
+" Trace View Control
+
+TraceCreateItem = O with LeftControl
+TraceDeleteItem = D with LeftControl
+TraceEditItem   = I with LeftControl
+TraceClearItem  = C with LeftControl
+
+" Knowledge View Control
+
+KnowledgeEditItem = I with LeftControl
+
+" Command View Control
+
+CommandClearItem  = C with LeftControl
+CommandDeleteItem = D with LeftControl
+CommandResetItem  = R with LeftControl
+CommandSortItem   = S with LeftControl
+
+" Synchronization Control
+
+ForceReset   = R with LeftControl and LeftShift
+ForceReverse = Space with LeftControl and LeftShift
+ForceFlip    = Enter with LeftControl and LeftShift
+
+" Basic Commands
+
+Escape = C with LeftControl
+Escape = Escape alone
+Enter  = Space alone

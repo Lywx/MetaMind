@@ -1,7 +1,7 @@
 ﻿namespace MetaMind.AcutanceUnitTest.Parsers
 {
     using MetaMind.Acutance.Parsers.Elements;
-    using MetaMind.Acutance.Parsers.Grammers;
+    using MetaMind.Acutance.Parsers.Grammars;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 

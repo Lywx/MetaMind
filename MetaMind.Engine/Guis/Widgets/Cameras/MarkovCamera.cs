@@ -7,6 +7,7 @@
 
 namespace MetaMind.Engine.Guis.Widgets.Cameras
 {
+    using MetaMind.Engine.Components.Graphics;
     using MetaMind.Engine.Settings;
 
     using Microsoft.Xna.Framework;

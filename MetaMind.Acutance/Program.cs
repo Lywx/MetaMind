@@ -1,7 +1,6 @@
 ﻿namespace MetaMind.Acutance
 {
     using System;
-    using System.Linq;
     using System.ServiceModel;
 
     using MetaMind.Acutance.PerseveranceServiceReference;
@@ -20,10 +19,9 @@
                                   InnerChannel = { OperationTimeout = TimeSpan.FromMilliseconds(20) }
                               };
 
-            using (var engine = GameEngine.GetInstance())
+            using (var engine = GameEngine.Instance)
             {
-                var fullscreen = args.Count() != 0 && args[0] == "--fullscreen";
-                var runner     = new Acutance(engine, client, fullscreen);
+                var runner = new Acutance(engine, client);
 
                 runner.Run();
             }

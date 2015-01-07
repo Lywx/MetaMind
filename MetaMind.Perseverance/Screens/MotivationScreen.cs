@@ -24,7 +24,7 @@
             this.IsPopup = true;
 
             this.synchronization = new SynchronizationModule(
-                Perseverance.Adventure.Cognition,
+                Perseverance.Session.Cognition,
                 new SynchronizationModuleSettings());
             this.synchronization.Load();
 

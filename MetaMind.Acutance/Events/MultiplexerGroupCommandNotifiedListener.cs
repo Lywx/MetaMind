@@ -1,6 +1,5 @@
-namespace MetaMind.Acutance.Guis.Modules
+namespace MetaMind.Acutance.Events
 {
-    using MetaMind.Acutance.Concepts;
     using MetaMind.Acutance.Sessions;
     using MetaMind.Engine.Components.Events;
     using MetaMind.Engine.Guis.Widgets.Views;
@@ -12,10 +11,10 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public MultiplexerGroupCommandNotifiedListener(IView commandView, IView knowledgeView)
         {
-            this.commandView      = commandView;
+            this.commandView   = commandView;
             this.knowledgeView = knowledgeView;
 
-            this.RegisteredEvents.Add((int)AdventureEventType.CommandNotified);
+            this.RegisteredEvents.Add((int)SessionEventType.CommandNotified);
         }
 
         public override bool HandleEvent(EventBase @event)

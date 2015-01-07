@@ -5,7 +5,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Acutance.Parsers.Grammers
+namespace MetaMind.Acutance.Parsers.Grammars
 {
     using System.Collections.Generic;
     using System.IO;
@@ -13,6 +13,7 @@ namespace MetaMind.Acutance.Parsers.Grammers
 
     using MetaMind.Acutance.Concepts;
     using MetaMind.Acutance.Parsers.Elements;
+    using MetaMind.Engine.Parsers.Grammars;
 
     using Sprache;
 

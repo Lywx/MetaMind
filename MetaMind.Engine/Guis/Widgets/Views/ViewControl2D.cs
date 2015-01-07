@@ -81,12 +81,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views
                         this.MoveDown();
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SUp))
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.FastUp))
                     {
                         this.SuperMoveUp();
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SDown))
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.FastDown))
                     {
                         this.SuperMoveDown();
                     }
@@ -101,12 +101,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views
                         this.MoveRight();
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SLeft))
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.FastLeft))
                     {
                         this.SuperMoveLeft();
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SRight))
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.FastRight))
                     {
                         this.SuperMoveRight();
                     }

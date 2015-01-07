@@ -5,7 +5,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Engine.Settings
+namespace MetaMind.Engine.Settings.Colors
 {
     using Microsoft.Xna.Framework;
 

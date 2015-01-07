@@ -3,6 +3,7 @@ namespace MetaMind.Perseverance.Guis.Modules
     using System;
     using System.Collections.Generic;
 
+    using MetaMind.Engine.Components.Graphics;
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Settings;
     using MetaMind.Perseverance.Concepts.MotivationEntries;
@@ -26,7 +27,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             this.NowViewSettings    = new MotivationViewSettings { Space = MotivationSpace.Now };
             this.FutureViewSettings = new MotivationViewSettings { Space = MotivationSpace.Future };
 
-            if (GraphicsSettings.Fullscreen)
+            if (GraphicsSettings.IsFullscreen)
             {
                 this.PastViewSettings  .ColumnNumDisplay = 9;
                 this.NowViewSettings   .ColumnNumDisplay = 1;
@@ -56,7 +57,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         public static List<MotivationEntry> GetFutureMotivations()
         {
-            return Perseverance.Adventure.Motivationlist.FutureMotivations;
+            return Perseverance.Session.Motivationlist.FutureMotivations;
         }
 
         public static List<MotivationEntry> GetMotivationSource(MotivationSpace space)
@@ -85,12 +86,12 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         public static List<MotivationEntry> GetNowMotivations()
         {
-            return Perseverance.Adventure.Motivationlist.NowMotivations;
+            return Perseverance.Session.Motivationlist.NowMotivations;
         }
 
         public static List<MotivationEntry> GetPastMotivations()
         {
-            return Perseverance.Adventure.Motivationlist.PastMotivations;
+            return Perseverance.Session.Motivationlist.PastMotivations;
         }
 
         public object Clone()

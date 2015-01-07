@@ -10,15 +10,15 @@ namespace MetaMind.Acutance.Sessions
     using MetaMind.Engine.Components;
 
     /// <summary>
-    /// Adventure is a data class.
+    /// Session is a data class.
     /// </summary>
     [DataContract]
-    public class Adventure : EngineObject
+    public class Session : EngineObject
     {
         #region File Storage
 
         [DataMember]
-        public const string XmlFilename = "Adventure.xml";
+        public const string XmlFilename = "Session.xml";
 
         [DataMember]
         public const string XmlPath = FolderManager.SaveFolderPath + XmlFilename;
@@ -27,15 +27,15 @@ namespace MetaMind.Acutance.Sessions
 
         #region Singleton
 
-        private static Adventure singleton;
+        private static Session singleton;
 
         #endregion Singleton
 
         #region Constructors
 
-        private Adventure()
+        private Session()
         {
-            this.Random    = new Random((int)DateTime.Now.Ticks);
+            this.Random = new Random((int)DateTime.Now.Ticks);
 
             this.Tracelist = new Tracelist();
             this.Commandlist = new Commandlist();
@@ -47,17 +47,18 @@ namespace MetaMind.Acutance.Sessions
 
         public Random Random { get; private set; }
 
+        //TODO: not necessary now
         [DataMember(Name = "Tracelist")]
-        public Tracelist Tracelist { get; private set; }
+        public ITracelist Tracelist { get; private set; }
 
         [DataMember(Name = "Commandlist")]
-        public Commandlist Commandlist { get; private set; }
+        public ICommandlist Commandlist { get; private set; }
 
         #endregion Public Properties
 
         #region Load and Save
 
-        public static Adventure LoadSave()
+        public static Session LoadSave()
         {
             if (File.Exists(XmlPath))
             {
@@ -75,7 +76,7 @@ namespace MetaMind.Acutance.Sessions
             else
             {
                 // create a new singleton
-                singleton = new Adventure();
+                singleton = new Session();
             }
 
             return singleton;
@@ -83,7 +84,7 @@ namespace MetaMind.Acutance.Sessions
 
         public void Save()
         {
-            var serializer = new DataContractSerializer(typeof(Adventure), null, int.MaxValue, false, true, null);
+            var serializer = new DataContractSerializer(typeof(Session), null, int.MaxValue, false, true, null);
             using (var file = File.Create(XmlPath))
             {
                 serializer.WriteObject(file, singleton);
@@ -96,15 +97,15 @@ namespace MetaMind.Acutance.Sessions
             {
                 try
                 {
-                    var deserializer = new DataContractSerializer(typeof(Adventure));
+                    var deserializer = new DataContractSerializer(typeof(Session));
                     using (var reader = XmlDictionaryReader.CreateTextReader(file, new XmlDictionaryReaderQuotas()))
                     {
-                        singleton = (Adventure)deserializer.ReadObject(reader, true);
+                        singleton = (Session)deserializer.ReadObject(reader, true);
                     }
                 }
                 catch (SerializationException)
                 {
-                    singleton = new Adventure();
+                    singleton = new Session();
                 }
             }
         }
@@ -115,7 +116,7 @@ namespace MetaMind.Acutance.Sessions
 
         public void Update()
         {
-            this.Tracelist.Update();
+            this.Tracelist  .Update();
             this.Commandlist.Update();
         }
 

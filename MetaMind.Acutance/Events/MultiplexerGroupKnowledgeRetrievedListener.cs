@@ -1,6 +1,5 @@
-namespace MetaMind.Acutance.Guis.Modules
+namespace MetaMind.Acutance.Events
 {
-    using MetaMind.Acutance.Guis.Widgets;
     using MetaMind.Acutance.Sessions;
     using MetaMind.Engine.Components.Events;
     using MetaMind.Engine.Guis.Widgets.Views;
@@ -13,7 +12,7 @@ namespace MetaMind.Acutance.Guis.Modules
         {
             this.knowledgeView = knowledgeView;
 
-            this.RegisteredEvents.Add((int)AdventureEventType.KnowledgeRetrieved);
+            this.RegisteredEvents.Add((int)SessionEventType.KnowledgeRetrieved);
         }
 
         public override bool HandleEvent(EventBase @event)

@@ -3,6 +3,7 @@
     using System;
 
     using MetaMind.Engine.Components.Fonts;
+    using MetaMind.Engine.Components.Graphics;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis;

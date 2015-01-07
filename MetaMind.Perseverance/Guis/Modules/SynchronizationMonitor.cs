@@ -9,6 +9,9 @@
 
     using Microsoft.Xna.Framework;
 
+    using Game = Microsoft.Xna.Framework.Game;
+    using GameComponent = Microsoft.Xna.Framework.GameComponent;
+
     public class SynchronizationAlertedEventArgs : EventArgs
     {
     }
@@ -78,7 +81,7 @@
 
         private void Alert()
         {
-            var alertedEvent = new EventBase((int)AdventureEventType.SyncAlerted, new SynchronizationAlertedEventArgs());
+            var alertedEvent = new EventBase((int)SessionEventType.SyncAlerted, new SynchronizationAlertedEventArgs());
             GameEngine.EventManager.QueueEvent(alertedEvent);
         }
 

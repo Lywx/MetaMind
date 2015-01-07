@@ -138,7 +138,7 @@ namespace MetaMind.Perseverance.Guis.Modules
                     this.View.Control.MoveDown();
                 }
 
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SUp))
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.FastUp))
                 {
                     for (var i = 0; i < this.View.ViewSettings.RowNumDisplay; i++)
                     {
@@ -146,7 +146,7 @@ namespace MetaMind.Perseverance.Guis.Modules
                     }
                 }
 
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SDown))
+                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.FastDown))
                 {
                     for (var i = 0; i < this.View.ViewSettings.RowNumDisplay; i++)
                     {

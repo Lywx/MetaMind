@@ -5,7 +5,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.EngineUnitTest
+namespace MetaMind.EngineUnitTest.Concepts
 {
     using System;
 

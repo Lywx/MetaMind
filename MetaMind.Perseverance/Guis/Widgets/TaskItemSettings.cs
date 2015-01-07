@@ -3,6 +3,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Settings;
+    using MetaMind.Engine.Settings.Colors;
 
     using Microsoft.Xna.Framework;
 

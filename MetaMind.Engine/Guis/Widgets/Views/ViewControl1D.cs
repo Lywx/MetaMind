@@ -229,12 +229,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views
                         this.MoveRight();
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SLeft))
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.FastLeft))
                     {
                         this.SuperMoveLeft();
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.SRight))
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.FastRight))
                     {
                         this.SuperMoveRight();
                     }

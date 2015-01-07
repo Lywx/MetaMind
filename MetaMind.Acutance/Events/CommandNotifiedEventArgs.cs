@@ -1,6 +1,8 @@
-namespace MetaMind.Acutance.Concepts
+namespace MetaMind.Acutance.Events
 {
     using System;
+
+    using MetaMind.Acutance.Concepts;
 
     public class CommandNotifiedEventArgs : EventArgs
     {

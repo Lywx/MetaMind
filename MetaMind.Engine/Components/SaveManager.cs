@@ -52,5 +52,9 @@ namespace MetaMind.Engine.Components
         public virtual void Save()
         {
         }
+
+        public virtual void Load()
+        {
+        }
     }
 }

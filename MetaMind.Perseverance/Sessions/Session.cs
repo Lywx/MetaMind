@@ -11,15 +11,15 @@
     using MetaMind.Perseverance.Concepts.MotivationEntries;
 
     /// <summary>
-    /// Adventure is a data class.
+    /// Session is a data class.
     /// </summary>
     [DataContract]
-    public class Adventure : EngineObject
+    public class Session : EngineObject
     {
         #region File Storage
 
         [DataMember]
-        public const string XmlFilename = "Adventure.xml";
+        public const string XmlFilename = "Session.xml";
 
         [DataMember]
         public const string XmlPath = FolderManager.SaveFolderPath + XmlFilename;
@@ -28,13 +28,13 @@
 
         #region Singleton
 
-        private static Adventure singleton;
+        private static Session singleton;
 
         #endregion Singleton
 
         #region Constructors
 
-        private Adventure()
+        private Session()
         {
             this.Random         = new Random((int)DateTime.Now.Ticks);
             this.Motivationlist = new Motivationlist();
@@ -63,7 +63,7 @@
             this.Random = new Random((int)DateTime.Now.Ticks);
         }
 
-        public static Adventure LoadSave()
+        public static Session LoadSave()
         {
             if (File.Exists(XmlPath))
             {
@@ -80,14 +80,14 @@
             else
             {
                 // create a new singleton
-                singleton = new Adventure();
+                singleton = new Session();
             }
             return singleton;
         }
 
         public void Save()
         {
-            var serializer = new DataContractSerializer(typeof(Adventure), null, int.MaxValue, false, true, null);
+            var serializer = new DataContractSerializer(typeof(Session), null, int.MaxValue, false, true, null);
             using (var file = File.Create(XmlPath))
             {
                 serializer.WriteObject( file, singleton );
@@ -100,15 +100,15 @@
             {
                 try
                 {
-                    var deserializer = new DataContractSerializer(typeof(Adventure));
+                    var deserializer = new DataContractSerializer(typeof(Session));
                     using (var reader = XmlDictionaryReader.CreateTextReader(file, new XmlDictionaryReaderQuotas()))
                     {
-                        singleton = (Adventure)deserializer.ReadObject(reader, true);
+                        singleton = (Session)deserializer.ReadObject(reader, true);
                     }
                 }
                 catch (SerializationException)
                 {
-                    singleton = new Adventure();
+                    singleton = new Session();
                 }
             }
         }

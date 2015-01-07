@@ -9,13 +9,18 @@ namespace MetaMind.Engine.Components
 {
     using System.IO;
 
+    using MetaMind.Engine.Settings;
+    using MetaMind.Engine.Settings.Loaders;
+
     public class FolderManager
     {
         #region Directory Settings
 
-        public const string DataFolderPath = @".\Data\";
+        public const string DataFolderPath          = @".\Data\";
 
-        public const string SaveFolderPath = @".\Save\";
+        public const string SaveFolderPath          = @".\Save\";
+
+        public const string ConfigurationFolderPath = @".\Configurations\";
 
         #endregion Directory Settings
 
@@ -45,6 +50,11 @@ namespace MetaMind.Engine.Components
             var fullPath     = Path.GetFullPath(path);
 
             return fullPath.Substring(dataFullPath.Length);
+        }
+
+        public static string ConfigurationPath(ISettingLoader loader)
+        {
+            return Path.Combine(ConfigurationFolderPath, loader.ConfigurationFile);
         }
 
         private void CreateDirectory()

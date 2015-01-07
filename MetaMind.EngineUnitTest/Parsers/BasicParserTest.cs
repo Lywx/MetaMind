@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MetaMind.AcutanceUnitTest.Parsers
+namespace MetaMind.EngineUnitTest.Parsers
 {
-    using MetaMind.Acutance.Parsers.Grammers;
+    using MetaMind.Engine.Parsers.Grammars;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 

@@ -9,6 +9,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 {
     using System;
 
+    using MetaMind.Engine.Components.Graphics;
     using MetaMind.Engine.Settings;
     using MetaMind.Perseverance.Guis.Widgets;
 
@@ -29,7 +30,7 @@ namespace MetaMind.Perseverance.Guis.Modules
                                         ColumnNumDisplay = 1,
                                         ColumnNumMax     = 1,
 
-                                        RowNumDisplay    = GraphicsSettings.Fullscreen ? 13 : 9,
+                                        RowNumDisplay    = GraphicsSettings.IsFullscreen ? 13 : 9,
                                         RowNumMax        = 100,
 
                                         RootMargin = new Point(

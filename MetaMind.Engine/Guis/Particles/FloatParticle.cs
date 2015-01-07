@@ -9,6 +9,7 @@ namespace MetaMind.Engine.Guis.Particles
 {
     using System;
 
+    using MetaMind.Engine.Components.Graphics;
     using MetaMind.Engine.Settings;
 
     using Microsoft.Xna.Framework;

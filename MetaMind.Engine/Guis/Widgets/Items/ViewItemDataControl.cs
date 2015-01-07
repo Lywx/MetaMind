@@ -11,6 +11,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
     using System.Reflection;
 
     using MetaMind.Engine.Concepts;
+    using MetaMind.Engine.Events;
     using MetaMind.Engine.Guis.Widgets.Views;
 
     using Microsoft.Xna.Framework;

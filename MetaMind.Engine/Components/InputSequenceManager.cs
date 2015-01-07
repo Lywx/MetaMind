@@ -9,7 +9,6 @@ namespace MetaMind.Engine.Components
 {
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis;
-    using MetaMind.Engine.Guis.Widgets;
 
     using Microsoft.Xna.Framework;
 
@@ -67,7 +66,7 @@ namespace MetaMind.Engine.Components
 
         public override void UpdateInput(GameTime gameTime)
         {
-            this.mouse.UpdateInput(gameTime);
+            this.mouse   .UpdateInput(gameTime);
             this.keyboard.UpdateInput(gameTime);
         }
 

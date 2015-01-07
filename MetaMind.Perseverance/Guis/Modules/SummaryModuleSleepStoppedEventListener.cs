@@ -18,7 +18,7 @@ namespace MetaMind.Perseverance.Guis.Modules
     {
         public SummaryModuleSleepStoppedEventListener()
         {
-            this.RegisteredEvents.Add((int)AdventureEventType.SleepStopped);
+            this.RegisteredEvents.Add((int)SessionEventType.SleepStopped);
         }
 
         public override bool HandleEvent(EventBase @event)

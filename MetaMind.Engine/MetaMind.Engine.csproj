@@ -79,6 +79,7 @@
     <Compile Include="Components\FolderManager.cs" />
     <Compile Include="Components\FontManager.cs" />
     <Compile Include="Components\Fonts\Font.cs" />
+    <Compile Include="Components\Graphics\GraphicsManager.cs" />
     <Compile Include="Components\InputEventManager.cs" />
     <Compile Include="Components\InputSequenceManager.cs" />
     <Compile Include="Components\Inputs\KeyboardManager.cs" />
@@ -91,7 +92,7 @@
     <Compile Include="Components\Processes\SoundProcess.cs" />
     <Compile Include="Components\Processes\WaitProcess.cs" />
     <Compile Include="Components\ProcessManager.cs" />
-    <Compile Include="Components\RunnerManager.cs" />
+    <Compile Include="Components\GameManager.cs" />
     <Compile Include="Components\SaveManager.cs" />
     <Compile Include="Components\ScreenManager.cs" />
     <Compile Include="Components\Fonts\Text.cs" />
@@ -100,7 +101,7 @@
     <Compile Include="Extensions\TypeExt.cs" />
     <Compile Include="GameEngine.cs" />
     <Compile Include="EngineObject.cs" />
-    <Compile Include="EngineRunner.cs" />
+    <Compile Include="GameComponent.cs" />
     <Compile Include="Extensions\ColorExt.cs" />
     <Compile Include="Extensions\GameTimeExt.cs" />
     <Compile Include="Extensions\PointExt.cs" />
@@ -155,7 +156,7 @@
     <Compile Include="Guis\Widgets\Items\ViewItemControl2D.cs" />
     <Compile Include="Guis\Widgets\Items\ViewItemData.cs" />
     <Compile Include="Guis\Widgets\Items\ViewItemDataControl.cs" />
-    <Compile Include="Guis\Widgets\Items\ViewItemDataEventArgs.cs" />
+    <Compile Include="Events\ViewItemDataEventArgs.cs" />
     <Compile Include="Guis\Widgets\Items\ViewItemExchangable.cs" />
     <Compile Include="Guis\Widgets\Items\ViewItemExchangeless.cs" />
     <Compile Include="Guis\Widgets\Items\ViewItemFrameControl.cs" />
@@ -197,22 +198,27 @@
     <Compile Include="Guis\Widgets\Cameras\MarkovCamera.cs" />
     <Compile Include="Guis\Widget.cs" />
     <Compile Include="Guis\Widgets\Views\VisualViewComponent.cs" />
+    <Compile Include="Parsers\Grammars\BasicGrammar.cs" />
+    <Compile Include="Parsers\Grammars\ConfigurationParser.cs" />
+    <Compile Include="Parsers\Elements\Sentence.cs" />
     <Compile Include="Parsers\RegexParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screens\GameScreen.cs" />
     <Compile Include="Screens\ScreenState.cs" />
-    <Compile Include="Settings\ColorPalette.cs" />
-    <Compile Include="Settings\GraphicsSettings.cs" />
+    <Compile Include="Settings\Colors\ColorPalette.cs" />
+    <Compile Include="Components\Graphics\GraphicsSettings.cs" />
+    <Compile Include="Settings\Loaders\ISettingLoader.cs" />
+    <Compile Include="Settings\Loaders\SettingLoader.cs" />
     <Compile Include="Settings\MessageSettings.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="FastMember">
-      <HintPath>..\packages\FastMember.1.0.0.11\lib\net40\FastMember.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Sprache">
+      <HintPath>..\ThirdParties\Sprache.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -234,8 +240,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Configurations\Keyboard.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="Configurations\Graphics.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configurations\Control.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
@@ -262,7 +271,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

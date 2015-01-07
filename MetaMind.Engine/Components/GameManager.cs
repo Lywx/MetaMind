@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RunnerManager.cs" company="UESTC">
+// <copyright file="GameManager.cs" company="UESTC">
 //   Copyright (c) 2014 Lin Wuxiang
 //   All Rights Reserved.
 // </copyright>
@@ -11,29 +11,31 @@ namespace MetaMind.Engine.Components
 
     using Microsoft.Xna.Framework;
 
-    public class RunnerManager
+    using Game = MetaMind.Engine.Game;
+
+    public class GameManager
     {
         #region Singleton
 
-        private static RunnerManager singleton;
+        private static GameManager singleton;
 
-        public static RunnerManager GetInstance(GameEngine engine)
+        public static GameManager GetInstance(GameEngine engine)
         {
-            return singleton ?? (singleton = new RunnerManager(engine));
+            return singleton ?? (singleton = new GameManager(engine));
         }
 
         #endregion Singleton
 
         private readonly GameComponentCollection components;
 
-        private readonly List<EngineRunner> runners = new List<EngineRunner>();
+        private readonly List<Game> runners = new List<Game>();
 
-        private RunnerManager(GameEngine engine)
+        private GameManager(GameEngine engine)
         {
             components = engine.Components;
         }
 
-        public void Add(EngineRunner runner)
+        public void Add(Game runner)
         {
             runners.Add(runner);
             components.Add(runner);

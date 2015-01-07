@@ -15,6 +15,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
     using MetaMind.Engine.Components;
     using MetaMind.Engine.Components.Inputs;
+    using MetaMind.Engine.Events;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;

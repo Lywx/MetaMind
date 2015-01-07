@@ -21,12 +21,12 @@
     {
         public ISynchronization Fetch()
         {
-            return Perseverance.Adventure.Cognition.Synchronization;
+            return Perseverance.Session.Cognition.Synchronization;
         }
 
         public TaskEntry FetchTask()
         {
-            return Perseverance.Adventure.Cognition.Synchronization.SynchronizedTask;
+            return Perseverance.Session.Cognition.Synchronization.SynchronizedTask;
         }
     }
 }

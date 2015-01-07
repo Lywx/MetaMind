@@ -3,7 +3,9 @@
     using System;
 
     using MetaMind.Engine.Components.Fonts;
+    using MetaMind.Engine.Components.Graphics;
     using MetaMind.Engine.Settings;
+    using MetaMind.Engine.Settings.Colors;
 
     using Microsoft.Xna.Framework;
 

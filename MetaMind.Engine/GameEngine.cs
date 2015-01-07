@@ -1,27 +1,20 @@
 ﻿namespace MetaMind.Engine
 {
     using System;
-    using System.Diagnostics;
 
     using MetaMind.Engine.Components;
-    using MetaMind.Engine.Settings;
+    using MetaMind.Engine.Components.Graphics;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
-    using Microsoft.Xna.Framework.Graphics;
 
-    public class GameEngine : Game
+    public sealed class GameEngine : Microsoft.Xna.Framework.Game
     {
-        private int fps;
-
         #region Singleton
 
-        private static GameEngine singleton;
+        private readonly static GameEngine singleton = new GameEngine();
 
-        public static GameEngine GetInstance()
-        {
-            return singleton ?? (singleton = new GameEngine());
-        }
+        public static GameEngine Instance { get { return singleton; } }
 
         #endregion
 
@@ -29,17 +22,9 @@
 
         private GameEngine()
         {
-            this.IsMouseVisible = true;
-            this.IsFixedTimeStep = true;
-
             // graphics
             //-----------------------------------------------------------------
-            GraphicsManager = new GraphicsDeviceManager(this)
-            {
-                PreferredBackBufferWidth = GraphicsSettings.Width,
-                PreferredBackBufferHeight = GraphicsSettings.Height
-            };
-            GraphicsManager.ApplyChanges();
+            GraphicsManager = GraphicsManager.GetInstance(this);
 
             // content
             //-----------------------------------------------------------------
@@ -48,74 +33,46 @@
 
             // audio
             //------------------------------------------------------------------
-            Debug.Assert(AudioManager == null);
-            AudioManager = AudioManager.GetInstance(
-                this,
+            AudioManager = AudioManager.GetInstance(this,
                 @"Content\Audio\Audio.xgs",
                 @"Content\Audio\Wave Bank.xwb",
                 @"Content\Audio\Sound Bank.xsb");
 
             // folder
             //-----------------------------------------------------------------
-            Debug.Assert(FolderManager == null);
             FolderManager = FolderManager.GetInstance();
 
             // screen
             //------------------------------------------------------------------
-            Debug.Assert(ScreenManager == null);
             ScreenManager = ScreenManager.GetInstance(this, new ScreenManagerSettings());
 
             // process
             //------------------------------------------------------------------
-            Debug.Assert(ProcessManager == null);
             ProcessManager = ProcessManager.GetInstance(this);
 
             // event
             //------------------------------------------------------------------
-            Debug.Assert(EventManager == null);
             EventManager = EventManager.GetInstance(this);
 
             // input
             //------------------------------------------------------------------
-            Debug.Assert(InputEventManager == null);
-            InputEventManager = InputEventManager.GetInstance(this);
-            Debug.Assert(InputSequenceManager == null);
+            InputEventManager    = InputEventManager.GetInstance(this);
             InputSequenceManager = InputSequenceManager.GetInstance();
 
             // font
             //------------------------------------------------------------------
-            Debug.Assert(FontManager == null);
             FontManager = FontManager.GetInstance();
 
             // message
             //------------------------------------------------------------------
-            Debug.Assert(MessageManager == null);
             MessageManager = MessageManager.GetInstance();
 
-            // runner
+            // game
             //---------------------------------------------------------------------
-            Debug.Assert(RunnerManager == null);
-            RunnerManager = RunnerManager.GetInstance(this);
+            GameManager = GameManager.GetInstance(this);
         }
 
         #endregion Consructors
-
-        #region Public Properties
-
-        public static int Fps
-        {
-            get { return singleton.fps; }
-            set
-            {
-                singleton.fps = value;
-
-                singleton.TargetElapsedTime = TimeSpan.FromMilliseconds(1000 / (double)singleton.fps);
-                singleton.IsFixedTimeStep = true;
-            }
-        }
-
-        #endregion
-
 
         #region Components
 
@@ -127,7 +84,7 @@
 
         public static FontManager FontManager { get; private set; }
 
-        public static GraphicsDeviceManager GraphicsManager { get; private set; }
+        public static GraphicsManager GraphicsManager { get; private set; }
 
         public static InputEventManager InputEventManager { get; private set; }
 
@@ -137,7 +94,7 @@
 
         public static ProcessManager ProcessManager { get; private set; }
 
-        public static RunnerManager RunnerManager { get; private set; }
+        public static GameManager GameManager { get; private set; }
 
         public static ScreenManager ScreenManager { get; private set; }
 
@@ -147,24 +104,10 @@
 
         #region Initializations
 
-        public void TriggerCenter()
-        {
-            // center game window
-            var screen = GraphicsSettings.Screen;
-            singleton.Window.Position = new Point(
-                screen.Bounds.X + (screen.Bounds.Width - GraphicsSettings.Width) / 2,
-                screen.Bounds.Y + (screen.Bounds.Height - GraphicsSettings.Height) / 2);
-
-            // set width and height
-            GraphicsManager.PreferredBackBufferWidth = GraphicsSettings.Width;
-            GraphicsManager.PreferredBackBufferHeight = GraphicsSettings.Height;
-            GraphicsManager.ApplyChanges();
-        }
-
         protected override void Initialize()
         {
-            // fixed drawing order in 3d graphics
-            this.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            GraphicsManager.Initialize();
+            GraphicsManager.CenterWindow();
 
             base.Initialize();
         }
@@ -196,8 +139,8 @@
 
         protected override void OnExiting(object sender, EventArgs args)
         {
-            RunnerManager.OnExiting();
-            base         .OnExiting(sender, args);
+            GameManager.OnExiting();
+            base       .OnExiting(sender, args);
         }
 
         #endregion System

@@ -1,8 +1,9 @@
-﻿namespace MetaMind.Acutance.Parsers.Grammers
+﻿namespace MetaMind.Acutance.Parsers.Grammars
 {
     using System.Linq;
 
     using MetaMind.Acutance.Parsers.Elements;
+    using MetaMind.Engine.Parsers.Grammars;
 
     using Sprache;
 
@@ -11,7 +12,8 @@
         public static Parser<RepeativityTag> RepeativityParser =
             Parse.String("Everyday")  .End().Return(RepeativityTag.EveryDay)
         .Or(Parse.String("EveryWeek") .End().Return(RepeativityTag.EveryWeek))
-        .Or(Parse.String("EveryMonth").End().Return(RepeativityTag.EveryMonth))
+        // TODO: Disabled for safety issue
+        // .Or(Parse.String("EveryMonth").End().Return(RepeativityTag.EveryMonth))
         .Or(Parse.String("-")               .Return(RepeativityTag.Unspecified));
 
         public static Parser<DayTag> DayParser =

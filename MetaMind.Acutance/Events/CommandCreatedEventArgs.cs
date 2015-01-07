@@ -1,4 +1,4 @@
-namespace MetaMind.Acutance.Concepts
+namespace MetaMind.Acutance.Events
 {
     using System;
 

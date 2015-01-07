@@ -9,6 +9,8 @@ namespace MetaMind.Engine
 {
     using System;
 
+    using MetaMind.Engine.Components.Graphics;
+
     [DataContract]
     public class EngineObject : IDisposable
     {
@@ -20,7 +22,7 @@ namespace MetaMind.Engine
 
         protected static EventManager EventManager { get { return GameEngine.EventManager; } }
 
-        protected static GraphicsDeviceManager GraphicsManager { get { return GameEngine.GraphicsManager; } }
+        protected static GraphicsManager GraphicsManager { get { return GameEngine.GraphicsManager; } }
 
         protected static InputEventManager InputEventManager { get { return GameEngine.InputEventManager; } }
 

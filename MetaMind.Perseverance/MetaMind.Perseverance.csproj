@@ -90,14 +90,14 @@
     <Compile Include="Concepts\Cognitions\Consciousness.cs" />
     <Compile Include="Concepts\Cognitions\ConsciousnessAwake.cs" />
     <Compile Include="Concepts\Cognitions\ConsciousnessSleepy.cs" />
-    <Compile Include="Concepts\Cognitions\ConsciousnessSleepStartedEventArgs.cs" />
-    <Compile Include="Concepts\Cognitions\ConsciousnessSleepStoppedEventArgs.cs" />
+    <Compile Include="Events\ConsciousnessSleepStartedEventArgs.cs" />
+    <Compile Include="Events\ConsciousnessSleepStoppedEventArgs.cs" />
     <Compile Include="Concepts\Cognitions\Synchronization.cs" />
     <Compile Include="Concepts\Cognitions\SynchronizationDailyStatistics.cs" />
     <Compile Include="Concepts\Cognitions\SynchronizationDataProcessor.cs" />
     <Compile Include="Concepts\Cognitions\SynchronizationDescription.cs" />
-    <Compile Include="Concepts\Cognitions\SynchronizationStartedEventArgs.cs" />
-    <Compile Include="Concepts\Cognitions\SynchronizationStoppedEventArgs.cs" />
+    <Compile Include="Events\SynchronizationStartedEventArgs.cs" />
+    <Compile Include="Events\SynchronizationStoppedEventArgs.cs" />
     <Compile Include="Concepts\Cognitions\SynchronizationTimer.cs" />
     <Compile Include="Concepts\MotivationEntries\MotivationEntry.cs" />
     <Compile Include="Concepts\MotivationEntries\Motivationlist.cs" />
@@ -154,8 +154,8 @@
     <Compile Include="Screens\BackgroundScreen.cs" />
     <Compile Include="Screens\MotivationScreen.cs" />
     <Compile Include="Screens\SummaryScreen.cs" />
-    <Compile Include="Sessions\Adventure.cs" />
-    <Compile Include="Sessions\AdventureEventType.cs" />
+    <Compile Include="Sessions\Session.cs" />
+    <Compile Include="Sessions\SessionEventType.cs" />
     <Compile Include="Guis\Modules\SynchronizationSleepStartedEventListener.cs" />
     <Compile Include="Guis\Modules\SummaryModuleSleepStoppedEventListener.cs">
       <SubType>Code</SubType>

@@ -11,7 +11,7 @@
 
     public class BackgroundScreen : GameScreen
     {
-        private readonly ParticleModule particles = new ParticleModule(new Engine.Guis.Modules.ParticleModuleSettings(Perseverance.Adventure.Random, FloatParticle.ParticleFromSide, 8, 2));
+        private readonly ParticleModule particles = new ParticleModule(new Engine.Guis.Modules.ParticleModuleSettings(Perseverance.Session.Random, FloatParticle.ParticleFromSide, 8, 2));
         private          Texture2D      backgroundTexture;
 
         #region Constructors

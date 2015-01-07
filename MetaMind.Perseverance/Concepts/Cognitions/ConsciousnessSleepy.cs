@@ -33,7 +33,7 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
             // add to event queue
             var sleepStoppedEvent = new EventBase(
-                (int)AdventureEventType.SleepStopped,
+                (int)SessionEventType.SleepStopped,
                 new ConsciousnessSleepStoppedEventArgs(this));
             EventManager.TriggerEvent(sleepStoppedEvent);
 

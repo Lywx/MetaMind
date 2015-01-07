@@ -1,5 +1,6 @@
 namespace MetaMind.Perseverance.Guis.Modules
 {
+    using MetaMind.Engine.Components.Graphics;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Modules;

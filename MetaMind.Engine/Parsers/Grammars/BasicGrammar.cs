@@ -5,11 +5,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Acutance.Parsers.Grammers
+namespace MetaMind.Engine.Parsers.Grammars
 {
     using System.Linq;
 
-    using MetaMind.Acutance.Parsers.Elements;
+    using MetaMind.Engine.Parsers.Elements;
 
     using Sprache;
 
@@ -23,6 +23,6 @@ namespace MetaMind.Acutance.Parsers.Grammers
         public static Parser<string> WordParser = Parse.Letter.AtLeastOnce().Text().Token();
 
         public static Parser<Sentence> SentenceParser = from words in WordParser.AtLeastOnce()
-                                                        select new Sentence(words.ToList());
+                                                        select new Sentence(Enumerable.ToList<string>(words));
     }
 }

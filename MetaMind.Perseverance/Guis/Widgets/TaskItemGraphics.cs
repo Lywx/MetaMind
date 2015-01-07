@@ -61,7 +61,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         private Rectangle RandomHighlight(GameTime gameTime, int flashLength, Rectangle rectangle)
         {
-            var thick = Perseverance.Adventure.Random.Next(flashLength);
+            var thick = Perseverance.Session.Random.Next(flashLength);
             return new Rectangle(
                 rectangle.X - thick,
                 rectangle.Y - thick,

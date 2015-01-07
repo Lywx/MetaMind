@@ -14,7 +14,7 @@
             this.synchronizationModule = synchronizationModule;
             this.synchronization = synchronization;
 
-            this.RegisteredEvents.Add((int)AdventureEventType.SyncStarted);
+            this.RegisteredEvents.Add((int)SessionEventType.SyncStarted);
         }
 
         public override bool HandleEvent(EventBase @event)

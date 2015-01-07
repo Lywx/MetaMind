@@ -1,6 +1,5 @@
-namespace MetaMind.Acutance.Guis.Modules
+namespace MetaMind.Acutance.Events
 {
-    using MetaMind.Acutance.Concepts;
     using MetaMind.Acutance.Sessions;
     using MetaMind.Engine.Components.Events;
     using MetaMind.Engine.Guis.Widgets.Views;
@@ -13,7 +12,7 @@ namespace MetaMind.Acutance.Guis.Modules
         {
             this.commandView = commandView;
 
-            this.RegisteredEvents.Add((int)AdventureEventType.CommandCreated);
+            this.RegisteredEvents.Add((int)SessionEventType.CommandCreated);
         }
 
         public override bool HandleEvent(EventBase @event)
@@ -21,7 +20,7 @@ namespace MetaMind.Acutance.Guis.Modules
             var createdEventArgs = @event.Data as CommandCreatedEventArgs;
             if (createdEventArgs != null)
             {
-                this.commandView.Control.AddItem(createdEventArgs.Name, createdEventArgs.Path, createdEventArgs.Minutes);
+                this.commandView.Control.AddItem(createdEventArgs.Name, createdEventArgs.Path);
             }
 
             return true;

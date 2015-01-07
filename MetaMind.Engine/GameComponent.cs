@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="EngineRunner.cs" company="UESTC">
+// <copyright file="Game.cs" company="UESTC">
 //   Copyright (c) 2014 Lin Wuxiang
 //   All Rights Reserved.
 // </copyright>
@@ -11,9 +11,9 @@ namespace MetaMind.Engine
 
     using Microsoft.Xna.Framework;
 
-    public class EngineRunner : DrawableGameComponent
+    public class Game : DrawableGameComponent
     {
-        protected EngineRunner(GameEngine engine)
+        protected Game(GameEngine engine)
             : base(engine)
         {
             if (engine == null)
@@ -22,7 +22,7 @@ namespace MetaMind.Engine
             }
 
             GameEngine = engine;
-            GameEngine.RunnerManager.Add(this);
+            GameEngine.GameManager.Add(this);
         }
 
         protected GameEngine GameEngine { get; private set; }

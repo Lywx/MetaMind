@@ -1,6 +1,6 @@
 namespace MetaMind.Perseverance.Components
 {
-    using MetaMind.Engine;
+    using MetaMind.Perseverance.Sessions;
 
     using Microsoft.Xna.Framework;
 
@@ -40,9 +40,15 @@ namespace MetaMind.Perseverance.Components
 
         public override void Save()
         {
-            Perseverance.Adventure.Save();
+            Perseverance.Session.Save();
+        }
+
+        public override void Load()
+        {
+            Perseverance.Session = Session.LoadSave();
         }
 
         #endregion Operations
+
     }
 }
