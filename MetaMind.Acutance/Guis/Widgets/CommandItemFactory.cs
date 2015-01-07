@@ -6,14 +6,8 @@ namespace MetaMind.Acutance.Guis.Widgets
     {
         public override dynamic CreateControl(IViewItem item)
         {
-            return new CommandItemControl(item);
+            return new CommandItemControl(item, Acutance.Session.Commandlist.Commands);
         }
-
-        // TODO: do I need to generate command entry inside command view?
-        //public CommandEntry CreateData(string name, string path, int lineNum)
-        //{
-        //    return Acutance.Session.Commandlist.Create(name, path);
-        //}
 
         public override IItemGraphics CreateGraphics(IViewItem item)
         {

@@ -18,17 +18,6 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #endregion Constructors
 
-        public void AddItem(string name, string path, int lineNum)
-        {
-            var commandItemFactory = ItemFactory as CommandItemFactory;
-            if (commandItemFactory != null)
-            {
-                //TODO remove
-                //var entry = commandItemFactory.CreateData(name, path, lineNum);
-                //this.AddItem(entry);
-            }
-        }
-
         public void AddItem(CommandEntry entry)
         {
             var item = new ViewItemExchangeless(View, ViewSettings, ItemSettings, ItemFactory, entry);
