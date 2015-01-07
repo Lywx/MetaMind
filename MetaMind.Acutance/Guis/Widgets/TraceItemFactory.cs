@@ -1,17 +1,25 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
+    using MetaMind.Acutance.Concepts;
     using MetaMind.Engine.Guis.Widgets.Items;
 
     public class TraceItemFactory : ViewItemBasicFactory2D
     {
+        public ITracelist Tracelist { get; set; }
+
+        public TraceItemFactory(ITracelist tracelist)
+        {
+            this.Tracelist = tracelist;
+        }
+
         public override dynamic CreateControl(IViewItem item)
         {
-            return new TraceItemControl(item);
+            return new TraceItemControl(item, Tracelist.Traces);
         }
 
         public override dynamic CreateData(IViewItem item)
         {
-            return Acutance.Session.Tracelist.Create();
+            return Tracelist.Create();
         }
 
         public override IItemGraphics CreateGraphics(IViewItem item)
@@ -21,7 +29,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public void RemoveData(IViewItem item)
         {
-            Acutance.Session.Tracelist.Remove(item.ItemData);
+            Tracelist.Remove(item.ItemData);
         }
     }
 }

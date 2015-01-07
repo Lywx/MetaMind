@@ -1,6 +1,5 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
-    using MetaMind.Engine.Settings;
     using MetaMind.Engine.Settings.Colors;
     using MetaMind.Perseverance.Guis.Widgets;
 
