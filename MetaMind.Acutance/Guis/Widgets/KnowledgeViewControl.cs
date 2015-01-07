@@ -1,19 +1,11 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
-    using System.Text;
-
-    using FileSearcher;
 
     using MetaMind.Acutance.Concepts;
     using MetaMind.Acutance.Events;
     using MetaMind.Acutance.Parsers.Elements;
     using MetaMind.Acutance.Sessions;
-    using MetaMind.Engine;
-    using MetaMind.Engine.Components;
     using MetaMind.Engine.Components.Events;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Widgets.Items;
@@ -140,9 +132,9 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
         }
 
-        public void LoadResult(string path, bool relative, int offset, bool retrieval)
+        public void LoadResult(string path, bool relative, int offset)
         {
-            this.SearchControl.LoadResult(path, relative, offset, retrieval);
+            this.SearchControl.LoadResult(path, relative, offset);
         }
 
         public void Search(string fileName)

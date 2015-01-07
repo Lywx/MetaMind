@@ -9,10 +9,7 @@ namespace MetaMind.Acutance.Guis.Widgets
     using FileSearcher;
 
     using MetaMind.Acutance.Concepts;
-    using MetaMind.Acutance.Events;
-    using MetaMind.Acutance.Sessions;
     using MetaMind.Engine.Components;
-    using MetaMind.Engine.Components.Events;
     using MetaMind.Engine.Guis.Widgets.Views;
 
     public class KnowledgeViewSearchControl : ViewComponent
@@ -31,8 +28,7 @@ namespace MetaMind.Acutance.Guis.Widgets
         /// Load knowledge or schedule from file, occasionally from path.
         /// </summary>
         /// <param name="offset">offset of line number when loading file</param>
-        /// <param name="retrieval">whether is triggered for information retrieval</param>
-        public void LoadResult(string path, bool relative, int offset, bool retrieval)
+        public void LoadResult(string path, bool relative, int offset)
         {
             ViewControl.FileItem.ItemControl.SetName(Path.GetFileName(path));
 
@@ -49,7 +45,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                 var isFile = (File.GetAttributes(path) & FileAttributes.Directory) != FileAttributes.Directory;
                 if (isFile)
                 {
-                    this.LoadResultFromFile(path, offset, retrieval);
+                    this.LoadResultFromFile(path, offset);
 
                     ViewControl.Scroll.MoveUpToTop();
                 }
@@ -78,7 +74,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             ViewControl.ClearNonControlItems();
             ViewControl.ClearResultItems();
 
-            Searcher.Start(SearcherParams(SearchName(fileName)));
+            Searcher.Start(SearchParams(SearchName(fileName)));
         }
 
         public void SearchStop()
@@ -88,7 +84,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             Searcher.Stop();
         }
 
-        private static SearcherParams SearcherParams(List<string> fileNames)
+        private static SearcherParams SearchParams(List<string> fileNames)
         {
             return new SearcherParams(
                 searchDir:             FolderManager.DataFolderPath,
@@ -121,8 +117,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
         }
 
-        // TODO: remove retriveal
-        private void LoadResultFromFile(string path, int offset, bool retrieval)
+        private void LoadResultFromFile(string path, int offset)
         {
             var query = KnowledgeLoader.LoadFile(path, offset);
             if (query == null)

@@ -62,8 +62,8 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             ViewControl.SearchStop();
 
-            // load knowledge file from the first line for the first time(not for retrival)
-            ViewControl.LoadResult(ItemData.Name, true, 0, false);
+            // load knowledge file from the first line
+            ViewControl.LoadResult(ItemData.Name, true, 0);
         }
 
         #endregion
