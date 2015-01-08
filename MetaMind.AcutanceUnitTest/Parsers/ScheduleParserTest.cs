@@ -158,5 +158,14 @@
             Assert.AreEqual(TestResources.AScheduleSampleCommandContent, parsed);
         }
 
+        [TestMethod]
+        public void ScheduleCommandInvariance()
+        {
+            var input = TestResources.AScheduleSampleCommandContent;
+            
+            var parsed = ScheduleGrammar.CommandUnitParser.Parse(input);
+            
+            Assert.AreEqual(TestResources.AScheduleSampleCommandContent, parsed);
+        }
     }
 }

@@ -48,11 +48,10 @@
         public static Parser<string> ScheduleUnitParser = 
             Parse.Regex(@"^(?![\[\n])(.)*((.*)?(\n)?(?!\[))*", "Between two [DateTag]");
 
-        // TODO: Wrong!
         public static Parser<string> CommandUnitParser = 
             
             // this regex is very sensitive to Window \r\n newline expression
-            from regex in Parse.Regex(@"Command:((.*)(\r)?\n)*!?([\r\n:])", "Command: ... until an empty line")
+            from regex in Parse.Regex(@"Command:((.*)(\r)?(\n)*)!?([\r\n:])*", "Command: ... until an empty line")
             from whitespaces in Parse.WhiteSpace.Many().Optional()
             select regex.Trim();
 
