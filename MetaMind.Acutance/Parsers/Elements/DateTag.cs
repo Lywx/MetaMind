@@ -31,6 +31,8 @@ namespace MetaMind.Acutance.Parsers.Elements
 
     public enum RepeativityTag
     {
+        EveryMoment,
+
         EveryDay, 
 
         EveryWeek, 

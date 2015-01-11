@@ -1,6 +1,5 @@
 namespace MetaMind.Acutance.Guis.Modules
 {
-    using MetaMind.Acutance.Concepts;
     using MetaMind.Acutance.Events;
     using MetaMind.Acutance.Sessions;
     using MetaMind.Engine.Components.Events;
@@ -25,6 +24,7 @@ namespace MetaMind.Acutance.Guis.Modules
             {
                 var moduleEntry = moduleView.Control.ItemFactory.CreateData(eventArgs.File);
                 this.moduleView.Control.AddItem(moduleEntry);
+                this.moduleView.Control.SortItems(ViewSortMode.Name);
             }
 
             return true;

@@ -20,7 +20,7 @@ namespace MetaMind.Engine.Parsers.Grammars
                                                             from rquot in Parse.Char(']')
                                                             select content).Token();
 
-        public static Parser<string> WordParser = Parse.Letter.AtLeastOnce().Text().Token();
+        public static Parser<string> WordParser = Parse.AnyChar.Except(Parse.Chars(' ', '[')).AtLeastOnce().Text().Token();
 
         public static Parser<Sentence> SentenceParser = from words in WordParser.AtLeastOnce()
                                                         select new Sentence(Enumerable.ToList<string>(words));

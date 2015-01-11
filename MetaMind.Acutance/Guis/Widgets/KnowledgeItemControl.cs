@@ -34,6 +34,15 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
         }
 
+        /// <remarks>
+        /// Don't need to remove delegate LoadKnowledge, for NameFrame may be diposed by
+        /// ItemFrameControl.
+        /// </remarks>>
+        ~KnowledgeItemControl()
+        {
+            this.Dispose();
+        }
+
         #endregion Constructors
 
         #region Public Properties

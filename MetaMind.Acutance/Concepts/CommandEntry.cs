@@ -46,10 +46,10 @@ namespace MetaMind.Acutance.Concepts
             this.Reset();
         }
 
-        public CommandEntry(string name, string path, int offset, TimeSpan timeout)
+        public CommandEntry(string name, string path, int offset, TimeSpan timeout, CommandRepeativity repeativity)
             : this(name, path, offset, CommandType.Knowledge)
         {
-            this.Timer = new CommandTimerWithTimeout(timeout);
+            this.Timer = new CommandTimerWithTimeout(timeout, repeativity);
 
             this.Reset();
         }
@@ -121,7 +121,7 @@ namespace MetaMind.Acutance.Concepts
             {
                 case CommandState.Running:
                     {
-                        if (this.Timer.Transiting)
+                        if (this.Timer.IsTransiting)
                         {
                             this.Transit();
                         }
@@ -131,6 +131,10 @@ namespace MetaMind.Acutance.Concepts
 
                 case CommandState.Transiting:
                     {
+                        if (this.Timer.IsAutoReseting)
+                        {
+                            this.Reset();
+                        }
                     }
 
                     break;

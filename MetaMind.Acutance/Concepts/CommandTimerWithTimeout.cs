@@ -9,16 +9,30 @@ namespace MetaMind.Acutance.Concepts
     [DataContract]
     public class CommandTimerWithTimeout : CommandTimer
     {
+        [DataMember]
+        private bool isAutoReseting;
+
         private Stopwatch timer;
+
+        public CommandTimerWithTimeout(TimeSpan timeout, CommandRepeativity repeativity)
+            : this(timeout)
+        {
+            this.isAutoReseting = repeativity == CommandRepeativity.EveryMoment;
+        }
 
         public CommandTimerWithTimeout(TimeSpan timeout)
         {
             this.Timeout = timeout;
         }
 
-        public override bool Transiting
+        public override bool IsTransiting
         {
             get { return this.Experience.CertainDuration >= this.Timeout; }
+        }
+
+        public override bool IsAutoReseting
+        {
+            get { return this.isAutoReseting; }
         }
 
         [DataMember]

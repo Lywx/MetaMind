@@ -19,7 +19,11 @@ namespace MetaMind.Acutance.Guis.Modules
         public override bool HandleEvent(EventBase @event)
         {
             var eventArgs = @event.Data as KnowledgeRetrievedEventArgs;
-            if (eventArgs != null)
+            if (eventArgs != null && 
+
+                // in case of module entry has been disposed
+                // so that path is null
+                eventArgs.Path != null)
             {
                 this.knowledgeView.Control.LoadResult(eventArgs.Path, false, eventArgs.Offset);
             }

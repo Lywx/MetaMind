@@ -17,7 +17,9 @@ namespace MetaMind.Acutance.Concepts
         [DataMember]
         public Experience Experience { get; protected set; }
 
-        public abstract bool Transiting { get; }
+        public abstract bool IsTransiting { get; }
+
+        public abstract bool IsAutoReseting { get; }
 
         [OnDeserialized]
         public void OnDeserialized(StreamingContext context)

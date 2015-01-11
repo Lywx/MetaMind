@@ -7,11 +7,15 @@ namespace MetaMind.Acutance.Concepts
 
     public enum CommandRepeativity
     {
+        EveryMoment,
+
         EveryDay,
 
         EveryWeek,
 
         // EveryMonth,
+
+        Never,
     }
 
     [DataContract]
@@ -23,7 +27,7 @@ namespace MetaMind.Acutance.Concepts
             this.Repeativity = repeativity;
         }
 
-        public override bool Transiting
+        public override bool IsTransiting
         {
             get
             {
@@ -43,6 +47,11 @@ namespace MetaMind.Acutance.Concepts
                         return false;
                 }
             }
+        }
+
+        public override bool IsAutoReseting
+        {
+            get { return false; }
         }
 
         [DataMember]

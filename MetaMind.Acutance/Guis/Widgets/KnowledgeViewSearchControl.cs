@@ -101,7 +101,8 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         private static List<string> SearchName(string fileName)
         {
-            return new List<string>(1) { "*" + fileName + "*" };
+            // won't be able to search directories now with .md subfix
+            return new List<string>(1) { "*" + fileName + "*" + ".md" };
         }
 
         private void LoadResultFromDirectory(string path)

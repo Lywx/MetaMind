@@ -74,6 +74,7 @@
     <Compile Include="Concepts\CommandTimerWithDate.cs" />
     <Compile Include="Concepts\CommandTimerWithTimeout.cs" />
     <Compile Include="Guis\Modules\MultiplexerGroupModuleCreatedListener.cs" />
+    <Compile Include="Guis\Widgets\CommandItemDataControl.cs" />
     <Compile Include="Guis\Widgets\KnowledgeViewSearchControl.cs" />
     <Compile Include="Guis\Widgets\ModuleItemControl.cs" />
     <Compile Include="Guis\Widgets\ModuleItemFactory.cs" />

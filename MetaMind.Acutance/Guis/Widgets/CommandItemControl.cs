@@ -15,15 +15,25 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     public class CommandItemControl : ViewItemControl2D
     {
-        #region Constructors
+        #region Constructors and Destructors
 
         public CommandItemControl(IViewItem item, List<CommandEntry> source )
             : base(item)
         {
             this.ItemFrameControl = new TraceItemFrameControl(item);
             this.ItemViewControl  = new SmartItemViewControl<SmartItemSwapProcess>(item, source);
+            this.ItemDataControl  = new CommandItemDataControl(item);
 
             this.NameFrame.MouseLeftDoubleClicked += this.RetrieveKnowledge;
+        }
+
+        /// <remarks>
+        /// Don't need to remove delegate RetrieveKnowledge, for NameFrame may be diposed by
+        /// ItemFrameControl.
+        /// </remarks>>
+        ~CommandItemControl()
+        {
+            this.Dispose();
         }
 
         #endregion Constructors
@@ -52,16 +62,20 @@ namespace MetaMind.Acutance.Guis.Widgets
         #region Operations
 
         /// <summary>
-        /// Delete command item from view
+        /// Delete command item from view.
         /// </summary>
         /// <remarks>
         /// Delete command item in view won't delete underlying command entry from commandlist.
         /// Only way to validly delete the entry is to delete corresponding module entry.
         /// </remarks>
-        private void DenotifyIt()
+        public void DenotifyIt()
         {
             View.Items.Remove(Item);
+
+            // reset corresponding command entry to turn to running state
             ItemData.Reset();
+
+            this.Dispose();
         }
 
         #endregion Operations

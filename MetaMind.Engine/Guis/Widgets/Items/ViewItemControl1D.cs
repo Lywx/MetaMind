@@ -14,8 +14,8 @@
             : base(item)
         {
             this.ItemFrameControl = new ViewItemFrameControl(item);
-            this.ItemViewControl = new ViewItemViewControl1D(item);
-            this.ItemDataControl = new ViewItemDataControl(item);
+            this.ItemViewControl  = new ViewItemViewControl1D(item);
+            this.ItemDataControl  = new ViewItemDataControl(item);
         }
 
         ~ViewItemControl1D()

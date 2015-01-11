@@ -57,9 +57,23 @@
 
             Assert.AreEqual(TitleLevel.Two, parsed.Level);
             Assert.AreEqual("A Title", parsed.Name);
-            Assert.AreEqual(1, parsed.Tag.Hours);
-            Assert.AreEqual(2, parsed.Tag.Minutes);
-            Assert.AreEqual(3, parsed.Tag.Seconds);
+            Assert.AreEqual(1, parsed.Time.Hours);
+            Assert.AreEqual(2, parsed.Time.Minutes);
+            Assert.AreEqual(3, parsed.Time.Seconds);
+        }
+
+        [TestMethod]
+        public void KnowledgeAComplexTitleWithATimeTag()
+        {
+            var input = "## A Title That May Contains \",\" \".\" And Anythings. [01:02:03]";
+
+            var parsed = KnowledgeGrammar.TitleWithTimeTagParser.Parse(input);
+
+            Assert.AreEqual(TitleLevel.Two, parsed.Level);
+            Assert.AreEqual("A Title That May Contains \",\" \".\" And Anythings.", parsed.Name);
+            Assert.AreEqual(1, parsed.Time.Hours);
+            Assert.AreEqual(2, parsed.Time.Minutes);
+            Assert.AreEqual(3, parsed.Time.Seconds);
         }
 
         [TestMethod]
@@ -72,6 +86,7 @@
             Assert.AreEqual(TitleLevel.Six, parsed.Level);
             Assert.AreEqual("A Title", parsed.Name);
         }
+
         [TestMethod]
         public void KnowledgeATitleWithoutTimeTag()
         {
@@ -90,9 +105,26 @@
 
             Assert.AreEqual(TitleLevel.Six, parsed.Level);
             Assert.AreEqual("A Title", parsed.Name);
-            Assert.AreEqual(0, parsed.Tag.Hours);
-            Assert.AreEqual(0, parsed.Tag.Minutes);
-            Assert.AreEqual(0, parsed.Tag.Seconds);
+            Assert.AreEqual(0, parsed.Time.Hours);
+            Assert.AreEqual(0, parsed.Time.Minutes);
+            Assert.AreEqual(0, parsed.Time.Seconds);
+
+            input = "######! A Title";
+
+            try
+            {
+                parsed = KnowledgeGrammar.TitleWithBracketParser.Parse(input);
+            }
+            catch (ParseException)
+            {
+                parsed = KnowledgeGrammar.TitleParser.Parse(input);
+            }
+
+            Assert.AreEqual(TitleLevel.Six, parsed.Level);
+            Assert.AreEqual("! A Title", parsed.Name);
+            Assert.AreEqual(0, parsed.Time.Hours);
+            Assert.AreEqual(0, parsed.Time.Minutes);
+            Assert.AreEqual(0, parsed.Time.Seconds);
         }
     }
 }

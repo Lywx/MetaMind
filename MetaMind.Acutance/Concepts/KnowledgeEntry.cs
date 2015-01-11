@@ -40,7 +40,31 @@
 
         public CommandEntry ToCommmandEntry()
         {
-            return new CommandEntry(this.Knowledge.Title.Name, this.Knowledge.Path, this.Knowledge.Offset, this.Knowledge.Title.Tag.ToTimeSpan());
+            CommandRepeativity repeativity;
+
+            switch (this.Knowledge.Title.Repeativity)
+            {
+                case RepeativityTag.EveryMoment:
+                    {
+                        repeativity = CommandRepeativity.EveryMoment;
+                    }
+
+                    break;
+                case RepeativityTag.Unspecified:
+                    {
+                        repeativity = CommandRepeativity.Never;
+                    }
+                   
+                    break;
+                default:
+                    {
+                        repeativity = CommandRepeativity.Never;
+                    }
+                
+                    break;
+            }
+
+            return new CommandEntry(this.Knowledge.Title.Name, this.Knowledge.Path, this.Knowledge.Offset, this.Knowledge.Title.Time.ToTimeSpan(), repeativity);
         }
     }
 }

@@ -48,9 +48,9 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public readonly int   CommandRowNumMax                  = 100;
 
-        public readonly int   CommandColumnNumDisplay           = 3;
+        public readonly int   CommandColumnNumDisplay           = 1;
 
-        public readonly int   CommandColumnNumDisplayFullscreen = 3;
+        public readonly int   CommandColumnNumDisplayFullscreen = 1;
 
         //---------------------------------------------------------------------
         public readonly KnowledgeViewFactory  KnowledgeViewFactory = new KnowledgeViewFactory();

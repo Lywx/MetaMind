@@ -5,19 +5,21 @@
     public class Title
     {
         private readonly TitleLevel level;
+        private readonly RepeativityTag repeativity;
         private readonly string     name;
-        private readonly TimeTag    tag;
+        private readonly TimeTag    time;
 
-        public Title(TitleLevel level, Sentence sentence)
-            : this(level, sentence, TimeTag.Zero)
+        public Title(TitleLevel level, RepeativityTag repeativity, Sentence sentence)
+            : this(level, repeativity, sentence, TimeTag.Zero)
         {
         }
 
-        public Title(TitleLevel level, Sentence sentence, TimeTag tag)
+        public Title(TitleLevel level, RepeativityTag repeativity, Sentence sentence, TimeTag time)
         {
-            this.level = level;
-            this.name  = sentence.ToString();
-            this.tag   = tag;
+            this.level       = level;
+            this.repeativity = repeativity;
+            this.name        = sentence.ToString();
+            this.time        = time;
         }
 
         public string Name
@@ -33,11 +35,16 @@
             get { return this.level; }
         }
 
-        public TimeTag Tag
+        public RepeativityTag Repeativity
+        {
+            get { return this.repeativity; }
+        }
+
+        public TimeTag Time
         {
             get
             {
-                return this.tag;
+                return this.time;
             }
         }
     }
