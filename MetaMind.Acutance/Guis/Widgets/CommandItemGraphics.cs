@@ -25,22 +25,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
             this.DrawNameFrame(255);
 
-            switch ((CommandState)ItemData.State)
-            {
-                case CommandState.Running:
-                    {
-                        this.FillNameFrameWith(ItemSettings.NameFrameRunningColor, alpha);
-                    }
-
-                    break;
-
-                case CommandState.Transiting:
-                    {
-                        this.FillNameFrameWith(ItemSettings.NameFrameTransitionColor, alpha);
-                    }
-
-                    break;
-            }
+            this.FillNameFrameWith(ItemSettings.NameFrameRunningColor, alpha);
 
             this.DrawName(255);
             this.DrawExperienceFrame(255);

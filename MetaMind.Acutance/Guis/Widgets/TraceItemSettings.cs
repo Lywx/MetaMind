@@ -7,7 +7,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     public class TraceItemSettings : TaskItemSettings
     {
-        public Color NameFrameRunningColor = ColorPalette.LightRed;
+        public Color NameFrameRunningColor = ColorPalette.DarkRed;
 
         public TraceItemSettings()
         {

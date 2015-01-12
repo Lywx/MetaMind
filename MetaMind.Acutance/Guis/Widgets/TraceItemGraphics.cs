@@ -91,7 +91,6 @@ namespace MetaMind.Acutance.Guis.Widgets
                 ScreenManager.SpriteBatch,
                 RectangleExt.Crop(ItemControl.ExperienceFrame.Rectangle, ItemSettings.ExperienceFrameMargin),
                 ColorExt.MakeTransparent(ItemSettings.ExperienceFrameColor, alpha));
-
         }
 
         protected void DrawIdFrame(byte alpha)
