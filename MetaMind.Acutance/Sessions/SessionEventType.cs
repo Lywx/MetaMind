@@ -9,5 +9,7 @@
         ModuleCreated      = 0x75f6,
 
         KnowledgeRetrieved = 0x8b76,
+
+        SessionSaved       = 0x4050,
     }
 }

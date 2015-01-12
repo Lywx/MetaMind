@@ -43,6 +43,12 @@ namespace MetaMind.Acutance.Concepts
                     case CommandRepeativity.EveryDay:
                         return this.SameTime;
 
+                    case CommandRepeativity.EveryMoment:
+                        return this.SameTime;
+
+                    case CommandRepeativity.Never:
+                        return this.SameTime;
+
                     default:
                         return false;
                 }
@@ -72,7 +78,7 @@ namespace MetaMind.Acutance.Concepts
             get
             {
                 var delta = DateTime.Now.TimeOfDay - new TimeSpan(0, this.Date.Hour, this.Date.Minute, this.Date.Second);
-                return delta.Duration() < TimeSpan.FromSeconds(1);
+                return delta.Duration() < TimeSpan.FromSeconds(0.1);
             }
         }
 

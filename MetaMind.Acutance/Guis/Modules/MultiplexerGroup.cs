@@ -1,7 +1,8 @@
 namespace MetaMind.Acutance.Guis.Modules
 {
+    using System.Linq;
+
     using MetaMind.Acutance.Concepts;
-    using MetaMind.Acutance.Events;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Settings.Loaders;
@@ -12,9 +13,11 @@ namespace MetaMind.Acutance.Guis.Modules
     {
         private MultiplexerGroupCommandNotifiedListener        commandNotifiedListener;
 
+        private MultiplexerGroupKnowledgeRetrievedListener     knowledgeRetrievedListener;
+
         private MultiplexerGroupModuleCreatedListener          moduleCreatedListener;
 
-        private MultiplexerGroupKnowledgeRetrievedListener     knowledgeRetrievedListener;
+        private MultiplexerGroupSessionSavedListener           sessionSavedListener;
 
         public MultiplexerGroup(MultiplexerGroupSettings settings)
             : base(settings)
@@ -62,6 +65,12 @@ namespace MetaMind.Acutance.Guis.Modules
             this.LoadEvents();
         }
 
+        public void ReloadScheduleData()
+        {
+            this.UnloadScheduleData();
+            this.LoadScheduleData();
+        }
+
         public void Unload()
         {
             if (this.moduleCreatedListener != null)
@@ -84,6 +93,13 @@ namespace MetaMind.Acutance.Guis.Modules
             }
 
             this.knowledgeRetrievedListener = null;
+
+            if (this.sessionSavedListener != null)
+            {
+                EventManager.RemoveListener(this.sessionSavedListener);
+            }
+
+            this.sessionSavedListener = null;
         }
 
         public override void UpdateInput(GameTime gameTime)
@@ -102,18 +118,8 @@ namespace MetaMind.Acutance.Guis.Modules
 
         private void LoadData()
         {
-            // load modules
-            foreach (var module in this.Settings.Modules.ToArray())
-            {
-                this.ModuleView.Control.AddItem(module);
-            }
-
-            // load schedules
-            foreach (var schedule in ScheduleLoader.Load(this))
-            {
-                // won't add to view but add to command list
-                this.Settings.Commands.Add(schedule);
-            }
+            this.LoadModuleData();
+            this.LoadScheduleData();
         }
 
         private void LoadEvents()
@@ -138,6 +144,36 @@ namespace MetaMind.Acutance.Guis.Modules
             }
 
             EventManager.AddListener(this.knowledgeRetrievedListener);
+
+            if (this.sessionSavedListener == null)
+            {
+                this.sessionSavedListener = new MultiplexerGroupSessionSavedListener(this);
+            }
+
+            EventManager.AddListener(this.sessionSavedListener);
+
+        }
+
+        private void LoadModuleData()
+        {
+            foreach (var module in this.Settings.Modules.ToArray())
+            {
+                this.ModuleView.Control.AddItem(module);
+            }
+        }
+
+        private void LoadScheduleData()
+        {
+            foreach (var schedule in ScheduleLoader.Load(this))
+            {
+                // won't add to view but add to command list
+                this.Settings.Commands.Add(schedule);
+            }
+        }
+
+        private void UnloadScheduleData()
+        {
+            CommandEntryFileter.RemoveRunningShedule(this.Settings.Commands);
         }
     }
 }
