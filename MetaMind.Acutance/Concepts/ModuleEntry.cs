@@ -1,10 +1,11 @@
 namespace MetaMind.Acutance.Concepts
 {
-    using System;
     using System.Collections.Generic;
     using System.Runtime.Serialization;
 
     using MetaMind.Acutance.Parsers.Elements;
+
+    using IO = System.IO;
 
     [DataContract,
     KnownType(typeof(Commandlist))]
@@ -17,10 +18,11 @@ namespace MetaMind.Acutance.Concepts
             // convert to entries
             var knowledgeEntries = file.Knowledges.ConvertAll(k => k.ToKnowledgeEntry());
 
-            this.Name = System.IO.Path.GetFileName(file.Path);
+            this.Name = IO.Path.GetFileName(file.Path);
             this.Path = file.Path;
+
             this.Commandlist = commandlist;
-            this.SubEntries = knowledgeEntries.ConvertAll(k => k.ToCommmandEntry());
+            this.SubEntries  = knowledgeEntries.ConvertAll(k => k.ToCommmandEntry());
 
             this.Commandlist.Add(this.SubEntries);
         }

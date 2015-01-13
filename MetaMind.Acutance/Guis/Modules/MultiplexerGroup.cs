@@ -133,7 +133,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
             if (this.commandNotifiedListener == null)
             {
-                this.commandNotifiedListener = new MultiplexerGroupCommandNotifiedListener(this.CommandView, this.KnowledgeView);
+                this.commandNotifiedListener = new MultiplexerGroupCommandNotifiedListener(this.CommandView, this.ModuleView, this.KnowledgeView);
             }
 
             EventManager.AddListener(this.commandNotifiedListener);

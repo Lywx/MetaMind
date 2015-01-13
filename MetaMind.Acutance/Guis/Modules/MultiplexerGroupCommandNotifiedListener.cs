@@ -8,12 +8,14 @@ namespace MetaMind.Acutance.Guis.Modules
     public class MultiplexerGroupCommandNotifiedListener : ListenerBase
     {
         private readonly IView commandView;
+        private readonly IView moduleView;
         private readonly IView knowledgeView;
 
-        public MultiplexerGroupCommandNotifiedListener(IView commandView, IView knowledgeView)
+        public MultiplexerGroupCommandNotifiedListener(IView commandView, IView moduleView, IView knowledgeView)
         {
             this.commandView   = commandView;
             this.knowledgeView = knowledgeView;
+            this.moduleView    = moduleView;
 
             this.RegisteredEvents.Add((int)SessionEventType.CommandNotified);
         }
@@ -42,6 +44,8 @@ namespace MetaMind.Acutance.Guis.Modules
 
             this.knowledgeView.Control.Selection.Clear();
             this.knowledgeView.Control.Region   .Clear();
+            this.moduleView   .Control.Selection.Clear();
+            this.moduleView   .Control.Region   .Clear();
 
             return true;
         }

@@ -43,7 +43,7 @@ namespace MetaMind.Acutance.Concepts
                     var entry     = new KnowledgeEntry(knowledge);
 
                     module.AddKnowledge(knowledge);
-                    query.AddEntry(entry);
+                    query .AddEntry(entry);
                 }
                 else
                 {
