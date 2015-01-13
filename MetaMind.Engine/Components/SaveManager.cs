@@ -18,8 +18,11 @@ namespace MetaMind.Engine.Components
             get
             {
                 var now = DateTime.Now;
-                return now.Minute == 59 || now.Minute == 14 ||
-                       now.Minute == 29 || now.Minute == 44;
+                return now.Second == 55 && 
+                      (now.Minute == 13 || 
+                       now.Minute == 28 || 
+                       now.Minute == 43 || 
+                       now.Minute == 58);
             }
         }
 
