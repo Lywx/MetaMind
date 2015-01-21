@@ -50,12 +50,28 @@
                     }
 
                     break;
+
+                case RepeativityTag.EveryDay:
+                    {
+                        repeativity = CommandRepeativity.EveryDay;
+                    }
+
+                    break;
+                    
+                case RepeativityTag.EveryWeek:
+                    {
+                        repeativity = CommandRepeativity.EveryWeek;
+                    }
+
+                    break;
+
                 case RepeativityTag.Unspecified:
                     {
                         repeativity = CommandRepeativity.Never;
                     }
                    
                     break;
+
                 default:
                     {
                         repeativity = CommandRepeativity.Never;

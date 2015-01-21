@@ -13,21 +13,31 @@ namespace MetaMind.Acutance.Parsers.Elements
         {
             var command = ScheduleGrammar.CommandUnitParser.Parse(schedule.Content);
 
+            // name is the part of command unit without identifier
             var name = command.Replace("Command: ", string.Empty);
             var time = schedule.Date.Time;
 
             CommandRepeativity repeativity;
             switch (schedule.Date.Repeativity)
             {
+                case RepeativityTag.EveryMoment:
+                    repeativity = CommandRepeativity.EveryMoment;
+                    break;
+
                 case RepeativityTag.EveryDay:
                     repeativity = CommandRepeativity.EveryDay;
                     break;
+
                 case RepeativityTag.EveryWeek:
                     repeativity = CommandRepeativity.EveryWeek;
                     break;
 
+                case RepeativityTag.Unspecified:
+                    repeativity = CommandRepeativity.Never;
+                    break;
+
                 default:
-                    repeativity = CommandRepeativity.EveryWeek;
+                    repeativity = CommandRepeativity.Never;
                     break;
             }
 

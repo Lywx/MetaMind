@@ -1,6 +1,7 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
     using System.Collections.Generic;
+    using System.IO;
 
     using MetaMind.Acutance.Concepts;
     using MetaMind.Acutance.Events;
@@ -46,20 +47,41 @@ namespace MetaMind.Acutance.Guis.Widgets
             GameEngine.EventManager.QueueEvent(knowledgeRetrievedEvent);
         }
 
+        // TODO: May implement change watcher #1
+        // private void RewriteModule(object sender, FileSystemEventArgs e)
+        // {
+        //    ItemData.Dispose();
+        // }
+
         #endregion
 
         #region Operations
 
-        private void ResetIt()
-        {
-            this.ItemData.Reset();
-        }
+        // TODO: May implement change watcher #2
+        // public void CreateFileWatcher(string folderPath)
+        // {
+        //     var watcher = new FileSystemWatcher
+        //                       {
+        //                           Path         = folderPath, 
+        //                           NotifyFilter = NotifyFilters.LastWrite,
+        //                           Filter       = "*.md",
+        //                       };
+ 
+        //     watcher.Changed += this.RewriteModule;
+
+        //     watcher.EnableRaisingEvents = true;
+        // }
 
         private void DeleteIt()
         {
             this.View.Items.Remove(this.Item);
 
             this.View.Control.ItemFactory.RemoveData(this.Item);
+        }
+
+        private void ResetIt()
+        {
+            this.ItemData.Reset();
         }
 
         #endregion Operations

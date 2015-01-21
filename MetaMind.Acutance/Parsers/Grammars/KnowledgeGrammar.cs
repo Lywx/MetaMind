@@ -45,23 +45,23 @@ namespace MetaMind.Acutance.Parsers.Grammars
                 .Or(Parse.String("##")    .Return(TitleLevel.Two))
                 .Or(Parse.String("#")     .Return(TitleLevel.One));
 
-        public static Parser<IOption<char>> RepeativityParser = Parse.Char('!').Optional();
+        public static Parser<IOption<char>> MomentParser = Parse.Char('!').Optional();
 
         public static Parser<Title> TitleParser = from level    in TitleLevelParser
                                                   from sentence in BasicGrammar.SentenceParser
-                                                  from repeat   in RepeativityParser
-                                                  select new Title(level, repeat.IsDefined ? RepeativityTag.EveryMoment : RepeativityTag.Unspecified, sentence);
+                                                  from moment   in MomentParser
+                                                  select new Title(level, moment.IsDefined ? RepeativityTag.EveryMoment : RepeativityTag.Unspecified, sentence);
 
         public static Parser<Title> TitleWithBracketParser = from level    in TitleLevelParser
-                                                             from repeat   in RepeativityParser
+                                                             from moment   in MomentParser
                                                              from sentence in BasicGrammar.SentenceParser
                                                              from text     in BasicGrammar.BracketedTextParser
-                                                             select new Title(level, repeat.IsDefined ? RepeativityTag.EveryMoment : RepeativityTag.Unspecified, sentence);
+                                                             select new Title(level, moment.IsDefined ? RepeativityTag.EveryMoment : RepeativityTag.Unspecified, sentence);
 
         public static Parser<Title> TitleWithTimeTagParser = from level    in TitleLevelParser
-                                                             from repeat   in RepeativityParser
+                                                             from moment   in MomentParser
                                                              from sentence in BasicGrammar.SentenceParser
                                                              from text     in BasicGrammar.BracketedTextParser
-                                                             select new Title(level, repeat.IsDefined ? RepeativityTag.EveryMoment : RepeativityTag.Unspecified,sentence, TimeTagStrategyParser.Parse(text).Parse(text));
+                                                             select new Title(level, moment.IsDefined ? RepeativityTag.EveryMoment : RepeativityTag.Unspecified,sentence, TimeTagStrategyParser.Parse(text).Parse(text));
     }
 }
