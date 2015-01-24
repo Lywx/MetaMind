@@ -14,34 +14,30 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public readonly Point ViewStartPoint = new Point(20, 108);
 
-        //---------------------------------------------------------------------
-        public ModuleViewFactory  ModuleViewFactory = new ModuleViewFactory(Acutance.Session.Modulelist);
-        
+        #region Module View
+
+        public readonly int ModuleRowNumDisplay = 13;
+
+        public readonly int ModuleRowNumDisplayFullscreen = 13;
+
+        public readonly int ModuleRowNumMax = 100;
+
+        public readonly int ModuleColumnNumDisplay = 1;
+
+        public readonly int ModuleColumnNumDisplayFullscreen = 1;
+
+        public ModuleViewFactory ModuleViewFactory = new ModuleViewFactory(Acutance.Session.Modulelist);
+
         public ModuleViewSettings ModuleViewSettings;
 
         public ModuleItemSettings ModuleItemSettings;
 
         public Point ModuleStartPoint;
 
-        public readonly int   ModuleRowNumDisplay              = 13;
+        #endregion
 
-        public readonly int   ModuleRowNumDisplayFullscreen    = 13;
-
-        public readonly int   ModuleRowNumMax                  = 100;
-
-        public readonly int   ModuleColumnNumDisplay           = 1;
-
-        public readonly int   ModuleColumnNumDisplayFullscreen = 1;
-
-        //---------------------------------------------------------------------
-        public CommandViewFactory  CommandViewFactory = new CommandViewFactory();
+        #region Command View
         
-        public CommandViewSettings CommandViewSettings;
-
-        public CommandItemSettings CommandItemSettings;
-
-        public Point CommandStartPoint;
-
         public readonly int   CommandRowNumDisplay              = 13;
 
         public readonly int   CommandRowNumDisplayFullscreen    = 13;
@@ -52,15 +48,18 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public readonly int   CommandColumnNumDisplayFullscreen = 1;
 
-        //---------------------------------------------------------------------
-        public KnowledgeViewFactory  KnowledgeViewFactory = new KnowledgeViewFactory();
+        public CommandViewFactory  CommandViewFactory = new CommandViewFactory();
+        
+        public CommandViewSettings CommandViewSettings;
 
-        public KnowledgeViewSettings KnowledgeViewSettings;
+        public CommandItemSettings CommandItemSettings;
 
-        public KnowledgeItemSettings KnowledgeItemSettings;
+        public Point               CommandStartPoint;
 
-        public Point KnowledgeStartPoint;
+        #endregion
 
+        #region Knowledge View
+        
         public readonly int KnowledgeViewRowNumDisplayFullscreen = 17;
 
         public readonly int KnowledgeViewRowNumDisplay           = 9;
@@ -69,7 +68,39 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public readonly int KnowledgeViewColumnNumDisplay        = 1;
 
-        public void CreateModuleView(int viewColumnWidth, Point starPoint)
+        public KnowledgeViewFactory  KnowledgeViewFactory = new KnowledgeViewFactory();
+
+        public KnowledgeViewSettings KnowledgeViewSettings;
+
+        public KnowledgeItemSettings KnowledgeItemSettings;
+
+        public Point                 KnowledgeStartPoint;
+
+        #endregion
+
+        public MultiplexerGroupSettings()
+        {
+            // module view
+            var moduleViewWidth = 500;
+            var moduleStartPoint = this.ViewStartPoint;
+            var moduleColumnWidth = moduleViewWidth / (GraphicsSettings.IsFullscreen
+                                          ? this.CommandColumnNumDisplayFullscreen
+                                          : this.CommandColumnNumDisplay);
+            this.CreateModuleView(moduleColumnWidth, moduleStartPoint);
+
+            // command view
+            var commandStartPoint = moduleStartPoint + new Point(moduleColumnWidth, 0);
+            var commandColumnWidth = this.ViewWidthMax - moduleViewWidth;
+            this.CreateCommandView(commandColumnWidth, commandStartPoint);
+
+            // knowledge view
+            var knowledgeStartPoint = this.ModuleStartPoint
+                                      + new Point(0, this.ModuleViewSettings.RowNumDisplay * this.ModuleViewSettings.RootMargin.Y + this.ViewVMargin);
+            var knowledgeColumnWidth = this.ViewWidthMax / this.KnowledgeViewColumnNumDisplay;
+            this.CreateKnowledgeView(knowledgeColumnWidth, knowledgeStartPoint);
+        }
+
+        private void CreateModuleView(int viewColumnWidth, Point starPoint)
         {
             this.ModuleItemSettings = new ModuleItemSettings();
 
@@ -95,11 +126,9 @@ namespace MetaMind.Acutance.Guis.Modules
                                                      : this.ModuleRowNumDisplay,
                                              RowNumMax     = this.ModuleRowNumMax,
                                          };
-
-            
         }
 
-        public void CreateCommandView(int viewColumnWidth, Point startPoint)
+        private void CreateCommandView(int viewColumnWidth, Point startPoint)
         {
             this.CommandItemSettings = new CommandItemSettings();
 
@@ -125,30 +154,6 @@ namespace MetaMind.Acutance.Guis.Modules
                                                      : this.CommandRowNumDisplay,
                                              RowNumMax     = this.CommandRowNumMax,
                                          };
-
-            
-        }
-
-        public MultiplexerGroupSettings()
-        {
-            // module view
-            var moduleStartPoint = this.ViewStartPoint;
-            var moduleViewWidth = 500;
-            var moduleColumnWidth = moduleViewWidth / (GraphicsSettings.IsFullscreen
-                                          ? this.CommandColumnNumDisplayFullscreen
-                                          : this.CommandColumnNumDisplay);
-            this.CreateModuleView(moduleColumnWidth, moduleStartPoint);
-
-            // command view
-            var commandStartPoint = moduleStartPoint + new Point(moduleColumnWidth, 0);
-            var commandColumnWidth = this.ViewWidthMax - moduleViewWidth;
-            this.CreateCommandView(commandColumnWidth, commandStartPoint);
-
-            // knowledge view
-            var knowledgeStartPoint = this.ModuleStartPoint
-                                      + new Point(0, this.ModuleViewSettings.RowNumDisplay * this.ModuleViewSettings.RootMargin.Y + this.ViewVMargin);
-            var knowledgeColumnWidth = this.ViewWidthMax / this.KnowledgeViewColumnNumDisplay;
-            this.CreateKnowledgeView(knowledgeColumnWidth, knowledgeStartPoint);
         }
 
         private void CreateKnowledgeView(int viewColumnWidth, Point startPoint)
@@ -156,7 +161,6 @@ namespace MetaMind.Acutance.Guis.Modules
             this.KnowledgeItemSettings = new KnowledgeItemSettings();
 
             var itemFixedWidth = this.KnowledgeItemSettings.IdFrameSize.X;
-
             this.KnowledgeItemSettings.NameFrameSize = new Point(viewColumnWidth - itemFixedWidth, 24);
             this.KnowledgeItemSettings.Reconfigure();
 
