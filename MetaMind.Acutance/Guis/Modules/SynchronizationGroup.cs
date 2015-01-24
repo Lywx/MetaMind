@@ -57,7 +57,7 @@
 
         private Vector2 SynchronizationTimeCenter
         {
-            get { return this.SynchronizationTaskInfoCenter + new Vector2(0, 20); }
+            get { return this.SynchronizationTaskInfoCenter + new Vector2(0, 30); }
         }
 
         public override void Draw(GameTime gameTime, byte alpha)
