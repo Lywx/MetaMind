@@ -27,7 +27,9 @@ namespace MetaMind.Engine.Settings.Colors
 
         public static Color LightPink         = new Color(255, 0, 27, 200);
 
-        public static Color LightBlue         = new Color(0, 20, 250, 2);
+        public static Color LightBlue         = new Color(14, 169, 253, 2);
+
+        public static Color DarkBlue          = new Color(0, 20, 250, 2);
 
         public static Color DarkRed           = new Color(100, 0, 0, 2);
     }

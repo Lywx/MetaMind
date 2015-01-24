@@ -55,9 +55,9 @@
             from whitespaces in Parse.WhiteSpace.Many().Optional()
             select regex.Trim();
 
-        public static Parser<Schedule> ScheduleParser = from text in BasicGrammar.BracketedTextParser
+        public static Parser<Schedule> ScheduleParser = from text   in BasicGrammar.BracketedTextParser
                                                         from spaces in Parse.WhiteSpace.Many().Optional()
-                                                        from unit in ScheduleUnitParser
+                                                        from unit   in ScheduleUnitParser
                                                         select new Schedule(DateTag(text), unit);
 
         public static Parser<ScheduleFile> ScheduleFileParser = from schedules in ScheduleParser.AtLeastOnce()

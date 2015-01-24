@@ -7,18 +7,27 @@ namespace MetaMind.Acutance.Parsers.Elements
 
     using Sprache;
 
-    public static class ScheduleExtension
+    public class Schedule
     {
-        public static ScheduleEntry ToEntry(this Schedule schedule, string path, int offset)
+        public readonly string Content;
+        public readonly DateTag Date;
+
+        public Schedule(DateTag date, string content)
         {
-            var command = ScheduleGrammar.CommandUnitParser.Parse(schedule.Content);
+            this.Date    = date;
+            this.Content = content;
+        }
+
+        public ScheduleEntry ToEntry(string path, int offset)
+        {
+            var command = ScheduleGrammar.CommandUnitParser.Parse(this.Content);
 
             // name is the part of command unit without identifier
             var name = command.Replace("Command: ", string.Empty);
-            var time = schedule.Date.Time;
+            var time = this.Date.Time;
 
             CommandRepeativity repeativity;
-            switch (schedule.Date.Repeativity)
+            switch (this.Date.Repeativity)
             {
                 case RepeativityTag.EveryMoment:
                     repeativity = CommandRepeativity.EveryMoment;
@@ -45,18 +54,6 @@ namespace MetaMind.Acutance.Parsers.Elements
             var date  = new DateTime(now.Year, now.Month, now.Day, time.Hours, time.Minutes, time.Seconds);
             var entry = new ScheduleEntry(name, path, offset, date, repeativity);
             return entry;
-        }
-    }
-
-    public class Schedule
-    {
-        public readonly string Content;
-        public readonly DateTag Date;
-
-        public Schedule(DateTag date, string content)
-        {
-            this.Date = date;
-            this.Content = content;
         }
     }
 }

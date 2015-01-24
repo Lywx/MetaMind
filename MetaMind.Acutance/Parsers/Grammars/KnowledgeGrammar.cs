@@ -34,8 +34,8 @@ namespace MetaMind.Acutance.Parsers.Grammars
             select new TimeTag("00", minutes, seconds);
 
         public static Parser<Parser<TimeTag>> TimeTagStrategyParser =
-            Parse.Regex(@"(\d+:\d+:\d+)", "Hours:Minutes:Seconds").Return(TimeTagFullParser)
-                .Or(Parse.Regex(@"(\d+:\d+)", "Minutes:Seconds").Return(TimeTagConciseParser));
+            Parse        .Regex(@"(\d+:\d+:\d+)", "Hours:Minutes:Seconds").Return(TimeTagFullParser)
+                .Or(Parse.Regex(@"(\d+:\d+)",     "Minutes:Seconds")      .Return(TimeTagConciseParser));
 
         public static Parser<TitleLevel> TitleLevelParser =
             Parse        .String("######").Return(TitleLevel.Six)

@@ -39,7 +39,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         public Color NameFrameModificationColor    = new Color(0, 0, 0, 0);
 
-        public Color NameFrameSelectionColor       = ColorPalette.LightBlue;
+        public Color NameFrameSelectionColor       = ColorPalette.DarkBlue;
 
         public Color NameFrameSynchronizationColor = new Color(0, 20, 250, 2);
 
