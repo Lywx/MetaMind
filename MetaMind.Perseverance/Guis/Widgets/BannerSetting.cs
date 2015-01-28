@@ -1,7 +1,6 @@
 namespace MetaMind.Perseverance.Guis.Widgets
 {
     using MetaMind.Engine.Components.Graphics;
-    using MetaMind.Engine.Settings;
     using MetaMind.Engine.Settings.Colors;
 
     using Microsoft.Xna.Framework;
@@ -13,6 +12,6 @@ namespace MetaMind.Perseverance.Guis.Widgets
         public int Thin   = 4;
         public int Thick  = 2;
 
-        public Color Color = ColorPalette.TransparentColor1;
+        public Color Color = ColorPalette.LightBlue;
     }
 }

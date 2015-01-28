@@ -102,6 +102,7 @@
     <Compile Include="Concepts\MotivationEntries\MotivationEntry.cs" />
     <Compile Include="Concepts\MotivationEntries\Motivationlist.cs" />
     <Compile Include="Concepts\TaskEntries\TaskEntry.cs" />
+    <Compile Include="Guis\Modules\MotivationModuleGameStartedListener.cs" />
     <Compile Include="Guis\Modules\MotivationTaskTracer.cs" />
     <Compile Include="Guis\Modules\MotivationTaskTracerSettings.cs" />
     <Compile Include="Guis\Modules\SummaryModule.cs" />
@@ -121,11 +122,11 @@
     <Compile Include="Guis\Widgets\MotivationItemTaskControl.cs" />
     <Compile Include="Guis\Widgets\MotivationItemTaskGraphics.cs" />
     <Compile Include="Guis\Widgets\MotivationItemViewControl.cs" />
-    <Compile Include="Guis\Modules\MotivationExchangeSettings.cs" />
+    <Compile Include="Guis\Modules\MotivationModuleSettings.cs" />
     <Compile Include="Guis\Widgets\MotivationViewControl.cs" />
     <Compile Include="Guis\Widgets\MotivationViewFactory.cs" />
     <Compile Include="Guis\Widgets\MotivationViewGraphics.cs" />
-    <Compile Include="Guis\Modules\MotivationExchange.cs" />
+    <Compile Include="Guis\Modules\MotivationModule.cs" />
     <Compile Include="Guis\Widgets\MotivationViewSettings.cs" />
     <Compile Include="Guis\Widgets\TaskItemErrorControl.cs" />
     <Compile Include="Guis\Widgets\TaskItemFrameControl.cs" />

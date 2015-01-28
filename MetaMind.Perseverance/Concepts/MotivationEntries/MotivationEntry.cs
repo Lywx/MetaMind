@@ -24,7 +24,7 @@
 
         public void CopyToSpace(MotivationSpace space, int position)
         {
-            var source = MotivationExchangeSettings.GetMotivationSource(space);
+            var source = MotivationModuleSettings.GetMotivationSource(space);
             if (source != null)
             {
                 source.Insert(position, this);
@@ -33,7 +33,7 @@
 
         public void SwapWithInSpace(MotivationSpace space, MotivationEntry target)
         {
-            var source = MotivationExchangeSettings.GetMotivationSource(space);
+            var source = MotivationModuleSettings.GetMotivationSource(space);
             if (source != null && 
                 source.Contains(this) && 
                 source.Contains(target))

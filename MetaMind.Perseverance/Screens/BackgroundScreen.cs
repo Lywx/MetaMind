@@ -18,7 +18,7 @@
 
         public BackgroundScreen()
         {
-            this.TransitionOnTime  = TimeSpan.FromSeconds(0.5);
+            this.TransitionOnTime  = TimeSpan.FromSeconds(3.5);
             this.TransitionOffTime = TimeSpan.FromSeconds(0.5);
         }
 

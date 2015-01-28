@@ -16,7 +16,7 @@
 
         public MotivationScreen()
         {
-            this.TransitionOnTime = TimeSpan.FromSeconds(0.5);
+            this.TransitionOnTime = TimeSpan.FromSeconds(1.5);
             this.TransitionOffTime = TimeSpan.FromSeconds(0.5);
 
             this.Exiting += this.MotivationScreenExiting;
@@ -28,7 +28,7 @@
                 new SynchronizationModuleSettings());
             this.synchronization.Load();
 
-            this.motivation = new MotivationExchange(new MotivationExchangeSettings());
+            this.motivation = new MotivationModule(new MotivationModuleSettings());
             this.motivation.Load();
         }
 

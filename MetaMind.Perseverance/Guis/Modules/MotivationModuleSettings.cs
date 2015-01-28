@@ -5,18 +5,17 @@ namespace MetaMind.Perseverance.Guis.Modules
 
     using MetaMind.Engine.Components.Graphics;
     using MetaMind.Engine.Guis.Widgets.Views;
-    using MetaMind.Engine.Settings;
     using MetaMind.Perseverance.Concepts.MotivationEntries;
     using MetaMind.Perseverance.Guis.Widgets;
 
     using Microsoft.Xna.Framework;
 
-    public class MotivationExchangeSettings : ICloneable
+    public class MotivationModuleSettings : ICloneable
     {
         public readonly MotivationItemSettings ItemSettings = new MotivationItemSettings();
         public readonly MotivationViewFactory  ViewFactory  = new MotivationViewFactory();
 
-        public MotivationExchangeSettings()
+        public MotivationModuleSettings()
         {
             this.PastViewSettings   = new MotivationViewSettings
                                           {
@@ -29,9 +28,9 @@ namespace MetaMind.Perseverance.Guis.Modules
 
             if (GraphicsSettings.IsFullscreen)
             {
-                this.PastViewSettings  .ColumnNumDisplay = 9;
+                this.PastViewSettings  .ColumnNumDisplay = 8;
                 this.NowViewSettings   .ColumnNumDisplay = 1;
-                this.FutureViewSettings.ColumnNumDisplay = 9;
+                this.FutureViewSettings.ColumnNumDisplay = 8;
 
                 this.PastViewSettings  .StartPoint = new Point(GraphicsSettings.Width / 2 - 270, 160);
                 this.NowViewSettings   .StartPoint = new Point(GraphicsSettings.Width / 2, 160);

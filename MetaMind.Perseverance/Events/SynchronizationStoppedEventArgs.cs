@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="SynchronizationStoppedEventArgs.cs" company="UESTC">
-//   Copyright (c) 2014 Lin Wuxiang
+//   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------

@@ -10,7 +10,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
     using Microsoft.Xna.Framework;
 
-    public class MotivationExchange : Module<MotivationExchangeSettings>
+    public class MotivationModule : Module<MotivationModuleSettings>
     {
         private readonly IView  futureView;
         private readonly IView  nowView;
@@ -18,9 +18,11 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         private readonly Banner banner;
 
+        private MotivationModuleGameStartedListener gameStartedListener;
+
         private bool[] readyMoving = new bool[(int)ViewEnum.ViewNum];
 
-        public MotivationExchange(MotivationExchangeSettings settings)
+        public MotivationModule(MotivationModuleSettings settings)
             : base(settings)
         {
             this.banner = new Banner(this.Settings.PastViewSettings, new BannerSetting());
@@ -35,9 +37,6 @@ namespace MetaMind.Perseverance.Guis.Modules
             this.nowView   .Control.Swap.AddObserver(this.futureView);
             this.futureView.Control.Swap.AddObserver(this.pastView  );
             this.futureView.Control.Swap.AddObserver(this.nowView   );
-
-            // auto-select after startup
-            this.nowView.Control.Selection.Select(0);
         }
 
         private enum ViewEnum
@@ -53,24 +52,47 @@ namespace MetaMind.Perseverance.Guis.Modules
         public override void Load()
         {
             // performance penalty is not severe for one-off loading
-            foreach (var entry in MotivationExchangeSettings.GetPastMotivations())
+            foreach (var entry in MotivationModuleSettings.GetPastMotivations())
             {
                 this.pastView.Control.AddItem(entry);
             }
 
-            foreach (var entry in MotivationExchangeSettings.GetNowMotivations())
+            foreach (var entry in MotivationModuleSettings.GetNowMotivations())
             {
                 this.nowView.Control.AddItem(entry);
             }
 
-            foreach (var entry in MotivationExchangeSettings.GetFutureMotivations())
+            foreach (var entry in MotivationModuleSettings.GetFutureMotivations())
             {
                 this.futureView.Control.AddItem(entry);
             }
+
+            this.LoadEvents();
+        }
+
+        private void LoadEvents()
+        {
+            if (this.gameStartedListener == null)
+            {
+                this.gameStartedListener = new MotivationModuleGameStartedListener(this.nowView);
+            }
+
+            EventManager.AddListener(this.gameStartedListener);
         }
 
         public override void Unload()
         {
+            this.UnloadEvents();
+        }
+
+        private void UnloadEvents()
+        {
+            if (this.gameStartedListener == null)
+            {
+                EventManager.RemoveListener(this.gameStartedListener);
+            }
+
+            this.gameStartedListener = null;
         }
 
         #endregion
@@ -182,13 +204,13 @@ namespace MetaMind.Perseverance.Guis.Modules
         private void CheckMoving(IView view, ViewEnum e)
         {
             var items = view.Items;
-            if (items.Count != 0 && items.First().IsEnabled(ItemState.Item_Selected))
+            if (items.Count != 0 && 
+                items.First().IsEnabled(ItemState.Item_Selected))
             {
                 this.CompeteMoving(e);
             }
         }
 
         #endregion
-
     }
 }

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="MotivationItemSettings.cs" company="UESTC">
-//   Copyright (c) 2014 Lin Wuxiang
+//   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -14,31 +14,34 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
     public class MotivationItemSettings : ItemSettings
     {
-        public Color NameColor = Color.White;
+        public Color NameColor                  = Color.White;
 
-        public Font  NameFont = Font.InfoSimSunFont;
+        public Font  NameFont                   = Font.InfoSimSunFont;
 
-        public Point NameFrameSize = new Point(256, 34);
+        public Point NameFrameSize              = new Point(256, 34);
 
-        public int   NameLineMargin = 20;
+        public int   NameLineMargin             = 20;
 
-        public float NameSize = 0.6f;
+        public float NameSize                   = 0.6f;
 
-        public Color IdPendingColor = new Color(200, 200, 0, 2);
+        //---------------------------------------------------------------------
+        public Color IdPendingColor             = new Color(200, 200, 0, 2);
 
-        public Color IdFramePendingColor = new Color(200, 200, 0, 2);
+        public Color IdFramePendingColor        = new Color(200, 200, 0, 2);
 
+        //---------------------------------------------------------------------
         public float SymbolFrameIncrementFactor = 0.2f;
         
-        public Color FearColor = new Color(51, 204, 204, 223);
+        public Color SymbolFrameFearColor       = new Color(51, 204, 204, 223);
 
-        public Color WishColor = new Color(255, 255, 255, 128);
+        public Color SymbolFrameWishColor       = new Color(255, 255, 255, 128);
 
-        public Font HelpFont = Font.UiStatisticsFont;
+        //---------------------------------------------------------------------
+        public Font  HelpFont                   = Font.UiStatisticsFont;
 
-        public float HelpSize = 0.75f;
+        public float HelpSize                   = 0.75f;
 
-        public Color HelpColor = Color.White;
+        public Color HelpColor                  = Color.White;
 
         public MotivationItemSettings()
         {
