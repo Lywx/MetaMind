@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="EventManager.cs" company="UESTC">
-//   Copyright (c) 2014 Lin Wuxiang
+//   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -67,6 +67,10 @@ namespace MetaMind.Engine.Components
         private EventManager(Game game)
             : base(game)
         {
+            this.knownEvents  = new List<int>();
+            this.queuedEvents = new List<EventBase>();
+            this.activeEvents = new List<EventBase>();
+            this.listeners    = new List<ListenerBase>();
         }
 
         #endregion Constructors
@@ -75,10 +79,6 @@ namespace MetaMind.Engine.Components
 
         public override void Initialize()
         {
-            this.knownEvents  = new List<int>();
-            this.queuedEvents = new List<EventBase>();
-            this.activeEvents = new List<EventBase>();
-            this.listeners    = new List<ListenerBase>();
         }
 
         #endregion Initialization
@@ -109,34 +109,32 @@ namespace MetaMind.Engine.Components
 
         #region Event Operations
 
-        public void QueueEvent(EventBase @event)
+        public void QueueEvent(EventBase e)
         {
-            if (this.ValidateEvent(@event.EventType))
-            {
-                @event.CreationTime = DateTime.Now.Ticks;
-                this.queuedEvents.Add(@event);
-            }
+            // won't validate event before adding it
+            // which allow queuing events before adding listeners for it
+            e.CreationTime = DateTime.Now.Ticks;
+            this.queuedEvents.Add(e);
         }
 
-        public void QueueUniqueEvent(EventBase @event)
+        public void QueueUniqueEvent(EventBase e)
         {
-            if (this.ValidateEvent(@event.EventType))
+            // won't validate event before adding it
+            // which allow queuing events before adding listeners for it
+            for (var x = this.queuedEvents.Count - 1; x >= 0; x--)
             {
-                for (var x = this.queuedEvents.Count - 1; x >= 0; x--)
+                if (this.queuedEvents[x].EventType == e.EventType)
                 {
-                    if (this.queuedEvents[x].EventType == @event.EventType)
-                    {
-                        this.queuedEvents.RemoveAt(x);
-                    }
+                    this.queuedEvents.RemoveAt(x);
                 }
-
-                this.queuedEvents.Add(@event);
             }
+
+            this.queuedEvents.Add(e);
         }
 
-        public void RemoveQueuedEvent(EventBase @event, bool allOccurances)
+        public void RemoveQueuedEvent(EventBase e, bool allOccurances)
         {
-            if (this.queuedEvents.Contains(@event))
+            if (this.queuedEvents.Contains(e))
             {
                 if (allOccurances)
                 {
@@ -147,19 +145,20 @@ namespace MetaMind.Engine.Components
                 }
                 else
                 {
-                    this.queuedEvents.Remove(@event);
+                    this.queuedEvents.Remove(e);
                 }
             }
         }
 
-        public void TriggerEvent(EventBase @event)
+        public void TriggerEvent(EventBase e)
         {
-            if (this.ValidateEvent(@event.EventType))
+            if (this.ValidateEvent(e.EventType))
             {
-                foreach (var listener in
-                    this.listeners.Where(listener => listener.RegisteredEvents.Contains(@event.EventType)).ToList())
+                foreach (var listener in this.listeners
+                    .Where(listener => listener.RegisteredEvents.Contains(e.EventType))
+                    .ToList())
                 {
-                    listener.HandleEvent(@event);
+                    listener.HandleEvent(e);
                 }
             }
         }
