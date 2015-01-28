@@ -12,7 +12,8 @@ namespace MetaMind.Engine.Guis.Modules
         public ParticleModule(ParticleModuleSettings settings)
             : base(settings)
         {
-            Particles = new List<FloatParticle>();
+            this.Particles = new List<FloatParticle>();
+
             this.SpawnSpeed   = 1;
             this.InitialSpeed = 1;
 
@@ -58,6 +59,9 @@ namespace MetaMind.Engine.Guis.Modules
         {
         }
 
+        public override void UpdateInput(GameTime gameTime)
+        {
+        }
 
         public override void UpdateStructure(GameTime gameTime)
         {

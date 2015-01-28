@@ -1,6 +1,5 @@
 namespace MetaMind.Engine.Guis.Widgets.Views
 {
-    using MetaMind.Engine.Settings;
     using MetaMind.Engine.Settings.Colors;
 
     using Microsoft.Xna.Framework;

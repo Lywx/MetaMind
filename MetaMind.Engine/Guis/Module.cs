@@ -66,7 +66,7 @@ namespace MetaMind.Engine.Guis
             this.Control.UpdateInput(gameTime);
         }
 
-        public override void UpdateStructure( GameTime gameTime )
+        public override void UpdateStructure(GameTime gameTime)
         {
             this.Control .UpdateStructure(gameTime);
             this.Graphics.Update(gameTime);

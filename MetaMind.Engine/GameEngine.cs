@@ -12,9 +12,15 @@
     {
         #region Singleton
 
-        private readonly static GameEngine singleton = new GameEngine();
+        private static  GameEngine singleton;
 
-        public static GameEngine Instance { get { return singleton; } }
+        public static GameEngine Instance
+        {
+            get
+            {
+                return singleton ?? (singleton = new GameEngine());
+            }
+        }
 
         #endregion
 
@@ -22,50 +28,21 @@
 
         private GameEngine()
         {
+            // all necessary components during construction are loaded here.
+            // other components are loaded in initialization.
+
             // graphics
             //-----------------------------------------------------------------
             GraphicsManager = GraphicsManager.GetInstance(this);
-
-            // content
-            //-----------------------------------------------------------------
-            this.Content.RootDirectory = "Content";
-            ContentManager = this.Content;
-
-            // audio
-            //------------------------------------------------------------------
-            AudioManager = AudioManager.GetInstance(this,
-                @"Content\Audio\Audio.xgs",
-                @"Content\Audio\Wave Bank.xwb",
-                @"Content\Audio\Sound Bank.xsb");
-
-            // folder
-            //-----------------------------------------------------------------
-            FolderManager = FolderManager.GetInstance();
 
             // screen
             //------------------------------------------------------------------
             ScreenManager = ScreenManager.GetInstance(this, new ScreenManagerSettings());
 
-            // process
-            //------------------------------------------------------------------
-            ProcessManager = ProcessManager.GetInstance(this);
-
-            // event
-            //------------------------------------------------------------------
-            EventManager = EventManager.GetInstance(this);
-
-            // input
-            //------------------------------------------------------------------
-            InputEventManager    = InputEventManager.GetInstance(this);
-            InputSequenceManager = InputSequenceManager.GetInstance();
-
-            // font
-            //------------------------------------------------------------------
-            FontManager = FontManager.GetInstance();
-
-            // message
-            //------------------------------------------------------------------
-            MessageManager = MessageManager.GetInstance();
+            // content
+            //-----------------------------------------------------------------
+            this.Content.RootDirectory = "Content";
+            ContentManager = this.Content;
 
             // game
             //---------------------------------------------------------------------
@@ -108,6 +85,38 @@
         {
             GraphicsManager.Initialize();
             GraphicsManager.CenterWindow();
+
+            // audio
+            //------------------------------------------------------------------
+            AudioManager = AudioManager.GetInstance(this,
+                @"Content\Audio\Audio.xgs",
+                @"Content\Audio\Wave Bank.xwb",
+                @"Content\Audio\Sound Bank.xsb");
+
+            // folder
+            //-----------------------------------------------------------------
+            FolderManager = FolderManager.GetInstance();
+
+            // process
+            //------------------------------------------------------------------
+            ProcessManager = ProcessManager.GetInstance(this);
+
+            // event
+            //------------------------------------------------------------------
+            EventManager = EventManager.GetInstance(this);
+
+            // input
+            //------------------------------------------------------------------
+            InputEventManager    = InputEventManager.GetInstance(this);
+            InputSequenceManager = InputSequenceManager.GetInstance();
+
+            // font
+            //------------------------------------------------------------------
+            FontManager = FontManager.GetInstance();
+
+            // message
+            //------------------------------------------------------------------
+            MessageManager = MessageManager.GetInstance();
 
             base.Initialize();
         }

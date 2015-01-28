@@ -11,6 +11,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public Point BorderMargin      = new Point(4, 4);
 
-        public Color HighlightColor    = ColorPalette.TransparentColor1;
+        public Color HighlightColor    = ColorPalette.DarkBlue;
     }
 }

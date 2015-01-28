@@ -21,6 +21,9 @@ namespace MetaMind.Engine.Components.Graphics
         private GraphicsManager(Game game)
             : base(game)
         {
+            this.PreferredBackBufferWidth  = 800;
+            this.PreferredBackBufferHeight = 600;
+            this.ApplyChanges();
         }
 
         public string ConfigurationFile
@@ -31,10 +34,14 @@ namespace MetaMind.Engine.Components.Graphics
             }
         }
 
+        /// <remarks>
+        /// Can be only called after GameEngine is constructed.
+        /// </remarks>>
         public void CenterWindow()
         {
             // center game window
             var screen = GraphicsSettings.Screen;
+
             GameEngine.Instance.Window.Position = new Point(
                 screen.Bounds.X + (screen.Bounds.Width - GraphicsSettings.Width) / 2,
                 screen.Bounds.Y + (screen.Bounds.Height - GraphicsSettings.Height) / 2);
