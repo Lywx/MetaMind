@@ -4,7 +4,6 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Items;
-    using MetaMind.Engine.Settings;
     using MetaMind.Engine.Settings.Colors;
 
     using Microsoft.Xna.Framework;
@@ -54,44 +53,15 @@ namespace MetaMind.Perseverance.Guis.Widgets
             var size        = new Point((int)(Math.Abs(Math.Cos(this.rotation)) * width), height);
             var destination = RectangleExt.DestinationWithSize(ItemControl.SymbolFrame.Rectangle, size);
 
-            if (ItemData.Property == "Neutral")
-            {
-                ScreenManager.SpriteBatch.Draw(
-                    this.symbolTexture,
-                    destination,
-                    null,
-                    Item.IsEnabled(ItemState.Item_Selected)
-                        ? ColorPalette.TransparentColor5
-                        : ColorPalette.TransparentColor3,
-                    0f,
-                    this.SymbolOrigin,
-                    flipped ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
-                    0f);
-            }
-            else if (ItemData.Property == "Wish")
-            {
-                ScreenManager.SpriteBatch.Draw(
-                    this.symbolTexture,
-                    destination,
-                    null,
-                    ItemSettings.SymbolFrameWishColor,
-                    0f,
-                    this.SymbolOrigin,
-                    flipped ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
-                    0f);
-            }
-            else if (ItemData.Property == "Fear")
-            {
-                ScreenManager.SpriteBatch.Draw(
-                    this.symbolTexture,
-                    destination,
-                    null,
-                    ItemSettings.SymbolFrameFearColor,
-                    0f,
-                    this.SymbolOrigin,
-                    flipped ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
-                    0f);
-            }
+            ScreenManager.SpriteBatch.Draw(
+                this.symbolTexture,
+                destination,
+                null,
+                ItemSettings.SymbolFrameWishColor,
+                0f,
+                this.SymbolOrigin,
+                flipped ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
+                0f);
         }
 
         private void DrawShadow()

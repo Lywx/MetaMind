@@ -3,6 +3,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
     using System;
 
     using MetaMind.Engine.Components.Fonts;
+    using MetaMind.Engine.Settings.Colors;
 
     using Microsoft.Xna.Framework;
 
@@ -13,7 +14,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         public Point RootFrameMargin = new Point(2, 2);
 
-        public Color RootFrameColor  = new Color(16, 32, 32, 2);
+        public Color RootFrameColor  = Color.Transparent;
 
         //---------------------------------------------------------------------
         public float IdSize        = 0.7f;
@@ -26,7 +27,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         public Point IdFrameMargin = new Point(2, 2);
 
-        public Color IdFrameColor  = new Color(139, 0, 0, 2);
+        public Color IdFrameColor  = ColorPalette.TransparentColor1;
 
         public object Clone()
         {

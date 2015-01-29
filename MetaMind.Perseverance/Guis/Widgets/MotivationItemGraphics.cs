@@ -18,8 +18,6 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
     public class MotivationItemGraphics : ViewItemBasicGraphics
     {
-        private const string HelpInformation = "N A:ttraction J:Fear K:Wish";
-
         private readonly MotivationItemSymbolGraphics symbol;
 
         private readonly MotivationItemTaskGraphics task;
@@ -28,7 +26,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             : base(item)
         {
             this.symbol = new MotivationItemSymbolGraphics(item);
-            this.task   = new MotivationItemTaskGraphics(item);
+            this.task = new MotivationItemTaskGraphics(item);
         }
 
         protected override Vector2 IdCenter
@@ -41,9 +39,21 @@ namespace MetaMind.Perseverance.Guis.Widgets
             }
         }
 
-        private Vector2 NameLocation
+        private string NameCropped
         {
-            get { return PointExt.ToVector2(ItemControl.RootFrame.Rectangle.Center) + new Vector2(0, 50); }
+            get
+            {
+                return FontManager.CropText(
+                    this.ItemSettings.NameFont,
+                    this.ItemData.Name,
+                    this.ItemSettings.NameSize,
+                    this.ViewSettings.RootMargin.X * 6);
+            }
+        }
+
+        private string HelpInformation
+        {
+            get { return "N:Name"; }
         }
 
         private Vector2 HelpLocation
@@ -51,6 +61,14 @@ namespace MetaMind.Perseverance.Guis.Widgets
             get { return this.NameLocation; }
         }
 
+        private Vector2 NameLocation
+        {
+            get
+            {
+                return PointExt.ToVector2(ItemControl.RootFrame.Rectangle.Center)
+                       + PointExt.ToVector2(ItemSettings.NameMargin);
+            }
+        }
         public override void Draw(GameTime gameTime, byte alpha)
         {
             if (!ItemControl.Active)
@@ -89,31 +107,23 @@ namespace MetaMind.Perseverance.Guis.Widgets
                 return;
             }
 
-            if (Item.IsEnabled(ItemState.Item_Pending))
+            if (this.Item.IsEnabled(ItemState.Item_Pending))
             {
-                FontManager.DrawText(
-                    ItemSettings.HelpFont,
-                    HelpInformation,
+                FontManager.DrawCenteredText(
+                    this.ItemSettings.HelpFont,
+                    this.HelpInformation,
                     this.HelpLocation,
-                    ColorExt.MakeTransparent(ItemSettings.HelpColor, alpha),
-                    ItemSettings.HelpSize);
+                    ColorExt.MakeTransparent(this.ItemSettings.HelpColor, alpha),
+                    this.ItemSettings.HelpSize);
             }
             else
             {
-                List<string> text = Text.BreakTextIntoList(
-                    ItemSettings.NameFont,
-                    ItemSettings.NameSize,
-                    ItemData.Name,
-                    (float)this.ViewSettings.RootMargin.X * 6);
-                for (var i = 0; i < text.Count; i++)
-                {
-                    FontManager.DrawCenteredText(
-                        ItemSettings.NameFont,
-                        text[i],
-                        this.NameLocation + new Vector2(0, ItemSettings.NameLineMargin) * i,
-                        ColorExt.MakeTransparent(ItemSettings.NameColor, alpha),
-                        ItemSettings.NameSize);
-                }
+                FontManager.DrawCenteredText(
+                    this.ItemSettings.NameFont,
+                    this.NameCropped,
+                    this.NameLocation,
+                    ColorExt.MakeTransparent(this.ItemSettings.NameColor, alpha),
+                    this.ItemSettings.NameSize);
             }
         }
 

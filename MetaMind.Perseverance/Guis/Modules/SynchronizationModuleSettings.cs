@@ -20,7 +20,7 @@
 
         public Color BarFrameBackgroundColor = new Color(30, 30, 40, 10);
 
-        public Color BarFrameAscendColor     = ColorPalette.LightGreen;
+        public Color BarFrameAscendColor     = ColorPalette.LightBlue;
 
         public Color BarFrameDescendColor    = ColorPalette.LightPink;
 
@@ -64,7 +64,7 @@
         public float MessageSize             = 0.7f;
 
         //---------------------------------------------------------------------
-        public Color SynchronizationDotFrameColor = new Color(10, 10, 40, 40);
+        public Color SynchronizationDotFrameColor = ColorPalette.TransparentColor1;
 
         public Font  SynchronizationRateFont      = Font.UiStatisticsFont;
 
@@ -81,9 +81,9 @@
 
         public Point ValveFrameSize    = new Point(400, 8);
 
-        public Color ValueAscendColor  = new Color(78, 255, 27, 200);
+        public Color ValueAscendColor  = ColorPalette.LightBlue;
 
-        public Color ValueDescendColor = Color.Yellow;
+        public Color ValueDescendColor = ColorPalette.LightPink;
 
         public float ValueStatusSize   = 2.0f;
 

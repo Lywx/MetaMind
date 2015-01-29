@@ -13,9 +13,6 @@
         public string Name = string.Empty;
 
         [DataMember]
-        public string Property = "Neutral";
-
-        [DataMember]
         public List<TaskEntry> Tasks = new List<TaskEntry>();
 
         public MotivationEntry()

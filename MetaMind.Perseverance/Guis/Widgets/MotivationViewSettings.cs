@@ -16,7 +16,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         public MotivationViewSettings()
         {
-            this.TracerMargin = new Vector2(-new MotivationItemSettings().NameFrameSize.X / 2f, 90);
+            this.TracerMargin = new Vector2(-new MotivationItemSettings().NameFrameSize.X / 2f, 75);
         }
     }
 }

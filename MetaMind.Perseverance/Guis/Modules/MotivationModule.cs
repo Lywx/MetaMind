@@ -105,7 +105,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             this.nowView   .Draw(gameTime, alpha);
             this.futureView.Draw(gameTime, alpha);
 
-            this.banner.Draw(gameTime, alpha);
+            this.banner    .Draw(gameTime, alpha);
         }
 
 

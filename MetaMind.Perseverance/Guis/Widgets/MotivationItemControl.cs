@@ -17,8 +17,7 @@
             this.ItemFrameControl = new MotivationItemFrameControl(item);
             this.ItemViewControl  = new MotivationItemViewControl(item);
 
-            this.ItemSymbolControl = new MotivationItemSymbolControl(item);
-            this.ItemTaskControl   = new MotivationItemTaskControl(item);
+            this.ItemTaskControl  = new MotivationItemTaskControl(item);
         }
 
         public MotivationItemTaskControl ItemTaskControl { get; set; }
@@ -32,8 +31,6 @@
         {
             get { return this.ItemTaskControl.TaskTracer; }
         }
-
-        private MotivationItemSymbolControl ItemSymbolControl { get; set; }
 
         #region Operations
 
@@ -113,14 +110,12 @@
                             this.Item.Disable(ItemState.Item_Pending);
                         }
                     }
-
-                    this.ItemSymbolControl.UpdateInput(gameTime);
                 }
 
                 if (!this.Locked)
                 {
                     // should be outside of the accepting input state
-                    // task view is paralled with item input
+                    // task view is parallel with item input
                     this.ItemTaskControl.UpdateInput(gameTime);
                 }
             }
@@ -128,9 +123,8 @@
 
         public override void UpdateStructure(GameTime gameTime)
         {
-            base                  .UpdateStructure(gameTime);
-            this.ItemSymbolControl.UpdateStructure(gameTime);
-            this.ItemTaskControl  .UpdateStructure(gameTime);
+            base                .UpdateStructure(gameTime);
+            this.ItemTaskControl.UpdateStructure(gameTime);
         }
 
         #endregion

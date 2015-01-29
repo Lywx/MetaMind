@@ -1,6 +1,5 @@
 ﻿namespace MetaMind.PerseveranceHost
 {
-    using System.Linq;
     using System.ServiceModel;
     using System.ServiceModel.Description;
 

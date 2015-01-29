@@ -24,6 +24,8 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         public float NameSize                   = 0.6f;
 
+        public Point NameMargin                 = new Point(0, 40);
+
         //---------------------------------------------------------------------
         public Color IdPendingColor             = new Color(200, 200, 0, 2);
 

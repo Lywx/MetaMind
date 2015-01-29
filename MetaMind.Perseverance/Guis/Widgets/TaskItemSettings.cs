@@ -39,12 +39,12 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         public Color NameFrameModificationColor    = new Color(0, 0, 0, 0);
 
-        public Color NameFrameSelectionColor       = ColorPalette.DarkBlue;
+        public Color NameFrameSelectionColor       = ColorPalette.LightBlue;
 
-        public Color NameFrameSynchronizationColor = new Color(0, 20, 250, 2);
+        public Color NameFrameSynchronizationColor = ColorPalette.LightBlue;
 
         //---------------------------------------------------------------------
-        public Color IdFramePendingColor           = new Color(200, 200, 0, 2);
+        public Color IdFramePendingColor           = ColorPalette.LightYellow;
 
         //---------------------------------------------------------------------
         public float ExperienceSize                = 0.7f;
@@ -57,7 +57,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         public Point ExperienceFrameMargin         = new Point(2, 2);
 
-        public Color ExperienceFrameColor          = new Color(16, 32, 32, 2);
+        public Color ExperienceFrameColor          = ColorPalette.TransparentColor1;
 
         //---------------------------------------------------------------------
         public float ProgressSize                  = 0.7f;
@@ -68,7 +68,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         public Point ProgressFrameSize             = new Point(96, 24);
 
-        public Color ProgressFrameColor            = new Color(16, 32, 32, 2);
+        public Color ProgressFrameColor            = ColorPalette.TransparentColor1;
 
         public Point ProgressFrameMargin           = new Point(2, 2);
 
@@ -90,15 +90,10 @@ namespace MetaMind.Perseverance.Guis.Widgets
             this.NameXLMargin = (int)(this.NameXLMargin * this.NameSize);
             this.NameXRMargin = (int)(this.NameXRMargin * this.NameSize);
             this.NameYTMargin = (int)(this.NameYTMargin * this.NameSize);
-
+           
             //-----------------------------------------------------------------
             this.IdSize       = 0.7f;
             this.IdFrameSize  = new Point(24, 24);
-            this.IdFrameColor = ColorPalette.TransparentColor1;
-
-            //-----------------------------------------------------------------
-            this.ExperienceFrameColor = ColorPalette.TransparentColor1;
-            this.ProgressFrameColor   = ColorPalette.TransparentColor1;
         }
 
         public virtual void Reconfigure()

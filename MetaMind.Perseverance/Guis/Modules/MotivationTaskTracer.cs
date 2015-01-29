@@ -21,14 +21,14 @@ namespace MetaMind.Perseverance.Guis.Modules
     {
         private bool loadFinished;
 
-        private int loadIndex;
+        private int  loadIndex;
 
         public MotivationTaskTracer(MotivationItemControl itemControl, MotivationTaskTracerSettings settings)
             : base(settings)
         {
             this.View = new View(this.Settings.ViewSettings, this.Settings.ItemSettings, this.Settings.ViewFactory, this);
 
-            // faster dynamic accessor with fast member
+            // faster dynamic accessors with fast member
             this.FastHostControl = ObjectAccessor.Create(itemControl);
             this.FastHostData    = ObjectAccessor.Create(this.FastHostControl["ItemData"]);
         }
@@ -65,12 +65,13 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         public override void Load()
         {
-            // performance penalty due to dynmaic type
+            // performance penalty due to dynamic type
             // performance is still bad even with fast member
             if (!this.loadFinished && this.FastHostData["Tasks"].Count != 0)
             {
                 this.View.Control.AddItem(this.FastHostData["Tasks"][this.loadIndex]);
-                ++this.loadIndex;
+
+                this.loadIndex++;
             }
 
             if (this.loadIndex >= this.FastHostData["Tasks"].Count)

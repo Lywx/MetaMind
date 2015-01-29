@@ -7,12 +7,10 @@
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis;
-    using MetaMind.Engine.Settings;
     using MetaMind.Perseverance.Concepts.Cognitions;
     using MetaMind.Perseverance.Concepts.TaskEntries;
 
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
 
     using Primtives2D;
 
@@ -281,7 +279,9 @@
         public override void Draw(GameTime gameTime, byte alpha)
         {
             this.DrawProgressFrame();
+            this.DrawProgressBar();
             this.DrawDotFrame();
+            this.DrawDot();
 
             this.DrawStateInfo();
             this.DrawStatusInfo();
@@ -294,15 +294,6 @@
             this.DrawDailyRateInfo();
 
             this.DrawMassage(gameTime);
-
-            ScreenManager.SpriteBatch.End();
-            ScreenManager.SpriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.Additive);
-
-            this.DrawProgressBar();
-            this.DrawDot();
-
-            ScreenManager.SpriteBatch.End();
-            ScreenManager.SpriteBatch.Begin();
         }
 
         private void DrawAccelerationInfo()

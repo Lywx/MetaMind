@@ -1,6 +1,5 @@
 namespace MetaMind.Engine.Guis.Widgets.Views
 {
-    using MetaMind.Engine.Settings;
     using MetaMind.Engine.Settings.Colors;
 
     using Microsoft.Xna.Framework;
@@ -11,6 +10,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public Point BorderMargin      = new Point(4, 4);
 
-        public Color HighlightColor    = ColorPalette.DarkBlue;
+        public Color HighlightColor    = ColorPalette.TransparentColor1;
     }
 }

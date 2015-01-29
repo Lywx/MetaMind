@@ -116,7 +116,6 @@
     <Compile Include="Guis\Widgets\MotivationItemGraphics.cs" />
     <Compile Include="Guis\Widgets\MotivationItemSettings.cs" />
     <Compile Include="Guis\Widgets\MotivationItemSwapProcess.cs" />
-    <Compile Include="Guis\Widgets\MotivationItemSymbolControl.cs" />
     <Compile Include="Guis\Widgets\MotivationItemFrameControl.cs" />
     <Compile Include="Guis\Widgets\MotivationItemSymbolGraphics.cs" />
     <Compile Include="Guis\Widgets\MotivationItemTaskControl.cs" />

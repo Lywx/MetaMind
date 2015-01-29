@@ -11,8 +11,6 @@ namespace MetaMind.Engine.Components.Graphics
     using System.Linq;
     using System.Windows.Forms;
 
-    using Microsoft.Xna.Framework;
-
     public static class GraphicsSettings
     {
         public static bool IsFullscreen;
