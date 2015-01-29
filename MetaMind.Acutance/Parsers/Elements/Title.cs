@@ -4,19 +4,21 @@
 
     public class Title
     {
-        private readonly TitleLevel level;
+        private readonly TitleLevel     level;
+        private readonly TitleType      type;
         private readonly RepeativityTag repeativity;
-        private readonly string     name;
-        private readonly TimeTag    time;
+        private readonly string         name;
+        private readonly TimeTag        time;
 
-        public Title(TitleLevel level, RepeativityTag repeativity, Sentence sentence)
-            : this(level, repeativity, sentence, TimeTag.Zero)
+        public Title(TitleLevel level, TitleType type, RepeativityTag repeativity, Sentence sentence)
+            : this(level, type, repeativity, sentence, TimeTag.Zero)
         {
         }
 
-        public Title(TitleLevel level, RepeativityTag repeativity, Sentence sentence, TimeTag time)
+        public Title(TitleLevel level, TitleType type, RepeativityTag repeativity, Sentence sentence, TimeTag time)
         {
             this.level       = level;
+            this.type        = type;
             this.repeativity = repeativity;
             this.name        = sentence.ToString();
             this.time        = time;
@@ -33,6 +35,11 @@
         public TitleLevel Level
         {
             get { return this.level; }
+        }
+
+        public TitleType Type
+        {
+            get { return this.type; }
         }
 
         public RepeativityTag Repeativity

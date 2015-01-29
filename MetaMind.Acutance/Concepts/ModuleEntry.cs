@@ -21,10 +21,13 @@ namespace MetaMind.Acutance.Concepts
             this.Name = IO.Path.GetFileName(file.Path);
             this.Path = file.Path;
 
-            this.Commandlist = commandlist;
-            this.SubEntries  = knowledgeEntries.ConvertAll(k => k.ToCommmandEntry());
+            this.ParentModuleEntry = null;
+            this.SubModuleEntries  = new List<ModuleEntry>();
 
-            this.Commandlist.Add(this.SubEntries);
+            this.SubCommandEntries = knowledgeEntries.ConvertAll(k => k.ToCommmandEntry());
+
+            this.Commandlist = commandlist;
+            this.Commandlist.Add(this.SubCommandEntries);
         }
 
         ~ModuleEntry()
@@ -34,31 +37,46 @@ namespace MetaMind.Acutance.Concepts
 
         public override void Dispose()
         {
-            if (this.SubEntries != null &&
+            if (this.SubCommandEntries != null &&
                 this.Commandlist != null)
             {
-                foreach (var subEntry in this.SubEntries.ToArray())
+                foreach (var subEntry in this.SubCommandEntries.ToArray())
                 {
-                    this.Commandlist.Remove(subEntry);
-                    this.SubEntries.Remove(subEntry);
+                    this.Commandlist      .Remove(subEntry);
+                    this.SubCommandEntries.Remove(subEntry);
+                }
+            }
+
+            if (this.SubModuleEntries != null)
+            {
+                foreach (var module in this.SubModuleEntries.ToArray())
+                {
+                    this.SubModuleEntries.Remove(module);
+                    module.Dispose();
                 }
             }
 
             this.Name = null;
             this.Path = null;
+
+            this.ParentModuleEntry = null;
+            this.SubModuleEntries  = null;
+
+            this.SubCommandEntries = null;
+
             this.Commandlist = null;
-            this.SubEntries = null;
 
             base.Dispose();
         }
 
         #endregion
 
-        public bool Populating
+        public bool IsPopulating
         {
             get
             {
-                return this.SubEntries.Find(c => c.State != CommandState.Transiting) != null;
+                return this.SubCommandEntries.Find(c => c.State != CommandState.Transiting) != null || 
+                       this.SubModuleEntries.Find(m => m.IsPopulating) != null;
             }
         }
 
@@ -66,9 +84,14 @@ namespace MetaMind.Acutance.Concepts
         {
             base.Reset();
 
-            foreach (var subEntry in this.SubEntries)
+            foreach (var subCommand in this.SubCommandEntries)
             {
-                subEntry.Reset();
+                subCommand.Reset();
+            }
+
+            foreach (var subModule in this.SubModuleEntries)
+            {
+                subModule.Reset();
             }
         }
 
@@ -76,9 +99,21 @@ namespace MetaMind.Acutance.Concepts
         public string Path { get; set; }
 
         [DataMember]
-        public List<CommandEntry> SubEntries { get; set; }
+        public List<CommandEntry> SubCommandEntries { get; set; }
+
+        [DataMember]
+        public List<ModuleEntry> SubModuleEntries { get; set; }
+
+        [DataMember]
+        public ModuleEntry ParentModuleEntry { get; set; }
 
         [DataMember]
         private ICommandlist Commandlist { get; set; }
+
+        public void AddSubModule(ModuleEntry module)
+        {
+            module.ParentModuleEntry = this;
+            this.SubModuleEntries.Add(module);
+        }
     }
 }

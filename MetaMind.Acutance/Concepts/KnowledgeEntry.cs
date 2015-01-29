@@ -1,20 +1,22 @@
 ﻿namespace MetaMind.Acutance.Concepts
 {
-    using MetaMind.Acutance.Parsers.Elements;
     using System.Linq;
+
+    using MetaMind.Acutance.Parsers.Elements;
 
     public class KnowledgeEntry
     {
         public KnowledgeEntry(Knowledge knowledge)
+            : this(knowledge.Title)
         {
-            if (knowledge != null)
-            {
-                this.Knowledge = knowledge;
+            this.Knowledge = knowledge;
+        }
 
-                this.Name = string.Concat(Enumerable.Repeat("#", (int)knowledge.Title.Level)) + " " + knowledge.Title.Name;
+        public KnowledgeEntry(Title title)
+        {
+            this.Name = string.Concat(Enumerable.Repeat("#", (int)title.Level)) + " " + title.Name;
 
-                this.IsTitle = true;
-            }
+            this.IsTitle = true;
         }
 
         public KnowledgeEntry(string name, bool isControl)

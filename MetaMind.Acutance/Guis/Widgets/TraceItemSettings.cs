@@ -16,11 +16,13 @@ namespace MetaMind.Acutance.Guis.Widgets
             //-----------------------------------------------------------------
             this.NameFrameRegularColor   = ColorPalette.TransparentColor1;
             this.NameFrameMouseOverColor = ColorPalette.TransparentColor2;
+            this.NameFramePendingColor   = ColorPalette.TransparentColor5;
 
             //-----------------------------------------------------------------
-            this.IdSize       = 0.7f;
-            this.IdFrameSize  = new Point(24, 24);
-            this.IdFrameColor = ColorPalette.TransparentColor1;
+            this.IdSize              = 0.7f;
+            this.IdFrameSize         = new Point(24, 24);
+            this.IdFrameColor        = ColorPalette.TransparentColor1;
+            this.IdFramePendingColor = ColorPalette.TransparentColor5;
 
             //-----------------------------------------------------------------
             this.ExperienceFrameColor = ColorPalette.TransparentColor1;

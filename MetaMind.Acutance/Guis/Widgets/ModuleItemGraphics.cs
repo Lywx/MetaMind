@@ -62,7 +62,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
             this.DrawNameFrame(255);
 
-            if (ItemData.Populating)
+            if (ItemData.IsPopulating)
             {
                 this.FillNameFrameWith(this.ItemSettings.NameFrameRunningColor, alpha);
             }

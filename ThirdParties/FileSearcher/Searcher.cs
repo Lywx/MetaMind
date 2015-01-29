@@ -6,41 +6,42 @@
 
     public class Searcher
     {
-        // ----- Asynchronous Events -----
+        private Thread thread;
 
-        public delegate void FoundInfoEventHandler(FoundInfoEventArgs e);
-        public static event FoundInfoEventHandler FoundInfo;
+        private bool stopped;
+
+        private SearcherParams searchParams;
+
+        private byte[] containingBytes;
+
+        #region Asynchronous Events 
 
         public delegate void ThreadEndedEventHandler(ThreadEndedEventArgs e);
-        public static event ThreadEndedEventHandler ThreadEnded;
 
+        public delegate void FoundInfoEventHandler(FoundInfoEventArgs e);
 
-        // ----- Variables -----
+        public event FoundInfoEventHandler FoundInfo;
 
-        private static Thread m_thread = null;
-        private static Boolean m_stop = false;
-        private static SearcherParams m_pars = null;
-        private static Byte[] m_containingBytes = null;
+        public event ThreadEndedEventHandler ThreadEnded;
 
+        #endregion
 
-        // ----- Public Methods -----
-
-        public static Boolean Start(SearcherParams pars)
+        public bool Start(SearcherParams pars)
         {
-            Boolean success = false;
+            var success = false;
 
-            if (m_thread == null)
+            if (this.thread == null)
             {
                 // Perform a reset of all variables,
                 // to ensure that the state of the searcher is the same on every new start:
-                ResetVariables();
+                this.ResetVariables();
 
                 // Remember the parameters:
-                m_pars = pars;
+                this.searchParams = pars;
 
                 // Start searching for FileSystemInfos that match the parameters:
-                m_thread = new Thread(new ThreadStart(SearchThread));
-                m_thread.Start();
+                this.thread = new Thread(this.SearchThread);
+                this.thread.Start();
 
                 success = true;
             }
@@ -48,46 +49,44 @@
             return success;
         }
 
-        public static void Stop()
+        public void Stop()
         {
             // Stop the thread by setting a flag:
-            m_stop = true;
+            this.stopped = true;
         }
 
 
-        // ----- Private Methods -----
-
-        private static void ResetVariables()
+        private void ResetVariables()
         {
-            m_thread = null;
-            m_stop = false;
-            m_pars = null;
-            m_containingBytes = null;
+            this.thread          = null;
+            this.stopped         = false;
+            this.searchParams    = null;
+            this.containingBytes = null;
         }
 
-        private static void SearchThread()
+        private void SearchThread()
         {
-            Boolean success = true;
-            String errorMsg = "";
+            var success = true;
+            var errorMsg = "";
 
             // Search for FileSystemInfos that match the parameters:
-            if ((m_pars.SearchDir.Length >= 3) && (Directory.Exists(m_pars.SearchDir)))
+            if ((this.searchParams.SearchDir.Length >= 3) && Directory.Exists(this.searchParams.SearchDir))
             {
-                if (m_pars.FileNames.Count > 0)
+                if (this.searchParams.FileNames.Count > 0)
                 {
                     // Convert the string to search for into bytes if necessary:
-                    if (m_pars.ContainingChecked)
+                    if (this.searchParams.ContainingChecked)
                     {
-                        if (m_pars.ContainingText != "")
+                        if (this.searchParams.ContainingText != "")
                         {
                             try
                             {
-                                m_containingBytes = m_pars.Encoding.GetBytes(m_pars.ContainingText);
+                                containingBytes = this.searchParams.Encoding.GetBytes(this.searchParams.ContainingText);
                             }
                             catch (Exception)
                             {
                                 success = false;
-                                errorMsg = "The string\r\n" + m_pars.ContainingText + "\r\ncannot be converted into bytes.";
+                                errorMsg = "The string\r\n" + this.searchParams.ContainingText + "\r\ncannot be converted into bytes.";
                             }
                         }
                         else
@@ -103,7 +102,7 @@
                         DirectoryInfo dirInfo = null;
                         try
                         {
-                            dirInfo = new DirectoryInfo(m_pars.SearchDir);
+                            dirInfo = new DirectoryInfo(this.searchParams.SearchDir);
                         }
                         catch (Exception ex)
                         {
@@ -115,7 +114,7 @@
                         {
                             // Search the directory (maybe recursively),
                             // and raise events if something was found:
-                            SearchDirectory(dirInfo);
+                            this.SearchDirectory(dirInfo);
                         }
                     }
                 }
@@ -128,59 +127,59 @@
             else
             {
                 success = false;
-                errorMsg = "The directory\r\n" + m_pars.SearchDir + "\r\ndoes not exist.";
+                errorMsg = "The directory\r\n" + this.searchParams.SearchDir + "\r\ndoes not exist.";
             }
 
             // Remember the thread has ended:
-            m_thread = null;
+            this.thread = null;
 
             // Raise an event:
-            if (ThreadEnded != null)
+            if (this.ThreadEnded != null)
             {
-                ThreadEnded(new ThreadEndedEventArgs(success, errorMsg));
+                this.ThreadEnded(new ThreadEndedEventArgs(success, errorMsg));
             }
         }
 
-        private static void SearchDirectory(DirectoryInfo dirInfo)
+        private void SearchDirectory(DirectoryInfo dirInfo)
         {
-            if (!m_stop)
+            if (!this.stopped)
             {
                 try
                 {
-                    foreach (String fileName in m_pars.FileNames)
+                    foreach (var fileName in this.searchParams.FileNames)
                     {
-                        FileSystemInfo[] infos = dirInfo.GetFileSystemInfos(fileName);
+                        var infos = dirInfo.GetFileSystemInfos(fileName);
 
-                        foreach (FileSystemInfo info in infos)
+                        foreach (var info in infos)
                         {
-                            if (m_stop)
+                            if (this.stopped)
                             {
                                 break;
                             }
 
-                            if (MatchesRestrictions(info))
+                            if (this.MatchesRestrictions(info))
                             {
                                 // We have found a matching FileSystemInfo, so let's raise an event:
-                                if (FoundInfo != null)
+                                if (this.FoundInfo != null)
                                 {
-                                    FoundInfo(new FoundInfoEventArgs(info));
+                                    this.FoundInfo(new FoundInfoEventArgs(info));
                                 }
                             }
                         }
                     }
 
-                    if (m_pars.IncludeSubDirsChecked)
+                    if (this.searchParams.IncludeSubDirsChecked)
                     {
-                        DirectoryInfo[] subDirInfos = dirInfo.GetDirectories();
-                        foreach (DirectoryInfo subDirInfo in subDirInfos)
+                        var subDirInfos = dirInfo.GetDirectories();
+                        foreach (var subDirInfo in subDirInfos)
                         {
-                            if (m_stop)
+                            if (this.stopped)
                             {
                                 break;
                             }
 
                             // Recursion:
-                            SearchDirectory(subDirInfo);
+                            this.SearchDirectory(subDirInfo);
                         }
                     }
                 }
@@ -190,57 +189,57 @@
             }
         }
 
-        private static Boolean MatchesRestrictions(FileSystemInfo info)
+        private bool MatchesRestrictions(FileSystemInfo info)
         {
-            Boolean matches = true;
+            var matches = true;
 
-            if (matches && m_pars.NewerThanChecked)
+            if (matches && this.searchParams.NewerThanChecked)
             {
-                matches = (info.LastWriteTime >= m_pars.NewerThanDateTime);
+                matches = info.LastWriteTime >= this.searchParams.NewerThanDateTime;
             }
 
-            if (matches && m_pars.OlderThanChecked)
+            if (matches && this.searchParams.OlderThanChecked)
             {
-                matches = (info.LastWriteTime <= m_pars.OlderThanDateTime);
+                matches = info.LastWriteTime <= this.searchParams.OlderThanDateTime;
             }
 
-            if (matches && m_pars.ContainingChecked)
+            if (matches && this.searchParams.ContainingChecked)
             {
                 matches = false;
                 if (info is FileInfo)
                 {
-                    matches = FileContainsBytes(info.FullName, m_containingBytes);
+                    matches = this.FileContainsBytes(info.FullName, this.containingBytes);
                 }
             }
 
             return matches;
         }
 
-        private static Boolean FileContainsBytes(String path, Byte[] compare)
+        private bool FileContainsBytes(string path, byte[] compare)
         {
-            Boolean contains = false;
+            var contains = false;
 
-            Int32 blockSize = 4096;
+            var blockSize = 4096;
             if ((compare.Length >= 1) && (compare.Length <= blockSize))
             {
-                Byte[] block = new Byte[compare.Length - 1 + blockSize];
+                var block = new byte[compare.Length - 1 + blockSize];
 
                 try
                 {
-                    FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
+                    var fs = new FileStream(path, FileMode.Open, FileAccess.Read);
 
                     // Read the first bytes from the file into "block":
-                    Int32 bytesRead = fs.Read(block, 0, block.Length);
+                    var bytesRead = fs.Read(block, 0, block.Length);
 
                     do
                     {
                         // Search "block" for the sequence "compare":
-                        Int32 endPos = bytesRead - compare.Length + 1;
-                        for (Int32 i = 0; i < endPos; i++)
+                        var endPos = bytesRead - compare.Length + 1;
+                        for (var i = 0; i < endPos; i++)
                         {
                             // Read "compare.Length" bytes at position "i" from the buffer,
                             // and compare them with "compare":
-                            Int32 j;
+                            int j;
                             for (j = 0; j < compare.Length; j++)
                             {
                                 if (block[i + j] != compare[j])
@@ -265,7 +264,7 @@
                         else
                         {
                             // Copy the last "compare.Length - 1" bytes to the beginning of "block":
-                            for (Int32 i = 0; i < (compare.Length - 1); i++)
+                            for (int i = 0; i < (compare.Length - 1); i++)
                             {
                                 block[i] = block[blockSize + i];
                             }
@@ -274,7 +273,7 @@
                             bytesRead = compare.Length - 1 + fs.Read(block, compare.Length - 1, blockSize);
                         }
                     }
-                    while (!m_stop);
+                    while (!this.stopped);
 
                     fs.Close();
                 }

@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="KnowledgeGrammar.cs" company="UESTC">
-//   Copyright (c) 2014 Lin Wuxiang
+//   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -38,30 +38,48 @@ namespace MetaMind.Acutance.Parsers.Grammars
                 .Or(Parse.Regex(@"(\d+:\d+)",     "Minutes:Seconds")      .Return(TimeTagConciseParser));
 
         public static Parser<TitleLevel> TitleLevelParser =
-            Parse        .String("######").Return(TitleLevel.Six)
-                .Or(Parse.String("#####") .Return(TitleLevel.Five))
-                .Or(Parse.String("####")  .Return(TitleLevel.Four))
-                .Or(Parse.String("###")   .Return(TitleLevel.Three))
-                .Or(Parse.String("##")    .Return(TitleLevel.Two))
-                .Or(Parse.String("#")     .Return(TitleLevel.One));
+            Parse        .String("######").Return(TitleLevel.T6)
+                .Or(Parse.String("#####") .Return(TitleLevel.T5))
+                .Or(Parse.String("####")  .Return(TitleLevel.T4))
+                .Or(Parse.String("###")   .Return(TitleLevel.T3))
+                .Or(Parse.String("##")    .Return(TitleLevel.T2))
+                .Or(Parse.String("#")     .Return(TitleLevel.T1));
 
         public static Parser<IOption<char>> MomentParser = Parse.Char('!').Optional();
 
+        public static Parser<IOption<char>> LinkParser = Parse.Char('>').Optional();
+
         public static Parser<Title> TitleParser = from level    in TitleLevelParser
-                                                  from sentence in BasicGrammar.SentenceParser
+                                                  from link     in LinkParser
                                                   from moment   in MomentParser
-                                                  select new Title(level, moment.IsDefined ? RepeativityTag.EveryMoment : RepeativityTag.Unspecified, sentence);
+                                                  from sentence in BasicGrammar.SentenceParser
+                                                  select new Title(
+                                                      level,
+                                                      link.  IsDefined ? TitleType     .Link        : TitleType     .Normal,
+                                                      moment.IsDefined ? RepeativityTag.EveryMoment : RepeativityTag.Unspecified,
+                                                      sentence);
 
         public static Parser<Title> TitleWithBracketParser = from level    in TitleLevelParser
+                                                             from link     in LinkParser
                                                              from moment   in MomentParser
                                                              from sentence in BasicGrammar.SentenceParser
                                                              from text     in BasicGrammar.BracketedTextParser
-                                                             select new Title(level, moment.IsDefined ? RepeativityTag.EveryMoment : RepeativityTag.Unspecified, sentence);
+                                                             select new Title(
+                                                                 level,
+                                                                 link.  IsDefined ? TitleType     .Link        : TitleType     .Normal,
+                                                                 moment.IsDefined ? RepeativityTag.EveryMoment : RepeativityTag.Unspecified,
+                                                                 sentence);
 
         public static Parser<Title> TitleWithTimeTagParser = from level    in TitleLevelParser
+                                                             from link     in LinkParser
                                                              from moment   in MomentParser
                                                              from sentence in BasicGrammar.SentenceParser
                                                              from text     in BasicGrammar.BracketedTextParser
-                                                             select new Title(level, moment.IsDefined ? RepeativityTag.EveryMoment : RepeativityTag.Unspecified,sentence, TimeTagStrategyParser.Parse(text).Parse(text));
+                                                             select new Title(
+                                                                 level,
+                                                                 link.  IsDefined ? TitleType     .Link        : TitleType     .Normal,
+                                                                 moment.IsDefined ? RepeativityTag.EveryMoment : RepeativityTag.Unspecified,
+                                                                 sentence,
+                                                                 TimeTagStrategyParser.Parse(text).Parse(text));
     }
 }

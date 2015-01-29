@@ -1,14 +1,13 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
     using System;
-    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Text;
 
     using FileSearcher;
 
     using MetaMind.Acutance.Concepts;
+    using MetaMind.Acutance.Settings;
     using MetaMind.Engine.Components;
     using MetaMind.Engine.Guis.Widgets.Views;
 
@@ -21,8 +20,11 @@ namespace MetaMind.Acutance.Guis.Widgets
         public KnowledgeViewSearchControl(IView view, ICloneable viewSettings, ICloneable itemSettings)
             : base(view, viewSettings, itemSettings)
         {
-            Searcher.FoundInfo += this.RefreshSearchResult;
+            this.Searcher = new Searcher();
+            this.Searcher.FoundInfo += this.RefreshSearchResult;
         }
+
+        public Searcher Searcher { get; set; }
 
         /// <summary>
         /// Load knowledge or schedule from file, occasionally from path.
@@ -74,7 +76,9 @@ namespace MetaMind.Acutance.Guis.Widgets
             ViewControl.ClearNonControlItems();
             ViewControl.ClearResultItems();
 
-            Searcher.Start(SearchParams(SearchName(fileName)));
+            var searchName     = SearchSettings.SearchName(fileName, true);
+            var searcherParams = SearchSettings.SearchParams(searchName);
+            Searcher.Start(searcherParams);
         }
 
         public void SearchStop()
@@ -82,27 +86,6 @@ namespace MetaMind.Acutance.Guis.Widgets
             ViewControl.FileItem.ItemControl.EditCancel();
 
             Searcher.Stop();
-        }
-
-        private static SearcherParams SearchParams(List<string> fileNames)
-        {
-            return new SearcherParams(
-                searchDir:             FolderManager.DataFolderPath,
-                includeSubDirsChecked: true,
-                fileNames:             fileNames,
-                newerThanChecked:      false,
-                newerThanDateTime:     DateTime.MinValue,
-                olderThanChecked:      false,
-                olderThanDateTime:     DateTime.MinValue,
-                containingChecked:     false,
-                containingText:        string.Empty,
-                encoding:              Encoding.Unicode);
-        }
-
-        private static List<string> SearchName(string fileName)
-        {
-            // won't be able to search directories now with .md subfix
-            return new List<string>(1) { "*" + fileName + "*" + ".md" };
         }
 
         private void LoadResultFromDirectory(string path)
@@ -126,7 +109,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                 return;
             }
 
-            ViewControl.FileBuffer = query;
+            ViewControl.FileBuffer = query.Buffer;
 
             foreach (var entry in query.Entries)
             {
@@ -148,7 +131,6 @@ namespace MetaMind.Acutance.Guis.Widgets
             {
                 return;
             }
-
 
             ViewControl.RemoveBlankItem();
             ViewControl.AddResultItem(relativePath);

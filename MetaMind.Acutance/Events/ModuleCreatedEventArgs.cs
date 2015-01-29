@@ -6,11 +6,11 @@
 
     public class ModuleCreatedEventArgs : EventArgs
     {
-        public readonly KnowledgeFile File;
+        public readonly KnowledgeFileBuffer Buffer;
 
-        public ModuleCreatedEventArgs(KnowledgeFile file)
+        public ModuleCreatedEventArgs(KnowledgeFileBuffer buffer)
         {
-            this.File = file;
+            this.Buffer = buffer;
         }
     }
 }

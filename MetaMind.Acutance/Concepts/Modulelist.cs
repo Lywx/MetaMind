@@ -4,7 +4,10 @@ namespace MetaMind.Acutance.Concepts
     using System.Linq;
     using System.Runtime.Serialization;
 
+    using FileSearcher;
+
     using MetaMind.Acutance.Parsers.Elements;
+    using MetaMind.Acutance.Settings;
 
     public enum ModuleSortMode
     {
@@ -33,7 +36,7 @@ namespace MetaMind.Acutance.Concepts
         {
             this.Commandlist = commandlist;
 
-            this.Modules = new List<ModuleEntry>();
+            this.Modules     = new List<ModuleEntry>();
         }
 
         [DataMember]

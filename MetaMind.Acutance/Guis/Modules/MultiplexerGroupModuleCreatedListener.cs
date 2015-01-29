@@ -22,7 +22,8 @@ namespace MetaMind.Acutance.Guis.Modules
 
             if (eventArgs != null)
             {
-                var moduleEntry = moduleView.Control.ItemFactory.CreateData(eventArgs.File);
+                var moduleEntry = moduleView.Control.ItemFactory.CreateData(eventArgs.Buffer);
+
                 this.moduleView.Control.AddItem(moduleEntry);
                 this.moduleView.Control.SortItems(ViewSortMode.Name);
             }

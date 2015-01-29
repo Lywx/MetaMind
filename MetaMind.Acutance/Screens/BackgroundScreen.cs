@@ -1,13 +1,16 @@
 ﻿namespace MetaMind.Acutance.Screens
 {
     using System;
+    using System.Diagnostics;
 
     using MetaMind.Acutance.Guis.Modules;
+    using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Particles;
     using MetaMind.Engine.Screens;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using Microsoft.Xna.Framework.Input;
 
     public class BackgroundScreen : GameScreen
     {
@@ -19,7 +22,7 @@
 
         public BackgroundScreen()
         {
-            this.TransitionOnTime = TimeSpan.FromSeconds(0.5);
+            this.TransitionOnTime  = TimeSpan.FromSeconds(0.5);
             this.TransitionOffTime = TimeSpan.FromSeconds(0.5);
         }
 
@@ -49,7 +52,8 @@
 
             spriteBatch.Begin();
 
-            spriteBatch   .Draw(this.backgroundTexture, fullscreen, new Color(this.TransitionAlpha, 0, 0));
+            spriteBatch.Draw(this.backgroundTexture, fullscreen, new Color(210, 100, 95).MakeTransparent(TransitionAlpha));
+
             this.particles.Draw(gameTime);
 
             spriteBatch.End();

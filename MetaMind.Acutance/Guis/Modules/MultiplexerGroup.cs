@@ -1,7 +1,5 @@
 namespace MetaMind.Acutance.Guis.Modules
 {
-    using System.Linq;
-
     using MetaMind.Acutance.Concepts;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Widgets.Views;
@@ -11,13 +9,13 @@ namespace MetaMind.Acutance.Guis.Modules
 
     public class MultiplexerGroup : Group<MultiplexerGroupSettings>, IConfigurationLoader
     {
-        private MultiplexerGroupCommandNotifiedListener        commandNotifiedListener;
+        private MultiplexerGroupCommandNotifiedListener    commandNotifiedListener;
 
-        private MultiplexerGroupKnowledgeRetrievedListener     knowledgeRetrievedListener;
+        private MultiplexerGroupKnowledgeRetrievedListener knowledgeRetrievedListener;
 
-        private MultiplexerGroupModuleCreatedListener          moduleCreatedListener;
+        private MultiplexerGroupModuleCreatedListener      moduleCreatedListener;
 
-        private MultiplexerGroupSessionSavedListener           sessionSavedListener;
+        private MultiplexerGroupSessionSavedListener       sessionSavedListener;
 
         public MultiplexerGroup(MultiplexerGroupSettings settings)
             : base(settings)
@@ -158,7 +156,10 @@ namespace MetaMind.Acutance.Guis.Modules
         {
             foreach (var module in this.Settings.Modules.ToArray())
             {
-                this.ModuleView.Control.AddItem(module);
+                if (module.ParentModuleEntry == null)
+                {
+                    this.ModuleView.Control.AddItem(module);
+                }
             }
         }
 

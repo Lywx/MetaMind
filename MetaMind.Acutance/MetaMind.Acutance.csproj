@@ -65,7 +65,9 @@
     <Compile Include="Concepts\CommandEntry.cs" />
     <Compile Include="Concepts\CommandEntryFileter.cs" />
     <Compile Include="Concepts\Commandlist.cs" />
+    <Compile Include="Concepts\ModuleLinker.cs" />
     <Compile Include="Concepts\KnowledgeLoader.cs" />
+    <Compile Include="Concepts\KnowledgeQuery.cs" />
     <Compile Include="Concepts\ModuleEntry.cs" />
     <Compile Include="Concepts\Modulelist.cs" />
     <Compile Include="Concepts\ScheduleLoader.cs" />
@@ -87,7 +89,7 @@
     <Compile Include="Guis\Widgets\ModuleViewSettings.cs" />
     <Compile Include="Parsers\Elements\Knowledge.cs" />
     <Compile Include="Concepts\KnowledgeEntry.cs" />
-    <Compile Include="Parsers\Elements\KnowledgeFileQuery.cs" />
+    <Compile Include="Parsers\Elements\KnowledgeFileBuffer.cs" />
     <Compile Include="Parsers\Elements\KnowledgeFile.cs" />
     <Compile Include="Concepts\ScheduleEntry.cs" />
     <Compile Include="Concepts\TraceEntry.cs" />
@@ -129,10 +131,12 @@
     <Compile Include="Guis\Widgets\TraceViewFactory.cs" />
     <Compile Include="Guis\Widgets\TraceViewGraphics.cs" />
     <Compile Include="Guis\Widgets\TraceViewSettings.cs" />
+    <Compile Include="Parsers\Elements\KnowledgeLink.cs" />
     <Compile Include="Parsers\Elements\TimeTag.cs" />
     <Compile Include="Parsers\Elements\DateTag.cs" />
     <Compile Include="Parsers\Elements\Schedule.cs" />
     <Compile Include="Parsers\Elements\ScheduleFile.cs" />
+    <Compile Include="Parsers\Elements\TitleType.cs" />
     <Compile Include="Parsers\Grammars\ScheduleGrammar.cs" />
     <Compile Include="Parsers\Elements\TitleLevel.cs" />
     <Compile Include="Parsers\Grammars\KnowledgeGrammar.cs" />
@@ -149,6 +153,7 @@
     <Compile Include="Sessions\Session.cs" />
     <Compile Include="Screens\MultiplexerScreen.cs" />
     <Compile Include="Sessions\SessionEventType.cs" />
+    <Compile Include="Settings\SearchSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FastMember, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">

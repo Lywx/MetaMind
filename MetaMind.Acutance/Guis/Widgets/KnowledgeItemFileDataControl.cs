@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="KnowledgeItemFileDataControl.cs" company="UESTC">
-//   Copyright (c) 2014 Lin Wuxiang
+//   Copyright (c) 2014 Wuxiang Lin  
 //   All Rights Reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -21,10 +21,11 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         private bool searchEnded = true;
 
+        private bool searcherHandlerAdded;
+
         public KnowledgeItemFileDataControl(IViewItem item)
             : base(item)
         {
-            Searcher.ThreadEnded += this.SearchEnded;
         }
 
         public void TrimPrompt()
@@ -52,6 +53,14 @@ namespace MetaMind.Acutance.Guis.Widgets
             {
                 CharModifier.ValueModified     += this.StartSearch;
                 CharModifier.ModificationEnded += this.StartSearch;
+            }
+
+            if (!searcherHandlerAdded)
+            {
+                Searcher searcher = ViewControl.Searcher;
+                searcher.ThreadEnded += this.SearchEnded;
+
+                this.searcherHandlerAdded = true;
             }
         }
 

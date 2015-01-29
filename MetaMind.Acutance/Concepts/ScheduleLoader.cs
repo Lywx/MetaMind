@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MetaMind.Acutance.Concepts
+﻿namespace MetaMind.Acutance.Concepts
 {
+    using System;
+    using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
 
     using MetaMind.Acutance.Parsers.Elements;
     using MetaMind.Acutance.Parsers.Grammars;

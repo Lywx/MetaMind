@@ -12,7 +12,7 @@ namespace MetaMind.Acutance.Screens
 
         public MultiplexerScreen()
         {
-            this.TransitionOnTime = TimeSpan.FromSeconds(0.5);
+            this.TransitionOnTime  = TimeSpan.FromSeconds(2.5);
             this.TransitionOffTime = TimeSpan.FromSeconds(0.5);
 
             this.Exiting += this.MultiplexerScreenExiting;

@@ -10,7 +10,6 @@
     [TestClass]
     public class KnowledgeParserTest
     {
-
         [TestMethod]
         public void KnowledgeATimeTagConciseFormat()
         {
@@ -44,7 +43,7 @@
 
             var parsed = KnowledgeGrammar.TitleParser.Parse(input);
 
-            Assert.AreEqual(TitleLevel.Two, parsed.Level);
+            Assert.AreEqual(TitleLevel.T2, parsed.Level);
             Assert.AreEqual("A Title", parsed.Name);
         }
 
@@ -55,7 +54,7 @@
 
             var parsed = KnowledgeGrammar.TitleWithTimeTagParser.Parse(input);
 
-            Assert.AreEqual(TitleLevel.Two, parsed.Level);
+            Assert.AreEqual(TitleLevel.T2, parsed.Level);
             Assert.AreEqual("A Title", parsed.Name);
             Assert.AreEqual(1, parsed.Time.Hours);
             Assert.AreEqual(2, parsed.Time.Minutes);
@@ -69,7 +68,7 @@
 
             var parsed = KnowledgeGrammar.TitleWithTimeTagParser.Parse(input);
 
-            Assert.AreEqual(TitleLevel.Two, parsed.Level);
+            Assert.AreEqual(TitleLevel.T2, parsed.Level);
             Assert.AreEqual("A Title That May Contains \",\" \".\" And Anythings.", parsed.Name);
             Assert.AreEqual(1, parsed.Time.Hours);
             Assert.AreEqual(2, parsed.Time.Minutes);
@@ -80,51 +79,54 @@
         public void KnowledgeATitleWithBracket()
         {
             var input = "###### A Title []";
-
+            
             var parsed = KnowledgeGrammar.TitleWithBracketParser.Parse(input);
 
-            Assert.AreEqual(TitleLevel.Six, parsed.Level);
+            Assert.AreEqual(TitleLevel.T6, parsed.Level);
             Assert.AreEqual("A Title", parsed.Name);
         }
 
         [TestMethod]
-        public void KnowledgeATitleWithoutTimeTag()
+        public void KnowledgeANormalTitleWithoutTimeTag()
         {
-            Title parsed;
-
             var input = "###### A Title";
 
-            try
-            {
-                parsed = KnowledgeGrammar.TitleWithBracketParser.Parse(input);
-            }
-            catch (ParseException)
-            {
-                parsed = KnowledgeGrammar.TitleParser.Parse(input);
-            }
+            var parsed = KnowledgeGrammar.TitleParser.Parse(input);
 
-            Assert.AreEqual(TitleLevel.Six, parsed.Level);
-            Assert.AreEqual("A Title", parsed.Name);
-            Assert.AreEqual(0, parsed.Time.Hours);
-            Assert.AreEqual(0, parsed.Time.Minutes);
-            Assert.AreEqual(0, parsed.Time.Seconds);
+            Assert.AreEqual(TitleLevel.T6   , parsed.Level);
+            Assert.AreEqual(TitleType.Normal, parsed.Type);
+            Assert.AreEqual("A Title"       , parsed.Name);
+            Assert.AreEqual(0               , parsed.Time.Hours);
+            Assert.AreEqual(0               , parsed.Time.Minutes);
+            Assert.AreEqual(0               , parsed.Time.Seconds);
+        }
 
-            input = "######! A Title";
+        [TestMethod] public void KnowledgeAMomentTitleWithoutTimeTag()
+        {
+            var input  = "######! A Title";
+            
+            var parsed = KnowledgeGrammar.TitleParser.Parse(input); 
 
-            try
-            {
-                parsed = KnowledgeGrammar.TitleWithBracketParser.Parse(input);
-            }
-            catch (ParseException)
-            {
-                parsed = KnowledgeGrammar.TitleParser.Parse(input);
-            }
+            Assert.AreEqual(TitleLevel.T6   , parsed.Level);
+            Assert.AreEqual(TitleType.Normal, parsed.Type);
+            Assert.AreEqual("A Title"       , parsed.Name);
+            Assert.AreEqual(0               , parsed.Time.Hours);
+            Assert.AreEqual(0               , parsed.Time.Minutes);
+            Assert.AreEqual(0               , parsed.Time.Seconds);
+        }
 
-            Assert.AreEqual(TitleLevel.Six, parsed.Level);
-            Assert.AreEqual("! A Title", parsed.Name);
-            Assert.AreEqual(0, parsed.Time.Hours);
-            Assert.AreEqual(0, parsed.Time.Minutes);
-            Assert.AreEqual(0, parsed.Time.Seconds);
+        [TestMethod] public void KnowledgeALinkTitleWithoutTimeTag()
+        {
+            var input  = "##> A Title";
+
+            var parsed = KnowledgeGrammar.TitleParser.Parse(input); 
+
+            Assert.AreEqual(TitleLevel.T2 , parsed.Level);
+            Assert.AreEqual(TitleType.Link, parsed.Type);
+            Assert.AreEqual("A Title"     , parsed.Name);
+            Assert.AreEqual(0             , parsed.Time.Hours);
+            Assert.AreEqual(0             , parsed.Time.Minutes);
+            Assert.AreEqual(0             , parsed.Time.Seconds);
         }
     }
 }

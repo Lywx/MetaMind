@@ -2,6 +2,8 @@ namespace MetaMind.Acutance.Guis.Widgets
 {
     using System.Linq;
 
+    using FileSearcher;
+
     using MetaMind.Acutance.Concepts;
     using MetaMind.Acutance.Events;
     using MetaMind.Acutance.Parsers.Elements;
@@ -43,11 +45,16 @@ namespace MetaMind.Acutance.Guis.Widgets
             get { return View.Items.Count > 0 ? View.Items.Where(item => item.ItemData.IsBlank).First() : null; }
         }
 
-        public KnowledgeFileQuery FileBuffer { get; set; }
+        public KnowledgeFileBuffer FileBuffer { get; set; }
         
         public IViewItem FileItem
         {
             get { return View.Items.Count > 0 ? View.Items.Where(item => item.ItemData.IsFile).First() : null; }
+        }
+
+        public Searcher Searcher
+        {
+            get { return this.SearchControl.Searcher; }
         }
 
         #endregion
@@ -126,7 +133,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             {
                 var moduleCreatedEvent = new EventBase(
                     (int)SessionEventType.ModuleCreated,
-                    new ModuleCreatedEventArgs(FileBuffer.File));
+                    new ModuleCreatedEventArgs(FileBuffer));
 
                 EventManager.QueueEvent(moduleCreatedEvent);
             }

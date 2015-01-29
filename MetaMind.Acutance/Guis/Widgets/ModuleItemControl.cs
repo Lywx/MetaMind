@@ -75,7 +75,7 @@ namespace MetaMind.Acutance.Guis.Widgets
         private void DeleteIt()
         {
             this.View.Items.Remove(this.Item);
-
+            
             this.View.Control.ItemFactory.RemoveData(this.Item);
         }
 

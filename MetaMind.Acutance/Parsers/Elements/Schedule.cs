@@ -9,7 +9,7 @@ namespace MetaMind.Acutance.Parsers.Elements
 
     public class Schedule
     {
-        public readonly string Content;
+        public readonly string  Content;
         public readonly DateTag Date;
 
         public Schedule(DateTag date, string content)
