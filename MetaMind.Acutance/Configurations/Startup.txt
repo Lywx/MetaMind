@@ -1,2 +1,2 @@
 ﻿" Schedule File Container
-ScheduleFolder = Schedule Tools
+ScheduleFolder = Schedules

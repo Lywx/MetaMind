@@ -49,6 +49,7 @@ ModuleSortItem   = S with LeftControl
 
 CommandClearItem  = C with LeftControl
 CommandDeleteItem = D with LeftControl
+CommandOpenItem   = O with LeftControl 
 CommandSortItem   = S with LeftControl
 
 " Synchronization Control

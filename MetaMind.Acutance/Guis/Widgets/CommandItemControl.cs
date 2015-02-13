@@ -28,7 +28,7 @@ namespace MetaMind.Acutance.Guis.Widgets
         }
 
         /// <remarks>
-        /// Don't need to remove delegate RetrieveKnowledge, for NameFrame may be diposed by
+        /// Don't need to remove delegate RetrieveIt, for NameFrame may be disposed by
         /// ItemFrameControl.
         /// </remarks>>
         ~CommandItemControl()
@@ -49,15 +49,10 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         private void RetrieveKnowledge(object sender, FrameEventArgs e)
         {
-            var knowledgeRetrievedEvent = new EventBase(
-                (int)SessionEventType.KnowledgeRetrieved,
-                new KnowledgeRetrievedEventArgs(ItemData.Path, ItemData.Offset));
-
-            GameEngine.EventManager.QueueEvent(knowledgeRetrievedEvent);
+            this.RetrieveIt();
         }
 
         #endregion
-
 
         #region Operations
 
@@ -76,6 +71,15 @@ namespace MetaMind.Acutance.Guis.Widgets
             ItemData.Reset();
 
             this.Dispose();
+        }
+
+        private void RetrieveIt()
+        {
+            var knowledgeRetrievedEvent = new EventBase(
+                (int)SessionEventType.KnowledgeRetrieved,
+                new KnowledgeRetrievedEventArgs(this.ItemData.Path, this.ItemData.Offset));
+
+            GameEngine.EventManager.QueueEvent(knowledgeRetrievedEvent);
         }
 
         #endregion Operations
@@ -108,6 +112,11 @@ namespace MetaMind.Acutance.Guis.Widgets
                         if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CommandDeleteItem))
                         {
                             this.DenotifyIt();
+                        }
+
+                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CommandOpenItem))
+                        {
+                            this.RetrieveIt();
                         }
                     }
                 }

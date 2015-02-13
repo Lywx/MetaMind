@@ -65,6 +65,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         CommandClearItem,
         CommandDeleteItem,
+        CommandOpenItem,
         CommandSortItem,
 
         // synchronization
