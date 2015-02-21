@@ -37,7 +37,9 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
         void TryAbort();
 
-        void ResetForTomorrow();
+        void ResetTomorrow();
+
+        void ResetToday();
 
         void Stop();
 
@@ -177,9 +179,14 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
         #region Operations
 
-        public void ResetForTomorrow()
+        public void ResetTomorrow()
         {
-            this.statistics.Reset();
+            this.statistics.ResetDaily();
+        }
+
+        public void ResetToday()
+        {
+            this.statistics.ResetToday();
         }
 
         public void Start(TaskEntry target)

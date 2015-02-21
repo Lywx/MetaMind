@@ -251,19 +251,30 @@
 
         public override void UpdateInput(GameTime gameTime)
         {
-            if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.ForceReset))
+            if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.ForceAwake))
             {
-                this.synchronization.ResetForTomorrow();
-            }
+                var awake = this.cognition.Consciousness as ConsciousnessAwake;
+                if (awake != null)
+                {
+                    awake.AwakeNow();
+                }
 
-            if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.ForceReverse))
-            {
-                this.synchronization.TryAbort();
+                this.synchronization.ResetToday();
             }
 
             if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.ForceFlip))
             {
                 this.valve.Flip();
+            }
+
+            if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.ForceReset))
+            {
+                this.synchronization.ResetTomorrow();
+            }
+
+            if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.ForceReverse))
+            {
+                this.synchronization.TryAbort();
             }
         }
 

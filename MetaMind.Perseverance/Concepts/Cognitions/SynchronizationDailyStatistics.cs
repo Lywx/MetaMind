@@ -7,10 +7,10 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
     public class SynchronizationDailyStatistics
     {
         [DataMember]
-        public readonly int HourMax = 16;
+        public readonly int DayMax = 7;
 
         [DataMember]
-        public readonly int DayMax = 7;
+        public readonly int HourMax = 16;
 
         public SynchronizationDailyStatistics()
         {
@@ -24,11 +24,10 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
         public int AccumulatedHourYesterday { get; set; }
 
         [DataMember]
-        public TimeSpan[] AccumulatedTimeWeekday { get; private set; } 
-        
-        [DataMember]
         public TimeSpan AccumulatedTimeToday { get; private set; }
 
+        [DataMember]
+        public TimeSpan[] AccumulatedTimeWeekday { get; private set; } 
         [DataMember]
         public TimeSpan AccumulatedTimeYesterday { get; private set; }
 
@@ -37,7 +36,7 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
             this.AccumulatedTimeToday = this.AccumulatedTimeToday + accumulatedTime;
         }
 
-        public void Reset()
+        public void ResetDaily()
         {
             // save today to yesterday
             this.AccumulatedHourYesterday = this.AccumulatedHourToday;
@@ -48,7 +47,14 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
             Array.Copy(this.AccumulatedTimeWeekday, 0, this.AccumulatedTimeWeekday, 1, this.DayMax - 1);
             this.AccumulatedTimeWeekday[0] = this.AccumulatedTimeYesterday;
             
-            // reset today
+            this.ResetToday();
+        }
+
+        /// <summary>
+        /// Clear today's record.
+        /// </summary>
+        public void ResetToday()
+        {
             this.AccumulatedTimeToday = TimeSpan.Zero;
         }
     }

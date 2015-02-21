@@ -64,7 +64,7 @@ namespace MetaMind.Perseverance.Guis.Modules
         {
             if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.ForceReset))
             {
-                this.synchronization.ResetForTomorrow();
+                this.synchronization.ResetTomorrow();
             }
         }
 

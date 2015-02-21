@@ -1,10 +1,18 @@
-﻿using MetaMind.Engine.Components.Events;
-using MetaMind.Perseverance.Sessions;
-using System;
-using System.Runtime.Serialization;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ConsciousnessAwake.cs" company="UESTC">
+//   Copyright (c) 2014 Wuxiang Lin
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace MetaMind.Perseverance.Concepts.Cognitions
 {
+    using System;
+    using System.Runtime.Serialization;
+
+    using MetaMind.Engine.Components.Events;
+    using MetaMind.Perseverance.Sessions;
+
     [DataContract]
     public class ConsciousnessAwake : Consciousness
     {
@@ -22,14 +30,22 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
         public TimeSpan AwakeSpan
         {
-            get { return DateTime.Now - this.SleepEndTime; }
+            get
+            {
+                return DateTime.Now - this.SleepEndTime;
+            }
+        }
+
+        public void AwakeNow()
+        {
+            this.SleepEndTime = DateTime.Now;
         }
 
         public ConsciousnessSleepy StartSleeping()
         {
-            SleepStartTime = DateTime.Now;
+            this.AwakeNow();
 
-            if (HasEverSlept)
+            if (this.HasEverSlept)
             {
                 var totalAwakeSpan = this.SleepStartTime - this.SleepEndTime;
                 this.HistoricalAwakeSpan += totalAwakeSpan;
@@ -39,7 +55,7 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
             // add to event queue
             var sleepStartedEvent = new EventBase(
-                (int)SessionEventType.SleepStarted,
+                (int)SessionEventType.SleepStarted, 
                 new ConsciousnessSleepStartedEventArgs(this));
             EventManager.TriggerEvent(sleepStartedEvent);
 

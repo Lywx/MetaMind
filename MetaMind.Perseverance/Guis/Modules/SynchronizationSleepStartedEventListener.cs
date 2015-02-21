@@ -28,7 +28,7 @@
                 this.synchronizationModule.StopSynchronizing();
             }
 
-            this.synchronization.ResetForTomorrow();
+            this.synchronization.ResetTomorrow();
 
             var screenManager = GameEngine.ScreenManager;
 

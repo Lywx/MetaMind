@@ -5,8 +5,6 @@
 
     using MetaMind.Engine;
 
-    using Microsoft.Xna.Framework;
-
     public interface IConsciousness
     {
         bool AwakeCondition { get; }
