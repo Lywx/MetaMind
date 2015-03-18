@@ -57,17 +57,21 @@
         {
             var name = Path.GetFileNameWithoutExtension(e.Info.FullName);
 
-            // only allow one sub-module even if they share a same name
-            if (!this.CompletionTable[name])
+            // HACK: I'm not sure about this
+            lock (this.CompletionTable)
             {
-                var query = KnowledgeLoader.LoadFile(e.Info.FullName, 0);
+                // only allow one sub-module even if they share a same name
+                if (!this.CompletionTable[name])
+                {
+                    var query = KnowledgeLoader.LoadFile(e.Info.FullName, 0);
 
-                // recursive calling to create sub-module
-                var module = this.ModuleItemFactory.CreateData(query.Buffer);
-                this.Target.AddSubModule(module);
+                    // recursive calling to create sub-module
+                    var module = this.ModuleItemFactory.CreateData(query.Buffer);
+                    this.Target.AddSubModule(module);
+                }
+
+                this.CompletionTable[name] = true;
             }
-
-            this.CompletionTable[name] = true;
         }
     }
 }
