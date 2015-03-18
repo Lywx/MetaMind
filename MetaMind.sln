@@ -672,6 +672,7 @@ Global
 		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Android|Mixed Platforms.Build.0 = Release|Any CPU
 		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Android|x86.ActiveCfg = Release|Any CPU
 		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}.Debug|x86.ActiveCfg = Debug|Any CPU

@@ -158,7 +158,8 @@
         {
             this.EndTime = DateTime.Now;
 
-            var recentDuration = TimeSpan.FromSeconds((long)((this.EndTime - this.RecentStartTime).TotalSeconds * this.Accelaration));
+            // TODO: Possible integer type overflow because of zero recent start time
+            var recentDuration = TimeSpan.FromMinutes((this.EndTime - this.RecentStartTime).TotalMinutes * this.Accelaration);
             this.CertainDuration = this.CertainDuration + recentDuration;
 
             this.HasEnded = true;

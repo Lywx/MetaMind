@@ -144,12 +144,12 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
         public int SynchronizedHourToday
         {
-            get { return statistics.AccumulatedHourToday; }
+            get { return statistics.AccumulatedHourToday < this.SynchronizedHourMax ? statistics.AccumulatedHourToday : this.SynchronizedHourMax; }
         }
 
         public int SynchronizedHourYesterday
         {
-            get { return statistics.AccumulatedHourYesterday; }
+            get { return statistics.AccumulatedHourYesterday < this.SynchronizedHourMax ? statistics.AccumulatedHourYesterday : this.SynchronizedHourMax; }
         }
 
         public TaskEntry SynchronizedTask
@@ -211,11 +211,22 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
         public void Stop()
         {
+            TimeSpan validPassed = TimeSpan.FromHours(16);
             TimeSpan timePassed;
 
-            this.data      .Release(out timePassed);
-            this.statistics.Add(timePassed);
-            this.timer     .Stop();
+            this.data.Release(out timePassed);
+
+            if (timePassed < validPassed)
+            {
+                this.statistics.Add(timePassed);
+            }
+            else
+            {
+                // to avoid possible invalid time passed.
+                this.statistics.Add(this.timer.ElapsedTimeSinceTransition);
+            }
+
+            this.timer.Stop();
         }
 
         public void TryStart(TaskEntry target)
