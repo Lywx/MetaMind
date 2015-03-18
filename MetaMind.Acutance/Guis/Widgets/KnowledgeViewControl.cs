@@ -176,7 +176,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
             if (View.Items.Count > 0)
             {
-                foreach (var item in View.Items.FindAll(item => item.ItemData.IsControl).ToArray())
+                foreach (var item in View.Items.FindAll(item => item.ItemData.IsControl && !item.ItemData.IsBlank).ToArray())
                 {
                     item.UpdateInput(gameTime);
                 }

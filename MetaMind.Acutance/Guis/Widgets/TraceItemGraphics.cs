@@ -10,8 +10,6 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     public class TraceItemGraphics : ViewItemBasicGraphics
     {
-        private const string HelpInformation = "N:ame";
-
         #region Constructors
 
         public TraceItemGraphics(IViewItem item)
@@ -23,9 +21,14 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Structure Position
 
-        protected Vector2 ExperienceLocation
+        protected virtual Vector2 ExperienceLocation
         {
             get { return PointExt.ToVector2(ItemControl.ExperienceFrame.Center); }
+        }
+
+        protected virtual Vector2 HelpLocation
+        {
+            get { return this.NameLocation; }
         }
 
         protected override Vector2 IdCenter
@@ -33,12 +36,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             get { return PointExt.ToVector2(ItemControl.IdFrame.Center); }
         }
 
-        private Vector2 HelpLocation
-        {
-            get { return this.NameLocation; }
-        }
-
-        private Vector2 NameLocation
+        protected virtual Vector2 NameLocation
         {
             get
             {
@@ -48,8 +46,19 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
         }
 
-
         #endregion Structure Position
+
+        #region Extras
+
+        protected virtual string HelpInformation
+        {
+            get
+            {
+                return "N:ame";
+            }
+        }
+
+        #endregion
 
         #region Update and Draw
 
