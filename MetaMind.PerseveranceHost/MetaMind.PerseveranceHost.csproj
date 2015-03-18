@@ -84,6 +84,10 @@
       <Project>{8944c3ab-1865-49cf-9e84-1ecc42ad2c3e}</Project>
       <Name>MetaMind.Engine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MetaMind.PerseveranceBuilder\MetaMind.PerseveranceBuilder\MetaMind.PerseveranceBuilder.csproj">
+      <Project>{5718d82f-2ac8-42bb-a7f0-5309bed3d883}</Project>
+      <Name>MetaMind.PerseveranceBuilder</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MetaMind.PerseveranceService\MetaMind.PerseveranceService.csproj">
       <Project>{61829f1d-d89d-4b13-bb47-4b13daffb205}</Project>
       <Name>MetaMind.PerseveranceService</Name>

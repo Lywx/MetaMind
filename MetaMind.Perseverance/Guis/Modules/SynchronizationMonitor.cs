@@ -25,7 +25,6 @@
 
         public string NotSynchronizingCue = "Windows Proximity Connection";
         public string SynchronizingCue    = "Windows Proximity Notification";
-        private readonly bool listening;
 
         private bool     actived;
         private DateTime alertMoment = DateTime.Now;

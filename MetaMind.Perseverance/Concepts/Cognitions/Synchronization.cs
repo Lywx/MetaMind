@@ -191,13 +191,13 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
         public void Start(TaskEntry target)
         {
-            this.data .Accept(target);
+            this.data.Accept(target);
             this.timer.Start();
         }
 
         public void Abort()
         {
-            this.data .Abort();
+            this.data.Abort();
             this.timer.Stop();
         }
 

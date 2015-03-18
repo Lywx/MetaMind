@@ -43,7 +43,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public Color TaskColor = Color.White;
 
-        public Font  TaskFont = Font.InfoSimSunFont;
+        public Font  TaskFont = Font.UiContentFont;
 
         public Point TaskMargin = new Point(0, 34);
 

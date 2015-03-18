@@ -147,7 +147,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             if (this.Item.IsEnabled(ItemState.Item_Pending))
             {
                 FontManager.DrawText(
-                    this.ItemSettings.HelpFont,
+                    ItemSettings.HelpFont,
                     HelpInformation,
                     this.HelpLocation,
                     ColorExt.MakeTransparent(this.ItemSettings.HelpColor, alpha),
@@ -161,7 +161,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
                     ItemSettings.NameSize,
                     ItemSettings.NameFrameSize.X - ItemSettings.NameXLMargin * 2);
 
-                FontManager.DrawText(
+                FontManager.DrawMonoSpacedText(
                     this.ItemSettings.NameFont,
                     text,
                     this.NameLocation,

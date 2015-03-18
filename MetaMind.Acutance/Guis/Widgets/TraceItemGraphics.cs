@@ -131,7 +131,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                     ItemSettings.NameSize,
                     ItemSettings.NameFrameSize.X - ItemSettings.NameXLMargin * 2);
                 
-                FontManager.DrawText(
+                FontManager.DrawMonoSpacedText(
                     ItemSettings.NameFont,
                     text,
                     this.NameLocation,

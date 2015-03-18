@@ -8,7 +8,7 @@ namespace MetaMind.Engine.Components.Fonts
 
         UiStatisticsFont,
 
-        InfoSimSunFont,
+        UiContentFont,
 
         // ---------------------------------------------------------------------
         FontNum,

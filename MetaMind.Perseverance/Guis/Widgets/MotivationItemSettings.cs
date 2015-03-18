@@ -16,7 +16,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
     {
         public Color NameColor                  = Color.White;
 
-        public Font  NameFont                   = Font.InfoSimSunFont;
+        public Font  NameFont                   = Font.UiContentFont;
 
         public Point NameFrameSize              = new Point(256, 34);
 
