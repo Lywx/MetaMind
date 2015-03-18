@@ -162,6 +162,7 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             this.UpdateRegionClick(gameTime);
             this.UpdateMouseScroll();
+            this.UpdateKeyboardMotion(gameTime);
 
             if (this.AcceptInput)
             {
