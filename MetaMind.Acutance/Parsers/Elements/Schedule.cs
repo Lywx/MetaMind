@@ -4,6 +4,7 @@ namespace MetaMind.Acutance.Parsers.Elements
 
     using MetaMind.Acutance.Concepts;
     using MetaMind.Acutance.Parsers.Grammars;
+    using MetaMind.Engine.Components.Fonts;
 
     using Sprache;
 
@@ -23,7 +24,7 @@ namespace MetaMind.Acutance.Parsers.Elements
             var command = ScheduleGrammar.CommandUnitParser.Parse(this.Content);
 
             // name is the part of command unit without identifier
-            var name = command.Replace("Command: ", string.Empty);
+            var name = Format.Compose(command.Replace("Command: ", string.Empty), 10, "", "> ", "", "");
             var time = this.Date.Time;
 
             CommandRepeativity repeativity;

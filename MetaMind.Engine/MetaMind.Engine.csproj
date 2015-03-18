@@ -79,6 +79,7 @@
     <Compile Include="Components\FolderManager.cs" />
     <Compile Include="Components\FontManager.cs" />
     <Compile Include="Components\Fonts\Font.cs" />
+    <Compile Include="Components\Fonts\Format.cs" />
     <Compile Include="Components\Graphics\GraphicsManager.cs" />
     <Compile Include="Components\InputEventManager.cs" />
     <Compile Include="Components\InputSequenceManager.cs" />

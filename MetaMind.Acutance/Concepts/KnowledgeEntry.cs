@@ -1,8 +1,10 @@
 ﻿namespace MetaMind.Acutance.Concepts
 {
+    using System.Collections.Generic;
     using System.Linq;
 
     using MetaMind.Acutance.Parsers.Elements;
+    using MetaMind.Engine.Components.Fonts;
 
     public class KnowledgeEntry
     {
@@ -59,7 +61,7 @@
                     }
 
                     break;
-                    
+
                 case RepeativityTag.EveryWeek:
                     {
                         repeativity = CommandRepeativity.EveryWeek;
@@ -71,18 +73,19 @@
                     {
                         repeativity = CommandRepeativity.Never;
                     }
-                   
+
                     break;
 
                 default:
                     {
                         repeativity = CommandRepeativity.Never;
                     }
-                
+
                     break;
             }
 
-            return new CommandEntry(this.Knowledge.Title.Name, this.Knowledge.Path, this.Knowledge.Offset, this.Knowledge.Title.Time.ToTimeSpan(), repeativity);
+            var name = Format.Compose(this.Knowledge.Title.Name, 10, "", "> ", "", "");
+            return new CommandEntry(name, this.Knowledge.Path, this.Knowledge.Offset, this.Knowledge.Title.Time.ToTimeSpan(), repeativity);
         }
     }
 }

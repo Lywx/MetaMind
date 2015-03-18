@@ -114,6 +114,7 @@ namespace MetaMind.Engine.Components.Fonts
         {
             return text.Length < maxLength ? text : string.Concat(text.Substring(0, maxLength), "...");
         }
+
         private static bool NextCharContinuous(string text, int index)
         {
             var firstLetter = text.Substring(index, 1);
