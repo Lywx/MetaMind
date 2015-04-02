@@ -1,7 +1,8 @@
 " Screen Settings
 
 Resolution = 1280 720
-Fps = 30
+Fps        = 30
+
 IsFullscreen = true
 
 " Mouse Settings

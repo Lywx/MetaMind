@@ -160,11 +160,15 @@ namespace MetaMind.Engine.Components.Fonts
                 }
             }
 
-            var paddledHeads = commonHeads.GetRange(0, commonHeads.Count - 1);
+            var paddledHeads = commonHeads.GetRange(0, commonHeads.Count > 0 ? commonHeads.Count - 1 : 0);
 
             // unpaddled heads are those add non-whitespace headEnd after heads
             var unpaddledHeads = new List<string>(uncommonHeads);
-            unpaddledHeads.Insert(0, commonHeads.Last());
+
+            if (commonHeads.Count > 0)
+            {
+                unpaddledHeads.Insert(0, commonHeads.Last());
+            }
 
             var paddled   = Compose(paddledHeads, headLength, headStart, "  ", string.Empty, infoStart, infoEnd);
             var unpaddled = Compose(unpaddledHeads, headLength, headStart, headEnd, string.Empty, infoStart, infoEnd);
