@@ -50,7 +50,7 @@ namespace MetaMind.Engine.Components.Fonts
         /// <summary>
         /// Default format composing.
         /// </summary>
-        /// <param name="text"></param>
+        /// <param target="text"></param>
         /// <returns></returns>
         public static string Compose(string text)
         {
@@ -153,8 +153,7 @@ namespace MetaMind.Engine.Components.Fonts
                 }
                 else
                 {
-                    var alreadyAdded = commonHeads.Count;
-                    uncommonHeads.AddRange(shorter.GetRange(i, shorter.Count - 1 - alreadyAdded));
+                    uncommonHeads.AddRange(target.GetRange(i, shorter.Count - 1 - commonHeads.Count));
 
                     break;
                 }
@@ -170,7 +169,7 @@ namespace MetaMind.Engine.Components.Fonts
                 unpaddledHeads.Insert(0, commonHeads.Last());
             }
 
-            var paddled   = Compose(paddledHeads, headLength, headStart, "  ", string.Empty, infoStart, infoEnd);
+            var paddled   = Compose(paddledHeads  , headLength, headStart, "  "   , string.Empty, infoStart, infoEnd);
             var unpaddled = Compose(unpaddledHeads, headLength, headStart, headEnd, string.Empty, infoStart, infoEnd);
             
             var extraHeads = new List<string>();
@@ -180,7 +179,7 @@ namespace MetaMind.Engine.Components.Fonts
                 // add heads in exceeding positions
                 for (var i = shorter.Count - 1; i < longer.Count - 1; i++)
                 {
-                    extraHeads.Add(longer[i]);
+                    extraHeads.Add(target[i]);
                 }
             }
 

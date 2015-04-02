@@ -123,6 +123,7 @@
     <Compile Include="Guis\Elements\PressableFrame.cs" />
     <Compile Include="Guis\Widgets\Items\SmartItemSwapProcess.cs" />
     <Compile Include="Guis\Widgets\Items\SmartItemViewControl.cs" />
+    <Compile Include="Guis\Widgets\Views\ContinuousView.cs" />
     <Compile Include="Guis\Widgets\Views\GridControl.cs" />
     <Compile Include="Guis\Widgets\Views\GridSettings.cs" />
     <Compile Include="Guis\Widgets\Views\IPointViewControl2D.cs" />

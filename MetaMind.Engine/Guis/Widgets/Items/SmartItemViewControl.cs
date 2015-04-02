@@ -23,7 +23,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             var originCenter = this        .ViewControl.Scroll.RootCenterPoint(this        .ItemControl.Id);
             var targetCenter = draggingItem.ViewControl.Scroll.RootCenterPoint(draggingItem.ItemControl.Id);
 
-            this.ViewControl.Swap.Initialize(originCenter, targetCenter);
+            ViewControl.Swap.Initialize(originCenter, targetCenter);
 
             var swapProcess = new TViewItemWSwapProcess().Initalize(draggingItem, this.Item, this.source);
             ProcessManager.AttachProcess(swapProcess);
