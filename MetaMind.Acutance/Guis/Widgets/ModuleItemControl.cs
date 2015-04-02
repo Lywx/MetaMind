@@ -24,7 +24,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             this.ItemFrameControl = new TraceItemFrameControl(item);
             this.ItemViewControl  = new SmartItemViewControl<SmartItemSwapProcess>(item, source);
 
-            this.NameFrame.MouseLeftDoubleClicked += this.RetrieveKnowledgeFile;
+            this.NameFrame.MouseLeftDoubleClicked += this.RetrieveIt;
         }
 
         #endregion Constructors
@@ -38,13 +38,9 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Events
 
-        private void RetrieveKnowledgeFile(object sender, FrameEventArgs e)
+        private void RetrieveIt(object sender, FrameEventArgs e)
         {
-            var knowledgeRetrievedEvent = new EventBase(
-                (int)SessionEventType.KnowledgeRetrieved,
-                new KnowledgeRetrievedEventArgs(this.ItemData.Path, 0));
-
-            GameEngine.EventManager.QueueEvent(knowledgeRetrievedEvent);
+            this.RetrieveIt();
         }
 
         // TODO: May implement change watcher #1
@@ -71,6 +67,15 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         //     watcher.EnableRaisingEvents = true;
         // }
+
+        private void RetrieveIt()
+        {
+            var knowledgeRetrievedEvent = new EventBase(
+                (int)SessionEventType.KnowledgeRetrieved,
+                new KnowledgeRetrievedEventArgs(this.ItemData.Path, 0));
+
+            GameEngine.EventManager.QueueEvent(knowledgeRetrievedEvent);
+        }
 
         private void DeleteIt()
         {
@@ -114,6 +119,11 @@ namespace MetaMind.Acutance.Guis.Widgets
                         if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.ModuleDeleteItem))
                         {
                             this.DeleteIt();
+                        }
+
+                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.ModuleOpenItem))
+                        {
+                            this.RetrieveIt();
                         }
                     }
                 }

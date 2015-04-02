@@ -115,6 +115,11 @@ namespace MetaMind.Engine.Components.Fonts
             return text.Length < maxLength ? text : string.Concat(text.Substring(0, maxLength), "...");
         }
 
+        public static string WhiteSpace(int number)
+        {
+            return string.Concat(Enumerable.Repeat(" ", number));
+        }
+
         private static bool NextCharContinuous(string text, int index)
         {
             var firstLetter = text.Substring(index, 1);

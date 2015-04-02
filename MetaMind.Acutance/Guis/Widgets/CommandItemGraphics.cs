@@ -1,9 +1,9 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
+    using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Concepts;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Items;
-
     using Microsoft.Xna.Framework;
 
     public class CommandItemGraphics : TraceItemGraphics
@@ -29,6 +29,24 @@ namespace MetaMind.Acutance.Guis.Widgets
             this.DrawExperience(255);
             this.DrawIdFrame(255);
             this.DrawId(255);
+        }
+
+        protected override void DrawName(byte alpha)
+        {
+            string name = ItemData.Name;
+
+            string text = FontManager.CropText(
+                ItemSettings.NameFont,
+                ItemControl.Id > 0 ? Format.Paddle(name, View.Items[ItemControl.Id - 1].ItemData.Name) : name,
+                ItemSettings.NameSize,
+                ItemSettings.NameFrameSize.X - ItemSettings.NameXLMargin * 2);
+
+            FontManager.DrawMonoSpacedText(
+                ItemSettings.NameFont,
+                text,
+                this.NameLocation,
+                ColorExt.MakeTransparent(ItemSettings.NameColor, alpha),
+                ItemSettings.NameSize);
         }
 
         protected override void DrawExperience(byte alpha)

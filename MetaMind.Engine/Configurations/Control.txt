@@ -42,6 +42,7 @@ KnowledgeLoadBuffer = L with LeftControl
 
 ModuleClearItem  = C with LeftControl
 ModuleDeleteItem = D with LeftControl 
+ModuleOpenItem   = O with LeftControl 
 ModuleResetItem  = R with LeftControl
 ModuleSortItem   = S with LeftControl
 

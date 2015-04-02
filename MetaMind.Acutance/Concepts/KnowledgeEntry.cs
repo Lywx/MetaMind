@@ -84,7 +84,7 @@
                     break;
             }
 
-            var name = Format.Compose(this.Knowledge.Title.Name, 10, "", "> ", "", "");
+            var name = Format.Compose(this.Knowledge.Title.Name);
             return new CommandEntry(name, this.Knowledge.Path, this.Knowledge.Offset, this.Knowledge.Title.Time.ToTimeSpan(), repeativity);
         }
     }

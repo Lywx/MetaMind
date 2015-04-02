@@ -173,6 +173,11 @@ namespace MetaMind.Acutance.Guis.Modules
             }
         }
 
+        private void LoadFormatData()
+        {
+            Format.Load(new Format());
+        }
+
         private void UnloadScheduleData()
         {
             CommandEntryFileter.RemoveRunningShedule(this.Settings.Commands);

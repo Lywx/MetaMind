@@ -60,6 +60,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         ModuleClearItem,
         ModuleDeleteItem,
+        ModuleOpenItem,
         ModuleResetItem,
         ModuleSortItem,
 

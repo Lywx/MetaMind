@@ -112,7 +112,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                     : ColorExt.MakeTransparent(ItemSettings.IdFrameColor, alpha));
         }
 
-        protected void DrawName(byte alpha)
+        protected virtual void DrawName(byte alpha)
         {
             if (Item.IsEnabled(ItemState.Item_Pending))
             {
