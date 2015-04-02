@@ -62,9 +62,9 @@ namespace MetaMind.Acutance.Guis.Widgets
         //                           NotifyFilter = NotifyFilters.LastWrite,
         //                           Filter       = "*.md",
         //                       };
- 
+        //
         //     watcher.Changed += this.RewriteModule;
-
+        //
         //     watcher.EnableRaisingEvents = true;
         // }
 
@@ -79,9 +79,9 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         private void DeleteIt()
         {
-            this.View.Items.Remove(this.Item);
+            View.Items.Remove(this.Item);
             
-            this.View.Control.ItemFactory.RemoveData(this.Item);
+            View.Control.ItemFactory.RemoveData(this.Item);
         }
 
         private void ResetIt()
@@ -110,7 +110,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
             // keyboard
             //-----------------------------------------------------------------
-            if (this.ViewSettings.KeyboardEnabled)
+            if (ViewSettings.KeyboardEnabled)
             {
                 if (this.AcceptInput)
                 {
@@ -130,7 +130,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
                 // special
                 //----------------------------------------------------------------- 
-                if (this.View.Control.AcceptInput)
+                if (View.Control.AcceptInput)
                 {
                     if (!this.Locked)
                     {

@@ -11,6 +11,8 @@
 
     public class ModuleLinker
     {
+        private static object locker = new object();
+
         public ModuleLinker(ModuleItemFactory moduleItemFactory, IModulelist modulelist)
         {
             this.ModuleItemFactory = moduleItemFactory;
@@ -57,8 +59,7 @@
         {
             var name = Path.GetFileNameWithoutExtension(e.Info.FullName);
 
-            // HACK: I'm not sure about this
-            lock (this.CompletionTable)
+            lock (locker)
             {
                 // only allow one sub-module even if they share a same name
                 if (!this.CompletionTable[name])
