@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ViewScrollBar.cs" company="UESTC">
+// <copyright file="PointViewScrollBar.cs" company="UESTC">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -15,13 +15,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     using Primtives2D;
 
-    public class ViewScrollBar : VisualViewComponent
+    public class PointViewScrollBar : ViewVisualComponent
     {
         private readonly ViewScrollBarSettings settings;
 
         private int alpha;
 
-        public ViewScrollBar(IView view, ViewSettings2D viewSettings, ICloneable itemSettings, ViewScrollBarSettings scrollBarSettings)
+        public PointViewScrollBar(IView view, PointViewSettings2D viewSettings, ICloneable itemSettings, ViewScrollBarSettings scrollBarSettings)
             : base(view, viewSettings, itemSettings)
         {
             this.settings = scrollBarSettings;

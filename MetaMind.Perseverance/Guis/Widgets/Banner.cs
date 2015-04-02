@@ -11,7 +11,7 @@
 
     public class Banner : EngineObject
     {
-        private ViewSettings1D viewSettings;
+        private PointViewSettings1D viewSettings;
         private BannerSetting  bannerSetting;
 
         private TimelineText   past;
@@ -21,7 +21,7 @@
         private TimelineFlash  flash;
 
 
-        public Banner(ViewSettings1D viewSettings, BannerSetting bannerSetting)
+        public Banner(PointViewSettings1D viewSettings, BannerSetting bannerSetting)
         {
             this.viewSettings  = viewSettings;
             this.bannerSetting = bannerSetting;

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ViewSelectionControl1D.cs" company="UESTC">
+// <copyright file="PointViewSelectionControl1D.cs" company="UESTC">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -9,20 +9,20 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 {
     using MetaMind.Engine.Guis.Widgets.Items;
 
-    public interface IViewSelectionControl1D : IViewSelectionControl
+    public interface IPointViewSelectionControl1D : IPointViewSelectionControl
     {
         void MoveLeft();
 
         void MoveRight();
     }
 
-    public class ViewSelectionControl1D : ViewComponent, IViewSelectionControl1D
+    public class PointViewSelectionControl1D : ViewComponent, IPointViewSelectionControl1D
     {
         private int? currentColumn;
 
         private int? previousColumn;
 
-        public ViewSelectionControl1D(IView view, ViewSettings1D viewSettings, ItemSettings itemSettings)
+        public PointViewSelectionControl1D(IView view, PointViewSettings1D viewSettings, ItemSettings itemSettings)
             : base(view, viewSettings, itemSettings)
         {
         }

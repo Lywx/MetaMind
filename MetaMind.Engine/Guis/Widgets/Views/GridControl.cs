@@ -8,33 +8,33 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     using Microsoft.Xna.Framework;
 
-    public interface IGridControl : IViewControl2D
+    public interface IGridControl : IPointViewControl2D
     {
         bool Locked { get; }
 
-        ViewRegion Region { get; }
+        PointViewRegion Region { get; }
 
-        ViewScrollBar ScrollBar { get; }
+        PointViewScrollBar ScrollBar { get; }
 
         void ScrollDown();
 
         void ScrollUp();
     }
 
-    public class GridControl : ViewControl2D, IGridControl
+    public class GridControl : PointViewControl2D, IGridControl
     {
         public GridControl(IView view, GridSettings viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
             : base(view, viewSettings, itemSettings, itemFactory)
         {
-            this.Region    = new ViewRegion(view, viewSettings, itemSettings, this.RegionPositioning);
-            this.ScrollBar = new ViewScrollBar(view, viewSettings, itemSettings, viewSettings.ScrollBarSettings);
+            this.Region    = new PointViewRegion(view, viewSettings, itemSettings, this.RegionPositioning);
+            this.ScrollBar = new PointViewScrollBar(view, viewSettings, itemSettings, viewSettings.ScrollBarSettings);
         }
 
         #region Public Properties
 
-        public ViewRegion Region { get; protected set; }
+        public PointViewRegion Region { get; protected set; }
 
-        public ViewScrollBar ScrollBar { get; protected set; }
+        public PointViewScrollBar ScrollBar { get; protected set; }
 
         #endregion Public Properties
 

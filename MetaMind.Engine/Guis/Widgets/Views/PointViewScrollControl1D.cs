@@ -4,9 +4,9 @@
 
     using Microsoft.Xna.Framework;
 
-    public class ViewScrollControl1D : ViewComponent, IViewScrollControlHorizontal
+    public class PointViewScrollControl1D : ViewComponent, IPointViewScrollControlHorizontal
     {
-        public ViewScrollControl1D(IView view, ViewSettings1D viewSettings, ItemSettings itemSettings)
+        public PointViewScrollControl1D(IView view, PointViewSettings1D viewSettings, ItemSettings itemSettings)
             : base(view, viewSettings, itemSettings)
         {
         }
@@ -58,7 +58,7 @@
         public Point RootCenterPoint(int id)
         {
             return new Point(
-                this.ViewSettings.Direction == ViewSettings1D.ScrollDirection.Right ?
+                this.ViewSettings.Direction == PointViewSettings1D.ScrollDirection.Right ?
                 this.ViewSettings.StartPoint.X - (this.XOffset * this.ViewSettings.RootMargin.X) + id * this.ViewSettings.RootMargin.X :
                 this.ViewSettings.StartPoint.X + (this.XOffset * this.ViewSettings.RootMargin.X) - id * this.ViewSettings.RootMargin.X,
                 this.ViewSettings.StartPoint.Y);

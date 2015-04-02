@@ -4,7 +4,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     using Microsoft.Xna.Framework;
 
-    public class GridSettings : ViewSettings2D
+    public class GridSettings : PointViewSettings2D
     {
         public readonly ViewScrollBarSettings ScrollBarSettings = new ViewScrollBarSettings();
 

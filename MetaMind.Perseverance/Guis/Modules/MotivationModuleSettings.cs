@@ -21,7 +21,7 @@ namespace MetaMind.Perseverance.Guis.Modules
                                           {
                                               Space     = MotivationSpace.Past,
 
-                                              Direction = ViewSettings1D.ScrollDirection.Left
+                                              Direction = PointViewSettings1D.ScrollDirection.Left
                                           };
             this.NowViewSettings    = new MotivationViewSettings { Space = MotivationSpace.Now };
             this.FutureViewSettings = new MotivationViewSettings { Space = MotivationSpace.Future };

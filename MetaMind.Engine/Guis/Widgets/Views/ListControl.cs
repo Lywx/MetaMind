@@ -8,9 +8,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     using Microsoft.Xna.Framework;
 
-    public interface IListControl : IViewControl
+    public interface IListControl : IPointViewControl
     {
-        ViewRegion Region { get; }
+        PointViewRegion Region { get; }
 
         bool AcceptInput { get; }
 
@@ -27,17 +27,17 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         void SuperMoveRight();
     }
 
-    public class ListControl : ViewControl1D, IListControl
+    public class ListControl : PointViewControl1D, IListControl
     {
-        public ListControl(IView view, ViewSettings1D viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
+        public ListControl(IView view, PointViewSettings1D viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
             : base(view, viewSettings, itemSettings, itemFactory)
         {
-            this.Region = new ViewRegion(view, viewSettings, itemSettings, this.RegionPositioning);
+            this.Region = new PointViewRegion(view, viewSettings, itemSettings, this.RegionPositioning);
         }
 
         #region Public Properties
 
-        public ViewRegion Region { get; private set; }
+        public PointViewRegion Region { get; private set; }
 
         #endregion Public Properties
 
@@ -103,7 +103,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         protected virtual Rectangle RegionPositioning(dynamic viewSettings, dynamic itemSettings)
         {
-            if (this.ViewSettings.Direction == ViewSettings1D.ScrollDirection.Left)
+            if (this.ViewSettings.Direction == PointViewSettings1D.ScrollDirection.Left)
             {
                 return
                     RectangleExt.Rectangle(

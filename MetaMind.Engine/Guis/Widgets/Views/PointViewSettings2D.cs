@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     using Microsoft.Xna.Framework;
 
-    public class ViewSettings2D : ViewSettings
+    public class PointViewSettings2D : ViewSettings
     {
         public Font  NameFont         = Font.UiStatisticsFont;
         public Color NameColor        = Color.White;

@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ViewControl2D.cs" company="UESTC">
+// <copyright file="PointViewControl2D.cs" company="UESTC">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -14,14 +14,14 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     using Microsoft.Xna.Framework;
 
-    public class ViewControl2D : ViewControl1D, IViewControl2D
+    public class PointViewControl2D : PointViewControl1D, IPointViewControl2D
     {
-        public ViewControl2D(IView view, ViewSettings2D viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
+        public PointViewControl2D(IView view, PointViewSettings2D viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
             : base(view, viewSettings, itemSettings, itemFactory)
         {
-            this.Swap      = new ViewSwapControl(this.View, this.ViewSettings, this.ItemSettings);
-            this.Scroll    = new ViewScrollControl2D(this.View, this.ViewSettings, this.ItemSettings);
-            this.Selection = new ViewSelectionControl2D(this.View, this.ViewSettings, this.ItemSettings);
+            this.Swap      = new PointViewSwapControl(this.View, this.ViewSettings, this.ItemSettings);
+            this.Scroll    = new PointViewScrollControl2D(this.View, this.ViewSettings, this.ItemSettings);
+            this.Selection = new PointViewSelectionControl2D(this.View, this.ViewSettings, this.ItemSettings);
         }
 
         #region Operations

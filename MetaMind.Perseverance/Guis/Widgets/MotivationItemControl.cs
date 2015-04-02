@@ -99,11 +99,6 @@
                             this.ItemDataControl.EditString("Name");
                         }
 
-                        if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.A))
-                        {
-                            this.ItemDataControl.EditInt("Attraction");
-                        }
-
                         if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
                         {
                             this.View.Disable(ViewState.Item_Editting);

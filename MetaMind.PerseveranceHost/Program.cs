@@ -42,9 +42,11 @@
                 }
                 catch (AddressAlreadyInUseException)
                 {
+                    host.Abort();
                 }
                 catch (CommunicationObjectFaultedException)
                 {
+                    host.Abort();
                 }
             }
         }

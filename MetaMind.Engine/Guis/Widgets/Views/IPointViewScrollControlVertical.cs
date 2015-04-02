@@ -2,7 +2,7 @@
 {
     using Microsoft.Xna.Framework;
 
-    public interface IViewScrollControlVertical
+    public interface IPointViewScrollControlVertical
     {
         int YOffset { get; }
 

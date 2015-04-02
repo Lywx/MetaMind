@@ -25,7 +25,7 @@ namespace MetaMind.Acutance.Guis.Modules
                 var moduleEntry = moduleView.Control.ItemFactory.CreateData(eventArgs.Buffer);
 
                 this.moduleView.Control.AddItem(moduleEntry);
-                this.moduleView.Control.SortItems(ViewSortMode.Name);
+                this.moduleView.Control.SortItems(PointViewSortMode.Name);
             }
 
             return true;

@@ -4,14 +4,14 @@
 
     using Microsoft.Xna.Framework;
 
-    public interface IVisualViewComponent : IViewComponent
+    public interface IViewVisualComponent : IViewComponent
     {
         void Draw(GameTime gameTime);
     }
 
-    public class VisualViewComponent : ViewComponent, IVisualViewComponent
+    public class ViewVisualComponent : ViewComponent, IViewVisualComponent
     {
-        protected VisualViewComponent(IView view, ICloneable viewSettings, ICloneable itemSettings)
+        protected ViewVisualComponent(IView view, ICloneable viewSettings, ICloneable itemSettings)
             : base(view, viewSettings, itemSettings)
         {
         }

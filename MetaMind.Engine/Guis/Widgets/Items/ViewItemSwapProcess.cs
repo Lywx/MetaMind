@@ -33,7 +33,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         protected dynamic Source { get; private set; }
 
-        protected IViewSwapControl SwapControl { get; private set; }
+        protected IPointViewSwapControl SwapControl { get; private set; }
 
         protected IViewItem SwappingItem { get; private set; }
 
@@ -142,7 +142,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             this.SwappingItem.ItemControl.Id = this.DraggingItem.ItemControl.Id;
             this.DraggingItem.ItemControl.Id = swappingId;
 
-            this.SwappingItem.View.Control.SortItems(ViewSortMode.Id);
+            this.SwappingItem.View.Control.SortItems(PointViewSortMode.Id);
         }
     }
 }

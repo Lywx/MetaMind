@@ -1,6 +1,6 @@
 namespace MetaMind.Engine.Guis.Widgets.Views
 {
-    public interface IViewControl2D
+    public interface IPointViewControl2D
     {
         bool AcceptInput { get; }
 

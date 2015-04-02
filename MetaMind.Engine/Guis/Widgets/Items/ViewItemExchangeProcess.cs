@@ -33,7 +33,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         protected IViewItemExchangable DraggingItem { get; private set; }
 
-        protected IViewSelectionControl TargetSelection { get; private set; }
+        protected IPointViewSelectionControl TargetSelection { get; private set; }
 
         protected IView TargetView { get; private set; }
 

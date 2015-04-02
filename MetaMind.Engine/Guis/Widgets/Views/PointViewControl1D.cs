@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ViewControl1D.cs" company="UESTC">
+// <copyright file="PointViewControl1D.cs" company="UESTC">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -15,19 +15,19 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     using Microsoft.Xna.Framework;
 
-    public class ViewControl1D : ViewComponent, IViewControl
+    public class PointViewControl1D : ViewComponent, IPointViewControl
     {
-        public ViewControl1D(IView view, ViewSettings1D viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
+        public PointViewControl1D(IView view, PointViewSettings1D viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
             : base(view, viewSettings, itemSettings)
         {
             this.ItemFactory = itemFactory;
 
-            this.Swap      = new ViewSwapControl(View, ViewSettings, this.ItemSettings);
-            this.Scroll    = new ViewScrollControl1D(View, ViewSettings, this.ItemSettings);
-            this.Selection = new ViewSelectionControl1D(View, ViewSettings, this.ItemSettings);
+            this.Swap      = new PointViewSwapControl(View, ViewSettings, this.ItemSettings);
+            this.Scroll    = new PointViewScrollControl1D(View, ViewSettings, this.ItemSettings);
+            this.Selection = new PointViewSelectionControl1D(View, ViewSettings, this.ItemSettings);
         }
 
-        protected ViewControl1D(IView view, ViewSettings2D viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
+        protected PointViewControl1D(IView view, PointViewSettings2D viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
             : base(view, viewSettings, itemSettings)
         {
             this.ItemFactory = itemFactory;
@@ -41,7 +41,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public dynamic Selection { get; protected set; }
 
-        public IViewSwapControl Swap { get; protected set; }
+        public IPointViewSwapControl Swap { get; protected set; }
 
         #endregion Components
 
@@ -55,7 +55,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public virtual void MoveLeft()
         {
-            if (ViewSettings.Direction == ViewSettings1D.ScrollDirection.Left)
+            if (ViewSettings.Direction == PointViewSettings1D.ScrollDirection.Left)
             {
                 // invert for left scrolling view
                 this.Selection.MoveRight();
@@ -68,7 +68,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public virtual void MoveRight()
         {
-            if (ViewSettings.Direction == ViewSettings1D.ScrollDirection.Left)
+            if (ViewSettings.Direction == PointViewSettings1D.ScrollDirection.Left)
             {
                 // invert for left scrolling view
                 this.Selection.MoveLeft();
@@ -79,11 +79,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
         }
 
-        public virtual void SortItems(ViewSortMode sortMode)
+        public virtual void SortItems(PointViewSortMode sortMode)
         {
             switch (sortMode)
             {
-                case ViewSortMode.Name:
+                case PointViewSortMode.Name:
                     {
                         View.Items = View.Items.OrderBy(item => item.ItemData.Name).ToList();
                         View.Items.ForEach(item => item.ItemControl.Id = View.Items.IndexOf(item));
@@ -91,7 +91,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
                     break;
 
-                case ViewSortMode.Id:
+                case PointViewSortMode.Id:
                     {
                         View.Items = View.Items.OrderBy(item => item.ItemControl.Id).ToList();
                         View.Items.ForEach(item => item.ItemControl.Id = View.Items.IndexOf(item));

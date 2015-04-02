@@ -4,7 +4,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     using Microsoft.Xna.Framework;
 
-    public class ListSettings : ViewSettings1D
+    public class ListSettings : PointViewSettings1D
     {
         public Point BorderMargin = new Point(4, 4);
 

@@ -9,20 +9,20 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 {
     using MetaMind.Engine.Guis.Widgets.Items;
 
-    public interface IViewSelectionControl2D : IViewSelectionControl1D
+    public interface IPointViewSelectionControl2D : IPointViewSelectionControl1D
     {
         void MoveDown();
 
         void MoveUp();
     }
 
-    public class ViewSelectionControl2D : ViewComponent, IViewSelectionControl2D
+    public class PointViewSelectionControl2D : ViewComponent, IPointViewSelectionControl2D
     {
         private int? currentId;
 
         private int? previousId;
 
-        public ViewSelectionControl2D(IView view, ViewSettings2D viewSettings, ItemSettings itemSettings)
+        public PointViewSelectionControl2D(IView view, PointViewSettings2D viewSettings, ItemSettings itemSettings)
             : base(view, viewSettings, itemSettings)
         {
         }

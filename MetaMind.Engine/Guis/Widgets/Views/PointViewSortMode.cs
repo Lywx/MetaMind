@@ -1,6 +1,6 @@
 namespace MetaMind.Engine.Guis.Widgets.Views
 {
-    public enum ViewSortMode
+    public enum PointViewSortMode
     {
         Id,
         Name,

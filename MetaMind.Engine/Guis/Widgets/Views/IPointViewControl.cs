@@ -4,7 +4,7 @@
 
     using Microsoft.Xna.Framework;
 
-    public interface IViewControl
+    public interface IPointViewControl
     {
         IViewItemFactory ItemFactory { get; }
 
@@ -12,9 +12,9 @@
 
         dynamic Selection { get; }
 
-        IViewSwapControl Swap { get; }
+        IPointViewSwapControl Swap { get; }
 
-        void SortItems(ViewSortMode sortMode);
+        void SortItems(PointViewSortMode sortMode);
 
         void UpdateInput(GameTime gameTime);
 

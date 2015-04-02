@@ -7,10 +7,8 @@
 
 namespace MetaMind.Perseverance.Guis.Widgets
 {
-    using System.Collections.Generic;
     using System.Globalization;
 
-    using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Items;
 
@@ -69,6 +67,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
                        + PointExt.ToVector2(ItemSettings.NameMargin);
             }
         }
+
         public override void Draw(GameTime gameTime, byte alpha)
         {
             if (!ItemControl.Active)

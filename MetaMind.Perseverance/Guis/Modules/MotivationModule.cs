@@ -27,9 +27,9 @@ namespace MetaMind.Perseverance.Guis.Modules
         {
             this.banner = new Banner(this.Settings.PastViewSettings, new BannerSetting());
 
-            this.pastView   = new View(this.Settings.PastViewSettings  , Settings.ItemSettings, Settings.ViewFactory);
-            this.nowView    = new View(this.Settings.NowViewSettings   , Settings.ItemSettings, Settings.ViewFactory);
-            this.futureView = new View(this.Settings.FutureViewSettings, Settings.ItemSettings, Settings.ViewFactory);
+            this.pastView   = new PointView(this.Settings.PastViewSettings  , Settings.ItemSettings, Settings.ViewFactory);
+            this.nowView    = new PointView(this.Settings.NowViewSettings   , Settings.ItemSettings, Settings.ViewFactory);
+            this.futureView = new PointView(this.Settings.FutureViewSettings, Settings.ItemSettings, Settings.ViewFactory);
 
             this.pastView  .Control.Swap.AddObserver(this.nowView   );
             this.pastView  .Control.Swap.AddObserver(this.futureView);

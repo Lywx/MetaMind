@@ -1,6 +1,6 @@
 ﻿namespace MetaMind.Engine.Guis.Widgets.Views
 {
-    public interface IViewSelectionControl
+    public interface IPointViewSelectionControl
     {
         bool HasSelected { get; }
 

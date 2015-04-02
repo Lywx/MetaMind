@@ -28,7 +28,7 @@ namespace MetaMind.Acutance.Guis.Modules
                 var notifiedCommand = eventArgs.NotifiedCommand;
 
                 this.commandView.Control.AddItem(notifiedCommand);
-                this.commandView.Control.SortItems(ViewSortMode.Name);
+                this.commandView.Control.SortItems(PointViewSortMode.Name);
 
                 // possibly unnecessary
                 var notifiedItem = this.commandView.Items.Find(item => ReferenceEquals(item.ItemData, notifiedCommand));

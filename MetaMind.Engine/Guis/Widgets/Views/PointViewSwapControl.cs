@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ViewSwapControl.cs" company="UESTC">
+// <copyright file="PointViewSwapControl.cs" company="UESTC">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -17,7 +17,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     using Microsoft.Xna.Framework;
 
-    public interface IViewSwapControl
+    public interface IPointViewSwapControl
     {
         List<IView> Observors { get; }
 
@@ -34,11 +34,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         void WatchSwapFrom(IViewItem draggingItem, IView targetView);
     }
 
-    public class ViewSwapControl : ViewComponent, IViewSwapControl
+    public class PointViewSwapControl : ViewComponent, IPointViewSwapControl
     {
         private bool initialized;
 
-        public ViewSwapControl(IView view, ICloneable viewSettings, ItemSettings itemSettings)
+        public PointViewSwapControl(IView view, ICloneable viewSettings, ItemSettings itemSettings)
             : base(view, viewSettings, itemSettings)
         {
             this.Observors = new List<IView> { view };

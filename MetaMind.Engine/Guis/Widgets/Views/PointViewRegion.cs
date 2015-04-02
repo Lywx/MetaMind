@@ -9,9 +9,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     public delegate Rectangle ViewRegionPositioning(dynamic viewSettings, dynamic itemSettings);
 
-    public class ViewRegion : Region, IViewComponent
+    public class PointViewRegion : Region, IViewComponent
     {
-        public ViewRegion(IView view, ViewSettings1D viewSettings, ICloneable itemSettings, ViewRegionPositioning positioning)
+        public PointViewRegion(IView view, PointViewSettings1D viewSettings, ICloneable itemSettings, ViewRegionPositioning positioning)
             : base(positioning(viewSettings, itemSettings))
         {
             this.View         = view;
@@ -21,7 +21,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             this.Positioning = positioning;
         }
 
-        public ViewRegion(IView view, ViewSettings2D viewSettings, ICloneable itemSettings, ViewRegionPositioning positioning)
+        public PointViewRegion(IView view, PointViewSettings2D viewSettings, ICloneable itemSettings, ViewRegionPositioning positioning)
             : base(positioning(viewSettings, itemSettings))
         {
             this.View         = view;

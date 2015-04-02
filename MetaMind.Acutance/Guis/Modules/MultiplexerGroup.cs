@@ -1,6 +1,7 @@
 namespace MetaMind.Acutance.Guis.Modules
 {
     using MetaMind.Acutance.Concepts;
+    using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Settings.Loaders;
@@ -20,17 +21,17 @@ namespace MetaMind.Acutance.Guis.Modules
         public MultiplexerGroup(MultiplexerGroupSettings settings)
             : base(settings)
         {
-            this.ModuleView = new View(
+            this.ModuleView = new PointView(
                 this.Settings.ModuleViewSettings,
                 this.Settings.ModuleItemSettings,
                 this.Settings.ModuleViewFactory);
 
-            this.CommandView = new View(
+            this.CommandView = new PointView(
                 this.Settings.CommandViewSettings,
                 this.Settings.CommandItemSettings,
                 this.Settings.CommandViewFactory);
 
-            this.KnowledgeView = new View(
+            this.KnowledgeView = new PointView(
                 this.Settings.KnowledgeViewSettings,
                 this.Settings.KnowledgeItemSettings,
                 this.Settings.KnowledgeViewFactory);
@@ -118,6 +119,7 @@ namespace MetaMind.Acutance.Guis.Modules
         {
             this.LoadModuleData();
             this.LoadScheduleData();
+            this.LoadFormatData();
         }
 
         private void LoadEvents()
@@ -149,7 +151,6 @@ namespace MetaMind.Acutance.Guis.Modules
             }
 
             EventManager.AddListener(this.sessionSavedListener);
-
         }
 
         private void LoadModuleData()

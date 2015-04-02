@@ -5,7 +5,7 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Acutance.Concepts;
     using MetaMind.Engine.Guis.Widgets.Views;
 
-    public class TraceViewFactory : ViewBasicFactory2D
+    public class TraceViewFactory : PointViewBasicFactory2D
     {
         public TraceViewFactory(ITracelist tracelist)
         {
@@ -14,12 +14,12 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public ITracelist Tracelist { get; set; }
 
-        protected override dynamic CreateControl(IView view, ViewSettings2D viewSettings, ICloneable itemSettings)
+        protected override dynamic CreateControl(IView view, PointViewSettings2D viewSettings, ICloneable itemSettings)
         {
             return new TraceViewControl(view, (TraceViewSettings)viewSettings, (TraceItemSettings)itemSettings, new TraceItemFactory(this.Tracelist));
         }
 
-        protected override IViewGraphics CreateGraphics(IView view, ViewSettings2D viewSettings, ICloneable itemSettings)
+        protected override IViewGraphics CreateGraphics(IView view, PointViewSettings2D viewSettings, ICloneable itemSettings)
         {
             return new TraceViewGraphics(view, (TraceViewSettings)viewSettings, (TraceItemSettings)itemSettings);
         }

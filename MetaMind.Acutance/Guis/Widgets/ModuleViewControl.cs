@@ -27,13 +27,13 @@ namespace MetaMind.Acutance.Guis.Widgets
             this.View.Items.Add(item);
         }
 
-        public override void SortItems(ViewSortMode sortMode)
+        public override void SortItems(PointViewSortMode sortMode)
         {
             base.SortItems(sortMode);
 
             switch (sortMode)
             {
-                case ViewSortMode.Name:
+                case PointViewSortMode.Name:
                     {
                         ViewSettings.Source.Sort(ModuleSortMode.Name);
                     }
@@ -88,7 +88,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
                     if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.ModuleSortItem))
                     {
-                        this.SortItems(ViewSortMode.Name);
+                        this.SortItems(PointViewSortMode.Name);
                     }
                 }
             }

@@ -6,18 +6,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     using Microsoft.Xna.Framework;
 
-    public interface IView : IViewObject
+    public class PointView : ViewObject, IView
     {
-        dynamic Control { get; set; }
-
-        IViewGraphics Graphics { get; set; }
-
-        List<IViewItem> Items { get; set; }
-    }
-
-    public class View : ViewObject, IView
-    {
-        public View(ViewSettings1D viewSettings, ItemSettings itemSettings, IViewFactory factory, dynamic parent = null)
+        public PointView(PointViewSettings1D viewSettings, ItemSettings itemSettings, IViewFactory factory, dynamic parent = null)
             : base(viewSettings, itemSettings)
         {
             this.Items = new List<IViewItem>(viewSettings.ColumnNumMax);
@@ -28,7 +19,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             this.Parent = parent;
         }
 
-        public View(ViewSettings2D viewSettings, ItemSettings itemSettings, IViewFactory factory, dynamic parent = null)
+        public PointView(PointViewSettings2D viewSettings, ItemSettings itemSettings, IViewFactory factory, dynamic parent = null)
             : base(viewSettings, itemSettings)
         {
             this.Items = new List<IViewItem>(viewSettings.RowNumMax * viewSettings.ColumnNumMax);

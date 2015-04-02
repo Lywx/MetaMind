@@ -1,11 +1,10 @@
 namespace MetaMind.Engine.Guis.Widgets.Views
 {
     using MetaMind.Engine.Components.Graphics;
-    using MetaMind.Engine.Settings;
 
     using Microsoft.Xna.Framework;
 
-    public class ViewSettings1D : ViewSettings
+    public class PointViewSettings1D : ViewSettings
     {
         //---------------------------------------------------------------------
         public Point           StartPoint          = new Point(160, GraphicsSettings.Height / 2);

@@ -77,7 +77,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         protected override Rectangle RegionPositioning(dynamic viewSettings, dynamic itemSettings)
         {
-            if (this.ViewSettings.Direction == ViewSettings1D.ScrollDirection.Left)
+            if (this.ViewSettings.Direction == PointViewSettings1D.ScrollDirection.Left)
             {
                 return
                     RectangleExt.Rectangle(
