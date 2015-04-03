@@ -25,6 +25,23 @@ namespace MetaMind.Acutance.Concepts
             this.Timeout = timeout;
         }
 
+        ~CommandTimerWithTimeout()
+        {
+            this.Dispose();
+        }
+
+        public override void Dispose()
+        {
+            if (this.timer != null)
+            {
+                this.timer.Stop();
+            }
+
+            this.timer = null;
+
+            base.Dispose();
+        }
+
         public override bool IsTransiting
         {
             get { return this.Experience.CertainDuration >= this.Timeout; }

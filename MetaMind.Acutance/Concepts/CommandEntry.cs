@@ -13,6 +13,7 @@ namespace MetaMind.Acutance.Concepts
     {
         Running,
         Transiting,
+        Terminated,
     }
 
     public enum CommandType
@@ -60,6 +61,20 @@ namespace MetaMind.Acutance.Concepts
             this.Path   = path;
             this.Offset = offset;
             this.Type   = type;
+        }
+
+        ~CommandEntry()
+        {
+            this.Dispose();
+        }
+
+        public override void Dispose()
+        {
+            this.Timer.Dispose();
+
+            this.State = CommandState.Terminated;
+
+            base.Dispose();
         }
 
         public Experience Experience

@@ -17,9 +17,16 @@ namespace MetaMind.Acutance.Concepts
         [DataMember]
         public Experience Experience { get; protected set; }
 
+        public abstract bool IsAutoReseting { get; }
+
         public abstract bool IsTransiting { get; }
 
-        public abstract bool IsAutoReseting { get; }
+        public override void Dispose()
+        {
+            this.Experience = Experience.Zero;
+
+            base.Dispose();
+        }
 
         [OnDeserialized]
         public void OnDeserialized(StreamingContext context)

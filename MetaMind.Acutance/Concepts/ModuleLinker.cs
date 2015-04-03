@@ -59,6 +59,7 @@
         {
             var name = Path.GetFileNameWithoutExtension(e.Info.FullName);
 
+            // note that lock has to be static
             lock (locker)
             {
                 // only allow one sub-module even if they share a same name

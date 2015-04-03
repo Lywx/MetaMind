@@ -172,6 +172,7 @@ namespace MetaMind.Engine.Components.Fonts
             var paddled   = Compose(paddledHeads  , headLength, headStart, "  "   , string.Empty, infoStart, infoEnd);
             var unpaddled = Compose(unpaddledHeads, headLength, headStart, headEnd, string.Empty, infoStart, infoEnd);
             
+            // extra heads are always uncommon
             var extraHeads = new List<string>();
 
             if (targetLonger)

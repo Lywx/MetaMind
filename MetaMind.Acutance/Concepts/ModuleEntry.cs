@@ -44,6 +44,8 @@ namespace MetaMind.Acutance.Concepts
                 {
                     this.Commandlist      .Remove(subEntry);
                     this.SubCommandEntries.Remove(subEntry);
+
+                    subEntry.Dispose();
                 }
             }
 
@@ -52,6 +54,7 @@ namespace MetaMind.Acutance.Concepts
                 foreach (var module in this.SubModuleEntries.ToArray())
                 {
                     this.SubModuleEntries.Remove(module);
+
                     module.Dispose();
                 }
             }

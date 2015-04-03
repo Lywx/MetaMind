@@ -63,7 +63,7 @@ namespace MetaMind.Acutance.Guis.Widgets
         /// Delete command item in view won't delete underlying command entry from commandlist.
         /// Only way to validly delete the entry is to delete corresponding module entry.
         /// </remarks>
-        public void DenotifyIt()
+        public void DeleteIt()
         {
             View.Items.Remove(Item);
 
@@ -111,7 +111,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                     {
                         if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CommandDeleteItem))
                         {
-                            this.DenotifyIt();
+                            this.DeleteIt();
                         }
 
                         if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CommandOpenItem))
@@ -129,7 +129,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                     {
                         if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CommandClearItem))
                         {
-                            this.DenotifyIt();
+                            this.DeleteIt();
                         }
                     }
                 }

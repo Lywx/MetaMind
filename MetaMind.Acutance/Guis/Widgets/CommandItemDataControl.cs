@@ -14,9 +14,10 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public override void UpdateStructure(GameTime gameTime)
         {
-            if (ItemData.State == CommandState.Running)
+            if (ItemData.State == CommandState.Running || 
+                ItemData.State == CommandState.Terminated)
             {
-                ItemControl.DenotifyIt();
+                ItemControl.DeleteIt();
             }
         }
     }

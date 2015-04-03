@@ -43,48 +43,27 @@ namespace MetaMind.Acutance.Guis.Widgets
             this.RetrieveIt();
         }
 
-        // TODO: May implement change watcher #1
-        // private void RewriteModule(object sender, FileSystemEventArgs e)
-        // {
-        //    ItemData.Dispose();
-        // }
-
         #endregion
 
         #region Operations
 
-        // TODO: May implement change watcher #2
-        // public void CreateFileWatcher(string folderPath)
-        // {
-        //     var watcher = new FileSystemWatcher
-        //                       {
-        //                           Path         = folderPath, 
-        //                           NotifyFilter = NotifyFilters.LastWrite,
-        //                           Filter       = "*.md",
-        //                       };
-        //
-        //     watcher.Changed += this.RewriteModule;
-        //
-        //     watcher.EnableRaisingEvents = true;
-        // }
-
-        private void RetrieveIt()
+        public void RetrieveIt()
         {
             var knowledgeRetrievedEvent = new EventBase(
                 (int)SessionEventType.KnowledgeRetrieved,
-                new KnowledgeRetrievedEventArgs(this.ItemData.Path, 0));
+                new KnowledgeRetrievedEventArgs(ItemData.Path, 0));
 
             GameEngine.EventManager.QueueEvent(knowledgeRetrievedEvent);
         }
 
-        private void DeleteIt()
+        public void DeleteIt()
         {
             View.Items.Remove(this.Item);
             
             View.Control.ItemFactory.RemoveData(this.Item);
         }
 
-        private void ResetIt()
+        public void ResetIt()
         {
             this.ItemData.Reset();
         }
