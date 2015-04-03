@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
 
     using FileSearcher;
 
@@ -43,7 +44,7 @@
 
         public void Start()
         {
-            foreach (var pair in this.CompletionTable)
+            foreach (var pair in this.CompletionTable.ToArray())
             {
                 var searchName   = SearchSettings.SearchName(pair.Key, false);
                 var searchParams = SearchSettings.SearchParams(searchName);

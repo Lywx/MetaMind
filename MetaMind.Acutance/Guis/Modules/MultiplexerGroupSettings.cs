@@ -10,21 +10,23 @@ namespace MetaMind.Acutance.Guis.Modules
 
     public class MultiplexerGroupSettings
     {
-        public readonly int ViewVMargin = 28;
+        public readonly int ViewSpace80Characters = 750;
+
+        public readonly int ViewVMargin = 24;
 
         public readonly Point ViewStartPoint = new Point(20, 108);
 
         #region Module View
 
-        public readonly int ModuleRowNumDisplay = 13;
+        public readonly int ModuleRowNumDisplay = 3;
 
-        public readonly int ModuleRowNumDisplayFullscreen = 13;
+        public readonly int ModuleRowNumDisplayFullscreen = 3;
 
         public readonly int ModuleRowNumMax = 100;
 
-        public readonly int ModuleColumnNumDisplay = 1;
+        public readonly int ModuleColumnNumDisplay = 2;
 
-        public readonly int ModuleColumnNumDisplayFullscreen = 1;
+        public readonly int ModuleColumnNumDisplayFullscreen = 2;
 
         public ModuleViewFactory ModuleViewFactory = new ModuleViewFactory(Acutance.Session.Modulelist);
 
@@ -38,9 +40,9 @@ namespace MetaMind.Acutance.Guis.Modules
 
         #region Command View
         
-        public readonly int   CommandRowNumDisplay              = 13;
+        public readonly int   CommandRowNumDisplay              = 24;
 
-        public readonly int   CommandRowNumDisplayFullscreen    = 13;
+        public readonly int   CommandRowNumDisplayFullscreen    = 32;
 
         public readonly int   CommandRowNumMax                  = 100;
 
@@ -60,9 +62,9 @@ namespace MetaMind.Acutance.Guis.Modules
 
         #region Knowledge View
         
-        public readonly int KnowledgeViewRowNumDisplayFullscreen = 17;
+        public readonly int KnowledgeViewRowNumDisplayFullscreen = 27;
 
-        public readonly int KnowledgeViewRowNumDisplay           = 9;
+        public readonly int KnowledgeViewRowNumDisplay           = 20;
 
         public readonly int KnowledgeViewRowNumMax               = 100;
 
@@ -81,22 +83,28 @@ namespace MetaMind.Acutance.Guis.Modules
         public MultiplexerGroupSettings()
         {
             // module view
-            var moduleViewWidth = 500;
-            var moduleStartPoint = this.ViewStartPoint;
+            var moduleViewWidth = this.ViewSpace80Characters / (GraphicsSettings.IsFullscreen
+                                         ? this.ModuleColumnNumDisplayFullscreen
+                                         : this.ModuleColumnNumDisplay);
+            var moduleStartPoint  = this.ViewStartPoint;
             var moduleColumnWidth = moduleViewWidth / (GraphicsSettings.IsFullscreen
                                           ? this.CommandColumnNumDisplayFullscreen
                                           : this.CommandColumnNumDisplay);
             this.CreateModuleView(moduleColumnWidth, moduleStartPoint);
 
             // command view
-            var commandStartPoint = moduleStartPoint + new Point(moduleColumnWidth, 0);
-            var commandColumnWidth = this.ViewWidthMax - moduleViewWidth;
+            var commandStartPoint = moduleStartPoint + new Point((GraphicsSettings.IsFullscreen
+                                               ? ModuleColumnNumDisplayFullscreen
+                                               : ModuleColumnNumDisplay) * moduleColumnWidth, 0);
+            var commandColumnWidth = this.ViewWidthMax - moduleViewWidth * (GraphicsSettings.IsFullscreen
+                                            ? ModuleColumnNumDisplayFullscreen
+                                            : ModuleColumnNumDisplay);
             this.CreateCommandView(commandColumnWidth, commandStartPoint);
 
             // knowledge view
             var knowledgeStartPoint = this.ModuleStartPoint
                                       + new Point(0, this.ModuleViewSettings.RowNumDisplay * this.ModuleViewSettings.RootMargin.Y + this.ViewVMargin);
-            var knowledgeColumnWidth = this.ViewWidthMax / this.KnowledgeViewColumnNumDisplay;
+            var knowledgeColumnWidth = this.ViewSpace80Characters;
             this.CreateKnowledgeView(knowledgeColumnWidth, knowledgeStartPoint);
         }
 
