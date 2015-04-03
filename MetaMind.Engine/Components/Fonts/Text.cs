@@ -110,11 +110,6 @@ namespace MetaMind.Engine.Components.Fonts
             return textList;
         }
 
-        public static string ChopText(string text, int maxLength)
-        {
-            return text.Length < maxLength ? text : string.Concat(text.Substring(0, maxLength), "...");
-        }
-
         public static string WhiteSpace(int number)
         {
             return string.Concat(Enumerable.Repeat(" ", number));

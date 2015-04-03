@@ -7,15 +7,13 @@
 
 namespace MetaMind.Engine.Components
 {
+    using MetaMind.Engine.Components.Fonts;
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
-
-    using MetaMind.Engine.Components.Fonts;
-
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
 
     /// <summary>
     /// Static storage of SpriteFont objects and colors for use throughout the game.
@@ -23,10 +21,12 @@ namespace MetaMind.Engine.Components
     public class FontManager : EngineObject
     {
         private const float FontMonoSpaceFactor = 2f / 3f;
+
         // this is a margin prefix to monospaced string to left-parallel normally spaced string
         private const int   FontMonoSpaceMargin = 7;
 
         private const int   FontMonoSpaceSize   = 18;
+
         public SpriteFont this[Font font]
         {
             get
@@ -77,12 +77,54 @@ namespace MetaMind.Engine.Components
 
         #region Text Drawing
 
-        public static string CropText(string text, int count)
+        /// <remarks>
+        /// Similar to CropText with one difference, which is to use MesureMonoSpacedString rather than regular MesureString.
+        /// </remarks>>
+        /// <param name="text"></param>
+        /// <param name="scale"></param>
+        /// <param name="maxLength"></param>
+        /// <returns></returns>
+        public string CropMonoSpacedText(string text, float scale, int maxLength)
+        {
+            if (maxLength < 1)
+            {
+                throw new ArgumentOutOfRangeException("maxLength");
+            }
+
+            var cjkSpriteFont = FontManager[Font.UiContentFont];
+            var avaliableText = GetDisaplayableCharacters(cjkSpriteFont, text);
+
+            var cropped     = false;
+            var croppedText = avaliableText;
+            var textSize    = MesureMonoSpacedString(croppedText, scale);
+
+            var outsideLength = textSize.X > maxLength;
+
+            while (outsideLength)
+            {
+                cropped = true;
+                croppedText = croppedText.Substring(0, croppedText.Length - 1);
+                textSize = MesureMonoSpacedString(croppedText, scale);
+
+                outsideLength = textSize.X > maxLength;
+            }
+
+            if (cropped && croppedText.Length > 2)
+            {
+                return croppedText.Substring(0, croppedText.Length - 3) + "...";
+            }
+            else
+            {
+                return croppedText;
+            }
+        }
+
+        public string CropText(string text, int count)
         {
             return text.Length < count ? text : string.Concat(text.Substring(0, count), "...");
         }
 
-        public string CropText(Font font, string text, float size, int maxLength)
+        public string CropText(Font font, string text, float scale, int maxLength)
         {
             if (maxLength < 1)
             {
@@ -94,7 +136,7 @@ namespace MetaMind.Engine.Components
 
             var cropped     = false;
             var croppedText = avaliableText;
-            var textSize    = spriteFont.MeasureString(croppedText) * size;
+            var textSize    = spriteFont.MesureString(croppedText, scale);
 
             var outsideLength = textSize.X > maxLength;
 
@@ -102,12 +144,19 @@ namespace MetaMind.Engine.Components
             {
                 cropped = true;
                 croppedText = croppedText.Substring(0, croppedText.Length - 1);
-                textSize = spriteFont.MeasureString(croppedText) * size;
+                textSize = spriteFont.MesureString(croppedText, scale);
 
                 outsideLength = textSize.X > maxLength;
             }
 
-            return croppedText + (cropped ? "..." : string.Empty);
+            if (cropped && croppedText.Length > 2)
+            {
+                return croppedText.Substring(0, croppedText.Length - 3) + "...";
+            }
+            else
+            {
+                return croppedText;
+            }
         }
 
         /// <summary>
@@ -129,10 +178,10 @@ namespace MetaMind.Engine.Components
             var spriteFont    = FontManager[font];
             var avaliableText = GetDisaplayableCharacters(spriteFont, text);
 
-            var textSize         = spriteFont.MeasureString(avaliableText);
+            var textSize         = spriteFont.MesureString(avaliableText, scale);
             var centeredPosition = new Vector2(
-                position.X - (int)textSize.X * scale / 2,
-                position.Y - (int)textSize.Y * scale / 2);
+                position.X - (int)textSize.X / 2,
+                position.Y - (int)textSize.Y / 2);
 
             ScreenManager.SpriteBatch.DrawString(spriteFont, avaliableText, centeredPosition, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0);
         }
@@ -161,19 +210,19 @@ namespace MetaMind.Engine.Components
             }
 
             var spriteFont    = FontManager[font];
-            var avaliableText = this.GetDisaplayableCharacters(spriteFont, text);
+            var avaliableText = GetDisaplayableCharacters(spriteFont, text);
 
             // HACK: Using existing font is not a good idea
             var asciiFont = FontManager[Font.UiRegularFont];
 
-            var cjkCharacterIndexes         = this.GetNonDisaplayableCharacterIndexes(asciiFont, avaliableText);
-            var cjkCharacterAmendedPosition = this.GetCjkCharacterPositionAmendments(cjkCharacterIndexes, avaliableText);
+            var cjkCharacterIndexes         = GetNonDisaplayableCharacterIndexes(asciiFont, avaliableText);
+            var cjkCharacterAmendedPosition = GetCjkCharacterPositionAmendments(cjkCharacterIndexes, avaliableText);
             var cjkCharacterExists = cjkCharacterIndexes.Count > 0;
 
             for (var i = 0; i < avaliableText.Length; ++i)
             {
                 var characterPosition = cjkCharacterExists ? cjkCharacterAmendedPosition[i] : i;
-                var amendedPosition   = position + new Vector2(characterPosition * FontMonoSpaceSize * FontMonoSpaceFactor * scale, 0);
+                var amendedPosition   = position + new Vector2(characterPosition * FontMonoSpacedSize(scale), 0);
 
                 this.DrawMonoSpacedCharacter(font, avaliableText[i], amendedPosition, color, scale);
             }
@@ -211,18 +260,34 @@ namespace MetaMind.Engine.Components
         private void DrawMonoSpacedCharacter(Font font, char character, Vector2 position, Color color, float scale)
         {
             var text            = character.ToString(CultureInfo.InvariantCulture);
-            var amendedPosition = position + new Vector2(FontMonoSpaceMargin - font.MeasureString(text).X * scale / 2, 0);
+            var amendedPosition = position + new Vector2(FontMonoSpaceMargin - font.MeasureString(text, scale).X / 2, 0);
 
             this.DrawText(font, text, amendedPosition, color, scale);
         }
 
-        #endregion Drawing Helper Methods
+        private float FontMonoSpacedSize(float scale)
+        {
+            return FontMonoSpaceSize * FontMonoSpaceFactor * scale;
+        }
+
+        private Vector2 MesureMonoSpacedString(string text, float scale)
+        {
+            // HACK: Using existing font is not a good idea
+            var asciiFont = FontManager[Font.UiRegularFont];
+            var cjkCharacterCount = GetNonDisaplayableCharacterIndexes(asciiFont, text).Count;
+            var asciiCharacterCount = text.Length - cjkCharacterCount;
+
+            var monoSize = FontMonoSpacedSize(scale);
+            return new Vector2((asciiCharacterCount + cjkCharacterCount * 2) * monoSize, monoSize);
+        }
+
+        #endregion Text Drawing
 
         #region Characters Filtering
 
         public string GetDisaplayableCharacters(Font font, string text)
         {
-            return this.GetDisaplayableCharacters(FontManager[font], text);
+            return GetDisaplayableCharacters(FontManager[font], text);
         }
 
         public string GetDisaplayableCharacters(SpriteFont font, string text)
@@ -260,15 +325,14 @@ namespace MetaMind.Engine.Components
                 {
                     position += 0.5f;
                 }
-                
+
                 indexes.Add(position);
                 position += 1f;
             }
 
             return indexes;
-
         }
 
-        #endregion
+        #endregion Characters Filtering
     }
 }

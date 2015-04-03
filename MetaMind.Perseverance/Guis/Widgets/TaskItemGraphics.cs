@@ -155,8 +155,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             }
             else
             {
-                string text = FontManager.CropText(
-                    ItemSettings.NameFont,
+                string text = FontManager.CropMonoSpacedText(
                     ItemData.Name,
                     ItemSettings.NameSize,
                     ItemSettings.NameFrameSize.X - ItemSettings.NameXLMargin * 2);
