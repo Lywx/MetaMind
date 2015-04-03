@@ -10,9 +10,9 @@ namespace MetaMind.Acutance.Guis.Modules
 
     public class MultiplexerGroupSettings
     {
-        public readonly int ViewSpace80Characters = 750;
+        public readonly int   ViewSpace80Characters = 750;
 
-        public readonly int ViewVMargin = 24;
+        public readonly int   ViewVMargin = 24;
 
         public readonly Point ViewStartPoint = new Point(20, 108);
 
@@ -140,7 +140,7 @@ namespace MetaMind.Acutance.Guis.Modules
         {
             this.CommandItemSettings = new CommandItemSettings();
 
-            var itemFixedWidth = this.CommandItemSettings.ExperienceFrameSize.X + this.CommandItemSettings.IdFrameSize.X;
+            var itemFixedWidth = this.CommandItemSettings.IdFrameSize.X;
             this.CommandItemSettings.NameFrameSize = new Point(viewColumnWidth - itemFixedWidth, 24);
             this.CommandItemSettings.Reconfigure();
 

@@ -20,7 +20,7 @@ namespace MetaMind.Acutance.Guis.Widgets
         public CommandItemControl(IViewItem item, List<CommandEntry> source )
             : base(item)
         {
-            this.ItemFrameControl = new TraceItemFrameControl(item);
+            this.ItemFrameControl = new KnowledgeItemFrameControl(item);
             this.ItemViewControl  = new SmartItemViewControl<SmartItemSwapProcess>(item, source);
             this.ItemDataControl  = new CommandItemDataControl(item);
 
@@ -38,12 +38,9 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #endregion Constructors
 
-        public ItemEntryFrame IdFrame { get { return ((TraceItemFrameControl)ItemFrameControl).IdFrame; } }
+        public ItemEntryFrame IdFrame { get { return ((KnowledgeItemFrameControl)ItemFrameControl).IdFrame; } }
 
-        public ItemEntryFrame NameFrame { get { return ((TraceItemFrameControl)ItemFrameControl).NameFrame; } }
-
-        public ItemEntryFrame ExperienceFrame { get { return ((TraceItemFrameControl)ItemFrameControl).ExperienceFrame; } }
-
+        public ItemEntryFrame NameFrame { get { return ((KnowledgeItemFrameControl)ItemFrameControl).NameFrame; } }
 
         #region Events
 

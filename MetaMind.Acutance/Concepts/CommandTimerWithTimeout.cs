@@ -65,9 +65,13 @@ namespace MetaMind.Acutance.Concepts
 
         public override void Update()
         {
-            this.Experience += this.timer.Elapsed;
+            // disposal guard
+            if (this.timer != null)
+            {
+                this.Experience += this.timer.Elapsed;
 
-            this.timer.Restart();
+                this.timer.Restart();
+            }
         }
     }
 }

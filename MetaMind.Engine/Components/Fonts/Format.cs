@@ -9,7 +9,14 @@ namespace MetaMind.Engine.Components.Fonts
 
     public class Format : IConfigurationLoader
     {
-        public static int DefaultHeadLength;
+        #region Format Parameters
+
+        public static int DefaultHeadLength = 12;
+
+
+        #endregion
+
+        #region Constructors and Destructors
 
         public Format()
         {
@@ -19,19 +26,15 @@ namespace MetaMind.Engine.Components.Fonts
         {
         }
 
+        #endregion
+
+        #region Formatting
+
         private enum LengthComparison
         {
-            Larger,
+            Longer,
             Equal,
-            Less,
-        }
-
-        public string ConfigurationFile
-        {
-            get
-            {
-                return "Format.txt";
-            }
+            Shorter,
         }
 
         public static string Compose(IEnumerable<string> heads, int headLength, string headStart, string headEnd, string info, string infoStart, string infoEnd)
@@ -40,10 +43,16 @@ namespace MetaMind.Engine.Components.Fonts
 
             foreach (var head in heads)
             {
-                result
-                    .Append(headStart)
-                    .Append(head.PadRight(headLength))
-                    .Append(headEnd);
+                // TODO: CJK characters may suffer double ... when paddling
+                var croppedHead = GameEngine.FontManager.CropMonoSpacedStringAsciiCount(head, headLength);
+                var cjkCount    = GameEngine.FontManager.GetExclusiveCJKCharacterCount(croppedHead);
+
+                result.
+                    Append(headStart).
+
+                    // cut out extra position taken out by double sized CJK characters
+                    Append(croppedHead.PadRight(headLength - cjkCount)).
+                    Append(headEnd);
             }
 
             result.
@@ -95,19 +104,17 @@ namespace MetaMind.Engine.Components.Fonts
             // add head elems
             for (var i = 0; i < headElemCount; i++)
             {
-                var head = headAllString.Substring(i * headElemLength, headElemLength)
-                    .TrimStart(headStart.ToCharArray())
-                    .TrimEnd(headEnd.ToCharArray())
-                    .Trim();
+                var head =
+                    headAllString.Substring(i * headElemLength, headElemLength)
+                        .TrimStart(headStart.ToCharArray())
+                        .TrimEnd(headEnd.ToCharArray())
+                        .Trim();
 
                 elems.Add(head);
             }
 
             // add info elem
-            var info = infoAllString
-                .TrimStart(infoStart.ToCharArray())
-                .TrimEnd(infoEnd.ToCharArray())
-                .Trim();
+            var info = infoAllString.TrimStart(infoStart.ToCharArray()).TrimEnd(infoEnd.ToCharArray()).Trim();
 
             elems.Add(info);
 
@@ -122,11 +129,6 @@ namespace MetaMind.Engine.Components.Fonts
         public static string GetInfo(string text)
         {
             return text.Split(':').Last().Trim();
-        }
-
-        public static void Load(IConfigurationLoader loader)
-        {
-            LoadFormatLength(loader);
         }
 
         public static string Paddle(string target, string reference)
@@ -145,12 +147,12 @@ namespace MetaMind.Engine.Components.Fonts
         public static string Paddle(List<string> target, List<string> reference, int headLength, string headStart, string headEnd, string infoStart, string infoEnd)
         {
             var delta = target.Count - reference.Count;
-            var comparison = delta > 0 ?        LengthComparison.Larger
+            var comparison = delta > 0 ?        LengthComparison.Longer
                                  : delta == 0 ? LengthComparison.Equal 
-                                    :           LengthComparison.Less;
+                                       :        LengthComparison.Shorter;
 
-            var max = comparison == LengthComparison.Larger ? target : reference;
-            var min = comparison == LengthComparison.Larger ? reference : target;
+            var max = comparison == LengthComparison.Longer ? target : reference;
+            var min = comparison == LengthComparison.Longer ? reference : target;
 
             var commonHeads   = new List<string>();
             var uncommonHeads = new List<string>();
@@ -184,7 +186,7 @@ namespace MetaMind.Engine.Components.Fonts
             // extra heads are always uncommon
             var extraHeads = new List<string>();
 
-            if (comparison == LengthComparison.Larger)
+            if (comparison == LengthComparison.Longer)
             {
                 // add heads in exceeding positions
                 for (var i = min.Count; i < max.Count - 1; i++)
@@ -200,11 +202,30 @@ namespace MetaMind.Engine.Components.Fonts
             }
         }
 
+        #endregion
+
+        #region Format Loading
+
+        public string ConfigurationFile
+        {
+            get
+            {
+                return "Format.txt";
+            }
+        }
+
+        public static void Load(IConfigurationLoader loader)
+        {
+            LoadFormatLength(loader);
+        }
+
         private static void LoadFormatLength(IConfigurationLoader loader)
         {
             var dict = ConfigurationLoader.LoadUniquePairs(loader);
 
             DefaultHeadLength = ConfigurationLoader.MultipleIntValue(dict, "HeadLength", 0, 10);
         }
+
+        #endregion
     }
 }

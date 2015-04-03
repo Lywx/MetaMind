@@ -25,8 +25,6 @@ namespace MetaMind.Acutance.Guis.Widgets
             this.FillNameFrameWith(ItemSettings.NameFrameRunningColor, alpha);
 
             this.DrawName(255);
-            this.DrawExperienceFrame(255);
-            this.DrawExperience(255);
             this.DrawIdFrame(255);
             this.DrawId(255);
         }
@@ -46,17 +44,6 @@ namespace MetaMind.Acutance.Guis.Widgets
                 this.NameLocation,
                 ColorExt.MakeTransparent(ItemSettings.NameColor, alpha),
                 ItemSettings.NameSize);
-        }
-
-        protected override void DrawExperience(byte alpha)
-        {
-            var countdown = ((Experience)ItemData.Experience).Duration;
-            FontManager.DrawCenteredText(
-                ItemSettings.ExperienceFont,
-                string.Format("{0:hh\\:mm\\:ss}", countdown),
-                this.ExperienceLocation,
-                ColorExt.MakeTransparent(ItemSettings.ExperienceColor, alpha),
-                ItemSettings.ExperienceSize);
         }
     }
 }
