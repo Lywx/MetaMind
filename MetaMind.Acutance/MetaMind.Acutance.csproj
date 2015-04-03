@@ -83,6 +83,7 @@
     <Compile Include="Guis\Widgets\KnowledgeViewSearchControl.cs" />
     <Compile Include="Guis\Widgets\ModuleItemControl.cs" />
     <Compile Include="Guis\Widgets\ModuleItemFactory.cs" />
+    <Compile Include="Guis\Widgets\ModuleItemFileControl.cs" />
     <Compile Include="Guis\Widgets\ModuleItemGraphics.cs" />
     <Compile Include="Guis\Widgets\ModuleItemSettings.cs" />
     <Compile Include="Guis\Widgets\ModuleViewControl.cs" />

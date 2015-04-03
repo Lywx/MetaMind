@@ -173,7 +173,7 @@ namespace MetaMind.Acutance.Guis.Modules
         {
             foreach (var module in this.Settings.Modules.ToArray())
             {
-                if (module.ParentModuleEntry == null)
+                if (module.ParentModule == null)
                 {
                     this.ModuleView.Control.AddItem(module);
                 }

@@ -1,8 +1,8 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
-    using System.Collections.Generic;
-    using System.IO;
+    using System;
 
+    using MetaMind.Acutance.Concepts;
     using MetaMind.Acutance.Events;
     using MetaMind.Acutance.Sessions;
     using MetaMind.Engine;
@@ -11,29 +11,23 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     public class ModuleItemFileControl : ViewItemComponent
     {
-        private List<FileSystemWatcher> watchers;
-
         public ModuleItemFileControl(IViewItem item)
             : base(item)
         {
-            this.watchers = new List<FileSystemWatcher>();
-
-            //foreach (var VARIABLE in ItemData.)
-            //{
-                
-            //}
-
-            //watcher.Changed += this.ReloadModule;
+            ((ModuleEntry)ItemData).Reloaded += this.ReloadModule;
         }
 
         ~ModuleItemFileControl()
         {
-            //this.watcher.Dispose();
-
-            //this.watcher = null;
+            this.Dispose();
         }
 
-        private void ReloadModule(object sender, FileSystemEventArgs e)
+        private void ReloadModule(object sender, EventArgs e)
+        {
+            this.ReloadModule();
+        }
+
+        private void ReloadModule()
         {
             var moduleReloadedEvent = new EventBase(
                 (int)SessionEventType.ModuleReloaded,

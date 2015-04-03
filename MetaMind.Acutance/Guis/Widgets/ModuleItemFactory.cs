@@ -60,10 +60,10 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         private void RemoveSubData(ModuleEntry module)
         {
-            if (module.SubModuleEntries != null && 
-                module.SubModuleEntries.Count > 0)
+            if (module.SubModules != null && 
+                module.SubModules.Count > 0)
             {
-                foreach (var subModule in module.SubModuleEntries.ToArray())
+                foreach (var subModule in module.SubModules.ToArray())
                 {
                     this.RemoveData(subModule);
                 }
