@@ -14,6 +14,8 @@ namespace MetaMind.Acutance.Guis.Modules
 
         private MultiplexerGroupKnowledgeRetrievedListener knowledgeRetrievedListener;
 
+        private MultiplexerGroupKnowledgeReloadListener    knowledgeReloadListener;
+
         private MultiplexerGroupModuleCreatedListener      moduleCreatedListener;
 
         private MultiplexerGroupSessionSavedListener       sessionSavedListener;
@@ -93,6 +95,13 @@ namespace MetaMind.Acutance.Guis.Modules
 
             this.knowledgeRetrievedListener = null;
 
+            if (this.knowledgeReloadListener != null)
+            {
+                EventManager.RemoveListener(this.knowledgeReloadListener);
+            }
+
+            this.knowledgeReloadListener = null;
+
             if (this.sessionSavedListener != null)
             {
                 EventManager.RemoveListener(this.sessionSavedListener);
@@ -144,6 +153,13 @@ namespace MetaMind.Acutance.Guis.Modules
             }
 
             EventManager.AddListener(this.knowledgeRetrievedListener);
+
+            if (this.knowledgeReloadListener == null)
+            {
+                this.knowledgeReloadListener = new MultiplexerGroupKnowledgeReloadListener(this.KnowledgeView);
+            }
+
+            EventManager.AddListener(this.knowledgeReloadListener);
 
             if (this.sessionSavedListener == null)
             {

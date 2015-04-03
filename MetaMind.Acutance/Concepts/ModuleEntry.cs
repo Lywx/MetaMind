@@ -11,6 +11,8 @@ namespace MetaMind.Acutance.Concepts
     KnownType(typeof(Commandlist))]
     public class ModuleEntry : TraceEntry 
     {
+        //private IO.FileSystemWatcher watcher;
+
         #region Constructors and Destructors
 
         public ModuleEntry(KnowledgeFile file, ICommandlist commandlist)
@@ -28,6 +30,14 @@ namespace MetaMind.Acutance.Concepts
 
             this.Commandlist = commandlist;
             this.Commandlist.Add(this.SubCommandEntries);
+
+            //this.watcher = new IO.FileSystemWatcher
+            //              {
+            //                  NotifyFilter        = IO.NotifyFilters.LastWrite,
+            //                  Path                = IO.Path.GetDirectoryName(this.Path),
+            //                  Filter              = IO.Path.GetFileName(this.Path),
+            //                  EnableRaisingEvents = true,
+            //              };
         }
 
         ~ModuleEntry()

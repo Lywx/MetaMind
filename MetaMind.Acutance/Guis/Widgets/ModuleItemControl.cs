@@ -1,7 +1,7 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
+    using System;
     using System.Collections.Generic;
-    using System.IO;
 
     using MetaMind.Acutance.Concepts;
     using MetaMind.Acutance.Events;
@@ -23,11 +23,15 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             this.ItemFrameControl = new TraceItemFrameControl(item);
             this.ItemViewControl  = new SmartItemViewControl<SmartItemSwapProcess>(item, source);
+            
+            this.ItemFileControl  = new ModuleItemFileControl(item);
 
             this.NameFrame.MouseLeftDoubleClicked += this.RetrieveIt;
         }
-
+        
         #endregion Constructors
+
+        public ModuleItemFileControl ItemFileControl { get; private set; }
 
         public ItemEntryFrame IdFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).IdFrame; } }
 

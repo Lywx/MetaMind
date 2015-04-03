@@ -19,6 +19,13 @@ namespace MetaMind.Engine.Components.Fonts
         {
         }
 
+        private enum LengthComparison
+        {
+            Larger,
+            Equal,
+            Less,
+        }
+
         public string ConfigurationFile
         {
             get
@@ -137,24 +144,26 @@ namespace MetaMind.Engine.Components.Fonts
 
         public static string Paddle(List<string> target, List<string> reference, int headLength, string headStart, string headEnd, string infoStart, string infoEnd)
         {
-            var targetLonger = target.Count > reference.Count;
+            var delta = target.Count - reference.Count;
+            var comparison = delta > 0 ?        LengthComparison.Larger
+                                 : delta == 0 ? LengthComparison.Equal 
+                                    :           LengthComparison.Less;
 
-            var longer  = targetLonger ? target : reference;
-            var shorter = targetLonger ? reference : target;
+            var max = comparison == LengthComparison.Larger ? target : reference;
+            var min = comparison == LengthComparison.Larger ? reference : target;
 
             var commonHeads   = new List<string>();
             var uncommonHeads = new List<string>();
 
-            for (var i = 0; i < shorter.Count - 1; i++)
+            for (var i = 0; i < min.Count; i++)
             {
-                if (shorter[i] == longer[i])
+                if (min[i] == max[i])
                 {
                     commonHeads.Add(Text.WhiteSpace(headLength));
                 }
                 else
                 {
-                    uncommonHeads.AddRange(target.GetRange(i, shorter.Count - 1 - commonHeads.Count));
-
+                    uncommonHeads.AddRange(target.GetRange(i, min.Count - commonHeads.Count));
                     break;
                 }
             }
@@ -175,16 +184,20 @@ namespace MetaMind.Engine.Components.Fonts
             // extra heads are always uncommon
             var extraHeads = new List<string>();
 
-            if (targetLonger)
+            if (comparison == LengthComparison.Larger)
             {
                 // add heads in exceeding positions
-                for (var i = shorter.Count - 1; i < longer.Count - 1; i++)
+                for (var i = min.Count; i < max.Count - 1; i++)
                 {
                     extraHeads.Add(target[i]);
                 }
+                
+                return paddled + unpaddled + Compose(extraHeads, headLength, headStart, headEnd, target.Last(), infoStart, infoEnd);
             }
-
-            return paddled + unpaddled + Compose(extraHeads, headLength, headStart, headEnd, target.Last(), infoStart, infoEnd);
+            else
+            {
+                return paddled + unpaddled.TrimEnd(" >".ToCharArray());
+            }
         }
 
         private static void LoadFormatLength(IConfigurationLoader loader)
