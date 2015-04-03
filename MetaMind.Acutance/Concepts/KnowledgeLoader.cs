@@ -27,11 +27,6 @@
             {
                 var line = lineList[lineNum];
 
-                if (string.IsNullOrWhiteSpace(line))
-                {
-                    continue;
-                }
-
                 var withTimeTag    = KnowledgeGrammar.TitleWithTimeTagParser.TryParse(line);
                 var withoutTimeTag = KnowledgeGrammar.TitleParser           .TryParse(line);
 
