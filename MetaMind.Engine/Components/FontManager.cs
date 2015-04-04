@@ -248,7 +248,7 @@ namespace MetaMind.Engine.Components
 
             if (cropped)
             {
-                return this.CropStringEnd(text);
+                return this.CropStringEnd(croppedText);
             }
             else
             {
@@ -288,11 +288,11 @@ namespace MetaMind.Engine.Components
 
             if (cropped)
             {
-                return this.CropStringEnd(text);
+                return this.CropStringEnd(croppedText);
             }
             else
             {
-                return avaliableText;
+                return croppedText;
             }
         }
 
