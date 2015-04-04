@@ -43,8 +43,11 @@ namespace MetaMind.Engine.Components.Fonts
 
             foreach (var head in heads)
             {
-                // TODO: CJK characters may suffer double ... when paddling
-                var croppedHead = GameEngine.FontManager.CropMonoSpacedStringAsciiCount(head, headLength);
+                // TODO: CJK characters may display improperly
+                // TODO: CJK characters may double ... when paddling
+
+                // crop to headLendth - 1 for a space between ... and head
+                var croppedHead = GameEngine.FontManager.CropMonoSpacedStringAsciiCount(head, headLength - 1);
                 var cjkCount    = GameEngine.FontManager.GetExclusiveCJKCharacterCount(croppedHead);
 
                 result.

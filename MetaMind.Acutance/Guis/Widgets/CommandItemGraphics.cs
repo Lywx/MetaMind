@@ -33,7 +33,7 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             string name = ItemData.Name;
 
-            string text = FontManager.CropMonoSpacedText(
+            string text = FontManager.CropMonoSpacedString(
                 ItemControl.Id > 0 ? Format.Paddle(name, View.Items[ItemControl.Id - 1].ItemData.Name) : name,
                 ItemSettings.NameSize,
                 ItemSettings.NameFrameSize.X - ItemSettings.NameXLMargin * 2);

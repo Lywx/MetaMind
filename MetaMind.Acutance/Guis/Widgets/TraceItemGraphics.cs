@@ -125,7 +125,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
             else
             {
-                string text = FontManager.CropMonoSpacedText(
+                string text = FontManager.CropMonoSpacedString(
                     ItemData.Name,
                     ItemSettings.NameSize,
                     ItemSettings.NameFrameSize.X - ItemSettings.NameXLMargin * 2);

@@ -213,19 +213,16 @@ namespace MetaMind.Engine.Components
 
         #region Text Cropping
 
-        public string CropMonoSpacedStringAsciiCount(string text, int count)
-        {
-            return this.CropMonoSpacedText(text, 1.0f, (int)(count * this.FontMonoSpaceAsciiSize(1.0f)));
-        }
+        // TODO: Replace with strategy pattern
 
         /// <remarks>
-        /// Similar to CropText with one difference, which is to use MesureMonoSpacedString rather than regular MesureString.
+        /// Similar to CropString with one difference, which is to use MesureMonoSpacedString rather than regular MesureString.
         /// </remarks>>
         /// <param name="text"></param>
         /// <param name="scale"></param>
         /// <param name="maxLength"></param>
         /// <returns></returns>
-        public string CropMonoSpacedText(string text, float scale, int maxLength)
+        public string CropMonoSpacedString(string text, float scale, int maxLength)
         {
             if (maxLength < 1)
             {
@@ -249,9 +246,9 @@ namespace MetaMind.Engine.Components
                 outsideLength = textSize.X > maxLength;
             }
 
-            if (cropped && croppedText.Length > 2)
+            if (cropped)
             {
-                return croppedText.Substring(0, croppedText.Length - 3) + "...";
+                return this.CropStringEnd(text);
             }
             else
             {
@@ -259,7 +256,12 @@ namespace MetaMind.Engine.Components
             }
         }
 
-        public string CropText(Font font, string text, float scale, int maxLength)
+        public string CropMonoSpacedStringAsciiCount(string text, int count)
+        {
+            return this.CropMonoSpacedString(text, 1.0f, (int)(count * this.FontMonoSpaceAsciiSize(1.0f)));
+        }
+
+        public string CropString(Font font, string text, float scale, int maxLength)
         {
             if (maxLength < 1)
             {
@@ -284,13 +286,28 @@ namespace MetaMind.Engine.Components
                 outsideLength = textSize.X > maxLength;
             }
 
-            if (cropped && croppedText.Length > 2)
+            if (cropped)
             {
-                return croppedText.Substring(0, croppedText.Length - 3) + "...";
+                return this.CropStringEnd(text);
             }
             else
             {
-                return croppedText;
+                return avaliableText;
+            }
+        }
+
+        public string CropStringEnd(string text)
+        {
+            if (text.Length > 2)
+            {
+                var start = text.Substring(0, text.Length - 3);
+                var end   = text.Substring(text.Length - 1 - 3, 3);
+
+                return start + (string.IsNullOrWhiteSpace(end) ? "   " : "...");
+            }
+            else
+            {
+                return text;
             }
         }
 
