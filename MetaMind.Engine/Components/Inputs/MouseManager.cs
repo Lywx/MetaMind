@@ -8,12 +8,11 @@
 namespace MetaMind.Engine.Components.Inputs
 {
     using MetaMind.Engine.Guis;
-    using MetaMind.Engine.Guis.Widgets;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
-    public class MouseManager : Widget
+    public class MouseManager : ManualInputGameElement
     {
         #region Singleton
 
@@ -42,7 +41,7 @@ namespace MetaMind.Engine.Components.Inputs
         {
             get
             {
-                return currentState;
+                return this.currentState;
             }
         }
 
@@ -50,7 +49,7 @@ namespace MetaMind.Engine.Components.Inputs
         {
             get
             {
-                return previousState;
+                return this.previousState;
             }
         }
 
@@ -62,7 +61,7 @@ namespace MetaMind.Engine.Components.Inputs
         {
             get
             {
-                if (currentState.LeftButton == ButtonState.Released && previousState.LeftButton == ButtonState.Pressed)
+                if (this.currentState.LeftButton == ButtonState.Released && this.previousState.LeftButton == ButtonState.Pressed)
                 {
                     return true;
                 }
@@ -75,7 +74,7 @@ namespace MetaMind.Engine.Components.Inputs
         {
             get
             {
-                if (currentState.RightButton == ButtonState.Released && previousState.RightButton == ButtonState.Pressed)
+                if (this.currentState.RightButton == ButtonState.Released && this.previousState.RightButton == ButtonState.Pressed)
                 {
                     return true;
                 }
@@ -88,7 +87,7 @@ namespace MetaMind.Engine.Components.Inputs
         {
             get
             {
-                if (currentState.ScrollWheelValue < previousState.ScrollWheelValue)
+                if (this.currentState.ScrollWheelValue < this.previousState.ScrollWheelValue)
                 {
                     return true;
                 }
@@ -101,7 +100,7 @@ namespace MetaMind.Engine.Components.Inputs
         {
             get
             {
-                if (currentState.ScrollWheelValue > previousState.ScrollWheelValue)
+                if (this.currentState.ScrollWheelValue > this.previousState.ScrollWheelValue)
                 {
                     return true;
                 }
@@ -123,9 +122,9 @@ namespace MetaMind.Engine.Components.Inputs
         {
             get
             {
-                if (IsWheelScrolledUp)
+                if (this.IsWheelScrolledUp)
                 {
-                    return (currentState.ScrollWheelValue - previousState.ScrollWheelValue) / WheelUnit;
+                    return (this.currentState.ScrollWheelValue - this.previousState.ScrollWheelValue) / WheelUnit;
                 }
 
                 return -(this.currentState.ScrollWheelValue - this.previousState.ScrollWheelValue) / WheelUnit;
@@ -148,10 +147,10 @@ namespace MetaMind.Engine.Components.Inputs
         {
         }
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
-            previousState = currentState;
-            currentState = Mouse.GetState();
+            this.previousState = this.currentState;
+            this.currentState = Mouse.GetState();
         }
 
         public override void UpdateStructure(GameTime gameTime)

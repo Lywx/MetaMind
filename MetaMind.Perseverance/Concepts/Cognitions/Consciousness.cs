@@ -15,7 +15,7 @@
     [DataContract,
      KnownType(typeof(ConsciousnessAwake)),
      KnownType(typeof(ConsciousnessSleepy))]
-    public class Consciousness : EngineObject, IConsciousness
+    public class Consciousness : GameEngineAccess, IConsciousness
     {
         #region Consciousness Data
 

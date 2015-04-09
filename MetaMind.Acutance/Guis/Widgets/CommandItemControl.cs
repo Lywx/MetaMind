@@ -17,11 +17,11 @@ namespace MetaMind.Acutance.Guis.Widgets
     {
         #region Constructors and Destructors
 
-        public CommandItemControl(IViewItem item, List<CommandEntry> source )
+        public CommandItemControl(IViewItem item, List<Command> source )
             : base(item)
         {
             this.ItemFrameControl = new KnowledgeItemFrameControl(item);
-            this.ItemViewControl  = new SmartItemViewControl<SmartItemSwapProcess>(item, source);
+            this.ItemViewControl  = new ViewItemViewSmartControl<ViewItemSmartSwapProcess>(item, source);
             this.ItemDataControl  = new CommandItemDataControl(item);
 
             this.NameFrame.MouseLeftDoubleClicked += this.RetrieveKnowledge;
@@ -38,9 +38,9 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #endregion Constructors
 
-        public ItemEntryFrame IdFrame { get { return ((KnowledgeItemFrameControl)ItemFrameControl).IdFrame; } }
+        public ItemDataFrame IdFrame { get { return ((KnowledgeItemFrameControl)ItemFrameControl).IdFrame; } }
 
-        public ItemEntryFrame NameFrame { get { return ((KnowledgeItemFrameControl)ItemFrameControl).NameFrame; } }
+        public ItemDataFrame NameFrame { get { return ((KnowledgeItemFrameControl)ItemFrameControl).NameFrame; } }
 
         #region Events
 

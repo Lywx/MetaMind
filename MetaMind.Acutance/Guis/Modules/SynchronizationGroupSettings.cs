@@ -7,13 +7,14 @@
 
 namespace MetaMind.Acutance.Guis.Modules
 {
+    using MetaMind.Engine;
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Components.Graphics;
-    using MetaMind.Engine.Settings;
+    using MetaMind.Engine.Settings.Loaders;
 
     using Microsoft.Xna.Framework;
 
-    public class SynchronizationGroupSettings
+    public class SynchronizationGroupSettings : IConfigurationParameterLoader<GraphicsSettings>
     {
         public Color BarFrameAscendColor = new Color(78, 255, 27, 200);
 
@@ -23,7 +24,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public Point BarFrameSize = new Point(500, 8);
 
-        public int   BarFrameXC = GraphicsSettings.Width / 2;
+        public int   BarFrameXC;
 
         public int   BarFrameYC = 16;
 
@@ -48,5 +49,27 @@ namespace MetaMind.Acutance.Guis.Modules
         public Point TaskMargin = new Point(0, 34);
 
         public float TaskSize = 0.7f;
+
+        public SynchronizationGroupSettings()
+        {
+            this.ParameterLoad(GameEngine.GraphicsSettings);
+
+            this.BarFrameXC = this.Width / 2;
+        }
+
+        #region Constructors
+
+        #endregion
+
+        #region Parameters
+
+        private int Width { get; set; }
+
+        public void ParameterLoad(GraphicsSettings parameter)
+        {
+            this.Width = parameter.Width;
+        }
+
+        #endregion
     }
 }

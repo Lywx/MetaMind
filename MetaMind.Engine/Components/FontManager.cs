@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="FontManager.cs" company="UESTC">
+// <copyright file="Font.cs" company="UESTC">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -7,34 +7,37 @@
 
 namespace MetaMind.Engine.Components
 {
-    using MetaMind.Engine.Components.Fonts;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
 
+    using MetaMind.Engine.Components.Fonts;
+    using MetaMind.Engine.Extensions;
+
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+
     /// <summary>
     /// Static storage of SpriteFont objects and colors for use throughout the game.
     /// </summary>
-    public class FontManager : EngineObject
+    public class FontManager : IGameEngineComponent
     {
-        #region Font Monospaced Information
+        #region Monospaced Font Data
 
-        private const float FontMonoSpaceFactor = 2f / 3f;
+        private const float MonospacedFontFactor = 2f / 3f;
 
         // this is a margin prefix to monospaced string to left-parallel normally spaced string
-        private const int FontMonoSpaceMargin = 7;
+        private const int MonospacedFontMargin = 7;
 
-        private const int FontMonoSpaceSize = 18;
+        private const int MonospacedFontSize = 18;
 
-        private float FontMonoSpaceAsciiSize(float scale)
+        private float MonospacedFontAsciiSize(float scale)
         {
-            return FontMonoSpaceSize * FontMonoSpaceFactor * scale;
+            return MonospacedFontSize * MonospacedFontFactor * scale;
         }
 
-        #endregion Font Monospaced Information
+        #endregion 
 
         #region Font Indexer
 
@@ -57,11 +60,11 @@ namespace MetaMind.Engine.Components
 
         #region Singleton
 
-        private static FontManager singleton;
+        private static FontManager Singleton { get; set; }
 
         public static FontManager GetInstance()
         {
-            return singleton ?? (singleton = new FontManager());
+            return Singleton ?? (Singleton = new FontManager());
         }
 
         #endregion Singleton
@@ -73,10 +76,10 @@ namespace MetaMind.Engine.Components
         /// </summary>
         public void LoadContent()
         {
-            // load each font from the content pipeline
-            this[Font.UiRegularFont] = ContentManager.Load<SpriteFont>(@"Fonts/BitmapFonts/RegularFont");
-            this[Font.UiStatisticsFont] = ContentManager.Load<SpriteFont>(@"Fonts/BitmapFonts/StatisticsFont");
-            this[Font.UiContentFont] = ContentManager.Load<SpriteFont>(@"Fonts/SpriteFonts/NSimSunFont");
+            this[Font.UiRegularFont]    = GameEngine.ContentManager.Load<SpriteFont>(@"Fonts/BitmapFonts/RegularFont");
+            this[Font.UiStatisticsFont] = GameEngine.ContentManager.Load<SpriteFont>(@"Fonts/BitmapFonts/StatisticsFont");
+
+            this[Font.UiContentFont]    = GameEngine.ContentManager.Load<SpriteFont>(@"Fonts/SpriteFonts/NSimSunFont");
         }
 
         /// <summary>
@@ -88,74 +91,32 @@ namespace MetaMind.Engine.Components
 
         #endregion Load and Unload
 
-        #region Text Drawing
-
-        /// <summary>
-        /// Draws text centered at particular position.
-        /// </summary>
-        /// <param name="font">The font used to draw the text.</param>
-        /// <param name="text">The text to be drawn</param>
-        /// <param name="position">The center position of the text.</param>
-        /// <param name="color">The color of the text.</param>
-        /// <param name="scale">The scale of the text.</param>
-        public void DrawCenteredText(Font font, string text, Vector2 position, Color color, float scale)
-        {
-            // check for trivial text
-            if (string.IsNullOrEmpty(text))
-            {
-                return;
-            }
-
-            var spriteFont    = FontManager[font];
-            var avaliableText = GetDisaplayableCharacters(spriteFont, text);
-
-            var textSize         = spriteFont.MesureString(avaliableText, scale);
-            var centeredPosition = new Vector2(
-                position.X - (int)textSize.X / 2,
-                position.Y - (int)textSize.Y / 2);
-
-            ScreenManager.SpriteBatch.DrawString(spriteFont, avaliableText, centeredPosition, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0);
-        }
-
-        public void DrawHCenteredText(Font font, string text, Vector2 position, Color color, float scale)
-        {
-            position += new Vector2(0, font.MeasureString(text).Y * scale / 2);
-            this.DrawCenteredText(font, text, position, color, scale);
-        }
+        #region String Drawing
 
         /// <summary>
         /// Draws the left-top monospaced text at particular position.
         /// </summary>
-        /// <param name="font">The font.</param>
-        /// <param name="text">The text.</param>
-        /// <param name="position">The position.</param>
-        /// <param name="color">The color.</param>
-        /// <param name="scale">The scale.</param>
-        /// <exception cref="System.ArgumentNullException">Font is not initialized.</exception>
-        public void DrawMonoSpacedText(Font font, string text, Vector2 position, Color color, float scale)
+        public void DrawMonospacedString(Font font, string str, Vector2 position, Color color, float scale)
         {
             // check for trivial text
-            if (string.IsNullOrEmpty(text))
+            if (string.IsNullOrEmpty(str))
             {
                 return;
             }
 
-            var spriteFont    = FontManager[font];
-            var avaliableText = GetDisaplayableCharacters(spriteFont, text);
+            var stringDisplayable = this.GetDisaplayableString(font, str);
 
-            // HACK: Using existing font is not a good idea
-            var asciiFont = FontManager[Font.UiRegularFont];
+            var cjkCharIndexes         = this.GetCJKExclusiveCharIndexes(stringDisplayable);
+            var cjkCharAmendedPosition = this.GetCJKExclusiveCharPositionAmendments(cjkCharIndexes, stringDisplayable);
 
-            var cjkCharacterIndexes         = GetNonDisaplayableCharacterIndexes(asciiFont, avaliableText);
-            var cjkCharacterAmendedPosition = this.GetExclusiveCJKCharacterPositionAmendments(cjkCharacterIndexes, avaliableText);
-            var cjkCharacterExists = cjkCharacterIndexes.Count > 0;
+            var isCJKCharExisting = cjkCharIndexes.Count > 0;
 
-            for (var i = 0; i < avaliableText.Length; ++i)
+            for (var i = 0; i < stringDisplayable.Length; ++i)
             {
-                var characterPosition = cjkCharacterExists ? cjkCharacterAmendedPosition[i] : i;
-                var amendedPosition   = position + new Vector2(characterPosition * this.FontMonoSpaceAsciiSize(scale), 0);
+                var charPosition = isCJKCharExisting ? cjkCharAmendedPosition[i] : i;
+                var amendedPosition = position + new Vector2(charPosition * this.MonospacedFontAsciiSize(scale), 0);
 
-                this.DrawMonoSpacedCharacter(font, avaliableText[i], amendedPosition, color, scale);
+                this.DrawMonospacedChar(font, stringDisplayable[i], amendedPosition, color, scale);
             }
         }
 
@@ -163,201 +124,194 @@ namespace MetaMind.Engine.Components
         /// Draws the left-top text at particular position.
         /// </summary>
         /// <param name="font">The font.</param>
-        /// <param name="text">The text.</param>
+        /// <param name="str">The text.</param>
         /// <param name="position">The position.</param>
         /// <param name="color">The color.</param>
         /// <param name="scale">The scale.</param>
         /// <exception cref="System.ArgumentNullException">Font is not initialized.</exception>
-        public void DrawText(Font font, string text, Vector2 position, Color color, float scale)
+        public void DrawString(Font font, string str, Vector2 position, Color color, float scale)
         {
             // check for trivial text
-            if (string.IsNullOrEmpty(text))
+            if (string.IsNullOrEmpty(str))
             {
                 return;
             }
 
-            var spriteFont    = FontManager[font];
-            var avaliableText = GetDisaplayableCharacters(spriteFont, text);
-
-            ScreenManager.SpriteBatch.DrawString(spriteFont, avaliableText, position, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0);
+            GameEngine.ScreenManager.SpriteBatch.DrawString(GameEngine.FontManager[font], this.GetDisaplayableString(font, str), position, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0);
         }
 
-        public void DrawVCenteredText(Font font, string text, Vector2 position, Color color, float scale)
+        public void DrawStringCenteredH(Font font, string str, Vector2 position, Color color, float scale)
         {
-            position += new Vector2(font.MeasureString(text).X * scale / 2, 0);
-            this.DrawCenteredText(font, text, position, color, scale);
+            position += new Vector2(0, font.MeasureString(str).Y * scale / 2);
+
+            this.DrawStringCenteredHV(font, str, position, color, scale);
         }
 
-        private void DrawMonoSpacedCharacter(Font font, char character, Vector2 position, Color color, float scale)
+        /// <summary>
+        /// Draws text centered at particular position.
+        /// </summary>
+        public void DrawStringCenteredHV(Font font, string str, Vector2 position, Color color, float scale)
         {
-            var text            = character.ToString(CultureInfo.InvariantCulture);
-            var amendedPosition = position + new Vector2(FontMonoSpaceMargin - font.MeasureString(text, scale).X / 2, 0);
+            // check for trivial text
+            if (string.IsNullOrEmpty(str))
+            {
+                return;
+            }
 
-            this.DrawText(font, text, amendedPosition, color, scale);
+            var stringDisplayable = this.GetDisaplayableString(font, str);
+            var stringSize = this.MeasureString(font, stringDisplayable, scale);
+
+            position -= new Vector2((int)(stringSize.X / 2), (int)(stringSize.Y / 2));
+
+            this.DrawString(font, stringDisplayable, position, color, scale);
+        }
+
+        public void DrawStringCenteredV(Font font, string str, Vector2 position, Color color, float scale)
+        {
+            position += new Vector2(font.MeasureString(str).X * scale / 2, 0);
+
+            this.DrawStringCenteredHV(font, str, position, color, scale);
+        }
+
+        private void DrawMonospacedChar(Font font, char khar, Vector2 position, Color color, float scale)
+        {
+            var str = khar.ToString(CultureInfo.InvariantCulture);
+
+            position += new Vector2(MonospacedFontMargin - this.MeasureString(font, str, scale).X / 2, 0);
+
+            this.DrawString(font, str, position, color, scale);
         }
 
         #endregion Text Drawing
 
-        #region Text Measurement
+        #region String Measurement
 
-        public Vector2 MesureMonoSpacedString(string text, float scale)
+        public Vector2 MeasureMonospacedString(string str, float scale)
         {
-            var cjkCharacterCount   = this.GetExclusiveCJKCharacterCount(text);
-            var asciiCharacterCount = text.Length - cjkCharacterCount;
+            var cjkCharCount = this.GetCJKExclusiveCharCount(str);
+            var asciiCharCount = str.Length - cjkCharCount;
 
-            var monoSize = this.FontMonoSpaceAsciiSize(scale);
-            return new Vector2((asciiCharacterCount + cjkCharacterCount * 2) * monoSize, monoSize);
+            var monoSize = this.MonospacedFontAsciiSize(scale);
+
+            return new Vector2((asciiCharCount + cjkCharCount * 2) * monoSize, monoSize);
+        }
+
+        public Vector2 MeasureString(Font font, string str, float scale)
+        {
+            return this.MeasureString(font, str, scale, false);
+        }
+
+        private Vector2 MeasureString(Font font, string str, float scale, bool monospaced)
+        {
+            if (monospaced)
+            {
+                return this.MeasureMonospacedString(str, scale);
+            }
+
+            return font.MeasureString(str, scale);
         }
 
         #endregion
 
-        #region Text Cropping
+        #region String Cropping
+        
+        public string CropMonospacedString(string str, float scale, int maxLength)
+        {
+            return this.CropString(Font.UiContentFont, str, scale, maxLength, true);
+        }
 
-        // TODO: Replace with strategy pattern
+        public string CropMonospacedStringByAsciiCount(string str, int count)
+        {
+            return this.CropMonospacedString(str, 1.0f, (int)(count * this.MonospacedFontAsciiSize(1.0f)));
+        }
 
-        /// <remarks>
-        /// Similar to CropString with one difference, which is to use MesureMonoSpacedString rather than regular MesureString.
-        /// </remarks>>
-        /// <param name="text"></param>
-        /// <param name="scale"></param>
-        /// <param name="maxLength"></param>
-        /// <returns></returns>
-        public string CropMonoSpacedString(string text, float scale, int maxLength)
+        public string CropString(Font font, string str, float scale, int maxLength)
+        {
+            return this.CropString(font, str, scale, maxLength, false);
+        }
+
+        public string CropString(Font font, string str, float scale, int maxLength, bool monospaced)
         {
             if (maxLength < 1)
             {
                 throw new ArgumentOutOfRangeException("maxLength");
             }
 
-            var cropped = false;
+            var stringDisaplayable = this.GetDisaplayableString(font, str);
+            var stringCropped      = stringDisaplayable;
+            var stringSize         = this.MeasureString(font, stringCropped, scale, monospaced);
 
-            var croppedText = this.GetInclusiveCJKText(text);
-            var textSize    = this.MesureMonoSpacedString(croppedText, scale);
+            var isCropped = false;
+            var isOutOfRange = stringSize.X > maxLength;
 
-            var outsideLength = textSize.X > maxLength;
-
-            while (outsideLength)
+            while (isOutOfRange)
             {
-                cropped = true;
+                isCropped = true;
+                
+                stringCropped = stringCropped.Substring(0, stringCropped.Length - 1);
+                stringSize    = this.MeasureString(font, stringCropped, scale, monospaced);
 
-                croppedText = croppedText.Substring(0, croppedText.Length - 1);
-                textSize = this.MesureMonoSpacedString(croppedText, scale);
-
-                outsideLength = textSize.X > maxLength;
+                isOutOfRange = stringSize.X > maxLength;
             }
 
-            if (cropped)
+            if (isCropped)
             {
-                return this.CropStringEnd(croppedText);
+                return this.CropStringTail(stringCropped);
             }
-            else
-            {
-                return croppedText;
-            }
+
+            return stringCropped;
         }
 
-        public string CropMonoSpacedStringAsciiCount(string text, int count)
+        private string CropStringTail(string str)
         {
-            return this.CropMonoSpacedString(text, 1.0f, (int)(count * this.FontMonoSpaceAsciiSize(1.0f)));
-        }
-
-        public string CropString(Font font, string text, float scale, int maxLength)
-        {
-            if (maxLength < 1)
+            if (str.Length > 2)
             {
-                throw new ArgumentOutOfRangeException("maxLength");
+                var head = str.Substring(0, str.Length - 3);
+                var tail = str.Substring(str.Length - 1 - 3, 3);
+
+                return head + (string.IsNullOrWhiteSpace(tail) ? "   " : "...");
             }
 
-            var spriteFont = FontManager[font];
-            var avaliableText = this.GetDisaplayableCharacters(spriteFont, text);
-
-            var cropped = false;
-            var croppedText = avaliableText;
-            var textSize = spriteFont.MesureString(croppedText, scale);
-
-            var outsideLength = textSize.X > maxLength;
-
-            while (outsideLength)
-            {
-                cropped = true;
-                croppedText = croppedText.Substring(0, croppedText.Length - 1);
-                textSize = spriteFont.MesureString(croppedText, scale);
-
-                outsideLength = textSize.X > maxLength;
-            }
-
-            if (cropped)
-            {
-                return this.CropStringEnd(croppedText);
-            }
-            else
-            {
-                return croppedText;
-            }
-        }
-
-        public string CropStringEnd(string text)
-        {
-            if (text.Length > 2)
-            {
-                var start = text.Substring(0, text.Length - 3);
-                var end   = text.Substring(text.Length - 1 - 3, 3);
-
-                return start + (string.IsNullOrWhiteSpace(end) ? "   " : "...");
-            }
-            else
-            {
-                return text;
-            }
+            return str;
         }
 
         #endregion Text Cropping
 
-        #region Text Filtering
+        #region String Filtering
 
-        public string GetDisaplayableCharacters(Font font, string text)
+        public int GetCJKExclusiveCharCount(string str)
         {
-            return GetDisaplayableCharacters(FontManager[font], text);
+            return this.GetCJKExclusiveCharIndexes(str).Count;
         }
 
-        public string GetDisaplayableCharacters(SpriteFont font, string text)
+        public string GetDisaplayableString(Font font, string str)
         {
-            if (font == null)
-            {
-                throw new ArgumentNullException("font");
-            }
-
-            return text.Where(t => font.Characters.Contains(t)).Aggregate(string.Empty, (current, t) => current + t);
+            return this.GetDisaplayableString(GameEngine.FontManager[font], str);
         }
 
-        public int GetExclusiveCJKCharacterCount(string text)
+        public List<int> GetNonDisaplayableCharIndexes(Font font, string str)
         {
-            var asciiFont = FontManager[Font.UiRegularFont];
-
-            return this.GetNonDisaplayableCharacterIndexes(asciiFont, text).Count;
+            return this.GetNonDisaplayableCharIndexes(GameEngine.FontManager[font], str);
         }
 
-        public string GetInclusiveCJKText(string text)
+        private List<int> GetCJKExclusiveCharIndexes(string str)
         {
-            var cjkSpriteFont = FontManager[Font.UiContentFont];
-            var cjkText = this.GetDisaplayableCharacters(cjkSpriteFont, text);
-
-            return cjkText;
+            return this.GetNonDisaplayableCharIndexes(Font.UiRegularFont, str);
         }
 
-        private List<float> GetExclusiveCJKCharacterPositionAmendments(List<int> cjkExclusiveCharacterIndexes, string text)
+        private List<float> GetCJKExclusiveCharPositionAmendments(List<int> cjkExclusiveCharIndexes, string str)
         {
             var position = 0f;
             var indexes  = new List<float>();
 
-            for (var i = 0; i < text.Length; i++)
+            for (var i = 0; i < str.Length; i++)
             {
-                if (cjkExclusiveCharacterIndexes.Contains(i))
+                if (cjkExclusiveCharIndexes.Contains(i))
                 {
                     position += 0.5f;
                 }
 
-                if (i > 0 && cjkExclusiveCharacterIndexes.Contains(i - 1))
+                if (i > 0 && cjkExclusiveCharIndexes.Contains(i - 1))
                 {
                     position += 0.5f;
                 }
@@ -369,7 +323,22 @@ namespace MetaMind.Engine.Components
             return indexes;
         }
 
-        private List<int> GetNonDisaplayableCharacterIndexes(SpriteFont font, string text)
+        private string GetCJKInclusiveString(string str)
+        {
+            return this.GetDisaplayableString(Font.UiContentFont, str);
+        }
+
+        private string GetDisaplayableString(SpriteFont font, string str)
+        {
+            if (font == null)
+            {
+                throw new ArgumentNullException("font");
+            }
+
+            return str.Where(t => font.Characters.Contains(t)).Aggregate(string.Empty, (current, t) => current + t);
+        }
+
+        private List<int> GetNonDisaplayableCharIndexes(SpriteFont font, string str)
         {
             if (font == null)
             {
@@ -377,9 +346,9 @@ namespace MetaMind.Engine.Components
             }
 
             var indexes = new List<int>();
-            for (var i = 0; i < text.Length; i++)
+            for (var i = 0; i < str.Length; i++)
             {
-                if (!font.Characters.Contains(text[i]))
+                if (!font.Characters.Contains(str[i]))
                 {
                     indexes.Add(i);
                 }

@@ -9,13 +9,13 @@
 
     public static class ScheduleGrammar
     {
-        public static Parser<RepeativityTag> RepeativityParser =
-            Parse.String("Everyday")  .End().Return(RepeativityTag.EveryDay)
-        .Or(Parse.String("EveryWeek") .End().Return(RepeativityTag.EveryWeek))
+        public static Parser<RepetitionTag> RepeativityParser =
+            Parse.String("Everyday")  .End().Return(RepetitionTag.EveryDay)
+        .Or(Parse.String("EveryWeek") .End().Return(RepetitionTag.EveryWeek))
 
         // TODO: Disabled for safety issue
-        // .Or(Parse.String("EveryMonth").End().Return(RepeativityTag.EveryMonth))
-        .Or(Parse.String("-")               .Return(RepeativityTag.Unspecified));
+        // .Or(Parse.String("EveryMonth").End().Return(RepetitionTag.EveryMonth))
+        .Or(Parse.String("-")               .Return(RepetitionTag.Unspecified));
 
         public static Parser<DayTag> DayParser =
             Parse.String("Mon").      End().Return(DayTag.Monday)
@@ -34,7 +34,7 @@
         .Or(Parse.String("Sunday").   End().Return(DayTag.Sunday))
         .Or(Parse.String("-").              Return(DayTag.Unspecified));
 
-        public static DateTag DateTag(string input)
+        public static ScheduleTag DateTag(string input)
         {
             var elems = input.Split(' ');
 
@@ -42,7 +42,7 @@
             var day         = DayParser                         .Parse(elems[1]);
             var time        = KnowledgeGrammar.TimeTagFullParser.Parse(elems[2]);
 
-            return new DateTag(repeativity, day, time);
+            return new ScheduleTag(repeativity, day, time);
         }
 
         public static Parser<string> ScheduleUnitParser = 
@@ -55,12 +55,12 @@
             from whitespaces in Parse.WhiteSpace.Many().Optional()
             select regex.Trim();
 
-        public static Parser<Schedule> ScheduleParser = from text   in BasicGrammar.BracketedTextParser
+        public static Parser<RawSchedule> ScheduleParser = from text   in LineGrammar.BracketedTextParser
                                                         from spaces in Parse.WhiteSpace.Many().Optional()
                                                         from unit   in ScheduleUnitParser
-                                                        select new Schedule(DateTag(text), unit);
+                                                        select new RawSchedule(DateTag(text), unit);
 
-        public static Parser<ScheduleFile> ScheduleFileParser = from schedules in ScheduleParser.AtLeastOnce()
-                                                                select new ScheduleFile(schedules.ToList());
+        public static Parser<RawScheduleFile> ScheduleFileParser = from schedules in ScheduleParser.AtLeastOnce()
+                                                                select new RawScheduleFile(schedules.ToList());
     }
 }

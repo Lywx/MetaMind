@@ -1,13 +1,11 @@
 namespace MetaMind.Engine.Guis.Elements
 {
+    using System;
+
     using Microsoft.Xna.Framework;
 
-    public interface IPressableFrame : IPressable
+    public interface IPressableFrame : IFrameBase, IPressable, IDisposable
     {
-        #region Public Properties
-
-        bool[] States { get; }
-
         Point Center { get; set; }
 
         Point Size { get; set; }
@@ -23,13 +21,5 @@ namespace MetaMind.Engine.Guis.Elements
         int Height { get; set; }
 
         Rectangle Rectangle { get; set; }
-
-        #endregion Public Properties
-
-        void UpdateInput(GameTime gameTime);
-
-        bool IsEnabled(FrameState state);
-
-        void Disable(FrameState state);
     }
 }

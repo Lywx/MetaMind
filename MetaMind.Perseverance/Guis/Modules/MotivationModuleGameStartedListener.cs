@@ -6,11 +6,11 @@ namespace MetaMind.Perseverance.Guis.Modules
 
     public class MotivationModuleGameStartedListener : ListenerBase
     {
-        private readonly IView nowView;
+        private readonly IView startup;
 
-        public MotivationModuleGameStartedListener(IView nowView)
+        public MotivationModuleGameStartedListener(IView startup)
         {
-            this.nowView = nowView;
+            this.startup = startup;
 
             this.RegisteredEvents.Add((int)SessionEventType.GameStarted);
         }
@@ -18,7 +18,7 @@ namespace MetaMind.Perseverance.Guis.Modules
         public override bool HandleEvent(EventBase @event)
         {
             // auto-select after startup
-            this.nowView.Control.Selection.Select(0);
+            this.startup.Control.Selection.Select(0);
 
             return true;
         }

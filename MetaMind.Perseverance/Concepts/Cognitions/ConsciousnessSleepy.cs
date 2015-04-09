@@ -5,6 +5,8 @@ using System.Runtime.Serialization;
 
 namespace MetaMind.Perseverance.Concepts.Cognitions
 {
+    using MetaMind.Perseverance.Events;
+
     [DataContract]
     public class ConsciousnessSleepy : Consciousness
     {

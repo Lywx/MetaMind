@@ -4,7 +4,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
     using MetaMind.Engine.Guis.Widgets.Views;
 
-    public class MotivationViewFactory : PointViewBasicFactory1D
+    public class MotivationViewFactory : PointViewFactory1D
     {
         protected override dynamic CreateControl(IView view, PointViewSettings1D viewSettings, ICloneable itemSettings)
         {

@@ -7,7 +7,6 @@
 
 namespace MetaMind.Engine.Components
 {
-    using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
@@ -23,7 +22,7 @@ namespace MetaMind.Engine.Components
 
         private static ScreenManager singleton;
 
-        public static ScreenManager GetInstance(Game game, ScreenManagerSettings settings)
+        public static ScreenManager GetInstance(Game game, ScreenSettings settings)
         {
             if (singleton == null)
             {
@@ -40,23 +39,80 @@ namespace MetaMind.Engine.Components
 
         #endregion Singleton
 
-        #region Screens
+        #region Drawing Data
+
+        private Texture2D blankTexture;
+
+        private SpriteBatch spriteBatch;
+
+        /// <summary>
+        /// A default SpriteBatch shared by all the screens. This saves
+        /// each screen having to bother creating their own local instance.
+        /// </summary>
+        public SpriteBatch SpriteBatch
+        {
+            get
+            {
+                return spriteBatch;
+            }
+        }
+
+        #endregion
+
+        #region Screen Data
 
         private readonly List<GameScreen> screens = new List<GameScreen>();
 
         private readonly List<GameScreen> screensToUpdate = new List<GameScreen>();
 
-        private Texture2D blankTexture;
+        /// <summary>
+        /// Expose an array holding all the screens. We return a copy rather
+        /// than the real master list, because screens should only ever be added
+        /// or removed using the AddScreen and RemoveScreen methods.
+        /// </summary>
+        public GameScreen[] Screens
+        {
+            get
+            {
+                return screens.ToArray();
+            }
+        }
+
+        #endregion
+
+        #region Configuration Data
+
+        public ScreenSettings Settings { get; private set; }
+
+        #endregion 
+
+        #region State Data
 
         private bool isInitialized;
 
-        private SpriteBatch spriteBatch;
+        #endregion
 
-        #endregion Screens
-
-        #region Trace and Settings
+        #region Trace Data
 
         private bool traceEnabled;
+
+        /// <summary>
+        /// If true, the manager prints out a list of all the screens
+        /// each time it is updated. This can be useful for making sure
+        /// everything is being added and removed at the right times.
+        /// </summary>
+        public bool TraceEnabled
+        {
+            get
+            {
+                return traceEnabled;
+            }
+
+            set
+            {
+                traceEnabled = value;
+            }
+        }
 
         #endregion Trace
 
@@ -65,7 +121,7 @@ namespace MetaMind.Engine.Components
         /// <summary>
         /// Constructs a new screen manager component.
         /// </summary>
-        private ScreenManager(Game game, ScreenManagerSettings settings)
+        private ScreenManager(Game game, ScreenSettings settings)
             : base(game)
         {
             this.Settings = settings;
@@ -121,7 +177,7 @@ namespace MetaMind.Engine.Components
         {
             if (Game.IsActive || this.Settings.AlwaysDraw)
             {
-                foreach (var screen in screens.Where(screen => screen.ScreenState != ScreenState.Hidden))
+                foreach (var screen in screens.Where(screen => screen.ScreenState != GameScreenState.Hidden))
                 {
                     screen.Draw(gameTime);
                 }
@@ -159,7 +215,7 @@ namespace MetaMind.Engine.Components
                     screen.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
                 }
 
-                if (screen.ScreenState == ScreenState.TransitionOn || screen.ScreenState == ScreenState.Active)
+                if (screen.ScreenState == GameScreenState.TransitionOn || screen.ScreenState == GameScreenState.Active)
                 {
                     // If this is the first active screen we came across,
                     // give it a chance to handle input.
@@ -187,55 +243,6 @@ namespace MetaMind.Engine.Components
         }
 
         #endregion Update and Draw
-
-        #region Public Properties
-
-        public ScreenManagerSettings Settings { get; private set; }
-
-        /// <summary>
-        /// Expose an array holding all the screens. We return a copy rather
-        /// than the real master list, because screens should only ever be added
-        /// or removed using the AddScreen and RemoveScreen methods.
-        /// </summary>
-        public GameScreen[] Screens
-        {
-            get
-            {
-                return screens.ToArray();
-            }
-        }
-
-        /// <summary>
-        /// A default SpriteBatch shared by all the screens. This saves
-        /// each screen having to bother creating their own local instance.
-        /// </summary>
-        public SpriteBatch SpriteBatch
-        {
-            get
-            {
-                return spriteBatch;
-            }
-        }
-
-        /// <summary>
-        /// If true, the manager prints out a list of all the screens
-        /// each time it is updated. This can be useful for making sure
-        /// everything is being added and removed at the right times.
-        /// </summary>
-        public bool TraceEnabled
-        {
-            get
-            {
-                return traceEnabled;
-            }
-
-            set
-            {
-                traceEnabled = value;
-            }
-        }
-
-        #endregion Public Properties
 
         #region Operations
 
@@ -304,17 +311,5 @@ namespace MetaMind.Engine.Components
         }
 
         #endregion Operations
-    }
-
-    public class ScreenManagerSettings: ICloneable
-    {
-        public bool AlwaysDraw = true;
-
-        public bool AlwaysUpdate = true;
-
-        public object Clone()
-        {
-            return this.MemberwiseClone();
-        }
     }
 }

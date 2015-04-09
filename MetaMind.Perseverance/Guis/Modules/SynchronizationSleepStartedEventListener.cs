@@ -4,6 +4,7 @@
 
     using MetaMind.Engine;
     using MetaMind.Engine.Components.Events;
+    using MetaMind.Perseverance.Concepts;
     using MetaMind.Perseverance.Concepts.Cognitions;
     using MetaMind.Perseverance.Screens;
     using MetaMind.Perseverance.Sessions;

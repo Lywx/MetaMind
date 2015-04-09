@@ -3,30 +3,31 @@
     using System.ServiceModel;
 
     using MetaMind.Perseverance;
-    using MetaMind.Perseverance.Concepts.Cognitions;
-    using MetaMind.Perseverance.Concepts.TaskEntries;
+    using MetaMind.Perseverance.Concepts;
+    using MetaMind.Perseverance.Concepts.Tasks;
 
     [ServiceContract]
     public interface ISynchronizationService
     {
         [OperationContract]
         [ServiceKnownType(typeof(Synchronization))]
-        ISynchronization Fetch();
+        ISynchronization FetchSynchronization();
 
         [OperationContract]
-        TaskEntry FetchTask();
+        [ServiceKnownType(typeof(Task))]
+        ISynchronizable FetchSynchronizationData();
     }
 
     public class SynchronizationService : ISynchronizationService
     {
-        public ISynchronization Fetch()
+        public ISynchronization FetchSynchronization()
         {
             return Perseverance.Session.Cognition.Synchronization;
         }
 
-        public TaskEntry FetchTask()
+        public ISynchronizable FetchSynchronizationData()
         {
-            return Perseverance.Session.Cognition.Synchronization.SynchronizedTask;
+            return Perseverance.Session.Cognition.Synchronization.SynchronizedData;
         }
     }
 }

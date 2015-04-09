@@ -1,10 +1,8 @@
 namespace MetaMind.Engine.Guis
 {
-    using MetaMind.Engine.Guis.Widgets;
-
     using Microsoft.Xna.Framework;
 
-    public abstract class Group<TGroupSettings> : Widget
+    public abstract class Group<TGroupSettings> : ManualInputGameElement
     {
         public TGroupSettings Settings { get; protected set; }
 
@@ -19,7 +17,7 @@ namespace MetaMind.Engine.Guis
 
         public override void HandleInput()
         {
-            base   .HandleInput();
+            base        .HandleInput();
             this.Control.HandleInput();
         }
 
@@ -28,15 +26,16 @@ namespace MetaMind.Engine.Guis
             this.Graphics.Draw(gameTime);
         }
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
-            this.Control.UpdateInput(gameTime);
+            this.Control .UpdateInput(gameTime);
+            this.Graphics.UpdateInput(gameTime);
         }
 
         public override void UpdateStructure(GameTime gameTime)
         {
             this.Control .UpdateStructure(gameTime);
-            this.Graphics.Update(gameTime);
+            this.Graphics.UpdateStructure(gameTime);
         }
     }
 }

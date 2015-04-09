@@ -2,10 +2,9 @@ namespace MetaMind.Perseverance.Guis.Widgets
 {
     using System;
 
-    using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Views;
 
-    public class TaskViewFactory : PointViewBasicFactory2D
+    public class TaskViewFactory : PointViewFactory2D
     {
         protected override dynamic CreateControl(IView view, PointViewSettings2D viewSettings, ICloneable itemSettings)
         {

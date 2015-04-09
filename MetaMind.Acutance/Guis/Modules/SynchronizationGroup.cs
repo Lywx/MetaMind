@@ -3,8 +3,10 @@
     using System;
     using System.ServiceModel;
 
+    using MetaMind.Engine;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis;
+    using MetaMind.Perseverance.Concepts;
     using MetaMind.Perseverance.Concepts.Cognitions;
     using MetaMind.Perseverance.Guis.Modules;
 
@@ -79,7 +81,7 @@
         {
         }
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
         }
 
@@ -142,7 +144,7 @@
 
         private void DrawSynchronizationStateInformation(ISynchronization validSynchronization)
         {
-            FontManager.DrawCenteredText(
+            FontManager.DrawStringCenteredHV(
                 this.Settings.StateFont,
                 validSynchronization.Enabled ? SynchronizationModule.SyncTrueInfo : SynchronizationModule.SyncFalseInfo,
                 this.SynchronizationStateInfoCenter,
@@ -152,11 +154,11 @@
 
         private void DrawSynchronizationTaskInformation(ISynchronization validSynchronization)
         {
-            var task = validSynchronization.SynchronizedTask;
+            var task = validSynchronization.SynchronizedData;
             if (task != null)
             {
-                var text = task.Name;
-                FontManager.DrawCenteredText(
+                var text = task.SynchronizationName;
+                FontManager.DrawStringCenteredHV(
                     text.IsAscii() ? this.Settings.StateFont : this.Settings.TaskFont,
                     text,
                     this.SynchronizationTaskInfoCenter,
@@ -167,7 +169,7 @@
 
         private void DrawSynchronizationTime(ISynchronization validSynchronization)
         {
-            FontManager.DrawCenteredText(
+            FontManager.DrawStringCenteredHV(
                 this.Settings.SynchronizationTimeFont,
                 string.Format("{0:hh\\:mm\\:ss}:{1}", validSynchronization.ElapsedTimeSinceTransition, validSynchronization.ElapsedTimeSinceTransition.Milliseconds.ToString("000")),
                 this.SynchronizationTimeCenter,

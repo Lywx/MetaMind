@@ -12,7 +12,7 @@
     {
         #region Singleton
 
-        private static  GameEngine singleton;
+        private static GameEngine singleton;
 
         public static GameEngine Instance
         {
@@ -24,7 +24,57 @@
 
         #endregion
 
-        #region Consructors
+        #region Components
+
+        #region File
+
+        public static ContentManager ContentManager { get; private set; }
+
+        public static FolderManager FolderManager { get; private set; }
+
+        #endregion
+
+        #region Sound
+
+        public static AudioManager AudioManager { get; private set; }
+
+        #endregion
+
+        #region Graphics
+
+        public static FontManager FontManager { get; private set; }
+
+        public static GraphicsManager GraphicsManager { get; private set; }
+
+        public static GraphicsSettings GraphicsSettings { get; set; }
+
+        public static MessageManager MessageManager { get; private set; }
+
+        public static ScreenManager ScreenManager { get; private set; }
+
+        #endregion
+
+        #region Input
+
+        public static InputEventManager InputEventManager { get; private set; }
+
+        public static InputSequenceManager InputSequenceManager { get; private set; }
+
+        #endregion
+
+        #region Interop
+
+        public static EventManager EventManager { get; private set; }
+
+        public static ProcessManager ProcessManager { get; private set; }
+
+        #endregion
+
+        public static GameManager GameManager { get; private set; }
+
+        #endregion Components
+
+        #region Constructors
 
         private GameEngine()
         {
@@ -32,94 +82,58 @@
             // other components are loaded in initialization.
 
             // graphics
-            //-----------------------------------------------------------------
-            GraphicsManager = GraphicsManager.GetInstance(this);
+            GraphicsSettings = GraphicsSettings.GetInstance();
+            GraphicsManager  = GraphicsManager .GetInstance(this);
 
             // screen
-            //------------------------------------------------------------------
-            ScreenManager = ScreenManager.GetInstance(this, new ScreenManagerSettings());
+            ScreenManager = ScreenManager.GetInstance(this, new ScreenSettings());
 
             // content
-            //-----------------------------------------------------------------
             this.Content.RootDirectory = "Content";
             ContentManager = this.Content;
 
             // game
-            //---------------------------------------------------------------------
             GameManager = GameManager.GetInstance(this);
         }
 
         #endregion Consructors
 
-        #region Components
-
-        public static AudioManager AudioManager { get; private set; }
-
-        public static ContentManager ContentManager { get; private set; }
-
-        public static EventManager EventManager { get; private set; }
-
-        public static FontManager FontManager { get; private set; }
-
-        public static GraphicsManager GraphicsManager { get; private set; }
-
-        public static InputEventManager InputEventManager { get; private set; }
-
-        public static InputSequenceManager InputSequenceManager { get; private set; }
-
-        public static MessageManager MessageManager { get; private set; }
-
-        public static ProcessManager ProcessManager { get; private set; }
-
-        public static GameManager GameManager { get; private set; }
-
-        public static ScreenManager ScreenManager { get; private set; }
-
-        private static FolderManager FolderManager { get; set; }
-
-        #endregion Components
-
         #region Initializations
 
         protected override void Initialize()
         {
-            GraphicsManager.Initialize();
-            GraphicsManager.CenterWindow();
+            // graphics
+            GraphicsSettings.Initialize();
+            GraphicsManager .Initialize();
 
             // audio
-            //------------------------------------------------------------------
-            AudioManager = AudioManager.GetInstance(this,
-                @"Content\Audio\Audio.xgs",
-                @"Content\Audio\Wave Bank.xwb",
-                @"Content\Audio\Sound Bank.xsb");
+            AudioManager = AudioManager.GetInstance(this);
 
             // folder
-            //-----------------------------------------------------------------
             FolderManager = FolderManager.GetInstance();
 
             // process
-            //------------------------------------------------------------------
             ProcessManager = ProcessManager.GetInstance(this);
 
             // event
-            //------------------------------------------------------------------
             EventManager = EventManager.GetInstance(this);
 
             // input
-            //------------------------------------------------------------------
-            InputEventManager    = InputEventManager.GetInstance(this);
+            InputEventManager    = InputEventManager   .GetInstance(this);
             InputSequenceManager = InputSequenceManager.GetInstance();
 
             // font
-            //------------------------------------------------------------------
             FontManager = FontManager.GetInstance();
 
             // message
-            //------------------------------------------------------------------
             MessageManager = MessageManager.GetInstance();
 
             base.Initialize();
         }
+
+        #endregion Initializations
+
+        #region Load and Unload
 
         protected override void LoadContent()
         {
@@ -132,7 +146,8 @@
             FontManager.UnloadContent();
             base       .UnloadContent();
         }
-        #endregion Initializations
+
+        #endregion
 
         #region Update and Draw
 
@@ -144,7 +159,7 @@
 
         #endregion Update and Draw
 
-        #region System
+        #region System Events
 
         protected override void OnExiting(object sender, EventArgs args)
         {
@@ -152,6 +167,6 @@
             base       .OnExiting(sender, args);
         }
 
-        #endregion System
+        #endregion 
     }
 }

@@ -6,7 +6,7 @@
 
     using Microsoft.Xna.Framework;
 
-    public class TimelineText : EngineObject
+    public class TimelineText : GameEngineAccess
     {
         private string  name;
         private Vector2 position;
@@ -23,7 +23,7 @@
 
         public void Draw(GameTime gameTime, byte alpha)
         {
-            FontManager.DrawText(this.font, this.name, this.position, Color.White.MakeTransparent(alpha), this.size);
+            FontManager.DrawString(this.font, this.name, this.position, Color.White.MakeTransparent(alpha), this.size);
         }
 
         public void Update(GameTime gameTime)

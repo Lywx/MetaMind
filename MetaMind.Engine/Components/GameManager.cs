@@ -28,22 +28,26 @@ namespace MetaMind.Engine.Components
 
         private readonly GameComponentCollection components;
 
-        private readonly List<Game> runners = new List<Game>();
+        private readonly List<IGame> games = new List<IGame>();
+
+        #region Constructors
 
         private GameManager(GameEngine engine)
         {
-            components = engine.Components;
+            this.components = engine.Components;
         }
 
-        public void Add(Game runner)
+        #endregion
+
+        public void Add(IGame game)
         {
-            runners.Add(runner);
-            components.Add(runner);
+            this.games     .Add(game);
+            this.components.Add(game);
         }
 
         public void OnExiting()
         {
-            runners.ForEach(component => component.OnExiting());
+            this.games.ForEach(component => component.OnExiting());
         }
     }
 }

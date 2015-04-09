@@ -4,7 +4,7 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Acutance.Parsers.Elements;
     using MetaMind.Engine.Guis.Widgets.Items;
 
-    public class ModuleItemFactory : ViewItemBasicFactory2D
+    public class ModuleItemFactory : ViewItemFactory2D
     {
         public ModuleItemFactory(IModulelist modulelist)
         {
@@ -18,7 +18,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             return new ModuleItemControl(item, this.Modulelist.Modules);
         }
 
-        public dynamic CreateData(KnowledgeFileBuffer buffer)
+        public dynamic CreateData(RawKnowledgeFileBuffer buffer)
         {
             var module = this.Modulelist.Create(buffer.File);
 
@@ -37,7 +37,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             this.RemoveData(item.ItemData);
         }
 
-        public void RemoveData(ModuleEntry module)
+        public void RemoveData(Module module)
         {
             this.Modulelist.Remove(module);
 
@@ -46,7 +46,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             module.Dispose();
         }
 
-        private void LinkData(KnowledgeFileBuffer buffer, ModuleEntry module, ModuleLinker linker)
+        private void LinkData(RawKnowledgeFileBuffer buffer, Module module, ModuleLinker linker)
         {
             linker.Initialize(module);
 
@@ -58,12 +58,12 @@ namespace MetaMind.Acutance.Guis.Widgets
             linker.Start();
         }
 
-        private void RemoveSubData(ModuleEntry module)
+        private void RemoveSubData(Module module)
         {
-            if (module.SubModules != null && 
-                module.SubModules.Count > 0)
+            if (module.Minions != null && 
+                module.Minions.Count > 0)
             {
-                foreach (var subModule in module.SubModules.ToArray())
+                foreach (var subModule in module.Minions.ToArray())
                 {
                     this.RemoveData(subModule);
                 }

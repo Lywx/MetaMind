@@ -9,7 +9,7 @@
 
     using Primtives2D;
 
-    public class Banner : EngineObject
+    public class Banner : GameEngineAccess
     {
         private PointViewSettings1D viewSettings;
         private BannerSetting  bannerSetting;
@@ -38,8 +38,8 @@
             get 
             {
                 return new Vector2(
-                    this.viewSettings.StartPoint.X - 30,
-                    this.viewSettings.StartPoint.Y - 63);
+                    this.viewSettings.PointStart.X - 30,
+                    this.viewSettings.PointStart.Y - 63);
             }
         }
 
@@ -52,9 +52,9 @@
         {
             var spriteBatch  = ScreenManager.SpriteBatch;
 
-            var upperBorder  = new Rectangle(0, this.viewSettings.StartPoint.Y - this.bannerSetting.Height / 2 - this.bannerSetting.Thin - this.bannerSetting.Thick, this.bannerSetting.Width, this.bannerSetting.Thick );
-            var middleRegion = new Rectangle(0, this.viewSettings.StartPoint.Y - this.bannerSetting.Height / 2                                           , this.bannerSetting.Width, this.bannerSetting.Height);
-            var lowerBorder  = new Rectangle(0, this.viewSettings.StartPoint.Y + this.bannerSetting.Height / 2 + this.bannerSetting.Thin                      , this.bannerSetting.Width, this.bannerSetting.Thick );
+            var upperBorder  = new Rectangle(0, this.viewSettings.PointStart.Y - this.bannerSetting.Height / 2 - this.bannerSetting.Thin - this.bannerSetting.Thick, this.bannerSetting.Width, this.bannerSetting.Thick );
+            var middleRegion = new Rectangle(0, this.viewSettings.PointStart.Y - this.bannerSetting.Height / 2                                           , this.bannerSetting.Width, this.bannerSetting.Height);
+            var lowerBorder  = new Rectangle(0, this.viewSettings.PointStart.Y + this.bannerSetting.Height / 2 + this.bannerSetting.Thin                      , this.bannerSetting.Width, this.bannerSetting.Thick );
 
             Primitives2D.FillRectangle(spriteBatch, upperBorder , this.bannerSetting.Color.MakeTransparent(alpha));
             Primitives2D.FillRectangle(spriteBatch, lowerBorder , this.bannerSetting.Color.MakeTransparent(alpha));

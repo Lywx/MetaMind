@@ -9,13 +9,11 @@ namespace MetaMind.Engine.Components.Inputs
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
 
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Parsers.Elements;
     using MetaMind.Engine.Parsers.Grammars;
-    using MetaMind.Engine.Settings;
     using MetaMind.Engine.Settings.Loaders;
 
     using Microsoft.Xna.Framework;
@@ -93,20 +91,8 @@ namespace MetaMind.Engine.Components.Inputs
         public Dictionary<Keys, List<Keys>> Bindings = new Dictionary<Keys, List<Keys>>();
     }
 
-    public class KeyboardManager : Widget, IConfigurationLoader
+    public class KeyboardManager : ManualInputGameElement, IConfigurationFileLoader
     {
-        #region Configurations
-
-        public string ConfigurationFile
-        {
-            get
-            {
-                return "Control.txt";
-            }
-        }
-
-        #endregion
-
         #region Singleton
 
         private static KeyboardManager singleton;
@@ -128,7 +114,7 @@ namespace MetaMind.Engine.Components.Inputs
         {
             get
             {
-                return currentState;
+                return this.currentState;
             }
         }
 
@@ -136,7 +122,7 @@ namespace MetaMind.Engine.Components.Inputs
         {
             get
             {
-                return previousState;
+                return this.previousState;
             }
         }
 
@@ -148,7 +134,7 @@ namespace MetaMind.Engine.Components.Inputs
         {
             get
             {
-                KeyboardState state = Keyboard.GetState();
+                var state = Keyboard.GetState();
                 return state.IsKeyDown(Keys.LeftAlt) || state.IsKeyDown(Keys.RightAlt);
             }
         }
@@ -157,7 +143,7 @@ namespace MetaMind.Engine.Components.Inputs
         {
             get
             {
-                KeyboardState state = Keyboard.GetState();
+                var state = Keyboard.GetState();
                 return state.IsKeyDown(Keys.LeftControl) || state.IsKeyDown(Keys.RightControl);
             }
         }
@@ -166,7 +152,7 @@ namespace MetaMind.Engine.Components.Inputs
         {
             get
             {
-                KeyboardState state = Keyboard.GetState();
+                var state = Keyboard.GetState();
                 return state.IsKeyDown(Keys.LeftShift) || state.IsKeyDown(Keys.RightShift);
             }
         }
@@ -180,7 +166,7 @@ namespace MetaMind.Engine.Components.Inputs
         /// </summary>
         public bool IsActionPressed(Actions action)
         {
-            return IsActionMapPressed(actionMaps[(int)action]);
+            return this.IsActionMapPressed(actionMaps[(int)action]);
         }
 
         /// <summary>
@@ -188,7 +174,7 @@ namespace MetaMind.Engine.Components.Inputs
         /// </summary>
         public bool IsActionTriggered(Actions action)
         {
-            return IsActionMapTriggered(actionMaps[(int)action]);
+            return this.IsActionMapTriggered(actionMaps[(int)action]);
         }
 
         /// <summary>
@@ -199,7 +185,7 @@ namespace MetaMind.Engine.Components.Inputs
             return
                 actionMap.Bindings.Any(
                     binding =>
-                    IsKeyPressed(binding.Key) && (binding.Value.Count == 0 || binding.Value.All(IsKeyPressed)));
+                    this.IsKeyPressed(binding.Key) && (binding.Value.Count == 0 || binding.Value.All(this.IsKeyPressed)));
         }
 
         /// <summary>
@@ -210,42 +196,12 @@ namespace MetaMind.Engine.Components.Inputs
             return
                 actionMap.Bindings.Any(
                     binding =>
-                    IsKeyTriggered(binding.Key) && (binding.Value.Count == 0 || binding.Value.All(IsKeyPressed)));
+                    this.IsKeyTriggered(binding.Key) && (binding.Value.Count == 0 || binding.Value.All(this.IsKeyPressed)));
         }
 
         #endregion Action States
 
-        #region Key States
-
-        /// <summary>
-        /// Check if a key is pressed.
-        /// </summary>
-        public bool IsKeyPressed(Keys key)
-        {
-            return currentState.IsKeyDown(key);
-        }
-
-        /// <summary>
-        /// Check if a key was just pressed in the most recent update.
-        /// </summary>
-        public bool IsKeyTriggered(Keys key)
-        {
-            return currentState.IsKeyDown(key) && !previousState.IsKeyDown(key);
-        }
-
-        #endregion Key States
-
-        #region Constructors
-
-        private KeyboardManager()
-        {
-            this.InitActionMap();
-            this.LoadActionMap();
-        }
-
-        #endregion Constructors
-
-        #region Keyboard Action Mappings
+        #region Action Mappings
 
         /// <summary>
         /// The action mappings for the game.
@@ -258,7 +214,7 @@ namespace MetaMind.Engine.Components.Inputs
             get { return actionMaps; }
         }
 
-        private void InitActionMap()
+        private void ActionMapInitialize()
         {
             actionMaps = new KeyboardActionMap[(int)Actions.ActionNum];
 
@@ -268,15 +224,15 @@ namespace MetaMind.Engine.Components.Inputs
             }
         }
 
-        private void LoadActionMap()
+        private void ActionMapLoad()
         {
-            foreach (var pair in ConfigurationLoader.LoadDuplicablePairs(this))
+            foreach (var pair in ConfigurationFileLoader.LoadDuplicablePairs(this))
             {
-                this.LoadActionMapPair(pair);
+                this.ActionMapPairLoad(pair);
             }
         }
 
-        private void LoadActionMapPair(KeyValuePair<string, string> pair)
+        private void ActionMapPairLoad(KeyValuePair<string, string> pair)
         {
             // parse pair action
             Actions action;
@@ -290,7 +246,7 @@ namespace MetaMind.Engine.Components.Inputs
             Keys key;
             List<Keys> modifiers = new List<Keys>();
 
-            var expression = BasicGrammar.SentenceParser.Parse(pair.Value);
+            var expression = LineGrammar.SentenceParser.Parse(pair.Value);
 
             // parse mapping key
             key = Key(expression);
@@ -323,7 +279,54 @@ namespace MetaMind.Engine.Components.Inputs
             return key;
         }
 
-        #endregion Keyboard Action Mappings
+        #endregion Action Mappings
+
+        #region Key States
+
+        /// <summary>
+        /// Check if a key is pressed.
+        /// </summary>
+        public bool IsKeyPressed(Keys key)
+        {
+            return this.currentState.IsKeyDown(key);
+        }
+
+        /// <summary>
+        /// Check if a key was just pressed in the most recent update.
+        /// </summary>
+        public bool IsKeyTriggered(Keys key)
+        {
+            return this.currentState.IsKeyDown(key) && !this.previousState.IsKeyDown(key);
+        }
+
+        #endregion Key States
+
+        #region Constructors
+
+        private KeyboardManager()
+        {
+            this.ConfigurationLoad();
+        }
+
+        #endregion Constructors
+
+        #region Configurations
+
+        public string ConfigurationFile
+        {
+            get
+            {
+                return "Control.txt";
+            }
+        }
+
+        public void ConfigurationLoad()
+        {
+            this.ActionMapInitialize();
+            this.ActionMapLoad();
+        }
+
+        #endregion
 
         #region Update
 
@@ -331,10 +334,10 @@ namespace MetaMind.Engine.Components.Inputs
         {
         }
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
-            previousState = currentState;
-            currentState = Keyboard.GetState();
+            this.previousState = this.currentState;
+            this.currentState = Keyboard.GetState();
         }
 
         public override void UpdateStructure(GameTime gameTime)
@@ -342,6 +345,5 @@ namespace MetaMind.Engine.Components.Inputs
         }
 
         #endregion Update
-
     }
 }

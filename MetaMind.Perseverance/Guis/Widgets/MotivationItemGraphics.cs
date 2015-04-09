@@ -14,7 +14,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
     using Microsoft.Xna.Framework;
 
-    public class MotivationItemGraphics : ViewItemBasicGraphics
+    public class MotivationItemGraphics : ViewItemGraphics
     {
         private readonly MotivationItemSymbolGraphics symbol;
 
@@ -27,13 +27,13 @@ namespace MetaMind.Perseverance.Guis.Widgets
             this.task = new MotivationItemTaskGraphics(item);
         }
 
+        #region Graphics Data
+
         protected override Vector2 IdCenter
         {
             get
             {
-                return new Vector2(
-                    ItemControl.RootFrame.Rectangle.Center.X,
-                    ItemControl.RootFrame.Rectangle.Top - 15);
+                return new Vector2(ItemControl.RootFrame.Rectangle.Center.X, ItemControl.RootFrame.Rectangle.Top - 15);
             }
         }
 
@@ -41,32 +41,41 @@ namespace MetaMind.Perseverance.Guis.Widgets
         {
             get
             {
-                return FontManager.CropText(
-                    this.ItemSettings.NameFont,
-                    this.ItemData.Name,
-                    this.ItemSettings.NameSize,
-                    this.ViewSettings.RootMargin.X * 6);
+                return FontManager.CropMonospacedString(
+                    ItemData.Name,
+                    ItemSettings.NameSize,
+                    ViewSettings.PointMargin.X * 6);
             }
         }
 
         private string HelpInformation
         {
-            get { return "N:Name"; }
+            get
+            {
+                return "N:Name";
+            }
         }
 
         private Vector2 HelpLocation
         {
-            get { return this.NameLocation; }
+            get
+            {
+                return this.NameLocation;
+            }
         }
 
         private Vector2 NameLocation
         {
             get
             {
-                return PointExt.ToVector2(ItemControl.RootFrame.Rectangle.Center)
-                       + PointExt.ToVector2(ItemSettings.NameMargin);
+                return ExtPoint.ToVector2(ItemControl.RootFrame.Rectangle.Center)
+                       + ExtPoint.ToVector2(ItemSettings.NameMargin);
             }
         }
+
+        #endregion
+
+        #region Update and Draw
 
         public override void Draw(GameTime gameTime, byte alpha)
         {
@@ -79,7 +88,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             this.DrawSymbol(gameTime, alpha);
             this.DrawName(alpha);
             this.DrawId(alpha);
-            
+
             // sub task view
             this.DrawTasks(gameTime, alpha);
         }
@@ -91,11 +100,11 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         protected override void DrawId(byte alpha)
         {
-            FontManager.DrawCenteredText(
-                ItemSettings.IdFont, 
+            FontManager.DrawStringCenteredHV(
+                ItemSettings.IdFont,
                 ItemControl.Id.ToString(new CultureInfo("en-US")),
                 this.IdCenter,
-                !Item.IsEnabled(ItemState.Item_Pending) ? ItemSettings.IdColor : ItemSettings.IdPendingColor, 
+                !Item.IsEnabled(ItemState.Item_Pending) ? ItemSettings.IdColor : ItemSettings.IdPendingColor,
                 ItemSettings.IdSize);
         }
 
@@ -106,23 +115,23 @@ namespace MetaMind.Perseverance.Guis.Widgets
                 return;
             }
 
-            if (this.Item.IsEnabled(ItemState.Item_Pending))
+            if (Item.IsEnabled(ItemState.Item_Pending))
             {
-                FontManager.DrawCenteredText(
-                    this.ItemSettings.HelpFont,
+                FontManager.DrawStringCenteredHV(
+                    ItemSettings.HelpFont,
                     this.HelpInformation,
                     this.HelpLocation,
-                    ColorExt.MakeTransparent(this.ItemSettings.HelpColor, alpha),
-                    this.ItemSettings.HelpSize);
+                    ExtColor.MakeTransparent(ItemSettings.HelpColor, alpha),
+                    ItemSettings.HelpSize);
             }
             else
             {
-                FontManager.DrawCenteredText(
-                    this.ItemSettings.NameFont,
+                FontManager.DrawStringCenteredHV(
+                    ItemSettings.NameFont,
                     this.NameCropped,
                     this.NameLocation,
-                    ColorExt.MakeTransparent(this.ItemSettings.NameColor, alpha),
-                    this.ItemSettings.NameSize);
+                    ExtColor.MakeTransparent(ItemSettings.NameColor, alpha),
+                    ItemSettings.NameSize);
             }
         }
 
@@ -135,5 +144,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
         {
             this.task.Draw(gameTime, alpha);
         }
+
+        #endregion
     }
 }

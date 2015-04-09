@@ -11,11 +11,11 @@ namespace MetaMind.Perseverance.Guis.Widgets
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Regions;
     using MetaMind.Engine.Guis.Widgets.Views;
-    using MetaMind.Perseverance.Concepts.TaskEntries;
+    using MetaMind.Perseverance.Concepts.Tasks;
 
     using Microsoft.Xna.Framework;
 
-    public class TaskViewControl : GridControl
+    public class TaskViewControl : PointGridControl
     {
         #region Constructors
 
@@ -28,7 +28,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         #region Operations
 
-        public void AddItem(TaskEntry entry)
+        public void AddItem(Task entry)
         {
             this.View.Items.Add(new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory, entry));
         }
@@ -99,8 +99,8 @@ namespace MetaMind.Perseverance.Guis.Widgets
         protected override Rectangle RegionPositioning(dynamic viewSettings, dynamic itemSettings)
         {
             return new Rectangle(
-                viewSettings.StartPoint.X,
-                viewSettings.StartPoint.Y,
+                viewSettings.PointStart.X,
+                viewSettings.PointStart.Y,
                 viewSettings.ColumnNumDisplay * itemSettings.NameFrameSize.X,
                 viewSettings.RowNumDisplay    * (itemSettings.NameFrameSize.Y + itemSettings.IdFrameSize.Y));
         }

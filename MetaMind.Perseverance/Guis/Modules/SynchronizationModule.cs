@@ -2,13 +2,15 @@
 {
     using System;
 
+    using MetaMind.Engine;
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Components.Graphics;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis;
+    using MetaMind.Perseverance.Concepts;
     using MetaMind.Perseverance.Concepts.Cognitions;
-    using MetaMind.Perseverance.Concepts.TaskEntries;
+    using MetaMind.Perseverance.Concepts.Tasks;
 
     using Microsoft.Xna.Framework;
 
@@ -17,7 +19,7 @@
     public class SynchronizationModule : Module<SynchronizationModuleSettings>
     {
         public const string SyncFalseInfo = "Losing Synchronicity";
-        public const string SyncTrueInfo  = "Synchronizing";
+        public const string SyncTrueInfo  = "IsSynchronizing";
 
         private readonly ICognition       cognition;
         private readonly ISynchronization synchronization;
@@ -106,7 +108,7 @@
         {
             get
             {
-                return new Vector2((int)this.StateInfoCenter.X, GraphicsSettings.Height - 15);
+                return new Vector2((int)this.StateInfoCenter.X, GameEngine.GraphicsSettings.Height - 15);
             }
         }
 
@@ -170,7 +172,7 @@
         {
             get
             {
-                return new Vector2(GraphicsSettings.Width / 2f, this.StatusInfoCenter.Y + 30);
+                return new Vector2(GameEngine.GraphicsSettings.Width / 2f, this.StatusInfoCenter.Y + 30);
             }
         }
 
@@ -228,7 +230,7 @@
 
         #region Operations
 
-        public void StartSynchronizing(TaskEntry target)
+        public void StartSynchronizing(Task target)
         {
             if (valve.Opened)
             {
@@ -249,7 +251,7 @@
 
         #region Update
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.ForceAwake))
             {
@@ -309,13 +311,13 @@
 
         private void DrawAccelerationInfo()
         {
-            FontManager.DrawCenteredText(
+            FontManager.DrawStringCenteredHV(
                 this.Settings.AccelerationFont,
                 "x",
                 this.AccelerationPrefixCenter,
                 this.Settings.AccelerationColor,
                 1f);
-            FontManager.DrawCenteredText(
+            FontManager.DrawStringCenteredHV(
                 this.Settings.AccelerationFont,
                 string.Format("{0}", this.synchronization.Acceleration.ToString("F1")),
                 this.AccelerationSubfixCenter,
@@ -325,7 +327,7 @@
 
         private void DrawAccumulationInfo()
         {
-            FontManager.DrawCenteredText(
+            FontManager.DrawStringCenteredHV(
                 this.Settings.AccumulationFont,
                 string.Format("{0}", this.synchronization.ElapsedTimeSinceTransition.ToString("hh':'mm':'ss")),
                 this.AccumulationSubfixCenter,
@@ -349,7 +351,7 @@
                 var syncRateText = (syncRate * 100).ToString("F0");
 
                 // draw rate digits
-                FontManager.DrawCenteredText(
+                FontManager.DrawStringCenteredHV(
                     this.Settings.SynchronizationRateFont,
                     syncRateText,
                     this.DailySyncHourPrefixCenter,
@@ -359,11 +361,11 @@
                 const int    SymbolMargin = 10;
                 const string Symbol = "%";
 
-                var syncRateTextWidth = this.Settings.SynchronizationRateFont.MeasureString(syncRateText).X;
+                var syncRateTextWidth = FontManager.MeasureString(this.Settings.SynchronizationRateFont, syncRateText, this.Settings.SynchronizationRateSize).X;
                 var syncRateTextMargin = new Vector2(syncRateTextWidth / 2 * this.Settings.SynchronizationRateSize + SymbolMargin, 0);
 
                 // draw % after rate digits
-                FontManager.DrawCenteredText(
+                FontManager.DrawStringCenteredHV(
                     this.Settings.SynchronizationRateFont,
                     Symbol,
                     this.DailySyncHourPrefixCenter + syncRateTextMargin,
@@ -421,7 +423,7 @@
                     dotFrame,
                     this.Settings.SynchronizationDotFrameColor);
 
-                FontManager.DrawCenteredText(
+                FontManager.DrawStringCenteredHV(
                     this.Settings.SynchronizationRateFont,
                     ((i + 1) % 10).ToString("F0"),
                     this.SynchronizationDotTextCenter(dotFrame),
@@ -439,7 +441,7 @@
                     dotFrame,
                     this.Settings.SynchronizationDotFrameColor);
 
-                FontManager.DrawCenteredText(
+                FontManager.DrawStringCenteredHV(
                     this.Settings.SynchronizationRateFont,
                     ((i + 1) % 10).ToString("F0"),
                     this.SynchronizationDotTextCenter(dotFrame),
@@ -456,7 +458,7 @@
             const string IncreaseMessage = "Computational Motivation Synchronization Ratio increases";
             const string DecreaseMessage = "Computational Motivation Synchronization Ratio decreases";
 
-            FontManager.DrawCenteredText(
+            FontManager.DrawStringCenteredHV(
                 this.Settings.MessageFont,
                 better ? IncreaseMessage : DecreaseMessage,
                 this.MessageCenter,
@@ -479,7 +481,7 @@
 
         private void DrawStateInfo()
         {
-            FontManager.DrawCenteredText(
+            FontManager.DrawStringCenteredHV(
                 this.Settings.StateFont,
                 this.synchronization.Enabled ? SyncTrueInfo : SyncFalseInfo,
                 this.StateInfoCenter,
@@ -489,7 +491,7 @@
 
         private void DrawStatusInfo()
         {
-            FontManager.DrawCenteredText(
+            FontManager.DrawStringCenteredHV(
                 this.Settings.StateFont,
                 string.Format("Level {0}: {1}", this.synchronization.Level, this.synchronization.State),
                 this.StatusInfoCenter,
@@ -500,14 +502,14 @@
         private void DrawValveStatusInfo()
         {
             const string PrefixText = "Approximated Motive";
-            FontManager.DrawCenteredText(
+            FontManager.DrawStringCenteredHV(
                 this.Settings.ValveStateFont,
                 PrefixText,
                 this.ValveStateInfoPrefixCenter,
                 this.valve.Opened ? this.Settings.ValueAscendColor : this.Settings.ValueDescendColor,
                 0.7f);
 
-            FontManager.DrawCenteredText(
+            FontManager.DrawStringCenteredHV(
                 this.Settings.ValveStateFont,
                 "[   ]",
                 this.ValveStateInfoSubfixCenter,
@@ -517,7 +519,7 @@
 
         private Rectangle SynchronizationDotRectangle(int i, bool leftsided)
         {
-            return RectangleExt.Rectangle(
+            return ExtRectangle.Rectangle(
                 leftsided ? (int)this.StateInfoCenter.X - 275 - 15 * i : (int)this.StateInfoCenter.X + 275 + 15 * i,
                 (int)this.StateInfoCenter.Y - 1,
                 this.Settings.BarFrameSize.Y,

@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Components.Events
 {
     using System.Collections.Generic;
 
-    public class ListenerBase : EngineObject
+    public class ListenerBase
     {
         private readonly List<int> registeredEvents;
 

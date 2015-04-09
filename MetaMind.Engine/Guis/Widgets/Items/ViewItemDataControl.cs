@@ -10,6 +10,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
     using System;
     using System.Reflection;
 
+    using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Concepts;
     using MetaMind.Engine.Events;
     using MetaMind.Engine.Guis.Widgets.Views;
@@ -111,19 +112,19 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         private void RefreshEditingExperience(object sender, ViewItemDataEventArgs e)
         {
-            string inputString = FontManager.GetDisaplayableCharacters(ItemSettings.NameFont, e.NewValue);
+            string inputString = FontManager.GetDisaplayableString((Font)this.ItemSettings.NameFont, e.NewValue);
 
             // parse input to experience
             int integer;
             var succeded = int.TryParse(inputString, out integer);
-            var experience = new Experience(DateTime.Now, TimeSpan.FromHours(integer), DateTime.Now);
+            var experience = new SynchronizationSpan(DateTime.Now, DateTime.Now, TimeSpan.FromHours(integer));
 
-            this.RefreshValue(ItemData, succeded ? experience : Experience.Zero);
+            this.RefreshValue(ItemData, succeded ? experience : SynchronizationSpan.Zero);
         }
 
         private void RefreshEditingInt(object sender, ViewItemDataEventArgs e)
         {
-            string inputString = FontManager.GetDisaplayableCharacters(ItemSettings.NameFont, e.NewValue);
+            string inputString = FontManager.GetDisaplayableString((Font)this.ItemSettings.NameFont, e.NewValue);
 
             // parse input to int
             int result;
@@ -135,7 +136,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         private void RefreshEditingString(object sender, ViewItemDataEventArgs e)
         {
             // make sure name is exactly the same as the displayed name
-            string inputString = FontManager.GetDisaplayableCharacters(ItemSettings.NameFont, e.NewValue);
+            string inputString = FontManager.GetDisaplayableString((Font)this.ItemSettings.NameFont, e.NewValue);
 
             this.RefreshValue(ItemData, inputString);
         }

@@ -8,6 +8,8 @@ namespace MetaMind.Acutance.Sessions
     using MetaMind.Acutance.Concepts;
     using MetaMind.Engine;
     using MetaMind.Engine.Components;
+    
+    // TODO: Session may be separated from saving and loading operations which may be useful for sharing saving and loading operations
 
     /// <summary>
     /// Session is a data class.
@@ -15,7 +17,7 @@ namespace MetaMind.Acutance.Sessions
     [DataContract,
     KnownType(typeof(Commandlist)),
     KnownType(typeof(Modulelist))]
-    public class Session : EngineObject
+    public class Session
     {
         #region File Storage
 
@@ -87,9 +89,16 @@ namespace MetaMind.Acutance.Sessions
         public void Save()
         {
             var serializer = new DataContractSerializer(typeof(Session), null, int.MaxValue, false, true, null);
-            using (var file = File.Create(XmlPath))
+            try
             {
-                serializer.WriteObject(file, singleton);
+                using (var file = File.Create(XmlPath))
+                {
+                    serializer.WriteObject(file, singleton);
+                }
+            }
+            catch (IOException)
+            {
+                // skip because there may be other instance trying to save
             }
         }
 

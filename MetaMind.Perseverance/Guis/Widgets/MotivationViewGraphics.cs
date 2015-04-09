@@ -14,7 +14,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
     using Primtives2D;
 
-    public class MotivationViewGraphics : ViewBasicGraphics
+    public class MotivationViewGraphics : ViewGraphics
     {
         private int frameAlpha;
 
@@ -55,7 +55,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             Primitives2D.FillRectangle(
                 ScreenManager.SpriteBatch,
                 this.ViewControl.Region.Frame.Rectangle,
-                ColorExt.MakeTransparent(this.ViewSettings.HighlightColor, (byte)this.frameAlpha));
+                ExtColor.MakeTransparent(this.ViewSettings.HighlightColor, (byte)this.frameAlpha));
         }
     }
 }

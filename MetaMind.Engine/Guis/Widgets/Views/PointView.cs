@@ -43,7 +43,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             this.Graphics.Draw(gameTime, alpha);
         }
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             this.Control.UpdateInput(gameTime);
         }

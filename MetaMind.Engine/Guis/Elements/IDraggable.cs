@@ -1,3 +1,10 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="IDraggable.cs" company="UESTC">
+//   Copyright (c) 2015 Wuxiang Lin
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace MetaMind.Engine.Guis.Elements
 {
     using System;
@@ -5,6 +12,7 @@ namespace MetaMind.Engine.Guis.Elements
     public interface IDraggable
     {
         event EventHandler<FrameEventArgs> MouseDragged;
+
         event EventHandler<FrameEventArgs> MouseDropped;
     }
 }

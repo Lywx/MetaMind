@@ -28,16 +28,16 @@
 
         private IModulelist Modulelist { get; set; }
 
-        private ModuleEntry Target { get; set; }
+        private Module Target { get; set; }
 
-        public void Initialize(ModuleEntry module)
+        public void Initialize(Module module)
         {
             this.Target = module;
 
             this.CompletionTable = new Dictionary<string, bool>();
         }
 
-        public void Prepare(KnowledgeLink link)
+        public void Prepare(RawKnowledgeLink link)
         {
             this.CompletionTable.Add(link.Name, false);
         }
@@ -70,7 +70,7 @@
 
                     // recursive calling to create sub-module
                     var module = this.ModuleItemFactory.CreateData(query.Buffer);
-                    this.Target.AddSubModule(module);
+                    this.Target.Add(module);
                 }
 
                 this.CompletionTable[name] = true;

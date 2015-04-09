@@ -6,11 +6,11 @@ namespace MetaMind.Acutance.Concepts
     public interface ITracelist
     {
         [DataMember]
-        List<TraceEntry> Traces { get; }
+        List<Trace> Traces { get; }
 
-        TraceEntry Create();
+        Trace Create();
 
-        void Remove(TraceEntry entry);
+        void Remove(Trace entry);
 
         void Update();
     }
@@ -20,20 +20,20 @@ namespace MetaMind.Acutance.Concepts
     {
         public Tracelist()
         {
-            this.Traces = new List<TraceEntry>();
+            this.Traces = new List<Trace>();
         }
 
         [DataMember]
-        public List<TraceEntry> Traces { get; private set; }
+        public List<Trace> Traces { get; private set; }
 
-        public TraceEntry Create()
+        public Trace Create()
         {
-            var entry = new TraceEntry();
+            var entry = new Trace();
             this.Traces.Add(entry);
             return entry;
         }
 
-        public void Remove(TraceEntry entry)
+        public void Remove(Trace entry)
         {
             if (this.Traces.Contains(entry))
             {

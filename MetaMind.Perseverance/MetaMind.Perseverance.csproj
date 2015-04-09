@@ -90,28 +90,34 @@
     <Compile Include="Concepts\Cognitions\Consciousness.cs" />
     <Compile Include="Concepts\Cognitions\ConsciousnessAwake.cs" />
     <Compile Include="Concepts\Cognitions\ConsciousnessSleepy.cs" />
+    <Compile Include="Concepts\Motivations\MotivationList.cs" />
+    <Compile Include="Concepts\ProgressionData.cs" />
+    <Compile Include="Concepts\SynchronizationData.cs" />
     <Compile Include="Events\ConsciousnessSleepStartedEventArgs.cs" />
     <Compile Include="Events\ConsciousnessSleepStoppedEventArgs.cs" />
-    <Compile Include="Concepts\Cognitions\Synchronization.cs" />
-    <Compile Include="Concepts\Cognitions\SynchronizationDailyStatistics.cs" />
-    <Compile Include="Concepts\Cognitions\SynchronizationDataProcessor.cs" />
-    <Compile Include="Concepts\Cognitions\SynchronizationDescription.cs" />
+    <Compile Include="Concepts\Synchronization.cs" />
+    <Compile Include="Concepts\SynchronizationStatistics.cs" />
+    <Compile Include="Concepts\SynchronizationProcessor.cs" />
+    <Compile Include="Concepts\SynchronizationDescription.cs" />
     <Compile Include="Events\SynchronizationStartedEventArgs.cs" />
     <Compile Include="Events\SynchronizationStoppedEventArgs.cs" />
-    <Compile Include="Concepts\Cognitions\SynchronizationTimer.cs" />
-    <Compile Include="Concepts\MotivationEntries\MotivationEntry.cs" />
-    <Compile Include="Concepts\MotivationEntries\Motivationlist.cs" />
-    <Compile Include="Concepts\TaskEntries\TaskEntry.cs" />
+    <Compile Include="Concepts\SynchronizationTimer.cs" />
+    <Compile Include="Concepts\Motivations\Motivation.cs" />
+    <Compile Include="Concepts\Motivations\MotivationStorage.cs" />
+    <Compile Include="Concepts\Tasks\Task.cs" />
+    <Compile Include="Extensions\ExtInt32.cs" />
+    <Compile Include="Guis\Modules\MotivationModuleFactory.cs" />
     <Compile Include="Guis\Modules\MotivationModuleGameStartedListener.cs" />
-    <Compile Include="Guis\Modules\MotivationTaskTracer.cs" />
-    <Compile Include="Guis\Modules\MotivationTaskTracerSettings.cs" />
+    <Compile Include="Events\SynchronizationAlertedEventArgs.cs" />
+    <Compile Include="Guis\Modules\TaskModule.cs" />
+    <Compile Include="Guis\Modules\TaskModuleSettings.cs" />
     <Compile Include="Guis\Modules\SummaryModule.cs" />
     <Compile Include="Guis\Modules\SummaryModuleSettings.cs" />
     <Compile Include="Guis\Modules\ParticleModule.cs" />
     <Compile Include="Guis\Modules\SynchronizationValve.cs" />
     <Compile Include="Guis\Widgets\BannerSetting.cs" />
     <Compile Include="Guis\Widgets\MotivationItemControl.cs" />
-    <Compile Include="Guis\Widgets\MotivationItemExchangeProcess.cs" />
+    <Compile Include="Guis\Widgets\MotivationItemTransitProcess.cs" />
     <Compile Include="Guis\Widgets\MotivationItemFactory.cs" />
     <Compile Include="Guis\Widgets\MotivationItemGraphics.cs" />
     <Compile Include="Guis\Widgets\MotivationItemSettings.cs" />
@@ -225,6 +231,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

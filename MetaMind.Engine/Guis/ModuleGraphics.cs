@@ -6,7 +6,9 @@ namespace MetaMind.Engine.Guis
     {
         void Draw(GameTime gameTime);
 
-        void Update(GameTime gameTime);
+        void UpdateStructure(GameTime gameTime);
+
+        void UpdateInput(IGameInput gameInput, GameTime gameTime);
     }
 
     public abstract class ModuleGraphics<TModule, TModuleSettings, TModuleControl> : ModuleComponent<TModule, TModuleSettings, TModuleControl>, IModuleGraphics
@@ -20,6 +22,8 @@ namespace MetaMind.Engine.Guis
 
         public abstract void Draw(GameTime gameTime);
 
-        public abstract void Update(GameTime gameTime);
+        public abstract void UpdateStructure(GameTime gameTime);
+
+        public abstract void UpdateInput(IGameInput gameInput, GameTime gameTime);
     }
 }

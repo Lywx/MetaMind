@@ -51,7 +51,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             var width       = ItemControl.SymbolFrame.Rectangle.Width;
             var height      = ItemControl.SymbolFrame.Rectangle.Height;
             var size        = new Point((int)(Math.Abs(Math.Cos(this.rotation)) * width), height);
-            var destination = RectangleExt.DestinationWithSize(ItemControl.SymbolFrame.Rectangle, size);
+            var destination = ExtRectangle.DestinationWithSize(ItemControl.SymbolFrame.Rectangle, size);
 
             ScreenManager.SpriteBatch.Draw(
                 this.symbolTexture,
@@ -77,7 +77,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
                 this.symbolTexture,
                 destination,
                 null,
-                ColorPalette.TransparentColor3,
+                Palette.TransparentColor3,
                 0f,
                 this.SymbolOrigin,
                 SpriteEffects.None,

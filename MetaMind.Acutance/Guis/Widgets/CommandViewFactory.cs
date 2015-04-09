@@ -4,7 +4,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     using MetaMind.Engine.Guis.Widgets.Views;
 
-    public class CommandViewFactory : PointViewBasicFactory2D
+    public class CommandViewFactory : PointViewFactory2D
     {
         protected override dynamic CreateControl(IView view, PointViewSettings2D viewSettings, ICloneable itemSettings)
         {

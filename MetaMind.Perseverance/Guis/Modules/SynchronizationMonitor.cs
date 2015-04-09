@@ -4,17 +4,14 @@
 
     using MetaMind.Engine;
     using MetaMind.Engine.Components.Events;
-    using MetaMind.Perseverance.Concepts.Cognitions;
+    using MetaMind.Perseverance.Concepts;
+    using MetaMind.Perseverance.Events;
     using MetaMind.Perseverance.Sessions;
 
     using Microsoft.Xna.Framework;
 
     using Game = Microsoft.Xna.Framework.Game;
     using GameComponent = Microsoft.Xna.Framework.GameComponent;
-
-    public class SynchronizationAlertedEventArgs : EventArgs
-    {
-    }
 
     /// <summary>
     /// An attention monitor during synchronization

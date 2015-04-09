@@ -2,17 +2,19 @@
 {
     using System;
 
+    using MetaMind.Engine;
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Components.Graphics;
     using MetaMind.Engine.Settings;
     using MetaMind.Engine.Settings.Colors;
+    using MetaMind.Engine.Settings.Loaders;
 
     using Microsoft.Xna.Framework;
 
-    public class SynchronizationModuleSettings : ICloneable
+    public class SynchronizationModuleSettings : IConfigurationParameterLoader<GraphicsSettings>, ICloneable
     {
         //---------------------------------------------------------------------
-        public int   BarFrameXC              = GraphicsSettings.Width / 2;
+        public int   BarFrameXC;
 
         public int   BarFrameYC              = 16;
 
@@ -20,9 +22,9 @@
 
         public Color BarFrameBackgroundColor = new Color(30, 30, 40, 10);
 
-        public Color BarFrameAscendColor     = ColorPalette.LightBlue;
+        public Color BarFrameAscendColor     = Palette.LightBlue;
 
-        public Color BarFrameDescendColor    = ColorPalette.LightPink;
+        public Color BarFrameDescendColor    = Palette.LightPink;
 
         //---------------------------------------------------------------------
         public Point StateMargin             = new Point(0, 1);
@@ -64,7 +66,7 @@
         public float MessageSize             = 0.7f;
 
         //---------------------------------------------------------------------
-        public Color SynchronizationDotFrameColor = ColorPalette.TransparentColor1;
+        public Color SynchronizationDotFrameColor = Palette.TransparentColor1;
 
         public Font  SynchronizationRateFont      = Font.UiStatisticsFont;
 
@@ -81,17 +83,36 @@
 
         public Point ValveFrameSize    = new Point(400, 8);
 
-        public Color ValueAscendColor  = ColorPalette.LightBlue;
+        public Color ValueAscendColor  = Palette.LightBlue;
 
-        public Color ValueDescendColor = ColorPalette.LightPink;
+        public Color ValueDescendColor = Palette.LightPink;
 
         public float ValueStatusSize   = 2.0f;
 
         public Font  ValveStateFont    = Font.UiStatisticsFont;
 
+        public SynchronizationModuleSettings()
+        {
+            this.ParameterLoad(GameEngine.GraphicsSettings);
+
+            this.BarFrameXC = this.Width / 2;
+        }
+
         public object Clone()
         {
             return this.MemberwiseClone();
         }
+
+        #region Parameters
+
+        public void ParameterLoad(GraphicsSettings parameter)
+        {
+            this.Width = parameter.Width;
+
+        }
+
+        private int Width { get; set; }
+
+        #endregion
     }
 }

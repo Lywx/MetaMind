@@ -16,7 +16,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public override bool HandleEvent(EventBase @event)
         {
-            this.multiplexerGroup.ReloadScheduleData();
+            this.multiplexerGroup.ScheduleDataReload();
 
             return true;
         }

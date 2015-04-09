@@ -1,28 +1,28 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="MarkovCamera.cs" company="UESTC">
-//   Copyright (c) 2014 Wuxiang Lin
+//   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
+// <summary>
+//   
+// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace MetaMind.Engine.Guis.Widgets.Cameras
 {
-    using MetaMind.Engine.Components.Graphics;
-    using MetaMind.Engine.Settings;
-
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
-    public interface IMarkovCamera : IWidget
+    public interface IMarkovCamera : IManualInputable
     {
         Vector2 Movement { get; set; }
     }
 
-    public class MarkovCamera : Widget, IMarkovCamera
+    public class MarkovCamera : ManualInputGameElement, IMarkovCamera
     {
-        private readonly CameraSettings settings;
+        private readonly MarkovCameraSettings settings;
 
-        public MarkovCamera(CameraSettings settings)
+        public MarkovCamera(MarkovCameraSettings settings)
         {
             this.settings = settings;
         }
@@ -33,7 +33,7 @@ namespace MetaMind.Engine.Guis.Widgets.Cameras
         {
         }
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             var mouse = InputSequenceManager.Mouse.CurrentState;
             var keyboard = InputSequenceManager.Keyboard.CurrentState;
@@ -79,13 +79,13 @@ namespace MetaMind.Engine.Guis.Widgets.Cameras
             // allow movement when mouse is on sides
             // forbid movement when mouse is at corners
             if (mouse.X < settings.PanRegionWidth && !(mouse.Y < settings.PanForbiddenHeight)
-                && !(mouse.Y > GraphicsSettings.Height - settings.PanForbiddenHeight))
+                && !(mouse.Y > GameEngine.GraphicsSettings.Height - settings.PanForbiddenHeight))
             {
                 identityMovement.X++;
             }
 
-            if (mouse.X > GraphicsSettings.Width - settings.PanRegionWidth && !(mouse.Y < settings.PanForbiddenHeight)
-                && !(mouse.Y > GraphicsSettings.Height - settings.PanForbiddenHeight))
+            if (mouse.X > GameEngine.GraphicsSettings.Width - settings.PanRegionWidth && !(mouse.Y < settings.PanForbiddenHeight)
+                && !(mouse.Y > GameEngine.GraphicsSettings.Height - settings.PanForbiddenHeight))
             {
                 identityMovement.X--;
             }

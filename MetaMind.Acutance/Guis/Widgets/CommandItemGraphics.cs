@@ -33,16 +33,16 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             string name = ItemData.Name;
 
-            string text = FontManager.CropMonoSpacedString(
-                ItemControl.Id > 0 ? Format.Paddle(name, View.Items[ItemControl.Id - 1].ItemData.Name) : name,
+            string text = FontManager.CropMonospacedString(
+                ItemControl.Id > 0 ? FormatHelper.Paddle(name, View.Items[ItemControl.Id - 1].ItemData.Name) : name,
                 ItemSettings.NameSize,
                 ItemSettings.NameFrameSize.X - ItemSettings.NameXLMargin * 2);
 
-            FontManager.DrawMonoSpacedText(
+            FontManager.DrawMonospacedString(
                 ItemSettings.NameFont,
                 text,
                 this.NameLocation,
-                ColorExt.MakeTransparent(ItemSettings.NameColor, alpha),
+                ExtColor.MakeTransparent(ItemSettings.NameColor, alpha),
                 ItemSettings.NameSize);
         }
     }

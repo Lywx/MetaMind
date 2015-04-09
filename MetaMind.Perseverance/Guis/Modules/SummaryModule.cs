@@ -1,14 +1,13 @@
 namespace MetaMind.Perseverance.Guis.Modules
 {
-    using MetaMind.Engine.Components.Graphics;
+    using MetaMind.Engine;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis;
-    using MetaMind.Engine.Guis.Modules;
-    using MetaMind.Engine.Settings;
+    using MetaMind.Perseverance.Concepts;
     using MetaMind.Perseverance.Concepts.Cognitions;
+    using MetaMind.Perseverance.Extensions;
 
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Input;
 
     using Primtives2D;
 
@@ -59,8 +58,9 @@ namespace MetaMind.Perseverance.Guis.Modules
         /// <summary>
         /// A must implementation for widget compatible module.
         /// </summary>
+        /// <param name="gameInput"></param>
         /// <param name="gameTime"></param>
-        public override void UpdateInput(GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.ForceReset))
             {
@@ -116,21 +116,21 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         private void DrawSummaryEntity(int line, Color color, string caption, string presentation)
         {
-            var captionPosition = new Vector2(GraphicsSettings.Width / 2f - 300, 150 + line * Settings.LineHeight);
-            var contentPosition = new Vector2(GraphicsSettings.Width / 2f + 260, 150 + line * Settings.LineHeight);
+            var captionPosition = new Vector2(GameEngine.GraphicsSettings.Width / 2f - 300, 150 + line * Settings.LineHeight);
+            var contentPosition = new Vector2(GameEngine.GraphicsSettings.Width / 2f + 260, 150 + line * Settings.LineHeight);
 
-            FontManager.DrawText(Settings.EntityFont, caption     , captionPosition, color, Settings.EntitySize);
-            FontManager.DrawText(Settings.EntityFont, presentation, contentPosition, color, Settings.EntitySize);
+            FontManager.DrawString(Settings.EntityFont, caption     , captionPosition, color, Settings.EntitySize);
+            FontManager.DrawString(Settings.EntityFont, presentation, contentPosition, color, Settings.EntitySize);
         }
 
         private void DrawSummaryEntity(int line, Color color, string caption, object presentedData)
         {
-            var captionPosition = new Vector2(GraphicsSettings.Width / 2f - 300, 150 + line * Settings.LineHeight);
-            var contentPosition = new Vector2(GraphicsSettings.Width / 2f + 260, 150 + line * Settings.LineHeight);
+            var captionPosition = new Vector2(GameEngine.GraphicsSettings.Width / 2f - 300, 150 + line * Settings.LineHeight);
+            var contentPosition = new Vector2(GameEngine.GraphicsSettings.Width / 2f + 260, 150 + line * Settings.LineHeight);
             var contentString   = string.Format("{0}", presentedData);
 
-            FontManager.DrawText(Settings.EntityFont, caption      , captionPosition, color, Settings.EntitySize);
-            FontManager.DrawText(Settings.EntityFont, contentString, contentPosition, color, Settings.EntitySize);
+            FontManager.DrawString(Settings.EntityFont, caption      , captionPosition, color, Settings.EntitySize);
+            FontManager.DrawString(Settings.EntityFont, contentString, contentPosition, color, Settings.EntitySize);
         }
 
         private void DrawSummaryResult(int line, Color goodColor, Color badColor, string caption, int computation)
@@ -140,25 +140,17 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         private void DrawSummarySplit(int line, Color color)
         {
-            var splitStart = new Vector2(GraphicsSettings.Width / 2f - 300, 150 + line * Settings.LineHeight + Settings.LineHeight / 2);
-            var splitEnd   = new Vector2(GraphicsSettings.Width / 2f + 300, 150 + line * Settings.LineHeight + Settings.LineHeight / 2);
+            var splitStart = new Vector2(GameEngine.GraphicsSettings.Width / 2f - 300, 150 + line * Settings.LineHeight + Settings.LineHeight / 2);
+            var splitEnd   = new Vector2(GameEngine.GraphicsSettings.Width / 2f + 300, 150 + line * Settings.LineHeight + Settings.LineHeight / 2);
 
             Primitives2D.DrawLine(ScreenManager.SpriteBatch, splitStart, splitEnd, color, this.Settings.EntitySize);
         }
 
         private void DrawSummaryTitle(Color color, string title)
         {
-            FontManager.DrawCenteredText(Settings.TitleFont, title, this.Settings.TitleCenter, color, Settings.TitleSize);
+            FontManager.DrawStringCenteredHV(Settings.TitleFont, title, this.Settings.TitleCenter, color, Settings.TitleSize);
         }
 
         #endregion 
-    }
-
-    internal static class Int32Ext
-    {
-        public static string ToSummary(this int hour)
-        {
-            return hour.ToString("+#;-#;+0");
-        }
     }
 }

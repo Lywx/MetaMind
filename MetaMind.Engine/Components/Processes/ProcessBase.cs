@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ProcessBase.cs" company="UESTC">
-//   Copyright (c) 2014 Wuxiang Lin
+//   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -9,30 +9,56 @@ namespace MetaMind.Engine.Components.Processes
 {
     using Microsoft.Xna.Framework;
 
-    public abstract class ProcessBase : EngineObject, IProcess
+    public abstract class ProcessBase : IProcess
     {
-        #region Process Data
-
         private IProcess child;
 
         private ProcessState state;
 
         public IProcess Child
         {
-            get { return child; }
+            get
+            {
+                return this.child;
+            }
         }
 
         public ProcessState State
         {
-            get { return state; }
+            get
+            {
+                return this.state;
+            }
         }
+
+        #region Constructors
+
+        protected ProcessBase()
+        {
+            this.state = ProcessState.Uninitilized;
+        }
+
+        #endregion Constructors
+
+        #region Destructors
+
+        ~ProcessBase()
+        {
+            if (this.child != null)
+            {
+                this.child.OnAbort();
+            }
+        }
+
+        #endregion Destructors
+
+        #region Process States
 
         public bool IsAlive
         {
             get
             {
-                return state == ProcessState.Running || 
-                       state == ProcessState.Paused;
+                return this.state == ProcessState.Running || this.state == ProcessState.Paused;
             }
         }
 
@@ -40,9 +66,8 @@ namespace MetaMind.Engine.Components.Processes
         {
             get
             {
-                return state == ProcessState.Succeeded || 
-                       state == ProcessState.Failed || 
-                       state == ProcessState.Aborted;
+                return this.state == ProcessState.Succeeded || this.state == ProcessState.Failed
+                       || this.state == ProcessState.Aborted;
             }
         }
 
@@ -50,7 +75,7 @@ namespace MetaMind.Engine.Components.Processes
         {
             get
             {
-                return state == ProcessState.Paused;
+                return this.state == ProcessState.Paused;
             }
         }
 
@@ -58,71 +83,75 @@ namespace MetaMind.Engine.Components.Processes
         {
             get
             {
-                return state == ProcessState.Removed;
+                return this.state == ProcessState.Removed;
             }
         }
 
-        #endregion Process Data
+        #endregion Process States
 
-        #region Constructors
+        #region Process Transition
 
-        protected ProcessBase()
+        public abstract void OnAbort();
+
+        public abstract void OnFail();
+
+        public virtual void OnInit()
         {
-            state = ProcessState.Uninitilized;
+            this.state = ProcessState.Running;
         }
 
-        #endregion Constructors
+        public abstract void OnSuccess();
 
-        #region Deconstructors
+        #endregion Process Transition
 
-        ~ProcessBase()
+        #region Process Update and Draw
+
+        public virtual void Draw(GameTime gameTime)
         {
-            if (child != null)
-            {
-                child.OnAbort();
-            }
         }
 
-        #endregion Deconstructors
+        public abstract void Update(GameTime gameTime);
 
-        #region Operations
+        #endregion Update and Draw
+
+        #region Process Operations
 
         public void Abort()
         {
-            state = ProcessState.Aborted;
+            this.state = ProcessState.Aborted;
         }
 
         public void AttachChild(IProcess process)
         {
-            if (child != null)
+            if (this.child != null)
             {
-                child.AttachChild(process);
+                this.child.AttachChild(process);
             }
             else
             {
-                child = process;
+                this.child = process;
             }
         }
 
         public void Fail()
         {
-            state = ProcessState.Failed;
+            this.state = ProcessState.Failed;
         }
 
         public void Pause()
         {
-            if (state == ProcessState.Running)
+            if (this.state == ProcessState.Running)
             {
-                state = ProcessState.Paused;
+                this.state = ProcessState.Paused;
             }
         }
 
         public IProcess RemoveChild()
         {
-            if (child != null)
+            if (this.child != null)
             {
-                IProcess removedChild = child;
-                child = null;
+                var removedChild = this.child;
+                this.child = null;
                 return removedChild;
             }
 
@@ -131,39 +160,17 @@ namespace MetaMind.Engine.Components.Processes
 
         public void Resume()
         {
-            if (state == ProcessState.Paused)
+            if (this.state == ProcessState.Paused)
             {
-                state = ProcessState.Running;
+                this.state = ProcessState.Running;
             }
         }
 
         public void Succeed()
         {
-            state = ProcessState.Succeeded;
+            this.state = ProcessState.Succeeded;
         }
 
         #endregion Operations
-
-        #region Transition
-
-        public abstract void OnAbort();
-
-        public abstract void OnFail();
-
-        public virtual void OnInit()
-        {
-            state = ProcessState.Running;
-        }
-
-        public abstract void OnSuccess();
-
-        public abstract void Update(GameTime gameTime);
-
-        public virtual void Draw(GameTime gameTime)
-        {
-        }
-
-
-        #endregion Transition
     }
 }

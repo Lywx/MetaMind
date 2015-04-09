@@ -3,7 +3,7 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Acutance.Concepts;
     using MetaMind.Engine.Guis.Widgets.Items;
 
-    public class TraceItemFactory : ViewItemBasicFactory2D
+    public class TraceItemFactory : ViewItemFactory2D
     {
         public ITracelist Tracelist { get; set; }
 

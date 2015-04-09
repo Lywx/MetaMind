@@ -25,13 +25,13 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             Primitives2D.DrawRectangle(
                 ScreenManager.SpriteBatch,
-                RectangleExt.Extend(this.ViewControl.Region.Frame.Rectangle, this.ViewSettings.BorderMargin),
-                ColorExt.MakeTransparent(this.ViewSettings.HighlightColor, alpha),
+                ExtRectangle.Extend(this.ViewControl.Region.Frame.Rectangle, this.ViewSettings.BorderMargin),
+                ExtColor.MakeTransparent(this.ViewSettings.HighlightColor, alpha),
                 2f);
             Primitives2D.FillRectangle(
                 ScreenManager.SpriteBatch,
                 this.ViewControl.Region.Frame.Rectangle,
-                ColorExt.MakeTransparent(this.ViewSettings.HighlightColor, alpha));
+                ExtColor.MakeTransparent(this.ViewSettings.HighlightColor, alpha));
         }
     }
 }

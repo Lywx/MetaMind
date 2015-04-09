@@ -11,13 +11,13 @@ namespace MetaMind.Perseverance.Guis.Widgets
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Views;
-    using MetaMind.Perseverance.Concepts.MotivationEntries;
+    using MetaMind.Perseverance.Concepts.Motivations;
 
     using Microsoft.Xna.Framework;
 
     public interface IMotivationViewControl
     {
-        void AddItem(MotivationEntry entry);
+        void AddItem(Motivation entry);
 
         /// <summary>
         /// Make view reject input when editing task view.
@@ -25,7 +25,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
         bool AcceptInput { get; }
     }
 
-    public class MotivationViewControl : ListControl, IMotivationViewControl
+    public class MotivationViewControl : PointListControl, IMotivationViewControl
     {
         #region Constructors
 
@@ -38,7 +38,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         #region Operations
 
-        public void AddItem(MotivationEntry entry)
+        public void AddItem(Motivation entry)
         {
             var item = new ViewItemExchangable(View, ViewSettings, ItemSettings, ItemFactory, entry);
             View.Items.Add(item);
@@ -80,18 +80,18 @@ namespace MetaMind.Perseverance.Guis.Widgets
             if (this.ViewSettings.Direction == PointViewSettings1D.ScrollDirection.Left)
             {
                 return
-                    RectangleExt.Rectangle(
-                        viewSettings.StartPoint.X - viewSettings.RootMargin.X * (viewSettings.ColumnNumDisplay / 2),
-                        viewSettings.StartPoint.Y,
-                        viewSettings.RootMargin.X * viewSettings.ColumnNumDisplay,
+                    ExtRectangle.Rectangle(
+                        viewSettings.PointStart.X - viewSettings.PointMargin.X * (viewSettings.ColumnNumDisplay / 2),
+                        viewSettings.PointStart.Y,
+                        viewSettings.PointMargin.X * viewSettings.ColumnNumDisplay,
                         viewSettings.BannerSetting.Height);
             }
 
             return
-                RectangleExt.Rectangle(
-                    viewSettings.StartPoint.X + viewSettings.RootMargin.X * (viewSettings.ColumnNumDisplay / 2),
-                    viewSettings.StartPoint.Y,
-                    viewSettings.RootMargin.X * viewSettings.ColumnNumDisplay,
+                ExtRectangle.Rectangle(
+                    viewSettings.PointStart.X + viewSettings.PointMargin.X * (viewSettings.ColumnNumDisplay / 2),
+                    viewSettings.PointStart.Y,
+                    viewSettings.PointMargin.X * viewSettings.ColumnNumDisplay,
                     viewSettings.BannerSetting.Height);
         }
 

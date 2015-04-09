@@ -5,19 +5,19 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Perseverance.Concepts.Cognitions
+namespace MetaMind.Perseverance.Events
 {
     using System;
 
-    using MetaMind.Perseverance.Concepts.TaskEntries;
+    using MetaMind.Perseverance.Concepts.Tasks;
 
     public class SynchronizationStartedEventArgs : EventArgs
     {
-        public readonly TaskEntry TaskEntry;
+        public readonly Task Task;
 
-        public SynchronizationStartedEventArgs(TaskEntry data)
+        public SynchronizationStartedEventArgs(Task data)
         {
-            TaskEntry = data;
+            this.Task = data;
         }
     }
 }

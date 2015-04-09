@@ -1,6 +1,7 @@
 namespace MetaMind.Acutance.Screens
 {
     using MetaMind.Acutance.Guis.Modules;
+    using MetaMind.Engine;
     using MetaMind.Engine.Guis;
 
     using Microsoft.Xna.Framework;
@@ -39,10 +40,10 @@ namespace MetaMind.Acutance.Screens
             this.synchronization.Unload();
         }
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
-            this.multiplexer    .UpdateInput(gameTime);
-            this.synchronization.UpdateInput(gameTime);
+            this.multiplexer    .UpdateInput(gameInput, gameTime);
+            this.synchronization.UpdateInput(gameInput, gameTime);
         }
 
         public override void UpdateStructure(GameTime gameTime)

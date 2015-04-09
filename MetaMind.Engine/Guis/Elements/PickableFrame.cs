@@ -18,8 +18,8 @@
 
         public PickableFrame()
         {
-            InputEventManager.MouseDoubleClick += this.DetectMouseLeftDoubleClick;
-            InputEventManager.MouseDoubleClick += this.DetectMouseRightDoubleClick;
+            GameEngine.InputEventManager.MouseDoubleClick += this.DetectMouseLeftDoubleClick;
+            GameEngine.InputEventManager.MouseDoubleClick += this.DetectMouseRightDoubleClick;
         }
 
         ~PickableFrame()
@@ -38,8 +38,8 @@
                 this.MouseRightClickedOutside = null;
                 this.MouseRightDoubleClicked  = null;
 
-                InputEventManager.MouseDoubleClick -= this.DetectMouseLeftDoubleClick;
-                InputEventManager.MouseDoubleClick -= this.DetectMouseRightDoubleClick;
+                GameEngine.InputEventManager.MouseDoubleClick -= this.DetectMouseLeftDoubleClick;
+                GameEngine.InputEventManager.MouseDoubleClick -= this.DetectMouseRightDoubleClick;
             }
             finally
             {

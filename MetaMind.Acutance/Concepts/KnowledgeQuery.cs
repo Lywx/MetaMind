@@ -13,20 +13,20 @@ namespace MetaMind.Acutance.Concepts
 
     public class KnowledgeQuery
     {
-        public KnowledgeQuery(KnowledgeFileBuffer buffer)
+        public KnowledgeQuery(RawKnowledgeFileBuffer buffer)
         {
             this.Buffer = buffer;
 
-            this.Entries = new List<KnowledgeEntry>();
+            this.Data = new List<Knowledge>();
         }
 
-        public KnowledgeFileBuffer Buffer { get; private set; }
+        public RawKnowledgeFileBuffer Buffer { get; private set; }
 
-        public List<KnowledgeEntry> Entries { get; private set; }
+        public List<Knowledge> Data { get; private set; }
 
-        public void AddEntry(KnowledgeEntry entry)
+        public void Add(Knowledge entry)
         {
-            this.Entries.Add(entry);
+            this.Data.Add(entry);
         }
     }
 }

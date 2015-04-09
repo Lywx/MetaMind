@@ -84,24 +84,24 @@
 
 
         [TestMethod]
-        public void ScheduleRepeativity()
+        public void ScheduleRepetition()
         {
             var input = "Everyday";
             var parsed = ScheduleGrammar.RepeativityParser.Parse(input);
-            Assert.AreEqual(RepeativityTag.EveryDay, parsed);
+            Assert.AreEqual(RepetitionTag.EveryDay, parsed);
             
             input = "EveryWeek";
             parsed = ScheduleGrammar.RepeativityParser.Parse(input);
-            Assert.AreEqual(RepeativityTag.EveryWeek, parsed);
+            Assert.AreEqual(RepetitionTag.EveryWeek, parsed);
 
             // TODO: Disabled for safety issue
             // input = "EveryMonth";
             // parsed = ScheduleGrammar.RepeativityParser.Parse(input);
-            // Assert.AreEqual(RepeativityTag.EveryMonth, parsed);
+            // Assert.AreEqual(RepetitionTag.EveryMonth, parsed);
 
             input = "-";
             parsed = ScheduleGrammar.RepeativityParser.Parse(input);
-            Assert.AreEqual(RepeativityTag.Unspecified, parsed);
+            Assert.AreEqual(RepetitionTag.Unspecified, parsed);
         }
 
         [TestMethod]
@@ -115,7 +115,7 @@
             var day         = ScheduleGrammar.DayParser         .Parse(elems[1]);
             var time        = KnowledgeGrammar.TimeTagFullParser.Parse(elems[2]);
 
-            Assert.AreEqual(RepeativityTag.EveryDay, repeativity);
+            Assert.AreEqual(RepetitionTag.EveryDay, repeativity);
             Assert.AreEqual(DayTag.Unspecified, day);
             Assert.AreEqual(8, time.Hours);
             Assert.AreEqual(0, time.Minutes);
@@ -130,11 +130,11 @@
 
             var parsed = ScheduleGrammar.ScheduleParser.Parse(input);
 
-            Assert.AreEqual(DayTag.Unspecified, parsed.Date.Day);
-            Assert.AreEqual(8, parsed.Date.Time.Hours);
-            Assert.AreEqual(0, parsed.Date.Time.Minutes);
-            Assert.AreEqual(0, parsed.Date.Time.Seconds);
-            Assert.AreEqual(RepeativityTag.EveryDay, parsed.Date.Repeativity);
+            Assert.AreEqual(DayTag.Unspecified, parsed.Tag.Day);
+            Assert.AreEqual(8, parsed.Tag.Time.Hours);
+            Assert.AreEqual(0, parsed.Tag.Time.Minutes);
+            Assert.AreEqual(0, parsed.Tag.Time.Seconds);
+            Assert.AreEqual(RepetitionTag.EveryDay, parsed.Tag.Repetition);
             Assert.AreEqual(TestResources.AScheduleSampleScheduleContent, parsed.Content);
         }
 

@@ -7,21 +7,21 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
     public class TaskItemFrameControl : ViewItemFrameControl
     {
-        public ItemEntryFrame NameFrame { get; private set; }
+        public ItemDataFrame NameFrame { get; private set; }
 
-        public ItemEntryFrame IdFrame { get; private set; }
+        public ItemDataFrame IdFrame { get; private set; }
 
-        public ItemEntryFrame ProgressFrame { get; private set; }
+        public ItemDataFrame ProgressFrame { get; private set; }
 
-        public ItemEntryFrame ExperienceFrame { get; private set; }
+        public ItemDataFrame ExperienceFrame { get; private set; }
 
         public TaskItemFrameControl(IViewItem item)
             : base(item)
         {
-            this.NameFrame       = new ItemEntryFrame(item);
-            this.IdFrame         = new ItemEntryFrame(item);
-            this.ExperienceFrame = new ItemEntryFrame(item);
-            this.ProgressFrame   = new ItemEntryFrame(item);
+            this.NameFrame       = new ItemDataFrame(item);
+            this.IdFrame         = new ItemDataFrame(item);
+            this.ExperienceFrame = new ItemDataFrame(item);
+            this.ProgressFrame   = new ItemDataFrame(item);
         }
 
         ~TaskItemFrameControl()
@@ -80,11 +80,11 @@ namespace MetaMind.Perseverance.Guis.Widgets
             ((TaskItemSettings)this.ItemSettings).ExperienceFrameSize.X = middleWidth;
             ((TaskItemSettings)this.ItemSettings).ProgressFrameSize.X   = middleWidth;
 
-            this.RootFrame         .Location = Vector2Ext.ToPoint(this.RootFrameLocation);
-            this.NameFrame         .Location = Vector2Ext.ToPoint(this.NameFrameLocation);
-            this.IdFrame           .Location = Vector2Ext.ToPoint(this.IdFrameLocation);
-            this.ExperienceFrame   .Location = Vector2Ext.ToPoint(this.ExperienceFrameLocation);
-            this.ProgressFrame     .Location = Vector2Ext.ToPoint(this.ProgressFrameLocation);
+            this.RootFrame         .Location = ExtVector2.ToPoint(this.RootFrameLocation);
+            this.NameFrame         .Location = ExtVector2.ToPoint(this.NameFrameLocation);
+            this.IdFrame           .Location = ExtVector2.ToPoint(this.IdFrameLocation);
+            this.ExperienceFrame   .Location = ExtVector2.ToPoint(this.ExperienceFrameLocation);
+            this.ProgressFrame     .Location = ExtVector2.ToPoint(this.ProgressFrameLocation);
 
             this.RootFrame         .Size = this.ItemSettings.RootFrameSize;
             this.NameFrame         .Size = this.ItemSettings.NameFrameSize;
@@ -99,7 +99,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             {
                 if (!this.Item.IsEnabled(ItemState.Item_Dragging) && !this.Item.IsEnabled(ItemState.Item_Swaping))
                 {
-                    return PointExt.ToVector2(this.ViewControl.Scroll.RootCenterPoint(this.ItemControl.Id)) + new Vector2(0, this.ItemSettings.IdFrameSize.Y);
+                    return ExtPoint.ToVector2(this.ViewControl.Scroll.RootCenterPoint(this.ItemControl.Id)) + new Vector2(0, this.ItemSettings.IdFrameSize.Y);
                 }
                 else if (this.Item.IsEnabled(ItemState.Item_Swaping))
                 {

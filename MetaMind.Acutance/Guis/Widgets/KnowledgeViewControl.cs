@@ -16,7 +16,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     using Microsoft.Xna.Framework;
 
-    public class KnowledgeViewControl : GridControl
+    public class KnowledgeViewControl : PointGridControl
     {
         #region Constructors
 
@@ -45,7 +45,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             get { return View.Items.Count > 0 ? View.Items.Where(item => item.ItemData.IsBlank).First() : null; }
         }
 
-        public KnowledgeFileBuffer FileBuffer { get; set; }
+        public RawKnowledgeFileBuffer FileBuffer { get; set; }
         
         public IViewItem FileItem
         {
@@ -63,17 +63,17 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public void AddBlankItem()
         {
-            var blankEntry = new KnowledgeEntry(string.Empty, true) { IsBlank = true };
+            var blankEntry = new Knowledge(string.Empty, true) { IsBlank = true };
             this.AddItem(blankEntry);
         }
 
         public void AddFileItem()
         {
-            var fileEntry = new KnowledgeEntry(string.Empty, true) { IsFile = true };
+            var fileEntry = new Knowledge(string.Empty, true) { IsFile = true };
             this.InsertItem(0, fileEntry);
         }
 
-        public void AddItem(KnowledgeEntry entry)
+        public void AddItem(Knowledge entry)
         {
             var item = new ViewItemExchangeless(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory, entry);
             View.Items.Add(item);
@@ -81,7 +81,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public void AddResultItem(string relativePath)
         {
-            var resultEntry = new KnowledgeEntry(relativePath, true) { IsResult = true };
+            var resultEntry = new Knowledge(relativePath, true) { IsResult = true };
             this.AddItem(resultEntry);
         }
 
@@ -105,11 +105,11 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public void InsertBlankItem()
         {
-            var blankEntry = new KnowledgeEntry(string.Empty, true) { IsBlank = true };
+            var blankEntry = new Knowledge(string.Empty, true) { IsBlank = true };
             this.InsertItem(1, blankEntry);
         }
 
-        public void InsertItem(int index, KnowledgeEntry entry)
+        public void InsertItem(int index, Knowledge entry)
         {
             var item = new ViewItemExchangeless(View, ViewSettings, ItemSettings, ItemFactory, entry);
             View.Items.Insert(index, item);
@@ -203,8 +203,8 @@ namespace MetaMind.Acutance.Guis.Widgets
         protected override Rectangle RegionPositioning(dynamic viewSettings, dynamic itemSettings)
         {
             return new Rectangle(
-                viewSettings.StartPoint.X,
-                viewSettings.StartPoint.Y,
+                viewSettings.PointStart.X,
+                viewSettings.PointStart.Y,
                 viewSettings.ColumnNumDisplay * (itemSettings.NameFrameSize.X + itemSettings.IdFrameSize.X),
                 viewSettings.RowNumDisplay    * itemSettings.NameFrameSize.Y);
         }

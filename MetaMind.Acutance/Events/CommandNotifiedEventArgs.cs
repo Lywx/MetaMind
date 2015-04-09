@@ -6,9 +6,9 @@ namespace MetaMind.Acutance.Events
 
     public class CommandNotifiedEventArgs : EventArgs
     {
-        public readonly CommandEntry NotifiedCommand;
+        public readonly Command NotifiedCommand;
 
-        public CommandNotifiedEventArgs(CommandEntry notifiedCommand)
+        public CommandNotifiedEventArgs(Command notifiedCommand)
         {
             this.NotifiedCommand = notifiedCommand;
         }

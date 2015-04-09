@@ -1,6 +1,7 @@
 ﻿namespace MetaMind.Perseverance.Guis.Modules
 {
     using MetaMind.Engine.Components.Events;
+    using MetaMind.Perseverance.Concepts;
     using MetaMind.Perseverance.Concepts.Cognitions;
     using MetaMind.Perseverance.Sessions;
 

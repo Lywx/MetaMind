@@ -14,18 +14,18 @@ namespace MetaMind.Acutance.Guis.Widgets
     {
         #region Constructors
 
-        public TraceItemControl(IViewItem item, List<TraceEntry> source)
+        public TraceItemControl(IViewItem item, List<Trace> source)
             : base(item)
         {
             this.ItemFrameControl = new TraceItemFrameControl(item);
-            this.ItemViewControl  = new SmartItemViewControl<SmartItemSwapProcess>(item, source);
+            this.ItemViewControl  = new ViewItemViewSmartControl<ViewItemSmartSwapProcess>(item, source);
         }
 
-        public ItemEntryFrame IdFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).IdFrame; } }
+        public ItemDataFrame IdFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).IdFrame; } }
 
-        public ItemEntryFrame NameFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).NameFrame; } }
+        public ItemDataFrame NameFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).NameFrame; } }
 
-        public ItemEntryFrame ExperienceFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).ExperienceFrame; } }
+        public ItemDataFrame ExperienceFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).ExperienceFrame; } }
 
         #endregion Constructors
 

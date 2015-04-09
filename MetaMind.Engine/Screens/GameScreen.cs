@@ -15,7 +15,7 @@ namespace MetaMind.Engine.Screens
     /// Similar to a class found in the Game State Management sample on the
     /// XNA Creators Club Online website (http://creators.xna.com).
     /// </remarks>
-    public class GameScreen : EngineObject
+    public class GameScreen : GameEngineAccess
     {
         private bool isExiting = false;
 
@@ -23,7 +23,7 @@ namespace MetaMind.Engine.Screens
 
         private bool otherScreenHasFocus;
 
-        private ScreenState screenState = ScreenState.TransitionOn;
+        private GameScreenState screenState = GameScreenState.TransitionOn;
 
         private TimeSpan transitionOffTime = TimeSpan.Zero;
 
@@ -41,8 +41,8 @@ namespace MetaMind.Engine.Screens
             get
             {
                 return !otherScreenHasFocus &&
-                       (screenState == ScreenState.TransitionOn ||
-                        screenState == ScreenState.Active);
+                       (screenState == GameScreenState.TransitionOn ||
+                        screenState == GameScreenState.Active);
             }
         }
 
@@ -82,7 +82,7 @@ namespace MetaMind.Engine.Screens
         /// <summary>
         /// Gets the current screen transition state.
         /// </summary>
-        public ScreenState ScreenState
+        public GameScreenState ScreenState
         {
             get { return screenState; }
             protected set { screenState = value; }
@@ -192,7 +192,7 @@ namespace MetaMind.Engine.Screens
             if (IsExiting)
             {
                 // If the screen is going away to die, it should transition off.
-                screenState = ScreenState.TransitionOff;
+                screenState = GameScreenState.TransitionOff;
 
                 if (!UpdateTransition(gameTime, transitionOffTime, 1))
                 {
@@ -206,12 +206,12 @@ namespace MetaMind.Engine.Screens
                 if (UpdateTransition(gameTime, transitionOffTime, 1))
                 {
                     // Still busy transitioning.
-                    screenState = ScreenState.TransitionOff;
+                    screenState = GameScreenState.TransitionOff;
                 }
                 else
                 {
                     // Transition finished!
-                    screenState = ScreenState.Hidden;
+                    screenState = GameScreenState.Hidden;
                 }
             }
             else
@@ -220,12 +220,12 @@ namespace MetaMind.Engine.Screens
                 if (UpdateTransition(gameTime, transitionOnTime, -1))
                 {
                     // Still busy transitioning.
-                    screenState = ScreenState.TransitionOn;
+                    screenState = GameScreenState.TransitionOn;
                 }
                 else
                 {
                     // Transition finished!
-                    screenState = ScreenState.Active;
+                    screenState = GameScreenState.Active;
                 }
             }
         }

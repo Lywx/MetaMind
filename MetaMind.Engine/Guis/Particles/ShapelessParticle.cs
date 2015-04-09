@@ -21,7 +21,7 @@ namespace MetaMind.Engine.Guis.Particles
         void Update(GameTime gameTime);
     }
 
-    public class ShapelessParticle : EngineObject, IAbstractParticle
+    public class ShapelessParticle : GameEngineAccess, IAbstractParticle
     {
         #region Particle Movements
 

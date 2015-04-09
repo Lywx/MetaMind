@@ -6,7 +6,9 @@
     {
         void Draw(GameTime gameTime);
 
-        void Update(GameTime gameTime);
+        void UpdateStructure(GameTime gameTime);
+
+        void UpdateInput(GameTime gameTime);
     }
 
     public class GroupGraphics<TGroup, TGroupSettings, TGroupControl> : GroupComponent<TGroup, TGroupSettings, TGroupControl>, IGroupGraphics
@@ -22,7 +24,11 @@
         {
         }
 
-        public void Update(GameTime gameTime)
+        public void UpdateStructure(GameTime gameTime)
+        {
+        }
+
+        public void UpdateInput(GameTime gameTime)
         {
         }
     }

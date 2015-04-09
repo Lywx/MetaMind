@@ -14,11 +14,11 @@
 
     public static class ScheduleLoader
     {
-        public static List<ScheduleEntry> Load(IConfigurationLoader loader)
+        public static List<Schedule> Load(IConfigurationFileLoader fileLoader)
         {
-            var todaySchedules = new List<ScheduleEntry>();
+            var todaySchedules = new List<Schedule>();
 
-            var scheduleFolderPath = LoadScheduleFolderPath(loader);
+            var scheduleFolderPath = LoadScheduleFolderPath(fileLoader);
 
             try
             {
@@ -29,7 +29,7 @@
                     var scheduleFile = ScheduleGrammar.ScheduleFileParser.Parse(File.ReadAllText(file));
 
                     // TODO: Need to improve this temporary solution for schedule offset
-                    todaySchedules.AddRange(FilterOutToday(scheduleFile.Schedules).ConvertAll(s => s.ToEntry(file, 0)));
+                    todaySchedules.AddRange(FilterOutToday(scheduleFile.Schedules).ConvertAll(s => s.ToSchedule(file, 0)));
                 }
 
                 return todaySchedules;
@@ -46,17 +46,17 @@
             }
         }
 
-        private static List<Schedule> FilterOutToday(IEnumerable<Schedule> fromFile)
+        private static List<Parsers.Elements.RawSchedule> FilterOutToday(IEnumerable<Parsers.Elements.RawSchedule> fromFile)
         {
-            Predicate<Schedule> sameWeekday    = s => (int)s.Date.Day == (int)DateTime.Now.DayOfWeek;
-            Predicate<Schedule> repeatEveryday = s => s.Date.Repeativity == RepeativityTag.EveryDay;
+            Predicate<Parsers.Elements.RawSchedule> sameWeekday    = s => (int)s.Tag.Day == (int)DateTime.Now.DayOfWeek;
+            Predicate<Parsers.Elements.RawSchedule> repeatEveryday = s => s.Tag.Repetition == RepetitionTag.EveryDay;
 
             return fromFile.Where(schedule => sameWeekday(schedule) || repeatEveryday(schedule)).ToList();
         }
 
-        private static string LoadScheduleFolderPath(IConfigurationLoader loader)
+        private static string LoadScheduleFolderPath(IConfigurationFileLoader fileLoader)
         {
-            var dict = ConfigurationLoader.LoadUniquePairs(loader);
+            var dict = ConfigurationFileLoader.LoadUniquePairs(fileLoader);
 
             var schedulePath = FolderManager.DataPath(dict["ScheduleFolder"]);
             return schedulePath;

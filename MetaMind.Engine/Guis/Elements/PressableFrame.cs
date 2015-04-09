@@ -11,7 +11,7 @@
     /// <summary>
     /// Only deals with low level clicked event.
     /// </summary>
-    public class PressableFrame : FrameObject, IPressableFrame 
+    public class PressableFrame : FrameBase, IPressableFrame
     {
         private Rectangle rectangle;
 
@@ -41,20 +41,18 @@
 
         protected PressableFrame()
         {
-            InputEventManager.MouseMove += this.DetectMouseOver;
+            GameEngine.InputEventManager.MouseMove += this.DetectMouseOver;
 
-            InputEventManager.MouseDown += this.DetectMouseLeftPressed;
-            InputEventManager.MouseDown += this.DetectMouseRightPressed;
+            GameEngine.InputEventManager.MouseDown += this.DetectMouseLeftPressed;
+            GameEngine.InputEventManager.MouseDown += this.DetectMouseRightPressed;
 
-            InputEventManager.MouseUp += this.DetectMouseLeftRelease;
-            InputEventManager.MouseUp += this.DetectMouseRightRelease;
+            GameEngine.InputEventManager.MouseUp += this.DetectMouseLeftRelease;
+            GameEngine.InputEventManager.MouseUp += this.DetectMouseRightRelease;
 
             this.FrameMoved += this.DetectMouseOver;
 
             // dummy intialization
             this.Initialize(new Rectangle());
-
-            Debug.WriteLine("PressableFrame Construction");
         }
 
         ~PressableFrame()
@@ -62,35 +60,26 @@
             this.Dispose();
         }
 
-        public override void Dispose()
+        public void Dispose()
         {
-            try
-            {
-                this.MouseEnter               = null;
-                this.MouseLeave               = null;
-                this.MouseLeftPressed         = null;
-                this.MouseLeftReleased        = null;
-                this.MouseLeftDraggedOutside  = null;
-                this.MouseRightPressed        = null;
-                this.MouseRightReleased       = null;
-                this.MouseRightDraggedOutside = null;
+            this.MouseEnter               = null;
+            this.MouseLeave               = null;
+            this.MouseLeftPressed         = null;
+            this.MouseLeftReleased        = null;
+            this.MouseLeftDraggedOutside  = null;
+            this.MouseRightPressed        = null;
+            this.MouseRightReleased       = null;
+            this.MouseRightDraggedOutside = null;
 
-                this.FrameMoved               = null;
+            this.FrameMoved               = null;
 
-                InputEventManager.MouseMove -= this.DetectMouseOver;
+            GameEngine.InputEventManager.MouseMove -= this.DetectMouseOver;
 
-                InputEventManager.MouseDown -= this.DetectMouseLeftPressed;
-                InputEventManager.MouseDown -= this.DetectMouseRightPressed;
+            GameEngine.InputEventManager.MouseDown -= this.DetectMouseLeftPressed;
+            GameEngine.InputEventManager.MouseDown -= this.DetectMouseRightPressed;
 
-                InputEventManager.MouseUp   -= this.DetectMouseLeftRelease;
-                InputEventManager.MouseUp   -= this.DetectMouseRightRelease;
-
-                Debug.WriteLine("PressableFrame Destruction");
-            }
-            finally
-            {
-                base.Dispose();
-            } 
+            GameEngine.InputEventManager.MouseUp   -= this.DetectMouseLeftRelease;
+            GameEngine.InputEventManager.MouseUp   -= this.DetectMouseRightRelease;
         }
 
         protected void Initialize(Rectangle rectangle)
@@ -232,7 +221,7 @@
 
         private void DetectMouseOver(object sender, EventArgs e)
         {
-            var mouse = InputSequenceManager.Mouse.CurrentState;
+            var mouse = GameEngine.InputSequenceManager.Mouse.CurrentState;
             this.DetectMouseOver(null, new MouseEventArgs(MouseButton.None, 0, mouse.X, mouse.Y, 0));
         }
 
@@ -299,7 +288,7 @@
 
         public virtual void UpdateInput(GameTime gameTime)
         {
-            var mouse         = InputSequenceManager.Mouse.CurrentState;
+            var mouse         = GameEngine.InputSequenceManager.Mouse.CurrentState;
             var mouseLocation = new Point(mouse.X, mouse.Y);
 
             this.UpdateStates(mouseLocation);

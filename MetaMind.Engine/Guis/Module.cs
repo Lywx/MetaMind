@@ -1,10 +1,8 @@
 namespace MetaMind.Engine.Guis
 {
-    using MetaMind.Engine.Guis.Widgets;
-
     using Microsoft.Xna.Framework;
 
-    public interface IModule : IWidget
+    public interface IModule : IManualInputable
     {
         IModuleControl Control { get; }
 
@@ -20,10 +18,10 @@ namespace MetaMind.Engine.Guis
     /// data from data source. The behavior is of maximum abstraction.
     /// </summary>
     /// <remarks>
-    /// Compatible with previous Widget implementation, as long as
+    /// Compatible with previous ManualInputGameElement implementation, as long as
     /// the derived class override the widget implementation.
     /// </remarks>>
-    public class Module<TModuleSettings> : Widget, IModule
+    public class Module<TModuleSettings> : ManualInputGameElement, IModule
     {
         protected Module(TModuleSettings settings)
         {
@@ -61,15 +59,16 @@ namespace MetaMind.Engine.Guis
             this.Control.Unload();
         }
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
-            this.Control.UpdateInput(gameTime);
+            this.Control .UpdateInput(gameTime);
+            this.Graphics.UpdateInput(gameInput, gameTime);
         }
 
         public override void UpdateStructure(GameTime gameTime)
         {
             this.Control .UpdateStructure(gameTime);
-            this.Graphics.Update(gameTime);
+            this.Graphics.UpdateStructure(gameTime);
         }
     }
 }

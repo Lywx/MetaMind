@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MessageManager.cs" company="UESTC">
+// <copyright file="Message.cs" company="UESTC">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -12,11 +12,10 @@ namespace MetaMind.Engine.Components
     using System.Globalization;
 
     using MetaMind.Engine.Components.Messages;
-    using MetaMind.Engine.Settings;
 
     using Microsoft.Xna.Framework;
 
-    public class MessageManager : EngineObject
+    public class MessageManager
     {
         #region Singleton
 
@@ -53,9 +52,9 @@ namespace MetaMind.Engine.Components
                 return;
             }
 
-            for (int i = 0; i < messages.Count; i++)
+            for (int i = 0; i < this.messages.Count; i++)
             {
-                FlashMessage message = messages[i];
+                FlashMessage message = this.messages[i];
 
                 if (string.IsNullOrEmpty(message.CurrentMessage))
                 {
@@ -64,14 +63,14 @@ namespace MetaMind.Engine.Components
 
                 message.DrawnMessage += message.CurrentMessage[message.CurrentIndex].ToString(new CultureInfo("en-US"));
 
-                Vector2 messagePosition = new Vector2(message.Position.X, message.Position.Y + 30 * i);
-                Color messageColor = new Color(
+                var messagePosition = new Vector2(message.Position.X, message.Position.Y + 30 * i);
+                var messageColor    = new Color(
                     message.FontColor.R - 100 + 15 * i, 
                     message.FontColor.G - 100 + 15 * i, 
                     message.FontColor.B - 100 + 15 * i, 
                     message.FontColor.A - 100 + 50 * i);
 
-                FontManager.DrawText(
+                GameEngine.FontManager.DrawString(
                     MessageSettings.MessageFont, 
                     message.DrawnMessage, 
                     messagePosition, 
@@ -84,28 +83,28 @@ namespace MetaMind.Engine.Components
                 }
 
                 message.CurrentIndex++;
-                messages[i] = message;
+                this.messages[i] = message;
             }
         }
 
         public void Update(GameTime gameTime)
         {
-            if (messages.Count == 0)
+            if (this.messages.Count == 0)
             {
                 return;
             }
 
-            for (int i = 0; i < messages.Count; i++)
+            for (int i = 0; i < this.messages.Count; i++)
             {
-                FlashMessage message = messages[i];
+                var message = this.messages[i];
                 message.DisplayTime -= gameTime.ElapsedGameTime;
                 if (message.DisplayTime <= TimeSpan.Zero)
                 {
-                    messages.RemoveAt(i);
+                    this.messages.RemoveAt(i);
                 }
                 else
                 {
-                    messages[i] = message;
+                    this.messages[i] = message;
                 }
             }
         }

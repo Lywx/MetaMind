@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Guis.Testers
 
     using Microsoft.Xna.Framework;
 
-    public class StateTestGraphics : EngineObject
+    public class StateTestGraphics : GameEngineAccess
     {
         private bool[] states;
 
@@ -28,8 +28,8 @@ namespace MetaMind.Engine.Guis.Testers
                 if (this.states[i])
                 {
                     var text = Enum.GetName(this.type, i);
-                    var position = PointExt.ToVector2(start) + new Vector2(dx, i * dy);
-                    FontManager.DrawText(Font.UiStatisticsFont, text, position, Color.White, 1f);
+                    var position = ExtPoint.ToVector2(start) + new Vector2(dx, i * dy);
+                    FontManager.DrawString(Font.UiStatisticsFont, text, position, Color.White, 1f);
                 }
             }
         }

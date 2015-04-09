@@ -59,9 +59,9 @@
         {
             return new Point(
                 this.ViewSettings.Direction == PointViewSettings1D.ScrollDirection.Right ?
-                this.ViewSettings.StartPoint.X - (this.XOffset * this.ViewSettings.RootMargin.X) + id * this.ViewSettings.RootMargin.X :
-                this.ViewSettings.StartPoint.X + (this.XOffset * this.ViewSettings.RootMargin.X) - id * this.ViewSettings.RootMargin.X,
-                this.ViewSettings.StartPoint.Y);
+                this.ViewSettings.PointStart.X - (this.XOffset * this.ViewSettings.PointMargin.X) + id * this.ViewSettings.PointMargin.X :
+                this.ViewSettings.PointStart.X + (this.XOffset * this.ViewSettings.PointMargin.X) - id * this.ViewSettings.PointMargin.X,
+                this.ViewSettings.PointStart.Y);
         }
 
         public void Zoom(int id)

@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="InputSequenceManager.cs" company="UESTC">
+// <copyright file="Sequence.cs" company="UESTC">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -15,7 +15,7 @@ namespace MetaMind.Engine.Components
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class InputSequenceManager : Widget
+    public class InputSequenceManager : ManualInputGameElement
     {
         private readonly KeyboardManager keyboard;
 
@@ -39,11 +39,11 @@ namespace MetaMind.Engine.Components
 
         #region Singleton
 
-        private static InputSequenceManager singleton;
+        private static InputSequenceManager Singleton { get; set; }
 
         public static InputSequenceManager GetInstance()
         {
-            return singleton ?? (singleton = new InputSequenceManager());
+            return Singleton ?? (Singleton = new InputSequenceManager());
         }
 
         #endregion Singleton
@@ -64,10 +64,10 @@ namespace MetaMind.Engine.Components
         {
         }
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
-            this.mouse   .UpdateInput(gameTime);
-            this.keyboard.UpdateInput(gameTime);
+            this.mouse   .UpdateInput(gameInput, gameTime);
+            this.keyboard.UpdateInput(gameInput, gameTime);
         }
 
         public override void UpdateStructure(GameTime gameTime)

@@ -76,7 +76,7 @@ namespace MetaMind.Engine.Guis.Elements
 
         private void RecordPressPosition(object sender, EventArgs e)
         {
-            var mouse = InputSequenceManager.Mouse.CurrentState;
+            var mouse = GameEngine.InputSequenceManager.Mouse.CurrentState;
 
             // origin for deciding whether is dragging
             this.PressedPosition = new Point(mouse.X, mouse.Y);
@@ -116,7 +116,7 @@ namespace MetaMind.Engine.Guis.Elements
         {
             base.UpdateInput(gameTime);
 
-            var mouse = InputSequenceManager.Mouse.CurrentState;
+            var mouse = GameEngine.InputSequenceManager.Mouse.CurrentState;
             var mouseLocation = new Point(mouse.X, mouse.Y);
 
             if (this.IsEnabled(FrameState.Frame_Dragging))

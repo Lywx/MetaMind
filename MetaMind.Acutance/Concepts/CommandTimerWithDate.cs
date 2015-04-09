@@ -5,7 +5,7 @@ namespace MetaMind.Acutance.Concepts
 
     using MetaMind.Engine.Concepts;
 
-    public enum CommandRepeativity
+    public enum CommandRepetion
     {
         EveryMoment,
 
@@ -21,32 +21,32 @@ namespace MetaMind.Acutance.Concepts
     [DataContract]
     public class CommandTimerWithDate : CommandTimer
     {
-        public CommandTimerWithDate(DateTime date, CommandRepeativity repeativity)
+        public CommandTimerWithDate(DateTime date, CommandRepetion repetion)
         {
             this.Date        = date;
-            this.Repeativity = repeativity;
+            this.Repetion = repetion;
         }
 
         public override bool IsTransiting
         {
             get
             {
-                switch (this.Repeativity)
+                switch (this.Repetion)
                 {
                     // TODO: Not implemented properly with parser because day of week cannot determine day in month
-                    // case CommandRepeativity.EveryMonth:
+                    // case CommandRepetion.EveryMonth:
                     //     return this.SameMonthDay && this.SameTime;
 
-                    case CommandRepeativity.EveryWeek:
+                    case CommandRepetion.EveryWeek:
                         return this.SameWeekDay && this.SameTime;
 
-                    case CommandRepeativity.EveryDay:
+                    case CommandRepetion.EveryDay:
                         return this.SameTime;
 
-                    case CommandRepeativity.EveryMoment:
+                    case CommandRepetion.EveryMoment:
                         return this.SameTime;
 
-                    case CommandRepeativity.Never:
+                    case CommandRepetion.Never:
                         return this.SameTime;
 
                     default:
@@ -63,7 +63,7 @@ namespace MetaMind.Acutance.Concepts
         [DataMember]
         private DateTime Date { get; set; }
 
-        private CommandRepeativity Repeativity { get; set; }
+        private CommandRepetion Repetion { get; set; }
 
         private bool SameMonthDay
         {
@@ -89,12 +89,12 @@ namespace MetaMind.Acutance.Concepts
 
         public override void Reset()
         {
-            this.Experience = Experience.Zero;
+            this.SynchronizationSpan = SynchronizationSpan.Zero;
         }
 
         public override void Update()
         {
-            this.Experience.CertainDuration = DateTime.Now.TimeOfDay - this.Date.TimeOfDay;
+            this.SynchronizationSpan.CertainDuration = DateTime.Now.TimeOfDay - this.Date.TimeOfDay;
         }
     }
 }

@@ -111,7 +111,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
             ViewControl.FileBuffer = query.Buffer;
 
-            foreach (var entry in query.Entries)
+            foreach (var entry in query.Data)
             {
                 ViewControl.AddItem(entry);
             }

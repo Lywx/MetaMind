@@ -42,7 +42,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
             this.Item.Enable(ItemState.Item_Exchanging);
 
-            ProcessManager.AttachProcess(new ViewItemExchangeProcess(draggingItem, targetView));
+            ProcessManager.AttachProcess(new ViewItemTransitProcess(draggingItem, targetView));
         }
 
         public virtual void SwapIt(IViewItem draggingItem)

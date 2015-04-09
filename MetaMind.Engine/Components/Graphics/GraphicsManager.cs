@@ -1,10 +1,12 @@
 namespace MetaMind.Engine.Components.Graphics
 {
+    using System.Windows.Forms;
+
     using MetaMind.Engine.Settings.Loaders;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    public class GraphicsManager : GraphicsDeviceManager, IConfigurationLoader
+    public class GraphicsManager : GraphicsDeviceManager, IConfigurationParameterLoader<GraphicsSettings>
     {
         #region Singleton
 
@@ -15,8 +17,9 @@ namespace MetaMind.Engine.Components.Graphics
             return singleton ?? (singleton = new GraphicsManager(game));
         }
 
-
         #endregion
+
+        #region Constructors
 
         private GraphicsManager(Game game)
             : base(game)
@@ -26,59 +29,47 @@ namespace MetaMind.Engine.Components.Graphics
             this.ApplyChanges();
         }
 
-        public string ConfigurationFile
+        #endregion
+
+        #region Configuration
+
+        public void ConfigurationLoad()
         {
-            get
-            {
-                return "Graphics.txt";
-            }
+            this.ApplyChanges();
+        }
+
+        #endregion
+
+        #region Parameters
+
+        public void ParameterLoad(GraphicsSettings parameter)
+        {
+            this.Screen = parameter.Screen;
+        }
+
+        private Screen Screen { get; set; }
+
+        #endregion
+
+        public void Initialize()
+        {
+            // fixed drawing order in 3d graphics
+            this.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+
+            this.ConfigurationLoad();
+            this.ParameterLoad(GameEngine.GraphicsSettings);
+
+            this.WindowCentralize();
         }
 
         /// <remarks>
         /// Can be only called after GameEngine is constructed.
         /// </remarks>>
-        public void CenterWindow()
+        private void WindowCentralize()
         {
-            // center game window
-            var screen = GraphicsSettings.Screen;
-
             GameEngine.Instance.Window.Position = new Point(
-                screen.Bounds.X + (screen.Bounds.Width - GraphicsSettings.Width) / 2,
-                screen.Bounds.Y + (screen.Bounds.Height - GraphicsSettings.Height) / 2);
-
-            // set width and height
-            this.PreferredBackBufferWidth = GraphicsSettings.Width;
-            this.PreferredBackBufferHeight = GraphicsSettings.Height;
-
-            this.ApplyChanges();
-        }
-
-        public void Initialize()
-        {
-            this.LoadSettings();
-            
-            // fixed drawing order in 3d graphics
-            this.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-        }
-
-        public void LoadSettings()
-        {
-            var dict = ConfigurationLoader.LoadUniquePairs(this);
-
-            var fullscreen = ConfigurationLoader.BooleanValue(dict, "IsFullscreen", false);
-            var width  = ConfigurationLoader.MultipleIntValue(dict, "Resolution", 0, 800);
-            var height = ConfigurationLoader.MultipleIntValue(dict, "Resolution", 1, 600);
-            var fps    = ConfigurationLoader.MultipleIntValue(dict, "Fps", 0, 30);
-
-            var mouseVisible = ConfigurationLoader.BooleanValue(dict, "IsMouseVisible", true);
-
-            GraphicsSettings.SetScreenProperties(width, height, fullscreen, fps);
-            GraphicsSettings.SetMouseProperties(mouseVisible);
-
-            this.PreferredBackBufferWidth  = GraphicsSettings.Width;
-            this.PreferredBackBufferHeight = GraphicsSettings.Height;
-
-            this.ApplyChanges();
+                this.Screen.Bounds.X + (this.Screen.Bounds.Width  - GameEngine.GraphicsSettings.Width)  / 2,
+                this.Screen.Bounds.Y + (this.Screen.Bounds.Height - GameEngine.GraphicsSettings.Height) / 2);
         }
     }
 }

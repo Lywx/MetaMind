@@ -1,14 +1,13 @@
 namespace MetaMind.Perseverance.Guis.Modules
 {
+    using MetaMind.Engine;
     using MetaMind.Engine.Components.Fonts;
-    using MetaMind.Engine.Components.Graphics;
-    using MetaMind.Engine.Settings;
 
     using Microsoft.Xna.Framework;
 
     public class SummaryModuleSettings
     {
-        public Vector2 TitleCenter         = new Vector2(GraphicsSettings.Width / 2f, 100);
+        public Vector2 TitleCenter         = new Vector2(GameEngine.GraphicsSettings.Width / 2f, 100);
 
         public Font    TitleFont           = Font.UiRegularFont;
 

@@ -6,7 +6,7 @@
 
     public interface IViewVisualComponent : IViewComponent
     {
-        void Draw(GameTime gameTime);
+        void Draw(GameTime gameTime, byte alpha);
     }
 
     public class ViewVisualComponent : ViewComponent, IViewVisualComponent
@@ -16,7 +16,7 @@
         {
         }
 
-        public virtual void Draw(GameTime gameTime)
+        public virtual void Draw(GameTime gameTime, byte alpha)
         {
         }
     }

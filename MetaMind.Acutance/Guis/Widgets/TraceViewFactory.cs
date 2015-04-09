@@ -5,7 +5,7 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Acutance.Concepts;
     using MetaMind.Engine.Guis.Widgets.Views;
 
-    public class TraceViewFactory : PointViewBasicFactory2D
+    public class TraceViewFactory : PointViewFactory2D
     {
         public TraceViewFactory(ITracelist tracelist)
         {

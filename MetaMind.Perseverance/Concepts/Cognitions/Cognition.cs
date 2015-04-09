@@ -20,7 +20,7 @@
     [DataContract,
     KnownType(typeof(Consciousness)),
     KnownType(typeof(Synchronization))]
-    public class Cognition : EngineObject, ICognition
+    public class Cognition : GameEngineAccess, ICognition
     {
         #region Components
 

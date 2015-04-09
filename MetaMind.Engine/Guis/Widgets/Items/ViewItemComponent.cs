@@ -29,7 +29,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         #endregion View Components
     }
 
-    public class ViewItemComponent : EngineObject, IViewItemComponent
+    public class ViewItemComponent : GameEngineAccess, IViewItemComponent
     {
         #region Constructors and Destructors
 

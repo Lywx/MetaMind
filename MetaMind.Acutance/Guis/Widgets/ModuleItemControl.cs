@@ -18,11 +18,11 @@ namespace MetaMind.Acutance.Guis.Widgets
     {
         #region Constructors
 
-        public ModuleItemControl(IViewItem item, List<ModuleEntry> source)
+        public ModuleItemControl(IViewItem item, List<Module> source)
             : base(item)
         {
             this.ItemFrameControl = new TraceItemFrameControl(item);
-            this.ItemViewControl  = new SmartItemViewControl<SmartItemSwapProcess>(item, source);
+            this.ItemViewControl  = new ViewItemViewSmartControl<ViewItemSmartSwapProcess>(item, source);
             
             this.ItemFileControl  = new ModuleItemFileControl(item);
 
@@ -33,11 +33,11 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public ModuleItemFileControl ItemFileControl { get; private set; }
 
-        public ItemEntryFrame IdFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).IdFrame; } }
+        public ItemDataFrame IdFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).IdFrame; } }
 
-        public ItemEntryFrame NameFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).NameFrame; } }
+        public ItemDataFrame NameFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).NameFrame; } }
 
-        public ItemEntryFrame ExperienceFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).ExperienceFrame; } }
+        public ItemDataFrame ExperienceFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).ExperienceFrame; } }
 
 
         #region Events

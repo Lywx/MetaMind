@@ -63,22 +63,22 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         public override void UpdateInput(GameTime gameTime)
         {
-            base       .UpdateInput(gameTime);
+            base            .UpdateInput(gameTime);
             this.SymbolFrame.UpdateInput(gameTime);
         }
 
         private void UpdateFrameSelection(GameTime gameTime)
         {
             if (this.Item.IsEnabled(ItemState.Item_Selected) &&
-                !this.Item.IsEnabled(ItemState.Item_Dragging))
+               !this.Item.IsEnabled(ItemState.Item_Dragging))
             {
-                this.selectedTime = this.selectedTime + gameTime.DeltaTimeSpan(2);
+                this.selectedTime = this.selectedTime + gameTime.Times(2);
             }
             else
             {
                 if (this.selectedTime.Ticks > 0)
                 {
-                    this.selectedTime = this.selectedTime - gameTime.DeltaTimeSpan(5);
+                    this.selectedTime = this.selectedTime - gameTime.Times(5);
                 }
                 else
                 {

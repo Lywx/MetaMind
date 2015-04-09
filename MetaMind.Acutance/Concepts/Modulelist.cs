@@ -17,11 +17,11 @@ namespace MetaMind.Acutance.Concepts
     public interface IModulelist
     {
         [DataMember]
-        List<ModuleEntry> Modules { get; }
+        List<Module> Modules { get; }
 
-        ModuleEntry Create(KnowledgeFile file);
+        Module Create(RawKnowledgeFile file);
 
-        void Remove(ModuleEntry entry);
+        void Remove(Module entry);
 
         void Sort(ModuleSortMode sortMode);
 
@@ -36,25 +36,25 @@ namespace MetaMind.Acutance.Concepts
         {
             this.Commandlist = commandlist;
 
-            this.Modules     = new List<ModuleEntry>();
+            this.Modules     = new List<Module>();
         }
 
         [DataMember]
-        public List<ModuleEntry> Modules { get; private set; }
+        public List<Module> Modules { get; private set; }
 
         [DataMember]
         private ICommandlist Commandlist { get; set; }
 
         #region Operations
 
-        public ModuleEntry Create(KnowledgeFile file)
+        public Module Create(RawKnowledgeFile file)
         {
-            var entry = new ModuleEntry(file, this.Commandlist);
+            var entry = new Module(file, this.Commandlist);
             this.Modules.Add(entry);
             return entry;
         }
 
-        public void Remove(ModuleEntry entry)
+        public void Remove(Module entry)
         {
             if (this.Modules.Contains(entry))
             {

@@ -7,11 +7,8 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
     using Microsoft.Xna.Framework;
 
-    public class TaskItemSettings : ItemSettings
+    public class TaskItemSettings : ItemSettings, IAdjustable
     {
-        //---------------------------------------------------------------------
-        public Color ErrorColor                    = Color.White;
-
         //---------------------------------------------------------------------
         public float NameSize                      = 0.7f;
 
@@ -39,12 +36,12 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         public Color NameFrameModificationColor    = new Color(0, 0, 0, 0);
 
-        public Color NameFrameSelectionColor       = ColorPalette.LightBlue;
+        public Color NameFrameSelectionColor       = Palette.LightBlue;
 
-        public Color NameFrameSynchronizationColor = ColorPalette.LightBlue;
+        public Color NameFrameSynchronizationColor = Palette.LightBlue;
 
         //---------------------------------------------------------------------
-        public Color IdFramePendingColor           = ColorPalette.LightYellow;
+        public Color IdFramePendingColor           = Palette.LightYellow;
 
         //---------------------------------------------------------------------
         public float ExperienceSize                = 0.7f;
@@ -57,7 +54,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         public Point ExperienceFrameMargin         = new Point(2, 2);
 
-        public Color ExperienceFrameColor          = ColorPalette.TransparentColor1;
+        public Color ExperienceFrameColor          = Palette.TransparentColor1;
 
         //---------------------------------------------------------------------
         public float ProgressSize                  = 0.7f;
@@ -68,11 +65,11 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         public Point ProgressFrameSize             = new Point(96, 24);
 
-        public Color ProgressFrameColor            = ColorPalette.TransparentColor1;
+        public Color ProgressFrameColor            = Palette.TransparentColor1;
 
         public Point ProgressFrameMargin           = new Point(2, 2);
 
-        public Color ProgressBarColor              = ColorPalette.TransparentColor2;
+        public Color ProgressBarColor              = Palette.TransparentColor2;
 
         //---------------------------------------------------------------------
         public Font  HelpFont                      = Font.UiStatisticsFont;
@@ -96,9 +93,14 @@ namespace MetaMind.Perseverance.Guis.Widgets
             this.IdFrameSize  = new Point(24, 24);
         }
 
-        public virtual void Reconfigure()
+        public virtual void Configure()
         {
             this.RootFrameSize = this.NameFrameSize;
         }
+    }
+
+    public interface IAdjustable
+    {
+        void Configure();
     }
 }

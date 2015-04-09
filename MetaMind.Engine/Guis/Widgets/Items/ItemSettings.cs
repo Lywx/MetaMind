@@ -3,6 +3,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
     using System;
 
     using MetaMind.Engine.Components.Fonts;
+    using MetaMind.Engine.Settings;
     using MetaMind.Engine.Settings.Colors;
 
     using Microsoft.Xna.Framework;
@@ -27,7 +28,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         public Point IdFrameMargin = new Point(2, 2);
 
-        public Color IdFrameColor  = ColorPalette.TransparentColor1;
+        public Color IdFrameColor  = Palette.TransparentColor1;
 
         public object Clone()
         {

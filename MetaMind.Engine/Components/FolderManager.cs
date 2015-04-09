@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="FolderManager.cs" company="UESTC">
+// <copyright file="Folder.cs" company="UESTC">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -57,9 +57,9 @@ namespace MetaMind.Engine.Components
             return fullPath.Substring(dataFullPath.Length);
         }
 
-        public static string ConfigurationPath(IConfigurationLoader loader)
+        public static string ConfigurationPath(IConfigurationFileLoader fileLoader)
         {
-            return Path.Combine(ConfigurationFolderPath, loader.ConfigurationFile);
+            return Path.Combine(ConfigurationFolderPath, fileLoader.ConfigurationFile);
         }
 
         private void CreateDirectory()

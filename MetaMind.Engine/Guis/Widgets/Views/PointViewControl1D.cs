@@ -49,7 +49,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public void AddItem()
         {
-            var item = new ViewItemExchangable(View, ViewSettings, this.ItemSettings, this.ItemFactory);
+            var item = new ViewItemExchangable(View, ViewSettings, ItemSettings, ItemFactory);
             View.Items.Add(item);
         }
 

@@ -19,19 +19,19 @@ namespace MetaMind.Perseverance.Guis.Widgets
             this.ItemSyncControl  = new TaskItemSyncControl(item);
 
             // only add this control when 
-            if (item.View.Parent is MotivationTaskTracer)
+            if (item.View.Parent is TaskModule)
             {
                 this.ItemViewControl = new TaskItemViewControlInMotivation(item);
             }
         }
 
-        public ItemEntryFrame ExperienceFrame { get { return ((TaskItemFrameControl)this.ItemFrameControl).ExperienceFrame; } }
+        public ItemDataFrame ExperienceFrame { get { return ((TaskItemFrameControl)this.ItemFrameControl).ExperienceFrame; } }
 
-        public ItemEntryFrame IdFrame { get { return ((TaskItemFrameControl)this.ItemFrameControl).IdFrame; } }
+        public ItemDataFrame IdFrame { get { return ((TaskItemFrameControl)this.ItemFrameControl).IdFrame; } }
 
-        public ItemEntryFrame NameFrame { get { return ((TaskItemFrameControl)this.ItemFrameControl).NameFrame; } }
+        public ItemDataFrame NameFrame { get { return ((TaskItemFrameControl)this.ItemFrameControl).NameFrame; } }
 
-        public ItemEntryFrame ProgressFrame { get { return ((TaskItemFrameControl)this.ItemFrameControl).ProgressFrame; } }
+        public ItemDataFrame ProgressFrame { get { return ((TaskItemFrameControl)this.ItemFrameControl).ProgressFrame; } }
 
         public TaskItemSyncControl ItemSyncControl { get; private set; }
 
@@ -81,6 +81,8 @@ namespace MetaMind.Perseverance.Guis.Widgets
                             this.ItemDataControl.EditString("Name");
                         }
 
+                        // UNDONE: Won't work anymore
+
                         if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.D))
                         {
                             this.ItemDataControl.EditInt("Done");
@@ -88,7 +90,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
                         if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.E))
                         {
-                            this.ItemDataControl.EditExperience("Experience");
+                            this.ItemDataControl.EditExperience("SynchronizationSpan");
                         }
 
                         if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.L))

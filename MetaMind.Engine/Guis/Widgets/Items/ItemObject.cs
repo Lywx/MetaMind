@@ -32,7 +32,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         void UpdateStructure(GameTime gameTime);
     }
 
-    public abstract class ItemObject : EngineObject, IItemObject
+    public abstract class ItemObject : GameEngineAccess, IItemObject
     {
         private readonly bool[] states;
 

@@ -9,13 +9,13 @@ namespace MetaMind.Acutance.Concepts
     [DataContract]
     [KnownType(typeof(CommandTimerWithDate))]
     [KnownType(typeof(CommandTimerWithTimeout))]
-    public abstract class CommandTimer : EngineObject
+    public abstract class CommandTimer : GameEngineAccess
     {
         [DataMember]
         public readonly TimeSpan Transition = TimeSpan.FromSeconds(30);
 
         [DataMember]
-        public Experience Experience { get; protected set; }
+        public SynchronizationSpan SynchronizationSpan { get; protected set; }
 
         public abstract bool IsAutoReseting { get; }
 
@@ -23,7 +23,7 @@ namespace MetaMind.Acutance.Concepts
 
         public override void Dispose()
         {
-            this.Experience = Experience.Zero;
+            this.SynchronizationSpan = SynchronizationSpan.Zero;
 
             base.Dispose();
         }

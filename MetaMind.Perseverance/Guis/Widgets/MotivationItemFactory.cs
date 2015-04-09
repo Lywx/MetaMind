@@ -11,7 +11,7 @@
 
         public dynamic CreateData(IViewItem item)
         {
-            return Perseverance.Session.Motivationlist.Create(item.ViewSettings.Space);
+            return Perseverance.Session.Motivation.Create(item.ViewSettings.Space);
         }
 
         public IItemGraphics CreateGraphics(IViewItem item)
@@ -21,7 +21,7 @@
 
         public void RemoveData(IViewItem item)
         {
-            Perseverance.Session.Motivationlist.Remove(item.ItemData, item.ViewSettings.Space);
+            Perseverance.Session.Motivation.Remove(item.ItemData, item.ViewSettings.Space);
         }
     }
 }

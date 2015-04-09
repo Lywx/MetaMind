@@ -6,9 +6,9 @@
 
     public class ModuleCreatedEventArgs : EventArgs
     {
-        public readonly KnowledgeFileBuffer Buffer;
+        public readonly RawKnowledgeFileBuffer Buffer;
 
-        public ModuleCreatedEventArgs(KnowledgeFileBuffer buffer)
+        public ModuleCreatedEventArgs(RawKnowledgeFileBuffer buffer)
         {
             this.Buffer = buffer;
         }

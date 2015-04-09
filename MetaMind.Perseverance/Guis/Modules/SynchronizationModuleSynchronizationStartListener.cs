@@ -1,7 +1,9 @@
 ﻿namespace MetaMind.Perseverance.Guis.Modules
 {
     using MetaMind.Engine.Components.Events;
+    using MetaMind.Perseverance.Concepts;
     using MetaMind.Perseverance.Concepts.Cognitions;
+    using MetaMind.Perseverance.Events;
     using MetaMind.Perseverance.Sessions;
 
     internal class SynchronizationModuleSynchronizationStartListener : ListenerBase
@@ -20,10 +22,10 @@
         public override bool HandleEvent(EventBase @event)
         {
             var synchronizationStartedEventArgs = (SynchronizationStartedEventArgs)@event.Data;
-            var data = synchronizationStartedEventArgs.TaskEntry;
+            var data = synchronizationStartedEventArgs.Task;
 
             // uncomment this to enforce fixed entry start/stop
-            //// if (synchronization.Enabled) return true;
+            //// if (synchronization.IsEnabled) return true;
 
             this.synchronizationModule.StartSynchronizing(data);
 

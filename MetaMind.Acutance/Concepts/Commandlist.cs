@@ -13,13 +13,13 @@ namespace MetaMind.Acutance.Concepts
     public interface ICommandlist
     {
         [DataMember]
-        List<CommandEntry> Commands { get; }
+        List<Command> Commands { get; }
 
-        void Add(CommandEntry entry);
+        void Add(Command entry);
 
-        void Add(List<CommandEntry> entries);
+        void Add(List<Command> entries);
 
-        void Remove(CommandEntry entry);
+        void Remove(Command entry);
 
         void Sort(CommandSortMode sortMode);
 
@@ -33,7 +33,7 @@ namespace MetaMind.Acutance.Concepts
 
         public Commandlist()
         {
-            this.Commands = new List<CommandEntry>();
+            this.Commands = new List<Command>();
         }
 
         #endregion Constructors
@@ -43,13 +43,13 @@ namespace MetaMind.Acutance.Concepts
         /// <summary>
         /// Used as a temporary buffer to store not serialized schedules from this.Commands.
         /// </summary>
-        private List<CommandEntry> SchedulelistBuffer { get; set; }
+        private List<Command> SchedulelistBuffer { get; set; }
 
         [OnSerializing]
         public void OnSerializing(StreamingContext context)
         {
             // won't serialize non-from-knowledge(won't serialize schedule command)
-            this.SchedulelistBuffer = CommandEntryFileter.RemoveAllShedule(this.Commands);
+            this.SchedulelistBuffer = CommandFileter.RemoveAllShedule(this.Commands);
         }
 
         [OnSerialized]
@@ -67,24 +67,24 @@ namespace MetaMind.Acutance.Concepts
         #region Public Properties
 
         [DataMember]
-        public List<CommandEntry> Commands { get; private set; }
+        public List<Command> Commands { get; private set; }
 
 
         #endregion
 
         #region Operations 
 
-        public void Add(List<CommandEntry> entries)
+        public void Add(List<Command> entries)
         {
             this.Commands.AddRange(entries);
         }
 
-        public void Add(CommandEntry entry)
+        public void Add(Command entry)
         {
             this.Commands.Add(entry);
         }
 
-        public void Remove(CommandEntry entry)
+        public void Remove(Command entry)
         {
             if (this.Commands.Contains(entry))
             {

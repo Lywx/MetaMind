@@ -45,14 +45,14 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
         }
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime, byte alpha)
         {
             if (this.ViewControl.RowNum > this.ViewSettings.RowNumDisplay)
             {
                 Primitives2D.FillRectangle(
                     ScreenManager.SpriteBatch,
                     this.ScrollBarRectangle,
-                    ColorExt.MakeTransparent(this.settings.Color, (byte)this.alpha));
+                    ExtColor.MakeTransparent(this.settings.Color, (byte)this.alpha));
             }
         }
 

@@ -1,80 +1,146 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="GraphicsSettings.cs" company="UESTC">
-//   Copyright (c) 2014 Wuxiang Lin
+//   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
+// <summary>
+//
+// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace MetaMind.Engine.Components.Graphics
 {
     using System;
-    using System.Linq;
     using System.Windows.Forms;
 
-    public static class GraphicsSettings
+    using MetaMind.Engine.Settings.Loaders;
+    using MetaMind.Engine.Settings.Systems;
+
+    public class GraphicsSettings : IConfigurationFileLoader, IConfigurationParameter
     {
-        public static bool IsFullscreen;
-
-        public static Screen Screen = Screen.AllScreens.First(e => e.Primary);
-
-        private static int height;
-
-        private static int width;
-        
-        private static int fps;
-
-        public static int Height
+        public static GraphicsSettings GetInstance()
         {
-            // allow taskbar to show
-            get
-            {
-                return IsFullscreen ? Screen.Bounds.Height - 1 : height;
-            }
+            return new GraphicsSettings();
         }
 
-        public static int Width
+        #region Graphics Data
+
+        private int height;
+
+        private int width;
+
+        public int FPS { get; set; }
+
+        public int Height
         {
             get
             {
-                return IsFullscreen ? Screen.Bounds.Width : width;
+                // allow taskbar to show
+                return this.IsFullscreen ? Screen.Bounds.Height - 1 : this.height;
             }
+
+            set { this.height = value; }
         }
 
-        public static void SetScreenProperties(int width, int height, bool isFullscreen, int fps)
+        public bool IsFullscreen { get; set; }
+
+        public bool IsMouseVisible { get; set; }
+
+        public Screen Screen
         {
-            GraphicsSettings.width  = width;
-            GraphicsSettings.height = height;
-
-            IsFullscreen = isFullscreen;
-            Fps          = fps;
-
-            if (IsFullscreen)
+            get
             {
-                GameEngine.Instance.Window.IsBorderless = true;
+                return Monitor.Screen;
             }
         }
 
-        public static int Fps
+        public int Width
         {
-            get { return fps; }
-            set
+            get
             {
-                fps = value;
+                // allow taskbar to show
+                return this.IsFullscreen ? this.Screen.Bounds.Width : this.width;
+            }
 
-                GameEngine.Instance.TargetElapsedTime = TimeSpan.FromMilliseconds(1000 / (double)fps);
-                GameEngine.Instance.IsFixedTimeStep = true;
+            set { this.width = value; }
+        }
+
+        #endregion Graphics Data
+
+        #region Constructors
+
+        private GraphicsSettings()
+        {
+        }
+
+        #endregion
+
+        #region Graphics Operations
+
+        public void ApplyChanges()
+        {
+            this.ApplyFrameChange();
+            this.ApplyScreenChange();
+            this.ApplyMouseChange();
+        }
+
+        private void ApplyFrameChange()
+        {
+            GameEngine.Instance.TargetElapsedTime = TimeSpan.FromMilliseconds(1000 / (double)this.FPS);
+            GameEngine.Instance.IsFixedTimeStep = true;
+        }
+
+        private void ApplyMouseChange()
+        {
+            GameEngine.Instance.IsMouseVisible = this.IsMouseVisible;
+        }
+
+        private void ApplyScreenChange()
+        {
+            // Resolution
+            GameEngine.GraphicsManager.PreferredBackBufferWidth  = this.Width;
+            GameEngine.GraphicsManager.PreferredBackBufferHeight = this.Height;
+            GameEngine.GraphicsManager.ApplyChanges();
+
+            // Border
+            GameEngine.Instance.Window.IsBorderless = this.IsFullscreen;
+        }
+
+        #endregion Graphics Operations
+
+        #region Initialization
+
+        public void Initialize()
+        {
+            this.ConfigurationLoad();
+        }
+
+        #endregion
+
+        #region Configuration
+
+        public string ConfigurationFile
+        {
+            get
+            {
+                return "Graphics.txt";
             }
         }
 
-        public static bool IsMouseVisible
+        public void ConfigurationLoad()
         {
-            get { return GameEngine.Instance.IsMouseVisible; }
-            set { GameEngine.Instance.IsMouseVisible = value; }
+            var configuration = ConfigurationFileLoader.LoadUniquePairs(this);
+
+            this.FPS    = ConfigurationFileLoader.ExtractMultipleInt(configuration, "FPS", 0, 30);
+            this.Width  = ConfigurationFileLoader.ExtractMultipleInt(configuration, "Resolution", 0, 800);
+            this.Height = ConfigurationFileLoader.ExtractMultipleInt(configuration, "Resolution", 1, 600);
+
+            this.IsMouseVisible = ConfigurationFileLoader.ExtractBool(configuration, "IsMouseVisible", true);
+            this.IsFullscreen   = ConfigurationFileLoader.ExtractBool(configuration, "IsFullscreen", false);
+
+            this.ApplyChanges();
         }
 
-        public static void SetMouseProperties(bool isMouseVisible)
-        {
-            IsMouseVisible = isMouseVisible;
-        }
+        #endregion
     }
 }

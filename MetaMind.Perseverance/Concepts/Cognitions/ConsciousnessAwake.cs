@@ -11,6 +11,7 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
     using System.Runtime.Serialization;
 
     using MetaMind.Engine.Components.Events;
+    using MetaMind.Perseverance.Events;
     using MetaMind.Perseverance.Sessions;
 
     [DataContract]

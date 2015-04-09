@@ -133,8 +133,8 @@
             var row    = this.ViewControl.RowFrom(id);
             var column = this.ViewControl.ColumnFrom(id);
             return new Point(
-                this.ViewSettings.StartPoint.X - this.XOffset * this.ViewSettings.RootMargin.X + column * this.ViewSettings.RootMargin.X,
-                this.ViewSettings.StartPoint.Y - this.YOffset * this.ViewSettings.RootMargin.Y + row    * this.ViewSettings.RootMargin.Y);
+                this.ViewSettings.PointStart.X - this.XOffset * this.ViewSettings.PointMargin.X + column * this.ViewSettings.PointMargin.X,
+                this.ViewSettings.PointStart.Y - this.YOffset * this.ViewSettings.PointMargin.Y + row    * this.ViewSettings.PointMargin.Y);
         }
 
 

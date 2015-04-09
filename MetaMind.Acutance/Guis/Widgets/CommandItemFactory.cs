@@ -2,7 +2,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 {
     using MetaMind.Engine.Guis.Widgets.Items;
 
-    public class CommandItemFactory : ViewItemBasicFactory2D
+    public class CommandItemFactory : ViewItemFactory2D
     {
         public override dynamic CreateControl(IViewItem item)
         {

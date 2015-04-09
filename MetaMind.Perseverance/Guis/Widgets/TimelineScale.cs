@@ -6,9 +6,12 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
     public class TimelineScale : ViewVisualComponent
     {
-        protected TimelineScale(IView view, ICloneable viewSettings, ICloneable itemSettings)
+        private float scale;
+
+        public TimelineScale(IView view, ICloneable viewSettings, ICloneable itemSettings)
             : base(view, viewSettings, itemSettings)
         {
+
         }
     }
 }

@@ -1,8 +1,11 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="MotivationItemTaskControl.cs" company="UESTC">
-//   Copyright (c) 2014 Wuxiang Lin
+//   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
+// <summary>
+//   
+// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace MetaMind.Perseverance.Guis.Widgets
@@ -21,57 +24,60 @@ namespace MetaMind.Perseverance.Guis.Widgets
         {
         }
 
-        public MotivationTaskTracer TaskTracer { get; private set; }
+        public TaskModule TaskModule { get; private set; }
 
         public void SelectsIt()
         {
-            if (this.TaskTracer == null)
+            if (this.TaskModule == null)
             {
-                this.TaskTracer = new MotivationTaskTracer(this.ItemControl, new MotivationTaskTracerSettings());
-                this.TaskTracer.Load();
+                Point start = ItemControl.RootFrame.Center + ViewSettings.TracerMargin;
+
+                this.TaskModule = new TaskModule(this.ItemControl, new TaskModuleSettings(start));
+                this.TaskModule.Load();
             }
 
-            this.TaskTracer.Show();
+            this.TaskModule.Show();
         }
 
         public bool UnselectsIt()
         {
-            if (this.TaskTracer == null)
+            if (this.TaskModule == null)
             {
                 return true;
             }
 
-            if (this.TaskTracer.View               .IsEnabled(ViewState.View_Has_Focus) && 
-                this.TaskTracer.View.Control.Region.IsEnabled(RegionState.Region_Has_Focus))
+            // FIXME: Bad design here
+            if (this.TaskModule.View               .IsEnabled(ViewState.View_Has_Focus) && 
+                this.TaskModule.View.Control.Region.IsEnabled(RegionState.Region_Has_Focus))
             {
                 return false;
             }
             else
             {
-                this.TaskTracer.Close();
+                this.TaskModule.Close();
                 return true;
             }
         }
 
         public void UpdateStructure(GameTime gameTime)
         {
-            if (this.TaskTracer != null)
+            if (this.TaskModule != null)
             {
-                this.TaskTracer.UpdateStructure(gameTime);
-                this.TaskTracer.Load();
+                this.TaskModule.UpdateStructure(gameTime);
+                this.TaskModule.Load();
 
-                if (!this.TaskTracer.View.IsEnabled(ViewState.View_Has_Focus))
+                if (!this.TaskModule.View.IsEnabled(ViewState.View_Has_Focus))
                 {
-                    this.TaskTracer.Close();
+                    this.TaskModule.Close();
                 }
             }
         }
 
         public void UpdateInput(GameTime gameTime)
         {
-            if (this.TaskTracer != null )
+            if (this.TaskModule != null )
             {
-                this.TaskTracer.UpdateInput(gameTime);
+                this.TaskModule.UpdateInput(gameInput, gameTime);
             }
         }
     }

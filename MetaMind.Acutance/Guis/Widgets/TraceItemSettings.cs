@@ -1,5 +1,6 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
+    using MetaMind.Engine.Settings;
     using MetaMind.Engine.Settings.Colors;
     using MetaMind.Perseverance.Guis.Widgets;
 
@@ -7,25 +8,25 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     public class TraceItemSettings : TaskItemSettings
     {
-        public Color NameFrameRunningColor = ColorPalette.DarkRed;
+        public Color NameFrameRunningColor = Palette.DarkRed;
 
         public TraceItemSettings()
         {
             this.RootFrameSize = this.NameFrameSize;
 
             //-----------------------------------------------------------------
-            this.NameFrameRegularColor   = ColorPalette.TransparentColor1;
-            this.NameFrameMouseOverColor = ColorPalette.TransparentColor2;
-            this.NameFramePendingColor   = ColorPalette.TransparentColor5;
+            this.NameFrameRegularColor   = Palette.TransparentColor1;
+            this.NameFrameMouseOverColor = Palette.TransparentColor2;
+            this.NameFramePendingColor   = Palette.TransparentColor5;
 
             //-----------------------------------------------------------------
             this.IdSize              = 0.7f;
             this.IdFrameSize         = new Point(24, 24);
-            this.IdFrameColor        = ColorPalette.TransparentColor1;
-            this.IdFramePendingColor = ColorPalette.TransparentColor5;
+            this.IdFrameColor        = Palette.TransparentColor1;
+            this.IdFramePendingColor = Palette.TransparentColor5;
 
             //-----------------------------------------------------------------
-            this.ExperienceFrameColor = ColorPalette.TransparentColor1;
+            this.ExperienceFrameColor = Palette.TransparentColor1;
         }
     }
 }

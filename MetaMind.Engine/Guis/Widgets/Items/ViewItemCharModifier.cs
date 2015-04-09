@@ -70,7 +70,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         #endregion Input Data
 
-        #region Constructors and Destructors
+        #region Constructors
 
         public ViewItemCharModifier(IViewItem item)
             : base(item)
@@ -79,10 +79,18 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             InputEventManager.KeyDown     += this.DetectEnterKeyDown;
         }
 
+        #endregion 
+
+        #region Destructors
+
         ~ViewItemCharModifier()
         {
             this.Dispose();
         }
+
+        #endregion 
+
+        #region IDisposable
 
         public override void Dispose()
         {
@@ -102,7 +110,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             Debug.WriteLine("ViewItemCharModifier Destruction");
         }
 
-        #endregion Constructors
+        #endregion IDisposable
 
         #region Events
 
@@ -137,6 +145,42 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         private event EventHandler<ViewItemDataEventArgs> modificationEnded;
 
         #endregion Events
+
+        #region Event Handlers
+
+        private void DetectCharEntered(object sender, CharacterEventArgs e)
+        {
+            if (!this.Item.IsEnabled(ItemState.Item_Editing))
+            {
+                return;
+            }
+
+            var newChars = this.imeEncoding.GetString(e.Character);
+
+            // clean index character before processing
+            this.RemoveCursor();
+
+            this.HandleControl(newChars);
+
+            this.InsertCursor();
+
+            this.Modified();
+        }
+
+        private void DetectEnterKeyDown(object sender, KeyEventArgs e)
+        {
+            if (!this.Item.IsEnabled(ItemState.Item_Editing))
+            {
+                return;
+            }
+
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.Release();
+            }
+        }
+
+        #endregion Event Handlers
 
         #region State Control
 
@@ -197,43 +241,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         #endregion State Control
 
-        #region Event Handlers
-
-        private void DetectCharEntered(object sender, CharacterEventArgs e)
-        {
-            if (!this.Item.IsEnabled(ItemState.Item_Editing))
-            {
-                return;
-            }
-
-            var newChars = this.imeEncoding.GetString(e.Character);
-
-            // clean index character before processing
-            this.RemoveCursor();
-
-            this.HandleControl(newChars);
-
-            this.InsertCursor();
-
-            this.Modified();
-        }
-
-        private void DetectEnterKeyDown(object sender, KeyEventArgs e)
-        {
-            if (!this.Item.IsEnabled(ItemState.Item_Editing))
-            {
-                return;
-            }
-
-            if (e.KeyCode == Keys.Enter)
-            {
-                this.Release();
-            }
-        }
-
-        #endregion Event Handlers
-
-        #region Cursor Processing
+        #region Cursor Operations
 
         public string RemoveCursor(string dirty)
         {
@@ -285,28 +293,35 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             }
         }
 
-        #endregion Cursor Processing
-
-        #region Operations
-
-        private void Clear()
+        private void MoveCursorLeft()
         {
-            this.cursorIndex = 0;
-            this.currentString.Clear();
+            if (this.cursorIndex > 0)
+            {
+                this.RemoveCursor();
+                this.DecrementCursor();
+                this.InsertCursor();
+                this.Modified();
+            }
         }
 
-        private void DeleteNextChar()
+        private void MoveCursorRight()
         {
-            this.RemoveCursor();
-            this.HandleDelete();
-            this.InsertCursor();
-            this.Modified();
+            if (this.cursorIndex < this.currentString.Length - this.cursorCharacter.Length)
+            {
+                this.RemoveCursor();
+                this.IncrementCursor();
+                this.InsertCursor();
+                this.Modified();
+            }
         }
+
+        #endregion 
+
+        #region Keyboard Operations
 
         private void HandleBackspace()
         {
-            if (this.currentString.Length > 0 &&
-                this.cursorIndex > 0)
+            if (this.currentString.Length > 0 && this.cursorIndex > 0)
             {
                 this.currentString.Remove(this.cursorIndex - 1, 1);
                 this.DecrementCursor();
@@ -331,8 +346,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         private void HandleDelete()
         {
-            if (this.currentString.Length > 0 &&
-                this.cursorIndex < this.currentString.Length)
+            if (this.currentString.Length > 0 && this.cursorIndex < this.currentString.Length)
             {
                 this.currentString.Remove(this.cursorIndex, 1);
             }
@@ -345,9 +359,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             this.currentString.Insert(this.cursorIndex, chars);
 
             // remove invalid characters
-            this.currentString = new StringBuilder(new string(this.currentString.ToString()
-                                                                                .Where(c => !this.invalidChars.Contains(c))
-                                                                                .ToArray()));
+            this.currentString =
+                new StringBuilder(
+                    new string(this.currentString.ToString().Where(c => !this.invalidChars.Contains(c)).ToArray()));
 
             // only increment when actually contains printable characters
             if (this.currentString.Length > previousLength)
@@ -362,29 +376,25 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             this.IncrementCursor(4);
         }
 
-        private void MoveCursorLeft()
+        #endregion
+
+        #region String Operations
+
+        private void DeleteAll()
         {
-            if (this.cursorIndex > 0)
-            {
-                this.RemoveCursor();
-                this.DecrementCursor();
-                this.InsertCursor();
-                this.Modified();
-            }
+            this.cursorIndex = 0;
+            this.currentString.Clear();
         }
 
-        private void MoveCursorRight()
+        private void DeleteNextChar()
         {
-            if (this.cursorIndex < this.currentString.Length - this.cursorCharacter.Length)
-            {
-                this.RemoveCursor();
-                this.IncrementCursor();
-                this.InsertCursor();
-                this.Modified();
-            }
+            this.RemoveCursor();
+            this.HandleDelete();
+            this.InsertCursor();
+            this.Modified();
         }
 
-        #endregion Operations
+        #endregion 
 
         #region Update and Draw
 
@@ -406,7 +416,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
             if (keyboard.CtrlDown && keyboard.IsKeyPressed(Keys.Back))
             {
-                this.Clear();
+                this.DeleteAll();
             }
 
             if (this.ComboTriggered(keyboard, Keys.Left))

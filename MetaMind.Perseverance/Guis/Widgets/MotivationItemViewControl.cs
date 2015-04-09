@@ -19,7 +19,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
             this.Item.Enable(ItemState.Item_Exchanging);
 
-            ProcessManager.AttachProcess(new MotivationItemExchangeProcess(draggingItem, targetView));
+            ProcessManager.AttachProcess(new MotivationItemTransitProcess(draggingItem, targetView));
         }
 
         public override void SwapIt(IViewItem draggingItem)

@@ -59,7 +59,7 @@ namespace MetaMind.Engine.Guis.Modules
         {
         }
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
         }
 

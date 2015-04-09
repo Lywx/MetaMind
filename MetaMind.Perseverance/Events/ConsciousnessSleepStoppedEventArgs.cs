@@ -5,8 +5,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Perseverance.Concepts.Cognitions
+namespace MetaMind.Perseverance.Events
 {
+    using MetaMind.Perseverance.Concepts.Cognitions;
+
     public class ConsciousnessSleepStoppedEventArgs
     {
         public readonly ConsciousnessSleepy State;

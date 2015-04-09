@@ -60,15 +60,25 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Fonts\SpriteFonts\SimSunFont.spritefont">
-      <Name>SimSunFont</Name>
+    <Compile Include="Fonts\SpriteFonts\NSimSunRegularFont.spritefont">
+      <Name>NSimSunRegularFont</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>ChineseCharProcessor</Processor>
-    </None>
+    </Compile>
+    <Compile Include="Fonts\SpriteFonts\NSimSunBoldItalicFont.spritefont">
+      <Name>NSimSunBoldItalicFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>ChineseCharProcessor</Processor>
+    </Compile>
+    <Compile Include="Fonts\SpriteFonts\NSimSunItalicFont.spritefont">
+      <Name>NSimSunItalicFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>ChineseCharProcessor</Processor>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fonts\SpriteFonts\NSimSunFont.spritefont">
-      <Name>NSimSunFont</Name>
+    <Compile Include="Fonts\SpriteFonts\NSimSunBoldFont.spritefont">
+      <Name>NSimSunBoldFont</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>ChineseCharProcessor</Processor>
     </Compile>

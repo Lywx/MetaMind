@@ -29,7 +29,7 @@
 
         public IModule Tracer
         {
-            get { return this.ItemTaskControl.TaskTracer; }
+            get { return this.ItemTaskControl.TaskModule; }
         }
 
         #region Operations

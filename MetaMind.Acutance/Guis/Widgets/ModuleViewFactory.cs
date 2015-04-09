@@ -5,7 +5,7 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Acutance.Concepts;
     using MetaMind.Engine.Guis.Widgets.Views;
 
-    public class ModuleViewFactory : PointViewBasicFactory2D
+    public class ModuleViewFactory : PointViewFactory2D
     {
         public ModuleViewFactory(IModulelist modulelist)
         {

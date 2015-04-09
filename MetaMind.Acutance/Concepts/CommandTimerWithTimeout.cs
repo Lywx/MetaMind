@@ -14,10 +14,10 @@ namespace MetaMind.Acutance.Concepts
 
         private Stopwatch timer;
 
-        public CommandTimerWithTimeout(TimeSpan timeout, CommandRepeativity repeativity)
+        public CommandTimerWithTimeout(TimeSpan timeout, CommandRepetion repetion)
             : this(timeout)
         {
-            this.isAutoReseting = repeativity == CommandRepeativity.EveryMoment;
+            this.isAutoReseting = repetion == CommandRepetion.EveryMoment;
         }
 
         public CommandTimerWithTimeout(TimeSpan timeout)
@@ -44,7 +44,7 @@ namespace MetaMind.Acutance.Concepts
 
         public override bool IsTransiting
         {
-            get { return this.Experience.CertainDuration >= this.Timeout; }
+            get { return this.SynchronizationSpan.CertainDuration >= this.Timeout; }
         }
 
         public override bool IsAutoReseting
@@ -60,7 +60,7 @@ namespace MetaMind.Acutance.Concepts
             this.timer = new Stopwatch();
             this.timer.Start();
 
-            this.Experience = Experience.Zero;
+            this.SynchronizationSpan = SynchronizationSpan.Zero;
         }
 
         public override void Update()
@@ -68,7 +68,7 @@ namespace MetaMind.Acutance.Concepts
             // disposal guard
             if (this.timer != null)
             {
-                this.Experience += this.timer.Elapsed;
+                this.SynchronizationSpan += this.timer.Elapsed;
 
                 this.timer.Restart();
             }

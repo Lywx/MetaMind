@@ -11,7 +11,7 @@
 
     public class FlashSettings
     {
-        public Color   Color  = ColorPalette.TransparentColor1;
+        public Color   Color  = Palette.TransparentColor1;
 
         public Vector2 Position;
 
@@ -23,7 +23,7 @@
         }
     }
 
-    public class TimelineFlash : EngineObject
+    public class TimelineFlash : GameEngineAccess
     {
         private FlashSettings flashSettings;
 

@@ -61,8 +61,8 @@ namespace MetaMind.Engine.Guis.Particles
             {
                 return this.Position.X + this.Size.X < 0 ||
                        this.Position.Y + this.Size.Y < 0 ||
-                       this.Position.X > GraphicsSettings.Width ||
-                       this.Position.Y > GraphicsSettings.Height;
+                       this.Position.X > GameEngine.GraphicsSettings.Width ||
+                       this.Position.Y > GameEngine.GraphicsSettings.Height;
             }
         }
 
@@ -123,8 +123,8 @@ namespace MetaMind.Engine.Guis.Particles
             var color    = new Color(Random.Next(0, 100) / deep, 50 / deep, 50 / deep, 50 / deep);
 
             // anywhere on the sides of screen
-            var x = direction == FloatDirection.Left ? -(Width * scale) : GraphicsSettings.Width;
-            var y = Random.Next(GraphicsSettings.Height);
+            var x = direction == FloatDirection.Left ? -(Width * scale) : GameEngine.GraphicsSettings.Width;
+            var y = Random.Next(GameEngine.GraphicsSettings.Height);
             var position = new Vector2(x, y);
 
             var particle = new FloatParticle(position, acceleration, velocity, lastingSeconds, color, deep, scale);
@@ -144,8 +144,8 @@ namespace MetaMind.Engine.Guis.Particles
             var color = new Color(50 / deep, 50 / deep, Random.Next(0, 50) / deep, 50 / deep);
 
             // anywhere on the sides of screen
-            var x = Random.Next(GraphicsSettings.Width);
-            var y = GraphicsSettings.Height;
+            var x = Random.Next(GameEngine.GraphicsSettings.Width);
+            var y = GameEngine.GraphicsSettings.Height;
             var position = new Vector2(x, y);
 
             var particle = new FloatParticle(position, acceleration, velocity, lastingSeconds, color, deep, scale);

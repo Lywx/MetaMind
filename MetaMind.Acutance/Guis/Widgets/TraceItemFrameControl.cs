@@ -7,18 +7,18 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     public class TraceItemFrameControl : ViewItemFrameControl
     {
-        public ItemEntryFrame NameFrame { get; private set; }
+        public ItemDataFrame NameFrame { get; private set; }
 
-        public ItemEntryFrame IdFrame { get; private set; }
+        public ItemDataFrame IdFrame { get; private set; }
 
-        public ItemEntryFrame ExperienceFrame { get; private set; }
+        public ItemDataFrame ExperienceFrame { get; private set; }
 
         public TraceItemFrameControl(IViewItem item)
             : base(item)
         {
-            this.NameFrame       = new ItemEntryFrame(item);
-            this.IdFrame         = new ItemEntryFrame(item);
-            this.ExperienceFrame = new ItemEntryFrame(item);
+            this.NameFrame       = new ItemDataFrame(item);
+            this.IdFrame         = new ItemDataFrame(item);
+            this.ExperienceFrame = new ItemDataFrame(item);
         }
 
         ~TraceItemFrameControl()
@@ -63,10 +63,10 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         protected override void UpdateFrameGeometry()
         {
-            this.RootFrame      .Location = Vector2Ext.ToPoint(this.RootFrameLocation);
-            this.NameFrame      .Location = Vector2Ext.ToPoint(this.NameFrameLocation);
-            this.IdFrame        .Location = Vector2Ext.ToPoint(this.IdFrameLocation);
-            this.ExperienceFrame.Location = Vector2Ext.ToPoint(ExperienceFrameLocation);
+            this.RootFrame      .Location = ExtVector2.ToPoint(this.RootFrameLocation);
+            this.NameFrame      .Location = ExtVector2.ToPoint(this.NameFrameLocation);
+            this.IdFrame        .Location = ExtVector2.ToPoint(this.IdFrameLocation);
+            this.ExperienceFrame.Location = ExtVector2.ToPoint(ExperienceFrameLocation);
 
             this.RootFrame      .Size = ItemSettings.RootFrameSize;
             this.NameFrame      .Size = ItemSettings.NameFrameSize;
@@ -80,7 +80,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             {
                 if (!Item.IsEnabled(ItemState.Item_Dragging) && !Item.IsEnabled(ItemState.Item_Swaping))
                 {
-                    return PointExt.ToVector2(ViewControl.Scroll.RootCenterPoint(ItemControl.Id))
+                    return ExtPoint.ToVector2(ViewControl.Scroll.RootCenterPoint(ItemControl.Id))
                            + new Vector2(ItemSettings.IdFrameSize.X, 0)
                            + new Vector2(ItemSettings.ExperienceFrameSize.X, 0);
                 }

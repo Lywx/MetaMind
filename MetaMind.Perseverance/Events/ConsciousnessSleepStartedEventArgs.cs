@@ -5,9 +5,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Perseverance.Concepts.Cognitions
+namespace MetaMind.Perseverance.Events
 {
     using System;
+
+    using MetaMind.Perseverance.Concepts.Cognitions;
 
     public class ConsciousnessSleepStartedEventArgs : EventArgs
     {

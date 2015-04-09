@@ -7,7 +7,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
     using Primtives2D;
 
-    public class TaskViewGraphics : ViewBasicGraphics
+    public class TaskViewGraphics : ViewGraphics
     {
         public TaskViewGraphics(IView view, TaskViewSettings viewSettings, TaskItemSettings itemSettings)
             : base(view, viewSettings, itemSettings)
@@ -26,7 +26,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         public override void UpdateStructure(GameTime gameTime)
         {
-            if (this.View.IsEnabled(ViewState.View_Has_Focus))
+            if (View.IsEnabled(ViewState.View_Has_Focus))
             {
                 this.FocusAlpha += 15;
                 if (this.FocusAlpha > 255)
@@ -48,18 +48,18 @@ namespace MetaMind.Perseverance.Guis.Widgets
         {
             Primitives2D.DrawRectangle(
                 ScreenManager.SpriteBatch,
-                RectangleExt.Extend(this.ViewControl.Region.Frame.Rectangle, this.ViewSettings.BorderMargin),
-                ColorExt.MakeTransparent(this.ViewSettings.HighlightColor, alpha),
+                ExtRectangle.Extend(ViewControl.Region.Frame.Rectangle, ViewSettings.BorderMargin),
+                ExtColor.MakeTransparent(ViewSettings.HighlightColor, alpha),
                 2f);
             Primitives2D.FillRectangle(
                 ScreenManager.SpriteBatch,
-                this.ViewControl.Region.Frame.Rectangle,
-                ColorExt.MakeTransparent(this.ViewSettings.HighlightColor, alpha));
+                ViewControl.Region.Frame.Rectangle,
+                ExtColor.MakeTransparent(ViewSettings.HighlightColor, alpha));
         }
 
         protected virtual void DrawScrollBar(GameTime gameTime)
         {
-            this.ViewControl.ScrollBar.Draw(gameTime);
+            ViewControl.ScrollBar.Draw(gameTime);
         }
     }
 }

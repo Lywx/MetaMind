@@ -7,7 +7,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     using Microsoft.Xna.Framework;
 
-    public class CommandViewControl : GridControl
+    public class CommandViewControl : PointGridControl
     {
         #region Constructors
 
@@ -20,7 +20,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Operations
 
-        public void AddItem(CommandEntry entry)
+        public void AddItem(Command entry)
         {
             var item = new ViewItemExchangeless(View, ViewSettings, ItemSettings, ItemFactory, entry);
             View.Items.Add(item);
@@ -95,8 +95,8 @@ namespace MetaMind.Acutance.Guis.Widgets
         protected override Rectangle RegionPositioning(dynamic viewSettings, dynamic itemSettings)
         {
             return new Rectangle(
-                viewSettings.StartPoint.X,
-                viewSettings.StartPoint.Y,
+                viewSettings.PointStart.X,
+                viewSettings.PointStart.Y,
                 viewSettings.ColumnNumDisplay * (itemSettings.NameFrameSize.X + itemSettings.IdFrameSize.X + itemSettings.ExperienceFrameSize.X),
                 viewSettings.RowNumDisplay    * itemSettings.NameFrameSize.Y);
         }

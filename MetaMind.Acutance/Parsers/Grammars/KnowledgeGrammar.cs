@@ -52,33 +52,33 @@ namespace MetaMind.Acutance.Parsers.Grammars
         public static Parser<Title> TitleParser = from level    in TitleLevelParser
                                                   from link     in LinkParser
                                                   from moment   in MomentParser
-                                                  from sentence in BasicGrammar.SentenceParser
+                                                  from sentence in LineGrammar.SentenceParser
                                                   select new Title(
                                                       level,
                                                       link.  IsDefined ? TitleType     .Link        : TitleType     .Normal,
-                                                      moment.IsDefined ? RepeativityTag.EveryMoment : RepeativityTag.Unspecified,
+                                                      moment.IsDefined ? RepetitionTag.EveryMoment : RepetitionTag.Unspecified,
                                                       sentence);
 
         public static Parser<Title> TitleWithBracketParser = from level    in TitleLevelParser
                                                              from link     in LinkParser
                                                              from moment   in MomentParser
-                                                             from sentence in BasicGrammar.SentenceParser
-                                                             from text     in BasicGrammar.BracketedTextParser
+                                                             from sentence in LineGrammar.SentenceParser
+                                                             from text     in LineGrammar.BracketedTextParser
                                                              select new Title(
                                                                  level,
                                                                  link.  IsDefined ? TitleType     .Link        : TitleType     .Normal,
-                                                                 moment.IsDefined ? RepeativityTag.EveryMoment : RepeativityTag.Unspecified,
+                                                                 moment.IsDefined ? RepetitionTag.EveryMoment : RepetitionTag.Unspecified,
                                                                  sentence);
 
         public static Parser<Title> TitleWithTimeTagParser = from level    in TitleLevelParser
                                                              from link     in LinkParser
                                                              from moment   in MomentParser
-                                                             from sentence in BasicGrammar.SentenceParser
-                                                             from text     in BasicGrammar.BracketedTextParser
+                                                             from sentence in LineGrammar.SentenceParser
+                                                             from text     in LineGrammar.BracketedTextParser
                                                              select new Title(
                                                                  level,
                                                                  link.  IsDefined ? TitleType     .Link        : TitleType     .Normal,
-                                                                 moment.IsDefined ? RepeativityTag.EveryMoment : RepeativityTag.Unspecified,
+                                                                 moment.IsDefined ? RepetitionTag.EveryMoment : RepetitionTag.Unspecified,
                                                                  sentence,
                                                                  TimeTagStrategyParser.Parse(text).Parse(text));
     }

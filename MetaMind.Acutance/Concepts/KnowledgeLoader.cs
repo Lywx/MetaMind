@@ -18,8 +18,8 @@
                 return null;
             }
 
-            var module = new KnowledgeFile(path);
-            var buffer = new KnowledgeFileBuffer(module);
+            var module = new RawKnowledgeFile(path);
+            var buffer = new RawKnowledgeFileBuffer(module);
             var query  = new KnowledgeQuery(buffer);
 
             var lineList = File.ReadLines(path) as IList<string> ?? File.ReadLines(path).ToList();
@@ -49,65 +49,65 @@
 
         private static void LoadLine(string line, KnowledgeQuery query)
         {
-            var entry = new KnowledgeEntry(line, false);
-            query.AddEntry(entry);
+            var entry = new Knowledge(line, false);
+            query.Add(entry);
         }
 
-        private static void LoadTitleWithTimetag(string path, Title title, int lineNum, KnowledgeFile module, KnowledgeQuery query, KnowledgeFileBuffer buffer)
+        private static void LoadTitleWithTimetag(string path, Title title, int lineNum, RawKnowledgeFile module, KnowledgeQuery query, RawKnowledgeFileBuffer buffer)
         {
             switch (title.Type)
             {
                 case TitleType.Normal:
                     {
-                        var knowledge = new Knowledge(title, path, lineNum);
-                        var entry     = new KnowledgeEntry(knowledge);
+                        var knowledge = new RawKnowledge(title, path, lineNum);
+                        var entry     = new Knowledge(knowledge);
 
                         // titles with time tag added to module and query
                         module.AddKnowledge(knowledge);
-                        query .AddEntry(entry);
+                        query .Add(entry);
                     }
 
                     break;
 
                 case TitleType.Link:
                     {
-                        var link = new KnowledgeLink(title.Name);
+                        var link = new RawKnowledgeLink(title.Name);
                         buffer.AddLink(link);
 
                         // links normally won't contains time tag 
                         // so it won't be added to module but query
-                        var entry = new KnowledgeEntry(title);
-                        query.AddEntry(entry);
+                        var entry = new Knowledge(title);
+                        query.Add(entry);
                     }
 
                     break;
             }
         }
 
-        private static void LoadTitleWithoutTimetag(Title title, KnowledgeQuery query, KnowledgeFileBuffer buffer)
+        private static void LoadTitleWithoutTimetag(Title title, KnowledgeQuery query, RawKnowledgeFileBuffer buffer)
         {
             switch (title.Type)
             {
                 case TitleType.Normal:
                     {
-                        var entry = new KnowledgeEntry(title);
+                        var entry = new Knowledge(title);
 
                         // titles without time tag
                         // won't add to module but will be added to query
-                        query.AddEntry(entry);
+                        query.Add(entry);
                     }
 
                     break;
 
                 case TitleType.Link:
                     {
-                        var link = new KnowledgeLink(title.Name);
+                        var link = new RawKnowledgeLink(title.Name);
                         buffer.AddLink(link);
 
                         // titles without time tag
                         // won't add to module but will be added to query
-                        var entry = new KnowledgeEntry(title);
-                        query.AddEntry(entry);
+                        var entry = new Knowledge(title);
+                        query.Add(entry);
                     }
 
                     break;

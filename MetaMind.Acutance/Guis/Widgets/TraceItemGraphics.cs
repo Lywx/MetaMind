@@ -8,7 +8,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     using Primtives2D;
 
-    public class TraceItemGraphics : ViewItemBasicGraphics
+    public class TraceItemGraphics : ViewItemGraphics
     {
         #region Constructors
 
@@ -23,7 +23,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         protected virtual Vector2 ExperienceLocation
         {
-            get { return PointExt.ToVector2(ItemControl.ExperienceFrame.Center); }
+            get { return ExtPoint.ToVector2(ItemControl.ExperienceFrame.Center); }
         }
 
         protected virtual Vector2 HelpLocation
@@ -33,7 +33,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         protected override Vector2 IdCenter
         {
-            get { return PointExt.ToVector2(ItemControl.IdFrame.Center); }
+            get { return ExtPoint.ToVector2(ItemControl.IdFrame.Center); }
         }
 
         protected virtual Vector2 NameLocation
@@ -86,11 +86,11 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         protected virtual void DrawExperience(byte alpha)
         {
-            FontManager.DrawCenteredText(
+            FontManager.DrawStringCenteredHV(
                 ItemSettings.ExperienceFont,
-                string.Format("{0:hh\\:mm\\:ss}", ((Experience)ItemData.Experience).Duration),
+                string.Format("{0:hh\\:mm\\:ss}", ((SynchronizationSpan)ItemData.Experience).Duration),
                 this.ExperienceLocation,
-                ColorExt.MakeTransparent(ItemSettings.ExperienceColor, alpha),
+                ExtColor.MakeTransparent(ItemSettings.ExperienceColor, alpha),
                 ItemSettings.ExperienceSize);
         }
 
@@ -98,43 +98,43 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             Primitives2D.FillRectangle(
                 ScreenManager.SpriteBatch,
-                RectangleExt.Crop(ItemControl.ExperienceFrame.Rectangle, ItemSettings.ExperienceFrameMargin),
-                ColorExt.MakeTransparent(ItemSettings.ExperienceFrameColor, alpha));
+                ExtRectangle.Crop(ItemControl.ExperienceFrame.Rectangle, ItemSettings.ExperienceFrameMargin),
+                ExtColor.MakeTransparent(ItemSettings.ExperienceFrameColor, alpha));
         }
 
         protected void DrawIdFrame(byte alpha)
         {
             Primitives2D.FillRectangle(
                 ScreenManager.SpriteBatch,
-                RectangleExt.Crop(ItemControl.IdFrame.Rectangle, ItemSettings.IdFrameMargin),
+                ExtRectangle.Crop(ItemControl.IdFrame.Rectangle, ItemSettings.IdFrameMargin),
                 Item.IsEnabled(ItemState.Item_Pending)
-                    ? ColorExt.MakeTransparent(ItemSettings.IdFramePendingColor, alpha)
-                    : ColorExt.MakeTransparent(ItemSettings.IdFrameColor, alpha));
+                    ? ExtColor.MakeTransparent(ItemSettings.IdFramePendingColor, alpha)
+                    : ExtColor.MakeTransparent(ItemSettings.IdFrameColor, alpha));
         }
 
         protected virtual void DrawName(byte alpha)
         {
             if (Item.IsEnabled(ItemState.Item_Pending))
             {
-                FontManager.DrawText(
+                FontManager.DrawString(
                     ItemSettings.HelpFont,
                     HelpInformation,
                     this.HelpLocation,
-                    ColorExt.MakeTransparent(ItemSettings.HelpColor, alpha),
+                    ExtColor.MakeTransparent(ItemSettings.HelpColor, alpha),
                     ItemSettings.HelpSize);
             }
             else
             {
-                string text = FontManager.CropMonoSpacedString(
+                string text = FontManager.CropMonospacedString(
                     ItemData.Name,
                     ItemSettings.NameSize,
                     ItemSettings.NameFrameSize.X - ItemSettings.NameXLMargin * 2);
                 
-                FontManager.DrawMonoSpacedText(
+                FontManager.DrawMonospacedString(
                     ItemSettings.NameFont,
                     text,
                     this.NameLocation,
-                    ColorExt.MakeTransparent(ItemSettings.NameColor, alpha),
+                    ExtColor.MakeTransparent(ItemSettings.NameColor, alpha),
                     ItemSettings.NameSize);
             }
         }

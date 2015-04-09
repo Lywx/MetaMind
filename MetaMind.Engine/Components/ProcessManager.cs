@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ProcessManager.cs" company="UESTC">
+// <copyright file="Process.cs" company="UESTC">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -23,21 +23,21 @@ namespace MetaMind.Engine.Components
 
         #region Singleton
 
-        private static ProcessManager singleton;
+        private static ProcessManager Singleton { get; set; }
 
         public static ProcessManager GetInstance(Game game)
         {
-            if (singleton == null)
+            if (Singleton == null)
             {
-                singleton = new ProcessManager(game);
+                Singleton = new ProcessManager(game);
             }
 
             if (game != null)
             {
-                game.Components.Add(singleton);
+                game.Components.Add(Singleton);
             }
 
-            return singleton;
+            return Singleton;
         }
 
         #endregion Singleton
@@ -61,7 +61,7 @@ namespace MetaMind.Engine.Components
 
         #endregion Deconstruction
 
-        #region Update
+        #region Update and Draw
 
         public override void Update(GameTime gameTime)
         {
@@ -120,12 +120,8 @@ namespace MetaMind.Engine.Components
             }
         }
 
-        #endregion Update
-
         public override void Draw(GameTime gameTime)
         {
-            base.Draw(gameTime);
-
             GameEngine.ScreenManager.SpriteBatch.Begin();
 
             foreach (var process in processes)
@@ -139,9 +135,11 @@ namespace MetaMind.Engine.Components
             GameEngine.ScreenManager.SpriteBatch.End();
         }
 
+        #endregion Update
+
         #region Operations
 
-        public void AbortAllProcesses(bool immediate)
+        public void AbortProcesses(bool immediate)
         {
             int i = 0;
 

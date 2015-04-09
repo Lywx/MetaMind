@@ -47,7 +47,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Public Properties
 
-        public ItemEntryFrame IdFrame
+        public ItemDataFrame IdFrame
         {
             get
             {
@@ -55,7 +55,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
         }
 
-        public ItemEntryFrame NameFrame
+        public ItemDataFrame NameFrame
         {
             get
             {

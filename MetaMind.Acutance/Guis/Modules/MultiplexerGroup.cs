@@ -1,6 +1,7 @@
 namespace MetaMind.Acutance.Guis.Modules
 {
     using MetaMind.Acutance.Concepts;
+    using MetaMind.Engine;
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Widgets.Views;
@@ -8,130 +9,37 @@ namespace MetaMind.Acutance.Guis.Modules
 
     using Microsoft.Xna.Framework;
 
-    public class MultiplexerGroup : Group<MultiplexerGroupSettings>, IConfigurationLoader
+    public class MultiplexerGroup : Group<MultiplexerGroupSettings>, IConfigurationFileLoader
     {
-        private MultiplexerGroupCommandNotifiedListener    commandNotifiedListener;
+        #region Listeners
+
+        #region Knowledge View
+
+        private MultiplexerGroupKnowledgeReloadListener knowledgeReloadListener;
 
         private MultiplexerGroupKnowledgeRetrievedListener knowledgeRetrievedListener;
 
-        private MultiplexerGroupKnowledgeReloadListener    knowledgeReloadListener;
+        #endregion
 
-        private MultiplexerGroupModuleCreatedListener      moduleCreatedListener;
+        #region Command View
 
-        private MultiplexerGroupSessionSavedListener       sessionSavedListener;
+        private MultiplexerGroupCommandNotifiedListener commandNotifiedListener;
 
-        public MultiplexerGroup(MultiplexerGroupSettings settings)
-            : base(settings)
-        {
-            this.ModuleView = new PointView(
-                this.Settings.ModuleViewSettings,
-                this.Settings.ModuleItemSettings,
-                this.Settings.ModuleViewFactory);
+        #endregion
 
-            this.CommandView = new PointView(
-                this.Settings.CommandViewSettings,
-                this.Settings.CommandItemSettings,
-                this.Settings.CommandViewFactory);
+        #region Module View
 
-            this.KnowledgeView = new PointView(
-                this.Settings.KnowledgeViewSettings,
-                this.Settings.KnowledgeItemSettings,
-                this.Settings.KnowledgeViewFactory);
-        }
+        private MultiplexerGroupModuleCreatedListener moduleCreatedListener;
 
-        public IView CommandView { get; private set; }
+        #endregion
 
-        public string ConfigurationFile
-        {
-            get
-            {
-                return "Startup.txt";
-            }
-        }
+        #region Session
 
-        public IView KnowledgeView { get; private set; }
+        private MultiplexerGroupSessionSavedListener sessionSavedListener;
 
-        public IView ModuleView { get; set; }
+        #endregion
 
-        public override void Draw(GameTime gameTime, byte alpha)
-        {
-            this.ModuleView   .Draw(gameTime, alpha);
-            this.KnowledgeView.Draw(gameTime, alpha);
-            this.CommandView  .Draw(gameTime, alpha);
-        }
-
-        public void Load()
-        {
-            this.LoadData();
-            this.LoadEvents();
-        }
-
-        public void ReloadScheduleData()
-        {
-            this.UnloadScheduleData();
-            this.LoadScheduleData();
-        }
-
-        public void Unload()
-        {
-            if (this.moduleCreatedListener != null)
-            {
-                EventManager.RemoveListener(this.moduleCreatedListener);
-            }
-
-            this.moduleCreatedListener = null;
-
-            if (this.commandNotifiedListener != null)
-            {
-                EventManager.RemoveListener(this.commandNotifiedListener);
-            }
-
-            this.commandNotifiedListener = null;
-
-            if (this.knowledgeRetrievedListener != null)
-            {
-                EventManager.RemoveListener(this.knowledgeRetrievedListener);
-            }
-
-            this.knowledgeRetrievedListener = null;
-
-            if (this.knowledgeReloadListener != null)
-            {
-                EventManager.RemoveListener(this.knowledgeReloadListener);
-            }
-
-            this.knowledgeReloadListener = null;
-
-            if (this.sessionSavedListener != null)
-            {
-                EventManager.RemoveListener(this.sessionSavedListener);
-            }
-
-            this.sessionSavedListener = null;
-        }
-
-        public override void UpdateInput(GameTime gameTime)
-        {
-            this.KnowledgeView.UpdateInput(gameTime);
-            this.ModuleView   .UpdateInput(gameTime);
-            this.CommandView  .UpdateInput(gameTime);
-        }
-
-        public override void UpdateStructure(GameTime gameTime)
-        {
-            this.CommandView  .UpdateStructure(gameTime);
-            this.ModuleView   .UpdateStructure(gameTime);
-            this.KnowledgeView.UpdateStructure(gameTime);
-        }
-
-        private void LoadData()
-        {
-            this.LoadModuleData();
-            this.LoadScheduleData();
-            this.LoadFormatData();
-        }
-
-        private void LoadEvents()
+        private void EventLoad()
         {
             if (this.moduleCreatedListener == null)
             {
@@ -169,18 +77,151 @@ namespace MetaMind.Acutance.Guis.Modules
             EventManager.AddListener(this.sessionSavedListener);
         }
 
-        private void LoadModuleData()
+        private void EventUnload()
+        {
+            if (this.moduleCreatedListener != null)
+            {
+                EventManager.RemoveListener(this.moduleCreatedListener);
+            }
+
+            this.moduleCreatedListener = null;
+
+            if (this.commandNotifiedListener != null)
+            {
+                EventManager.RemoveListener(this.commandNotifiedListener);
+            }
+
+            this.commandNotifiedListener = null;
+
+            if (this.knowledgeRetrievedListener != null)
+            {
+                EventManager.RemoveListener(this.knowledgeRetrievedListener);
+            }
+
+            this.knowledgeRetrievedListener = null;
+
+            if (this.knowledgeReloadListener != null)
+            {
+                EventManager.RemoveListener(this.knowledgeReloadListener);
+            }
+
+            this.knowledgeReloadListener = null;
+
+            if (this.sessionSavedListener != null)
+            {
+                EventManager.RemoveListener(this.sessionSavedListener);
+            }
+
+            this.sessionSavedListener = null;
+        }
+
+        #endregion
+
+        #region Views
+
+        public IView CommandView { get; private set; }
+
+        public IView KnowledgeView { get; private set; }
+
+        public IView ModuleView { get; set; }
+
+        #endregion
+
+        #region Constructors
+
+        public MultiplexerGroup(MultiplexerGroupSettings settings)
+            : base(settings)
+        {
+            this.ModuleView = new PointView(
+                this.Settings.ModuleViewSettings,
+                this.Settings.ModuleItemSettings,
+                this.Settings.ModuleViewFactory);
+
+            this.CommandView = new PointView(
+                this.Settings.CommandViewSettings,
+                this.Settings.CommandItemSettings,
+                this.Settings.CommandViewFactory);
+
+            this.KnowledgeView = new PointView(
+                this.Settings.KnowledgeViewSettings,
+                this.Settings.KnowledgeItemSettings,
+                this.Settings.KnowledgeViewFactory);
+        }
+
+
+        #endregion
+
+        #region Configuration
+
+        public string ConfigurationFile
+        {
+            get
+            {
+                return "Startup.txt";
+            }
+        }
+
+        public void ConfigurationLoad()
+        {
+            this.CommandFormatDataLoad();
+        }
+
+        #endregion
+
+        #region Load and Unload
+
+        public void Load()
+        {
+            this.ConfigurationLoad();
+            this.DataLoad();
+            this.EventLoad();
+        }
+
+        private void DataLoad()
+        {
+            this.ModuleDataLoad();
+            this.ScheduleDataLoad();
+        }
+
+        public void Unload()
+        {
+            this.EventUnload();
+        }
+
+        #region Commands
+
+        private void CommandFormatDataLoad()
+        {
+            new FormatHelper().ConfigurationLoad();
+        }
+
+
+        #endregion
+
+        #region Module
+
+        private void ModuleDataLoad()
         {
             foreach (var module in this.Settings.Modules.ToArray())
             {
-                if (module.ParentModule == null)
+                if (module.Parent == null)
                 {
                     this.ModuleView.Control.AddItem(module);
                 }
             }
         }
 
-        private void LoadScheduleData()
+        #endregion
+
+        #region Schedule
+
+        public void ScheduleDataReload()
+        {
+            this.ScheduleDataUnload();
+            this.ScheduleDataLoad();
+        }
+
+        private void ScheduleDataLoad()
         {
             foreach (var schedule in ScheduleLoader.Load(this))
             {
@@ -189,14 +230,37 @@ namespace MetaMind.Acutance.Guis.Modules
             }
         }
 
-        private void LoadFormatData()
+        private void ScheduleDataUnload()
         {
-            Format.Load(new Format());
+            CommandFileter.RemoveRunningShedule(this.Settings.Commands);
         }
 
-        private void UnloadScheduleData()
+        #endregion
+
+        #endregion
+
+        #region Update and Draw
+
+        public override void Draw(GameTime gameTime, byte alpha)
         {
-            CommandEntryFileter.RemoveRunningShedule(this.Settings.Commands);
+            this.ModuleView   .Draw(gameTime, alpha);
+            this.KnowledgeView.Draw(gameTime, alpha);
+            this.CommandView  .Draw(gameTime, alpha);
         }
+
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        {
+            this.KnowledgeView.UpdateInput(gameInput, gameTime);
+            this.ModuleView   .UpdateInput(gameInput, gameTime);
+            this.CommandView  .UpdateInput(gameInput, gameTime);
+        }
+
+        public override void UpdateStructure(GameTime gameTime)
+        {
+            this.CommandView  .UpdateStructure(gameTime);
+            this.ModuleView   .UpdateStructure(gameTime);
+            this.KnowledgeView.UpdateStructure(gameTime);
+        }
+        #endregion
     }
 }

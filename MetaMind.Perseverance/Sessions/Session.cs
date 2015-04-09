@@ -8,13 +8,13 @@
     using MetaMind.Engine;
     using MetaMind.Engine.Components;
     using MetaMind.Perseverance.Concepts.Cognitions;
-    using MetaMind.Perseverance.Concepts.MotivationEntries;
+    using MetaMind.Perseverance.Concepts.Motivations;
 
     /// <summary>
     /// Session is a data class.
     /// </summary>
     [DataContract]
-    public class Session : EngineObject
+    public class Session : GameEngineAccess
     {
         #region File Storage
 
@@ -36,32 +36,27 @@
 
         private Session()
         {
-            this.Random         = new Random((int)DateTime.Now.Ticks);
-            this.Motivationlist = new Motivationlist();
-            this.Cognition      = new Cognition();
+            this.LoadRandomNumberGenerator();
+
+            this.Cognition  = new Cognition();
+            this.Motivation = new MotivationStorage();
         }
 
         #endregion Constructors
 
         #region Public Properties
 
-        [DataMember]
+        [DataMember(Name = "Cognition")]
         public Cognition Cognition { get; private set; }
 
-        public Random Random { get; private set; }
+        [DataMember(Name = "Motivation")]
+        public MotivationStorage Motivation { get; private set; }
 
-        [DataMember]
-        public Motivationlist Motivationlist { get; private set; }
+        public Random Random { get; private set; }
 
         #endregion Public Properties
 
         #region Load and Save
-
-        [OnDeserialized]
-        public void OnDeserialized(StreamingContext context)
-        {
-            this.Random = new Random((int)DateTime.Now.Ticks);
-        }
 
         public static Session LoadSave()
         {
@@ -69,6 +64,7 @@
             {
                 // auto-backup the old file
                 File.Copy(XmlPath, XmlPath + ".bak", true);
+
                 // load from save
                 LoadSave(XmlPath);
             }
@@ -85,12 +81,25 @@
             return singleton;
         }
 
+        [OnDeserialized]
+        public void LoadRandomNumberGenerator(StreamingContext context)
+        {
+            this.LoadRandomNumberGenerator();
+        }
+
         public void Save()
         {
             var serializer = new DataContractSerializer(typeof(Session), null, int.MaxValue, false, true, null);
-            using (var file = File.Create(XmlPath))
+            try
             {
-                serializer.WriteObject( file, singleton );
+                using (var file = File.Create(XmlPath))
+                {
+                    serializer.WriteObject(file, singleton);
+                }
+            }
+            catch (IOException)
+            {
+                // skip because there may be other instance trying to save
             }
         }
 
@@ -113,6 +122,10 @@
             }
         }
 
+        private void LoadRandomNumberGenerator()
+        {
+            this.Random = new Random((int)DateTime.Now.Ticks);
+        }
         #endregion Load and Save
 
         #region Update 
@@ -123,7 +136,5 @@
         }
 
         #endregion Update 
-
-        //---------------------------------------------------------------------
     }
 }

@@ -3,7 +3,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
     using System.Collections.Generic;
 
     using MetaMind.Engine.Guis.Widgets.Items;
-    using MetaMind.Perseverance.Concepts.TaskEntries;
+    using MetaMind.Perseverance.Concepts.Tasks;
     using MetaMind.Perseverance.Guis.Modules;
 
     public class TaskItemViewControlInMotivation : ViewItemViewControl2D
@@ -27,8 +27,8 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
             this.ViewControl.Swap.Initialize(originCenter, targetCenter);
 
-            List<TaskEntry> tasks;
-            using (MotivationTaskTracer parent = draggingItem.View.Parent)
+            List<Task> tasks;
+            using (TaskModule parent = draggingItem.View.Parent)
             {
                 tasks = parent.FastHostData["Tasks"];
             }

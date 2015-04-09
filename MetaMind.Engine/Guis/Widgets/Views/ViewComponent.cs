@@ -15,7 +15,7 @@
         dynamic ItemSettings { get; }
     }
 
-    public class ViewComponent : EngineObject, IViewComponent
+    public class ViewComponent : GameEngineAccess, IViewComponent
     {
         public dynamic ViewControl { get { return this.View.Control; } }
 

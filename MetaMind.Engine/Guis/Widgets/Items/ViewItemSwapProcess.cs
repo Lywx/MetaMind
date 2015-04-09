@@ -13,13 +13,24 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         private bool initialized;
 
-        public ViewItemSwapProcess(IViewItem draggingItem, IViewItem swappingItem, dynamic source = null)
+        protected IViewItem DraggingItem { get; private set; }
+
+        protected dynamic CommonSource { get; private set; }
+
+        protected IPointViewSwapControl SwappingControl { get; private set; }
+
+        protected IViewItem SwappingItem { get; private set; }
+
+        #region Constructors
+
+        public ViewItemSwapProcess(IViewItem draggingItem, IViewItem swappingItem, dynamic commonSource = null)
         {
             this.DraggingItem = draggingItem;
-            this.SwappingItem = swappingItem;
-            this.SwapControl  = swappingItem.ViewControl.Swap;
 
-            this.Source = source;
+            this.SwappingItem    = swappingItem;
+            this.SwappingControl = swappingItem.ViewControl.Swap;
+
+            this.CommonSource = commonSource;
 
             this.initialized = true;
         }
@@ -29,31 +40,32 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             this.initialized = false;
         }
 
-        protected IViewItem DraggingItem { get; private set; }
+        #endregion
 
-        protected dynamic Source { get; private set; }
+        #region Initializations
 
-        protected IPointViewSwapControl SwapControl { get; private set; }
-
-        protected IViewItem SwappingItem { get; private set; }
-
-        public ViewItemSwapProcess Initalize(IViewItem draggingItem, IViewItem swappingItem, dynamic source = null)
+        public ViewItemSwapProcess Initialize(IViewItem draggingItem, IViewItem swappingItem, dynamic commonSource = null)
         {
             if (this.initialized)
             {
                 return this;
             }
 
-            this.DraggingItem  = draggingItem;
-            this.SwappingItem  = swappingItem;
-            this.SwapControl   = swappingItem.ViewControl.Swap;
+            this.DraggingItem = draggingItem;
 
-            this.Source = source;
+            this.SwappingItem    = swappingItem;
+            this.SwappingControl = swappingItem.ViewControl.Swap;
+
+            this.CommonSource = commonSource;
 
             this.initialized = true;
 
             return this;
         }
+
+        #endregion
+
+        #region Swap Transition
 
         public override void OnAbort()
         {
@@ -78,15 +90,24 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             this.EndSwap();
         }
 
+
+        #endregion
+
+        #region Swap Update
+
         public override void Update(GameTime gameTime)
         {
-            this.SwapControl.Progress += 1f / UpdateNum;
+            this.SwappingControl.Progress += 1f / UpdateNum;
 
-            if (this.SwapControl.Progress > 1)
+            if (this.SwappingControl.Progress > 1)
             {
                 this.Succeed();
             }
         }
+
+        #endregion
+
+        #region Swap Operations
 
         protected void EndSwap()
         {
@@ -99,14 +120,19 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         protected virtual void SwapAroundView()
         {
-            var draggedExchangable  = this.DraggingItem as IViewItemExchangable;
+            var draggedExchangable = this.DraggingItem as IViewItemExchangable;
             var swappingExchangable = this.SwappingItem as IViewItemExchangable;
 
-            Debug.Assert(draggedExchangable != null && swappingExchangable != null, "Not all item are exchangeable.");
+            // assert all exchangable
+            {
+                Debug.Assert(
+                    draggedExchangable != null && swappingExchangable != null,
+                    "Not all item are exchangeable.");
+            }
 
             // replace each another in their origial view
             var originalSwappingItemView = this.SwappingItem.View;
-            var orignialDraggedItemView  = this.DraggingItem.View;
+            var orignialDraggedItemView = this.DraggingItem.View;
 
             orignialDraggedItemView.Control.Selection.Clear();
             orignialDraggedItemView.Disable(ViewState.View_Has_Focus);
@@ -120,18 +146,17 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         protected virtual void SwapDataInList()
         {
-            if (this.Source == null || 
-               !this.Source.Contains(this.DraggingItem.ItemData) || 
-               !this.Source.Contains(this.SwappingItem.ItemData))
+            if (this.CommonSource == null || !this.CommonSource.Contains(this.DraggingItem.ItemData)
+                || !this.CommonSource.Contains(this.SwappingItem.ItemData))
             {
                 return;
             }
 
-            int draggingPosition = this.Source.IndexOf(this.DraggingItem.ItemData);
-            int swappingPosition = this.Source.IndexOf(this.SwappingItem.ItemData);
+            int draggingPosition = this.CommonSource.IndexOf(this.DraggingItem.ItemData);
+            int swappingPosition = this.CommonSource.IndexOf(this.SwappingItem.ItemData);
 
-            this.Source[draggingPosition] = this.SwappingItem.ItemData;
-            this.Source[swappingPosition] = this.DraggingItem.ItemData;
+            this.CommonSource[draggingPosition] = this.SwappingItem.ItemData;
+            this.CommonSource[swappingPosition] = this.DraggingItem.ItemData;
         }
 
         protected virtual void SwapInView()
@@ -144,5 +169,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
             this.SwappingItem.View.Control.SortItems(PointViewSortMode.Id);
         }
+
+        #endregion
     }
 }

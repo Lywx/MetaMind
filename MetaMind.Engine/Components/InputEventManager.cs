@@ -1,8 +1,11 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="InputEventManager.cs" company="UESTC">
-//   Copyright (c) 2014 Wuxiang Lin
+// <copyright file="Event.cs" company="UESTC">
+//   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
+// <summary>
+//   
+// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace MetaMind.Engine.Components
@@ -126,21 +129,21 @@ namespace MetaMind.Engine.Components
         }
     }
 
-    public class InputEventManager : Widget
+    public class InputEventManager : ManualInputGameElement
     {
         #region Singleton
 
-        private static InputEventManager singleton;
-
         public static InputEventManager GetInstance(Game game)
         {
-            if (singleton == null)
+            if (Singleton == null)
             {
-                singleton = new InputEventManager(game);
+                Singleton = new InputEventManager(game);
             }
 
-            return singleton;
+            return Singleton;
         }
+
+        private static InputEventManager Singleton { get; set; }
 
         #endregion Singleton
 
@@ -316,7 +319,7 @@ namespace MetaMind.Engine.Components
         {
             IntPtr returnCode = CallWindowProc(prevWndProc, hWnd, msg, wParam, lParam);
 
-            if (!IsHandlingInput)
+            if (!this.Controllable)
             {
                 return returnCode;
             }
@@ -528,7 +531,7 @@ namespace MetaMind.Engine.Components
         {
         }
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
         }
 

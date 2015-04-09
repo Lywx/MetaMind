@@ -14,7 +14,7 @@ namespace MetaMind.Acutance.Guis.Widgets
         public ModuleItemFileControl(IViewItem item)
             : base(item)
         {
-            ((ModuleEntry)ItemData).Reloaded += this.ReloadModule;
+            ((Module)ItemData).Reloaded += this.ReloadModule;
         }
 
         ~ModuleItemFileControl()

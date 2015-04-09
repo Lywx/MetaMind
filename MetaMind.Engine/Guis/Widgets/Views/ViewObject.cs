@@ -4,7 +4,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     using Microsoft.Xna.Framework;
 
-    public interface IViewObject : IWidget
+    public interface IViewObject : IManualInputable
     {
         bool[] States { get; }
 
@@ -19,7 +19,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         bool IsEnabled(ViewState state);
     }
 
-    public class ViewObject : Widget, IViewObject
+    public class ViewObject : ManualInputGameElement, IViewObject
     {
         public dynamic ViewSettings { get; private set; }
 
@@ -41,7 +41,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
         }
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
         }
 

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AudioManager.cs" company="UESTC">
+// <copyright file="Audio.cs" company="UESTC">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -27,7 +27,38 @@ namespace MetaMind.Engine.Components
         /// <summary>
         /// The singleton for this type.
         /// </summary>
-        private static AudioManager singleton;
+        private static AudioManager Singleton { get; set; }
+
+        public static AudioManager GetInstance(Game game)
+        {
+            var settingsFile  = @"Content\Audio\Audio.xgs";
+            var waveBankFile  = @"Content\Audio\Wave Bank.xwb";
+            var soundBankFile = @"Content\Audio\Sound Bank.xsb";
+
+            return GetInstance(game, settingsFile, waveBankFile, soundBankFile);
+        }
+
+        /// <summary>
+        /// Initialize the static Audio functionality.
+        /// </summary>
+        /// <param name="game">The game that this component will be attached to.</param>
+        /// <param name="settingsFile">The filename of the XACT settings file.</param>
+        /// <param name="waveBankFile">The filename of the XACT wavebank file.</param>
+        /// <param name="soundBankFile">The filename of the XACT soundbank file.</param>
+        public static AudioManager GetInstance(Game game, string settingsFile, string waveBankFile, string soundBankFile)
+        {
+            if (Singleton == null)
+            {
+                Singleton = new AudioManager(game, settingsFile, waveBankFile, soundBankFile);
+            }
+
+            if (game != null)
+            {
+                game.Components.Add(Singleton);
+            }
+
+            return Singleton;
+        }
 
         #endregion Singleton
 
@@ -36,17 +67,17 @@ namespace MetaMind.Engine.Components
         /// <summary>
         /// The audio engine used to play all cues.
         /// </summary>
-        private AudioEngine audioEngine;
+        private AudioEngine AudioEngine { get; set; }
 
         /// <summary>
         /// The soundbank that contains all cues.
         /// </summary>
-        private SoundBank soundBank;
+        private SoundBank SoundBank { get; set; }
 
         /// <summary>
         /// The wavebank with all wave files for this game.
         /// </summary>
-        private WaveBank waveBank;
+        private WaveBank WaveBank { get; set; }
 
         #endregion Audio Data
 
@@ -64,53 +95,31 @@ namespace MetaMind.Engine.Components
         {
             try
             {
-                audioEngine = new AudioEngine(settingsFile);
-                waveBank    = new WaveBank(audioEngine, waveBankFile);
-                soundBank   = new SoundBank(audioEngine, soundBankFile);
+                this.AudioEngine = new AudioEngine(settingsFile);
+                this.WaveBank    = new WaveBank(this.AudioEngine, waveBankFile);
+                this.SoundBank   = new SoundBank(this.AudioEngine, soundBankFile);
             }
             catch (NoAudioHardwareException)
             {
                 // silently fall back to silence
-                audioEngine = null;
-                waveBank    = null;
-                soundBank   = null;
+                this.AudioEngine = null;
+                this.WaveBank    = null;
+                this.SoundBank   = null;
             }
             catch (InvalidOperationException)
             {
                 // no audio prepared
                 // silently fall back to silence
-                audioEngine = null;
-                waveBank    = null;
-                soundBank   = null;
+                this.AudioEngine = null;
+                this.WaveBank    = null;
+                this.SoundBank   = null;
             }
             catch (NotImplementedException)
             {
-                audioEngine = null;
-                waveBank    = null;
-                soundBank   = null;
+                this.AudioEngine = null;
+                this.WaveBank    = null;
+                this.SoundBank   = null;
             }
-        }
-
-        /// <summary>
-        /// Initialize the static AudioManager functionality.
-        /// </summary>
-        /// <param name="game">The game that this component will be attached to.</param>
-        /// <param name="settingsFile">The filename of the XACT settings file.</param>
-        /// <param name="waveBankFile">The filename of the XACT wavebank file.</param>
-        /// <param name="soundBankFile">The filename of the XACT soundbank file.</param>
-        public static AudioManager GetInstance(Game game, string settingsFile, string waveBankFile, string soundBankFile)
-        {
-            if (singleton == null)
-            {
-                singleton = new AudioManager(game, settingsFile, waveBankFile, soundBankFile);
-            }
-
-            if (game != null)
-            {
-                game.Components.Add(singleton);
-            }
-
-            return singleton;
         }
 
         #endregion Initialization Methods
@@ -125,15 +134,15 @@ namespace MetaMind.Engine.Components
         public static Cue GetCue(string cueName)
         {
             if (string.IsNullOrEmpty(cueName) ||
-                singleton == null ||
-                singleton.audioEngine == null ||
-                singleton.soundBank == null ||
-                singleton.waveBank == null)
+                Singleton == null ||
+                Singleton.AudioEngine == null ||
+                Singleton.SoundBank == null ||
+                Singleton.WaveBank == null)
             {
                 return null;
             }
 
-            return singleton.soundBank.GetCue(cueName);
+            return Singleton.SoundBank.GetCue(cueName);
         }
 
         /// <summary>
@@ -142,10 +151,10 @@ namespace MetaMind.Engine.Components
         /// <param name="cueName">The name of the cue to play.</param>
         public static void PlayCue(string cueName)
         {
-            if ((singleton != null) && (singleton.audioEngine != null) && (singleton.soundBank != null)
-                && (singleton.waveBank != null))
+            if ((Singleton != null) && (Singleton.AudioEngine != null) && (Singleton.SoundBank != null)
+                && (Singleton.WaveBank != null))
             {
-                singleton.soundBank.PlayCue(cueName);
+                Singleton.SoundBank.PlayCue(cueName);
             }
         }
 
@@ -170,9 +179,9 @@ namespace MetaMind.Engine.Components
         public void PlayMusic(string cueName)
         {
             // start the new music cue
-            if (singleton != null)
+            if (Singleton != null)
             {
-                singleton.musicCueNameStack.Clear();
+                Singleton.musicCueNameStack.Clear();
                 PushMusic(cueName);
             }
         }
@@ -184,23 +193,23 @@ namespace MetaMind.Engine.Components
         public static void PushMusic(string cueName)
         {
             // start the new music cue
-            if ((singleton != null) && (singleton.audioEngine != null) && (singleton.soundBank != null)
-                && (singleton.waveBank != null))
+            if ((Singleton != null) && (Singleton.AudioEngine != null) && (Singleton.SoundBank != null)
+                && (Singleton.WaveBank != null))
             {
-                singleton.musicCueNameStack.Push(cueName);
-                if ((singleton.musicCue == null) || (singleton.musicCue.Name != cueName))
+                Singleton.musicCueNameStack.Push(cueName);
+                if ((Singleton.musicCue == null) || (Singleton.musicCue.Name != cueName))
                 {
-                    if (singleton.musicCue != null)
+                    if (Singleton.musicCue != null)
                     {
-                        singleton.musicCue.Stop(AudioStopOptions.AsAuthored);
-                        singleton.musicCue.Dispose();
-                        singleton.musicCue = null;
+                        Singleton.musicCue.Stop(AudioStopOptions.AsAuthored);
+                        Singleton.musicCue.Dispose();
+                        Singleton.musicCue = null;
                     }
 
-                    singleton.musicCue = GetCue(cueName);
-                    if (singleton.musicCue != null)
+                    Singleton.musicCue = GetCue(cueName);
+                    if (Singleton.musicCue != null)
                     {
-                        singleton.musicCue.Play();
+                        Singleton.musicCue.Play();
                     }
                 }
             }
@@ -212,34 +221,34 @@ namespace MetaMind.Engine.Components
         public static void PopMusic()
         {
             // start the new music cue
-            if ((singleton != null) && (singleton.audioEngine != null) && (singleton.soundBank != null)
-                && (singleton.waveBank != null))
+            if ((Singleton != null) && (Singleton.AudioEngine != null) && (Singleton.SoundBank != null)
+                && (Singleton.WaveBank != null))
             {
                 string cueName = null;
-                if (singleton.musicCueNameStack.Count > 0)
+                if (Singleton.musicCueNameStack.Count > 0)
                 {
-                    singleton.musicCueNameStack.Pop();
-                    if (singleton.musicCueNameStack.Count > 0)
+                    Singleton.musicCueNameStack.Pop();
+                    if (Singleton.musicCueNameStack.Count > 0)
                     {
-                        cueName = singleton.musicCueNameStack.Peek();
+                        cueName = Singleton.musicCueNameStack.Peek();
                     }
                 }
 
-                if ((singleton.musicCue == null) || (singleton.musicCue.Name != cueName))
+                if ((Singleton.musicCue == null) || (Singleton.musicCue.Name != cueName))
                 {
-                    if (singleton.musicCue != null)
+                    if (Singleton.musicCue != null)
                     {
-                        singleton.musicCue.Stop(AudioStopOptions.AsAuthored);
-                        singleton.musicCue.Dispose();
-                        singleton.musicCue = null;
+                        Singleton.musicCue.Stop(AudioStopOptions.AsAuthored);
+                        Singleton.musicCue.Dispose();
+                        Singleton.musicCue = null;
                     }
 
                     if (!string.IsNullOrEmpty(cueName))
                     {
-                        singleton.musicCue = GetCue(cueName);
-                        if (singleton.musicCue != null)
+                        Singleton.musicCue = GetCue(cueName);
+                        if (Singleton.musicCue != null)
                         {
-                            singleton.musicCue.Play();
+                            Singleton.musicCue.Play();
                         }
                     }
                 }
@@ -251,14 +260,14 @@ namespace MetaMind.Engine.Components
         /// </summary>
         public static void StopMusic()
         {
-            if (singleton != null)
+            if (Singleton != null)
             {
-                singleton.musicCueNameStack.Clear();
-                if (singleton.musicCue != null)
+                Singleton.musicCueNameStack.Clear();
+                if (Singleton.musicCue != null)
                 {
-                    singleton.musicCue.Stop(AudioStopOptions.AsAuthored);
-                    singleton.musicCue.Dispose();
-                    singleton.musicCue = null;
+                    Singleton.musicCue.Stop(AudioStopOptions.AsAuthored);
+                    Singleton.musicCue.Dispose();
+                    Singleton.musicCue = null;
                 }
             }
         }
@@ -274,12 +283,12 @@ namespace MetaMind.Engine.Components
         public override void Update(GameTime gameTime)
         {
             // update the audio engine
-            if (audioEngine != null)
+            if (this.AudioEngine != null)
             {
-                audioEngine.Update();
+                this.AudioEngine.Update();
             }
 
-            if ((musicCue != null) && musicCue.IsStopped)
+            if ((this.musicCue != null) && this.musicCue.IsStopped)
             {
                 PopMusic();
             }
@@ -301,9 +310,9 @@ namespace MetaMind.Engine.Components
                 if (disposing)
                 {
                     StopMusic();
-                    soundBank = null;
-                    waveBank = null;
-                    audioEngine = null;
+                    this.SoundBank = null;
+                    this.WaveBank = null;
+                    this.AudioEngine = null;
                 }
             }
             finally
