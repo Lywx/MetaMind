@@ -67,10 +67,10 @@ namespace MetaMind.Perseverance.Guis.Widgets
         {
             base.UpdateInput(gameTime);
 
-            this.NameFrame      .UpdateInput(gameTime);
-            this.IdFrame        .UpdateInput(gameTime);
-            this.ExperienceFrame.UpdateInput(gameTime);
-            this.ProgressFrame  .UpdateInput(gameTime);
+            this.NameFrame      .Update(gameInput, gameTime);
+            this.IdFrame        .Update(gameInput, gameTime);
+            this.ExperienceFrame.Update(gameInput, gameTime);
+            this.ProgressFrame  .Update(gameInput, gameTime);
         }
 
         protected override void UpdateFrameGeometry()

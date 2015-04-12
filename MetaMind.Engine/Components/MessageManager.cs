@@ -15,46 +15,55 @@ namespace MetaMind.Engine.Components
 
     using Microsoft.Xna.Framework;
 
-    public class MessageManager
+    public class MessageManager : DrawableGameComponent
     {
         #region Singleton
 
-        private static MessageManager singleton;
+        private static MessageManager Singleton { get; set; }
 
-        public static MessageManager GetInstance()
+        public static MessageManager GetInstance(GameEngine gameEngine)
         {
-            return singleton ?? (singleton = new MessageManager());
+            return Singleton ?? (Singleton = new MessageManager(gameEngine));
         }
 
         #endregion Singleton
 
-        #region Messages
+        #region Message Data
 
         private readonly List<FlashMessage> messages;
 
-        #endregion Messages
+        #endregion
+
+        #region Engine Data
+
+        private IGameGraphics GameGraphics { get; set; }
+
+        #endregion
 
         #region Constructors
 
-        public MessageManager()
+        private MessageManager(GameEngine gameEngine)
+            : base(gameEngine)
         {
-            messages = new List<FlashMessage>();
+            this.GameGraphics = new GameEngineGraphics(gameEngine);
+
+            this.messages = new List<FlashMessage>();
         }
 
         #endregion Constructors
 
         #region Update and Draw
 
-        public void Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime)
         {
-            if (messages.Count == 0)
+            if (this.messages.Count == 0)
             {
                 return;
             }
 
             for (int i = 0; i < this.messages.Count; i++)
             {
-                FlashMessage message = this.messages[i];
+                var message = this.messages[i];
 
                 if (string.IsNullOrEmpty(message.CurrentMessage))
                 {
@@ -70,7 +79,7 @@ namespace MetaMind.Engine.Components
                     message.FontColor.B - 100 + 15 * i, 
                     message.FontColor.A - 100 + 50 * i);
 
-                GameEngine.FontManager.DrawString(
+                this.GameGraphics.Font.DrawString(
                     MessageSettings.MessageFont, 
                     message.DrawnMessage, 
                     messagePosition, 
@@ -87,14 +96,14 @@ namespace MetaMind.Engine.Components
             }
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             if (this.messages.Count == 0)
             {
                 return;
             }
 
-            for (int i = 0; i < this.messages.Count; i++)
+            for (var i = 0; i < this.messages.Count; i++)
             {
                 var message = this.messages[i];
                 message.DisplayTime -= gameTime.ElapsedGameTime;
@@ -115,27 +124,26 @@ namespace MetaMind.Engine.Components
 
         public void PopMessages(string message, TimeSpan lastingPeriod, Vector2 postion, Color color)
         {
-            messages.Add(new FlashMessage(message, lastingPeriod, postion, color));
+            this.messages.Add(new FlashMessage(message, lastingPeriod, postion, color));
         }
 
         public void PopMessages(string message, Vector2 postion, Color color)
         {
-            messages.Add(new FlashMessage(message, MessageSettings.MessageLastingPeriod, postion, color));
+            this.messages.Add(new FlashMessage(message, MessageSettings.MessageLastingPeriod, postion, color));
         }
 
         public void PopMessages(string message, Color color)
         {
-            messages.Add(
-                new FlashMessage(message, MessageSettings.MessageLastingPeriod, MessageSettings.MessagePosition, color));
+            this.messages.Add(new FlashMessage(message, MessageSettings.MessageLastingPeriod, MessageSettings.MessagePosition, color));
         }
 
         public void PopMessages(string message)
         {
-            messages.Add(
+            this.messages.Add(
                 new FlashMessage(
-                    message, 
-                    MessageSettings.MessageLastingPeriod, 
-                    MessageSettings.MessagePosition, 
+                    message,
+                    MessageSettings.MessageLastingPeriod,
+                    MessageSettings.MessagePosition,
                     MessageSettings.MessageColor));
         }
 

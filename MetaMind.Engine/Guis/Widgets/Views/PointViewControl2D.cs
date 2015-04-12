@@ -56,14 +56,14 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         #region Update Input
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
-            this.UpdateMouseScroll();
-            this.UpdateKeyboardMotion();
-            this.UpdateItemInput(gameTime);
+            this.UpdateMouseScroll(gameInput);
+            this.UpdateKeyboardMotion(gameInput);
+            this.UpdateItemInput(gameInput, gameTime);
         }
 
-        protected override void UpdateKeyboardMotion()
+        protected override void UpdateKeyboardMotion(IGameInput gameInput)
         {
             if (this.AcceptInput)
             {
@@ -71,47 +71,47 @@ namespace MetaMind.Engine.Guis.Widgets.Views
                 // --------------------------------------------------------------
                 if (this.ViewSettings.KeyboardEnabled)
                 {
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Up))
+                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Up))
                     {
                         this.MoveUp();
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Down))
+                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Down))
                     {
                         this.MoveDown();
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.FastUp))
+                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.FastUp))
                     {
                         this.SuperMoveUp();
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.FastDown))
+                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.FastDown))
                     {
                         this.SuperMoveDown();
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
+                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Left))
                     {
                         this.MoveLeft();
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
+                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Right))
                     {
                         this.MoveRight();
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.FastLeft))
+                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.FastLeft))
                     {
                         this.SuperMoveLeft();
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.FastRight))
+                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.FastRight))
                     {
                         this.SuperMoveRight();
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
+                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Escape))
                     {
                         this.Selection.Clear();
                     }

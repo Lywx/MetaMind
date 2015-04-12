@@ -13,12 +13,12 @@
 
     public class ItemDataFrame : PickableFrame, IItemDataFrame
     {
-        public ItemDataFrame(IItemObject item)
+        public ItemDataFrame(IItemEntity item)
         {
             this.Item = item;
         }
 
-        private IItemObject Item { get; set; }
+        private IItemEntity Item { get; set; }
 
         public void Disable()
         {

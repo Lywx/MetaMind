@@ -58,7 +58,7 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
             var sleepStartedEvent = new EventBase(
                 (int)SessionEventType.SleepStarted, 
                 new ConsciousnessSleepStartedEventArgs(this));
-            EventManager.TriggerEvent(sleepStartedEvent);
+            gameInterop.Event.TriggerEvent(sleepStartedEvent);
 
             return new ConsciousnessSleepy(this);
         }

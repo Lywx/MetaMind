@@ -2,6 +2,7 @@
 {
     using System;
     using System.Globalization;
+    using System.Runtime.CompilerServices;
     using System.Runtime.Serialization;
 
     [DataContract]
@@ -73,7 +74,7 @@
             this.IsEnded = false;
         }
 
-        private SynchronizationSpan(DateTime firstStartTime, TimeSpan certainDuration, DateTime recentEndTime)
+        internal SynchronizationSpan(DateTime firstStartTime, TimeSpan certainDuration, DateTime recentEndTime)
         {
             this.FirstStartTime  = firstStartTime;
             this.RecentEndTime   = recentEndTime;

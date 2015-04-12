@@ -2,7 +2,7 @@ using System;
 
 namespace MetaMind.Engine
 {
-#if WINDOWS || XBOX
+#if WINDOWS || LINUX
 
     public static class Program
     {
@@ -12,9 +12,8 @@ namespace MetaMind.Engine
         [STAThread]
         private static void Main(string[] args)
         {
-            //using (var engine = GameEngine.Instance)
+            using (var engine = GameEngine.GetInstance())
             {
-                var engine = GameEngine.Instance;
                 engine.Run();
             }
         }

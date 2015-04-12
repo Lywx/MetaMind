@@ -29,8 +29,8 @@ namespace MetaMind.Perseverance.Components
 
         #region Constructors
 
-        private SaveManager(Game game)
-            : base(game)
+        private SaveManager(Game gameEngine)
+            : base(gameEngine)
         {
         }
 

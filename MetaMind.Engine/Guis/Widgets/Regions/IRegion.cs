@@ -27,6 +27,6 @@ namespace MetaMind.Engine.Guis.Widgets.Regions
 
         bool IsEnabled(RegionState state);
 
-        void UpdateInput(GameTime gameTime);
+        void Update(IGameInput gameInput, GameTime gameTime);
     }
 }

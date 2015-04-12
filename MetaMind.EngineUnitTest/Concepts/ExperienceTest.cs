@@ -17,47 +17,47 @@ namespace MetaMind.EngineUnitTest.Concepts
     public class ExperienceTest
     {
         [TestMethod]
-        public void DurationTestCaseAddition()
+        public void Addition()
         {
-            var exp1 = new Experience(
-                new DateTime(2014, 7, 20, 0, 0, 0), 
-                endTime: new DateTime(2014, 7, 21, 0, 0, 0), 
+            var exp1 = new SynchronizationSpan(
+                firstStartTime: new DateTime(2014, 7, 20, 0, 0, 0),
+                recentEndTime: new DateTime(2014, 7, 21, 0, 0, 0),
                 certainDuration: TimeSpan.FromDays(1));
 
-            var exp2 = new Experience(
-                new DateTime(2014, 7, 21, 0, 0, 0), 
-                endTime: new DateTime(2014, 7, 22, 0, 0, 0), 
+            var exp2 = new SynchronizationSpan(
+                firstStartTime: new DateTime(2014, 7, 21, 0, 0, 0),
+                recentEndTime: new DateTime(2014, 7, 22, 0, 0, 0),
                 certainDuration: TimeSpan.FromDays(1));
 
             var exp = exp1 + exp2;
 
             Assert.AreEqual(exp.Duration, TimeSpan.FromDays(2));
-            Assert.AreEqual(exp.HistoricalStartTime, new DateTime(2014, 7, 20, 0, 0, 0));
-            Assert.AreEqual(exp.EndTime, new DateTime(2014, 7, 22, 0, 0, 0));
+            Assert.AreEqual(exp.FirstStartTime, new DateTime(2014, 7, 20, 0, 0, 0));
+            Assert.AreEqual(exp.RecentEndTime, new DateTime(2014, 7, 22, 0, 0, 0));
         }
 
         [TestMethod]
-        public void DurationTestCaseDuration()
+        public void Duration()
         {
-            var exp = new Experience(
-                new DateTime(2014, 7, 21, 0, 0, 0), 
-                endTime: new DateTime(2014, 7, 22, 0, 0, 0), 
+            var exp = new SynchronizationSpan(
+                firstStartTime: new DateTime(2014, 7, 21, 0, 0, 0),
+                recentEndTime: new DateTime(2014, 7, 22, 0, 0, 0),
                 certainDuration: TimeSpan.FromDays(1));
 
             Assert.AreEqual(exp.Duration, TimeSpan.FromDays(1));
         }
 
         [TestMethod]
-        public void DurationTestCaseSubtraction()
+        public void Subtraction()
         {
-            var exp1 = new Experience(
-                new DateTime(2014, 7, 20, 0, 0, 0), 
-                endTime: new DateTime(2014, 7, 21, 0, 0, 0), 
+            var exp1 = new SynchronizationSpan(
+                firstStartTime: new DateTime(2014, 7, 20, 0, 0, 0),
+                recentEndTime: new DateTime(2014, 7, 21, 0, 0, 0),
                 certainDuration: TimeSpan.FromDays(1));
 
-            var exp2 = new Experience(
-                new DateTime(2014, 7, 20, 0, 0, 0), 
-                endTime: new DateTime(2014, 7, 22, 0, 0, 0), 
+            var exp2 = new SynchronizationSpan(
+                firstStartTime: new DateTime(2014, 7, 20, 0, 0, 0),
+                recentEndTime: new DateTime(2014, 7, 22, 0, 0, 0),
                 certainDuration: TimeSpan.FromDays(2));
 
             var exp = exp2 - exp1;

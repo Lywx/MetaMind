@@ -10,6 +10,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Reflection;
 
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Items;

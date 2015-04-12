@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     using Microsoft.Xna.Framework;
 
-    public class PointView : ViewObject, IView
+    public class PointView : ViewEntity, IView
     {
         public PointView(PointViewSettings1D viewSettings, ItemSettings itemSettings, IViewFactory factory, dynamic parent = null)
             : base(viewSettings, itemSettings)
@@ -38,20 +38,20 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public dynamic Parent { get; private set; }
 
-        public override void Draw(GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
         {
-            this.Graphics.Draw(gameTime, alpha);
+            this.Graphics.Draw(gameGraphics, gameTime, alpha);
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
-            this.Control.UpdateInput(gameTime);
+            this.Control.Update(gameInput, gameTime);
         }
 
-        public override void UpdateStructure(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
-            this.Control .UpdateStructure(gameTime);
-            this.Graphics.UpdateStructure(gameTime);
+            this.Control .Update(gameTime);
+            this.Graphics.Update(gameTime);
         }
     }
 }

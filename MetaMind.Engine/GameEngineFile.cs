@@ -13,7 +13,8 @@ namespace MetaMind.Engine
 
     public sealed class GameEngineFile : GameEngineAccess, IGameFile
     {
-        public GameEngineFile()
+        public GameEngineFile(GameEngine gameEngine)
+            : base(gameEngine)
         {
             this.AccessType = GameEngineAccessType.File;
         }

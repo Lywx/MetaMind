@@ -8,14 +8,18 @@
 namespace MetaMind.Engine
 {
     /// <summary>
-    /// Provide engine-game interface separation.
+    ///     Provide engine-game interface separation.
     /// </summary>
     public class GameEngineAccess
     {
-        public GameEngineAccess()
+        protected GameEngineAccess(GameEngine gameEngine)
         {
+            this.GameEngine = gameEngine;
+
             this.AccessType = GameEngineAccessType.None;
         }
+
+        protected GameEngine GameEngine { get; private set; }
 
         protected GameEngineAccessType AccessType { get; set; }
     }

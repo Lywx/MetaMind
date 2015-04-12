@@ -8,8 +8,8 @@ namespace MetaMind.Engine.Components
     {
         private bool autoSaved;
 
-        protected SaveManager(Game game)
-            : base(game)
+        protected SaveManager(Game gameEngine)
+            : base(gameEngine)
         {
         }
 

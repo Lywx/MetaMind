@@ -5,10 +5,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Engine.Extensions
+namespace Microsoft.Xna.Framework
 {
-    using Microsoft.Xna.Framework;
-
     public static class ExtPoint
     {
         public static Vector2 DistanceFrom(this Point first, Point second)

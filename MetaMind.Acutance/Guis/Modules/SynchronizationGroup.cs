@@ -62,7 +62,7 @@
             get { return this.SynchronizationTaskInfoCenter + new Vector2(0, 30); }
         }
 
-        public override void Draw(GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
         {
             if (this.synchronization != null)
             {
@@ -73,19 +73,19 @@
             }
         }
 
-        public void Load()
+        public void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
         {
         }
 
-        public void Unload() 
+        public void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
         {
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
         }
 
-        public override void UpdateStructure(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             if (this.synchronizationTimer < TimeSpan.FromMilliseconds(10))
             {

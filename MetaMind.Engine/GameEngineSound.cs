@@ -11,7 +11,8 @@ namespace MetaMind.Engine
 
     public sealed class GameEngineSound : GameEngineAccess, IGameSound
     {
-        public GameEngineSound()
+        public GameEngineSound(GameEngine gameEngine)
+            : base(gameEngine)
         {
             this.AccessType = GameEngineAccessType.Sound;
         }

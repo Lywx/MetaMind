@@ -16,7 +16,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
     {
         public Color NameColor                  = Color.White;
 
-        public Font  NameFont                   = Font.UiContentFont;
+        public Font  NameFont                   = Font.ContentRegular;
 
         public Point NameFrameSize              = new Point(256, 34);
 
@@ -39,7 +39,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
         public Color SymbolFrameWishColor       = new Color(255, 255, 255, 128);
 
         //---------------------------------------------------------------------
-        public Font  HelpFont                   = Font.UiStatisticsFont;
+        public Font  HelpFont                   = Font.UiStatistics;
 
         public float HelpSize                   = 0.75f;
 

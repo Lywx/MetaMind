@@ -2,9 +2,7 @@
 {
     using MetaMind.Engine.Guis.Widgets.Items;
 
-    using Microsoft.Xna.Framework;
-
-    public interface IPointViewControl
+    public interface IPointViewControl : IInputable
     {
         IViewItemFactory ItemFactory { get; }
 
@@ -15,9 +13,5 @@
         IPointViewSwapControl Swap { get; }
 
         void SortItems(PointViewSortMode sortMode);
-
-        void UpdateInput(GameTime gameTime);
-
-        void UpdateStructure(GameTime gameTime);
     }
 }

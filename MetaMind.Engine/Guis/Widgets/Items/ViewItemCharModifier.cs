@@ -20,7 +20,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
-    public interface IViewItemCharModifier : IDisposable
+    public interface IViewItemCharModifier : IInputable, Engine.IDrawable, IDisposable
     {
         event EventHandler<ViewItemDataEventArgs> ModificationEnded;
 
@@ -28,23 +28,12 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         void Cancel();
 
-        void Draw(GameTime gameTime);
-
         void Initialize(string prevString, bool showCursor);
 
         void Release();
-
-        void UpdateInput(GameTime gameTime);
-
-        void UpdateStructure(GameTime gameTime);
     }
 
-    public interface IViewItemCharPostProcessor
-    {
-        string RemoveCursor(string dirty);
-    }
-
-    public class ViewItemCharModifier : ViewItemComponent, IViewItemCharModifier, IViewItemCharPostProcessor, IDisposable
+    public class ViewItemCharModifier : ViewItemComponent, IViewItemCharModifier, IViewItemCharPostProcessor
     {
         #region Input Settings
 
@@ -148,7 +137,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         #region Event Handlers
 
-        private void DetectCharEntered(object sender, CharacterEventArgs e)
+        private void DetectCharEntered(object sender, CharEnteredEventArgs e)
         {
             if (!this.Item.IsEnabled(ItemState.Item_Editing))
             {
@@ -398,13 +387,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         #region Update and Draw
 
-        public void Draw(GameTime gameTime)
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
-        }
-
-        public void UpdateInput(GameTime gameTime)
-        {
-            var keyboard = InputSequenceManager.Keyboard;
+            var keyboard = gameInput.Sequence.Keyboard;
 
             if (keyboard.IsActionTriggered(Actions.Escape))
             {
@@ -433,10 +418,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             {
                 this.DeleteNextChar();
             }
-        }
-
-        public void UpdateStructure(GameTime gameTime)
-        {
         }
 
         private bool ComboTriggered(KeyboardManager keyboard, Keys key)

@@ -17,6 +17,8 @@ namespace MetaMind.Engine.Components
 
     public class EventManager : GameComponent
     {
+        #region Event Data
+
         private List<EventBase> activeEvents;
 
         private List<int> knownEvents;
@@ -41,31 +43,33 @@ namespace MetaMind.Engine.Components
             }
         }
 
+        #endregion
+
         #region Singleton
 
-        private static EventManager singleton;
-
-        public static EventManager GetInstance(Game game)
+        public static EventManager GetInstance(GameEngine gameEngine)
         {
-            if (singleton == null)
+            if (Singleton == null)
             {
-                singleton = new EventManager(game);
+                Singleton = new EventManager(gameEngine);
             }
 
-            if (game != null)
+            if (gameEngine != null)
             {
-                game.Components.Add(singleton);
+                gameEngine.Components.Add(Singleton);
             }
 
-            return singleton;
+            return Singleton;
         }
+
+        private static EventManager Singleton { get; set; }
 
         #endregion Singleton
 
         #region Constructors
 
-        private EventManager(Game game)
-            : base(game)
+        private EventManager(GameEngine gameEngine)
+            : base(gameEngine)
         {
             this.knownEvents  = new List<int>();
             this.queuedEvents = new List<EventBase>();
@@ -258,9 +262,5 @@ namespace MetaMind.Engine.Components
         }
 
         #endregion Time Helper
-
-        // ---------------------------------------------------------------------
-
-        // ---------------------------------------------------------------------
     }
 }

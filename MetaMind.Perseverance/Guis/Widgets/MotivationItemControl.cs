@@ -1,5 +1,6 @@
 ﻿namespace MetaMind.Perseverance.Guis.Widgets
 {
+    using MetaMind.Engine;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Elements;
@@ -67,11 +68,11 @@
             }
         }
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
             // mouse and keyboard in modifier
             //-----------------------------------------------------------------
-            base.UpdateInput(gameTime);
+            base.UpdateInput(, gameTime);
 
             // keyboard
             //-----------------------------------------------------------------
@@ -116,10 +117,10 @@
             }
         }
 
-        public override void UpdateStructure(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
-            base                .UpdateStructure(gameTime);
-            this.ItemTaskControl.UpdateStructure(gameTime);
+            base                .Update(gameTime);
+            this.ItemTaskControl.Update(gameTime);
         }
 
         #endregion

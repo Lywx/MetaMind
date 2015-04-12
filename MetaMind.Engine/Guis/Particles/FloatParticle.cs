@@ -84,9 +84,9 @@ namespace MetaMind.Engine.Guis.Particles
                 Random.Next(0, 255) / this.deep);
         }
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
         {
-            ScreenManager.SpriteBatch.FillRectangle(this.Position, this.Size, this.Color, this.Angle);
+            gameGraphics.Screen.SpriteBatch.FillRectangle(this.Position, this.Size, this.Color, this.Angle);
         }
 
         public override void Update(GameTime gameTime)

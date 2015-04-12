@@ -45,12 +45,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
         }
 
-        public override void Draw(GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
         {
             if (this.ViewControl.RowNum > this.ViewSettings.RowNumDisplay)
             {
                 Primitives2D.FillRectangle(
-                    ScreenManager.SpriteBatch,
+                    gameGraphics.Screen.SpriteBatch,
                     this.ScrollBarRectangle,
                     ExtColor.MakeTransparent(this.settings.Color, (byte)this.alpha));
             }
@@ -61,7 +61,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             this.alpha = this.settings.BrightnessMax;
         }
 
-        public override void UpdateStructure(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             this.alpha -= this.settings.BrightnessTransitionRate;
             if (this.alpha < 0)

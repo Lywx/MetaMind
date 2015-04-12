@@ -1,22 +1,21 @@
 namespace MetaMind.Engine.Guis.Widgets.Regions
 {
-    public class RegionObject : GameEngineAccess
+    public abstract class RegionEntity : InputableGameEntity
     {
-        private bool[] states;
+        #region Constructors
 
-        protected RegionObject()
+        protected RegionEntity()
         {
             this.states = new bool[(int)RegionState.StateNum];
         }
 
-        public bool[] States { get { return this.states; } }
+        #endregion
 
         #region States
 
-        public bool IsEnabled(RegionState state)
-        {
-            return state.IsStateEnabledIn(this.states);
-        }
+        private bool[] states;
+
+        public bool[] States { get { return this.states; } }
 
         public void Disable(RegionState state)
         {
@@ -26,6 +25,11 @@ namespace MetaMind.Engine.Guis.Widgets.Regions
         public void Enable(RegionState state)
         {
             state.EnableStateIn(this.states);
+        }
+
+        public bool IsEnabled(RegionState state)
+        {
+            return state.IsStateEnabledIn(this.states);
         }
 
         #endregion States

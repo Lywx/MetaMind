@@ -1,11 +1,6 @@
 ﻿namespace MetaMind.Engine.Guis.Widgets.Views
 {
-    using Microsoft.Xna.Framework;
-
-    public interface IViewGraphics
+    public interface IViewGraphics : Engine.IDrawable, Engine.IUpdateable
     {
-        void UpdateStructure(GameTime gameTime);
-
-        void Draw(GameTime gameTime, byte alpha);
     }
 }

@@ -16,12 +16,19 @@ namespace MetaMind.Engine.Components.Graphics
     using MetaMind.Engine.Settings.Loaders;
     using MetaMind.Engine.Settings.Systems;
 
-    public class GraphicsSettings : IConfigurationFileLoader, IConfigurationParameter
+    using Microsoft.Xna.Framework;
+
+    public class GraphicsSettings : GameComponent, IConfigurationFileLoader, IConfigurationParameter
     {
-        public static GraphicsSettings GetInstance()
+        #region Builder
+
+        public static GraphicsSettings GetInstance(GameEngine gameEngine)
         {
-            return new GraphicsSettings();
+            return new GraphicsSettings(gameEngine);
         }
+
+
+        #endregion
 
         #region Graphics Data
 
@@ -67,10 +74,18 @@ namespace MetaMind.Engine.Components.Graphics
 
         #endregion Graphics Data
 
+        #region Engine Data
+
+        private IGameGraphics GameGraphics { get; set; }
+
+        #endregion
+
         #region Constructors
 
-        private GraphicsSettings()
+        private GraphicsSettings(GameEngine gameEngine)
+            : base(gameEngine)
         {
+            this.GameGraphics = new GameEngineGraphics(gameEngine);
         }
 
         #endregion
@@ -86,24 +101,24 @@ namespace MetaMind.Engine.Components.Graphics
 
         private void ApplyFrameChange()
         {
-            GameEngine.Instance.TargetElapsedTime = TimeSpan.FromMilliseconds(1000 / (double)this.FPS);
-            GameEngine.Instance.IsFixedTimeStep = true;
+            this.Game.TargetElapsedTime = TimeSpan.FromMilliseconds(1000 / (double)this.FPS);
+            this.Game.IsFixedTimeStep = true;
         }
 
         private void ApplyMouseChange()
         {
-            GameEngine.Instance.IsMouseVisible = this.IsMouseVisible;
+            this.Game.IsMouseVisible = this.IsMouseVisible;
         }
 
         private void ApplyScreenChange()
         {
             // Resolution
-            GameEngine.GraphicsManager.PreferredBackBufferWidth  = this.Width;
-            GameEngine.GraphicsManager.PreferredBackBufferHeight = this.Height;
-            GameEngine.GraphicsManager.ApplyChanges();
+            this.GameGraphics.Graphics.PreferredBackBufferWidth  = this.Width;
+            this.GameGraphics.Graphics.PreferredBackBufferHeight = this.Height;
+            this.GameGraphics.Graphics.ApplyChanges();
 
             // Border
-            GameEngine.Instance.Window.IsBorderless = this.IsFullscreen;
+            this.Game.Window.IsBorderless = this.IsFullscreen;
         }
 
         #endregion Graphics Operations
@@ -112,7 +127,7 @@ namespace MetaMind.Engine.Components.Graphics
 
         public void Initialize()
         {
-            this.ConfigurationLoad();
+            this.LoadConfiguration();
         }
 
         #endregion
@@ -127,7 +142,7 @@ namespace MetaMind.Engine.Components.Graphics
             }
         }
 
-        public void ConfigurationLoad()
+        public void LoadConfiguration()
         {
             var configuration = ConfigurationFileLoader.LoadUniquePairs(this);
 

@@ -5,11 +5,9 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Engine.Extensions
+namespace System.Reflection
 {
-    using System;
     using System.Linq;
-    using System.Reflection;
 
     public static class ExtType
     {

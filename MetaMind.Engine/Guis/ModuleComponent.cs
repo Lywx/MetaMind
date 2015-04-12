@@ -1,7 +1,7 @@
 
 namespace MetaMind.Engine.Guis
 {
-    public abstract class ModuleComponent<TModule, TModuleSettings, TModuleControl> : GameEngineAccess 
+    public abstract class ModuleComponent<TModule, TModuleSettings, TModuleControl> : InputableGameEntity, IInputable, IDrawable
         where                             TModule                                   : Module<TModuleSettings>
         where                             TModuleControl                            : ModuleControl<TModule, TModuleSettings, TModuleControl>
     {

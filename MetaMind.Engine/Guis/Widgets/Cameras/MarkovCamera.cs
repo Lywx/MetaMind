@@ -13,12 +13,12 @@ namespace MetaMind.Engine.Guis.Widgets.Cameras
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
-    public interface IMarkovCamera : IManualInputable
+    public interface IMarkovCamera : IInputable
     {
         Vector2 Movement { get; set; }
     }
 
-    public class MarkovCamera : ManualInputGameElement, IMarkovCamera
+    public class MarkovCamera : InputableGameEntity, IMarkovCamera
     {
         private readonly MarkovCameraSettings settings;
 
@@ -29,14 +29,14 @@ namespace MetaMind.Engine.Guis.Widgets.Cameras
 
         public Vector2 Movement { get; set; }
 
-        public override void Draw(GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
         {
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
-            var mouse = InputSequenceManager.Mouse.CurrentState;
-            var keyboard = InputSequenceManager.Keyboard.CurrentState;
+            var mouse    = gameInput.Sequence.Mouse.CurrentState;
+            var keyboard = gameInput.Sequence.Keyboard.CurrentState;
 
             var identityMovement = Vector2.Zero;
             identityMovement = AddMovementFromKeyboardInput(keyboard, identityMovement);
@@ -45,7 +45,7 @@ namespace MetaMind.Engine.Guis.Widgets.Cameras
             Movement = FinalMovement(identityMovement);
         }
 
-        public override void UpdateStructure(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
         }
 

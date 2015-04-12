@@ -92,11 +92,11 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
         }
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
             // mouse and keyboard in modifier
             //-----------------------------------------------------------------
-            base.UpdateInput(gameTime);
+            base.UpdateInput(, gameTime);
 
             // keyboard
             //-----------------------------------------------------------------

@@ -4,6 +4,6 @@ namespace MetaMind.Engine.Settings.Loaders
     {
         string ConfigurationFile { get; }
 
-        void ConfigurationLoad();
+        void LoadConfiguration();
     }
 }

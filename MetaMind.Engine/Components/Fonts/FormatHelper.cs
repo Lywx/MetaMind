@@ -9,11 +9,15 @@ namespace MetaMind.Engine.Components.Fonts
 
     public class FormatHelper : IConfigurationFileLoader
     {
-        #region Constructors and Destructors
+        #region Constructors 
 
         public FormatHelper()
         {
         }
+
+        #endregion
+
+        #region Destructors
 
         ~FormatHelper()
         {
@@ -226,7 +230,7 @@ namespace MetaMind.Engine.Components.Fonts
             }
         }
 
-        public void ConfigurationLoad()
+        public void LoadConfiguration()
         {
             var configuration = ConfigurationFileLoader.LoadUniquePairs(this);
 

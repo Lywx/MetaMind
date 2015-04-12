@@ -5,11 +5,9 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Engine.Extensions
+namespace Microsoft.Xna.Framework
 {
     using System;
-
-    using Microsoft.Xna.Framework;
 
     public static class ExtColor
     {

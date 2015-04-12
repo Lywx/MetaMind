@@ -46,9 +46,9 @@ namespace MetaMind.Perseverance.Guis.Widgets
             }
         }
 
-        public override void UpdateStructure(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
-            base.UpdateStructure(gameTime);
+            base.Update(gameTime);
 
             this.UpdateFrameSelection(gameTime);
         }
@@ -64,7 +64,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
         public override void UpdateInput(GameTime gameTime)
         {
             base            .UpdateInput(gameTime);
-            this.SymbolFrame.UpdateInput(gameTime);
+            this.SymbolFrame.Update(gameInput, gameTime);
         }
 
         private void UpdateFrameSelection(GameTime gameTime)

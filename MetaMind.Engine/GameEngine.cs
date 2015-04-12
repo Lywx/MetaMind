@@ -12,15 +12,12 @@
     {
         #region Singleton
 
-        private static GameEngine singleton;
-
-        public static GameEngine Instance
+        public static GameEngine GetInstance()
         {
-            get
-            {
-                return singleton ?? (singleton = new GameEngine());
-            }
+            return Singleton ?? (Singleton = new GameEngine());
         }
+
+        private static GameEngine Singleton { get; set; }
 
         #endregion
 
@@ -28,49 +25,49 @@
 
         #region File
 
-        public static ContentManager ContentManager { get; private set; }
+        public ContentManager ContentManager { get; private set; }
 
-        public static FolderManager FolderManager { get; private set; }
+        public FolderManager FolderManager { get; private set; }
 
         #endregion
 
         #region Sound
 
-        public static AudioManager AudioManager { get; private set; }
+        public AudioManager AudioManager { get; private set; }
 
         #endregion
 
         #region Graphics
 
-        public static FontManager FontManager { get; private set; }
+        public FontManager FontManager { get; private set; }
 
-        public static GraphicsManager GraphicsManager { get; private set; }
+        public GraphicsManager GraphicsManager { get; private set; }
 
-        public static GraphicsSettings GraphicsSettings { get; set; }
+        public GraphicsSettings GraphicsSettings { get; set; }
 
-        public static MessageManager MessageManager { get; private set; }
+        public MessageManager MessageManager { get; private set; }
 
-        public static ScreenManager ScreenManager { get; private set; }
+        public ScreenManager ScreenManager { get; private set; }
 
         #endregion
 
         #region Input
 
-        public static InputEventManager InputEventManager { get; private set; }
+        public InputEventManager InputEventManager { get; private set; }
 
-        public static InputSequenceManager InputSequenceManager { get; private set; }
+        public InputSequenceManager InputSequenceManager { get; private set; }
 
         #endregion
 
         #region Interop
 
-        public static EventManager EventManager { get; private set; }
+        public EventManager EventManager { get; private set; }
 
-        public static ProcessManager ProcessManager { get; private set; }
+        public ProcessManager ProcessManager { get; private set; }
 
         #endregion
 
-        public static GameManager GameManager { get; private set; }
+        public GameManager GameManager { get; private set; }
 
         #endregion Components
 
@@ -78,21 +75,21 @@
 
         private GameEngine()
         {
-            // all necessary components during construction are loaded here.
-            // other components are loaded in initialization.
+            // All necessary components during construction are loaded here.
+            // Other components are loaded in initialization.
 
-            // graphics
-            GraphicsSettings = GraphicsSettings.GetInstance();
+            // Graphics
+            GraphicsSettings = GraphicsSettings.GetInstance(this);
             GraphicsManager  = GraphicsManager .GetInstance(this);
 
-            // screen
+            // Screen
             ScreenManager = ScreenManager.GetInstance(this, new ScreenSettings());
 
-            // content
+            // Content
             this.Content.RootDirectory = "Content";
             ContentManager = this.Content;
 
-            // game
+            // Game
             GameManager = GameManager.GetInstance(this);
         }
 
@@ -102,31 +99,31 @@
 
         protected override void Initialize()
         {
-            // graphics
-            GraphicsSettings.Initialize();
-            GraphicsManager .Initialize();
+            // Graphics
+            this.GraphicsSettings.Initialize();
+            this.GraphicsManager .Initialize();
 
-            // audio
-            AudioManager = AudioManager.GetInstance(this);
+            // Audio
+            this.AudioManager = AudioManager.GetInstance(this);
 
-            // folder
-            FolderManager = FolderManager.GetInstance();
+            // Folder
+            this.FolderManager = FolderManager.GetInstance();
 
-            // process
-            ProcessManager = ProcessManager.GetInstance(this);
+            // Process
+            this.ProcessManager = ProcessManager.GetInstance(this);
 
-            // event
-            EventManager = EventManager.GetInstance(this);
+            // Event
+            this.EventManager = EventManager.GetInstance(this);
 
-            // input
-            InputEventManager    = InputEventManager   .GetInstance(this);
-            InputSequenceManager = InputSequenceManager.GetInstance();
+            // Input
+            this.InputEventManager    = InputEventManager.GetInstance(this);
+            this.InputSequenceManager = InputSequenceManager.GetInstance();
 
-            // font
-            FontManager = FontManager.GetInstance();
+            // Font
+            this.FontManager = FontManager.GetInstance(this);
 
-            // message
-            MessageManager = MessageManager.GetInstance();
+            // Message
+            this.MessageManager = MessageManager.GetInstance(this);
 
             base.Initialize();
         }

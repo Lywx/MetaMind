@@ -2,15 +2,17 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 {
     using MetaMind.Engine.Guis.Widgets.Views;
 
-    public interface IViewItemComponent 
+    using Microsoft.Xna.Framework;
+
+    public interface IViewItemComponent
     {
         #region Item Components
 
         IViewItem Item { get; }
 
-        dynamic ItemData { get; }
-
         dynamic ItemControl { get; }
+
+        dynamic ItemData { get; }
 
         IItemGraphics ItemGraphics { get; }
 
@@ -29,7 +31,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         #endregion View Components
     }
 
-    public class ViewItemComponent : GameEngineAccess, IViewItemComponent
+    public class ViewItemComponent : InputableGameEntity, IViewItemComponent
     {
         #region Constructors and Destructors
 
@@ -43,20 +45,20 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             this.Dispose();
         }
 
-        #endregion
+        #endregion Constructors and Destructors
 
         #region Item Components
 
         public IViewItem Item { get; private set; }
 
-        public dynamic ItemData
-        {
-            get { return this.Item.ItemData; }
-        }
-
         public dynamic ItemControl
         {
             get { return this.Item.ItemControl; }
+        }
+
+        public dynamic ItemData
+        {
+            get { return this.Item.ItemData; }
         }
 
         public IItemGraphics ItemGraphics
@@ -89,6 +91,5 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         }
 
         #endregion View Components
-
     }
 }

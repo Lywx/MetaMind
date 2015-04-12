@@ -5,10 +5,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Engine.Extensions
+namespace System.Text
 {
-    using System.Text;
-
     public static class ExtString
     {
         public static bool IsAscii(this string value)

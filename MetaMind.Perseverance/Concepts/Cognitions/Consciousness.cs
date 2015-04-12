@@ -3,8 +3,6 @@
     using System;
     using System.Runtime.Serialization;
 
-    using MetaMind.Engine;
-
     public interface IConsciousness
     {
         bool AwakeCondition { get; }
@@ -15,7 +13,7 @@
     [DataContract,
      KnownType(typeof(ConsciousnessAwake)),
      KnownType(typeof(ConsciousnessSleepy))]
-    public class Consciousness : GameEngineAccess, IConsciousness
+    public class Consciousness : IConsciousness
     {
         #region Consciousness Data
 
@@ -63,10 +61,10 @@
 
         public Consciousness()
         {
-            SleepEndTime        = DateTime.MinValue;
-            SleepStartTime      = DateTime.MinValue;
-            HistoricalAwakeSpan = TimeSpan.Zero;
-            HistoricalSleepSpan = TimeSpan.Zero;
+            this.SleepEndTime        = DateTime.MinValue;
+            this.SleepStartTime      = DateTime.MinValue;
+            this.HistoricalAwakeSpan = TimeSpan.Zero;
+            this.HistoricalSleepSpan = TimeSpan.Zero;
         }
 
         #endregion Constructors
@@ -75,14 +73,12 @@
 
         public Consciousness Update()
         {
-            if (!AwakeCondition &&
-                this is ConsciousnessAwake)
+            if (!this.AwakeCondition && this is ConsciousnessAwake)
             {
                 return ((ConsciousnessAwake)this).StartSleeping();
             }
 
-            if (AwakeCondition &&
-                this is ConsciousnessSleepy)
+            if (this.AwakeCondition && this is ConsciousnessSleepy)
             {
                 return ((ConsciousnessSleepy)this).StopSleeping();
             }

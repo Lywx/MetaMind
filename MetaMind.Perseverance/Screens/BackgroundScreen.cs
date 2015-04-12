@@ -2,6 +2,7 @@
 {
     using System;
 
+    using MetaMind.Engine;
     using MetaMind.Engine.Guis.Particles;
     using MetaMind.Engine.Screens;
     using MetaMind.Perseverance.Guis.Modules;
@@ -26,41 +27,39 @@
 
         #region Load and Unload
 
-        public override void LoadContent()
+        public override void Load(IGameFile gameFile)
         {
-            this.backgroundTexture = ContentManager.Load<Texture2D>(@"Textures\Screens\Background\Sea Of Mind");
+            this.backgroundTexture = gameFile.Content.Load<Texture2D>(@"Textures\Screens\Background\Sea Of Mind");
         }
 
-        public override void UnloadContent()
+        public override void Unload(IGameFile gameFile)
         {
-            ContentManager.Unload();
+            this.backgroundTexture.Dispose();
+            this.backgroundTexture = null;
         }
 
         #endregion Load and Unload
 
         #region Update and Draw
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime)
         {
-            var spriteBatch = ScreenManager.SpriteBatch;
-            var viewport    = ScreenManager.GraphicsDevice.Viewport;
+            var spriteBatch = gameGraphics.Screen.SpriteBatch;
+            var viewport    = gameGraphics.Screen.GraphicsDevice.Viewport;
             var fullscreen  = new Rectangle(0, 0, viewport.Width, viewport.Height);
 
             spriteBatch.Begin();
 
             spriteBatch   .Draw(backgroundTexture, fullscreen, new Color(0, 0, TransitionAlpha / 2));
-            this.particles.Draw(gameTime);
+            this.particles.Draw(gameGraphics, gameTime, this.TransitionAlpha);
 
             spriteBatch.End();
         }
 
-        public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
-            // forced input update
-            this.particles.HandleInput();
+            this.particles.Update(gameInput, gameTime);
             this.particles.Update(gameTime);
-
-            base.Update(gameTime, otherScreenHasFocus, false);
         }
 
         #endregion Update and Draw

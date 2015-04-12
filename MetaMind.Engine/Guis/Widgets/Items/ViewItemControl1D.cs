@@ -6,7 +6,7 @@
 
     public class ViewItemControl1D : ViewItemComponent
     {
-        private bool frameInitialized;
+        private bool isFrameInitialized;
 
         #region Constructors
 
@@ -18,10 +18,18 @@
             this.ItemDataControl  = new ViewItemDataControl(item);
         }
 
+        #endregion
+
+        #region Destructors
+
         ~ViewItemControl1D()
         {
             this.Dispose();
         }
+
+        #endregion
+
+        #region IDisposable
 
         public override void Dispose()
         {
@@ -49,7 +57,7 @@
             }
         }
 
-        #endregion Constructors
+        #endregion 
 
         public int Id { get; set; }
 
@@ -138,7 +146,7 @@
             get { return this.Item.IsEnabled(ItemState.Item_Active); }
         }
 
-        public virtual void UpdateInput(GameTime gameTime)
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
             if (!this.Active)
             {
@@ -156,35 +164,47 @@
             //-----------------------------------------------------------------
             if (this.ViewSettings.KeyboardEnabled)
             {
-                this.ItemDataControl.UpdateInput(gameTime);
+                this.ItemDataControl.Update(gameInput, gameTime);
             }
         }
 
-        public virtual void UpdateStructure(GameTime gameTime)
+        public override void Update(IGameFile gameFile, GameTime gameTime) { }
+
+        public override void Update(IGameInterop gameInterop, GameTime gameTime) { }
+
+        public override void Update(IGameSound gameSound, GameTime gameTime) { }
+
+        public override void Update(GameTime gameTime)
         {
-            this.UpdateStructureForView(gameTime);
+            this.UpdateForView(gameTime);
 
             // reduce lagging graphics 
-            if (!this.frameInitialized)
+            if (!this.isFrameInitialized)
             {
-                this.ItemFrameControl.UpdateStructure(gameTime);
-                this.frameInitialized = true;
+                this.ItemFrameControl.Update(gameTime);
+                this.isFrameInitialized = true;
             }
 
             // to improve performance
             if (this.Active)
             {
-                this.ItemFrameControl.UpdateStructure(gameTime);
-                this.ItemDataControl .UpdateStructure(gameTime);
+                this.ItemFrameControl.Update(gameTime);
+                this.ItemDataControl .Update(gameTime);
             }
         }
 
-        public void UpdateStructureForView(GameTime gameTime)
+        public void UpdateForView(GameTime gameTime)
         {
             // view activation is controlled by item view control
-            this.ItemViewControl.UpdateStructure(gameTime);
+            this.ItemViewControl.Update(gameTime);
         }
 
         #endregion Update
+
+        #region Draw
+
+        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha) { } 
+
+        #endregion
     }
 }

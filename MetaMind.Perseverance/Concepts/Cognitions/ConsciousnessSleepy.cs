@@ -37,7 +37,7 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
             var sleepStoppedEvent = new EventBase(
                 (int)SessionEventType.SleepStopped,
                 new ConsciousnessSleepStoppedEventArgs(this));
-            EventManager.TriggerEvent(sleepStoppedEvent);
+            gameInterop.Event.TriggerEvent(sleepStoppedEvent);
 
             MessageManager.PopMessages("Slept for " + SleepSpan.ToString("hh':'mm':'ss''"));
 

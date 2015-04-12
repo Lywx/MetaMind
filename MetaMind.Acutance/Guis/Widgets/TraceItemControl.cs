@@ -3,6 +3,7 @@ namespace MetaMind.Acutance.Guis.Widgets
     using System.Collections.Generic;
 
     using MetaMind.Acutance.Concepts;
+    using MetaMind.Engine;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Views;
@@ -53,11 +54,11 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
         }
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
             // mouse and keyboard in modifier
             //-----------------------------------------------------------------
-            base.UpdateInput(gameTime);
+            base.UpdateInput(, gameTime);
 
             // keyboard
             //-----------------------------------------------------------------

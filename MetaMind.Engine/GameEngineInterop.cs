@@ -11,7 +11,8 @@ namespace MetaMind.Engine
 
     public sealed class GameEngineInterop : GameEngineAccess, IGameInterop
     {
-        public GameEngineInterop()
+        public GameEngineInterop(GameEngine gameEngine)
+            : base(gameEngine)
         {
             this.AccessType = GameEngineAccessType.Interop;
         }
@@ -29,6 +30,22 @@ namespace MetaMind.Engine
             get
             {
                 return GameEngine.ProcessManager;
+            }
+        }
+
+        public GameManager Game
+        {
+            get
+            {
+                return this.GameEngine.GameManager;
+            }
+        }
+
+        public GameEngine GameEngine
+        {
+            get
+            {
+                return this.GameEngine;
             }
         }
     }

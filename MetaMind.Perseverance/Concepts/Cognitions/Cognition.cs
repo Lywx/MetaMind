@@ -20,7 +20,7 @@
     [DataContract,
     KnownType(typeof(Consciousness)),
     KnownType(typeof(Synchronization))]
-    public class Cognition : GameEngineAccess, ICognition
+    public class Cognition : ICognition
     {
         #region Components
 
@@ -38,8 +38,8 @@
 
         public Cognition()
         {
-            Consciousness   = new ConsciousnessAwake();
-            Synchronization = new Synchronization();
+            this.Consciousness = new ConsciousnessAwake();
+            this.Synchronization = new Synchronization();
         }
 
         #endregion Constructors

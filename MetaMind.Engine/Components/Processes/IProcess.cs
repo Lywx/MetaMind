@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="IProcess.cs" company="UESTC">
-//   Copyright (c) 2014 Wuxiang Lin
+//   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -9,7 +9,9 @@ namespace MetaMind.Engine.Components.Processes
 {
     using Microsoft.Xna.Framework;
 
-    public interface IProcess
+    using IUpdateable = MetaMind.Engine.IUpdateable;
+
+    public interface IProcess : IUpdateable
     {
         #region Process Data
 
@@ -37,11 +39,13 @@ namespace MetaMind.Engine.Components.Processes
 
         void OnSuccess();
 
+        #endregion Transition
+
+        #region Update
+
         void Update(GameTime gameTime);
 
-        void Draw(GameTime gameTime);
-
-        #endregion Transition
+        #endregion
 
         #region Operations
 

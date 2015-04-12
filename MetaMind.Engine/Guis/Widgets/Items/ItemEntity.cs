@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ItemObject.cs" company="UESTC">
+// <copyright file="ItemEntity.cs" company="UESTC">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -11,7 +11,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
     using Microsoft.Xna.Framework;
 
-    public interface IItemObject
+    using IDrawable = MetaMind.Engine.IDrawable;
+
+    public interface IItemEntity : IInputable, IDrawable
     {
         bool[] States { get; }
 
@@ -19,24 +21,18 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         void Disable(ItemState state);
 
-        void Draw(GameTime gameTime, byte alpha);
-
         void Enable(ItemState state);
 
         bool IsEnabled(ItemState state);
 
-        void UpdateInput(GameTime gameTime);
-
-        void UpdateStructureForView(GameTime gameTime);
-
-        void UpdateStructure(GameTime gameTime);
+        void UpdateView(GameTime gameTime);
     }
 
-    public abstract class ItemObject : GameEngineAccess, IItemObject
+    public abstract class ItemEntity : InputableGameEntity, IItemEntity
     {
         private readonly bool[] states;
 
-        protected ItemObject(ICloneable itemSettings)
+        protected ItemEntity(ICloneable itemSettings)
         {
             this.ItemSettings = itemSettings;
             this.states = new bool[(int)ItemState.StateNum];
@@ -73,13 +69,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         #region Update and Draw
 
-        public abstract void Draw(GameTime gameTime, byte alpha);
-
-        public abstract void UpdateInput(GameTime gameTime);
-
-        public abstract void UpdateStructureForView(GameTime gameTime);
-
-        public abstract void UpdateStructure(GameTime gameTime);
+        public abstract void UpdateView(GameTime gameTime);
 
         #endregion Update and Draw
     }

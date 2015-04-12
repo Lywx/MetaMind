@@ -2,26 +2,16 @@ namespace MetaMind.Engine.Guis
 {
     using Microsoft.Xna.Framework;
 
-    public interface IModule : IManualInputable
-    {
-        IModuleControl Control { get; }
-
-        IModuleGraphics Graphics { get; }
-
-        void Load();
-
-        void Unload();
-    }
-
+    /// FIXME: Won't work now.
     /// <summary>
     /// Module is the most outer shell of gui object that load and unload
     /// data from data source. The behavior is of maximum abstraction.
     /// </summary>
     /// <remarks>
-    /// Compatible with previous ManualInputGameElement implementation, as long as
+    /// Compatible with previous InputableGameEntity implementation, as long as
     /// the derived class override the widget implementation.
     /// </remarks>>
-    public class Module<TModuleSettings> : ManualInputGameElement, IModule
+    public class Module<TModuleSettings> : InputableGameEntity, IModule
     {
         protected Module(TModuleSettings settings)
         {
@@ -34,41 +24,31 @@ namespace MetaMind.Engine.Guis
 
         public TModuleSettings Settings { get; protected set; }
 
-        public override void Draw(GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
         {
             this.Graphics.Draw(gameTime);
         }
 
-        public override void HandleInput()
+        public virtual void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
         {
-            if (this.Control != null)
-            {
-                this.Control.HandleInput();
-            }
-
-            base.HandleInput();
+            this.Control.Load(gameFile, gameInput, gameInterop, gameSound);
         }
 
-        public virtual void Load()
+        public virtual void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
         {
-            this.Control.Load();
+            this.Control.Unload(gameFile, gameInput, gameInterop, gameSound);
         }
 
-        public virtual void Unload()
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
-            this.Control.Unload();
+            this.Control .Update(gameInput, gameTime);
+            this.Graphics.Update(gameInput, gameTime);
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
-            this.Control .UpdateInput(gameTime);
-            this.Graphics.UpdateInput(gameInput, gameTime);
-        }
-
-        public override void UpdateStructure(GameTime gameTime)
-        {
-            this.Control .UpdateStructure(gameTime);
-            this.Graphics.UpdateStructure(gameTime);
+            this.Control .Update(gameTime);
+            this.Graphics.Update(gameTime);
         }
     }
 }

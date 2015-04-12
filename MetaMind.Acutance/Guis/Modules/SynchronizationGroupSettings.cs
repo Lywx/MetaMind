@@ -30,7 +30,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public Color StateColor = Color.White;
 
-        public Font  StateFont = Font.UiRegularFont;
+        public Font  StateFont = Font.UiRegular;
 
         public Point StateMargin = new Point(0, 1);
 
@@ -38,13 +38,13 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public Color SynchronizationTimeColor = Color.White;
 
-        public Font  SynchronizationTimeFont = Font.UiRegularFont;
+        public Font  SynchronizationTimeFont = Font.UiRegular;
 
         public float SynchronizationTimeSize = 0.7f;
 
         public Color TaskColor = Color.White;
 
-        public Font  TaskFont = Font.UiContentFont;
+        public Font  TaskFont = Font.ContentRegular;
 
         public Point TaskMargin = new Point(0, 34);
 

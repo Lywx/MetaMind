@@ -78,7 +78,7 @@
         private void Alert()
         {
             var alertedEvent = new EventBase((int)SessionEventType.SyncAlerted, new SynchronizationAlertedEventArgs());
-            GameEngine.EventManager.QueueEvent(alertedEvent);
+            gameInterop.Event.QueueEvent(alertedEvent);
         }
 
         private void Confirm()

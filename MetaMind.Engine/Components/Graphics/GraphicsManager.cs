@@ -12,26 +12,40 @@ namespace MetaMind.Engine.Components.Graphics
 
         private static GraphicsManager singleton;
 
-        public static GraphicsManager GetInstance(Game game)
+        public static GraphicsManager GetInstance(GameEngine gameEngine)
         {
-            return singleton ?? (singleton = new GraphicsManager(game));
+            return singleton ?? (singleton = new GraphicsManager(gameEngine));
         }
+
+        #endregion
+
+        #region Engine Data
+
+        protected Game Game { get; set; }
+
+        private GameEngineGraphics GameGraphics { get; set; }
 
         #endregion
 
         #region Constructors
 
-        private GraphicsManager(Game game)
-            : base(game)
+        private GraphicsManager(GameEngine gameEngine)
+            : base(gameEngine)
         {
+            this.Game = gameEngine;
+
+            this.GameGraphics = new GameEngineGraphics(gameEngine);
+
+            // Set default resolution
             this.PreferredBackBufferWidth  = 800;
             this.PreferredBackBufferHeight = 600;
+
             this.ApplyChanges();
         }
 
         #endregion
 
-        #region Configuration
+        #region Configurations
 
         public void ConfigurationLoad()
         {
@@ -57,7 +71,7 @@ namespace MetaMind.Engine.Components.Graphics
             this.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
             this.ConfigurationLoad();
-            this.ParameterLoad(GameEngine.GraphicsSettings);
+            this.ParameterLoad(GameGraphics.Settings);
 
             this.WindowCentralize();
         }
@@ -67,9 +81,9 @@ namespace MetaMind.Engine.Components.Graphics
         /// </remarks>>
         private void WindowCentralize()
         {
-            GameEngine.Instance.Window.Position = new Point(
-                this.Screen.Bounds.X + (this.Screen.Bounds.Width  - GameEngine.GraphicsSettings.Width)  / 2,
-                this.Screen.Bounds.Y + (this.Screen.Bounds.Height - GameEngine.GraphicsSettings.Height) / 2);
+            this.Game.Window.Position = new Point(
+                this.Screen.Bounds.X + (this.Screen.Bounds.Width  - GameGraphics.Settings.Width)  / 2,
+                this.Screen.Bounds.Y + (this.Screen.Bounds.Height - GameGraphics.Settings.Height) / 2);
         }
     }
 }

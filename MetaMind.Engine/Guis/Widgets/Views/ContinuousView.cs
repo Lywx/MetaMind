@@ -2,18 +2,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 {
     using System.Collections.Generic;
 
-    using MetaMind.Engine.Components.Graphics;
     using MetaMind.Engine.Guis.Widgets.Items;
 
-    using Microsoft.Xna.Framework;
-
-    public class ContinuousViewSettings : ViewSettings
-    {
-        public Point PointStart = new Point(160, GameEngine.GraphicsSettings.Height / 2);
-
-    }
-
-    public class ContinuousView : ViewObject, IView
+    public class ContinuousView : ViewEntity, IView
     {
         protected ContinuousView(ContinuousViewSettings viewSettings, ItemSettings itemSettings, IViewFactory factory)
             : base(viewSettings, itemSettings)

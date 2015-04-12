@@ -4,9 +4,9 @@ namespace MetaMind.Engine.Components
 
     public class ScreenSettings : ICloneable
     {
-        public bool AlwaysDraw = true;
+        public bool IsAlwaysVisible = true;
 
-        public bool AlwaysUpdate = true;
+        public bool IsAlwaysActive  = true;
 
         public object Clone()
         {

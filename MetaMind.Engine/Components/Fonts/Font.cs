@@ -1,10 +1,25 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Font.cs" company="UESTC">
+//   Copyright (c) 2015 Wuxiang Lin
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace MetaMind.Engine.Components.Fonts
 {
     public enum Font
     {
-        UiRegularFont,     // ASCII
-        UiStatisticsFont,  // ASCII
-        UiContentFont,     // CJK
+        UiRegular, // ASCII
+
+        UiStatistics, // ASCII
+
+        ContentRegular, // CJK
+
+        ContentBold, // CJK 
+
+        ContentItalic, // CJK 
+
+        ContentBoldItalic, // CJK 
 
         FontNum
     }

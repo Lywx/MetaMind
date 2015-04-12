@@ -11,17 +11,15 @@ namespace MetaMind.Engine.Components
 
     using Microsoft.Xna.Framework;
 
-    using Game = MetaMind.Engine.Game;
-
     public class GameManager
     {
         #region Singleton
 
-        private static GameManager singleton;
+        private static GameManager Singleton { get; set; }
 
-        public static GameManager GetInstance(GameEngine engine)
+        public static GameManager GetInstance(GameEngine gameEngine)
         {
-            return singleton ?? (singleton = new GameManager(engine));
+            return Singleton ?? (Singleton = new GameManager(gameEngine));
         }
 
         #endregion Singleton

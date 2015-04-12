@@ -33,7 +33,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
                 Point start = ItemControl.RootFrame.Center + ViewSettings.TracerMargin;
 
                 this.TaskModule = new TaskModule(this.ItemControl, new TaskModuleSettings(start));
-                this.TaskModule.Load();
+                this.TaskModule.Load(gameFile, gameInput, gameInterop, gameSound);
             }
 
             this.TaskModule.Show();
@@ -59,12 +59,12 @@ namespace MetaMind.Perseverance.Guis.Widgets
             }
         }
 
-        public void UpdateStructure(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             if (this.TaskModule != null)
             {
-                this.TaskModule.UpdateStructure(gameTime);
-                this.TaskModule.Load();
+                this.TaskModule.Update(gameTime);
+                this.TaskModule.Load(gameFile, gameInput, gameInterop, gameSound);
 
                 if (!this.TaskModule.View.IsEnabled(ViewState.View_Has_Focus))
                 {
@@ -77,7 +77,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
         {
             if (this.TaskModule != null )
             {
-                this.TaskModule.UpdateInput(gameInput, gameTime);
+                this.TaskModule.Update(gameInput, gameTime);
             }
         }
     }

@@ -14,7 +14,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         public Color NameColor                     = Color.White;
 
-        public Font  NameFont                      = Font.UiContentFont;
+        public Font  NameFont                      = Font.ContentRegular;
 
         public Point NameFrameSize                 = new Point(256, 24);
 
@@ -48,7 +48,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         public Color ExperienceColor               = Color.White;
 
-        public Font  ExperienceFont                = Font.UiStatisticsFont;
+        public Font  ExperienceFont                = Font.UiStatistics;
 
         public Point ExperienceFrameSize           = new Point(96, 24);
 
@@ -61,7 +61,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         public Color ProgressColor                 = Color.White;
 
-        public Font  ProgressFont                  = Font.UiStatisticsFont;
+        public Font  ProgressFont                  = Font.UiStatistics;
 
         public Point ProgressFrameSize             = new Point(96, 24);
 
@@ -72,7 +72,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
         public Color ProgressBarColor              = Palette.TransparentColor2;
 
         //---------------------------------------------------------------------
-        public Font  HelpFont                      = Font.UiStatisticsFont;
+        public Font  HelpFont                      = Font.UiStatistics;
 
         public float HelpSize                      = 0.75f;
         

@@ -20,26 +20,26 @@ namespace MetaMind.Engine.Components
     {
         #region Singleton
 
-        private static ScreenManager singleton;
+        private static ScreenManager Singleton { get; set; }
 
-        public static ScreenManager GetInstance(Game game, ScreenSettings settings)
+        public static ScreenManager GetInstance(GameEngine gameEngine, ScreenSettings settings)
         {
-            if (singleton == null)
+            if (Singleton == null)
             {
-                singleton = new ScreenManager(game, settings);
+                Singleton = new ScreenManager(gameEngine, settings);
             }
 
-            if (game != null)
+            if (gameEngine != null)
             {
-                game.Components.Add(singleton);
+                gameEngine.Components.Add(Singleton);
             }
 
-            return singleton;
+            return Singleton;
         }
 
         #endregion Singleton
 
-        #region Drawing Data
+        #region Graphics Data
 
         private Texture2D blankTexture;
 
@@ -53,7 +53,7 @@ namespace MetaMind.Engine.Components
         {
             get
             {
-                return spriteBatch;
+                return this.spriteBatch;
             }
         }
 
@@ -61,30 +61,26 @@ namespace MetaMind.Engine.Components
 
         #region Screen Data
 
-        private readonly List<GameScreen> screens = new List<GameScreen>();
+        private readonly List<IGameScreen> screens = new List<IGameScreen>();
 
-        private readonly List<GameScreen> screensToUpdate = new List<GameScreen>();
+        private readonly List<IGameScreen> screensToUpdate = new List<IGameScreen>();
 
         /// <summary>
         /// Expose an array holding all the screens. We return a copy rather
         /// than the real master list, because screens should only ever be added
         /// or removed using the AddScreen and RemoveScreen methods.
         /// </summary>
-        public GameScreen[] Screens
+        public IGameScreen[] Screens
         {
             get
             {
-                return screens.ToArray();
+                return this.screens.ToArray();
             }
         }
 
-        #endregion
-
-        #region Configuration Data
-
         public ScreenSettings Settings { get; private set; }
 
-        #endregion 
+        #endregion
 
         #region State Data
 
@@ -116,16 +112,40 @@ namespace MetaMind.Engine.Components
 
         #endregion Trace
 
+        #region Engine Data
+
+        private IGameFile GameFile { get; set; }
+
+        private IGameGraphics GameGraphics { get; set; }
+
+        private IGameInput GameInput { get; set; }
+
+        private IGameInterop GameInterop { get; set; }
+
+        private IGameSound GameSound { get; set; }
+
+        #endregion
+
         #region Constructors
 
         /// <summary>
         /// Constructs a new screen manager component.
         /// </summary>
-        private ScreenManager(Game game, ScreenSettings settings)
-            : base(game)
+        private ScreenManager(GameEngine gameEngine, ScreenSettings settings)
+            : base(gameEngine)
         {
             this.Settings = settings;
+
+            this.GameFile     = new GameEngineFile(gameEngine);
+            this.GameGraphics = new GameEngineGraphics(gameEngine);
+            this.GameInput    = new GameEngineInput(gameEngine);
+            this.GameInterop  = new GameEngineInterop(gameEngine);
+            this.GameSound    = new GameEngineSound(gameEngine);
         }
+
+        #endregion
+
+        #region Initialization
 
         /// <summary>
         /// Initializes the screen manager component.
@@ -134,35 +154,32 @@ namespace MetaMind.Engine.Components
         {
             base.Initialize();
 
-            isInitialized = true;
+            this.isInitialized = true;
         }
 
-        /// <summary>
-        /// Load your graphics content.
-        /// </summary>
+        #endregion
+
+        #region Load and Unload
+
         protected override void LoadContent()
         {
-            // Load content belonging to the screen manager.
-            this.blankTexture = this.Game.Content.Load<Texture2D>(@"Textures\Screens\Blank");
-            
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
+
+            this.blankTexture = this.GameFile.Content.Load<Texture2D>(@"Textures\Screens\Blank");
 
             // Tell each of the screens to load their content.
-            foreach (var screen in screens)
+            foreach (var screen in this.screens)
             {
-                screen.LoadContent();
+                screen.Load(this.GameFile);
             }
         }
 
-        /// <summary>
-        /// Unload your graphics content.
-        /// </summary>
         protected override void UnloadContent()
         {
             // Tell each of the screens to unload their content.
-            foreach (var screen in screens)
+            foreach (var screen in this.screens)
             {
-                screen.UnloadContent();
+                screen.Unload(this.GameFile);
             }
         }
 
@@ -175,11 +192,12 @@ namespace MetaMind.Engine.Components
         /// </summary>
         public override void Draw(GameTime gameTime)
         {
-            if (Game.IsActive || this.Settings.AlwaysDraw)
+            if (this.Game.IsActive || 
+                this.Settings.IsAlwaysVisible)
             {
-                foreach (var screen in screens.Where(screen => screen.ScreenState != GameScreenState.Hidden))
+                foreach (var screen in this.screens.Where(screen => screen.ScreenState != GameScreenState.Hidden))
                 {
-                    screen.Draw(gameTime);
+                    screen.Draw(this.GameGraphics, gameTime);
                 }
             }
         }
@@ -191,46 +209,54 @@ namespace MetaMind.Engine.Components
         {
             // Make a copy of the master screen list, to avoid confusion if
             // the process of updating one screen adds or removes others.
-            screensToUpdate.Clear();
-
-            foreach (var screen in screens)
             {
-                screensToUpdate.Add(screen);
+                this.screensToUpdate.Clear();
+
+                foreach (var screen in this.screens)
+                {
+                    this.screensToUpdate.Add(screen);
+                }
             }
 
-            var otherScreenHasFocus = !Game.IsActive;
-            var coveredByOtherScreen = false;
+            var hasOtherScreenFocus = !this.Game.IsActive;
+            var isCoveredByOtherScreen = false;
 
             // Loop as long as there are screens waiting to be updated.
-            while (screensToUpdate.Count > 0)
+            while (this.screensToUpdate.Count > 0)
             {
                 // Pop the topmost screen off the waiting list.
                 var screen = screensToUpdate[screensToUpdate.Count - 1];
 
-                screensToUpdate.RemoveAt(screensToUpdate.Count - 1);
+                this.screensToUpdate.RemoveAt(this.screensToUpdate.Count - 1);
 
-                // Update the screen.
-                if (Game.IsActive || this.Settings.AlwaysUpdate)
+                // Update the screen when users actually use it
+                if (this.Game.IsActive || 
+                    this.Settings.IsAlwaysActive)
                 {
-                    screen.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+                    // Rudimentary screen update
+                    screen.Update(this.GameGraphics, gameTime, hasOtherScreenFocus, isCoveredByOtherScreen);
                 }
 
-                if (screen.ScreenState == GameScreenState.TransitionOn || screen.ScreenState == GameScreenState.Active)
+                if (screen.ScreenState == GameScreenState.TransitionOn || 
+                    screen.ScreenState == GameScreenState.Active)
                 {
                     // If this is the first active screen we came across,
                     // give it a chance to handle input.
-                    if (!otherScreenHasFocus)
+                    if (!hasOtherScreenFocus)
                     {
-                        screen.HandleInput();
+                        screen.Update(this.GameFile   , gameTime);
+                        screen.Update(this.GameInput  , gameTime);
+                        screen.Update(this.GameInterop, gameTime);
+                        screen.Update(this.GameSound  , gameTime);
 
-                        otherScreenHasFocus = true;
+                        hasOtherScreenFocus = true;
                     }
 
                     // If this is an active non-popup, inform any subsequent
                     // screens that they are covered by it.
                     if (!screen.IsPopup)
                     {
-                        coveredByOtherScreen = true;
+                        isCoveredByOtherScreen = true;
                     }
                 }
             }
@@ -254,30 +280,45 @@ namespace MetaMind.Engine.Components
             screen.IsExiting = false;
 
             // If we have a graphics device, tell the screen to load content.
-            if (isInitialized)
+            if (this.isInitialized)
             {
-                screen.LoadContent();
+                screen.Load(this.GameFile);
             }
 
-            screens.Add(screen);
+            this.screens.Add(screen);
+        }
+
+        /// <summary>
+        /// Helper draws a translucent black fullscreen sprite, used for fading
+        /// screens in and out, and for darkening the background behind popups.
+        /// </summary>
+        public void FadeScreen(float alpha, Color color)
+        {
+            var viewport = this.GraphicsDevice.Viewport;
+
+            this.spriteBatch.Begin();
+
+            this.spriteBatch.Draw(this.blankTexture, new Rectangle(0, 0, viewport.Width, viewport.Height), color * alpha);
+
+            this.spriteBatch.End();
         }
 
         /// <summary>
         /// Removes a screen from the screen manager. You should normally
-        /// use Screen.ExitScreen instead of calling this directly, so
+        /// use Screen.Exit instead of calling this directly, so
         /// the screen can gradually transition off rather than just being
         /// instantly removed.
         /// </summary>
         public void RemoveScreen(GameScreen screen)
         {
             // If we have a graphics device, tell the screen to unload content.
-            if (isInitialized)
+            if (this.isInitialized)
             {
-                screen.UnloadContent();
+                screen.Unload(this.GameFile);
             }
 
-            screens.Remove(screen);
-            screensToUpdate.Remove(screen);
+            this.screens.Remove(screen);
+            this.screensToUpdate.Remove(screen);
         }
 
         /// <summary>
@@ -285,29 +326,14 @@ namespace MetaMind.Engine.Components
         /// </summary>
         private void TraceScreens()
         {
-            var screenNames = new List<string>();
+            var names = new List<string>();
 
-            foreach (GameScreen screen in screens)
+            foreach (var screen in this.screens)
             {
-                screenNames.Add(screen.GetType().Name);
+                names.Add(screen.GetType().Name);
             }
 
-            Debug.WriteLine(string.Join(", ", screenNames.ToArray()));
-        }
-
-        /// <summary>
-        /// Helper draws a translucent black fullscreen sprite, used for fading
-        /// screens in and out, and for darkening the background behind popups.
-        /// </summary>
-        public void FadeBackBuffer(float alpha, Color color)
-        {
-            Viewport viewport = GraphicsDevice.Viewport;
-
-            spriteBatch.Begin();
-
-            spriteBatch.Draw(blankTexture, new Rectangle(0, 0, viewport.Width, viewport.Height), color * alpha);
-
-            spriteBatch.End();
+            Debug.WriteLine(string.Join(", ", names.ToArray()));
         }
 
         #endregion Operations

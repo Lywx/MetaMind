@@ -11,7 +11,6 @@ namespace MetaMind.Engine.Components.Inputs
     using System.Collections.Generic;
     using System.Linq;
 
-    using MetaMind.Engine.Guis;
     using MetaMind.Engine.Parsers.Elements;
     using MetaMind.Engine.Parsers.Grammars;
     using MetaMind.Engine.Settings.Loaders;
@@ -91,15 +90,15 @@ namespace MetaMind.Engine.Components.Inputs
         public Dictionary<Keys, List<Keys>> Bindings = new Dictionary<Keys, List<Keys>>();
     }
 
-    public class KeyboardManager : ManualInputGameElement, IConfigurationFileLoader
+    public class KeyboardManager : InputableGameEntity, IConfigurationFileLoader
     {
         #region Singleton
 
-        private static KeyboardManager singleton;
+        private static KeyboardManager Singleton { get; set; }
 
         public static KeyboardManager GetInstance()
         {
-            return singleton ?? (singleton = new KeyboardManager());
+            return Singleton ?? (Singleton = new KeyboardManager());
         }
 
         #endregion Singleton
@@ -305,7 +304,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         private KeyboardManager()
         {
-            this.ConfigurationLoad();
+            this.LoadConfiguration();
         }
 
         #endregion Constructors
@@ -320,7 +319,7 @@ namespace MetaMind.Engine.Components.Inputs
             }
         }
 
-        public void ConfigurationLoad()
+        public void LoadConfiguration()
         {
             this.ActionMapInitialize();
             this.ActionMapLoad();
@@ -330,18 +329,10 @@ namespace MetaMind.Engine.Components.Inputs
 
         #region Update
 
-        public override void Draw(GameTime gameTime, byte alpha)
-        {
-        }
-
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
             this.previousState = this.currentState;
             this.currentState = Keyboard.GetState();
-        }
-
-        public override void UpdateStructure(GameTime gameTime)
-        {
         }
 
         #endregion Update

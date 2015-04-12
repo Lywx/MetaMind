@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Process.cs" company="UESTC">
-//   Copyright (c) 2014 Wuxiang Lin
+//   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -13,28 +13,22 @@ namespace MetaMind.Engine.Components
 
     using Microsoft.Xna.Framework;
 
-    public class ProcessManager : DrawableGameComponent
+    public class ProcessManager : GameComponent
     {
-        #region Process Data
-
-        private readonly List<IProcess> processes;
-
-        #endregion Process Data
-
         #region Singleton
 
         private static ProcessManager Singleton { get; set; }
 
-        public static ProcessManager GetInstance(Game game)
+        public static ProcessManager GetInstance(GameEngine gameEngine)
         {
             if (Singleton == null)
             {
-                Singleton = new ProcessManager(game);
+                Singleton = new ProcessManager(gameEngine);
             }
 
-            if (game != null)
+            if (gameEngine != null)
             {
-                game.Components.Add(Singleton);
+                gameEngine.Components.Add(Singleton);
             }
 
             return Singleton;
@@ -42,12 +36,34 @@ namespace MetaMind.Engine.Components
 
         #endregion Singleton
 
+        #region Process Data
+
+        private readonly List<IProcess> processes;
+
+        #endregion Process Data
+
+        #region Engine Data
+
+        private IGameFile GameFile { get; set; }
+
+        private IGameInterop GameInterop { get; set; }
+
+        private IGameSound GameSound { get; set; }
+
+        #endregion
+
         #region Constructors
 
-        private ProcessManager(Game game)
-            : base(game)
+        private ProcessManager(GameEngine gameEngine)
+            : base(gameEngine)
         {
-            processes = new List<IProcess>();
+            this.processes = new List<IProcess>();
+
+            this.UpdateOrder = 1;
+            
+            this.GameFile    = new GameEngineFile(gameEngine);
+            this.GameInterop = new GameEngineInterop(gameEngine);
+            this.GameSound   = new GameEngineSound(gameEngine);
         }
 
         #endregion Constructors
@@ -61,16 +77,16 @@ namespace MetaMind.Engine.Components
 
         #endregion Deconstruction
 
-        #region Update and Draw
+        #region Update 
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
 
-            int i = 0;
-            while (i < processes.Count)
+            var i = 0;
+            while (i < this.processes.Count)
             {
-                IProcess process = processes[i];
+                var process = this.processes[i];
 
                 if (process.State == ProcessState.Uninitilized)
                 {
@@ -80,6 +96,9 @@ namespace MetaMind.Engine.Components
                 if (process.State == ProcessState.Running)
                 {
                     process.Update(gameTime);
+                    process.Update(this.GameFile, gameTime);
+                    process.Update(this.GameInterop, gameTime);
+                    process.Update(this.GameSound, gameTime);
                 }
 
                 if (process.IsDead)
@@ -89,10 +108,10 @@ namespace MetaMind.Engine.Components
                         case ProcessState.Succeeded:
                             {
                                 process.OnSuccess();
-                                IProcess child = process.RemoveChild();
+                                var child = process.RemoveChild();
                                 if (child != null)
                                 {
-                                    processes.Add(child);
+                                    this.processes.Add(child);
                                 }
 
                                 break;
@@ -111,28 +130,13 @@ namespace MetaMind.Engine.Components
                             }
                     }
 
-                    processes.Remove(process);
+                    this.processes.Remove(process);
                 }
                 else
                 {
                     ++i;
                 }
             }
-        }
-
-        public override void Draw(GameTime gameTime)
-        {
-            GameEngine.ScreenManager.SpriteBatch.Begin();
-
-            foreach (var process in processes)
-            {
-                if (process.State == ProcessState.Running)
-                {
-                    process.Draw(gameTime);
-                }
-            }
-
-            GameEngine.ScreenManager.SpriteBatch.End();
         }
 
         #endregion Update

@@ -125,18 +125,18 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             get { return View.IsEnabled(ViewState.View_Active); }
         }
 
-        public override void UpdateStructure(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             if (View.IsEnabled(ViewState.View_Active))
             {
                 this.UpdateViewLogics();
-                this.UpdateItemStructure(gameTime);
+                this.UpdateItem(gameTime);
             }
             else
             {
                 foreach (var item in View.Items)
                 {
-                    item.UpdateStructureForView(gameTime);
+                    item.UpdateView(gameTime);
                 }
             }
         }
@@ -185,32 +185,32 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
         }
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
-            this.UpdateMouseScroll();
-            this.UpdateItemInput(gameTime);
+            this.UpdateMouseScroll(gameInput);
+            this.UpdateItemInput(gameInput, gameTime);
         }
 
-        protected void UpdateItemInput(GameTime gameTime)
+        protected void UpdateItemInput(IGameInput gameInput, GameTime gameTime)
         {
             // item input
             // -----------------------------------------------------------------
             foreach (var item in View.Items.ToArray())
             {
-                item.UpdateInput(gameTime);
+                item.Update(gameInput, gameTime);
             }
         }
 
-        protected void UpdateItemStructure(GameTime gameTime)
+        protected void UpdateItem(GameTime gameTime)
         {
             // TODO: Possible thread safety issue
             foreach (var item in View.Items.ToArray())
             {
-                item.UpdateStructure(gameTime);
+                item.Update(gameTime);
             }
         }
 
-        protected virtual void UpdateKeyboardMotion()
+        protected virtual void UpdateKeyboardMotion(IGameInput gameInput)
         {
             if (this.AcceptInput)
             {
@@ -219,28 +219,28 @@ namespace MetaMind.Engine.Guis.Widgets.Views
                 if (ViewSettings.KeyboardEnabled)
                 {
                     // movement
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
+                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Left))
                     {
                         this.MoveLeft();
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
+                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Right))
                     {
                         this.MoveRight();
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.FastLeft))
+                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.FastLeft))
                     {
                         this.SuperMoveLeft();
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.FastRight))
+                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.FastRight))
                     {
                         this.SuperMoveRight();
                     }
 
                     // escape
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
+                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Escape))
                     {
                         this.Selection.Clear();
                     }
@@ -248,7 +248,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
         }
 
-        protected virtual void UpdateMouseScroll()
+        protected virtual void UpdateMouseScroll(IGameInput gameInput)
         {
             if (this.AcceptInput)
             {
@@ -256,12 +256,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views
                 // ------------------------------------------------------------------
                 if (ViewSettings.MouseEnabled)
                 {
-                    if (InputSequenceManager.Mouse.IsWheelScrolledUp)
+                    if (gameInput.Sequence.Mouse.IsWheelScrolledUp)
                     {
                         this.Scroll.MoveLeft();
                     }
 
-                    if (InputSequenceManager.Mouse.IsWheelScrolledDown)
+                    if (gameInput.Sequence.Mouse.IsWheelScrolledDown)
                     {
                         this.Scroll.MoveRight();
                     }

@@ -7,6 +7,7 @@
 
 namespace MetaMind.Perseverance.Guis.Widgets
 {
+    using MetaMind.Engine;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Items;
@@ -48,11 +49,11 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         #region Update
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
-            this.UpdateRegionClick(gameTime);
-            this.UpdateMouseScroll();
-            this.UpdateKeyboardMotion();
+            this.UpdateRegionClick(gameInput, gameTime);
+            this.UpdateMouseScroll(gameInput);
+            this.UpdateKeyboardMotion(gameInput);
 
             if (this.AcceptInput)
             {
@@ -68,7 +69,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
                 }
             }
 
-            this.UpdateItemInput(gameTime);
+            this.UpdateItemInput(gameInput, gameTime);
         }
 
         #endregion Update

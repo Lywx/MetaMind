@@ -2,6 +2,7 @@ namespace MetaMind.Acutance.Screens
 {
     using System;
 
+    using MetaMind.Engine;
     using MetaMind.Engine.Screens;
 
     using Microsoft.Xna.Framework;
@@ -22,44 +23,41 @@ namespace MetaMind.Acutance.Screens
             this.multiplexer = new MultiplexerModule();
         }
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime)
         {
-            base.Draw(gameTime);
+            var spriteBatch = gameGraphics.Screen.SpriteBatch;
 
-            ScreenManager.SpriteBatch.Begin();
+            spriteBatch.Begin();
 
-            MessageManager  .Draw(gameTime);
+            gameGraphics.Message.Draw(gameTime);
 
-            this.multiplexer.Draw(gameTime, this.TransitionAlpha);
+            this.multiplexer.Draw(gameGraphics, gameTime, this.TransitionAlpha);
 
-            ScreenManager.SpriteBatch.End();
+            spriteBatch.End();
         }
 
-        public override void HandleInput()
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
-            InputEventManager   .HandleInput();
-            InputSequenceManager.HandleInput();
+            gameInput.Event   .Update(gameInput, gameTime);
+            gameInput.Sequence.Update(gameInput, gameTime);
 
-            this.multiplexer    .HandleInput();
+            this.multiplexer.Update(gameInput, gameTime);
         }
 
-        public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
+        public override void Update(IGameGraphics gameGraphics, GameTime gameTime, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
         {
-            if (this.IsActive && !coveredByOtherScreen)
+            if (this.IsActive && !isCoveredByOtherScreen)
             {
-                InputEventManager   .Update(gameTime);
-                InputSequenceManager.Update(gameTime);
-                MessageManager      .Update(gameTime);
+                gameGraphics.Message.Update(gameTime);
 
-                this.multiplexer    .Update(gameTime);
             }
 
-            base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+            base.Update(gameGraphics, gameTime, hasOtherScreenFocus, isCoveredByOtherScreen);
         }
 
         private void MultiplexerScreenExiting(object sender, EventArgs e)
         {
-            this.multiplexer.Unload();
+            this.multiplexer.Unload(gameFile, gameInput, gameInterop, gameSound);
         }
     }
 }

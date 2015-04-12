@@ -7,7 +7,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
     using Microsoft.Xna.Framework;
 
-    public class MotivationModule : Module<MotivationModuleSettings>, IModule
+    public class MotivationModule : Module<MotivationModuleSettings>
     {
         private readonly IView intelligence;
         private readonly IView intime;
@@ -30,37 +30,39 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         #region Load and Unload
 
-        void IModule.Load()
+        // FIXME: Wrong interface
+        public override void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
         {
+            base.Load();
             // performance penalty is not severe for one-off loading
             foreach (var entry in MotivationModuleSettings.GetNowMotivations())
             {
                 this.intelligence.Control.AddItem(entry);
             }
 
-            this.LoadEvents();
+            this.LoadEvents(gameInterop);
         }
 
-        private void LoadEvents()
+        private void LoadEvents(IGameInterop gameInterop)
         {
             if (this.gameStartedListener == null)
             {
                 this.gameStartedListener = new MotivationModuleGameStartedListener(this.intelligence);
             }
 
-            EventManager.AddListener(this.gameStartedListener);
+            gameInterop.Event.AddListener(this.gameStartedListener);
         }
 
-        public override void Unload()
+        public override void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
         {
-            this.UnloadEvents();
+            this.UnloadEvents(gameInterop);
         }
 
-        private void UnloadEvents()
+        private void UnloadEvents(IGameInterop gameInterop)
         {
             if (this.gameStartedListener == null)
             {
-                EventManager.RemoveListener(this.gameStartedListener);
+                gameInterop.Event.RemoveListener(this.gameStartedListener);
             }
 
             this.gameStartedListener = null;
@@ -70,26 +72,19 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         #region Update and Draw
 
-        public override void Draw(GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
         {
-            this.intelligence.Draw(gameTime, alpha);
+            this.intelligence.Draw(gameGraphics, gameTime, alpha);
         }
 
-        public override void HandleInput()
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
-            base.HandleInput();
-
-            this.intelligence.HandleInput();
+            this.intelligence.Update(gameInput, gameTime);
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
-            this.intelligence.UpdateInput(gameInput, gameTime);
-        }
-
-        public override void UpdateStructure(GameTime gameTime)
-        {
-            this.intelligence.UpdateStructure(gameTime);
+            this.intelligence.Update(gameTime);
         }
 
         #endregion Update and Draw

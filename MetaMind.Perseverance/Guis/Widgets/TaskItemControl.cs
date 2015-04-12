@@ -1,5 +1,6 @@
 namespace MetaMind.Perseverance.Guis.Widgets
 {
+    using MetaMind.Engine;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Views;
@@ -61,11 +62,11 @@ namespace MetaMind.Perseverance.Guis.Widgets
             }
         }
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
             // mouse and keyboard in modifier
             //-----------------------------------------------------------------
-            base.UpdateInput(gameTime);
+            base.Update(gameInput, gameTime);
 
             // keyboard
             //-----------------------------------------------------------------
@@ -76,29 +77,28 @@ namespace MetaMind.Perseverance.Guis.Widgets
                     // in pending status
                     if (this.Item.IsEnabled(ItemState.Item_Pending))
                     {
-                        if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.N))
+                        if (gameInput.Sequence.Keyboard.IsKeyTriggered(Keys.N))
                         {
                             this.ItemDataControl.EditString("Name");
                         }
 
                         // UNDONE: Won't work anymore
-
-                        if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.D))
+                        if (gameInput.Sequence.Keyboard.IsKeyTriggered(Keys.D))
                         {
                             this.ItemDataControl.EditInt("Done");
                         }
 
-                        if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.E))
+                        if (gameInput.Sequence.Keyboard.IsKeyTriggered(Keys.E))
                         {
                             this.ItemDataControl.EditExperience("SynchronizationSpan");
                         }
 
-                        if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.L))
+                        if (gameInput.Sequence.Keyboard.IsKeyTriggered(Keys.L))
                         {
                             this.ItemDataControl.EditInt("Load");
                         }
 
-                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
+                        if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Escape))
                         {
                             View.Disable(ViewState.Item_Editting);
                             this.Item.Disable(ItemState.Item_Pending);
@@ -110,18 +110,18 @@ namespace MetaMind.Perseverance.Guis.Widgets
                     if (!this.Locked)
                     {
                         // normal status
-                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskEditItem))
+                        if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.TaskEditItem))
                         {
                             View.Enable(ViewState.Item_Editting);
                             this.Item.Enable(ItemState.Item_Pending);
                         }
 
-                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskDeleteItem))
+                        if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.TaskDeleteItem))
                         {
                             this.DeleteIt();
                         }
 
-                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Enter))
+                        if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Enter))
                         {
                             this.ItemSyncControl.SwitchSync();
                         }

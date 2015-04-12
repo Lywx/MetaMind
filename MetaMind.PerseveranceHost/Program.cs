@@ -31,7 +31,7 @@
                 {
                     host.Open();
 
-                    using (var engine = GameEngine.Instance)
+                    using (var engine = GameEngine.GetInstance())
                     {
                         var runner = new Perseverance(engine);
 

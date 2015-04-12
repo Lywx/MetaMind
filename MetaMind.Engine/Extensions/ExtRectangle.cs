@@ -1,6 +1,4 @@
-using Microsoft.Xna.Framework;
-
-namespace MetaMind.Engine.Extensions
+namespace Microsoft.Xna.Framework
 {
     public static class ExtRectangle
     {

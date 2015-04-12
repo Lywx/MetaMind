@@ -8,6 +8,7 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Acutance.Events;
     using MetaMind.Acutance.Parsers.Elements;
     using MetaMind.Acutance.Sessions;
+    using MetaMind.Engine;
     using MetaMind.Engine.Components.Events;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Widgets.Items;
@@ -158,11 +159,11 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Update
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
-            this.UpdateRegionClick(gameTime);
-            this.UpdateMouseScroll();
-            this.UpdateKeyboardMotion(gameTime);
+            this.UpdateRegionClick(gameInput, gameTime);
+            this.UpdateMouseScroll(gameInput);
+            this.UpdateKeyboardMotion(gameInput, gameTime);
 
             if (this.AcceptInput)
             {

@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Guis.Particles
 {
     using Microsoft.Xna.Framework;
 
-    public interface IAbstractParticle
+    public interface IAbstractParticle : IUpdateable
     {
         float Angle { get; set; }
 
@@ -17,11 +17,9 @@ namespace MetaMind.Engine.Guis.Particles
         Vector2 Velocity { get; set; }
 
         float LastingSeconds { get; set; }
-
-        void Update(GameTime gameTime);
     }
 
-    public class ShapelessParticle : GameEngineAccess, IAbstractParticle
+    public class ShapelessParticle : DrawableGameEntity, IAbstractParticle
     {
         #region Particle Movements
 
@@ -58,9 +56,17 @@ namespace MetaMind.Engine.Guis.Particles
 
         #endregion Constructors
 
+        #region Draw
+
+        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
+        {
+        }
+
+        #endregion
+
         #region Update
 
-        public virtual void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             this.AngularVelocity += (float)gameTime.ElapsedGameTime.TotalSeconds * this.AngularAcceleration;
             this.Angle += (float)gameTime.ElapsedGameTime.TotalSeconds * this.AngularVelocity;
@@ -69,6 +75,19 @@ namespace MetaMind.Engine.Guis.Particles
             this.Position += (float)gameTime.ElapsedGameTime.TotalSeconds * this.Velocity;
 
             this.LastingSeconds -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+        }
+
+        public override void Update(IGameFile gameFile, GameTime gameTime)
+        {
+            
+        }
+
+        public override void Update(IGameInterop gameInterop, GameTime gameTime)
+        {
+        }
+
+        public override void Update(IGameSound gameSound, GameTime gameTime)
+        {
         }
 
         #endregion Update

@@ -4,22 +4,7 @@
 
     using Microsoft.Xna.Framework;
 
-    public interface IViewItem : IItemObject, IDisposable
-    {
-        dynamic ItemControl { get; set; }
-
-        dynamic ItemData { get; set; }
-
-        IItemGraphics ItemGraphics { get; set; }
-
-        dynamic View { get; }
-
-        dynamic ViewControl { get; }
-
-        dynamic ViewSettings { get; }
-    }
-
-    public class ViewItemExchangeless : ItemObject, IViewItem
+    public class ViewItemExchangeless : ItemEntity, IViewItem
     {
         public ViewItemExchangeless(dynamic view, ICloneable viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
             : base(itemSettings)
@@ -63,24 +48,29 @@
 
         public dynamic ViewSettings { get; protected set; }
 
-        public override void Draw(GameTime gameTime, byte alpha)
+        #region Draw
+
+        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
         {
-            this.ItemGraphics.Draw(gameTime, alpha);
+            this.ItemGraphics.Draw(gameGraphics, gameTime, alpha);
         }
 
-        public override void UpdateInput(GameTime gameTime)
+        #endregion
+
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
-            this.ItemControl.UpdateInput(gameTime);
+            this.ItemControl .Update(gameInput, gameTime);
+            this.ItemGraphics.Update(gameInput, gameTime);
         }
 
-        public override void UpdateStructureForView(GameTime gameTime)
+        public override void UpdateView(GameTime gameTime)
         {
-            this.ItemControl.UpdateStructureForView(gameTime);
+            this.ItemControl.UpdateView(gameTime);
         }
 
-        public override void UpdateStructure(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
-            this.ItemControl. UpdateStructure(gameTime);
+            this.ItemControl .Update(gameTime);
             this.ItemGraphics.Update(gameTime);
         }
 

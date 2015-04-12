@@ -2,22 +2,39 @@
 {
     using System;
 
-    using Microsoft.Xna.Framework;
-
-    public interface IViewComponent
+    public interface IViewComponent : IUpdateable
     {
-        dynamic ViewControl  { get; }
+        dynamic ViewControl { get; }
 
-        IView   View         { get; }
+        IView View { get; }
 
         dynamic ViewSettings { get; }
 
         dynamic ItemSettings { get; }
     }
 
-    public class ViewComponent : GameEngineAccess, IViewComponent
+    public class ViewComponent : InputableGameEntity, IViewComponent
     {
-        public dynamic ViewControl { get { return this.View.Control; } }
+        #region Constructors
+
+        protected ViewComponent(IView view, ICloneable viewSettings, ICloneable itemSettings)
+        {
+            this.View = view;
+            this.ViewSettings = viewSettings;
+            this.ItemSettings = itemSettings;
+        }
+
+        #endregion
+
+        #region IViewComponent
+
+        public dynamic ViewControl
+        {
+            get
+            {
+                return this.View.Control;
+            }
+        }
 
         public IView View { get; private set; }
 
@@ -25,19 +42,6 @@
 
         public dynamic ItemSettings { get; private set; }
 
-        protected ViewComponent(IView view, ICloneable viewSettings, ICloneable itemSettings)
-        {
-            this.View         = view;
-            this.ViewSettings = viewSettings;
-            this.ItemSettings = itemSettings;
-        }
-
-        public virtual void UpdateStructure(GameTime gameTime)
-        {
-        }
-
-        public virtual void UpdateInput(GameTime gameTime)
-        {
-        }
+        #endregion
     }
 }

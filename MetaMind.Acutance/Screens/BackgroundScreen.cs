@@ -1,16 +1,15 @@
 ﻿namespace MetaMind.Acutance.Screens
 {
     using System;
-    using System.Diagnostics;
 
     using MetaMind.Acutance.Guis.Modules;
+    using MetaMind.Engine;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Particles;
     using MetaMind.Engine.Screens;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Microsoft.Xna.Framework.Input;
 
     public class BackgroundScreen : GameScreen
     {
@@ -30,41 +29,38 @@
 
         #region Load and Unload
 
-        public override void LoadContent()
+        public override void Load(IGameFile gameFile)
         {
-            this.backgroundTexture = ContentManager.Load<Texture2D>(@"Textures\Screens\Background\Sea Of Mind");
+            this.backgroundTexture = gameFile.Content.Load<Texture2D>(@"Textures\Screens\Background\Sea Of Mind");
         }
 
-        public override void UnloadContent()
+        public override void Unload(IGameFile gameFile)
         {
-            ContentManager.Unload();
         }
 
         #endregion Load and Unload
 
         #region Update and Draw
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime)
         {
-            var spriteBatch = ScreenManager.SpriteBatch;
-            var viewport    = ScreenManager.GraphicsDevice.Viewport;
+            var spriteBatch = gameGraphics.Screen.SpriteBatch;
+            var viewport    = gameGraphics.Screen.GraphicsDevice.Viewport;
             var fullscreen  = new Rectangle(0, 0, viewport.Width, viewport.Height);
 
             spriteBatch.Begin();
 
             spriteBatch.Draw(this.backgroundTexture, fullscreen, new Color(210, 100, 95).MakeTransparent(TransitionAlpha));
 
-            this.particles.Draw(gameTime);
+            this.particles.Draw(gameGraphics, gameTime, this.TransitionAlpha);
 
             spriteBatch.End();
         }
 
-        public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
+        public override void Update(IGameGraphics gameGraphics, GameTime gameTime, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
         {
-            // forced input update
-            this.particles.HandleInput();
             this.particles.Update(gameTime);
-            base          .Update(gameTime, otherScreenHasFocus, false);
+            base          .Update(gameGraphics, gameTime, hasOtherScreenFocus, false);
         }
 
         #endregion Update and Draw

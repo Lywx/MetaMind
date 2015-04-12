@@ -7,32 +7,28 @@
 
 namespace MetaMind.Engine
 {
-    using System;
-
     using Microsoft.Xna.Framework;
-
-    public interface IGame : IGameComponent
-    {
-        void Run();
-
-        void OnExiting();
-    }
 
     public class Game : DrawableGameComponent, IGame
     {
-        protected Game(GameEngine engine)
-            : base(engine)
-        {
-            if (engine == null)
-            {
-                throw new ArgumentNullException("engine");
-            }
+        #region Engine Data
 
-            GameEngine = engine;
-            GameEngine.GameManager.Add(this);
+        protected IGameInterop GameInterop { get; set; }
+
+        #endregion
+
+        #region Constructors
+
+        protected Game(GameEngine gameEngine)
+            : base(gameEngine)
+        {
+            this.GameInterop = new GameEngineInterop(gameEngine);
+            this.GameInterop.Game.Add(this);
         }
 
-        protected GameEngine GameEngine { get; private set; }
+        #endregion
+
+        #region IGame
 
         public virtual void OnExiting()
         {
@@ -40,7 +36,9 @@ namespace MetaMind.Engine
 
         public void Run()
         {
-            GameEngine.Run();
+            this.GameInterop.GameEngine.Run();
         }
+
+        #endregion
     }
 }

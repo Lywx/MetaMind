@@ -2,7 +2,10 @@ namespace MetaMind.Engine.Guis.Particles
 {
     using Microsoft.Xna.Framework;
 
-    public interface IParticle
+    using IDrawable = MetaMind.Engine.IDrawable;
+    using IUpdateable = MetaMind.Engine.IUpdateable;
+
+    public interface IParticle : IUpdateable, IDrawable
     {
         Vector2 Acceleration { get; set; }
 
@@ -21,10 +24,6 @@ namespace MetaMind.Engine.Guis.Particles
         float Scale { get; set; }
 
         Vector2 Velocity { get; set; }
-
-        void Draw(GameTime gameTime);
-
-        void Update(GameTime gameTime);
     }
 
     public abstract class Particle : ShapelessParticle, IParticle
@@ -40,6 +39,6 @@ namespace MetaMind.Engine.Guis.Particles
 
         public float Scale { get; set; }
 
-        public abstract void Draw(GameTime gameTime);
+        public abstract void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha);
     }
 }

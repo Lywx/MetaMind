@@ -2,12 +2,14 @@
 {
     using System;
 
+    using MetaMind.Engine;
     using MetaMind.Engine.Guis;
-    using MetaMind.Engine.Guis.Modules;
     using MetaMind.Engine.Screens;
     using MetaMind.Perseverance.Guis.Modules;
 
     using Microsoft.Xna.Framework;
+
+    using IUpdateable = Microsoft.Xna.Framework.IUpdateable;
 
     public class SummaryScreen : GameScreen
     {
@@ -25,21 +27,23 @@
             this.Exiting += this.SummaryScreenExiting;
 
             this.summary = new SummaryModule(Perseverance.Session.Cognition, new SummaryModuleSettings());
-            this.summary.Load();
+            this.summary.Load(gameFile, gameInput, gameInterop, gameSound);
         }
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime)
         {
-            ScreenManager.SpriteBatch.Begin();
+            var spriteBatch = gameGraphics.Screen.SpriteBatch;
 
-            MessageManager.Draw(gameTime);
+            spriteBatch.Begin();
 
-            this.summary.Draw(gameTime, TransitionAlpha);
+            gameGraphics.Message.Draw(gameTime);
 
-            ScreenManager.SpriteBatch.End();
+            this.summary.Draw(gameGraphics, gameTime, TransitionAlpha);
+
+            spriteBatch.End();
         }
 
-        public override void HandleInput()
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
             InputEventManager   .HandleInput();
             InputSequenceManager.HandleInput();
@@ -47,27 +51,27 @@
             this.summary.HandleInput();
         }
 
-        public override void LoadContent()
+        public override void Load(IGameFile gameFile)
         {
         }
 
-        public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
+        public override void Update(IGameGraphics gameGraphics, GameTime gameTime, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
         {
-            if (IsActive && !coveredByOtherScreen)
+            if (IsActive && !isCoveredByOtherScreen)
             {
                 InputEventManager   .Update(gameTime);
                 InputSequenceManager.Update(gameTime);
                 MessageManager      .Update(gameTime);
 
-                this.summary.Update(gameTime);
+                ((IUpdateable)this.summary).Update(gameTime);
             }
 
-            base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+            base.Update(gameGraphics, gameTime, hasOtherScreenFocus, isCoveredByOtherScreen);
         }
 
         private void SummaryScreenExiting(object sender, EventArgs e)
         {
-            this.summary.Unload();
+            this.summary.Unload(gameFile, gameInput, gameInterop, gameSound);
         }
     }
 }

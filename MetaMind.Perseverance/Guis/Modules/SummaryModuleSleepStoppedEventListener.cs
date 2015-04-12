@@ -28,7 +28,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             var summary = screenManager.Screens.First(screen => screen is SummaryScreen);
             if (summary != null)
             {
-                summary.ExitScreen();
+                summary.Exit();
             }
 
             screenManager.AddScreen(new MotivationScreen());

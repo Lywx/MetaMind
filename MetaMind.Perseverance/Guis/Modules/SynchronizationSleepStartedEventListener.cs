@@ -5,7 +5,6 @@
     using MetaMind.Engine;
     using MetaMind.Engine.Components.Events;
     using MetaMind.Perseverance.Concepts;
-    using MetaMind.Perseverance.Concepts.Cognitions;
     using MetaMind.Perseverance.Screens;
     using MetaMind.Perseverance.Sessions;
 
@@ -16,7 +15,7 @@
         
         public SynchronizationModuleSleepStartedEventListener(ISynchronization synchronization, SynchronizationModule synchronizationModule )
         {
-            this.synchronization    = synchronization;
+            this.synchronization       = synchronization;
             this.synchronizationModule = synchronizationModule;
 
             this.RegisteredEvents.Add((int)SessionEventType.SleepStarted);
@@ -36,7 +35,7 @@
             var motivation = screenManager.Screens.First(screen => screen is MotivationScreen);
             if (motivation != null)
             {
-                motivation.ExitScreen();
+                motivation.Exit();
             }
 
             screenManager.AddScreen(new SummaryScreen());

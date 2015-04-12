@@ -5,7 +5,6 @@
     using System.Runtime.Serialization;
     using System.Xml;
 
-    using MetaMind.Engine;
     using MetaMind.Engine.Components;
     using MetaMind.Perseverance.Concepts.Cognitions;
     using MetaMind.Perseverance.Concepts.Motivations;
@@ -14,7 +13,7 @@
     /// Session is a data class.
     /// </summary>
     [DataContract]
-    public class Session : GameEngineAccess
+    public class Session 
     {
         #region File Storage
 

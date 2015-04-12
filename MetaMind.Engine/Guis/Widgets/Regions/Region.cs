@@ -4,7 +4,7 @@
 
     using Microsoft.Xna.Framework;
 
-    public class Region : RegionObject, IRegion
+    public class Region : RegionEntity, IRegion
     {
         public Region(Rectangle rectangle)
         {
@@ -54,7 +54,11 @@
             set { this.Frame.Y = value; }
         }
 
-        public virtual void UpdateInput(GameTime gameTime)
+        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
+        {
+        }
+
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
             if (this.Frame.IsEnabled(FrameState.Mouse_Over))
             {
@@ -65,7 +69,7 @@
                 this.Disable(RegionState.Region_Mouse_Over);
             }
 
-            if (this.Frame.IsEnabled(FrameState.Mouse_Left_Clicked) || 
+            if (this.Frame.IsEnabled(FrameState.Mouse_Left_Clicked) ||
                 this.Frame.IsEnabled(FrameState.Mouse_Left_Double_Clicked) ||
                 this.Frame.IsEnabled(FrameState.Mouse_Right_Clicked) ||
                 this.Frame.IsEnabled(FrameState.Mouse_Right_Double_Clicked))
@@ -78,7 +82,19 @@
             }
         }
 
-        public virtual void UpdateStructure(GameTime gameTime)
+        public override void Update(GameTime gameTime)
+        {
+        }
+
+        public override void Update(IGameFile gameFile, GameTime gameTime)
+        {
+        }
+
+        public override void Update(IGameInterop gameInterop, GameTime gameTime)
+        {
+        }
+
+        public override void Update(IGameSound gameSound, GameTime gameTime)
         {
         }
     }

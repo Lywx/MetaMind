@@ -14,7 +14,7 @@ namespace MetaMind.EngineUnitTest.Parsers
         {
             var input = "a=b";
 
-            var parsed = ConfigurationParser.ConfigurationPairParser.Parse(input);
+            var parsed = ConfigurationFileGrammar.ConfigurationPairParser.Parse(input);
 
             Assert.AreEqual("a", parsed.Key);
             Assert.AreEqual("b", parsed.Value);
@@ -25,7 +25,7 @@ namespace MetaMind.EngineUnitTest.Parsers
         {
             var input = "a = b";
 
-            var parsed = ConfigurationParser.ConfigurationPairParser.Parse(input);
+            var parsed = ConfigurationFileGrammar.ConfigurationPairParser.Parse(input);
 
             Assert.AreEqual("a", parsed.Key);
             Assert.AreEqual("b", parsed.Value);
@@ -36,7 +36,7 @@ namespace MetaMind.EngineUnitTest.Parsers
         {
             var input = "aaa = bbb";
 
-            var parsed = ConfigurationParser.ConfigurationPairParser.Parse(input);
+            var parsed = ConfigurationFileGrammar.ConfigurationPairParser.Parse(input);
 
             Assert.AreEqual("aaa", parsed.Key);
             Assert.AreEqual("bbb", parsed.Value);
@@ -49,7 +49,7 @@ namespace MetaMind.EngineUnitTest.Parsers
 
             try
             {
-                var parsed = ConfigurationParser.ConfigurationPairParser.Parse(input);
+                var parsed = ConfigurationFileGrammar.ConfigurationPairParser.Parse(input);
 
                 Assert.AreEqual("a b", parsed.Key);
                 Assert.AreEqual("b", parsed.Value);
@@ -66,7 +66,7 @@ namespace MetaMind.EngineUnitTest.Parsers
 
             try
             {
-                var parsed = ConfigurationParser.ConfigurationPairParser.Parse(input);
+                var parsed = ConfigurationFileGrammar.ConfigurationPairParser.Parse(input);
 
                 Assert.AreEqual("a", parsed.Key);
                 Assert.AreEqual("b c", parsed.Value);
@@ -81,7 +81,7 @@ namespace MetaMind.EngineUnitTest.Parsers
         {
             var input = "\" a = b c";
 
-            var parsed = ConfigurationParser.ConfigurationLineParser.Parse(input);
+            var parsed = ConfigurationFileGrammar.ConfigurationLineParser.Parse(input);
 
             Assert.AreEqual(null, parsed.Key);
             Assert.AreEqual(null, parsed.Value);
@@ -92,7 +92,7 @@ namespace MetaMind.EngineUnitTest.Parsers
         {
             var input = "a = b c";
 
-            var parsed = ConfigurationParser.ConfigurationLineParser.Parse(input);
+            var parsed = ConfigurationFileGrammar.ConfigurationLineParser.Parse(input);
 
             Assert.AreEqual("a", parsed.Key);
             Assert.AreEqual("b c", parsed.Value);

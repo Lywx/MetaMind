@@ -11,7 +11,8 @@ namespace MetaMind.Engine
 
     public sealed class GameEngineInput : GameEngineAccess, IGameInput
     {
-        public GameEngineInput()
+        public GameEngineInput(GameEngine gameEngine)
+            : base(gameEngine)
         {
             this.AccessType = GameEngineAccessType.Input;
         }

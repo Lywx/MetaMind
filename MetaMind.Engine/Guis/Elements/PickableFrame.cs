@@ -2,7 +2,7 @@
 {
     using System;
 
-    using MetaMind.Engine.Components;
+    using MetaMind.Engine.Components.Inputs;
 
     using Microsoft.Xna.Framework;
 

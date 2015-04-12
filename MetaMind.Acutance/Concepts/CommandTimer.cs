@@ -3,13 +3,12 @@ namespace MetaMind.Acutance.Concepts
     using System;
     using System.Runtime.Serialization;
 
-    using MetaMind.Engine;
     using MetaMind.Engine.Concepts;
 
     [DataContract]
     [KnownType(typeof(CommandTimerWithDate))]
     [KnownType(typeof(CommandTimerWithTimeout))]
-    public abstract class CommandTimer : GameEngineAccess
+    public abstract class CommandTimer : IDisposable
     {
         [DataMember]
         public readonly TimeSpan Transition = TimeSpan.FromSeconds(30);
@@ -21,11 +20,9 @@ namespace MetaMind.Acutance.Concepts
 
         public abstract bool IsTransiting { get; }
 
-        public override void Dispose()
+        public virtual void Dispose()
         {
             this.SynchronizationSpan = SynchronizationSpan.Zero;
-
-            base.Dispose();
         }
 
         [OnDeserialized]

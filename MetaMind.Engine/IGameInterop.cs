@@ -7,5 +7,9 @@ namespace MetaMind.Engine
         EventManager Event { get; }
 
         ProcessManager Process { get; }
+
+        GameManager Game { get; }
+
+        GameEngine GameEngine { get; }
     }
 }

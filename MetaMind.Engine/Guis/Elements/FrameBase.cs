@@ -18,7 +18,7 @@ namespace MetaMind.Engine.Guis.Elements
         void Enable(FrameState state);
     }
 
-    public class FrameBase : IFrameBase
+    public abstract class FrameBase : IFrameBase
     {
         #region Constructors
 

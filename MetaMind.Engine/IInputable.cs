@@ -5,7 +5,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Engine.Guis
+namespace MetaMind.Engine
 {
     using System;
 
@@ -13,20 +13,12 @@ namespace MetaMind.Engine.Guis
 
     public interface IInputable : IUpdateable
     {
-        /// <summary>
-        ///     Handles the input part of updating.
-        /// </summary>
-        void UpdateInput(IGameInput gameInput, GameTime gameTime);
-
-        /// <summary>
-        ///     Handles the structure part of updating.
-        /// </summary>
-        void UpdateStructure(GameTime gameTime);
-
-        int InputOrder { get; }
+        event EventHandler<EventArgs> ControllableChanged;
 
         event EventHandler<EventArgs> InputOrderChanged;
 
-        event EventHandler<EventArgs> ControllableChanged;
+        int InputOrder { get; }
+
+        void Update(IGameInput gameInput, GameTime gameTime);
     }
 }

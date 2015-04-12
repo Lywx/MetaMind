@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Components.Processes
 {
     using Microsoft.Xna.Framework;
 
-    public abstract class ProcessBase : IProcess
+    public abstract class ProcessBase : GameEntity, IProcess
     {
         private IProcess child;
 
@@ -103,16 +103,6 @@ namespace MetaMind.Engine.Components.Processes
         public abstract void OnSuccess();
 
         #endregion Process Transition
-
-        #region Process Update and Draw
-
-        public virtual void Draw(GameTime gameTime)
-        {
-        }
-
-        public abstract void Update(GameTime gameTime);
-
-        #endregion Update and Draw
 
         #region Process Operations
 

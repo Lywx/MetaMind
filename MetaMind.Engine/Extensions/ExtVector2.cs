@@ -5,10 +5,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Engine.Extensions
+namespace Microsoft.Xna.Framework
 {
-    using Microsoft.Xna.Framework;
-
     public static class ExtVector2
     {
         public static Point ToPoint(this Vector2 vector2)

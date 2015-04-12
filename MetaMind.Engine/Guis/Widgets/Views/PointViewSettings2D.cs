@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     public class PointViewSettings2D : ViewSettings
     {
-        public Font  NameFont   = Font.UiStatisticsFont;
+        public Font  NameFont   = Font.UiStatistics;
         public Color NameColor  = Color.White;
         public float NameSize   = 1.5f;
         public Point NameMargin = new Point(47, 47);

@@ -7,6 +7,7 @@
 
 namespace MetaMind.Perseverance.Guis.Widgets
 {
+    using MetaMind.Engine;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Regions;
@@ -37,18 +38,18 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         #region Update
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
-            this.UpdateRegionClick(gameTime);
-            this.UpdateMouseScroll();
-            this.UpdateKeyboardMotion(gameTime);
+            this.UpdateRegionClick(gameInput, gameTime);
+            this.UpdateMouseScroll(gameInput);
+            this.UpdateKeyboardMotion(gameInput, gameTime);
 
             if (this.AcceptInput)
             {
                 if (this.ViewSettings.KeyboardEnabled)
                 {
                     // list management
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskCreateItem))
+                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.TaskCreateItem))
                     {
                         this.AddItem();
 
@@ -56,7 +57,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
                         this.Selection.Select(this.View.Items.Count - 1);
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskDeleteItem))
+                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.TaskDeleteItem))
                     {
                         // itme deletion is handled by item control
                         // auto select last item
@@ -73,7 +74,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
                 }
             }
 
-            this.UpdateItemInput(gameTime);
+            this.UpdateItemInput(gameInput, gameTime);
         }
 
         protected override void UpdateViewFocus()

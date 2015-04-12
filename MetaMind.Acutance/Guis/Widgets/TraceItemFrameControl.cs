@@ -58,7 +58,7 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             base.UpdateInput(gameTime);
 
-            this.NameFrame      .UpdateInput(gameTime);
+            this.NameFrame      .Update(gameInput, gameTime);
         }
 
         protected override void UpdateFrameGeometry()

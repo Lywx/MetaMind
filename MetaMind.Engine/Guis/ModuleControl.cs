@@ -4,26 +4,26 @@ namespace MetaMind.Engine.Guis
 
     public interface IModuleControl
     {
-        void HandleInput();
-        void Load();
-        void Unload();
-        void UpdateInput( GameTime gameTime );
-        void UpdateStructure( GameTime gameTime );
+        void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound);
+
+        void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound);
+
+        void Update(IGameInput gameInput, GameTime gameTime);
+
+        void Update(GameTime gameTime);
     }
 
     public abstract class ModuleControl<TModule, TModuleSettings, TModuleControl> : ModuleComponent<TModule, TModuleSettings, TModuleControl>, IModuleControl
         where                           TModule                                   : Module         <TModuleSettings>
         where                           TModuleControl                            : ModuleControl  <TModule, TModuleSettings, TModuleControl>
     {
-        protected ModuleControl( TModule module )
-            : base( module )
+        protected ModuleControl(TModule module)
+            : base(module)
         {
         }
 
-        public abstract void HandleInput();
-        public abstract void Load();
-        public abstract void Unload();
-        public abstract void UpdateInput(GameTime gameTime);
-        public abstract void UpdateStructure(GameTime gameTime);
+        public abstract void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound);
+
+        public abstract void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound);
     }
 }

@@ -2,6 +2,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 {
     using System.Collections.Generic;
 
+    using MetaMind.Engine;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Perseverance.Concepts.Tasks;
     using MetaMind.Perseverance.Guis.Modules;
@@ -13,7 +14,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
         {
         }
 
-        public override void SwapIt(IViewItem draggingItem)
+        public override void SwapIt(IGameInterop gameInterop, IViewItem draggingItem)
         {
             if (this.Item.IsEnabled(ItemState.Item_Swaping))
             {

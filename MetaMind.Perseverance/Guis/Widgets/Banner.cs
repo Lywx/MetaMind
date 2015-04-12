@@ -26,9 +26,9 @@
             this.viewSettings  = viewSettings;
             this.bannerSetting = bannerSetting;
 
-            this.past   = new TimelineText("Past"  , this.TextLeftmostPosition,                           1f, Font.UiRegularFont);
-            this.now    = new TimelineText("Now"   , this.TextLeftmostPosition + new Vector2(270, 0),     1f, Font.UiRegularFont);
-            this.future = new TimelineText("Future", this.TextLeftmostPosition + new Vector2(270, 0) * 2, 1f, Font.UiRegularFont);
+            this.past   = new TimelineText("Past"  , this.TextLeftmostPosition,                           1f, Font.UiRegular);
+            this.now    = new TimelineText("Now"   , this.TextLeftmostPosition + new Vector2(270, 0),     1f, Font.UiRegular);
+            this.future = new TimelineText("Future", this.TextLeftmostPosition + new Vector2(270, 0) * 2, 1f, Font.UiRegular);
                 
             this.flash = new TimelineFlash(this.TextLeftmostPosition + new Vector2(0, 10));
         }

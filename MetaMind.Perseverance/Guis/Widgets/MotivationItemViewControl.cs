@@ -1,5 +1,6 @@
 namespace MetaMind.Perseverance.Guis.Widgets
 {
+    using MetaMind.Engine;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Views;
 
@@ -10,7 +11,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
         {
         }
 
-        public override void ExchangeIt(IViewItem draggingItem, IView targetView)
+        public override void ExchangeIt(IGameInterop gameInterop, IViewItem draggingItem, IView targetView)
         {
             if (this.Item.IsEnabled(ItemState.Item_Exchanging))
             {
@@ -22,7 +23,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             ProcessManager.AttachProcess(new MotivationItemTransitProcess(draggingItem, targetView));
         }
 
-        public override void SwapIt(IViewItem draggingItem)
+        public override void SwapIt(IGameInterop gameInterop, IViewItem draggingItem)
         {
             if (this.Item.IsEnabled(ItemState.Item_Swaping))
             {

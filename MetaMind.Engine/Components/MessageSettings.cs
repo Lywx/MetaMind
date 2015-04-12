@@ -15,7 +15,7 @@ namespace MetaMind.Engine.Components
 
     public static class MessageSettings
     {
-        public static Font     MessageFont = Font.UiRegularFont;
+        public static Font     MessageFont = Font.UiRegular;
 
         public static float    MessageSize = 1f;
 

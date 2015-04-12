@@ -1,5 +1,6 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
+    using MetaMind.Engine;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Perseverance.Guis.Widgets;
@@ -15,13 +16,13 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
         }
 
-        public override void Draw(GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
         {
-            this.DrawItems(gameTime, (byte)this.FocusAlpha);
+            this.DrawItems(gameGraphics, gameTime, (byte)this.FocusAlpha);
             this.DrawScrollBar(gameTime);
         }
 
-        protected override void DrawRegion(GameTime gameTime, byte alpha)
+        protected override void DrawRegion(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
         {
             Primitives2D.DrawRectangle(
                 ScreenManager.SpriteBatch,

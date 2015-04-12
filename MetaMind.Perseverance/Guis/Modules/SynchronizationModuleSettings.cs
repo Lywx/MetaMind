@@ -29,7 +29,7 @@
         //---------------------------------------------------------------------
         public Point StateMargin             = new Point(0, 1);
 
-        public Font  StateFont               = Font.UiStatisticsFont;
+        public Font  StateFont               = Font.UiStatistics;
 
         public float StateSize               = 1.1f;
 
@@ -43,7 +43,7 @@
         public Point StatusMargin            = new Point(0, 34);
 
         //---------------------------------------------------------------------
-        public Font  AccumulationFont        = Font.UiStatisticsFont;
+        public Font  AccumulationFont        = Font.UiStatistics;
 
         public Point AccumulationMargin      = new Point(170, 0);
 
@@ -54,21 +54,21 @@
         //---------------------------------------------------------------------
         public Point AccelerationMargin      = new Point(170, 0);
 
-        public Font  AccelerationFont        = Font.UiStatisticsFont;
+        public Font  AccelerationFont        = Font.UiStatistics;
 
         public float AccelerationSize        = 2.0f;
 
         public Color AccelerationColor       = Color.White;
 
         //---------------------------------------------------------------------
-        public Font  MessageFont             = Font.UiStatisticsFont;
+        public Font  MessageFont             = Font.UiStatistics;
 
         public float MessageSize             = 0.7f;
 
         //---------------------------------------------------------------------
         public Color SynchronizationDotFrameColor = Palette.TransparentColor1;
 
-        public Font  SynchronizationRateFont      = Font.UiStatisticsFont;
+        public Font  SynchronizationRateFont      = Font.UiStatistics;
 
         public float SynchronizationRateSize      = 2.0f;
 
@@ -89,7 +89,7 @@
 
         public float ValueStatusSize   = 2.0f;
 
-        public Font  ValveStateFont    = Font.UiStatisticsFont;
+        public Font  ValveStateFont    = Font.UiStatistics;
 
         public SynchronizationModuleSettings()
         {

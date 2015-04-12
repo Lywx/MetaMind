@@ -9,6 +9,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 {
     using System.Globalization;
 
+    using MetaMind.Engine;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Items;
 
@@ -77,7 +78,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         #region Update and Draw
 
-        public override void Draw(GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
         {
             if (!ItemControl.Active)
             {
@@ -87,7 +88,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             // main motivation item
             this.DrawSymbol(gameTime, alpha);
             this.DrawName(alpha);
-            this.DrawId(alpha);
+            this.DrawId(TODO, alpha);
 
             // sub task view
             this.DrawTasks(gameTime, alpha);
@@ -98,7 +99,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             this.symbol.Update(gameTime);
         }
 
-        protected override void DrawId(byte alpha)
+        protected override void DrawId(IGameGraphics gameGraphics, byte alpha)
         {
             FontManager.DrawStringCenteredHV(
                 ItemSettings.IdFont,

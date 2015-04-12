@@ -39,77 +39,77 @@ namespace MetaMind.Acutance.Guis.Modules
 
         #endregion
 
-        private void EventLoad()
+        private void LoadEvents(IGameInterop gameInterop)
         {
             if (this.moduleCreatedListener == null)
             {
                 this.moduleCreatedListener = new MultiplexerGroupModuleCreatedListener(this.ModuleView);
             }
 
-            EventManager.AddListener(this.moduleCreatedListener);
+            gameInterop.Event.AddListener(this.moduleCreatedListener);
 
             if (this.commandNotifiedListener == null)
             {
                 this.commandNotifiedListener = new MultiplexerGroupCommandNotifiedListener(this.CommandView, this.ModuleView, this.KnowledgeView);
             }
 
-            EventManager.AddListener(this.commandNotifiedListener);
+            gameInterop.Event.AddListener(this.commandNotifiedListener);
 
             if (this.knowledgeRetrievedListener == null)
             {
                 this.knowledgeRetrievedListener = new MultiplexerGroupKnowledgeRetrievedListener(this.KnowledgeView);
             }
 
-            EventManager.AddListener(this.knowledgeRetrievedListener);
+            gameInterop.Event.AddListener(this.knowledgeRetrievedListener);
 
             if (this.knowledgeReloadListener == null)
             {
                 this.knowledgeReloadListener = new MultiplexerGroupKnowledgeReloadListener(this.KnowledgeView);
             }
 
-            EventManager.AddListener(this.knowledgeReloadListener);
+            gameInterop.Event.AddListener(this.knowledgeReloadListener);
 
             if (this.sessionSavedListener == null)
             {
                 this.sessionSavedListener = new MultiplexerGroupSessionSavedListener(this);
             }
 
-            EventManager.AddListener(this.sessionSavedListener);
+            gameInterop.Event.AddListener(this.sessionSavedListener);
         }
 
-        private void EventUnload()
+        private void UnloadEvents(IGameInterop gameInterop)
         {
             if (this.moduleCreatedListener != null)
             {
-                EventManager.RemoveListener(this.moduleCreatedListener);
+                gameInterop.Event.RemoveListener(this.moduleCreatedListener);
             }
 
             this.moduleCreatedListener = null;
 
             if (this.commandNotifiedListener != null)
             {
-                EventManager.RemoveListener(this.commandNotifiedListener);
+                gameInterop.Event.RemoveListener(this.commandNotifiedListener);
             }
 
             this.commandNotifiedListener = null;
 
             if (this.knowledgeRetrievedListener != null)
             {
-                EventManager.RemoveListener(this.knowledgeRetrievedListener);
+                gameInterop.Event.RemoveListener(this.knowledgeRetrievedListener);
             }
 
             this.knowledgeRetrievedListener = null;
 
             if (this.knowledgeReloadListener != null)
             {
-                EventManager.RemoveListener(this.knowledgeReloadListener);
+                gameInterop.Event.RemoveListener(this.knowledgeReloadListener);
             }
 
             this.knowledgeReloadListener = null;
 
             if (this.sessionSavedListener != null)
             {
-                EventManager.RemoveListener(this.sessionSavedListener);
+                gameInterop.Event.RemoveListener(this.sessionSavedListener);
             }
 
             this.sessionSavedListener = null;
@@ -161,7 +161,7 @@ namespace MetaMind.Acutance.Guis.Modules
             }
         }
 
-        public void ConfigurationLoad()
+        public void LoadConfiguration()
         {
             this.CommandFormatDataLoad();
         }
@@ -170,29 +170,29 @@ namespace MetaMind.Acutance.Guis.Modules
 
         #region Load and Unload
 
-        public void Load()
+        public void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
         {
-            this.ConfigurationLoad();
-            this.DataLoad();
-            this.EventLoad();
+            this.LoadConfiguration();
+            this.LoadData();
+            this.LoadEvents(gameInterop);
         }
 
-        private void DataLoad()
+        private void LoadData()
         {
-            this.ModuleDataLoad();
-            this.ScheduleDataLoad();
+            this.LoadModuleData();
+            this.LoadScheduleData();
         }
 
-        public void Unload()
+        public void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
         {
-            this.EventUnload();
+            this.UnloadEvents(gameInterop);
         }
 
         #region Commands
 
         private void CommandFormatDataLoad()
         {
-            new FormatHelper().ConfigurationLoad();
+            new FormatHelper().LoadConfiguration();
         }
 
 
@@ -200,7 +200,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
         #region Module
 
-        private void ModuleDataLoad()
+        private void LoadModuleData()
         {
             foreach (var module in this.Settings.Modules.ToArray())
             {
@@ -218,10 +218,10 @@ namespace MetaMind.Acutance.Guis.Modules
         public void ScheduleDataReload()
         {
             this.ScheduleDataUnload();
-            this.ScheduleDataLoad();
+            this.LoadScheduleData();
         }
 
-        private void ScheduleDataLoad()
+        private void LoadScheduleData()
         {
             foreach (var schedule in ScheduleLoader.Load(this))
             {
@@ -241,25 +241,25 @@ namespace MetaMind.Acutance.Guis.Modules
 
         #region Update and Draw
 
-        public override void Draw(GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
         {
-            this.ModuleView   .Draw(gameTime, alpha);
-            this.KnowledgeView.Draw(gameTime, alpha);
-            this.CommandView  .Draw(gameTime, alpha);
+            this.ModuleView   .Draw(gameGraphics, gameTime, alpha);
+            this.KnowledgeView.Draw(gameGraphics, gameTime, alpha);
+            this.CommandView  .Draw(gameGraphics, gameTime, alpha);
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
-            this.KnowledgeView.UpdateInput(gameInput, gameTime);
-            this.ModuleView   .UpdateInput(gameInput, gameTime);
-            this.CommandView  .UpdateInput(gameInput, gameTime);
+            this.KnowledgeView.Update(gameInput, gameTime);
+            this.ModuleView   .Update(gameInput, gameTime);
+            this.CommandView  .Update(gameInput, gameTime);
         }
 
-        public override void UpdateStructure(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
-            this.CommandView  .UpdateStructure(gameTime);
-            this.ModuleView   .UpdateStructure(gameTime);
-            this.KnowledgeView.UpdateStructure(gameTime);
+            this.CommandView  .Update(gameTime);
+            this.ModuleView   .Update(gameTime);
+            this.KnowledgeView.Update(gameTime);
         }
         #endregion
     }

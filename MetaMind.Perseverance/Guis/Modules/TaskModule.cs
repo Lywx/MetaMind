@@ -64,7 +64,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             }
         }
 
-        public override void Load()
+        public override void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
         {
             // performance penalty due to dynamic type
             // performance is still bad even with fast member
@@ -83,12 +83,12 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         #region Update and Draw
 
-        public override void Draw(GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
         {
             this.View.Draw(gameTime, alpha);
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
             // mouse
             //-----------------------------------------------------------------
@@ -215,14 +215,14 @@ namespace MetaMind.Perseverance.Guis.Modules
             }
         }
 
-        public override void UpdateStructure(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             // make sure that task region and task items all follow the host location changes
             this.View.ViewSettings.PointStart = ExtVector2.ToPoint(
                     this.FastHostControl["RootFrame"].Center.ToVector2() + 
                     this.FastHostControl["ViewSettings"].TracerMargin);
 
-            this.View.UpdateStructure(gameTime);
+            this.View.Update(gameTime);
         }
 
         #endregion Update and Draw

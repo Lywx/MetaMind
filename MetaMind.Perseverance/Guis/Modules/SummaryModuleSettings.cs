@@ -9,12 +9,12 @@ namespace MetaMind.Perseverance.Guis.Modules
     {
         public Vector2 TitleCenter         = new Vector2(GameEngine.GraphicsSettings.Width / 2f, 100);
 
-        public Font    TitleFont           = Font.UiRegularFont;
+        public Font    TitleFont           = Font.UiRegular;
 
         public float   TitleSize           = 1f;
 
         //---------------------------------------------------------------------
-        public Font  EntityFont          = Font.UiStatisticsFont;
+        public Font  EntityFont          = Font.UiStatistics;
 
         public float EntitySize          = 1f;
 

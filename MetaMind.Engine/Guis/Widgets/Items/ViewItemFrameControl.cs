@@ -15,9 +15,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
     public interface IViewItemFrameControl
     {
-        void UpdateInput(GameTime gameTime);
+        void Update(IGameInput gameInput, GameTime gameTime);
 
-        void UpdateStructure(GameTime gameTime);
+        void Update(GameTime gameTime);
     }
 
     public class ViewItemFrameControl : ViewItemComponent, IViewItemFrameControl
@@ -34,7 +34,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         public virtual void UpdateInput(GameTime gameTime)
         {
-            this.RootFrame.UpdateInput(gameTime);
+            this.RootFrame.Update(gameInput, gameTime);
 
             if (this.RootFrame.IsEnabled(FrameState.Mouse_Over))
             {
@@ -55,7 +55,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             }
         }
 
-        public virtual void UpdateStructure(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             this.UpdateFrameGeometry();
             this.UpdateFrameLogics();

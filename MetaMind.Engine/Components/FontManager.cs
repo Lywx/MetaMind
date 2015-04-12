@@ -21,7 +21,7 @@ namespace MetaMind.Engine.Components
     /// <summary>
     /// Static storage of SpriteFont objects and colors for use throughout the game.
     /// </summary>
-    public class FontManager : IGameEngineComponent
+    public class FontManager : DrawableGameComponent
     {
         #region Monospaced Font Data
 
@@ -39,53 +39,75 @@ namespace MetaMind.Engine.Components
 
         #endregion 
 
-        #region Font Indexer
+        #region Font Data
 
-        private static readonly SpriteFont[] fonts = new SpriteFont[(int)Font.FontNum];
+        private readonly SpriteFont[] fonts = new SpriteFont[(int)Font.FontNum];
 
         public SpriteFont this[Font font]
         {
             get
             {
-                return fonts[(int)font];
+                return this.fonts[(int)font];
             }
 
             private set
             {
-                fonts[(int)font] = value;
+                this.fonts[(int)font] = value;
             }
         }
 
-        #endregion Font Indexer
+        #endregion
+
+        #region Engine Data
+
+        private IGameGraphics GameGraphics { get; set; }
+
+        private IGameFile GameFile { get; set; }
+
+        #endregion
 
         #region Singleton
 
         private static FontManager Singleton { get; set; }
 
-        public static FontManager GetInstance()
+        public static FontManager GetInstance(GameEngine gameEngine)
         {
-            return Singleton ?? (Singleton = new FontManager());
+            return Singleton ?? (Singleton = new FontManager(gameEngine));
         }
 
         #endregion Singleton
+
+        #region Contructors
+
+        public FontManager(GameEngine gameEngine)
+            : base(gameEngine)
+        {
+            this.GameFile     = new GameEngineFile(gameEngine);
+            this.GameGraphics = new GameEngineGraphics(gameEngine);
+        }
+
+        #endregion
 
         #region Load and Unload
 
         /// <summary>
         /// Load the fonts from the content pipeline.
         /// </summary>
-        public void LoadContent()
+        protected override void LoadContent()
         {
-            this[Font.UiRegularFont]    = GameEngine.ContentManager.Load<SpriteFont>(@"Fonts/BitmapFonts/RegularFont");
-            this[Font.UiStatisticsFont] = GameEngine.ContentManager.Load<SpriteFont>(@"Fonts/BitmapFonts/StatisticsFont");
+            this[Font.UiRegular]    = this.GameFile.Content.Load<SpriteFont>(@"Fonts/BitmapFonts/RegularFont");
+            this[Font.UiStatistics] = this.GameFile.Content.Load<SpriteFont>(@"Fonts/BitmapFonts/StatisticsFont");
 
-            this[Font.UiContentFont]    = GameEngine.ContentManager.Load<SpriteFont>(@"Fonts/SpriteFonts/NSimSunFont");
+            this[Font.ContentRegular]    = this.GameFile.Content.Load<SpriteFont>(@"Fonts/SpriteFonts/NSimSunRegularFont");
+            this[Font.ContentBold]       = this.GameFile.Content.Load<SpriteFont>(@"Fonts/SpriteFonts/NSimSunBoldFont");
+            this[Font.ContentItalic]     = this.GameFile.Content.Load<SpriteFont>(@"Fonts/SpriteFonts/NSimSunItalicFont");
+            this[Font.ContentBoldItalic] = this.GameFile.Content.Load<SpriteFont>(@"Fonts/SpriteFonts/NSimSunBoldItalicFont");
         }
 
         /// <summary>
         /// Release all references to the fonts.
         /// </summary>
-        public void UnloadContent()
+        protected override void UnloadContent()
         {
         }
 
@@ -137,7 +159,7 @@ namespace MetaMind.Engine.Components
                 return;
             }
 
-            GameEngine.ScreenManager.SpriteBatch.DrawString(GameEngine.FontManager[font], this.GetDisaplayableString(font, str), position, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0);
+            GameGraphics.Screen.SpriteBatch.DrawString(this[font], this.GetDisaplayableString(font, str), position, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0);
         }
 
         public void DrawStringCenteredH(Font font, string str, Vector2 position, Color color, float scale)
@@ -184,7 +206,7 @@ namespace MetaMind.Engine.Components
 
         #endregion Text Drawing
 
-        #region String Measurement
+        #region String Measuring
 
         public Vector2 MeasureMonospacedString(string str, float scale)
         {
@@ -217,7 +239,7 @@ namespace MetaMind.Engine.Components
         
         public string CropMonospacedString(string str, float scale, int maxLength)
         {
-            return this.CropString(Font.UiContentFont, str, scale, maxLength, true);
+            return this.CropString(Font.ContentRegular, str, scale, maxLength, true);
         }
 
         public string CropMonospacedStringByAsciiCount(string str, int count)
@@ -286,17 +308,17 @@ namespace MetaMind.Engine.Components
 
         public string GetDisaplayableString(Font font, string str)
         {
-            return this.GetDisaplayableString(GameEngine.FontManager[font], str);
+            return this.GetDisaplayableString(this[font], str);
         }
 
         public List<int> GetNonDisaplayableCharIndexes(Font font, string str)
         {
-            return this.GetNonDisaplayableCharIndexes(GameEngine.FontManager[font], str);
+            return this.GetNonDisaplayableCharIndexes(this[font], str);
         }
 
         private List<int> GetCJKExclusiveCharIndexes(string str)
         {
-            return this.GetNonDisaplayableCharIndexes(Font.UiRegularFont, str);
+            return this.GetNonDisaplayableCharIndexes(Font.UiRegular, str);
         }
 
         private List<float> GetCJKExclusiveCharPositionAmendments(List<int> cjkExclusiveCharIndexes, string str)
@@ -325,7 +347,7 @@ namespace MetaMind.Engine.Components
 
         private string GetCJKInclusiveString(string str)
         {
-            return this.GetDisaplayableString(Font.UiContentFont, str);
+            return this.GetDisaplayableString(Font.ContentRegular, str);
         }
 
         private string GetDisaplayableString(SpriteFont font, string str)
@@ -357,6 +379,6 @@ namespace MetaMind.Engine.Components
             return indexes;
         }
 
-        #endregion Text Filtering
+        #endregion 
     }
 }

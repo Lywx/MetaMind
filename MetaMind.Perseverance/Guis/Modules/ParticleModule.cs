@@ -11,13 +11,13 @@ namespace MetaMind.Perseverance.Guis.Modules
         public ParticleModule(ParticleModuleSettings settings)
             : base(settings)
         {
-            SpawnSpeed = 2;
+            this.SpawnSpeed = 2;
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
-            if (InputSequenceManager.Keyboard.IsActionPressed(Actions.ForceFlip) &&
-                InputSequenceManager.Keyboard.IsActionPressed(Actions.Enter))
+            if (gameInput.Sequence.Keyboard.IsActionPressed(Actions.ForceFlip) &&
+                gameInput.Sequence.Keyboard.IsActionPressed(Actions.Enter))
             {
                 this.Refresh = !this.Refresh;
                 this.Plain   = !this.Plain;

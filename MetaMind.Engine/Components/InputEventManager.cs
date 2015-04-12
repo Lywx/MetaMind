@@ -13,131 +13,20 @@ namespace MetaMind.Engine.Components
     using System;
     using System.Runtime.InteropServices;
 
-    using MetaMind.Engine.Guis;
+    using MetaMind.Engine.Components.Inputs;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
-    public delegate void CharEnteredHandler(object sender, CharacterEventArgs e);
-
-    public delegate void KeyEventHandler(object sender, KeyEventArgs e);
-
-    public delegate void MouseEventHandler(object sender, MouseEventArgs e);
-
-    public enum MouseButton
-    {
-        None, 
-
-        Left, 
-
-        Right, 
-
-        Middle, 
-
-        X1, 
-
-        X2
-    }
-
-    /// <summary>
-    /// Mouse Key Flags from WinUser.h for mouse related WM messages.
-    /// </summary>
-    [Flags]
-    public enum MouseKeys
-    {
-        LButton = 0x01, 
-
-        RButton = 0x02, 
-
-        Shift = 0x04, 
-
-        Control = 0x08, 
-
-        MButton = 0x10, 
-
-        XButton1 = 0x20, 
-
-        XButton2 = 0x40
-    }
-
-    public class CharacterEventArgs : EventArgs
-    {
-        private readonly byte[] character;
-
-        private readonly int lParam;
-
-        public CharacterEventArgs(byte[] character, int lParam)
-        {
-            this.character = character;
-            this.lParam = lParam;
-        }
-
-        public bool AltPressed
-        {
-            get
-            {
-                return (lParam & (1 << 29)) > 0;
-            }
-        }
-
-        public byte[] Character
-        {
-            get
-            {
-                return character;
-            }
-        }
-
-        public bool ExtendedKey
-        {
-            get
-            {
-                return (lParam & (1 << 24)) > 0;
-            }
-        }
-
-        public int Param
-        {
-            get
-            {
-                return lParam;
-            }
-        }
-
-        public bool PreviousState
-        {
-            get
-            {
-                return (lParam & (1 << 30)) > 0;
-            }
-        }
-
-        public int RepeatCount
-        {
-            get
-            {
-                return lParam & 0xffff;
-            }
-        }
-
-        public bool TransitionState
-        {
-            get
-            {
-                return (lParam & (1 << 31)) > 0;
-            }
-        }
-    }
-
-    public class InputEventManager : ManualInputGameElement
+    public class InputEventManager : InputableGameEntity
     {
         #region Singleton
 
-        public static InputEventManager GetInstance(Game game)
+        public static InputEventManager GetInstance(GameEngine gameEngine)
         {
             if (Singleton == null)
             {
-                Singleton = new InputEventManager(game);
+                Singleton = new InputEventManager(gameEngine);
             }
 
             return Singleton;
@@ -163,11 +52,11 @@ namespace MetaMind.Engine.Components
 
         private bool isInitialized;
 
-        private InputEventManager(Game game)
+        private InputEventManager(GameEngine gameEngine)
         {
             if (!isInitialized)
             {
-                Initialize(game.Window);
+                this.Initialize(gameEngine.Window);
             }
         }
 
@@ -308,16 +197,16 @@ namespace MetaMind.Engine.Components
                 throw new InvalidOperationException("TextInput.Initialize can only be called once!");
             }
 
-            hookProcHandler = HookProc;
-            prevWndProc = (IntPtr)SetWindowLong(window.Handle, GWL_WNDPROC, (int)Marshal.GetFunctionPointerForDelegate(hookProcHandler));
+            this.hookProcHandler = this.HookProc;
+            this.prevWndProc = (IntPtr)SetWindowLong(window.Handle, GWL_WNDPROC, (int)Marshal.GetFunctionPointerForDelegate(this.hookProcHandler));
 
-            hIMC = ImmGetContext(window.Handle);
-            isInitialized = true;
+            this.hIMC = ImmGetContext(window.Handle);
+            this.isInitialized = true;
         }
 
         private IntPtr HookProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
         {
-            IntPtr returnCode = CallWindowProc(prevWndProc, hWnd, msg, wParam, lParam);
+            var returnCode = CallWindowProc(prevWndProc, hWnd, msg, wParam, lParam);
 
             if (!this.Controllable)
             {
@@ -351,7 +240,7 @@ namespace MetaMind.Engine.Components
                     {
                         // convert wParam to byte for different IME encoding
                         byte[] charBytes = BitConverter.GetBytes((int)wParam);
-                        CharEntered(null, new CharacterEventArgs(charBytes, lParam.ToInt32()));
+                        CharEntered(null, new CharEnteredEventArgs(charBytes, lParam.ToInt32()));
                     }
 
                     break;
@@ -524,109 +413,5 @@ namespace MetaMind.Engine.Components
         }
 
         #endregion Mouse Messages
-
-        #region Update and Draw
-
-        public override void Draw(GameTime gameTime, byte alpha)
-        {
-        }
-
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
-        {
-        }
-
-        public override void UpdateStructure(GameTime gameTime)
-        {
-        }
-
-        #endregion Update and Draw
-    }
-
-    public class KeyEventArgs : EventArgs
-    {
-        private readonly Keys keyCode;
-
-        public KeyEventArgs(Keys keyCode)
-        {
-            this.keyCode = keyCode;
-        }
-
-        public Keys KeyCode
-        {
-            get
-            {
-                return keyCode;
-            }
-        }
-    }
-
-    public class MouseEventArgs : EventArgs
-    {
-        private readonly MouseButton button;
-
-        private readonly int clicks;
-
-        private readonly int delta;
-
-        private readonly int x;
-
-        private readonly int y;
-
-        public MouseEventArgs(MouseButton button, int clicks, int x, int y, int delta)
-        {
-            this.button = button;
-            this.clicks = clicks;
-            this.x = x;
-            this.y = y;
-            this.delta = delta;
-        }
-
-        public MouseButton Button
-        {
-            get
-            {
-                return button;
-            }
-        }
-
-        public int Clicks
-        {
-            get
-            {
-                return clicks;
-            }
-        }
-
-        public int Delta
-        {
-            get
-            {
-                return delta;
-            }
-        }
-
-        public Point Location
-        {
-            get
-            {
-                return new Point(x, y);
-            }
-        }
-
-        public int X
-        {
-            get
-            {
-                return x;
-            }
-        }
-
-        public int Y
-        {
-            get
-            {
-                return y;
-            }
-        }
     }
 }

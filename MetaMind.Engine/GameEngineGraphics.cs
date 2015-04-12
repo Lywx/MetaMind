@@ -12,7 +12,8 @@ namespace MetaMind.Engine
 
     public sealed class GameEngineGraphics : GameEngineAccess, IGameGraphics
     {
-        public GameEngineGraphics()
+        public GameEngineGraphics(GameEngine gameEngine)
+            : base(gameEngine)
         {
             this.AccessType = GameEngineAccessType.Graphics;
         }
@@ -22,6 +23,14 @@ namespace MetaMind.Engine
             get
             {
                 return GameEngine.GraphicsManager;
+            }
+        }
+
+        public GraphicsSettings Settings
+        {
+            get
+            {
+                return GameEngine.GraphicsSettings;
             }
         }
 

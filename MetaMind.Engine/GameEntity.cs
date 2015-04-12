@@ -1,43 +1,54 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GameElement.cs" company="UESTC">
+// <copyright file="GameEntity.cs" company="UESTC">
 //   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Engine.Guis
+namespace MetaMind.Engine
 {
     using System;
 
     using Microsoft.Xna.Framework;
 
-    public class GameElement : IUpdateable, IDisposable
+    public class GameEntity : IUpdateable, IDisposable
     {
-        private bool enabled = true;
-
-        private int updateOrder;
-
-        public event EventHandler<EventArgs> EnabledChanged;
-
-        public event EventHandler<EventArgs> UpdateOrderChanged;
-
         #region Constructors
 
-        public GameElement()
+        public GameEntity()
         {
-
         }
 
-        #endregion
+        #endregion Constructors
 
         #region Destructors
 
-        ~GameElement()
+        ~GameEntity()
         {
             this.Dispose();
         }
 
         #endregion Destructors
+
+        #region Events
+
+        public event EventHandler<EventArgs> EnabledChanged;
+
+        public event EventHandler<EventArgs> UpdateOrderChanged;
+
+        protected virtual void OnEnabledChanged(object sender, EventArgs args)
+        {
+        }
+
+        protected virtual void OnUpdateOrderChanged(object sender, EventArgs args)
+        {
+        }
+
+        #endregion Events
+
+        #region States
+
+        private bool enabled = true;
 
         public bool Enabled
         {
@@ -61,6 +72,12 @@ namespace MetaMind.Engine.Guis
             }
         }
 
+        #endregion States
+
+        #region Update
+
+        private int updateOrder;
+
         public int UpdateOrder
         {
             get
@@ -83,17 +100,15 @@ namespace MetaMind.Engine.Guis
             }
         }
 
-        public virtual void Update(GameTime gameTime)
-        {
-        }
+        public virtual void Update(GameTime gameTime) { }
 
-        protected virtual void OnEnabledChanged(object sender, EventArgs args)
-        {
-        }
+        public virtual void Update(IGameFile gameFile, GameTime gameTime) { }
 
-        protected virtual void OnUpdateOrderChanged(object sender, EventArgs args)
-        {
-        }
+        public virtual void Update(IGameInterop gameInterop, GameTime gameTime) { }
+
+        public virtual void Update(IGameSound gameSound, GameTime gameTime) { }
+
+        #endregion Update
 
         #region IDisposable
 

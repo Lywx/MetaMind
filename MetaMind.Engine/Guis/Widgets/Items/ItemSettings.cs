@@ -22,7 +22,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         public Color IdColor       = Color.White;
 
-        public Font  IdFont        = Font.UiStatisticsFont;
+        public Font  IdFont        = Font.UiStatistics;
 
         public Point IdFrameSize   = new Point(48, 24);
 

@@ -3,8 +3,7 @@
     using System;
     using System.Diagnostics;
 
-    using MetaMind.Engine.Components;
-    using MetaMind.Engine.Extensions;
+    using MetaMind.Engine.Components.Inputs;
 
     using Microsoft.Xna.Framework;
 
@@ -21,8 +20,8 @@
             set
             {
                 var deltaLocation = this.rectangle.Location.DistanceFrom(value.Location);
-                var rectanleMoved = deltaLocation.Length() > 0f;
-                if (rectanleMoved && this.FrameMoved != null)
+                var hasMoved = deltaLocation.Length() > 0f;
+                if (hasMoved && this.FrameMoved != null)
                 {
                     this.FrameMoved(this, new FrameEventArgs(FrameEventType.Frame_Moved));
                 }
@@ -55,32 +54,44 @@
             this.Initialize(new Rectangle());
         }
 
+        #endregion
+
+        #region Destructors
+
         ~PressableFrame()
         {
             this.Dispose();
         }
 
-        public void Dispose()
+        #endregion
+
+        #region IDisposable
+
+        public virtual void Dispose()
         {
-            this.MouseEnter               = null;
-            this.MouseLeave               = null;
-            this.MouseLeftPressed         = null;
-            this.MouseLeftReleased        = null;
-            this.MouseLeftDraggedOutside  = null;
-            this.MouseRightPressed        = null;
-            this.MouseRightReleased       = null;
+            this.MouseEnter = null;
+            this.MouseLeave = null;
+            this.MouseLeftPressed = null;
+            this.MouseLeftReleased = null;
+            this.MouseLeftDraggedOutside = null;
+            this.MouseRightPressed = null;
+            this.MouseRightReleased = null;
             this.MouseRightDraggedOutside = null;
 
-            this.FrameMoved               = null;
+            this.FrameMoved = null;
 
             GameEngine.InputEventManager.MouseMove -= this.DetectMouseOver;
 
             GameEngine.InputEventManager.MouseDown -= this.DetectMouseLeftPressed;
             GameEngine.InputEventManager.MouseDown -= this.DetectMouseRightPressed;
 
-            GameEngine.InputEventManager.MouseUp   -= this.DetectMouseLeftRelease;
-            GameEngine.InputEventManager.MouseUp   -= this.DetectMouseRightRelease;
+            GameEngine.InputEventManager.MouseUp -= this.DetectMouseLeftRelease;
+            GameEngine.InputEventManager.MouseUp -= this.DetectMouseRightRelease;
         }
+
+        #endregion
+
+        #region Initialization
 
         protected void Initialize(Rectangle rectangle)
         {
@@ -95,7 +106,7 @@
             this.Initialize(center.PinRectangleCenter(size));
         }
 
-        #endregion Constructors
+        #endregion 
 
         #region Public Properties
 
@@ -205,7 +216,7 @@
         private void DetectMouseOver(object sender, MouseEventArgs e)
         {
             var previouslyInside = this.IsEnabled(FrameState.Mouse_Over);
-            var currentlyInside = this.MouseInside(e.Location);
+            var currentlyInside  = this.MouseInside(e.Location);
 
             this.UpdateStates(e.Location);
 
@@ -286,9 +297,9 @@
 
         #region Update
 
-        public virtual void UpdateInput(GameTime gameTime)
+        public virtual void Update(IGameInput gameInput, GameTime gameTime)
         {
-            var mouse         = GameEngine.InputSequenceManager.Mouse.CurrentState;
+            var mouse         = gameInput.Sequence.Mouse.CurrentState;
             var mouseLocation = new Point(mouse.X, mouse.Y);
 
             this.UpdateStates(mouseLocation);
@@ -301,10 +312,12 @@
                 this.Enable(FrameState.Mouse_Over);
             }
 
-            if (!this.MouseInside(mouseLocation) && this.IsEnabled(FrameState.Mouse_Left_Pressed))
+            if (!this.MouseInside(mouseLocation) && 
+                 this.IsEnabled(FrameState.Mouse_Left_Pressed))
             {
                 // non-applicable for draggable frame
-                if (!this.IsEnabled(FrameState.Frame_Dragging) && !this.IsEnabled(FrameState.Frame_Holding))
+                if (!this.IsEnabled(FrameState.Frame_Dragging) && 
+                    !this.IsEnabled(FrameState.Frame_Holding))
                 {
                     this.Disable(FrameState.Mouse_Left_Pressed);
                     this.Enable(FrameState.Mouse_Left_Dragged_Out);

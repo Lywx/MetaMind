@@ -2,10 +2,8 @@
 {
     using System.Runtime.Serialization;
 
-    using MetaMind.Engine;
-
     [DataContract]
-    public class Task : GameEngineAccess, IProgressable, ISynchronizable
+    public class Task : IProgressable, ISynchronizable
     {
         [DataMember]
         public string Name = string.Empty;

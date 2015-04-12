@@ -33,7 +33,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             }
         }
 
-        public virtual void ExchangeIt(IViewItem draggingItem, IView targetView)
+        public virtual void ExchangeIt(IGameInterop gameInterop, IViewItem draggingItem, IView targetView)
         {
             if (this.Item.IsEnabled(ItemState.Item_Exchanging))
             {
@@ -42,10 +42,10 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
             this.Item.Enable(ItemState.Item_Exchanging);
 
-            ProcessManager.AttachProcess(new ViewItemTransitProcess(draggingItem, targetView));
+            gameInterop.Process.AttachProcess(new ViewItemTransitProcess(draggingItem, targetView));
         }
 
-        public virtual void SwapIt(IViewItem draggingItem)
+        public virtual void SwapIt(IGameInterop gameInterop, IViewItem draggingItem)
         {
             if (this.Item.IsEnabled(ItemState.Item_Swaping))
             {
@@ -59,10 +59,10 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
             this.ViewControl.Swap.Initialize(originCenter, targetCenter);
 
-            ProcessManager.AttachProcess(new ViewItemSwapProcess(draggingItem, this.Item));
+            gameInterop.Process.AttachProcess(new ViewItemSwapProcess(draggingItem, this.Item));
         }
 
-        public virtual void UpdateStructure(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             this.UpdateViewScroll();
             this.UpdateViewSelection();

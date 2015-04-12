@@ -49,7 +49,7 @@ namespace MetaMind.Perseverance.Concepts
     }
 
     [DataContract(Name = "Synchronization")]
-    public class Synchronization : GameEngineAccess, ISynchronization
+    public class Synchronization : ISynchronization
     {
         #region Components
 

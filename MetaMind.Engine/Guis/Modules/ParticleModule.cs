@@ -33,7 +33,7 @@ namespace MetaMind.Engine.Guis.Modules
 
         protected int SpawnSpeed { get; set; }
 
-        public void Draw(GameTime gameTime)
+        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
         {
             for (var i = 0; i < this.Particles.Count; ++i)
             {
@@ -42,28 +42,26 @@ namespace MetaMind.Engine.Guis.Modules
                     if (!this.Plain)
                     {
                         // half additive and half solid
-                        ScreenManager.SpriteBatch.End();
-                        ScreenManager.SpriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.Additive);
+                        var spriteBatch = gameGraphics.Screen.SpriteBatch;
+
+                        spriteBatch.End();
+                        spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.Additive);
                     }
                 }
 
-                this.Particles[i].Draw(gameTime);
+                this.Particles[i].Draw(gameGraphics, gameTime, alpha);
             }
         }
 
-        public override void Load()
+        public override void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
         {
         }
 
-        public override void Unload()
+        public override void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
         {
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
-        {
-        }
-
-        public override void UpdateStructure(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             for (var i = 0; i < this.Particles.Count; ++i)
             {

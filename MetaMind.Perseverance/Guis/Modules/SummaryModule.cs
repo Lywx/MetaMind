@@ -31,21 +31,21 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         #region Load and Unload
 
-        public override void Load()
+        public override void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
         {
             if (this.sleepStoppedEventListener == null)
             {
                 this.sleepStoppedEventListener = new SummaryModuleSleepStoppedEventListener();
             }
 
-            EventManager.AddListener(this.sleepStoppedEventListener);
+            gameInterop.Event.AddListener(this.sleepStoppedEventListener);
         }
 
-        public override void Unload()
+        public override void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
         {
             if (this.sleepStoppedEventListener != null)
             {
-                EventManager.RemoveListener(this.sleepStoppedEventListener);
+                gameInterop.Event.RemoveListener(this.sleepStoppedEventListener);
             }
 
             this.sleepStoppedEventListener = null;
@@ -60,15 +60,15 @@ namespace MetaMind.Perseverance.Guis.Modules
         /// </summary>
         /// <param name="gameInput"></param>
         /// <param name="gameTime"></param>
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
-            if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.ForceReset))
+            if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.ForceReset))
             {
                 this.synchronization.ResetTomorrow();
             }
         }
 
-        public override void UpdateStructure(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
         }
 
@@ -76,34 +76,34 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         #region Draw
 
-        public override void Draw(GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
         {
             if (this.cognition.Awake)
             {
                 return;
             }
             
-            this.DrawSummaryTitle (   Color.White, "Summary");
+            this.DrawSummaryTitle(   Color.White, "Summary");
             
             // daily statistics
-            this.DrawSummaryEntity(1, Color.White, "Hours in Synchronization:" , this.synchronization.SynchronizedHourYesterday.ToSummary());
-            this.DrawSummaryBlank (2);
-            this.DrawSummaryEntity(3, Color.Red,   "Hours in Good Profession:" , -this.Settings.GoodPrefessionHour);
-            this.DrawSummaryEntity(4, Color.Red,   "Hours in Lofty Profession:", -this.Settings.LoftyProfessionHour);
-            this.DrawSummarySplit (5, Color.Red);
+            this.DrawSummaryEntry(1, Color.White, "Hours in Synchronization:" , this.synchronization.SynchronizedHourYesterday.ToSummary());
+            this.DrawSummaryBlank(2);
+            this.DrawSummaryEntry(3, Color.Red,   "Hours in Good Profession:" , -this.Settings.GoodPrefessionHour);
+            this.DrawSummaryEntry(4, Color.Red,   "Hours in Lofty Profession:", -this.Settings.LoftyProfessionHour);
+            this.DrawSummarySplit(5, Color.Red);
 
             var dailyLeftHour = this.synchronization.SynchronizedHourYesterday - this.Settings.GoodPrefessionHour - this.Settings.LoftyProfessionHour;
             this.DrawSummaryResult(6, Color.White, Color.Red, string.Empty, dailyLeftHour);
             
-            this.DrawSummaryBlank (7);
+            this.DrawSummaryBlank(7);
 
             // weekly statistics
             var weeklyHour = (int)this.synchronization.SynchronizedTimeRecentWeek.TotalHours;
             var weeklyLeftHour = weeklyHour - this.Settings.WorldRecordHour;
 
-            this.DrawSummaryEntity(8, Color.White, "Hours in Synchronization In Recent 7 Days:", weeklyHour.ToSummary());
+            this.DrawSummaryEntry(8, Color.White, "Hours in Synchronization In Recent 7 Days:", weeklyHour.ToSummary());
             this.DrawSummaryBlank (9);
-            this.DrawSummaryEntity(10, Color.Red,   "Len Bosack's Records in 7 Days:", -this.Settings.WorldRecordHour);
+            this.DrawSummaryEntry(10, Color.Red,   "Len Bosack's Records in 7 Days:", -this.Settings.WorldRecordHour);
             this.DrawSummarySplit (11, Color.Red);
 
             this.DrawSummaryResult(12, Color.Gold, Color.Red, string.Empty, weeklyLeftHour);
@@ -111,10 +111,10 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         private void DrawSummaryBlank(int line)
         {
-            this.DrawSummaryEntity(line, Color.White, string.Empty, string.Empty);
+            this.DrawSummaryEntry(line, Color.White, string.Empty, string.Empty);
         }
 
-        private void DrawSummaryEntity(int line, Color color, string caption, string presentation)
+        private void DrawSummaryEntry(int line, Color color, string caption, string presentation)
         {
             var captionPosition = new Vector2(GameEngine.GraphicsSettings.Width / 2f - 300, 150 + line * Settings.LineHeight);
             var contentPosition = new Vector2(GameEngine.GraphicsSettings.Width / 2f + 260, 150 + line * Settings.LineHeight);
@@ -123,7 +123,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             FontManager.DrawString(Settings.EntityFont, presentation, contentPosition, color, Settings.EntitySize);
         }
 
-        private void DrawSummaryEntity(int line, Color color, string caption, object presentedData)
+        private void DrawSummaryEntry(int line, Color color, string caption, object presentedData)
         {
             var captionPosition = new Vector2(GameEngine.GraphicsSettings.Width / 2f - 300, 150 + line * Settings.LineHeight);
             var contentPosition = new Vector2(GameEngine.GraphicsSettings.Width / 2f + 260, 150 + line * Settings.LineHeight);
@@ -135,7 +135,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         private void DrawSummaryResult(int line, Color goodColor, Color badColor, string caption, int computation)
         {
-            this.DrawSummaryEntity(line, computation >= 0 ? goodColor : badColor, caption, computation.ToSummary());
+            this.DrawSummaryEntry(line, computation >= 0 ? goodColor : badColor, caption, computation.ToSummary());
         }
 
         private void DrawSummarySplit(int line, Color color)

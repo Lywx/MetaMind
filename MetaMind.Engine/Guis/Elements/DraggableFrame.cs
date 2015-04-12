@@ -9,8 +9,6 @@ namespace MetaMind.Engine.Guis.Elements
 {
     using System;
 
-    using MetaMind.Engine.Extensions;
-
     using Microsoft.Xna.Framework;
 
     public class DraggableFrame : PickableFrame, IDraggableFrame
@@ -74,7 +72,7 @@ namespace MetaMind.Engine.Guis.Elements
 
         public event EventHandler<FrameEventArgs> MouseDropped;
 
-        private void RecordPressPosition(object sender, EventArgs e)
+        private void RecordPressPosition(object sender, FrameEventArgs e)
         {
             var mouse = GameEngine.InputSequenceManager.Mouse.CurrentState;
 
@@ -112,11 +110,11 @@ namespace MetaMind.Engine.Guis.Elements
 
         #region Update
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
-            base.UpdateInput(gameTime);
+            base.Update(gameInput, gameTime);
 
-            var mouse = GameEngine.InputSequenceManager.Mouse.CurrentState;
+            var mouse = gameInput.Sequence.Mouse.CurrentState;
             var mouseLocation = new Point(mouse.X, mouse.Y);
 
             if (this.IsEnabled(FrameState.Frame_Dragging))

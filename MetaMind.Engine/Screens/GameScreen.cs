@@ -4,34 +4,56 @@ namespace MetaMind.Engine.Screens
 
     using Microsoft.Xna.Framework;
 
-    /// <summary>
-    /// A screen is a single layer that has update and draw logic, and which
-    /// can be combined with other layers to build up a complex menu system.
-    /// For instance the main menu, the options menu, the "are you sure you
-    /// want to quit" message box, and the main game itself are all implemented
-    /// as screens.
-    /// </summary>
-    /// <remarks>
-    /// Similar to a class found in the Game State Management sample on the
-    /// XNA Creators Club Online website (http://creators.xna.com).
-    /// </remarks>
-    public class GameScreen : GameEngineAccess
+    public class GameScreen : IGameScreen
     {
-        private bool isExiting = false;
+        #region Screen Options Data
 
         private bool isPopup = false;
-
-        private bool otherScreenHasFocus;
-
-        private GameScreenState screenState = GameScreenState.TransitionOn;
 
         private TimeSpan transitionOffTime = TimeSpan.Zero;
 
         private TimeSpan transitionOnTime = TimeSpan.Zero;
 
-        private float transitionPosition = 1;
+        /// <summary>
+        /// This property indicates whether the screen is only a small
+        /// popup, in which case screens underneath it do not need to bother
+        /// transitioning off.
+        /// </summary>
+        public bool IsPopup
+        {
+            get { return this.isPopup; }
+            protected set { this.isPopup = value; }
+        }
 
-        public event EventHandler Exiting;
+        /// <summary>
+        /// Indicates how long the screen takes to
+        /// transition off when it is deactivated.
+        /// </summary>
+        public TimeSpan TransitionOffTime
+        {
+            get { return this.transitionOffTime; }
+            protected set { this.transitionOffTime = value; }
+        }
+
+        /// <summary>
+        /// Indicates how long the screen takes to
+        /// transition on when it is activated.
+        /// </summary>
+        public TimeSpan TransitionOnTime
+        {
+            get { return this.transitionOnTime; }
+            protected set { this.transitionOnTime = value; }
+        }
+
+        #endregion Screen Options Data
+
+        #region Screen State Data
+
+        private bool isExiting = false;
+
+        private GameScreenState screenState = GameScreenState.TransitionOn;
+
+        private float transitionPosition = 1;
 
         /// <summary>
         /// Checks whether this screen is active and can respond to user input.
@@ -40,9 +62,9 @@ namespace MetaMind.Engine.Screens
         {
             get
             {
-                return !otherScreenHasFocus &&
-                       (screenState == GameScreenState.TransitionOn ||
-                        screenState == GameScreenState.Active);
+                return !this.HasOtherScreenFocus &&
+                       (this.screenState == GameScreenState.TransitionOn ||
+                        this.screenState == GameScreenState.Active);
             }
         }
 
@@ -56,27 +78,16 @@ namespace MetaMind.Engine.Screens
         /// </summary>
         public bool IsExiting
         {
-            get { return isExiting; }
+            get { return this.isExiting; }
             protected internal set
             {
-                bool fireEvent = !isExiting && value;
-                isExiting = value;
-                if (fireEvent && (Exiting != null))
+                var fireEvent = !this.isExiting && value;
+                this.isExiting = value;
+                if (fireEvent && (this.Exiting != null))
                 {
-                    Exiting(this, EventArgs.Empty);
+                    this.Exiting(this, EventArgs.Empty);
                 }
             }
-        }
-
-        /// <summary>
-        /// This property indicates whether the screen is only a small
-        /// popup, in which case screens underneath it do not need to bother
-        /// transitioning off.
-        /// </summary>
-        public bool IsPopup
-        {
-            get { return isPopup; }
-            protected set { isPopup = value; }
         }
 
         /// <summary>
@@ -84,8 +95,8 @@ namespace MetaMind.Engine.Screens
         /// </summary>
         public GameScreenState ScreenState
         {
-            get { return screenState; }
-            protected set { screenState = value; }
+            get { return this.screenState; }
+            protected set { this.screenState = value; }
         }
 
         /// <summary>
@@ -95,27 +106,7 @@ namespace MetaMind.Engine.Screens
         /// </summary>
         public byte TransitionAlpha
         {
-            get { return (byte)(255 - TransitionPosition * 255); }
-        }
-
-        /// <summary>
-        /// Indicates how long the screen takes to
-        /// transition off when it is deactivated.
-        /// </summary>
-        public TimeSpan TransitionOffTime
-        {
-            get { return transitionOffTime; }
-            protected set { transitionOffTime = value; }
-        }
-
-        /// <summary>
-        /// Indicates how long the screen takes to
-        /// transition on when it is activated.
-        /// </summary>
-        public TimeSpan TransitionOnTime
-        {
-            get { return transitionOnTime; }
-            protected set { transitionOnTime = value; }
+            get { return (byte)(255 - this.TransitionPosition * 255); }
         }
 
         /// <summary>
@@ -125,109 +116,110 @@ namespace MetaMind.Engine.Screens
         /// </summary>
         public float TransitionPosition
         {
-            get { return transitionPosition; }
-            protected set { transitionPosition = value; }
+            get { return this.transitionPosition; }
+            protected set { this.transitionPosition = value; }
         }
+
+        protected bool HasOtherScreenFocus { get; set; }
+
+        #endregion Screen State Data
+
+        #region Screen Events
+
+        public event EventHandler Exiting;
+
+        #endregion Screen Events
+
+        #region Load and Unload
+
+        public virtual void Load(IGameFile gameFile)
+        {
+        }
+
+        public void Load(IGameInterop gameInterop)
+        {
+        }
+
+        public virtual void Unload(IGameFile gameFile)
+        {
+        }
+
+        public void Unload(IGameInterop gameInterop)
+        {
+        }
+
+        #endregion Load and Unload
+
+        #region Draw
 
         /// <summary>
         /// This is called when the screen should draw itself.
         /// </summary>
-        public virtual void Draw(GameTime gameTime)
+        public virtual void Draw(IGameGraphics gameGraphics, GameTime gameTime) { }
+
+        #endregion Draw
+
+        #region Update
+
+        public virtual void Update(IGameGraphics gameGraphics, GameTime gameTime, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
         {
-            if (!isPopup)
-            {
-            }
-        }
+            this.HasOtherScreenFocus = hasOtherScreenFocus;
 
-        /// <summary>
-        /// Tells the screen to go away. Unlike ScreenManager.RemoveScreen, which
-        /// instantly kills the screen, this method respects the transition timings
-        /// and will give the screen a chance to gradually transition off.
-        /// </summary>
-        public void ExitScreen()
-        {
-            // flag that it should transition off and then exit.
-            IsExiting = true;
-
-            // If the screen has a zero transition time, remove it immediately.
-            if (TransitionOffTime == TimeSpan.Zero)
-            {
-                ScreenManager.RemoveScreen(this);
-            }
-        }
-
-        /// <summary>
-        /// Allows the screen to handle user input. Unlike Update, this method
-        /// is only called when the screen is active, and not when some other
-        /// screen has taken the focus.
-        /// </summary>
-        public virtual void HandleInput()
-        {
-        }
-
-        /// <summary>
-        /// Load graphics content for the screen.
-        /// </summary>
-        public virtual void LoadContent()
-        {
-        }
-
-        /// <summary>
-        /// Unload content for the screen.
-        /// </summary>
-        public virtual void UnloadContent()
-        {
-        }
-
-        /// <summary>
-        /// Allows the screen to run logic, such as updating the transition position.
-        /// Unlike HandleInput, this method is called regardless of whether the screen
-        /// is active, hidden, or in the middle of a transition.
-        /// </summary>
-        public virtual void Update(GameTime gameTime, bool otherScreenHasFocus,
-            bool coveredByOtherScreen)
-        {
-            this.otherScreenHasFocus = otherScreenHasFocus;
-
-            if (IsExiting)
+            if (this.IsExiting)
             {
                 // If the screen is going away to die, it should transition off.
-                screenState = GameScreenState.TransitionOff;
+                this.screenState = GameScreenState.TransitionOff;
 
-                if (!UpdateTransition(gameTime, transitionOffTime, 1))
+                if (!this.UpdateTransition(gameTime, this.transitionOffTime, 1))
                 {
                     // When the transition finishes, remove the screen.
-                    ScreenManager.RemoveScreen(this);
+                    gameGraphics.Screen.RemoveScreen(this);
                 }
             }
-            else if (coveredByOtherScreen)
+            else if (isCoveredByOtherScreen)
             {
                 // If the screen is covered by another, it should transition off.
-                if (UpdateTransition(gameTime, transitionOffTime, 1))
+                if (this.UpdateTransition(gameTime, this.transitionOffTime, 1))
                 {
                     // Still busy transitioning.
-                    screenState = GameScreenState.TransitionOff;
+                    this.screenState = GameScreenState.TransitionOff;
                 }
                 else
                 {
                     // Transition finished!
-                    screenState = GameScreenState.Hidden;
+                    this.screenState = GameScreenState.Hidden;
                 }
             }
             else
             {
                 // Otherwise the screen should transition on and become active.
-                if (UpdateTransition(gameTime, transitionOnTime, -1))
+                if (this.UpdateTransition(gameTime, this.transitionOnTime, -1))
                 {
                     // Still busy transitioning.
-                    screenState = GameScreenState.TransitionOn;
+                    this.screenState = GameScreenState.TransitionOn;
                 }
                 else
                 {
                     // Transition finished!
-                    screenState = GameScreenState.Active;
+                    this.screenState = GameScreenState.Active;
                 }
             }
+        }
+
+        public virtual void Update(IGameInput gameInput, GameTime gameTime)
+        {
+        }
+
+        public virtual void Update(IGameFile gameFile, GameTime gameTime)
+        {
+        }
+
+        public virtual void Update(IGameInterop gameInterop, GameTime gameTime)
+        {
+        }
+
+        public virtual void Update(IGameSound gameSound, GameTime gameTime)
+        {
         }
 
         /// <summary>
@@ -239,23 +231,49 @@ namespace MetaMind.Engine.Screens
             float transitionDelta;
 
             if (time == TimeSpan.Zero)
+            {
                 transitionDelta = 1;
+            }
             else
-                transitionDelta = (float)(gameTime.ElapsedGameTime.TotalMilliseconds /
-                                          time.TotalMilliseconds);
+            {
+                transitionDelta = (float)(gameTime.ElapsedGameTime.TotalMilliseconds / time.TotalMilliseconds);
+            }
 
             // Update the transition position.
-            transitionPosition += transitionDelta * direction;
+            this.transitionPosition += transitionDelta * direction;
 
             // Did we reach the end of the transition?
-            if ((transitionPosition <= 0) || (transitionPosition >= 1))
+            if ((this.transitionPosition <= 0) || (this.transitionPosition >= 1))
             {
-                transitionPosition = MathHelper.Clamp(transitionPosition, 0, 1);
+                this.transitionPosition = MathHelper.Clamp(this.transitionPosition, 0, 1);
                 return false;
             }
 
             // Otherwise we are still busy transitioning.
             return true;
         }
+
+        #endregion Update
+
+        #region Operations
+
+        /// <summary>
+        /// Tells the screen to go away. Unlike ScreenManager.RemoveScreen, which
+        /// instantly kills the screen, this method respects the transition timings
+        /// and will give the screen a chance to gradually transition off.
+        /// </summary>
+        public void Exit()
+        {
+            // flag that it should transition off and then exit.
+            this.IsExiting = true;
+
+            // If the screen has a zero transition time, remove it immediately.
+            if (this.TransitionOffTime == TimeSpan.Zero)
+            {
+                GameEngine.ScreenManager.RemoveScreen(this);
+            }
+        }
+
+        #endregion Operations
     }
 }

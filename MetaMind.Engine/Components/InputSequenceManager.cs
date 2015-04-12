@@ -15,7 +15,7 @@ namespace MetaMind.Engine.Components
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class InputSequenceManager : ManualInputGameElement
+    public class InputSequenceManager : InputableGameEntity
     {
         private readonly KeyboardManager keyboard;
 
@@ -60,18 +60,10 @@ namespace MetaMind.Engine.Components
 
         #region Update and Draw
 
-        public override void Draw(GameTime gameTime, byte alpha)
+        public override void Update(IGameInput gameInput, GameTime gameTime)
         {
-        }
-
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
-        {
-            this.mouse   .UpdateInput(gameInput, gameTime);
-            this.keyboard.UpdateInput(gameInput, gameTime);
-        }
-
-        public override void UpdateStructure(GameTime gameTime)
-        {
+            this.mouse   .Update(gameInput, gameTime);
+            this.keyboard.Update(gameInput, gameTime);
         }
 
         #endregion Update and Draw

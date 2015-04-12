@@ -7,6 +7,7 @@
 
 namespace MetaMind.Perseverance.Guis.Widgets
 {
+    using MetaMind.Engine;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Views;
 
@@ -23,14 +24,14 @@ namespace MetaMind.Perseverance.Guis.Widgets
         {
         }
 
-        public override void Draw(GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
         {
-            base.Draw(gameTime, alpha);
+            base.Draw(gameGraphics, gameTime, alpha);
 
-            this.DrawRegion(gameTime);
+            this.DrawRegion(gameGraphics, gameTime);
         }
 
-        public override void UpdateStructure(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             if (this.View.IsEnabled(ViewState.View_Has_Focus))
             {
@@ -50,10 +51,10 @@ namespace MetaMind.Perseverance.Guis.Widgets
             }
         }
 
-        private void DrawRegion(GameTime gameTime)
+        private void DrawRegion(IGameGraphics gameGraphics, GameTime gameTime)
         {
             Primitives2D.FillRectangle(
-                ScreenManager.SpriteBatch,
+                gameGraphics.Screen.SpriteBatch,
                 this.ViewControl.Region.Frame.Rectangle,
                 ExtColor.MakeTransparent(this.ViewSettings.HighlightColor, (byte)this.frameAlpha));
         }

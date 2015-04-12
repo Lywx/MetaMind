@@ -31,7 +31,7 @@ namespace MetaMind.Acutance.Concepts
             this.Dispose();
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             if (this.timer != null)
             {
