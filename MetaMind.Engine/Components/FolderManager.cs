@@ -9,7 +9,6 @@ namespace MetaMind.Engine.Components
 {
     using System.IO;
 
-    using MetaMind.Engine.Settings;
     using MetaMind.Engine.Settings.Loaders;
 
     public class FolderManager

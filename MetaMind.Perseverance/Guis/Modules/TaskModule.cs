@@ -64,7 +64,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             }
         }
 
-        public override void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
+        public override void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
         {
             // performance penalty due to dynamic type
             // performance is still bad even with fast member
@@ -88,7 +88,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             this.View.Draw(gameTime, alpha);
         }
 
-        public override void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             // mouse
             //-----------------------------------------------------------------

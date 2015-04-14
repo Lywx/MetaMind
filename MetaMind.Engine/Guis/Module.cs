@@ -8,10 +8,10 @@ namespace MetaMind.Engine.Guis
     /// data from data source. The behavior is of maximum abstraction.
     /// </summary>
     /// <remarks>
-    /// Compatible with previous InputableGameEntity implementation, as long as
+    /// Compatible with previous GameControllableEntity implementation, as long as
     /// the derived class override the widget implementation.
-    /// </remarks>>
-    public class Module<TModuleSettings> : InputableGameEntity, IModule
+    /// </remarks>
+    public class Module<TModuleSettings> : GameControllableEntity, IModule
     {
         protected Module(TModuleSettings settings)
         {
@@ -26,23 +26,23 @@ namespace MetaMind.Engine.Guis
 
         public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
         {
-            this.Graphics.Draw(gameTime);
+            this.Graphics.Draw(gameGraphics, gameTime, alpha);
         }
 
-        public virtual void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
+        public virtual void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
         {
-            this.Control.Load(gameFile, gameInput, gameInterop, gameSound);
+            this.Control.Load(gameFile, gameInput, gameInterop, gameAudio);
         }
 
-        public virtual void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
+        public virtual void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
         {
-            this.Control.Unload(gameFile, gameInput, gameInterop, gameSound);
+            this.Control.Unload(gameFile, gameInput, gameInterop, gameAudio);
         }
 
-        public override void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
-            this.Control .Update(gameInput, gameTime);
-            this.Graphics.Update(gameInput, gameTime);
+            this.Control .UpdateInput(gameInput, gameTime);
+            this.Graphics.UpdateInput(gameInput, gameTime);
         }
 
         public override void Update(GameTime gameTime)

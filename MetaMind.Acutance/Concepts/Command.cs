@@ -102,13 +102,13 @@ namespace MetaMind.Acutance.Concepts
         {
             this.State = CommandState.Transiting;
 
-            var commandNotifiedEvent = new EventBase(
+            var commandNotifiedEvent = new Event(
                 (int)SessionEventType.CommandNotified,
                 new CommandNotifiedEventArgs(this));
 
             GameEngine.EventManager.QueueEvent(commandNotifiedEvent);
 
-            var knowledgeRetrievedEvent = new EventBase(
+            var knowledgeRetrievedEvent = new Event(
                 (int)SessionEventType.KnowledgeRetrieved,
                 new KnowledgeRetrievedEventArgs(this.Path, this.Offset));
 

@@ -15,17 +15,17 @@ namespace MetaMind.Engine.Components
 
     using Microsoft.Xna.Framework;
 
-    public class EventManager : GameComponent
+    public class EventManager : GameComponent, IEventManager
     {
         #region Event Data
 
-        private List<EventBase> activeEvents;
+        private List<IEvent> activeEvents;
 
         private List<int> knownEvents;
 
-        private List<ListenerBase> listeners;
+        private List<IListener> listeners;
 
-        private List<EventBase> queuedEvents;
+        private List<IEvent> queuedEvents;
 
         public List<int> KnownEvents
         {
@@ -35,7 +35,7 @@ namespace MetaMind.Engine.Components
             }
         }
 
-        public List<ListenerBase> Listeners
+        public List<IListener> Listeners
         {
             get
             {
@@ -72,9 +72,9 @@ namespace MetaMind.Engine.Components
             : base(gameEngine)
         {
             this.knownEvents  = new List<int>();
-            this.queuedEvents = new List<EventBase>();
-            this.activeEvents = new List<EventBase>();
-            this.listeners    = new List<ListenerBase>();
+            this.queuedEvents = new List<IEvent>();
+            this.activeEvents = new List<IEvent>();
+            this.listeners    = new List<IListener>();
         }
 
         #endregion Constructors
@@ -89,7 +89,7 @@ namespace MetaMind.Engine.Components
 
         #region Listener Operations
 
-        public void AddListener(ListenerBase listener)
+        public void AddListener(IListener listener)
         {
             if (!this.listeners.Contains(listener))
             {
@@ -101,7 +101,7 @@ namespace MetaMind.Engine.Components
             }
         }
 
-        public void RemoveListener(ListenerBase listener)
+        public void RemoveListener(IListener listener)
         {
             if (this.listeners.Contains(listener))
             {
@@ -113,7 +113,7 @@ namespace MetaMind.Engine.Components
 
         #region Event Operations
 
-        public void QueueEvent(EventBase e)
+        public void QueueEvent(IEvent e)
         {
             // won't validate event before adding it
             // which allow queuing events before adding listeners for it
@@ -121,7 +121,7 @@ namespace MetaMind.Engine.Components
             this.queuedEvents.Add(e);
         }
 
-        public void QueueUniqueEvent(EventBase e)
+        public void QueueUniqueEvent(IEvent e)
         {
             // won't validate event before adding it
             // which allow queuing events before adding listeners for it
@@ -136,7 +136,7 @@ namespace MetaMind.Engine.Components
             this.queuedEvents.Add(e);
         }
 
-        public void RemoveQueuedEvent(EventBase e, bool allOccurances)
+        public void RemoveQueuedEvent(IEvent e, bool allOccurances)
         {
             if (this.queuedEvents.Contains(e))
             {
@@ -154,7 +154,7 @@ namespace MetaMind.Engine.Components
             }
         }
 
-        public void TriggerEvent(EventBase e)
+        public void TriggerEvent(IEvent e)
         {
             if (this.ValidateEvent(e.EventType))
             {
@@ -197,7 +197,7 @@ namespace MetaMind.Engine.Components
             var stopTime = startTime + 50000;
 
             // Copy the queued events to the active events list
-            this.activeEvents = new List<EventBase>(this.queuedEvents);
+            this.activeEvents = new List<IEvent>(this.queuedEvents);
             this.queuedEvents.Clear();
 
             // Process at least one event..or so Mr. McShaffry says
@@ -225,7 +225,7 @@ namespace MetaMind.Engine.Components
 
                 // If an event has been around for longer than 3 seconds, remove it
                 // should change to 2 attempts?
-                if (currentTime >= @event.CreationTime + this.SecondsToTicks(@event.LifeTime))
+                if (currentTime >= @event.CreationTime + this.SecondsToTicks(@event.EventLife))
                 {
                     @event.Handled = true;
                 }

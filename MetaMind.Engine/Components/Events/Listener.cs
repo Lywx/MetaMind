@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ListenerBase.cs" company="UESTC">
+// <copyright file="Listener.cs" company="UESTC">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -7,13 +7,21 @@
 
 namespace MetaMind.Engine.Components.Events
 {
+    using System;
     using System.Collections.Generic;
 
-    public class ListenerBase
+    public class Listener : IListener
     {
         private readonly List<int> registeredEvents;
+        private readonly Func<IEvent, bool> handleEvents;
 
-        protected ListenerBase()
+        public Listener(List<int> registeredEvents, Func<IEvent, bool> handleEvents)
+        {
+            this.handleEvents     = handleEvents;
+            this.registeredEvents = registeredEvents;
+        }
+
+        protected Listener()
         {
             this.registeredEvents = new List<int>();
         }
@@ -26,8 +34,13 @@ namespace MetaMind.Engine.Components.Events
             }
         }
 
-        public virtual bool HandleEvent(EventBase @event)
+        public virtual bool HandleEvent(IEvent e)
         {
+            if (this.handleEvents != null)
+            {
+                return this.handleEvents(e);
+            }
+
             return false;
         }
     }

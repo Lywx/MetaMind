@@ -29,12 +29,12 @@
 
         #region Load and Unload
 
-        public override void Load(IGameFile gameFile)
+        public override void LoadContent(IGameFile gameFile)
         {
             this.backgroundTexture = gameFile.Content.Load<Texture2D>(@"Textures\Screens\Background\Sea Of Mind");
         }
 
-        public override void Unload(IGameFile gameFile)
+        public override void UnloadContent(IGameFile gameFile)
         {
         }
 

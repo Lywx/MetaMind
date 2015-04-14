@@ -146,7 +146,7 @@
             get { return this.Item.IsEnabled(ItemState.Item_Active); }
         }
 
-        public override void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             if (!this.Active)
             {
@@ -164,15 +164,9 @@
             //-----------------------------------------------------------------
             if (this.ViewSettings.KeyboardEnabled)
             {
-                this.ItemDataControl.Update(gameInput, gameTime);
+                this.ItemDataControl.UpdateInput(gameInput, gameTime);
             }
         }
-
-        public override void Update(IGameFile gameFile, GameTime gameTime) { }
-
-        public override void Update(IGameInterop gameInterop, GameTime gameTime) { }
-
-        public override void Update(IGameSound gameSound, GameTime gameTime) { }
 
         public override void Update(GameTime gameTime)
         {
@@ -200,11 +194,5 @@
         }
 
         #endregion Update
-
-        #region Draw
-
-        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha) { } 
-
-        #endregion
     }
 }

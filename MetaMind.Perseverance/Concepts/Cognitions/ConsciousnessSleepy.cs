@@ -34,7 +34,7 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
             HistoricalSleepSpan += SleepSpan;
 
             // add to event queue
-            var sleepStoppedEvent = new EventBase(
+            var sleepStoppedEvent = new Event(
                 (int)SessionEventType.SleepStopped,
                 new ConsciousnessSleepStoppedEventArgs(this));
             gameInterop.Event.TriggerEvent(sleepStoppedEvent);

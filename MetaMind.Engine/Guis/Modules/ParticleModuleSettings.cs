@@ -2,26 +2,19 @@ namespace MetaMind.Engine.Guis.Modules
 {
     using System;
 
-    using MetaMind.Engine.Guis.Particles;
-
     public class ParticleModuleSettings : ICloneable
     {
-        public Random           Random;
-        public GenerateParticle Generate;
-
         public int ParticleNum = 1500;
 
-        public int Width;
+        public int ParticleWidth;
 
-        public int Height;
+        public int ParticleHeight;
 
-        public ParticleModuleSettings(Random random, GenerateParticle generate, int width, int height)
+        public ParticleModuleSettings(int particleWidth, int particleHeight, int particleNum)
         {
-            this.Random   = random;
-            this.Generate = generate;
-
-            this.Width    = width;
-            this.Height   = height;
+            this.ParticleWidth  = particleWidth;
+            this.ParticleHeight = particleHeight;
+            this.ParticleNum    = particleNum;
         }
 
         public object Clone()

@@ -1,5 +1,6 @@
 namespace MetaMind.Perseverance.Guis.Widgets
 {
+    using MetaMind.Engine;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Items;
 
@@ -63,14 +64,14 @@ namespace MetaMind.Perseverance.Guis.Widgets
             }
         }
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
-            base.UpdateInput(gameTime);
+            base.UpdateInput(gameInput, gameTime);
 
-            this.NameFrame      .Update(gameInput, gameTime);
-            this.IdFrame        .Update(gameInput, gameTime);
-            this.ExperienceFrame.Update(gameInput, gameTime);
-            this.ProgressFrame  .Update(gameInput, gameTime);
+            this.NameFrame      .UpdateInput(gameInput, gameTime);
+            this.IdFrame        .UpdateInput(gameInput, gameTime);
+            this.ExperienceFrame.UpdateInput(gameInput, gameTime);
+            this.ProgressFrame  .UpdateInput(gameInput, gameTime);
         }
 
         protected override void UpdateFrameGeometry()

@@ -1,6 +1,6 @@
 namespace MetaMind.Engine.Guis
 {
-    public class GroupComponent<TGroup, TGroupSettings, TGroupControl> : InputableGameEntity, IUpdateable, IDrawable, IInputable
+    public class GroupComponent<TGroup, TGroupSettings, TGroupControl> : GameControllableEntity, IUpdateable, IDrawable, IInputable
         where                   TGroup        : Group<TGroupSettings>
         where                   TGroupControl : GroupControl<TGroup, TGroupSettings, TGroupControl>
     {

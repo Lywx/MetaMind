@@ -58,7 +58,7 @@
         {
         }
 
-        public override void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             if (this.Frame.IsEnabled(FrameState.Mouse_Over))
             {
@@ -80,22 +80,6 @@
             {
                 this.Disable(RegionState.Region_Has_Focus);
             }
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-        }
-
-        public override void Update(IGameFile gameFile, GameTime gameTime)
-        {
-        }
-
-        public override void Update(IGameInterop gameInterop, GameTime gameTime)
-        {
-        }
-
-        public override void Update(IGameSound gameSound, GameTime gameTime)
-        {
         }
     }
 }

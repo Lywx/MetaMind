@@ -10,11 +10,11 @@ namespace MetaMind.Engine.Components.Graphics
     {
         #region Singleton
 
-        private static GraphicsManager singleton;
+        private static GraphicsManager Singleton { get; set; }
 
         public static GraphicsManager GetInstance(GameEngine gameEngine)
         {
-            return singleton ?? (singleton = new GraphicsManager(gameEngine));
+            return Singleton ?? (Singleton = new GraphicsManager(gameEngine));
         }
 
         #endregion

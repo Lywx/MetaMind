@@ -5,7 +5,7 @@ namespace MetaMind.Acutance.Guis.Modules
     using MetaMind.Engine.Components.Events;
     using MetaMind.Engine.Guis.Widgets.Views;
 
-    public class MultiplexerGroupModuleCreatedListener : ListenerBase
+    public class MultiplexerGroupModuleCreatedListener : Listener
     {
         private readonly IView moduleView;
 
@@ -16,9 +16,9 @@ namespace MetaMind.Acutance.Guis.Modules
             this.RegisteredEvents.Add((int)SessionEventType.ModuleCreated);
         }
 
-        public override bool HandleEvent(EventBase @event)
+        public override bool HandleEvent(IEvent e)
         {
-            var eventArgs = @event.Data as ModuleCreatedEventArgs;
+            var eventArgs = e.EventData as ModuleCreatedEventArgs;
 
             if (eventArgs != null)
             {

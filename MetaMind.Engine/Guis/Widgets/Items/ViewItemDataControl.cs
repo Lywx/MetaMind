@@ -80,9 +80,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items
            this.CharModifier.Cancel(); 
         }
 
-        public override void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
-            this.CharModifier.Update(gameInput, gameTime);
+            this.CharModifier.UpdateInput(gameInput, gameTime);
         }
 
         public override void Update(GameTime gameTime)

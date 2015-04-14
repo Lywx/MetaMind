@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="FrameBase.cs" company="UESTC">
+// <copyright file="FrameEntity.cs" company="UESTC">
 //   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -7,7 +7,7 @@
 
 namespace MetaMind.Engine.Guis.Elements
 {
-    public interface IFrameBase
+    public interface IFrameBase : IUpdateable, IDrawable, IInputable
     {
         bool[] States { get; }
 
@@ -18,11 +18,11 @@ namespace MetaMind.Engine.Guis.Elements
         void Enable(FrameState state);
     }
 
-    public abstract class FrameBase : IFrameBase
+    public abstract class FrameEntity : GameControllableEntity, IFrameBase
     {
         #region Constructors
 
-        protected FrameBase()
+        protected FrameEntity()
         {
             this.states = new bool[(int)FrameState.StateNum];
         }

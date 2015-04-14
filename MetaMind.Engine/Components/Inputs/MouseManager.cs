@@ -10,7 +10,7 @@ namespace MetaMind.Engine.Components.Inputs
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
-    public class MouseManager : InputableGameEntity
+    public class MouseManager : GameControllableEntity
     {
         #region Singleton
 
@@ -141,10 +141,10 @@ namespace MetaMind.Engine.Components.Inputs
 
         #region Update
 
-        public override void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             this.previousState = this.currentState;
-            this.currentState = Mouse.GetState();
+            this.currentState  = Mouse.GetState();
         }
 
         #endregion Update

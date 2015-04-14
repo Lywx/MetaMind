@@ -4,7 +4,7 @@ namespace MetaMind.Engine.Screens
 
     using Microsoft.Xna.Framework;
 
-    public interface IGameScreen
+    public interface IGameScreen : IDisposable
     {
         #region Screen Option Data
 
@@ -75,13 +75,13 @@ namespace MetaMind.Engine.Screens
 
         #region Load and Unload
 
-        void Load(IGameFile gameFile);
+        void LoadContent(IGameFile gameFile);
 
-        void Load(IGameInterop gameInterop);
+        void LoadInterop(IGameInterop gameInterop);
 
-        void Unload(IGameFile gameFile);
+        void UnloadContent(IGameFile gameFile);
 
-        void Unload(IGameInterop gameInterop);
+        void UnloadInterop(IGameInterop gameInterop);
 
         #endregion Load and Unload
 
@@ -100,7 +100,7 @@ namespace MetaMind.Engine.Screens
 
         void Update(IGameInterop gameInterop, GameTime gameTime);
 
-        void Update(IGameSound gameSound, GameTime gameTime);
+        void Update(IGameAudio gameAudio, GameTime gameTime);
 
         #endregion Update
 

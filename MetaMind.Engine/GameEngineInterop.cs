@@ -9,6 +9,9 @@ namespace MetaMind.Engine
 {
     using MetaMind.Engine.Components;
 
+    /// <remarks>
+    /// Sealed for added new keyword and changed acceesibility in GameEngine property
+    /// </remarks>
     public sealed class GameEngineInterop : GameEngineAccess, IGameInterop
     {
         public GameEngineInterop(GameEngine gameEngine)
@@ -17,7 +20,12 @@ namespace MetaMind.Engine
             this.AccessType = GameEngineAccessType.Interop;
         }
 
-        public EventManager Event
+        public GameEngineInterop(IGameInterop gameInterop)
+            : this(gameInterop.GameEngine)
+        {
+        }
+
+        public IEventManager Event
         {
             get
             {
@@ -25,15 +33,7 @@ namespace MetaMind.Engine
             }
         }
 
-        public ProcessManager Process
-        {
-            get
-            {
-                return GameEngine.ProcessManager;
-            }
-        }
-
-        public GameManager Game
+        public IGameManager Game
         {
             get
             {
@@ -41,11 +41,27 @@ namespace MetaMind.Engine
             }
         }
 
-        public GameEngine GameEngine
+        public new GameEngine GameEngine
         {
             get
             {
                 return this.GameEngine;
+            }
+        }
+
+        public IProcessManager Process
+        {
+            get
+            {
+                return GameEngine.ProcessManager;
+            }
+        }
+
+        public IScreenManager Screen
+        {
+            get
+            {
+                return this.GameEngine.ScreenManager;
             }
         }
     }

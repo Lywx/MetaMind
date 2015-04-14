@@ -18,7 +18,7 @@ namespace MetaMind.Engine.Components
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
-    public class InputEventManager : InputableGameEntity
+    public class InputEventManager : GameControllableEntity
     {
         #region Singleton
 
@@ -166,12 +166,7 @@ namespace MetaMind.Engine.Components
         #region DLL Imports
 
         [DllImport("user32.dll")]
-        private static extern IntPtr CallWindowProc(
-            IntPtr lpPrevWndFunc, 
-            IntPtr hWnd, 
-            uint Msg, 
-            IntPtr wParam, 
-            IntPtr lParam);
+        private static extern IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
         [DllImport("Imm32.dll")]
         private static extern IntPtr ImmAssociateContext(IntPtr hWnd, IntPtr hIMC);
@@ -239,8 +234,8 @@ namespace MetaMind.Engine.Components
                     if (CharEntered != null)
                     {
                         // convert wParam to byte for different IME encoding
-                        byte[] charBytes = BitConverter.GetBytes((int)wParam);
-                        CharEntered(null, new CharEnteredEventArgs(charBytes, lParam.ToInt32()));
+                        var charBytes = BitConverter.GetBytes((int)wParam);
+                        this.CharEntered(null, new CharEnteredEventArgs(charBytes, lParam.ToInt32()));
                     }
 
                     break;
@@ -248,94 +243,96 @@ namespace MetaMind.Engine.Components
                 case WM_IME_SETCONTEXT:
                     if (wParam.ToInt32() == 1)
                     {
-                        ImmAssociateContext(hWnd, hIMC);
+                        ImmAssociateContext(hWnd, this.hIMC);
                     }
 
                     break;
 
                 case WM_INPUTLANGCHANGE:
-                    ImmAssociateContext(hWnd, hIMC);
+                    ImmAssociateContext(hWnd, this.hIMC);
                     returnCode = (IntPtr)1;
                     break;
 
                     // Mouse messages
                 case WM_MOUSEMOVE:
-                    if (MouseMove != null)
+                    if (this.MouseMove != null)
                     {
                         short x, y;
-                        MouseLocationFromLParam(lParam.ToInt32(), out x, out y);
+                        this.MouseLocationFromLParam(lParam.ToInt32(), out x, out y);
 
-                        MouseMove(null, new MouseEventArgs(MouseButton.None, 0, x, y, 0));
+                        this.MouseMove(null, new MouseEventArgs(MouseButton.None, 0, x, y, 0));
                     }
 
                     break;
 
                 case WM_MOUSEHOVER:
-                    if (MouseHover != null)
+                    if (this.MouseHover != null)
                     {
                         short x, y;
-                        MouseLocationFromLParam(lParam.ToInt32(), out x, out y);
+                        this.MouseLocationFromLParam(lParam.ToInt32(), out x, out y);
 
-                        MouseHover(null, new MouseEventArgs(MouseButton.None, 0, x, y, 0));
+                        this.MouseHover(null, new MouseEventArgs(MouseButton.None, 0, x, y, 0));
                     }
 
                     break;
 
                 case WM_MOUSEWHEEL:
-                    if (MouseWheel != null)
+                    if (this.MouseWheel != null)
                     {
                         short x, y;
-                        MouseLocationFromLParam(lParam.ToInt32(), out x, out y);
+                        this.MouseLocationFromLParam(lParam.ToInt32(), out x, out y);
 
-                        MouseWheel(null, new MouseEventArgs(MouseButton.None, 0, x, y, (wParam.ToInt32() >> 16) / 120));
+                        this.MouseWheel(
+                            null,
+                            new MouseEventArgs(MouseButton.None, 0, x, y, (wParam.ToInt32() >> 16) / 120));
                     }
 
                     break;
 
                 case WM_LBUTTONDOWN:
-                    RaiseMouseDownEvent(MouseButton.Left, wParam.ToInt32(), lParam.ToInt32());
+                    this.RaiseMouseDownEvent(MouseButton.Left, wParam.ToInt32(), lParam.ToInt32());
                     break;
 
                 case WM_LBUTTONUP:
-                    RaiseMouseUpEvent(MouseButton.Left, wParam.ToInt32(), lParam.ToInt32());
+                    this.RaiseMouseUpEvent(MouseButton.Left, wParam.ToInt32(), lParam.ToInt32());
                     break;
 
                 case WM_LBUTTONDBLCLK:
-                    RaiseMouseDblClickEvent(MouseButton.Left, wParam.ToInt32(), lParam.ToInt32());
+                    this.RaiseMouseDblClickEvent(MouseButton.Left, wParam.ToInt32(), lParam.ToInt32());
                     break;
 
                 case WM_RBUTTONDOWN:
-                    RaiseMouseDownEvent(MouseButton.Right, wParam.ToInt32(), lParam.ToInt32());
+                    this.RaiseMouseDownEvent(MouseButton.Right, wParam.ToInt32(), lParam.ToInt32());
                     break;
 
                 case WM_RBUTTONUP:
-                    RaiseMouseUpEvent(MouseButton.Right, wParam.ToInt32(), lParam.ToInt32());
+                    this.RaiseMouseUpEvent(MouseButton.Right, wParam.ToInt32(), lParam.ToInt32());
                     break;
 
                 case WM_RBUTTONDBLCLK:
-                    RaiseMouseDblClickEvent(MouseButton.Right, wParam.ToInt32(), lParam.ToInt32());
+                    this.RaiseMouseDblClickEvent(MouseButton.Right, wParam.ToInt32(), lParam.ToInt32());
                     break;
 
                 case WM_MBUTTONDOWN:
-                    RaiseMouseDownEvent(MouseButton.Middle, wParam.ToInt32(), lParam.ToInt32());
+                    this.RaiseMouseDownEvent(MouseButton.Middle, wParam.ToInt32(), lParam.ToInt32());
                     break;
 
                 case WM_MBUTTONUP:
-                    RaiseMouseUpEvent(MouseButton.Middle, wParam.ToInt32(), lParam.ToInt32());
+                    this.RaiseMouseUpEvent(MouseButton.Middle, wParam.ToInt32(), lParam.ToInt32());
                     break;
 
                 case WM_MBUTTONDBLCLK:
-                    RaiseMouseDblClickEvent(MouseButton.Middle, wParam.ToInt32(), lParam.ToInt32());
+                    this.RaiseMouseDblClickEvent(MouseButton.Middle, wParam.ToInt32(), lParam.ToInt32());
                     break;
 
                 case WM_XBUTTONDOWN:
                     if ((wParam.ToInt32() & 0x10000) != 0)
                     {
-                        RaiseMouseDownEvent(MouseButton.X1, wParam.ToInt32(), lParam.ToInt32());
+                        this.RaiseMouseDownEvent(MouseButton.X1, wParam.ToInt32(), lParam.ToInt32());
                     }
                     else if ((wParam.ToInt32() & 0x20000) != 0)
                     {
-                        RaiseMouseDownEvent(MouseButton.X2, wParam.ToInt32(), lParam.ToInt32());
+                        this.RaiseMouseDownEvent(MouseButton.X2, wParam.ToInt32(), lParam.ToInt32());
                     }
 
                     break;
@@ -343,11 +340,11 @@ namespace MetaMind.Engine.Components
                 case WM_XBUTTONUP:
                     if ((wParam.ToInt32() & 0x10000) != 0)
                     {
-                        RaiseMouseUpEvent(MouseButton.X1, wParam.ToInt32(), lParam.ToInt32());
+                        this.RaiseMouseUpEvent(MouseButton.X1, wParam.ToInt32(), lParam.ToInt32());
                     }
                     else if ((wParam.ToInt32() & 0x20000) != 0)
                     {
-                        RaiseMouseUpEvent(MouseButton.X2, wParam.ToInt32(), lParam.ToInt32());
+                        this.RaiseMouseUpEvent(MouseButton.X2, wParam.ToInt32(), lParam.ToInt32());
                     }
 
                     break;
@@ -355,11 +352,11 @@ namespace MetaMind.Engine.Components
                 case WM_XBUTTONDBLCLK:
                     if ((wParam.ToInt32() & 0x10000) != 0)
                     {
-                        RaiseMouseDblClickEvent(MouseButton.X1, wParam.ToInt32(), lParam.ToInt32());
+                        this.RaiseMouseDblClickEvent(MouseButton.X1, wParam.ToInt32(), lParam.ToInt32());
                     }
                     else if ((wParam.ToInt32() & 0x20000) != 0)
                     {
-                        RaiseMouseDblClickEvent(MouseButton.X2, wParam.ToInt32(), lParam.ToInt32());
+                        this.RaiseMouseDblClickEvent(MouseButton.X2, wParam.ToInt32(), lParam.ToInt32());
                     }
 
                     break;
@@ -381,34 +378,34 @@ namespace MetaMind.Engine.Components
 
         private void RaiseMouseDblClickEvent(MouseButton button, int wParam, int lParam)
         {
-            if (MouseDoubleClick != null)
+            if (this.MouseDoubleClick != null)
             {
                 short x, y;
-                MouseLocationFromLParam(lParam, out x, out y);
+                this.MouseLocationFromLParam(lParam, out x, out y);
 
-                MouseDoubleClick(null, new MouseEventArgs(button, 1, x, y, 0));
+                this.MouseDoubleClick(null, new MouseEventArgs(button, 1, x, y, 0));
             }
         }
 
         private void RaiseMouseDownEvent(MouseButton button, int wParam, int lParam)
         {
-            if (MouseDown != null)
+            if (this.MouseDown != null)
             {
                 short x, y;
-                MouseLocationFromLParam(lParam, out x, out y);
+                this.MouseLocationFromLParam(lParam, out x, out y);
 
-                MouseDown(null, new MouseEventArgs(button, 1, x, y, 0));
+                this.MouseDown(null, new MouseEventArgs(button, 1, x, y, 0));
             }
         }
 
         private void RaiseMouseUpEvent(MouseButton button, int wParam, int lParam)
         {
-            if (MouseUp != null)
+            if (this.MouseUp != null)
             {
                 short x, y;
-                MouseLocationFromLParam(lParam, out x, out y);
+                this.MouseLocationFromLParam(lParam, out x, out y);
 
-                MouseUp(null, new MouseEventArgs(button, 1, x, y, 0));
+                this.MouseUp(null, new MouseEventArgs(button, 1, x, y, 0));
             }
         }
 

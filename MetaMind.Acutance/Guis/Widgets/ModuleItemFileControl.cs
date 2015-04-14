@@ -29,7 +29,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         private void ReloadModule()
         {
-            var moduleReloadedEvent = new EventBase(
+            var moduleReloadedEvent = new Event(
                 (int)SessionEventType.ModuleReloaded,
                 new KnowledgeReloadedEventArgs(this.ItemData.Path));
 

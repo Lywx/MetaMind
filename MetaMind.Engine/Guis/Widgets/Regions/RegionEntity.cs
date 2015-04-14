@@ -1,6 +1,6 @@
 namespace MetaMind.Engine.Guis.Widgets.Regions
 {
-    public abstract class RegionEntity : InputableGameEntity
+    public abstract class RegionEntity : GameControllableEntity
     {
         #region Constructors
 

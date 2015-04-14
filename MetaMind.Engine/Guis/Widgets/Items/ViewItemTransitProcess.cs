@@ -9,7 +9,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
     using Microsoft.Xna.Framework;
 
-    public class ViewItemTransitProcess : ProcessBase
+    using Process = MetaMind.Engine.Components.Processes.Process;
+
+    public class ViewItemTransitProcess : Process
     {
         #region Source Data
 

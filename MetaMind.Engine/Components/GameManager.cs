@@ -11,7 +11,7 @@ namespace MetaMind.Engine.Components
 
     using Microsoft.Xna.Framework;
 
-    public class GameManager
+    public class GameManager : IGameManager
     {
         #region Singleton
 

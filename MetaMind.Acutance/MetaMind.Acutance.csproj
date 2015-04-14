@@ -158,6 +158,7 @@
     </Compile>
     <Compile Include="Sessions\Session.cs" />
     <Compile Include="Screens\MultiplexerScreen.cs" />
+    <Compile Include="Sessions\SessionData.cs" />
     <Compile Include="Sessions\SessionEventType.cs" />
     <Compile Include="Settings\SearchSettings.cs" />
   </ItemGroup>

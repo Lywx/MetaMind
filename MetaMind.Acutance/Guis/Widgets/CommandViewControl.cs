@@ -45,7 +45,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #endregion
 
-        public override void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             this.UpdateRegionClick(gameInput, gameTime);
             this.UpdateMouseScroll(gameInput);

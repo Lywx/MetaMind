@@ -85,7 +85,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             get { return this.Item.IsEnabled(ItemState.Item_Editing) || this.Item.IsEnabled(ItemState.Item_Pending); }
         }
 
-        public override void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             // mouse and keyboard in modifier
             // -----------------------------------------------------------------

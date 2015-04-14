@@ -14,14 +14,14 @@ namespace MetaMind.Perseverance.Guis.Modules
     using MetaMind.Perseverance.Screens;
     using MetaMind.Perseverance.Sessions;
 
-    public class SummaryModuleSleepStoppedEventListener : ListenerBase
+    public class SummaryModuleSleepStoppedEventListener : Listener
     {
         public SummaryModuleSleepStoppedEventListener()
         {
             this.RegisteredEvents.Add((int)SessionEventType.SleepStopped);
         }
 
-        public override bool HandleEvent(EventBase @event)
+        public override bool HandleEvent(Event @event)
         {
             var screenManager = GameEngine.ScreenManager;
 

@@ -6,7 +6,7 @@
     using MetaMind.Perseverance.Events;
     using MetaMind.Perseverance.Sessions;
 
-    internal class SynchronizationModuleSynchronizationStartListener : ListenerBase
+    internal class SynchronizationModuleSynchronizationStartListener : Listener
     {
         private readonly ISynchronization   synchronization;
         private readonly SynchronizationModule synchronizationModule;
@@ -19,9 +19,9 @@
             this.RegisteredEvents.Add((int)SessionEventType.SyncStarted);
         }
 
-        public override bool HandleEvent(EventBase @event)
+        public override bool HandleEvent(IEvent e)
         {
-            var synchronizationStartedEventArgs = (SynchronizationStartedEventArgs)@event.Data;
+            var synchronizationStartedEventArgs = (SynchronizationStartedEventArgs)e.EventData;
             var data = synchronizationStartedEventArgs.Task;
 
             // uncomment this to enforce fixed entry start/stop

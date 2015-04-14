@@ -14,7 +14,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             this.SpawnSpeed = 2;
         }
 
-        public override void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             if (gameInput.Sequence.Keyboard.IsActionPressed(Actions.ForceFlip) &&
                 gameInput.Sequence.Keyboard.IsActionPressed(Actions.Enter))

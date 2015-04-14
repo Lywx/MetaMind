@@ -21,7 +21,7 @@ namespace MetaMind.Engine.Components
     /// <summary>
     /// Static storage of SpriteFont objects and colors for use throughout the game.
     /// </summary>
-    public class FontManager : DrawableGameComponent
+    public class FontManager : DrawableGameComponent, IFontManager
     {
         #region Monospaced Font Data
 
@@ -72,7 +72,17 @@ namespace MetaMind.Engine.Components
 
         public static FontManager GetInstance(GameEngine gameEngine)
         {
-            return Singleton ?? (Singleton = new FontManager(gameEngine));
+            if (Singleton == null)
+            {
+                Singleton = new FontManager(gameEngine);
+            }
+
+            if (gameEngine != null)
+            {
+                gameEngine.Components.Add(Singleton);
+            }
+
+            return Singleton;
         }
 
         #endregion Singleton
@@ -159,7 +169,8 @@ namespace MetaMind.Engine.Components
                 return;
             }
 
-            GameGraphics.Screen.SpriteBatch.DrawString(this[font], this.GetDisaplayableString(font, str), position, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0);
+            var spriteBatch = GameGraphics.Screen.SpriteBatch;
+            spriteBatch.DrawString(this[font], this.GetDisaplayableString(font, str), position, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0);
         }
 
         public void DrawStringCenteredH(Font font, string str, Vector2 position, Color color, float scale)

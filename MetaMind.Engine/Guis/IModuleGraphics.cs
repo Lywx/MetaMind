@@ -1,13 +1,9 @@
 namespace MetaMind.Engine.Guis
 {
-    using Microsoft.Xna.Framework;
+    using IDrawable = MetaMind.Engine.IDrawable;
+    using IUpdateable = MetaMind.Engine.IUpdateable;
 
-    public interface IModuleGraphics
+    public interface IModuleGraphics : IUpdateable, IDrawable, IInputable
     {
-        void Draw(GameTime gameTime);
-
-        void Update(GameTime gameTime);
-
-        void Update(IGameInput gameInput, GameTime gameTime);
     }
 }

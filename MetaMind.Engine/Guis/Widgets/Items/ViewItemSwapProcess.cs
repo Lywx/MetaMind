@@ -7,7 +7,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
     using Microsoft.Xna.Framework;
 
-    public class ViewItemSwapProcess : ProcessBase
+    using Process = MetaMind.Engine.Components.Processes.Process;
+
+    public class ViewItemSwapProcess : Process
     {
         private const int UpdateNum = 6;
 

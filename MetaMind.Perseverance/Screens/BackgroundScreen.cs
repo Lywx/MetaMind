@@ -3,17 +3,20 @@
     using System;
 
     using MetaMind.Engine;
+    using MetaMind.Engine.Guis.Modules;
     using MetaMind.Engine.Guis.Particles;
     using MetaMind.Engine.Screens;
-    using MetaMind.Perseverance.Guis.Modules;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
+    using ParticleModule = MetaMind.Perseverance.Guis.Modules.ParticleModule;
+
     public class BackgroundScreen : GameScreen
     {
-        private readonly ParticleModule particles = new ParticleModule(new Engine.Guis.Modules.ParticleModuleSettings(Perseverance.Session.Random, FloatParticle.ParticleFromSide, 8, 2));
-        private          Texture2D      backgroundTexture;
+        private ParticleModule particles;
+        
+        private Texture2D      background;
 
         #region Constructors
 
@@ -27,15 +30,20 @@
 
         #region Load and Unload
 
-        public override void Load(IGameFile gameFile)
+        public override void LoadContent(IGameFile gameFile)
         {
-            this.backgroundTexture = gameFile.Content.Load<Texture2D>(@"Textures\Screens\Background\Sea Of Mind");
+            this.particles = new ParticleModule(new ParticleModuleSettings(Perseverance.Session.Random, FloatParticle.ParticleFromSide, 8, 2))
+
+            this.background = gameFile.Content.Load<Texture2D>(@"Textures\Screens\Background\Sea Of Mind");
         }
 
-        public override void Unload(IGameFile gameFile)
+        public override void UnloadContent(IGameFile gameFile)
         {
-            this.backgroundTexture.Dispose();
-            this.backgroundTexture = null;
+            this.background.Dispose();
+            this.background = null;
+
+            this.particles.Dispose();
+            this.particles = null;
         }
 
         #endregion Load and Unload
@@ -50,7 +58,7 @@
 
             spriteBatch.Begin();
 
-            spriteBatch   .Draw(backgroundTexture, fullscreen, new Color(0, 0, TransitionAlpha / 2));
+            spriteBatch   .Draw(this.background, fullscreen, new Color(0, 0, TransitionAlpha / 2));
             this.particles.Draw(gameGraphics, gameTime, this.TransitionAlpha);
 
             spriteBatch.End();
@@ -58,7 +66,8 @@
 
         public override void Update(IGameInput gameInput, GameTime gameTime)
         {
-            this.particles.Update(gameInput, gameTime);
+            ??
+            this.particles.UpdateInput(gameInput, gameTime);
             this.particles.Update(gameTime);
         }
 

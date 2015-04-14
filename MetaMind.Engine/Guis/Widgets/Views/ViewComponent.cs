@@ -13,7 +13,7 @@
         dynamic ItemSettings { get; }
     }
 
-    public class ViewComponent : InputableGameEntity, IViewComponent
+    public class ViewComponent : GameControllableEntity, IViewComponent
     {
         #region Constructors
 

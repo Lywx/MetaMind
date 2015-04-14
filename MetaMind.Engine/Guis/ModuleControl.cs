@@ -1,16 +1,12 @@
 namespace MetaMind.Engine.Guis
 {
-    using Microsoft.Xna.Framework;
+    using IUpdateable = MetaMind.Engine.IUpdateable;
 
-    public interface IModuleControl
+    public interface IModuleControl : IUpdateable, IInputable
     {
-        void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound);
+        void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio);
 
-        void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound);
-
-        void Update(IGameInput gameInput, GameTime gameTime);
-
-        void Update(GameTime gameTime);
+        void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio);
     }
 
     public abstract class ModuleControl<TModule, TModuleSettings, TModuleControl> : ModuleComponent<TModule, TModuleSettings, TModuleControl>, IModuleControl
@@ -22,8 +18,8 @@ namespace MetaMind.Engine.Guis
         {
         }
 
-        public abstract void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound);
+        public abstract void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio);
 
-        public abstract void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound);
+        public abstract void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio);
     }
 }

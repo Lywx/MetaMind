@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DrawableGameEntity.cs" company="UESTC">
+// <copyright file="GameVisualEntity.cs" company="UESTC">
 //   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -11,7 +11,7 @@ namespace MetaMind.Engine
 
     using Microsoft.Xna.Framework;
 
-    public class DrawableGameEntity : GameEntity, IDrawable
+    public class GameVisualEntity : GameEntity, IGameVisualEntity
     {
         #region States
 
@@ -84,6 +84,12 @@ namespace MetaMind.Engine
         }
 
         public virtual void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha) { }
+
+        #endregion
+
+        #region Update
+
+        public virtual void UpdateGraphics(IGameGraphics gameGraphics, GameTime gameTime) { }
 
         #endregion
     }

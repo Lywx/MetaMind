@@ -7,23 +7,37 @@
 
 namespace MetaMind.Engine
 {
-    using System;
-
+    using MetaMind.Engine.Components.Events;
     using Microsoft.Xna.Framework;
+    using System;
+    using System.Collections.Generic;
 
-    public class GameEntity : IUpdateable, IDisposable
+    public class GameEntity : IGameEntity
     {
+        #region Event Data
+
+        protected List<IListener> Listeners { get; set; }
+
+        #endregion Event Data
+
+        #region Engine Data
+
+        private IGameInterop GameInterop { get; set; }
+
+        #endregion Engine Data
+
         #region Constructors
 
-        public GameEntity()
+        protected GameEntity()
         {
+            this.Listeners = new List<IListener>();
         }
 
         #endregion Constructors
 
         #region Destructors
 
-        ~GameEntity()
+        virtual ~GameEntity()
         {
             this.Dispose();
         }
@@ -36,12 +50,44 @@ namespace MetaMind.Engine
 
         public event EventHandler<EventArgs> UpdateOrderChanged;
 
+        public virtual void LoadContent(IGameFile gameFile)
+        {
+        }
+
+        public virtual void LoadGraphics(IGameGraphics gameGraphics)
+        {
+        }
+
+        public virtual void LoadInterop(IGameInterop gameInterop)
+        {
+            if (this.GameInterop == null)
+            {
+                this.GameInterop = new GameEngineInterop(gameInterop);
+            }
+
+            this.Listeners.ForEach(l => gameInterop.Event.AddListener(l));
+        }
+
         protected virtual void OnEnabledChanged(object sender, EventArgs args)
         {
         }
 
         protected virtual void OnUpdateOrderChanged(object sender, EventArgs args)
         {
+        }
+
+        public virtual void UnloadContent(IGameFile gameFile)
+        {
+        }
+
+        public virtual void UnloadGraphics(IGameGraphics gameGraphics)
+        {
+        }
+
+        public virtual void UnloadInterop(IGameInterop gameInterop)
+        {
+            this.Listeners.ForEach(l => gameInterop.Event.RemoveListener(l));
+            this.Listeners.Clear();
         }
 
         #endregion Events
@@ -100,13 +146,21 @@ namespace MetaMind.Engine
             }
         }
 
-        public virtual void Update(GameTime gameTime) { }
+        public virtual void Update(GameTime gameTime)
+        {
+        }
 
-        public virtual void Update(IGameFile gameFile, GameTime gameTime) { }
+        public virtual void UpdateAudio(IGameAudio gameAudio, GameTime gameTime)
+        {
+        }
 
-        public virtual void Update(IGameInterop gameInterop, GameTime gameTime) { }
+        public virtual void UpdateContent(IGameFile gameFile, GameTime gameTime)
+        {
+        }
 
-        public virtual void Update(IGameSound gameSound, GameTime gameTime) { }
+        public virtual void UpdateInterop(IGameInterop gameInterop, GameTime gameTime)
+        {
+        }
 
         #endregion Update
 
@@ -114,6 +168,12 @@ namespace MetaMind.Engine
 
         public virtual void Dispose()
         {
+            if (this.GameInterop != null)
+            {
+                this.UnloadInterop(this.GameInterop);
+            }
+
+            this.Listeners = null;
         }
 
         #endregion IDisposable

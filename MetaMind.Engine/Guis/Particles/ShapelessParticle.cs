@@ -2,24 +2,7 @@ namespace MetaMind.Engine.Guis.Particles
 {
     using Microsoft.Xna.Framework;
 
-    public interface IAbstractParticle : IUpdateable
-    {
-        float Angle { get; set; }
-
-        float AngularAcceleration { get; set; }
-
-        float AngularVelocity { get; set; }
-
-        Vector2 Position { get; set; }
-
-        Vector2 Acceleration { get; set; }
-
-        Vector2 Velocity { get; set; }
-
-        float LastingSeconds { get; set; }
-    }
-
-    public class ShapelessParticle : DrawableGameEntity, IAbstractParticle
+    public class ShapelessParticle : GameVisualEntity, IShapelessParticle
     {
         #region Particle Movements
 
@@ -33,7 +16,7 @@ namespace MetaMind.Engine.Guis.Particles
 
         public Vector2 Position { get; set; }
 
-        public float LastingSeconds { get; set; }
+        public float Life { get; set; }
 
         public Vector2 Velocity { get; set; }
 
@@ -41,28 +24,20 @@ namespace MetaMind.Engine.Guis.Particles
 
         #region Constructors
 
-        public ShapelessParticle(Vector2 a, Vector2 v, float angle, float angluarA, float angluarV, float lastingSeconds)
+        public ShapelessParticle(Vector2 position, Vector2 a, Vector2 v, float angle, float angluarA, float angluarV, float life)
         {
-            this.Position = Vector2.Zero;
+            this.Position     = position;
             this.Acceleration = a;
-            this.Velocity = v;
+            this.Velocity     = v;
 
-            this.Angle = angle;
+            this.Angle               = angle;
             this.AngularAcceleration = angluarA;
-            this.AngularVelocity = angluarV;
+            this.AngularVelocity     = angluarV;
 
-            this.LastingSeconds = lastingSeconds;
+            this.Life = life;
         }
 
         #endregion Constructors
-
-        #region Draw
-
-        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
-        {
-        }
-
-        #endregion
 
         #region Update
 
@@ -74,20 +49,7 @@ namespace MetaMind.Engine.Guis.Particles
             this.Velocity += (float)gameTime.ElapsedGameTime.TotalSeconds * this.Acceleration;
             this.Position += (float)gameTime.ElapsedGameTime.TotalSeconds * this.Velocity;
 
-            this.LastingSeconds -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-        }
-
-        public override void Update(IGameFile gameFile, GameTime gameTime)
-        {
-            
-        }
-
-        public override void Update(IGameInterop gameInterop, GameTime gameTime)
-        {
-        }
-
-        public override void Update(IGameSound gameSound, GameTime gameTime)
-        {
+            this.Life -= (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
         #endregion Update

@@ -1,13 +1,14 @@
-namespace MetaMind.Engine.Guis.Testers
+namespace MetaMind.Engine.Testers
 {
-    using MetaMind.Engine;
-    using MetaMind.Engine.Components.Fonts;
-    using MetaMind.Engine.Extensions;
-    using Microsoft.Xna.Framework;
     using System;
     using System.Linq;
 
-    public class StateTestGraphics : DrawableGameEntity
+    using MetaMind.Engine;
+    using MetaMind.Engine.Components.Fonts;
+
+    using Microsoft.Xna.Framework;
+
+    public class StateGraphicTester : GameVisualEntity
     {
         private Type enumType;
 
@@ -15,7 +16,7 @@ namespace MetaMind.Engine.Guis.Testers
 
         #region Constructors
 
-        public StateTestGraphics(bool[] states, Type enumType)
+        public StateGraphicTester(bool[] states, Type enumType)
         {
             this.states = states;
             this.enumType = enumType;
@@ -39,22 +40,6 @@ namespace MetaMind.Engine.Guis.Testers
                     gameGraphics.Font.DrawString(Font.UiStatistics, text, position, Color.White, 1f);
                 }
             }
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-        }
-
-        public override void Update(IGameFile gameFile, GameTime gameTime)
-        {
-        }
-
-        public override void Update(IGameInterop gameInterop, GameTime gameTime)
-        {
-        }
-
-        public override void Update(IGameSound gameSound, GameTime gameTime)
-        {
         }
     }
 }

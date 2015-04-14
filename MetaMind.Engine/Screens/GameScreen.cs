@@ -83,7 +83,9 @@ namespace MetaMind.Engine.Screens
             {
                 var fireEvent = !this.isExiting && value;
                 this.isExiting = value;
-                if (fireEvent && (this.Exiting != null))
+
+                if (fireEvent && 
+                    this.Exiting != null)
                 {
                     this.Exiting(this, EventArgs.Empty);
                 }
@@ -130,21 +132,31 @@ namespace MetaMind.Engine.Screens
 
         #endregion Screen Events
 
+        #region Engine Data
+
+        protected IGameInterop GameInterop { get; set; }
+
+        #endregion
+
         #region Load and Unload
 
-        public virtual void Load(IGameFile gameFile)
+        public virtual void LoadContent(IGameFile gameFile)
         {
         }
 
-        public void Load(IGameInterop gameInterop)
+        public void LoadInterop(IGameInterop gameInterop)
+        {
+            if (this.GameInterop == null)
+            {
+                this.GameInterop = new GameEngineInterop(gameInterop);
+            }
+        }
+
+        public virtual void UnloadContent(IGameFile gameFile)
         {
         }
 
-        public virtual void Unload(IGameFile gameFile)
-        {
-        }
-
-        public void Unload(IGameInterop gameInterop)
+        public void UnloadInterop(IGameInterop gameInterop)
         {
         }
 
@@ -218,7 +230,7 @@ namespace MetaMind.Engine.Screens
         {
         }
 
-        public virtual void Update(IGameSound gameSound, GameTime gameTime)
+        public virtual void Update(IGameAudio gameAudio, GameTime gameTime)
         {
         }
 
@@ -270,10 +282,19 @@ namespace MetaMind.Engine.Screens
             // If the screen has a zero transition time, remove it immediately.
             if (this.TransitionOffTime == TimeSpan.Zero)
             {
-                GameEngine.ScreenManager.RemoveScreen(this);
+                var screen = this.GameInterop.Screen;
+                screen.RemoveScreen(this);
             }
         }
 
         #endregion Operations
+
+        #region IDisposable
+
+        public virtual void Dispose()
+        {
+        }
+
+        #endregion
     }
 }

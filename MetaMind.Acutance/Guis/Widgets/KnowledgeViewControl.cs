@@ -132,7 +132,7 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             if (this.FileBuffer != null)
             {
-                var moduleCreatedEvent = new EventBase(
+                var moduleCreatedEvent = new Event(
                     (int)SessionEventType.ModuleCreated,
                     new ModuleCreatedEventArgs(FileBuffer));
 
@@ -159,7 +159,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Update
 
-        public override void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             this.UpdateRegionClick(gameInput, gameTime);
             this.UpdateMouseScroll(gameInput);

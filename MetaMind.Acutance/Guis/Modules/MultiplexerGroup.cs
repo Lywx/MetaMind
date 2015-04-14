@@ -11,108 +11,25 @@ namespace MetaMind.Acutance.Guis.Modules
 
     public class MultiplexerGroup : Group<MultiplexerGroupSettings>, IConfigurationFileLoader
     {
-        #region Listeners
+        #region Events
 
-        #region Knowledge View
-
-        private MultiplexerGroupKnowledgeReloadListener knowledgeReloadListener;
-
-        private MultiplexerGroupKnowledgeRetrievedListener knowledgeRetrievedListener;
-
-        #endregion
-
-        #region Command View
-
-        private MultiplexerGroupCommandNotifiedListener commandNotifiedListener;
-
-        #endregion
-
-        #region Module View
-
-        private MultiplexerGroupModuleCreatedListener moduleCreatedListener;
-
-        #endregion
-
-        #region Session
-
-        private MultiplexerGroupSessionSavedListener sessionSavedListener;
-
-        #endregion
-
+        // TODO: Redesign events
         private void LoadEvents(IGameInterop gameInterop)
         {
-            if (this.moduleCreatedListener == null)
-            {
-                this.moduleCreatedListener = new MultiplexerGroupModuleCreatedListener(this.ModuleView);
-            }
+            // Module View 
+            this.Listeners.Add(new MultiplexerGroupModuleCreatedListener(this.ModuleView));
 
-            gameInterop.Event.AddListener(this.moduleCreatedListener);
+            // Command View 
+            this.Listeners.Add(new MultiplexerGroupCommandNotifiedListener(this.CommandView, this.ModuleView, this.KnowledgeView));
 
-            if (this.commandNotifiedListener == null)
-            {
-                this.commandNotifiedListener = new MultiplexerGroupCommandNotifiedListener(this.CommandView, this.ModuleView, this.KnowledgeView);
-            }
+            // Knowledge View 
+            this.Listeners.Add(new MultiplexerGroupKnowledgeRetrievedListener(this.KnowledgeView));
+            this.Listeners.Add(new MultiplexerGroupKnowledgeReloadListener(this.KnowledgeView));
 
-            gameInterop.Event.AddListener(this.commandNotifiedListener);
+            // Session 
+            this.Listeners.Add(new MultiplexerGroupSessionSavedListener(this));
 
-            if (this.knowledgeRetrievedListener == null)
-            {
-                this.knowledgeRetrievedListener = new MultiplexerGroupKnowledgeRetrievedListener(this.KnowledgeView);
-            }
-
-            gameInterop.Event.AddListener(this.knowledgeRetrievedListener);
-
-            if (this.knowledgeReloadListener == null)
-            {
-                this.knowledgeReloadListener = new MultiplexerGroupKnowledgeReloadListener(this.KnowledgeView);
-            }
-
-            gameInterop.Event.AddListener(this.knowledgeReloadListener);
-
-            if (this.sessionSavedListener == null)
-            {
-                this.sessionSavedListener = new MultiplexerGroupSessionSavedListener(this);
-            }
-
-            gameInterop.Event.AddListener(this.sessionSavedListener);
-        }
-
-        private void UnloadEvents(IGameInterop gameInterop)
-        {
-            if (this.moduleCreatedListener != null)
-            {
-                gameInterop.Event.RemoveListener(this.moduleCreatedListener);
-            }
-
-            this.moduleCreatedListener = null;
-
-            if (this.commandNotifiedListener != null)
-            {
-                gameInterop.Event.RemoveListener(this.commandNotifiedListener);
-            }
-
-            this.commandNotifiedListener = null;
-
-            if (this.knowledgeRetrievedListener != null)
-            {
-                gameInterop.Event.RemoveListener(this.knowledgeRetrievedListener);
-            }
-
-            this.knowledgeRetrievedListener = null;
-
-            if (this.knowledgeReloadListener != null)
-            {
-                gameInterop.Event.RemoveListener(this.knowledgeReloadListener);
-            }
-
-            this.knowledgeReloadListener = null;
-
-            if (this.sessionSavedListener != null)
-            {
-                gameInterop.Event.RemoveListener(this.sessionSavedListener);
-            }
-
-            this.sessionSavedListener = null;
+            base.LoadInterop(gameInterop);
         }
 
         #endregion
@@ -170,7 +87,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
         #region Load and Unload
 
-        public void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
+        public void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
         {
             this.LoadConfiguration();
             this.LoadData();
@@ -183,9 +100,9 @@ namespace MetaMind.Acutance.Guis.Modules
             this.LoadScheduleData();
         }
 
-        public void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
+        public void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
         {
-            this.UnloadEvents(gameInterop);
+            this.UnloadInterop(gameInterop);
         }
 
         #region Commands
@@ -248,11 +165,11 @@ namespace MetaMind.Acutance.Guis.Modules
             this.CommandView  .Draw(gameGraphics, gameTime, alpha);
         }
 
-        public override void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
-            this.KnowledgeView.Update(gameInput, gameTime);
-            this.ModuleView   .Update(gameInput, gameTime);
-            this.CommandView  .Update(gameInput, gameTime);
+            this.KnowledgeView.UpdateInput(gameInput, gameTime);
+            this.ModuleView   .UpdateInput(gameInput, gameTime);
+            this.CommandView  .UpdateInput(gameInput, gameTime);
         }
 
         public override void Update(GameTime gameTime)

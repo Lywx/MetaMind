@@ -31,7 +31,7 @@ namespace MetaMind.Perseverance.Guis.Modules
         #region Load and Unload
 
         // FIXME: Wrong interface
-        public override void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
+        public override void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
         {
             base.Load();
             // performance penalty is not severe for one-off loading
@@ -53,7 +53,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             gameInterop.Event.AddListener(this.gameStartedListener);
         }
 
-        public override void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
+        public override void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
         {
             this.UnloadEvents(gameInterop);
         }
@@ -77,9 +77,9 @@ namespace MetaMind.Perseverance.Guis.Modules
             this.intelligence.Draw(gameGraphics, gameTime, alpha);
         }
 
-        public override void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
-            this.intelligence.Update(gameInput, gameTime);
+            this.intelligence.UpdateInput(gameInput, gameTime);
         }
 
         public override void Update(GameTime gameTime)

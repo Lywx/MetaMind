@@ -56,7 +56,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         #region Update Input
 
-        public override void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             this.UpdateMouseScroll(gameInput);
             this.UpdateKeyboardMotion(gameInput);

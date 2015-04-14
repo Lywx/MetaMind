@@ -25,8 +25,7 @@ namespace MetaMind.Engine.Components.Inputs
     /// </summary>
     public enum Actions
     {
-        // cursor movement
-        // ---------------------------------------------------------------------
+        // Cursor Movement
         Up, 
         Down, 
         Left, 
@@ -37,8 +36,7 @@ namespace MetaMind.Engine.Components.Inputs
         FastLeft, 
         FastRight, 
 
-        // list management
-        // ---------------------------------------------------------------------
+        // List Management
         MotivationCreateItem, 
         MotivationDeleteItem, 
         MotivationEditItem, 
@@ -66,19 +64,16 @@ namespace MetaMind.Engine.Components.Inputs
         CommandOpenItem,
         CommandSortItem,
 
-        // synchronization
-        // ---------------------------------------------------------------------
+        // Synchronization
         ForceAwake,
         ForceFlip,
         ForceReset,
         ForceReverse,
 
-        // general
-        // ---------------------------------------------------------------------
+        // General
         Enter, 
         Escape, 
 
-        // ---------------------------------------------------------------------
         ActionNum,
     }
 
@@ -90,7 +85,7 @@ namespace MetaMind.Engine.Components.Inputs
         public Dictionary<Keys, List<Keys>> Bindings = new Dictionary<Keys, List<Keys>>();
     }
 
-    public class KeyboardManager : InputableGameEntity, IConfigurationFileLoader
+    public class KeyboardManager : GameControllableEntity, IConfigurationFileLoader
     {
         #region Singleton
 
@@ -329,7 +324,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         #region Update
 
-        public override void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             this.previousState = this.currentState;
             this.currentState = Keyboard.GetState();

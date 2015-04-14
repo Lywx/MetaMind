@@ -28,22 +28,22 @@ namespace MetaMind.Acutance.Screens
             this.synchronization.Draw(gameGraphics, gameTime, alpha);
         }
 
-        public override void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
+        public override void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
         {
-            this.multiplexer    .Load(gameFile, gameInput, gameInterop, gameSound);
-            this.synchronization.Load(gameFile, gameInput, gameInterop, gameSound);
+            this.multiplexer    .Load(gameFile, gameInput, gameInterop, gameAudio);
+            this.synchronization.Load(gameFile, gameInput, gameInterop, gameAudio);
         }
 
-        public override void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
+        public override void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
         {
-            this.multiplexer    .Unload(gameFile, gameInput, gameInterop, gameSound);
-            this.synchronization.Unload(gameFile, gameInput, gameInterop, gameSound);
+            this.multiplexer    .Unload(gameFile, gameInput, gameInterop, gameAudio);
+            this.synchronization.Unload(gameFile, gameInput, gameInterop, gameAudio);
         }
 
-        public override void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
-            this.multiplexer    .Update(gameInput, gameTime);
-            this.synchronization.Update(gameInput, gameTime);
+            this.multiplexer    .UpdateInput(gameInput, gameTime);
+            this.synchronization.UpdateInput(gameInput, gameTime);
         }
 
         public override void Update(GameTime gameTime)

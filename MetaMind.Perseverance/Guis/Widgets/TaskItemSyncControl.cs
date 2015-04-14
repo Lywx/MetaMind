@@ -22,7 +22,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         public void StopSync()
         {
-            var syncStoppedEvent = new EventBase(
+            var syncStoppedEvent = new Event(
                 (int)SessionEventType.SyncStopped, 
                 new SynchronizationStoppedEventArgs(this.ItemData));
             gameInterop.Event.QueueEvent(syncStoppedEvent);
@@ -30,7 +30,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         public void StartSync()
         {
-            var syncStartEvent = new EventBase(
+            var syncStartEvent = new Event(
                 (int)SessionEventType.SyncStarted, 
                 new SynchronizationStartedEventArgs(this.ItemData));
             gameInterop.Event.QueueEvent(syncStartEvent);

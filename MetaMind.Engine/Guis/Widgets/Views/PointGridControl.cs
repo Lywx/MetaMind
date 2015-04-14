@@ -116,7 +116,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             get { return this.View.IsEnabled(ViewState.Item_Editting); }
         }
 
-        public override void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             this.UpdateRegionClick(gameInput, gameTime);
             this.UpdateMouseScroll(gameInput);
@@ -204,7 +204,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             if (this.Active)
             {
-                this.Region.Update(gameInput, gameTime);
+                this.Region.UpdateInput(gameInput, gameTime);
             }
         }
 

@@ -7,17 +7,18 @@
     <Position X="2.281" Y="0.5" Height="0.667" Width="3.252" />
   </Comment>
   <Comment CommentText="Game Content">
-    <Position X="9.24" Y="0.5" Height="0.656" Width="1.7" />
+    <Position X="9.25" Y="1.24" Height="0.291" Width="1.512" />
   </Comment>
   <Comment CommentText="Game Window Based">
-    <Position X="7.531" Y="2.51" Height="0.698" Width="1.7" />
+    <Position X="2.26" Y="1.25" Height="0.313" Width="1.502" />
   </Comment>
   <Class Name="MetaMind.Engine.Components.ProcessManager" Collapsed="true">
-    <Position X="2.25" Y="1.5" Width="1.5" />
+    <Position X="7.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAAAAAAABAAQQBAEAwAEAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAQAAAAAAAAAAAAAAAABAAQQBAEAQAGAAAAAAAAAAAA=</HashCode>
       <FileName>Components\ProcessManager.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="MetaMind.Engine.GameEngine" Collapsed="true">
     <Position X="0.5" Y="0.5" Width="1.5" />
@@ -27,71 +28,75 @@
     </TypeIdentifier>
   </Class>
   <Class Name="MetaMind.Engine.Components.ScreenManager" Collapsed="true">
-    <Position X="0.5" Y="1.5" Width="1.5" />
+    <Position X="4" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQQVEAAAAAAAwAAAAACAAAQBAAAyAGExIAAgAAACEQ=</HashCode>
       <FileName>Components\ScreenManager.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="MetaMind.Engine.Components.EventManager" Collapsed="true">
-    <Position X="4" Y="1.5" Width="1.5" />
+    <Position X="5.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAQAAAAACAAAERAgAAAEAAABBIARIAGAAAgAAEAAIAA=</HashCode>
       <FileName>Components\EventManager.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="MetaMind.Engine.Components.InputEventManager" Collapsed="true">
-    <Position X="5.75" Y="2.5" Width="1.5" />
+    <Position X="2.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIgAAiAAAgIAg0SAKAgAQAaABQBIEEEECIAoAJ2UMDQ=</HashCode>
       <FileName>Components\InputEventManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaMind.Engine.Components.InputSequenceManager" Collapsed="true">
-    <Position X="5.75" Y="1.5" Width="1.5" />
+    <Position X="0.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAwAAAAIAAAAAAAAQAAAAEAABAAAAAEAAAAAAAAAAAA=</HashCode>
       <FileName>Components\InputSequenceManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaMind.Engine.Components.GameManager" Collapsed="true">
-    <Position X="9.5" Y="4.25" Width="1.5" />
+    <Position X="9.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAKAAAAAAAAAAAAAAACAAAAABAAAAAEAAAAAAEAAAAA=</HashCode>
       <FileName>Components\GameManager.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="MetaMind.Engine.Components.MessageManager" Collapsed="true">
-    <Position X="8.5" Y="6" Width="1.5" />
+    <Position X="7.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAgAAAAAAAAAABAACAAGBAAAAAAAAAAA=</HashCode>
       <FileName>Components\MessageManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaMind.Engine.Components.AudioManager" Collapsed="true">
-    <Position X="7.5" Y="1.5" Width="1.5" />
+    <Position X="11" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAGAEAAAAQAAAAAUABACIAAEAAAQAACBAAAI=</HashCode>
       <FileName>Components\AudioManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaMind.Engine.Components.FontManager" Collapsed="true">
-    <Position X="2.5" Y="6" Width="1.5" />
+    <Position X="7.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAEBgEDBAEAAQQCIAAAQAABQAAQIHAQAAAkAAQAQ0=</HashCode>
       <FileName>Components\FontManager.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="MetaMind.Engine.Components.Graphics.GraphicsManager" Collapsed="true">
-    <Position X="4.25" Y="6" Width="1.5" />
+    <Position X="5.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAgAAAAAAAQAABAAAAAAAhQgAAADAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAgAAAAAAAQAABAAAAAAAhAgAAAHAAAAAAAAAAAA=</HashCode>
       <FileName>Components\Graphics\GraphicsManager.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="MetaMind.Engine.Components.Graphics.GraphicsSettings" Collapsed="true">
-    <Position X="6.5" Y="6" Width="1.5" />
+    <Position X="5.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAARAAABQQIRABAAECQBAAAAACAAAAAAAAAAAg=</HashCode>
       <FileName>Components\Graphics\GraphicsSettings.cs</FileName>

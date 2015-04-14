@@ -23,17 +23,17 @@
 
         #region Components
 
+        #region Audio
+
+        public AudioManager AudioManager { get; private set; }
+
+        #endregion
+
         #region File
 
         public ContentManager ContentManager { get; private set; }
 
         public FolderManager FolderManager { get; private set; }
-
-        #endregion
-
-        #region Sound
-
-        public AudioManager AudioManager { get; private set; }
 
         #endregion
 
@@ -152,6 +152,18 @@
         {
             this.GraphicsDevice.Clear(Color.Black);
             base.Draw(gameTime);
+        }
+
+        protected override void Update(GameTime gameTime)
+        {
+            this.UpdateInput(gameTime);
+            base.Update(gameTime);
+        }
+
+        private void UpdateInput(GameTime gameTime)
+        {
+            this.InputEventManager.UpdateInput(gameTime);
+            this.ScreenManager.UpdateInput(gameTime);
         }
 
         #endregion Update and Draw

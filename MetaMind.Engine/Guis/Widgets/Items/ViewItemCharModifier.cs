@@ -387,7 +387,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         #region Update and Draw
 
-        public override void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             var keyboard = gameInput.Sequence.Keyboard;
 

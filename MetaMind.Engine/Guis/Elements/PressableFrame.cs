@@ -10,7 +10,7 @@
     /// <summary>
     /// Only deals with low level clicked event.
     /// </summary>
-    public class PressableFrame : FrameBase, IPressableFrame
+    public class PressableFrame : FrameEntity, IPressableFrame
     {
         private Rectangle rectangle;
 
@@ -297,7 +297,7 @@
 
         #region Update
 
-        public virtual void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             var mouse         = gameInput.Sequence.Mouse.CurrentState;
             var mouseLocation = new Point(mouse.X, mouse.Y);

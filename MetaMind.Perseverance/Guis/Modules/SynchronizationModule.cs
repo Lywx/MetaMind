@@ -186,7 +186,7 @@
 
         #region Load and Unload
 
-        public override void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
+        public override void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
         {
             if (this.synchronizationStartListener == null || 
                 this.synchronizationStopListener  == null || 
@@ -202,7 +202,7 @@
             gameInterop.Event.AddListener(this.sleepStartedEventListener);
         }
 
-        public override void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
+        public override void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
         {
             if (this.synchronizationStartListener != null)
             {
@@ -249,7 +249,7 @@
 
         #region Update
 
-        public override void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.ForceAwake))
             {

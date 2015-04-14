@@ -11,7 +11,7 @@ namespace MetaMind.Engine.Components.Processes
 
     using Microsoft.Xna.Framework;
 
-    public class WaitProcess : ProcessBase
+    public class WaitProcess : Process
     {
         public readonly TimeSpan TotalDuration;
 

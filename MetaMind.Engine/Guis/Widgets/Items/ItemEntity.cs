@@ -28,7 +28,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         void UpdateView(GameTime gameTime);
     }
 
-    public abstract class ItemEntity : InputableGameEntity, IItemEntity
+    public abstract class ItemEntity : GameControllableEntity, IItemEntity
     {
         private readonly bool[] states;
 

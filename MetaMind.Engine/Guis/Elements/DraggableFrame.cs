@@ -110,9 +110,9 @@ namespace MetaMind.Engine.Guis.Elements
 
         #region Update
 
-        public override void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
-            base.Update(gameInput, gameTime);
+            base.UpdateInput(gameInput, gameTime);
 
             var mouse = gameInput.Sequence.Mouse.CurrentState;
             var mouseLocation = new Point(mouse.X, mouse.Y);

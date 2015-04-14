@@ -13,7 +13,7 @@ namespace MetaMind.Engine.Components
 
     using Microsoft.Xna.Framework;
 
-    public class ProcessManager : GameComponent
+    public class ProcessManager : GameComponent, IProcessManager
     {
         #region Singleton
 
@@ -44,11 +44,11 @@ namespace MetaMind.Engine.Components
 
         #region Engine Data
 
-        private IGameFile GameFile { get; set; }
+        private IGameFile    GameFile { get; set; }
 
         private IGameInterop GameInterop { get; set; }
 
-        private IGameSound GameSound { get; set; }
+        private IGameAudio   GameAudio { get; set; }
 
         #endregion
 
@@ -63,7 +63,7 @@ namespace MetaMind.Engine.Components
             
             this.GameFile    = new GameEngineFile(gameEngine);
             this.GameInterop = new GameEngineInterop(gameEngine);
-            this.GameSound   = new GameEngineSound(gameEngine);
+            this.GameAudio   = new GameEngineAudio(gameEngine);
         }
 
         #endregion Constructors
@@ -96,9 +96,9 @@ namespace MetaMind.Engine.Components
                 if (process.State == ProcessState.Running)
                 {
                     process.Update(gameTime);
-                    process.Update(this.GameFile, gameTime);
-                    process.Update(this.GameInterop, gameTime);
-                    process.Update(this.GameSound, gameTime);
+                    process.UpdateContent(this.GameFile, gameTime);
+                    process.UpdateInterop(this.GameInterop, gameTime);
+                    process.UpdateAudio(this.GameAudio, gameTime);
                 }
 
                 if (process.IsDead)

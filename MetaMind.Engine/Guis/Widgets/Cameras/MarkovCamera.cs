@@ -18,7 +18,7 @@ namespace MetaMind.Engine.Guis.Widgets.Cameras
         Vector2 Movement { get; set; }
     }
 
-    public class MarkovCamera : InputableGameEntity, IMarkovCamera
+    public class MarkovCamera : GameControllableEntity, IMarkovCamera
     {
         private readonly MarkovCameraSettings settings;
 
@@ -33,7 +33,7 @@ namespace MetaMind.Engine.Guis.Widgets.Cameras
         {
         }
 
-        public override void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             var mouse    = gameInput.Sequence.Mouse.CurrentState;
             var keyboard = gameInput.Sequence.Keyboard.CurrentState;

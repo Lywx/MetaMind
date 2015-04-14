@@ -7,10 +7,10 @@ namespace MetaMind.Engine
     {
         GraphicsManager Graphics { get; }
 
-        ScreenManager Screen { get; }
+        IScreenManager Screen { get; }
 
         MessageManager Message { get; }
 
-        FontManager Font { get; }
+        IFontManager Font { get; }
     }
 }

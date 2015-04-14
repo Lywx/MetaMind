@@ -6,8 +6,8 @@ namespace MetaMind.Engine.Guis
 
         IModuleGraphics Graphics { get; }
 
-        void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound);
+        void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio);
 
-        void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound);
+        void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio);
     }
 }

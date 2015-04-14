@@ -34,7 +34,7 @@ namespace MetaMind.Engine
             }
         }
 
-        public ScreenManager Screen
+        public IScreenManager Screen
         {
             get
             {
@@ -50,7 +50,7 @@ namespace MetaMind.Engine
             }
         }
 
-        public FontManager Font
+        public IFontManager Font
         {
             get
             {

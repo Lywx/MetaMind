@@ -1,5 +1,6 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
+    using MetaMind.Engine;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Items;
 
@@ -54,9 +55,9 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
         }
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
-            base.UpdateInput(gameTime);
+            base.UpdateInput(gameInput, gameTime);
 
             this.NameFrame      .Update(gameInput, gameTime);
         }

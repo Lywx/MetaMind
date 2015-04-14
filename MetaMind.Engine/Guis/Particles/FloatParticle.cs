@@ -9,50 +9,32 @@ namespace MetaMind.Engine.Guis.Particles
 {
     using System;
 
-    using MetaMind.Engine.Components.Graphics;
-    using MetaMind.Engine.Settings;
-
     using Microsoft.Xna.Framework;
 
     using Primtives2D;
-
-    public delegate FloatParticle GenerateParticle(int factor);
-
-    public enum FloatDirection
-    {
-        Left, Right, Up, Down
-    }
 
     public class FloatParticle : Particle
     {
         public const int BubbleSeconds = 20;
 
         public static int Height = 2;
-        public static int Width = 8;
 
-        public static GenerateParticle Generate;
-        public static Random           Random;
+        public static int Width = 8;
 
         private readonly int deep;
 
-        public FloatParticle(Vector2 position, Vector2 a, Vector2 v, float lastingSeconds, Color color, int deep, float scale)
-            : base(a, v, 0f, 0f, 0f, lastingSeconds, color, scale)
+        public FloatParticle(Vector2 position, Vector2 a, Vector2 v, float life, Color color, int deep, float scale)
+            : base(position, a, v, 0f, 0f, 0f, life, color, scale)
         {
-            if (Generate == null)
-            {
-                throw new InvalidOperationException("Generate is not set.");
-            }
+            this.deep = deep;
 
-            if (Random == null)
-            {
-                throw new InvalidOperationException("Random is not set.");
-            }
-            
-            this.deep     = deep;
-            this.Position = position;
-            
-            this.Size     = new Vector2(Width, Height) * scale;
+            this.Size = new Vector2(Width, Height) * scale;
             this.Pressure = new Vector2(10, 10);
+        }
+
+        protected enum FloatDirection
+        {
+            Left, Right, Up, Down
         }
 
         public bool IsOutsideScreen
@@ -66,14 +48,9 @@ namespace MetaMind.Engine.Guis.Particles
             }
         }
 
-        public Vector2 Size { get; private set; }
-
         public Vector2 Pressure { get; set; }
 
-        public static FloatParticle RandomParticle(int factor)
-        {
-            return Generate(factor);
-        }
+        public Vector2 Size { get; private set; }
 
         public void Colorize()
         {
@@ -86,15 +63,16 @@ namespace MetaMind.Engine.Guis.Particles
 
         public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
         {
-            gameGraphics.Screen.SpriteBatch.FillRectangle(this.Position, this.Size, this.Color, this.Angle);
+            var spriteBatch = gameGraphics.Screen.SpriteBatch;
+            spriteBatch.FillRectangle(this.Position, this.Size, this.Color, this.Angle);
         }
 
         public override void Update(GameTime gameTime)
         {
             // smooth disappearance
-            if (this.LastingSeconds < BubbleSeconds)
+            if (this.Life < BubbleSeconds)
             {
-                this.Scale = Math.Min(this.LastingSeconds, this.Scale);
+                this.Scale = Math.Min(this.Life, this.Scale);
             }
 
             this.Size = new Vector2(Width * this.Scale, Height * this.Scale);
@@ -109,30 +87,7 @@ namespace MetaMind.Engine.Guis.Particles
 
         #region Particle Configuration
 
-        public static FloatParticle ParticleFromSide(int factor)
-        {
-            // direction only could be left or right 
-            var direction = (FloatDirection)Random.Next(2);
-            var deep  = Random.Next(1, 10);
-            var scale = deep;
-
-            var acceleration   = new Vector2(direction == FloatDirection.Left ? Random.Next(5, 10) : Random.Next(-10, -5), 0);
-            var velocity       = new Vector2(direction == FloatDirection.Left ? Random.Next(30 * factor, 50 * factor) : Random.Next(-50 * factor, -30 * factor), 0);
-            var lastingSeconds = Random.Next(BubbleSeconds, 2 * BubbleSeconds);
-
-            var color    = new Color(Random.Next(0, 100) / deep, 50 / deep, 50 / deep, 50 / deep);
-
-            // anywhere on the sides of screen
-            var x = direction == FloatDirection.Left ? -(Width * scale) : GameEngine.GraphicsSettings.Width;
-            var y = Random.Next(GameEngine.GraphicsSettings.Height);
-            var position = new Vector2(x, y);
-
-            var particle = new FloatParticle(position, acceleration, velocity, lastingSeconds, color, deep, scale);
-
-            return particle;
-        }
-
-        public static FloatParticle ParticleFromBelow(int factor)
+        public FloatParticle ParticleFromBelow(int factor)
         {
             var deep  = Random.Next(1, 5);
             var scale = deep;
@@ -153,6 +108,28 @@ namespace MetaMind.Engine.Guis.Particles
             return particle;
         }
 
-        #endregion
+        public FloatParticle ParticleFromSide(int factor)
+        {
+            // direction only could be left or right
+            var direction = (FloatDirection)Random.Next(2);
+            var deep  = Random.Next(1, 10);
+            var scale = deep;
+
+            var acceleration   = new Vector2(direction == FloatDirection.Left ? Random.Next(5, 10) : Random.Next(-10, -5), 0);
+            var velocity       = new Vector2(direction == FloatDirection.Left ? Random.Next(30 * factor, 50 * factor) : Random.Next(-50 * factor, -30 * factor), 0);
+            var lastingSeconds = Random.Next(BubbleSeconds, 2 * BubbleSeconds);
+
+            var color    = new Color(Random.Next(0, 100) / deep, 50 / deep, 50 / deep, 50 / deep);
+
+            // anywhere on the sides of screen
+            var x = direction == FloatDirection.Left ? -(Width * scale) : GameEngine.GraphicsSettings.Width;
+            var y = Random.Next(GameEngine.GraphicsSettings.Height);
+            var position = new Vector2(x, y);
+
+            var particle = new FloatParticle(position, acceleration, velocity, lastingSeconds, color, deep, scale);
+
+            return particle;
+        }
+        #endregion Particle Configuration
     }
 }

@@ -17,7 +17,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         bool IsEnabled(ViewState state);
     }
 
-    public abstract class ViewEntity : InputableGameEntity, IViewEntity
+    public abstract class ViewEntity : GameControllableEntity, IViewEntity
     {
         #region Constructors
 

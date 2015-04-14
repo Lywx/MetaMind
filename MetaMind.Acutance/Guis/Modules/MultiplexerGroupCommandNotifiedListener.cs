@@ -5,7 +5,7 @@ namespace MetaMind.Acutance.Guis.Modules
     using MetaMind.Engine.Components.Events;
     using MetaMind.Engine.Guis.Widgets.Views;
 
-    public class MultiplexerGroupCommandNotifiedListener : ListenerBase
+    public class MultiplexerGroupCommandNotifiedListener : Listener
     {
         private readonly IView commandView;
         private readonly IView moduleView;
@@ -20,9 +20,9 @@ namespace MetaMind.Acutance.Guis.Modules
             this.RegisteredEvents.Add((int)SessionEventType.CommandNotified);
         }
 
-        public override bool HandleEvent(EventBase @event)
+        public override bool HandleEvent(IEvent e)
         {
-            var eventArgs = @event.Data as CommandNotifiedEventArgs;
+            var eventArgs = e.EventData as CommandNotifiedEventArgs;
             if (eventArgs != null)
             {
                 var notifiedCommand = eventArgs.NotifiedCommand;

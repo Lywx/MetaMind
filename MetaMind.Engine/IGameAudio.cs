@@ -2,7 +2,7 @@ namespace MetaMind.Engine
 {
     using MetaMind.Engine.Components;
 
-    public interface IGameSound
+    public interface IGameAudio
     {
         AudioManager Audio { get; }
     }

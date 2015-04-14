@@ -8,7 +8,7 @@
     using MetaMind.Perseverance.Screens;
     using MetaMind.Perseverance.Sessions;
 
-    public class SynchronizationModuleSleepStartedEventListener : ListenerBase
+    public class SynchronizationModuleSleepStartedEventListener : Listener
     {
         private readonly ISynchronization synchronization;
         private readonly SynchronizationModule synchronizationModule;
@@ -21,7 +21,7 @@
             this.RegisteredEvents.Add((int)SessionEventType.SleepStarted);
         }
 
-        public override bool HandleEvent(EventBase @event)
+        public override bool HandleEvent(Event @event)
         {
             if (this.synchronization.Enabled)
             {

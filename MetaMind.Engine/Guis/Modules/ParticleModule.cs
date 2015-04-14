@@ -19,8 +19,8 @@ namespace MetaMind.Engine.Guis.Modules
 
             FloatParticle.Generate = settings.Generate;
             FloatParticle.Random   = settings.Random;
-            FloatParticle.Width    = settings.Width;
-            FloatParticle.Height   = settings.Height;
+            FloatParticle.Width    = settings.ParticleWidth;
+            FloatParticle.Height   = settings.ParticleHeight;
         }
 
         protected int InitialSpeed { get; set; }
@@ -53,11 +53,11 @@ namespace MetaMind.Engine.Guis.Modules
             }
         }
 
-        public override void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
+        public override void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
         {
         }
 
-        public override void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
+        public override void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
         {
         }
 
@@ -72,7 +72,7 @@ namespace MetaMind.Engine.Guis.Modules
 
                 this.Particles[i].Update(gameTime);
 
-                if (this.Particles[i].LastingSeconds < 0 ||
+                if (this.Particles[i].Life < 0 ||
                     this.Particles[i].IsOutsideScreen)
                 {
                     this.Particles.Remove(this.Particles[i]);

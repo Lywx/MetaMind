@@ -3,7 +3,7 @@ namespace MetaMind.Acutance.Guis.Modules
     using MetaMind.Acutance.Sessions;
     using MetaMind.Engine.Components.Events;
 
-    public class MultiplexerGroupSessionSavedListener : ListenerBase
+    public class MultiplexerGroupSessionSavedListener : Listener
     {
         private readonly MultiplexerGroup multiplexerGroup;
 
@@ -14,7 +14,7 @@ namespace MetaMind.Acutance.Guis.Modules
             this.RegisteredEvents.Add((int)SessionEventType.SessionSaved);
         }
 
-        public override bool HandleEvent(EventBase @event)
+        public override bool HandleEvent(IEvent e)
         {
             this.multiplexerGroup.ScheduleDataReload();
 

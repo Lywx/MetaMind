@@ -51,7 +51,7 @@
             this.summary.HandleInput();
         }
 
-        public override void Load(IGameFile gameFile)
+        public override void LoadContent(IGameFile gameFile)
         {
         }
 

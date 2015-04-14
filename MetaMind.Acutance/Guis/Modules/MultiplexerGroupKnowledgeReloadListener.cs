@@ -5,7 +5,7 @@ namespace MetaMind.Acutance.Guis.Modules
     using MetaMind.Engine.Components.Events;
     using MetaMind.Engine.Guis.Widgets.Views;
 
-    public class MultiplexerGroupKnowledgeReloadListener : ListenerBase
+    public class MultiplexerGroupKnowledgeReloadListener : Listener
     {
         private readonly IView knowledgeView;
 
@@ -16,9 +16,9 @@ namespace MetaMind.Acutance.Guis.Modules
             this.RegisteredEvents.Add((int)SessionEventType.ModuleReloaded);
         }
 
-        public override bool HandleEvent(EventBase @event)
+        public override bool HandleEvent(IEvent e)
         {
-            var eventArgs = @event.Data as KnowledgeReloadedEventArgs;
+            var eventArgs = e.EventData as KnowledgeReloadedEventArgs;
             if (eventArgs != null && 
 
                 // in case of module entry has been disposed

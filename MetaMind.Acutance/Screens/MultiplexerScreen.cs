@@ -38,10 +38,10 @@ namespace MetaMind.Acutance.Screens
 
         public override void Update(IGameInput gameInput, GameTime gameTime)
         {
-            gameInput.Event   .Update(gameInput, gameTime);
-            gameInput.Sequence.Update(gameInput, gameTime);
+            gameInput.Event   .UpdateInput(gameInput, gameTime);
+            gameInput.Sequence.UpdateInput(gameInput, gameTime);
 
-            this.multiplexer.Update(gameInput, gameTime);
+            this.multiplexer.UpdateInput(gameInput, gameTime);
         }
 
         public override void Update(IGameGraphics gameGraphics, GameTime gameTime, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)

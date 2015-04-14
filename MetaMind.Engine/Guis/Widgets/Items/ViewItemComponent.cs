@@ -2,8 +2,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 {
     using MetaMind.Engine.Guis.Widgets.Views;
 
-    using Microsoft.Xna.Framework;
-
     public interface IViewItemComponent
     {
         #region Item Components
@@ -31,7 +29,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         #endregion View Components
     }
 
-    public class ViewItemComponent : InputableGameEntity, IViewItemComponent
+    public class ViewItemComponent : GameControllableEntity, IViewItemComponent
     {
         #region Constructors and Destructors
 

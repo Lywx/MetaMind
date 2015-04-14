@@ -4,7 +4,7 @@ namespace MetaMind.Engine
 
     using Microsoft.Xna.Framework;
 
-    public class InputableGameEntity : DrawableGameEntity, IInputable
+    public class GameControllableEntity : GameVisualEntity, IInputable
     {
         #region States
 
@@ -76,7 +76,7 @@ namespace MetaMind.Engine
             }
         }
 
-        public virtual void Update(IGameInput gameInput, GameTime gameTime) { }
+        public virtual void UpdateInput(IGameInput gameInput, GameTime gameTime) { }
 
         #endregion Input
     }

@@ -4,7 +4,7 @@ namespace MetaMind.Perseverance.Guis.Modules
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Perseverance.Sessions;
 
-    public class MotivationModuleGameStartedListener : ListenerBase
+    public class MotivationModuleGameStartedListener : Listener
     {
         private readonly IView startup;
 
@@ -15,7 +15,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             this.RegisteredEvents.Add((int)SessionEventType.GameStarted);
         }
 
-        public override bool HandleEvent(EventBase @event)
+        public override bool HandleEvent(Event @event)
         {
             // auto-select after startup
             this.startup.Control.Selection.Select(0);

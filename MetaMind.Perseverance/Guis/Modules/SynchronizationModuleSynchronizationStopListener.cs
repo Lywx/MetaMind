@@ -5,7 +5,7 @@
     using MetaMind.Perseverance.Concepts.Cognitions;
     using MetaMind.Perseverance.Sessions;
 
-    internal class SynchronizationModuleSynchronizationStopListener : ListenerBase
+    internal class SynchronizationModuleSynchronizationStopListener : Listener
     {
         private readonly ISynchronization   synchronization;
         private readonly SynchronizationModule synchronizationModule;
@@ -18,7 +18,7 @@
             this.RegisteredEvents.Add((int)SessionEventType.SyncStopped);
         }
 
-        public override bool HandleEvent(EventBase @event)
+        public override bool HandleEvent(Event @event)
         {
             if (!this.synchronization.Enabled)
             {

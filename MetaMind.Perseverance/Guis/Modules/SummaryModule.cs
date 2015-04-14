@@ -31,7 +31,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         #region Load and Unload
 
-        public override void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
+        public override void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
         {
             if (this.sleepStoppedEventListener == null)
             {
@@ -41,7 +41,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             gameInterop.Event.AddListener(this.sleepStoppedEventListener);
         }
 
-        public override void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameSound gameSound)
+        public override void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
         {
             if (this.sleepStoppedEventListener != null)
             {
@@ -60,7 +60,7 @@ namespace MetaMind.Perseverance.Guis.Modules
         /// </summary>
         /// <param name="gameInput"></param>
         /// <param name="gameTime"></param>
-        public override void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.ForceReset))
             {

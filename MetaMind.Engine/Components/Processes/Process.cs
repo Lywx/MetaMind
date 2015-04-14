@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ProcessBase.cs" company="UESTC">
+// <copyright file="Process.cs" company="UESTC">
 //   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -7,9 +7,7 @@
 
 namespace MetaMind.Engine.Components.Processes
 {
-    using Microsoft.Xna.Framework;
-
-    public abstract class ProcessBase : GameEntity, IProcess
+    public abstract class Process : GameEntity, IProcess
     {
         private IProcess child;
 
@@ -33,7 +31,7 @@ namespace MetaMind.Engine.Components.Processes
 
         #region Constructors
 
-        protected ProcessBase()
+        protected Process()
         {
             this.state = ProcessState.Uninitilized;
         }
@@ -42,7 +40,7 @@ namespace MetaMind.Engine.Components.Processes
 
         #region Destructors
 
-        ~ProcessBase()
+        ~Process()
         {
             if (this.child != null)
             {

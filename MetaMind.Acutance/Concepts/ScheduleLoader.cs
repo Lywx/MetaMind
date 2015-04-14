@@ -12,6 +12,7 @@
 
     using Sprache;
 
+    // FIXME: static ?
     public static class ScheduleLoader
     {
         public static List<Schedule> Load(IConfigurationFileLoader fileLoader)
@@ -46,10 +47,10 @@
             }
         }
 
-        private static List<Parsers.Elements.RawSchedule> FilterOutToday(IEnumerable<Parsers.Elements.RawSchedule> fromFile)
+        private static List<RawSchedule> FilterOutToday(IEnumerable<RawSchedule> fromFile)
         {
-            Predicate<Parsers.Elements.RawSchedule> sameWeekday    = s => (int)s.Tag.Day == (int)DateTime.Now.DayOfWeek;
-            Predicate<Parsers.Elements.RawSchedule> repeatEveryday = s => s.Tag.Repetition == RepetitionTag.EveryDay;
+            Predicate<RawSchedule> sameWeekday    = s => (int)s.Tag.Day == (int)DateTime.Now.DayOfWeek;
+            Predicate<RawSchedule> repeatEveryday = s => s.Tag.Repetition == RepetitionTag.EveryDay;
 
             return fromFile.Where(schedule => sameWeekday(schedule) || repeatEveryday(schedule)).ToList();
         }

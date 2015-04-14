@@ -53,7 +53,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public void RetrieveIt()
         {
-            var knowledgeRetrievedEvent = new EventBase(
+            var knowledgeRetrievedEvent = new Event(
                 (int)SessionEventType.KnowledgeRetrieved,
                 new KnowledgeRetrievedEventArgs(ItemData.Path, 0));
 
@@ -85,7 +85,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
         }
 
-        public override void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             // mouse and keyboard in modifier
             //-----------------------------------------------------------------

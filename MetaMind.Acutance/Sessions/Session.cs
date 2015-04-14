@@ -1,25 +1,28 @@
 namespace MetaMind.Acutance.Sessions
 {
-    using System;
     using System.IO;
     using System.Runtime.Serialization;
     using System.Xml;
 
-    using MetaMind.Acutance.Concepts;
-    using MetaMind.Engine;
     using MetaMind.Engine.Components;
-    
-    // TODO: Session may be separated from saving and loading operations which may be useful for sharing saving and loading operations
 
-    /// <summary>
-    /// Session is a data class.
-    /// </summary>
-    [DataContract,
-    KnownType(typeof(Commandlist)),
-    KnownType(typeof(Modulelist))]
-    public class Session
+    using Microsoft.Xna.Framework;
+
+    using IUpdateable = MetaMind.Engine.IUpdateable;
+
+    public interface ISession<TData>
+        where TData : IUpdateable, new()
     {
-        #region File Storage
+        void Save();
+
+        void Update(GameTime gameTime);
+    }
+
+    [DataContract]
+    public class Session<TData> : ISession<TData>
+        where TData : IUpdateable, new()
+    {
+        #region File Data
 
         [DataMember]
         public const string XmlFilename = "Session.xml";
@@ -27,11 +30,17 @@ namespace MetaMind.Acutance.Sessions
         [DataMember]
         public const string XmlPath = FolderManager.SaveFolderPath + XmlFilename;
 
-        #endregion File Storage
+        #endregion 
+
+        #region Session Data 
+
+        private TData Data { get; set; }
+
+        #endregion
 
         #region Singleton
 
-        private static Session singleton;
+        private static Session<TData> Singleton { get; set; }
 
         #endregion Singleton
 
@@ -39,30 +48,14 @@ namespace MetaMind.Acutance.Sessions
 
         private Session()
         {
-            this.Random = new Random((int)DateTime.Now.Ticks);
-
-            this.Commandlist = new Commandlist();
-            this.Modulelist  = new Modulelist(this.Commandlist);
+            this.Data = new TData();
         }
 
         #endregion Constructors
 
-        #region Public Properties
+        #region Save and Load
 
-        public Random Random { get; private set; }
-
-
-        [DataMember(Name = "Modulelist")]
-        public IModulelist Modulelist { get; private set; }
-
-        [DataMember(Name = "Commandlist")]
-        public ICommandlist Commandlist { get; private set; }
-
-        #endregion Public Properties
-
-        #region Load and Save
-
-        public static Session LoadSave()
+        public static Session<TData> LoadSave()
         {
             if (File.Exists(XmlPath))
             {
@@ -80,20 +73,20 @@ namespace MetaMind.Acutance.Sessions
             else
             {
                 // create a new singleton
-                singleton = new Session();
+                Singleton = new Session<TData>();
             }
 
-            return singleton;
+            return Singleton;
         }
 
         public void Save()
         {
-            var serializer = new DataContractSerializer(typeof(Session), null, int.MaxValue, false, true, null);
+            var serializer = new DataContractSerializer(typeof(Session<TData>), null, int.MaxValue, false, true, null);
             try
             {
                 using (var file = File.Create(XmlPath))
                 {
-                    serializer.WriteObject(file, singleton);
+                    serializer.WriteObject(file, Singleton);
                 }
             }
             catch (IOException)
@@ -108,53 +101,28 @@ namespace MetaMind.Acutance.Sessions
             {
                 try
                 {
-                    var deserializer = new DataContractSerializer(typeof(Session));
+                    var deserializer = new DataContractSerializer(typeof(Session<TData>));
                     using (var reader = XmlDictionaryReader.CreateTextReader(file, new XmlDictionaryReaderQuotas()))
                     {
-                        singleton = (Session)deserializer.ReadObject(reader, true);
+                        Singleton = (Session<TData>)deserializer.ReadObject(reader, true);
                     }
                 }
                 catch (SerializationException)
                 {
-                    singleton = new Session();
+                    Singleton = new Session<TData>();
                 }
             }
         }
 
-        #endregion Load and Save
+        #endregion 
 
         #region Update
 
-        public void Update()
+        public virtual void Update(GameTime gameTime)
         {
-            this.Modulelist .Update();
-            this.Commandlist.Update();
+            this.Data.Update(gameTime);
         }
 
         #endregion Update
-
-        #region Serialization
-
-        [OnDeserialized]
-        public void OnDeserialized(StreamingContext context)
-        {
-            if (this.Random == null)
-            {
-                this.Random = new Random((int)DateTime.Now.Ticks);
-            }
-
-            if (this.Commandlist == null)
-            {
-                this.Commandlist = new Commandlist();
-            }
-
-            if (this.Modulelist == null)
-            {
-                this.Modulelist = new Modulelist(this.Commandlist);
-            }
-
-        }
-
-        #endregion
     }
 }

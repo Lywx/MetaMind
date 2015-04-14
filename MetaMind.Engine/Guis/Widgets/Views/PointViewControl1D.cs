@@ -185,7 +185,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
         }
 
-        public override void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             this.UpdateMouseScroll(gameInput);
             this.UpdateItemInput(gameInput, gameTime);
@@ -197,7 +197,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             // -----------------------------------------------------------------
             foreach (var item in View.Items.ToArray())
             {
-                item.Update(gameInput, gameTime);
+                item.UpdateInput(gameInput, gameTime);
             }
         }
 

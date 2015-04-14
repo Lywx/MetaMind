@@ -7,17 +7,14 @@
 
 namespace MetaMind.Engine.Guis.Widgets.Items
 {
-    using System;
-
     using MetaMind.Engine.Guis.Elements;
 
     using Microsoft.Xna.Framework;
 
-    public interface IViewItemFrameControl
-    {
-        void Update(IGameInput gameInput, GameTime gameTime);
+    using IUpdateable = MetaMind.Engine.IUpdateable;
 
-        void Update(GameTime gameTime);
+    public interface IViewItemFrameControl : IUpdateable, IInputable
+    {
     }
 
     public class ViewItemFrameControl : ViewItemComponent, IViewItemFrameControl
@@ -32,9 +29,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         #region Update
 
-        public virtual void UpdateInput(GameTime gameTime)
+        public virtual void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
-            this.RootFrame.Update(gameInput, gameTime);
+            this.RootFrame.UpdateInput(gameInput, gameTime);
 
             if (this.RootFrame.IsEnabled(FrameState.Mouse_Over))
             {

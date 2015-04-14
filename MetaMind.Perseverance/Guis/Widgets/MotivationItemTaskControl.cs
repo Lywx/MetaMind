@@ -77,7 +77,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
         {
             if (this.TaskModule != null )
             {
-                this.TaskModule.Update(gameInput, gameTime);
+                this.TaskModule.UpdateInput(gameInput, gameTime);
             }
         }
     }

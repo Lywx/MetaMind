@@ -10,7 +10,7 @@ namespace MetaMind.Engine.Components.Processes
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Audio;
 
-    public class SoundProcess : ProcessBase
+    public class SoundProcess : Process
     {
         private readonly SoundEffectInstance soundInstance;
 
@@ -30,7 +30,8 @@ namespace MetaMind.Engine.Components.Processes
         public override void OnInit()
         {
             base.OnInit();
-            soundInstance.Play();
+
+            this.soundInstance.Play();
         }
 
         public override void OnSuccess()
@@ -39,9 +40,9 @@ namespace MetaMind.Engine.Components.Processes
 
         public override void Update(GameTime gameTime)
         {
-            if (soundInstance.IsDisposed || soundInstance.State == SoundState.Stopped)
+            if (this.soundInstance.IsDisposed || this.soundInstance.State == SoundState.Stopped)
             {
-                Succeed();
+                this.Succeed();
             }
         }
     }

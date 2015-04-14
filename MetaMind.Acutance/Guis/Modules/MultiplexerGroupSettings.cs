@@ -11,7 +11,7 @@ namespace MetaMind.Acutance.Guis.Modules
         public MultiplexerGroupSettings(ICommandlist commandlist, IModulelist modulelist)
         {
             this.Commandlist = commandlist;
-            this.Modulelist = modulelist;
+            this.Modulelist  = modulelist;
         }
 
         #region Module View Data
