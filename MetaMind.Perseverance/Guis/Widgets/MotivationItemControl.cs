@@ -81,13 +81,13 @@
                 if (this.AcceptInput)
                 {
                     // normal status
-                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.MotivationEditItem))
+                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.MotivationEditItem))
                     {
                         this.View.Enable(ViewState.Item_Editting);
                         this.Item.Enable(ItemState.Item_Pending);
                     }
 
-                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.MotivationDeleteItem))
+                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.MotivationDeleteItem))
                     {
                         this.DeleteIt();
                     }
@@ -95,12 +95,12 @@
                     // in pending status
                     if (this.Item.IsEnabled(ItemState.Item_Pending))
                     {
-                        if (gameInput.Sequence.Keyboard.IsKeyTriggered(Keys.N))
+                        if (gameInput.State.Keyboard.IsKeyTriggered(Keys.N))
                         {
                             this.ItemDataControl.EditString("Name");
                         }
 
-                        if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Escape))
+                        if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))
                         {
                             this.View.Disable(ViewState.Item_Editting);
                             this.Item.Disable(ItemState.Item_Pending);

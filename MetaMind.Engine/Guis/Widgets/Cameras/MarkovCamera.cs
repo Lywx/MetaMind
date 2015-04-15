@@ -35,8 +35,8 @@ namespace MetaMind.Engine.Guis.Widgets.Cameras
 
         public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
-            var mouse    = gameInput.Sequence.Mouse.CurrentState;
-            var keyboard = gameInput.Sequence.Keyboard.CurrentState;
+            var mouse    = gameInput.State.Mouse.CurrentState;
+            var keyboard = gameInput.State.Keyboard.CurrentState;
 
             var identityMovement = Vector2.Zero;
             identityMovement = AddMovementFromKeyboardInput(keyboard, identityMovement);

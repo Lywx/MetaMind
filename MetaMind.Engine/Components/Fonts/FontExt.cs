@@ -55,6 +55,17 @@ namespace MetaMind.Engine.Components.Fonts
             return new Vector2((asciiCharCount + cjkCharCount * 2) * monoSize, monoSize);
         }
 
+        public static Vector2 MeasureString(this Font font, string str, float scale, bool monospaced)
+        {
+            if (monospaced)
+            {
+                return font.MeasureMonospacedString(str, scale);
+            }
+
+            return font.MeasureString(str, scale);
+        }
+
+
         public static void Initialize(IFontManager fontManager)
         {
             if (fontManager == null)

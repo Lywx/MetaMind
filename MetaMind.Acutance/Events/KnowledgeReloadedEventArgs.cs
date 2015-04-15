@@ -4,11 +4,19 @@ namespace MetaMind.Acutance.Events
 
     public class KnowledgeReloadedEventArgs : EventArgs
     {
-        public readonly string Path;
+        private readonly string path;
 
         public KnowledgeReloadedEventArgs(string path)
         {
-            this.Path = path;
+            this.path = path;
+        }
+
+        public string Path
+        {
+            get
+            {
+                return this.path;
+            }
         }
     }
 }

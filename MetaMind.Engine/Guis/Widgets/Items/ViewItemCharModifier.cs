@@ -64,8 +64,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         public ViewItemCharModifier(IViewItem item)
             : base(item)
         {
-            InputEventManager.CharEntered += this.DetectCharEntered;
-            InputEventManager.KeyDown     += this.DetectEnterKeyDown;
+            InputEvent.CharEntered += this.DetectCharEntered;
+            InputEvent.KeyDown     += this.DetectEnterKeyDown;
         }
 
         #endregion 
@@ -88,8 +88,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items
                 this.ValueModified     = null;
                 this.modificationEnded = null;
 
-                InputEventManager.CharEntered -= this.DetectCharEntered;
-                InputEventManager.KeyDown     -= this.DetectEnterKeyDown;
+                InputEvent.CharEntered -= this.DetectCharEntered;
+                InputEvent.KeyDown     -= this.DetectEnterKeyDown;
             }
             finally
             {
@@ -389,9 +389,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
-            var keyboard = gameInput.Sequence.Keyboard;
+            var keyboard = gameInput.State.Keyboard;
 
-            if (keyboard.IsActionTriggered(Actions.Escape))
+            if (keyboard.IsActionTriggered(KeyboardActions.Escape))
             {
                 if (this.Item.IsEnabled(ItemState.Item_Editing))
                 {
@@ -420,7 +420,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             }
         }
 
-        private bool ComboTriggered(KeyboardManager keyboard, Keys key)
+        private bool ComboTriggered(KeyboardInputState keyboard, Keys key)
         {
             return (keyboard.IsKeyPressed(key) && keyboard.CtrlDown) || keyboard.IsKeyTriggered(key);
         }

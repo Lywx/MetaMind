@@ -4,14 +4,29 @@ namespace MetaMind.Acutance.Events
 
     public class KnowledgeRetrievedEventArgs : EventArgs
     {
-        public readonly string Path;
-
-        public readonly int Offset;
+        private readonly int offset;
+        private readonly string path;
 
         public KnowledgeRetrievedEventArgs(string path, int offset)
         {
-            this.Path   = path;
-            this.Offset = offset;
+            this.path = path;
+            this.offset = offset;
+        }
+
+        public int Offset
+        {
+            get
+            {
+                return this.offset;
+            }
+        }
+
+        public string Path
+        {
+            get
+            {
+                return this.path;
+            }
         }
     }
 }

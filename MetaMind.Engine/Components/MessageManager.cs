@@ -21,9 +21,9 @@ namespace MetaMind.Engine.Components
 
         private static MessageManager Singleton { get; set; }
 
-        public static MessageManager GetInstance(GameEngine gameEngine)
+        public static MessageManager GetInstance(GameEngine gameEngine, MessageSettings settings)
         {
-            return Singleton ?? (Singleton = new MessageManager(gameEngine));
+            return Singleton ?? (Singleton = new MessageManager(gameEngine, settings));
         }
 
         #endregion Singleton
@@ -32,21 +32,24 @@ namespace MetaMind.Engine.Components
 
         private readonly List<FlashMessage> messages;
 
+        public MessageSettings Settings { get; set; }
+
         #endregion
 
         #region Engine Data
 
-        private IGameGraphics GameGraphics { get; set; }
+        private IGameGraphics gameGraphics;
 
         #endregion
 
         #region Constructors
 
-        private MessageManager(GameEngine gameEngine)
+        private MessageManager(GameEngine gameEngine, MessageSettings settings)
             : base(gameEngine)
         {
-            this.GameGraphics = new GameEngineGraphics(gameEngine);
+            this.gameGraphics = new GameEngineGraphics(gameEngine);
 
+            this.Settings = settings;
             this.messages = new List<FlashMessage>();
         }
 
@@ -79,7 +82,7 @@ namespace MetaMind.Engine.Components
                     message.FontColor.B - 100 + 15 * i, 
                     message.FontColor.A - 100 + 50 * i);
 
-                this.GameGraphics.FontDrawer.DrawString(
+                this.gameGraphics.FontDrawer.DrawString(
                     MessageSettings.MessageFont, 
                     message.DrawnMessage, 
                     messagePosition, 

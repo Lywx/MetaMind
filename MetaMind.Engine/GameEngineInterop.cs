@@ -29,7 +29,7 @@ namespace MetaMind.Engine
         {
             get
             {
-                return GameEngine.Events;
+                return GameEngine.Event;
             }
         }
 
@@ -53,7 +53,7 @@ namespace MetaMind.Engine
         {
             get
             {
-                return GameEngine.Processes;
+                return GameEngine.Process;
             }
         }
 
@@ -61,7 +61,7 @@ namespace MetaMind.Engine
         {
             get
             {
-                return this.GameEngine.Screens;
+                return this.GameEngine.Screen;
             }
         }
     }

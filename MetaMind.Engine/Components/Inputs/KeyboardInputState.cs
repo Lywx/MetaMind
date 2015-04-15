@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="KeyboardManager.cs" company="UESTC">
+// <copyright file="KeyboardInputState.cs" company="UESTC">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -20,80 +20,15 @@ namespace MetaMind.Engine.Components.Inputs
 
     using Sprache;
 
-    /// <summary>
-    /// The actions that are possible within the game.
-    /// </summary>
-    public enum Actions
-    {
-        // Cursor Movement
-        Up, 
-        Down, 
-        Left, 
-        Right, 
-
-        FastUp, 
-        FastDown, 
-        FastLeft, 
-        FastRight, 
-
-        // List Management
-        MotivationCreateItem, 
-        MotivationDeleteItem, 
-        MotivationEditItem, 
-
-        TaskCreateItem, 
-        TaskDeleteItem, 
-        TaskEditItem, 
-
-        TraceCreateItem, 
-        TraceDeleteItem, 
-        TraceEditItem, 
-        TraceClearItem, 
-
-        KnowledgeEditItem,
-        KnowledgeLoadBuffer,
-
-        ModuleClearItem,
-        ModuleDeleteItem,
-        ModuleOpenItem,
-        ModuleResetItem,
-        ModuleSortItem,
-
-        CommandClearItem,
-        CommandDeleteItem,
-        CommandOpenItem,
-        CommandSortItem,
-
-        // Synchronization
-        ForceAwake,
-        ForceFlip,
-        ForceReset,
-        ForceReverse,
-
-        // General
-        Enter, 
-        Escape, 
-
-        ActionNum,
-    }
-
-    public class KeyboardActionMap
-    {
-        /// <summary>
-        /// Dictionary of key, modifier pair to be mapped to a given action.
-        /// </summary>
-        public Dictionary<Keys, List<Keys>> Bindings = new Dictionary<Keys, List<Keys>>();
-    }
-
-    public class KeyboardManager : GameControllableEntity, IConfigurationFileLoader
+    public class KeyboardInputState : IConfigurationFileLoader, IKeyboardInputState
     {
         #region Singleton
 
-        private static KeyboardManager Singleton { get; set; }
+        private static KeyboardInputState Singleton { get; set; }
 
-        public static KeyboardManager GetInstance()
+        public static KeyboardInputState GetInstance()
         {
-            return Singleton ?? (Singleton = new KeyboardManager());
+            return Singleton ?? (Singleton = new KeyboardInputState());
         }
 
         #endregion Singleton
@@ -158,7 +93,7 @@ namespace MetaMind.Engine.Components.Inputs
         /// <summary>
         /// Check if an action has been pressed.
         /// </summary>
-        public bool IsActionPressed(Actions action)
+        public bool IsActionPressed(KeyboardActions action)
         {
             return this.IsActionMapPressed(actionMaps[(int)action]);
         }
@@ -166,7 +101,7 @@ namespace MetaMind.Engine.Components.Inputs
         /// <summary>
         /// Check if an action was just performed in the most recent update.
         /// </summary>
-        public bool IsActionTriggered(Actions action)
+        public bool IsActionTriggered(KeyboardActions action)
         {
             return this.IsActionMapTriggered(actionMaps[(int)action]);
         }
@@ -210,9 +145,9 @@ namespace MetaMind.Engine.Components.Inputs
 
         private void ActionMapInitialize()
         {
-            actionMaps = new KeyboardActionMap[(int)Actions.ActionNum];
+            actionMaps = new KeyboardActionMap[(int)KeyboardActions.ActionNum];
 
-            for (var i = 0; i < (int)Actions.ActionNum; i++)
+            for (var i = 0; i < (int)KeyboardActions.ActionNum; i++)
             {
                 actionMaps[i] = new KeyboardActionMap();
             }
@@ -229,7 +164,7 @@ namespace MetaMind.Engine.Components.Inputs
         private void ActionMapPairLoad(KeyValuePair<string, string> pair)
         {
             // parse pair action
-            Actions action;
+            KeyboardActions action;
             var success = Enum.TryParse(pair.Key, true, out action);
             if (!success)
             {
@@ -238,7 +173,7 @@ namespace MetaMind.Engine.Components.Inputs
 
             // parse pair mapping
             Keys key;
-            List<Keys> modifiers = new List<Keys>();
+            var modifiers = new List<Keys>();
 
             var expression = LineGrammar.SentenceParser.Parse(pair.Value);
 
@@ -297,7 +232,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         #region Constructors
 
-        private KeyboardManager()
+        private KeyboardInputState()
         {
             this.LoadConfiguration();
         }
@@ -324,7 +259,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         #region Update
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             this.previousState = this.currentState;
             this.currentState = Keyboard.GetState();

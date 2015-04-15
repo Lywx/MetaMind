@@ -100,19 +100,19 @@ namespace MetaMind.Engine.Components.Fonts
 
         #region CJK Char Helper
 
-        private List<float> CJKExclusiveCharAmendedPosition(List<int> cjkExclusiveCharIndexes, string str)
+        private List<float> CJKExclusiveCharAmendedPosition(List<int> CJKExclusiveCharIndexes, string str)
         {
             var position = 0f;
             var indexes = new List<float>();
 
             for (var i = 0; i < str.Length; i++)
             {
-                if (cjkExclusiveCharIndexes.Contains(i))
+                if (CJKExclusiveCharIndexes.Contains(i))
                 {
                     position += 0.5f;
                 }
 
-                if (i > 0 && cjkExclusiveCharIndexes.Contains(i - 1))
+                if (i > 0 && CJKExclusiveCharIndexes.Contains(i - 1))
                 {
                     position += 0.5f;
                 }

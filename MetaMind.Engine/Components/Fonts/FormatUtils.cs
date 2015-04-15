@@ -9,22 +9,6 @@ namespace MetaMind.Engine.Components.Fonts
 
     public class FormatUtils : IConfigurationFileLoader
     {
-        private static IStringProcessor stringProcessor;
-
-        #region Service Injection
-
-        public static void Initialize(IStringProcessor stringProcessor)
-        {
-            if (stringProcessor == null)
-            {
-                throw new ArgumentNullException("stringProcessor");
-            }
-
-            FormatUtils.stringProcessor = stringProcessor;
-        }
-
-        #endregion
-
         #region  Settings
 
         public static FormatSettings Settings { get; set; }
@@ -54,7 +38,7 @@ namespace MetaMind.Engine.Components.Fonts
                     // TODO: CJK characters may double ... when paddling
 
                     // crop to headLendth - 1 for a space between ... and head
-                    headMiddle = stringProcessor.CropMonospacedStringByAsciiCount(head, headLength - 1);
+                    headMiddle = StringUtils.CropMonospacedStringByAsciiCount(head, headLength - 1);
                 }
                 else
                 {

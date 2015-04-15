@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Sequence.cs" company="UESTC">
+// <copyright file="State.cs" company="UESTC">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -11,16 +11,23 @@ namespace MetaMind.Engine.Components
 
     using Microsoft.Xna.Framework;
 
+    public interface IInputState
+    {
+        KeyboardInputState Keyboard { get; }
+
+        MouseInputState Mouse { get; }
+    }
+
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class InputSequenceManager : GameControllableEntity
+    public class InputState : IInputState
     {
-        private readonly KeyboardManager keyboard;
+        private readonly KeyboardInputState keyboard;
 
-        private readonly MouseManager mouse;
+        private readonly MouseInputState mouse;
 
-        public KeyboardManager Keyboard
+        public KeyboardInputState Keyboard
         {
             get
             {
@@ -28,7 +35,7 @@ namespace MetaMind.Engine.Components
             }
         }
 
-        public MouseManager Mouse
+        public MouseInputState Mouse
         {
             get
             {
@@ -38,28 +45,28 @@ namespace MetaMind.Engine.Components
 
         #region Singleton
 
-        private static InputSequenceManager Singleton { get; set; }
+        private static InputState Singleton { get; set; }
 
-        public static InputSequenceManager GetInstance()
+        public static InputState GetInstance()
         {
-            return Singleton ?? (Singleton = new InputSequenceManager());
+            return Singleton ?? (Singleton = new InputState());
         }
 
         #endregion Singleton
 
         #region Constructors
 
-        private InputSequenceManager()
+        private InputState()
         {
-            this.keyboard = KeyboardManager.GetInstance();
-            this.mouse    = MouseManager   .GetInstance();
+            this.keyboard = KeyboardInputState.GetInstance();
+            this.mouse    = MouseInputState   .GetInstance();
         }
 
         #endregion Constructors
 
         #region Update and Draw
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             this.mouse   .UpdateInput(gameInput, gameTime);
             this.keyboard.UpdateInput(gameInput, gameTime);

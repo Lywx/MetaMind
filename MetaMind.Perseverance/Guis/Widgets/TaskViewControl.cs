@@ -49,7 +49,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
                 if (this.ViewSettings.KeyboardEnabled)
                 {
                     // list management
-                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.TaskCreateItem))
+                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.TaskCreateItem))
                     {
                         this.AddItem();
 
@@ -57,7 +57,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
                         this.Selection.Select(this.View.Items.Count - 1);
                     }
 
-                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.TaskDeleteItem))
+                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.TaskDeleteItem))
                     {
                         // itme deletion is handled by item control
                         // auto select last item

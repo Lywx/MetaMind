@@ -118,7 +118,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                             }
                         }
 
-                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
+                        if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.Escape))
                         {
                             this.View.Disable(ViewState.Item_Editting);
                             this.Item.Disable(ItemState.Item_Pending);
@@ -128,7 +128,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                     if (!this.Locked)
                     {
                         // normal status
-                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.KnowledgeEditItem))
+                        if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.KnowledgeEditItem))
                         {
                             this.View.Enable(ViewState.Item_Editting);
                             this.Item.Enable(ItemState.Item_Pending);

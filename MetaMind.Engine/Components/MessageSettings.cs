@@ -13,7 +13,7 @@ namespace MetaMind.Engine.Components
 
     using Microsoft.Xna.Framework;
 
-    public static class MessageSettings
+    public class MessageSettings
     {
         public static Font     MessageFont = Font.UiRegular;
 

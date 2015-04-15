@@ -27,9 +27,7 @@ namespace MetaMind.Engine.Components
 
         #region Engine Data
 
-        private IGameGraphics GameGraphics { get; set; }
-
-        private IGameFile GameFile { get; set; }
+        private IGameFile gameFile;
 
         #endregion
 
@@ -59,8 +57,7 @@ namespace MetaMind.Engine.Components
         public FontManager(GameEngine gameEngine)
             : base(gameEngine)
         {
-            this.GameFile     = new GameEngineFile(gameEngine);
-            this.GameGraphics = new GameEngineGraphics(gameEngine);
+            this.gameFile = new GameEngineFile(gameEngine);
         }
 
         #endregion
@@ -95,7 +92,7 @@ namespace MetaMind.Engine.Components
                 this.Fonts = new Dictionary<Font, FontInfo>();
             }
 
-            var spriteFont = this.GameFile.Content.Load<SpriteFont>(path);
+            var spriteFont = this.gameFile.Content.Load<SpriteFont>(path);
 
             this.Fonts[font] = new FontInfo(font, spriteFont, fontSize);
         }

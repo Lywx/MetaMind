@@ -39,7 +39,7 @@ namespace MetaMind.Engine
         {
             get
             {
-                return GameEngine.Screens;
+                return GameEngine.Screen;
             }
         }
 
@@ -55,7 +55,7 @@ namespace MetaMind.Engine
         {
             get
             {
-                return GameEngine.FontManager;
+                return GameEngine.FontDrawer;
             }
         }
     }

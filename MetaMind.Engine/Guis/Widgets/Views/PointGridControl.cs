@@ -133,47 +133,47 @@ namespace MetaMind.Engine.Guis.Widgets.Views
                 if (this.ViewSettings.KeyboardEnabled)
                 {
                     // movement
-                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Left))
+                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.Left))
                     {
                         this.MoveLeft();
                     }
 
-                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Right))
+                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.Right))
                     {
                         this.MoveRight();
                     }
 
-                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Up))
+                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.Up))
                     {
                         this.MoveUp();
                     }
 
-                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Down))
+                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.Down))
                     {
                         this.MoveDown();
                     }
 
-                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.FastUp))
+                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.FastUp))
                     {
                         this.SuperMoveUp();
                     }
 
-                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.FastDown))
+                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.FastDown))
                     {
                         this.SuperMoveDown();
                     }
 
-                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.FastLeft))
+                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.FastLeft))
                     {
                         this.SuperMoveLeft();
                     }
 
-                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.FastRight))
+                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.FastRight))
                     {
                         this.SuperMoveRight();
                     }
 
-                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Escape))
+                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))
                     {
                         this.Selection.Clear();
                     }
@@ -187,12 +187,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             {
                 if (this.ViewSettings.MouseEnabled)
                 {
-                    if (gameInput.Sequence.Mouse.IsWheelScrolledUp)
+                    if (gameInput.State.Mouse.IsWheelScrolledUp)
                     {
                         this.ScrollUp();
                     }
 
-                    if (gameInput.Sequence.Mouse.IsWheelScrolledDown)
+                    if (gameInput.State.Mouse.IsWheelScrolledDown)
                     {
                         this.ScrollDown();
                     }

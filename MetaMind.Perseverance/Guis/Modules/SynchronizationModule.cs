@@ -251,7 +251,7 @@
 
         public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
-            if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.ForceAwake))
+            if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.ForceAwake))
             {
                 var awake = this.cognition.Consciousness as ConsciousnessAwake;
                 if (awake != null)
@@ -262,17 +262,17 @@
                 this.synchronization.ResetToday();
             }
 
-            if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.ForceFlip))
+            if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.ForceFlip))
             {
                 this.valve.Flip();
             }
 
-            if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.ForceReset))
+            if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.ForceReset))
             {
                 this.synchronization.ResetTomorrow();
             }
 
-            if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.ForceReverse))
+            if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.ForceReverse))
             {
                 this.synchronization.TryAbort();
             }

@@ -62,7 +62,7 @@ namespace MetaMind.Perseverance.Guis.Modules
         /// <param name="gameTime"></param>
         public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
-            if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.ForceReset))
+            if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.ForceReset))
             {
                 this.synchronization.ResetTomorrow();
             }

@@ -57,7 +57,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                 (int)SessionEventType.KnowledgeRetrieved,
                 new KnowledgeRetrievedEventArgs(ItemData.Path, 0));
 
-            GameEngine.Events.QueueEvent(knowledgeRetrievedEvent);
+            GameEngine.Event.QueueEvent(knowledgeRetrievedEvent);
         }
 
         public void DeleteIt()
@@ -99,12 +99,12 @@ namespace MetaMind.Acutance.Guis.Widgets
                 {
                     if (!this.Locked)
                     {
-                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.ModuleDeleteItem))
+                        if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.ModuleDeleteItem))
                         {
                             this.DeleteIt();
                         }
 
-                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.ModuleOpenItem))
+                        if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.ModuleOpenItem))
                         {
                             this.RetrieveIt();
                         }
@@ -117,12 +117,12 @@ namespace MetaMind.Acutance.Guis.Widgets
                 {
                     if (!this.Locked)
                     {
-                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.ModuleClearItem))
+                        if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.ModuleClearItem))
                         {
                             this.DeleteIt();
                         }
 
-                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.ModuleResetItem))
+                        if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.ModuleResetItem))
                         {
                             this.ResetIt();
                         }

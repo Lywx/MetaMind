@@ -6,11 +6,19 @@
 
     public class ModuleCreatedEventArgs : EventArgs
     {
-        public readonly RawKnowledgeFileBuffer Buffer;
+        private readonly RawKnowledgeFileBuffer buffer;
 
         public ModuleCreatedEventArgs(RawKnowledgeFileBuffer buffer)
         {
-            this.Buffer = buffer;
+            this.buffer = buffer;
+        }
+
+        public RawKnowledgeFileBuffer Buffer
+        {
+            get
+            {
+                return this.buffer;
+            }
         }
     }
 }

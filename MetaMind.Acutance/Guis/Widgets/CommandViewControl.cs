@@ -57,7 +57,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                 // ---------------------------------------------------------------------
                 if (ViewSettings.KeyboardEnabled)
                 {
-                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.CommandClearItem))
+                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.CommandClearItem))
                     {
                         var notEmpty = View.Items.Count;
                         if (notEmpty > 0)
@@ -70,7 +70,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                         }
                     }
 
-                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.CommandDeleteItem))
+                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.CommandDeleteItem))
                     {
                         // itme deletion is handled by item control
                         // auto select last item
@@ -81,7 +81,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                         }
                     }
 
-                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.CommandSortItem))
+                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.CommandSortItem))
                     {
                         this.SortItems(PointViewSortMode.Name);
                     }

@@ -15,24 +15,23 @@ namespace MetaMind.Engine.Components
 
     using MetaMind.Engine.Components.Inputs;
 
-    using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
-    public class InputEventManager : GameControllableEntity
+    public class InputEvent : IInputEvent
     {
         #region Singleton
 
-        public static InputEventManager GetInstance(GameEngine gameEngine)
+        public static InputEvent GetInstance(GameEngine gameEngine)
         {
             if (Singleton == null)
             {
-                Singleton = new InputEventManager(gameEngine);
+                Singleton = new InputEvent(gameEngine);
             }
 
             return Singleton;
         }
 
-        private static InputEventManager Singleton { get; set; }
+        private static InputEvent Singleton { get; set; }
 
         #endregion Singleton
 
@@ -40,9 +39,7 @@ namespace MetaMind.Engine.Components
 
         private IntPtr hIMC;
 
-        private WndProc hookProcHandler;
-
-        private IntPtr prevWndProc;
+        private IntPtr wndProc;
 
         private delegate IntPtr WndProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
 
@@ -50,14 +47,12 @@ namespace MetaMind.Engine.Components
 
         #region Constructors
 
-        private bool isInitialized;
-
-        private InputEventManager(GameEngine gameEngine)
+        private InputEvent(GameEngine gameEngine)
         {
-            if (!isInitialized)
-            {
-                this.Initialize(gameEngine.Window);
-            }
+            var window = gameEngine.Window;
+
+            this.wndProc = (IntPtr)SetWindowLong(window.Handle, GWL_WNDPROC, (int)Marshal.GetFunctionPointerForDelegate((WndProc)this.HookProc));
+            this.hIMC    = ImmGetContext(window.Handle);
         }
 
         #endregion Constructors
@@ -67,47 +62,47 @@ namespace MetaMind.Engine.Components
         /// <summary>
         /// Event raised when a character has been entered.
         /// </summary>
-        public event CharEnteredHandler CharEntered;
+        public event EventHandler<CharEnteredEventArgs> CharEntered;
 
         /// <summary>
         /// Event raised when a key has been pressed down. May fire multiple times due to keyboard repeat.
         /// </summary>
-        public event KeyEventHandler KeyDown;
+        public event EventHandler<KeyEventArgs> KeyDown;
 
         /// <summary>
         /// Event raised when a key has been released.
         /// </summary>
-        public event KeyEventHandler KeyUp;
+        public event EventHandler<KeyEventArgs> KeyUp;
 
         /// <summary>
         /// Event raised when a mouse button has been double clicked.
         /// </summary>
-        public event MouseEventHandler MouseDoubleClick;
+        public event EventHandler<MouseEventArgs> MouseDoubleClick;
 
         /// <summary>
         /// Event raised when a mouse button is pressed.
         /// </summary>
-        public event MouseEventHandler MouseDown;
+        public event EventHandler<MouseEventArgs> MouseDown;
 
         /// <summary>
         /// Event raised when the mouse has hovered in the same location for a short period of time.
         /// </summary>
-        public event MouseEventHandler MouseHover;
+        public event EventHandler<MouseEventArgs> MouseHover;
 
         /// <summary>
         /// Event raised when the mouse changes location.
         /// </summary>
-        public event MouseEventHandler MouseMove;
+        public event EventHandler<MouseEventArgs> MouseMove;
 
         /// <summary>
         /// Event raised when a mouse button is released.
         /// </summary>
-        public event MouseEventHandler MouseUp;
+        public event EventHandler<MouseEventArgs> MouseUp;
 
         /// <summary>
         /// Event raised when the mouse wheel has been moved.
         /// </summary>
-        public event MouseEventHandler MouseWheel;
+        public event EventHandler<MouseEventArgs> MouseWheel;
 
         #endregion Events
 
@@ -181,27 +176,9 @@ namespace MetaMind.Engine.Components
 
         #region Initialization
 
-        /// <summary>
-        /// Initialize the TextInput with the given GameWindow.
-        /// </summary>
-        /// <param name="window">The XNA window to which text input should be linked.</param>
-        public void Initialize(GameWindow window)
-        {
-            if (isInitialized)
-            {
-                throw new InvalidOperationException("TextInput.Initialize can only be called once!");
-            }
-
-            this.hookProcHandler = this.HookProc;
-            this.prevWndProc = (IntPtr)SetWindowLong(window.Handle, GWL_WNDPROC, (int)Marshal.GetFunctionPointerForDelegate(this.hookProcHandler));
-
-            this.hIMC = ImmGetContext(window.Handle);
-            this.isInitialized = true;
-        }
-
         private IntPtr HookProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
         {
-            var returnCode = CallWindowProc(prevWndProc, hWnd, msg, wParam, lParam);
+            var returnCode = CallWindowProc(this.wndProc, hWnd, msg, wParam, lParam);
 
             if (!this.Controllable)
             {
@@ -215,23 +192,23 @@ namespace MetaMind.Engine.Components
                     break;
 
                 case WM_KEYDOWN:
-                    if (KeyDown != null)
+                    if (this.KeyDown != null)
                     {
-                        KeyDown(null, new KeyEventArgs((Keys)wParam));
+                        this.KeyDown(null, new KeyEventArgs((Keys)wParam));
                     }
 
                     break;
 
                 case WM_KEYUP:
-                    if (KeyUp != null)
+                    if (this.KeyUp != null)
                     {
-                        KeyUp(null, new KeyEventArgs((Keys)wParam));
+                        this.KeyUp(null, new KeyEventArgs((Keys)wParam));
                     }
 
                     break;
 
                 case WM_CHAR:
-                    if (CharEntered != null)
+                    if (this.CharEntered != null)
                     {
                         // convert wParam to byte for different IME encoding
                         var charBytes = BitConverter.GetBytes((int)wParam);

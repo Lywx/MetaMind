@@ -76,7 +76,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                 (int)SessionEventType.KnowledgeRetrieved,
                 new KnowledgeRetrievedEventArgs(this.ItemData.Path, this.ItemData.Offset));
 
-            GameEngine.Events.QueueEvent(knowledgeRetrievedEvent);
+            GameEngine.Event.QueueEvent(knowledgeRetrievedEvent);
         }
 
         #endregion Operations
@@ -106,12 +106,12 @@ namespace MetaMind.Acutance.Guis.Widgets
                 {
                     if (!this.Locked)
                     {
-                        if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.CommandDeleteItem))
+                        if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.CommandDeleteItem))
                         {
                             this.DeleteIt();
                         }
 
-                        if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.CommandOpenItem))
+                        if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.CommandOpenItem))
                         {
                             this.RetrieveIt();
                         }
@@ -124,7 +124,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                 {
                     if (!this.Locked)
                     {
-                        if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.CommandClearItem))
+                        if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.CommandClearItem))
                         {
                             this.DeleteIt();
                         }

@@ -45,7 +45,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                 if (this.ViewSettings.KeyboardEnabled)
                 {
                     // list management
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceCreateItem))
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.TraceCreateItem))
                     {
                         this.AddItem();
 
@@ -53,7 +53,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                         this.Selection.Select(this.View.Items.Count - 1);
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceDeleteItem))
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.TraceDeleteItem))
                     {
                         // itme deletion is handled by item control
                         // auto select last item
@@ -64,7 +64,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                         }
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceClearItem))
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.TraceClearItem))
                     {
                         var notEmpty = View.Items.Count;
                         if (notEmpty > 0)

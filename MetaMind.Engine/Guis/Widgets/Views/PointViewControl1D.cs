@@ -219,28 +219,28 @@ namespace MetaMind.Engine.Guis.Widgets.Views
                 if (ViewSettings.KeyboardEnabled)
                 {
                     // movement
-                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Left))
+                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.Left))
                     {
                         this.MoveLeft();
                     }
 
-                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Right))
+                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.Right))
                     {
                         this.MoveRight();
                     }
 
-                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.FastLeft))
+                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.FastLeft))
                     {
                         this.SuperMoveLeft();
                     }
 
-                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.FastRight))
+                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.FastRight))
                     {
                         this.SuperMoveRight();
                     }
 
                     // escape
-                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Escape))
+                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))
                     {
                         this.Selection.Clear();
                     }
@@ -256,12 +256,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views
                 // ------------------------------------------------------------------
                 if (ViewSettings.MouseEnabled)
                 {
-                    if (gameInput.Sequence.Mouse.IsWheelScrolledUp)
+                    if (gameInput.State.Mouse.IsWheelScrolledUp)
                     {
                         this.Scroll.MoveLeft();
                     }
 
-                    if (gameInput.Sequence.Mouse.IsWheelScrolledDown)
+                    if (gameInput.State.Mouse.IsWheelScrolledDown)
                     {
                         this.Scroll.MoveRight();
                     }

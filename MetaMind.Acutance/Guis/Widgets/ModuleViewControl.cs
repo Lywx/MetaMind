@@ -59,7 +59,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                 // ---------------------------------------------------------------------
                 if (this.ViewSettings.KeyboardEnabled)
                 {
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.ModuleDeleteItem))
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.ModuleDeleteItem))
                     {
                         // itme deletion is handled by item control
                         // auto select last item
@@ -74,7 +74,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                         }
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.ModuleClearItem))
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.ModuleClearItem))
                     {
                         var notEmpty = this.View.Items.Count;
                         if (notEmpty > 0)
@@ -87,7 +87,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                         }
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.ModuleSortItem))
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.ModuleSortItem))
                     {
                         this.SortItems(PointViewSortMode.Name);
                     }

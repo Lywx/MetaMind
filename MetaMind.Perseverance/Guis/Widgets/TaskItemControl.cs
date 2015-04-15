@@ -77,28 +77,28 @@ namespace MetaMind.Perseverance.Guis.Widgets
                     // in pending status
                     if (this.Item.IsEnabled(ItemState.Item_Pending))
                     {
-                        if (gameInput.Sequence.Keyboard.IsKeyTriggered(Keys.N))
+                        if (gameInput.State.Keyboard.IsKeyTriggered(Keys.N))
                         {
                             this.ItemDataControl.EditString("Name");
                         }
 
                         // UNDONE: Won't work anymore
-                        if (gameInput.Sequence.Keyboard.IsKeyTriggered(Keys.D))
+                        if (gameInput.State.Keyboard.IsKeyTriggered(Keys.D))
                         {
                             this.ItemDataControl.EditInt("Done");
                         }
 
-                        if (gameInput.Sequence.Keyboard.IsKeyTriggered(Keys.E))
+                        if (gameInput.State.Keyboard.IsKeyTriggered(Keys.E))
                         {
                             this.ItemDataControl.EditExperience("SynchronizationSpan");
                         }
 
-                        if (gameInput.Sequence.Keyboard.IsKeyTriggered(Keys.L))
+                        if (gameInput.State.Keyboard.IsKeyTriggered(Keys.L))
                         {
                             this.ItemDataControl.EditInt("Load");
                         }
 
-                        if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Escape))
+                        if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))
                         {
                             View.Disable(ViewState.Item_Editting);
                             this.Item.Disable(ItemState.Item_Pending);
@@ -110,18 +110,18 @@ namespace MetaMind.Perseverance.Guis.Widgets
                     if (!this.Locked)
                     {
                         // normal status
-                        if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.TaskEditItem))
+                        if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.TaskEditItem))
                         {
                             View.Enable(ViewState.Item_Editting);
                             this.Item.Enable(ItemState.Item_Pending);
                         }
 
-                        if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.TaskDeleteItem))
+                        if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.TaskDeleteItem))
                         {
                             this.DeleteIt();
                         }
 
-                        if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Enter))
+                        if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.Enter))
                         {
                             this.ItemSyncControl.SwitchSync();
                         }

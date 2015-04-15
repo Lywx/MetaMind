@@ -40,13 +40,13 @@
 
         protected PressableFrame()
         {
-            GameEngine.InputEventManager.MouseMove += this.DetectMouseOver;
+            GameEngine.InputEvent.MouseMove += this.DetectMouseOver;
 
-            GameEngine.InputEventManager.MouseDown += this.DetectMouseLeftPressed;
-            GameEngine.InputEventManager.MouseDown += this.DetectMouseRightPressed;
+            GameEngine.InputEvent.MouseDown += this.DetectMouseLeftPressed;
+            GameEngine.InputEvent.MouseDown += this.DetectMouseRightPressed;
 
-            GameEngine.InputEventManager.MouseUp += this.DetectMouseLeftRelease;
-            GameEngine.InputEventManager.MouseUp += this.DetectMouseRightRelease;
+            GameEngine.InputEvent.MouseUp += this.DetectMouseLeftRelease;
+            GameEngine.InputEvent.MouseUp += this.DetectMouseRightRelease;
 
             this.FrameMoved += this.DetectMouseOver;
 
@@ -80,13 +80,13 @@
 
             this.FrameMoved = null;
 
-            GameEngine.InputEventManager.MouseMove -= this.DetectMouseOver;
+            GameEngine.InputEvent.MouseMove -= this.DetectMouseOver;
 
-            GameEngine.InputEventManager.MouseDown -= this.DetectMouseLeftPressed;
-            GameEngine.InputEventManager.MouseDown -= this.DetectMouseRightPressed;
+            GameEngine.InputEvent.MouseDown -= this.DetectMouseLeftPressed;
+            GameEngine.InputEvent.MouseDown -= this.DetectMouseRightPressed;
 
-            GameEngine.InputEventManager.MouseUp -= this.DetectMouseLeftRelease;
-            GameEngine.InputEventManager.MouseUp -= this.DetectMouseRightRelease;
+            GameEngine.InputEvent.MouseUp -= this.DetectMouseLeftRelease;
+            GameEngine.InputEvent.MouseUp -= this.DetectMouseRightRelease;
         }
 
         #endregion
@@ -232,7 +232,7 @@
 
         private void DetectMouseOver(object sender, EventArgs e)
         {
-            var mouse = GameEngine.InputSequenceManager.Mouse.CurrentState;
+            var mouse = GameEngine.InputState.Mouse.CurrentState;
             this.DetectMouseOver(null, new MouseEventArgs(MouseButton.None, 0, mouse.X, mouse.Y, 0));
         }
 
@@ -299,7 +299,7 @@
 
         public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
-            var mouse         = gameInput.Sequence.Mouse.CurrentState;
+            var mouse         = gameInput.State.Mouse.CurrentState;
             var mouseLocation = new Point(mouse.X, mouse.Y);
 
             this.UpdateStates(mouseLocation);

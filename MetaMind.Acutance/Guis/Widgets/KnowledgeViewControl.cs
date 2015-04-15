@@ -169,7 +169,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             {
                 if (this.ViewSettings.KeyboardEnabled)
                 {
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.KnowledgeLoadBuffer))
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.KnowledgeLoadBuffer))
                     {
                         this.LoadBuffer();
                     }

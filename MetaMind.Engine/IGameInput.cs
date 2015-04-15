@@ -4,8 +4,8 @@ namespace MetaMind.Engine
 
     public interface IGameInput
     {
-        InputEventManager Event { get; }
+        IInputEvent Event { get; }
 
-        InputSequenceManager Sequence { get; }
+        IInputState State { get; }
     }
 }

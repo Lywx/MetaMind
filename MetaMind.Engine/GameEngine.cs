@@ -47,23 +47,23 @@
 
         public MessageManager Message { get; private set; }
 
-        public ScreenManager Screens { get; private set; }
+        public ScreenManager Screen { get; private set; }
 
         #endregion
 
         #region Input
 
-        public InputEventManager InputEventManager { get; private set; }
+        public InputEvent InputEvent { get; private set; }
 
-        public InputSequenceManager InputSequenceManager { get; private set; }
+        public InputState InputState { get; private set; }
 
         #endregion
 
         #region Interop
 
-        public EventManager Events { get; private set; }
+        public EventManager Event { get; private set; }
 
-        public ProcessManager Processes { get; private set; }
+        public ProcessManager Process { get; private set; }
 
         #endregion
 
@@ -80,10 +80,10 @@
 
             // Graphics
             this.GraphicsSettings = GraphicsSettings.GetInstance(this);
-            this.GraphicsManager  = GraphicsManager.GetInstance(this);
+            this.GraphicsManager  = GraphicsManager .GetInstance(this);
 
             // Screen
-            this.Screens = ScreenManager.GetInstance(this, new ScreenSettings());
+            this.Screen = ScreenManager.GetInstance(this, new ScreenSettings());
 
             // Content
             this.Content.RootDirectory = "Content";
@@ -109,20 +109,20 @@
             this.Folder = FolderManager.GetInstance();
 
             // Processes
-            this.Processes = ProcessManager.GetInstance(this);
+            this.Process = ProcessManager.GetInstance(this);
 
             // Events
-            this.Events = EventManager.GetInstance(this);
+            this.Event = EventManager.GetInstance(this);
 
             // Input
-            this.InputEventManager    = InputEventManager.GetInstance(this);
-            this.InputSequenceManager = InputSequenceManager.GetInstance();
+            this.InputEvent    = InputEvent.GetInstance(this);
+            this.InputState = InputState.GetInstance();
 
             // Font
             this.FontManager = FontManager.GetInstance(this);
 
             // Message
-            this.Message = MessageManager.GetInstance(this);
+            this.Message = MessageManager.GetInstance(this, new MessageSettings());
 
             // Service
             GameEngineService.Provide(new Random((int)DateTime.Now.Ticks));
@@ -162,9 +162,9 @@
 
         private void UpdateInput(GameTime gameTime)
         {
-            this.InputSequenceManager.UpdateInput(gameTime);
-            this.InputEventManager.UpdateInput(gameTime);
-            this.Screens.UpdateInput(gameTime);
+            this.InputState.UpdateInput(gameTime);
+            this.InputEvent.UpdateInput(gameTime);
+            this.Screen.UpdateInput(gameTime);
         }
 
         #endregion Update and Draw

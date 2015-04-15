@@ -102,13 +102,13 @@ namespace MetaMind.Perseverance.Guis.Modules
             {
                 // mouse
                 // ---------------------------------------------------------------------
-                if (gameInput.Sequence.Mouse.IsWheelScrolledUp)
+                if (gameInput.State.Mouse.IsWheelScrolledUp)
                 {
                     this.View.Control.ScrollBar.Trigger();
                     this.View.Control.Scroll.MoveUp();
                 }
 
-                if (gameInput.Sequence.Mouse.IsWheelScrolledDown)
+                if (gameInput.State.Mouse.IsWheelScrolledDown)
                 {
                     this.View.Control.Scroll.MoveDown();
                     this.View.Control.ScrollBar.Trigger();
@@ -117,29 +117,29 @@ namespace MetaMind.Perseverance.Guis.Modules
                 // keyboard
                 // ---------------------------------------------------------------------
                 // movement
-                if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Left))
+                if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.Left))
                 {
                     // won't trigger scroll bar
                     this.View.Control.Selection.MoveLeft();
                 }
 
-                if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Right))
+                if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.Right))
                 {
                     // won't trigger scroll bar
                     this.View.Control.Selection.MoveRight();
                 }
 
-                if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Up))
+                if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.Up))
                 {
                     this.View.Control.MoveUp();
                 }
 
-                if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Down))
+                if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.Down))
                 {
                     this.View.Control.MoveDown();
                 }
 
-                if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.FastUp))
+                if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.FastUp))
                 {
                     for (var i = 0; i < this.View.ViewSettings.RowNumDisplay; i++)
                     {
@@ -147,7 +147,7 @@ namespace MetaMind.Perseverance.Guis.Modules
                     }
                 }
 
-                if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.FastDown))
+                if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.FastDown))
                 {
                     for (var i = 0; i < this.View.ViewSettings.RowNumDisplay; i++)
                     {
@@ -156,13 +156,13 @@ namespace MetaMind.Perseverance.Guis.Modules
                 }
 
                 // escape
-                if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Escape))
+                if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))
                 {
                     this.View.Control.Selection.Clear();
                 }
 
                 // list management
-                if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.TaskCreateItem))
+                if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.TaskCreateItem))
                 {
                     var task = this.View.Control.ItemFactory.CreateData(null);
 
@@ -176,7 +176,7 @@ namespace MetaMind.Perseverance.Guis.Modules
                     this.View.Control.Selection.Select(this.View.Items.Count - 1);
                 }
 
-                if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.TaskDeleteItem))
+                if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.TaskDeleteItem))
                 {
                     // item deletion was processed by item control which is unaware of motivation
 

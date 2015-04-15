@@ -50,7 +50,7 @@
         public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             gameInput.Event   .UpdateInput(gameInput, gameTime);
-            gameInput.Sequence.UpdateInput(gameInput, gameTime);
+            gameInput.State.UpdateInput(gameInput, gameTime);
             MessageManager.Update(gameTime);
         }
 

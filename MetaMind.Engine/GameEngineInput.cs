@@ -17,19 +17,19 @@ namespace MetaMind.Engine
             this.AccessType = GameEngineAccessType.Input;
         }
 
-        public InputEventManager Event
+        public IInputEvent Event
         {
             get
             {
-                return GameEngine.InputEventManager;
+                return GameEngine.InputEvent;
             }
         }
 
-        public InputSequenceManager Sequence
+        public IInputState State
         {
             get
             {
-                return GameEngine.InputSequenceManager;
+                return GameEngine.InputState;
             }
         }
     }

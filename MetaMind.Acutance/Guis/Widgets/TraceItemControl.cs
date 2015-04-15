@@ -74,7 +74,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                             this.ItemDataControl.EditString("Name");
                         }
 
-                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
+                        if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.Escape))
                         {
                             this.View.Disable(ViewState.Item_Editting);
                             this.Item.Disable(ItemState.Item_Pending);
@@ -84,13 +84,13 @@ namespace MetaMind.Acutance.Guis.Widgets
                     if (!this.Locked)
                     {
                         // normal status
-                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceEditItem))
+                        if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.TraceEditItem))
                         {
                             this.View.Enable(ViewState.Item_Editting);
                             this.Item.Enable(ItemState.Item_Pending);
                         }
 
-                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceDeleteItem))
+                        if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.TraceDeleteItem))
                         {
                             this.DeleteIt();
                         }
@@ -103,7 +103,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                 {
                     if (!this.Locked)
                     {
-                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TraceClearItem))
+                        if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.TraceClearItem))
                         {
                             this.DeleteIt();
                         }

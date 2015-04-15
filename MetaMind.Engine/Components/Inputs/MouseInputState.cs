@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MouseManager.cs" company="UESTC">
+// <copyright file="MouseInputState.cs" company="UESTC">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -10,15 +10,15 @@ namespace MetaMind.Engine.Components.Inputs
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
-    public class MouseManager : GameControllableEntity
+    public class MouseInputState 
     {
         #region Singleton
 
-        private static MouseManager singleton;
+        private static MouseInputState Singleton { get; set; }
 
-        public static MouseManager GetInstance()
+        public static MouseInputState GetInstance()
         {
-            return singleton ?? (singleton = new MouseManager());
+            return Singleton ?? (Singleton = new MouseInputState());
         }
 
         #endregion Singleton
@@ -59,7 +59,8 @@ namespace MetaMind.Engine.Components.Inputs
         {
             get
             {
-                if (this.currentState.LeftButton == ButtonState.Released && this.previousState.LeftButton == ButtonState.Pressed)
+                if (this.currentState.LeftButton == ButtonState.Released && 
+                    this.previousState.LeftButton == ButtonState.Pressed)
                 {
                     return true;
                 }
@@ -72,7 +73,8 @@ namespace MetaMind.Engine.Components.Inputs
         {
             get
             {
-                if (this.currentState.RightButton == ButtonState.Released && this.previousState.RightButton == ButtonState.Pressed)
+                if (this.currentState.RightButton == ButtonState.Released && 
+                    this.previousState.RightButton == ButtonState.Pressed)
                 {
                     return true;
                 }
@@ -111,7 +113,7 @@ namespace MetaMind.Engine.Components.Inputs
         {
             get
             {
-                MouseState state = Mouse.GetState();
+                var state = Mouse.GetState();
                 return new Point(state.X, state.Y);
             }
         }
@@ -133,7 +135,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         #region Constructors
 
-        private MouseManager()
+        private MouseInputState()
         {
         }
 
@@ -141,7 +143,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         #region Update
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             this.previousState = this.currentState;
             this.currentState  = Mouse.GetState();
