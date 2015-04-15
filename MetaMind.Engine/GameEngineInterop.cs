@@ -25,11 +25,11 @@ namespace MetaMind.Engine
         {
         }
 
-        public IEventManager Event
+        public IEventManager Events
         {
             get
             {
-                return GameEngine.EventManager;
+                return GameEngine.Events;
             }
         }
 
@@ -37,7 +37,7 @@ namespace MetaMind.Engine
         {
             get
             {
-                return this.GameEngine.GameManager;
+                return this.GameEngine.Games;
             }
         }
 
@@ -49,19 +49,19 @@ namespace MetaMind.Engine
             }
         }
 
-        public IProcessManager Process
+        public IProcessManager Processes
         {
             get
             {
-                return GameEngine.ProcessManager;
+                return GameEngine.Processes;
             }
         }
 
-        public IScreenManager Screen
+        public IScreenManager Screens
         {
             get
             {
-                return this.GameEngine.ScreenManager;
+                return this.GameEngine.Screens;
             }
         }
     }

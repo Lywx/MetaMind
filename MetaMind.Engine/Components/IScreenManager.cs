@@ -48,6 +48,6 @@ namespace MetaMind.Engine.Components
         /// the screen can gradually transition off rather than just being
         /// instantly removed.
         /// </summary>
-        void RemoveScreen(GameScreen screen);
+        void RemoveScreen(IGameScreen screen);
     }
 }

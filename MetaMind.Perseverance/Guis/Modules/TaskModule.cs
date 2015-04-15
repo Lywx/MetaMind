@@ -102,13 +102,13 @@ namespace MetaMind.Perseverance.Guis.Modules
             {
                 // mouse
                 // ---------------------------------------------------------------------
-                if (InputSequenceManager.Mouse.IsWheelScrolledUp)
+                if (gameInput.Sequence.Mouse.IsWheelScrolledUp)
                 {
                     this.View.Control.ScrollBar.Trigger();
                     this.View.Control.Scroll.MoveUp();
                 }
 
-                if (InputSequenceManager.Mouse.IsWheelScrolledDown)
+                if (gameInput.Sequence.Mouse.IsWheelScrolledDown)
                 {
                     this.View.Control.Scroll.MoveDown();
                     this.View.Control.ScrollBar.Trigger();
@@ -117,29 +117,29 @@ namespace MetaMind.Perseverance.Guis.Modules
                 // keyboard
                 // ---------------------------------------------------------------------
                 // movement
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Left))
+                if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Left))
                 {
                     // won't trigger scroll bar
                     this.View.Control.Selection.MoveLeft();
                 }
 
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Right))
+                if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Right))
                 {
                     // won't trigger scroll bar
                     this.View.Control.Selection.MoveRight();
                 }
 
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Up))
+                if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Up))
                 {
                     this.View.Control.MoveUp();
                 }
 
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Down))
+                if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Down))
                 {
                     this.View.Control.MoveDown();
                 }
 
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.FastUp))
+                if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.FastUp))
                 {
                     for (var i = 0; i < this.View.ViewSettings.RowNumDisplay; i++)
                     {
@@ -147,7 +147,7 @@ namespace MetaMind.Perseverance.Guis.Modules
                     }
                 }
 
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.FastDown))
+                if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.FastDown))
                 {
                     for (var i = 0; i < this.View.ViewSettings.RowNumDisplay; i++)
                     {
@@ -156,13 +156,13 @@ namespace MetaMind.Perseverance.Guis.Modules
                 }
 
                 // escape
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
+                if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Escape))
                 {
                     this.View.Control.Selection.Clear();
                 }
 
                 // list management
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskCreateItem))
+                if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.TaskCreateItem))
                 {
                     var task = this.View.Control.ItemFactory.CreateData(null);
 
@@ -176,7 +176,7 @@ namespace MetaMind.Perseverance.Guis.Modules
                     this.View.Control.Selection.Select(this.View.Items.Count - 1);
                 }
 
-                if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.TaskDeleteItem))
+                if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.TaskDeleteItem))
                 {
                     // item deletion was processed by item control which is unaware of motivation
 
@@ -210,7 +210,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             {
                 foreach (var item in this.View.Items.ToArray())
                 {
-                    item.UpdateInput(gameTime);
+                    item.UpdateInput(gameInput, gameTime);
                 }
             }
         }

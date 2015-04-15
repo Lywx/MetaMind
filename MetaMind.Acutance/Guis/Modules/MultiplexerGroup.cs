@@ -109,7 +109,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
         private void CommandFormatDataLoad()
         {
-            new FormatHelper().LoadConfiguration();
+            new FormatUtils().LoadConfiguration();
         }
 
 

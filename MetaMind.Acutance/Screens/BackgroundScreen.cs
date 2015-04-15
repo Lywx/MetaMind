@@ -44,8 +44,8 @@
 
         public override void Draw(IGameGraphics gameGraphics, GameTime gameTime)
         {
-            var spriteBatch = gameGraphics.Screen.SpriteBatch;
-            var viewport    = gameGraphics.Screen.GraphicsDevice.Viewport;
+            var spriteBatch = gameGraphics.Screens.SpriteBatch;
+            var viewport    = gameGraphics.Screens.GraphicsDevice.Viewport;
             var fullscreen  = new Rectangle(0, 0, viewport.Width, viewport.Height);
 
             spriteBatch.Begin();
@@ -57,10 +57,10 @@
             spriteBatch.End();
         }
 
-        public override void Update(IGameGraphics gameGraphics, GameTime gameTime, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
+        public override void UpdateScreen(IGameGraphics gameGraphics, GameTime gameTime, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
         {
             this.particles.Update(gameTime);
-            base          .Update(gameGraphics, gameTime, hasOtherScreenFocus, false);
+            base          .UpdateScreen(gameGraphics, gameTime, hasOtherScreenFocus, false);
         }
 
         #endregion Update and Draw

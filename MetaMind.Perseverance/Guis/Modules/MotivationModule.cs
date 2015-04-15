@@ -50,7 +50,7 @@ namespace MetaMind.Perseverance.Guis.Modules
                 this.gameStartedListener = new MotivationModuleGameStartedListener(this.intelligence);
             }
 
-            gameInterop.Event.AddListener(this.gameStartedListener);
+            gameInterop.Events.AddListener(this.gameStartedListener);
         }
 
         public override void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
@@ -62,7 +62,7 @@ namespace MetaMind.Perseverance.Guis.Modules
         {
             if (this.gameStartedListener == null)
             {
-                gameInterop.Event.RemoveListener(this.gameStartedListener);
+                gameInterop.Events.RemoveListener(this.gameStartedListener);
             }
 
             this.gameStartedListener = null;

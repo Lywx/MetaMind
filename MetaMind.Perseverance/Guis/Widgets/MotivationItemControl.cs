@@ -72,7 +72,7 @@
         {
             // mouse and keyboard in modifier
             //-----------------------------------------------------------------
-            base.UpdateInput(, gameTime);
+            base.UpdateInput(gameInput, gameTime);
 
             // keyboard
             //-----------------------------------------------------------------
@@ -81,13 +81,13 @@
                 if (this.AcceptInput)
                 {
                     // normal status
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.MotivationEditItem))
+                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.MotivationEditItem))
                     {
                         this.View.Enable(ViewState.Item_Editting);
                         this.Item.Enable(ItemState.Item_Pending);
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.MotivationDeleteItem))
+                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.MotivationDeleteItem))
                     {
                         this.DeleteIt();
                     }
@@ -95,12 +95,12 @@
                     // in pending status
                     if (this.Item.IsEnabled(ItemState.Item_Pending))
                     {
-                        if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.N))
+                        if (gameInput.Sequence.Keyboard.IsKeyTriggered(Keys.N))
                         {
                             this.ItemDataControl.EditString("Name");
                         }
 
-                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.Escape))
+                        if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.Escape))
                         {
                             this.View.Disable(ViewState.Item_Editting);
                             this.Item.Disable(ItemState.Item_Pending);
@@ -112,7 +112,7 @@
                 {
                     // should be outside of the accepting input state
                     // task view is parallel with item input
-                    this.ItemTaskControl.UpdateInput(gameTime);
+                    this.ItemTaskControl.UpdateInput(gameInput, gameTime);
                 }
             }
         }

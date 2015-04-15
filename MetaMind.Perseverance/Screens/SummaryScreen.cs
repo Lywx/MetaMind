@@ -32,7 +32,7 @@
 
         public override void Draw(IGameGraphics gameGraphics, GameTime gameTime)
         {
-            var spriteBatch = gameGraphics.Screen.SpriteBatch;
+            var spriteBatch = gameGraphics.Screens.SpriteBatch;
 
             spriteBatch.Begin();
 
@@ -43,30 +43,26 @@
             spriteBatch.End();
         }
 
-        public override void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
-            InputEventManager   .HandleInput();
-            InputSequenceManager.HandleInput();
-
-            this.summary.HandleInput();
+            this.summary.UpdateInput(gameInput, gameTime);
         }
 
         public override void LoadContent(IGameFile gameFile)
         {
         }
 
-        public override void Update(IGameGraphics gameGraphics, GameTime gameTime, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
+        public override void UpdateGraphics(IGameGraphics gameGraphics, GameTime gameTime)
         {
-            if (IsActive && !isCoveredByOtherScreen)
+            if (this.IsActive)
             {
-                InputEventManager   .Update(gameTime);
-                InputSequenceManager.Update(gameTime);
-                MessageManager      .Update(gameTime);
-
-                ((IUpdateable)this.summary).Update(gameTime);
+                gameGraphics.Message.Update(gameTime);
             }
+        }
 
-            base.Update(gameGraphics, gameTime, hasOtherScreenFocus, isCoveredByOtherScreen);
+        public override void Update(GameTime gameTime)
+        {
+            this.summary.Update(gameTime);
         }
 
         private void SummaryScreenExiting(object sender, EventArgs e)

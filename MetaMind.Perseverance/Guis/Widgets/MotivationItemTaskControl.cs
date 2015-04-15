@@ -10,6 +10,7 @@
 
 namespace MetaMind.Perseverance.Guis.Widgets
 {
+    using MetaMind.Engine;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Regions;
     using MetaMind.Engine.Guis.Widgets.Views;
@@ -59,7 +60,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             }
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             if (this.TaskModule != null)
             {
@@ -73,7 +74,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             }
         }
 
-        public void UpdateInput(GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             if (this.TaskModule != null )
             {

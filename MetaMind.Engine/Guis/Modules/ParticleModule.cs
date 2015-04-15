@@ -17,19 +17,13 @@ namespace MetaMind.Engine.Guis.Modules
             this.SpawnSpeed   = 1;
             this.InitialSpeed = 1;
 
-            FloatParticle.Generate = settings.Generate;
-            FloatParticle.Random   = settings.Random;
-            FloatParticle.Width    = settings.ParticleWidth;
-            FloatParticle.Height   = settings.ParticleHeight;
+            FloatParticle.Width  = settings.ParticleWidth;
+            FloatParticle.Height = settings.ParticleHeight;
         }
 
         protected int InitialSpeed { get; set; }
 
         protected List<FloatParticle> Particles { get; private set; }
-
-        protected bool Plain { get; set; }
-
-        protected bool Refresh { get; set; }
 
         protected int SpawnSpeed { get; set; }
 
@@ -39,14 +33,11 @@ namespace MetaMind.Engine.Guis.Modules
             {
                 if (i == this.Particles.Count / 2)
                 {
-                    if (!this.Plain)
-                    {
-                        // half additive and half solid
-                        var spriteBatch = gameGraphics.Screen.SpriteBatch;
+                    // half additive and half solid
+                    var spriteBatch = gameGraphics.Screens.SpriteBatch;
 
-                        spriteBatch.End();
-                        spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.Additive);
-                    }
+                    spriteBatch.End();
+                    spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.Additive);
                 }
 
                 this.Particles[i].Draw(gameGraphics, gameTime, alpha);
@@ -65,11 +56,6 @@ namespace MetaMind.Engine.Guis.Modules
         {
             for (var i = 0; i < this.Particles.Count; ++i)
             {
-                if (this.Refresh)
-                {
-                    this.Particles[i].Colorize();
-                }
-
                 this.Particles[i].Update(gameTime);
 
                 if (this.Particles[i].Life < 0 ||

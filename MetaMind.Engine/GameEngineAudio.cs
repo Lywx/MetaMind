@@ -21,7 +21,7 @@ namespace MetaMind.Engine
         {
             get
             {
-                return GameEngine.AudioManager;
+                return GameEngine.Audio;
             }
         }
     }

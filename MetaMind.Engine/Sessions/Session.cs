@@ -1,4 +1,4 @@
-namespace MetaMind.Acutance.Sessions
+namespace MetaMind.Engine.Sessions
 {
     using System.IO;
     using System.Runtime.Serialization;
@@ -8,19 +8,9 @@ namespace MetaMind.Acutance.Sessions
 
     using Microsoft.Xna.Framework;
 
-    using IUpdateable = MetaMind.Engine.IUpdateable;
-
-    public interface ISession<TData>
-        where TData : IUpdateable, new()
-    {
-        void Save();
-
-        void Update(GameTime gameTime);
-    }
-
     [DataContract]
     public class Session<TData> : ISession<TData>
-        where TData : IUpdateable, new()
+        where TData : ISessionData, new()
     {
         #region File Data
 
@@ -34,6 +24,7 @@ namespace MetaMind.Acutance.Sessions
 
         #region Session Data 
 
+        [DataMember]
         private TData Data { get; set; }
 
         #endregion

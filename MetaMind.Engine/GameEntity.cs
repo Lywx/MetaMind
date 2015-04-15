@@ -65,7 +65,7 @@ namespace MetaMind.Engine
                 this.GameInterop = new GameEngineInterop(gameInterop);
             }
 
-            this.Listeners.ForEach(l => gameInterop.Event.AddListener(l));
+            this.Listeners.ForEach(l => gameInterop.Events.AddListener(l));
         }
 
         protected virtual void OnEnabledChanged(object sender, EventArgs args)
@@ -86,7 +86,7 @@ namespace MetaMind.Engine
 
         public virtual void UnloadInterop(IGameInterop gameInterop)
         {
-            this.Listeners.ForEach(l => gameInterop.Event.RemoveListener(l));
+            this.Listeners.ForEach(l => gameInterop.Events.RemoveListener(l));
             this.Listeners.Clear();
         }
 

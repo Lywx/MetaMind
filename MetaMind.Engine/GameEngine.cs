@@ -3,10 +3,10 @@
     using System;
 
     using MetaMind.Engine.Components;
+    using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Components.Graphics;
 
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Content;
 
     public sealed class GameEngine : Microsoft.Xna.Framework.Game
     {
@@ -25,15 +25,13 @@
 
         #region Audio
 
-        public AudioManager AudioManager { get; private set; }
+        public AudioManager Audio { get; private set; }
 
         #endregion
 
         #region File
 
-        public ContentManager ContentManager { get; private set; }
-
-        public FolderManager FolderManager { get; private set; }
+        public FolderManager Folder { get; private set; }
 
         #endregion
 
@@ -41,13 +39,15 @@
 
         public FontManager FontManager { get; private set; }
 
+        public FontDrawer FontDrawer { get; set; }
+
         public GraphicsManager GraphicsManager { get; private set; }
 
         public GraphicsSettings GraphicsSettings { get; set; }
 
-        public MessageManager MessageManager { get; private set; }
+        public MessageManager Message { get; private set; }
 
-        public ScreenManager ScreenManager { get; private set; }
+        public ScreenManager Screens { get; private set; }
 
         #endregion
 
@@ -61,13 +61,13 @@
 
         #region Interop
 
-        public EventManager EventManager { get; private set; }
+        public EventManager Events { get; private set; }
 
-        public ProcessManager ProcessManager { get; private set; }
+        public ProcessManager Processes { get; private set; }
 
         #endregion
 
-        public GameManager GameManager { get; private set; }
+        public GameManager Games { get; private set; }
 
         #endregion Components
 
@@ -79,18 +79,17 @@
             // Other components are loaded in initialization.
 
             // Graphics
-            GraphicsSettings = GraphicsSettings.GetInstance(this);
-            GraphicsManager  = GraphicsManager .GetInstance(this);
+            this.GraphicsSettings = GraphicsSettings.GetInstance(this);
+            this.GraphicsManager  = GraphicsManager.GetInstance(this);
 
             // Screen
-            ScreenManager = ScreenManager.GetInstance(this, new ScreenSettings());
+            this.Screens = ScreenManager.GetInstance(this, new ScreenSettings());
 
             // Content
             this.Content.RootDirectory = "Content";
-            ContentManager = this.Content;
 
             // Game
-            GameManager = GameManager.GetInstance(this);
+            this.Games = GameManager.GetInstance(this);
         }
 
         #endregion Consructors
@@ -104,16 +103,16 @@
             this.GraphicsManager .Initialize();
 
             // Audio
-            this.AudioManager = AudioManager.GetInstance(this);
+            this.Audio = AudioManager.GetInstance(this);
 
             // Folder
-            this.FolderManager = FolderManager.GetInstance();
+            this.Folder = FolderManager.GetInstance();
 
-            // Process
-            this.ProcessManager = ProcessManager.GetInstance(this);
+            // Processes
+            this.Processes = ProcessManager.GetInstance(this);
 
-            // Event
-            this.EventManager = EventManager.GetInstance(this);
+            // Events
+            this.Events = EventManager.GetInstance(this);
 
             // Input
             this.InputEventManager    = InputEventManager.GetInstance(this);
@@ -123,7 +122,10 @@
             this.FontManager = FontManager.GetInstance(this);
 
             // Message
-            this.MessageManager = MessageManager.GetInstance(this);
+            this.Message = MessageManager.GetInstance(this);
+
+            // Service
+            GameEngineService.Provide(new Random((int)DateTime.Now.Ticks));
 
             base.Initialize();
         }
@@ -134,14 +136,12 @@
 
         protected override void LoadContent()
         {
-            FontManager.LoadContent();
-            base       .LoadContent();
+            base.LoadContent();
         }
 
         protected override void UnloadContent()
         {
-            FontManager.UnloadContent();
-            base       .UnloadContent();
+            base.UnloadContent();
         }
 
         #endregion
@@ -162,8 +162,9 @@
 
         private void UpdateInput(GameTime gameTime)
         {
+            this.InputSequenceManager.UpdateInput(gameTime);
             this.InputEventManager.UpdateInput(gameTime);
-            this.ScreenManager.UpdateInput(gameTime);
+            this.Screens.UpdateInput(gameTime);
         }
 
         #endregion Update and Draw
@@ -172,8 +173,8 @@
 
         protected override void OnExiting(object sender, EventArgs args)
         {
-            GameManager.OnExiting();
-            base       .OnExiting(sender, args);
+            this.Games.OnExiting();
+            base      .OnExiting(sender, args);
         }
 
         #endregion 

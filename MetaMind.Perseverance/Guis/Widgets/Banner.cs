@@ -9,7 +9,7 @@
 
     using Primtives2D;
 
-    public class Banner : GameEngineAccess
+    public class Banner 
     {
         private PointViewSettings1D viewSettings;
         private BannerSetting  bannerSetting;

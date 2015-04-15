@@ -57,7 +57,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                 (int)SessionEventType.KnowledgeRetrieved,
                 new KnowledgeRetrievedEventArgs(ItemData.Path, 0));
 
-            GameEngine.EventManager.QueueEvent(knowledgeRetrievedEvent);
+            GameEngine.Events.QueueEvent(knowledgeRetrievedEvent);
         }
 
         public void DeleteIt()

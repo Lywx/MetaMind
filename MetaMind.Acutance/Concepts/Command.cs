@@ -106,13 +106,13 @@ namespace MetaMind.Acutance.Concepts
                 (int)SessionEventType.CommandNotified,
                 new CommandNotifiedEventArgs(this));
 
-            GameEngine.EventManager.QueueEvent(commandNotifiedEvent);
+            GameEngine.Events.QueueEvent(commandNotifiedEvent);
 
             var knowledgeRetrievedEvent = new Event(
                 (int)SessionEventType.KnowledgeRetrieved,
                 new KnowledgeRetrievedEventArgs(this.Path, this.Offset));
 
-            GameEngine.EventManager.QueueEvent(knowledgeRetrievedEvent);
+            GameEngine.Events.QueueEvent(knowledgeRetrievedEvent);
         }
 
         private void UpdateState()

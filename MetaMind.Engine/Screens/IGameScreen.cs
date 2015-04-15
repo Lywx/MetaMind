@@ -1,8 +1,7 @@
 namespace MetaMind.Engine.Screens
 {
-    using System;
-
     using Microsoft.Xna.Framework;
+    using System;
 
     public interface IGameScreen : IDisposable
     {
@@ -87,20 +86,24 @@ namespace MetaMind.Engine.Screens
 
         #region Update
 
+        void Update(GameTime gameTime);
+
+        void UpdateAudio(IGameAudio gameAudio, GameTime gameTime);
+
+        void UpdateContent(IGameFile gameFile, GameTime gameTime);
+
+        void UpdateGraphics(IGameGraphics gameGraphics, GameTime gameTime);
+
+        void UpdateInput(IGameInput gameInput, GameTime gameTime);
+
+        void UpdateInterop(IGameInterop gameInterop, GameTime gameTime);
+
         /// <summary>
         /// Allows the screen to run logic, such as updating the transition position.
-        /// Unlike other overloaded method, this method is called regardless of whether the screen
+        /// Unlike other update method, this method is called regardless of whether the screen
         /// is active, hidden, or in the middle of a transition.
         /// </summary>
-        void Update(IGameGraphics gameGraphics, GameTime gameTime, bool hasOtherScreenFocus, bool isCoveredByOtherScreen);
-
-        void Update(IGameFile gameFile, GameTime gameTime);
-
-        void Update(IGameInput gameInput, GameTime gameTime);
-
-        void Update(IGameInterop gameInterop, GameTime gameTime);
-
-        void Update(IGameAudio gameAudio, GameTime gameTime);
+        void UpdateScreen(IGameGraphics gameGraphics, GameTime gameTime, bool hasOtherScreenFocus, bool isCoveredByOtherScreen);
 
         #endregion Update
 

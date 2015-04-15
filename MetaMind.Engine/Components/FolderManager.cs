@@ -25,11 +25,11 @@ namespace MetaMind.Engine.Components
 
         #region Singleton
 
-        private static FolderManager singleton;
+        private static FolderManager Singleton { get; set; }
 
         public static FolderManager GetInstance()
         {
-            return singleton ?? (singleton = new FolderManager());
+            return Singleton ?? (Singleton = new FolderManager());
         }
 
         #endregion Singleton

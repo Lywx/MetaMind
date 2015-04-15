@@ -21,9 +21,9 @@ namespace MetaMind.Perseverance.Guis.Modules
             this.RegisteredEvents.Add((int)SessionEventType.SleepStopped);
         }
 
-        public override bool HandleEvent(Event @event)
+        public override bool HandleEvent(IEvent @event)
         {
-            var screenManager = GameEngine.ScreenManager;
+            var screenManager = GameEngine.Screens;
 
             var summary = screenManager.Screens.First(screen => screen is SummaryScreen);
             if (summary != null)

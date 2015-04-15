@@ -24,7 +24,7 @@ namespace MetaMind.Acutance.Parsers.Elements
             var command = ScheduleGrammar.CommandUnitParser.Parse(this.Content);
 
             // name is the part of command unit without identifier
-            var name = FormatHelper.Compose(command.Replace("Command: ", string.Empty));
+            var name = FormatUtils.Compose(command.Replace("Command: ", string.Empty));
             var time = this.Tag.Time;
 
             CommandRepetion repetion;

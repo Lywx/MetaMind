@@ -32,7 +32,9 @@
 
         public override void LoadContent(IGameFile gameFile)
         {
-            this.particles = new ParticleModule(new ParticleModuleSettings(Perseverance.Session.Random, FloatParticle.ParticleFromSide, 8, 2))
+            this.particles =
+                new ParticleModule(
+                    new ParticleModuleSettings(Perseverance.Session.Random, FloatParticle.ParticleFromSide, 8, 2));
 
             this.background = gameFile.Content.Load<Texture2D>(@"Textures\Screens\Background\Sea Of Mind");
         }
@@ -52,8 +54,8 @@
 
         public override void Draw(IGameGraphics gameGraphics, GameTime gameTime)
         {
-            var spriteBatch = gameGraphics.Screen.SpriteBatch;
-            var viewport    = gameGraphics.Screen.GraphicsDevice.Viewport;
+            var spriteBatch = gameGraphics.Screens.SpriteBatch;
+            var viewport    = gameGraphics.Screens.GraphicsDevice.Viewport;
             var fullscreen  = new Rectangle(0, 0, viewport.Width, viewport.Height);
 
             spriteBatch.Begin();
@@ -64,13 +66,15 @@
             spriteBatch.End();
         }
 
-        public override void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
-            ??
             this.particles.UpdateInput(gameInput, gameTime);
-            this.particles.Update(gameTime);
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            this.particles.Update(gameTime);
+        }
         #endregion Update and Draw
     }
 }

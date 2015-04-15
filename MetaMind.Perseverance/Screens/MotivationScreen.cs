@@ -9,8 +9,6 @@
 
     using Microsoft.Xna.Framework;
 
-    using IUpdateable = Microsoft.Xna.Framework.IUpdateable;
-
     public class MotivationScreen : GameScreen
     {
         private readonly IModule motivation;
@@ -39,30 +37,26 @@
         {
             base.Draw(gameGraphics, gameTime);
 
-            gameGraphics.Screen.SpriteBatch.Begin();
+            gameGraphics.Screens.SpriteBatch.Begin();
 
             gameGraphics.Message.Draw(gameTime);
 
             this.motivation     .Draw(gameGraphics, gameTime, TransitionAlpha);
             this.synchronization.Draw(gameGraphics, gameTime, TransitionAlpha);
 
-            gameGraphics.Screen.SpriteBatch.End();
+            gameGraphics.Screens.SpriteBatch.End();
         }
 
-        public override void Update(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
-            gameInput.Event   .Update(gameTime);
-            gameInput.Sequence.Update(gameTime);
-
-            this.motivation     .HandleInput();
-            this.synchronization.HandleInput();
-        }
-
-        public override void Update(IGameInput gameInput, GameTime gameTime)
-        {
+            gameInput.Event   .UpdateInput(gameInput, gameTime);
+            gameInput.Sequence.UpdateInput(gameInput, gameTime);
             MessageManager.Update(gameTime);
+        }
 
-            this.motivation.Update(gameTime);
+        public override void Update(GameTime gameTime)
+        {
+            this.motivation     .Update(gameTime);
             this.synchronization.Update(gameTime);
         }
 

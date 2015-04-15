@@ -33,7 +33,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                 (int)SessionEventType.ModuleReloaded,
                 new KnowledgeReloadedEventArgs(this.ItemData.Path));
 
-            GameEngine.EventManager.QueueEvent(moduleReloadedEvent);
+            GameEngine.Events.QueueEvent(moduleReloadedEvent);
 
             this.ItemControl.DeleteIt();
         }

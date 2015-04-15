@@ -54,7 +54,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
         private void DrawRegion(IGameGraphics gameGraphics, GameTime gameTime)
         {
             Primitives2D.FillRectangle(
-                gameGraphics.Screen.SpriteBatch,
+                gameGraphics.Screens.SpriteBatch,
                 this.ViewControl.Region.Frame.Rectangle,
                 ExtColor.MakeTransparent(this.ViewSettings.HighlightColor, (byte)this.frameAlpha));
         }

@@ -15,7 +15,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             this.RegisteredEvents.Add((int)SessionEventType.GameStarted);
         }
 
-        public override bool HandleEvent(Event @event)
+        public override bool HandleEvent(IEvent @event)
         {
             // auto-select after startup
             this.startup.Control.Selection.Select(0);

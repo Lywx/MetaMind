@@ -5,39 +5,8 @@ namespace MetaMind.Engine.Components.Fonts
     using System.Linq;
     using System.Text;
 
-    using MetaMind.Engine.Extensions;
-
-    public static class StringHelper
+    public class StringUtils
     {
-        #region Engine Injection
-
-        private static FontManager FontManager
-        {
-            get
-            {
-                return GameEngine.FontManager;
-            }
-        }
-
-        private static GameEngine GameEngine
-        {
-            get
-            {
-                return GameEngine.GetInstance;
-            }
-        }
-
-        #endregion
-
-        #region Whitespace
-
-        public static string WhiteSpace(int number)
-        {
-            return string.Concat(Enumerable.Repeat(" ", number));
-        }
-
-        #endregion
-
         #region Breaking
 
         /// <summary>
@@ -45,7 +14,7 @@ namespace MetaMind.Engine.Components.Fonts
         /// </summary>
         public static string BreakStringIntoLinesByWord(Font font, string str, float maxLineWidth)
         {
-            var spaceWidth = FontManager.MeasureString(font, " ", 1f).X;
+            var spaceWidth = font.MeasureString(" ", 1f).X;
 
             var result = new StringBuilder();
 
@@ -56,7 +25,7 @@ namespace MetaMind.Engine.Components.Fonts
                 var lineWidth = 0f;
                 foreach (var word in words)
                 {
-                    var size = FontManager.MeasureString(font, word, 1f);
+                    var size = font.MeasureString(word, 1f);
                     if (lineWidth + size.X < maxLineWidth)
                     {
                         result.Append(word + " ");
@@ -94,15 +63,12 @@ namespace MetaMind.Engine.Components.Fonts
                     // measure length and decide whether to go into next line
                     if (IsNextCharExisting(str, index))
                     {
-                        lineWidth = (int) FontManager.MeasureString(
-                                font,
-                                string.Concat(line.ToString(), str[index + 1]),
-                                scale).X;
+                        lineWidth = (int)font.MeasureString(string.Concat(line.ToString(), str[index + 1]), scale).X;
                         index++;
                     }
                     else
                     {
-                        lineWidth = (int)FontManager.MeasureString(font, line.ToString(), scale).X;
+                        lineWidth = (int)font.MeasureString(line.ToString(), scale).X;
                         index++;
                         break;
                     }
@@ -138,8 +104,9 @@ namespace MetaMind.Engine.Components.Fonts
             var firstChar = text[index];
             var secondChar = text[index + 1];
 
-            return firstChar.ToString(CultureInfo.InvariantCulture).IsAscii() && !char.IsWhiteSpace(firstChar)
-                   && !char.IsWhiteSpace(secondChar);
+            return firstChar.ToString(CultureInfo.InvariantCulture).IsAscii() && 
+                !char.IsWhiteSpace(firstChar) && 
+                !char.IsWhiteSpace(secondChar);
         }
 
         private static bool IsNextCharExisting(string text, int index)

@@ -197,26 +197,26 @@
                 this.sleepStartedEventListener    = new SynchronizationModuleSleepStartedEventListener(this.synchronization, this);
             }
 
-            gameInterop.Event.AddListener(this.synchronizationStartListener);
-            gameInterop.Event.AddListener(this.synchronizationStopListener);
-            gameInterop.Event.AddListener(this.sleepStartedEventListener);
+            gameInterop.Events.AddListener(this.synchronizationStartListener);
+            gameInterop.Events.AddListener(this.synchronizationStopListener);
+            gameInterop.Events.AddListener(this.sleepStartedEventListener);
         }
 
         public override void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
         {
             if (this.synchronizationStartListener != null)
             {
-                gameInterop.Event.RemoveListener(this.synchronizationStartListener);
+                gameInterop.Events.RemoveListener(this.synchronizationStartListener);
             }
 
             if (this.synchronizationStopListener != null)
             {
-                gameInterop.Event.RemoveListener(this.synchronizationStopListener);
+                gameInterop.Events.RemoveListener(this.synchronizationStopListener);
             }
 
             if (this.sleepStartedEventListener != null)
             {
-                gameInterop.Event.RemoveListener(this.sleepStartedEventListener);
+                gameInterop.Events.RemoveListener(this.sleepStartedEventListener);
             }
 
             this.synchronizationStartListener = null;

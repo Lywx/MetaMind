@@ -105,7 +105,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         private void DrawExperience(IGameGraphics gameGraphics, byte alpha)
         {
-            gameGraphics.Font.DrawStringCenteredHV(
+            gameGraphics.FontDrawer.DrawStringCenteredHV(
                 this.ItemSettings.IdFont,
                 string.Format(
                     "{0} : {1} : {2}",
@@ -120,7 +120,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
         private void DrawExperienceFrame(IGameGraphics gameGraphics, byte alpha)
         {
             Primitives2D.FillRectangle(
-                gameGraphics.Screen.SpriteBatch,
+                gameGraphics.Screens.SpriteBatch,
                 ExtRectangle.Crop(this.ItemControl.ExperienceFrame.Rectangle, this.ItemSettings.ExperienceFrameMargin),
                 ExtColor.MakeTransparent(this.ItemSettings.ExperienceFrameColor, alpha));
         }
@@ -130,14 +130,14 @@ namespace MetaMind.Perseverance.Guis.Widgets
             if (this.Item.IsEnabled(ItemState.Item_Pending))
             {
                 Primitives2D.FillRectangle(
-                    gameGraphics.Screen.SpriteBatch,
+                    gameGraphics.Screens.SpriteBatch,
                     ExtRectangle.Crop(this.ItemControl.IdFrame.Rectangle, this.ItemSettings.IdFrameMargin),
                     ExtColor.MakeTransparent(this.ItemSettings.IdFramePendingColor, alpha));
             }
             else
             {
                 Primitives2D.FillRectangle(
-                    gameGraphics.Screen.SpriteBatch,
+                    gameGraphics.Screens.SpriteBatch,
                     ExtRectangle.Crop(this.ItemControl.IdFrame.Rectangle, this.ItemSettings.IdFrameMargin),
                     ExtColor.MakeTransparent(this.ItemSettings.IdFrameColor, alpha));
             }
@@ -147,7 +147,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
         {
             if (this.Item.IsEnabled(ItemState.Item_Pending))
             {
-                gameGraphics.Font.DrawString(
+                gameGraphics.FontDrawer.DrawString(
                     ItemSettings.HelpFont,
                     HelpInformation,
                     this.HelpLocation,
@@ -156,12 +156,12 @@ namespace MetaMind.Perseverance.Guis.Widgets
             }
             else
             {
-                string text = gameGraphics.Font.CropMonospacedString(
+                string text = gameGraphics.FontDrawer.CropMonospacedString(
                     ItemData.Name,
                     ItemSettings.NameSize,
                     ItemSettings.NameFrameSize.X - ItemSettings.NameXLMargin * 2);
 
-                gameGraphics.Font.DrawMonospacedString(
+                gameGraphics.FontDrawer.DrawMonospacedString(
                     this.ItemSettings.NameFont,
                     text,
                     this.NameLocation,
@@ -177,10 +177,10 @@ namespace MetaMind.Perseverance.Guis.Widgets
             progressBar.Width = (int)(progressBar.Width * progressRatio);
 
             Primitives2D.FillRectangle(
-                gameGraphics.Screen.SpriteBatch,
+                gameGraphics.Screens.SpriteBatch,
                 progressBar,
                 ExtColor.MakeTransparent(this.ItemSettings.ProgressBarColor, alpha));
-            gameGraphics.Font.DrawStringCenteredHV(
+            gameGraphics.FontDrawer.DrawStringCenteredHV(
                 this.ItemSettings.ProgressFont,
                 string.Format("{0} / {1} = {2}", this.ItemData.Done, this.ItemData.Load, progressRatio.ToString("F1")),
                 this.ProgressLocation,
@@ -191,7 +191,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
         private void DrawProgressFrame(IGameGraphics gameGraphics, byte alpha)
         {
             Primitives2D.FillRectangle(
-                gameGraphics.Screen.SpriteBatch,
+                gameGraphics.Screens.SpriteBatch,
                 ExtRectangle.Crop(this.ItemControl.ProgressFrame.Rectangle, this.ItemSettings.ProgressFrameMargin),
                 ExtColor.MakeTransparent(this.ItemSettings.ProgressFrameColor, alpha));
         }
@@ -201,7 +201,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             if (this.ItemData.Synchronizing)
             {
                 Primitives2D.DrawRectangle(
-                    gameGraphics.Screen.SpriteBatch,
+                    gameGraphics.Screens.SpriteBatch,
                     this.SinwaveHighlight(gameTime, 5, ExtRectangle.Crop(this.ItemControl.NameFrame.Rectangle, this.ItemSettings.NameFrameMargin)),
                     ExtColor.MakeTransparent(this.ItemSettings.NameFrameSynchronizationColor, alpha),
                     2f);

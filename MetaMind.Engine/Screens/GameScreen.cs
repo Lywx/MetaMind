@@ -84,7 +84,7 @@ namespace MetaMind.Engine.Screens
                 var fireEvent = !this.isExiting && value;
                 this.isExiting = value;
 
-                if (fireEvent && 
+                if (fireEvent &&
                     this.Exiting != null)
                 {
                     this.Exiting(this, EventArgs.Empty);
@@ -136,7 +136,7 @@ namespace MetaMind.Engine.Screens
 
         protected IGameInterop GameInterop { get; set; }
 
-        #endregion
+        #endregion Engine Data
 
         #region Load and Unload
 
@@ -167,13 +167,39 @@ namespace MetaMind.Engine.Screens
         /// <summary>
         /// This is called when the screen should draw itself.
         /// </summary>
-        public virtual void Draw(IGameGraphics gameGraphics, GameTime gameTime) { }
+        public virtual void Draw(IGameGraphics gameGraphics, GameTime gameTime)
+        {
+        }
 
         #endregion Draw
 
         #region Update
 
-        public virtual void Update(IGameGraphics gameGraphics, GameTime gameTime, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
+        public virtual void Update(GameTime gameTime)
+        {
+        }
+
+        public virtual void UpdateAudio(IGameAudio gameAudio, GameTime gameTime)
+        {
+        }
+
+        public virtual void UpdateContent(IGameFile gameFile, GameTime gameTime)
+        {
+        }
+
+        public virtual void UpdateGraphics(IGameGraphics gameGraphics, GameTime gameTime)
+        {
+        }
+
+        public virtual void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        {
+        }
+
+        public virtual void UpdateInterop(IGameInterop gameInterop, GameTime gameTime)
+        {
+        }
+
+        public virtual void UpdateScreen(IGameGraphics gameGraphics, GameTime gameTime, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
         {
             this.HasOtherScreenFocus = hasOtherScreenFocus;
 
@@ -185,7 +211,7 @@ namespace MetaMind.Engine.Screens
                 if (!this.UpdateTransition(gameTime, this.transitionOffTime, 1))
                 {
                     // When the transition finishes, remove the screen.
-                    gameGraphics.Screen.RemoveScreen(this);
+                    gameGraphics.Screens.RemoveScreen(this);
                 }
             }
             else if (isCoveredByOtherScreen)
@@ -216,22 +242,6 @@ namespace MetaMind.Engine.Screens
                     this.screenState = GameScreenState.Active;
                 }
             }
-        }
-
-        public virtual void Update(IGameInput gameInput, GameTime gameTime)
-        {
-        }
-
-        public virtual void Update(IGameFile gameFile, GameTime gameTime)
-        {
-        }
-
-        public virtual void Update(IGameInterop gameInterop, GameTime gameTime)
-        {
-        }
-
-        public virtual void Update(IGameAudio gameAudio, GameTime gameTime)
-        {
         }
 
         /// <summary>
@@ -282,7 +292,7 @@ namespace MetaMind.Engine.Screens
             // If the screen has a zero transition time, remove it immediately.
             if (this.TransitionOffTime == TimeSpan.Zero)
             {
-                var screen = this.GameInterop.Screen;
+                var screen = this.GameInterop.Screens;
                 screen.RemoveScreen(this);
             }
         }
@@ -295,6 +305,6 @@ namespace MetaMind.Engine.Screens
         {
         }
 
-        #endregion
+        #endregion IDisposable
     }
 }

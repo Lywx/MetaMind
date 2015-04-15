@@ -1,19 +1,18 @@
 ﻿namespace MetaMind.Perseverance.Sessions
 {
+    using MetaMind.Engine.Components;
+    using MetaMind.Perseverance.Concepts.Cognitions;
+    using MetaMind.Perseverance.Concepts.Motivations;
     using System;
     using System.IO;
     using System.Runtime.Serialization;
     using System.Xml;
 
-    using MetaMind.Engine.Components;
-    using MetaMind.Perseverance.Concepts.Cognitions;
-    using MetaMind.Perseverance.Concepts.Motivations;
-
     /// <summary>
     /// Session is a data class.
     /// </summary>
     [DataContract]
-    public class Session 
+    public class Session
     {
         #region File Storage
 
@@ -37,7 +36,7 @@
         {
             this.LoadRandomNumberGenerator();
 
-            this.Cognition  = new Cognition();
+            this.Cognition = new Cognition();
             this.Motivation = new MotivationStorage();
         }
 
@@ -125,15 +124,16 @@
         {
             this.Random = new Random((int)DateTime.Now.Ticks);
         }
+
         #endregion Load and Save
 
-        #region Update 
+        #region Update
 
         public void Update()
         {
             this.Cognition.Update();
         }
 
-        #endregion Update 
+        #endregion Update
     }
 }

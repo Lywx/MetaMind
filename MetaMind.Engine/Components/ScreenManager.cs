@@ -58,7 +58,7 @@ namespace MetaMind.Engine.Components
             }
         }
 
-        #endregion
+        #endregion Graphics Data
 
         #region Screen Data
 
@@ -81,13 +81,13 @@ namespace MetaMind.Engine.Components
 
         public ScreenSettings Settings { get; private set; }
 
-        #endregion
+        #endregion Screen Data
 
         #region State Data
 
         private bool isInitialized;
 
-        #endregion
+        #endregion State Data
 
         #region Trace Data
 
@@ -111,9 +111,11 @@ namespace MetaMind.Engine.Components
             }
         }
 
-        #endregion Trace
+        #endregion Trace Data
 
         #region Engine Data
+
+        private IGameAudio GameAudio { get; set; }
 
         private IGameFile GameFile { get; set; }
 
@@ -123,9 +125,7 @@ namespace MetaMind.Engine.Components
 
         private IGameInterop GameInterop { get; set; }
 
-        private IGameAudio GameAudio { get; set; }
-
-        #endregion
+        #endregion Engine Data
 
         #region Constructors
 
@@ -135,18 +135,18 @@ namespace MetaMind.Engine.Components
         private ScreenManager(GameEngine gameEngine, ScreenSettings settings)
             : base(gameEngine)
         {
-            this.UpdateOrder = 1;
+            this.UpdateOrder = 2;
 
             this.Settings = settings;
 
+            this.GameAudio    = new GameEngineAudio(gameEngine);
             this.GameFile     = new GameEngineFile(gameEngine);
             this.GameGraphics = new GameEngineGraphics(gameEngine);
             this.GameInput    = new GameEngineInput(gameEngine);
             this.GameInterop  = new GameEngineInterop(gameEngine);
-            this.GameAudio    = new GameEngineAudio(gameEngine);
         }
 
-        #endregion
+        #endregion Constructors
 
         #region Initialization
 
@@ -160,7 +160,7 @@ namespace MetaMind.Engine.Components
             this.isInitialized = true;
         }
 
-        #endregion
+        #endregion Initialization
 
         #region Load and Unload
 
@@ -186,7 +186,7 @@ namespace MetaMind.Engine.Components
             }
         }
 
-        #endregion Constructors
+        #endregion Load and Unload
 
         #region Update and Draw
 
@@ -195,7 +195,7 @@ namespace MetaMind.Engine.Components
         /// </summary>
         public override void Draw(GameTime gameTime)
         {
-            if (this.Game.IsActive || 
+            if (this.Game.IsActive ||
                 this.Settings.IsAlwaysVisible)
             {
                 foreach (var screen in this.screens.Where(screen => screen.ScreenState != GameScreenState.Hidden))
@@ -205,81 +205,56 @@ namespace MetaMind.Engine.Components
             }
         }
 
-        private void Update<TAccess>(Action<IGameScreen, TAccess, GameTime> update, TAccess access, GameTime gameTime)
-        {
-            // Make a copy of the master screen list, to avoid confusion if
-            // the process of updating one screen adds or removes others.
-            {
-                this.screensToUpdate.Clear();
-
-                foreach (var screen in this.screens)
-                {
-                    this.screensToUpdate.Add(screen);
-                }
-            }
-
-            var hasOtherScreenFocus = !this.Game.IsActive;
-            var isCoveredByOtherScreen = false;
-
-            // Loop as long as there are screens waiting to be updated.
-            while (this.screensToUpdate.Count > 0)
-            {
-                // Pop the topmost screen off the waiting list.
-                var screen = screensToUpdate[screensToUpdate.Count - 1];
-
-                this.screensToUpdate.RemoveAt(this.screensToUpdate.Count - 1);
-
-                // Update the screen when users actually use it
-                if (this.Game.IsActive || 
-                    this.Settings.IsAlwaysActive)
-                {
-                    // Rudimentary screen update
-                    screen.Update(this.GameGraphics, gameTime, hasOtherScreenFocus, isCoveredByOtherScreen);
-                }
-
-                if (screen.ScreenState == GameScreenState.TransitionOn || 
-                    screen.ScreenState == GameScreenState.Active)
-                {
-                    // If this is the first active screen we came across,
-                    // give it a chance to handle input.
-                    if (!hasOtherScreenFocus)
-                    {
-                        update(screen, access, gameTime);
-
-                        hasOtherScreenFocus = true;
-                    }
-
-                    // If this is an active non-popup, inform any subsequent
-                    // screens that they are covered by it.
-                    if (!screen.IsPopup)
-                    {
-                        isCoveredByOtherScreen = true;
-                    }
-                }
-            }
-
-            // Print debug trace?
-            if (traceEnabled)
-            {
-                TraceScreens();
-            }
-        }
-
         /// <summary>
         /// Allows each screen to run logic.
         /// </summary>
         public override void Update(GameTime gameTime)
         {
-            this.Update();
+            // Update the screen when users actually use it
+            if (this.Game.IsActive || 
+                this.Settings.IsAlwaysActive)
+            {
+                this.UpdateInternal(gameTime);
+
+                // 1
+                // Don't need an engine access here
+                this.UpdateAll<object>((screen, access, time) => screen.Update(gameTime), null, gameTime);
+
+                // 2
+                this.UpdateAll((screen, access, time) => screen.UpdateInterop(access, gameTime), this.GameInterop, gameTime);
+
+                // 3
+                this.UpdateAll((screen, access, time) => screen.UpdateAudio(access, gameTime), this.GameAudio, gameTime);
+
+                // 4
+                this.UpdateAll((screen, access, time) => screen.UpdateContent(access, gameTime), this.GameFile, gameTime);
+            }
+        }
+
+        public void UpdateInput(GameTime gameTime)
+        {
+            this.UpdateActive((screen, access, time) => screen.UpdateInput(access, gameTime), this.GameInput, gameTime);
+        }
+
+        private void UpdateActive<TAccess>(Action<IGameScreen, TAccess, GameTime> action, TAccess access, GameTime gameTime)
+        {
+            var screensActive = this.screens.FindAll(screen => screen.IsActive);
+            screensActive.ForEach(screen => action(screen, access, gameTime));
+        }
+
+        private void UpdateAll<TAccess>(Action<IGameScreen, TAccess, GameTime> action, TAccess access, GameTime gameTime)
+        {
+            this.screens.ForEach(screen => action(screen, access, gameTime));
+        }
+
+        private void UpdateInternal(GameTime gameTime)
+        {
             // Make a copy of the master screen list, to avoid confusion if
             // the process of updating one screen adds or removes others.
+            this.screensToUpdate.Clear();
+            foreach (var screen in this.screens)
             {
-                this.screensToUpdate.Clear();
-
-                foreach (var screen in this.screens)
-                {
-                    this.screensToUpdate.Add(screen);
-                }
+                this.screensToUpdate.Add(screen);
             }
 
             var hasOtherScreenFocus = !this.Game.IsActive;
@@ -289,30 +264,20 @@ namespace MetaMind.Engine.Components
             while (this.screensToUpdate.Count > 0)
             {
                 // Pop the topmost screen off the waiting list.
-                var screen = screensToUpdate[screensToUpdate.Count - 1];
+                var screen = this.screensToUpdate[this.screensToUpdate.Count - 1];
 
                 this.screensToUpdate.RemoveAt(this.screensToUpdate.Count - 1);
 
-                // Update the screen when users actually use it
-                if (this.Game.IsActive || 
-                    this.Settings.IsAlwaysActive)
-                {
-                    // Rudimentary screen update
-                    screen.Update(this.GameGraphics, gameTime, hasOtherScreenFocus, isCoveredByOtherScreen);
-                }
+                // Update the screen transition
+                screen.UpdateScreen(this.GameGraphics, gameTime, hasOtherScreenFocus, isCoveredByOtherScreen);
 
-                if (screen.ScreenState == GameScreenState.TransitionOn || 
+                if (screen.ScreenState == GameScreenState.TransitionOn ||
                     screen.ScreenState == GameScreenState.Active)
                 {
                     // If this is the first active screen we came across,
                     // give it a chance to handle input.
                     if (!hasOtherScreenFocus)
                     {
-                        screen.Update(this.GameFile   , gameTime);
-                        screen.Update(this.GameInput  , gameTime);
-                        screen.Update(this.GameInterop, gameTime);
-                        screen.Update(this.GameAudio  , gameTime);
-
                         hasOtherScreenFocus = true;
                     }
 
@@ -326,9 +291,9 @@ namespace MetaMind.Engine.Components
             }
 
             // Print debug trace?
-            if (traceEnabled)
+            if (this.traceEnabled)
             {
-                TraceScreens();
+                this.TraceScreens();
             }
         }
 
@@ -373,7 +338,7 @@ namespace MetaMind.Engine.Components
         /// the screen can gradually transition off rather than just being
         /// instantly removed.
         /// </summary>
-        public void RemoveScreen(GameScreen screen)
+        public void RemoveScreen(IGameScreen screen)
         {
             // If we have a graphics device, tell the screen to unload content.
             if (this.isInitialized)

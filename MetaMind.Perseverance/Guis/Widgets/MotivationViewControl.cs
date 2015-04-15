@@ -59,7 +59,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             {
                 if (this.ViewSettings.KeyboardEnabled)
                 {
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.MotivationCreateItem))
+                    if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.MotivationCreateItem))
                     {
                         this.AddItem();
 

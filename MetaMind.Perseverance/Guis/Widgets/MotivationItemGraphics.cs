@@ -88,7 +88,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             // main motivation item
             this.DrawSymbol(gameTime, alpha);
             this.DrawName(alpha);
-            this.DrawId(TODO, alpha);
+            this.DrawId(gameGraphics, alpha);
 
             // sub task view
             this.DrawTasks(gameTime, alpha);

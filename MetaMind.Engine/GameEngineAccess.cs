@@ -17,11 +17,6 @@ namespace MetaMind.Engine
             this.GameEngine = gameEngine;
 
             this.AccessType = GameEngineAccessType.None;
-
-            askdljasl
-            this.GameEngine.Services.AddService(new object());
-
-            this.GameEngine.Services.GetService<object>();
         }
 
         protected enum GameEngineAccessType

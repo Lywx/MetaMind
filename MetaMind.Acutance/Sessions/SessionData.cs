@@ -4,14 +4,15 @@ namespace MetaMind.Acutance.Sessions
     using System.Runtime.Serialization;
 
     using MetaMind.Acutance.Concepts;
+    using MetaMind.Engine.Sessions;
+
+    using Microsoft.Xna.Framework;
 
     [DataContract]
     [KnownType(typeof(Commandlist))]
     [KnownType(typeof(Modulelist))]
-    public class SessionData
+    public class SessionData : ISessionData
     {
-        public Random Random { get; private set; }
-
         [DataMember(Name = "Modulelist")]
         public IModulelist Modulelist { get; private set; }
 
@@ -20,9 +21,6 @@ namespace MetaMind.Acutance.Sessions
 
         public SessionData()
         {
-            // FIXME: MOVE
-            this.Random = new Random((int)DateTime.Now.Ticks);
-
             this.Commandlist = new Commandlist();
             this.Modulelist = new Modulelist(this.Commandlist);
         }
@@ -32,11 +30,6 @@ namespace MetaMind.Acutance.Sessions
         [OnDeserialized]
         public void OnDeserialized(StreamingContext context)
         {
-            if (this.Random == null)
-            {
-                this.Random = new Random((int)DateTime.Now.Ticks);
-            }
-
             if (this.Commandlist == null)
             {
                 this.Commandlist = new Commandlist();
@@ -49,5 +42,11 @@ namespace MetaMind.Acutance.Sessions
         }
 
         #endregion Serialization
+
+        public void Update(GameTime gameTime)
+        {
+            this.Commandlist.Update();
+            this.Modulelist .Update();
+        }
     }
 }

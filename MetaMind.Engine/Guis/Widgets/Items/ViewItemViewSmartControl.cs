@@ -30,7 +30,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             ViewControl.Swap.Initialize(originCenter, targetCenter);
 
             var swapProcess = new TViewItemWSwapProcess().Initialize(draggingItem, this.Item, this.dataSource);
-            gameInterop.Process.AttachProcess(swapProcess);
+            gameInterop.Processes.AttachProcess(swapProcess);
         }
     }
 }

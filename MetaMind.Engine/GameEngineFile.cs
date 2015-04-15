@@ -23,7 +23,7 @@ namespace MetaMind.Engine
         {
             get
             {
-                return GameEngine.ContentManager;
+                return GameEngine.Content;
             }
         }
 
@@ -31,7 +31,7 @@ namespace MetaMind.Engine
         {
             get
             {
-                return GameEngine.FolderManager;
+                return GameEngine.Folder;
             }
         }
     }

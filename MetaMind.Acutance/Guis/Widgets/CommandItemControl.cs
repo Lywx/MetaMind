@@ -76,7 +76,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                 (int)SessionEventType.KnowledgeRetrieved,
                 new KnowledgeRetrievedEventArgs(this.ItemData.Path, this.ItemData.Offset));
 
-            GameEngine.EventManager.QueueEvent(knowledgeRetrievedEvent);
+            GameEngine.Events.QueueEvent(knowledgeRetrievedEvent);
         }
 
         #endregion Operations
@@ -96,7 +96,7 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             // mouse and keyboard in modifier
             //-----------------------------------------------------------------
-            base.UpdateInput(, gameTime);
+            base.UpdateInput(gameInput, gameTime);
 
             // keyboard
             //-----------------------------------------------------------------
@@ -106,12 +106,12 @@ namespace MetaMind.Acutance.Guis.Widgets
                 {
                     if (!this.Locked)
                     {
-                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CommandDeleteItem))
+                        if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.CommandDeleteItem))
                         {
                             this.DeleteIt();
                         }
 
-                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CommandOpenItem))
+                        if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.CommandOpenItem))
                         {
                             this.RetrieveIt();
                         }
@@ -124,7 +124,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                 {
                     if (!this.Locked)
                     {
-                        if (InputSequenceManager.Keyboard.IsActionTriggered(Actions.CommandClearItem))
+                        if (gameInput.Sequence.Keyboard.IsActionTriggered(Actions.CommandClearItem))
                         {
                             this.DeleteIt();
                         }

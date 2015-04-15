@@ -60,14 +60,14 @@
             {
                 if (this.Synchronization.Enabled)
                 {
-                    GameEngine.AudioManager.PlayMusic(this.SynchronizingCue);
+                    GameEngine.Audio.PlayMusic(this.SynchronizingCue);
 
                     this.Confirm();
                     this.Alert();
                 }
                 else
                 {
-                    GameEngine.AudioManager.PlayMusic(this.NotSynchronizingCue);
+                    GameEngine.Audio.PlayMusic(this.NotSynchronizingCue);
 
                     this.Confirm();
                     this.Alert();

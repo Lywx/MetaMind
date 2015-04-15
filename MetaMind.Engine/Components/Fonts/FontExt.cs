@@ -1,0 +1,68 @@
+namespace MetaMind.Engine.Components.Fonts
+{
+    using System;
+    using System.Collections.Generic;
+
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+
+    internal static class FontExt
+    {
+        private static IFontManager fontManager;
+
+        public static string DisaplayableString(this Font font, string str)
+        {
+            return font.GetSprite().FilterDisaplayableString(str);
+        }
+
+        public static List<int> NonDisaplayableCharIndexes(this Font font, string str)
+        {
+            return font.GetSprite().FilterNonDisaplayableCharIndexes(str);
+        }
+
+        public static SpriteFont GetSprite(this Font font)
+        {
+            return font.GetInfo().SpriteFont;
+        }
+
+        public static FontInfo GetInfo(this Font font)
+        {
+            return fontManager.Fonts[font];
+        }
+
+        public static MonoFont GetMono(this Font font)
+        {
+            return font.GetInfo().MonoFont;
+        }
+
+        public static Vector2 MeasureString(this Font font, string text)
+        {
+            return font.GetSprite().MeasureString(text);
+        }
+
+        public static Vector2 MeasureString(this Font font, string text, float scale)
+        {
+            return font.MeasureString(text) * scale;
+        }
+
+        public static Vector2 MeasureMonospacedString(this Font font, string str, float scale)
+        {
+            var cjkCharCount = str.CJKExclusiveCharCount();
+            var asciiCharCount = str.Length - cjkCharCount;
+
+            var monoSize = font.GetMono().AsciiSize(scale);
+
+            return new Vector2((asciiCharCount + cjkCharCount * 2) * monoSize, monoSize);
+        }
+
+        public static void Initialize(IFontManager fontManager)
+        {
+            if (fontManager == null)
+            {
+                throw new ArgumentNullException("fontManager");
+            }
+
+            FontExt.fontManager = fontManager;
+        }
+    }
+}

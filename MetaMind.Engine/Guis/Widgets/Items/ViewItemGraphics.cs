@@ -1,12 +1,38 @@
 ﻿namespace MetaMind.Engine.Guis.Widgets.Items
 {
+    using System;
     using System.Globalization;
 
-    using MetaMind.Engine.Extensions;
+    using MetaMind.Engine.Components.Fonts;
 
     using Microsoft.Xna.Framework;
 
     using Primtives2D;
+
+    public class LabelWidget : GameVisualEntity
+    {
+        public Func<string> Text { get; set; }
+
+        public Func<Vector2> TextPosition { get; set; }
+
+        public Func<Color> TextColor { get; set; }
+
+        public Func<float> TextSide { get; set; }
+
+        public Func<Font> TextFont { get; set; }
+
+        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
+        {
+            var font = gameGraphics.FontDrawer;
+
+            font.DrawStringCenteredHV(
+                this.TextFont(),
+                this.Text(),
+                this.TextPosition(),
+                this.TextColor(),
+                this.TextSide());
+        }
+    }
 
     public class ViewItemGraphics : ViewItemComponent, IItemGraphics
     {
@@ -30,7 +56,7 @@
             }
         }
 
-        public virtual void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
         {
             if (!ItemControl.Active && !Item.IsEnabled(ItemState.Item_Dragging))
             {
@@ -47,7 +73,7 @@
 
         protected virtual void DrawId(IGameGraphics gameGraphics, byte alpha)
         {
-            gameGraphics.Font.DrawStringCenteredHV(
+            gameGraphics.FontDrawer.DrawStringCenteredHV(
                 ItemSettings.IdFont,
                 ItemControl.Id.ToString(new CultureInfo("en-US")),
                 this.IdCenter,
@@ -97,7 +123,7 @@
         protected void DrawNameFrameWith(IGameGraphics gameGraphics, Color color, byte alpha)
         {
             Primitives2D.DrawRectangle(
-                gameGraphics.Screen.SpriteBatch,
+                gameGraphics.Screens.SpriteBatch,
                 ExtRectangle.Crop(ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin),
                 color.MakeTransparent(alpha),
                 1f);
@@ -106,7 +132,7 @@
         protected void FillNameFrameWith(IGameGraphics gameGraphics, Color color, byte alpha)
         {
             Primitives2D.FillRectangle(
-                gameGraphics.Screen.SpriteBatch,
+                gameGraphics.Screens.SpriteBatch,
                 ExtRectangle.Crop(ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin),
                 color.MakeTransparent(alpha));
         }

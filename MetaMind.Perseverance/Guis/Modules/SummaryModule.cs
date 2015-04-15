@@ -38,14 +38,14 @@ namespace MetaMind.Perseverance.Guis.Modules
                 this.sleepStoppedEventListener = new SummaryModuleSleepStoppedEventListener();
             }
 
-            gameInterop.Event.AddListener(this.sleepStoppedEventListener);
+            gameInterop.Events.AddListener(this.sleepStoppedEventListener);
         }
 
         public override void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
         {
             if (this.sleepStoppedEventListener != null)
             {
-                gameInterop.Event.RemoveListener(this.sleepStoppedEventListener);
+                gameInterop.Events.RemoveListener(this.sleepStoppedEventListener);
             }
 
             this.sleepStoppedEventListener = null;
@@ -83,72 +83,73 @@ namespace MetaMind.Perseverance.Guis.Modules
                 return;
             }
             
-            this.DrawSummaryTitle(   Color.White, "Summary");
+            this.DrawSummaryTitle(gameGraphics, Color.White, "Summary");
             
             // daily statistics
-            this.DrawSummaryEntry(1, Color.White, "Hours in Synchronization:" , this.synchronization.SynchronizedHourYesterday.ToSummary());
-            this.DrawSummaryBlank(2);
-            this.DrawSummaryEntry(3, Color.Red,   "Hours in Good Profession:" , -this.Settings.GoodPrefessionHour);
-            this.DrawSummaryEntry(4, Color.Red,   "Hours in Lofty Profession:", -this.Settings.LoftyProfessionHour);
-            this.DrawSummarySplit(5, Color.Red);
+            this.DrawSummaryEntry(gameGraphics, 1, Color.White, "Hours in Synchronization:" , this.synchronization.SynchronizedHourYesterday.ToSummary());
+            this.DrawSummaryBlank(gameGraphics, 2);
+            this.DrawSummaryEntry(gameGraphics, 3, Color.Red,   "Hours in Good Profession:" , -this.Settings.GoodPrefessionHour);
+            this.DrawSummaryEntry(gameGraphics, 4, Color.Red,   "Hours in Lofty Profession:", -this.Settings.LoftyProfessionHour);
+            this.DrawSummarySplit(gameGraphics, 5, Color.Red);
 
             var dailyLeftHour = this.synchronization.SynchronizedHourYesterday - this.Settings.GoodPrefessionHour - this.Settings.LoftyProfessionHour;
-            this.DrawSummaryResult(6, Color.White, Color.Red, string.Empty, dailyLeftHour);
+            this.DrawSummaryResult(gameGraphics, 6, Color.White, Color.Red, string.Empty, dailyLeftHour);
             
-            this.DrawSummaryBlank(7);
+            this.DrawSummaryBlank(gameGraphics, 7);
 
             // weekly statistics
             var weeklyHour = (int)this.synchronization.SynchronizedTimeRecentWeek.TotalHours;
             var weeklyLeftHour = weeklyHour - this.Settings.WorldRecordHour;
 
-            this.DrawSummaryEntry(8, Color.White, "Hours in Synchronization In Recent 7 Days:", weeklyHour.ToSummary());
-            this.DrawSummaryBlank (9);
-            this.DrawSummaryEntry(10, Color.Red,   "Len Bosack's Records in 7 Days:", -this.Settings.WorldRecordHour);
-            this.DrawSummarySplit (11, Color.Red);
+            this.DrawSummaryEntry(gameGraphics, 8, Color.White, "Hours in Synchronization In Recent 7 Days:", weeklyHour.ToSummary());
+            this.DrawSummaryBlank(gameGraphics, 9);
+            this.DrawSummaryEntry(gameGraphics, 10, Color.Red,  "Len Bosack's Records in 7 Days:", -this.Settings.WorldRecordHour);
+            this.DrawSummarySplit(gameGraphics, 11, Color.Red);
 
-            this.DrawSummaryResult(12, Color.Gold, Color.Red, string.Empty, weeklyLeftHour);
+            this.DrawSummaryResult(gameGraphics, 12, Color.Gold, Color.Red, string.Empty, weeklyLeftHour);
         }
 
-        private void DrawSummaryBlank(int line)
+        private void DrawSummaryBlank(IGameGraphics gameGraphics, int line)
         {
-            this.DrawSummaryEntry(line, Color.White, string.Empty, string.Empty);
+            this.DrawSummaryEntry(gameGraphics, line, Color.White, string.Empty, string.Empty);
         }
 
-        private void DrawSummaryEntry(int line, Color color, string caption, string presentation)
+        private void DrawSummaryEntry(IGameGraphics gameGraphics, int line, Color color, string caption, string presentation)
         {
-            var captionPosition = new Vector2(GameEngine.GraphicsSettings.Width / 2f - 300, 150 + line * Settings.LineHeight);
-            var contentPosition = new Vector2(GameEngine.GraphicsSettings.Width / 2f + 260, 150 + line * Settings.LineHeight);
+            var captionPosition = new Vector2(gameGraphics.Settings.Width / 2f - 300, 150 + line * Settings.LineHeight);
+            var contentPosition = new Vector2(gameGraphics.Settings.Width / 2f + 260, 150 + line * Settings.LineHeight);
 
-            FontManager.DrawString(Settings.EntityFont, caption     , captionPosition, color, Settings.EntitySize);
-            FontManager.DrawString(Settings.EntityFont, presentation, contentPosition, color, Settings.EntitySize);
+            gameGraphics.FontDrawer.DrawString(this.Settings.EntityFont, caption     , captionPosition, color, this.Settings.EntitySize);
+            gameGraphics.FontDrawer.DrawString(this.Settings.EntityFont, presentation, contentPosition, color, this.Settings.EntitySize);
         }
 
-        private void DrawSummaryEntry(int line, Color color, string caption, object presentedData)
+        private void DrawSummaryEntry(IGameGraphics gameGraphics, int line, Color color, string caption, object presentedData)
         {
-            var captionPosition = new Vector2(GameEngine.GraphicsSettings.Width / 2f - 300, 150 + line * Settings.LineHeight);
-            var contentPosition = new Vector2(GameEngine.GraphicsSettings.Width / 2f + 260, 150 + line * Settings.LineHeight);
+            var captionPosition = new Vector2(gameGraphics.Settings.Width / 2f - 300, 150 + line * Settings.LineHeight);
+            var contentPosition = new Vector2(gameGraphics.Settings.Width / 2f + 260, 150 + line * Settings.LineHeight);
             var contentString   = string.Format("{0}", presentedData);
 
-            FontManager.DrawString(Settings.EntityFont, caption      , captionPosition, color, Settings.EntitySize);
-            FontManager.DrawString(Settings.EntityFont, contentString, contentPosition, color, Settings.EntitySize);
+            gameGraphics.FontDrawer.DrawString(this.Settings.EntityFont, caption      , captionPosition, color, this.Settings.EntitySize);
+            gameGraphics.FontDrawer.DrawString(this.Settings.EntityFont, contentString, contentPosition, color, this.Settings.EntitySize);
         }
 
-        private void DrawSummaryResult(int line, Color goodColor, Color badColor, string caption, int computation)
+        private void DrawSummaryResult(IGameGraphics gameGraphics, int line, Color goodColor, Color badColor, string caption, int computation)
         {
-            this.DrawSummaryEntry(line, computation >= 0 ? goodColor : badColor, caption, computation.ToSummary());
+            this.DrawSummaryEntry(gameGraphics, line, computation >= 0 ? goodColor : badColor, caption, computation.ToSummary());
         }
 
-        private void DrawSummarySplit(int line, Color color)
+        private void DrawSummarySplit(IGameGraphics gameGraphics, int line, Color color)
         {
-            var splitStart = new Vector2(GameEngine.GraphicsSettings.Width / 2f - 300, 150 + line * Settings.LineHeight + Settings.LineHeight / 2);
-            var splitEnd   = new Vector2(GameEngine.GraphicsSettings.Width / 2f + 300, 150 + line * Settings.LineHeight + Settings.LineHeight / 2);
+            var splitStart = new Vector2(gameGraphics.Settings.Width / 2f - 300, 150 + line * Settings.LineHeight + Settings.LineHeight / 2);
+            var splitEnd   = new Vector2(gameGraphics.Settings.Width / 2f + 300, 150 + line * Settings.LineHeight + Settings.LineHeight / 2);
 
-            Primitives2D.DrawLine(ScreenManager.SpriteBatch, splitStart, splitEnd, color, this.Settings.EntitySize);
+            var spriteBatch = gameGraphics.Screens.SpriteBatch;
+            spriteBatch.DrawLine(splitStart, splitEnd, color, this.Settings.EntitySize);
         }
 
-        private void DrawSummaryTitle(Color color, string title)
+        private void DrawSummaryTitle(IGameGraphics gameGraphics, Color color, string title)
         {
-            FontManager.DrawStringCenteredHV(Settings.TitleFont, title, this.Settings.TitleCenter, color, Settings.TitleSize);
+            gameGraphics.FontDrawer.DrawStringCenteredHV(this.Settings.TitleFont, title, this.Settings.TitleCenter, color, this.Settings.TitleSize);
         }
 
         #endregion 

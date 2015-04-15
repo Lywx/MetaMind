@@ -18,7 +18,7 @@
             this.RegisteredEvents.Add((int)SessionEventType.SyncStopped);
         }
 
-        public override bool HandleEvent(Event @event)
+        public override bool HandleEvent(IEvent @event)
         {
             if (!this.synchronization.Enabled)
             {

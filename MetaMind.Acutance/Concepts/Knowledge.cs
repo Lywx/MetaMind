@@ -83,7 +83,7 @@
                     break;
             }
 
-            var name = FormatHelper.Compose(this.RawKnowledge.Title.Name);
+            var name = FormatUtils.Compose(this.RawKnowledge.Title.Name);
             return new Command(name, this.RawKnowledge.Path, this.RawKnowledge.Offset, this.RawKnowledge.Title.Time.ToTimeSpan(), repetion);
         }
     }

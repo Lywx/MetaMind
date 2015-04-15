@@ -52,18 +52,9 @@ namespace MetaMind.Engine.Guis.Particles
 
         public Vector2 Size { get; private set; }
 
-        public void Colorize()
-        {
-            this.Color = new Color(
-                Random.Next(0, 255) / this.deep,
-                Random.Next(0, 255) / this.deep,
-                Random.Next(0, 255) / this.deep,
-                Random.Next(0, 255) / this.deep);
-        }
-
         public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
         {
-            var spriteBatch = gameGraphics.Screen.SpriteBatch;
+            var spriteBatch = gameGraphics.Screens.SpriteBatch;
             spriteBatch.FillRectangle(this.Position, this.Size, this.Color, this.Angle);
         }
 
@@ -78,9 +69,10 @@ namespace MetaMind.Engine.Guis.Particles
             this.Size = new Vector2(Width * this.Scale, Height * this.Scale);
 
             // random water movements
+            var random = GameEngineService.Random;
             this.Acceleration = new Vector2(
-                Random.Next((int)-this.Pressure.X, (int)this.Pressure.X),
-                Random.Next((int)-this.Pressure.Y, (int)this.Pressure.Y));
+                random.Next((int)-this.Pressure.X, (int)this.Pressure.X),
+                random.Next((int)-this.Pressure.Y, (int)this.Pressure.Y));
 
             base.Update(gameTime);
         }
@@ -89,17 +81,19 @@ namespace MetaMind.Engine.Guis.Particles
 
         public FloatParticle ParticleFromBelow(int factor)
         {
-            var deep  = Random.Next(1, 5);
+            var random = GameEngineService.Random;
+
+            var deep  = random.Next(1, 5);
             var scale = deep;
 
-            var acceleration   = new Vector2(0, Random.Next(-10, -1));
-            var velocity       = new Vector2(0, Random.Next(-80 * factor, -30 * factor));
-            var lastingSeconds = Random.Next(BubbleSeconds, 2 * BubbleSeconds);
+            var acceleration   = new Vector2(0, random.Next(-10, -1));
+            var velocity       = new Vector2(0, random.Next(-80 * factor, -30 * factor));
+            var lastingSeconds = random.Next(BubbleSeconds, 2 * BubbleSeconds);
 
-            var color = new Color(50 / deep, 50 / deep, Random.Next(0, 50) / deep, 50 / deep);
+            var color = new Color(50 / deep, 50 / deep, random.Next(0, 50) / deep, 50 / deep);
 
             // anywhere on the sides of screen
-            var x = Random.Next(GameEngine.GraphicsSettings.Width);
+            var x = random.Next(GameEngine.GraphicsSettings.Width);
             var y = GameEngine.GraphicsSettings.Height;
             var position = new Vector2(x, y);
 

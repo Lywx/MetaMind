@@ -65,7 +65,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
         public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
             base            .UpdateInput(gameInput, gameTime);
-            this.SymbolFrame.Update(gameInput, gameTime);
+            this.SymbolFrame.UpdateInput(gameInput, gameTime);
         }
 
         private void UpdateFrameSelection(GameTime gameTime)

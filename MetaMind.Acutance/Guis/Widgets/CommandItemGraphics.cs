@@ -2,8 +2,6 @@ namespace MetaMind.Acutance.Guis.Widgets
 {
     using MetaMind.Engine;
     using MetaMind.Engine.Components.Fonts;
-    using MetaMind.Engine.Concepts;
-    using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Items;
     using Microsoft.Xna.Framework;
 
@@ -27,7 +25,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
             this.DrawName(255);
             this.DrawIdFrame(255);
-            this.DrawId(TODO, 255);
+            this.DrawId(gameGraphics, 255);
         }
 
         protected override void DrawName(byte alpha)
@@ -35,7 +33,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             string name = ItemData.Name;
 
             string text = FontManager.CropMonospacedString(
-                ItemControl.Id > 0 ? FormatHelper.Paddle(name, View.Items[ItemControl.Id - 1].ItemData.Name) : name,
+                ItemControl.Id > 0 ? FormatUtils.Paddle(name, View.Items[ItemControl.Id - 1].ItemData.Name) : name,
                 ItemSettings.NameSize,
                 ItemSettings.NameFrameSize.X - ItemSettings.NameXLMargin * 2);
 

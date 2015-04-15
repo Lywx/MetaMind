@@ -8,6 +8,7 @@
 namespace MetaMind.Engine
 {
     using MetaMind.Engine.Components;
+    using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Components.Graphics;
 
     public sealed class GameEngineGraphics : GameEngineAccess, IGameGraphics
@@ -34,11 +35,11 @@ namespace MetaMind.Engine
             }
         }
 
-        public IScreenManager Screen
+        public IScreenManager Screens
         {
             get
             {
-                return GameEngine.ScreenManager;
+                return GameEngine.Screens;
             }
         }
 
@@ -46,11 +47,11 @@ namespace MetaMind.Engine
         {
             get
             {
-                return GameEngine.MessageManager;
+                return GameEngine.Message;
             }
         }
 
-        public IFontManager Font
+        public IFontDrawer FontDrawer
         {
             get
             {

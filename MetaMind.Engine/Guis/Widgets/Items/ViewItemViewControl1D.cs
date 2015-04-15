@@ -42,7 +42,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
             this.Item.Enable(ItemState.Item_Exchanging);
 
-            gameInterop.Process.AttachProcess(new ViewItemTransitProcess(draggingItem, targetView));
+            gameInterop.Processes.AttachProcess(new ViewItemTransitProcess(draggingItem, targetView));
         }
 
         public virtual void SwapIt(IGameInterop gameInterop, IViewItem draggingItem)
@@ -59,7 +59,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
             this.ViewControl.Swap.Initialize(originCenter, targetCenter);
 
-            gameInterop.Process.AttachProcess(new ViewItemSwapProcess(draggingItem, this.Item));
+            gameInterop.Processes.AttachProcess(new ViewItemSwapProcess(draggingItem, this.Item));
         }
 
         public override void Update(GameTime gameTime)

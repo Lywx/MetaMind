@@ -57,10 +57,10 @@ namespace MetaMind.Engine.Components
         private ProcessManager(GameEngine gameEngine)
             : base(gameEngine)
         {
+            this.UpdateOrder = 3;
+            
             this.processes = new List<IProcess>();
 
-            this.UpdateOrder = 1;
-            
             this.GameFile    = new GameEngineFile(gameEngine);
             this.GameInterop = new GameEngineInterop(gameEngine);
             this.GameAudio   = new GameEngineAudio(gameEngine);
@@ -81,9 +81,8 @@ namespace MetaMind.Engine.Components
 
         public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
-
             var i = 0;
+
             while (i < this.processes.Count)
             {
                 var process = this.processes[i];

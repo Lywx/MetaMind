@@ -2,6 +2,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 {
     using System;
 
+    using MetaMind.Engine;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Settings.Colors;
@@ -11,18 +12,18 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
     public class MotivationItemSymbolGraphics : ViewItemComponent
     {
-        private readonly Texture2D symbolTexture;
+        private readonly Texture2D symbol;
         private          float     rotation;
 
         public MotivationItemSymbolGraphics(IViewItem item)
             : base(item)
         {
-            this.symbolTexture = ContentManager.Load<Texture2D>(@"Textures\UIs\Heart");
+            this.symbol = ContentManager.Load<Texture2D>(@"Textures\UIs\Heart");
         }
 
         private Vector2 SymbolOrigin
         {
-            get { return new Vector2(this.symbolTexture.Width / 2f, this.symbolTexture.Height / 2f); }
+            get { return new Vector2(this.symbol.Width / 2f, this.symbol.Height / 2f); }
         }
 
         public void Draw(GameTime gameTime, byte alpha)
@@ -34,18 +35,18 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
             if (Item.IsEnabled(ItemState.Item_Dragging))
             {
-                this.DrawShadow();
+                this.DrawShadow(gameGraphics);
             }
 
-            this.DrawHeart(alpha);
+            this.DrawHeart(gameGraphics, alpha);
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             this.UpdateRotation();
         }
 
-        private void DrawHeart(byte alpha)
+        private void DrawHeart(IGameGraphics gameGraphics, byte alpha)
         {
             var flipped     = Math.Cos(this.rotation) > 0;
             var width       = ItemControl.SymbolFrame.Rectangle.Width;
@@ -53,8 +54,8 @@ namespace MetaMind.Perseverance.Guis.Widgets
             var size        = new Point((int)(Math.Abs(Math.Cos(this.rotation)) * width), height);
             var destination = ExtRectangle.DestinationWithSize(ItemControl.SymbolFrame.Rectangle, size);
 
-            ScreenManager.SpriteBatch.Draw(
-                this.symbolTexture,
+            gameGraphics.Screens.SpriteBatch.Draw(
+                this.symbol,
                 destination,
                 null,
                 ItemSettings.SymbolFrameWishColor,
@@ -64,7 +65,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
                 0f);
         }
 
-        private void DrawShadow()
+        private void DrawShadow(IGameGraphics gameGraphics)
         {
             var scrollCenter = this.ViewControl.Scroll.RootCenterPoint(ItemControl.Id);
             var destination = new Rectangle(
@@ -73,8 +74,8 @@ namespace MetaMind.Perseverance.Guis.Widgets
                 ItemControl.RootFrame.Rectangle.Width,
                 ItemControl.RootFrame.Rectangle.Height);
 
-            ScreenManager.SpriteBatch.Draw(
-                this.symbolTexture,
+            gameGraphics.Screens.SpriteBatch.Draw(
+                this.symbol,
                 destination,
                 null,
                 Palette.TransparentColor3,

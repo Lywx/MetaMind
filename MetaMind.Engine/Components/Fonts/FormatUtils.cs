@@ -7,27 +7,27 @@ namespace MetaMind.Engine.Components.Fonts
 
     using MetaMind.Engine.Settings.Loaders;
 
-    public class FormatHelper : IConfigurationFileLoader
+    public class FormatUtils : IConfigurationFileLoader
     {
-        #region Constructors 
+        private static IStringProcessor stringProcessor;
 
-        public FormatHelper()
+        #region Service Injection
+
+        public static void Initialize(IStringProcessor stringProcessor)
         {
+            if (stringProcessor == null)
+            {
+                throw new ArgumentNullException("stringProcessor");
+            }
+
+            FormatUtils.stringProcessor = stringProcessor;
         }
 
         #endregion
 
-        #region Destructors
+        #region  Settings
 
-        ~FormatHelper()
-        {
-        }
-
-        #endregion
-
-        #region Format Settings 
-
-        private static FormatSettings Settings { get; set; }
+        public static FormatSettings Settings { get; set; }
 
         #endregion
 
@@ -54,14 +54,14 @@ namespace MetaMind.Engine.Components.Fonts
                     // TODO: CJK characters may double ... when paddling
 
                     // crop to headLendth - 1 for a space between ... and head
-                    headMiddle = GameEngine.FontManager.CropMonospacedStringByAsciiCount(head, headLength - 1);
+                    headMiddle = stringProcessor.CropMonospacedStringByAsciiCount(head, headLength - 1);
                 }
                 else
                 {
                     headMiddle = head;
                 }
 
-                var extraLength = GameEngine.FontManager.GetCJKExclusiveCharCount(headMiddle);
+                var extraLength = headMiddle.CJKExclusiveCharCount();
 
                 result.
                     Append(headStart).
@@ -154,7 +154,7 @@ namespace MetaMind.Engine.Components.Fonts
 
         public static string Paddle(string target, string reference, int headLength, string headStart, string headEnd, string infoStart, string infoEnd)
         {
-            var targetElems    = Disintegrate(target, headLength, headStart, headEnd, infoStart, infoEnd);
+            var targetElems    = Disintegrate(target   , headLength, headStart, headEnd, infoStart, infoEnd);
             var referenceElems = Disintegrate(reference, headLength, headStart, headEnd, infoStart, infoEnd);
 
             return Paddle(targetElems, referenceElems, headLength, headStart, headEnd, infoStart, infoEnd);
@@ -177,7 +177,7 @@ namespace MetaMind.Engine.Components.Fonts
             {
                 if (min[i] == max[i])
                 {
-                    commonHeads.Add(StringHelper.WhiteSpace(headLength));
+                    commonHeads.Add(string.Concat(Enumerable.Repeat(" ", headLength)));
                 }
                 else
                 {
@@ -234,7 +234,7 @@ namespace MetaMind.Engine.Components.Fonts
         {
             var configuration = ConfigurationFileLoader.LoadUniquePairs(this);
 
-            Settings.HeadLength = ConfigurationFileLoader.ExtractMultipleInt(configuration, "HeadLength", 0, 10);
+            FormatUtils.Settings.HeadLength = ConfigurationFileLoader.ExtractMultipleInt(configuration, "HeadLength", 0, 10);
         }
 
         #endregion

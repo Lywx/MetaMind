@@ -19,7 +19,7 @@
         {
             var heads = new List<string> { "Acutance", "Check" };
 
-            var actualComposed = FormatHelper.Compose(heads, 14, "", "> ", "Start", "", "");
+            var actualComposed = FormatUtils.Compose(heads, 14, "", "> ", "Start", "", "");
 
             Assert.AreEqual(normalComposed, actualComposed);
         }
@@ -29,7 +29,7 @@
         {
             var heads = new List<string> { "", "" };
 
-            var actualComposed = FormatHelper.Compose(heads, 14, "", "> ", "Start", "", "");
+            var actualComposed = FormatUtils.Compose(heads, 14, "", "> ", "Start", "", "");
 
             Assert.AreEqual(sanityComposed, actualComposed);
         }
@@ -37,7 +37,7 @@
         [TestMethod]
         public void DisintegrateTest()
         {
-            var heads = FormatHelper.Disintegrate(normalComposed, 14, "", "> ", "", "");
+            var heads = FormatUtils.Disintegrate(normalComposed, 14, "", "> ", "", "");
 
             Assert.AreEqual("Acutance", heads[0]);
             Assert.AreEqual("Check"   , heads[1]);
@@ -47,7 +47,7 @@
         [TestMethod]
         public void PaddleTest()
         {
-            var actual = FormatHelper.Paddle(normalComposed, normalReference, 14, "", "> ", "", "");
+            var actual = FormatUtils.Paddle(normalComposed, normalReference, 14, "", "> ", "", "");
 
             Assert.AreEqual(normalRaddled, actual);
         }

@@ -21,7 +21,7 @@
             this.RegisteredEvents.Add((int)SessionEventType.SleepStarted);
         }
 
-        public override bool HandleEvent(Event @event)
+        public override bool HandleEvent(IEvent @event)
         {
             if (this.synchronization.Enabled)
             {
@@ -30,7 +30,7 @@
 
             this.synchronization.ResetTomorrow();
 
-            var screenManager = GameEngine.ScreenManager;
+            var screenManager = GameEngine.Screens;
 
             var motivation = screenManager.Screens.First(screen => screen is MotivationScreen);
             if (motivation != null)
