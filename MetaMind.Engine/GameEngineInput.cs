@@ -7,7 +7,7 @@
 
 namespace MetaMind.Engine
 {
-    using MetaMind.Engine.Components;
+    using MetaMind.Engine.Components.Inputs;
 
     public sealed class GameEngineInput : GameEngineAccess, IGameInput
     {

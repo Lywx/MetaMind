@@ -35,7 +35,7 @@ namespace MetaMind.Engine
             }
         }
 
-        public IScreenManager Screens
+        public IScreenManager Screen
         {
             get
             {

@@ -1,22 +1,17 @@
 namespace MetaMind.Engine.Guis.Particles
 {
-    public class ParticleSpawner<TParticle> where TParticle : IShapelessParticle
+    public class ParticleSpawner<TParticle> where TParticle : IRandomParticle
     {
-        private TParticle prototype;
+        private readonly TParticle prototype;
 
         public ParticleSpawner(TParticle prototype)
         {
             this.prototype = prototype;
         }
 
-        public TParticle Spawn()
+        public IRandomParticle Spawn()
         {
-            return (TParticle)this.prototype.Clone();
-        }
-
-        public TParticle Random()
-        {
-            return 
+            return ((TParticle)this.prototype.Clone()).Randomize();
         }
     }
 }

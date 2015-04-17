@@ -53,7 +53,7 @@ namespace MetaMind.Engine.Components.Fonts
                 return;
             }
 
-            var spriteBatch = this.gameGraphics.Screens.SpriteBatch;
+            var spriteBatch = this.gameGraphics.Screen.SpriteBatch;
             spriteBatch.DrawString(font.GetSprite(), font.DisaplayableString(str), position, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0);
         }
 

@@ -58,7 +58,6 @@ CommandSortItem   = S with LeftControl
 ForceAwake   = A with LeftControl and LeftShift
 ForceReset   = R with LeftControl and LeftShift
 ForceReverse = Space with LeftControl and LeftShift
-ForceFlip    = Enter with LeftControl and LeftShift
 
 " Basic Commands
 

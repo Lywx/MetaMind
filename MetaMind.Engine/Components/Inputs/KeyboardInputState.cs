@@ -26,7 +26,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         private static KeyboardInputState Singleton { get; set; }
 
-        public static KeyboardInputState GetInstance()
+        public static KeyboardInputState GetState()
         {
             return Singleton ?? (Singleton = new KeyboardInputState());
         }
@@ -232,7 +232,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         #region Constructors
 
-        private KeyboardInputState()
+        internal KeyboardInputState()
         {
             this.LoadConfiguration();
         }
@@ -259,7 +259,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         #region Update
 
-        public void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public void UpdateInput(GameTime gameTime)
         {
             this.previousState = this.currentState;
             this.currentState = Keyboard.GetState();

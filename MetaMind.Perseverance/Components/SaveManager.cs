@@ -6,35 +6,10 @@ namespace MetaMind.Perseverance.Components
 
     public class SaveManager : Engine.Components.SaveManager
     {
-        #region Singleton
-
-        private static SaveManager singleton;
-
-        public static SaveManager GetInstance(Game game)
-        {
-            if (singleton == null)
-            {
-                singleton = new SaveManager(game);
-            }
-
-            if (game != null)
-            {
-                game.Components.Add(singleton);
-            }
-
-            return singleton;
-        }
-
-        #endregion Singleton
-
-        #region Constructors
-
         private SaveManager(Game gameEngine)
             : base(gameEngine)
         {
         }
-
-        #endregion Constructors
 
         #region Operations
 

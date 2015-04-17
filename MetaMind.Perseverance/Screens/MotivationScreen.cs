@@ -37,14 +37,14 @@
         {
             base.Draw(gameGraphics, gameTime);
 
-            gameGraphics.Screens.SpriteBatch.Begin();
+            gameGraphics.Screen.SpriteBatch.Begin();
 
             gameGraphics.Message.Draw(gameTime);
 
             this.motivation     .Draw(gameGraphics, gameTime, TransitionAlpha);
             this.synchronization.Draw(gameGraphics, gameTime, TransitionAlpha);
 
-            gameGraphics.Screens.SpriteBatch.End();
+            gameGraphics.Screen.SpriteBatch.End();
         }
 
         public override void UpdateInput(IGameInput gameInput, GameTime gameTime)

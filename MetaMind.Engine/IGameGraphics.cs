@@ -12,7 +12,7 @@ namespace MetaMind.Engine
 
         MessageManager Message { get; }
 
-        IScreenManager Screens { get; }
+        IScreenManager Screen { get; }
 
         GraphicsSettings Settings { get; }
     }

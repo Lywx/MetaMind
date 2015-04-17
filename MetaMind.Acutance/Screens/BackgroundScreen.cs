@@ -44,8 +44,8 @@
 
         public override void Draw(IGameGraphics gameGraphics, GameTime gameTime)
         {
-            var spriteBatch = gameGraphics.Screens.SpriteBatch;
-            var viewport    = gameGraphics.Screens.GraphicsDevice.Viewport;
+            var spriteBatch = gameGraphics.Screen.SpriteBatch;
+            var viewport    = gameGraphics.Screen.GraphicsDevice.Viewport;
             var fullscreen  = new Rectangle(0, 0, viewport.Width, viewport.Height);
 
             spriteBatch.Begin();

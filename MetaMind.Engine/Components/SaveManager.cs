@@ -4,14 +4,23 @@ namespace MetaMind.Engine.Components
 
     using Microsoft.Xna.Framework;
 
-    public class SaveManager : GameComponent
+    public abstract class SaveManager : GameComponent, ISaveManager
     {
-        private bool autoSaved;
+        public static ISaveManager GetComponent<T>(Func<GameEngine, T> create, GameEngine gameEngine) where T : ISaveManager
+        {
+            return create(gameEngine);
+        }
 
-        protected SaveManager(Game gameEngine)
+        private bool isAutoSaved;
+
+        #region Constructors
+
+        protected SaveManager(GameEngine gameEngine)
             : base(gameEngine)
         {
         }
+
+        #endregion
 
         private bool AutoSaveCondition
         {
@@ -34,7 +43,7 @@ namespace MetaMind.Engine.Components
             }
             else
             {
-                this.autoSaved = false;
+                this.isAutoSaved = false;
             }
 
             base.Update(gameTime);
@@ -42,14 +51,14 @@ namespace MetaMind.Engine.Components
 
         private void AutoSave()
         {
-            if (this.autoSaved)
+            if (this.isAutoSaved)
             {
                 return;
             }
 
             this.Save();
 
-            this.autoSaved = true;
+            this.isAutoSaved = true;
         }
 
         public virtual void Save()

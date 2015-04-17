@@ -25,7 +25,7 @@ namespace MetaMind.Acutance.Screens
 
         public override void Draw(IGameGraphics gameGraphics, GameTime gameTime)
         {
-            var spriteBatch = gameGraphics.Screens.SpriteBatch;
+            var spriteBatch = gameGraphics.Screen.SpriteBatch;
 
             spriteBatch.Begin();
 
@@ -38,9 +38,6 @@ namespace MetaMind.Acutance.Screens
 
         public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
         {
-            gameInput.Event.UpdateInput(gameInput, gameTime);
-            gameInput.State.UpdateInput(gameInput, gameTime);
-
             this.multiplexer.UpdateInput(gameInput, gameTime);
         }
 

@@ -54,7 +54,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             var size        = new Point((int)(Math.Abs(Math.Cos(this.rotation)) * width), height);
             var destination = ExtRectangle.DestinationWithSize(ItemControl.SymbolFrame.Rectangle, size);
 
-            gameGraphics.Screens.SpriteBatch.Draw(
+            gameGraphics.Screen.SpriteBatch.Draw(
                 this.symbol,
                 destination,
                 null,
@@ -74,7 +74,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
                 ItemControl.RootFrame.Rectangle.Width,
                 ItemControl.RootFrame.Rectangle.Height);
 
-            gameGraphics.Screens.SpriteBatch.Draw(
+            gameGraphics.Screen.SpriteBatch.Draw(
                 this.symbol,
                 destination,
                 null,

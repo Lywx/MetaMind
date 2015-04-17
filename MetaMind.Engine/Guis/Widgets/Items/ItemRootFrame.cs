@@ -38,6 +38,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         {
             try
             {
+                // TODO: ??
                 this.MouseLeftClicked        -= this.SelectItsItem;
                 this.MouseLeftClickedOutside -= this.UnselectItsItem;
 
@@ -47,8 +48,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             {
                 base.Dispose();
             }
-
-            Debug.WriteLine("ItemRootFrame Destruction");
         }
 
         public void Enable()

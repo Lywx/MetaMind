@@ -1,8 +1,6 @@
-namespace MetaMind.Engine.Components
+namespace MetaMind.Engine.Components.Inputs
 {
     using System;
-
-    using MetaMind.Engine.Components.Inputs;
 
     public interface IInputEvent
     {

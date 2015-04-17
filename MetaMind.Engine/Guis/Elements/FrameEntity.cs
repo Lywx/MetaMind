@@ -7,28 +7,52 @@
 
 namespace MetaMind.Engine.Guis.Elements
 {
+    using MetaMind.Engine.Components.Inputs;
+
     public interface IFrameBase : IUpdateable, IDrawable, IInputable
     {
         bool[] States { get; }
 
-        bool IsEnabled(FrameState state);
-
         void Disable(FrameState state);
 
         void Enable(FrameState state);
+
+        bool IsEnabled(FrameState state);
     }
 
     public abstract class FrameEntity : GameControllableEntity, IFrameBase
     {
-        #region Constructors
+        #region Service
+
+        private static bool isFlyweightSeviceLoaded;
+
+        private static readonly IInputEvent inputEvent;
+
+        protected static IInputEvent InputEvent { get; private set; }
+
+        protected static IInputState InputState { get; private set; }
+
+        #endregion Service
+
+        #region Constructors and Destructors
 
         protected FrameEntity()
+            : this(GameEngine.Service.GameInput.Event, GameEngine.Service.GameInput.State)
         {
+        }
+
+        protected FrameEntity(IInputEvent inputEvent, IInputState inputState)
+        {
+            if (!isFlyweightSeviceLoaded)
+            {
+                InputEvent = inputEvent;
+                InputState = inputState;
+            }
+
             this.states = new bool[(int)FrameState.StateNum];
         }
 
-
-        #endregion
+        #endregion Constructors and Destructors
 
         #region State Data
 
@@ -42,14 +66,9 @@ namespace MetaMind.Engine.Guis.Elements
             }
         }
 
-        #endregion
+        #endregion State Data
 
         #region State Control
-
-        public bool IsEnabled(FrameState state)
-        {
-            return state.IsStateEnabledIn(this.states);
-        }
 
         public void Disable(FrameState state)
         {
@@ -61,6 +80,11 @@ namespace MetaMind.Engine.Guis.Elements
             state.EnableStateIn(this.states);
         }
 
-        #endregion 
+        public bool IsEnabled(FrameState state)
+        {
+            return state.IsStateEnabledIn(this.states);
+        }
+
+        #endregion State Control
     }
 }

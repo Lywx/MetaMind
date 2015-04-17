@@ -1,9 +1,13 @@
 namespace MetaMind.Perseverance.Guis.Modules
 {
+    using System.Collections.Generic;
+
     using MetaMind.Engine;
+    using MetaMind.Engine.Components.Events;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Perseverance.Sessions;
 
     using Microsoft.Xna.Framework;
 
@@ -33,7 +37,6 @@ namespace MetaMind.Perseverance.Guis.Modules
         // FIXME: Wrong interface
         public override void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
         {
-            base.Load();
             // performance penalty is not severe for one-off loading
             foreach (var entry in MotivationModuleSettings.GetNowMotivations())
             {
@@ -50,22 +53,20 @@ namespace MetaMind.Perseverance.Guis.Modules
                 this.gameStartedListener = new MotivationModuleGameStartedListener(this.intelligence);
             }
 
+            new Listener(new List<int> { (int)SessionEventType.GameStarted },
+                e => {
+                        // auto-select after startup
+                        this.intelligence.Control.Selection.Select(0);
+
+                        return true;
+                    });
+
             gameInterop.Events.AddListener(this.gameStartedListener);
         }
 
         public override void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
         {
-            this.UnloadEvents(gameInterop);
-        }
-
-        private void UnloadEvents(IGameInterop gameInterop)
-        {
-            if (this.gameStartedListener == null)
-            {
-                gameInterop.Events.RemoveListener(this.gameStartedListener);
-            }
-
-            this.gameStartedListener = null;
+            this.UnloadInterop(gameInterop);
         }
 
         #endregion Load and Unload

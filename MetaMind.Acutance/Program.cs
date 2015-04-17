@@ -19,7 +19,7 @@
                                   InnerChannel = { OperationTimeout = TimeSpan.FromMilliseconds(20) }
                               };
 
-            using (var engine = GameEngine.GetInstance())
+            using (var engine = GameEngine.GetEngine())
             {
                 var runner = new Acutance(engine, client);
 

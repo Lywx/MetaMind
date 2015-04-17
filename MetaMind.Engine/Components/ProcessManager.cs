@@ -19,11 +19,11 @@ namespace MetaMind.Engine.Components
 
         private static ProcessManager Singleton { get; set; }
 
-        public static ProcessManager GetInstance(GameEngine gameEngine)
+        public static ProcessManager GetComponent(GameEngine gameEngine, int updateOrder)
         {
             if (Singleton == null)
             {
-                Singleton = new ProcessManager(gameEngine);
+                Singleton = new ProcessManager(gameEngine, updateOrder);
             }
 
             if (gameEngine != null)
@@ -54,13 +54,13 @@ namespace MetaMind.Engine.Components
 
         #region Constructors
 
-        private ProcessManager(GameEngine gameEngine)
+        private ProcessManager(GameEngine gameEngine, int updateOrder)
             : base(gameEngine)
         {
-            this.UpdateOrder = 3;
-            
             this.processes = new List<IProcess>();
 
+            this.UpdateOrder = updateOrder;
+            
             this.GameFile    = new GameEngineFile(gameEngine);
             this.GameInterop = new GameEngineInterop(gameEngine);
             this.GameAudio   = new GameEngineAudio(gameEngine);
@@ -72,7 +72,7 @@ namespace MetaMind.Engine.Components
 
         ~ProcessManager()
         {
-            processes.Clear();
+            this.processes.Clear();
         }
 
         #endregion Deconstruction
@@ -95,9 +95,11 @@ namespace MetaMind.Engine.Components
                 if (process.State == ProcessState.Running)
                 {
                     process.Update(gameTime);
-                    process.UpdateContent(this.GameFile, gameTime);
-                    process.UpdateInterop(this.GameInterop, gameTime);
-                    process.UpdateAudio(this.GameAudio, gameTime);
+
+                    // TODO: ???
+                    //process.UpdateContent(this.GameFile, gameTime);
+                    //process.UpdateInterop(this.GameInterop, gameTime);
+                    //process.UpdateAudio(this.GameAudio, gameTime);
                 }
 
                 if (process.IsDead)
@@ -107,6 +109,8 @@ namespace MetaMind.Engine.Components
                         case ProcessState.Succeeded:
                             {
                                 process.OnSuccess();
+
+                                // Continue child processes when succedded
                                 var child = process.RemoveChild();
                                 if (child != null)
                                 {
@@ -130,10 +134,13 @@ namespace MetaMind.Engine.Components
                     }
 
                     this.processes.Remove(process);
+
+                    // Totally remove process's existing implication
+                    process.Dispose();
                 }
                 else
                 {
-                    ++i;
+                    i += 1;
                 }
             }
         }
@@ -144,28 +151,29 @@ namespace MetaMind.Engine.Components
 
         public void AbortProcesses(bool immediate)
         {
-            int i = 0;
-
-            while (i < processes.Count)
+            var i = 0;
+            while (i < this.processes.Count)
             {
-                IProcess process = processes[i];
+                var process = this.processes[i];
+
                 process.Abort();
 
                 if (immediate)
                 {
                     process.OnAbort();
-                    processes.Remove(process);
+
+                    this.processes.Remove(process);
                 }
                 else
                 {
-                    ++i;
+                    i += 1;
                 }
             }
         }
 
         public void AttachProcess(IProcess process)
         {
-            processes.Add(process);
+            this.processes.Add(process);
         }
 
         #endregion Operations

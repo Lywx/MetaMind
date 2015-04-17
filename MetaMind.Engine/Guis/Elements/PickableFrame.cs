@@ -13,13 +13,13 @@
         public PickableFrame(Rectangle rectangle)
             : this()
         {
-            this.Initialize(rectangle);
+            this.Populate(rectangle);
         }
 
         public PickableFrame()
         {
-            GameEngine.InputEvent.MouseDoubleClick += this.DetectMouseLeftDoubleClick;
-            GameEngine.InputEvent.MouseDoubleClick += this.DetectMouseRightDoubleClick;
+            InputEvent.MouseDoubleClick += this.DetectMouseLeftDoubleClick;
+            InputEvent.MouseDoubleClick += this.DetectMouseRightDoubleClick;
         }
 
         ~PickableFrame()
@@ -29,22 +29,17 @@
 
         public override void Dispose()
         {
-            try
-            {
-                this.MouseLeftClicked         = null;
-                this.MouseLeftClickedOutside  = null;
-                this.MouseLeftDoubleClicked   = null;
-                this.MouseRightClicked        = null;
-                this.MouseRightClickedOutside = null;
-                this.MouseRightDoubleClicked  = null;
+            this.MouseLeftClicked         = null;
+            this.MouseLeftClickedOutside  = null;
+            this.MouseLeftDoubleClicked   = null;
+            this.MouseRightClicked        = null;
+            this.MouseRightClickedOutside = null;
+            this.MouseRightDoubleClicked  = null;
 
-                GameEngine.InputEvent.MouseDoubleClick -= this.DetectMouseLeftDoubleClick;
-                GameEngine.InputEvent.MouseDoubleClick -= this.DetectMouseRightDoubleClick;
-            }
-            finally
-            {
-                base.Dispose();
-            }
+            InputEvent.MouseDoubleClick -= this.DetectMouseLeftDoubleClick;
+            InputEvent.MouseDoubleClick -= this.DetectMouseRightDoubleClick;
+
+            base.Dispose();
         }
 
         #endregion Constructors

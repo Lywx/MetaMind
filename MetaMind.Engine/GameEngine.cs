@@ -5,6 +5,7 @@
     using MetaMind.Engine.Components;
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Components.Graphics;
+    using MetaMind.Engine.Components.Inputs;
 
     using Microsoft.Xna.Framework;
 
@@ -12,7 +13,7 @@
     {
         #region Singleton
 
-        public static GameEngine GetInstance()
+        public static GameEngine GetEngine()
         {
             return Singleton ?? (Singleton = new GameEngine());
         }
@@ -25,7 +26,7 @@
 
         #region Audio
 
-        public AudioManager Audio { get; private set; }
+        public AudioManager AudioManager { get; private set; }
 
         #endregion
 
@@ -69,6 +70,8 @@
 
         public GameManager Games { get; private set; }
 
+        public static IGameService Service { get; private set; }
+
         #endregion Components
 
         #region Constructors
@@ -79,17 +82,17 @@
             // Other components are loaded in initialization.
 
             // Graphics
-            this.GraphicsSettings = GraphicsSettings.GetInstance(this);
-            this.GraphicsManager  = GraphicsManager .GetInstance(this);
+            this.GraphicsSettings = GraphicsSettings.GetComponent(this);
+            this.GraphicsManager  = GraphicsManager .GetComponent(this);
 
             // Screen
-            this.Screen = ScreenManager.GetInstance(this, new ScreenSettings());
+            this.Screen = ScreenManager.GetComponent(this, new ScreenSettings(), 3);
 
             // Content
             this.Content.RootDirectory = "Content";
 
             // Game
-            this.Games = GameManager.GetInstance(this);
+            this.Games = GameManager.GetComponent(this);
         }
 
         #endregion Consructors
@@ -103,29 +106,32 @@
             this.GraphicsManager .Initialize();
 
             // Audio
-            this.Audio = AudioManager.GetInstance(this);
+            this.AudioManager = AudioManager.GetComponent(this, int.MaxValue);
 
             // Folder
-            this.Folder = FolderManager.GetInstance();
+            this.Folder = FolderManager.GetComponent();
 
             // Processes
-            this.Process = ProcessManager.GetInstance(this);
+            this.Process = ProcessManager.GetComponent(this, 4);
 
             // Events
-            this.Event = EventManager.GetInstance(this);
+            this.Event = EventManager.GetComponent(this, 3);
 
             // Input
-            this.InputEvent    = InputEvent.GetInstance(this);
-            this.InputState = InputState.GetInstance();
+            this.InputEvent = InputEvent.GetComponent(this, 1);
+            this.InputState = InputState.GetComponent(this, 2);
 
             // Font
-            this.FontManager = FontManager.GetInstance(this);
+            this.FontManager = FontManager.GetComponent(this);
 
             // Message
-            this.Message = MessageManager.GetInstance(this, new MessageSettings());
+            this.Message = MessageManager.GetComponent(this, new MessageSettings());
 
             // Service
-            GameEngineService.Provide(new Random((int)DateTime.Now.Ticks));
+            Service = new GameEngineService();
+            Service.Provide(new GameEngineAudio(this));
+            Service.Provide(new GameEngineGraphics(this));
+            Service.Provide(new GameEngineInput(this));
 
             base.Initialize();
         }
@@ -151,6 +157,7 @@
         protected override void Draw(GameTime gameTime)
         {
             this.GraphicsDevice.Clear(Color.Black);
+
             base.Draw(gameTime);
         }
 
@@ -162,9 +169,12 @@
 
         private void UpdateInput(GameTime gameTime)
         {
-            this.InputState.UpdateInput(gameTime);
+            // TODO: Playtest
             this.InputEvent.UpdateInput(gameTime);
-            this.Screen.UpdateInput(gameTime);
+            this.InputState.UpdateInput(gameTime);
+
+            // TODO: More
+            this.Screen    .UpdateInput(gameTime);
         }
 
         #endregion Update and Draw

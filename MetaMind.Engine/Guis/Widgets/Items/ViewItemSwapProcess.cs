@@ -2,7 +2,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 {
     using System.Diagnostics;
 
-    using MetaMind.Engine.Components.Processes;
     using MetaMind.Engine.Guis.Widgets.Views;
 
     using Microsoft.Xna.Framework;
@@ -15,10 +14,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         private bool initialized;
 
-        protected IViewItem DraggingItem { get; private set; }
-
         protected dynamic CommonSource { get; private set; }
 
+        protected IViewItem DraggingItem { get; private set; }
         protected IPointViewSwapControl SwappingControl { get; private set; }
 
         protected IViewItem SwappingItem { get; private set; }
@@ -89,7 +87,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
                 this.SwapAroundView();
             }
 
-            this.EndSwap();
+            this.SwapTerminate();
         }
 
 
@@ -110,15 +108,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         #endregion
 
         #region Swap Operations
-
-        protected void EndSwap()
-        {
-            // refine selection to make sure the overall effect is smooth
-            this.DraggingItem.ItemControl.MouseSelectsIt();
-
-            // stop swapping state
-            this.SwappingItem.Disable(ItemState.Item_Swaping);
-        }
 
         protected virtual void SwapAroundView()
         {
@@ -172,6 +161,14 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             this.SwappingItem.View.Control.SortItems(PointViewSortMode.Id);
         }
 
+        protected void SwapTerminate()
+        {
+            // refine selection to make sure the overall effect is smooth
+            this.DraggingItem.ItemControl.MouseSelectsIt();
+
+            // stop swapping state
+            this.SwappingItem.Disable(ItemState.Item_Swaping);
+        }
         #endregion
     }
 }

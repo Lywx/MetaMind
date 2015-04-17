@@ -22,7 +22,7 @@ namespace MetaMind.Engine.Components.Graphics
     {
         #region Builder
 
-        public static GraphicsSettings GetInstance(GameEngine gameEngine)
+        public static GraphicsSettings GetComponent(GameEngine gameEngine)
         {
             return new GraphicsSettings(gameEngine);
         }

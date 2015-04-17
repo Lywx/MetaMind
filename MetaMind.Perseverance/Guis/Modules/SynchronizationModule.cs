@@ -24,8 +24,6 @@
 
         private readonly SynchronizationMonitor monitor;
 
-        private readonly SynchronizationValve valve;
-
         private SynchronizationModuleSleepStartedEventListener    sleepStartedEventListener;
 
         private SynchronizationModuleSynchronizationStartListener synchronizationStartListener;
@@ -43,7 +41,6 @@
             // best close the mouse listener
             // which may casue severe mouse performance issues
             this.monitor = new SynchronizationMonitor(ScreenManager.Game, synchronization);
-            this.valve   = new SynchronizationValve();
         }
 
         #endregion Constructors
@@ -193,6 +190,9 @@
                 this.sleepStartedEventListener    == null)
             {
                 this.synchronizationStartListener = new SynchronizationModuleSynchronizationStartListener(this.synchronization, this);
+
+
+
                 this.synchronizationStopListener  = new SynchronizationModuleSynchronizationStopListener(this.synchronization, this);
                 this.sleepStartedEventListener    = new SynchronizationModuleSleepStartedEventListener(this.synchronization, this);
             }
@@ -260,11 +260,6 @@
                 }
 
                 this.synchronization.ResetToday();
-            }
-
-            if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.ForceFlip))
-            {
-                this.valve.Flip();
             }
 
             if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.ForceReset))

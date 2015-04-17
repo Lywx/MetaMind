@@ -5,29 +5,20 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Engine.Components
+namespace MetaMind.Engine.Components.Inputs
 {
-    using MetaMind.Engine.Components.Inputs;
-
     using Microsoft.Xna.Framework;
-
-    public interface IInputState
-    {
-        KeyboardInputState Keyboard { get; }
-
-        MouseInputState Mouse { get; }
-    }
 
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class InputState : IInputState
+    public class InputState : GameComponent, IInputState
     {
         private readonly KeyboardInputState keyboard;
 
         private readonly MouseInputState mouse;
 
-        public KeyboardInputState Keyboard
+        public IKeyboardInputState Keyboard
         {
             get
             {
@@ -35,7 +26,7 @@ namespace MetaMind.Engine.Components
             }
         }
 
-        public MouseInputState Mouse
+        public IMouseInputState Mouse
         {
             get
             {
@@ -47,29 +38,32 @@ namespace MetaMind.Engine.Components
 
         private static InputState Singleton { get; set; }
 
-        public static InputState GetInstance()
+        public static InputState GetComponent(GameEngine gameEngine, int updateOrder)
         {
-            return Singleton ?? (Singleton = new InputState());
+            return Singleton ?? (Singleton = new InputState(gameEngine, updateOrder));
         }
 
         #endregion Singleton
 
         #region Constructors
 
-        private InputState()
+        private InputState(GameEngine gameEngine, int updateOrder)
+            : base(gameEngine)
         {
-            this.keyboard = KeyboardInputState.GetInstance();
-            this.mouse    = MouseInputState   .GetInstance();
+            this.UpdateOrder = updateOrder;
+
+            this.keyboard = KeyboardInputState.GetState();
+            this.mouse    = MouseInputState   .GetState();
         }
 
         #endregion Constructors
 
         #region Update and Draw
 
-        public void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public void UpdateInput(GameTime gameTime)
         {
-            this.mouse   .UpdateInput(gameInput, gameTime);
-            this.keyboard.UpdateInput(gameInput, gameTime);
+            this.mouse   .UpdateInput(gameTime);
+            this.keyboard.UpdateInput(gameTime);
         }
 
         #endregion Update and Draw

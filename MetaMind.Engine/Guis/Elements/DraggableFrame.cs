@@ -9,6 +9,8 @@ namespace MetaMind.Engine.Guis.Elements
 {
     using System;
 
+    using MetaMind.Engine.Components.Inputs;
+
     using Microsoft.Xna.Framework;
 
     public class DraggableFrame : PickableFrame, IDraggableFrame
@@ -28,7 +30,7 @@ namespace MetaMind.Engine.Guis.Elements
         public DraggableFrame(Rectangle rectangle)
             : this()
         {
-            this.Initialize(rectangle);
+            this.Populate(rectangle);
         }
 
         public DraggableFrame()
@@ -45,26 +47,26 @@ namespace MetaMind.Engine.Guis.Elements
             this.Dispose();
         }
 
+        #endregion
+
+        #region IDiposable
+
         public override void Dispose()
         {
-            try
-            {
-                this.MouseDragged = null;
-                this.MouseDropped = null;
+            // Clean events
+            this.MouseDragged = null;
+            this.MouseDropped = null;
 
-                this.MouseLeftPressed   -= this.RecordPressPosition;
-                this.MouseLeftReleased  -= this.ResetRecordPosition;
+            // Clean handlers
+            this.MouseLeftPressed -= this.RecordPressPosition;
+            this.MouseLeftReleased -= this.ResetRecordPosition;
+            this.MouseRightPressed -= this.RecordPressPosition;
+            this.MouseRightReleased -= this.ResetRecordPosition;
 
-                this.MouseRightPressed  -= this.RecordPressPosition;
-                this.MouseRightReleased -= this.ResetRecordPosition;
-            }
-            finally
-            {
-                base.Dispose();
-            }
+            base.Dispose();
         }
 
-        #endregion Constructors
+        #endregion 
 
         #region Events
 
@@ -74,7 +76,7 @@ namespace MetaMind.Engine.Guis.Elements
 
         private void RecordPressPosition(object sender, FrameEventArgs e)
         {
-            var mouse = GameEngine.InputState.Mouse.CurrentState;
+            var mouse = InputState.Mouse.CurrentState;
 
             // origin for deciding whether is dragging
             this.PressedPosition = new Point(mouse.X, mouse.Y);

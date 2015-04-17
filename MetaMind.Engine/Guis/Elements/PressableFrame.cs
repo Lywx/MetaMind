@@ -12,11 +12,75 @@
     /// </summary>
     public class PressableFrame : FrameEntity, IPressableFrame
     {
+        #region Constructors and Destructors 
+
+        public PressableFrame(Rectangle rectangle)
+            : this()
+        {
+            this.Populate(rectangle);
+        }
+
+        protected PressableFrame()
+        {
+            InputEvent.MouseMove += this.DetectMouseOver;
+
+            InputEvent.MouseDown += this.DetectMouseLeftPressed;
+            InputEvent.MouseDown += this.DetectMouseRightPressed;
+
+            InputEvent.MouseUp += this.DetectMouseLeftRelease;
+            InputEvent.MouseUp += this.DetectMouseRightRelease;
+
+            this.FrameMoved += this.DetectMouseOver;
+
+            this.Enable(FrameState.Frame_Initialized);
+            this.Enable(FrameState.Frame_Active);
+        }
+
+        ~PressableFrame()
+        {
+            this.Dispose();
+        }
+
+        #endregion Destructors
+
+        #region IDisposable
+
+        public override void Dispose()
+        {
+            // Clean events
+            this.MouseEnter               = null;
+            this.MouseLeave               = null;
+            this.MouseLeftPressed         = null;
+            this.MouseLeftReleased        = null;
+            this.MouseLeftDraggedOutside  = null;
+            this.MouseRightPressed        = null;
+            this.MouseRightReleased       = null;
+            this.MouseRightDraggedOutside = null;
+            this.FrameMoved               = null;
+
+            // Clean handlers
+            InputEvent.MouseMove -= this.DetectMouseOver;
+            InputEvent.MouseDown -= this.DetectMouseLeftPressed;
+            InputEvent.MouseDown -= this.DetectMouseRightPressed;
+            InputEvent.MouseUp   -= this.DetectMouseLeftRelease;
+            InputEvent.MouseUp   -= this.DetectMouseRightRelease;
+
+            base.Dispose();
+        }
+
+        #endregion IDisposable
+
+        #region Frame Data
+
         private Rectangle rectangle;
 
         public Rectangle Rectangle
         {
-            get { return this.rectangle; }
+            get
+            {
+                return this.rectangle;
+            }
+
             set
             {
                 var deltaLocation = this.rectangle.Location.DistanceFrom(value.Location);
@@ -30,90 +94,28 @@
             }
         }
 
-        #region Constructors
-
-        public PressableFrame(Rectangle rectangle)
-            : this()
+        public Point Center
         {
-            this.Initialize(rectangle);
+            get { return this.Rectangle.Center; }
+            set { this.Populate(value, this.Size); }
         }
-
-        protected PressableFrame()
-        {
-            GameEngine.InputEvent.MouseMove += this.DetectMouseOver;
-
-            GameEngine.InputEvent.MouseDown += this.DetectMouseLeftPressed;
-            GameEngine.InputEvent.MouseDown += this.DetectMouseRightPressed;
-
-            GameEngine.InputEvent.MouseUp += this.DetectMouseLeftRelease;
-            GameEngine.InputEvent.MouseUp += this.DetectMouseRightRelease;
-
-            this.FrameMoved += this.DetectMouseOver;
-
-            // dummy intialization
-            this.Initialize(new Rectangle());
-        }
-
-        #endregion
-
-        #region Destructors
-
-        ~PressableFrame()
-        {
-            this.Dispose();
-        }
-
-        #endregion
-
-        #region IDisposable
-
-        public virtual void Dispose()
-        {
-            this.MouseEnter = null;
-            this.MouseLeave = null;
-            this.MouseLeftPressed = null;
-            this.MouseLeftReleased = null;
-            this.MouseLeftDraggedOutside = null;
-            this.MouseRightPressed = null;
-            this.MouseRightReleased = null;
-            this.MouseRightDraggedOutside = null;
-
-            this.FrameMoved = null;
-
-            GameEngine.InputEvent.MouseMove -= this.DetectMouseOver;
-
-            GameEngine.InputEvent.MouseDown -= this.DetectMouseLeftPressed;
-            GameEngine.InputEvent.MouseDown -= this.DetectMouseRightPressed;
-
-            GameEngine.InputEvent.MouseUp -= this.DetectMouseLeftRelease;
-            GameEngine.InputEvent.MouseUp -= this.DetectMouseRightRelease;
-        }
-
-        #endregion
-
-        #region Initialization
-
-        protected void Initialize(Rectangle rectangle)
-        {
-            this.rectangle = rectangle;
-
-            this.Enable(FrameState.Frame_Initialized);
-            this.Enable(FrameState.Frame_Active);
-        }
-
-        protected void Initialize(Point center, Point size)
-        {
-            this.Initialize(center.PinRectangleCenter(size));
-        }
-
-        #endregion 
-
-        #region Public Properties
 
         public int Height
         {
             get { return this.Rectangle.Height; }
             set { this.Rectangle = new Rectangle(this.Rectangle.X, this.Rectangle.Y, this.Rectangle.Width, value); }
+        }
+
+        public Point Location
+        {
+            get { return this.Rectangle.Location; }
+            set { this.Populate(new Rectangle(value.X, value.Y, this.Rectangle.Width, this.Rectangle.Height)); }
+        }
+
+        public Point Size
+        {
+            get { return new Point(this.Rectangle.Width, this.Rectangle.Height); }
+            set { this.Populate(this.Center, value); }
         }
 
         public int Width
@@ -134,45 +136,27 @@
             set { this.Rectangle = new Rectangle(this.Rectangle.X, value, this.Rectangle.Width, this.Rectangle.Height); }
         }
 
-        public Point Center
-        {
-            get { return this.Rectangle.Center; }
-            set { this.Initialize(value, this.Size); }
-        }
-
-        public Point Size
-        {
-            get { return new Point(this.Rectangle.Width, this.Rectangle.Height); }
-            set { this.Initialize(this.Center, value); }
-        }
-
-        public Point Location
-        {
-            get { return this.Rectangle.Location; }
-            set { this.Initialize(new Rectangle(value.X, value.Y, this.Rectangle.Width, this.Rectangle.Height)); }
-        }
-
-        #endregion Public Properties
+        #endregion 
 
         #region Events
+
+        public event EventHandler<FrameEventArgs> FrameMoved;
 
         public event EventHandler<FrameEventArgs> MouseEnter;
 
         public event EventHandler<FrameEventArgs> MouseLeave;
 
+        public event EventHandler<FrameEventArgs> MouseLeftDraggedOutside;
+
         public event EventHandler<FrameEventArgs> MouseLeftPressed;
 
         public event EventHandler<FrameEventArgs> MouseLeftReleased;
 
-        public event EventHandler<FrameEventArgs> MouseLeftDraggedOutside;
+        public event EventHandler<FrameEventArgs> MouseRightDraggedOutside;
 
         public event EventHandler<FrameEventArgs> MouseRightPressed;
 
         public event EventHandler<FrameEventArgs> MouseRightReleased;
-
-        public event EventHandler<FrameEventArgs> MouseRightDraggedOutside;
-
-        public event EventHandler<FrameEventArgs> FrameMoved;
 
         protected virtual void DetectMouseLeftPressed(object sender, MouseEventArgs e)
         {
@@ -211,29 +195,6 @@
                 this.Disable(FrameState.Mouse_Left_Released);
                 this.Disable(FrameState.Mouse_Left_Dragged_Out);
             }
-        }
-
-        private void DetectMouseOver(object sender, MouseEventArgs e)
-        {
-            var previouslyInside = this.IsEnabled(FrameState.Mouse_Over);
-            var currentlyInside  = this.MouseInside(e.Location);
-
-            this.UpdateStates(e.Location);
-
-            if (!previouslyInside && currentlyInside && this.MouseEnter != null)
-            {
-                this.MouseEnter(this, new FrameEventArgs(FrameEventType.Mouse_Enter));
-            }
-            else if (previouslyInside && !currentlyInside && this.MouseLeave != null)
-            {
-                this.MouseLeave(this, new FrameEventArgs(FrameEventType.Mouse_Leave));
-            }
-        }
-
-        private void DetectMouseOver(object sender, EventArgs e)
-        {
-            var mouse = GameEngine.InputState.Mouse.CurrentState;
-            this.DetectMouseOver(null, new MouseEventArgs(MouseButton.None, 0, mouse.X, mouse.Y, 0));
         }
 
         protected virtual void DetectMouseRightPressed(object sender, MouseEventArgs e)
@@ -293,6 +254,29 @@
             return e.Button == MouseButton.Right;
         }
 
+        private void DetectMouseOver(object sender, MouseEventArgs e)
+        {
+            var previouslyInside = this.IsEnabled(FrameState.Mouse_Over);
+            var currentlyInside  = this.MouseInside(e.Location);
+
+            this.UpdateStates(e.Location);
+
+            if (!previouslyInside && currentlyInside && this.MouseEnter != null)
+            {
+                this.MouseEnter(this, new FrameEventArgs(FrameEventType.Mouse_Enter));
+            }
+            else if (previouslyInside && !currentlyInside && this.MouseLeave != null)
+            {
+                this.MouseLeave(this, new FrameEventArgs(FrameEventType.Mouse_Leave));
+            }
+        }
+
+        private void DetectMouseOver(object sender, EventArgs e)
+        {
+            var mouse = InputState.Mouse.CurrentState;
+            this.DetectMouseOver(null, new MouseEventArgs(MouseButton.None, 0, mouse.X, mouse.Y, 0));
+        }
+
         #endregion Events
 
         #region Update
@@ -312,11 +296,11 @@
                 this.Enable(FrameState.Mouse_Over);
             }
 
-            if (!this.MouseInside(mouseLocation) && 
+            if (!this.MouseInside(mouseLocation) &&
                  this.IsEnabled(FrameState.Mouse_Left_Pressed))
             {
                 // non-applicable for draggable frame
-                if (!this.IsEnabled(FrameState.Frame_Dragging) && 
+                if (!this.IsEnabled(FrameState.Frame_Dragging) &&
                     !this.IsEnabled(FrameState.Frame_Holding))
                 {
                     this.Disable(FrameState.Mouse_Left_Pressed);
@@ -353,5 +337,19 @@
         }
 
         #endregion Update
+
+        #region Operations
+
+        protected void Populate(Rectangle rect)
+        {
+            this.rectangle = rect;
+        }
+
+        protected void Populate(Point center, Point size)
+        {
+            this.Populate(center.ToRectangleCenter(size));
+        }
+
+        #endregion
     }
 }

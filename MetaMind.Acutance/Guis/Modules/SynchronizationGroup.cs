@@ -4,10 +4,8 @@
     using System.ServiceModel;
 
     using MetaMind.Engine;
-    using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis;
     using MetaMind.Perseverance.Concepts;
-    using MetaMind.Perseverance.Concepts.Cognitions;
     using MetaMind.Perseverance.Guis.Modules;
 
     using Microsoft.Xna.Framework;

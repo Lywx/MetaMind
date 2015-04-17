@@ -7,11 +7,11 @@
 
 namespace MetaMind.Engine.Components.Processes
 {
-    using Microsoft.Xna.Framework;
+    using System;
 
     using IUpdateable = MetaMind.Engine.IUpdateable;
 
-    public interface IProcess : IUpdateable
+    public interface IProcess : IUpdateable, IDisposable
     {
         #region Process Data
 
@@ -40,12 +40,6 @@ namespace MetaMind.Engine.Components.Processes
         void OnSuccess();
 
         #endregion Transition
-
-        #region Update
-
-        void Update(GameTime gameTime);
-
-        #endregion
 
         #region Operations
 

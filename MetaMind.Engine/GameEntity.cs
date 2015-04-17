@@ -22,7 +22,7 @@ namespace MetaMind.Engine
 
         #region Engine Data
 
-        private IGameInterop GameInterop { get; set; }
+        protected IGameInterop GameInterop { get; set; }
 
         #endregion Engine Data
 
@@ -50,44 +50,12 @@ namespace MetaMind.Engine
 
         public event EventHandler<EventArgs> UpdateOrderChanged;
 
-        public virtual void LoadContent(IGameFile gameFile)
-        {
-        }
-
-        public virtual void LoadGraphics(IGameGraphics gameGraphics)
-        {
-        }
-
-        public virtual void LoadInterop(IGameInterop gameInterop)
-        {
-            if (this.GameInterop == null)
-            {
-                this.GameInterop = new GameEngineInterop(gameInterop);
-            }
-
-            this.Listeners.ForEach(l => gameInterop.Events.AddListener(l));
-        }
-
         protected virtual void OnEnabledChanged(object sender, EventArgs args)
         {
         }
 
         protected virtual void OnUpdateOrderChanged(object sender, EventArgs args)
         {
-        }
-
-        public virtual void UnloadContent(IGameFile gameFile)
-        {
-        }
-
-        public virtual void UnloadGraphics(IGameGraphics gameGraphics)
-        {
-        }
-
-        public virtual void UnloadInterop(IGameInterop gameInterop)
-        {
-            this.Listeners.ForEach(l => gameInterop.Events.RemoveListener(l));
-            this.Listeners.Clear();
         }
 
         #endregion Events
@@ -120,6 +88,43 @@ namespace MetaMind.Engine
 
         #endregion States
 
+        #region Load and Unload
+
+        public virtual void LoadContent(IGameFile gameFile)
+        {
+        }
+
+        public virtual void LoadGraphics(IGameGraphics gameGraphics)
+        {
+        }
+
+        public virtual void LoadInterop(IGameInterop gameInterop)
+        {
+            if (this.GameInterop == null)
+            {
+                this.GameInterop = new GameEngineInterop(gameInterop);
+            }
+
+            this.Listeners.ForEach(l => gameInterop.Events.AddListener(l));
+        }
+
+        public virtual void UnloadContent(IGameFile gameFile)
+        {
+        }
+
+        public virtual void UnloadGraphics(IGameGraphics gameGraphics)
+        {
+        }
+
+        public virtual void UnloadInterop(IGameInterop gameInterop)
+        {
+            // TODO: UnloadInterop How to design
+            this.Listeners.ForEach(l => gameInterop.Events.RemoveListener(l));
+            this.Listeners.Clear();
+        }
+
+        #endregion Load and Unload
+
         #region Update
 
         private int updateOrder;
@@ -147,10 +152,6 @@ namespace MetaMind.Engine
         }
 
         public virtual void Update(GameTime gameTime)
-        {
-        }
-
-        public virtual void UpdateAudio(IGameAudio gameAudio, GameTime gameTime)
         {
         }
 

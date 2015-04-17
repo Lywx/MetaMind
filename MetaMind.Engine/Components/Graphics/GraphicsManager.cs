@@ -12,7 +12,7 @@ namespace MetaMind.Engine.Components.Graphics
 
         private static GraphicsManager Singleton { get; set; }
 
-        public static GraphicsManager GetInstance(GameEngine gameEngine)
+        public static GraphicsManager GetComponent(GameEngine gameEngine)
         {
             return Singleton ?? (Singleton = new GraphicsManager(gameEngine));
         }

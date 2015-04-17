@@ -27,7 +27,7 @@ namespace MetaMind.Engine.Components
 
         private static FolderManager Singleton { get; set; }
 
-        public static FolderManager GetInstance()
+        public static FolderManager GetComponent()
         {
             return Singleton ?? (Singleton = new FolderManager());
         }

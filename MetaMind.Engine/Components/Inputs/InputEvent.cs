@@ -8,24 +8,22 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Engine.Components
+namespace MetaMind.Engine.Components.Inputs
 {
     using System;
     using System.Runtime.InteropServices;
 
-    using MetaMind.Engine.Components.Inputs;
-
     using Microsoft.Xna.Framework.Input;
 
-    public class InputEvent : IInputEvent
+    public class InputEvent : InputSync, IInputEvent
     {
         #region Singleton
 
-        public static InputEvent GetInstance(GameEngine gameEngine)
+        public static InputEvent GetComponent(GameEngine gameEngine, int updateOrder)
         {
             if (Singleton == null)
             {
-                Singleton = new InputEvent(gameEngine);
+                Singleton = new InputEvent(gameEngine, updateOrder);
             }
 
             return Singleton;
@@ -47,7 +45,8 @@ namespace MetaMind.Engine.Components
 
         #region Constructors
 
-        private InputEvent(GameEngine gameEngine)
+        private InputEvent(GameEngine gameEngine, int updateOrder)
+            : base(gameEngine, updateOrder)
         {
             var window = gameEngine.Window;
 
@@ -174,7 +173,7 @@ namespace MetaMind.Engine.Components
 
         #endregion DLL Imports
 
-        #region Initialization
+        #region Hook API
 
         private IntPtr HookProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
         {
@@ -342,7 +341,7 @@ namespace MetaMind.Engine.Components
             return returnCode;
         }
 
-        #endregion Initialization
+        #endregion 
 
         #region Mouse Messages
 

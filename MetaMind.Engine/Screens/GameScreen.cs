@@ -181,6 +181,7 @@ namespace MetaMind.Engine.Screens
 
         public virtual void UpdateAudio(IGameAudio gameAudio, GameTime gameTime)
         {
+            // TODO: REmove?
         }
 
         public virtual void UpdateContent(IGameFile gameFile, GameTime gameTime)
@@ -211,7 +212,7 @@ namespace MetaMind.Engine.Screens
                 if (!this.UpdateTransition(gameTime, this.transitionOffTime, 1))
                 {
                     // When the transition finishes, remove the screen.
-                    gameGraphics.Screens.RemoveScreen(this);
+                    gameGraphics.Screen.RemoveScreen(this);
                 }
             }
             else if (isCoveredByOtherScreen)

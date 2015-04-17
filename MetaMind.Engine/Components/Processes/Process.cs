@@ -9,6 +9,8 @@ namespace MetaMind.Engine.Components.Processes
 {
     public abstract class Process : GameEntity, IProcess
     {
+        #region Process Data
+
         private IProcess child;
 
         private ProcessState state;
@@ -29,6 +31,8 @@ namespace MetaMind.Engine.Components.Processes
             }
         }
 
+        #endregion
+
         #region Constructors
 
         protected Process()
@@ -42,10 +46,7 @@ namespace MetaMind.Engine.Components.Processes
 
         ~Process()
         {
-            if (this.child != null)
-            {
-                this.child.OnAbort();
-            }
+            this.Dispose();
         }
 
         #endregion Destructors
@@ -56,7 +57,8 @@ namespace MetaMind.Engine.Components.Processes
         {
             get
             {
-                return this.state == ProcessState.Running || this.state == ProcessState.Paused;
+                return this.state == ProcessState.Running || 
+                    this.state == ProcessState.Paused;
             }
         }
 
@@ -64,8 +66,9 @@ namespace MetaMind.Engine.Components.Processes
         {
             get
             {
-                return this.state == ProcessState.Succeeded || this.state == ProcessState.Failed
-                       || this.state == ProcessState.Aborted;
+                return this.state == ProcessState.Succeeded || 
+                    this.state == ProcessState.Failed || 
+                    this.state == ProcessState.Aborted;
             }
         }
 
@@ -160,5 +163,16 @@ namespace MetaMind.Engine.Components.Processes
         }
 
         #endregion Operations
+
+        public override void Dispose()
+        {
+            if (this.child != null)
+            {
+                // Aborted child if its child is not successfully separated out
+                this.child.OnAbort();
+            }
+
+            base.Dispose();
+        }
     }
 }

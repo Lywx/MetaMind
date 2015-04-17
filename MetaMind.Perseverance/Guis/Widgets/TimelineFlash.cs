@@ -1,8 +1,6 @@
 ﻿namespace MetaMind.Perseverance.Guis.Widgets
 {
     using MetaMind.Engine;
-    using MetaMind.Engine.Extensions;
-    using MetaMind.Engine.Settings;
     using MetaMind.Engine.Settings.Colors;
 
     using Microsoft.Xna.Framework;
@@ -23,7 +21,7 @@
         }
     }
 
-    public class TimelineFlash : GameEngineAccess
+    public class TimelineFlash
     {
         private FlashSettings flashSettings;
 
@@ -51,7 +49,7 @@
 
         public void Draw(GameTime gameTime, byte alpha)
         {
-            Primitives2D.FillRectangle(ScreenManager.SpriteBatch, this.position.ToPoint().PinRectangle(this.size.ToPoint()), this.color.MakeTransparent(alpha));
+            Primitives2D.FillRectangle(ScreenManager.SpriteBatch, this.position.ToPoint().ToRectangleCorner(this.size.ToPoint()), this.color.MakeTransparent(alpha));
         }
 
         public void Update(GameTime gameTime)

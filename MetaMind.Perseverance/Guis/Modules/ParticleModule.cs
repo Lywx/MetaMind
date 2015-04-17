@@ -7,7 +7,7 @@ namespace MetaMind.Perseverance.Guis.Modules
         public ParticleModule(ParticleModuleSettings settings)
             : base(settings)
         {
-            this.SpawnSpeed = 2;
+            this.SpawnRate = 2;
         }
     }
 }

@@ -10,6 +10,9 @@
 
 namespace MetaMind.Engine.Guis.Widgets.Cameras
 {
+    using MetaMind.Engine.Components.Graphics;
+    using MetaMind.Engine.Settings.Loaders;
+
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
@@ -18,7 +21,7 @@ namespace MetaMind.Engine.Guis.Widgets.Cameras
         Vector2 Movement { get; set; }
     }
 
-    public class MarkovCamera : GameControllableEntity, IMarkovCamera
+    public class MarkovCamera : GameControllableEntity, IMarkovCamera, IConfigurationParameterLoader<GraphicsSettings>
     {
         private readonly MarkovCameraSettings settings;
 
@@ -39,7 +42,7 @@ namespace MetaMind.Engine.Guis.Widgets.Cameras
             var keyboard = gameInput.State.Keyboard.CurrentState;
 
             var identityMovement = Vector2.Zero;
-            identityMovement = AddMovementFromKeyboardInput(keyboard, identityMovement);
+            identityMovement = this.AddMovementFromKeyboard(keyboard, identityMovement);
             identityMovement = AddMovementFromMouse(mouse, identityMovement);
 
             Movement = FinalMovement(identityMovement);
@@ -49,7 +52,7 @@ namespace MetaMind.Engine.Guis.Widgets.Cameras
         {
         }
 
-        private Vector2 AddMovementFromKeyboardInput(KeyboardState keyboard, Vector2 identityMovement)
+        private Vector2 AddMovementFromKeyboard(KeyboardState keyboard, Vector2 identityMovement)
         {
             if (keyboard.IsKeyDown(Keys.Left))
             {
@@ -78,8 +81,9 @@ namespace MetaMind.Engine.Guis.Widgets.Cameras
         {
             // allow movement when mouse is on sides
             // forbid movement when mouse is at corners
-            if (mouse.X < settings.PanRegionWidth && !(mouse.Y < settings.PanForbiddenHeight)
-                && !(mouse.Y > GameEngine.GraphicsSettings.Height - settings.PanForbiddenHeight))
+            if (mouse.X < settings.PanRegionWidth && 
+              !(mouse.Y < settings.PanForbiddenHeight) && 
+              !(mouse.Y > ScreenHeight - settings.PanForbiddenHeight))
             {
                 identityMovement.X++;
             }
@@ -102,5 +106,16 @@ namespace MetaMind.Engine.Guis.Widgets.Cameras
 
             return settings.PanVelocity * identityMovement;
         }
+
+        public void ParameterLoad(GraphicsSettings parameter)
+        {
+            this.ScreenWidth = parameter.Width;
+            this.ScreenHeight = parameter.Height;
+
+        }
+
+        public int ScreenHeight { get; set; }
+
+        public int ScreenWidth { get; set; }
     }
 }

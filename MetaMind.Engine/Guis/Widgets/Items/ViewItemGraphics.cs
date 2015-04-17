@@ -123,7 +123,7 @@
         protected void DrawNameFrameWith(IGameGraphics gameGraphics, Color color, byte alpha)
         {
             Primitives2D.DrawRectangle(
-                gameGraphics.Screens.SpriteBatch,
+                gameGraphics.Screen.SpriteBatch,
                 ExtRectangle.Crop(ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin),
                 color.MakeTransparent(alpha),
                 1f);
@@ -132,7 +132,7 @@
         protected void FillNameFrameWith(IGameGraphics gameGraphics, Color color, byte alpha)
         {
             Primitives2D.FillRectangle(
-                gameGraphics.Screens.SpriteBatch,
+                gameGraphics.Screen.SpriteBatch,
                 ExtRectangle.Crop(ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin),
                 color.MakeTransparent(alpha));
         }

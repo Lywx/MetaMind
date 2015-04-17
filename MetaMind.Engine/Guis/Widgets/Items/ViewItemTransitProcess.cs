@@ -2,7 +2,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 {
     using System.Diagnostics;
 
-    using MetaMind.Engine.Components.Processes;
     using MetaMind.Engine.Guis.Elements;
     using MetaMind.Engine.Guis.Widgets.Regions;
     using MetaMind.Engine.Guis.Widgets.Views;
@@ -35,22 +34,25 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         public ViewItemTransitProcess(IViewItem srcItem, IView desView)
         {
-            // source part
+            // Source part
             this.SrcItem = srcItem as IViewItemExchangable;
+            Debug.Assert(this.SrcItem != null, "Item is not exchangable.");
+
             this.srcFrame = srcItem.ItemControl.RootFrame;
 
-            // assert item exchangable
-            {
-                Debug.Assert(this.SrcItem != null, "Dragging item is not exchangable");
-            }
-
-            // destination part
-            this.DesView = desView;
-            this.desRegion = desView.Control.Region;
+            // Destination part
+            this.DesView      = desView;
+            this.desRegion    = desView.Control.Region;
             this.DesSelection = desView.Control.Selection;
 
+            this.Initialize();
+        }
+
+        private void Initialize()
+        {
             this.SrcItem.Enable(ItemState.Item_Exchanging);
-            this.srcFrame.MouseDropped += this.MouseInsideRegionThenTransit;
+
+            this.srcFrame.MouseDropped += this.TransitWhenMouseInsideRegion;
         }
 
         #endregion Constructors
@@ -63,12 +65,12 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         public override void OnFail()
         {
-            this.Terminate();
+            this.TransitTerminate();
         }
 
         public override void OnSuccess()
         {
-            this.Terminate();
+            this.TransitTerminate();
         }
 
         #endregion Transit Transition
@@ -93,24 +95,25 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             this.SrcItem.ExchangeTo(this.DesView, position);
         }
 
-        private void Terminate()
+        /// <summary>
+        /// Stop item transiting.
+        /// </summary>
+        private void TransitTerminate()
         {
-            // stop swapping state
             this.SrcItem.Disable(ItemState.Item_Exchanging);
-            this.srcFrame.MouseDropped -= this.MouseInsideRegionThenTransit;
         }
 
         #endregion Exchange Operations
 
         #region Transit Trigger
 
-        private void MouseInsideRegionThenTransit(object sender, FrameEventArgs e)
+        private void TransitWhenMouseInsideRegion(object sender, FrameEventArgs e)
         {
             if (this.desRegion.IsEnabled(RegionState.Region_Mouse_Over))
             {
-                // this is a event driven method
-                // which does not obey the normal update process
-                // or it will cause sudden graphical changes in screen
+                // This is a event driven method which does not obey the 
+                // normal update process or it will cause sudden graphical 
+                // changes in screen.
                 this.Transit();
                 this.Succeed();
             }
@@ -119,6 +122,18 @@ namespace MetaMind.Engine.Guis.Widgets.Items
                 this.Fail();
             }
         }
+
+        #endregion
+
+        #region IDisposable
+
+        public override void Dispose()
+        {
+            this.srcFrame.MouseDropped -= this.TransitWhenMouseInsideRegion;
+
+            base.Dispose();
+        }
+
 
         #endregion
     }

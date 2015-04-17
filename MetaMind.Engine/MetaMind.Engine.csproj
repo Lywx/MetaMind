@@ -78,11 +78,15 @@
     <Compile Include="Components\Fonts\FontDrawer.cs" />
     <Compile Include="Components\Fonts\FontInfo.cs" />
     <Compile Include="Components\Fonts\MonoFont.cs" />
+    <Compile Include="Components\IAudio.cs" />
     <Compile Include="Components\IEventManager.cs" />
     <Compile Include="Components\Fonts\IFontDrawer.cs" />
     <Compile Include="Components\Fonts\IFontManager.cs" />
     <Compile Include="Components\IGameManager.cs" />
-    <Compile Include="Components\IInputEvent.cs" />
+    <Compile Include="Components\Inputs\InputSync.cs" />
+    <Compile Include="Components\Inputs\IInputEvent.cs" />
+    <Compile Include="Components\Inputs\IInputState.cs" />
+    <Compile Include="Components\Inputs\IMouseInputState.cs" />
     <Compile Include="Components\Inputs\KeyboardActionMap.cs" />
     <Compile Include="Components\Inputs\KeyboardActions.cs" />
     <Compile Include="Components\Inputs\CharEnteredEventArgs.cs" />
@@ -94,7 +98,10 @@
     <Compile Include="Components\Inputs\MouseButton.cs" />
     <Compile Include="Components\Inputs\MouseEventArgs.cs" />
     <Compile Include="Components\Inputs\MouseKeys.cs" />
+    <Compile Include="Components\Inputs\NullInputEvent.cs" />
+    <Compile Include="Components\Inputs\NullInputState.cs" />
     <Compile Include="Components\IProcessManager.cs" />
+    <Compile Include="Components\ISaveManager.cs" />
     <Compile Include="Components\IScreenManager.cs" />
     <Compile Include="Components\Fonts\FontExt.cs" />
     <Compile Include="Components\Fonts\SpriteFontExt.cs" />
@@ -106,6 +113,7 @@
     <Compile Include="Components\Fonts\StringUtils.cs" />
     <Compile Include="Components\Graphics\GraphicsManager.cs" />
     <Compile Include="GameEngineAccess.cs" />
+    <Compile Include="GameEngineNumerical.cs" />
     <Compile Include="GameVisualEntity.cs" />
     <Compile Include="GameEngineGraphics.cs" />
     <Compile Include="GameEngineFile.cs" />
@@ -119,9 +127,11 @@
     <Compile Include="Guis\IModule.cs" />
     <Compile Include="Guis\IModuleGraphics.cs" />
     <Compile Include="Guis\Particles\IParticle.cs" />
+    <Compile Include="Guis\Particles\IRandomParticle.cs" />
     <Compile Include="Guis\Particles\IShapelessParticle.cs" />
     <Compile Include="GameEngineService.cs" />
     <Compile Include="Guis\Particles\ParticleSpawner.cs" />
+    <Compile Include="Guis\Widgets\Cameras\CameraSettings.cs" />
     <Compile Include="Guis\Widgets\Items\IViewItem.cs" />
     <Compile Include="Guis\Widgets\Items\IViewItemCharPostProcessor.cs" />
     <Compile Include="Guis\Widgets\Views\ContinuousViewSettings.cs" />
@@ -129,6 +139,8 @@
     <Compile Include="IDrawable.cs" />
     <Compile Include="IGame.cs" />
     <Compile Include="IGameEntity.cs" />
+    <Compile Include="IGameNumerical.cs" />
+    <Compile Include="IGameService.cs" />
     <Compile Include="IGameVisualEntity.cs" />
     <Compile Include="IInputable.cs" />
     <Compile Include="GameEntity.cs" />
@@ -144,8 +156,8 @@
     <Compile Include="Sessions\Session.cs" />
     <Compile Include="Settings\Loaders\IConfigurationParameter.cs" />
     <Compile Include="Settings\Loaders\IConfigurationParameterLoader.cs" />
-    <Compile Include="Components\InputEvent.cs" />
-    <Compile Include="Components\InputState.cs" />
+    <Compile Include="Components\Inputs\InputEvent.cs" />
+    <Compile Include="Components\Inputs\InputState.cs" />
     <Compile Include="Components\Inputs\KeyboardInputState.cs" />
     <Compile Include="Components\Inputs\MouseInputState.cs" />
     <Compile Include="Components\MessageManager.cs" />

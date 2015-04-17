@@ -1,6 +1,5 @@
 namespace MetaMind.Acutance.Sessions
 {
-    using System;
     using System.Runtime.Serialization;
 
     using MetaMind.Acutance.Concepts;
@@ -22,7 +21,7 @@ namespace MetaMind.Acutance.Sessions
         public SessionData()
         {
             this.Commandlist = new Commandlist();
-            this.Modulelist = new Modulelist(this.Commandlist);
+            this.Modulelist  = new Modulelist(this.Commandlist);
         }
 
         #region Serialization

@@ -5,11 +5,9 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Engine.Components
+namespace MetaMind.Engine.Components.Fonts
 {
     using System.Collections.Generic;
-
-    using MetaMind.Engine.Components.Fonts;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -35,7 +33,7 @@ namespace MetaMind.Engine.Components
 
         private static FontManager Singleton { get; set; }
 
-        public static FontManager GetInstance(GameEngine gameEngine)
+        public static FontManager GetComponent(GameEngine gameEngine)
         {
             if (Singleton == null)
             {

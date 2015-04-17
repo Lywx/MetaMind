@@ -23,11 +23,11 @@ namespace MetaMind.Engine.Components
 
         private static ScreenManager Singleton { get; set; }
 
-        public static ScreenManager GetInstance(GameEngine gameEngine, ScreenSettings settings)
+        public static ScreenManager GetComponent(GameEngine gameEngine, ScreenSettings settings, int updateOrder)
         {
             if (Singleton == null)
             {
-                Singleton = new ScreenManager(gameEngine, settings);
+                Singleton = new ScreenManager(gameEngine, settings, updateOrder);
             }
 
             if (gameEngine != null)
@@ -79,7 +79,7 @@ namespace MetaMind.Engine.Components
             }
         }
 
-        public ScreenSettings Settings { get; private set; }
+        public ScreenSettings Settings { get; set; }
 
         #endregion Screen Data
 
@@ -132,12 +132,11 @@ namespace MetaMind.Engine.Components
         /// <summary>
         /// Constructs a new screen manager component.
         /// </summary>
-        private ScreenManager(GameEngine gameEngine, ScreenSettings settings)
+        private ScreenManager(GameEngine gameEngine, ScreenSettings settings, int updateOrder)
             : base(gameEngine)
         {
-            this.UpdateOrder = 2;
-
-            this.Settings = settings;
+            this.Settings    = settings;
+            this.UpdateOrder = updateOrder;
 
             this.GameAudio    = new GameEngineAudio(gameEngine);
             this.GameFile     = new GameEngineFile(gameEngine);

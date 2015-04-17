@@ -7,25 +7,36 @@ namespace MetaMind.Engine.Guis.Modules
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
+    /// <summary>
+    /// Particle controller relies on implementation of FloatParticle.
+    /// </summary>
     public class ParticleModule : Module<ParticleModuleSettings>
     {
-        public ParticleModule(ParticleModuleSettings settings)
-            : base(settings)
-        {
-            this.Particles = new List<FloatParticle>();
-
-            this.SpawnSpeed   = 1;
-            this.InitialSpeed = 1;
-
-            FloatParticle.Width  = settings.ParticleWidth;
-            FloatParticle.Height = settings.ParticleHeight;
-        }
-
-        protected int InitialSpeed { get; set; }
+        #region Particle Data
 
         protected List<FloatParticle> Particles { get; private set; }
 
+        #endregion
+
+        #region Particle Spawner Data
+        protected ParticleSpawner<FloatParticle> Spawner { get; set; }
+
         protected int SpawnSpeed { get; set; }
+
+        protected int SpawnRate { get; set; }
+
+        #endregion
+
+        public ParticleModule(ParticleModuleSettings settings)
+            : base(settings)
+        {
+            this.Spawner = new ParticleSpawner<FloatParticle>(FloatParticle.Prototype());
+
+            this.SpawnRate  = 1;
+            this.SpawnSpeed = 1;
+
+            this.Particles = new List<FloatParticle>();
+        }
 
         public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
         {
@@ -34,7 +45,7 @@ namespace MetaMind.Engine.Guis.Modules
                 if (i == this.Particles.Count / 2)
                 {
                     // half additive and half solid
-                    var spriteBatch = gameGraphics.Screens.SpriteBatch;
+                    var spriteBatch = gameGraphics.Screen.SpriteBatch;
 
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.Additive);
@@ -67,9 +78,10 @@ namespace MetaMind.Engine.Guis.Modules
 
             if (this.Particles.Count < this.Settings.ParticleNum)
             {
-                for (var i = 0; i < this.SpawnSpeed; ++i)
+                for (var i = 0; i < this.SpawnRate; ++i)
                 {
-                    this.Particles.Add(FloatParticle.RandomParticle(this.InitialSpeed));
+                    // Temporary solution for FloatParticle implementation
+                    this.Particles.Add((FloatParticle)this.Spawner.Spawn());
                 }
             }
         }

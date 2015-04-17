@@ -4,6 +4,6 @@ namespace MetaMind.Engine
 
     public interface IGameAudio
     {
-        AudioManager Audio { get; }
+        IAudio Audio { get; }
     }
 }

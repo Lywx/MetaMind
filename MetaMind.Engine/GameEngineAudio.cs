@@ -17,11 +17,11 @@ namespace MetaMind.Engine
             this.AccessType = GameEngineAccessType.Sound;
         }
 
-        public AudioManager Audio
+        public IAudio Audio
         {
             get
             {
-                return GameEngine.Audio;
+                return GameEngine.AudioManager;
             }
         }
     }

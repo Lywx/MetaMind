@@ -143,7 +143,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             var splitStart = new Vector2(gameGraphics.Settings.Width / 2f - 300, 150 + line * Settings.LineHeight + Settings.LineHeight / 2);
             var splitEnd   = new Vector2(gameGraphics.Settings.Width / 2f + 300, 150 + line * Settings.LineHeight + Settings.LineHeight / 2);
 
-            var spriteBatch = gameGraphics.Screens.SpriteBatch;
+            var spriteBatch = gameGraphics.Screen.SpriteBatch;
             spriteBatch.DrawLine(splitStart, splitEnd, color, this.Settings.EntitySize);
         }
 

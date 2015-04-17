@@ -1,8 +1,13 @@
 namespace MetaMind.Engine.Guis.Particles
 {
+    using System;
+
+    using MetaMind.Engine.Components.Graphics;
+    using MetaMind.Engine.Settings.Loaders;
+
     using Microsoft.Xna.Framework;
 
-    public class ShapelessParticle : GameVisualEntity, IShapelessParticle
+    public class ShapelessParticle : GameVisualEntity, IShapelessParticle, IConfigurationParameterLoader<GraphicsSettings>  
     {
         #region Particle Movements
 
@@ -22,9 +27,44 @@ namespace MetaMind.Engine.Guis.Particles
 
         #endregion Particle Movements
 
+        #region Service
+
+        private static bool isFlyweightServiceLoaded;
+
+        protected static Random Random { get; private set; }
+
+        #endregion
+
+        #region Parameters
+
+        public void ParameterLoad(GraphicsSettings parameter)
+        {
+            ScreenWidth  = parameter.Width;
+            ScreenHeight = parameter.Height;
+        }
+
+        protected static int ScreenHeight { get; set; }
+
+        protected static int ScreenWidth { get; set; }
+
+        #endregion
+
         #region Constructors
 
+        public ShapelessParticle(IGameNumerical gameNumerical, IGameGraphics gameGraphics)
+        {
+            if (!isFlyweightServiceLoaded)
+            {
+                // Service
+                Random = gameNumerical.Random;
+
+                // Parameters
+                this.ParameterLoad(gameGraphics.Settings);
+            }
+        }
+
         public ShapelessParticle(Vector2 position, Vector2 a, Vector2 v, float angle, float angluarA, float angluarV, float life)
+            : this(GameEngine.Service.GameNumerical, GameEngine.Service.GameGraphics)
         {
             this.Position     = position;
             this.Acceleration = a;
@@ -44,7 +84,7 @@ namespace MetaMind.Engine.Guis.Particles
         public override void Update(GameTime gameTime)
         {
             this.AngularVelocity += (float)gameTime.ElapsedGameTime.TotalSeconds * this.AngularAcceleration;
-            this.Angle += (float)gameTime.ElapsedGameTime.TotalSeconds * this.AngularVelocity;
+            this.Angle           += (float)gameTime.ElapsedGameTime.TotalSeconds * this.AngularVelocity;
 
             this.Velocity += (float)gameTime.ElapsedGameTime.TotalSeconds * this.Acceleration;
             this.Position += (float)gameTime.ElapsedGameTime.TotalSeconds * this.Velocity;

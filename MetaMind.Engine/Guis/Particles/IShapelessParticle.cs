@@ -1,10 +1,8 @@
 namespace MetaMind.Engine.Guis.Particles
 {
-    using System;
-
     using Microsoft.Xna.Framework;
 
-    public interface IShapelessParticle : IUpdateable, ICloneable
+    public interface IShapelessParticle : IUpdateable
     {
         float Angle { get; set; }
 
@@ -19,7 +17,7 @@ namespace MetaMind.Engine.Guis.Particles
         Vector2 Velocity { get; set; }
 
         /// <summary>
-        /// Second of particle lifespan.
+        /// Gets second of particle lifespan.
         /// </summary>
         float Life { get; set; }
     }

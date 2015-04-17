@@ -21,7 +21,7 @@ namespace MetaMind.Engine.Components
 
         private static MessageManager Singleton { get; set; }
 
-        public static MessageManager GetInstance(GameEngine gameEngine, MessageSettings settings)
+        public static MessageManager GetComponent(GameEngine gameEngine, MessageSettings settings)
         {
             return Singleton ?? (Singleton = new MessageManager(gameEngine, settings));
         }

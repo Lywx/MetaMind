@@ -46,7 +46,6 @@ namespace MetaMind.Engine.Components.Inputs
 
         // Synchronization
         ForceAwake,
-        ForceFlip,
         ForceReset,
         ForceReverse,
 

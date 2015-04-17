@@ -32,7 +32,7 @@
 
         public override void Draw(IGameGraphics gameGraphics, GameTime gameTime)
         {
-            var spriteBatch = gameGraphics.Screens.SpriteBatch;
+            var spriteBatch = gameGraphics.Screen.SpriteBatch;
 
             spriteBatch.Begin();
 

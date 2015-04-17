@@ -50,7 +50,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             if (this.ViewControl.RowNum > this.ViewSettings.RowNumDisplay)
             {
                 Primitives2D.FillRectangle(
-                    gameGraphics.Screens.SpriteBatch,
+                    gameGraphics.Screen.SpriteBatch,
                     this.ScrollBarRectangle,
                     ExtColor.MakeTransparent(this.settings.Color, (byte)this.alpha));
             }

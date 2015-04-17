@@ -47,11 +47,11 @@ namespace MetaMind.Engine.Components
 
         #region Singleton
 
-        public static EventManager GetInstance(GameEngine gameEngine)
+        public static EventManager GetComponent(GameEngine gameEngine, int updateOrder)
         {
             if (Singleton == null)
             {
-                Singleton = new EventManager(gameEngine);
+                Singleton = new EventManager(gameEngine, updateOrder);
             }
 
             if (gameEngine != null)
@@ -68,9 +68,11 @@ namespace MetaMind.Engine.Components
 
         #region Constructors
 
-        private EventManager(GameEngine gameEngine)
+        private EventManager(GameEngine gameEngine, int updateOrder)
             : base(gameEngine)
         {
+            this.UpdateOrder = updateOrder;
+
             this.knownEvents  = new List<int>();
             this.queuedEvents = new List<IEvent>();
             this.activeEvents = new List<IEvent>();

@@ -10,13 +10,13 @@ namespace MetaMind.Engine.Components.Inputs
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
-    public class MouseInputState 
+    public class MouseInputState : IMouseInputState
     {
         #region Singleton
 
         private static MouseInputState Singleton { get; set; }
 
-        public static MouseInputState GetInstance()
+        public static MouseInputState GetState()
         {
             return Singleton ?? (Singleton = new MouseInputState());
         }
@@ -135,7 +135,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         #region Constructors
 
-        private MouseInputState()
+        internal MouseInputState()
         {
         }
 
@@ -143,7 +143,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         #region Update
 
-        public void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public void UpdateInput(GameTime gameTime)
         {
             this.previousState = this.currentState;
             this.currentState  = Mouse.GetState();

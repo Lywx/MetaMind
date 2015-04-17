@@ -17,7 +17,7 @@ namespace MetaMind.Engine.Components
 
         private static GameManager Singleton { get; set; }
 
-        public static GameManager GetInstance(GameEngine gameEngine)
+        public static GameManager GetComponent(GameEngine gameEngine)
         {
             return Singleton ?? (Singleton = new GameManager(gameEngine));
         }
