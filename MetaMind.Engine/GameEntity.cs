@@ -105,7 +105,7 @@ namespace MetaMind.Engine
                 this.GameInterop = new GameEngineInterop(gameInterop);
             }
 
-            this.Listeners.ForEach(l => gameInterop.Events.AddListener(l));
+            this.Listeners.ForEach(l => gameInterop.Event.AddListener(l));
         }
 
         public virtual void UnloadContent(IGameFile gameFile)
@@ -119,7 +119,7 @@ namespace MetaMind.Engine
         public virtual void UnloadInterop(IGameInterop gameInterop)
         {
             // TODO: UnloadInterop How to design
-            this.Listeners.ForEach(l => gameInterop.Events.RemoveListener(l));
+            this.Listeners.ForEach(l => gameInterop.Event.RemoveListener(l));
             this.Listeners.Clear();
         }
 

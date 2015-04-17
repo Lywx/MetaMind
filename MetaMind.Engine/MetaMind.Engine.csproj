@@ -135,7 +135,10 @@
     <Compile Include="Guis\Widgets\Items\IViewItem.cs" />
     <Compile Include="Guis\Widgets\Items\IViewItemCharPostProcessor.cs" />
     <Compile Include="Guis\Widgets\Views\ContinuousViewSettings.cs" />
+    <Compile Include="Guis\Widgets\Views\IPointListControl.cs" />
+    <Compile Include="Guis\Widgets\Views\IPointViewSwapControl.cs" />
     <Compile Include="Guis\Widgets\Views\IViewVisualComponent.cs" />
+    <Compile Include="Guis\Widgets\Views\ViewBorder.cs" />
     <Compile Include="IDrawable.cs" />
     <Compile Include="IGame.cs" />
     <Compile Include="IGameEntity.cs" />

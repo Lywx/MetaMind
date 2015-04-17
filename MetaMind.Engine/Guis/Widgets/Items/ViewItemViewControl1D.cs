@@ -42,7 +42,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
             this.Item.Enable(ItemState.Item_Exchanging);
 
-            gameInterop.Processes.AttachProcess(new ViewItemTransitProcess(draggingItem, targetView));
+            gameInterop.Process.AttachProcess(new ViewItemTransitProcess(draggingItem, targetView));
         }
 
         public virtual void SwapIt(IGameInterop gameInterop, IViewItem draggingItem)
@@ -59,7 +59,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
             this.ViewControl.Swap.Initialize(originCenter, targetCenter);
 
-            gameInterop.Processes.AttachProcess(new ViewItemSwapProcess(draggingItem, this.Item));
+            gameInterop.Process.AttachProcess(new ViewItemSwapProcess(draggingItem, this.Item));
         }
 
         public override void Update(GameTime gameTime)
@@ -96,7 +96,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         {
             if (this.ViewControl.Selection.IsSelected(this.ItemControl.Id))
             {
-                // unify mouse and keyboard selection
+                // Unify mouse and keyboard selection
                 if (!this.Item.IsEnabled(ItemState.Item_Selected))
                 {
                     this.ItemControl.CommonSelectsIt();
@@ -106,7 +106,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             }
             else
             {
-                // unify mouse and keyboard selection
+                // Unify mouse and keyboard selection
                 if (this.Item.IsEnabled(ItemState.Item_Selected))
                 {
                     this.ItemControl.CommonUnselectsIt();

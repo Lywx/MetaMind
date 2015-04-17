@@ -51,14 +51,10 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
                 var totalAwakeSpan = this.SleepStartTime - this.SleepEndTime;
                 this.HistoricalAwakeSpan += totalAwakeSpan;
 
-                MessageManager.PopMessages("Awake for " + totalAwakeSpan.ToString("hh':'mm':'ss''"));
+                GameInterop..PopMessages("Awake for " + totalAwakeSpan.ToString("hh':'mm':'ss''"));
             }
 
-            // add to event queue
-            var sleepStartedEvent = new Event(
-                (int)SessionEventType.SleepStarted, 
-                new ConsciousnessSleepStartedEventArgs(this));
-            gameInterop.Event.TriggerEvent(sleepStartedEvent);
+            GameInterop.Event.TriggerEvent(new Event((int)SessionEventType.SleepStarted, new ConsciousnessSleepStartedEventArgs(this)));
 
             return new ConsciousnessSleepy(this);
         }

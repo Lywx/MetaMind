@@ -9,8 +9,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 {
     using System;
 
-    using MetaMind.Engine.Extensions;
-
     using Microsoft.Xna.Framework;
 
     using Primtives2D;

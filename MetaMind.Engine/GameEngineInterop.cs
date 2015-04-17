@@ -25,7 +25,7 @@ namespace MetaMind.Engine
         {
         }
 
-        public IEventManager Events
+        public IEventManager Event
         {
             get
             {
@@ -49,7 +49,7 @@ namespace MetaMind.Engine
             }
         }
 
-        public IProcessManager Processes
+        public IProcessManager Process
         {
             get
             {
@@ -57,7 +57,7 @@ namespace MetaMind.Engine
             }
         }
 
-        public IScreenManager Screens
+        public IScreenManager Screen
         {
             get
             {

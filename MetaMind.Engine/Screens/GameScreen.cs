@@ -293,7 +293,7 @@ namespace MetaMind.Engine.Screens
             // If the screen has a zero transition time, remove it immediately.
             if (this.TransitionOffTime == TimeSpan.Zero)
             {
-                var screen = this.GameInterop.Screens;
+                var screen = this.GameInterop.Screen;
                 screen.RemoveScreen(this);
             }
         }

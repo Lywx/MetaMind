@@ -11,6 +11,7 @@ namespace MetaMind.Engine.Components
     using System.Collections.Generic;
     using System.Globalization;
 
+    using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Components.Messages;
 
     using Microsoft.Xna.Framework;
@@ -36,21 +37,32 @@ namespace MetaMind.Engine.Components
 
         #endregion
 
-        #region Engine Data
+        #region Service
 
-        private IGameGraphics gameGraphics;
+        private static IFontDrawer fontDrawer;
+
+        private static bool isFlyweightServiceLoaded;
 
         #endregion
 
         #region Constructors
 
         private MessageManager(GameEngine gameEngine, MessageSettings settings)
+            : this(gameEngine, settings, GameEngine.Service.GameGraphics.FontDrawer)
+        {
+        }
+
+        private MessageManager(GameEngine gameEngine, MessageSettings settings, IFontDrawer fontDrawer)
             : base(gameEngine)
         {
-            this.gameGraphics = new GameEngineGraphics(gameEngine);
+            // Service
+            if (!isFlyweightServiceLoaded)
+            {
+                MessageManager.fontDrawer = fontDrawer;
+            }
 
-            this.Settings = settings;
             this.messages = new List<FlashMessage>();
+            this.Settings = settings;
         }
 
         #endregion Constructors
@@ -64,7 +76,7 @@ namespace MetaMind.Engine.Components
                 return;
             }
 
-            for (int i = 0; i < this.messages.Count; i++)
+            for (var i = 0; i < this.messages.Count; i++)
             {
                 var message = this.messages[i];
 
@@ -82,12 +94,12 @@ namespace MetaMind.Engine.Components
                     message.FontColor.B - 100 + 15 * i, 
                     message.FontColor.A - 100 + 50 * i);
 
-                this.gameGraphics.FontDrawer.DrawString(
-                    MessageSettings.MessageFont, 
+                fontDrawer.DrawString(
+                    Settings.MessageFont, 
                     message.DrawnMessage, 
                     messagePosition, 
                     messageColor, 
-                    MessageSettings.MessageSize);
+                    Settings.MessageSize);
 
                 if (message.CurrentIndex == message.CurrentMessage.Length - 1)
                 {
@@ -109,6 +121,7 @@ namespace MetaMind.Engine.Components
             for (var i = 0; i < this.messages.Count; i++)
             {
                 var message = this.messages[i];
+
                 message.DisplayTime -= gameTime.ElapsedGameTime;
                 if (message.DisplayTime <= TimeSpan.Zero)
                 {
@@ -125,29 +138,31 @@ namespace MetaMind.Engine.Components
 
         #region Operations
 
-        public void PopMessages(string message, TimeSpan lastingPeriod, Vector2 postion, Color color)
+        public void PopMessages(string message, TimeSpan life, Vector2 postion, Color color)
         {
-            this.messages.Add(new FlashMessage(message, lastingPeriod, postion, color));
+            this.messages.Add(new FlashMessage(message, life, postion, color));
         }
 
         public void PopMessages(string message, Vector2 postion, Color color)
         {
-            this.messages.Add(new FlashMessage(message, MessageSettings.MessageLastingPeriod, postion, color));
+            this.messages.Add(new FlashMessage(message, Settings.MessageLife, postion, color));
         }
 
         public void PopMessages(string message, Color color)
         {
-            this.messages.Add(new FlashMessage(message, MessageSettings.MessageLastingPeriod, MessageSettings.MessagePosition, color));
+            this.messages.Add(
+                new FlashMessage(message, 
+                    Settings.MessageLife,
+                    Settings.MessagePosition, color));
         }
 
         public void PopMessages(string message)
         {
             this.messages.Add(
-                new FlashMessage(
-                    message,
-                    MessageSettings.MessageLastingPeriod,
-                    MessageSettings.MessagePosition,
-                    MessageSettings.MessageColor));
+                new FlashMessage(message,
+                    Settings.MessageLife,
+                    Settings.MessagePosition,
+                    Settings.MessageColor));
         }
 
         #endregion Operations

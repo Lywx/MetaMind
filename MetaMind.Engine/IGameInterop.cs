@@ -4,14 +4,14 @@ namespace MetaMind.Engine
 
     public interface IGameInterop
     {
-        IEventManager Events { get; }
+        IEventManager Event { get; }
 
         IGameManager Game { get; }
 
         GameEngine GameEngine { get; }
 
-        IProcessManager Processes { get; }
+        IProcessManager Process { get; }
 
-        IScreenManager Screens { get; }
+        IScreenManager Screen { get; }
     }
 }

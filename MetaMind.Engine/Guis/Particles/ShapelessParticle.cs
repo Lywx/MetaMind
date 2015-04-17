@@ -31,6 +31,8 @@ namespace MetaMind.Engine.Guis.Particles
 
         private static bool isFlyweightServiceLoaded;
 
+        private static bool isFlyweightParameterLoaded;
+
         protected static Random Random { get; private set; }
 
         #endregion
@@ -53,13 +55,20 @@ namespace MetaMind.Engine.Guis.Particles
 
         public ShapelessParticle(IGameNumerical gameNumerical, IGameGraphics gameGraphics)
         {
+            // Service
             if (!isFlyweightServiceLoaded)
             {
-                // Service
                 Random = gameNumerical.Random;
 
-                // Parameters
+                isFlyweightServiceLoaded = true;
+            }
+
+            // Parameters
+            if (!isFlyweightParameterLoaded)
+            {
                 this.ParameterLoad(gameGraphics.Settings);
+
+                isFlyweightParameterLoaded = true;
             }
         }
 

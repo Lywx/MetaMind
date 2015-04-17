@@ -1,7 +1,5 @@
 namespace MetaMind.Engine.Guis.Widgets.Views
 {
-    using System;
-
     using MetaMind.Engine.Settings.Colors;
 
     using Microsoft.Xna.Framework;
@@ -19,16 +17,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public PointListSettings(Point start)
             : base(start)
-        {
-        }
-    }
-
-    public class ViewBorder : ViewVisualComponent
-    {
-        public ViewBorderSettings Settings { private get; set; }
-
-        protected ViewBorder(IView view, ICloneable viewSettings, ICloneable itemSettings)
-            : base(view, viewSettings, itemSettings)
         {
         }
     }

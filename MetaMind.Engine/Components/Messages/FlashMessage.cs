@@ -27,12 +27,12 @@ namespace MetaMind.Engine.Components.Messages
 
         public FlashMessage(string currentMessage, TimeSpan displayTime, Vector2 position, Color fontColor)
         {
-            CurrentMessage = currentMessage;
-            DisplayTime = displayTime;
-            CurrentIndex = 0;
-            Position = position;
-            DrawnMessage = string.Empty;
-            FontColor = fontColor;
+            this.CurrentMessage = currentMessage;
+            this.DisplayTime    = displayTime;
+            this.CurrentIndex   = 0;
+            this.Position       = position;
+            this.DrawnMessage   = string.Empty;
+            this.FontColor      = fontColor;
         }
     }
 }

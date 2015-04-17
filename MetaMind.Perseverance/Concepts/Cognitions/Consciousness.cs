@@ -3,6 +3,8 @@
     using System;
     using System.Runtime.Serialization;
 
+    using MetaMind.Engine;
+
     public interface IConsciousness
     {
         bool AwakeCondition { get; }
@@ -52,14 +54,24 @@
 
         protected bool HasEverSlept
         {
-            get { return SleepEndTime.Ticks != 0; }
+            get
+            {
+                return this.SleepEndTime.Ticks != 0;
+            }
         }
 
-        #endregion Consciousness Control
+        #endregion
 
-        #region Constructors
+        #region Service
+
+        protected static IGameInterop GameInterop { get; private set; }
+
+        #endregion
+
+        #region Constructors and Destructors 
 
         public Consciousness()
+            : this(GameEngine.Service.GameInterop)
         {
             this.SleepEndTime        = DateTime.MinValue;
             this.SleepStartTime      = DateTime.MinValue;
@@ -67,7 +79,18 @@
             this.HistoricalSleepSpan = TimeSpan.Zero;
         }
 
-        #endregion Constructors
+        private Consciousness(IGameInterop gameInterop)
+        {
+            // Service
+            GameInterop = gameInterop;
+        }
+
+        virtual ~Consciousness()
+        {
+        }
+
+        #endregion 
+
 
         #region Update
 

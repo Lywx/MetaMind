@@ -47,6 +47,8 @@ namespace MetaMind.Engine.Guis.Elements
             {
                 InputEvent = inputEvent;
                 InputState = inputState;
+
+                isFlyweightSeviceLoaded = true;
             }
 
             this.states = new bool[(int)FrameState.StateNum];

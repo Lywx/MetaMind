@@ -11,13 +11,15 @@ namespace MetaMind.Engine
 
     public class GameEngineService : IGameService
     {
-        private static IGameNumerical gameNumerical;
-
         private static IGameAudio gameAudio;
 
         private static IGameGraphics gameGraphics;
 
         private static IGameInput gameInput;
+
+        private static IGameInterop gameInterop;
+
+        private static IGameNumerical gameNumerical;
 
         static GameEngineService()
         {
@@ -45,6 +47,14 @@ namespace MetaMind.Engine
             get
             {
                 return gameInput;
+            }
+        }
+
+        public IGameInterop GameInterop
+        {
+            get
+            {
+                return gameInterop;
             }
         }
 
@@ -84,6 +94,16 @@ namespace MetaMind.Engine
             }
 
             GameEngineService.gameInput = gameInput;
+        }
+
+        public void Provide(IGameInterop gameInterop)
+        {
+            if (gameInterop == null)
+            {
+                throw new ArgumentNullException("gameInterop");
+            }
+
+            GameEngineService.gameInterop = gameInterop;
         }
     }
 }

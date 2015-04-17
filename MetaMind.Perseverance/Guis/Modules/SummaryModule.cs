@@ -38,14 +38,14 @@ namespace MetaMind.Perseverance.Guis.Modules
                 this.sleepStoppedEventListener = new SummaryModuleSleepStoppedEventListener();
             }
 
-            gameInterop.Events.AddListener(this.sleepStoppedEventListener);
+            gameInterop.Event.AddListener(this.sleepStoppedEventListener);
         }
 
         public override void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
         {
             if (this.sleepStoppedEventListener != null)
             {
-                gameInterop.Events.RemoveListener(this.sleepStoppedEventListener);
+                gameInterop.Event.RemoveListener(this.sleepStoppedEventListener);
             }
 
             this.sleepStoppedEventListener = null;

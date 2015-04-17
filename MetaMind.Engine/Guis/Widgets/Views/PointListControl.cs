@@ -2,30 +2,10 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 {
     using System;
 
-    using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Regions;
 
     using Microsoft.Xna.Framework;
-
-    public interface IPointListControl : IPointViewControl
-    {
-        PointViewRegion Region { get; }
-
-        bool AcceptInput { get; }
-
-        bool Active { get; }
-
-        void AddItem();
-
-        void MoveLeft();
-
-        void MoveRight();
-
-        void SuperMoveLeft();
-
-        void SuperMoveRight();
-    }
 
     public class PointListControl : PointViewControl1D, IPointListControl
     {
@@ -70,8 +50,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             get
             {
-                return base.AcceptInput && !this.View.Items.Exists(
-                    item => item.ItemControl.ItemTaskControl.TaskTracer != null
+                return base.AcceptInput && !this.View.Items.Exists(item => item.ItemControl.ItemTaskControl.TaskTracer != null
                                 ? item.ItemControl.ItemTaskControl.TaskTracer.View.Control.Locked
                                 : false);
             }
@@ -105,22 +84,19 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             if (this.ViewSettings.Direction == PointViewSettings1D.ScrollDirection.Left)
             {
-                return
-                    ExtRectangle.Rectangle(
+                return ExtRectangle.Rectangle(
                         viewSettings.PointStart.X - viewSettings.PointMargin.X * (viewSettings.ColumnNumDisplay / 2),
                         viewSettings.PointStart.Y,
                         viewSettings.PointMargin.X * viewSettings.ColumnNumDisplay,
                         0);
             }
 
-            return
-                ExtRectangle.Rectangle(
+            return ExtRectangle.Rectangle(
                     viewSettings.PointStart.X + viewSettings.PointMargin.X * (viewSettings.ColumnNumDisplay / 2),
                     viewSettings.PointStart.Y,
                     viewSettings.PointMargin.X * viewSettings.ColumnNumDisplay,
                     0);
         }
-
 
         #endregion
     }

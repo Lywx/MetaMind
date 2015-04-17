@@ -61,7 +61,7 @@ namespace MetaMind.Perseverance.Guis.Modules
                         return true;
                     });
 
-            gameInterop.Events.AddListener(this.gameStartedListener);
+            gameInterop.Event.AddListener(this.gameStartedListener);
         }
 
         public override void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)

@@ -6,6 +6,8 @@ namespace MetaMind.Engine
 
         IGameInput GameInput { get; }
 
+        IGameInterop GameInterop { get; }
+
         IGameNumerical GameNumerical { get; }
 
         IGameGraphics GameGraphics { get; }
@@ -15,5 +17,7 @@ namespace MetaMind.Engine
         void Provide(IGameAudio gameAudio);
 
         void Provide(IGameInput gameInput);
+
+        void Provide(IGameInterop gameInterop);
     }
 }

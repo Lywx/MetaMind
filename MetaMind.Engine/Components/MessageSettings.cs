@@ -15,14 +15,14 @@ namespace MetaMind.Engine.Components
 
     public class MessageSettings
     {
-        public static Font     MessageFont = Font.UiRegular;
+        public Font     MessageFont = Font.UiRegular;
 
-        public static float    MessageSize = 1f;
+        public float    MessageSize = 1f;
 
-        public static Color    MessageColor = Color.White;
+        public Color    MessageColor = Color.White;
 
-        public static Vector2  MessagePosition = new Vector2(5, 5);
+        public Vector2  MessagePosition = new Vector2(5, 5);
 
-        public static TimeSpan MessageLastingPeriod = TimeSpan.FromSeconds(1.5);
+        public TimeSpan MessageLife = TimeSpan.FromSeconds(1.5);
     }
 }

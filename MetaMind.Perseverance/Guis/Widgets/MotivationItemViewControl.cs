@@ -20,7 +20,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
             this.Item.Enable(ItemState.Item_Exchanging);
 
-            gameInterop.Processes.AttachProcess(new MotivationItemTransitProcess(draggingItem, targetView));
+            gameInterop.Process.AttachProcess(new MotivationItemTransitProcess(draggingItem, targetView));
         }
 
         public override void SwapIt(IGameInterop gameInterop, IViewItem draggingItem)
@@ -37,7 +37,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
             this.ViewControl.Swap.Initialize(originCenter, targetCenter);
 
-            gameInterop.Processes.AttachProcess(new MotivationItemSwapProcess(draggingItem, this.Item));
+            gameInterop.Process.AttachProcess(new MotivationItemSwapProcess(draggingItem, this.Item));
         }
     }
 }
