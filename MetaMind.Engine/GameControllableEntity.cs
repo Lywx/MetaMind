@@ -2,6 +2,8 @@ namespace MetaMind.Engine
 {
     using System;
 
+    using MetaMind.Engine.Components.Inputs;
+
     using Microsoft.Xna.Framework;
 
     public class GameControllableEntity : GameVisualEntity, IInputable
@@ -46,6 +48,29 @@ namespace MetaMind.Engine
 
         protected virtual void OnInputOrderChanged(object sender, EventArgs args)
         {
+        }
+
+        #region Engine Service
+
+        private static bool isFlyweightServiceLoaded;
+
+        protected static IGameInput GameInput { get; private set; }
+
+        #endregion
+
+        public GameControllableEntity()
+            : this(GameService.GameInput)
+        {
+        }
+
+        public GameControllableEntity(IGameInput gameInput)
+        {
+            if (!isFlyweightServiceLoaded)
+            {
+                GameInput = gameInput;
+
+                isFlyweightServiceLoaded = true;
+            }
         }
 
         #endregion Events

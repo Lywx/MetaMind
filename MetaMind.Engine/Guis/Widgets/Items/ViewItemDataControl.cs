@@ -34,19 +34,12 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         public override void Dispose()
         {
-            try
+            if (this.CharModifier != null)
             {
-                if (this.CharModifier != null)
-                {
-                    this.CharModifier.Dispose();
-                }
+                this.CharModifier.Dispose();
+            }
 
-                this.CharModifier = null;
-            }
-            finally
-            {
-                base.Dispose();
-            }
+            base.Dispose();
         }
 
         protected IViewItemCharModifier CharModifier { get; private set; }
@@ -112,7 +105,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         private void RefreshEditingExperience(object sender, ViewItemDataEventArgs e)
         {
-            string inputString = FontManager.GetDisaplayableString((Font)this.ItemSettings.NameFont, e.NewValue);
+            var inputString = ((Font)this.ItemSettings.NameFont).DisaplayableString(e.NewValue);
 
             // parse input to experience
             int integer;
@@ -124,7 +117,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         private void RefreshEditingInt(object sender, ViewItemDataEventArgs e)
         {
-            string inputString = FontManager.GetDisaplayableString((Font)this.ItemSettings.NameFont, e.NewValue);
+            var inputString = ((Font)this.ItemSettings.NameFont).DisaplayableString(e.NewValue);
 
             // parse input to int
             int result;
@@ -136,7 +129,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         private void RefreshEditingString(object sender, ViewItemDataEventArgs e)
         {
             // make sure name is exactly the same as the displayed name
-            string inputString = FontManager.GetDisaplayableString((Font)this.ItemSettings.NameFont, e.NewValue);
+            var inputString = ((Font)this.ItemSettings.NameFont).DisaplayableString(e.NewValue);
 
             this.RefreshValue(ItemData, inputString);
         }

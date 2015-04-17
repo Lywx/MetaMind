@@ -1,38 +1,10 @@
 ﻿namespace MetaMind.Engine.Guis.Widgets.Items
 {
-    using System;
     using System.Globalization;
-
-    using MetaMind.Engine.Components.Fonts;
 
     using Microsoft.Xna.Framework;
 
     using Primtives2D;
-
-    public class LabelWidget : GameVisualEntity
-    {
-        public Func<string> Text { get; set; }
-
-        public Func<Vector2> TextPosition { get; set; }
-
-        public Func<Color> TextColor { get; set; }
-
-        public Func<float> TextSide { get; set; }
-
-        public Func<Font> TextFont { get; set; }
-
-        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
-        {
-            var font = gameGraphics.FontDrawer;
-
-            font.DrawStringCenteredHV(
-                this.TextFont(),
-                this.Text(),
-                this.TextPosition(),
-                this.TextColor(),
-                this.TextSide());
-        }
-    }
 
     public class ViewItemGraphics : ViewItemComponent, IItemGraphics
     {
@@ -73,7 +45,7 @@
 
         protected virtual void DrawId(IGameGraphics gameGraphics, byte alpha)
         {
-            gameGraphics.FontDrawer.DrawStringCenteredHV(
+            gameGraphics.TextDrawer.DrawStringCenteredHV(
                 ItemSettings.IdFont,
                 ItemControl.Id.ToString(new CultureInfo("en-US")),
                 this.IdCenter,

@@ -15,7 +15,7 @@
     [DataContract,
      KnownType(typeof(ConsciousnessAwake)),
      KnownType(typeof(ConsciousnessSleepy))]
-    public class Consciousness : IConsciousness
+    public class Consciousness : GameVisualEntity, IConsciousness
     {
         #region Consciousness Data
 
@@ -62,27 +62,14 @@
 
         #endregion
 
-        #region Service
-
-        protected static IGameInterop GameInterop { get; private set; }
-
-        #endregion
-
         #region Constructors and Destructors 
 
         public Consciousness()
-            : this(GameEngine.Service.GameInterop)
         {
             this.SleepEndTime        = DateTime.MinValue;
             this.SleepStartTime      = DateTime.MinValue;
             this.HistoricalAwakeSpan = TimeSpan.Zero;
             this.HistoricalSleepSpan = TimeSpan.Zero;
-        }
-
-        private Consciousness(IGameInterop gameInterop)
-        {
-            // Service
-            GameInterop = gameInterop;
         }
 
         virtual ~Consciousness()
@@ -98,12 +85,12 @@
         {
             if (!this.AwakeCondition && this is ConsciousnessAwake)
             {
-                return ((ConsciousnessAwake)this).StartSleeping();
+                return ((ConsciousnessAwake)this).Sleep();
             }
 
             if (this.AwakeCondition && this is ConsciousnessSleepy)
             {
-                return ((ConsciousnessSleepy)this).StopSleeping();
+                return ((ConsciousnessSleepy)this).Awaken();
             }
 
             return this;

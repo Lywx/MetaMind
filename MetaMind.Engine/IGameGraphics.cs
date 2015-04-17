@@ -6,11 +6,11 @@ namespace MetaMind.Engine
 
     public interface IGameGraphics
     {
-        IFontDrawer FontDrawer { get; }
+        ITextDrawer TextDrawer { get; }
 
         GraphicsManager Graphics { get; }
 
-        MessageManager Message { get; }
+        MessageDrawer MessageDrawer { get; }
 
         IScreenManager Screen { get; }
 

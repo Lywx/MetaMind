@@ -11,24 +11,12 @@ namespace MetaMind.Engine.Components
     using System.Collections.Generic;
     using System.Globalization;
 
-    using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Components.Messages;
 
     using Microsoft.Xna.Framework;
 
-    public class MessageManager : DrawableGameComponent
+    public class MessageDrawer : GameVisualEntity
     {
-        #region Singleton
-
-        private static MessageManager Singleton { get; set; }
-
-        public static MessageManager GetComponent(GameEngine gameEngine, MessageSettings settings)
-        {
-            return Singleton ?? (Singleton = new MessageManager(gameEngine, settings));
-        }
-
-        #endregion Singleton
-
         #region Message Data
 
         private readonly List<FlashMessage> messages;
@@ -37,30 +25,10 @@ namespace MetaMind.Engine.Components
 
         #endregion
 
-        #region Service
-
-        private static IFontDrawer fontDrawer;
-
-        private static bool isFlyweightServiceLoaded;
-
-        #endregion
-
         #region Constructors
 
-        private MessageManager(GameEngine gameEngine, MessageSettings settings)
-            : this(gameEngine, settings, GameEngine.Service.GameGraphics.FontDrawer)
+        public MessageDrawer(MessageSettings settings)
         {
-        }
-
-        private MessageManager(GameEngine gameEngine, MessageSettings settings, IFontDrawer fontDrawer)
-            : base(gameEngine)
-        {
-            // Service
-            if (!isFlyweightServiceLoaded)
-            {
-                MessageManager.fontDrawer = fontDrawer;
-            }
-
             this.messages = new List<FlashMessage>();
             this.Settings = settings;
         }
@@ -69,7 +37,7 @@ namespace MetaMind.Engine.Components
 
         #region Update and Draw
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
         {
             if (this.messages.Count == 0)
             {
@@ -94,7 +62,7 @@ namespace MetaMind.Engine.Components
                     message.FontColor.B - 100 + 15 * i, 
                     message.FontColor.A - 100 + 50 * i);
 
-                fontDrawer.DrawString(
+                gameGraphics.TextDrawer.DrawString(
                     Settings.MessageFont, 
                     message.DrawnMessage, 
                     messagePosition, 

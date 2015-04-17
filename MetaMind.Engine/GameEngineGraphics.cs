@@ -43,19 +43,19 @@ namespace MetaMind.Engine
             }
         }
 
-        public MessageManager Message
+        public MessageDrawer MessageDrawer
         {
             get
             {
-                return GameEngine.Message;
+                return GameEngine.MessageDrawer;
             }
         }
 
-        public IFontDrawer FontDrawer
+        public ITextDrawer TextDrawer
         {
             get
             {
-                return GameEngine.FontDrawer;
+                return GameEngine.TextDrawer;
             }
         }
     }

@@ -119,8 +119,8 @@ namespace MetaMind.Perseverance.Guis.Modules
             var captionPosition = new Vector2(gameGraphics.Settings.Width / 2f - 300, 150 + line * Settings.LineHeight);
             var contentPosition = new Vector2(gameGraphics.Settings.Width / 2f + 260, 150 + line * Settings.LineHeight);
 
-            gameGraphics.FontDrawer.DrawString(this.Settings.EntityFont, caption     , captionPosition, color, this.Settings.EntitySize);
-            gameGraphics.FontDrawer.DrawString(this.Settings.EntityFont, presentation, contentPosition, color, this.Settings.EntitySize);
+            gameGraphics.TextDrawer.DrawString(this.Settings.EntityFont, caption     , captionPosition, color, this.Settings.EntitySize);
+            gameGraphics.TextDrawer.DrawString(this.Settings.EntityFont, presentation, contentPosition, color, this.Settings.EntitySize);
         }
 
         private void DrawSummaryEntry(IGameGraphics gameGraphics, int line, Color color, string caption, object presentedData)
@@ -129,8 +129,8 @@ namespace MetaMind.Perseverance.Guis.Modules
             var contentPosition = new Vector2(gameGraphics.Settings.Width / 2f + 260, 150 + line * Settings.LineHeight);
             var contentString   = string.Format("{0}", presentedData);
 
-            gameGraphics.FontDrawer.DrawString(this.Settings.EntityFont, caption      , captionPosition, color, this.Settings.EntitySize);
-            gameGraphics.FontDrawer.DrawString(this.Settings.EntityFont, contentString, contentPosition, color, this.Settings.EntitySize);
+            gameGraphics.TextDrawer.DrawString(this.Settings.EntityFont, caption      , captionPosition, color, this.Settings.EntitySize);
+            gameGraphics.TextDrawer.DrawString(this.Settings.EntityFont, contentString, contentPosition, color, this.Settings.EntitySize);
         }
 
         private void DrawSummaryResult(IGameGraphics gameGraphics, int line, Color goodColor, Color badColor, string caption, int computation)
@@ -149,7 +149,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         private void DrawSummaryTitle(IGameGraphics gameGraphics, Color color, string title)
         {
-            gameGraphics.FontDrawer.DrawStringCenteredHV(this.Settings.TitleFont, title, this.Settings.TitleCenter, color, this.Settings.TitleSize);
+            gameGraphics.TextDrawer.DrawStringCenteredHV(this.Settings.TitleFont, title, this.Settings.TitleCenter, color, this.Settings.TitleSize);
         }
 
         #endregion 

@@ -29,7 +29,7 @@ namespace MetaMind.Acutance.Screens
 
             spriteBatch.Begin();
 
-            gameGraphics.Message.Draw(gameTime);
+            gameGraphics.MessageDrawer.Draw(gameTime);
 
             this.multiplexer.Draw(gameGraphics, gameTime, this.TransitionAlpha);
 
@@ -45,7 +45,7 @@ namespace MetaMind.Acutance.Screens
         {
             if (this.IsActive && !isCoveredByOtherScreen)
             {
-                gameGraphics.Message.Update(gameTime);
+                gameGraphics.MessageDrawer.Update(gameTime);
 
             }
 

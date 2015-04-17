@@ -3,7 +3,6 @@ namespace MetaMind.Perseverance.Guis.Widgets
     using System;
 
     using MetaMind.Engine;
-    using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Items;
 
     using Microsoft.Xna.Framework;
@@ -105,7 +104,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         private void DrawExperience(IGameGraphics gameGraphics, byte alpha)
         {
-            gameGraphics.FontDrawer.DrawStringCenteredHV(
+            gameGraphics.TextDrawer.DrawStringCenteredHV(
                 this.ItemSettings.IdFont,
                 string.Format(
                     "{0} : {1} : {2}",
@@ -147,7 +146,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
         {
             if (this.Item.IsEnabled(ItemState.Item_Pending))
             {
-                gameGraphics.FontDrawer.DrawString(
+                gameGraphics.TextDrawer.DrawString(
                     ItemSettings.HelpFont,
                     HelpInformation,
                     this.HelpLocation,
@@ -156,12 +155,12 @@ namespace MetaMind.Perseverance.Guis.Widgets
             }
             else
             {
-                string text = gameGraphics.FontDrawer.CropMonospacedString(
+                string text = gameGraphics.TextDrawer.CropMonospacedString(
                     ItemData.Name,
                     ItemSettings.NameSize,
                     ItemSettings.NameFrameSize.X - ItemSettings.NameXLMargin * 2);
 
-                gameGraphics.FontDrawer.DrawMonospacedString(
+                gameGraphics.TextDrawer.DrawMonospacedString(
                     this.ItemSettings.NameFont,
                     text,
                     this.NameLocation,
@@ -180,7 +179,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
                 gameGraphics.Screen.SpriteBatch,
                 progressBar,
                 ExtColor.MakeTransparent(this.ItemSettings.ProgressBarColor, alpha));
-            gameGraphics.FontDrawer.DrawStringCenteredHV(
+            gameGraphics.TextDrawer.DrawStringCenteredHV(
                 this.ItemSettings.ProgressFont,
                 string.Format("{0} / {1} = {2}", this.ItemData.Done, this.ItemData.Load, progressRatio.ToString("F1")),
                 this.ProgressLocation,

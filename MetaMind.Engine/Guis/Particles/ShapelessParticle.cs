@@ -73,7 +73,7 @@ namespace MetaMind.Engine.Guis.Particles
         }
 
         public ShapelessParticle(Vector2 position, Vector2 a, Vector2 v, float angle, float angluarA, float angluarV, float life)
-            : this(GameEngine.Service.GameNumerical, GameEngine.Service.GameGraphics)
+            : this(GameNumerical, GameGraphics)
         {
             this.Position     = position;
             this.Acceleration = a;

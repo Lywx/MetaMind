@@ -17,8 +17,9 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
         public ConsciousnessSleepy(ConsciousnessAwake state)
         {
-            SleepEndTime = state.SleepEndTime;
+            SleepEndTime   = state.SleepEndTime;
             SleepStartTime = state.SleepStartTime;
+
             HistoricalAwakeSpan = state.HistoricalAwakeSpan;
             HistoricalSleepSpan = state.HistoricalSleepSpan;
         }
@@ -27,19 +28,16 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
         #region Conversions
 
-        public ConsciousnessAwake StopSleeping()
+        public ConsciousnessAwake Awaken()
         {
             SleepEndTime = DateTime.Now;
-            SleepSpan = SleepEndTime - SleepStartTime;
+            SleepSpan    = SleepEndTime - SleepStartTime;
+
             HistoricalSleepSpan += SleepSpan;
 
-            // add to event queue
-            var sleepStoppedEvent = new Event(
-                (int)SessionEventType.SleepStopped,
-                new ConsciousnessSleepStoppedEventArgs(this));
-            gameInterop.Event.TriggerEvent(sleepStoppedEvent);
+            GameInterop.Event.TriggerEvent(new Event((int)SessionEventType.SleepStopped, new ConsciousnessSleepStoppedEventArgs(this)));
 
-            MessageManager.PopMessages("Slept for " + SleepSpan.ToString("hh':'mm':'ss''"));
+            GameGraphics.MessageDrawer.PopMessages("Slept for " + SleepSpan.ToString("hh':'mm':'ss''"));
 
             return new ConsciousnessAwake(this);
         }

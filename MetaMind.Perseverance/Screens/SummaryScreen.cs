@@ -36,7 +36,7 @@
 
             spriteBatch.Begin();
 
-            gameGraphics.Message.Draw(gameTime);
+            gameGraphics.MessageDrawer.Draw(gameTime);
 
             this.summary.Draw(gameGraphics, gameTime, TransitionAlpha);
 
@@ -56,7 +56,7 @@
         {
             if (this.IsActive)
             {
-                gameGraphics.Message.Update(gameTime);
+                gameGraphics.MessageDrawer.Update(gameTime);
             }
         }
 

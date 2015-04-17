@@ -42,7 +42,7 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
             this.SleepEndTime = DateTime.Now;
         }
 
-        public ConsciousnessSleepy StartSleeping()
+        public ConsciousnessSleepy Sleep()
         {
             this.AwakeNow();
 
@@ -51,7 +51,7 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
                 var totalAwakeSpan = this.SleepStartTime - this.SleepEndTime;
                 this.HistoricalAwakeSpan += totalAwakeSpan;
 
-                GameInterop..PopMessages("Awake for " + totalAwakeSpan.ToString("hh':'mm':'ss''"));
+                GameGraphics.MessageDrawer.PopMessages("Awake for " + totalAwakeSpan.ToString("hh':'mm':'ss''"));
             }
 
             GameInterop.Event.TriggerEvent(new Event((int)SessionEventType.SleepStarted, new ConsciousnessSleepStartedEventArgs(this)));

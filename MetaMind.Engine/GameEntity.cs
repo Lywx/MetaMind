@@ -20,19 +20,33 @@ namespace MetaMind.Engine
 
         #endregion Event Data
 
-        #region Engine Data
+        #region Engine Service
 
-        protected IGameInterop GameInterop { get; set; }
+        protected static IGameAudio GameAudio { get; private set; }
 
-        #endregion Engine Data
+        protected static IGameInterop GameInterop { get; private set; }
+
+        protected static IGameNumerical GameNumerical { get; private set; }
+
+        protected static IGameService GameService { get; private set; }
+
+        #endregion 
 
         #region Constructors
 
         protected GameEntity()
+            : this(GameEngine.Service)
         {
             this.Listeners = new List<IListener>();
         }
 
+        private GameEntity(IGameService gameService)
+        {
+            GameService   = gameService;
+            GameAudio     = gameService.GameAudio;
+            GameInterop   = gameService.GameInterop;
+            GameNumerical = gameService.GameNumerical;
+        }
         #endregion Constructors
 
         #region Destructors
@@ -100,11 +114,6 @@ namespace MetaMind.Engine
 
         public virtual void LoadInterop(IGameInterop gameInterop)
         {
-            if (this.GameInterop == null)
-            {
-                this.GameInterop = new GameEngineInterop(gameInterop);
-            }
-
             this.Listeners.ForEach(l => gameInterop.Event.AddListener(l));
         }
 
@@ -169,12 +178,7 @@ namespace MetaMind.Engine
 
         public virtual void Dispose()
         {
-            if (this.GameInterop != null)
-            {
-                this.UnloadInterop(this.GameInterop);
-            }
-
-            this.Listeners = null;
+            this.UnloadInterop(GameInterop);
         }
 
         #endregion IDisposable

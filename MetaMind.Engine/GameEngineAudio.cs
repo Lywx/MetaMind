@@ -17,7 +17,7 @@ namespace MetaMind.Engine
             this.AccessType = GameEngineAccessType.Sound;
         }
 
-        public IAudio Audio
+        public IAudioManager Audio
         {
             get
             {

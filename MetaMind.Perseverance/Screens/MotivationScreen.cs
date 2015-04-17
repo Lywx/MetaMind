@@ -39,7 +39,7 @@
 
             gameGraphics.Screen.SpriteBatch.Begin();
 
-            gameGraphics.Message.Draw(gameTime);
+            gameGraphics.MessageDrawer.Draw(gameTime);
 
             this.motivation     .Draw(gameGraphics, gameTime, TransitionAlpha);
             this.synchronization.Draw(gameGraphics, gameTime, TransitionAlpha);

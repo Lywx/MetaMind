@@ -40,13 +40,13 @@
 
         public FontManager FontManager { get; private set; }
 
-        public FontDrawer FontDrawer { get; set; }
+        public TextDrawer TextDrawer { get; set; }
 
         public GraphicsManager GraphicsManager { get; private set; }
 
         public GraphicsSettings GraphicsSettings { get; set; }
 
-        public MessageManager Message { get; private set; }
+        public MessageDrawer MessageDrawer { get; private set; }
 
         public ScreenManager Screen { get; private set; }
 
@@ -111,10 +111,10 @@
             // Folder
             this.Folder = FolderManager.GetComponent();
 
-            // Processes
+            // Process
             this.Process = ProcessManager.GetComponent(this, 4);
 
-            // Events
+            // Event
             this.Event = EventManager.GetComponent(this, 3);
 
             // Input
@@ -124,14 +124,16 @@
             // Font
             this.FontManager = FontManager.GetComponent(this);
 
-            // Message
-            this.Message = MessageManager.GetComponent(this, new MessageSettings());
-
             // Service
             Service = new GameEngineService();
             Service.Provide(new GameEngineAudio(this));
             Service.Provide(new GameEngineGraphics(this));
             Service.Provide(new GameEngineInput(this));
+
+            // Extra components as GameEntity
+
+            this.TextDrawer    = new TextDrawer();
+            this.MessageDrawer = new MessageDrawer(new MessageSettings());
 
             base.Initialize();
         }

@@ -10,7 +10,7 @@ namespace MetaMind.Engine.Components.Events
     using System;
     using System.Collections.Generic;
 
-    public class Listener : IListener
+    public class Listener : GameEntity, IListener
     {
         private readonly List<int> registeredEvents;
         private readonly Func<IEvent, bool> handleEvents;

@@ -61,8 +61,8 @@
             // Clean handlers
             InputEvent.MouseMove -= this.DetectMouseOver;
             InputEvent.MouseDown -= this.DetectMouseLeftPressed;
-            InputEvent.MouseDown -= this.DetectMouseRightPressed;
             InputEvent.MouseUp   -= this.DetectMouseLeftRelease;
+            InputEvent.MouseDown -= this.DetectMouseRightPressed;
             InputEvent.MouseUp   -= this.DetectMouseRightRelease;
 
             base.Dispose();

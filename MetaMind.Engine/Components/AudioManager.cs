@@ -20,7 +20,7 @@ namespace MetaMind.Engine.Components
     /// Similar to a class found in the Net Rumble starter kit on the
     /// XNA Creators Club Online website (http://creators.xna.com).
     /// </remarks>
-    public class AudioManager : GameComponent, IAudio
+    public class AudioManager : GameComponent, IAudioManager
     {
         #region Singleton
 

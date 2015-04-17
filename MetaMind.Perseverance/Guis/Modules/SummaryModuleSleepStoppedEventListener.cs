@@ -9,7 +9,6 @@ namespace MetaMind.Perseverance.Guis.Modules
 {
     using System.Linq;
 
-    using MetaMind.Engine;
     using MetaMind.Engine.Components.Events;
     using MetaMind.Perseverance.Screens;
     using MetaMind.Perseverance.Sessions;
@@ -23,7 +22,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         public override bool HandleEvent(IEvent @event)
         {
-            var screenManager = GameEngine.Screen;
+            var screenManager = GameInterop.Screen;
 
             var summary = screenManager.Screens.First(screen => screen is SummaryScreen);
             if (summary != null)

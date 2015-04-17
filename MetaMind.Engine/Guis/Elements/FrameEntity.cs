@@ -9,24 +9,11 @@ namespace MetaMind.Engine.Guis.Elements
 {
     using MetaMind.Engine.Components.Inputs;
 
-    public interface IFrameBase : IUpdateable, IDrawable, IInputable
-    {
-        bool[] States { get; }
-
-        void Disable(FrameState state);
-
-        void Enable(FrameState state);
-
-        bool IsEnabled(FrameState state);
-    }
-
-    public abstract class FrameEntity : GameControllableEntity, IFrameBase
+    public abstract class FrameEntity : GameControllableEntity, IFrameEntity
     {
         #region Service
 
         private static bool isFlyweightSeviceLoaded;
-
-        private static readonly IInputEvent inputEvent;
 
         protected static IInputEvent InputEvent { get; private set; }
 
@@ -37,7 +24,7 @@ namespace MetaMind.Engine.Guis.Elements
         #region Constructors and Destructors
 
         protected FrameEntity()
-            : this(GameEngine.Service.GameInput.Event, GameEngine.Service.GameInput.State)
+            : this(GameInput.Event, GameInput.State)
         {
         }
 

@@ -10,6 +10,7 @@ namespace MetaMind.Engine
     using System;
 
     using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
 
     public class GameVisualEntity : GameEntity, IGameVisualEntity
     {
@@ -56,6 +57,32 @@ namespace MetaMind.Engine
         }
 
         #endregion
+
+        #region Service
+
+        private static bool isFlyweightServiceLoaded;
+
+        protected static IGameGraphics GameGraphics { get; private set; }
+
+        protected static SpriteBatch SpriteBatch { get; private set; }
+
+        #endregion
+
+        public GameVisualEntity()
+            : this(GameService.GameGraphics)
+        {
+        }
+
+        private GameVisualEntity(IGameGraphics gameGraphics)
+        {
+            if (!isFlyweightServiceLoaded)
+            {
+                GameGraphics = gameGraphics;
+                SpriteBatch  = gameGraphics.Screen.SpriteBatch;
+
+                isFlyweightServiceLoaded = true;
+            }
+        }
 
         #region Draw
 

@@ -8,12 +8,10 @@
 namespace MetaMind.Engine.Guis.Widgets.Items
 {
     using System;
-    using System.Diagnostics;
     using System.Globalization;
     using System.Linq;
     using System.Text;
 
-    using MetaMind.Engine.Components;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Events;
 
@@ -59,11 +57,31 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         #endregion Input Data
 
+        #region Service
+
+        private static bool isFlyweightServiceLoaded;
+
+        protected static IInputEvent InputEvent { get; private set; }
+
+        #endregion
+
         #region Constructors
 
         public ViewItemCharModifier(IViewItem item)
+            : this(item, GameInput.Event)
+        {
+        }
+
+        public ViewItemCharModifier(IViewItem item, IInputEvent inputEvent)
             : base(item)
         {
+            if (!isFlyweightServiceLoaded)
+            {
+                InputEvent = inputEvent;
+
+                isFlyweightServiceLoaded = true;
+            }
+
             InputEvent.CharEntered += this.DetectCharEntered;
             InputEvent.KeyDown     += this.DetectEnterKeyDown;
         }
@@ -72,7 +90,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         #region Destructors
 
-        ~ViewItemCharModifier()
+        virtual ~ViewItemCharModifier()
         {
             this.Dispose();
         }
@@ -83,20 +101,13 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         public override void Dispose()
         {
-            try
-            {
-                this.ValueModified     = null;
-                this.modificationEnded = null;
+            this.modificationEnded = null;
+            this.ValueModified     = null;
 
-                InputEvent.CharEntered -= this.DetectCharEntered;
-                InputEvent.KeyDown     -= this.DetectEnterKeyDown;
-            }
-            finally
-            {
-                base.Dispose();
-            }
-            
-            Debug.WriteLine("ViewItemCharModifier Destruction");
+            InputEvent.CharEntered -= this.DetectCharEntered;
+            InputEvent.KeyDown     -= this.DetectEnterKeyDown;
+
+            base.Dispose();
         }
 
         #endregion IDisposable
@@ -420,7 +431,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             }
         }
 
-        private bool ComboTriggered(KeyboardInputState keyboard, Keys key)
+        private bool ComboTriggered(IKeyboardInputState keyboard, Keys key)
         {
             return (keyboard.IsKeyPressed(key) && keyboard.CtrlDown) || keyboard.IsKeyTriggered(key);
         }

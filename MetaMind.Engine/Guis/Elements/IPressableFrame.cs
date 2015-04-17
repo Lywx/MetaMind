@@ -4,7 +4,7 @@ namespace MetaMind.Engine.Guis.Elements
 
     using Microsoft.Xna.Framework;
 
-    public interface IPressableFrame : IFrameBase, IPressable, IDisposable
+    public interface IPressableFrame : IFrameEntity, IPressable, IDisposable
     {
         Point Center { get; set; }
 

@@ -1,27 +1,24 @@
 namespace MetaMind.Engine.Components.Fonts
 {
-    using System;
     using System.Collections.Generic;
     using System.Globalization;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    public class FontDrawer : IFontDrawer
+    public class TextDrawer : GameVisualEntity, ITextDrawer
     {
-        private IGameGraphics gameGraphics;
 
-        public FontDrawer(GameEngine gameEngine)
+        #region Constructors
+
+        public TextDrawer()
         {
-            if (gameEngine == null)
-            {
-                throw new ArgumentNullException("gameEngine");
-            }
-
-            this.gameGraphics = new GameEngineGraphics(gameEngine);
+            
         }
 
-        #region IFontDrawer
+        #endregion
+
+        #region ITextDrawer
 
         public void DrawMonospacedString(Font font, string str, Vector2 position, Color color, float scale)
         {
@@ -53,8 +50,16 @@ namespace MetaMind.Engine.Components.Fonts
                 return;
             }
 
-            var spriteBatch = this.gameGraphics.Screen.SpriteBatch;
-            spriteBatch.DrawString(font.GetSprite(), font.DisaplayableString(str), position, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0);
+            SpriteBatch.DrawString(
+                font.GetSprite(),
+                font.DisaplayableString(str),
+                position,
+                color,
+                0f,
+                Vector2.Zero,
+                scale,
+                SpriteEffects.None,
+                0);
         }
 
         public void DrawStringCenteredH(Font font, string str, Vector2 position, Color color, float scale)
