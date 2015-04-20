@@ -6,19 +6,19 @@ namespace MetaMind.Engine.Components.Fonts
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    public class TextDrawer : GameVisualEntity, ITextDrawer
+    public class StringDrawer : GameVisualEntity, IStringDrawer
     {
 
         #region Constructors
 
-        public TextDrawer()
+        public StringDrawer()
         {
             
         }
 
         #endregion
 
-        #region ITextDrawer
+        #region IStringDrawer
 
         public void DrawMonospacedString(Font font, string str, Vector2 position, Color color, float scale)
         {

@@ -51,11 +51,11 @@ namespace MetaMind.Engine
             }
         }
 
-        public ITextDrawer TextDrawer
+        public IStringDrawer StringDrawer
         {
             get
             {
-                return GameEngine.TextDrawer;
+                return GameEngine.StringDrawer;
             }
         }
     }

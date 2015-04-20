@@ -9,19 +9,8 @@
 
     using Microsoft.Xna.Framework;
 
-    public sealed class GameEngine : Microsoft.Xna.Framework.Game
+    public sealed class GameEngine : Microsoft.Xna.Framework.Game, IGameEngine
     {
-        #region Singleton
-
-        public static GameEngine GetEngine()
-        {
-            return Singleton ?? (Singleton = new GameEngine());
-        }
-
-        private static GameEngine Singleton { get; set; }
-
-        #endregion
-
         #region Components
 
         #region Audio
@@ -40,7 +29,7 @@
 
         public FontManager FontManager { get; private set; }
 
-        public TextDrawer TextDrawer { get; set; }
+        public StringDrawer StringDrawer { get; set; }
 
         public GraphicsManager GraphicsManager { get; private set; }
 
@@ -76,7 +65,7 @@
 
         #region Constructors
 
-        private GameEngine()
+        public GameEngine()
         {
             // All necessary components during construction are loaded here.
             // Other components are loaded in initialization.
@@ -131,8 +120,7 @@
             Service.Provide(new GameEngineInput(this));
 
             // Extra components as GameEntity
-
-            this.TextDrawer    = new TextDrawer();
+            this.StringDrawer  = new StringDrawer();
             this.MessageDrawer = new MessageDrawer(new MessageSettings());
 
             base.Initialize();

@@ -104,7 +104,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         private void DrawExperience(IGameGraphics gameGraphics, byte alpha)
         {
-            gameGraphics.TextDrawer.DrawStringCenteredHV(
+            gameGraphics.StringDrawer.DrawStringCenteredHV(
                 this.ItemSettings.IdFont,
                 string.Format(
                     "{0} : {1} : {2}",
@@ -146,7 +146,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
         {
             if (this.Item.IsEnabled(ItemState.Item_Pending))
             {
-                gameGraphics.TextDrawer.DrawString(
+                gameGraphics.StringDrawer.DrawString(
                     ItemSettings.HelpFont,
                     HelpInformation,
                     this.HelpLocation,
@@ -155,12 +155,12 @@ namespace MetaMind.Perseverance.Guis.Widgets
             }
             else
             {
-                string text = gameGraphics.TextDrawer.CropMonospacedString(
+                string text = gameGraphics.StringDrawer.CropMonospacedString(
                     ItemData.Name,
                     ItemSettings.NameSize,
                     ItemSettings.NameFrameSize.X - ItemSettings.NameXLMargin * 2);
 
-                gameGraphics.TextDrawer.DrawMonospacedString(
+                gameGraphics.StringDrawer.DrawMonospacedString(
                     this.ItemSettings.NameFont,
                     text,
                     this.NameLocation,
@@ -179,7 +179,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
                 gameGraphics.Screen.SpriteBatch,
                 progressBar,
                 ExtColor.MakeTransparent(this.ItemSettings.ProgressBarColor, alpha));
-            gameGraphics.TextDrawer.DrawStringCenteredHV(
+            gameGraphics.StringDrawer.DrawStringCenteredHV(
                 this.ItemSettings.ProgressFont,
                 string.Format("{0} / {1} = {2}", this.ItemData.Done, this.ItemData.Load, progressRatio.ToString("F1")),
                 this.ProgressLocation,

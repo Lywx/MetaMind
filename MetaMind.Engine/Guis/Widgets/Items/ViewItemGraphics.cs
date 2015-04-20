@@ -45,7 +45,7 @@
 
         protected virtual void DrawId(IGameGraphics gameGraphics, byte alpha)
         {
-            gameGraphics.TextDrawer.DrawStringCenteredHV(
+            gameGraphics.StringDrawer.DrawStringCenteredHV(
                 ItemSettings.IdFont,
                 ItemControl.Id.ToString(new CultureInfo("en-US")),
                 this.IdCenter,

@@ -1,7 +1,9 @@
-using System;
-
 namespace MetaMind.Engine
 {
+    using System;
+
+    using LightInject;
+
 #if WINDOWS || LINUX
 
     public static class Program
@@ -12,8 +14,13 @@ namespace MetaMind.Engine
         [STAThread]
         private static void Main(string[] args)
         {
-            using (var engine = GameEngine.GetEngine())
+            using (var ioC = new ServiceContainer())
             {
+                ioC.RegisterFrom<GameEngineCompositionRoot>();
+
+                var engine = ioC.GetInstance<IGameEngine>();
+                ioC.RegisterInstance(engine);
+
                 engine.Run();
             }
         }

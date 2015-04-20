@@ -7,10 +7,12 @@
 
 namespace MetaMind.Engine
 {
-    using MetaMind.Engine.Components.Events;
-    using Microsoft.Xna.Framework;
     using System;
     using System.Collections.Generic;
+
+    using MetaMind.Engine.Components.Events;
+
+    using Microsoft.Xna.Framework;
 
     public class GameEntity : IGameEntity
     {
@@ -22,36 +24,59 @@ namespace MetaMind.Engine
 
         #region Engine Service
 
-        protected static IGameAudio GameAudio { get; private set; }
+        protected IGameFile GameFile { get; set; }
 
-        protected static IGameInterop GameInterop { get; private set; }
+        protected IGameAudio GameAudio { get; private set; }
 
-        protected static IGameNumerical GameNumerical { get; private set; }
+        protected IGameInterop GameInterop { get; private set; }
 
-        protected static IGameService GameService { get; private set; }
+        protected IGameNumerical GameNumerical { get; private set; }
+
+        protected IGameService GameService { get; private set; }
 
         #endregion 
 
         #region Constructors
 
         protected GameEntity()
-            : this(GameEngine.Service)
+            : this(GameEngine.Service.GameAudio, null, GameEngine.Service.GameInterop, GameEngine.Service.GameNumerical)
         {
             this.Listeners = new List<IListener>();
         }
 
-        private GameEntity(IGameService gameService)
+        private GameEntity(IGameAudio gameAudio, IGameFile gameFile, IGameInterop gameInterop, IGameNumerical gameNumerical)
         {
-            GameService   = gameService;
-            GameAudio     = gameService.GameAudio;
-            GameInterop   = gameService.GameInterop;
-            GameNumerical = gameService.GameNumerical;
+            if (gameAudio == null)
+            {
+                throw new ArgumentNullException("gameAudio");
+            }
+
+            if (gameFile == null)
+            {
+                throw new ArgumentNullException("gameFile");
+            }
+
+            if (gameInterop == null)
+            {
+                throw new ArgumentNullException("gameInterop");
+            }
+
+            if (gameNumerical == null)
+            {
+                throw new ArgumentNullException("gameNumerical");
+            }
+
+            this.GameAudio     = gameAudio;
+            this.GameFile      = gameFile;
+            this.GameInterop   = gameInterop;
+            this.GameNumerical = gameNumerical;
         }
+
         #endregion Constructors
 
         #region Destructors
 
-        virtual ~GameEntity()
+        ~GameEntity()
         {
             this.Dispose();
         }

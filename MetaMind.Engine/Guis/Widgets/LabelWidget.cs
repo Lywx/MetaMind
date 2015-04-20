@@ -20,7 +20,7 @@
 
         public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
         {
-            var font = gameGraphics.TextDrawer;
+            var font = gameGraphics.StringDrawer;
 
             font.DrawStringCenteredHV(
                 this.TextFont(),

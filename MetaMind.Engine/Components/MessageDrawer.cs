@@ -62,7 +62,7 @@ namespace MetaMind.Engine.Components
                     message.FontColor.B - 100 + 15 * i, 
                     message.FontColor.A - 100 + 50 * i);
 
-                gameGraphics.TextDrawer.DrawString(
+                gameGraphics.StringDrawer.DrawString(
                     Settings.MessageFont, 
                     message.DrawnMessage, 
                     messagePosition, 

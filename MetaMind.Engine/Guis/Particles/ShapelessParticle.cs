@@ -29,11 +29,9 @@ namespace MetaMind.Engine.Guis.Particles
 
         #region Service
 
-        private static bool isFlyweightServiceLoaded;
-
-        private static bool isFlyweightParameterLoaded;
-
         protected static Random Random { get; private set; }
+
+        private static bool isFlyweightServiceLoaded;
 
         #endregion
 
@@ -49,16 +47,18 @@ namespace MetaMind.Engine.Guis.Particles
 
         protected static int ScreenWidth { get; set; }
 
+        private static bool isFlyweightParameterLoaded;
+
         #endregion
 
         #region Constructors
 
-        public ShapelessParticle(IGameNumerical gameNumerical, IGameGraphics gameGraphics)
+        public ShapelessParticle()
         {
             // Service
             if (!isFlyweightServiceLoaded)
             {
-                Random = gameNumerical.Random;
+                Random = this.GameNumerical.Random;
 
                 isFlyweightServiceLoaded = true;
             }
@@ -66,14 +66,14 @@ namespace MetaMind.Engine.Guis.Particles
             // Parameters
             if (!isFlyweightParameterLoaded)
             {
-                this.ParameterLoad(gameGraphics.Settings);
+                this.ParameterLoad(this.GameGraphics.Settings);
 
                 isFlyweightParameterLoaded = true;
             }
         }
 
         public ShapelessParticle(Vector2 position, Vector2 a, Vector2 v, float angle, float angluarA, float angluarV, float life)
-            : this(GameNumerical, GameGraphics)
+            : this()
         {
             this.Position     = position;
             this.Acceleration = a;

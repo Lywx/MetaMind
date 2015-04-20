@@ -59,7 +59,7 @@ namespace MetaMind.Engine
         #endregion
 
         public GameControllableEntity()
-            : this(GameService.GameInput)
+            : this(GameEngine.Service.GameInput)
         {
         }
 

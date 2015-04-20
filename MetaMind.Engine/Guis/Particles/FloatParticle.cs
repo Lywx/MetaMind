@@ -143,7 +143,7 @@ namespace MetaMind.Engine.Guis.Particles
             this.height = 2;
             this.width = 8;
 
-            return 
+            return this;
         }
 
         #endregion IRandomParticle

@@ -6,7 +6,7 @@ namespace MetaMind.Engine
 
     public interface IGameGraphics
     {
-        ITextDrawer TextDrawer { get; }
+        IStringDrawer StringDrawer { get; }
 
         GraphicsManager Graphics { get; }
 

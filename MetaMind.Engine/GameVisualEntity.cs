@@ -62,14 +62,14 @@ namespace MetaMind.Engine
 
         private static bool isFlyweightServiceLoaded;
 
-        protected static IGameGraphics GameGraphics { get; private set; }
+        protected IGameGraphics GameGraphics { get; private set; }
 
-        protected static SpriteBatch SpriteBatch { get; private set; }
+        protected SpriteBatch SpriteBatch { get; private set; }
 
         #endregion
 
         public GameVisualEntity()
-            : this(GameService.GameGraphics)
+            : this(GameEngine.Service.GameGraphics)
         {
         }
 

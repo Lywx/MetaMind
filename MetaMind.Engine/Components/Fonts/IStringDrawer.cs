@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Components.Fonts
 {
     using Microsoft.Xna.Framework;
 
-    public interface ITextDrawer
+    public interface IStringDrawer
     {
         /// <summary>
         /// Draws the left-top monospaced text at particular position.

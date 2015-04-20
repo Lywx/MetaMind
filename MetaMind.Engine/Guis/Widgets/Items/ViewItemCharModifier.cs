@@ -90,7 +90,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         #region Destructors
 
-        virtual ~ViewItemCharModifier()
+        ~ViewItemCharModifier()
         {
             this.Dispose();
         }

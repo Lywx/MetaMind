@@ -75,12 +75,12 @@
     <Compile Include="Components\AudioManager.cs" />
     <Compile Include="Components\Events\IEvent.cs" />
     <Compile Include="Components\Events\IListener.cs" />
-    <Compile Include="Components\Fonts\TextDrawer.cs" />
+    <Compile Include="Components\Fonts\StringDrawer.cs" />
     <Compile Include="Components\Fonts\FontInfo.cs" />
     <Compile Include="Components\Fonts\MonoFont.cs" />
     <Compile Include="Components\IAudioManager.cs" />
     <Compile Include="Components\IEventManager.cs" />
-    <Compile Include="Components\Fonts\ITextDrawer.cs" />
+    <Compile Include="Components\Fonts\IStringDrawer.cs" />
     <Compile Include="Components\Fonts\IFontManager.cs" />
     <Compile Include="Components\IGameManager.cs" />
     <Compile Include="Components\Inputs\InputSync.cs" />
@@ -113,6 +113,8 @@
     <Compile Include="Components\Fonts\StringUtils.cs" />
     <Compile Include="Components\Graphics\GraphicsManager.cs" />
     <Compile Include="GameEngineAccess.cs" />
+    <Compile Include="GameEngineCompositionRoot.cs" />
+    <Compile Include="GameEngineDependency.cs" />
     <Compile Include="GameEngineNumerical.cs" />
     <Compile Include="GameVisualEntity.cs" />
     <Compile Include="GameEngineGraphics.cs" />
@@ -142,6 +144,7 @@
     <Compile Include="Guis\Widgets\Views\ViewBorder.cs" />
     <Compile Include="IDrawable.cs" />
     <Compile Include="IGame.cs" />
+    <Compile Include="IGameEngine.cs" />
     <Compile Include="IGameEntity.cs" />
     <Compile Include="IGameNumerical.cs" />
     <Compile Include="IGameService.cs" />
@@ -294,6 +297,10 @@
     <Compile Include="Settings\Systems\Monitor.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="LightInject, Version=3.0.2.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LightInject.3.0.2.6\lib\net45\LightInject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>

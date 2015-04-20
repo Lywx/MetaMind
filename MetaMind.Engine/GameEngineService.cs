@@ -68,7 +68,7 @@ namespace MetaMind.Engine
 
         public void Provide(IGameGraphics gameGraphics)
         {
-            if (GameEngineService.gameGraphics == null)
+            if (gameGraphics == null)
             {
                 throw new ArgumentNullException("gameGraphics");
             }
@@ -78,7 +78,7 @@ namespace MetaMind.Engine
 
         public void Provide(IGameAudio gameAudio)
         {
-            if (GameEngineService.gameAudio == null)
+            if (gameAudio == null)
             {
                 throw new ArgumentNullException("gameAudio");
             }
