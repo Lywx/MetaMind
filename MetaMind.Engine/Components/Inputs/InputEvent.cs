@@ -17,22 +17,6 @@ namespace MetaMind.Engine.Components.Inputs
 
     public class InputEvent : InputSync, IInputEvent
     {
-        #region Singleton
-
-        public static InputEvent GetComponent(GameEngine gameEngine, int updateOrder)
-        {
-            if (Singleton == null)
-            {
-                Singleton = new InputEvent(gameEngine, updateOrder);
-            }
-
-            return Singleton;
-        }
-
-        private static InputEvent Singleton { get; set; }
-
-        #endregion Singleton
-
         #region Windows Message Handler
 
         private IntPtr hIMC;
@@ -45,10 +29,10 @@ namespace MetaMind.Engine.Components.Inputs
 
         #region Constructors
 
-        private InputEvent(GameEngine gameEngine, int updateOrder)
-            : base(gameEngine, updateOrder)
+        public InputEvent(GameEngine engine, int updateOrder)
+            : base(engine, updateOrder)
         {
-            var window = gameEngine.Window;
+            var window = engine.Window;
 
             this.wndProc = (IntPtr)SetWindowLong(window.Handle, GWL_WNDPROC, (int)Marshal.GetFunctionPointerForDelegate((WndProc)this.HookProc));
             this.hIMC    = ImmGetContext(window.Handle);

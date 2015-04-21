@@ -63,7 +63,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             interop.Process.AttachProcess(new ViewItemSwapProcess(draggingItem, this.Item));
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
             this.UpdateViewScroll();
             this.UpdateViewSelection();

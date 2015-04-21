@@ -30,7 +30,7 @@
 
             this.synchronization.ResetTomorrow();
 
-            var screenManager = GameEngine.Screen;
+            var screenManager = this.Interop.Screen;
 
             var motivation = screenManager.Screens.First(screen => screen is MotivationScreen);
             if (motivation != null)

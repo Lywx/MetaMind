@@ -9,21 +9,45 @@ namespace MetaMind.Engine.Services
 {
     using MetaMind.Engine.Components;
 
+    using Microsoft.Xna.Framework.Content;
+
     /// <remarks>
-    /// Sealed for added new keyword and changed acceesibility in GameEngine property
+    ///     Sealed for added new keyword and changed acceesibility in GameEngine property
     /// </remarks>
-    public sealed class GameEngineInteropService : GameEngineAccess, IGameInteropService
+    public sealed class GameEngineInteropService : IGameInteropService
     {
-        public GameEngineInteropService(GameEngine engine)
-            : base(engine)
+        private readonly IGameInterop interop;
+
+        public GameEngineInteropService(IGameInterop interop)
         {
+            this.interop = interop;
+        }
+
+        public IAudioManager Audio
+        {
+            get
+            {
+                return this.interop.Audio;
+            }
+        }
+
+        public ContentManager Content { get; private set; }
+
+        public FolderManager Folder { get; private set; }
+
+        public IGameEngine Engine
+        {
+            get
+            {
+                return this.interop.Engine;
+            }
         }
 
         public IEventManager Event
         {
             get
             {
-                return this.Engine.Event;
+                return this.interop.Event;
             }
         }
 
@@ -31,15 +55,7 @@ namespace MetaMind.Engine.Services
         {
             get
             {
-                return this.Engine.Games;
-            }
-        }
-
-        public new GameEngine Engine
-        {
-            get
-            {
-                return this.Engine;
+                return this.interop.Game;
             }
         }
 
@@ -47,7 +63,7 @@ namespace MetaMind.Engine.Services
         {
             get
             {
-                return this.Engine.Process;
+                return this.interop.Process;
             }
         }
 
@@ -55,7 +71,7 @@ namespace MetaMind.Engine.Services
         {
             get
             {
-                return this.Engine.Screen;
+                return this.interop.Screen;
             }
         }
     }

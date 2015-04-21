@@ -11,8 +11,6 @@ namespace MetaMind.Engine.Services
 
     public class GameEngineService : IGameService
     {
-        private readonly IGameAudioService audio;
-
         private readonly IGameGraphicsService graphics;
 
         private readonly IGameInputService input;
@@ -22,17 +20,11 @@ namespace MetaMind.Engine.Services
         private readonly IGameNumericalService numerical;
 
         public GameEngineService(
-            IGameAudioService     audio,
             IGameGraphicsService  graphics,
             IGameInputService     input,
             IGameInteropService   interop,
             IGameNumericalService numerical)
         {
-            if (audio == null)
-            {
-                throw new ArgumentNullException("audio");
-            }
-
             if (graphics == null)
             {
                 throw new ArgumentNullException("graphics");
@@ -53,19 +45,10 @@ namespace MetaMind.Engine.Services
                 throw new ArgumentNullException("numerical");
             }
 
-            this.audio     = audio;
             this.graphics  = graphics;
             this.input     = input;
             this.interop   = interop;
             this.numerical = numerical;
-        }
-
-        public IGameAudioService Audio
-        {
-            get
-            {
-                return this.audio;
-            }
         }
 
         public IGameGraphicsService Graphics

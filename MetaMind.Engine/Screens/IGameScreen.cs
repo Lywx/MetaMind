@@ -76,13 +76,13 @@ namespace MetaMind.Engine.Screens
 
         #region Load and Unload
 
-        void LoadContent(IGameFile gameFile);
+        void LoadContent(IGameInteropService interop);
 
-        void LoadInterop(IGameInteropService interop);
+        void LoadInterop(Services.IGameInteropService interop);
 
-        void UnloadContent(IGameFile gameFile);
+        void UnloadContent(IGameInteropService interop);
 
-        void UnloadInterop(IGameInteropService interop);
+        void UnloadInterop(Services.IGameInteropService interop);
 
         #endregion Load and Unload
 
@@ -90,22 +90,20 @@ namespace MetaMind.Engine.Screens
 
         void Update(GameTime gameTime);
 
-        void UpdateAudio(IGameAudioService audio, GameTime gameTime);
-
-        void UpdateContent(IGameFile gameFile, GameTime gameTime);
+        void UpdateContent(IGameInteropService interop, GameTime gameTime);
 
         void UpdateGraphics(IGameGraphicsService graphics, GameTime gameTime);
 
-        void UpdateInput(IGameInputService input, GameTime gameTime);
+        void UpdateInput(IGameInputService input, GameTime time);
 
-        void UpdateInterop(IGameInteropService interop, GameTime gameTime);
+        void UpdateInterop(Services.IGameInteropService interop, GameTime time);
 
         /// <summary>
         /// Allows the screen to run logic, such as updating the transition position.
         /// Unlike other update method, this method is called regardless of whether the screen
         /// is active, hidden, or in the middle of a transition.
         /// </summary>
-        void UpdateScreen(IGameGraphicsService graphics, GameTime gameTime, bool hasOtherScreenFocus, bool isCoveredByOtherScreen);
+        void UpdateScreen(Services.IGameInteropService interop, GameTime time, bool hasOtherScreenFocus, bool isCoveredByOtherScreen);
 
         #endregion Update
 

@@ -12,7 +12,6 @@ namespace MetaMind.Engine
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
 
     public class GameVisualEntity : GameEntity, IGameVisualEntity
     {
@@ -62,13 +61,7 @@ namespace MetaMind.Engine
 
         
         public GameVisualEntity()
-            : this(GameEngine.Service.Graphics)
         {
-        }
-
-        private GameVisualEntity(IGameGraphicsService graphics)
-        {
-            GameGraphics = graphics;
         }
 
         #region Draw

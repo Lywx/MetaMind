@@ -7,7 +7,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
     using Microsoft.Xna.Framework;
 
-    public class MotivationModuleFactory : GameVisualEntity, IConfigurationParameterLoader<GraphicsSettings>
+    public class MotivationModuleFactory : GameVisualEntity, IParameterLoader<GraphicsSettings>
     {
         private Point IntelligenceViewStartPoint;
 
@@ -21,7 +21,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         private int Width { get; set; }
 
-        public void ParameterLoad(GraphicsSettings parameter)
+        public void LoadParameter(GraphicsSettings parameter)
         {
             this.IsFullscreen = parameter.IsFullscreen;
             this.Width = parameter.Width;
@@ -33,7 +33,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         public MotivationModuleFactory()
         {
-            this.ParameterLoad(GameGraphics.Settings);
+            this.LoadParameter(GameGraphics.Settings);
         }
 
         #endregion Constructors

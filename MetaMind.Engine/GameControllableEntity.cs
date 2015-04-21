@@ -101,7 +101,7 @@ namespace MetaMind.Engine
             }
         }
 
-        public virtual void UpdateInput(IGameInputService input, GameTime gameTime) { }
+        public virtual void UpdateInput(IGameInputService input, GameTime time) { }
 
         #endregion Input
     }

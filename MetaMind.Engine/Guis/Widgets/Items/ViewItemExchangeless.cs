@@ -59,10 +59,10 @@
 
         #endregion
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.ItemControl .Update(input, gameTime);
-            this.ItemGraphics.UpdateInput(input, gameTime);
+            this.ItemControl .Update(input, time);
+            this.ItemGraphics.UpdateInput(input, time);
         }
 
         public override void UpdateView(GameTime gameTime)
@@ -70,10 +70,10 @@
             this.ItemControl.UpdateView(gameTime);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
-            this.ItemControl .Update(gameTime);
-            this.ItemGraphics.Update(gameTime);
+            this.ItemControl .Update(time);
+            this.ItemGraphics.Update(time);
         }
 
         public override void Dispose()

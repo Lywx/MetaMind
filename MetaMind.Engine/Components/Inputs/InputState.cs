@@ -36,13 +36,13 @@ namespace MetaMind.Engine.Components.Inputs
 
         #region Constructors
 
-        private InputState(GameEngine gameEngine, int updateOrder)
-            : base(gameEngine)
+        public InputState(GameEngine engine, int updateOrder)
+            : base(engine)
         {
             this.UpdateOrder = updateOrder;
 
-            this.keyboard = KeyboardInputState.GetState();
-            this.mouse    = MouseInputState   .GetState();
+            this.keyboard = new KeyboardInputState();
+            this.mouse    = new MouseInputState();
         }
 
         #endregion Constructors

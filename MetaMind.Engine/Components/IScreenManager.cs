@@ -3,12 +3,9 @@ namespace MetaMind.Engine.Components
     using MetaMind.Engine.Screens;
 
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
 
-    public interface IScreenManager
+    public interface IScreenManager : IGameInputableComponent
     {
-        GraphicsDevice GraphicsDevice { get; }
-
         /// <summary>
         /// Expose an array holding all the screens. We return a copy rather
         /// than the real master list, because screens should only ever be added
@@ -17,12 +14,6 @@ namespace MetaMind.Engine.Components
         IGameScreen[] Screens { get; }
 
         ScreenSettings Settings { get; }
-
-        /// <summary>
-        /// A default SpriteBatch shared by all the screens. This saves
-        /// each screen having to bother creating their own local instance.
-        /// </summary>
-        SpriteBatch SpriteBatch { get; }
 
         /// <summary>
         /// If true, the manager prints out a list of all the screens

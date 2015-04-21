@@ -7,21 +7,30 @@
 
 namespace MetaMind.Engine.Services
 {
+    using System;
+
+    using MetaMind.Engine.Components;
     using MetaMind.Engine.Components.Inputs;
 
-    public sealed class GameEngineInputService : GameEngineAccess, IGameInputService
+    public sealed class GameEngineInputService : IGameInputService
     {
-        public GameEngineInputService(GameEngine engine)
-            : base(engine)
+        private readonly IGameInput input;
+
+        public GameEngineInputService(IGameInput input)
         {
-            this.AccessType = GameEngineAccessType.Input;
+            if (input == null)
+            {
+                throw new ArgumentNullException("input");
+            }
+
+            this.input = input;
         }
 
         public IInputEvent Event
         {
             get
             {
-                return this.Engine.InputEvent;
+                return this.input.Event;
             }
         }
 
@@ -29,7 +38,7 @@ namespace MetaMind.Engine.Services
         {
             get
             {
-                return this.Engine.InputState;
+                return this.input.State;
             }
         }
     }

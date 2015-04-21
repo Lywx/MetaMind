@@ -22,15 +22,6 @@ namespace MetaMind.Engine.Components
     /// </remarks>
     public class AudioManager : GameComponent, IAudioManager
     {
-        public static AudioManager GetComponent(GameEngine game, int updateOrder)
-        {
-            var settingsFile  = @"Content\Audio\Audio.xgs";
-            var waveBankFile  = @"Content\Audio\Wave Bank.xwb";
-            var soundBankFile = @"Content\Audio\Sound Bank.xsb";
-
-            return new AudioManager(game, settingsFile, waveBankFile, soundBankFile, updateOrder);
-        }
-
         #region Audio Data
 
         /// <summary>
@@ -59,8 +50,8 @@ namespace MetaMind.Engine.Components
         /// <param name="settingsFile">The filename of the XACT settings file.</param>
         /// <param name="waveBankFile">The filename of the XACT wavebank file.</param>
         /// <param name="soundBankFile">The filename of the XACT soundbank file.</param>
-        private AudioManager(Game game, string settingsFile, string waveBankFile, string soundBankFile)
-            : base(game)
+        public AudioManager(GameEngine engine, string settingsFile, string waveBankFile, string soundBankFile)
+            : base(engine)
         {
             try
             {

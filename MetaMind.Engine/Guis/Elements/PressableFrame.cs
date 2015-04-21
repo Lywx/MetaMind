@@ -282,7 +282,7 @@
 
         #region Update
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
             var mouse         = input.State.Mouse.CurrentState;
             var mouseLocation = new Point(mouse.X, mouse.Y);

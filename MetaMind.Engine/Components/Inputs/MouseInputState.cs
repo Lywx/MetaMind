@@ -12,17 +12,6 @@ namespace MetaMind.Engine.Components.Inputs
 
     public class MouseInputState : IMouseInputState
     {
-        #region Singleton
-
-        private static MouseInputState Singleton { get; set; }
-
-        public static MouseInputState GetState()
-        {
-            return Singleton ?? (Singleton = new MouseInputState());
-        }
-
-        #endregion Singleton
-
         #region Settings
 
         private const int WheelUnit = 120;
@@ -135,7 +124,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         #region Constructors
 
-        internal MouseInputState()
+        public MouseInputState()
         {
         }
 

@@ -26,7 +26,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         public object Clone()
         {
-            return MemberwiseClone();
+            return this.MemberwiseClone();
         }
     }
 }

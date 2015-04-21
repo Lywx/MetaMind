@@ -57,19 +57,19 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.UpdateRegionClick(input, gameTime);
+            this.UpdateRegionClick(input, time);
             this.UpdateMouseScroll(input);
             this.UpdateKeyboardMotion(input);
 
-            this.UpdateItemInput(input, gameTime);
+            this.UpdateItemInput(input, time);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
-            base       .Update(gameTime);
-            this.Region.Update(gameTime);
+            base       .Update(time);
+            this.Region.Update(time);
         }
 
         protected void UpdateRegionClick(IGameInputService input, GameTime gameTime)

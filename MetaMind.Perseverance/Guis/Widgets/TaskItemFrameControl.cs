@@ -65,14 +65,14 @@ namespace MetaMind.Perseverance.Guis.Widgets
             }
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            base.UpdateInput(input, gameTime);
+            base.UpdateInput(input, time);
 
-            this.NameFrame      .UpdateInput(input, gameTime);
-            this.IdFrame        .UpdateInput(input, gameTime);
-            this.ExperienceFrame.UpdateInput(input, gameTime);
-            this.ProgressFrame  .UpdateInput(input, gameTime);
+            this.NameFrame      .UpdateInput(input, time);
+            this.IdFrame        .UpdateInput(input, time);
+            this.ExperienceFrame.UpdateInput(input, time);
+            this.ProgressFrame  .UpdateInput(input, time);
         }
 
         protected override void UpdateFrameGeometry()

@@ -26,14 +26,14 @@
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="gameEngine"></param>
+        /// <param name="engine"></param>
         /// <param name="updateOrder">It is very sensible. It need to be higher 
         /// than the sync standard's value so that once this instance finished 
         /// updating input(which a process between calling UpdateInput method 
         /// and calling Update method), it is freezed before sync standard 
         /// updating. </param>
-        protected InputSync(GameEngine gameEngine, int updateOrder)
-            : base(gameEngine)
+        protected InputSync(GameEngine engine, int updateOrder)
+            : base(engine)
         {
             this.UpdateOrder = updateOrder;
         }

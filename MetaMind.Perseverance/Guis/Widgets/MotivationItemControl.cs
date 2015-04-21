@@ -69,11 +69,11 @@
             }
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
             // mouse and keyboard in modifier
             //-----------------------------------------------------------------
-            base.UpdateInput(input, gameTime);
+            base.UpdateInput(input, time);
 
             // keyboard
             //-----------------------------------------------------------------
@@ -113,15 +113,15 @@
                 {
                     // should be outside of the accepting input state
                     // task view is parallel with item input
-                    this.ItemTaskControl.UpdateInput(input, gameTime);
+                    this.ItemTaskControl.UpdateInput(input, time);
                 }
             }
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
-            base                .Update(gameTime);
-            this.ItemTaskControl.Update(gameTime);
+            base                .Update(time);
+            this.ItemTaskControl.Update(time);
         }
 
         #endregion

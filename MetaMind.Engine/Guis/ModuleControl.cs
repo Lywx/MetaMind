@@ -6,9 +6,9 @@ namespace MetaMind.Engine.Guis
 
     public interface IModuleControl : IUpdateable, IInputable
     {
-        void Load(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio);
+        void Load(IGameInputService input, IGameInteropService interop);
 
-        void Unload(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio);
+        void Unload(IGameInputService input, IGameInteropService interop);
     }
 
     public abstract class ModuleControl<TModule, TModuleSettings, TModuleControl> : ModuleComponent<TModule, TModuleSettings, TModuleControl>, IModuleControl
@@ -20,8 +20,8 @@ namespace MetaMind.Engine.Guis
         {
         }
 
-        public abstract void Load(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio);
+        public abstract void Load(IGameInputService input, IGameInteropService interop);
 
-        public abstract void Unload(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio);
+        public abstract void Unload(IGameInputService input, IGameInteropService interop);
     }
 }

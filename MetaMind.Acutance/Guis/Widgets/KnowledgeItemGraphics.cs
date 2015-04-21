@@ -19,7 +19,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Update and Draw
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
         }
 

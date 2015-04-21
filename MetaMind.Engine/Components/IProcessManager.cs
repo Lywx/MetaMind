@@ -2,7 +2,9 @@ namespace MetaMind.Engine.Components
 {
     using MetaMind.Engine.Components.Processes;
 
-    public interface IProcessManager
+    using Microsoft.Xna.Framework;
+
+    public interface IProcessManager : IGameComponent
     {
         void AbortProcesses(bool immediate);
 

@@ -7,6 +7,8 @@ namespace MetaMind.Acutance.Screens
 
     using Microsoft.Xna.Framework;
 
+    using IGameInteropService = MetaMind.Engine.IGameInteropService;
+
     public class MultiplexerModule : Module<object>
     {
         private readonly MultiplexerGroup multiplexer;
@@ -29,28 +31,28 @@ namespace MetaMind.Acutance.Screens
             this.synchronization.Draw(graphics, time, alpha);
         }
 
-        public override void Load(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
+        public override void Load(IGameInteropService interop, IGameInputService input, Engine.Services.IGameInteropService interop, IGameAudioService audio)
         {
             this.multiplexer    .Load(gameFile, input, interop, audio);
             this.synchronization.Load(gameFile, input, interop, audio);
         }
 
-        public override void Unload(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
+        public override void Unload(IGameInteropService interop, IGameInputService input, Engine.Services.IGameInteropService interop, IGameAudioService audio)
         {
             this.multiplexer    .Unload(gameFile, input, interop, audio);
             this.synchronization.Unload(gameFile, input, interop, audio);
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.multiplexer    .UpdateInput(input, gameTime);
-            this.synchronization.UpdateInput(input, gameTime);
+            this.multiplexer    .UpdateInput(input, time);
+            this.synchronization.UpdateInput(input, time);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
-            this.multiplexer    .Update(gameTime);
-            this.synchronization.Update(gameTime);
+            this.multiplexer    .Update(time);
+            this.synchronization.Update(time);
         }
     }
 }

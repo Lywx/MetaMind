@@ -74,12 +74,12 @@ namespace MetaMind.Engine.Guis.Widgets.Items
            this.CharModifier.Cancel(); 
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.CharModifier.UpdateInput(input, gameTime);
+            this.CharModifier.UpdateInput(input, time);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
         }
 

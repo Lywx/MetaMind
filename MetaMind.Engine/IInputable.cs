@@ -21,6 +21,6 @@ namespace MetaMind.Engine
 
         int InputOrder { get; }
 
-        void UpdateInput(IGameInputService input, GameTime gameTime);
+        void UpdateInput(IGameInputService input, GameTime time);
     }
 }

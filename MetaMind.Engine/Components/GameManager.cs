@@ -13,24 +13,13 @@ namespace MetaMind.Engine.Components
 
     public class GameManager : IGameManager
     {
-        #region Singleton
-
-        private static GameManager Singleton { get; set; }
-
-        public static GameManager GetComponent(GameEngine gameEngine)
-        {
-            return Singleton ?? (Singleton = new GameManager(gameEngine));
-        }
-
-        #endregion Singleton
-
         private readonly GameComponentCollection components;
 
         private readonly List<IGame> games = new List<IGame>();
 
         #region Constructors
 
-        private GameManager(GameEngine engine)
+        public GameManager(GameEngine engine)
         {
             this.components = engine.Components;
         }

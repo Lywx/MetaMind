@@ -13,6 +13,8 @@
 
     using Primtives2D;
 
+    using IGameInteropService = MetaMind.Engine.IGameInteropService;
+
     public class SynchronizationGroup : Group<SynchronizationGroupSettings>
     {
         private ISynchronization       synchronization;
@@ -72,19 +74,19 @@
             }
         }
 
-        public void Load(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
+        public void Load(IGameInteropService interop, IGameInputService input, Engine.Services.IGameInteropService interop, IGameAudioService audio)
         {
         }
 
-        public void Unload(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
+        public void Unload(IGameInteropService interop, IGameInputService input, Engine.Services.IGameInteropService interop, IGameAudioService audio)
         {
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
             if (this.synchronizationTimer < TimeSpan.FromMilliseconds(10))
             {
@@ -94,33 +96,33 @@
                 }
                 catch (TimeoutException)
                 {
-                    this.synchronizationTimer += gameTime.ElapsedGameTime;
+                    this.synchronizationTimer += time.ElapsedGameTime;
                     this.synchronization = null;
                 }
                 catch (ServerTooBusyException)
                 {
-                    this.synchronizationTimer += gameTime.ElapsedGameTime;
+                    this.synchronizationTimer += time.ElapsedGameTime;
                     this.synchronization = null;
                 }
                 catch (EndpointNotFoundException)
                 {
-                    this.synchronizationTimer += gameTime.ElapsedGameTime;
+                    this.synchronizationTimer += time.ElapsedGameTime;
                     this.synchronization = null;
                 }
                 catch (CommunicationObjectAbortedException)
                 {
-                    this.synchronizationTimer += gameTime.ElapsedGameTime;
+                    this.synchronizationTimer += time.ElapsedGameTime;
                     this.synchronization = null;
                 }
                 catch (CommunicationException)
                 {
-                    this.synchronizationTimer += gameTime.ElapsedGameTime;
+                    this.synchronizationTimer += time.ElapsedGameTime;
                     this.synchronization = null;
                 }
             }
             else
             {
-                this.synchronizationTimer += gameTime.ElapsedGameTime;
+                this.synchronizationTimer += time.ElapsedGameTime;
                 if (this.synchronizationTimer > this.synchronizationRetryTime)
                 {
                     this.synchronizationTimer = TimeSpan.Zero;

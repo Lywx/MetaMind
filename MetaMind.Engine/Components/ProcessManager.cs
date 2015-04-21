@@ -24,7 +24,7 @@ namespace MetaMind.Engine.Components
 
         #region Constructors
 
-        private ProcessManager(GameEngine engine, int updateOrder)
+        public ProcessManager(GameEngine engine, int updateOrder)
             : base(engine)
         {
             if (engine == null)

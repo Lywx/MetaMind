@@ -2,6 +2,8 @@ namespace MetaMind.Engine.Components.Inputs
 {
     using System;
 
+    using Microsoft.Xna.Framework;
+
     public class NullInputEvent : IInputEvent
     {
         public event EventHandler<CharEnteredEventArgs> CharEntered;
@@ -21,5 +23,13 @@ namespace MetaMind.Engine.Components.Inputs
         public event EventHandler<MouseEventArgs> MouseUp;
 
         public event EventHandler<MouseEventArgs> MouseWheel;
+
+        public void Initialize()
+        {
+        }
+
+        public void UpdateInput(GameTime gameTime)
+        {
+        }
     }
 }

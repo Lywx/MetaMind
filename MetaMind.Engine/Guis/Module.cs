@@ -31,26 +31,26 @@ namespace MetaMind.Engine.Guis
             this.Graphics.Draw(graphics, time, alpha);
         }
 
-        public virtual void Load(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
+        public virtual void Load(IGameInputService input, IGameInteropService interop)
         {
-            this.Control.Load(gameFile, input, interop, audio);
+            this.Control.Load(input, interop);
         }
 
-        public virtual void Unload(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
+        public virtual void Unload(IGameInputService input, IGameInteropService interop)
         {
-            this.Control.Unload(gameFile, input, interop, audio);
+            this.Control.Unload(input, interop);
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.Control .UpdateInput(input, gameTime);
-            this.Graphics.UpdateInput(input, gameTime);
+            this.Control .UpdateInput(input, time);
+            this.Graphics.UpdateInput(input, time);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
-            this.Control .Update(gameTime);
-            this.Graphics.Update(gameTime);
+            this.Control .Update(time);
+            this.Graphics.Update(time);
         }
     }
 }

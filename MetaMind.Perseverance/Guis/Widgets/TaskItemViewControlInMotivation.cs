@@ -8,6 +8,8 @@ namespace MetaMind.Perseverance.Guis.Widgets
     using MetaMind.Perseverance.Concepts.Tasks;
     using MetaMind.Perseverance.Guis.Modules;
 
+    using IGameInteropService = MetaMind.Engine.Services.IGameInteropService;
+
     public class TaskItemViewControlInMotivation : ViewItemViewControl2D
     {
         public TaskItemViewControlInMotivation(IViewItem item)

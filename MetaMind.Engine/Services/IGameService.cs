@@ -2,8 +2,6 @@ namespace MetaMind.Engine.Services
 {
     public interface IGameService
     {
-        IGameAudioService Audio { get; }
-
         IGameInputService Input { get; }
 
         IGameInteropService Interop { get; }

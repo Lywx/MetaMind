@@ -8,7 +8,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
     using Microsoft.Xna.Framework;
 
-    public class MultiplexerGroupFactory : IConfigurationParameterLoader<GraphicsSettings>
+    public class MultiplexerGroupFactory : IParameterLoader<GraphicsSettings>
     {
         #region Parameters Data
 
@@ -18,7 +18,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
         private int Height { get; set; }
 
-        public void ParameterLoad(GraphicsSettings parameter)
+        public void LoadParameter(GraphicsSettings parameter)
         {
             this.Width        = parameter.Width;
             this.Height       = parameter.Height;
@@ -120,7 +120,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public MultiplexerGroupFactory()
         {
-            this.ParameterLoad(GameEngine.GraphicsSettings);
+            this.LoadParameter(GameEngine.GraphicsSettings);
         }
 
         private MultiplexerGroupSettings CreateGroupSettings()

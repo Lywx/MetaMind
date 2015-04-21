@@ -20,23 +20,21 @@ namespace MetaMind.Engine.Components
 
     public class ScreenManager : DrawableGameComponent, IScreenManager
     {
-        #region Graphics Data
-
-        private Texture2D blankTexture;
-
-        private SpriteBatch spriteBatch;
+        #region Dependency
 
         /// <summary>
         /// A default SpriteBatch shared by all the screens. This saves
         /// each screen having to bother creating their own local instance.
         /// </summary>
-        public SpriteBatch SpriteBatch
-        {
-            get
-            {
-                return this.spriteBatch;
-            }
-        }
+        private SpriteBatch SpriteBatch { get; set; }
+
+        public ScreenSettings Settings { get; set; }
+
+        #endregion
+
+        #region Graphics Data
+
+        private Texture2D blankTexture;
 
         #endregion Graphics Data
 
@@ -59,7 +57,6 @@ namespace MetaMind.Engine.Components
             }
         }
 
-        public ScreenSettings Settings { get; set; }
 
         #endregion Screen Data
 
@@ -94,11 +91,7 @@ namespace MetaMind.Engine.Components
         #endregion Trace Data
 
         #region Engine Data
-
-        private IGameAudioService Audio { get; set; }
-
-        private IGameFile GameFile { get; set; }
-
+        
         private IGameGraphicsService Graphics { get; set; }
 
         private IGameInputService Input { get; set; }
@@ -112,7 +105,7 @@ namespace MetaMind.Engine.Components
         /// <summary>
         /// Constructs a new screen manager component.
         /// </summary>
-        private ScreenManager(GameEngine engine, ScreenSettings settings, int updateOrder)
+        public ScreenManager(GameEngine engine, ScreenSettings settings, SpriteBatch spriteBatch, int updateOrder)
             : base(engine)
         {
             if (engine == null)
@@ -120,17 +113,26 @@ namespace MetaMind.Engine.Components
                 throw new ArgumentNullException("engine");
             }
 
+            if (settings == null)
+            {
+                throw new ArgumentNullException("settings");
+            }
+
+            if (spriteBatch == null)
+            {
+                throw new ArgumentNullException("spriteBatch");
+            }
+
             engine.Components.Add(this);
 
-
+            this.SpriteBatch = spriteBatch;
             this.Settings    = settings;
+        
             this.UpdateOrder = updateOrder;
 
-            this.Audio    = new GameEngineAudioService(engine);
-            this.GameFile     = new GameEngineFile(engine);
-            this.Graphics = new GameEngineGraphicsAccess(engine);
-            this.Input    = new GameEngineInputService(engine);
-            this.Interop  = new GameEngineInteropService(engine);
+            this.Graphics = GameEngine.Service.Graphics;
+            this.Input    = GameEngine.Service.Input;
+            this.Interop  = GameEngine.Service.Interop;
         }
 
         #endregion Constructors
@@ -142,8 +144,6 @@ namespace MetaMind.Engine.Components
         /// </summary>
         public override void Initialize()
         {
-            base.Initialize();
-
             this.isInitialized = true;
         }
 
@@ -153,8 +153,6 @@ namespace MetaMind.Engine.Components
 
         protected override void LoadContent()
         {
-            this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
-
             this.blankTexture = this.GameFile.Content.Load<Texture2D>(@"Textures\Screens\Blank");
 
             // Tell each of the screens to load their content.
@@ -256,7 +254,7 @@ namespace MetaMind.Engine.Components
                 this.screensToUpdate.RemoveAt(this.screensToUpdate.Count - 1);
 
                 // Update the screen transition
-                screen.UpdateScreen(this.Graphics, gameTime, hasOtherScreenFocus, isCoveredByOtherScreen);
+                screen.UpdateScreen(this.Interop, gameTime, hasOtherScreenFocus, isCoveredByOtherScreen);
 
                 if (screen.ScreenState == GameScreenState.TransitionOn ||
                     screen.ScreenState == GameScreenState.Active)
@@ -312,11 +310,11 @@ namespace MetaMind.Engine.Components
         {
             var viewport = this.GraphicsDevice.Viewport;
 
-            this.spriteBatch.Begin();
+            this.SpriteBatch.Begin();
 
-            this.spriteBatch.Draw(this.blankTexture, new Rectangle(0, 0, viewport.Width, viewport.Height), color * alpha);
+            this.SpriteBatch.Draw(this.blankTexture, new Rectangle(0, 0, viewport.Width, viewport.Height), color * alpha);
 
-            this.spriteBatch.End();
+            this.SpriteBatch.End();
         }
 
         /// <summary>

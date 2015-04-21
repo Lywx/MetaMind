@@ -14,7 +14,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
     using Microsoft.Xna.Framework;
 
-    public class SynchronizationGroupSettings : IConfigurationParameterLoader<GraphicsSettings>
+    public class SynchronizationGroupSettings : IParameterLoader<GraphicsSettings>
     {
         public Color BarFrameAscendColor = new Color(78, 255, 27, 200);
 
@@ -52,7 +52,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public SynchronizationGroupSettings()
         {
-            this.ParameterLoad(GameEngine.GraphicsSettings);
+            this.LoadParameter(GameEngine.GraphicsSettings);
 
             this.BarFrameXC = this.Width / 2;
         }
@@ -65,7 +65,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
         private int Width { get; set; }
 
-        public void ParameterLoad(GraphicsSettings parameter)
+        public void LoadParameter(GraphicsSettings parameter)
         {
             this.Width = parameter.Width;
         }

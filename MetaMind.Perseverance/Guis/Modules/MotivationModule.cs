@@ -11,7 +11,7 @@ namespace MetaMind.Perseverance.Guis.Modules
     using MetaMind.Perseverance.Sessions;
 
     using Microsoft.Xna.Framework;
-
+    
     public class MotivationModule : Module<MotivationModuleSettings>
     {
         private readonly IView intelligence;
@@ -36,7 +36,7 @@ namespace MetaMind.Perseverance.Guis.Modules
         #region Load and Unload
 
         // FIXME: Wrong interface
-        public override void Load(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
+        public override void Load(IGameInputService input, IGameInteropService interop)
         {
             // performance penalty is not severe for one-off loading
             foreach (var entry in MotivationModuleSettings.GetNowMotivations())
@@ -47,7 +47,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             this.LoadEvents(interop);
         }
 
-        private void LoadEvents(IGameInteropService interop)
+        private void LoadEvents(Engine.Services.IGameInteropService interop)
         {
             if (this.gameStartedListener == null)
             {
@@ -65,7 +65,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             interop.Event.AddListener(this.gameStartedListener);
         }
 
-        public override void Unload(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
+        public override void Unload(IGameInputService input, IGameInteropService interop)
         {
             this.UnloadInterop(interop);
         }
@@ -79,14 +79,14 @@ namespace MetaMind.Perseverance.Guis.Modules
             this.intelligence.Draw(graphics, time, alpha);
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.intelligence.UpdateInput(input, gameTime);
+            this.intelligence.UpdateInput(input, time);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
-            this.intelligence.Update(gameTime);
+            this.intelligence.Update(time);
         }
 
         #endregion Update and Draw

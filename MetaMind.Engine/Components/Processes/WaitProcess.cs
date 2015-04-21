@@ -22,9 +22,9 @@ namespace MetaMind.Engine.Components.Processes
 
         public TimeSpan Duration { get; private set; }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
-            Duration -= gameTime.ElapsedGameTime;
+            Duration -= time.ElapsedGameTime;
             if (Duration <= TimeSpan.Zero)
             {
                 Succeed();

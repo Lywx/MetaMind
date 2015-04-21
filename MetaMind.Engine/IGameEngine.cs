@@ -1,34 +1,14 @@
 ﻿namespace MetaMind.Engine
 {
     using MetaMind.Engine.Components;
-    using MetaMind.Engine.Components.Fonts;
-    using MetaMind.Engine.Components.Graphics;
-    using MetaMind.Engine.Components.Inputs;
+    using MetaMind.Engine.Services;
 
     public interface IGameEngine
     {
-        AudioManager AudioManager { get; }
+        IGameInput Input { get; }
 
-        FolderManager Folder { get; }
+        IGameInteropService Interop { get; }
 
-        FontManager FontManager { get; }
-
-        StringDrawer StringDrawer { get; set; }
-
-        GraphicsManager GraphicsManager { get; }
-
-        GraphicsSettings GraphicsSettings { get; set; }
-
-        ScreenManager Screen { get; }
-
-        InputEvent InputEvent { get; }
-
-        InputState InputState { get; }
-
-        EventManager Event { get; }
-
-        ProcessManager Process { get; }
-
-        GameManager Games { get; }
+        IGameGraphics Graphics { get; }
     }
 }

@@ -147,7 +147,7 @@
             get { return this.Item.IsEnabled(ItemState.Item_Active); }
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
             if (!this.Active)
             {
@@ -158,33 +158,33 @@
             //-----------------------------------------------------------------
             if (this.ViewSettings.MouseEnabled)
             {
-                this.ItemFrameControl.UpdateInput(gameTime);
+                this.ItemFrameControl.UpdateInput(time);
             }
 
             // keyboard
             //-----------------------------------------------------------------
             if (this.ViewSettings.KeyboardEnabled)
             {
-                this.ItemDataControl.UpdateInput(input, gameTime);
+                this.ItemDataControl.UpdateInput(input, time);
             }
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
-            this.UpdateForView(gameTime);
+            this.UpdateForView(time);
 
             // reduce lagging graphics 
             if (!this.isFrameInitialized)
             {
-                this.ItemFrameControl.Update(gameTime);
+                this.ItemFrameControl.Update(time);
                 this.isFrameInitialized = true;
             }
 
             // to improve performance
             if (this.Active)
             {
-                this.ItemFrameControl.Update(gameTime);
-                this.ItemDataControl .Update(gameTime);
+                this.ItemFrameControl.Update(time);
+                this.ItemDataControl .Update(time);
             }
         }
 

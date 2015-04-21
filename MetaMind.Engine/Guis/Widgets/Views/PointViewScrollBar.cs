@@ -50,7 +50,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             if (this.ViewControl.RowNum > this.ViewSettings.RowNumDisplay)
             {
                 Primitives2D.FillRectangle(
-                    graphics.Screen.SpriteBatch,
+                    graphics.SpriteBatch,
                     this.ScrollBarRectangle,
                     ExtColor.MakeTransparent(this.settings.Color, (byte)this.alpha));
             }
@@ -61,7 +61,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             this.alpha = this.settings.BrightnessMax;
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
             this.alpha -= this.settings.BrightnessTransitionRate;
             if (this.alpha < 0)

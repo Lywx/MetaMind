@@ -22,17 +22,6 @@ namespace MetaMind.Engine.Components.Inputs
 
     public class KeyboardInputState : IConfigurationLoader, IKeyboardInputState
     {
-        #region Singleton
-
-        private static KeyboardInputState Singleton { get; set; }
-
-        public static KeyboardInputState GetState()
-        {
-            return Singleton ?? (Singleton = new KeyboardInputState());
-        }
-
-        #endregion Singleton
-
         #region Latch State
 
         private KeyboardState currentState;

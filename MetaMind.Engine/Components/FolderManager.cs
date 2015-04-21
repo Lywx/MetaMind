@@ -23,20 +23,9 @@ namespace MetaMind.Engine.Components
 
         #endregion Directory Settings
 
-        #region Singleton
-
-        private static FolderManager Singleton { get; set; }
-
-        public static FolderManager GetComponent()
-        {
-            return Singleton ?? (Singleton = new FolderManager());
-        }
-
-        #endregion Singleton
-
         #region Constructors
 
-        private FolderManager()
+        public FolderManager()
         {
             this.CreateDirectory();
         }

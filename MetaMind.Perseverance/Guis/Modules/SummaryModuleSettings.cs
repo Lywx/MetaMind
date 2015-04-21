@@ -1,17 +1,29 @@
 namespace MetaMind.Perseverance.Guis.Modules
 {
-    using MetaMind.Engine;
     using MetaMind.Engine.Components.Fonts;
+    using MetaMind.Engine.Components.Graphics;
+    using MetaMind.Engine.Settings.Loaders;
 
     using Microsoft.Xna.Framework;
 
-    public class SummaryModuleSettings
+    public class SummaryModuleSettings : IParameterLoader<GraphicsSettings>
     {
-        public Vector2 TitleCenter         = new Vector2(GameEngine.GraphicsSettings.Width / 2f, 100);
+        #region Parameters
 
-        public Font    TitleFont           = Font.UiRegular;
+        public void LoadParameter(GraphicsSettings parameter)
+        {
+            this.ScreenWidth = parameter.Width;
+        }
 
-        public float   TitleSize           = 1f;
+        private int ScreenWidth { get; set; }
+
+        #endregion
+        
+        public Vector2 TitleCenter;
+
+        public Font    TitleFont         = Font.UiRegular;
+
+        public float   TitleSize         = 1f;
 
         //---------------------------------------------------------------------
         public Font  EntityFont          = Font.UiStatistics;
@@ -27,5 +39,12 @@ namespace MetaMind.Perseverance.Guis.Modules
         public int   LoftyProfessionHour = 6;
 
         public int   WorldRecordHour     = 110;
+
+        public SummaryModuleSettings(GraphicsSettings settings)
+        {
+            this.LoadParameter(settings);
+
+            this.TitleCenter = new Vector2(this.ScreenWidth / 2f, 100);
+        }
     }
 }

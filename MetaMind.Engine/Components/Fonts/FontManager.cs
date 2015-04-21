@@ -24,40 +24,13 @@ namespace MetaMind.Engine.Components.Fonts
         public Dictionary<Font, FontInfo> Fonts { get; set; }
 
         #endregion
-
-        #region Engine Data
-
-        private IGameFile gameFile;
-
-        #endregion
-
-        #region Singleton
-
-        private static FontManager Singleton { get; set; }
-
-        public static FontManager GetComponent(GameEngine gameEngine)
-        {
-            if (Singleton == null)
-            {
-                Singleton = new FontManager(gameEngine);
-            }
-
-            if (gameEngine != null)
-            {
-                gameEngine.Components.Add(Singleton);
-            }
-
-            return Singleton;
-        }
-
-        #endregion Singleton
-
+        
         #region Contructors
 
         public FontManager(GameEngine gameEngine)
             : base(gameEngine)
         {
-            this.gameFile = new GameEngineFile(gameEngine);
+            this.gameFile = GameEngine.Service.Interop;
         }
 
         #endregion

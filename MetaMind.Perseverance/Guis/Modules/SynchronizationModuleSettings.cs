@@ -5,13 +5,12 @@
     using MetaMind.Engine;
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Components.Graphics;
-    using MetaMind.Engine.Settings;
     using MetaMind.Engine.Settings.Colors;
     using MetaMind.Engine.Settings.Loaders;
 
     using Microsoft.Xna.Framework;
 
-    public class SynchronizationModuleSettings : IConfigurationParameterLoader<GraphicsSettings>, ICloneable
+    public class SynchronizationModuleSettings : IParameterLoader<GraphicsSettings>, ICloneable
     {
         //---------------------------------------------------------------------
         public int   BarFrameXC;
@@ -93,7 +92,7 @@
 
         public SynchronizationModuleSettings()
         {
-            this.ParameterLoad(GameEngine.GraphicsSettings);
+            this.LoadParameter(GameEngine.GraphicsSettings);
 
             this.BarFrameXC = this.Width / 2;
         }
@@ -105,7 +104,7 @@
 
         #region Parameters
 
-        public void ParameterLoad(GraphicsSettings parameter)
+        public void LoadParameter(GraphicsSettings parameter)
         {
             this.Width = parameter.Width;
 

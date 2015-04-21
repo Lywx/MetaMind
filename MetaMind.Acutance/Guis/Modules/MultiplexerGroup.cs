@@ -10,12 +10,14 @@ namespace MetaMind.Acutance.Guis.Modules
 
     using Microsoft.Xna.Framework;
 
+    using IGameInteropService = MetaMind.Engine.IGameInteropService;
+
     public class MultiplexerGroup : Group<MultiplexerGroupSettings>, IConfigurationFileLoader
     {
         #region Events
 
         // TODO: Redesign events
-        private void LoadEvents(IGameInteropService interop)
+        private void LoadEvents(Engine.Services.IGameInteropService interop)
         {
             // Module View 
             this.Listeners.Add(new MultiplexerGroupModuleCreatedListener(this.ModuleView));
@@ -88,7 +90,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
         #region Load and Unload
 
-        public void Load(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
+        public void Load(IGameInteropService interop, IGameInputService input, Engine.Services.IGameInteropService interop, IGameAudioService audio)
         {
             this.LoadConfiguration();
             this.LoadData();
@@ -101,7 +103,7 @@ namespace MetaMind.Acutance.Guis.Modules
             this.LoadScheduleData();
         }
 
-        public void Unload(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
+        public void Unload(IGameInteropService interop, IGameInputService input, Engine.Services.IGameInteropService interop, IGameAudioService audio)
         {
             this.UnloadInterop(interop);
         }
@@ -166,18 +168,18 @@ namespace MetaMind.Acutance.Guis.Modules
             this.CommandView  .Draw(graphics, time, alpha);
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.KnowledgeView.UpdateInput(input, gameTime);
-            this.ModuleView   .UpdateInput(input, gameTime);
-            this.CommandView  .UpdateInput(input, gameTime);
+            this.KnowledgeView.UpdateInput(input, time);
+            this.ModuleView   .UpdateInput(input, time);
+            this.CommandView  .UpdateInput(input, time);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
-            this.CommandView  .Update(gameTime);
-            this.ModuleView   .Update(gameTime);
-            this.KnowledgeView.Update(gameTime);
+            this.CommandView  .Update(time);
+            this.ModuleView   .Update(time);
+            this.KnowledgeView.Update(time);
         }
         #endregion
     }

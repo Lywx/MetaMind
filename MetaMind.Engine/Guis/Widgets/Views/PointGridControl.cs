@@ -84,12 +84,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         /// <remarks>
         /// All state change should be inside this methods.
         /// </remarks>>
-        /// <param name="gameTime"></param>
-        public override void Update(GameTime gameTime)
+        /// <param name="time"></param>
+        public override void Update(GameTime time)
         {
-            base          .Update(gameTime);
-            this.Region   .Update(gameTime);
-            this.ScrollBar.Update(gameTime);
+            base          .Update(time);
+            this.Region   .Update(time);
+            this.ScrollBar.Update(time);
         }
 
         protected override void UpdateViewFocus()
@@ -117,12 +117,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             get { return this.View.IsEnabled(ViewState.Item_Editting); }
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.UpdateRegionClick(input, gameTime);
+            this.UpdateRegionClick(input, time);
             this.UpdateMouseScroll(input);
-            this.UpdateKeyboardMotion(input, gameTime);
-            this.UpdateItemInput(input, gameTime);
+            this.UpdateKeyboardMotion(input, time);
+            this.UpdateItemInput(input, time);
         }
 
         protected void UpdateKeyboardMotion(IGameInputService input, GameTime gameTime)

@@ -77,7 +77,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         #region Transit Update
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
         }
 

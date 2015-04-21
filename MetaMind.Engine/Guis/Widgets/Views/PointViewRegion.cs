@@ -52,7 +52,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             this.Frame.Disable(FrameState.Mouse_Right_Double_Clicked);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
             this.UpdateRegionGeometry();
         }

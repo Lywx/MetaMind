@@ -30,9 +30,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         #region Update
 
-        public virtual void UpdateInput(IGameInputService input, GameTime gameTime)
+        public virtual void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.RootFrame.UpdateInput(input, gameTime);
+            this.RootFrame.UpdateInput(input, time);
 
             if (this.RootFrame.IsEnabled(FrameState.Mouse_Over))
             {
@@ -53,7 +53,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             }
         }
 
-        public virtual void Update(GameTime gameTime)
+        public virtual void Update(GameTime time)
         {
             this.UpdateFrameGeometry();
             this.UpdateFrameLogics();

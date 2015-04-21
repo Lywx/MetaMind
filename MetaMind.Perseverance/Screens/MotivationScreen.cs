@@ -48,11 +48,11 @@
             graphics.SpriteBatch.End();
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            input.Event   .UpdateInput(input, gameTime);
-            input.State.UpdateInput(input, gameTime);
-            MessageManager.Update(gameTime);
+            input.Event   .UpdateInput(input, time);
+            input.State.UpdateInput(input, time);
+            MessageManager.Update(time);
         }
 
         public override void Update(GameTime gameTime)

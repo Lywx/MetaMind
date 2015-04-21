@@ -95,7 +95,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         #region Swap Update
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
             this.SwappingControl.Progress += 1f / UpdateNum;
 

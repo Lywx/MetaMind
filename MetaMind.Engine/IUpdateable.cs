@@ -6,7 +6,7 @@ namespace MetaMind.Engine
 
     public interface IUpdateable : Microsoft.Xna.Framework.IUpdateable
     {
-        void UpdateContent(IGameFile gameFile, GameTime time);
+        void UpdateContent(IGameInteropService interop, GameTime time);
 
         void UpdateInterop(IGameInteropService interop, GameTime time);
     }

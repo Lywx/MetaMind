@@ -1,6 +1,5 @@
 namespace MetaMind.Engine.Services
 {
-    using MetaMind.Engine.Components;
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Components.Graphics;
 
@@ -13,8 +12,6 @@ namespace MetaMind.Engine.Services
         GraphicsSettings Settings { get; }
 
         SpriteBatch SpriteBatch { get; }
-
-        IScreenManager Screen { get; }
         
         IStringDrawer String { get; }
     }

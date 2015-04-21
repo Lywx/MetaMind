@@ -4,7 +4,6 @@
 
     using MetaMind.Engine;
     using MetaMind.Engine.Components.Inputs;
-    using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Services;
     using MetaMind.Perseverance.Concepts;
@@ -41,7 +40,7 @@
 
             // best close the mouse listener
             // which may casue severe mouse performance issues
-            this.monitor = new SynchronizationMonitor(ScreenManager.Game, synchronization);
+            this.monitor = new SynchronizationMonitor(GameEngine.Service.Interop.Engine, synchronization);
         }
 
         #endregion Constructors
@@ -184,15 +183,13 @@
 
         #region Load and Unload
 
-        public override void Load(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
+        public override void Load(IGameInputService input, IGameInteropService interop)
         {
             if (this.synchronizationStartListener == null || 
                 this.synchronizationStopListener  == null || 
                 this.sleepStartedEventListener    == null)
             {
                 this.synchronizationStartListener = new SynchronizationModuleSynchronizationStartListener(this.synchronization, this);
-
-
 
                 this.synchronizationStopListener  = new SynchronizationModuleSynchronizationStopListener(this.synchronization, this);
                 this.sleepStartedEventListener    = new SynchronizationModuleSleepStartedEventListener(this.synchronization, this);
@@ -203,7 +200,7 @@
             interop.Event.AddListener(this.sleepStartedEventListener);
         }
 
-        public override void Unload(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
+        public override void Unload(IGameInputService input, IGameInteropService interop)
         {
             if (this.synchronizationStartListener != null)
             {
@@ -231,26 +228,20 @@
 
         public void StartSynchronizing(Task target)
         {
-            if (valve.Opened)
-            {
-                this.synchronization.TryStart(target);
-            }
+            this.synchronization.TryStart(target);
         }
 
         public void StopSynchronizing()
         {
-            if (valve.Opened)
-            {
-                this.synchronization.Stop();
-                this.monitor        .Stop();
-            }
+            this.synchronization.Stop();
+            this.monitor        .Stop();
         }
 
         #endregion Operations
 
         #region Update
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
             if (input.State.Keyboard.IsActionTriggered(KeyboardActions.ForceAwake))
             {
@@ -274,7 +265,7 @@
             }
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
             this.monitor.TryStart();
         }

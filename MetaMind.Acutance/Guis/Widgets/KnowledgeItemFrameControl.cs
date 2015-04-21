@@ -79,11 +79,11 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            base          .UpdateInput(input, gameTime);
+            base          .UpdateInput(input, time);
 
-            this.NameFrame.Update(input, gameTime);
+            this.NameFrame.Update(input, time);
         }
 
         protected override void UpdateFrameGeometry()

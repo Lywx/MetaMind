@@ -1,5 +1,6 @@
 namespace MetaMind.Engine.Components.Fonts
 {
+    using System;
     using System.Collections.Generic;
     using System.Globalization;
 
@@ -8,12 +9,22 @@ namespace MetaMind.Engine.Components.Fonts
 
     public class StringDrawer : GameVisualEntity, IStringDrawer
     {
+        #region Dependency
+
+        private SpriteBatch SpriteBatch { get; set; }
+
+        #endregion
 
         #region Constructors
 
-        public StringDrawer()
+        public StringDrawer(SpriteBatch spriteBatch)
         {
-            
+            if (spriteBatch == null)
+            {
+                throw new ArgumentNullException("spriteBatch");
+            }
+
+            this.SpriteBatch = spriteBatch;
         }
 
         #endregion

@@ -50,9 +50,9 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         #region Update
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.UpdateRegionClick(input, gameTime);
+            this.UpdateRegionClick(input, time);
             this.UpdateMouseScroll(input);
             this.UpdateKeyboardMotion(input);
 
@@ -70,7 +70,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
                 }
             }
 
-            this.UpdateItemInput(input, gameTime);
+            this.UpdateItemInput(input, time);
         }
 
         #endregion Update

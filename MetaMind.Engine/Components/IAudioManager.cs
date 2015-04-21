@@ -1,8 +1,9 @@
 namespace MetaMind.Engine.Components
 {
+    using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Audio;
 
-    public interface IAudioManager
+    public interface IAudioManager : IGameComponent
     {
         /// <summary>
         /// Retrieve a cue by name.

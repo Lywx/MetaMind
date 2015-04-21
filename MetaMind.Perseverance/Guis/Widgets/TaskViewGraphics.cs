@@ -26,7 +26,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             this.DrawScrollBar(time);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
             if (View.IsEnabled(ViewState.View_Has_Focus))
             {

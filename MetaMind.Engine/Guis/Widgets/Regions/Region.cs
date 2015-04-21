@@ -59,7 +59,7 @@
         {
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
             if (this.Frame.IsEnabled(FrameState.Mouse_Over))
             {

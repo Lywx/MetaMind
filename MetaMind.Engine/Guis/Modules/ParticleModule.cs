@@ -7,7 +7,7 @@ namespace MetaMind.Engine.Guis.Modules
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-
+    
     /// <summary>
     /// Particle controller relies on implementation of FloatParticle.
     /// </summary>
@@ -46,7 +46,7 @@ namespace MetaMind.Engine.Guis.Modules
                 if (i == this.Particles.Count / 2)
                 {
                     // half additive and half solid
-                    var spriteBatch = graphics.Screen.SpriteBatch;
+                    var spriteBatch = graphics.SpriteBatch;
 
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.Additive);
@@ -56,19 +56,19 @@ namespace MetaMind.Engine.Guis.Modules
             }
         }
 
-        public override void Load(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
+        public override void Load(IGameInputService input, IGameInteropService interop)
         {
         }
 
-        public override void Unload(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
+        public override void Unload(IGameInputService input, IGameInteropService interop)
         {
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
             for (var i = 0; i < this.Particles.Count; ++i)
             {
-                this.Particles[i].Update(gameTime);
+                this.Particles[i].Update(time);
 
                 if (this.Particles[i].Life < 0 ||
                     this.Particles[i].IsOutsideScreen)

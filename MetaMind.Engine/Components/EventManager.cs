@@ -45,32 +45,18 @@ namespace MetaMind.Engine.Components
 
         #endregion
 
-        #region Singleton
-
-        public static EventManager GetComponent(GameEngine gameEngine, int updateOrder)
-        {
-            if (Singleton == null)
-            {
-                Singleton = new EventManager(gameEngine, updateOrder);
-            }
-
-            if (gameEngine != null)
-            {
-                gameEngine.Components.Add(Singleton);
-            }
-
-            return Singleton;
-        }
-
-        private static EventManager Singleton { get; set; }
-
-        #endregion Singleton
-
         #region Constructors
 
-        private EventManager(GameEngine gameEngine, int updateOrder)
-            : base(gameEngine)
+        public EventManager(GameEngine engine, int updateOrder)
+            : base(engine)
         {
+            if (engine == null)
+            {
+                throw new ArgumentNullException("engine");
+            }
+
+            engine.Components.Add(this);
+            
             this.UpdateOrder = updateOrder;
 
             this.knownEvents  = new List<int>();

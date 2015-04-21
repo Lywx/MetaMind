@@ -42,7 +42,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             this.DrawHeart(gameGraphics, alpha);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
             this.UpdateRotation();
         }

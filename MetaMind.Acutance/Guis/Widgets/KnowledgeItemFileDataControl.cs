@@ -38,7 +38,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             ItemData.Name = string.Format(this.filePrompt + "{0}", fileName);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
             if (View.IsEnabled(ViewState.View_Has_Focus))
             {

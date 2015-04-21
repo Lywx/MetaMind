@@ -1,6 +1,5 @@
 namespace MetaMind.Perseverance.Guis.Modules
 {
-    using MetaMind.Engine;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Services;
@@ -32,7 +31,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         #region Load and Unload
 
-        public override void Load(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
+        public override void Load(IGameInputService input, IGameInteropService interop)
         {
             if (this.sleepStoppedEventListener == null)
             {
@@ -42,7 +41,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             interop.Event.AddListener(this.sleepStoppedEventListener);
         }
 
-        public override void Unload(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
+        public override void Unload(IGameInputService input, IGameInteropService interop)
         {
             if (this.sleepStoppedEventListener != null)
             {
@@ -60,8 +59,8 @@ namespace MetaMind.Perseverance.Guis.Modules
         /// A must implementation for widget compatible module.
         /// </summary>
         /// <param name="input"></param>
-        /// <param name="gameTime"></param>
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        /// <param name="time"></param>
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
             if (input.State.Keyboard.IsActionTriggered(KeyboardActions.ForceReset))
             {
@@ -69,7 +68,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             }
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
         }
 
@@ -120,8 +119,8 @@ namespace MetaMind.Perseverance.Guis.Modules
             var captionPosition = new Vector2(graphics.Settings.Width / 2f - 300, 150 + line * Settings.LineHeight);
             var contentPosition = new Vector2(graphics.Settings.Width / 2f + 260, 150 + line * Settings.LineHeight);
 
-            graphics.StringDrawer.DrawString(this.Settings.EntityFont, caption     , captionPosition, color, this.Settings.EntitySize);
-            graphics.StringDrawer.DrawString(this.Settings.EntityFont, presentation, contentPosition, color, this.Settings.EntitySize);
+            graphics.String.DrawString(this.Settings.EntityFont, caption     , captionPosition, color, this.Settings.EntitySize);
+            graphics.String.DrawString(this.Settings.EntityFont, presentation, contentPosition, color, this.Settings.EntitySize);
         }
 
         private void DrawSummaryEntry(IGameGraphicsService graphics, int line, Color color, string caption, object presentedData)
@@ -130,8 +129,8 @@ namespace MetaMind.Perseverance.Guis.Modules
             var contentPosition = new Vector2(graphics.Settings.Width / 2f + 260, 150 + line * Settings.LineHeight);
             var contentString   = string.Format("{0}", presentedData);
 
-            graphics.StringDrawer.DrawString(this.Settings.EntityFont, caption      , captionPosition, color, this.Settings.EntitySize);
-            graphics.StringDrawer.DrawString(this.Settings.EntityFont, contentString, contentPosition, color, this.Settings.EntitySize);
+            graphics.String.DrawString(this.Settings.EntityFont, caption      , captionPosition, color, this.Settings.EntitySize);
+            graphics.String.DrawString(this.Settings.EntityFont, contentString, contentPosition, color, this.Settings.EntitySize);
         }
 
         private void DrawSummaryResult(IGameGraphicsService graphics, int line, Color goodColor, Color badColor, string caption, int computation)
@@ -150,7 +149,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         private void DrawSummaryTitle(IGameGraphicsService graphics, Color color, string title)
         {
-            graphics.StringDrawer.DrawStringCenteredHV(this.Settings.TitleFont, title, this.Settings.TitleCenter, color, this.Settings.TitleSize);
+            graphics.String.DrawStringCenteredHV(this.Settings.TitleFont, title, this.Settings.TitleCenter, color, this.Settings.TitleSize);
         }
 
         #endregion 

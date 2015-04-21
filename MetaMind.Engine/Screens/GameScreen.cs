@@ -136,17 +136,17 @@ namespace MetaMind.Engine.Screens
 
         #region Engine Data
 
-        protected IGameInteropService Interop { get; set; }
+        protected Services.IGameInteropService Interop { get; set; }
 
         #endregion Engine Data
 
         #region Load and Unload
 
-        public virtual void LoadContent(IGameFile gameFile)
+        public virtual void LoadContent(IGameInteropService interop)
         {
         }
 
-        public void LoadInterop(IGameInteropService interop)
+        public void LoadInterop(Services.IGameInteropService interop)
         {
             if (this.Interop == null)
             {
@@ -154,11 +154,11 @@ namespace MetaMind.Engine.Screens
             }
         }
 
-        public virtual void UnloadContent(IGameFile gameFile)
+        public virtual void UnloadContent(IGameInteropService interop)
         {
         }
 
-        public void UnloadInterop(IGameInteropService interop)
+        public void UnloadInterop(Services.IGameInteropService interop)
         {
         }
 
@@ -181,28 +181,19 @@ namespace MetaMind.Engine.Screens
         {
         }
 
-        public virtual void UpdateAudio(IGameAudioService audio, GameTime gameTime)
-        {
-            // TODO: REmove?
-        }
-
-        public virtual void UpdateContent(IGameFile gameFile, GameTime gameTime)
-        {
-        }
-
         public virtual void UpdateGraphics(IGameGraphicsService graphics, GameTime gameTime)
         {
         }
 
-        public virtual void UpdateInput(IGameInputService input, GameTime gameTime)
+        public virtual void UpdateInput(IGameInputService input, GameTime time)
         {
         }
 
-        public virtual void UpdateInterop(IGameInteropService interop, GameTime gameTime)
+        public virtual void UpdateInterop(IGameInteropService interop, GameTime time)
         {
         }
 
-        public virtual void UpdateScreen(IGameGraphicsService graphics, GameTime gameTime, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
+        public virtual void UpdateScreen(IGameInteropService interop, GameTime time, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
         {
             this.HasOtherScreenFocus = hasOtherScreenFocus;
 
@@ -211,16 +202,16 @@ namespace MetaMind.Engine.Screens
                 // If the screen is going away to die, it should transition off.
                 this.screenState = GameScreenState.TransitionOff;
 
-                if (!this.UpdateTransition(gameTime, this.transitionOffTime, 1))
+                if (!this.UpdateTransition(time, this.transitionOffTime, 1))
                 {
                     // When the transition finishes, remove the screen.
-                    graphics.Screen.RemoveScreen(this);
+                    interop.Screen.RemoveScreen(this);
                 }
             }
             else if (isCoveredByOtherScreen)
             {
                 // If the screen is covered by another, it should transition off.
-                if (this.UpdateTransition(gameTime, this.transitionOffTime, 1))
+                if (this.UpdateTransition(time, this.transitionOffTime, 1))
                 {
                     // Still busy transitioning.
                     this.screenState = GameScreenState.TransitionOff;
@@ -234,7 +225,7 @@ namespace MetaMind.Engine.Screens
             else
             {
                 // Otherwise the screen should transition on and become active.
-                if (this.UpdateTransition(gameTime, this.transitionOnTime, -1))
+                if (this.UpdateTransition(time, this.transitionOnTime, -1))
                 {
                     // Still busy transitioning.
                     this.screenState = GameScreenState.TransitionOn;

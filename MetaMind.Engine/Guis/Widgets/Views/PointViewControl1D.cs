@@ -126,18 +126,18 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             get { return View.IsEnabled(ViewState.View_Active); }
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
             if (View.IsEnabled(ViewState.View_Active))
             {
                 this.UpdateViewLogics();
-                this.UpdateItem(gameTime);
+                this.UpdateItem(time);
             }
             else
             {
                 foreach (var item in View.Items)
                 {
-                    item.UpdateView(gameTime);
+                    item.UpdateView(time);
                 }
             }
         }
@@ -186,10 +186,10 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
             this.UpdateMouseScroll(input);
-            this.UpdateItemInput(input, gameTime);
+            this.UpdateItemInput(input, time);
         }
 
         protected void UpdateItemInput(IGameInputService input, GameTime gameTime)

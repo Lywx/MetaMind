@@ -11,6 +11,8 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
+    using IGameInteropService = MetaMind.Engine.IGameInteropService;
+
     public class BackgroundScreen : GameScreen
     {
         private readonly ParticleModule particles = new ParticleModule(new Engine.Guis.Modules.ParticleModuleSettings(Acutance.Session.Random, FloatParticle.ParticleFromBelow, 4, 2));
@@ -29,12 +31,12 @@
 
         #region Load and Unload
 
-        public override void LoadContent(IGameFile gameFile)
+        public override void LoadContent(IGameInteropService interop)
         {
-            this.backgroundTexture = gameFile.Content.Load<Texture2D>(@"Textures\Screens\Background\Sea Of Mind");
+            this.backgroundTexture = interop.Content.Load<Texture2D>(@"Textures\Screens\Background\Sea Of Mind");
         }
 
-        public override void UnloadContent(IGameFile gameFile)
+        public override void UnloadContent(IGameInteropService interop)
         {
         }
 
@@ -57,10 +59,10 @@
             spriteBatch.End();
         }
 
-        public override void UpdateScreen(IGameGraphicsService graphics, GameTime gameTime, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
+        public override void UpdateScreen(Engine.Services.IGameInteropService interop, GameTime time, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
         {
-            this.particles.Update(gameTime);
-            base          .UpdateScreen(graphics, gameTime, hasOtherScreenFocus, false);
+            this.particles.Update(time);
+            base          .UpdateScreen(interop, time, hasOtherScreenFocus, false);
         }
 
         #endregion Update and Draw

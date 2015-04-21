@@ -7,6 +7,8 @@
 
 namespace MetaMind.Engine.Components.Inputs
 {
+    using Microsoft.Xna.Framework;
+
     public class NullInputState : IInputState
     {
         private static readonly KeyboardInputState keyboard = new KeyboardInputState();
@@ -27,6 +29,14 @@ namespace MetaMind.Engine.Components.Inputs
             {
                 return mouse;
             }
+        }
+
+        public void Initialize()
+        {
+        }
+
+        public void UpdateInput(GameTime gameTime)
+        {
         }
     }
 }

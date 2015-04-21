@@ -72,7 +72,7 @@
             this.HistoricalSleepSpan = TimeSpan.Zero;
         }
 
-        virtual ~Consciousness()
+        ~Consciousness()
         {
         }
 

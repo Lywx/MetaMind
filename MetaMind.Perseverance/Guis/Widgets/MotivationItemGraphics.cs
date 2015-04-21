@@ -95,9 +95,9 @@ namespace MetaMind.Perseverance.Guis.Widgets
             this.DrawTasks(time, alpha);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
-            this.symbol.Update(gameTime);
+            this.symbol.Update(time);
         }
 
         protected override void DrawId(IGameGraphicsService graphics, byte alpha)

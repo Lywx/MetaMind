@@ -26,16 +26,16 @@ namespace MetaMind.Engine.Guis
             this.Graphics.Draw(graphics, time, alpha);
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.Control .Update(gameTime);
-            this.Graphics.Update(gameTime);
+            this.Control .Update(time);
+            this.Graphics.Update(time);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
-            this.Control .Update(gameTime);
-            this.Graphics.Update(gameTime);
+            this.Control .Update(time);
+            this.Graphics.Update(time);
         }
     }
 }

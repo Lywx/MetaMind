@@ -48,11 +48,11 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Update
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.UpdateRegionClick(input, gameTime);
+            this.UpdateRegionClick(input, time);
             this.UpdateMouseScroll(input);
-            this.UpdateKeyboardMotion(input, gameTime);
+            this.UpdateKeyboardMotion(input, time);
 
             if (this.AcceptInput)
             {
@@ -95,7 +95,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                 }
             }
 
-            this.UpdateItemInput(input, gameTime);
+            this.UpdateItemInput(input, time);
         }
 
         protected override void UpdateViewFocus()

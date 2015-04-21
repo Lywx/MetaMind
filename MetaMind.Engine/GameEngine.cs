@@ -1,148 +1,64 @@
-﻿namespace MetaMind.Engine
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="GameEngine.cs" company="UESTC">
+//   Copyright (c) 2015 Wuxiang Lin
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace MetaMind.Engine
 {
     using System;
 
     using MetaMind.Engine.Components;
-    using MetaMind.Engine.Components.Fonts;
-    using MetaMind.Engine.Components.Graphics;
-    using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
-    public sealed class GameEngine : Microsoft.Xna.Framework.Game, IGameEngine
+    public class GameEngine : Microsoft.Xna.Framework.Game, IGameEngine
     {
-        #region Components
+        public GameEngine()
+        {
+            this.Input    = new GameEngineInput(this);
+            this.Interop  = new GameEngineInterop(this);
+            this.Graphics = new GameEngineGraphics(this);
+            
+            this.Numerical = new GameEngineNumerical();
 
-        #region Audio
+            Service = new GameEngineService(
+                new GameEngineGraphicsService(this.Graphics),
+                new GameEngineInputService(this.Input),
+                new GameEngineInteropService(this.Interop),
+                new GameEngineNumericalService(this.Numerical));
 
-        public AudioManager AudioManager { get; private set; }
-
-        #endregion
-
-        #region File
-
-        public FolderManager Folder { get; private set; }
-
-        #endregion
-
-        #region Graphics
-
-        public FontManager FontManager { get; private set; }
-
-        public StringDrawer StringDrawer { get; set; }
-
-        public GraphicsManager GraphicsManager { get; private set; }
-
-        public GraphicsSettings GraphicsSettings { get; set; }
-
-        public ScreenManager Screen { get; private set; }
-
-        #endregion
-
-        #region Input
-
-        public InputEvent InputEvent { get; private set; }
-
-        public InputState InputState { get; private set; }
-
-        #endregion
-
-        #region Interop
-
-        public EventManager Event { get; private set; }
-
-        public ProcessManager Process { get; private set; }
-
-        #endregion
-
-        public GameManager Games { get; private set; }
+            this.Content.RootDirectory = "Content";
+        }
 
         public static IGameService Service { get; private set; }
 
-        #endregion Components
+        public IGameInput Input { get; private set; }
 
-        #region Constructors
+        public Components.IGameInterop Interop { get; private set; }
 
-        public GameEngine()
-        {
-            // All necessary components during construction are loaded here.
-            // Other components are loaded in initialization.
+        public IGameGraphics Graphics { get; private set; }
 
-            // Graphics
-            this.GraphicsSettings = new GraphicsSettings();
-            this.GraphicsManager  = new GraphicsManager(this, this.GraphicsSettings);
-
-            // Screen
-            this.Screen = ScreenManager.GetComponent(this, new ScreenSettings(), 3);
-
-            // Content
-            this.Content.RootDirectory = "Content";
-
-            // Game
-            this.Games = GameManager.GetComponent(this);
-        }
-
-        #endregion Consructors
-
-        #region Initializations
+        public IGameNumerical Numerical { get; private set; }
 
         protected override void Initialize()
         {
-            // Graphics
-            this.GraphicsManager .Initialize();
-
-            // Audio
-            this.AudioManager = AudioManager.GetComponent(this, int.MaxValue);
-
-            // Folder
-            this.Folder = FolderManager.GetComponent();
-
-            // Process
-            this.Process = ProcessManager.GetComponent(this, 4);
-
-            // Event
-            this.Event = EventManager.GetComponent(this, 3);
-
-            // Input
-            this.InputEvent = InputEvent.GetComponent(this, 1);
-            this.InputState = InputState.GetComponent(this, 2);
-
-            // Font
-            this.FontManager = FontManager.GetComponent(this);
-
-            // Service
-            Service = new GameEngineService(this.);
-
-            // Extra components as GameEntity
-            this.StringDrawer = new StringDrawer();
+            this.Input    .Initialize();
+            this.Interop  .Initialize();
+            this.Graphics .Initialize();
+            this.Numerical.Initialize();
 
             base.Initialize();
         }
 
-        #endregion Initializations
-
-        #region Load and Unload
-
         protected override void LoadContent()
         {
-            base.LoadContent();
         }
 
         protected override void UnloadContent()
         {
-            base.UnloadContent();
-        }
-
-        #endregion
-
-        #region Update and Draw
-
-        protected override void Draw(GameTime gameTime)
-        {
-            this.GraphicsDevice.Clear(Color.Black);
-
-            base.Draw(gameTime);
         }
 
         protected override void Update(GameTime gameTime)
@@ -154,26 +70,23 @@
         private void UpdateInput(GameTime gameTime)
         {
             // TODO: Playtest
-
             this.Input.UpdateInput(gameTime);
 
-            this.InputEvent.UpdateInput(gameTime);
-            this.InputState.UpdateInput(gameTime);
-
             // TODO: More
-            this.Screen    .UpdateInput(gameTime);
+            this.Interop.UpdateInput(gameTime);
         }
 
-        #endregion Update and Draw
+        protected override void Draw(GameTime gameTime)
+        {
+            this.GraphicsDevice.Clear(Color.Black);
 
-        #region System Events
+            base.Draw(gameTime);
+        }
 
         protected override void OnExiting(object sender, EventArgs args)
         {
-            this.Games.OnExiting();
-            base      .OnExiting(sender, args);
+            this.Interop.OnExiting();
+            base.        OnExiting(sender, args);
         }
-
-        #endregion 
     }
 }

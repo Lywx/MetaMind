@@ -41,7 +41,7 @@
             this.DrawId(graphics, alpha);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
         }
 

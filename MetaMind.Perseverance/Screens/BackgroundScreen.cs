@@ -11,6 +11,7 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
+    using IGameInteropService = MetaMind.Engine.IGameInteropService;
     using ParticleModule = MetaMind.Perseverance.Guis.Modules.ParticleModule;
 
     public class BackgroundScreen : GameScreen
@@ -31,16 +32,16 @@
 
         #region Load and Unload
 
-        public override void LoadContent(IGameFile gameFile)
+        public override void LoadContent(IGameInteropService interop)
         {
             this.particles =
                 new ParticleModule(
                     new ParticleModuleSettings(Perseverance.Session.Random, FloatParticle.ParticleFromSide, 8, 2));
 
-            this.background = gameFile.Content.Load<Texture2D>(@"Textures\Screens\Background\Sea Of Mind");
+            this.background = interop.Content.Load<Texture2D>(@"Textures\Screens\Background\Sea Of Mind");
         }
 
-        public override void UnloadContent(IGameFile gameFile)
+        public override void UnloadContent(IGameInteropService interop)
         {
             this.background.Dispose();
             this.background = null;
@@ -67,9 +68,9 @@
             spriteBatch.End();
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.particles.UpdateInput(input, gameTime);
+            this.particles.UpdateInput(input, time);
         }
 
         public override void Update(GameTime gameTime)

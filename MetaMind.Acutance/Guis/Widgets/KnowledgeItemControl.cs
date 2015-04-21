@@ -86,11 +86,11 @@ namespace MetaMind.Acutance.Guis.Widgets
             get { return this.Item.IsEnabled(ItemState.Item_Editing) || this.Item.IsEnabled(ItemState.Item_Pending); }
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
             // mouse and keyboard in modifier
             // -----------------------------------------------------------------
-            base.UpdateInput(, gameTime);
+            base.UpdateInput(, time);
 
             // keyboard
             // -----------------------------------------------------------------

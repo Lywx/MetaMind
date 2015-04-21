@@ -2,7 +2,6 @@ namespace MetaMind.Acutance.Screens
 {
     using System;
 
-    using MetaMind.Engine;
     using MetaMind.Engine.Screens;
     using MetaMind.Engine.Services;
 
@@ -36,20 +35,20 @@ namespace MetaMind.Acutance.Screens
             spriteBatch.End();
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.multiplexer.UpdateInput(input, gameTime);
+            this.multiplexer.UpdateInput(input, time);
         }
 
-        public override void UpdateScreen(IGameGraphicsService graphics, GameTime gameTime, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
+        public override void UpdateScreen(IGameInteropService interop, GameTime time, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
         {
             if (this.IsActive && !isCoveredByOtherScreen)
             {
-                graphics.MessageDrawer.Update(gameTime);
+                interop.MessageDrawer.Update(time);
 
             }
 
-            base.UpdateScreen(graphics, gameTime, hasOtherScreenFocus, isCoveredByOtherScreen);
+            base.UpdateScreen(interop, time, hasOtherScreenFocus, isCoveredByOtherScreen);
         }
 
         private void MultiplexerScreenExiting(object sender, EventArgs e)

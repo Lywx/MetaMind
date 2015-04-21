@@ -63,10 +63,10 @@ namespace MetaMind.Engine.Guis.Particles
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            graphics.Screen.SpriteBatch.FillRectangle(this.Position, this.size, this.Color, this.Angle);
+            graphics.SpriteBatch.FillRectangle(this.Position, this.size, this.Color, this.Angle);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
             // smooth disappearance
             if (this.Life < this.bubbleSeconds)
@@ -81,7 +81,7 @@ namespace MetaMind.Engine.Guis.Particles
                 Random.Next((int)-this.pressure.X, (int)this.pressure.X),
                 Random.Next((int)-this.pressure.Y, (int)this.pressure.Y));
 
-            base.Update(gameTime);
+            base.Update(time);
         }
 
         #region Particle Configuration

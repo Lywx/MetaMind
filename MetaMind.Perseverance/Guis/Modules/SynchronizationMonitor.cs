@@ -10,31 +10,39 @@
 
     using Microsoft.Xna.Framework;
 
-    using Game = Microsoft.Xna.Framework.Game;
-    using GameComponent = Microsoft.Xna.Framework.GameComponent;
-
     /// <summary>
     /// An attention monitor during synchronization
     /// </summary>
-    public class SynchronizationMonitor : GameComponent
+    public class SynchronizationMonitor : GameEntity
     {
+        #region Cues
+
+        public string SynchronizingFalseCue = "Windows Proximity Connection";
+
+        public string SynchronizingTrueCue = "Windows Proximity Notification";
+
+        #endregion
+
         public TimeSpan AttentionSpan = TimeSpan.FromSeconds(5);
-
-        public string NotSynchronizingCue = "Windows Proximity Connection";
-        public string SynchronizingCue    = "Windows Proximity Notification";
-
+        
         private bool     actived;
         private DateTime alertMoment = DateTime.Now;
 
-        public SynchronizationMonitor(Game game, ISynchronization synchronization)
-            : base(game)
-        {
-            this.Synchronization = synchronization;
-
-            this.Game.Components.Add(this);
-        }
+        #region Dependency
 
         public ISynchronization Synchronization { get; set; }
+
+        #endregion
+
+        public SynchronizationMonitor(ISynchronization synchronization)
+        {
+            if (synchronization == null)
+            {
+                throw new ArgumentNullException("synchronization");
+            }
+
+            this.Synchronization = synchronization;
+        }
 
         public void Start()
         {
@@ -60,14 +68,14 @@
             {
                 if (this.Synchronization.Enabled)
                 {
-                    GameEngine.AudioManager.PlayMusic(this.SynchronizingCue);
+                    this.Interop.Audio.PlayMusic(this.SynchronizingTrueCue);
 
                     this.Confirm();
                     this.Alert();
                 }
                 else
                 {
-                    GameEngine.AudioManager.PlayMusic(this.NotSynchronizingCue);
+                    this.Interop.Audio.PlayMusic(this.SynchronizingFalseCue);
 
                     this.Confirm();
                     this.Alert();
@@ -77,8 +85,7 @@
 
         private void Alert()
         {
-            var alertedEvent = new Event((int)SessionEventType.SyncAlerted, new SynchronizationAlertedEventArgs());
-            gameInterop.Event.QueueEvent(alertedEvent);
+            this.Interop.Event.QueueEvent(new Event((int)SessionEventType.SyncAlerted, new SynchronizationAlertedEventArgs()));
         }
 
         private void Confirm()

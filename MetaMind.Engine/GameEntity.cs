@@ -24,12 +24,8 @@ namespace MetaMind.Engine
         #endregion Event Data
 
         #region Engine Service
-
-        protected IGameAudioService Audio { get; private set; }
-
-        protected IGameFile GameFile { get; set; }
         
-        protected IGameInteropService Interop { get; private set; }
+        protected Services.IGameInteropService Interop { get; private set; }
 
         protected IGameNumericalService Numerical { get; private set; }
 
@@ -37,20 +33,12 @@ namespace MetaMind.Engine
 
         #region Constructors
 
-        protected GameEntity(IGameService service)
+        protected GameEntity()
         {
-            if (service == null)
-            {
-                throw new ArgumentNullException("service");
-            }
-
+            this.Interop   = GameEngine.Service.Interop;
+            this.Numerical = GameEngine.Service.Numerical;
 
             this.Listeners = new List<IListener>();
-
-            this.Audio     = service.Audio;
-            this.GameFile      = gameFile;
-            this.Interop   = gameInterop;
-            this.Numerical = gameNumerical;
         }
 
         #endregion Constructors
@@ -110,7 +98,7 @@ namespace MetaMind.Engine
 
         #region Load and Unload
 
-        public virtual void LoadContent(IGameFile gameFile)
+        public virtual void LoadContent(IGameInteropService interop)
         {
         }
 
@@ -123,7 +111,7 @@ namespace MetaMind.Engine
             this.Listeners.ForEach(l => interop.Event.AddListener(l));
         }
 
-        public virtual void UnloadContent(IGameFile gameFile)
+        public virtual void UnloadContent(IGameInteropService interop)
         {
         }
 
@@ -131,7 +119,7 @@ namespace MetaMind.Engine
         {
         }
 
-        public virtual void UnloadInterop(IGameInteropService interop)
+        public virtual void UnloadInterop(Services.IGameInteropService interop)
         {
             // TODO: UnloadInterop How to design
             this.Listeners.ForEach(l => interop.Event.RemoveListener(l));
@@ -166,15 +154,15 @@ namespace MetaMind.Engine
             }
         }
 
-        public virtual void Update(GameTime gameTime)
+        public virtual void Update(GameTime time)
         {
         }
 
-        public virtual void UpdateContent(IGameFile gameFile, GameTime time)
+        public virtual void UpdateContent(IGameInteropService interop, GameTime time)
         {
         }
 
-        public virtual void UpdateInterop(IGameInteropService interop, GameTime time)
+        public virtual void UpdateInterop(Services.IGameInteropService interop, GameTime time)
         {
         }
 

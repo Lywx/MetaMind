@@ -10,6 +10,7 @@
 
     using Microsoft.Xna.Framework;
 
+    using IGameInteropService = MetaMind.Engine.IGameInteropService;
     using IUpdateable = Microsoft.Xna.Framework.IUpdateable;
 
     public class SummaryScreen : GameScreen
@@ -44,12 +45,12 @@
             spriteBatch.End();
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.summary.UpdateInput(input, gameTime);
+            this.summary.UpdateInput(input, time);
         }
 
-        public override void LoadContent(IGameFile gameFile)
+        public override void LoadContent(IGameInteropService interop)
         {
         }
 

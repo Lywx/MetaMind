@@ -90,15 +90,15 @@ namespace MetaMind.Engine.Guis.Particles
 
         #region Update
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
-            this.AngularVelocity += (float)gameTime.ElapsedGameTime.TotalSeconds * this.AngularAcceleration;
-            this.Angle           += (float)gameTime.ElapsedGameTime.TotalSeconds * this.AngularVelocity;
+            this.AngularVelocity += (float)time.ElapsedGameTime.TotalSeconds * this.AngularAcceleration;
+            this.Angle           += (float)time.ElapsedGameTime.TotalSeconds * this.AngularVelocity;
 
-            this.Velocity += (float)gameTime.ElapsedGameTime.TotalSeconds * this.Acceleration;
-            this.Position += (float)gameTime.ElapsedGameTime.TotalSeconds * this.Velocity;
+            this.Velocity += (float)time.ElapsedGameTime.TotalSeconds * this.Acceleration;
+            this.Position += (float)time.ElapsedGameTime.TotalSeconds * this.Velocity;
 
-            this.Life -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            this.Life -= (float)time.ElapsedGameTime.TotalSeconds;
         }
 
         #endregion Update

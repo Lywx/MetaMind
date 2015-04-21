@@ -9,9 +9,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 {
     using FastMember;
 
-    using MetaMind.Engine;
     using MetaMind.Engine.Components.Inputs;
-    using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Services;
@@ -65,7 +63,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             }
         }
 
-        public override void Load(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
+        public override void Load(IGameInputService input, IGameInteropService interop)
         {
             // performance penalty due to dynamic type
             // performance is still bad even with fast member
@@ -86,16 +84,16 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            this.View.Draw(time, alpha);
+            this.View.Draw(graphics, time, alpha);
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
             // mouse
             //-----------------------------------------------------------------
             if (this.View.Control.Active)
             {
-                this.View.Control.Region.UpdateInput(gameTime);
+                this.View.Control.Region.UpdateInput(time);
             }
 
             // directly update through view control
@@ -211,19 +209,19 @@ namespace MetaMind.Perseverance.Guis.Modules
             {
                 foreach (var item in this.View.Items.ToArray())
                 {
-                    item.UpdateInput(input, gameTime);
+                    item.UpdateInput(input, time);
                 }
             }
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
             // make sure that task region and task items all follow the host location changes
             this.View.ViewSettings.PointStart = ExtVector2.ToPoint(
                     this.FastHostControl["RootFrame"].Center.ToVector2() + 
                     this.FastHostControl["ViewSettings"].TracerMargin);
 
-            this.View.Update(gameTime);
+            this.View.Update(time);
         }
 
         #endregion Update and Draw

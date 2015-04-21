@@ -61,11 +61,11 @@ namespace MetaMind.Perseverance.Guis.Widgets
             }
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
             if (this.TaskModule != null)
             {
-                this.TaskModule.Update(gameTime);
+                this.TaskModule.Update(time);
                 this.TaskModule.Load(gameFile, gameInput, gameInterop, gameSound);
 
                 if (!this.TaskModule.View.IsEnabled(ViewState.View_Has_Focus))
@@ -75,11 +75,11 @@ namespace MetaMind.Perseverance.Guis.Widgets
             }
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
             if (this.TaskModule != null )
             {
-                this.TaskModule.UpdateInput(input, gameTime);
+                this.TaskModule.UpdateInput(input, time);
             }
         }
     }
