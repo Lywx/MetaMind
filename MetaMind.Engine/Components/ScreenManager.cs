@@ -142,9 +142,12 @@ namespace MetaMind.Engine.Components
         {
             this.isInitialized = true;
 
+            // Register service before LoadContent, which is called by base.Initialize()
             this.Graphics = GameEngine.Service.Graphics;
             this.Input    = GameEngine.Service.Input;
             this.Interop  = GameEngine.Service.Interop;
+
+            base.Initialize();            
         }
 
         #endregion Initialization

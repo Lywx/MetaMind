@@ -24,19 +24,9 @@ namespace MetaMind.Engine.Guis.Elements
         #region Constructors and Destructors
 
         protected FrameEntity()
-            : this(Input.Event, Input.State)
         {
-        }
-
-        protected FrameEntity(IInputEvent inputEvent, IInputState inputState)
-        {
-            if (!isFlyweightSeviceLoaded)
-            {
-                InputEvent = inputEvent;
-                InputState = inputState;
-
-                isFlyweightSeviceLoaded = true;
-            }
+            InputEvent = this.Input.Event;
+            InputState = this.Input.State;
 
             this.states = new bool[(int)FrameState.StateNum];
         }

@@ -1,13 +1,12 @@
 namespace MetaMind.Perseverance.Components
 {
+    using MetaMind.Engine;
     using MetaMind.Perseverance.Sessions;
-
-    using Microsoft.Xna.Framework;
 
     public class SaveManager : Engine.Components.SaveManager
     {
-        private SaveManager(Game gameEngine)
-            : base(gameEngine)
+        private SaveManager(GameEngine engine)
+            : base(engine)
         {
         }
 

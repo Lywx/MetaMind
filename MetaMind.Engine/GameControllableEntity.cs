@@ -52,25 +52,13 @@ namespace MetaMind.Engine
 
         #region Engine Service
 
-        private static bool isFlyweightServiceLoaded;
-
-        protected static IGameInputService Input { get; private set; }
+        protected IGameInputService Input { get; private set; }
 
         #endregion
 
         public GameControllableEntity()
-            : this(GameEngine.Service.Input)
         {
-        }
-
-        public GameControllableEntity(IGameInputService input)
-        {
-            if (!isFlyweightServiceLoaded)
-            {
-                Input = input;
-
-                isFlyweightServiceLoaded = true;
-            }
+            this.Input = GameEngine.Service.Input;
         }
 
         #endregion Events

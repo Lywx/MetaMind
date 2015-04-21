@@ -18,6 +18,8 @@ namespace MetaMind.Engine
     {
         public GameEngine()
         {
+            // Graphics need to be constructed before Interop and Input 
+            // for Interop.Screen relies on Graphics.SpriteBatch.
             this.Graphics = new GameEngineGraphics(this);
 
             this.Interop = new GameEngineInterop(this);
@@ -25,6 +27,8 @@ namespace MetaMind.Engine
             
             this.Numerical = new GameEngineNumerical();
 
+            // Service is loaded after GameEngine.Initialize. But it has to 
+            // be constructed after Components.
             Service = new GameEngineService(
                 new GameEngineGraphicsService(this.Graphics),
                 new GameEngineInputService(this.Input),
@@ -57,6 +61,7 @@ namespace MetaMind.Engine
 
         protected override void LoadContent()
         {
+            
         }
 
         protected override void UnloadContent()

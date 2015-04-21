@@ -144,7 +144,6 @@
     <Compile Include="Guis\Modules\SynchronizationModuleSynchronizationStopListener.cs" />
     <Compile Include="Guis\Widgets\TimelineFlash.cs" />
     <Compile Include="Guis\Widgets\TimelineScale.cs" />
-    <Compile Include="Guis\Widgets\TimelineText.cs" />
     <Compile Include="Guis\Widgets\Banner.cs" />
     <Compile Include="Guis\Widgets\TaskItemControl.cs" />
     <Compile Include="Guis\Widgets\TaskItemFactory.cs" />

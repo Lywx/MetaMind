@@ -15,11 +15,11 @@
     // FIXME: static ?
     public static class ScheduleLoader
     {
-        public static List<Schedule> Load(IConfigurationFileLoader fileLoader)
+        public static List<Schedule> Load(IConfigurationLoader loader)
         {
             var todaySchedules = new List<Schedule>();
 
-            var scheduleFolderPath = LoadScheduleFolderPath(fileLoader);
+            var scheduleFolderPath = LoadScheduleFolderPath(loader);
 
             try
             {
@@ -55,9 +55,9 @@
             return fromFile.Where(schedule => sameWeekday(schedule) || repeatEveryday(schedule)).ToList();
         }
 
-        private static string LoadScheduleFolderPath(IConfigurationFileLoader fileLoader)
+        private static string LoadScheduleFolderPath(IConfigurationLoader loader)
         {
-            var dict = ConfigurationFileLoader.LoadUniquePairs(fileLoader);
+            var dict = ConfigurationFileLoader.LoadUniquePairs(loader);
 
             var schedulePath = FolderManager.DataPath(dict["ScheduleFolder"]);
             return schedulePath;

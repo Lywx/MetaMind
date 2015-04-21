@@ -31,9 +31,21 @@ namespace MetaMind.Engine.Services
             }
         }
 
-        public ContentManager Content { get; private set; }
+        public ContentManager Content
+        {
+            get
+            {
+                return this.interop.Content;
+            }
+        }
 
-        public FolderManager Folder { get; private set; }
+        public FolderManager Folder
+        {
+            get
+            {
+                return this.interop.Folder;
+            }
+        }
 
         public IGameEngine Engine
         {

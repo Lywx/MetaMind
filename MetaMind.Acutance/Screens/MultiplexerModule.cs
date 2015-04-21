@@ -31,13 +31,13 @@ namespace MetaMind.Acutance.Screens
             this.synchronization.Draw(graphics, time, alpha);
         }
 
-        public override void Load(IGameInteropService interop, IGameInputService input, Engine.Services.IGameInteropService interop, IGameAudioService audio)
+        public override void Load(IGameInputService input, Engine.Services.IGameInteropService interop)
         {
             this.multiplexer    .Load(gameFile, input, interop, audio);
             this.synchronization.Load(gameFile, input, interop, audio);
         }
 
-        public override void Unload(IGameInteropService interop, IGameInputService input, Engine.Services.IGameInteropService interop, IGameAudioService audio)
+        public override void Unload(IGameInputService input, Engine.Services.IGameInteropService interop)
         {
             this.multiplexer    .Unload(gameFile, input, interop, audio);
             this.synchronization.Unload(gameFile, input, interop, audio);

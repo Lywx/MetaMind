@@ -7,11 +7,13 @@
 
 namespace MetaMind.Engine.Guis.Particles
 {
+    using System;
+
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
+
     using Primtives2D;
-    using System;
 
     public class FloatParticle : Particle, IRandomParticle
     {

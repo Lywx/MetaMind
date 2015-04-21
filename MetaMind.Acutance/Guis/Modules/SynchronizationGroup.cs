@@ -3,17 +3,14 @@
     using System;
     using System.ServiceModel;
 
-    using MetaMind.Engine;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Services;
-    using MetaMind.Perseverance.Concepts;
+    using MetaMind.Perseverance.Concepts.Cognitions;
     using MetaMind.Perseverance.Guis.Modules;
 
     using Microsoft.Xna.Framework;
 
     using Primtives2D;
-
-    using IGameInteropService = MetaMind.Engine.IGameInteropService;
 
     public class SynchronizationGroup : Group<SynchronizationGroupSettings>
     {
@@ -74,11 +71,11 @@
             }
         }
 
-        public void Load(IGameInteropService interop, IGameInputService input, Engine.Services.IGameInteropService interop, IGameAudioService audio)
+        public void Load(IGameInputService input, Engine.Services.IGameInteropService interop)
         {
         }
 
-        public void Unload(IGameInteropService interop, IGameInputService input, Engine.Services.IGameInteropService interop, IGameAudioService audio)
+        public void Unload(IGameInputService input, Engine.Services.IGameInteropService interop)
         {
         }
 

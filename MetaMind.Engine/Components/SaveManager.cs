@@ -6,18 +6,19 @@ namespace MetaMind.Engine.Components
 
     public abstract class SaveManager : GameComponent, ISaveManager
     {
-        public static ISaveManager GetComponent<T>(Func<GameEngine, T> create, GameEngine gameEngine) where T : ISaveManager
-        {
-            return create(gameEngine);
-        }
-
         private bool isAutoSaved;
 
         #region Constructors
 
-        protected SaveManager(GameEngine gameEngine)
-            : base(gameEngine)
+        protected SaveManager(GameEngine engine)
+            : base(engine)
         {
+            if (engine == null)
+            {
+                throw new ArgumentNullException("engine");
+            }
+
+            engine.Components.Add(this);
         }
 
         #endregion

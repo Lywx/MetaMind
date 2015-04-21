@@ -21,7 +21,7 @@
         }
     }
 
-    public class TimelineFlash
+    public class TimelineFlash : GameControllableEntity
     {
         private FlashSettings flashSettings;
 
@@ -52,9 +52,9 @@
             Primitives2D.FillRectangle(ScreenManager.SpriteBatch, this.position.ToPoint().ToRectangleCorner(this.size.ToPoint()), this.color.MakeTransparent(alpha));
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
-            if (this.state == LightState.Static && InputSequenceManager.Mouse.IsButtonLeftClicked)
+            if (this.state == LightState.Static && this.Input.State.Mouse.IsButtonLeftClicked)
             {
                 this.state = LightState.Increment;
             }

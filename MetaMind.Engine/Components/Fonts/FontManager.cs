@@ -47,9 +47,12 @@ namespace MetaMind.Engine.Components.Fonts
 
         #endregion
 
-        public void Initialize()
+        public override void Initialize()
         {
+            // It has to register service before LoadContent.
             this.Interop = GameEngine.Service.Interop;
+
+            base.Initialize();
 
             FontExt.Initialize(this);
         }

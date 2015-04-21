@@ -69,20 +69,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         #region Constructors
 
         public ViewItemCharModifier(IViewItem item)
-            : this(item, Input.Event)
-        {
-        }
-
-        public ViewItemCharModifier(IViewItem item, IInputEvent inputEvent)
             : base(item)
         {
-            if (!isFlyweightServiceLoaded)
-            {
-                InputEvent = inputEvent;
-
-                isFlyweightServiceLoaded = true;
-            }
-
             InputEvent.CharEntered += this.DetectCharEntered;
             InputEvent.KeyDown     += this.DetectEnterKeyDown;
         }

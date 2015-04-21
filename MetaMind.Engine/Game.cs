@@ -24,16 +24,12 @@ namespace MetaMind.Engine
         protected Game(GameEngine engine)
             : base(engine)
         {
+            // Callled after construction of GameEngine
+            this.Interop = GameEngine.Service.Interop;
+            this.Interop.Game.Add(this);
         }
 
         #endregion
-
-        public override void Initialize()
-        {
-            this.Interop = GameEngine.Service.Interop;
-            
-            this.Interop.Game.Add(this);
-        }
 
         #region IGame
 

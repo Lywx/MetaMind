@@ -10,14 +10,12 @@ namespace MetaMind.Acutance.Guis.Modules
 
     using Microsoft.Xna.Framework;
 
-    using IGameInteropService = MetaMind.Engine.IGameInteropService;
-
-    public class MultiplexerGroup : Group<MultiplexerGroupSettings>, IConfigurationFileLoader
+    public class MultiplexerGroup : Group<MultiplexerGroupSettings>, IConfigurationLoader
     {
         #region Events
 
         // TODO: Redesign events
-        private void LoadEvents(Engine.Services.IGameInteropService interop)
+        private void LoadEvents(IGameInteropService interop)
         {
             // Module View 
             this.Listeners.Add(new MultiplexerGroupModuleCreatedListener(this.ModuleView));
@@ -90,7 +88,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
         #region Load and Unload
 
-        public void Load(IGameInteropService interop, IGameInputService input, Engine.Services.IGameInteropService interop, IGameAudioService audio)
+        public void Load(IGameInputService input, Engine.Services.IGameInteropService interop)
         {
             this.LoadConfiguration();
             this.LoadData();
@@ -103,7 +101,7 @@ namespace MetaMind.Acutance.Guis.Modules
             this.LoadScheduleData();
         }
 
-        public void Unload(IGameInteropService interop, IGameInputService input, Engine.Services.IGameInteropService interop, IGameAudioService audio)
+        public void Unload(IGameInputService input, IGameInteropService interop)
         {
             this.UnloadInterop(interop);
         }

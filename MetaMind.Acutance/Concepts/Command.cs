@@ -24,7 +24,7 @@ namespace MetaMind.Acutance.Concepts
     }
 
     [DataContract]
-    public class Command : ICommand, IDisposable
+    public class Command : GameEntity, ICommand, IDisposable
     {
         public Command(string name, string path, int offset, DateTime date, CommandRepetion repetion)
             : this(name, path, offset, CommandType.Schedule)
@@ -102,17 +102,8 @@ namespace MetaMind.Acutance.Concepts
         {
             this.State = CommandState.Transiting;
 
-            var commandNotifiedEvent = new Event(
-                (int)SessionEventType.CommandNotified,
-                new CommandNotifiedEventArgs(this));
-
-            GameEngine.Event.QueueEvent(commandNotifiedEvent);
-
-            var knowledgeRetrievedEvent = new Event(
-                (int)SessionEventType.KnowledgeRetrieved,
-                new KnowledgeRetrievedEventArgs(this.Path, this.Offset));
-
-            GameEngine.Event.QueueEvent(knowledgeRetrievedEvent);
+            this.Interop.Event.QueueEvent(new Event((int)SessionEventType.CommandNotified, new CommandNotifiedEventArgs(this)));
+            this.Interop.Event.QueueEvent(new Event((int)SessionEventType.KnowledgeRetrieved, new KnowledgeRetrievedEventArgs(this.Path, this.Offset)));
         }
 
         private void UpdateState()

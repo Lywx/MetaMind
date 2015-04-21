@@ -23,6 +23,8 @@ namespace MetaMind.Engine.Components.Inputs
 
         private IntPtr wndProc;
 
+        private WndProc hookProcHandler;
+
         private delegate IntPtr WndProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
 
         #endregion Windows Message Handler
@@ -33,8 +35,13 @@ namespace MetaMind.Engine.Components.Inputs
             : base(engine, updateOrder)
         {
             var window = engine.Window;
+            
+            // This handler has to be a field that not gabbage collected during the running of GameEngine.
+            this.hookProcHandler = this.HookProc;
 
-            this.wndProc = (IntPtr)SetWindowLong(window.Handle, GWL_WNDPROC, (int)Marshal.GetFunctionPointerForDelegate((WndProc)this.HookProc));
+            // Register hook API handler
+            this.wndProc = (IntPtr)SetWindowLong(window.Handle, GWL_WNDPROC, (int)Marshal.GetFunctionPointerForDelegate(this.hookProcHandler));
+            
             this.hIMC    = ImmGetContext(window.Handle);
         }
 
