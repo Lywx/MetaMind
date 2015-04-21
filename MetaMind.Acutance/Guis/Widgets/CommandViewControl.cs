@@ -5,6 +5,7 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
@@ -45,11 +46,11 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #endregion
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime gameTime)
         {
-            this.UpdateRegionClick(gameInput, gameTime);
-            this.UpdateMouseScroll(gameInput);
-            this.UpdateKeyboardMotion(gameInput, gameTime);
+            this.UpdateRegionClick(input, gameTime);
+            this.UpdateMouseScroll(input);
+            this.UpdateKeyboardMotion(input, gameTime);
 
             if (this.AcceptInput)
             {
@@ -57,7 +58,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                 // ---------------------------------------------------------------------
                 if (ViewSettings.KeyboardEnabled)
                 {
-                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.CommandClearItem))
+                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.CommandClearItem))
                     {
                         var notEmpty = View.Items.Count;
                         if (notEmpty > 0)
@@ -70,7 +71,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                         }
                     }
 
-                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.CommandDeleteItem))
+                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.CommandDeleteItem))
                     {
                         // itme deletion is handled by item control
                         // auto select last item
@@ -81,14 +82,14 @@ namespace MetaMind.Acutance.Guis.Widgets
                         }
                     }
 
-                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.CommandSortItem))
+                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.CommandSortItem))
                     {
                         this.SortItems(PointViewSortMode.Name);
                     }
                 }
             }
 
-            this.UpdateItemInput(gameInput, gameTime);
+            this.UpdateItemInput(input, gameTime);
         }
 
         #region Configurations

@@ -3,6 +3,7 @@
     using MetaMind.Engine;
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Extensions;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 

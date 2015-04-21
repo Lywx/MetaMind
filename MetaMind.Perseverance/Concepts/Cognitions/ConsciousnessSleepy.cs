@@ -35,7 +35,7 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
             HistoricalSleepSpan += SleepSpan;
 
-            GameInterop.Event.TriggerEvent(new Event((int)SessionEventType.SleepStopped, new ConsciousnessSleepStoppedEventArgs(this)));
+            this.Interop.Event.TriggerEvent(new Event((int)SessionEventType.SleepStopped, new ConsciousnessSleepStoppedEventArgs(this)));
 
             GameGraphics.MessageDrawer.PopMessages("Slept for " + SleepSpan.ToString("hh':'mm':'ss''"));
 

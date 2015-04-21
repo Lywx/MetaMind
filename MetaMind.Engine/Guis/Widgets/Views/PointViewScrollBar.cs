@@ -9,6 +9,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 {
     using System;
 
+    using MetaMind.Engine.Services;
+
     using Microsoft.Xna.Framework;
 
     using Primtives2D;
@@ -43,12 +45,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
         }
 
-        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
             if (this.ViewControl.RowNum > this.ViewSettings.RowNumDisplay)
             {
                 Primitives2D.FillRectangle(
-                    gameGraphics.Screen.SpriteBatch,
+                    graphics.Screen.SpriteBatch,
                     this.ScrollBarRectangle,
                     ExtColor.MakeTransparent(this.settings.Color, (byte)this.alpha));
             }

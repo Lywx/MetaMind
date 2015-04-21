@@ -9,6 +9,8 @@ namespace MetaMind.Engine
 {
     using System;
 
+    using MetaMind.Engine.Services;
+
     using Microsoft.Xna.Framework;
 
     public interface IInputable : IUpdateable
@@ -19,6 +21,6 @@ namespace MetaMind.Engine
 
         int InputOrder { get; }
 
-        void UpdateInput(IGameInput gameInput, GameTime gameTime);
+        void UpdateInput(IGameInputService input, GameTime gameTime);
     }
 }

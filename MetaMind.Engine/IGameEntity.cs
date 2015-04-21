@@ -2,18 +2,20 @@ namespace MetaMind.Engine
 {
     using System;
 
+    using MetaMind.Engine.Services;
+
     public interface IGameEntity : IUpdateable, IDisposable
     {
         void LoadContent(IGameFile gameFile);
 
-        void LoadGraphics(IGameGraphics gameGraphics);
+        void LoadGraphics(IGameGraphicsService graphics);
 
-        void LoadInterop(IGameInterop gameInterop);
+        void LoadInterop(IGameInteropService interop);
 
         void UnloadContent(IGameFile gameFile);
 
-        void UnloadGraphics(IGameGraphics gameGraphics);
+        void UnloadGraphics(IGameGraphicsService graphics);
 
-        void UnloadInterop(IGameInterop gameInterop);
+        void UnloadInterop(IGameInteropService interop);
     }
 }

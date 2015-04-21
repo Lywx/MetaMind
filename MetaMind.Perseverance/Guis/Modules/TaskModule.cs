@@ -14,6 +14,7 @@ namespace MetaMind.Perseverance.Guis.Modules
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Engine.Services;
     using MetaMind.Perseverance.Guis.Widgets;
 
     using Microsoft.Xna.Framework;
@@ -64,7 +65,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             }
         }
 
-        public override void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
+        public override void Load(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
         {
             // performance penalty due to dynamic type
             // performance is still bad even with fast member
@@ -83,12 +84,12 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         #region Update and Draw
 
-        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            this.View.Draw(gameTime, alpha);
+            this.View.Draw(time, alpha);
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime gameTime)
         {
             // mouse
             //-----------------------------------------------------------------
@@ -102,13 +103,13 @@ namespace MetaMind.Perseverance.Guis.Modules
             {
                 // mouse
                 // ---------------------------------------------------------------------
-                if (gameInput.State.Mouse.IsWheelScrolledUp)
+                if (input.State.Mouse.IsWheelScrolledUp)
                 {
                     this.View.Control.ScrollBar.Trigger();
                     this.View.Control.Scroll.MoveUp();
                 }
 
-                if (gameInput.State.Mouse.IsWheelScrolledDown)
+                if (input.State.Mouse.IsWheelScrolledDown)
                 {
                     this.View.Control.Scroll.MoveDown();
                     this.View.Control.ScrollBar.Trigger();
@@ -117,29 +118,29 @@ namespace MetaMind.Perseverance.Guis.Modules
                 // keyboard
                 // ---------------------------------------------------------------------
                 // movement
-                if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.Left))
+                if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Left))
                 {
                     // won't trigger scroll bar
                     this.View.Control.Selection.MoveLeft();
                 }
 
-                if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.Right))
+                if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Right))
                 {
                     // won't trigger scroll bar
                     this.View.Control.Selection.MoveRight();
                 }
 
-                if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.Up))
+                if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Up))
                 {
                     this.View.Control.MoveUp();
                 }
 
-                if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.Down))
+                if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Down))
                 {
                     this.View.Control.MoveDown();
                 }
 
-                if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.FastUp))
+                if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastUp))
                 {
                     for (var i = 0; i < this.View.ViewSettings.RowNumDisplay; i++)
                     {
@@ -147,7 +148,7 @@ namespace MetaMind.Perseverance.Guis.Modules
                     }
                 }
 
-                if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.FastDown))
+                if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastDown))
                 {
                     for (var i = 0; i < this.View.ViewSettings.RowNumDisplay; i++)
                     {
@@ -156,13 +157,13 @@ namespace MetaMind.Perseverance.Guis.Modules
                 }
 
                 // escape
-                if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))
+                if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))
                 {
                     this.View.Control.Selection.Clear();
                 }
 
                 // list management
-                if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.TaskCreateItem))
+                if (input.State.Keyboard.IsActionTriggered(KeyboardActions.TaskCreateItem))
                 {
                     var task = this.View.Control.ItemFactory.CreateData(null);
 
@@ -176,7 +177,7 @@ namespace MetaMind.Perseverance.Guis.Modules
                     this.View.Control.Selection.Select(this.View.Items.Count - 1);
                 }
 
-                if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.TaskDeleteItem))
+                if (input.State.Keyboard.IsActionTriggered(KeyboardActions.TaskDeleteItem))
                 {
                     // item deletion was processed by item control which is unaware of motivation
 
@@ -210,7 +211,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             {
                 foreach (var item in this.View.Items.ToArray())
                 {
-                    item.UpdateInput(gameInput, gameTime);
+                    item.UpdateInput(input, gameTime);
                 }
             }
         }

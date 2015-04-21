@@ -54,7 +54,7 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
                 GameGraphics.MessageDrawer.PopMessages("Awake for " + totalAwakeSpan.ToString("hh':'mm':'ss''"));
             }
 
-            GameInterop.Event.TriggerEvent(new Event((int)SessionEventType.SleepStarted, new ConsciousnessSleepStartedEventArgs(this)));
+            this.Interop.Event.TriggerEvent(new Event((int)SessionEventType.SleepStarted, new ConsciousnessSleepStartedEventArgs(this)));
 
             return new ConsciousnessSleepy(this);
         }

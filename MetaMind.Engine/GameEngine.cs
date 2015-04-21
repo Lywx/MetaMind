@@ -6,6 +6,7 @@
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Components.Graphics;
     using MetaMind.Engine.Components.Inputs;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
@@ -34,8 +35,6 @@
         public GraphicsManager GraphicsManager { get; private set; }
 
         public GraphicsSettings GraphicsSettings { get; set; }
-
-        public MessageDrawer MessageDrawer { get; private set; }
 
         public ScreenManager Screen { get; private set; }
 
@@ -71,8 +70,8 @@
             // Other components are loaded in initialization.
 
             // Graphics
-            this.GraphicsSettings = GraphicsSettings.GetComponent(this);
-            this.GraphicsManager  = GraphicsManager .GetComponent(this);
+            this.GraphicsSettings = new GraphicsSettings();
+            this.GraphicsManager  = new GraphicsManager(this, this.GraphicsSettings);
 
             // Screen
             this.Screen = ScreenManager.GetComponent(this, new ScreenSettings(), 3);
@@ -91,7 +90,6 @@
         protected override void Initialize()
         {
             // Graphics
-            this.GraphicsSettings.Initialize();
             this.GraphicsManager .Initialize();
 
             // Audio
@@ -114,14 +112,10 @@
             this.FontManager = FontManager.GetComponent(this);
 
             // Service
-            Service = new GameEngineService();
-            Service.Provide(new GameEngineAudio(this));
-            Service.Provide(new GameEngineGraphics(this));
-            Service.Provide(new GameEngineInput(this));
+            Service = new GameEngineService(this.);
 
             // Extra components as GameEntity
-            this.StringDrawer  = new StringDrawer();
-            this.MessageDrawer = new MessageDrawer(new MessageSettings());
+            this.StringDrawer = new StringDrawer();
 
             base.Initialize();
         }
@@ -160,6 +154,9 @@
         private void UpdateInput(GameTime gameTime)
         {
             // TODO: Playtest
+
+            this.Input.UpdateInput(gameTime);
+
             this.InputEvent.UpdateInput(gameTime);
             this.InputState.UpdateInput(gameTime);
 

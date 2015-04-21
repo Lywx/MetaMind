@@ -1,6 +1,7 @@
 ﻿namespace MetaMind.Engine.Guis.Widgets.Regions
 {
     using MetaMind.Engine.Guis.Elements;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
@@ -54,11 +55,11 @@
             set { this.Frame.Y = value; }
         }
 
-        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime gameTime)
         {
             if (this.Frame.IsEnabled(FrameState.Mouse_Over))
             {

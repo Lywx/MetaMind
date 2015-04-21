@@ -1,9 +1,11 @@
 namespace MetaMind.Engine
 {
+    using MetaMind.Engine.Services;
+
     using Microsoft.Xna.Framework;
 
     public interface IGameVisualEntity : IDrawable  
     {
-        void UpdateGraphics(IGameGraphics gameGraphics, GameTime gameTime);
+        void UpdateGraphics(IGameGraphicsService graphics, GameTime time);
     }
 }

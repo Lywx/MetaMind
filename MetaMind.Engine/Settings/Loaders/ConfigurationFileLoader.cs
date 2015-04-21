@@ -13,11 +13,11 @@ namespace MetaMind.Engine.Settings.Loaders
     {
         #region Configuration Pair Loading
 
-        public static List<KeyValuePair<string, string>> LoadDuplicablePairs(IConfigurationFileLoader fileLoader)
+        public static List<KeyValuePair<string, string>> LoadDuplicablePairs(IConfigurationLoader loader)
         {
             var list = new List<KeyValuePair<string, string>>();
 
-            var lines = LoadAllLine(fileLoader);
+            var lines = LoadAllLine(loader);
             foreach (var line in lines)
             {
                 if (string.IsNullOrWhiteSpace(line))
@@ -41,11 +41,11 @@ namespace MetaMind.Engine.Settings.Loaders
             return list;
         }
 
-        public static Dictionary<string, string> LoadUniquePairs(IConfigurationFileLoader fileLoader)
+        public static Dictionary<string, string> LoadUniquePairs(IConfigurationLoader loader)
         {
             var list = new Dictionary<string, string>();
 
-            var lines = LoadAllLine(fileLoader);
+            var lines = LoadAllLine(loader);
             foreach (var line in lines)
             {
                 if (string.IsNullOrWhiteSpace(line))
@@ -69,9 +69,9 @@ namespace MetaMind.Engine.Settings.Loaders
             return list;
         }
 
-        private static string[] LoadAllLine(IConfigurationFileLoader fileLoader)
+        private static string[] LoadAllLine(IConfigurationLoader loader)
         {
-            return File.ReadAllLines(FolderManager.ConfigurationPath(fileLoader));
+            return File.ReadAllLines(FolderManager.ConfigurationPath(loader));
         }
 
         #endregion

@@ -20,7 +20,7 @@ namespace MetaMind.Engine.Components.Inputs
 
     using Sprache;
 
-    public class KeyboardInputState : IConfigurationFileLoader, IKeyboardInputState
+    public class KeyboardInputState : IConfigurationLoader, IKeyboardInputState
     {
         #region Singleton
 

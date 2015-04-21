@@ -2,6 +2,8 @@ namespace MetaMind.Engine
 {
     using System;
 
+    using MetaMind.Engine.Services;
+
     using Microsoft.Xna.Framework;
 
     public interface IDrawable
@@ -14,6 +16,6 @@ namespace MetaMind.Engine
 
         bool Visible { get; }
 
-        void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha);
+        void Draw(IGameGraphicsService graphics, GameTime time, byte alpha);
     }
 }

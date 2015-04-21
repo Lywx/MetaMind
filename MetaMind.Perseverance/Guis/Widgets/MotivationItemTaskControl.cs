@@ -14,6 +14,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Regions;
     using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Engine.Services;
     using MetaMind.Perseverance.Guis.Modules;
 
     using Microsoft.Xna.Framework;
@@ -74,11 +75,11 @@ namespace MetaMind.Perseverance.Guis.Widgets
             }
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime gameTime)
         {
             if (this.TaskModule != null )
             {
-                this.TaskModule.UpdateInput(gameInput, gameTime);
+                this.TaskModule.UpdateInput(input, gameTime);
             }
         }
     }

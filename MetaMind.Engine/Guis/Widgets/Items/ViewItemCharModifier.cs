@@ -14,6 +14,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Events;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
@@ -68,7 +69,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         #region Constructors
 
         public ViewItemCharModifier(IViewItem item)
-            : this(item, GameInput.Event)
+            : this(item, Input.Event)
         {
         }
 
@@ -398,9 +399,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         #region Update and Draw
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime gameTime)
         {
-            var keyboard = gameInput.State.Keyboard;
+            var keyboard = input.State.Keyboard;
 
             if (keyboard.IsActionTriggered(KeyboardActions.Escape))
             {

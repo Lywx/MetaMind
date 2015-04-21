@@ -4,6 +4,7 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Engine.Concepts;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
@@ -63,16 +64,16 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Update and Draw
 
-        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
             if (!ItemControl.Active && !Item.IsEnabled(ItemState.Item_Dragging))
             {
                 return;
             }
 
-            this.DrawNameFrame(gameGraphics, 255);
+            this.DrawNameFrame(graphics, 255);
 
-            this.FillNameFrameWith(gameGraphics, this.ItemSettings.NameFrameRunningColor, alpha);
+            this.FillNameFrameWith(graphics, this.ItemSettings.NameFrameRunningColor, alpha);
 
             this.DrawName(255);
             this.DrawExperienceFrame(255);

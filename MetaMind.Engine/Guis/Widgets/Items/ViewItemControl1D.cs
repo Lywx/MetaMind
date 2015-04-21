@@ -1,6 +1,7 @@
 ﻿namespace MetaMind.Engine.Guis.Widgets.Items
 {
     using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
@@ -146,7 +147,7 @@
             get { return this.Item.IsEnabled(ItemState.Item_Active); }
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime gameTime)
         {
             if (!this.Active)
             {
@@ -164,7 +165,7 @@
             //-----------------------------------------------------------------
             if (this.ViewSettings.KeyboardEnabled)
             {
-                this.ItemDataControl.UpdateInput(gameInput, gameTime);
+                this.ItemDataControl.UpdateInput(input, gameTime);
             }
         }
 

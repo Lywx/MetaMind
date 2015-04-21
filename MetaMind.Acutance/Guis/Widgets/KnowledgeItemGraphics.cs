@@ -2,6 +2,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 {
     using MetaMind.Engine;
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
@@ -22,21 +23,21 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
         }
 
-        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
             if (!this.ItemControl.Active && !this.Item.IsEnabled(ItemState.Item_Dragging))
             {
                 return;
             }
 
-            this.DrawNameFrame(gameGraphics, 255);
+            this.DrawNameFrame(graphics, 255);
 
             if (ItemData.IsTitle)
             {
-                this.FillNameFrameWith(gameGraphics, this.ItemSettings.NameFrameTitleColor, alpha);
+                this.FillNameFrameWith(graphics, this.ItemSettings.NameFrameTitleColor, alpha);
             }
 
-            this.FillNameFrameWith(gameGraphics, this.ItemSettings.NameFrameRunningColor, alpha);
+            this.FillNameFrameWith(graphics, this.ItemSettings.NameFrameRunningColor, alpha);
 
             this.DrawName(255);
             this.DrawIdFrame(255);

@@ -56,9 +56,9 @@ namespace MetaMind.Engine.Components
             return fullPath.Substring(dataFullPath.Length);
         }
 
-        public static string ConfigurationPath(IConfigurationFileLoader fileLoader)
+        public static string ConfigurationPath(IConfigurationLoader loader)
         {
-            return Path.Combine(ConfigurationFolderPath, fileLoader.ConfigurationFile);
+            return Path.Combine(ConfigurationFolderPath, loader.ConfigurationFile);
         }
 
         private void CreateDirectory()

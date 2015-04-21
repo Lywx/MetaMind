@@ -5,6 +5,7 @@ namespace MetaMind.Acutance.Guis.Modules
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Engine.Services;
     using MetaMind.Engine.Settings.Loaders;
 
     using Microsoft.Xna.Framework;
@@ -14,7 +15,7 @@ namespace MetaMind.Acutance.Guis.Modules
         #region Events
 
         // TODO: Redesign events
-        private void LoadEvents(IGameInterop gameInterop)
+        private void LoadEvents(IGameInteropService interop)
         {
             // Module View 
             this.Listeners.Add(new MultiplexerGroupModuleCreatedListener(this.ModuleView));
@@ -29,7 +30,7 @@ namespace MetaMind.Acutance.Guis.Modules
             // Session 
             this.Listeners.Add(new MultiplexerGroupSessionSavedListener(this));
 
-            base.LoadInterop(gameInterop);
+            base.LoadInterop(interop);
         }
 
         #endregion
@@ -87,11 +88,11 @@ namespace MetaMind.Acutance.Guis.Modules
 
         #region Load and Unload
 
-        public void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
+        public void Load(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
         {
             this.LoadConfiguration();
             this.LoadData();
-            this.LoadEvents(gameInterop);
+            this.LoadEvents(interop);
         }
 
         private void LoadData()
@@ -100,9 +101,9 @@ namespace MetaMind.Acutance.Guis.Modules
             this.LoadScheduleData();
         }
 
-        public void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
+        public void Unload(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
         {
-            this.UnloadInterop(gameInterop);
+            this.UnloadInterop(interop);
         }
 
         #region Commands
@@ -158,18 +159,18 @@ namespace MetaMind.Acutance.Guis.Modules
 
         #region Update and Draw
 
-        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            this.ModuleView   .Draw(gameGraphics, gameTime, alpha);
-            this.KnowledgeView.Draw(gameGraphics, gameTime, alpha);
-            this.CommandView  .Draw(gameGraphics, gameTime, alpha);
+            this.ModuleView   .Draw(graphics, time, alpha);
+            this.KnowledgeView.Draw(graphics, time, alpha);
+            this.CommandView  .Draw(graphics, time, alpha);
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime gameTime)
         {
-            this.KnowledgeView.UpdateInput(gameInput, gameTime);
-            this.ModuleView   .UpdateInput(gameInput, gameTime);
-            this.CommandView  .UpdateInput(gameInput, gameTime);
+            this.KnowledgeView.UpdateInput(input, gameTime);
+            this.ModuleView   .UpdateInput(input, gameTime);
+            this.CommandView  .UpdateInput(input, gameTime);
         }
 
         public override void Update(GameTime gameTime)

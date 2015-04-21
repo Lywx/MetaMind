@@ -5,7 +5,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     using Microsoft.Xna.Framework;
 
-    public class ContinuousViewSettings : ViewSettings, IConfigurationParameterLoader<GraphicsSettings>
+    public class ContinuousViewSettings : ViewSettings, IParameterLoader<GraphicsSettings>
     {
         public Point PointStart;
 
@@ -14,7 +14,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             
         }
 
-        public void ParameterLoad(GraphicsSettings parameter)
+        public void LoadParameter(GraphicsSettings parameter)
         {
             this.PointStart = new Point(160, parameter.Height / 2);
         }

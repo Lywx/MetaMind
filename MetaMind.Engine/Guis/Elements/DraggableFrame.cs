@@ -10,6 +10,7 @@ namespace MetaMind.Engine.Guis.Elements
     using System;
 
     using MetaMind.Engine.Components.Inputs;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
@@ -112,11 +113,11 @@ namespace MetaMind.Engine.Guis.Elements
 
         #region Update
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime gameTime)
         {
-            base.UpdateInput(gameInput, gameTime);
+            base.UpdateInput(input, gameTime);
 
-            var mouse = gameInput.State.Mouse.CurrentState;
+            var mouse = input.State.Mouse.CurrentState;
             var mouseLocation = new Point(mouse.X, mouse.Y);
 
             if (this.IsEnabled(FrameState.Frame_Dragging))

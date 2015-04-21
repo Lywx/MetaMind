@@ -22,7 +22,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         public override bool HandleEvent(IEvent @event)
         {
-            var screenManager = GameInterop.Screen;
+            var screenManager = this.Interop.Screen;
 
             var summary = screenManager.Screens.First(screen => screen is SummaryScreen);
             if (summary != null)

@@ -3,6 +3,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     using System;
 
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
@@ -13,12 +14,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
         }
 
-        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            this.DrawItems(gameGraphics, gameTime, alpha);
+            this.DrawItems(graphics, time, alpha);
         }
 
-        protected void DrawItems(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
+        protected void DrawItems(IGameGraphicsService graphics, GameTime gameTime, byte alpha)
         {
             foreach (var item in View.Items.ToArray())
             {
@@ -29,7 +30,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
                 if (item != null && 
                     item.IsEnabled(ItemState.Item_Active))
                 {
-                    item.Draw(gameGraphics, gameTime, alpha);
+                    item.Draw(graphics, gameTime, alpha);
                 }
             }
         }

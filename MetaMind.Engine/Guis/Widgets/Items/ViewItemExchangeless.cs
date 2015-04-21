@@ -2,6 +2,8 @@
 {
     using System;
 
+    using MetaMind.Engine.Services;
+
     using Microsoft.Xna.Framework;
 
     public class ViewItemExchangeless : ItemEntity, IViewItem
@@ -50,17 +52,17 @@
 
         #region Draw
 
-        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            this.ItemGraphics.Draw(gameGraphics, gameTime, alpha);
+            this.ItemGraphics.Draw(graphics, time, alpha);
         }
 
         #endregion
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime gameTime)
         {
-            this.ItemControl .Update(gameInput, gameTime);
-            this.ItemGraphics.UpdateInput(gameInput, gameTime);
+            this.ItemControl .Update(input, gameTime);
+            this.ItemGraphics.UpdateInput(input, gameTime);
         }
 
         public override void UpdateView(GameTime gameTime)

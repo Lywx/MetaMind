@@ -3,6 +3,8 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Engine;
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Services;
+
     using Microsoft.Xna.Framework;
 
     public class CommandItemGraphics : TraceItemGraphics
@@ -12,20 +14,20 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
         }
 
-        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
             if (!ItemControl.Active && !Item.IsEnabled(ItemState.Item_Dragging))
             {
                 return;
             }
 
-            this.DrawNameFrame(gameGraphics, 255);
+            this.DrawNameFrame(graphics, 255);
 
-            this.FillNameFrameWith(gameGraphics, this.ItemSettings.NameFrameRunningColor, alpha);
+            this.FillNameFrameWith(graphics, this.ItemSettings.NameFrameRunningColor, alpha);
 
             this.DrawName(255);
             this.DrawIdFrame(255);
-            this.DrawId(gameGraphics, 255);
+            this.DrawId(graphics, 255);
         }
 
         protected override void DrawName(byte alpha)

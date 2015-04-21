@@ -7,7 +7,7 @@ namespace MetaMind.Engine.Components.Fonts
 
     using MetaMind.Engine.Settings.Loaders;
 
-    public class FormatUtils : IConfigurationFileLoader
+    public class FormatUtils : IConfigurationLoader
     {
         #region  Settings
 

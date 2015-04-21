@@ -4,6 +4,7 @@
     using System.Diagnostics;
 
     using MetaMind.Engine.Components.Inputs;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
@@ -281,9 +282,9 @@
 
         #region Update
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime gameTime)
         {
-            var mouse         = gameInput.State.Mouse.CurrentState;
+            var mouse         = input.State.Mouse.CurrentState;
             var mouseLocation = new Point(mouse.X, mouse.Y);
 
             this.UpdateStates(mouseLocation);

@@ -2,6 +2,8 @@ namespace MetaMind.Engine.Screens
 {
     using System;
 
+    using MetaMind.Engine.Services;
+
     using Microsoft.Xna.Framework;
 
     public class GameScreen : IGameScreen
@@ -134,7 +136,7 @@ namespace MetaMind.Engine.Screens
 
         #region Engine Data
 
-        protected IGameInterop GameInterop { get; set; }
+        protected IGameInteropService Interop { get; set; }
 
         #endregion Engine Data
 
@@ -144,11 +146,11 @@ namespace MetaMind.Engine.Screens
         {
         }
 
-        public void LoadInterop(IGameInterop gameInterop)
+        public void LoadInterop(IGameInteropService interop)
         {
-            if (this.GameInterop == null)
+            if (this.Interop == null)
             {
-                this.GameInterop = new GameEngineInterop(gameInterop);
+                this.Interop = interop;
             }
         }
 
@@ -156,7 +158,7 @@ namespace MetaMind.Engine.Screens
         {
         }
 
-        public void UnloadInterop(IGameInterop gameInterop)
+        public void UnloadInterop(IGameInteropService interop)
         {
         }
 
@@ -167,7 +169,7 @@ namespace MetaMind.Engine.Screens
         /// <summary>
         /// This is called when the screen should draw itself.
         /// </summary>
-        public virtual void Draw(IGameGraphics gameGraphics, GameTime gameTime)
+        public virtual void Draw(IGameGraphicsService graphics, GameTime time)
         {
         }
 
@@ -179,7 +181,7 @@ namespace MetaMind.Engine.Screens
         {
         }
 
-        public virtual void UpdateAudio(IGameAudio gameAudio, GameTime gameTime)
+        public virtual void UpdateAudio(IGameAudioService audio, GameTime gameTime)
         {
             // TODO: REmove?
         }
@@ -188,19 +190,19 @@ namespace MetaMind.Engine.Screens
         {
         }
 
-        public virtual void UpdateGraphics(IGameGraphics gameGraphics, GameTime gameTime)
+        public virtual void UpdateGraphics(IGameGraphicsService graphics, GameTime gameTime)
         {
         }
 
-        public virtual void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public virtual void UpdateInput(IGameInputService input, GameTime gameTime)
         {
         }
 
-        public virtual void UpdateInterop(IGameInterop gameInterop, GameTime gameTime)
+        public virtual void UpdateInterop(IGameInteropService interop, GameTime gameTime)
         {
         }
 
-        public virtual void UpdateScreen(IGameGraphics gameGraphics, GameTime gameTime, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
+        public virtual void UpdateScreen(IGameGraphicsService graphics, GameTime gameTime, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
         {
             this.HasOtherScreenFocus = hasOtherScreenFocus;
 
@@ -212,7 +214,7 @@ namespace MetaMind.Engine.Screens
                 if (!this.UpdateTransition(gameTime, this.transitionOffTime, 1))
                 {
                     // When the transition finishes, remove the screen.
-                    gameGraphics.Screen.RemoveScreen(this);
+                    graphics.Screen.RemoveScreen(this);
                 }
             }
             else if (isCoveredByOtherScreen)
@@ -248,18 +250,18 @@ namespace MetaMind.Engine.Screens
         /// <summary>
         /// Helper for updating the screen transition position.
         /// </summary>
-        private bool UpdateTransition(GameTime gameTime, TimeSpan time, int direction)
+        private bool UpdateTransition(GameTime gameTime, TimeSpan transitionOff, int direction)
         {
             // How much should we move by?
             float transitionDelta;
 
-            if (time == TimeSpan.Zero)
+            if (transitionOff == TimeSpan.Zero)
             {
                 transitionDelta = 1;
             }
             else
             {
-                transitionDelta = (float)(gameTime.ElapsedGameTime.TotalMilliseconds / time.TotalMilliseconds);
+                transitionDelta = (float)(gameTime.ElapsedGameTime.TotalMilliseconds / transitionOff.TotalMilliseconds);
             }
 
             // Update the transition position.
@@ -293,7 +295,7 @@ namespace MetaMind.Engine.Screens
             // If the screen has a zero transition time, remove it immediately.
             if (this.TransitionOffTime == TimeSpan.Zero)
             {
-                var screen = this.GameInterop.Screen;
+                var screen = this.Interop.Screen;
                 screen.RemoveScreen(this);
             }
         }

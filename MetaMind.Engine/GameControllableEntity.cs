@@ -2,7 +2,7 @@ namespace MetaMind.Engine
 {
     using System;
 
-    using MetaMind.Engine.Components.Inputs;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
@@ -54,20 +54,20 @@ namespace MetaMind.Engine
 
         private static bool isFlyweightServiceLoaded;
 
-        protected static IGameInput GameInput { get; private set; }
+        protected static IGameInputService Input { get; private set; }
 
         #endregion
 
         public GameControllableEntity()
-            : this(GameEngine.Service.GameInput)
+            : this(GameEngine.Service.Input)
         {
         }
 
-        public GameControllableEntity(IGameInput gameInput)
+        public GameControllableEntity(IGameInputService input)
         {
             if (!isFlyweightServiceLoaded)
             {
-                GameInput = gameInput;
+                Input = input;
 
                 isFlyweightServiceLoaded = true;
             }
@@ -101,7 +101,7 @@ namespace MetaMind.Engine
             }
         }
 
-        public virtual void UpdateInput(IGameInput gameInput, GameTime gameTime) { }
+        public virtual void UpdateInput(IGameInputService input, GameTime gameTime) { }
 
         #endregion Input
     }

@@ -5,6 +5,7 @@
 
     using MetaMind.Engine;
     using MetaMind.Engine.Guis;
+    using MetaMind.Engine.Services;
     using MetaMind.Perseverance.Concepts;
     using MetaMind.Perseverance.Guis.Modules;
 
@@ -60,7 +61,7 @@
             get { return this.SynchronizationTaskInfoCenter + new Vector2(0, 30); }
         }
 
-        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
             if (this.synchronization != null)
             {
@@ -71,15 +72,15 @@
             }
         }
 
-        public void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
+        public void Load(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
         {
         }
 
-        public void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
+        public void Unload(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
         {
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime gameTime)
         {
         }
 

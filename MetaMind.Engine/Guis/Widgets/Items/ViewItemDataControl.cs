@@ -14,6 +14,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
     using MetaMind.Engine.Concepts;
     using MetaMind.Engine.Events;
     using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
@@ -73,9 +74,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items
            this.CharModifier.Cancel(); 
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime gameTime)
         {
-            this.CharModifier.UpdateInput(gameInput, gameTime);
+            this.CharModifier.UpdateInput(input, gameTime);
         }
 
         public override void Update(GameTime gameTime)

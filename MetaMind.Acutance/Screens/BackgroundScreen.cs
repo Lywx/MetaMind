@@ -4,9 +4,9 @@
 
     using MetaMind.Acutance.Guis.Modules;
     using MetaMind.Engine;
-    using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Particles;
     using MetaMind.Engine.Screens;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -42,25 +42,25 @@
 
         #region Update and Draw
 
-        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime)
+        public override void Draw(IGameGraphicsService graphics, GameTime time)
         {
-            var spriteBatch = gameGraphics.Screen.SpriteBatch;
-            var viewport    = gameGraphics.Screen.GraphicsDevice.Viewport;
+            var spriteBatch = graphics.SpriteBatch;
+            var viewport    = graphics.Manager.GraphicsDevice.Viewport;
             var fullscreen  = new Rectangle(0, 0, viewport.Width, viewport.Height);
 
             spriteBatch.Begin();
 
             spriteBatch.Draw(this.backgroundTexture, fullscreen, new Color(210, 100, 95).MakeTransparent(TransitionAlpha));
 
-            this.particles.Draw(gameGraphics, gameTime, this.TransitionAlpha);
+            this.particles.Draw(graphics, time, this.TransitionAlpha);
 
             spriteBatch.End();
         }
 
-        public override void UpdateScreen(IGameGraphics gameGraphics, GameTime gameTime, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
+        public override void UpdateScreen(IGameGraphicsService graphics, GameTime gameTime, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
         {
             this.particles.Update(gameTime);
-            base          .UpdateScreen(gameGraphics, gameTime, hasOtherScreenFocus, false);
+            base          .UpdateScreen(graphics, gameTime, hasOtherScreenFocus, false);
         }
 
         #endregion Update and Draw

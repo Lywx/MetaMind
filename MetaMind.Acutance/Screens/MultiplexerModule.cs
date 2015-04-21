@@ -3,6 +3,7 @@ namespace MetaMind.Acutance.Screens
     using MetaMind.Acutance.Guis.Modules;
     using MetaMind.Engine;
     using MetaMind.Engine.Guis;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
@@ -22,28 +23,28 @@ namespace MetaMind.Acutance.Screens
             this.synchronization.Load();
         }
 
-        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            this.multiplexer    .Draw(gameGraphics, gameTime, alpha);
-            this.synchronization.Draw(gameGraphics, gameTime, alpha);
+            this.multiplexer    .Draw(graphics, time, alpha);
+            this.synchronization.Draw(graphics, time, alpha);
         }
 
-        public override void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
+        public override void Load(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
         {
-            this.multiplexer    .Load(gameFile, gameInput, gameInterop, gameAudio);
-            this.synchronization.Load(gameFile, gameInput, gameInterop, gameAudio);
+            this.multiplexer    .Load(gameFile, input, interop, audio);
+            this.synchronization.Load(gameFile, input, interop, audio);
         }
 
-        public override void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
+        public override void Unload(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
         {
-            this.multiplexer    .Unload(gameFile, gameInput, gameInterop, gameAudio);
-            this.synchronization.Unload(gameFile, gameInput, gameInterop, gameAudio);
+            this.multiplexer    .Unload(gameFile, input, interop, audio);
+            this.synchronization.Unload(gameFile, input, interop, audio);
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime gameTime)
         {
-            this.multiplexer    .UpdateInput(gameInput, gameTime);
-            this.synchronization.UpdateInput(gameInput, gameTime);
+            this.multiplexer    .UpdateInput(input, gameTime);
+            this.synchronization.UpdateInput(input, gameTime);
         }
 
         public override void Update(GameTime gameTime)

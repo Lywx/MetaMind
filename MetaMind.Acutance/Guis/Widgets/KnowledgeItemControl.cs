@@ -12,6 +12,7 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Engine.Guis.Elements;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
@@ -85,7 +86,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             get { return this.Item.IsEnabled(ItemState.Item_Editing) || this.Item.IsEnabled(ItemState.Item_Pending); }
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime gameTime)
         {
             // mouse and keyboard in modifier
             // -----------------------------------------------------------------

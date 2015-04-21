@@ -3,6 +3,7 @@ namespace MetaMind.Engine.Guis.Modules
     using System.Collections.Generic;
 
     using MetaMind.Engine.Guis.Particles;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -38,28 +39,28 @@ namespace MetaMind.Engine.Guis.Modules
             this.Particles = new List<FloatParticle>();
         }
 
-        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
             for (var i = 0; i < this.Particles.Count; ++i)
             {
                 if (i == this.Particles.Count / 2)
                 {
                     // half additive and half solid
-                    var spriteBatch = gameGraphics.Screen.SpriteBatch;
+                    var spriteBatch = graphics.Screen.SpriteBatch;
 
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.Additive);
                 }
 
-                this.Particles[i].Draw(gameGraphics, gameTime, alpha);
+                this.Particles[i].Draw(graphics, time, alpha);
             }
         }
 
-        public override void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
+        public override void Load(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
         {
         }
 
-        public override void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
+        public override void Unload(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
         {
         }
 

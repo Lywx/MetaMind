@@ -3,6 +3,7 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Engine;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
@@ -55,11 +56,11 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime gameTime)
         {
-            base.UpdateInput(gameInput, gameTime);
+            base.UpdateInput(input, gameTime);
 
-            this.NameFrame      .Update(gameInput, gameTime);
+            this.NameFrame      .Update(input, gameTime);
         }
 
         protected override void UpdateFrameGeometry()

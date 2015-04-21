@@ -6,6 +6,7 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Regions;
     using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
@@ -47,11 +48,11 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Update
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime gameTime)
         {
-            this.UpdateRegionClick(gameInput, gameTime);
-            this.UpdateMouseScroll(gameInput);
-            this.UpdateKeyboardMotion(gameInput, gameTime);
+            this.UpdateRegionClick(input, gameTime);
+            this.UpdateMouseScroll(input);
+            this.UpdateKeyboardMotion(input, gameTime);
 
             if (this.AcceptInput)
             {
@@ -94,7 +95,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                 }
             }
 
-            this.UpdateItemInput(gameInput, gameTime);
+            this.UpdateItemInput(input, gameTime);
         }
 
         protected override void UpdateViewFocus()

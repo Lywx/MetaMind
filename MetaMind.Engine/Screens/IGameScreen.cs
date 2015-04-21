@@ -1,5 +1,7 @@
 namespace MetaMind.Engine.Screens
 {
+    using MetaMind.Engine.Services;
+
     using Microsoft.Xna.Framework;
     using System;
 
@@ -76,11 +78,11 @@ namespace MetaMind.Engine.Screens
 
         void LoadContent(IGameFile gameFile);
 
-        void LoadInterop(IGameInterop gameInterop);
+        void LoadInterop(IGameInteropService interop);
 
         void UnloadContent(IGameFile gameFile);
 
-        void UnloadInterop(IGameInterop gameInterop);
+        void UnloadInterop(IGameInteropService interop);
 
         #endregion Load and Unload
 
@@ -88,22 +90,22 @@ namespace MetaMind.Engine.Screens
 
         void Update(GameTime gameTime);
 
-        void UpdateAudio(IGameAudio gameAudio, GameTime gameTime);
+        void UpdateAudio(IGameAudioService audio, GameTime gameTime);
 
         void UpdateContent(IGameFile gameFile, GameTime gameTime);
 
-        void UpdateGraphics(IGameGraphics gameGraphics, GameTime gameTime);
+        void UpdateGraphics(IGameGraphicsService graphics, GameTime gameTime);
 
-        void UpdateInput(IGameInput gameInput, GameTime gameTime);
+        void UpdateInput(IGameInputService input, GameTime gameTime);
 
-        void UpdateInterop(IGameInterop gameInterop, GameTime gameTime);
+        void UpdateInterop(IGameInteropService interop, GameTime gameTime);
 
         /// <summary>
         /// Allows the screen to run logic, such as updating the transition position.
         /// Unlike other update method, this method is called regardless of whether the screen
         /// is active, hidden, or in the middle of a transition.
         /// </summary>
-        void UpdateScreen(IGameGraphics gameGraphics, GameTime gameTime, bool hasOtherScreenFocus, bool isCoveredByOtherScreen);
+        void UpdateScreen(IGameGraphicsService graphics, GameTime gameTime, bool hasOtherScreenFocus, bool isCoveredByOtherScreen);
 
         #endregion Update
 
@@ -112,7 +114,7 @@ namespace MetaMind.Engine.Screens
         /// <summary>
         /// This is called when the screen should draw itself.
         /// </summary>
-        void Draw(IGameGraphics gameGraphics, GameTime gameTime);
+        void Draw(IGameGraphicsService graphics, GameTime time);
 
         #endregion Draw
 

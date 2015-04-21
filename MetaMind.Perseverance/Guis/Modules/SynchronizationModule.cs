@@ -6,6 +6,7 @@
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis;
+    using MetaMind.Engine.Services;
     using MetaMind.Perseverance.Concepts;
     using MetaMind.Perseverance.Concepts.Cognitions;
     using MetaMind.Perseverance.Concepts.Tasks;
@@ -183,7 +184,7 @@
 
         #region Load and Unload
 
-        public override void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
+        public override void Load(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
         {
             if (this.synchronizationStartListener == null || 
                 this.synchronizationStopListener  == null || 
@@ -197,26 +198,26 @@
                 this.sleepStartedEventListener    = new SynchronizationModuleSleepStartedEventListener(this.synchronization, this);
             }
 
-            gameInterop.Event.AddListener(this.synchronizationStartListener);
-            gameInterop.Event.AddListener(this.synchronizationStopListener);
-            gameInterop.Event.AddListener(this.sleepStartedEventListener);
+            interop.Event.AddListener(this.synchronizationStartListener);
+            interop.Event.AddListener(this.synchronizationStopListener);
+            interop.Event.AddListener(this.sleepStartedEventListener);
         }
 
-        public override void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
+        public override void Unload(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
         {
             if (this.synchronizationStartListener != null)
             {
-                gameInterop.Event.RemoveListener(this.synchronizationStartListener);
+                interop.Event.RemoveListener(this.synchronizationStartListener);
             }
 
             if (this.synchronizationStopListener != null)
             {
-                gameInterop.Event.RemoveListener(this.synchronizationStopListener);
+                interop.Event.RemoveListener(this.synchronizationStopListener);
             }
 
             if (this.sleepStartedEventListener != null)
             {
-                gameInterop.Event.RemoveListener(this.sleepStartedEventListener);
+                interop.Event.RemoveListener(this.sleepStartedEventListener);
             }
 
             this.synchronizationStartListener = null;
@@ -249,9 +250,9 @@
 
         #region Update
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime gameTime)
         {
-            if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.ForceAwake))
+            if (input.State.Keyboard.IsActionTriggered(KeyboardActions.ForceAwake))
             {
                 var awake = this.cognition.Consciousness as ConsciousnessAwake;
                 if (awake != null)
@@ -262,12 +263,12 @@
                 this.synchronization.ResetToday();
             }
 
-            if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.ForceReset))
+            if (input.State.Keyboard.IsActionTriggered(KeyboardActions.ForceReset))
             {
                 this.synchronization.ResetTomorrow();
             }
 
-            if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.ForceReverse))
+            if (input.State.Keyboard.IsActionTriggered(KeyboardActions.ForceReverse))
             {
                 this.synchronization.TryAbort();
             }
@@ -282,7 +283,7 @@
 
         #region Draw
 
-        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
             this.DrawProgressFrame();
             this.DrawProgressBar();
@@ -299,7 +300,7 @@
             
             this.DrawDailyRateInfo();
 
-            this.DrawMessage(gameTime);
+            this.DrawMessage(time);
         }
 
         private void DrawAccelerationInfo()

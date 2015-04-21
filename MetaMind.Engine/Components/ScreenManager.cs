@@ -13,33 +13,13 @@ namespace MetaMind.Engine.Components
     using System.Linq;
 
     using MetaMind.Engine.Screens;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
     public class ScreenManager : DrawableGameComponent, IScreenManager
     {
-        #region Singleton
-
-        private static ScreenManager Singleton { get; set; }
-
-        public static ScreenManager GetComponent(GameEngine gameEngine, ScreenSettings settings, int updateOrder)
-        {
-            if (Singleton == null)
-            {
-                Singleton = new ScreenManager(gameEngine, settings, updateOrder);
-            }
-
-            if (gameEngine != null)
-            {
-                gameEngine.Components.Add(Singleton);
-            }
-
-            return Singleton;
-        }
-
-        #endregion Singleton
-
         #region Graphics Data
 
         private Texture2D blankTexture;
@@ -115,15 +95,15 @@ namespace MetaMind.Engine.Components
 
         #region Engine Data
 
-        private IGameAudio GameAudio { get; set; }
+        private IGameAudioService Audio { get; set; }
 
         private IGameFile GameFile { get; set; }
 
-        private IGameGraphics GameGraphics { get; set; }
+        private IGameGraphicsService Graphics { get; set; }
 
-        private IGameInput GameInput { get; set; }
+        private IGameInputService Input { get; set; }
 
-        private IGameInterop GameInterop { get; set; }
+        private IGameInteropService Interop { get; set; }
 
         #endregion Engine Data
 
@@ -132,17 +112,25 @@ namespace MetaMind.Engine.Components
         /// <summary>
         /// Constructs a new screen manager component.
         /// </summary>
-        private ScreenManager(GameEngine gameEngine, ScreenSettings settings, int updateOrder)
-            : base(gameEngine)
+        private ScreenManager(GameEngine engine, ScreenSettings settings, int updateOrder)
+            : base(engine)
         {
+            if (engine == null)
+            {
+                throw new ArgumentNullException("engine");
+            }
+
+            engine.Components.Add(this);
+
+
             this.Settings    = settings;
             this.UpdateOrder = updateOrder;
 
-            this.GameAudio    = new GameEngineAudio(gameEngine);
-            this.GameFile     = new GameEngineFile(gameEngine);
-            this.GameGraphics = new GameEngineGraphics(gameEngine);
-            this.GameInput    = new GameEngineInput(gameEngine);
-            this.GameInterop  = new GameEngineInterop(gameEngine);
+            this.Audio    = new GameEngineAudioService(engine);
+            this.GameFile     = new GameEngineFile(engine);
+            this.Graphics = new GameEngineGraphicsAccess(engine);
+            this.Input    = new GameEngineInputService(engine);
+            this.Interop  = new GameEngineInteropService(engine);
         }
 
         #endregion Constructors
@@ -199,7 +187,7 @@ namespace MetaMind.Engine.Components
             {
                 foreach (var screen in this.screens.Where(screen => screen.ScreenState != GameScreenState.Hidden))
                 {
-                    screen.Draw(this.GameGraphics, gameTime);
+                    screen.Draw(this.Graphics, gameTime);
                 }
             }
         }
@@ -220,10 +208,10 @@ namespace MetaMind.Engine.Components
                 this.UpdateAll<object>((screen, access, time) => screen.Update(gameTime), null, gameTime);
 
                 // 2
-                this.UpdateAll((screen, access, time) => screen.UpdateInterop(access, gameTime), this.GameInterop, gameTime);
+                this.UpdateAll((screen, access, time) => screen.UpdateInterop(access, gameTime), this.Interop, gameTime);
 
                 // 3
-                this.UpdateAll((screen, access, time) => screen.UpdateAudio(access, gameTime), this.GameAudio, gameTime);
+                this.UpdateAll((screen, access, time) => screen.UpdateAudio(access, gameTime), this.Audio, gameTime);
 
                 // 4
                 this.UpdateAll((screen, access, time) => screen.UpdateContent(access, gameTime), this.GameFile, gameTime);
@@ -232,7 +220,7 @@ namespace MetaMind.Engine.Components
 
         public void UpdateInput(GameTime gameTime)
         {
-            this.UpdateActive((screen, access, time) => screen.UpdateInput(access, gameTime), this.GameInput, gameTime);
+            this.UpdateActive((screen, access, time) => screen.UpdateInput(access, gameTime), this.Input, gameTime);
         }
 
         private void UpdateActive<TAccess>(Action<IGameScreen, TAccess, GameTime> action, TAccess access, GameTime gameTime)
@@ -268,7 +256,7 @@ namespace MetaMind.Engine.Components
                 this.screensToUpdate.RemoveAt(this.screensToUpdate.Count - 1);
 
                 // Update the screen transition
-                screen.UpdateScreen(this.GameGraphics, gameTime, hasOtherScreenFocus, isCoveredByOtherScreen);
+                screen.UpdateScreen(this.Graphics, gameTime, hasOtherScreenFocus, isCoveredByOtherScreen);
 
                 if (screen.ScreenState == GameScreenState.TransitionOn ||
                     screen.ScreenState == GameScreenState.Active)

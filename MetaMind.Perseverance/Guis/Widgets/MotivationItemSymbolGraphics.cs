@@ -5,6 +5,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
     using MetaMind.Engine;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Services;
     using MetaMind.Engine.Settings.Colors;
 
     using Microsoft.Xna.Framework;
@@ -46,7 +47,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             this.UpdateRotation();
         }
 
-        private void DrawHeart(IGameGraphics gameGraphics, byte alpha)
+        private void DrawHeart(IGameGraphicsService graphics, byte alpha)
         {
             var flipped     = Math.Cos(this.rotation) > 0;
             var width       = ItemControl.SymbolFrame.Rectangle.Width;
@@ -54,7 +55,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             var size        = new Point((int)(Math.Abs(Math.Cos(this.rotation)) * width), height);
             var destination = ExtRectangle.DestinationWithSize(ItemControl.SymbolFrame.Rectangle, size);
 
-            gameGraphics.Screen.SpriteBatch.Draw(
+            graphics.SpriteBatch.Draw(
                 this.symbol,
                 destination,
                 null,
@@ -65,7 +66,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
                 0f);
         }
 
-        private void DrawShadow(IGameGraphics gameGraphics)
+        private void DrawShadow(IGameGraphicsService graphics)
         {
             var scrollCenter = this.ViewControl.Scroll.RootCenterPoint(ItemControl.Id);
             var destination = new Rectangle(
@@ -74,7 +75,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
                 ItemControl.RootFrame.Rectangle.Width,
                 ItemControl.RootFrame.Rectangle.Height);
 
-            gameGraphics.Screen.SpriteBatch.Draw(
+            graphics.SpriteBatch.Draw(
                 this.symbol,
                 destination,
                 null,

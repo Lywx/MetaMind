@@ -7,7 +7,7 @@ namespace MetaMind.Engine.Guis.Particles
 
     using Microsoft.Xna.Framework;
 
-    public class ShapelessParticle : GameVisualEntity, IShapelessParticle, IConfigurationParameterLoader<GraphicsSettings>  
+    public class ShapelessParticle : GameVisualEntity, IShapelessParticle, IParameterLoader<GraphicsSettings>  
     {
         #region Particle Movements
 
@@ -37,7 +37,7 @@ namespace MetaMind.Engine.Guis.Particles
 
         #region Parameters
 
-        public void ParameterLoad(GraphicsSettings parameter)
+        public void LoadParameter(GraphicsSettings parameter)
         {
             ScreenWidth  = parameter.Width;
             ScreenHeight = parameter.Height;
@@ -58,7 +58,7 @@ namespace MetaMind.Engine.Guis.Particles
             // Service
             if (!isFlyweightServiceLoaded)
             {
-                Random = this.GameNumerical.Random;
+                Random = this.Numerical.Random;
 
                 isFlyweightServiceLoaded = true;
             }
@@ -66,7 +66,7 @@ namespace MetaMind.Engine.Guis.Particles
             // Parameters
             if (!isFlyweightParameterLoaded)
             {
-                this.ParameterLoad(this.GameGraphics.Settings);
+                this.LoadParameter(this.GameGraphics.Settings);
 
                 isFlyweightParameterLoaded = true;
             }

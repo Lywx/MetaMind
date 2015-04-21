@@ -3,6 +3,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
     using MetaMind.Engine;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
@@ -17,12 +18,12 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         protected int FocusAlpha { get; set; }
 
-        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
             // draw active items
-            this.DrawItems(gameGraphics, gameTime, (byte)this.FocusAlpha);
-            this.DrawRegion(gameGraphics, gameTime, (byte)this.FocusAlpha);
-            this.DrawScrollBar(gameTime);
+            this.DrawItems(graphics, time, (byte)this.FocusAlpha);
+            this.DrawRegion(graphics, time, (byte)this.FocusAlpha);
+            this.DrawScrollBar(time);
         }
 
         public override void Update(GameTime gameTime)
@@ -45,15 +46,15 @@ namespace MetaMind.Perseverance.Guis.Widgets
             }
         }
 
-        protected virtual void DrawRegion(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
+        protected virtual void DrawRegion(IGameGraphicsService graphics, GameTime gameTime, byte alpha)
         {
             Primitives2D.DrawRectangle(
-                gameGraphics.Screen.SpriteBatch,
+                graphics.SpriteBatch,
                 ExtRectangle.Extend(ViewControl.Region.Frame.Rectangle, ViewSettings.BorderMargin),
                 ExtColor.MakeTransparent(ViewSettings.HighlightColor, alpha),
                 2f);
             Primitives2D.FillRectangle(
-                gameGraphics.Screen.SpriteBatch,
+                graphics.SpriteBatch,
                 ViewControl.Region.Frame.Rectangle,
                 ExtColor.MakeTransparent(ViewSettings.HighlightColor, alpha));
         }

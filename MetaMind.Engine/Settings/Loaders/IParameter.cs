@@ -1,0 +1,6 @@
+﻿namespace MetaMind.Engine.Settings.Loaders
+{
+    public interface IParameter
+    {
+    }
+}

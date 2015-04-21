@@ -24,7 +24,7 @@ namespace MetaMind.Engine.Guis.Elements
         #region Constructors and Destructors
 
         protected FrameEntity()
-            : this(GameInput.Event, GameInput.State)
+            : this(Input.Event, Input.State)
         {
         }
 

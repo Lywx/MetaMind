@@ -1,40 +1,24 @@
 namespace MetaMind.Engine.Components.Graphics
 {
-    using System.Windows.Forms;
+    using System;
 
-    using MetaMind.Engine.Settings.Loaders;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    public class GraphicsManager : GraphicsDeviceManager, IConfigurationParameterLoader<GraphicsSettings>
+    public class GraphicsManager : GraphicsDeviceManager
     {
-        #region Singleton
+        #region Dependency
 
-        private static GraphicsManager Singleton { get; set; }
+        public GraphicsSettings Settings { get; set; }
 
-        public static GraphicsManager GetComponent(GameEngine gameEngine)
-        {
-            return Singleton ?? (Singleton = new GraphicsManager(gameEngine));
-        }
-
+        protected GameEngine Engine { get; set; }
         #endregion
 
-        #region Engine Data
-
-        protected Game Game { get; set; }
-
-        private GameEngineGraphics GameGraphics { get; set; }
-
-        #endregion
-
-        #region Constructors
-
-        private GraphicsManager(GameEngine gameEngine)
-            : base(gameEngine)
+        public GraphicsManager(GameEngine engine, GraphicsSettings settings)
+            : base(engine)
         {
-            this.Game = gameEngine;
-
-            this.GameGraphics = new GameEngineGraphics(gameEngine);
+            this.Engine   = engine;
+            this.Settings = settings;
 
             // Set default resolution
             this.PreferredBackBufferWidth  = 800;
@@ -43,47 +27,64 @@ namespace MetaMind.Engine.Components.Graphics
             this.ApplyChanges();
         }
 
-        #endregion
-
-        #region Configurations
-
-        public void ConfigurationLoad()
-        {
-            this.ApplyChanges();
-        }
-
-        #endregion
-
-        #region Parameters
-
-        public void ParameterLoad(GraphicsSettings parameter)
-        {
-            this.Screen = parameter.Screen;
-        }
-
-        private Screen Screen { get; set; }
-
-        #endregion
 
         public void Initialize()
         {
-            // fixed drawing order in 3d graphics
-            this.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            this.ApplySettings();
 
-            this.ConfigurationLoad();
-            this.ParameterLoad(GameGraphics.Settings);
-
-            this.WindowCentralize();
+            this.CentralizeWindow(this.Engine, this.Settings);
         }
 
         /// <remarks>
         /// Can be only called after GameEngine is constructed.
         /// </remarks>>
-        private void WindowCentralize()
+        private void CentralizeWindow(GameEngine engine, GraphicsSettings settings)
         {
-            this.Game.Window.Position = new Point(
-                this.Screen.Bounds.X + (this.Screen.Bounds.Width  - GameGraphics.Settings.Width)  / 2,
-                this.Screen.Bounds.Y + (this.Screen.Bounds.Height - GameGraphics.Settings.Height) / 2);
+            var window = engine.Window;
+            var screen = settings.Screen;
+            var bounds = screen.Bounds;
+
+            window.Position = new Point(
+                bounds.X + (bounds.Width - settings.Width) / 2,
+                bounds.Y + (bounds.Height - settings.Height) / 2);
         }
+
+        #region Setting Operations
+
+        private void ApplySettings()
+        {
+            // fixed drawing order in 3d graphics
+            this.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+
+            this.ApplyFrameSettings(this.Engine, this.Settings);
+            this.ApplyMouseSettings(this.Engine, this.Settings);
+            this.ApplyScreenSettings(this.Engine, this.Settings);
+            
+            this.ApplyChanges();
+        }
+
+        private void ApplyFrameSettings(GameEngine engine, GraphicsSettings settings)
+        {
+            engine.TargetElapsedTime = TimeSpan.FromMilliseconds(1000 / (double)settings.FPS);
+            engine.IsFixedTimeStep = true;
+        }
+
+        private void ApplyMouseSettings(GameEngine engine, GraphicsSettings settings)
+        {
+            engine.IsMouseVisible = settings.IsMouseVisible;
+        }
+
+        private void ApplyScreenSettings(GameEngine engine, GraphicsSettings settings)
+        {
+            // Resolution
+            this.PreferredBackBufferWidth = settings.Width;
+            this.PreferredBackBufferHeight = settings.Height;
+
+            // Border
+            var window = engine.Window;
+            window.IsBorderless = settings.IsFullscreen;
+        }
+
+        #endregion Graphics Operations
     }
 }

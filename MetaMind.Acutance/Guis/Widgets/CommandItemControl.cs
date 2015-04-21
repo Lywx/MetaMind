@@ -10,6 +10,7 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Elements;
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
@@ -92,11 +93,11 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime gameTime)
         {
             // mouse and keyboard in modifier
             //-----------------------------------------------------------------
-            base.UpdateInput(gameInput, gameTime);
+            base.UpdateInput(input, gameTime);
 
             // keyboard
             //-----------------------------------------------------------------
@@ -106,12 +107,12 @@ namespace MetaMind.Acutance.Guis.Widgets
                 {
                     if (!this.Locked)
                     {
-                        if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.CommandDeleteItem))
+                        if (input.State.Keyboard.IsActionTriggered(KeyboardActions.CommandDeleteItem))
                         {
                             this.DeleteIt();
                         }
 
-                        if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.CommandOpenItem))
+                        if (input.State.Keyboard.IsActionTriggered(KeyboardActions.CommandOpenItem))
                         {
                             this.RetrieveIt();
                         }
@@ -124,7 +125,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                 {
                     if (!this.Locked)
                     {
-                        if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.CommandClearItem))
+                        if (input.State.Keyboard.IsActionTriggered(KeyboardActions.CommandClearItem))
                         {
                             this.DeleteIt();
                         }

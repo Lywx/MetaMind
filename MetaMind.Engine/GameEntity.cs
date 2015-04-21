@@ -11,6 +11,7 @@ namespace MetaMind.Engine
     using System.Collections.Generic;
 
     using MetaMind.Engine.Components.Events;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
@@ -24,52 +25,32 @@ namespace MetaMind.Engine
 
         #region Engine Service
 
+        protected IGameAudioService Audio { get; private set; }
+
         protected IGameFile GameFile { get; set; }
+        
+        protected IGameInteropService Interop { get; private set; }
 
-        protected IGameAudio GameAudio { get; private set; }
-
-        protected IGameInterop GameInterop { get; private set; }
-
-        protected IGameNumerical GameNumerical { get; private set; }
-
-        protected IGameService GameService { get; private set; }
+        protected IGameNumericalService Numerical { get; private set; }
 
         #endregion 
 
         #region Constructors
 
-        protected GameEntity()
-            : this(GameEngine.Service.GameAudio, null, GameEngine.Service.GameInterop, GameEngine.Service.GameNumerical)
+        protected GameEntity(IGameService service)
         {
+            if (service == null)
+            {
+                throw new ArgumentNullException("service");
+            }
+
+
             this.Listeners = new List<IListener>();
-        }
 
-        private GameEntity(IGameAudio gameAudio, IGameFile gameFile, IGameInterop gameInterop, IGameNumerical gameNumerical)
-        {
-            if (gameAudio == null)
-            {
-                throw new ArgumentNullException("gameAudio");
-            }
-
-            if (gameFile == null)
-            {
-                throw new ArgumentNullException("gameFile");
-            }
-
-            if (gameInterop == null)
-            {
-                throw new ArgumentNullException("gameInterop");
-            }
-
-            if (gameNumerical == null)
-            {
-                throw new ArgumentNullException("gameNumerical");
-            }
-
-            this.GameAudio     = gameAudio;
+            this.Audio     = service.Audio;
             this.GameFile      = gameFile;
-            this.GameInterop   = gameInterop;
-            this.GameNumerical = gameNumerical;
+            this.Interop   = gameInterop;
+            this.Numerical = gameNumerical;
         }
 
         #endregion Constructors
@@ -133,27 +114,27 @@ namespace MetaMind.Engine
         {
         }
 
-        public virtual void LoadGraphics(IGameGraphics gameGraphics)
+        public virtual void LoadGraphics(IGameGraphicsService graphics)
         {
         }
 
-        public virtual void LoadInterop(IGameInterop gameInterop)
+        public virtual void LoadInterop(IGameInteropService interop)
         {
-            this.Listeners.ForEach(l => gameInterop.Event.AddListener(l));
+            this.Listeners.ForEach(l => interop.Event.AddListener(l));
         }
 
         public virtual void UnloadContent(IGameFile gameFile)
         {
         }
 
-        public virtual void UnloadGraphics(IGameGraphics gameGraphics)
+        public virtual void UnloadGraphics(IGameGraphicsService graphics)
         {
         }
 
-        public virtual void UnloadInterop(IGameInterop gameInterop)
+        public virtual void UnloadInterop(IGameInteropService interop)
         {
             // TODO: UnloadInterop How to design
-            this.Listeners.ForEach(l => gameInterop.Event.RemoveListener(l));
+            this.Listeners.ForEach(l => interop.Event.RemoveListener(l));
             this.Listeners.Clear();
         }
 
@@ -189,11 +170,11 @@ namespace MetaMind.Engine
         {
         }
 
-        public virtual void UpdateContent(IGameFile gameFile, GameTime gameTime)
+        public virtual void UpdateContent(IGameFile gameFile, GameTime time)
         {
         }
 
-        public virtual void UpdateInterop(IGameInterop gameInterop, GameTime gameTime)
+        public virtual void UpdateInterop(IGameInteropService interop, GameTime time)
         {
         }
 
@@ -203,7 +184,7 @@ namespace MetaMind.Engine
 
         public virtual void Dispose()
         {
-            this.UnloadInterop(GameInterop);
+            this.UnloadInterop(this.Interop);
         }
 
         #endregion IDisposable

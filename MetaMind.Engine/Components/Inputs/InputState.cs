@@ -34,17 +34,6 @@ namespace MetaMind.Engine.Components.Inputs
             }
         }
 
-        #region Singleton
-
-        private static InputState Singleton { get; set; }
-
-        public static InputState GetComponent(GameEngine gameEngine, int updateOrder)
-        {
-            return Singleton ?? (Singleton = new InputState(gameEngine, updateOrder));
-        }
-
-        #endregion Singleton
-
         #region Constructors
 
         private InputState(GameEngine gameEngine, int updateOrder)

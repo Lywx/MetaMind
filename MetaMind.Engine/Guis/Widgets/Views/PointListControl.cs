@@ -4,6 +4,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Regions;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
@@ -56,13 +57,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime gameTime)
         {
-            this.UpdateRegionClick(gameInput, gameTime);
-            this.UpdateMouseScroll(gameInput);
-            this.UpdateKeyboardMotion(gameInput);
+            this.UpdateRegionClick(input, gameTime);
+            this.UpdateMouseScroll(input);
+            this.UpdateKeyboardMotion(input);
 
-            this.UpdateItemInput(gameInput, gameTime);
+            this.UpdateItemInput(input, gameTime);
         }
 
         public override void Update(GameTime gameTime)
@@ -71,9 +72,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             this.Region.Update(gameTime);
         }
 
-        protected void UpdateRegionClick(IGameInput gameInput, GameTime gameTime)
+        protected void UpdateRegionClick(IGameInputService input, GameTime gameTime)
         {
-            this.Region.UpdateInput(gameInput, gameTime);
+            this.Region.UpdateInput(input, gameTime);
         }
 
         #endregion Update Input

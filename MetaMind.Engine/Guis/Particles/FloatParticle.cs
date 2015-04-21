@@ -7,6 +7,8 @@
 
 namespace MetaMind.Engine.Guis.Particles
 {
+    using MetaMind.Engine.Services;
+
     using Microsoft.Xna.Framework;
     using Primtives2D;
     using System;
@@ -59,9 +61,9 @@ namespace MetaMind.Engine.Guis.Particles
             return new FloatParticle(Vector2.Zero, Vector2.Zero, Vector2.Zero, 0f, Color.Transparent, 0, 0f);
         }
 
-        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            gameGraphics.Screen.SpriteBatch.FillRectangle(this.Position, this.size, this.Color, this.Angle);
+            graphics.Screen.SpriteBatch.FillRectangle(this.Position, this.size, this.Color, this.Angle);
         }
 
         public override void Update(GameTime gameTime)

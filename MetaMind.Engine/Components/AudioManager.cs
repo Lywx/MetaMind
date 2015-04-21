@@ -22,46 +22,14 @@ namespace MetaMind.Engine.Components
     /// </remarks>
     public class AudioManager : GameComponent, IAudioManager
     {
-        #region Singleton
-
-        /// <summary>
-        /// The singleton for this type.
-        /// </summary>
-        private static AudioManager Singleton { get; set; }
-
         public static AudioManager GetComponent(GameEngine game, int updateOrder)
         {
             var settingsFile  = @"Content\Audio\Audio.xgs";
             var waveBankFile  = @"Content\Audio\Wave Bank.xwb";
             var soundBankFile = @"Content\Audio\Sound Bank.xsb";
 
-            return GetComponent(game, settingsFile, waveBankFile, soundBankFile, updateOrder);
+            return new AudioManager(game, settingsFile, waveBankFile, soundBankFile, updateOrder);
         }
-
-        /// <summary>
-        /// Initialize the static Audio functionality.
-        /// </summary>
-        /// <param name="game">The game that this component will be attached to.</param>
-        /// <param name="settingsFile">The filename of the XACT settings file.</param>
-        /// <param name="waveBankFile">The filename of the XACT wavebank file.</param>
-        /// <param name="soundBankFile">The filename of the XACT soundbank file.</param>
-        /// <param name="updateOrder"></param>
-        public static AudioManager GetComponent(GameEngine game, string settingsFile, string waveBankFile, string soundBankFile, int updateOrder)
-        {
-            if (Singleton == null)
-            {
-                Singleton = new AudioManager(game, settingsFile, waveBankFile, soundBankFile);
-            }
-
-            if (game != null)
-            {
-                game.Components.Add(Singleton);
-            }
-
-            return Singleton;
-        }
-
-        #endregion Singleton
 
         #region Audio Data
 
@@ -110,6 +78,7 @@ namespace MetaMind.Engine.Components
             catch (InvalidOperationException)
             {
                 // no audio prepared
+
                 // silently fall back to silence
                 this.AudioEngine = null;
                 this.WaveBank    = null;

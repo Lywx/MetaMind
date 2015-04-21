@@ -4,6 +4,7 @@ namespace MetaMind.Acutance.Screens
 
     using MetaMind.Engine;
     using MetaMind.Engine.Screens;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
@@ -23,33 +24,32 @@ namespace MetaMind.Acutance.Screens
             this.multiplexer = new MultiplexerModule();
         }
 
-        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime)
+        public override void Draw(IGameGraphicsService graphics, GameTime time)
         {
-            var spriteBatch = gameGraphics.Screen.SpriteBatch;
+            var spriteBatch = graphics.SpriteBatch;
 
             spriteBatch.Begin();
 
-            gameGraphics.MessageDrawer.Draw(gameTime);
 
-            this.multiplexer.Draw(gameGraphics, gameTime, this.TransitionAlpha);
+            this.multiplexer.Draw(graphics, time, this.TransitionAlpha);
 
             spriteBatch.End();
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime gameTime)
         {
-            this.multiplexer.UpdateInput(gameInput, gameTime);
+            this.multiplexer.UpdateInput(input, gameTime);
         }
 
-        public override void UpdateScreen(IGameGraphics gameGraphics, GameTime gameTime, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
+        public override void UpdateScreen(IGameGraphicsService graphics, GameTime gameTime, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
         {
             if (this.IsActive && !isCoveredByOtherScreen)
             {
-                gameGraphics.MessageDrawer.Update(gameTime);
+                graphics.MessageDrawer.Update(gameTime);
 
             }
 
-            base.UpdateScreen(gameGraphics, gameTime, hasOtherScreenFocus, isCoveredByOtherScreen);
+            base.UpdateScreen(graphics, gameTime, hasOtherScreenFocus, isCoveredByOtherScreen);
         }
 
         private void MultiplexerScreenExiting(object sender, EventArgs e)

@@ -1,5 +1,7 @@
 namespace MetaMind.Engine.Guis.Widgets.Items
 {
+    using MetaMind.Engine.Services;
+
     public class ViewItemViewSmartControl<TViewItemWSwapProcess> : ViewItemViewControl2D
         where TViewItemWSwapProcess : ViewItemSwapProcess, new()
     {
@@ -11,7 +13,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             this.dataSource = dataSource;
         }
 
-        public override void SwapIt(IGameInterop gameInterop, IViewItem draggingItem)
+        public override void SwapIt(IGameInteropService interop, IViewItem draggingItem)
         {
             // state checking
             if (this.Item.IsEnabled(ItemState.Item_Swaping))
@@ -30,7 +32,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             ViewControl.Swap.Initialize(originCenter, targetCenter);
 
             var swapProcess = new TViewItemWSwapProcess().Initialize(draggingItem, this.Item, this.dataSource);
-            gameInterop.Process.AttachProcess(swapProcess);
+            interop.Process.AttachProcess(swapProcess);
         }
     }
 }

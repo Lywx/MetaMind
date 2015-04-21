@@ -1,5 +1,7 @@
 namespace MetaMind.Engine.Guis
 {
+    using MetaMind.Engine.Services;
+
     using Microsoft.Xna.Framework;
 
     /// FIXME: Won't work now.
@@ -24,25 +26,25 @@ namespace MetaMind.Engine.Guis
 
         public TModuleSettings Settings { get; protected set; }
 
-        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            this.Graphics.Draw(gameGraphics, gameTime, alpha);
+            this.Graphics.Draw(graphics, time, alpha);
         }
 
-        public virtual void Load(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
+        public virtual void Load(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
         {
-            this.Control.Load(gameFile, gameInput, gameInterop, gameAudio);
+            this.Control.Load(gameFile, input, interop, audio);
         }
 
-        public virtual void Unload(IGameFile gameFile, IGameInput gameInput, IGameInterop gameInterop, IGameAudio gameAudio)
+        public virtual void Unload(IGameFile gameFile, IGameInputService input, IGameInteropService interop, IGameAudioService audio)
         {
-            this.Control.Unload(gameFile, gameInput, gameInterop, gameAudio);
+            this.Control.Unload(gameFile, input, interop, audio);
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime gameTime)
         {
-            this.Control .UpdateInput(gameInput, gameTime);
-            this.Graphics.UpdateInput(gameInput, gameTime);
+            this.Control .UpdateInput(input, gameTime);
+            this.Graphics.UpdateInput(input, gameTime);
         }
 
         public override void Update(GameTime gameTime)

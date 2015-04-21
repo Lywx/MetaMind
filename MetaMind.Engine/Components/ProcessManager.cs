@@ -7,6 +7,7 @@
 
 namespace MetaMind.Engine.Components
 {
+    using System;
     using System.Collections.Generic;
 
     using MetaMind.Engine.Components.Processes;
@@ -15,55 +16,27 @@ namespace MetaMind.Engine.Components
 
     public class ProcessManager : GameComponent, IProcessManager
     {
-        #region Singleton
-
-        private static ProcessManager Singleton { get; set; }
-
-        public static ProcessManager GetComponent(GameEngine gameEngine, int updateOrder)
-        {
-            if (Singleton == null)
-            {
-                Singleton = new ProcessManager(gameEngine, updateOrder);
-            }
-
-            if (gameEngine != null)
-            {
-                gameEngine.Components.Add(Singleton);
-            }
-
-            return Singleton;
-        }
-
-        #endregion Singleton
-
         #region Process Data
 
         private readonly List<IProcess> processes;
 
         #endregion Process Data
 
-        #region Engine Data
-
-        private IGameFile    GameFile { get; set; }
-
-        private IGameInterop GameInterop { get; set; }
-
-        private IGameAudio   GameAudio { get; set; }
-
-        #endregion
-
         #region Constructors
 
-        private ProcessManager(GameEngine gameEngine, int updateOrder)
-            : base(gameEngine)
+        private ProcessManager(GameEngine engine, int updateOrder)
+            : base(engine)
         {
-            this.processes = new List<IProcess>();
+            if (engine == null)
+            {
+                throw new ArgumentNullException("engine");
+            }
 
-            this.UpdateOrder = updateOrder;
+            engine.Components.Add(this);
             
-            this.GameFile    = new GameEngineFile(gameEngine);
-            this.GameInterop = new GameEngineInterop(gameEngine);
-            this.GameAudio   = new GameEngineAudio(gameEngine);
+            this.UpdateOrder = updateOrder;
+
+            this.processes = new List<IProcess>();
         }
 
         #endregion Constructors
@@ -95,11 +68,6 @@ namespace MetaMind.Engine.Components
                 if (process.State == ProcessState.Running)
                 {
                     process.Update(gameTime);
-
-                    // TODO: ???
-                    //process.UpdateContent(this.GameFile, gameTime);
-                    //process.UpdateInterop(this.GameInterop, gameTime);
-                    //process.UpdateAudio(this.GameAudio, gameTime);
                 }
 
                 if (process.IsDead)

@@ -9,6 +9,8 @@ namespace MetaMind.Engine.Components.Fonts
 {
     using System.Collections.Generic;
 
+    using MetaMind.Engine.Services;
+
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 

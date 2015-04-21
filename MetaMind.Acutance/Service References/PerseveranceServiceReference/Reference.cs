@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 
 namespace MetaMind.Acutance.PerseveranceServiceReference {
+    using MetaMind.Engine.Services;
     using MetaMind.Perseverance.Concepts;
     using MetaMind.Perseverance.Concepts.Tasks;
 
@@ -22,7 +23,7 @@ namespace MetaMind.Acutance.PerseveranceServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SynchronizationDescription))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SynchronizationStatistics))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SynchronizationTimer))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MetaMind.Engine.GameEngineAccess))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(GameEngineAccess))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Task))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MetaMind.Engine.Concepts.SynchronizationSpan))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(double[]))]

@@ -8,6 +8,7 @@
 namespace MetaMind.Engine.Guis.Widgets.Items
 {
     using MetaMind.Engine.Guis.Elements;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
@@ -29,9 +30,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         #region Update
 
-        public virtual void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public virtual void UpdateInput(IGameInputService input, GameTime gameTime)
         {
-            this.RootFrame.UpdateInput(gameInput, gameTime);
+            this.RootFrame.UpdateInput(input, gameTime);
 
             if (this.RootFrame.IsEnabled(FrameState.Mouse_Over))
             {

@@ -3,6 +3,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
     using MetaMind.Engine;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Engine.Services;
 
     public class MotivationItemViewControl : ViewItemViewControl1D
     {
@@ -11,7 +12,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
         {
         }
 
-        public override void ExchangeIt(IGameInterop gameInterop, IViewItem draggingItem, IView targetView)
+        public override void ExchangeIt(IGameInteropService interop, IViewItem draggingItem, IView targetView)
         {
             if (this.Item.IsEnabled(ItemState.Item_Exchanging))
             {
@@ -20,10 +21,10 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
             this.Item.Enable(ItemState.Item_Exchanging);
 
-            gameInterop.Process.AttachProcess(new MotivationItemTransitProcess(draggingItem, targetView));
+            interop.Process.AttachProcess(new MotivationItemTransitProcess(draggingItem, targetView));
         }
 
-        public override void SwapIt(IGameInterop gameInterop, IViewItem draggingItem)
+        public override void SwapIt(IGameInteropService interop, IViewItem draggingItem)
         {
             if (this.Item.IsEnabled(ItemState.Item_Swaping))
             {
@@ -37,7 +38,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
             this.ViewControl.Swap.Initialize(originCenter, targetCenter);
 
-            gameInterop.Process.AttachProcess(new MotivationItemSwapProcess(draggingItem, this.Item));
+            interop.Process.AttachProcess(new MotivationItemSwapProcess(draggingItem, this.Item));
         }
     }
 }

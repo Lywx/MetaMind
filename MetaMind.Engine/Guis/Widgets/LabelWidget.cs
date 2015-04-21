@@ -3,6 +3,7 @@
     using System;
 
     using MetaMind.Engine.Components.Fonts;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
@@ -18,9 +19,9 @@
 
         public Func<Font> TextFont { get; set; }
 
-        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            var font = gameGraphics.StringDrawer;
+            var font = graphics.String;
 
             font.DrawStringCenteredHV(
                 this.TextFont(),

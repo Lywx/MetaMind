@@ -12,6 +12,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Regions;
     using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Engine.Services;
     using MetaMind.Perseverance.Concepts.Tasks;
 
     using Microsoft.Xna.Framework;
@@ -38,18 +39,18 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         #region Update
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime gameTime)
         {
-            this.UpdateRegionClick(gameInput, gameTime);
-            this.UpdateMouseScroll(gameInput);
-            this.UpdateKeyboardMotion(gameInput, gameTime);
+            this.UpdateRegionClick(input, gameTime);
+            this.UpdateMouseScroll(input);
+            this.UpdateKeyboardMotion(input, gameTime);
 
             if (this.AcceptInput)
             {
                 if (this.ViewSettings.KeyboardEnabled)
                 {
                     // list management
-                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.TaskCreateItem))
+                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.TaskCreateItem))
                     {
                         this.AddItem();
 
@@ -57,7 +58,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
                         this.Selection.Select(this.View.Items.Count - 1);
                     }
 
-                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.TaskDeleteItem))
+                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.TaskDeleteItem))
                     {
                         // itme deletion is handled by item control
                         // auto select last item
@@ -74,7 +75,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
                 }
             }
 
-            this.UpdateItemInput(gameInput, gameTime);
+            this.UpdateItemInput(input, gameTime);
         }
 
         protected override void UpdateViewFocus()

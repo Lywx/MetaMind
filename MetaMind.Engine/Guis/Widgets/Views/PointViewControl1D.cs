@@ -12,6 +12,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
@@ -185,19 +186,19 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime gameTime)
         {
-            this.UpdateMouseScroll(gameInput);
-            this.UpdateItemInput(gameInput, gameTime);
+            this.UpdateMouseScroll(input);
+            this.UpdateItemInput(input, gameTime);
         }
 
-        protected void UpdateItemInput(IGameInput gameInput, GameTime gameTime)
+        protected void UpdateItemInput(IGameInputService input, GameTime gameTime)
         {
             // item input
             // -----------------------------------------------------------------
             foreach (var item in View.Items.ToArray())
             {
-                item.UpdateInput(gameInput, gameTime);
+                item.UpdateInput(input, gameTime);
             }
         }
 
@@ -210,7 +211,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
         }
 
-        protected virtual void UpdateKeyboardMotion(IGameInput gameInput)
+        protected virtual void UpdateKeyboardMotion(IGameInputService input)
         {
             if (this.AcceptInput)
             {
@@ -219,28 +220,28 @@ namespace MetaMind.Engine.Guis.Widgets.Views
                 if (ViewSettings.KeyboardEnabled)
                 {
                     // movement
-                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.Left))
+                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Left))
                     {
                         this.MoveLeft();
                     }
 
-                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.Right))
+                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Right))
                     {
                         this.MoveRight();
                     }
 
-                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.FastLeft))
+                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastLeft))
                     {
                         this.SuperMoveLeft();
                     }
 
-                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.FastRight))
+                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastRight))
                     {
                         this.SuperMoveRight();
                     }
 
                     // escape
-                    if (gameInput.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))
+                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))
                     {
                         this.Selection.Clear();
                     }
@@ -248,7 +249,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
         }
 
-        protected virtual void UpdateMouseScroll(IGameInput gameInput)
+        protected virtual void UpdateMouseScroll(IGameInputService input)
         {
             if (this.AcceptInput)
             {
@@ -256,12 +257,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views
                 // ------------------------------------------------------------------
                 if (ViewSettings.MouseEnabled)
                 {
-                    if (gameInput.State.Mouse.IsWheelScrolledUp)
+                    if (input.State.Mouse.IsWheelScrolledUp)
                     {
                         this.Scroll.MoveLeft();
                     }
 
-                    if (gameInput.State.Mouse.IsWheelScrolledDown)
+                    if (input.State.Mouse.IsWheelScrolledDown)
                     {
                         this.Scroll.MoveRight();
                     }

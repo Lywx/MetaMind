@@ -2,6 +2,8 @@
 {
     using System.Globalization;
 
+    using MetaMind.Engine.Services;
+
     using Microsoft.Xna.Framework;
 
     using Primtives2D;
@@ -28,24 +30,24 @@
             }
         }
 
-        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
             if (!ItemControl.Active && !Item.IsEnabled(ItemState.Item_Dragging))
             {
                 return;
             }
 
-            this.DrawNameFrame(gameGraphics, alpha);
-            this.DrawId(gameGraphics, alpha);
+            this.DrawNameFrame(graphics, alpha);
+            this.DrawId(graphics, alpha);
         }
 
         public override void Update(GameTime gameTime)
         {
         }
 
-        protected virtual void DrawId(IGameGraphics gameGraphics, byte alpha)
+        protected virtual void DrawId(IGameGraphicsService graphics, byte alpha)
         {
-            gameGraphics.StringDrawer.DrawStringCenteredHV(
+            graphics.String.DrawStringCenteredHV(
                 ItemSettings.IdFont,
                 ItemControl.Id.ToString(new CultureInfo("en-US")),
                 this.IdCenter,
@@ -53,58 +55,58 @@
                 ItemSettings.IdSize);
         }
 
-        protected virtual void DrawNameFrame(IGameGraphics gameGraphics, byte alpha)
+        protected virtual void DrawNameFrame(IGameGraphicsService graphics, byte alpha)
         {
             if (Item.IsEnabled(ItemState.Item_Pending))
             {
-                this.FillNameFrameWith(gameGraphics, this.ItemSettings.NameFramePendingColor, alpha);
+                this.FillNameFrameWith(graphics, this.ItemSettings.NameFramePendingColor, alpha);
             }
             else if (Item.IsEnabled(ItemState.Item_Mouse_Over) &&
                      Item.IsEnabled(ItemState.Item_Editing))
             {
-                this.FillNameFrameWith(gameGraphics, this.ItemSettings.NameFrameModificationColor, alpha);
-                this.DrawNameFrameWith(gameGraphics, this.ItemSettings.NameFrameMouseOverColor, alpha);
+                this.FillNameFrameWith(graphics, this.ItemSettings.NameFrameModificationColor, alpha);
+                this.DrawNameFrameWith(graphics, this.ItemSettings.NameFrameMouseOverColor, alpha);
             }
             else if (!Item.IsEnabled(ItemState.Item_Mouse_Over) &&
                      Item.IsEnabled(ItemState.Item_Editing))
             {
-                this.FillNameFrameWith(gameGraphics, this.ItemSettings.NameFrameModificationColor, alpha);
+                this.FillNameFrameWith(graphics, this.ItemSettings.NameFrameModificationColor, alpha);
             }
             else if (Item.IsEnabled(ItemState.Item_Mouse_Over) &&
                      Item.IsEnabled(ItemState.Item_Selected))
             {
-                this.FillNameFrameWith(gameGraphics, this.ItemSettings.NameFrameSelectionColor, alpha);
-                this.DrawNameFrameWith(gameGraphics, this.ItemSettings.NameFrameMouseOverColor, alpha);
+                this.FillNameFrameWith(graphics, this.ItemSettings.NameFrameSelectionColor, alpha);
+                this.DrawNameFrameWith(graphics, this.ItemSettings.NameFrameMouseOverColor, alpha);
             }
             else if (Item.IsEnabled(ItemState.Item_Mouse_Over) &&
                      !Item.IsEnabled(ItemState.Item_Selected))
             {
-                this.FillNameFrameWith(gameGraphics, this.ItemSettings.NameFrameRegularColor, alpha);
-                this.DrawNameFrameWith(gameGraphics, this.ItemSettings.NameFrameMouseOverColor, alpha);
+                this.FillNameFrameWith(graphics, this.ItemSettings.NameFrameRegularColor, alpha);
+                this.DrawNameFrameWith(graphics, this.ItemSettings.NameFrameMouseOverColor, alpha);
             }
             else if (Item.IsEnabled(ItemState.Item_Selected))
             {
-                this.FillNameFrameWith(gameGraphics, this.ItemSettings.NameFrameSelectionColor, alpha);
+                this.FillNameFrameWith(graphics, this.ItemSettings.NameFrameSelectionColor, alpha);
             }
             else
             {
-                this.FillNameFrameWith(gameGraphics, this.ItemSettings.NameFrameRegularColor, alpha);
+                this.FillNameFrameWith(graphics, this.ItemSettings.NameFrameRegularColor, alpha);
             }
         }
 
-        protected void DrawNameFrameWith(IGameGraphics gameGraphics, Color color, byte alpha)
+        protected void DrawNameFrameWith(IGameGraphicsService graphics, Color color, byte alpha)
         {
             Primitives2D.DrawRectangle(
-                gameGraphics.Screen.SpriteBatch,
+                graphics.SpriteBatch,
                 ExtRectangle.Crop(ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin),
                 color.MakeTransparent(alpha),
                 1f);
         }
 
-        protected void FillNameFrameWith(IGameGraphics gameGraphics, Color color, byte alpha)
+        protected void FillNameFrameWith(IGameGraphicsService graphics, Color color, byte alpha)
         {
             Primitives2D.FillRectangle(
-                gameGraphics.Screen.SpriteBatch,
+                graphics.SpriteBatch,
                 ExtRectangle.Crop(ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin),
                 color.MakeTransparent(alpha));
         }

@@ -3,6 +3,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     using System.Collections.Generic;
 
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
@@ -38,14 +39,14 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public dynamic Parent { get; private set; }
 
-        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            this.Graphics.Draw(gameGraphics, gameTime, alpha);
+            this.Graphics.Draw(graphics, time, alpha);
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime gameTime)
         {
-            this.Control.Update(gameInput, gameTime);
+            this.Control.Update(input, gameTime);
         }
 
         public override void Update(GameTime gameTime)

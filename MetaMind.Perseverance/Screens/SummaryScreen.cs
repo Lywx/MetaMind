@@ -5,6 +5,7 @@
     using MetaMind.Engine;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Screens;
+    using MetaMind.Engine.Services;
     using MetaMind.Perseverance.Guis.Modules;
 
     using Microsoft.Xna.Framework;
@@ -30,33 +31,33 @@
             this.summary.Load(gameFile, gameInput, gameInterop, gameSound);
         }
 
-        public override void Draw(IGameGraphics gameGraphics, GameTime gameTime)
+        public override void Draw(IGameGraphicsService graphics, GameTime time)
         {
-            var spriteBatch = gameGraphics.Screen.SpriteBatch;
+            var spriteBatch = graphics.SpriteBatch;
 
             spriteBatch.Begin();
 
-            gameGraphics.MessageDrawer.Draw(gameTime);
+            graphics.MessageDrawer.Draw(time);
 
-            this.summary.Draw(gameGraphics, gameTime, TransitionAlpha);
+            this.summary.Draw(graphics, time, TransitionAlpha);
 
             spriteBatch.End();
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime gameTime)
         {
-            this.summary.UpdateInput(gameInput, gameTime);
+            this.summary.UpdateInput(input, gameTime);
         }
 
         public override void LoadContent(IGameFile gameFile)
         {
         }
 
-        public override void UpdateGraphics(IGameGraphics gameGraphics, GameTime gameTime)
+        public override void UpdateGraphics(IGameGraphicsService graphics, GameTime gameTime)
         {
             if (this.IsActive)
             {
-                gameGraphics.MessageDrawer.Update(gameTime);
+                graphics.MessageDrawer.Update(gameTime);
             }
         }
 

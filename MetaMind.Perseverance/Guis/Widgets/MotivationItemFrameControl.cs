@@ -6,6 +6,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Elements;
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
@@ -62,10 +63,10 @@ namespace MetaMind.Perseverance.Guis.Widgets
             this.SymbolFrame.Size   = this.SymbolFrameSize;
         }
 
-        public override void UpdateInput(IGameInput gameInput, GameTime gameTime)
+        public override void UpdateInput(IGameInputService input, GameTime gameTime)
         {
-            base            .UpdateInput(gameInput, gameTime);
-            this.SymbolFrame.UpdateInput(gameInput, gameTime);
+            base            .UpdateInput(input, gameTime);
+            this.SymbolFrame.UpdateInput(input, gameTime);
         }
 
         private void UpdateFrameSelection(GameTime gameTime)

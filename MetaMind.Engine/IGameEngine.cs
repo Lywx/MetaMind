@@ -19,8 +19,6 @@
 
         GraphicsSettings GraphicsSettings { get; set; }
 
-        MessageDrawer MessageDrawer { get; }
-
         ScreenManager Screen { get; }
 
         InputEvent InputEvent { get; }
