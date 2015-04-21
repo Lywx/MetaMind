@@ -6,7 +6,6 @@ using System.Linq;
 
 namespace MonoGameConsole
 {
-    using MetaMind.Engine;
     using MetaMind.Engine.Components.Fonts;
 
     using Game = Microsoft.Xna.Framework.Game;
@@ -30,6 +29,8 @@ namespace MonoGameConsole
         }
 
         private readonly SpriteBatch spriteBatch;
+
+        private readonly IStringDrawer stringDrawer;
 
         private readonly InputProcessor inputProcessor;
 
@@ -81,13 +82,14 @@ namespace MonoGameConsole
 
         private readonly int maxCharactersPerLine;
 
-        public Renderer(Game game, SpriteBatch spriteBatch, InputProcessor inputProcessor)
+        public Renderer(Game game, SpriteBatch spriteBatch, IStringDrawer stringDrawer, InputProcessor inputProcessor)
         {
             this.currentState = State.Closed;
             this.width = game.GraphicsDevice.Viewport.Width;
             this.position = this.closedPosition = new Vector2(GameConsoleOptions.Options.Margin, -GameConsoleOptions.Options.Height);
             this.openedPosition = new Vector2(GameConsoleOptions.Options.Margin, 0);
             this.spriteBatch = spriteBatch;
+            this.stringDrawer = stringDrawer;
             this.inputProcessor = inputProcessor;
             this.pixel = new Texture2D(game.GraphicsDevice, 1, 1);
             this.pixel.SetData(new[] { Color.White });
@@ -127,24 +129,27 @@ namespace MonoGameConsole
 
         public void Draw(GameTime gameTime)
         {
-            if (this.currentState == State.Closed) //Do not draw if the console is closed
+            // Do not draw if the console is closed
+            if (this.currentState == State.Closed)
             {
                 return;
             }
+
             this.spriteBatch.Draw(this.pixel, this.Bounds, GameConsoleOptions.Options.BackgroundColor);
+
             // DrawRoundedEdges();
             var nextCommandPosition = this.DrawCommands(this.inputProcessor.Out, this.FirstCommandPosition);
             nextCommandPosition = this.DrawPrompt(nextCommandPosition);
             var bufferPosition = this.DrawCommand(
                 this.inputProcessor.Buffer.ToString(),
                 nextCommandPosition,
-                GameConsoleOptions.Options.BufferColor); //Draw the buffer
+                GameConsoleOptions.Options.BufferColor); // Draw the buffer
             this.DrawCursor(bufferPosition, gameTime);
         }
 
         private void DrawRoundedEdges()
         {
-            //Bottom-left edge
+            // Bottom-left edge
             this.spriteBatch.Draw(
                 GameConsoleOptions.Options.RoundedCorner,
                 new Vector2(this.position.X, this.position.Y + GameConsoleOptions.Options.Height),
@@ -155,7 +160,8 @@ namespace MonoGameConsole
                 1,
                 SpriteEffects.None,
                 1);
-            //Bottom-right edge
+
+            // Bottom-right edge
             this.spriteBatch.Draw(
                 GameConsoleOptions.Options.RoundedCorner,
                 new Vector2(
@@ -168,7 +174,8 @@ namespace MonoGameConsole
                 1,
                 SpriteEffects.FlipHorizontally,
                 1);
-            //connecting bottom-rectangle
+
+            // Connecting bottom-rectangle
             this.spriteBatch.Draw(
                 this.pixel,
                 new Rectangle(
@@ -185,16 +192,20 @@ namespace MonoGameConsole
             {
                 return;
             }
+
             var split = SplitCommand(this.inputProcessor.Buffer.ToString(), this.maxCharactersPerLine).Last();
-            pos.X += GameConsoleOptions.Options.Font.MeasureString(split).X;
-            pos.Y -= GameConsoleOptions.Options.Font.LineSpacing;
-            this.spriteBatch.DrawString(
+
+            pos.X += GameConsoleOptions.Options.Font.MeasureMonospacedString(split, 1f).X;
+            pos.Y -= GameConsoleOptions.Options.Font.GetSprite().LineSpacing;
+
+            this.stringDrawer.DrawMonospacedString(
                 GameConsoleOptions.Options.Font,
                 (int)(gameTime.TotalGameTime.TotalSeconds / GameConsoleOptions.Options.CursorBlinkSpeed) % 2 == 0
                     ? GameConsoleOptions.Options.Cursor.ToString()
                     : "",
                 pos,
-                GameConsoleOptions.Options.CursorColor);
+                GameConsoleOptions.Options.CursorColor,
+                1f);
         }
 
         /// <summary>
@@ -213,12 +224,11 @@ namespace MonoGameConsole
             {
                 if (this.IsInBounds(pos.Y))
                 {
-                    //this.spriteBatch.DrawString(GameConsoleOptions.Options.Font, line, pos, color);
-                    GameEngine.Service.Graphics.String.DrawMonospacedString(Font.UiConsole, line, pos, color, 1f);
-
+                    this.stringDrawer.DrawMonospacedString(GameConsoleOptions.Options.Font, line, pos, color, 1f);
                 }
-                this.ValidateFirstCommandPosition(pos.Y + GameConsoleOptions.Options.Font.LineSpacing);
-                pos.Y += GameConsoleOptions.Options.Font.LineSpacing;
+
+                this.ValidateFirstCommandPosition(pos.Y + GameConsoleOptions.Options.Font.GetSprite().LineSpacing);
+                pos.Y += GameConsoleOptions.Options.Font.GetSprite().LineSpacing;
             }
             return pos;
         }
@@ -271,17 +281,12 @@ namespace MonoGameConsole
         /// <returns></returns>
         private Vector2 DrawPrompt(Vector2 pos)
         {
-            //this.spriteBatch.DrawString(
-            //    GameConsoleOptions.Options.Font,
-            //    GameConsoleOptions.Options.Prompt,
-            //    pos,
-            //    GameConsoleOptions.Options.PromptColor);
-
-            GameEngine.Service.Graphics.String.DrawMonospacedString(
-                Font.UiConsole,
+            this.stringDrawer.DrawMonospacedString(
+                GameConsoleOptions.Options.Font,
                 GameConsoleOptions.Options.Prompt,
                 pos,
-                GameConsoleOptions.Options.PromptColor, 1f);
+                GameConsoleOptions.Options.PromptColor, 
+                1f);
 
             pos.X += this.oneCharacterWidth * GameConsoleOptions.Options.Prompt.Length + this.oneCharacterWidth;
             return pos;
@@ -311,7 +316,7 @@ namespace MonoGameConsole
         {
             if (!this.IsInBounds(nextCommandY))
             {
-                this.firstCommandPositionOffset.Y -= GameConsoleOptions.Options.Font.LineSpacing;
+                this.firstCommandPositionOffset.Y -= GameConsoleOptions.Options.Font.GetSprite().LineSpacing;
             }
         }
 

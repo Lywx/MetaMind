@@ -14,6 +14,8 @@ namespace MonoGameConsole
     using System.Collections.Generic;
     using System.Linq;
 
+    using MetaMind.Engine.Components.Fonts;
+
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -52,22 +54,22 @@ namespace MonoGameConsole
 
         private readonly GameConsoleComponent console;
 
-        public GameConsole(Game game, SpriteBatch spriteBatch)
-            : this(game, spriteBatch, new IConsoleCommand[0], new GameConsoleOptions())
+        public GameConsole(Game game, SpriteBatch spriteBatch, IStringDrawer stringDrawer)
+            : this(game, spriteBatch, stringDrawer, new IConsoleCommand[0], new GameConsoleOptions())
         {
         }
 
-        public GameConsole(Game game, SpriteBatch spriteBatch, GameConsoleOptions options)
-            : this(game, spriteBatch, new IConsoleCommand[0], options)
+        public GameConsole(Game game, SpriteBatch spriteBatch, IStringDrawer stringDrawer, GameConsoleOptions options)
+            : this(game, spriteBatch, stringDrawer, new IConsoleCommand[0], options)
         {
         }
 
-        public GameConsole(Game game, SpriteBatch spriteBatch, IEnumerable<IConsoleCommand> commands)
-            : this(game, spriteBatch, commands, new GameConsoleOptions())
+        public GameConsole(Game game, SpriteBatch spriteBatch, IStringDrawer stringDrawer, IEnumerable<IConsoleCommand> commands)
+            : this(game, spriteBatch, stringDrawer, commands, new GameConsoleOptions())
         {
         }
 
-        public GameConsole(Game game, SpriteBatch spriteBatch, IEnumerable<IConsoleCommand> commands, GameConsoleOptions options)
+        public GameConsole(Game game, SpriteBatch spriteBatch, IStringDrawer stringDrawer, IEnumerable<IConsoleCommand> commands, GameConsoleOptions options)
         {
             if (options.Font == null)
             {
@@ -77,7 +79,7 @@ namespace MonoGameConsole
             GameConsoleOptions.Options = options;
             GameConsoleOptions.Commands = commands.ToList();
             this.Enabled = true;
-            this.console = new GameConsoleComponent(this, game, spriteBatch);
+            this.console = new GameConsoleComponent(this, game, spriteBatch, stringDrawer);
             game.Services.AddService(typeof(GameConsole), this);
             game.Components.Add(this.console);
         }

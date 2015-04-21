@@ -10,14 +10,14 @@ namespace MetaMind.Engine.Components.Fonts
     {
         private static IFontManager fontManager;
 
-        public static string DisaplayableString(this Font font, string str)
+        public static string PrintableString(this Font font, string str)
         {
-            return font.GetSprite().FilterDisaplayableString(str);
+            return font.GetSprite().PrintableString(str);
         }
 
-        public static List<int> NonDisaplayableCharIndexes(this Font font, string str)
+        public static List<int> NonPrintableCharIndexes(this Font font, string str)
         {
-            return font.GetSprite().FilterNonDisaplayableCharIndexes(str);
+            return font.GetSprite().NonPrintableCharIndexes(str);
         }
 
         public static SpriteFont GetSprite(this Font font)

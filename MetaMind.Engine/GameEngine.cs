@@ -64,7 +64,7 @@ namespace MetaMind.Engine
 
         protected override void LoadContent()
         {
-            var console = new GameConsole(this, this.Graphics.SpriteBatch, new GameConsoleOptions { Font = Font.UiRegular.GetSprite() });
+            var console = new GameConsole(this, this.Graphics.SpriteBatch, this.Graphics.String, new GameConsoleOptions { Font = Font.UiConsole });
         }
 
         protected override void UnloadContent()

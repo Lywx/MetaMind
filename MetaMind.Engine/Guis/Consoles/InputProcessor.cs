@@ -9,6 +9,8 @@ namespace MonoGameConsole
 {
     using System.Windows.Forms;
 
+    using MetaMind.Engine.Components.Fonts;
+
     using Keys = Microsoft.Xna.Framework.Input.Keys;
 
     internal class InputProcessor
@@ -207,7 +209,7 @@ namespace MonoGameConsole
 
         private static bool IsPrintable(char letter)
         {
-            return GameConsoleOptions.Options.Font.Characters.Contains(letter);
+            return GameConsoleOptions.Options.Font.GetSprite().Characters.Contains(letter);
         }
     }
 }

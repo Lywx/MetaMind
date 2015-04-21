@@ -46,7 +46,7 @@ namespace MetaMind.Engine.Components.Fonts
                 return;
             }
 
-            var displayable = font.DisaplayableString(str);
+            var displayable = font.PrintableString(str);
 
             var CJKCharIndexes = displayable.CJKExclusiveCharIndexes();
             var CJKCharAmendedPosition = this.CJKExclusiveCharAmendedPosition(CJKCharIndexes, displayable);
@@ -71,7 +71,7 @@ namespace MetaMind.Engine.Components.Fonts
 
             SpriteBatch.DrawString(
                 font.GetSprite(),
-                font.DisaplayableString(str),
+                font.PrintableString(str),
                 position,
                 color,
                 0f,
@@ -96,12 +96,12 @@ namespace MetaMind.Engine.Components.Fonts
                 return;
             }
 
-            var stringDisplayable = font.DisaplayableString(str);
-            var stringSize = font.MeasureString(stringDisplayable, scale);
+            var stringPrintable = font.PrintableString(str);
+            var stringSize = font.MeasureString(stringPrintable, scale);
 
             position -= new Vector2((int)(stringSize.X / 2), (int)(stringSize.Y / 2));
 
-            this.DrawString(font, stringDisplayable, position, color, scale);
+            this.DrawString(font, stringPrintable, position, color, scale);
         }
 
         public void DrawStringCenteredV(Font font, string str, Vector2 position, Color color, float scale)

@@ -106,7 +106,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         private void RefreshEditingExperience(object sender, ViewItemDataEventArgs e)
         {
-            var inputString = ((Font)this.ItemSettings.NameFont).DisaplayableString(e.NewValue);
+            var inputString = ((Font)this.ItemSettings.NameFont).PrintableString(e.NewValue);
 
             // parse input to experience
             int integer;
@@ -118,7 +118,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         private void RefreshEditingInt(object sender, ViewItemDataEventArgs e)
         {
-            var inputString = ((Font)this.ItemSettings.NameFont).DisaplayableString(e.NewValue);
+            var inputString = ((Font)this.ItemSettings.NameFont).PrintableString(e.NewValue);
 
             // parse input to int
             int result;
@@ -130,7 +130,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         private void RefreshEditingString(object sender, ViewItemDataEventArgs e)
         {
             // make sure name is exactly the same as the displayed name
-            var inputString = ((Font)this.ItemSettings.NameFont).DisaplayableString(e.NewValue);
+            var inputString = ((Font)this.ItemSettings.NameFont).PrintableString(e.NewValue);
 
             this.RefreshValue(ItemData, inputString);
         }

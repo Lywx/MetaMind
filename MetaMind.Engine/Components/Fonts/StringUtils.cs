@@ -29,7 +29,7 @@ namespace MetaMind.Engine.Components.Fonts
                 throw new ArgumentOutOfRangeException("maxLength");
             }
 
-            var stringCropped = font.DisaplayableString(str);
+            var stringCropped = font.PrintableString(str);
             var stringSize    = font.MeasureString(stringCropped, scale, monospaced);
 
             var isCropped = false;

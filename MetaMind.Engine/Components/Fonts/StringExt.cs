@@ -22,12 +22,12 @@ namespace MetaMind.Engine.Components.Fonts
         public static List<int> CJKExclusiveCharIndexes(this string str)
         {
             // HACK: May not use standard font here.
-            return Font.UiRegular.NonDisaplayableCharIndexes(str);
+            return Font.UiRegular.NonPrintableCharIndexes(str);
         }
 
         public static string CJKInclusiveString(this string str)
         {
-            return Font.ContentRegular.DisaplayableString(str);
+            return Font.ContentRegular.PrintableString(str);
         }
 
         public static Vector2 MeasureMonospacedString(this string str, float scale)

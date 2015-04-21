@@ -4,6 +4,8 @@ using MonoGameConsole.Commands;
 
 namespace MonoGameConsole
 {
+    using MetaMind.Engine.Components.Fonts;
+
     internal class GameConsoleComponent : DrawableGameComponent
     {
         public bool IsOpen
@@ -19,7 +21,7 @@ namespace MonoGameConsole
         private readonly InputProcessor inputProcesser;
         private readonly Renderer renderer;
 
-        public GameConsoleComponent(GameConsole console, Game game, SpriteBatch spriteBatch)
+        public GameConsoleComponent(GameConsole console, Game game, SpriteBatch spriteBatch, IStringDrawer stringDrawer)
             : base(game)
         {
             this.console = console;
@@ -30,7 +32,7 @@ namespace MonoGameConsole
             inputProcesser.Open += (s, e) => renderer.Open();
             inputProcesser.Close += (s, e) => renderer.Close();
 
-            renderer = new Renderer(game, spriteBatch, inputProcesser);
+            renderer = new Renderer(game, spriteBatch, stringDrawer, inputProcesser);
             var inbuiltCommands = new IConsoleCommand[] { new ClearCommand(inputProcesser), new ExitCommand(game), new HelpCommand() };
             GameConsoleOptions.Commands.AddRange(inbuiltCommands);
         }

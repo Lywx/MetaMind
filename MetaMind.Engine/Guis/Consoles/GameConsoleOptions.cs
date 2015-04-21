@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 namespace MonoGameConsole
 {
+    using MetaMind.Engine.Components.Fonts;
+
     public class GameConsoleOptions
     {
         public int ToggleKey { get; set; }
@@ -44,7 +46,7 @@ namespace MonoGameConsole
 
         public bool OpenOnWrite { get; set; }
 
-        public SpriteFont Font { get; set; }
+        public Font Font { get; set; }
 
         public Texture2D RoundedCorner { get; set; }
 

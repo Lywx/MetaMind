@@ -6,7 +6,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
     internal static class SpriteFontExt
     {
-        public static string FilterDisaplayableString(this SpriteFont font, string str)
+        public static string PrintableString(this SpriteFont font, string str)
         {
             if (font == null)
             {
@@ -16,7 +16,7 @@ namespace Microsoft.Xna.Framework.Graphics
             return str.Where(t => font.Characters.Contains(t)).Aggregate(string.Empty, (current, t) => current + t);
         }
 
-        public static List<int> FilterNonDisaplayableCharIndexes(this SpriteFont spriteFont, string str)
+        public static List<int> NonPrintableCharIndexes(this SpriteFont spriteFont, string str)
         {
             if (spriteFont == null)
             {
