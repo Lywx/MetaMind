@@ -2,8 +2,12 @@ namespace MetaMind.Engine.Components
 {
     using System;
 
+    using MetaMind.Engine.Components.Fonts;
+
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
+
+    using MonoGameConsole;
 
     public class GameEngineInterop : IGameInterop
     {
@@ -50,6 +54,7 @@ namespace MetaMind.Engine.Components
             this.Folder  = new FolderManager();
 
             this.Game = new GameManager(engine);
+
         }
 
         public void Initialize()

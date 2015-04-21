@@ -10,9 +10,12 @@ namespace MetaMind.Engine
     using System;
 
     using MetaMind.Engine.Components;
+    using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
+
+    using MonoGameConsole;
 
     public class GameEngine : Microsoft.Xna.Framework.Game, IGameEngine
     {
@@ -61,7 +64,7 @@ namespace MetaMind.Engine
 
         protected override void LoadContent()
         {
-            
+            var console = new GameConsole(this, this.Graphics.SpriteBatch, new GameConsoleOptions { Font = Font.UiRegular.GetSprite() });
         }
 
         protected override void UnloadContent()
@@ -74,7 +77,7 @@ namespace MetaMind.Engine
             base.Update(gameTime);
         }
 
-        private void UpdateInput(GameTime gameTime)
+        protected void UpdateInput(GameTime gameTime)
         {
             // TODO: Playtest
             this.Input.UpdateInput(gameTime);

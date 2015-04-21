@@ -13,6 +13,8 @@ namespace MetaMind.Engine.Components.Fonts
 
         UiStatistics, // ASCII
 
+        UiConsole, // ASCII
+
         ContentRegular, // CJK
 
         ContentBold, // CJK 

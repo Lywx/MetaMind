@@ -2,7 +2,6 @@ namespace MetaMind.Perseverance.Guis.Modules
 {
     using System.Collections.Generic;
 
-    using MetaMind.Engine;
     using MetaMind.Engine.Components.Events;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Widgets.Items;
@@ -54,8 +53,10 @@ namespace MetaMind.Perseverance.Guis.Modules
                 this.gameStartedListener = new MotivationModuleGameStartedListener(this.intelligence);
             }
 
-            new Listener(new List<int> { (int)SessionEventType.GameStarted },
-                e => {
+            new Listener(
+                new List<int> { (int)SessionEventType.GameStarted },
+                e =>
+                    {
                         // auto-select after startup
                         this.intelligence.Control.Selection.Select(0);
 

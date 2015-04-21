@@ -2,8 +2,6 @@
 {
     using System.Runtime.Serialization;
 
-    using MetaMind.Engine;
-
     public interface ICognition
     {
         [DataMember]
@@ -30,7 +28,13 @@
         [DataMember]
         public ISynchronization Synchronization { get; set; }
 
-        public bool Awake { get { return Consciousness.AwakeCondition; } }
+        public bool Awake
+        {
+            get
+            {
+                return this.Consciousness.AwakeCondition;
+            }
+        }
 
         #endregion Components
 
@@ -38,7 +42,7 @@
 
         public Cognition()
         {
-            this.Consciousness = new ConsciousnessAwake();
+            this.Consciousness   = new ConsciousnessAwake();
             this.Synchronization = new Synchronization();
         }
 
@@ -48,8 +52,8 @@
 
         public void Update()
         {
-            Consciousness = Consciousness.Update();
-            Synchronization              .Update();
+            this.Consciousness = this.Consciousness.Update();
+            this.Synchronization.Update();
         }
 
         #endregion Update

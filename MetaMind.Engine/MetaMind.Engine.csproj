@@ -117,6 +117,22 @@
     <Compile Include="Components\GameEngineGraphics.cs" />
     <Compile Include="Components\GameEngineInterop.cs" />
     <Compile Include="Components\GameEngineNumerical.cs" />
+    <Compile Include="Guis\Consoles\CommandHistory.cs" />
+    <Compile Include="Guis\Consoles\CommandProcesser.cs" />
+    <Compile Include="Guis\Consoles\Commands\ClearCommand.cs" />
+    <Compile Include="Guis\Consoles\Commands\CommandComparer.cs" />
+    <Compile Include="Guis\Consoles\Commands\CustomCommand.cs" />
+    <Compile Include="Guis\Consoles\Commands\ExitCommand.cs" />
+    <Compile Include="Guis\Consoles\Commands\HelpCommand.cs" />
+    <Compile Include="Guis\Consoles\GameConsole.cs" />
+    <Compile Include="Guis\Consoles\GameConsoleComponent.cs" />
+    <Compile Include="Guis\Consoles\GameConsoleOptions.cs" />
+    <Compile Include="Guis\Consoles\IConsoleCommand.cs" />
+    <Compile Include="Guis\Consoles\InputProcessor.cs" />
+    <Compile Include="Guis\Consoles\KeyboardCapture\CharEventArgs.cs" />
+    <Compile Include="Guis\Consoles\KeyboardCapture\KeyEventArgs.cs" />
+    <Compile Include="Guis\Consoles\OutputLine.cs" />
+    <Compile Include="Guis\Consoles\Renderer.cs" />
     <Compile Include="Services\GameEngineNumericalService.cs" />
     <Compile Include="GameVisualEntity.cs" />
     <Compile Include="Services\GameEngineGraphicsService.cs" />
@@ -299,9 +315,16 @@
     <Compile Include="Settings\Systems\Monitor.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="FileSearcher">
+      <HintPath>..\ThirdParties\FileSearcher.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Primtives2D, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdParties\Primtives2D.dll</HintPath>
     </Reference>
     <Reference Include="Sprache">
       <HintPath>..\ThirdParties\Sprache.dll</HintPath>
@@ -312,17 +335,11 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Content\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\MetaMind.EngineBuilder\MetaMind.EngineBuilder\MetaMind.EngineBuilder.csproj">
       <Project>{492c04cf-f181-48af-b919-fcd639ed711c}</Project>
       <Name>MetaMind.EngineBuilder</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ThirdParties\Primitives2D\ThirdParties.Primitives2D.csproj">
-      <Project>{39ad1482-1881-4852-a05d-dc61b0d3446a}</Project>
-      <Name>ThirdParties.Primitives2D</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -359,6 +376,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Class Diagrams\Components.cd" />
+    <None Include="Content\ConsoleFont.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

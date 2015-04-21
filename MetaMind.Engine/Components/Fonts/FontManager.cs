@@ -66,6 +66,7 @@ namespace MetaMind.Engine.Components.Fonts
         {
             this.LoadFont(Font.UiRegular,    18, @"Fonts/BitmapFonts/RegularFont");
             this.LoadFont(Font.UiStatistics, 18, @"Fonts/BitmapFonts/StatisticsFont");
+            this.LoadFont(Font.UiConsole   , 18, @"ConsoleFont");
 
             this.LoadFont(Font.ContentRegular,    18, @"Fonts/SpriteFonts/NSimSunRegularFont");
             this.LoadFont(Font.ContentBold,       18, @"Fonts/SpriteFonts/NSimSunBoldFont");

@@ -23,6 +23,5 @@ namespace MetaMind.Perseverance.Components
         }
 
         #endregion Operations
-
     }
 }
