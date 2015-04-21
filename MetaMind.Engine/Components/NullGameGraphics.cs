@@ -14,12 +14,7 @@
 
         public GraphicsSettings Settings { get; private set; }
 
-        public SpriteBatch SpriteBatch
-        {
-            get
-            {
-            }
-        }
+        public SpriteBatch SpriteBatch { get; private set; }
 
         public IStringDrawer String { get; private set; }
 

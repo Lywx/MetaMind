@@ -7,8 +7,10 @@
     {
         IGameInput Input { get; }
 
-        IGameInteropService Interop { get; }
+        IGameInterop Interop { get; }
 
         IGameGraphics Graphics { get; }
+
+        void Run();
     }
 }

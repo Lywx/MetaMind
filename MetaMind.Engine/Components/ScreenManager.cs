@@ -129,10 +129,6 @@ namespace MetaMind.Engine.Components
             this.Settings    = settings;
         
             this.UpdateOrder = updateOrder;
-
-            this.Graphics = GameEngine.Service.Graphics;
-            this.Input    = GameEngine.Service.Input;
-            this.Interop  = GameEngine.Service.Interop;
         }
 
         #endregion Constructors
@@ -145,6 +141,10 @@ namespace MetaMind.Engine.Components
         public override void Initialize()
         {
             this.isInitialized = true;
+
+            this.Graphics = GameEngine.Service.Graphics;
+            this.Input    = GameEngine.Service.Input;
+            this.Interop  = GameEngine.Service.Interop;
         }
 
         #endregion Initialization
@@ -153,12 +153,12 @@ namespace MetaMind.Engine.Components
 
         protected override void LoadContent()
         {
-            this.blankTexture = this.GameFile.Content.Load<Texture2D>(@"Textures\Screens\Blank");
+            this.blankTexture = this.Interop.Content.Load<Texture2D>(@"Textures\Screens\Blank");
 
             // Tell each of the screens to load their content.
             foreach (var screen in this.screens)
             {
-                screen.LoadContent(this.GameFile);
+                screen.LoadContent(this.Interop);
             }
         }
 
@@ -167,7 +167,7 @@ namespace MetaMind.Engine.Components
             // Tell each of the screens to unload their content.
             foreach (var screen in this.screens)
             {
-                screen.UnloadContent(this.GameFile);
+                screen.UnloadContent(this.Interop);
             }
         }
 
@@ -207,12 +207,6 @@ namespace MetaMind.Engine.Components
 
                 // 2
                 this.UpdateAll((screen, access, time) => screen.UpdateInterop(access, gameTime), this.Interop, gameTime);
-
-                // 3
-                this.UpdateAll((screen, access, time) => screen.UpdateAudio(access, gameTime), this.Audio, gameTime);
-
-                // 4
-                this.UpdateAll((screen, access, time) => screen.UpdateContent(access, gameTime), this.GameFile, gameTime);
             }
         }
 
@@ -296,7 +290,7 @@ namespace MetaMind.Engine.Components
             // If we have a graphics device, tell the screen to load content.
             if (this.isInitialized)
             {
-                screen.LoadContent(this.GameFile);
+                screen.LoadContent(this.Interop);
             }
 
             this.screens.Add(screen);
@@ -328,7 +322,7 @@ namespace MetaMind.Engine.Components
             // If we have a graphics device, tell the screen to unload content.
             if (this.isInitialized)
             {
-                screen.UnloadContent(this.GameFile);
+                screen.UnloadContent(this.Interop);
             }
 
             this.screens.Remove(screen);

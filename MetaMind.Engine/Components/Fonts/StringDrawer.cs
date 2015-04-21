@@ -7,7 +7,7 @@ namespace MetaMind.Engine.Components.Fonts
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    public class StringDrawer : GameVisualEntity, IStringDrawer
+    public class StringDrawer : IStringDrawer
     {
         #region Dependency
 
@@ -25,6 +25,14 @@ namespace MetaMind.Engine.Components.Fonts
             }
 
             this.SpriteBatch = spriteBatch;
+        }
+
+        #endregion
+
+        #region IGameComponent
+
+        public void Initialize()
+        {
         }
 
         #endregion

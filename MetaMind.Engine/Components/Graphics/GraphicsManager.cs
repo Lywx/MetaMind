@@ -20,6 +20,8 @@ namespace MetaMind.Engine.Components.Graphics
             this.Engine   = engine;
             this.Settings = settings;
 
+            this.CreateDevice();
+
             // Set default resolution
             this.PreferredBackBufferWidth  = 800;
             this.PreferredBackBufferHeight = 600;

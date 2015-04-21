@@ -18,9 +18,10 @@ namespace MetaMind.Engine
     {
         public GameEngine()
         {
-            this.Input    = new GameEngineInput(this);
-            this.Interop  = new GameEngineInterop(this);
             this.Graphics = new GameEngineGraphics(this);
+
+            this.Interop = new GameEngineInterop(this);
+            this.Input   = new GameEngineInput(this);
             
             this.Numerical = new GameEngineNumerical();
 
@@ -37,7 +38,7 @@ namespace MetaMind.Engine
 
         public IGameInput Input { get; private set; }
 
-        public Components.IGameInterop Interop { get; private set; }
+        public IGameInterop Interop { get; private set; }
 
         public IGameGraphics Graphics { get; private set; }
 
@@ -45,9 +46,10 @@ namespace MetaMind.Engine
 
         protected override void Initialize()
         {
+            this.Graphics.Initialize();
+
             this.Input    .Initialize();
             this.Interop  .Initialize();
-            this.Graphics .Initialize();
             this.Numerical.Initialize();
 
             base.Initialize();

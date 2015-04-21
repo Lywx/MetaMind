@@ -136,7 +136,7 @@ namespace MetaMind.Engine.Screens
 
         #region Engine Data
 
-        protected Services.IGameInteropService Interop { get; set; }
+        protected IGameInteropService Interop { get; set; }
 
         #endregion Engine Data
 

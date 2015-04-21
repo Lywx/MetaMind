@@ -55,21 +55,7 @@ namespace MetaMind.Engine.Guis.Particles
 
         public ShapelessParticle()
         {
-            // Service
-            if (!isFlyweightServiceLoaded)
-            {
-                Random = this.Numerical.Random;
-
-                isFlyweightServiceLoaded = true;
-            }
-
-            // Parameters
-            if (!isFlyweightParameterLoaded)
-            {
-                this.LoadParameter(this.GameGraphics.Settings);
-
-                isFlyweightParameterLoaded = true;
-            }
+            this.LoadParameter(this.Graphics.Settings);
         }
 
         public ShapelessParticle(Vector2 position, Vector2 a, Vector2 v, float angle, float angluarA, float angluarV, float life)

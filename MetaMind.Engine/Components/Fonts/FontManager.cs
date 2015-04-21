@@ -7,6 +7,7 @@
 
 namespace MetaMind.Engine.Components.Fonts
 {
+    using System;
     using System.Collections.Generic;
 
     using MetaMind.Engine.Services;
@@ -24,20 +25,31 @@ namespace MetaMind.Engine.Components.Fonts
         public Dictionary<Font, FontInfo> Fonts { get; set; }
 
         #endregion
-        
+
+        #region Dependency
+
+        private IGameInteropService Interop { get; set; }
+
+        #endregion
+
         #region Contructors
 
-        public FontManager(GameEngine gameEngine)
-            : base(gameEngine)
+        public FontManager(GameEngine engine)
+            : base(engine)
         {
-            this.gameFile = GameEngine.Service.Interop;
+            if (engine == null)
+            {
+                throw new ArgumentNullException("engine");
+            }
+
+            engine.Components.Add(this);
         }
 
         #endregion
 
-        public override void Initialize()
+        public void Initialize()
         {
-            base.Initialize();
+            this.Interop = GameEngine.Service.Interop;
 
             FontExt.Initialize(this);
         }
@@ -65,7 +77,7 @@ namespace MetaMind.Engine.Components.Fonts
                 this.Fonts = new Dictionary<Font, FontInfo>();
             }
 
-            var spriteFont = this.gameFile.Content.Load<SpriteFont>(path);
+            var spriteFont = this.Interop.Content.Load<SpriteFont>(path);
 
             this.Fonts[font] = new FontInfo(font, spriteFont, fontSize);
         }

@@ -21,14 +21,19 @@ namespace MetaMind.Engine
 
         #region Constructors
 
-        protected Game(GameEngine gameEngine)
-            : base(gameEngine)
+        protected Game(GameEngine engine)
+            : base(engine)
         {
-            this.Interop = new GameEngineInteropService(gameEngine);
-            this.Interop.Game.Add(this);
         }
 
         #endregion
+
+        public override void Initialize()
+        {
+            this.Interop = GameEngine.Service.Interop;
+            
+            this.Interop.Game.Add(this);
+        }
 
         #region IGame
 

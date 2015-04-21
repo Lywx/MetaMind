@@ -15,13 +15,17 @@ namespace MetaMind.Engine.Components
 
         public IStringDrawer String { get; private set; }
 
+        public IFontManager Font { get; private set; }
+
         public GameEngineGraphics(GameEngine engine)
         {
-            this.SpriteBatch = new SpriteBatch(engine.GraphicsDevice);
-            this.String      = new StringDrawer(this.SpriteBatch);
-            
             this.Settings = new GraphicsSettings();
             this.Manager  = new GraphicsManager(engine, this.Settings);
+            
+            this.SpriteBatch = new SpriteBatch(this.Manager.GraphicsDevice);
+            this.String      = new StringDrawer(this.SpriteBatch);
+            
+            this.Font = new FontManager(engine);
         }
 
         public void Initialize()

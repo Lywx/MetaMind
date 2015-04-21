@@ -8,6 +8,7 @@
 namespace MetaMind.Engine
 {
     using System;
+    using System.Drawing;
 
     using MetaMind.Engine.Services;
 
@@ -59,9 +60,15 @@ namespace MetaMind.Engine
 
         #endregion
 
-        
-        public GameVisualEntity()
+        #region Dependency
+
+        protected IGameGraphicsService Graphics { get; private set; }
+
+        #endregion
+
+        protected GameVisualEntity()
         {
+            this.Graphics = GameEngine.Service.Graphics;
         }
 
         #region Draw

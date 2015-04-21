@@ -1,10 +1,15 @@
 namespace MetaMind.Engine.Components
 {
     using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Content;
 
     internal class NullGameInterop : IGameInterop
     {
         public IAudioManager Audio { get; private set; }
+
+        public ContentManager Content { get; private set; }
+
+        public FolderManager Folder { get; private set; }
 
         public IGameEngine Engine { get; private set; }
 

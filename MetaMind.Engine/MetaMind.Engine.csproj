@@ -185,7 +185,6 @@
     <Compile Include="Concepts\SynchronizationSpan.cs" />
     <Compile Include="Components\Fonts\StringExt.cs" />
     <Compile Include="Extensions\ExtType.cs" />
-    <Compile Include="GameEngine_.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Extensions\ExtColor.cs" />
     <Compile Include="Extensions\ExtGameTime.cs" />

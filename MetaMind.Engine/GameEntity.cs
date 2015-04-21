@@ -25,7 +25,7 @@ namespace MetaMind.Engine
 
         #region Engine Service
         
-        protected Services.IGameInteropService Interop { get; private set; }
+        protected IGameInteropService Interop { get; private set; }
 
         protected IGameNumericalService Numerical { get; private set; }
 
@@ -35,10 +35,11 @@ namespace MetaMind.Engine
 
         protected GameEntity()
         {
+            this.Listeners = new List<IListener>();
+
+
             this.Interop   = GameEngine.Service.Interop;
             this.Numerical = GameEngine.Service.Numerical;
-
-            this.Listeners = new List<IListener>();
         }
 
         #endregion Constructors
@@ -158,11 +159,7 @@ namespace MetaMind.Engine
         {
         }
 
-        public virtual void UpdateContent(IGameInteropService interop, GameTime time)
-        {
-        }
-
-        public virtual void UpdateInterop(Services.IGameInteropService interop, GameTime time)
+        public virtual void UpdateInterop(IGameInteropService interop, GameTime time)
         {
         }
 

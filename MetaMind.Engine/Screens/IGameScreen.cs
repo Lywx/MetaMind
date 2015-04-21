@@ -78,20 +78,18 @@ namespace MetaMind.Engine.Screens
 
         void LoadContent(IGameInteropService interop);
 
-        void LoadInterop(Services.IGameInteropService interop);
+        void LoadInterop(IGameInteropService interop);
 
         void UnloadContent(IGameInteropService interop);
 
-        void UnloadInterop(Services.IGameInteropService interop);
+        void UnloadInterop(IGameInteropService interop);
 
         #endregion Load and Unload
 
         #region Update
 
         void Update(GameTime gameTime);
-
-        void UpdateContent(IGameInteropService interop, GameTime gameTime);
-
+        
         void UpdateGraphics(IGameGraphicsService graphics, GameTime gameTime);
 
         void UpdateInput(IGameInputService input, GameTime time);

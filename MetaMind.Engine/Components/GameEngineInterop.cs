@@ -3,10 +3,15 @@ namespace MetaMind.Engine.Components
     using System;
 
     using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Content;
 
     public class GameEngineInterop : IGameInterop
     {
         public IAudioManager Audio { get; private set; }
+
+        public ContentManager Content { get; private set; }
+
+        public FolderManager Folder { get; private set; }
 
         public IGameEngine Engine { get; private set; }
 
@@ -40,6 +45,9 @@ namespace MetaMind.Engine.Components
             this.Event   = new EventManager(engine, 4);
             this.Process = new ProcessManager(engine, 5);
             this.Screen  = new ScreenManager(engine, new ScreenSettings(), engine.Graphics.SpriteBatch, 3);
+
+            this.Content = engine.Content;
+            this.Folder  = new FolderManager();
 
             this.Game = new GameManager(engine);
         }
