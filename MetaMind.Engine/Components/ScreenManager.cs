@@ -204,12 +204,8 @@ namespace MetaMind.Engine.Components
             {
                 this.UpdateInternal(gameTime);
 
-                // 1
-                // Don't need an engine access here
+                // Don't need an engine access here for plain Update(GameTime)
                 this.UpdateAll<object>((screen, access, time) => screen.Update(gameTime), null, gameTime);
-
-                // 2
-                this.UpdateAll((screen, access, time) => screen.UpdateInterop(access, gameTime), this.Interop, gameTime);
             }
         }
 

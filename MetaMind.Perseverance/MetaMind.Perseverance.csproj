@@ -111,6 +111,8 @@
     <Compile Include="Guis\Modules\MotivationModuleFactory.cs" />
     <Compile Include="Guis\Modules\MotivationModuleGameStartedListener.cs" />
     <Compile Include="Events\SynchronizationAlertedEventArgs.cs" />
+    <Compile Include="Guis\Modules\SynchronizationModuleControl.cs" />
+    <Compile Include="Guis\Modules\SynchronizationModuleGraphics.cs" />
     <Compile Include="Guis\Modules\TaskModule.cs" />
     <Compile Include="Guis\Modules\TaskModuleSettings.cs" />
     <Compile Include="Guis\Modules\SummaryModule.cs" />

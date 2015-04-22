@@ -2,6 +2,8 @@
 {
     using System.Runtime.Serialization;
 
+    using Microsoft.Xna.Framework;
+
     public interface ICognition
     {
         [DataMember]
@@ -12,7 +14,7 @@
 
         bool Awake { get; }
 
-        void Update();
+        void Update(GameTime time);
     }
 
     [DataContract,
@@ -42,7 +44,7 @@
 
         public Cognition()
         {
-            this.Consciousness   = new ConsciousnessAwake();
+            this.Consciousness   = new Consciousness();
             this.Synchronization = new Synchronization();
         }
 
@@ -50,9 +52,9 @@
 
         #region Update
 
-        public void Update()
+        public void Update(GameTime time)
         {
-            this.Consciousness  .Update(TODO);
+            this.Consciousness  .Update(time);
             this.Synchronization.Update();
         }
 

@@ -25,7 +25,15 @@
 
         public bool TextMonospaced { get; set; }
 
-        public Label(Func<string> text, Func<Vector2> textPosition, Func<Color> textColor, Func<float> textSize, Func<Font> textFont)
+        public Label(Func<Font> textFont, Func<string> text, Func<Vector2> textPosition, Func<Color> textColor, Func<float> textSize, StringHAlign textHAlign, StringVAlign textVAlign, bool textMonospaced)
+            : this(textFont, text, textPosition, textColor, textSize)
+        {
+            this.TextHAlign     = textHAlign;
+            this.TextVAlign     = textVAlign;
+            this.TextMonospaced = textMonospaced;
+        }
+
+        public Label(Func<Font> textFont, Func<string> text, Func<Vector2> textPosition, Func<Color> textColor, Func<float> textSize)
         {
             this.Text         = text;
             this.TextPosition = textPosition;

@@ -144,7 +144,7 @@
         {
             FontManager.DrawStringCenteredHV(
                 this.Settings.StateFont,
-                validSynchronization.Enabled ? SynchronizationModule.SyncTrueInfo : SynchronizationModule.SyncFalseInfo,
+                validSynchronization.Enabled ? SynchronizationModule.StateInfoTrue : SynchronizationModule.StateInfoFalse,
                 this.SynchronizationStateInfoCenter,
                 this.Settings.StateColor,
                 this.Settings.StateSize);

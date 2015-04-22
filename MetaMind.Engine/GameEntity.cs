@@ -145,10 +145,6 @@ namespace MetaMind.Engine
         {
         }
 
-        public virtual void UpdateInterop(IGameInteropService interop, GameTime time)
-        {
-        }
-
         #endregion Update
 
         #region IDisposable

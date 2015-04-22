@@ -78,11 +78,7 @@ namespace MetaMind.Engine.Screens
 
         void LoadContent(IGameInteropService interop);
 
-        void LoadInterop(IGameInteropService interop);
-
         void UnloadContent(IGameInteropService interop);
-
-        void UnloadInterop(IGameInteropService interop);
 
         #endregion Load and Unload
 
@@ -90,11 +86,7 @@ namespace MetaMind.Engine.Screens
 
         void Update(GameTime gameTime);
         
-        void UpdateGraphics(IGameGraphicsService graphics, GameTime gameTime);
-
         void UpdateInput(IGameInputService input, GameTime time);
-
-        void UpdateInterop(Services.IGameInteropService interop, GameTime time);
 
         /// <summary>
         /// Allows the screen to run logic, such as updating the transition position.

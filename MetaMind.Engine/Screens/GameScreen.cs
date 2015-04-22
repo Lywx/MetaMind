@@ -181,15 +181,7 @@ namespace MetaMind.Engine.Screens
         {
         }
 
-        public virtual void UpdateGraphics(IGameGraphicsService graphics, GameTime gameTime)
-        {
-        }
-
         public virtual void UpdateInput(IGameInputService input, GameTime time)
-        {
-        }
-
-        public virtual void UpdateInterop(IGameInteropService interop, GameTime time)
         {
         }
 

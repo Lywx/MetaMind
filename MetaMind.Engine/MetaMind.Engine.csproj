@@ -131,6 +131,7 @@
     <Compile Include="Guis\Consoles\InputProcessor.cs" />
     <Compile Include="Guis\Consoles\OutputLine.cs" />
     <Compile Include="Guis\Consoles\Renderer.cs" />
+    <Compile Include="Guis\IModuleControl.cs" />
     <Compile Include="Services\GameEngineNumericalService.cs" />
     <Compile Include="GameVisualEntity.cs" />
     <Compile Include="Services\GameEngineGraphicsService.cs" />

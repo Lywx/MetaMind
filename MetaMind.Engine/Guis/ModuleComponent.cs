@@ -28,7 +28,7 @@ namespace MetaMind.Engine.Guis
             }
         }
 
-        public TModuleSettings ModuleSettings
+        protected TModuleSettings Settings
         {
             get
             {

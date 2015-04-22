@@ -10,7 +10,7 @@
 
     using Microsoft.Xna.Framework;
 
-    public class SynchronizationModuleSettings : IParameterLoader<GraphicsSettings>, ICloneable
+    public class SynchronizationModuleSettings : GameVisualEntity, IParameterLoader<GraphicsSettings>, ICloneable
     {
         //---------------------------------------------------------------------
         public int   BarFrameXC;
@@ -21,23 +21,8 @@
 
         public Color BarFrameBackgroundColor = new Color(30, 30, 40, 10);
 
-        public Color BarFrameAscendColor     = Palette.LightBlue;
-
-        public Color BarFrameDescendColor    = Palette.LightPink;
-
         //---------------------------------------------------------------------
         public Point StateMargin             = new Point(0, 1);
-
-        public Font  StateFont               = Font.UiStatistics;
-
-        public float StateSize               = 1.1f;
-
-        public Color StateColor              = Color.White;
-
-        //---------------------------------------------------------------------
-        public float StatusSize              = 0.7f;
-
-        public Color StatusColor             = Color.White;
 
         public Point StatusMargin            = new Point(0, 34);
 
@@ -46,23 +31,8 @@
 
         public Point AccumulationMargin      = new Point(170, 0);
 
-        public float AccumulationSize        = 0.7f;
-
-        public Color AccumulationColor       = Color.White;
-
         //---------------------------------------------------------------------
         public Point AccelerationMargin      = new Point(170, 0);
-
-        public Font  AccelerationFont        = Font.UiStatistics;
-
-        public float AccelerationSize        = 2.0f;
-
-        public Color AccelerationColor       = Color.White;
-
-        //---------------------------------------------------------------------
-        public Font  MessageFont             = Font.UiStatistics;
-
-        public float MessageSize             = 0.7f;
 
         //---------------------------------------------------------------------
         public Color SynchronizationDotFrameColor = Palette.TransparentColor1;
@@ -75,26 +45,11 @@
 
         public Point SynchronizationRateMargin    = new Point(210, 0);
 
-        /// ---------------------------------------------------------------------
-        public int   ValveFrameX       = 5;
-
-        public int   ValveFrameY       = 16;
-
-        public Point ValveFrameSize    = new Point(400, 8);
-
-        public Color ValueAscendColor  = Palette.LightBlue;
-
-        public Color ValueDescendColor = Palette.LightPink;
-
-        public float ValueStatusSize   = 2.0f;
-
-        public Font  ValveStateFont    = Font.UiStatistics;
-
         public SynchronizationModuleSettings()
         {
-            this.LoadParameter(GameEngine.GraphicsSettings);
+            this.LoadParameter(this.GameGraphics.Settings);
 
-            this.BarFrameXC = this.Width / 2;
+            this.BarFrameXC = this.ScreenWidth / 2;
         }
 
         public object Clone()
@@ -106,11 +61,13 @@
 
         public void LoadParameter(GraphicsSettings parameter)
         {
-            this.Width = parameter.Width;
-
+            this.ScreenWidth  = parameter.Width;
+            this.ScreenHeight = parameter.Height;
         }
 
-        private int Width { get; set; }
+        public int ScreenHeight { get; private set; }
+
+        public int ScreenWidth { get; private set; }
 
         #endregion
     }

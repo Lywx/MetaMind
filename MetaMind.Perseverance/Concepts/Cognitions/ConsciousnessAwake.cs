@@ -24,14 +24,13 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
         {
             if (!this.AwakeCondition && this is ConsciousnessAwake)
             {
-                return ((ConsciousnessAwake)this).Sleep();
+                return this.Sleep();
             }
 
             if (this.AwakeCondition && this is ConsciousnessAsleep)
             {
                 return ((ConsciousnessAsleep)this).Awaken();
             }
-
         }
 
         public TimeSpan AwakeSpan
@@ -66,7 +65,7 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
             return new ConsciousnessAsleep(consciousness);
         }
 
-        public override void Update(GameTime time)
+        public ConsciousnessState Update(GameTime time)
         {
             base.Update(time);
         }
