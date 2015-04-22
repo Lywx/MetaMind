@@ -35,7 +35,7 @@ namespace MetaMind.Perseverance.Guis.Modules
         #region Load and Unload
 
         // FIXME: Wrong interface
-        public override void Load(IGameInputService input, IGameInteropService interop)
+        public override void LoadContent(IGameInteropService interop)
         {
             // performance penalty is not severe for one-off loading
             foreach (var entry in MotivationModuleSettings.GetNowMotivations())
@@ -46,7 +46,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             this.LoadEvents(interop);
         }
 
-        private void LoadEvents(Engine.Services.IGameInteropService interop)
+        private void LoadEvents(IGameInteropService interop)
         {
             if (this.gameStartedListener == null)
             {
@@ -66,7 +66,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             interop.Event.AddListener(this.gameStartedListener);
         }
 
-        public override void Unload(IGameInputService input, IGameInteropService interop)
+        public override void UnloadContent(IGameInteropService interop)
         {
             this.UnloadInterop(interop);
         }

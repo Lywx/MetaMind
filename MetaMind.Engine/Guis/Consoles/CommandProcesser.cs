@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
-
-namespace MonoGameConsole
+﻿namespace MetaMind.Engine.Guis.Consoles
 {
+    using System;
+    using System.Linq;
+
     class CommandProcesser
     {
         public string Process(string buffer)

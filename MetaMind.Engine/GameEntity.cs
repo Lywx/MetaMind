@@ -9,12 +9,14 @@ namespace MetaMind.Engine
 {
     using System;
     using System.Collections.Generic;
+    using System.Runtime.Serialization;
 
     using MetaMind.Engine.Components.Events;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
+    [DataContract]
     public class GameEntity : IGameEntity
     {
         #region Event Data
@@ -23,11 +25,11 @@ namespace MetaMind.Engine
 
         #endregion Event Data
 
-        #region Engine Service
+        #region Dependency
         
-        protected IGameInteropService Interop { get; private set; }
+        protected IGameInteropService GameInterop { get; private set; }
 
-        protected IGameNumericalService Numerical { get; private set; }
+        protected IGameNumericalService GameNumerical { get; private set; }
 
         #endregion 
 
@@ -35,11 +37,11 @@ namespace MetaMind.Engine
 
         protected GameEntity()
         {
+            // Dependency
+            this.GameInterop   = GameEngine.Service.Interop;
+            this.GameNumerical = GameEngine.Service.Numerical;
+         
             this.Listeners = new List<IListener>();
-
-
-            this.Interop   = GameEngine.Service.Interop;
-            this.Numerical = GameEngine.Service.Numerical;
         }
 
         #endregion Constructors
@@ -101,28 +103,12 @@ namespace MetaMind.Engine
 
         public virtual void LoadContent(IGameInteropService interop)
         {
-        }
-
-        public virtual void LoadGraphics(IGameGraphicsService graphics)
-        {
-        }
-
-        public virtual void LoadInterop(IGameInteropService interop)
-        {
             this.Listeners.ForEach(l => interop.Event.AddListener(l));
         }
 
         public virtual void UnloadContent(IGameInteropService interop)
         {
-        }
-
-        public virtual void UnloadGraphics(IGameGraphicsService graphics)
-        {
-        }
-
-        public virtual void UnloadInterop(Services.IGameInteropService interop)
-        {
-            // TODO: UnloadInterop How to design
+            // TODO: UnloadContent How to design
             this.Listeners.ForEach(l => interop.Event.RemoveListener(l));
             this.Listeners.Clear();
         }
@@ -169,7 +155,7 @@ namespace MetaMind.Engine
 
         public virtual void Dispose()
         {
-            this.UnloadInterop(this.Interop);
+            this.UnloadContent(this.GameInterop);
         }
 
         #endregion IDisposable

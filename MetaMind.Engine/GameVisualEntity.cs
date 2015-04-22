@@ -62,13 +62,13 @@ namespace MetaMind.Engine
 
         #region Dependency
 
-        protected IGameGraphicsService Graphics { get; private set; }
+        protected IGameGraphicsService GameGraphics { get; private set; }
 
         #endregion
 
         protected GameVisualEntity()
         {
-            this.Graphics = GameEngine.Service.Graphics;
+            this.GameGraphics = GameEngine.Service.Graphics;
         }
 
         #region Draw

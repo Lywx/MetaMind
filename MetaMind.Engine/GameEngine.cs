@@ -11,11 +11,10 @@ namespace MetaMind.Engine
 
     using MetaMind.Engine.Components;
     using MetaMind.Engine.Components.Fonts;
+    using MetaMind.Engine.Guis.Consoles;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
-
-    using MonoGameConsole;
 
     public class GameEngine : Microsoft.Xna.Framework.Game, IGameEngine
     {
@@ -64,7 +63,9 @@ namespace MetaMind.Engine
 
         protected override void LoadContent()
         {
-            var console = new GameConsole(this, this.Graphics.SpriteBatch, this.Graphics.String, new GameConsoleOptions { Font = Font.UiConsole });
+            // FIXME: Need to contruct after FontManager LoadContent.
+            // TODO:  It may be possible to change the underlying mechanism to move this code inside the contruction of GameEngine.Interop
+            this.Interop.Console = new GameConsole(this, this.Graphics.SpriteBatch, this.Graphics.String, new GameConsoleOptions { Font = Font.UiConsole });
         }
 
         protected override void UnloadContent()

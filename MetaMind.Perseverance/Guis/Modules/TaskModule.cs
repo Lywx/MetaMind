@@ -63,7 +63,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             }
         }
 
-        public override void Load(IGameInputService input, IGameInteropService interop)
+        public override void LoadContent(IGameInteropService interop)
         {
             // performance penalty due to dynamic type
             // performance is still bad even with fast member

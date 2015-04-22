@@ -11,13 +11,11 @@ namespace MetaMind.Engine.Guis.Elements
 
     public abstract class FrameEntity : GameControllableEntity, IFrameEntity
     {
-        #region Service
+        #region Flyweight Dependency
 
-        private static bool isFlyweightSeviceLoaded;
+        protected IInputEvent InputEvent { get; private set; }
 
-        protected static IInputEvent InputEvent { get; private set; }
-
-        protected static IInputState InputState { get; private set; }
+        protected IInputState InputState { get; private set; }
 
         #endregion Service
 
@@ -25,8 +23,8 @@ namespace MetaMind.Engine.Guis.Elements
 
         protected FrameEntity()
         {
-            InputEvent = this.Input.Event;
-            InputState = this.Input.State;
+            this.InputEvent = this.GameInput.Event;
+            this.InputState = this.GameInput.State;
 
             this.states = new bool[(int)FrameState.StateNum];
         }

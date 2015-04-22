@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ConsciousnessSleepStoppedEventArgs.cs" company="UESTC">
-//   Copyright (c) 2014 Wuxiang Lin
+//   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,9 +11,9 @@ namespace MetaMind.Perseverance.Events
 
     public class ConsciousnessSleepStoppedEventArgs
     {
-        public readonly ConsciousnessSleepy State;
+        public readonly ConsciousnessAsleep State;
 
-        public ConsciousnessSleepStoppedEventArgs(ConsciousnessSleepy state)
+        public ConsciousnessSleepStoppedEventArgs(ConsciousnessAsleep state)
         {
             this.State = state;
         }

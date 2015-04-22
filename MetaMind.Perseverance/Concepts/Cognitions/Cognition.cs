@@ -32,7 +32,7 @@
         {
             get
             {
-                return this.Consciousness.AwakeCondition;
+                return this.Consciousness.HasAwaken;
             }
         }
 
@@ -52,7 +52,7 @@
 
         public void Update()
         {
-            this.Consciousness = this.Consciousness.Update();
+            this.Consciousness  .Update(TODO);
             this.Synchronization.Update();
         }
 

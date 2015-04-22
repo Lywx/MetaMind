@@ -27,11 +27,9 @@ namespace MetaMind.Engine.Guis.Particles
 
         #endregion Particle Movements
 
-        #region Service
+        #region Dependency
 
-        protected static Random Random { get; private set; }
-
-        private static bool isFlyweightServiceLoaded;
+        protected Random Random { get; private set; }
 
         #endregion
 
@@ -39,23 +37,25 @@ namespace MetaMind.Engine.Guis.Particles
 
         public void LoadParameter(GraphicsSettings parameter)
         {
-            ScreenWidth  = parameter.Width;
-            ScreenHeight = parameter.Height;
+            this.ScreenWidth  = parameter.Width;
+            this.ScreenHeight = parameter.Height;
         }
 
-        protected static int ScreenHeight { get; set; }
+        protected int ScreenHeight { get; set; }
 
-        protected static int ScreenWidth { get; set; }
-
-        private static bool isFlyweightParameterLoaded;
-
+        protected int ScreenWidth { get; set; }
+        
         #endregion
 
         #region Constructors
 
         public ShapelessParticle()
         {
-            this.LoadParameter(this.Graphics.Settings);
+            // Parameters
+            this.LoadParameter(this.GameGraphics.Settings);
+
+            // Dependency
+            this.Random = this.GameNumerical.Random;
         }
 
         public ShapelessParticle(Vector2 position, Vector2 a, Vector2 v, float angle, float angluarA, float angluarV, float life)

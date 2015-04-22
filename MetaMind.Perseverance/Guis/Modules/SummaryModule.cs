@@ -31,7 +31,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         #region Load and Unload
 
-        public override void Load(IGameInputService input, IGameInteropService interop)
+        public override void LoadContent(IGameInteropService interop)
         {
             if (this.sleepStoppedEventListener == null)
             {
@@ -41,7 +41,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             interop.Event.AddListener(this.sleepStoppedEventListener);
         }
 
-        public override void Unload(IGameInputService input, IGameInteropService interop)
+        public override void UnloadContent(IGameInteropService interop)
         {
             if (this.sleepStoppedEventListener != null)
             {

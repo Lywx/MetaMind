@@ -52,13 +52,13 @@ namespace MetaMind.Engine
 
         #region Engine Service
 
-        protected IGameInputService Input { get; private set; }
+        protected IGameInputService GameInput { get; private set; }
 
         #endregion
 
-        public GameControllableEntity()
+        protected GameControllableEntity()
         {
-            this.Input = GameEngine.Service.Input;
+            this.GameInput = GameEngine.Service.Input;
         }
 
         #endregion Events

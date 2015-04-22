@@ -18,8 +18,8 @@
 
         public PickableFrame()
         {
-            InputEvent.MouseDoubleClick += this.DetectMouseLeftDoubleClick;
-            InputEvent.MouseDoubleClick += this.DetectMouseRightDoubleClick;
+            this.InputEvent.MouseDoubleClick += this.DetectMouseLeftDoubleClick;
+            this.InputEvent.MouseDoubleClick += this.DetectMouseRightDoubleClick;
         }
 
         ~PickableFrame()
@@ -36,8 +36,8 @@
             this.MouseRightClickedOutside = null;
             this.MouseRightDoubleClicked  = null;
 
-            InputEvent.MouseDoubleClick -= this.DetectMouseLeftDoubleClick;
-            InputEvent.MouseDoubleClick -= this.DetectMouseRightDoubleClick;
+            this.InputEvent.MouseDoubleClick -= this.DetectMouseLeftDoubleClick;
+            this.InputEvent.MouseDoubleClick -= this.DetectMouseRightDoubleClick;
 
             base.Dispose();
         }

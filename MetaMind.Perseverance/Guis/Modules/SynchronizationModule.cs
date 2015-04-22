@@ -5,6 +5,7 @@
     using MetaMind.Engine;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis;
+    using MetaMind.Engine.Guis.Widgets;
     using MetaMind.Engine.Services;
     using MetaMind.Perseverance.Concepts;
     using MetaMind.Perseverance.Concepts.Cognitions;
@@ -17,7 +18,7 @@
     public class SynchronizationModule : Module<SynchronizationModuleSettings>
     {
         public const string SyncFalseInfo = "Losing Synchronicity";
-        public const string SyncTrueInfo  = "IsSynchronizing";
+        public const string SyncTrueInfo  = "Synchronizing";
 
         private readonly ICognition       cognition;
         private readonly ISynchronization synchronization;
@@ -183,7 +184,7 @@
 
         #region Load and Unload
 
-        public override void Load(IGameInputService input, IGameInteropService interop)
+        public override void LoadContent(IGameInteropService interop)
         {
             if (this.synchronizationStartListener == null || 
                 this.synchronizationStopListener  == null || 
@@ -200,7 +201,7 @@
             interop.Event.AddListener(this.sleepStartedEventListener);
         }
 
-        public override void Unload(IGameInputService input, IGameInteropService interop)
+        public override void UnloadContent(IGameInteropService interop)
         {
             if (this.synchronizationStartListener != null)
             {
@@ -466,8 +467,9 @@
 
         private void DrawStateInfo()
         {
+            new Label(() => "", () => )
             FontManager.DrawStringCenteredHV(
-                this.Settings.StateFont,
+                ,
                 this.synchronization.Enabled ? SyncTrueInfo : SyncFalseInfo,
                 this.StateInfoCenter,
                 this.Settings.StateColor,

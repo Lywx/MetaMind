@@ -1,4 +1,4 @@
-﻿namespace MonoGameConsole
+﻿namespace MetaMind.Engine.Guis.Consoles
 {
     public interface IConsoleCommand
     {

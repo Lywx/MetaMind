@@ -63,8 +63,8 @@
 
         private void MotivationScreenExiting(object sender, EventArgs e)
         {
-            this.motivation     .Unload(gameFile, gameInput, gameInterop, gameSound);
-            this.synchronization.Unload(gameFile, gameInput, gameInterop, gameSound);
+            this.motivation     .UnloadContent(gameFile, gameInput, gameInterop, gameSound);
+            this.synchronization.UnloadContent(gameFile, gameInput, gameInterop, gameSound);
         }
     }
 }

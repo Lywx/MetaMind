@@ -102,7 +102,6 @@
     <Compile Include="Concepts\Tracelist.cs" />
     <Compile Include="Guis\Modules\MultiplexerGroupCommandNotifiedListener.cs" />
     <Compile Include="Guis\Modules\MultiplexerGroupKnowledgeRetrievedListener.cs" />
-    <Compile Include="Guis\Modules\ParticleModule.cs" />
     <Compile Include="Guis\Modules\MultiplexerGroup.cs" />
     <Compile Include="Guis\Modules\SynchronizationGroupSettings.cs" />
     <Compile Include="Guis\Modules\SynchronizationGroup.cs" />

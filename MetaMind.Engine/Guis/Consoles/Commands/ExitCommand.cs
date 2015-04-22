@@ -5,7 +5,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MonoGameConsole.Commands
+namespace MetaMind.Engine.Guis.Consoles.Commands
 {
     using Microsoft.Xna.Framework;
 
@@ -30,14 +30,15 @@ namespace MonoGameConsole.Commands
         {
             get
             {
-                return "Forcefully exists the game";
+                return "Exists the engine";
             }
         }
 
         public string Execute(string[] arguments)
         {
             this.game.Exit();
-            return "Exiting the game";
+            
+            return "Exiting the engine";
         }
     }
 }

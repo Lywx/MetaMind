@@ -23,13 +23,13 @@
 
         protected PressableFrame()
         {
-            InputEvent.MouseMove += this.DetectMouseOver;
+            this.InputEvent.MouseMove += this.DetectMouseOver;
 
-            InputEvent.MouseDown += this.DetectMouseLeftPressed;
-            InputEvent.MouseDown += this.DetectMouseRightPressed;
+            this.InputEvent.MouseDown += this.DetectMouseLeftPressed;
+            this.InputEvent.MouseDown += this.DetectMouseRightPressed;
 
-            InputEvent.MouseUp += this.DetectMouseLeftRelease;
-            InputEvent.MouseUp += this.DetectMouseRightRelease;
+            this.InputEvent.MouseUp += this.DetectMouseLeftRelease;
+            this.InputEvent.MouseUp += this.DetectMouseRightRelease;
 
             this.FrameMoved += this.DetectMouseOver;
 
@@ -60,11 +60,11 @@
             this.FrameMoved               = null;
 
             // Clean handlers
-            InputEvent.MouseMove -= this.DetectMouseOver;
-            InputEvent.MouseDown -= this.DetectMouseLeftPressed;
-            InputEvent.MouseUp   -= this.DetectMouseLeftRelease;
-            InputEvent.MouseDown -= this.DetectMouseRightPressed;
-            InputEvent.MouseUp   -= this.DetectMouseRightRelease;
+            this.InputEvent.MouseMove -= this.DetectMouseOver;
+            this.InputEvent.MouseDown -= this.DetectMouseLeftPressed;
+            this.InputEvent.MouseUp   -= this.DetectMouseLeftRelease;
+            this.InputEvent.MouseDown -= this.DetectMouseRightPressed;
+            this.InputEvent.MouseUp   -= this.DetectMouseRightRelease;
 
             base.Dispose();
         }

@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace MonoGameConsole.Commands
+﻿namespace MetaMind.Engine.Guis.Consoles.Commands
 {
+    using System;
+
     class CustomCommand:IConsoleCommand
     {
         public string Name { get; private set; }
@@ -11,13 +11,13 @@ namespace MonoGameConsole.Commands
 
         public CustomCommand(string name, Func<string[], string> action, string description)
         {
-            Name = name;
-            Description = description;
+            this.Name = name;
+            this.Description = description;
             this.action = action;
         }
         public string Execute(string[] arguments)
         {
-            return action(arguments);
+            return this.action(arguments);
         }
     }
 }

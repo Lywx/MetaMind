@@ -14,19 +14,24 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
     using MetaMind.Perseverance.Events;
     using MetaMind.Perseverance.Sessions;
 
-    [DataContract]
-    public class ConsciousnessAwake : Consciousness
-    {
-        public ConsciousnessAwake()
-        {
-        }
+    using Microsoft.Xna.Framework;
 
-        public ConsciousnessAwake(ConsciousnessSleepy state)
+    [DataContract]
+    internal class ConsciousnessAwake : ConsciousnessState
+    {
+        public ConsciousnessAwake(Consciousness consciousness)
+            : base(consciousness)
         {
-            this.SleepEndTime        = state.SleepEndTime;
-            this.SleepStartTime      = state.SleepStartTime;
-            this.HistoricalAwakeSpan = state.HistoricalAwakeSpan;
-            this.HistoricalSleepSpan = state.HistoricalSleepSpan;
+            if (!this.AwakeCondition && this is ConsciousnessAwake)
+            {
+                return ((ConsciousnessAwake)this).Sleep();
+            }
+
+            if (this.AwakeCondition && this is ConsciousnessAsleep)
+            {
+                return ((ConsciousnessAsleep)this).Awaken();
+            }
+
         }
 
         public TimeSpan AwakeSpan
@@ -37,26 +42,33 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
             }
         }
 
-        public void AwakeNow()
+        public void AwakeNow(Consciousness consciousness)
         {
-            this.SleepEndTime = DateTime.Now;
+            consciousness.SleepEndTime = DateTime.Now;
         }
 
-        public ConsciousnessSleepy Sleep()
+        public ConsciousnessAsleep Sleep(Consciousness consciousness)
         {
-            this.AwakeNow();
+            this.AwakeNow(consciousness);
 
-            if (this.HasEverSlept)
+            if (consciousness.HasEverSlept)
             {
-                var totalAwakeSpan = this.SleepStartTime - this.SleepEndTime;
-                this.HistoricalAwakeSpan += totalAwakeSpan;
+                var awakeSpan = consciousness.SleepStartTime - consciousness.SleepEndTime;
+                consciousness.KnownAwakeSpan += awakeSpan;
 
-                GameGraphics.MessageDrawer.PopMessages("Awake for " + totalAwakeSpan.ToString("hh':'mm':'ss''"));
+                var console = this.GameInterop.Console;
+                console.WriteLine(string.Format("MESSAGE: {0} in Awakening", awakeSpan.ToString("hh':'mm':'ss''")));
             }
 
-            this.Interop.Event.TriggerEvent(new Event((int)SessionEventType.SleepStarted, new ConsciousnessSleepStartedEventArgs(this)));
+            var @event = this.GameInterop.Event;
+            @event.TriggerEvent(new Event((int)SessionEventType.SleepStarted, new ConsciousnessSleepStartedEventArgs(this)));
 
-            return new ConsciousnessSleepy(this);
+            return new ConsciousnessAsleep(consciousness);
+        }
+
+        public override void Update(GameTime time)
+        {
+            base.Update(time);
         }
     }
 }

@@ -8,18 +8,17 @@
 
 #endregion File Description
 
-namespace MonoGameConsole
+namespace MetaMind.Engine.Guis.Consoles
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
     using MetaMind.Engine.Components.Fonts;
+    using MetaMind.Engine.Guis.Consoles.Commands;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-
-    using MonoGameConsole.Commands;
 
     public class GameConsole
     {
@@ -71,15 +70,12 @@ namespace MonoGameConsole
 
         public GameConsole(Game game, SpriteBatch spriteBatch, IStringDrawer stringDrawer, IEnumerable<IConsoleCommand> commands, GameConsoleOptions options)
         {
-            if (options.Font == null)
-            {
-                throw new NullReferenceException("Please, provide SpriteFont for console font!");
-            }
-
             GameConsoleOptions.Options = options;
             GameConsoleOptions.Commands = commands.ToList();
+            
             this.Enabled = true;
             this.console = new GameConsoleComponent(this, game, spriteBatch, stringDrawer);
+            
             game.Services.AddService(typeof(GameConsole), this);
             game.Components.Add(this.console);
         }

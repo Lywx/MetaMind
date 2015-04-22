@@ -1,4 +1,4 @@
-﻿namespace MonoGameConsole.Commands
+﻿namespace MetaMind.Engine.Guis.Consoles.Commands
 {
     using System.Collections.Generic;
 

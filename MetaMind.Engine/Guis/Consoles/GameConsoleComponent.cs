@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using MonoGameConsole.Commands;
-
-namespace MonoGameConsole
+﻿namespace MetaMind.Engine.Guis.Consoles
 {
     using MetaMind.Engine.Components.Fonts;
+    using MetaMind.Engine.Guis.Consoles.Commands;
+
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
 
     internal class GameConsoleComponent : DrawableGameComponent
     {
@@ -12,7 +12,7 @@ namespace MonoGameConsole
         {
             get
             {
-                return renderer.IsOpen;
+                return this.renderer.IsOpen;
             }
         }
 
@@ -27,41 +27,42 @@ namespace MonoGameConsole
             this.console = console;
             this.spriteBatch = spriteBatch;
 
-            inputProcesser = new InputProcessor(new CommandProcesser(), game.Window);
+            this.inputProcesser = new InputProcessor(new CommandProcesser(), game.Window);
 
-            inputProcesser.Open += (s, e) => renderer.Open();
-            inputProcesser.Close += (s, e) => renderer.Close();
+            this.inputProcesser.Open += (s, e) => this.renderer.Open();
+            this.inputProcesser.Close += (s, e) => this.renderer.Close();
 
-            renderer = new Renderer(game, spriteBatch, stringDrawer, inputProcesser);
-            var inbuiltCommands = new IConsoleCommand[] { new ClearCommand(inputProcesser), new ExitCommand(game), new HelpCommand() };
+            this.renderer = new Renderer(game, spriteBatch, stringDrawer, this.inputProcesser);
+            var inbuiltCommands = new IConsoleCommand[] { new ClearCommand(this.inputProcesser), new ExitCommand(game), new HelpCommand() };
             GameConsoleOptions.Commands.AddRange(inbuiltCommands);
         }
 
         public override void Draw(GameTime gameTime)
         {
-            if (!console.Enabled)
+            if (!this.console.Enabled)
             {
                 return;
             }
-            spriteBatch.Begin();
-            renderer.Draw(gameTime);
-            spriteBatch.End();
+            this.spriteBatch.Begin();
+            this.renderer.Draw(gameTime);
+            this.spriteBatch.End();
             base.Draw(gameTime);
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (!console.Enabled)
+            if (!this.console.Enabled)
             {
                 return;
             }
-            renderer.Update(gameTime);
+
+            this.renderer.Update(gameTime);
             base.Update(gameTime);
         }
 
         public void WriteLine(string text)
         {
-            inputProcesser.AddToOutput(text);
+            this.inputProcesser.AddToOutput(text);
         }
     }
 }

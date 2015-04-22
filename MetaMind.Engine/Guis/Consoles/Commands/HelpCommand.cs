@@ -1,6 +1,5 @@
-﻿namespace MonoGameConsole.Commands
+﻿namespace MetaMind.Engine.Guis.Consoles.Commands
 {
-    using System;
     using System.Linq;
     using System.Text;
 
@@ -18,7 +17,7 @@
         {
             get
             {
-                return "Displays the list of commands";
+                return "Displays the command description";
             }
         }
 
@@ -39,7 +38,7 @@
             GameConsoleOptions.Commands.Sort(new CommandComparer());
             foreach (var command in GameConsoleOptions.Commands)
             {
-                help.Append(string.Format("{0} - ", command.Name).PadRight(12) + string.Format("{0}\n", command.Description));
+                help.Append(command.Name.PadRight(10) + " - " + string.Format("{0}\n", command.Description));
             }
 
             return help.ToString();

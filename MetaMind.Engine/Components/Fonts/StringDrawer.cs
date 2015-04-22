@@ -7,6 +7,10 @@ namespace MetaMind.Engine.Components.Fonts
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
+    public enum StringHAlign { Left, Center, Right }
+
+    public enum StringVAlign { Top, Center, Bottom }
+
     public class StringDrawer : IStringDrawer
     {
         #region Dependency
@@ -62,6 +66,34 @@ namespace MetaMind.Engine.Components.Fonts
             }
         }
 
+        public void DrawMonospacedString(Font font, string str, Vector2 position, Color color, float scale, StringHAlign HAlign, StringVAlign VAlign)
+        {
+            var stringPrintable = font.PrintableString(str);
+            var stringSize      = font.MeasureMonospacedString(stringPrintable, scale);
+
+            if (VAlign == StringVAlign.Center)
+            {
+                position -= new Vector2(0, stringSize.Y / 2);
+            }
+
+            if (VAlign == StringVAlign.Top)
+            {
+                position -= new Vector2(0, stringSize.Y);
+            }
+
+            if (HAlign == StringHAlign.Center)
+            {
+                position -= new Vector2(stringSize.X / 2, 0);
+            }
+
+            if (HAlign == StringHAlign.Left)
+            {
+                position -= new Vector2(stringSize.X, 0);
+            }
+
+            this.DrawMonospacedString(font, stringPrintable, position, color, scale);
+        }
+
         public void DrawString(Font font, string str, Vector2 position, Color color, float scale)
         {
             if (string.IsNullOrEmpty(str))
@@ -69,46 +101,35 @@ namespace MetaMind.Engine.Components.Fonts
                 return;
             }
 
-            SpriteBatch.DrawString(
-                font.GetSprite(),
-                font.PrintableString(str),
-                position,
-                color,
-                0f,
-                Vector2.Zero,
-                scale,
-                SpriteEffects.None,
-                0);
+            SpriteBatch.DrawString(font.GetSprite(), font.PrintableString(str), position, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0);
         }
 
-        public void DrawStringCenteredH(Font font, string str, Vector2 position, Color color, float scale)
+        public void DrawString(Font font, string str, Vector2 position, Color color, float scale, StringHAlign HAlign, StringVAlign VAlign)
         {
-            position += new Vector2(0, font.MeasureString(str).Y * scale / 2);
+            var stringPrintable = font.PrintableString(str);
+            var stringSize      = font.MeasureString(stringPrintable, scale);
 
-            this.DrawStringCenteredHV(font, str, position, color, scale);
-        }
-
-        public void DrawStringCenteredHV(Font font, string str, Vector2 position, Color color, float scale)
-        {
-            // check for trivial text
-            if (string.IsNullOrEmpty(str))
+            if (VAlign == StringVAlign.Center)
             {
-                return;
+                position -= new Vector2(0, stringSize.Y / 2);
             }
 
-            var stringPrintable = font.PrintableString(str);
-            var stringSize = font.MeasureString(stringPrintable, scale);
+            if (VAlign == StringVAlign.Top)
+            {
+                position -= new Vector2(0, stringSize.Y);
+            }
 
-            position -= new Vector2((int)(stringSize.X / 2), (int)(stringSize.Y / 2));
+            if (HAlign == StringHAlign.Center)
+            {
+                position -= new Vector2(stringSize.X / 2, 0);
+            }
+
+            if (HAlign == StringHAlign.Left)
+            {
+                position -= new Vector2(stringSize.X, 0);
+            }
 
             this.DrawString(font, stringPrintable, position, color, scale);
-        }
-
-        public void DrawStringCenteredV(Font font, string str, Vector2 position, Color color, float scale)
-        {
-            position += new Vector2(font.MeasureString(str).X * scale / 2, 0);
-
-            this.DrawStringCenteredHV(font, str, position, color, scale);
         }
 
         private void DrawMonospacedChar(Font font, char khar, Vector2 position, Color color, float scale)

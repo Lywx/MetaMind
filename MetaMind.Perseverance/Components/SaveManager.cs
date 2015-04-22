@@ -5,7 +5,7 @@ namespace MetaMind.Perseverance.Components
 
     public class SaveManager : Engine.Components.SaveManager
     {
-        private SaveManager(GameEngine engine)
+        public SaveManager(GameEngine engine)
             : base(engine)
         {
         }

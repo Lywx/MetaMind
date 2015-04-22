@@ -88,7 +88,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
         #region Load and Unload
 
-        public void Load(IGameInputService input, Engine.Services.IGameInteropService interop)
+        public void Load(IGameInputService input, IGameInteropService interop)
         {
             this.LoadConfiguration();
             this.LoadData();

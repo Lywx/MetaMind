@@ -1,10 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-
-namespace MonoGameConsole
+﻿namespace MetaMind.Engine.Guis.Consoles
 {
+    using System.Collections.Generic;
+
     using MetaMind.Engine.Components.Fonts;
+
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
 
     public class GameConsoleOptions
     {

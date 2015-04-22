@@ -71,11 +71,11 @@
             }
         }
 
-        public void Load(IGameInputService input, Engine.Services.IGameInteropService interop)
+        public void Load(IGameInputService input, IGameInteropService interop)
         {
         }
 
-        public void Unload(IGameInputService input, Engine.Services.IGameInteropService interop)
+        public void Unload(IGameInputService input, IGameInteropService interop)
         {
         }
 

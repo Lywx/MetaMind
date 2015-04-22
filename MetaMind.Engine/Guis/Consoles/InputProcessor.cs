@@ -1,15 +1,15 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-
-namespace MonoGameConsole
+﻿namespace MetaMind.Engine.Guis.Consoles
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
     using System.Windows.Forms;
 
     using MetaMind.Engine.Components.Fonts;
+
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Input;
 
     using Keys = Microsoft.Xna.Framework.Input.Keys;
 
@@ -29,37 +29,40 @@ namespace MonoGameConsole
 
         public List<OutputLine> Out { get; set; }
 
-        private const int BACKSPACE = 8;
-        private const int ENTER = 13;
-        private const int TAB = 9;
+        private const int Backspace = 8;
+
+        private const int Enter = 13;
+
+        private const int Tab = 9;
+
         private bool isActive, isHandled;
-        private CommandProcesser commandProcesser;
+
+        private readonly CommandProcesser commandProcesser;
 
         public InputProcessor(CommandProcesser commandProcesser, GameWindow window)
         {
             this.commandProcesser = commandProcesser;
-            isActive = false;
-            CommandHistory = new CommandHistory();
-            Out = new List<OutputLine>();
-            Buffer = new OutputLine("", OutputLineType.Command);
+            this.isActive = false;
+            this.CommandHistory = new CommandHistory();
+            this.Out = new List<OutputLine>();
+            this.Buffer = new OutputLine("", OutputLineType.Command);
 
-            Form winGameWindow = GetGameWindow();
-            winGameWindow.KeyPress += form_KeyPress;
-            winGameWindow.KeyDown += EventInput_KeyDown;
+            var gameWinForm = this.GameWinForm();
+            gameWinForm.KeyPress += this.FormKeyPress;
+            gameWinForm.KeyDown += this.FormKeyDown;
         }
 
         /// <summary>
         /// Force application to find current app window controls with System.Windows.Forms (Windows)
         /// </summary>
-        /// <returns></returns>
-        private Form GetGameWindow()
+        private Form GameWinForm()
         {
-            FormCollection winFormsWindow = Application.OpenForms;
+            var winFormsWindows = Application.OpenForms;
 
-            return (Form)Control.FromHandle(winFormsWindow[0].Handle);
+            return (Form)Control.FromHandle(winFormsWindows[0].Handle);
         }
 
-        private void form_KeyPress(Object sender, KeyPressEventArgs e)
+        private void FormKeyPress(Object sender, KeyPressEventArgs e)
         {
             e.Handled = true;
 
@@ -87,6 +90,7 @@ namespace MonoGameConsole
                     {
                         this.Buffer.Output = this.Buffer.Output.Substring(0, this.Buffer.Output.Length - 1);
                     }
+
                     break;
 
                 case (char)Keys.Tab:
@@ -98,6 +102,7 @@ namespace MonoGameConsole
                     {
                         this.Buffer.Output += e.KeyChar;
                     }
+
                     break;
             }
         }
@@ -122,17 +127,21 @@ namespace MonoGameConsole
                 this.isActive = true;
                 this.Open(this, EventArgs.Empty);
             }
+
             foreach (var line in text.Split('\n'))
             {
                 this.Out.Add(new OutputLine(line, OutputLineType.Output));
             }
         }
 
-        private void EventInput_KeyDown(object sender, KeyEventArgs e)
+        private void FormKeyDown(object sender, KeyEventArgs e)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.V) && Keyboard.GetState().IsKeyDown(Keys.LeftControl)) // CTRL + V
+            // Ctrl + V
+            if (Keyboard.GetState().IsKeyDown(Keys.V) && 
+                Keyboard.GetState().IsKeyDown(Keys.LeftControl)) 
             {
-                if (Thread.CurrentThread.GetApartmentState() == ApartmentState.STA) //Thread Apartment must be in Single-Threaded for the Clipboard to work
+                // Thread Apartment must be in Single-Threaded for the Clipboard to work
+                if (Thread.CurrentThread.GetApartmentState() == ApartmentState.STA)
                 {
                     this.AddToBuffer(Clipboard.GetText());
                 }
@@ -160,26 +169,28 @@ namespace MonoGameConsole
             this.isActive = !this.isActive;
             if (this.isActive)
             {
-                Open(this, EventArgs.Empty);
+                this.Open(this, EventArgs.Empty);
             }
             else
             {
-                Close(this, EventArgs.Empty);
+                this.Close(this, EventArgs.Empty);
             }
         }
 
         private void ExecuteBuffer()
         {
-            if (Buffer.Output.Length == 0)
+            if (this.Buffer.Output.Length == 0)
             {
                 return;
             }
+
             var output = this.commandProcesser.Process(this.Buffer.Output).Split('\n').Where(l => l != "");
             this.Out.Add(new OutputLine(this.Buffer.Output, OutputLineType.Command));
             foreach (var line in output)
             {
                 this.Out.Add(new OutputLine(line, OutputLineType.Output));
             }
+
             this.CommandHistory.Add(this.Buffer.Output);
             this.Buffer.Output = "";
         }

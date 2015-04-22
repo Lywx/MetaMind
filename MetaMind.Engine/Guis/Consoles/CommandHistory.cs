@@ -1,24 +1,24 @@
-﻿using System.Collections.Generic;
-
-namespace MonoGameConsole
+﻿namespace MetaMind.Engine.Guis.Consoles
 {
+    using System.Collections.Generic;
+
     internal class CommandHistory : List<string>
     {
         public int Index { get; private set; }
 
         public void Reset()
         {
-            Index = Count;
+            this.Index = this.Count;
         }
 
         public string Next()
         {
-            return Count == 0 ? "" : Index + 1 > Count - 1 ? this[Count - 1] : this[++Index];
+            return this.Count == 0 ? "" : this.Index + 1 > this.Count - 1 ? this[this.Count - 1] : this[++this.Index];
         }
 
         public string Previous()
         {
-            return Count == 0 ? "" : Index - 1 < 0 ? this[0] : this[--Index];
+            return this.Count == 0 ? "" : this.Index - 1 < 0 ? this[0] : this[--this.Index];
         }
 
         public new void Add(string command)
@@ -32,7 +32,7 @@ namespace MonoGameConsole
                 }
             }
 
-            Reset();
+            this.Reset();
         }
     }
 }

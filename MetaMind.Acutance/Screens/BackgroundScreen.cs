@@ -2,8 +2,8 @@
 {
     using System;
 
-    using MetaMind.Acutance.Guis.Modules;
     using MetaMind.Engine;
+    using MetaMind.Engine.Guis.Modules;
     using MetaMind.Engine.Guis.Particles;
     using MetaMind.Engine.Screens;
     using MetaMind.Engine.Services;
@@ -11,13 +11,13 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    using IGameInteropService = MetaMind.Engine.IGameInteropService;
+    using ParticleModule = MetaMind.Acutance.Guis.Modules.ParticleModule;
 
     public class BackgroundScreen : GameScreen
     {
-        private readonly ParticleModule particles = new ParticleModule(new Engine.Guis.Modules.ParticleModuleSettings(Acutance.Session.Random, FloatParticle.ParticleFromBelow, 4, 2));
+        private ParticleModule particles;
 
-        private Texture2D backgroundTexture;
+        private Texture2D background;
 
         #region Constructors
 
@@ -33,7 +33,11 @@
 
         public override void LoadContent(IGameInteropService interop)
         {
-            this.backgroundTexture = interop.Content.Load<Texture2D>(@"Textures\Screens\Background\Sea Of Mind");
+            this.background = interop.Content.Load<Texture2D>(@"Textures\Screens\Background\Sea Of Mind");
+            
+            this.particles =
+                new ParticleModule(
+                    new ParticleModuleSettings(Acutance.Session.Random, FloatParticle.ParticleFromBelow, 4, 2))
         }
 
         public override void UnloadContent(IGameInteropService interop)
@@ -52,14 +56,13 @@
 
             spriteBatch.Begin();
 
-            spriteBatch.Draw(this.backgroundTexture, fullscreen, new Color(210, 100, 95).MakeTransparent(TransitionAlpha));
-
+            spriteBatch   .Draw(this.background, fullscreen, new Color(210, 100, 95).MakeTransparent(TransitionAlpha));
             this.particles.Draw(graphics, time, this.TransitionAlpha);
 
             spriteBatch.End();
         }
 
-        public override void UpdateScreen(Engine.Services.IGameInteropService interop, GameTime time, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
+        public override void UpdateScreen(IGameInteropService interop, GameTime time, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
         {
             this.particles.Update(time);
             base          .UpdateScreen(interop, time, hasOtherScreenFocus, false);

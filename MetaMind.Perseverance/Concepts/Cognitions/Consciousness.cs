@@ -5,31 +5,24 @@
 
     using MetaMind.Engine;
 
-    public interface IConsciousness
-    {
-        bool AwakeCondition { get; }
+    using Microsoft.Xna.Framework;
 
-        Consciousness Update();
-    }
-
-    [DataContract,
-     KnownType(typeof(ConsciousnessAwake)),
-     KnownType(typeof(ConsciousnessSleepy))]
-    public class Consciousness : GameVisualEntity, IConsciousness
+    [DataContract]
+    public class Consciousness : GameEntity, IConsciousness
     {
         #region Consciousness Data
 
         [DataMember]
-        public static int AwakeHour = 7;
+        public readonly int AwakeHour = 7;
 
         [DataMember]
-        public static int AwakeMinute = 0;
+        public readonly int AwakeMinute = 0;
 
         [DataMember]
-        public TimeSpan HistoricalAwakeSpan { get; set; }
+        public TimeSpan KnownAwakeSpan { get; set; }
 
         [DataMember]
-        public TimeSpan HistoricalSleepSpan { get; set; }
+        public TimeSpan KnownAsleepSpan { get; set; }
 
         [DataMember]
         public DateTime SleepEndTime { get; set; }
@@ -37,14 +30,17 @@
         [DataMember]
         public DateTime SleepStartTime { get; set; }
 
+        [DataMember]
+        private ConsciousnessState State { get; set; }
+
         #endregion Consciousness Data
 
         #region Consciousness Control
 
         /// <summary>
-        ///     Awake when 0 AM - awaken condition(7 AM for example) - 0 AM
+        ///     Awake when AwakeHour AM to 0 AM
         /// </summary>
-        public bool AwakeCondition
+        public bool HasAwaken
         {
             get
             {
@@ -52,11 +48,27 @@
             }
         }
 
-        protected bool HasEverSlept
+        internal bool HasEverSlept
         {
             get
             {
                 return this.SleepEndTime.Ticks != 0;
+            }
+        }
+
+        public bool IsAwake
+        {
+            get
+            {
+                return this.State is ConsciousnessAwake;
+            }
+        }
+
+        public bool IsAsleep
+        {
+            get
+            {
+                return this.State is ConsciousnessAsleep;
             }
         }
 
@@ -66,10 +78,13 @@
 
         public Consciousness()
         {
-            this.SleepEndTime        = DateTime.MinValue;
-            this.SleepStartTime      = DateTime.MinValue;
-            this.HistoricalAwakeSpan = TimeSpan.Zero;
-            this.HistoricalSleepSpan = TimeSpan.Zero;
+            this.SleepStartTime = DateTime.MinValue;
+            this.SleepEndTime   = DateTime.MinValue;
+            
+            this.KnownAwakeSpan  = TimeSpan.Zero;
+            this.KnownAsleepSpan = TimeSpan.Zero;
+
+            this.State = new ConsciousnessAwake(this);
         }
 
         ~Consciousness()
@@ -81,21 +96,34 @@
 
         #region Update
 
-        public Consciousness Update()
+        public override void Update(GameTime time)
         {
-            if (!this.AwakeCondition && this is ConsciousnessAwake)
-            {
-                return ((ConsciousnessAwake)this).Sleep();
-            }
-
-            if (this.AwakeCondition && this is ConsciousnessSleepy)
-            {
-                return ((ConsciousnessSleepy)this).Awaken();
-            }
-
-            return this;
+            this.State.Update(time);
         }
 
         #endregion Update
+        
+        #region Operations
+
+        public void Sleep()
+        {
+            var awake = this.State as ConsciousnessAwake;
+            if (awake != null)
+            {
+                this.State = awake.Sleep(this);
+            }
+        }
+
+        public void Awaken()
+        {
+            var asleep = this.State as ConsciousnessAsleep;
+            if (asleep != null)
+            {
+                this.State = asleep.Awaken(this);
+            }
+        }
+
+        #endregion
+
     }
 }

@@ -15,10 +15,16 @@ namespace MetaMind.Engine.Guis
     /// </remarks>
     public class Module<TModuleSettings> : GameControllableEntity, IModule
     {
+        #region Constructors
+
         protected Module(TModuleSettings settings)
         {
             this.Settings = settings;
         }
+
+        #endregion
+
+        #region Components
 
         public IModuleControl Control { get; protected set; }
 
@@ -26,20 +32,32 @@ namespace MetaMind.Engine.Guis
 
         public TModuleSettings Settings { get; protected set; }
 
+        #endregion
+
+        #region Draw
+
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
             this.Graphics.Draw(graphics, time, alpha);
         }
 
-        public virtual void Load(IGameInputService input, IGameInteropService interop)
+        #endregion
+        
+        #region Load and Unload
+
+        public override void LoadContent(IGameInteropService interop)
         {
-            this.Control.Load(input, interop);
+            this.Control.Load(interop);
         }
 
-        public virtual void Unload(IGameInputService input, IGameInteropService interop)
+        public override void UnloadContent(IGameInteropService interop)
         {
-            this.Control.Unload(input, interop);
+            this.Control.Unload(interop);
         }
+
+        #endregion
+        
+        #region Update
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
@@ -52,5 +70,7 @@ namespace MetaMind.Engine.Guis
             this.Control .Update(time);
             this.Graphics.Update(time);
         }
+
+        #endregion
     }
 }

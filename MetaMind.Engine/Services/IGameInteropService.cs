@@ -1,6 +1,7 @@
 namespace MetaMind.Engine.Services
 {
     using MetaMind.Engine.Components;
+    using MetaMind.Engine.Guis.Consoles;
 
     using Microsoft.Xna.Framework.Content;
 
@@ -9,6 +10,8 @@ namespace MetaMind.Engine.Services
         IAudioManager Audio { get; }
 
         ContentManager Content { get; }
+
+        GameConsole Console { get; set; }
 
         FolderManager Folder { get; }
 

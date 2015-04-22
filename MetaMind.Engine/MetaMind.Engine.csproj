@@ -129,8 +129,6 @@
     <Compile Include="Guis\Consoles\GameConsoleOptions.cs" />
     <Compile Include="Guis\Consoles\IConsoleCommand.cs" />
     <Compile Include="Guis\Consoles\InputProcessor.cs" />
-    <Compile Include="Guis\Consoles\KeyboardCapture\CharEventArgs.cs" />
-    <Compile Include="Guis\Consoles\KeyboardCapture\KeyEventArgs.cs" />
     <Compile Include="Guis\Consoles\OutputLine.cs" />
     <Compile Include="Guis\Consoles\Renderer.cs" />
     <Compile Include="Services\GameEngineNumericalService.cs" />

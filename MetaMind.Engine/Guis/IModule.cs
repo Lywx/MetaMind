@@ -8,8 +8,8 @@ namespace MetaMind.Engine.Guis
 
         IModuleGraphics Graphics { get; }
 
-        void Load(IGameInputService input, IGameInteropService interop);
+        void LoadContent(IGameInteropService interop);
 
-        void Unload(IGameInputService input, IGameInteropService interop);
+        void UnloadContent(IGameInteropService interop);
     }
 }

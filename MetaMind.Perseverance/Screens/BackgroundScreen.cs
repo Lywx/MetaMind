@@ -11,7 +11,6 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    using IGameInteropService = MetaMind.Engine.IGameInteropService;
     using ParticleModule = MetaMind.Perseverance.Guis.Modules.ParticleModule;
 
     public class BackgroundScreen : GameScreen
@@ -44,10 +43,7 @@
         public override void UnloadContent(IGameInteropService interop)
         {
             this.background.Dispose();
-            this.background = null;
-
-            this.particles.Dispose();
-            this.particles = null;
+            this.particles .Dispose();
         }
 
         #endregion Load and Unload
@@ -62,7 +58,7 @@
 
             spriteBatch.Begin();
 
-            spriteBatch   .Draw(this.background, fullscreen, new Color(0, 0, TransitionAlpha / 2));
+            spriteBatch   .Draw(this.background, fullscreen, new Color(0, 0, this.TransitionAlpha / 2));
             this.particles.Draw(graphics, time, this.TransitionAlpha);
 
             spriteBatch.End();

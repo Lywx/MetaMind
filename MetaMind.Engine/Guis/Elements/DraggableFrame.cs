@@ -9,7 +9,6 @@ namespace MetaMind.Engine.Guis.Elements
 {
     using System;
 
-    using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;

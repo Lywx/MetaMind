@@ -3,15 +3,18 @@ namespace MetaMind.Engine.Components
     using System;
 
     using MetaMind.Engine.Components.Fonts;
+    using MetaMind.Engine.Guis.Consoles;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
 
-    using MonoGameConsole;
-
     public class GameEngineInterop : IGameInterop
     {
+        private GameEngine engine;
+
         public IAudioManager Audio { get; private set; }
+
+        public GameConsole Console { get; set; }
 
         public ContentManager Content { get; private set; }
 
@@ -54,9 +57,8 @@ namespace MetaMind.Engine.Components
             this.Folder  = new FolderManager();
 
             this.Game = new GameManager(engine);
-
         }
-
+        
         public void Initialize()
         {
             this.Audio  .Initialize();

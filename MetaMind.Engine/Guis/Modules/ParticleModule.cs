@@ -56,11 +56,11 @@ namespace MetaMind.Engine.Guis.Modules
             }
         }
 
-        public override void Load(IGameInputService input, IGameInteropService interop)
+        public override void LoadContent(IGameInteropService interop)
         {
         }
 
-        public override void Unload(IGameInputService input, IGameInteropService interop)
+        public override void UnloadContent(IGameInteropService interop)
         {
         }
 

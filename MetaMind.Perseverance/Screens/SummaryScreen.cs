@@ -2,7 +2,6 @@
 {
     using System;
 
-    using MetaMind.Engine;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Screens;
     using MetaMind.Engine.Services;
@@ -10,26 +9,15 @@
 
     using Microsoft.Xna.Framework;
 
-    using IGameInteropService = MetaMind.Engine.IGameInteropService;
-    using IUpdateable = Microsoft.Xna.Framework.IUpdateable;
-
     public class SummaryScreen : GameScreen
     {
-        private readonly IModule summary;
+        // TODO: Dependenency Injection
+        private IModule summary;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SummaryScreen"/> class.
-        /// This is the most active screen of all.
-        /// </summary>
         public SummaryScreen()
         {
             this.TransitionOnTime = TimeSpan.FromSeconds(0.5);
             this.TransitionOffTime = TimeSpan.FromSeconds(0.5);
-
-            this.Exiting += this.SummaryScreenExiting;
-
-            this.summary = new SummaryModule(Perseverance.Session.Cognition, new SummaryModuleSettings());
-            this.summary.Load(gameFile, gameInput, gameInterop, gameSound);
         }
 
         public override void Draw(IGameGraphicsService graphics, GameTime time)
@@ -38,28 +26,22 @@
 
             spriteBatch.Begin();
 
-            graphics.MessageDrawer.Draw(time);
-
             this.summary.Draw(graphics, time, TransitionAlpha);
 
             spriteBatch.End();
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime time)
-        {
-            this.summary.UpdateInput(input, time);
-        }
-
         public override void LoadContent(IGameInteropService interop)
         {
+            this.summary = new SummaryModule(Perseverance.Session.Cognition, new SummaryModuleSettings());
+            this.summary.Load(interop);
         }
 
-        public override void UpdateGraphics(IGameGraphicsService graphics, GameTime gameTime)
+        public override void UnloadContent(IGameInteropService interop)
         {
-            if (this.IsActive)
-            {
-                graphics.MessageDrawer.Update(gameTime);
-            }
+            base.UnloadContent(interop);
+
+            this.summary.UnloadContent(interop);
         }
 
         public override void Update(GameTime gameTime)
@@ -67,9 +49,9 @@
             this.summary.Update(gameTime);
         }
 
-        private void SummaryScreenExiting(object sender, EventArgs e)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.summary.Unload(gameFile, gameInput, gameInterop, gameSound);
+            this.summary.UpdateInput(input, time);
         }
     }
 }

@@ -8,6 +8,7 @@
 namespace MetaMind.Engine.Services
 {
     using MetaMind.Engine.Components;
+    using MetaMind.Engine.Guis.Consoles;
 
     using Microsoft.Xna.Framework.Content;
 
@@ -36,6 +37,18 @@ namespace MetaMind.Engine.Services
             get
             {
                 return this.interop.Content;
+            }
+        }
+
+        public GameConsole Console
+        {
+            get
+            {
+                return this.interop.Console;
+            }
+            set
+            {
+                this.interop.Console = value;
             }
         }
 
