@@ -85,14 +85,14 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             if (this.ViewSettings.Direction == PointViewSettings1D.ScrollDirection.Left)
             {
-                return ExtRectangle.Rectangle(
+                return ExtRectangle.RectangleByCenter(
                         viewSettings.PointStart.X - viewSettings.PointMargin.X * (viewSettings.ColumnNumDisplay / 2),
                         viewSettings.PointStart.Y,
                         viewSettings.PointMargin.X * viewSettings.ColumnNumDisplay,
                         0);
             }
 
-            return ExtRectangle.Rectangle(
+            return ExtRectangle.RectangleByCenter(
                     viewSettings.PointStart.X + viewSettings.PointMargin.X * (viewSettings.ColumnNumDisplay / 2),
                     viewSettings.PointStart.Y,
                     viewSettings.PointMargin.X * viewSettings.ColumnNumDisplay,

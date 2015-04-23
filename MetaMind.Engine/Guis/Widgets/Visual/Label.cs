@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Engine.Guis.Widgets
+﻿namespace MetaMind.Engine.Guis.Widgets.Visual
 {
     using System;
 
@@ -49,12 +49,6 @@
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            var font     = this.TextFont();
-            var text     = this.Text();
-            var position = this.TextPosition();
-            var color    = this.TextColor();
-            var size     = this.TextSize();
-
             var drawer = graphics.StringDrawer;
 
             var draw = this.TextMonospaced
@@ -62,7 +56,14 @@
                              drawer.DrawMonospacedString
                            : drawer.DrawString;
 
-            draw(font, text, position, color.MakeTransparent(alpha), size, this.TextHAlign, this.TextVAlign);
+            draw(
+                this.TextFont(),
+                this.Text(),
+                this.TextPosition(),
+                this.TextColor().MakeTransparent(alpha),
+                this.TextSize(),
+                this.TextHAlign,
+                this.TextVAlign);
         }
     }
 }

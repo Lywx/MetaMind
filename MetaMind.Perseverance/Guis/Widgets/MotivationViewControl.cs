@@ -80,7 +80,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             if (this.ViewSettings.Direction == PointViewSettings1D.ScrollDirection.Left)
             {
                 return
-                    ExtRectangle.Rectangle(
+                    ExtRectangle.RectangleByCenter(
                         viewSettings.PointStart.X - viewSettings.PointMargin.X * (viewSettings.ColumnNumDisplay / 2),
                         viewSettings.PointStart.Y,
                         viewSettings.PointMargin.X * viewSettings.ColumnNumDisplay,
@@ -88,7 +88,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             }
 
             return
-                ExtRectangle.Rectangle(
+                ExtRectangle.RectangleByCenter(
                     viewSettings.PointStart.X + viewSettings.PointMargin.X * (viewSettings.ColumnNumDisplay / 2),
                     viewSettings.PointStart.Y,
                     viewSettings.PointMargin.X * viewSettings.ColumnNumDisplay,

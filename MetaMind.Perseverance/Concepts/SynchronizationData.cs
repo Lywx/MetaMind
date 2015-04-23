@@ -17,7 +17,6 @@ namespace MetaMind.Perseverance.Concepts
 
         bool IsSynchronizing { get; set; }
 
-
         #endregion
 
         #region Time Data
@@ -41,7 +40,6 @@ namespace MetaMind.Perseverance.Concepts
 
         [DataMember]
         public bool IsSynchronizing { get; set; }
-
 
         #endregion
 

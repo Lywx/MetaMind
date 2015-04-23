@@ -72,6 +72,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Guis\Widgets\Visual\Box.cs" />
     <Compile Include="Components\AudioManager.cs" />
     <Compile Include="Components\Events\IEvent.cs" />
     <Compile Include="Components\Events\IListener.cs" />
@@ -153,7 +154,7 @@
     <Compile Include="Guis\Particles\ParticleSpawner.cs" />
     <Compile Include="Guis\Widgets\Items\IViewItem.cs" />
     <Compile Include="Guis\Widgets\Items\IViewItemCharPostProcessor.cs" />
-    <Compile Include="Guis\Widgets\Label.cs" />
+    <Compile Include="Guis\Widgets\Visual\Label.cs" />
     <Compile Include="Guis\Widgets\Views\ContinuousViewSettings.cs" />
     <Compile Include="Guis\Widgets\Views\IPointListControl.cs" />
     <Compile Include="Guis\Widgets\Views\IPointViewSwapControl.cs" />

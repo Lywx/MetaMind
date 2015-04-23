@@ -8,7 +8,7 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
     using MetaMind.Perseverance.Events;
 
     [DataContract]
-    internal class ConsciousnessAsleep : ConsciousnessState
+    internal class ConsciousnessAsleep : ConsciousnessState, IConsciousnessAsleep
     {
         #region Constructors
 

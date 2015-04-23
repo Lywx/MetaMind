@@ -9,15 +9,15 @@ namespace MetaMind.Perseverance.Events
 {
     using System;
 
-    using MetaMind.Perseverance.Concepts.Tasks;
+    using MetaMind.Perseverance.Concepts;
 
     public class SynchronizationStartedEventArgs : EventArgs
     {
-        public readonly Task Task;
+        public readonly ISynchronizable Data;
 
-        public SynchronizationStartedEventArgs(Task data)
+        public SynchronizationStartedEventArgs(ISynchronizable data)
         {
-            this.Task = data;
+            this.Data = data;
         }
     }
 }

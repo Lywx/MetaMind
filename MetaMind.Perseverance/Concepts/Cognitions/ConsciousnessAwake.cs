@@ -15,7 +15,7 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
     using MetaMind.Perseverance.Sessions;
 
     [DataContract]
-    internal class ConsciousnessAwake : ConsciousnessState
+    internal class ConsciousnessAwake : ConsciousnessState, IConsciousnessAwake
     {
         public ConsciousnessAwake(Consciousness consciousness)
             : base(consciousness)

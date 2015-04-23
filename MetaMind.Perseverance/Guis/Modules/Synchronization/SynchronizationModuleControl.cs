@@ -3,9 +3,8 @@ namespace MetaMind.Perseverance.Guis.Modules.Synchronization
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Services;
 
-    public class SynchronizationModuleControl : ModuleControl<SynchronizationModule, SynchronizationModuleSettings, SynchronizationModuleControl>
+    public class SynchronizationModuleControl : ModuleControl<SynchronizationModule, SynchronizationSettings, SynchronizationModuleControl>
     {
-
         public SynchronizationModuleControl(SynchronizationModule module)
             : base(module)
         {

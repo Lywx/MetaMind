@@ -56,7 +56,7 @@ namespace MetaMind.Perseverance.Concepts
             }
         }
 
-        public double Progress
+        public float Progress
         {
             get
             {
@@ -64,7 +64,7 @@ namespace MetaMind.Perseverance.Concepts
                 var right  = this.NextLevelSeconds;
                 var middle = this.timer.AccumulatedTime.TotalSeconds;
 
-                return (middle - left) / (right - left);
+                return (float)((middle - left) / (right - left));
             }
         }
 
@@ -170,7 +170,7 @@ namespace MetaMind.Perseverance.Concepts
         public void Abort()
         {
             this.processor.Abort();
-            this.timer.Stop();
+            this.timer    .Stop();
         }
 
         public void ResetToday()

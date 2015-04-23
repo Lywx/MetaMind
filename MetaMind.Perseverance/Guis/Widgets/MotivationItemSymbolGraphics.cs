@@ -52,7 +52,10 @@ namespace MetaMind.Perseverance.Guis.Widgets
             var width       = ItemControl.SymbolFrame.Rectangle.Width;
             var height      = ItemControl.SymbolFrame.Rectangle.Height;
             var size        = new Point((int)(Math.Abs(Math.Cos(this.rotation)) * width), height);
-            var destination = ExtRectangle.DestinationWithSize(ItemControl.SymbolFrame.Rectangle, size);
+            // ??? After removing a extension method
+            Rectangle rectangle = this.ItemControl.SymbolFrame.Rectangle;
+            Point size1 = size;
+            var destination = new Rectangle(rectangle.Center.X, rectangle.Center.Y, size1.X, size1.Y);
 
             graphics.SpriteBatch.Draw(
                 this.symbol,

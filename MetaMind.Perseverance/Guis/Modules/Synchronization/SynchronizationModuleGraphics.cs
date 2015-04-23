@@ -1,40 +1,27 @@
 namespace MetaMind.Perseverance.Guis.Modules.Synchronization
 {
     using System;
+    using System.Collections.Generic;
 
+    using MetaMind.Engine;
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Guis;
-    using MetaMind.Engine.Guis.Widgets;
+    using MetaMind.Engine.Guis.Widgets.Visual;
     using MetaMind.Engine.Services;
-    using MetaMind.Engine.Settings.Colors;
     using MetaMind.Perseverance.Concepts;
     using MetaMind.Perseverance.Concepts.Cognitions;
 
     using Microsoft.Xna.Framework;
 
-    using Primtives2D;
-
-    public class SynchronizationModuleGraphics : ModuleGraphics<SynchronizationModule, SynchronizationModuleSettings, SynchronizationModuleControl>
+    public class SynchronizationModuleGraphics : ModuleGraphics<SynchronizationModule, SynchronizationSettings, SynchronizationModuleControl>
     {
-        private string StateInfoTrue  = "Gaining Synchronicity"; 
-
         private string StateInfoFalse = "Losing Synchronicity";
 
-        private string MessageInfoIncrease = "Computational Motivation Synchronization Ratio increases";
-        
-        private string MessageInfoDecrease = "Computational Motivation Synchronization Ratio decreases";
+        private string StateInfoTrue  = "Gaining Synchronicity";
 
-        private Label accumulationInfo;
-        
-        private Label stateInfo;
-        private Label statusInfo;
+        private List<GameVisualEntity> entities;
 
-        private Label messageInfo;
-
-        private Label accelerationInfoSubfix;
-        private Label accelerationInfoPrefix;
-
-        public SynchronizationModuleGraphics(SynchronizationModule module, ISynchronization synchronization)
+        public SynchronizationModuleGraphics(SynchronizationModule module, IConsciousness consciousness, ISynchronization synchronization)
             : base(module)
         {
             if (synchronization == null)
@@ -42,348 +29,188 @@ namespace MetaMind.Perseverance.Guis.Modules.Synchronization
                 throw new ArgumentNullException("synchronization");
             }
 
-            this.Synchronization = synchronization;
+            if (consciousness == null)
+            {
+                throw new ArgumentNullException("consciousness");
+            }
 
-            this.stateInfo = new Label(
+            this.Synchronization = synchronization;
+            this.Consciousness = consciousness;
+
+            var progressBar = new SynchronizationProgressBar(this.Module, this.Synchronization);
+
+            var stateInfo = new Label(
                 () => Font.UiStatistics,
                 () => this.Synchronization.Enabled ? this.StateInfoTrue : this.StateInfoFalse,
-                () => this.StateInfoCenter,
+                () => this.StateInfoCenterPosition,
                 () => Color.White,
                 () => 1.1f,
                 StringHAlign.Center,
                 StringVAlign.Center,
                 false);
 
-            this.statusInfo = new Label(
+            var statusInfo = new Label(
                 () => Font.UiStatistics,
                 () => string.Format("Level {0}: {1}", this.Synchronization.Level, this.Synchronization.State),
-                () => this.StatusInfoCenter,
+                () => this.StatusInfoCenterPosition,
                 () => Color.White,
                 () => 0.7f,
                 StringHAlign.Center,
                 StringVAlign.Center,
                 false);
 
-            this.accumulationInfo = new Label(
+            var accumulationInfo = new Label(
                 () => Font.UiStatistics,
                 () => string.Format("{0}", this.Synchronization.ElapsedTimeSinceTransition.ToString("hh':'mm':'ss")),
-                () => this.AccumulationSubfixCenter,
+                () => this.AccumulationInfoPosition,
                 () => Color.White,
                 () => 0.7f,
-                StringHAlign.Center,
+                StringHAlign.Right,
                 StringVAlign.Center,
                 false);
 
-            this.accelerationInfoPrefix = new Label(
-                () => Font.UiStatistics,
-                () => "x",
-                () => this.AccelerationPrefixCenter,
-                () => Color.White,
-                () => 1f,
-                StringHAlign.Center,
-                StringVAlign.Center,
-                false);
-
-            this.accelerationInfoSubfix = new Label(
-                () => Font.UiStatistics,
-                () => string.Format("{0}", this.Synchronization.Acceleration.ToString("F1")),
-                () => this.AccelerationSubfixCenter,
+            var dailySyncRatePrefix = new Label(
+                () => this.Settings.SynchronizationRateFont,
+                () => this.Consciousness.IsAwake
+                    ? (this.Synchronization.PotentialSynchronizedTimeToday.TotalSeconds
+                       / ((IConsciousnessAwake)this.Consciousness.State).AwakeSpan.TotalSeconds * 100).ToString("F0")
+                    : "",
+                () => this.DailySyncRateCenterPosition,
                 () => Color.White,
                 () => 2.0f,
-                StringHAlign.Center,
+                StringHAlign.Left,
                 StringVAlign.Center,
                 false);
 
-            //Func<byte> alpha  = () => (byte)(255 * Math.Abs(Math.Sin(time.TotalGameTime.TotalSeconds * 3)));
-            //Func<bool> better = () => this.Synchronization.SynchronizedHourToday >= this.Synchronization.SynchronizedHourYesterday;
+            var dailySyncRateSubfix = new Label(
+                () => this.Settings.SynchronizationRateFont,
+                () => this.Consciousness.IsAwake ? " %" : "",
+                () => this.DailySyncRateCenterPosition,
+                () => Color.White,
+                () => 1f,
+                StringHAlign.Right,
+                StringVAlign.Center,
+                false);
 
-            //this.messageInfo = new Label(
-            //    () => Font.UiStatistics,
-            //    () => better() ? this.MessageInfoIncrease : this.MessageInfoDecrease,
-            //    () => this.MessageCenter,
-            //    () => (better() ? Palette.LightBlue : Palette.LightPink).MakeTransparent(alpha()),
-            //    () => 0.7f,
-            //    StringHAlign.Center,
-            //    StringVAlign.Center,
-            //    false);
+            var accelerationInfoPrefix = new Label(
+                () => Font.UiStatistics,
+                () => "x ",
+                () => this.AccelerationInfoCenterPosition,
+                () => Color.White,
+                () => 1f,
+                StringHAlign.Left,
+                StringVAlign.Center,
+                false);
+
+            var accelerationInfoSubfix = new Label(
+                () => Font.UiStatistics,
+                () => string.Format("{0}", this.Synchronization.Acceleration.ToString("F1")),
+                () => this.AccelerationInfoCenterPosition,
+                () => Color.White,
+                () => 2.0f,
+                StringHAlign.Right,
+                StringVAlign.Center,
+                false);
+
+            this.entities = new List<GameVisualEntity>
+                                {
+                                    progressBar,
+
+                                    stateInfo, // Gaining Synchronity
+                                    statusInfo, // Level 0: unrecognizable
+
+                                    accumulationInfo, // 00:00:14
+
+                                    dailySyncRatePrefix, // 80
+                                    dailySyncRateSubfix, // %
+
+                                    accelerationInfoPrefix, // x
+                                    accelerationInfoSubfix // 1.2
+                                };
+
+            var factory = new SynchronizationFactory(this.Settings);
+
+            // Empty point frames
+            for (var i = 0; i < this.Synchronization.SynchronizedHourMax; ++i)
+            {
+                this.entities.Add(factory.CreatePointFrame(this.StateInfoCenterPosition, i, SynchronizationPointSide.Left));
+                this.entities.Add(factory.CreatePointFrame(this.StateInfoCenterPosition, i, SynchronizationPointSide.Right));
+            }
+
+            // Today points
+            for (var i = 0; i < this.Synchronization.SynchronizedHourToday; ++i)
+            {
+                this.entities.Add(factory.CreatePoint(this.StateInfoCenterPosition, i, "", () => this.Settings.BarFrameAscendColor, SynchronizationPointSide.Left));
+                this.entities.Add(factory.CreatePoint(this.StateInfoCenterPosition, i, "", () => this.Settings.BarFrameAscendColor, SynchronizationPointSide.Right));
+            }
+
+            // Yesterday points
+            for (var i = 0; i < this.Synchronization.SynchronizedHourYesterday; ++i)
+            {
+                this.entities.Add(factory.CreatePoint(this.StateInfoCenterPosition, i, "", () => this.Settings.BarFrameDescendColor, SynchronizationPointSide.Left));
+                this.entities.Add(factory.CreatePoint(this.StateInfoCenterPosition, i, "", () => this.Settings.BarFrameDescendColor, SynchronizationPointSide.Right));
+            }
+
         }
 
         #region Dependency
+
+        private IConsciousness Consciousness { get; set; }
 
         private ISynchronization Synchronization { get; set; }
 
         #endregion
 
-        private Vector2 AccelerationPrefixCenter
+        #region Positional Data
+
+        private Vector2 AccelerationInfoCenterPosition
         {
             get
             {
-                return new Vector2(
-                    this.StatusInfoCenter.X + this.Settings.AccelerationMargin.X,
-                    this.StatusInfoCenter.Y + this.Settings.AccelerationMargin.Y);
+                return this.StatusInfoCenterPosition + new Vector2(160, 0);
             }
         }
 
-        private Vector2 AccelerationSubfixCenter
+        private Vector2 AccumulationInfoPosition
         {
             get
             {
-                const int XSymbolWidth = 43;
-                return new Vector2(
-                    this.AccelerationPrefixCenter.X + XSymbolWidth,
-                    this.AccelerationPrefixCenter.Y);
+                return this.StateInfoCenterPosition + new Vector2(170, 0);
             }
         }
 
-        private Vector2 AccumulationPrefixCenter
+        private Vector2 DailySyncRateCenterPosition
         {
             get
             {
-                return new Vector2(
-                    this.StateInfoCenter.X + this.Settings.AccumulationMargin.X,
-                    this.StateInfoCenter.Y + this.Settings.AccumulationMargin.Y);
+                return this.StatusInfoCenterPosition + new Vector2(-160, 0);
             }
         }
 
-        private Vector2 AccumulationSubfixCenter
+        private Vector2 StateInfoCenterPosition
         {
             get
             {
-                const int PlusSymbolWidth = 42;
-                return new Vector2(
-                    this.AccumulationPrefixCenter.X + PlusSymbolWidth,
-                    this.AccumulationPrefixCenter.Y);
+                return this.Settings.BarFrameCenterPosition + new Vector2(0, 1);
             }
         }
 
-        private Vector2 DailySyncHourPrefixCenter
+        private Vector2 StatusInfoCenterPosition
         {
             get
             {
-                return new Vector2(
-                    this.StatusInfoCenter.X - this.Settings.SynchronizationRateMargin.X,
-                    this.StatusInfoCenter.Y + this.Settings.SynchronizationRateMargin.Y);
+                return this.Settings.BarFrameCenterPosition + new Vector2(0, 34);
             }
         }
 
-        private Vector2 MessageCenter
-        {
-            get
-            {
-                return new Vector2((int)this.StateInfoCenter.X, this.Settings.ScreenHeight - 15);
-            }
-        }
-
-        private Rectangle ProgressBarRectangle
-        {
-            get
-            {
-                return new Rectangle(
-                    this.Settings.BarFrameXC - this.Settings.BarFrameSize.X / 2,
-                    this.Settings.BarFrameYC - this.Settings.BarFrameSize.Y / 2,
-                    (int)(this.Synchronization.Progress * this.Settings.BarFrameSize.X),
-                    this.Settings.BarFrameSize.Y);
-            }
-        }
-
-        private Rectangle ProgressFrameRectangle
-        {
-            get
-            {
-                return new Rectangle(
-                    this.Settings.BarFrameXC - this.Settings.BarFrameSize.X / 2,
-                    this.Settings.BarFrameYC - this.Settings.BarFrameSize.Y / 2,
-                    this.Settings.BarFrameSize.X,
-                    this.Settings.BarFrameSize.Y);
-            }
-        }
-
-        private Vector2 StateInfoCenter
-        {
-            get
-            {
-                return new Vector2(
-                    this.Settings.BarFrameXC,
-                    this.Settings.BarFrameYC + this.Settings.StateMargin.Y);
-            }
-        }
-
-        private Vector2 StatusInfoCenter
-        {
-            get
-            {
-                return new Vector2(
-                    this.Settings.BarFrameXC,
-                    this.Settings.BarFrameYC + this.Settings.StatusMargin.Y);
-            }
-        }
+        #endregion
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            this.DrawProgressFrame();
-            this.DrawProgressBar();
-            this.DrawDotFrame();
-            this.DrawDot();
-
-            this.stateInfo.Draw(graphics, time, alpha);
-            this.statusInfo.Draw(graphics, time, alpha);
-
-            this.accelerationInfoPrefix.Draw(graphics, time, alpha);
-            this.accelerationInfoSubfix.Draw(graphics, time, alpha);
-
-            this.accumulationInfo.Draw(graphics, time, alpha);
-
-            this.DrawDailyRateInfo();
-            
-            //this.messageInfo.Draw(graphics, time, alpha);
-        }
-
-        private void DrawDailyRateInfo()
-        {
-            //if (this.Module.Cognition.Consciousness.IsAwake)
-            //{
-            //    var syncRate = this.Synchronization.PotentialSynchronizedTimeToday.TotalSeconds / awake.AwakeSpan.TotalSeconds;
-            //    var syncRateText = (syncRate * 100).ToString("F0");
-
-            //    // draw rate digits
-            //    var stringDrawer = GameGraphics.StringDrawer;
-            //    stringDrawer.DrawString(
-            //        this.Settings.SynchronizationRateFont,
-            //        syncRateText,
-            //        this.DailySyncHourPrefixCenter,
-            //        this.Settings.SynchronizationRateColor,
-            //        this.Settings.SynchronizationRateSize,
-            //        StringHAlign.Center,
-            //        StringVAlign.Center);
-
-            //    const int    SymbolMargin = 10;
-            //    const string Symbol = "%";
-
-            //    var syncRateTextWidth = this.Settings.SynchronizationRateFont.MeasureString(syncRateText, this.Settings.SynchronizationRateSize).X;
-            //    var syncRateTextMargin = new Vector2(syncRateTextWidth / 2 * this.Settings.SynchronizationRateSize + SymbolMargin, 0);
-
-            //    // draw % after rate digits
-            //    stringDrawer.DrawString(
-            //        this.Settings.SynchronizationRateFont,
-            //        Symbol,
-            //        this.DailySyncHourPrefixCenter + syncRateTextMargin,
-            //        this.Settings.SynchronizationRateColor,
-            //        1f,
-            //        StringHAlign.Center,
-            //        StringVAlign.Center);
-            //}
-        }
-
-        private void DrawDot()
-        {
-            // left side content
-            var barFrameAscendColor = Palette.LightBlue;
-            for (var i = 0; i < this.Synchronization.SynchronizedHourToday; ++i)
+            foreach (var entity in this.entities)
             {
-                Primitives2D.FillRectangle(
-                    this.GameGraphics.SpriteBatch,
-                    this.SynchronizationDotRectangle(i, true),
-                    barFrameAscendColor);
+                entity.Draw(graphics, time, alpha);
             }
-
-            var barFrameDescendColor = Palette.LightPink;
-            for (var i = 0; i < this.Synchronization.SynchronizedHourYesterday; ++i)
-            {
-                Primitives2D.FillRectangle(
-                    this.GameGraphics.SpriteBatch,
-                    this.SynchronizationDotRectangle(i, true),
-                    barFrameDescendColor);
-            }
-
-            // right side content
-            for (var i = 0; i < this.Synchronization.SynchronizedHourToday; ++i)
-            {
-                Primitives2D.FillRectangle(
-                    this.GameGraphics.SpriteBatch,
-                    this.SynchronizationDotRectangle(i, false),
-                    barFrameAscendColor);
-            }
-
-            for (var i = 0; i < this.Synchronization.SynchronizedHourYesterday; ++i)
-            {
-                Primitives2D.FillRectangle(
-                    this.GameGraphics.SpriteBatch,
-                    this.SynchronizationDotRectangle(i, false),
-                    barFrameDescendColor);
-            }
-        }
-
-        private void DrawDotFrame()
-        {
-            var stringDrawer = this.GameGraphics.StringDrawer;
-
-            // left side frame
-            for (var i = 0; i < this.Synchronization.SynchronizedHourMax; ++i)
-            {
-                var dotFrame = this.SynchronizationDotRectangle(i, true);
-
-                Primitives2D.FillRectangle(
-                    this.GameGraphics.SpriteBatch,
-                    dotFrame,
-                    this.Settings.SynchronizationDotFrameColor);
-
-                stringDrawer.DrawString(
-                    this.Settings.SynchronizationRateFont,
-                    ((i + 1) % 10).ToString("F0"),
-                    this.SynchronizationDotTextCenter(dotFrame),
-                    this.Settings.SynchronizationRateColor,
-                    0.7f,
-                    StringHAlign.Center,
-                    StringVAlign.Center);
-            }
-
-            // right side frame
-            for (var i = 0; i < this.Synchronization.SynchronizedHourMax; ++i)
-            {
-                var dotFrame = this.SynchronizationDotRectangle(i, false);
-
-                Primitives2D.FillRectangle(
-                    this.GameGraphics.SpriteBatch,
-                    dotFrame,
-                    this.Settings.SynchronizationDotFrameColor);
-
-                stringDrawer.DrawString(
-                    this.Settings.SynchronizationRateFont,
-                    ((i + 1) % 10).ToString("F0"),
-                    this.SynchronizationDotTextCenter(dotFrame),
-                    this.Settings.SynchronizationRateColor,
-                    0.7f);
-            }
-        }
-
-        private void DrawProgressBar()
-        {
-            Primitives2D.FillRectangle(
-                this.GameGraphics.SpriteBatch,
-                this.ProgressBarRectangle,
-                this.Synchronization.Enabled ? Palette.LightBlue : Palette.LightPink);
-        }
-
-        private void DrawProgressFrame()
-        {
-            Primitives2D.FillRectangle(
-                this.GameGraphics.SpriteBatch,
-                this.ProgressFrameRectangle,
-                this.Settings.BarFrameBackgroundColor);
-        }
-
-        private Rectangle SynchronizationDotRectangle(int i, bool leftsided)
-        {
-            return ExtRectangle.Rectangle(
-                leftsided ? (int)this.StateInfoCenter.X - 275 - 15 * i : (int)this.StateInfoCenter.X + 275 + 15 * i,
-                (int)this.StateInfoCenter.Y - 1,
-                this.Settings.BarFrameSize.Y,
-                this.Settings.BarFrameSize.Y);
-        }
-
-        private Vector2 SynchronizationDotTextCenter(Rectangle dotFrame)
-        {
-            return dotFrame.Center.ToVector2() + new Vector2(0, this.Settings.BarFrameSize.Y * 2);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace MetaMind.Perseverance.Concepts
 
         int Level { get; }
 
-        double Progress { get; }
+        float Progress { get; }
 
         double Acceleration { get; }
 

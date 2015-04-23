@@ -17,22 +17,15 @@
     {
         #region Cues
 
-        public string SynchronizingFalseCue = "Windows Proximity Connection";
+        private string SynchronizingFalseCue = "Windows Proximity Connection";
 
-        public string SynchronizingTrueCue = "Windows Proximity Notification";
+        private string SynchronizingTrueCue  = "Windows Proximity Notification";
 
         #endregion
 
-        public TimeSpan AttentionSpan = TimeSpan.FromSeconds(5);
-        
         private bool     actived;
-        private DateTime alertMoment = DateTime.Now;
-
-        #region Dependency
-
-        public ISynchronization Synchronization { get; set; }
-
-        #endregion
+        private DateTime alertMoment   = DateTime.Now;
+        private TimeSpan attentionSpan = TimeSpan.FromSeconds(5);
 
         public SynchronizationMonitor(ISynchronization synchronization)
         {
@@ -43,6 +36,12 @@
 
             this.Synchronization = synchronization;
         }
+
+        #region Dependency
+
+        private ISynchronization Synchronization { get; set; }
+
+        #endregion
 
         public void Start()
         {
@@ -64,7 +63,7 @@
 
         public override void Update(GameTime gameTime)
         {
-            if (DateTime.Now - this.alertMoment > this.AttentionSpan)
+            if (DateTime.Now - this.alertMoment > this.attentionSpan)
             {
                 var audio = this.GameInterop.Audio;
 

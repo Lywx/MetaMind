@@ -3,7 +3,7 @@ namespace MetaMind.Perseverance.Guis.Modules.Summary
     using System;
 
     using MetaMind.Engine.Components.Fonts;
-    using MetaMind.Engine.Guis.Widgets;
+    using MetaMind.Engine.Guis.Widgets.Visual;
 
     using Microsoft.Xna.Framework;
 
