@@ -71,7 +71,7 @@ namespace MetaMind.Engine.Settings.Loaders
 
         private static string[] LoadAllLine(IConfigurationLoader loader)
         {
-            return File.ReadAllLines(FolderManager.ConfigurationPath(loader));
+            return File.ReadAllLines(FileManager.ConfigurationPath(loader));
         }
 
         #endregion

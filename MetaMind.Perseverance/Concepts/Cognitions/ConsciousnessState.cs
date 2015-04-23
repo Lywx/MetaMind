@@ -5,13 +5,16 @@
     using MetaMind.Engine;
 
     [DataContract]
-    internal class ConsciousnessState : GameEntity
+    internal abstract class ConsciousnessState : GameEntity
     {
         protected ConsciousnessState(Consciousness consciousness)
         {
             this.Consciousness = consciousness;
         }
 
+        [DataMember]
         protected Consciousness Consciousness { get; set; }
+
+        public abstract ConsciousnessState UpdateState(Consciousness consciousness);
     }
 }

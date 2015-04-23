@@ -21,23 +21,25 @@ namespace MetaMind.Perseverance.Guis.Modules
         public MotivationModule(MotivationModuleSettings settings)
             : base(settings)
         {
-            this.intelligence = new PointView(
-                this.Settings.IntelligenceViewSettings,
-                Settings.ItemSettings,
-                Settings.ViewFactory);
+            // UNDONE: NOW
+            //this.intelligence = new PointView(
+            //    this.Settings.IntelligenceViewSettings,
+            //    Settings.ItemSettings,
+            //    Settings.ViewFactory);
 
-            var svs = new ContinuousViewSettings();
-            var isettings = new ItemSettings();
+            //var svs = new ContinuousViewSettings();
+            //var isettings = new ItemSettings();
             //var ifactory = new ContinuousViewFactory();
             //timeline = new ContinuousView(svs, isettings, ifactory);
         }
 
         #region Load and Unload
 
-        // FIXME: Wrong interface
         public override void LoadContent(IGameInteropService interop)
         {
             // performance penalty is not severe for one-off loading
+
+            // UNDONE: NOW
             foreach (var entry in MotivationModuleSettings.GetNowMotivations())
             {
                 this.intelligence.Control.AddItem(entry);
@@ -48,27 +50,28 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         private void LoadEvents(IGameInteropService interop)
         {
-            if (this.gameStartedListener == null)
-            {
-                this.gameStartedListener = new MotivationModuleGameStartedListener(this.intelligence);
-            }
+            // UNDONE: NOW
+            //if (this.gameStartedListener == null)
+            //{
+            //    this.gameStartedListener = new MotivationModuleGameStartedListener(this.intelligence);
+            //}
 
-            new Listener(
-                new List<int> { (int)SessionEventType.GameStarted },
-                e =>
-                    {
-                        // auto-select after startup
-                        this.intelligence.Control.Selection.Select(0);
+            //new Listener(
+            //    new List<int> { (int)SessionEventType.GameStarted },
+            //    e =>
+            //        {
+            //            // auto-select after startup
+            //            this.intelligence.Control.Selection.Select(0);
 
-                        return true;
-                    });
+            //            return true;
+            //        });
 
-            interop.Event.AddListener(this.gameStartedListener);
+            //interop.Event.AddListener(this.gameStartedListener);
         }
 
         public override void UnloadContent(IGameInteropService interop)
         {
-            this.UnloadInterop(interop);
+            base.UnloadContent(interop);
         }
 
         #endregion Load and Unload
@@ -77,17 +80,17 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            this.intelligence.Draw(graphics, time, alpha);
+            //this.intelligence.Draw(graphics, time, alpha);
         }
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.intelligence.UpdateInput(input, time);
+            //this.intelligence.UpdateInput(input, time);
         }
 
         public override void Update(GameTime time)
         {
-            this.intelligence.Update(time);
+            //this.intelligence.Update(time);
         }
 
         #endregion Update and Draw

@@ -8,10 +8,13 @@
 namespace MetaMind.Engine
 {
     using System;
+    using System.Diagnostics;
+    using System.Reflection;
 
     using MetaMind.Engine.Components;
     using MetaMind.Engine.Components.Fonts;
-    using MetaMind.Engine.Guis.Consoles;
+    using MetaMind.Engine.Guis.Console;
+    using MetaMind.Engine.Guis.Console.Commands;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
@@ -50,6 +53,8 @@ namespace MetaMind.Engine
 
         public IGameNumerical Numerical { get; private set; }
 
+        #region Game
+
         protected override void Initialize()
         {
             this.Graphics.Initialize();
@@ -65,7 +70,14 @@ namespace MetaMind.Engine
         {
             // FIXME: Need to contruct after FontManager LoadContent.
             // TODO:  It may be possible to change the underlying mechanism to move this code inside the contruction of GameEngine.Interop
-            this.Interop.Console = new GameConsole(this, this.Graphics.SpriteBatch, this.Graphics.String, new GameConsoleOptions { Font = Font.UiConsole });
+            this.Interop.Console = new GameConsole(
+                this,
+                this.Graphics.SpriteBatch,
+                this.Graphics.StringDrawer,
+                new GameConsoleOptions { Font = Font.UiConsole });
+
+            this.Interop.Console.AddCommand(new ResetCommand(this.Interop.File));
+            this.Interop.Console.AddCommand(new RestartCommand(this));
         }
 
         protected override void UnloadContent()
@@ -81,9 +93,7 @@ namespace MetaMind.Engine
         protected void UpdateInput(GameTime gameTime)
         {
             // TODO: Playtest
-            this.Input.UpdateInput(gameTime);
-
-            // TODO: More
+            this.Input  .UpdateInput(gameTime);
             this.Interop.UpdateInput(gameTime);
         }
 
@@ -97,7 +107,24 @@ namespace MetaMind.Engine
         protected override void OnExiting(object sender, EventArgs args)
         {
             this.Interop.OnExiting();
-            base.        OnExiting(sender, args);
+            base        .OnExiting(sender, args);
         }
+
+
+        #endregion
+
+        #region Operations
+
+        public void Restart()
+        {
+            this.Exit();
+
+            using (var p = Process.GetCurrentProcess())
+            {
+                Process.Start(Assembly.GetEntryAssembly().Location, p.StartInfo.Arguments);
+            }
+        }
+
+        #endregion
     }
 }

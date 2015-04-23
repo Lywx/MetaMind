@@ -29,7 +29,7 @@ namespace MetaMind.Perseverance.Guis.Modules
                                         ColumnNumDisplay = 1,
                                         ColumnNumMax     = 1,
 
-                                        RowNumDisplay    = GameEngine.GraphicsSettings.IsFullscreen ? 13 : 9,
+                                        //RowNumDisplay    = GameEngine.GraphicsSettings.IsFullscreen ? 13 : 9,
                                         RowNumMax        = 100,
 
                                         PointMargin = new Point(

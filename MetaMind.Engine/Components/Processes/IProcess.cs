@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Components.Processes
 {
     using System;
 
-    using IUpdateable = MetaMind.Engine.IUpdateable;
+    using Microsoft.Xna.Framework;
 
     public interface IProcess : IUpdateable, IDisposable
     {

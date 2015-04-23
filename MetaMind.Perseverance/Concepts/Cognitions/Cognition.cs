@@ -2,8 +2,6 @@
 {
     using System.Runtime.Serialization;
 
-    using Microsoft.Xna.Framework;
-
     public interface ICognition
     {
         [DataMember]
@@ -12,14 +10,12 @@
         [DataMember]
         ISynchronization Synchronization { get; set; }
 
-        bool Awake { get; }
-
-        void Update(GameTime time);
+        void Update();
     }
 
-    [DataContract,
-    KnownType(typeof(Consciousness)),
-    KnownType(typeof(Synchronization))]
+    [DataContract]
+    [KnownType(typeof(Consciousness))]
+    [KnownType(typeof(Synchronization))]
     public class Cognition : ICognition
     {
         #region Components
@@ -29,14 +25,6 @@
 
         [DataMember]
         public ISynchronization Synchronization { get; set; }
-
-        public bool Awake
-        {
-            get
-            {
-                return this.Consciousness.HasAwaken;
-            }
-        }
 
         #endregion Components
 
@@ -52,9 +40,9 @@
 
         #region Update
 
-        public void Update(GameTime time)
+        public void Update()
         {
-            this.Consciousness  .Update(time);
+            this.Consciousness  .Update();
             this.Synchronization.Update();
         }
 

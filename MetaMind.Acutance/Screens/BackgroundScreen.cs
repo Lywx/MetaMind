@@ -37,7 +37,7 @@
             
             this.particles =
                 new ParticleModule(
-                    new ParticleModuleSettings(Acutance.Session.Random, FloatParticle.ParticleFromBelow, 4, 2))
+                    new ParticleSettings(Acutance.Session.Random, FloatParticle.ParticleFromBelow, 4, 2))
         }
 
         public override void UnloadContent(IGameInteropService interop)

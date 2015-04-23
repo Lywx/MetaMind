@@ -2,10 +2,12 @@ namespace MetaMind.Engine.Guis
 {
     using MetaMind.Engine.Services;
 
+    using Microsoft.Xna.Framework;
+
     public interface IModuleControl : IUpdateable, IInputable
     {
-        void Load(IGameInteropService interop);
+        void LoadContent(IGameInteropService interop);
 
-        void Unload(IGameInteropService interop);
+        void UnloadContent(IGameInteropService interop);
     }
 }

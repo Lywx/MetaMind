@@ -7,6 +7,10 @@
 
 namespace MetaMind.Engine.Guis.Widgets.Items
 {
+    using Microsoft.Xna.Framework;
+
+    using IDrawable = MetaMind.Engine.IDrawable;
+
     public interface IItemGraphics : IDrawable, IInputable, IUpdateable
     {
     }

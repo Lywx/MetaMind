@@ -36,7 +36,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
             if (relative)
             {
-                path = FolderManager.DataPath(path);
+                path = FileManager.DataPath(path);
             }
 
             ViewControl.ClearNonControlItems();
@@ -92,12 +92,12 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             foreach (var dir in Directory.GetDirectories(path).Take(this.directoryNumMax))
             {
-                ViewControl.AddResultItem(FolderManager.DataRelativePath(dir));
+                ViewControl.AddResultItem(FileManager.DataRelativePath(dir));
             }
 
             foreach (var file in Directory.GetFiles(path).Take(this.fileNumMax))
             {
-                ViewControl.AddResultItem(FolderManager.DataRelativePath(file));
+                ViewControl.AddResultItem(FileManager.DataRelativePath(file));
             }
         }
 
@@ -124,7 +124,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                 return;
             }
 
-            var relativePath = FolderManager.DataRelativePath(e.Info.FullName);
+            var relativePath = FileManager.DataRelativePath(e.Info.FullName);
             
             // won't load git repository
             if (relativePath.Contains(".git"))

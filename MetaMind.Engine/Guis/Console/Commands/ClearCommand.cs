@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Engine.Guis.Consoles.Commands
+﻿namespace MetaMind.Engine.Guis.Console.Commands
 {
     internal class ClearCommand : IConsoleCommand
     {

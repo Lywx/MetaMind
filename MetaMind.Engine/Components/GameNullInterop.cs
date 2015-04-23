@@ -1,11 +1,11 @@
 namespace MetaMind.Engine.Components
 {
-    using MetaMind.Engine.Guis.Consoles;
+    using MetaMind.Engine.Guis.Console;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
 
-    internal class NullGameInterop : IGameInterop
+    internal class GameNullInterop : IGameInterop
     {
         public IAudioManager Audio { get; private set; }
 
@@ -13,7 +13,7 @@ namespace MetaMind.Engine.Components
 
         public GameConsole Console { get; set; }
 
-        public FolderManager Folder { get; private set; }
+        public FileManager File { get; private set; }
 
         public IGameEngine Engine { get; private set; }
 

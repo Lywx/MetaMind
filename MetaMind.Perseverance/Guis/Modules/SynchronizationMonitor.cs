@@ -66,16 +66,18 @@
         {
             if (DateTime.Now - this.alertMoment > this.AttentionSpan)
             {
+                var audio = this.GameInterop.Audio;
+
                 if (this.Synchronization.Enabled)
                 {
-                    this.Interop.Audio.PlayMusic(this.SynchronizingTrueCue);
+                    audio.PlayMusic(this.SynchronizingTrueCue);
 
                     this.Confirm();
                     this.Alert();
                 }
                 else
                 {
-                    this.Interop.Audio.PlayMusic(this.SynchronizingFalseCue);
+                    audio.PlayMusic(this.SynchronizingFalseCue);
 
                     this.Confirm();
                     this.Alert();
@@ -85,7 +87,8 @@
 
         private void Alert()
         {
-            this.Interop.Event.QueueEvent(new Event((int)SessionEventType.SyncAlerted, new SynchronizationAlertedEventArgs()));
+            var @event = this.GameInterop.Event;
+            @event.QueueEvent(new Event((int)SessionEventType.SyncAlerted, new SynchronizationAlertedEventArgs()));
         }
 
         private void Confirm()

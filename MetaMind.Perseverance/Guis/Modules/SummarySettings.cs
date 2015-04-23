@@ -1,12 +1,13 @@
 namespace MetaMind.Perseverance.Guis.Modules
 {
+    using MetaMind.Engine;
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Components.Graphics;
     using MetaMind.Engine.Settings.Loaders;
 
     using Microsoft.Xna.Framework;
 
-    public class SummaryModuleSettings : IParameterLoader<GraphicsSettings>
+    public class SummarySettings : GameVisualEntity, IParameterLoader<GraphicsSettings>
     {
         #region Parameters
 
@@ -15,34 +16,40 @@ namespace MetaMind.Perseverance.Guis.Modules
             this.ScreenWidth = parameter.Width;
         }
 
-        private int ScreenWidth { get; set; }
+        public int ScreenWidth { get; set; }
 
         #endregion
-        
+
+        #region Detail Data
+
         public Vector2 TitleCenter;
 
-        public Font    TitleFont         = Font.UiRegular;
+        public Font    TitleFont = Font.UiRegular;
 
-        public float   TitleSize         = 1f;
+        public float   TitleSize = 1f;
 
-        //---------------------------------------------------------------------
-        public Font  EntityFont          = Font.UiStatistics;
-
-        public float EntitySize          = 1f;
+        public Color   TitleColor = Color.White;
 
         //---------------------------------------------------------------------
-        public int   LineHeight          = 25;
+        public Font  EntityFont = Font.UiStatistics;
+
+        public float EntitySize = 1f;
 
         //---------------------------------------------------------------------
-        public int   GoodPrefessionHour  = 10;
+        public int LineHeight = 25;
 
-        public int   LoftyProfessionHour = 6;
+        //---------------------------------------------------------------------
+        public int HourOfGood = 10;
 
-        public int   WorldRecordHour     = 110;
+        public int HourOfLofty = 6;
 
-        public SummaryModuleSettings(GraphicsSettings settings)
+        public int HourOfWorldRecord = 110;
+
+        #endregion
+
+        public SummarySettings()
         {
-            this.LoadParameter(settings);
+            this.LoadParameter(this.GameGraphics.Settings);
 
             this.TitleCenter = new Vector2(this.ScreenWidth / 2f, 100);
         }

@@ -55,14 +55,14 @@
             var color    = this.TextColor();
             var size     = this.TextSize();
 
-            var drawer = graphics.String;
+            var drawer = graphics.StringDrawer;
 
             var draw = this.TextMonospaced
                            ? (Action<Font, string, Vector2, Color, float, StringHAlign, StringVAlign>)
                              drawer.DrawMonospacedString
                            : drawer.DrawString;
 
-            draw(font, text, position, color, size, this.TextHAlign, this.TextVAlign);
+            draw(font, text, position, color.MakeTransparent(alpha), size, this.TextHAlign, this.TextVAlign);
         }
     }
 }

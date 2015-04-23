@@ -16,14 +16,14 @@ namespace MetaMind.Perseverance.Guis.Widgets
             this.SrcItem.ViewControl.ItemFactory.RemoveData(this.SrcItem);
 
             // change data position
-            MotivationSpace desMotivationList = this.DesView.ViewSettings.Space;
-                desMotivationList.Insert(position, this);
+            //MotivationSpace desMotivationList = this.DesView.ViewSettings.Space;
+            //    desMotivationList.Insert(position, this);
 
             var position = this.DesSelection.PreviousSelectedId != null
                                ? (int)this.DesSelection.PreviousSelectedId
                                : 0;
 
-            this.SrcItem.ItemData.CopyToSpace(desMotivationList, position);
+            //this.SrcItem.ItemData.CopyToSpace(desMotivationList, position);
 
             base.Transit();
         }

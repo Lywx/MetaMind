@@ -19,20 +19,20 @@
         {
         }
 
-        public void SwapWithInSpace(MotivationSpace space, Motivation target)
-        {
-            var source = MotivationModuleSettings.GetMotivationSource(space);
-            if (source != null && 
-                source.Contains(this) && 
-                source.Contains(target))
-            {
-                var thisIndex   = source.IndexOf(this);
-                var targetIndex = source.IndexOf(target);
+        //public void SwapWithInSpace(MotivationSpace space, Motivation target)
+        //{
+        //    var source = MotivationModuleSettings.GetMotivationSource(space);
+        //    if (source != null && 
+        //        source.Contains(this) && 
+        //        source.Contains(target))
+        //    {
+        //        var thisIndex   = source.IndexOf(this);
+        //        var targetIndex = source.IndexOf(target);
 
-                source[thisIndex]   = target;
-                source[targetIndex] = this;
-            }
-        }
+        //        source[thisIndex]   = target;
+        //        source[targetIndex] = this;
+        //    }
+        //}
 
         #region Progression Data
 

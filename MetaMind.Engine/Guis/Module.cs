@@ -38,7 +38,10 @@ namespace MetaMind.Engine.Guis
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            this.Graphics.Draw(graphics, time, alpha);
+            if (this.Graphics != null)
+            {
+                this.Graphics.Draw(graphics, time, alpha);
+            }
         }
 
         #endregion
@@ -47,12 +50,22 @@ namespace MetaMind.Engine.Guis
 
         public override void LoadContent(IGameInteropService interop)
         {
-            this.Control.Load(interop);
+            if (this.Control != null)
+            {
+                this.Control.LoadContent(interop);
+            }
+
+            base.LoadContent(interop);
         }
 
         public override void UnloadContent(IGameInteropService interop)
         {
-            this.Control.Unload(interop);
+            if (this.Control != null)
+            {
+                this.Control.UnloadContent(interop);
+            }
+
+            base.UnloadContent(interop);
         }
 
         #endregion
@@ -61,14 +74,28 @@ namespace MetaMind.Engine.Guis
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.Control .UpdateInput(input, time);
-            this.Graphics.UpdateInput(input, time);
+            if (this.Control != null)
+            {
+                this.Control.UpdateInput(input, time);
+            }
+
+            if (this.Graphics != null)
+            {
+                this.Graphics.UpdateInput(input, time);
+            }
         }
 
         public override void Update(GameTime time)
         {
-            this.Control .Update(time);
-            this.Graphics.Update(time);
+            if (this.Control != null)
+            {
+                this.Control.Update(time);
+            }
+
+            if (this.Graphics != null)
+            {
+                this.Graphics.Update(time);
+            }
         }
 
         #endregion

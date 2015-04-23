@@ -37,7 +37,8 @@ namespace MetaMind.Perseverance.Guis.Widgets
                 tasks = parent.FastHostData["Tasks"];
             }
 
-            ProcessManager.AttachProcess(new TaskItemSwapProcessInMotivation(draggingItem, Item, tasks));
+            var process = this.GameInterop.Process;
+            process.AttachProcess(new TaskItemSwapProcessInMotivation(draggingItem, Item, tasks));
         }
     }
 }

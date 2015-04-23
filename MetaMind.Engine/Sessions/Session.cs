@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Sessions
     using Microsoft.Xna.Framework;
 
     [DataContract]
-    public class Session<TData> : ISession<TData>
+    public sealed class Session<TData> : ISession<TData>
         where TData : ISessionData, new()
     {
         #region File Data
@@ -18,7 +18,7 @@ namespace MetaMind.Engine.Sessions
         public const string XmlFilename = "Session.xml";
 
         [DataMember]
-        public const string XmlPath = FolderManager.SaveFolderPath + XmlFilename;
+        public const string XmlPath = FileManager.SaveFolderPath + XmlFilename;
 
         #endregion 
 
@@ -109,7 +109,7 @@ namespace MetaMind.Engine.Sessions
 
         #region Update
 
-        public virtual void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             this.Data.Update(gameTime);
         }

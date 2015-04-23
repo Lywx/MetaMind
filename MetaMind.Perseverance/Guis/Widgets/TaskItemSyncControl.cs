@@ -22,18 +22,14 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         public void StopSync()
         {
-            var syncStoppedEvent = new Event(
-                (int)SessionEventType.SyncStopped, 
-                new SynchronizationStoppedEventArgs(this.ItemData));
-            gameInterop.Event.QueueEvent(syncStoppedEvent);
+            var @event = this.GameInterop.Event;
+            @event.QueueEvent(new Event((int)SessionEventType.SyncStopped, new SynchronizationStoppedEventArgs(this.ItemData)));
         }
 
         public void StartSync()
         {
-            var syncStartEvent = new Event(
-                (int)SessionEventType.SyncStarted, 
-                new SynchronizationStartedEventArgs(this.ItemData));
-            gameInterop.Event.QueueEvent(syncStartEvent);
+            var @event = this.GameInterop.Event;
+            @event.QueueEvent(new Event((int)SessionEventType.SyncStarted, new SynchronizationStartedEventArgs(this.ItemData)));
         }
 
         public void SwitchSync()

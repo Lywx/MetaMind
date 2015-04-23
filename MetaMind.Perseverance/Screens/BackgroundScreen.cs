@@ -2,16 +2,12 @@
 {
     using System;
 
-    using MetaMind.Engine;
     using MetaMind.Engine.Guis.Modules;
-    using MetaMind.Engine.Guis.Particles;
     using MetaMind.Engine.Screens;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-
-    using ParticleModule = MetaMind.Perseverance.Guis.Modules.ParticleModule;
 
     public class BackgroundScreen : GameScreen
     {
@@ -33,9 +29,7 @@
 
         public override void LoadContent(IGameInteropService interop)
         {
-            this.particles =
-                new ParticleModule(
-                    new ParticleModuleSettings(Perseverance.Session.Random, FloatParticle.ParticleFromSide, 8, 2));
+            this.particles = new ParticleModule(new ParticleSettings()) { SpawnRate = 2 };
 
             this.background = interop.Content.Load<Texture2D>(@"Textures\Screens\Background\Sea Of Mind");
         }

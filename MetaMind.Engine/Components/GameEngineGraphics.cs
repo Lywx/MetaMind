@@ -14,7 +14,7 @@ namespace MetaMind.Engine.Components
 
         public SpriteBatch SpriteBatch { get; private set; }
 
-        public IStringDrawer String { get; private set; }
+        public IStringDrawer StringDrawer { get; private set; }
 
         public IFontManager Font { get; private set; }
 
@@ -25,7 +25,7 @@ namespace MetaMind.Engine.Components
             this.Manager  = new GraphicsManager(engine, this.Settings);
             
             this.SpriteBatch = new SpriteBatch(this.Manager.GraphicsDevice);
-            this.String      = new StringDrawer(this.SpriteBatch);
+            this.StringDrawer      = new StringDrawer(this.SpriteBatch);
             
             this.Font = new FontManager(engine);
         }

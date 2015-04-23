@@ -11,11 +11,19 @@ namespace MetaMind.Perseverance.Events
 
     public class ConsciousnessSleepStoppedEventArgs
     {
-        public readonly ConsciousnessAsleep State;
+        private readonly Consciousness consciousness;
 
-        public ConsciousnessSleepStoppedEventArgs(ConsciousnessAsleep state)
+        public ConsciousnessSleepStoppedEventArgs(Consciousness consciousness)
         {
-            this.State = state;
+            this.consciousness = consciousness;
+        }
+
+        public Consciousness Consciousness
+        {
+            get
+            {
+                return this.consciousness;
+            }
         }
     }
 }

@@ -33,7 +33,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             get { return this.NameLocation; }
         }
 
-        protected override Vector2 IdCenter
+        protected override Vector2 IdCenterPosition()
         {
             get { return ExtPoint.ToVector2(ItemControl.IdFrame.Center); }
         }

@@ -5,18 +5,15 @@
 
     using MetaMind.Engine;
 
-    using Microsoft.Xna.Framework;
-
     [DataContract]
+    [KnownType(typeof(ConsciousnessAsleep))]
+    [KnownType(typeof(ConsciousnessAwake))]
     public class Consciousness : GameEntity, IConsciousness
     {
         #region Consciousness Data
 
         [DataMember]
-        public readonly int AwakeHour = 7;
-
-        [DataMember]
-        public readonly int AwakeMinute = 0;
+        public readonly DateTime KnownOriginTime = DateTime.Now;
 
         [DataMember]
         public TimeSpan KnownAwakeSpan { get; set; }
@@ -25,10 +22,10 @@
         public TimeSpan KnownAsleepSpan { get; set; }
 
         [DataMember]
-        public DateTime SleepEndTime { get; set; }
+        public DateTime LastSleepEndTime { get; set; }
 
         [DataMember]
-        public DateTime SleepStartTime { get; set; }
+        public DateTime LastSleepStartTime { get; set; }
 
         [DataMember]
         private ConsciousnessState State { get; set; }
@@ -37,22 +34,11 @@
 
         #region Consciousness Control
 
-        /// <summary>
-        ///     Awake when AwakeHour AM to 0 AM
-        /// </summary>
-        public bool HasAwaken
-        {
-            get
-            {
-                return DateTime.Now - DateTime.Today.AddHours(AwakeHour).AddMinutes(AwakeMinute) > TimeSpan.Zero;
-            }
-        }
-
         internal bool HasEverSlept
         {
             get
             {
-                return this.SleepEndTime.Ticks != 0;
+                return this.LastSleepEndTime.Ticks != 0;
             }
         }
 
@@ -78,8 +64,8 @@
 
         public Consciousness()
         {
-            this.SleepStartTime = DateTime.MinValue;
-            this.SleepEndTime   = DateTime.MinValue;
+            this.LastSleepStartTime = DateTime.MinValue;
+            this.LastSleepEndTime   = DateTime.MinValue;
             
             this.KnownAwakeSpan  = TimeSpan.Zero;
             this.KnownAsleepSpan = TimeSpan.Zero;
@@ -96,9 +82,9 @@
 
         #region Update
 
-        public override void Update(GameTime time)
+        public void Update()
         {
-            this.State.Update(time);
+            this.State = this.State.UpdateState(this);
         }
 
         #endregion Update

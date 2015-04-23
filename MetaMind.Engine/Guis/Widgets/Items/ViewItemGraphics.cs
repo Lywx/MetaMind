@@ -1,5 +1,6 @@
 ﻿namespace MetaMind.Engine.Guis.Widgets.Items
 {
+    using System;
     using System.Globalization;
 
     using MetaMind.Engine.Services;
@@ -10,24 +11,17 @@
 
     public class ViewItemGraphics : ViewItemComponent, IItemGraphics
     {
+        protected Func<Vector2> IdCenterPosition { get; set; }
+
+        protected Func<Vector2> ItemCenterPosition { get; set; }
+
         public ViewItemGraphics(IViewItem item)
             : base(item)
         {
-        }
+            var rootFrame = ItemControl.RootFrame;
 
-        protected Point Center
-        {
-            get { return ItemControl.RootFrame.Center; }
-        }
-
-        protected virtual Vector2 IdCenter
-        {
-            get
-            {
-                return new Vector2(
-                    ItemControl.RootFrame.Rectangle.Right + 10,
-                    ItemControl.RootFrame.Rectangle.Top - 10);
-            }
+            IdCenterPosition   = () => new Vector2(rootFrame.Rectangle.Right + 10, rootFrame.Rectangle.Top - 10);
+            ItemCenterPosition = () => ExtPoint.ToVector2(rootFrame.Center);
         }
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
@@ -47,12 +41,12 @@
 
         protected virtual void DrawId(IGameGraphicsService graphics, byte alpha)
         {
-            graphics.String.DrawStringCenteredHV(
-                ItemSettings.IdFont,
-                ItemControl.Id.ToString(new CultureInfo("en-US")),
-                this.IdCenter,
-                ExtColor.MakeTransparent(ItemSettings.IdColor, alpha),
-                ItemSettings.IdSize);
+            //graphics.String.DrawStringCenteredHV(
+            //    ItemSettings.IdFont,
+            //    ItemControl.Id.ToString(new CultureInfo("en-US")),
+            //    this.IdCenterPosition(),
+            //    ExtColor.MakeTransparent(ItemSettings.IdColor, alpha),
+            //    ItemSettings.IdSize);
         }
 
         protected virtual void DrawNameFrame(IGameGraphicsService graphics, byte alpha)

@@ -1,5 +1,9 @@
 namespace MetaMind.Engine.Guis.Elements
 {
+    using Microsoft.Xna.Framework;
+
+    using IDrawable = MetaMind.Engine.IDrawable;
+
     public interface IFrameEntity : IUpdateable, IDrawable, IInputable
     {
         bool[] States { get; }

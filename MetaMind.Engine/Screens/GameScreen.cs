@@ -134,11 +134,21 @@ namespace MetaMind.Engine.Screens
 
         #endregion Screen Events
 
-        #region Engine Data
+        #region Dependency
 
         protected IGameInteropService Interop { get; set; }
 
-        #endregion Engine Data
+        private void RegisterDependency()
+        {
+            this.Interop = GameEngine.Service.Interop;
+        }
+
+        #endregion
+
+        protected GameScreen()
+        {
+            this.RegisterDependency();
+        }
 
         #region Load and Unload
 
@@ -146,19 +156,8 @@ namespace MetaMind.Engine.Screens
         {
         }
 
-        public void LoadInterop(Services.IGameInteropService interop)
-        {
-            if (this.Interop == null)
-            {
-                this.Interop = interop;
-            }
-        }
 
         public virtual void UnloadContent(IGameInteropService interop)
-        {
-        }
-
-        public void UnloadInterop(Services.IGameInteropService interop)
         {
         }
 

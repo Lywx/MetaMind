@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Guis.Modules
 {
     using System;
 
-    public class ParticleModuleSettings : ICloneable
+    public class ParticleSettings : ICloneable
     {
         public int ParticleNum = 1500;
 
@@ -10,6 +10,5 @@ namespace MetaMind.Engine.Guis.Modules
         {
             return this.MemberwiseClone();
         }
-
     }
 }

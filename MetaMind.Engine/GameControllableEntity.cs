@@ -1,11 +1,13 @@
 namespace MetaMind.Engine
 {
     using System;
+    using System.Runtime.Serialization;
 
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
+    [DataContract]
     public class GameControllableEntity : GameVisualEntity, IInputable
     {
         #region States
@@ -50,15 +52,26 @@ namespace MetaMind.Engine
         {
         }
 
-        #region Engine Service
+        #region Dependency
 
         protected IGameInputService GameInput { get; private set; }
+
+        [OnDeserialized]
+        public new void RegisterDependency(StreamingContext context)
+        {
+            this.RegisterDependency();
+        }
+
+        private void RegisterDependency()
+        {
+            this.GameInput = GameEngine.Service.Input;
+        }
 
         #endregion
 
         protected GameControllableEntity()
         {
-            this.GameInput = GameEngine.Service.Input;
+            this.RegisterDependency();
         }
 
         #endregion Events

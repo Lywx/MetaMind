@@ -1,7 +1,7 @@
 namespace MetaMind.Engine.Services
 {
     using MetaMind.Engine.Components;
-    using MetaMind.Engine.Guis.Consoles;
+    using MetaMind.Engine.Guis.Console;
 
     using Microsoft.Xna.Framework.Content;
 
@@ -13,7 +13,7 @@ namespace MetaMind.Engine.Services
 
         GameConsole Console { get; set; }
 
-        FolderManager Folder { get; }
+        FileManager File { get; }
 
         IEventManager Event { get; }
 

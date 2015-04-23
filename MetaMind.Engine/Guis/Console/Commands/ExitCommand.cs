@@ -5,7 +5,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Engine.Guis.Consoles.Commands
+namespace MetaMind.Engine.Guis.Console.Commands
 {
     using Microsoft.Xna.Framework;
 

@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Engine.Guis.Consoles
+﻿namespace MetaMind.Engine.Guis.Console
 {
     internal enum OutputLineType
     {

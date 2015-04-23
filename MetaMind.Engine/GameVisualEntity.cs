@@ -8,12 +8,13 @@
 namespace MetaMind.Engine
 {
     using System;
-    using System.Drawing;
+    using System.Runtime.Serialization;
 
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
+    [DataContract]
     public class GameVisualEntity : GameEntity, IGameVisualEntity
     {
         #region States
@@ -64,12 +65,27 @@ namespace MetaMind.Engine
 
         protected IGameGraphicsService GameGraphics { get; private set; }
 
-        #endregion
+        [OnDeserialized]
+        public new void RegisterDependency(StreamingContext context)
+        {
+            this.RegisterDependency();
+        }
 
-        protected GameVisualEntity()
+        private void RegisterDependency()
         {
             this.GameGraphics = GameEngine.Service.Graphics;
         }
+
+        #endregion
+
+        #region Constructors
+
+        protected GameVisualEntity()
+        {
+            this.RegisterDependency();
+        }
+
+        #endregion
 
         #region Draw
 

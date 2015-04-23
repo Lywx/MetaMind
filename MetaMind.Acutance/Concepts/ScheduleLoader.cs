@@ -59,7 +59,7 @@
         {
             var dict = ConfigurationFileLoader.LoadUniquePairs(loader);
 
-            var schedulePath = FolderManager.DataPath(dict["ScheduleFolder"]);
+            var schedulePath = FileManager.DataPath(dict["ScheduleFolder"]);
             return schedulePath;
         }
     }

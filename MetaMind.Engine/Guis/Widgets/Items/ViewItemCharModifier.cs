@@ -58,11 +58,14 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         #endregion Input Data
 
-        #region Service
+        #region Dependency
 
-        private static bool isFlyweightServiceLoaded;
+        protected IInputEvent InputEvent { get; private set; }
 
-        protected static IInputEvent InputEvent { get; private set; }
+        private void RegisterDependency()
+        {
+            this.InputEvent = this.GameInput.Event;
+        }
 
         #endregion
 
@@ -71,8 +74,10 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         public ViewItemCharModifier(IViewItem item)
             : base(item)
         {
-            InputEvent.CharEntered += this.DetectCharEntered;
-            InputEvent.KeyDown     += this.DetectEnterKeyDown;
+            this.RegisterDependency();
+
+            this.InputEvent.CharEntered += this.DetectCharEntered;
+            this.InputEvent.KeyDown     += this.DetectEnterKeyDown;
         }
 
         #endregion 
@@ -93,8 +98,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             this.modificationEnded = null;
             this.ValueModified     = null;
 
-            InputEvent.CharEntered -= this.DetectCharEntered;
-            InputEvent.KeyDown     -= this.DetectEnterKeyDown;
+            this.InputEvent.CharEntered -= this.DetectCharEntered;
+            this.InputEvent.KeyDown     -= this.DetectEnterKeyDown;
 
             base.Dispose();
         }

@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Folder.cs" company="UESTC">
-//   Copyright (c) 2014 Wuxiang Lin
+// <copyright file="File.cs" company="UESTC">
+//   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,7 +11,12 @@ namespace MetaMind.Engine.Components
 
     using MetaMind.Engine.Settings.Loaders;
 
-    public class FolderManager
+    public interface IFileManager
+    {
+        void DeleteSaveDirectory();
+    }
+
+    public class FileManager : IFileManager
     {
         #region Directory Settings
 
@@ -25,7 +30,7 @@ namespace MetaMind.Engine.Components
 
         #region Constructors
 
-        public FolderManager()
+        public FileManager()
         {
             this.CreateDirectory();
         }
@@ -54,13 +59,21 @@ namespace MetaMind.Engine.Components
         {
             if (!Directory.Exists(SaveFolderPath))
             {
-                // if it doesn't exist, create
+                // If it doesn't exist, create
                 Directory.CreateDirectory(SaveFolderPath);
             }
 
             if (!Directory.Exists(DataFolderPath))
             {
                 Directory.CreateDirectory(DataFolderPath);
+            }
+        }
+
+        public void DeleteSaveDirectory()
+        {
+            if (Directory.Exists(SaveFolderPath))
+            {
+                Directory.Delete(SaveFolderPath, true);
             }
         }
     }

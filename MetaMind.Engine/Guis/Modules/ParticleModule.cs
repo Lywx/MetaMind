@@ -11,7 +11,7 @@ namespace MetaMind.Engine.Guis.Modules
     /// <summary>
     /// Particle controller relies on implementation of FloatParticle.
     /// </summary>
-    public class ParticleModule : Module<ParticleModuleSettings>
+    public class ParticleModule : Module<ParticleSettings>
     {
         #region Particle Data
 
@@ -20,21 +20,18 @@ namespace MetaMind.Engine.Guis.Modules
         #endregion
 
         #region Particle Spawner Data
+        public int SpawnRate { get; set; }
+
         protected ParticleSpawner<FloatParticle> Spawner { get; set; }
-
-        protected int SpawnSpeed { get; set; }
-
-        protected int SpawnRate { get; set; }
 
         #endregion
 
-        public ParticleModule(ParticleModuleSettings settings)
+        public ParticleModule(ParticleSettings settings)
             : base(settings)
         {
             this.Spawner = new ParticleSpawner<FloatParticle>(FloatParticle.Prototype());
 
             this.SpawnRate  = 1;
-            this.SpawnSpeed = 1;
 
             this.Particles = new List<FloatParticle>();
         }

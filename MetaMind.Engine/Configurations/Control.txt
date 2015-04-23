@@ -55,9 +55,8 @@ CommandSortItem   = S with LeftControl
 
 " Synchronization Control
 
-ForceAwake   = A with LeftControl and LeftShift
-ForceReset   = R with LeftControl and LeftShift
-ForceReverse = Space with LeftControl and LeftShift
+Awaken       = A with LeftControl and LeftShift
+Sleep        = S with LeftControl and LeftShift
 
 " Basic Commands
 

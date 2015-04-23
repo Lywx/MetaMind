@@ -13,6 +13,6 @@ namespace MetaMind.Engine.Services
 
         SpriteBatch SpriteBatch { get; }
         
-        IStringDrawer String { get; }
+        IStringDrawer StringDrawer { get; }
     }
 }

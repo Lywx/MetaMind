@@ -20,13 +20,13 @@
         public const string XmlFilename = "Session.xml";
 
         [DataMember]
-        public const string XmlPath = FolderManager.SaveFolderPath + XmlFilename;
+        public const string XmlPath = FileManager.SaveFolderPath + XmlFilename;
 
         #endregion File Storage
 
         #region Singleton
 
-        private static Session singleton;
+        private static Session Singleton { get; set; }
 
         #endregion Singleton
 
@@ -74,9 +74,9 @@
             else
             {
                 // create a new singleton
-                singleton = new Session();
+                Singleton = new Session();
             }
-            return singleton;
+            return Singleton;
         }
 
         [OnDeserialized]
@@ -92,7 +92,7 @@
             {
                 using (var file = File.Create(XmlPath))
                 {
-                    serializer.WriteObject(file, singleton);
+                    serializer.WriteObject(file, Singleton);
                 }
             }
             catch (IOException)
@@ -110,12 +110,16 @@
                     var deserializer = new DataContractSerializer(typeof(Session));
                     using (var reader = XmlDictionaryReader.CreateTextReader(file, new XmlDictionaryReaderQuotas()))
                     {
-                        singleton = (Session)deserializer.ReadObject(reader, true);
+                        Singleton = (Session)deserializer.ReadObject(reader, true);
                     }
                 }
                 catch (SerializationException)
                 {
-                    singleton = new Session();
+                    Singleton = new Session();
+                }
+                catch (XmlException)
+                {
+                    Singleton = new Session();
                 }
             }
         }

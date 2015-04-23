@@ -38,7 +38,7 @@ namespace MetaMind.Engine.Testers
                     var text     = Enum.GetName(this.enumType, i);
                     var position = ExtPoint.ToVector2(start) + new Vector2(dx, i * dy);
 
-                    graphics.String.DrawString(Font.UiStatistics, text, position, Color.White, 1f);
+                    graphics.StringDrawer.DrawString(Font.UiStatistics, text, position, Color.White, 1f);
                 }
             }
         }

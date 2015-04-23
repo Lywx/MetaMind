@@ -111,14 +111,16 @@
     <Compile Include="Guis\Modules\MotivationModuleFactory.cs" />
     <Compile Include="Guis\Modules\MotivationModuleGameStartedListener.cs" />
     <Compile Include="Events\SynchronizationAlertedEventArgs.cs" />
+    <Compile Include="Guis\Modules\Summary\SummaryEntry.cs" />
+    <Compile Include="Guis\Modules\Summary\SummaryFactory.cs" />
+    <Compile Include="Guis\Modules\Summary\SummarySplit.cs" />
+    <Compile Include="Guis\Modules\Summary\SummaryTitle.cs" />
     <Compile Include="Guis\Modules\SynchronizationModuleControl.cs" />
     <Compile Include="Guis\Modules\SynchronizationModuleGraphics.cs" />
     <Compile Include="Guis\Modules\TaskModule.cs" />
     <Compile Include="Guis\Modules\TaskModuleSettings.cs" />
     <Compile Include="Guis\Modules\SummaryModule.cs" />
-    <Compile Include="Guis\Modules\SummaryModuleSettings.cs" />
-    <Compile Include="Guis\Modules\ParticleModule.cs" />
-    <Compile Include="Guis\Widgets\BannerSetting.cs" />
+    <Compile Include="Guis\Modules\SummarySettings.cs" />
     <Compile Include="Guis\Widgets\MotivationItemControl.cs" />
     <Compile Include="Guis\Widgets\MotivationItemTransitProcess.cs" />
     <Compile Include="Guis\Widgets\MotivationItemFactory.cs" />
@@ -147,7 +149,6 @@
     <Compile Include="Guis\Modules\SynchronizationModuleSynchronizationStartListener.cs" />
     <Compile Include="Guis\Modules\SynchronizationModuleSynchronizationStopListener.cs" />
     <Compile Include="Guis\Widgets\TimelineScale.cs" />
-    <Compile Include="Guis\Widgets\Banner.cs" />
     <Compile Include="Guis\Widgets\TaskItemControl.cs" />
     <Compile Include="Guis\Widgets\TaskItemFactory.cs" />
     <Compile Include="Guis\Widgets\TaskItemGraphics.cs" />
@@ -165,9 +166,6 @@
     <Compile Include="Sessions\Session.cs" />
     <Compile Include="Sessions\SessionEventType.cs" />
     <Compile Include="Guis\Modules\SynchronizationSleepStartedEventListener.cs" />
-    <Compile Include="Guis\Modules\SummaryModuleSleepStoppedEventListener.cs">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FastMember">

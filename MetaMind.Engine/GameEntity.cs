@@ -31,16 +31,26 @@ namespace MetaMind.Engine
 
         protected IGameNumericalService GameNumerical { get; private set; }
 
+        [OnDeserialized]
+        public void RegisterDependency(StreamingContext context)
+        {
+            this.RegisterDependency();
+        }
+
+        private void RegisterDependency()
+        {
+            this.GameInterop = GameEngine.Service.Interop;
+            this.GameNumerical = GameEngine.Service.Numerical;
+        }
+
         #endregion 
 
         #region Constructors
 
         protected GameEntity()
         {
-            // Dependency
-            this.GameInterop   = GameEngine.Service.Interop;
-            this.GameNumerical = GameEngine.Service.Numerical;
-         
+            this.RegisterDependency();
+
             this.Listeners = new List<IListener>();
         }
 
@@ -108,9 +118,12 @@ namespace MetaMind.Engine
 
         public virtual void UnloadContent(IGameInteropService interop)
         {
-            // TODO: UnloadContent How to design
-            this.Listeners.ForEach(l => interop.Event.RemoveListener(l));
-            this.Listeners.Clear();
+            // Maybe disposed already
+            if (this.Listeners != null)
+            {
+                this.Listeners.ForEach(l => interop.Event.RemoveListener(l));
+                this.Listeners.Clear();
+            }
         }
 
         #endregion Load and Unload

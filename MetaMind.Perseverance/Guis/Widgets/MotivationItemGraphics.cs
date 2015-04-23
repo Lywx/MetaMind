@@ -9,8 +9,6 @@ namespace MetaMind.Perseverance.Guis.Widgets
 {
     using System.Globalization;
 
-    using MetaMind.Engine;
-    using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Services;
 
@@ -31,7 +29,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         #region Graphics Data
 
-        protected override Vector2 IdCenter
+        protected override Vector2 IdCenterPosition()
         {
             get
             {
@@ -87,12 +85,13 @@ namespace MetaMind.Perseverance.Guis.Widgets
             }
 
             // main motivation item
-            this.DrawSymbol(time, alpha);
+            this.symbol.Draw(graphics, time, alpha);
+
             this.DrawName(alpha);
             this.DrawId(graphics, alpha);
 
             // sub task view
-            this.DrawTasks(time, alpha);
+            this.task.Draw(graphics, time, alpha);
         }
 
         public override void Update(GameTime time)
@@ -102,12 +101,12 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         protected override void DrawId(IGameGraphicsService graphics, byte alpha)
         {
-            FontManager.DrawStringCenteredHV(
-                ItemSettings.IdFont,
-                ItemControl.Id.ToString(new CultureInfo("en-US")),
-                this.IdCenter,
-                !Item.IsEnabled(ItemState.Item_Pending) ? ItemSettings.IdColor : ItemSettings.IdPendingColor,
-                ItemSettings.IdSize);
+            //FontManager.DrawStringCenteredHV(
+            //    ItemSettings.IdFont,
+            //    ItemControl.Id.ToString(new CultureInfo("en-US")),
+            //    this.IdCenterPosition(),
+            //    !Item.IsEnabled(ItemState.Item_Pending) ? ItemSettings.IdColor : ItemSettings.IdPendingColor,
+            //    ItemSettings.IdSize);
         }
 
         private void DrawName(byte alpha)
@@ -135,16 +134,6 @@ namespace MetaMind.Perseverance.Guis.Widgets
                     ExtColor.MakeTransparent(ItemSettings.NameColor, alpha),
                     ItemSettings.NameSize);
             }
-        }
-
-        private void DrawSymbol(GameTime gameTime, byte alpha)
-        {
-            this.symbol.Draw(gameTime, alpha);
-        }
-
-        private void DrawTasks(GameTime gameTime, byte alpha)
-        {
-            this.task.Draw(gameTime, alpha);
         }
 
         #endregion

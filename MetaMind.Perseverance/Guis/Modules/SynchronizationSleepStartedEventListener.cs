@@ -2,7 +2,6 @@
 {
     using System.Linq;
 
-    using MetaMind.Engine;
     using MetaMind.Engine.Components.Events;
     using MetaMind.Perseverance.Concepts;
     using MetaMind.Perseverance.Screens;
@@ -30,7 +29,7 @@
 
             this.synchronization.ResetTomorrow();
 
-            var screenManager = this.Interop.Screen;
+            var screenManager = this.GameInterop.Screen;
 
             var motivation = screenManager.Screens.First(screen => screen is MotivationScreen);
             if (motivation != null)

@@ -2,8 +2,6 @@ namespace MetaMind.Perseverance.Guis.Widgets
 {
     using System;
 
-    using MetaMind.Engine;
-    using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Services;
     using MetaMind.Engine.Settings.Colors;
@@ -19,7 +17,8 @@ namespace MetaMind.Perseverance.Guis.Widgets
         public MotivationItemSymbolGraphics(IViewItem item)
             : base(item)
         {
-            this.symbol = ContentManager.Load<Texture2D>(@"Textures\UIs\Heart");
+            var content = this.GameInterop.Content;
+            this.symbol = content.Load<Texture2D>(@"Textures\UIs\Heart");
         }
 
         private Vector2 SymbolOrigin
@@ -27,7 +26,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             get { return new Vector2(this.symbol.Width / 2f, this.symbol.Height / 2f); }
         }
 
-        public void Draw(GameTime gameTime, byte alpha)
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
             if (!ItemControl.Active)
             {
@@ -36,10 +35,10 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
             if (Item.IsEnabled(ItemState.Item_Dragging))
             {
-                this.DrawShadow(gameGraphics);
+                this.DrawShadow(graphics);
             }
 
-            this.DrawHeart(gameGraphics, alpha);
+            this.DrawHeart(graphics, alpha);
         }
 
         public override void Update(GameTime time)

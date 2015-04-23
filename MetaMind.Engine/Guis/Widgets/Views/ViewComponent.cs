@@ -2,6 +2,8 @@
 {
     using System;
 
+    using Microsoft.Xna.Framework;
+
     public interface IViewComponent : IUpdateable
     {
         dynamic ViewControl { get; }

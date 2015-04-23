@@ -28,12 +28,12 @@
         public SynchronizationModule(Cognition cognition, SynchronizationModuleSettings settings)
             : base(settings)
         {
-            this.Cognition = cognition;
+            this.Cognition       = cognition;
             this.Synchronization = cognition.Synchronization;
 
             // best close the mouse listener
             // which may casue severe mouse performance issues
-            this.monitor = new SynchronizationMonitor(GameEngine.Service.Interop.Engine, this.Synchronization);
+            this.monitor = new SynchronizationMonitor(this.Synchronization);
         }
 
         #endregion Constructors
@@ -99,25 +99,16 @@
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            if (input.State.Keyboard.IsActionTriggered(KeyboardActions.ForceAwake))
+            if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Awaken))
             {
-                var awake = this.Cognition.Consciousness as ConsciousnessAwake;
-                if (awake != null)
-                {
-                    awake.AwakeNow();
-                }
-
+                // TODO: integrate
+                this.Cognition.Consciousness.Awaken();
                 this.Synchronization.ResetToday();
             }
 
-            if (input.State.Keyboard.IsActionTriggered(KeyboardActions.ForceReset))
+            if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Sleep))
             {
-                this.Synchronization.ResetTomorrow();
-            }
-
-            if (input.State.Keyboard.IsActionTriggered(KeyboardActions.ForceReverse))
-            {
-                this.Synchronization.TryAbort();
+                this.Cognition.Consciousness.Sleep();
             }
         }
 

@@ -45,9 +45,8 @@ namespace MetaMind.Engine.Components.Inputs
         CommandSortItem,
 
         // Synchronization
-        ForceAwake,
-        ForceReset,
-        ForceReverse,
+        Awaken,
+        Sleep,
 
         // General
         Enter, 

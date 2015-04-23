@@ -1,7 +1,7 @@
-﻿namespace MetaMind.Engine.Guis.Consoles
+﻿namespace MetaMind.Engine.Guis.Console
 {
     using MetaMind.Engine.Components.Fonts;
-    using MetaMind.Engine.Guis.Consoles.Commands;
+    using MetaMind.Engine.Guis.Console.Commands;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;

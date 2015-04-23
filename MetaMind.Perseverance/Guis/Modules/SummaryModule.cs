@@ -1,30 +1,63 @@
 namespace MetaMind.Perseverance.Guis.Modules
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using MetaMind.Engine;
+    using MetaMind.Engine.Components.Events;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Services;
     using MetaMind.Perseverance.Concepts;
     using MetaMind.Perseverance.Concepts.Cognitions;
     using MetaMind.Perseverance.Extensions;
+    using MetaMind.Perseverance.Guis.Modules.Summary;
+    using MetaMind.Perseverance.Screens;
+    using MetaMind.Perseverance.Sessions;
 
     using Microsoft.Xna.Framework;
 
-    using Primtives2D;
-
-    public class SummaryModule : Module<SummaryModuleSettings>
+    namespace Summary
     {
-        private ICognition       cognition;
-        private ISynchronization synchronization;
+        public class SleepStoppedListener : Listener
+        {
+            public SleepStoppedListener()
+            {
+                this.RegisteredEvents.Add((int)SessionEventType.SleepStopped);
+            }
 
-        private SummaryModuleSleepStoppedEventListener sleepStoppedEventListener;
+            public override bool HandleEvent(IEvent @event)
+            {
+                var screenManager = this.GameInterop.Screen;
 
+                var summary = screenManager.Screens.First(screen => screen is SummaryScreen);
+                if (summary != null)
+                {
+                    summary.Exit();
+                }
+
+                screenManager.AddScreen(new MotivationScreen());
+
+                return true;
+            }
+        }
+    }
+
+    public class SummaryModule : Module<SummarySettings>
+    {
+        private ICognition       Cognition;
+        private ISynchronization Synchronization;
+
+        private List<GameVisualEntity> entities;
         #region Constructors
 
-        public SummaryModule(ICognition cognition, SummaryModuleSettings settings)
+        public SummaryModule(ICognition cognition, SummarySettings settings)
             : base(settings)
         {
-            this.cognition       = cognition;
-            this.synchronization = cognition.Synchronization;
+            this.Cognition       = cognition;
+            this.Synchronization = cognition.Synchronization;
+
+            this.entities = new List<GameVisualEntity>();
         }
 
         #endregion Constructors
@@ -33,123 +66,105 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         public override void LoadContent(IGameInteropService interop)
         {
-            if (this.sleepStoppedEventListener == null)
-            {
-                this.sleepStoppedEventListener = new SummaryModuleSleepStoppedEventListener();
-            }
+            var factory = new SummaryFactory(this.Settings);
 
-            interop.Event.AddListener(this.sleepStoppedEventListener);
-        }
+            this.entities.Add(
+                new SummaryTitle(
+                    () => this.Settings.TitleFont,
+                    () => "Summary",
+                    () => this.Settings.TitleCenter,
+                    () => this.Settings.TitleColor,
+                    () => this.Settings.TitleSize));
 
-        public override void UnloadContent(IGameInteropService interop)
-        {
-            if (this.sleepStoppedEventListener != null)
-            {
-                interop.Event.RemoveListener(this.sleepStoppedEventListener);
-            }
+            // Daily statistics
+            this.entities.Add(
+                factory.CreateEntry(
+                    1,
+                    "Hours in Synchronization:",
+                    () => this.Synchronization.SynchronizedHourYesterday.ToSummary(),
+                    Color.White));
 
-            this.sleepStoppedEventListener = null;
+            this.entities.Add(
+                factory.CreateEntry(
+                    3,
+                    "Hours in Good Profession:",
+                    () => (-this.Settings.HourOfGood).ToSummary(),
+                    Color.Red));
+            this.entities.Add(
+                factory.CreateEntry(
+                    4,
+                    "Hours in Lofty Profession:",
+                    () => (-this.Settings.HourOfLofty).ToSummary(),
+                    Color.Red));
+
+            this.entities.Add(factory.CreateSplit(5, Color.Red));
+
+            this.entities.Add(
+                factory.CreateEntry(
+                    () => 6,
+                    () => "",
+                    () => (this.Synchronization.SynchronizedHourYesterday - this.Settings.HourOfGood - this.Settings.HourOfLofty).ToSummary(),
+                    () => (this.Synchronization.SynchronizedHourYesterday - this.Settings.HourOfGood - this.Settings.HourOfLofty >= 0 ? Color.White : Color.Red)));
+
+            // Weekly statistics
+            this.entities.Add(
+                factory.CreateEntry(
+                    8,
+                    "Hours in Synchronization In Recent 7 Days:",
+                    () => ((int)this.Synchronization.SynchronizedTimeRecentWeek.TotalHours).ToSummary(),
+                    Color.White));
+
+            this.entities.Add(
+                factory.CreateEntry(
+                    10,
+                    "Len Bosack's Records in 7 Days:",
+                    () => (-this.Settings.HourOfWorldRecord).ToSummary(),
+                    Color.Red));
+
+            this.entities.Add(factory.CreateSplit(11, Color.Red));
+
+            this.entities.Add(
+                factory.CreateEntry(
+                    () => 12,
+                    () => "",
+                    () => ((int)this.Synchronization.SynchronizedTimeRecentWeek.TotalHours - this.Settings.HourOfWorldRecord).ToSummary(),
+                    () => ((int)this.Synchronization.SynchronizedTimeRecentWeek.TotalHours - this.Settings.HourOfWorldRecord >= 0
+                         ? Color.Gold
+                         : Color.Red)));
+
+            this.Listeners.Add(new SleepStoppedListener());
+
+            base.LoadContent(interop);
         }
 
         #endregion
 
         #region Update
 
-        /// <summary>
-        /// A must implementation for widget compatible module.
-        /// </summary>
-        /// <param name="input"></param>
-        /// <param name="time"></param>
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            if (input.State.Keyboard.IsActionTriggered(KeyboardActions.ForceReset))
+            var keyboard = input.State.Keyboard;
+
+            if (keyboard.IsActionTriggered(KeyboardActions.Awaken))
             {
-                this.synchronization.ResetTomorrow();
+                this.Cognition.Consciousness.Awaken();
+            }
+
+            if (keyboard.IsActionTriggered(KeyboardActions.Sleep))
+            {
+                this.Cognition.Consciousness.Sleep();
             }
         }
-
-        public override void Update(GameTime time)
-        {
-        }
-
         #endregion
 
         #region Draw
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            if (this.cognition.Awake)
+            foreach (var entity in this.entities)
             {
-                return;
+                entity.Draw(graphics, time, alpha);
             }
-            
-            this.DrawSummaryTitle(graphics, Color.White, "Summary");
-            
-            // daily statistics
-            this.DrawSummaryEntry(graphics, 1, Color.White, "Hours in Synchronization:" , this.synchronization.SynchronizedHourYesterday.ToSummary());
-            this.DrawSummaryBlank(graphics, 2);
-            this.DrawSummaryEntry(graphics, 3, Color.Red,   "Hours in Good Profession:" , -this.Settings.GoodPrefessionHour);
-            this.DrawSummaryEntry(graphics, 4, Color.Red,   "Hours in Lofty Profession:", -this.Settings.LoftyProfessionHour);
-            this.DrawSummarySplit(graphics, 5, Color.Red);
-
-            var dailyLeftHour = this.synchronization.SynchronizedHourYesterday - this.Settings.GoodPrefessionHour - this.Settings.LoftyProfessionHour;
-            this.DrawSummaryResult(graphics, 6, Color.White, Color.Red, string.Empty, dailyLeftHour);
-            
-            this.DrawSummaryBlank(graphics, 7);
-
-            // weekly statistics
-            var weeklyHour = (int)this.synchronization.SynchronizedTimeRecentWeek.TotalHours;
-            var weeklyLeftHour = weeklyHour - this.Settings.WorldRecordHour;
-
-            this.DrawSummaryEntry(graphics, 8, Color.White, "Hours in Synchronization In Recent 7 Days:", weeklyHour.ToSummary());
-            this.DrawSummaryBlank(graphics, 9);
-            this.DrawSummaryEntry(graphics, 10, Color.Red,  "Len Bosack's Records in 7 Days:", -this.Settings.WorldRecordHour);
-            this.DrawSummarySplit(graphics, 11, Color.Red);
-
-            this.DrawSummaryResult(graphics, 12, Color.Gold, Color.Red, string.Empty, weeklyLeftHour);
-        }
-
-        private void DrawSummaryBlank(IGameGraphicsService graphics, int line)
-        {
-            this.DrawSummaryEntry(graphics, line, Color.White, string.Empty, string.Empty);
-        }
-
-        private void DrawSummaryEntry(IGameGraphicsService graphics, int line, Color color, string caption, string presentation)
-        {
-            var captionPosition = new Vector2(graphics.Settings.Width / 2f - 300, 150 + line * Settings.LineHeight);
-            var contentPosition = new Vector2(graphics.Settings.Width / 2f + 260, 150 + line * Settings.LineHeight);
-
-            graphics.String.DrawString(this.Settings.EntityFont, caption     , captionPosition, color, this.Settings.EntitySize);
-            graphics.String.DrawString(this.Settings.EntityFont, presentation, contentPosition, color, this.Settings.EntitySize);
-        }
-
-        private void DrawSummaryEntry(IGameGraphicsService graphics, int line, Color color, string caption, object presentedData)
-        {
-            var captionPosition = new Vector2(graphics.Settings.Width / 2f - 300, 150 + line * Settings.LineHeight);
-            var contentPosition = new Vector2(graphics.Settings.Width / 2f + 260, 150 + line * Settings.LineHeight);
-            var contentString   = string.Format("{0}", presentedData);
-
-            graphics.String.DrawString(this.Settings.EntityFont, caption      , captionPosition, color, this.Settings.EntitySize);
-            graphics.String.DrawString(this.Settings.EntityFont, contentString, contentPosition, color, this.Settings.EntitySize);
-        }
-
-        private void DrawSummaryResult(IGameGraphicsService graphics, int line, Color goodColor, Color badColor, string caption, int computation)
-        {
-            this.DrawSummaryEntry(graphics, line, computation >= 0 ? goodColor : badColor, caption, computation.ToSummary());
-        }
-
-        private void DrawSummarySplit(IGameGraphicsService graphics, int line, Color color)
-        {
-            var splitStart = new Vector2(graphics.Settings.Width / 2f - 300, 150 + line * Settings.LineHeight + Settings.LineHeight / 2);
-            var splitEnd   = new Vector2(graphics.Settings.Width / 2f + 300, 150 + line * Settings.LineHeight + Settings.LineHeight / 2);
-
-            var spriteBatch = graphics.SpriteBatch;
-            spriteBatch.DrawLine(splitStart, splitEnd, color, this.Settings.EntitySize);
-        }
-
-        private void DrawSummaryTitle(IGameGraphicsService graphics, Color color, string title)
-        {
-            graphics.String.DrawStringCenteredHV(this.Settings.TitleFont, title, this.Settings.TitleCenter, color, this.Settings.TitleSize);
         }
 
         #endregion 

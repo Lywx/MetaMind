@@ -11,11 +11,13 @@
 
     public class SummaryScreen : GameScreen
     {
-        // TODO: Dependenency Injection
         private IModule summary;
 
         public SummaryScreen()
         {
+            // Has to be a popup screen, or it can block the background
+            this.IsPopup = true;
+            
             this.TransitionOnTime = TimeSpan.FromSeconds(0.5);
             this.TransitionOffTime = TimeSpan.FromSeconds(0.5);
         }
@@ -33,8 +35,8 @@
 
         public override void LoadContent(IGameInteropService interop)
         {
-            this.summary = new SummaryModule(Perseverance.Session.Cognition, new SummaryModuleSettings());
-            this.summary.Load(interop);
+            this.summary = new SummaryModule(Perseverance.Session.Cognition, new SummarySettings());
+            this.summary.LoadContent(interop);
         }
 
         public override void UnloadContent(IGameInteropService interop)

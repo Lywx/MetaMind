@@ -3,7 +3,7 @@ namespace MetaMind.Engine.Components
     using System;
 
     using MetaMind.Engine.Components.Fonts;
-    using MetaMind.Engine.Guis.Consoles;
+    using MetaMind.Engine.Guis.Console;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
@@ -18,7 +18,7 @@ namespace MetaMind.Engine.Components
 
         public ContentManager Content { get; private set; }
 
-        public FolderManager Folder { get; private set; }
+        public FileManager File { get; private set; }
 
         public IGameEngine Engine { get; private set; }
 
@@ -54,7 +54,7 @@ namespace MetaMind.Engine.Components
             this.Screen  = new ScreenManager(engine, new ScreenSettings(), engine.Graphics.SpriteBatch, 3);
 
             this.Content = engine.Content;
-            this.Folder  = new FolderManager();
+            this.File  = new FileManager();
 
             this.Game = new GameManager(engine);
         }

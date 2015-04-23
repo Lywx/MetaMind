@@ -46,11 +46,11 @@ namespace MetaMind.Engine.Services
             }
         }
         
-        public IStringDrawer String
+        public IStringDrawer StringDrawer
         {
             get
             {
-                return this.graphics.String;
+                return this.graphics.StringDrawer;
             }
         }
     }

@@ -20,7 +20,7 @@ namespace MetaMind.Acutance.Settings
         public static SearcherParams SearchParams(List<string> fileNames)
         {
             return new SearcherParams(
-                searchDir:             FolderManager.DataFolderPath,
+                searchDir:             FileManager.DataFolderPath,
                 includeSubDirsChecked: true,
                 fileNames:             fileNames,
                 newerThanChecked:      false,

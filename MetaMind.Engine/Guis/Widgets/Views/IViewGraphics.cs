@@ -1,6 +1,8 @@
 ﻿namespace MetaMind.Engine.Guis.Widgets.Views
 {
-    public interface IViewGraphics : Engine.IDrawable, Engine.IUpdateable
+    using Microsoft.Xna.Framework;
+
+    public interface IViewGraphics : Engine.IDrawable, IUpdateable
     {
     }
 }

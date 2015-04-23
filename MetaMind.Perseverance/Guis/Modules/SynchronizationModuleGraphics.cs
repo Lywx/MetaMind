@@ -223,7 +223,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             this.accelerationInfoSubfix.Draw(graphics, time, alpha);
 
             this.accumulationInfo.Draw(graphics, time, alpha);
-            
+
             this.DrawDailyRateInfo();
             
             this.messageInfo.Draw(graphics, time, alpha);

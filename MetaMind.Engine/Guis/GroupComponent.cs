@@ -1,5 +1,9 @@
 namespace MetaMind.Engine.Guis
 {
+    using Microsoft.Xna.Framework;
+
+    using IDrawable = MetaMind.Engine.IDrawable;
+
     public class GroupComponent<TGroup, TGroupSettings, TGroupControl> : GameControllableEntity, IUpdateable, IDrawable, IInputable
         where                   TGroup        : Group<TGroupSettings>
         where                   TGroupControl : GroupControl<TGroup, TGroupSettings, TGroupControl>

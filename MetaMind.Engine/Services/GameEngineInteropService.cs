@@ -8,7 +8,7 @@
 namespace MetaMind.Engine.Services
 {
     using MetaMind.Engine.Components;
-    using MetaMind.Engine.Guis.Consoles;
+    using MetaMind.Engine.Guis.Console;
 
     using Microsoft.Xna.Framework.Content;
 
@@ -52,11 +52,11 @@ namespace MetaMind.Engine.Services
             }
         }
 
-        public FolderManager Folder
+        public FileManager File
         {
             get
             {
-                return this.interop.Folder;
+                return this.interop.File;
             }
         }
 

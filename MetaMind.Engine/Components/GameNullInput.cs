@@ -4,7 +4,7 @@
 
     using Microsoft.Xna.Framework;
 
-    internal class NullGameInput : IGameInput
+    internal class GameNullInput : IGameInput
     {
         public IInputEvent Event { get; private set; }
 

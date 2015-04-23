@@ -2,8 +2,6 @@ namespace MetaMind.Perseverance.Guis.Widgets
 {
     using System;
 
-    using MetaMind.Engine;
-    using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Elements;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Services;

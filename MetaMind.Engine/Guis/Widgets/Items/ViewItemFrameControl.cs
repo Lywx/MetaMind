@@ -12,8 +12,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
     using Microsoft.Xna.Framework;
 
-    using IUpdateable = MetaMind.Engine.IUpdateable;
-
     public interface IViewItemFrameControl : IUpdateable, IInputable
     {
     }

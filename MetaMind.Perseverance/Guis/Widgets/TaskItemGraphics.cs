@@ -25,10 +25,10 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         #region Structure Position
 
-        protected override Vector2 IdCenter
-        {
-            get { return ExtPoint.ToVector2(this.ItemControl.IdFrame.Center); }
-        }
+        //protected override Vector2 IdCenterPosition()
+        //{
+        //    get { return ExtPoint.ToVector2(this.ItemControl.IdFrame.Center); }
+        //}
 
         private Vector2 ExperienceCenter
         {
@@ -105,16 +105,16 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         private void DrawExperience(IGameGraphicsService graphics, byte alpha)
         {
-            graphics.StringDrawer.DrawStringCenteredHV(
-                this.ItemSettings.IdFont,
-                string.Format(
-                    "{0} : {1} : {2}",
-                    this.ItemData.Experience.Duration.TotalHours.ToString("F0"),
-                    this.ItemData.Experience.Duration.Minutes.ToString(),
-                    this.ItemData.Experience.Duration.Seconds.ToString()),
-                this.ExperienceCenter,
-                ExtColor.MakeTransparent(this.ItemSettings.ExperienceColor, alpha),
-                this.ItemSettings.ExperienceSize);
+            //graphics.String.DrawStringCenteredHV(
+            //    this.ItemSettings.IdFont,
+            //    string.Format(
+            //        "{0} : {1} : {2}",
+            //        this.ItemData.Experience.Duration.TotalHours.ToString("F0"),
+            //        this.ItemData.Experience.Duration.Minutes.ToString(),
+            //        this.ItemData.Experience.Duration.Seconds.ToString()),
+            //    this.ExperienceCenter,
+            //    ExtColor.MakeTransparent(this.ItemSettings.ExperienceColor, alpha),
+            //    this.ItemSettings.ExperienceSize);
         }
 
         private void DrawExperienceFrame(IGameGraphicsService graphics, byte alpha)
@@ -145,29 +145,29 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         private void DrawName(IGameGraphicsService graphics, byte alpha)
         {
-            if (this.Item.IsEnabled(ItemState.Item_Pending))
-            {
-                graphics.StringDrawer.DrawString(
-                    ItemSettings.HelpFont,
-                    HelpInformation,
-                    this.HelpLocation,
-                    ExtColor.MakeTransparent(this.ItemSettings.HelpColor, alpha),
-                    this.ItemSettings.HelpSize);
-            }
-            else
-            {
-                string text = graphics.StringDrawer.CropMonospacedString(
-                    ItemData.Name,
-                    ItemSettings.NameSize,
-                    ItemSettings.NameFrameSize.X - ItemSettings.NameXLMargin * 2);
+            //if (this.Item.IsEnabled(ItemState.Item_Pending))
+            //{
+            //    graphics.StringDrawer.DrawString(
+            //        ItemSettings.HelpFont,
+            //        HelpInformation,
+            //        this.HelpLocation,
+            //        ExtColor.MakeTransparent(this.ItemSettings.HelpColor, alpha),
+            //        this.ItemSettings.HelpSize);
+            //}
+            //else
+            //{
+            //    string text = graphics.StringDrawer.CropMonospacedString(
+            //        ItemData.Name,
+            //        ItemSettings.NameSize,
+            //        ItemSettings.NameFrameSize.X - ItemSettings.NameXLMargin * 2);
 
-                graphics.StringDrawer.DrawMonospacedString(
-                    this.ItemSettings.NameFont,
-                    text,
-                    this.NameLocation,
-                    ExtColor.MakeTransparent(this.ItemSettings.NameColor, alpha),
-                    this.ItemSettings.NameSize);
-            }
+            //    graphics.StringDrawer.DrawMonospacedString(
+            //        this.ItemSettings.NameFont,
+            //        text,
+            //        this.NameLocation,
+            //        ExtColor.MakeTransparent(this.ItemSettings.NameColor, alpha),
+            //        this.ItemSettings.NameSize);
+            //}
         }
 
         private void DrawProgress(IGameGraphicsService graphics, byte alpha)
@@ -180,12 +180,12 @@ namespace MetaMind.Perseverance.Guis.Widgets
                 graphics.SpriteBatch,
                 progressBar,
                 ExtColor.MakeTransparent(this.ItemSettings.ProgressBarColor, alpha));
-            graphics.StringDrawer.DrawStringCenteredHV(
-                this.ItemSettings.ProgressFont,
-                string.Format("{0} / {1} = {2}", this.ItemData.Done, this.ItemData.Load, progressRatio.ToString("F1")),
-                this.ProgressLocation,
-                ExtColor.MakeTransparent(this.ItemSettings.ProgressColor, alpha),
-                this.ItemSettings.ProgressSize);
+            //graphics.StringDrawer.DrawStringCenteredHV(
+            //    this.ItemSettings.ProgressFont,
+            //    string.Format("{0} / {1} = {2}", this.ItemData.Done, this.ItemData.Load, progressRatio.ToString("F1")),
+            //    this.ProgressLocation,
+            //    ExtColor.MakeTransparent(this.ItemSettings.ProgressColor, alpha),
+            //    this.ItemSettings.ProgressSize);
         }
 
         private void DrawProgressFrame(IGameGraphicsService graphics, byte alpha)

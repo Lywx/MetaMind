@@ -4,6 +4,8 @@ namespace MetaMind.Engine
 
     using MetaMind.Engine.Services;
 
+    using Microsoft.Xna.Framework;
+
     public interface IGameEntity : IUpdateable, IDisposable
     {
         void LoadContent(IGameInteropService interop);

@@ -11,12 +11,12 @@ namespace MetaMind.Perseverance.Guis.Modules
         {
         }
 
-        public override void Load(IGameInteropService interop)
+        public override void LoadContent(IGameInteropService interop)
         {
             
         }
 
-        public override void Unload(IGameInteropService interop)
+        public override void UnloadContent(IGameInteropService interop)
         {
 
         }

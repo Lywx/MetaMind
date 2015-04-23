@@ -6,7 +6,7 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    internal class NullGameGraphics : IGameGraphics
+    internal class GameNullGraphics : IGameGraphics
     {
         public GraphicsManager Manager { get; private set; }
 
@@ -16,7 +16,7 @@
 
         public SpriteBatch SpriteBatch { get; private set; }
 
-        public IStringDrawer String { get; private set; }
+        public IStringDrawer StringDrawer { get; private set; }
 
         public void Initialize()
         {

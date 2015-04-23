@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Engine.Guis.Consoles.Commands
+﻿namespace MetaMind.Engine.Guis.Console.Commands
 {
     using System.Linq;
     using System.Text;
@@ -34,11 +34,13 @@
                 return "ERROR: Invalid command '" + arguments[0] + "'";
             }
 
-            var help = new StringBuilder();
             GameConsoleOptions.Commands.Sort(new CommandComparer());
+
+            var pad  = GameConsoleOptions.Commands.Max(command => command.Name.Length);
+            var help = new StringBuilder();
             foreach (var command in GameConsoleOptions.Commands)
             {
-                help.Append(command.Name.PadRight(10) + " - " + string.Format("{0}\n", command.Description));
+                help.Append(command.Name.PadRight(pad) + " - " + string.Format("{0}\n", command.Description));
             }
 
             return help.ToString();
