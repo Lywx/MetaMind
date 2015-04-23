@@ -1,19 +1,23 @@
 ﻿namespace MetaMind.Perseverance.Guis.Modules
 {
-    using MetaMind.Engine;
+    using System;
+
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Services;
     using MetaMind.Perseverance.Concepts;
     using MetaMind.Perseverance.Concepts.Cognitions;
     using MetaMind.Perseverance.Concepts.Tasks;
+    using MetaMind.Perseverance.Guis.Modules.Synchronization;
 
     using Microsoft.Xna.Framework;
 
     public class SynchronizationModule : Module<SynchronizationModuleSettings>
     {
-        public ICognition Cognition { get; set; }
+        public IConsciousness Consciousness { get; set; }
+
         public ISynchronization Synchronization { get; set; }
+
 
         private readonly SynchronizationMonitor monitor;
 
@@ -25,11 +29,24 @@
 
         #region Constructors
 
-        public SynchronizationModule(Cognition cognition, SynchronizationModuleSettings settings)
+        public SynchronizationModule(IConsciousness consciousness, ISynchronization synchronization, SynchronizationModuleSettings settings)
             : base(settings)
         {
-            this.Cognition       = cognition;
-            this.Synchronization = cognition.Synchronization;
+            if (consciousness == null)
+            {
+                throw new ArgumentNullException("consciousness");
+            }
+
+            if (synchronization == null)
+            {
+                throw new ArgumentNullException("synchronization");
+            }
+
+            this.Consciousness       = consciousness;
+            this.Synchronization = synchronization;
+
+            this.Control = new SynchronizationModuleControl(this);
+            this.Graphics = new SynchronizationModuleGraphics(this, this.Synchronization);
 
             // best close the mouse listener
             // which may casue severe mouse performance issues
@@ -37,6 +54,7 @@
         }
 
         #endregion Constructors
+
         #region Load and Unload
 
         public override void LoadContent(IGameInteropService interop)
@@ -102,13 +120,13 @@
             if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Awaken))
             {
                 // TODO: integrate
-                this.Cognition.Consciousness.Awaken();
+                this.Consciousness.Awaken();
                 this.Synchronization.ResetToday();
             }
 
             if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Sleep))
             {
-                this.Cognition.Consciousness.Sleep();
+                this.Consciousness.Sleep();
             }
         }
 

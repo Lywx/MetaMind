@@ -24,29 +24,29 @@ namespace MetaMind.Perseverance.Guis.Widgets
             : base(item)
         {
             this.symbol = new MotivationItemSymbolGraphics(item);
-            this.task = new MotivationItemTaskGraphics(item);
+            this.task   = new MotivationItemTaskGraphics(item);
         }
 
         #region Graphics Data
 
-        protected override Vector2 IdCenterPosition()
-        {
-            get
-            {
-                return new Vector2(ItemControl.RootFrame.Rectangle.Center.X, ItemControl.RootFrame.Rectangle.Top - 15);
-            }
-        }
+        //protected override Vector2 IdCenterPosition()
+        //{
+        //    get
+        //    {
+        //        return new Vector2(ItemControl.RootFrame.Rectangle.Center.X, ItemControl.RootFrame.Rectangle.Top - 15);
+        //    }
+        //}
 
-        private string NameCropped
-        {
-            get
-            {
-                return FontManager.CropMonospacedString(
-                    ItemData.Name,
-                    ItemSettings.NameSize,
-                    ViewSettings.PointMargin.X * 6);
-            }
-        }
+        //private string NameCropped
+        //{
+        //    get
+        //    {
+        //        return FontManager.CropMonospacedString(
+        //            ItemData.Name,
+        //            ItemSettings.NameSize,
+        //            ViewSettings.PointMargin.X * 6);
+        //    }
+        //}
 
         private string HelpInformation
         {
@@ -116,24 +116,24 @@ namespace MetaMind.Perseverance.Guis.Widgets
                 return;
             }
 
-            if (Item.IsEnabled(ItemState.Item_Pending))
-            {
-                FontManager.DrawStringCenteredHV(
-                    ItemSettings.HelpFont,
-                    this.HelpInformation,
-                    this.HelpLocation,
-                    ExtColor.MakeTransparent(ItemSettings.HelpColor, alpha),
-                    ItemSettings.HelpSize);
-            }
-            else
-            {
-                FontManager.DrawStringCenteredHV(
-                    ItemSettings.NameFont,
-                    this.NameCropped,
-                    this.NameLocation,
-                    ExtColor.MakeTransparent(ItemSettings.NameColor, alpha),
-                    ItemSettings.NameSize);
-            }
+            //if (Item.IsEnabled(ItemState.Item_Pending))
+            //{
+            //    FontManager.DrawStringCenteredHV(
+            //        ItemSettings.HelpFont,
+            //        this.HelpInformation,
+            //        this.HelpLocation,
+            //        ExtColor.MakeTransparent(ItemSettings.HelpColor, alpha),
+            //        ItemSettings.HelpSize);
+            //}
+            //else
+            //{
+            //    FontManager.DrawStringCenteredHV(
+            //        ItemSettings.NameFont,
+            //        this.NameCropped,
+            //        this.NameLocation,
+            //        ExtColor.MakeTransparent(ItemSettings.NameColor, alpha),
+            //        ItemSettings.NameSize);
+            //}
         }
 
         #endregion

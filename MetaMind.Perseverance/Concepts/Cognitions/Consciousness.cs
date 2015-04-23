@@ -28,7 +28,7 @@
         public DateTime LastSleepStartTime { get; set; }
 
         [DataMember]
-        private ConsciousnessState State { get; set; }
+        public IConsciousnessState State { get; set; }
 
         #endregion Consciousness Data
 

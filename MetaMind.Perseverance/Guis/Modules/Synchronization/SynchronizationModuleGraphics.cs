@@ -1,4 +1,4 @@
-namespace MetaMind.Perseverance.Guis.Modules
+namespace MetaMind.Perseverance.Guis.Modules.Synchronization
 {
     using System;
 
@@ -34,16 +34,19 @@ namespace MetaMind.Perseverance.Guis.Modules
         private Label accelerationInfoSubfix;
         private Label accelerationInfoPrefix;
 
-        private ISynchronization synchronization;
-
-        public SynchronizationModuleGraphics(SynchronizationModule module)
+        public SynchronizationModuleGraphics(SynchronizationModule module, ISynchronization synchronization)
             : base(module)
         {
-            this.synchronization = this.Module.Synchronization;
+            if (synchronization == null)
+            {
+                throw new ArgumentNullException("synchronization");
+            }
+
+            this.Synchronization = synchronization;
 
             this.stateInfo = new Label(
                 () => Font.UiStatistics,
-                () => this.synchronization.Enabled ? this.StateInfoTrue : this.StateInfoFalse,
+                () => this.Synchronization.Enabled ? this.StateInfoTrue : this.StateInfoFalse,
                 () => this.StateInfoCenter,
                 () => Color.White,
                 () => 1.1f,
@@ -53,7 +56,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
             this.statusInfo = new Label(
                 () => Font.UiStatistics,
-                () => string.Format("Level {0}: {1}", this.synchronization.Level, this.synchronization.State),
+                () => string.Format("Level {0}: {1}", this.Synchronization.Level, this.Synchronization.State),
                 () => this.StatusInfoCenter,
                 () => Color.White,
                 () => 0.7f,
@@ -63,7 +66,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
             this.accumulationInfo = new Label(
                 () => Font.UiStatistics,
-                () => string.Format("{0}", this.synchronization.ElapsedTimeSinceTransition.ToString("hh':'mm':'ss")),
+                () => string.Format("{0}", this.Synchronization.ElapsedTimeSinceTransition.ToString("hh':'mm':'ss")),
                 () => this.AccumulationSubfixCenter,
                 () => Color.White,
                 () => 0.7f,
@@ -83,7 +86,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
             this.accelerationInfoSubfix = new Label(
                 () => Font.UiStatistics,
-                () => string.Format("{0}", this.synchronization.Acceleration.ToString("F1")),
+                () => string.Format("{0}", this.Synchronization.Acceleration.ToString("F1")),
                 () => this.AccelerationSubfixCenter,
                 () => Color.White,
                 () => 2.0f,
@@ -91,19 +94,25 @@ namespace MetaMind.Perseverance.Guis.Modules
                 StringVAlign.Center,
                 false);
 
-            Func<byte> alpha  = () => (byte)(255 * Math.Abs(Math.Sin(time.TotalGameTime.TotalSeconds * 3)));
-            Func<bool> better = () => this.synchronization.SynchronizedHourToday >= this.synchronization.SynchronizedHourYesterday;
+            //Func<byte> alpha  = () => (byte)(255 * Math.Abs(Math.Sin(time.TotalGameTime.TotalSeconds * 3)));
+            //Func<bool> better = () => this.Synchronization.SynchronizedHourToday >= this.Synchronization.SynchronizedHourYesterday;
 
-            this.messageInfo = new Label(
-                () => Font.UiStatistics,
-                () => better() ? this.MessageInfoIncrease : this.MessageInfoDecrease,
-                () => this.MessageCenter,
-                () => (better() ? Palette.LightBlue : Palette.LightPink).MakeTransparent(alpha()),
-                () => 0.7f,
-                StringHAlign.Center,
-                StringVAlign.Center,
-                false);
+            //this.messageInfo = new Label(
+            //    () => Font.UiStatistics,
+            //    () => better() ? this.MessageInfoIncrease : this.MessageInfoDecrease,
+            //    () => this.MessageCenter,
+            //    () => (better() ? Palette.LightBlue : Palette.LightPink).MakeTransparent(alpha()),
+            //    () => 0.7f,
+            //    StringHAlign.Center,
+            //    StringVAlign.Center,
+            //    false);
         }
+
+        #region Dependency
+
+        private ISynchronization Synchronization { get; set; }
+
+        #endregion
 
         private Vector2 AccelerationPrefixCenter
         {
@@ -172,7 +181,7 @@ namespace MetaMind.Perseverance.Guis.Modules
                 return new Rectangle(
                     this.Settings.BarFrameXC - this.Settings.BarFrameSize.X / 2,
                     this.Settings.BarFrameYC - this.Settings.BarFrameSize.Y / 2,
-                    (int)(synchronization.ProgressPercent * this.Settings.BarFrameSize.X),
+                    (int)(this.Synchronization.Progress * this.Settings.BarFrameSize.X),
                     this.Settings.BarFrameSize.Y);
             }
         }
@@ -226,53 +235,50 @@ namespace MetaMind.Perseverance.Guis.Modules
 
             this.DrawDailyRateInfo();
             
-            this.messageInfo.Draw(graphics, time, alpha);
+            //this.messageInfo.Draw(graphics, time, alpha);
         }
 
         private void DrawDailyRateInfo()
         {
-            var awake = this.cognition.Consciousness as ConsciousnessAwake;
-            if (awake != null)
-            {
-                var awakeTime = awake.AwakeSpan;
+            //if (this.Module.Cognition.Consciousness.IsAwake)
+            //{
+            //    var syncRate = this.Synchronization.PotentialSynchronizedTimeToday.TotalSeconds / awake.AwakeSpan.TotalSeconds;
+            //    var syncRateText = (syncRate * 100).ToString("F0");
 
-                var synchronizedTime = synchronization.SynchronizedTimeToday
-                                       + (synchronization.Enabled
-                                              ? synchronization.ElapsedTimeSinceTransition
-                                              : TimeSpan.Zero);
+            //    // draw rate digits
+            //    var stringDrawer = GameGraphics.StringDrawer;
+            //    stringDrawer.DrawString(
+            //        this.Settings.SynchronizationRateFont,
+            //        syncRateText,
+            //        this.DailySyncHourPrefixCenter,
+            //        this.Settings.SynchronizationRateColor,
+            //        this.Settings.SynchronizationRateSize,
+            //        StringHAlign.Center,
+            //        StringVAlign.Center);
 
-                var syncRate = synchronizedTime.TotalSeconds / awakeTime.TotalSeconds;
-                var syncRateText = (syncRate * 100).ToString("F0");
+            //    const int    SymbolMargin = 10;
+            //    const string Symbol = "%";
 
-                // draw rate digits
-                FontManager.DrawStringCenteredHV(
-                    this.Settings.SynchronizationRateFont,
-                    syncRateText,
-                    this.DailySyncHourPrefixCenter,
-                    this.Settings.SynchronizationRateColor,
-                    this.Settings.SynchronizationRateSize);
+            //    var syncRateTextWidth = this.Settings.SynchronizationRateFont.MeasureString(syncRateText, this.Settings.SynchronizationRateSize).X;
+            //    var syncRateTextMargin = new Vector2(syncRateTextWidth / 2 * this.Settings.SynchronizationRateSize + SymbolMargin, 0);
 
-                const int    SymbolMargin = 10;
-                const string Symbol = "%";
-
-                var syncRateTextWidth = FontManager.MeasureString(this.Settings.SynchronizationRateFont, syncRateText, this.Settings.SynchronizationRateSize).X;
-                var syncRateTextMargin = new Vector2(syncRateTextWidth / 2 * this.Settings.SynchronizationRateSize + SymbolMargin, 0);
-
-                // draw % after rate digits
-                FontManager.DrawStringCenteredHV(
-                    this.Settings.SynchronizationRateFont,
-                    Symbol,
-                    this.DailySyncHourPrefixCenter + syncRateTextMargin,
-                    this.Settings.SynchronizationRateColor,
-                    1f);
-            }
+            //    // draw % after rate digits
+            //    stringDrawer.DrawString(
+            //        this.Settings.SynchronizationRateFont,
+            //        Symbol,
+            //        this.DailySyncHourPrefixCenter + syncRateTextMargin,
+            //        this.Settings.SynchronizationRateColor,
+            //        1f,
+            //        StringHAlign.Center,
+            //        StringVAlign.Center);
+            //}
         }
 
         private void DrawDot()
         {
             // left side content
             var barFrameAscendColor = Palette.LightBlue;
-            for (var i = 0; i < synchronization.SynchronizedHourToday; ++i)
+            for (var i = 0; i < this.Synchronization.SynchronizedHourToday; ++i)
             {
                 Primitives2D.FillRectangle(
                     this.GameGraphics.SpriteBatch,
@@ -281,7 +287,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             }
 
             var barFrameDescendColor = Palette.LightPink;
-            for (var i = 0; i < this.synchronization.SynchronizedHourYesterday; ++i)
+            for (var i = 0; i < this.Synchronization.SynchronizedHourYesterday; ++i)
             {
                 Primitives2D.FillRectangle(
                     this.GameGraphics.SpriteBatch,
@@ -290,7 +296,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             }
 
             // right side content
-            for (var i = 0; i < this.synchronization.SynchronizedHourToday; ++i)
+            for (var i = 0; i < this.Synchronization.SynchronizedHourToday; ++i)
             {
                 Primitives2D.FillRectangle(
                     this.GameGraphics.SpriteBatch,
@@ -298,7 +304,7 @@ namespace MetaMind.Perseverance.Guis.Modules
                     barFrameAscendColor);
             }
 
-            for (var i = 0; i < this.synchronization.SynchronizedHourYesterday; ++i)
+            for (var i = 0; i < this.Synchronization.SynchronizedHourYesterday; ++i)
             {
                 Primitives2D.FillRectangle(
                     this.GameGraphics.SpriteBatch,
@@ -309,8 +315,10 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         private void DrawDotFrame()
         {
+            var stringDrawer = this.GameGraphics.StringDrawer;
+
             // left side frame
-            for (var i = 0; i < synchronization.SynchronizedHourMax; ++i)
+            for (var i = 0; i < this.Synchronization.SynchronizedHourMax; ++i)
             {
                 var dotFrame = this.SynchronizationDotRectangle(i, true);
 
@@ -319,16 +327,18 @@ namespace MetaMind.Perseverance.Guis.Modules
                     dotFrame,
                     this.Settings.SynchronizationDotFrameColor);
 
-                FontManager.DrawStringCenteredHV(
+                stringDrawer.DrawString(
                     this.Settings.SynchronizationRateFont,
                     ((i + 1) % 10).ToString("F0"),
                     this.SynchronizationDotTextCenter(dotFrame),
                     this.Settings.SynchronizationRateColor,
-                    0.7f);
+                    0.7f,
+                    StringHAlign.Center,
+                    StringVAlign.Center);
             }
 
             // right side frame
-            for (var i = 0; i < synchronization.SynchronizedHourMax; ++i)
+            for (var i = 0; i < this.Synchronization.SynchronizedHourMax; ++i)
             {
                 var dotFrame = this.SynchronizationDotRectangle(i, false);
 
@@ -337,7 +347,7 @@ namespace MetaMind.Perseverance.Guis.Modules
                     dotFrame,
                     this.Settings.SynchronizationDotFrameColor);
 
-                FontManager.DrawStringCenteredHV(
+                stringDrawer.DrawString(
                     this.Settings.SynchronizationRateFont,
                     ((i + 1) % 10).ToString("F0"),
                     this.SynchronizationDotTextCenter(dotFrame),
@@ -351,7 +361,7 @@ namespace MetaMind.Perseverance.Guis.Modules
             Primitives2D.FillRectangle(
                 this.GameGraphics.SpriteBatch,
                 this.ProgressBarRectangle,
-                this.synchronization.Enabled ? Palette.LightBlue : Palette.LightPink);
+                this.Synchronization.Enabled ? Palette.LightBlue : Palette.LightPink);
         }
 
         private void DrawProgressFrame()

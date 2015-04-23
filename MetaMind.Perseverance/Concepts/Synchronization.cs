@@ -4,61 +4,16 @@ namespace MetaMind.Perseverance.Concepts
     using System.Linq;
     using System.Runtime.Serialization;
 
-    using MetaMind.Engine;
-    using MetaMind.Perseverance.Concepts.Tasks;
-
-    public interface ISynchronization
-    {
-        double Acceleration { get; }
-
-        TimeSpan ElapsedTimeSinceTransition { get; }
-
-        bool Enabled { get; }
-
-        int Level { get; }
-
-        double ProgressPercent { get; }
-
-        string State { get; }
-
-        int SynchronizedHourMax { get; }
-
-        int SynchronizedHourToday { get; }
-
-        int SynchronizedHourYesterday { get; }
-
-        ISynchronizable SynchronizedData { get; }
-
-        TimeSpan SynchronizedTimeRecentWeek { get; }
-
-        TimeSpan SynchronizedTimeToday { get; }
-
-        TimeSpan SynchronizedTimeYesterday { get; }
-
-        void TryAbort();
-
-        void ResetTomorrow();
-
-        void ResetToday();
-
-        void Stop();
-
-        void TryStart(ISynchronizable data);
-
-        void Update();
-    }
-
     [DataContract(Name = "Synchronization")]
     public class Synchronization : ISynchronization
     {
         #region Components
 
         [DataMember]
-        private readonly SynchronizationProcessor processor = new SynchronizationProcessor();
-
-        [DataMember]
         private readonly SynchronizationDescription description = new SynchronizationDescription();
 
+        [DataMember]
+        private readonly SynchronizationProcessor processor = new SynchronizationProcessor();
         [DataMember]
         private readonly SynchronizationStatistics statistics = new SynchronizationStatistics();
 
@@ -67,7 +22,7 @@ namespace MetaMind.Perseverance.Concepts
 
         #endregion Components
 
-        #region Read-only Properties
+        #region State Data
 
         public double Acceleration
         {
@@ -96,65 +51,92 @@ namespace MetaMind.Perseverance.Concepts
                         level = i;
                     }
                 }
+
                 return level;
             }
         }
 
-        public double LevelSeconds
-        {
-            get { return this.description.LevelSeconds[this.Level]; }
-        }
-
-        public int NextLevel
-        {
-            get { return this.Level + 1; }
-        }
-
-        public double NextLevelSeconds
-        {
-            get { return this.description.LevelSeconds[this.NextLevel]; }
-        }
-
-        public double ProgressPercent
+        public double Progress
         {
             get
             {
                 var left   = this.LevelSeconds;
                 var right  = this.NextLevelSeconds;
-                var middle = this.Seconds;
+                var middle = this.timer.AccumulatedTime.TotalSeconds;
 
                 return (middle - left) / (right - left);
             }
         }
 
-        public double Seconds
-        {
-            get { return this.timer.AccumulatedTime.TotalSeconds; }
-        }
-
         public string State
         {
-            get { return this.description.LevelStates[this.Level]; }
-        }
-
-        public int SynchronizedHourMax
-        {
-            get { return this.statistics.HourMax; }
-        }
-
-        public int SynchronizedHourToday
-        {
-            get { return this.statistics.AccumulatedHourToday < this.SynchronizedHourMax ? this.statistics.AccumulatedHourToday : this.SynchronizedHourMax; }
-        }
-
-        public int SynchronizedHourYesterday
-        {
-            get { return this.statistics.AccumulatedHourYesterday < this.SynchronizedHourMax ? this.statistics.AccumulatedHourYesterday : this.SynchronizedHourMax; }
+            get
+            {
+                return this.description.LevelStates[this.Level];
+            }
         }
 
         public ISynchronizable SynchronizedData
         {
-            get { return this.processor.Data; }
+            get
+            {
+                return this.processor.Data;
+            }
+        }
+
+        private double LevelSeconds
+        {
+            get { return this.description.LevelSeconds[this.Level]; }
+        }
+
+        private int NextLevel
+        {
+            get { return this.Level + 1; }
+        }
+
+        private double NextLevelSeconds
+        {
+            get { return this.description.LevelSeconds[this.NextLevel]; }
+        }
+
+        #endregion
+
+        #region Statistic Data
+
+        public TimeSpan PotentialSynchronizedTimeToday
+        {
+            get
+            {
+                return this.SynchronizedTimeToday + (this.Enabled ? this.ElapsedTimeSinceTransition : TimeSpan.Zero);
+            }
+        }
+
+        public int SynchronizedHourMax
+        {
+            get
+            {
+                return this.statistics.HourMax;
+            }
+        }
+
+        public int SynchronizedHourToday
+        {
+            get
+            {
+                return this.statistics.AccumulatedHourToday < this.SynchronizedHourMax
+                           ? this.statistics.AccumulatedHourToday
+                           : this.SynchronizedHourMax;
+            }
+        }
+
+        public int SynchronizedHourYesterday
+        {
+            get
+            {
+                return this.statistics.AccumulatedHourYesterday < this.SynchronizedHourMax
+                           ? this.statistics.AccumulatedHourYesterday
+                           : this.SynchronizedHourMax;
+            }
         }
 
         public TimeSpan SynchronizedTimeRecentWeek
@@ -167,33 +149,23 @@ namespace MetaMind.Perseverance.Concepts
 
         public TimeSpan SynchronizedTimeToday
         {
-            get { return this.statistics.AccumulatedTimeToday; }
+            get
+            {
+                return this.statistics.AccumulatedTimeToday;
+            }
         }
 
         public TimeSpan SynchronizedTimeYesterday
         {
-            get { return this.statistics.AccumulatedTimeYesterday; }
+            get
+            {
+                return this.statistics.AccumulatedTimeYesterday;
+            }
         }
 
         #endregion Read-only Properties
 
         #region Operations
-
-        public void ResetTomorrow()
-        {
-            this.statistics.ResetDaily();
-        }
-
-        public void ResetToday()
-        {
-            this.statistics.ResetToday();
-        }
-
-        public void Start(ISynchronizable data)
-        {
-            this.processor.Accept(data);
-            this.timer.Start();
-        }
 
         public void Abort()
         {
@@ -201,12 +173,20 @@ namespace MetaMind.Perseverance.Concepts
             this.timer.Stop();
         }
 
-        public void TryAbort()
+        public void ResetToday()
         {
-            if (this.Enabled)
-            {
-                this.Abort();
-            }
+            this.statistics.ResetToday();
+        }
+
+        public void ResetTomorrow()
+        {
+            this.statistics.ResetDaily();
+        }
+
+        public void Start(ISynchronizable data)
+        {
+            this.processor.Accept(data);
+            this.timer.Start();
         }
 
         public void Stop()
@@ -229,6 +209,14 @@ namespace MetaMind.Perseverance.Concepts
             this.timer.Stop();
         }
 
+        public void TryAbort()
+        {
+            if (this.Enabled)
+            {
+                this.Abort();
+            }
+        }
+
         public void TryStart(ISynchronizable data)
         {
             if (this.Enabled)
@@ -241,8 +229,8 @@ namespace MetaMind.Perseverance.Concepts
 
         public void Update()
         {
-            this.timer.Update();
-            this.processor .Update(this.timer.IsEnabled, this.Acceleration);
+            this.timer    .Update();
+            this.processor.Update(this.timer.IsEnabled, this.Acceleration);
         }
 
         #endregion Operations

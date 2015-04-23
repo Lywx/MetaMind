@@ -19,9 +19,9 @@ namespace MetaMind.Perseverance.Guis.Modules
 
     namespace Summary
     {
-        public class SleepStoppedListener : Listener
+        public class SummaryModuleSleepStoppedListener : Listener
         {
-            public SleepStoppedListener()
+            public SummaryModuleSleepStoppedListener()
             {
                 this.RegisteredEvents.Add((int)SessionEventType.SleepStopped);
             }
@@ -45,11 +45,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
     public class SummaryModule : Module<SummarySettings>
     {
-        private ICognition       Cognition;
-        private ISynchronization Synchronization;
-
         private List<GameVisualEntity> entities;
-        #region Constructors
 
         public SummaryModule(ICognition cognition, SummarySettings settings)
             : base(settings)
@@ -60,7 +56,18 @@ namespace MetaMind.Perseverance.Guis.Modules
             this.entities = new List<GameVisualEntity>();
         }
 
-        #endregion Constructors
+        ~SummaryModule()
+        {
+            this.Dispose();
+        }
+
+        #region Dependency
+
+        private ICognition Cognition { get; set; }
+
+        private ISynchronization Synchronization { get; set; }
+
+        #endregion
 
         #region Load and Unload
 
@@ -132,7 +139,7 @@ namespace MetaMind.Perseverance.Guis.Modules
                          ? Color.Gold
                          : Color.Red)));
 
-            this.Listeners.Add(new SleepStoppedListener());
+            this.Listeners.Add(new SummaryModuleSleepStoppedListener());
 
             base.LoadContent(interop);
         }

@@ -92,6 +92,7 @@
     <Compile Include="Concepts\Cognitions\ConsciousnessAsleep.cs" />
     <Compile Include="Concepts\Cognitions\ConsciousnessState.cs" />
     <Compile Include="Concepts\Cognitions\IConsciousness.cs" />
+    <Compile Include="Concepts\ISynchronization.cs" />
     <Compile Include="Concepts\Motivations\MotivationList.cs" />
     <Compile Include="Concepts\ProgressionData.cs" />
     <Compile Include="Concepts\SynchronizationData.cs" />
@@ -115,8 +116,9 @@
     <Compile Include="Guis\Modules\Summary\SummaryFactory.cs" />
     <Compile Include="Guis\Modules\Summary\SummarySplit.cs" />
     <Compile Include="Guis\Modules\Summary\SummaryTitle.cs" />
-    <Compile Include="Guis\Modules\SynchronizationModuleControl.cs" />
-    <Compile Include="Guis\Modules\SynchronizationModuleGraphics.cs" />
+    <Compile Include="Guis\Modules\Synchronization\SynchronizationLabel.cs" />
+    <Compile Include="Guis\Modules\Synchronization\SynchronizationModuleControl.cs" />
+    <Compile Include="Guis\Modules\Synchronization\SynchronizationModuleGraphics.cs" />
     <Compile Include="Guis\Modules\TaskModule.cs" />
     <Compile Include="Guis\Modules\TaskModuleSettings.cs" />
     <Compile Include="Guis\Modules\SummaryModule.cs" />
@@ -146,8 +148,8 @@
     <Compile Include="Guis\Modules\SynchronizationModule.cs" />
     <Compile Include="Guis\Modules\SynchronizationMonitor.cs" />
     <Compile Include="Guis\Modules\SynchronizationModuleSettings.cs" />
-    <Compile Include="Guis\Modules\SynchronizationModuleSynchronizationStartListener.cs" />
-    <Compile Include="Guis\Modules\SynchronizationModuleSynchronizationStopListener.cs" />
+    <Compile Include="Guis\Modules\Synchronization\SynchronizationModuleSynchronizationStartListener.cs" />
+    <Compile Include="Guis\Modules\Synchronization\SynchronizationModuleSynchronizationStopListener.cs" />
     <Compile Include="Guis\Widgets\TimelineScale.cs" />
     <Compile Include="Guis\Widgets\TaskItemControl.cs" />
     <Compile Include="Guis\Widgets\TaskItemFactory.cs" />

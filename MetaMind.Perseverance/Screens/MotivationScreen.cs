@@ -26,7 +26,8 @@
         public override void LoadContent(IGameInteropService interop)
         {
             this.synchronization = new SynchronizationModule(
-                Perseverance.Session.Cognition,
+                Perseverance.Session.Cognition.Consciousness,
+                Perseverance.Session.Cognition.Synchronization,
                 new SynchronizationModuleSettings());
             this.synchronization.LoadContent(interop);
 

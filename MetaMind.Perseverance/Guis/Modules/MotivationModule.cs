@@ -40,10 +40,10 @@ namespace MetaMind.Perseverance.Guis.Modules
             // performance penalty is not severe for one-off loading
 
             // UNDONE: NOW
-            foreach (var entry in MotivationModuleSettings.GetNowMotivations())
-            {
-                this.intelligence.Control.AddItem(entry);
-            }
+            //foreach (var entry in MotivationModuleSettings.GetNowMotivations())
+            //{
+            //    this.intelligence.Control.AddItem(entry);
+            //}
 
             this.LoadEvents(interop);
         }

@@ -18,7 +18,7 @@
             // Has to be a popup screen, or it can block the background
             this.IsPopup = true;
             
-            this.TransitionOnTime = TimeSpan.FromSeconds(0.5);
+            this.TransitionOnTime  = TimeSpan.FromSeconds(0.5);
             this.TransitionOffTime = TimeSpan.FromSeconds(0.5);
         }
 

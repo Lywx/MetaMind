@@ -4,8 +4,13 @@
 
     using MetaMind.Engine;
 
+    public interface IConsciousnessState
+    {
+        IConsciousnessState UpdateState(Consciousness consciousness);
+    }
+
     [DataContract]
-    internal abstract class ConsciousnessState : GameEntity
+    internal abstract class ConsciousnessState : GameEntity, IConsciousnessState
     {
         protected ConsciousnessState(Consciousness consciousness)
         {
@@ -15,6 +20,6 @@
         [DataMember]
         protected Consciousness Consciousness { get; set; }
 
-        public abstract ConsciousnessState UpdateState(Consciousness consciousness);
+        public abstract IConsciousnessState UpdateState(Consciousness consciousness);
     }
 }

@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Components.Fonts
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    internal static class FontExt
+    public static class FontExt
     {
         private static IFontManager fontManager;
 

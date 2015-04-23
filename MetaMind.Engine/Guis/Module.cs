@@ -22,6 +22,11 @@ namespace MetaMind.Engine.Guis
             this.Settings = settings;
         }
 
+        ~Module()
+        {
+            this.Dispose();
+        }
+
         #endregion
 
         #region Components

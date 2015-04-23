@@ -1,14 +1,13 @@
-﻿namespace MetaMind.Perseverance.Guis.Modules
+﻿namespace MetaMind.Perseverance.Guis.Modules.Synchronization
 {
     using MetaMind.Engine.Components.Events;
     using MetaMind.Perseverance.Concepts;
-    using MetaMind.Perseverance.Concepts.Cognitions;
     using MetaMind.Perseverance.Events;
     using MetaMind.Perseverance.Sessions;
 
     internal class SynchronizationModuleSynchronizationStartListener : Listener
     {
-        private readonly ISynchronization   synchronization;
+        private readonly ISynchronization      synchronization;
         private readonly SynchronizationModule synchronizationModule;
 
         public SynchronizationModuleSynchronizationStartListener(ISynchronization synchronization, SynchronizationModule synchronizationModule)

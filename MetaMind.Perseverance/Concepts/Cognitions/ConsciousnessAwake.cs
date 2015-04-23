@@ -47,7 +47,7 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
             return new ConsciousnessAsleep(consciousness);
         }
 
-        public override ConsciousnessState UpdateState(Consciousness consciousness)
+        public override IConsciousnessState UpdateState(Consciousness consciousness)
         {
             return this;
         }

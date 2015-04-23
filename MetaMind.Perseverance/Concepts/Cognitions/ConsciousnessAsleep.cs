@@ -39,7 +39,7 @@ namespace MetaMind.Perseverance.Concepts.Cognitions
 
         #endregion Conversions
 
-        public override ConsciousnessState UpdateState(Consciousness consciousness)
+        public override IConsciousnessState UpdateState(Consciousness consciousness)
         {
             return this;
         }
