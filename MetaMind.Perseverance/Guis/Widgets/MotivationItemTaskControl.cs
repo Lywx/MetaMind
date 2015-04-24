@@ -8,14 +8,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Perseverance.Guis.Widgets
+namespace MetaMind.Runtime.Guis.Widgets
 {
-    using MetaMind.Engine;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Regions;
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Services;
-    using MetaMind.Perseverance.Guis.Modules;
+    using MetaMind.Runtime.Guis.Modules;
 
     using Microsoft.Xna.Framework;
 
@@ -32,7 +31,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
         {
             if (this.TaskModule == null)
             {
-                Point start = ItemControl.RootFrame.Center + ViewSettings.TracerMargin;
+                Point start = this.ItemControl.RootFrame.Center + this.ViewSettings.TracerMargin;
 
                 this.TaskModule = new TaskModule(this.ItemControl, new TaskModuleSettings(start));
                 this.TaskModule.LoadContent(this.GameInterop);

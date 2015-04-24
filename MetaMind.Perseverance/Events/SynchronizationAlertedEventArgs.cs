@@ -1,4 +1,4 @@
-namespace MetaMind.Perseverance.Events
+namespace MetaMind.Runtime.Events
 {
     using System;
 

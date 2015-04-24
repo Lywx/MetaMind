@@ -1,6 +1,9 @@
-﻿namespace MetaMind.Perseverance.Concepts.Tasks
+﻿namespace MetaMind.Runtime.Concepts.Tasks
 {
     using System.Runtime.Serialization;
+
+    using MetaMind.Runtime.Concepts.Progressions;
+    using MetaMind.Runtime.Concepts.Synchronizations;
 
     [DataContract]
     public class Task : IProgressable, ISynchronizable

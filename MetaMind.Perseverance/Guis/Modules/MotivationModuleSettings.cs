@@ -5,11 +5,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Perseverance.Guis.Modules
+namespace MetaMind.Runtime.Guis.Modules
 {
     using System;
 
-    using MetaMind.Perseverance.Guis.Widgets;
+    using MetaMind.Runtime.Guis.Widgets;
 
     public class MotivationModuleSettings : ICloneable
     {

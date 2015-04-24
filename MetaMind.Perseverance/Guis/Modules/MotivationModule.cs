@@ -1,16 +1,11 @@
-namespace MetaMind.Perseverance.Guis.Modules
+namespace MetaMind.Runtime.Guis.Modules
 {
-    using System.Collections.Generic;
-
-    using MetaMind.Engine.Components.Events;
     using MetaMind.Engine.Guis;
-    using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Services;
-    using MetaMind.Perseverance.Sessions;
 
     using Microsoft.Xna.Framework;
-    
+
     public class MotivationModule : Module<MotivationModuleSettings>
     {
         private readonly IView intelligence;

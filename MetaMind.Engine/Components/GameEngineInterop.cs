@@ -2,7 +2,6 @@ namespace MetaMind.Engine.Components
 {
     using System;
 
-    using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Guis.Console;
 
     using Microsoft.Xna.Framework;
@@ -10,8 +9,6 @@ namespace MetaMind.Engine.Components
 
     public class GameEngineInterop : IGameInterop
     {
-        private GameEngine engine;
-
         public IAudioManager Audio { get; private set; }
 
         public GameConsole Console { get; set; }
@@ -29,6 +26,8 @@ namespace MetaMind.Engine.Components
         public IProcessManager Process { get; private set; }
 
         public IScreenManager Screen { get; private set; }
+
+        public ISaveManager Save { get; set; }
 
         public void OnExiting()
         {
@@ -48,23 +47,20 @@ namespace MetaMind.Engine.Components
             var waveBankFile  = @"Content\Audio\Wave Bank.xwb";
             var soundBankFile = @"Content\Audio\Sound Bank.xsb";
 
-            this.Audio   = new AudioManager(engine, settingsFile, waveBankFile, soundBankFile);
+            this.Audio   = new AudioManager(engine, settingsFile, waveBankFile, soundBankFile, int.MaxValue);
             this.Event   = new EventManager(engine, 4);
             this.Process = new ProcessManager(engine, 5);
             this.Screen  = new ScreenManager(engine, new ScreenSettings(), engine.Graphics.SpriteBatch, 3);
 
             this.Content = engine.Content;
-            this.File  = new FileManager();
+            this.File    = new FileManager();
 
             this.Game = new GameManager(engine);
         }
         
         public void Initialize()
         {
-            this.Audio  .Initialize();
-            this.Event  .Initialize();
-            this.Process.Initialize();
-            this.Screen .Initialize();
+            // Initialize components that aren't initialized during GameComponents initialization
         }
 
         public void UpdateInput(GameTime gameTime)

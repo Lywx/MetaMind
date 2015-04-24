@@ -1,6 +1,6 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
-    using MetaMind.Perseverance.Guis.Widgets;
+    using MetaMind.Runtime.Guis.Widgets;
 
     using Microsoft.Xna.Framework;
 

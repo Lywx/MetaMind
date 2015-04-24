@@ -1,8 +1,8 @@
-namespace MetaMind.Perseverance.Guis.Modules
+namespace MetaMind.Runtime.Guis.Modules
 {
     using MetaMind.Engine.Components.Events;
     using MetaMind.Engine.Guis.Widgets.Views;
-    using MetaMind.Perseverance.Sessions;
+    using MetaMind.Runtime.Sessions;
 
     public class MotivationModuleGameStartedListener : Listener
     {

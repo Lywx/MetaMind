@@ -5,10 +5,9 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Perseverance
+namespace MetaMind.Runtime
 {
     using System;
-    using System.Linq;
 
     using MetaMind.Engine;
 
@@ -27,7 +26,7 @@ namespace MetaMind.Perseverance
         {
             using (var engine = new GameEngine())
             {
-                var game = new Perseverance(engine);
+                var game = new Runtime(engine);
                 game.Run();
             }
         }

@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Perseverance.Concepts.Cognitions
+﻿namespace MetaMind.Runtime.Concepts.Cognitions
 {
     using System;
     using System.Runtime.Serialization;

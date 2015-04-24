@@ -9,8 +9,8 @@
     <ProjectGuid>{61829F1D-D89D-4B13-BB47-4B13DAFFB205}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MetaMind.PerseveranceService</RootNamespace>
-    <AssemblyName>MetaMind.PerseveranceService</AssemblyName>
+    <RootNamespace>MetaMind.RuntimeService</RootNamespace>
+    <AssemblyName>MetaMind.RuntimeService</AssemblyName>
     <ProjectTypeGuids>{3D9AD99F-2412-4246-B90B-4EAA41C64699};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <StartArguments>/client:"WcfTestClient.exe"</StartArguments>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
@@ -92,9 +92,9 @@
       <Project>{8944c3ab-1865-49cf-9e84-1ecc42ad2c3e}</Project>
       <Name>MetaMind.Engine</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MetaMind.Perseverance\MetaMind.Perseverance.csproj">
+    <ProjectReference Include="..\MetaMind.Perseverance\MetaMind.Runtime.csproj">
       <Project>{91a424b6-e62b-4b7a-b30d-331c7e3af5f0}</Project>
-      <Name>MetaMind.Perseverance</Name>
+      <Name>MetaMind.Runtime</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

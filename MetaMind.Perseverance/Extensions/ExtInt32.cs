@@ -1,4 +1,4 @@
-namespace MetaMind.Perseverance.Extensions
+namespace MetaMind.Runtime.Extensions
 {
     internal static class ExtInt32
     {

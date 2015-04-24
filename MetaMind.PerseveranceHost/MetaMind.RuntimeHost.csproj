@@ -8,8 +8,8 @@
     <ProjectGuid>{7AB9FC74-C671-41B1-9D26-9FBF03E275B4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MetaMind.PerseveranceHost</RootNamespace>
-    <AssemblyName>MetaMind.PerseveranceHost</AssemblyName>
+    <RootNamespace>MetaMind.RuntimeHost</RootNamespace>
+    <AssemblyName>MetaMind.RuntimeHost</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <TargetFrameworkProfile />
@@ -84,17 +84,17 @@
       <Project>{8944c3ab-1865-49cf-9e84-1ecc42ad2c3e}</Project>
       <Name>MetaMind.Engine</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MetaMind.PerseveranceBuilder\MetaMind.PerseveranceBuilder\MetaMind.PerseveranceBuilder.csproj">
+    <ProjectReference Include="..\MetaMind.PerseveranceBuilder\MetaMind.PerseveranceBuilder\MetaMind.RuntimeBuilder.csproj">
       <Project>{5718d82f-2ac8-42bb-a7f0-5309bed3d883}</Project>
-      <Name>MetaMind.PerseveranceBuilder</Name>
+      <Name>MetaMind.RuntimeBuilder</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MetaMind.PerseveranceService\MetaMind.PerseveranceService.csproj">
+    <ProjectReference Include="..\MetaMind.PerseveranceService\MetaMind.RuntimeService.csproj">
       <Project>{61829f1d-d89d-4b13-bb47-4b13daffb205}</Project>
-      <Name>MetaMind.PerseveranceService</Name>
+      <Name>MetaMind.RuntimeService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MetaMind.Perseverance\MetaMind.Perseverance.csproj">
+    <ProjectReference Include="..\MetaMind.Perseverance\MetaMind.Runtime.csproj">
       <Project>{91a424b6-e62b-4b7a-b30d-331c7e3af5f0}</Project>
-      <Name>MetaMind.Perseverance</Name>
+      <Name>MetaMind.Runtime</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

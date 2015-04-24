@@ -5,7 +5,7 @@
 
     using MetaMind.Acutance.PerseveranceServiceReference;
     using MetaMind.Engine;
-    using MetaMind.PerseveranceService.Settings;
+    using MetaMind.RuntimeService.Settings;
 
     public static class Program
     {

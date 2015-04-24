@@ -1,10 +1,10 @@
-﻿namespace MetaMind.Perseverance.Concepts.Motivations
+﻿namespace MetaMind.Runtime.Concepts.Motivations
 {
     using System.Collections.Generic;
     using System.Runtime.Serialization;
 
-    using MetaMind.Perseverance.Concepts.Tasks;
-    using MetaMind.Perseverance.Guis.Modules;
+    using MetaMind.Runtime.Concepts.Progressions;
+    using MetaMind.Runtime.Concepts.Tasks;
 
     [DataContract]
     public class Motivation : IProgressable
@@ -18,21 +18,6 @@
         public Motivation()
         {
         }
-
-        //public void SwapWithInSpace(MotivationSpace space, Motivation target)
-        //{
-        //    var source = MotivationModuleSettings.GetMotivationSource(space);
-        //    if (source != null && 
-        //        source.Contains(this) && 
-        //        source.Contains(target))
-        //    {
-        //        var thisIndex   = source.IndexOf(this);
-        //        var targetIndex = source.IndexOf(target);
-
-        //        source[thisIndex]   = target;
-        //        source[targetIndex] = this;
-        //    }
-        //}
 
         #region Progression Data
 

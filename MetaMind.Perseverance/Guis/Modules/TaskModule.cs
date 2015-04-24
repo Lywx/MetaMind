@@ -5,7 +5,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Perseverance.Guis.Modules
+namespace MetaMind.Runtime.Guis.Modules
 {
     using FastMember;
 
@@ -13,7 +13,7 @@ namespace MetaMind.Perseverance.Guis.Modules
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Services;
-    using MetaMind.Perseverance.Guis.Widgets;
+    using MetaMind.Runtime.Guis.Widgets;
 
     using Microsoft.Xna.Framework;
 
@@ -195,9 +195,9 @@ namespace MetaMind.Perseverance.Guis.Modules
                     {
                         // this will be called before item deletion
                         if (this.View.Control.Selection.SelectedId != null && 
-                            this.View.Control.Selection.SelectedId > View.Items.Count - 2)
+                            this.View.Control.Selection.SelectedId > this.View.Items.Count - 2)
                         {
-                            this.View.Control.Selection.Select(View.Items.Count - 2);
+                            this.View.Control.Selection.Select(this.View.Items.Count - 2);
                         }
                     }
                 }

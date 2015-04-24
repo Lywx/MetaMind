@@ -1,11 +1,11 @@
-﻿namespace MetaMind.Perseverance.Guis.Modules
+﻿namespace MetaMind.Runtime.Guis.Modules
 {
     using System.Linq;
 
     using MetaMind.Engine.Components.Events;
-    using MetaMind.Perseverance.Concepts;
-    using MetaMind.Perseverance.Screens;
-    using MetaMind.Perseverance.Sessions;
+    using MetaMind.Runtime.Concepts.Synchronizations;
+    using MetaMind.Runtime.Screens;
+    using MetaMind.Runtime.Sessions;
 
     public class SynchronizationModuleSleepStartedEventListener : Listener
     {

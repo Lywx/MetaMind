@@ -5,13 +5,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Perseverance.Guis.Widgets
+namespace MetaMind.Runtime.Guis.Widgets
 {
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Services;
-    using MetaMind.Perseverance.Concepts.Motivations;
+    using MetaMind.Runtime.Concepts.Motivations;
 
     using Microsoft.Xna.Framework;
 
@@ -40,8 +40,8 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         public void AddItem(Motivation entry)
         {
-            var item = new ViewItemExchangable(View, ViewSettings, ItemSettings, ItemFactory, entry);
-            View.Items.Add(item);
+            var item = new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory, entry);
+            this.View.Items.Add(item);
         }
 
         #endregion Operations

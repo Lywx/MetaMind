@@ -1,4 +1,4 @@
-﻿namespace MetaMind.PerseveranceService.Settings
+﻿namespace MetaMind.RuntimeService.Settings
 {
     using System;
 

@@ -1,12 +1,12 @@
 namespace MetaMind.Engine.Sessions
 {
-    using Microsoft.Xna.Framework;
-
-    public interface ISession<TData>
+    public interface ISession<out TData>
         where TData : ISessionData, new()
     {
+        TData Data { get; }
+
         void Save();
 
-        void Update(GameTime gameTime);
+        void Update();
     }
 }

@@ -1,8 +1,7 @@
-namespace MetaMind.Perseverance.Guis.Widgets
+namespace MetaMind.Runtime.Guis.Widgets
 {
     using System;
 
-    using MetaMind.Engine;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Services;
 
@@ -25,10 +24,10 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         #region Structure Position
 
-        //protected override Vector2 IdCenterPosition()
-        //{
-        //    get { return ExtPoint.ToVector2(this.ItemControl.IdFrame.Center); }
-        //}
+        protected override Vector2 IdCenterPosition()
+        {
+            get { return ExtPoint.ToVector2(this.ItemControl.IdFrame.Center); }
+        }
 
         private Vector2 ExperienceCenter
         {
@@ -62,7 +61,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         private Rectangle RandomHighlight(GameTime gameTime, int flashLength, Rectangle rectangle)
         {
-            var thick = Perseverance.Session.Random.Next(flashLength);
+            var thick = Runtime.Session.Random.Next(flashLength);
             return new Rectangle(
                 rectangle.X - thick,
                 rectangle.Y - thick,
@@ -105,16 +104,16 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         private void DrawExperience(IGameGraphicsService graphics, byte alpha)
         {
-            //graphics.String.DrawStringCenteredHV(
-            //    this.ItemSettings.IdFont,
-            //    string.Format(
-            //        "{0} : {1} : {2}",
-            //        this.ItemData.Experience.Duration.TotalHours.ToString("F0"),
-            //        this.ItemData.Experience.Duration.Minutes.ToString(),
-            //        this.ItemData.Experience.Duration.Seconds.ToString()),
-            //    this.ExperienceCenter,
-            //    ExtColor.MakeTransparent(this.ItemSettings.ExperienceColor, alpha),
-            //    this.ItemSettings.ExperienceSize);
+            graphics.String.DrawStringCenteredHV(
+                this.ItemSettings.IdFont,
+                string.Format(
+                    "{0} : {1} : {2}",
+                    this.ItemData.Experience.Duration.TotalHours.ToString("F0"),
+                    this.ItemData.Experience.Duration.Minutes.ToString(),
+                    this.ItemData.Experience.Duration.Seconds.ToString()),
+                this.ExperienceCenter,
+                ExtColor.MakeTransparent(this.ItemSettings.ExperienceColor, alpha),
+                this.ItemSettings.ExperienceSize);
         }
 
         private void DrawExperienceFrame(IGameGraphicsService graphics, byte alpha)

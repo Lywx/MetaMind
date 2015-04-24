@@ -5,14 +5,14 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Perseverance.Concepts.Cognitions
+namespace MetaMind.Runtime.Concepts.Cognitions
 {
     using System;
     using System.Runtime.Serialization;
 
     using MetaMind.Engine.Components.Events;
-    using MetaMind.Perseverance.Events;
-    using MetaMind.Perseverance.Sessions;
+    using MetaMind.Runtime.Events;
+    using MetaMind.Runtime.Sessions;
 
     [DataContract]
     internal class ConsciousnessAwake : ConsciousnessState, IConsciousnessAwake

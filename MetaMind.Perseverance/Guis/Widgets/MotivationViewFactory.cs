@@ -1,4 +1,4 @@
-namespace MetaMind.Perseverance.Guis.Widgets
+namespace MetaMind.Runtime.Guis.Widgets
 {
     using System;
 

@@ -24,5 +24,10 @@ namespace MetaMind.Engine.Services
         IProcessManager Process { get; }
 
         IScreenManager Screen { get; }
+
+        /// <remarks>
+        /// Save that is replaceable in specific game 
+        /// </remarks>
+        ISaveManager Save { get; set; }
     }
 }

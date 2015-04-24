@@ -1,11 +1,11 @@
-﻿using MetaMind.Engine.Components.Events;
-using MetaMind.Perseverance.Sessions;
-using System;
-using System.Runtime.Serialization;
-
-namespace MetaMind.Perseverance.Concepts.Cognitions
+﻿namespace MetaMind.Runtime.Concepts.Cognitions
 {
-    using MetaMind.Perseverance.Events;
+    using System;
+    using System.Runtime.Serialization;
+
+    using MetaMind.Engine.Components.Events;
+    using MetaMind.Runtime.Events;
+    using MetaMind.Runtime.Sessions;
 
     [DataContract]
     internal class ConsciousnessAsleep : ConsciousnessState, IConsciousnessAsleep

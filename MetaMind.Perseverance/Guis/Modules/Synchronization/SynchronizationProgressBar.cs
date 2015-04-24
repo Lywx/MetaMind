@@ -1,4 +1,4 @@
-namespace MetaMind.Perseverance.Guis.Modules.Synchronization
+namespace MetaMind.Runtime.Guis.Modules.Synchronization
 {
     using System;
 
@@ -6,7 +6,7 @@ namespace MetaMind.Perseverance.Guis.Modules.Synchronization
     using MetaMind.Engine.Guis.Widgets.Visual;
     using MetaMind.Engine.Services;
     using MetaMind.Engine.Settings.Colors;
-    using MetaMind.Perseverance.Concepts;
+    using MetaMind.Runtime.Concepts.Synchronizations;
 
     using Microsoft.Xna.Framework;
 

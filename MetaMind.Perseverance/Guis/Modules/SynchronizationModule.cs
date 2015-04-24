@@ -1,13 +1,13 @@
-﻿namespace MetaMind.Perseverance.Guis.Modules
+﻿namespace MetaMind.Runtime.Guis.Modules
 {
     using System;
 
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Services;
-    using MetaMind.Perseverance.Concepts;
-    using MetaMind.Perseverance.Concepts.Cognitions;
-    using MetaMind.Perseverance.Guis.Modules.Synchronization;
+    using MetaMind.Runtime.Concepts.Cognitions;
+    using MetaMind.Runtime.Concepts.Synchronizations;
+    using MetaMind.Runtime.Guis.Modules.Synchronization;
 
     using Microsoft.Xna.Framework;
 

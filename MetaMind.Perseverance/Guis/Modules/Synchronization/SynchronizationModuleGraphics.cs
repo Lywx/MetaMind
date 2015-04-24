@@ -1,4 +1,4 @@
-namespace MetaMind.Perseverance.Guis.Modules.Synchronization
+namespace MetaMind.Runtime.Guis.Modules.Synchronization
 {
     using System;
     using System.Collections.Generic;
@@ -8,8 +8,8 @@ namespace MetaMind.Perseverance.Guis.Modules.Synchronization
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Widgets.Visual;
     using MetaMind.Engine.Services;
-    using MetaMind.Perseverance.Concepts;
-    using MetaMind.Perseverance.Concepts.Cognitions;
+    using MetaMind.Runtime.Concepts.Cognitions;
+    using MetaMind.Runtime.Concepts.Synchronizations;
 
     using Microsoft.Xna.Framework;
 
@@ -137,13 +137,6 @@ namespace MetaMind.Perseverance.Guis.Modules.Synchronization
                 this.entities.Add(factory.CreatePointFrame(this.StateInfoCenterPosition, i, SynchronizationPointSide.Right));
             }
 
-            // Today points
-            for (var i = 0; i < this.Synchronization.SynchronizedHourToday; ++i)
-            {
-                this.entities.Add(factory.CreatePoint(this.StateInfoCenterPosition, i, "", () => this.Settings.BarFrameAscendColor, SynchronizationPointSide.Left));
-                this.entities.Add(factory.CreatePoint(this.StateInfoCenterPosition, i, "", () => this.Settings.BarFrameAscendColor, SynchronizationPointSide.Right));
-            }
-
             // Yesterday points
             for (var i = 0; i < this.Synchronization.SynchronizedHourYesterday; ++i)
             {
@@ -151,6 +144,12 @@ namespace MetaMind.Perseverance.Guis.Modules.Synchronization
                 this.entities.Add(factory.CreatePoint(this.StateInfoCenterPosition, i, "", () => this.Settings.BarFrameDescendColor, SynchronizationPointSide.Right));
             }
 
+            // Today points
+            for (var i = 0; i < this.Synchronization.SynchronizedHourToday; ++i)
+            {
+                this.entities.Add(factory.CreatePoint(this.StateInfoCenterPosition, i, "", () => this.Settings.BarFrameAscendColor, SynchronizationPointSide.Left));
+                this.entities.Add(factory.CreatePoint(this.StateInfoCenterPosition, i, "", () => this.Settings.BarFrameAscendColor, SynchronizationPointSide.Right));
+            }
         }
 
         #region Dependency

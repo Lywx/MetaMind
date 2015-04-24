@@ -1,9 +1,9 @@
-namespace MetaMind.Perseverance.Guis.Modules
+namespace MetaMind.Runtime.Guis.Modules
 {
     using MetaMind.Engine;
     using MetaMind.Engine.Components.Graphics;
     using MetaMind.Engine.Settings.Loaders;
-    using MetaMind.Perseverance.Guis.Widgets;
+    using MetaMind.Runtime.Guis.Widgets;
 
     using Microsoft.Xna.Framework;
 
@@ -33,7 +33,7 @@ namespace MetaMind.Perseverance.Guis.Modules
 
         public MotivationModuleFactory()
         {
-            this.LoadParameter(GameGraphics.Settings);
+            this.LoadParameter(this.GameGraphics.Settings);
         }
 
         #endregion Constructors

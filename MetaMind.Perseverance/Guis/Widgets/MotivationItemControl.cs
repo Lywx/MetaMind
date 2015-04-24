@@ -1,6 +1,5 @@
-﻿namespace MetaMind.Perseverance.Guis.Widgets
+﻿namespace MetaMind.Runtime.Guis.Widgets
 {
-    using MetaMind.Engine;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Elements;
@@ -53,7 +52,7 @@
 
             this.View.Control.ItemFactory.RemoveData(this.Item);
 
-            Item.Dispose();
+            this.Item.Dispose();
         }
 
         #endregion

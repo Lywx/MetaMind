@@ -1,4 +1,4 @@
-namespace MetaMind.Perseverance.Guis.Widgets
+namespace MetaMind.Runtime.Guis.Widgets
 {
     using System;
 
@@ -28,12 +28,12 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            if (!ItemControl.Active)
+            if (!this.ItemControl.Active)
             {
                 return;
             }
 
-            if (Item.IsEnabled(ItemState.Item_Dragging))
+            if (this.Item.IsEnabled(ItemState.Item_Dragging))
             {
                 this.DrawShadow(graphics);
             }
@@ -49,8 +49,8 @@ namespace MetaMind.Perseverance.Guis.Widgets
         private void DrawHeart(IGameGraphicsService graphics, byte alpha)
         {
             var flipped     = Math.Cos(this.rotation) > 0;
-            var width       = ItemControl.SymbolFrame.Rectangle.Width;
-            var height      = ItemControl.SymbolFrame.Rectangle.Height;
+            var width       = this.ItemControl.SymbolFrame.Rectangle.Width;
+            var height      = this.ItemControl.SymbolFrame.Rectangle.Height;
             var size        = new Point((int)(Math.Abs(Math.Cos(this.rotation)) * width), height);
             // ??? After removing a extension method
             Rectangle rectangle = this.ItemControl.SymbolFrame.Rectangle;
@@ -61,7 +61,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
                 this.symbol,
                 destination,
                 null,
-                ItemSettings.SymbolFrameWishColor,
+                this.ItemSettings.SymbolFrameWishColor,
                 0f,
                 this.SymbolOrigin,
                 flipped ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
@@ -70,12 +70,12 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         private void DrawShadow(IGameGraphicsService graphics)
         {
-            var scrollCenter = this.ViewControl.Scroll.RootCenterPoint(ItemControl.Id);
+            var scrollCenter = this.ViewControl.Scroll.RootCenterPoint(this.ItemControl.Id);
             var destination = new Rectangle(
                 scrollCenter.X,
                 scrollCenter.Y,
-                ItemControl.RootFrame.Rectangle.Width,
-                ItemControl.RootFrame.Rectangle.Height);
+                this.ItemControl.RootFrame.Rectangle.Width,
+                this.ItemControl.RootFrame.Rectangle.Height);
 
             graphics.SpriteBatch.Draw(
                 this.symbol,
@@ -90,7 +90,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         private void UpdateRotation()
         {
-            if (Item.IsEnabled(ItemState.Item_Selected))
+            if (this.Item.IsEnabled(ItemState.Item_Selected))
             {
                 this.rotation += MathHelper.ToRadians(5);
             }

@@ -1,6 +1,5 @@
-namespace MetaMind.Perseverance.Guis.Widgets
+namespace MetaMind.Runtime.Guis.Widgets
 {
-    using MetaMind.Engine;
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Services;
 
@@ -27,7 +26,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         public override void Update(GameTime time)
         {
-            if (View.IsEnabled(ViewState.View_Has_Focus))
+            if (this.View.IsEnabled(ViewState.View_Has_Focus))
             {
                 this.FocusAlpha += 15;
                 if (this.FocusAlpha > 255)
@@ -49,18 +48,18 @@ namespace MetaMind.Perseverance.Guis.Widgets
         {
             Primitives2D.DrawRectangle(
                 graphics.SpriteBatch,
-                ExtRectangle.Extend(ViewControl.Region.Frame.Rectangle, ViewSettings.BorderMargin),
-                ExtColor.MakeTransparent(ViewSettings.HighlightColor, alpha),
+                ExtRectangle.Extend(this.ViewControl.Region.Frame.Rectangle, this.ViewSettings.BorderMargin),
+                ExtColor.MakeTransparent(this.ViewSettings.HighlightColor, alpha),
                 2f);
             Primitives2D.FillRectangle(
                 graphics.SpriteBatch,
-                ViewControl.Region.Frame.Rectangle,
-                ExtColor.MakeTransparent(ViewSettings.HighlightColor, alpha));
+                this.ViewControl.Region.Frame.Rectangle,
+                ExtColor.MakeTransparent(this.ViewSettings.HighlightColor, alpha));
         }
 
         protected virtual void DrawScrollBar(GameTime gameTime)
         {
-            ViewControl.ScrollBar.Draw(gameTime);
+            this.ViewControl.ScrollBar.Draw(gameTime);
         }
     }
 }

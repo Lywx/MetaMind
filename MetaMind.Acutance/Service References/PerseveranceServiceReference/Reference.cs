@@ -11,7 +11,8 @@
 namespace MetaMind.Acutance.PerseveranceServiceReference {
     using MetaMind.Engine.Services;
     using MetaMind.Perseverance.Concepts;
-    using MetaMind.Perseverance.Concepts.Tasks;
+    using MetaMind.Runtime.Concepts.Synchronizations;
+    using MetaMind.Runtime.Concepts.Tasks;
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="PerseveranceServiceReference.ISynchronizationService")]

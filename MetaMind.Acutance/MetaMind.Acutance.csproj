@@ -236,13 +236,13 @@
       <Project>{8944c3ab-1865-49cf-9e84-1ecc42ad2c3e}</Project>
       <Name>MetaMind.Engine</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MetaMind.PerseveranceService\MetaMind.PerseveranceService.csproj">
+    <ProjectReference Include="..\MetaMind.PerseveranceService\MetaMind.RuntimeService.csproj">
       <Project>{61829F1D-D89D-4B13-BB47-4B13DAFFB205}</Project>
-      <Name>MetaMind.PerseveranceService</Name>
+      <Name>MetaMind.RuntimeService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MetaMind.Perseverance\MetaMind.Perseverance.csproj">
+    <ProjectReference Include="..\MetaMind.Perseverance\MetaMind.Runtime.csproj">
       <Project>{91a424b6-e62b-4b7a-b30d-331c7e3af5f0}</Project>
-      <Name>MetaMind.Perseverance</Name>
+      <Name>MetaMind.Runtime</Name>
     </ProjectReference>
     <ProjectReference Include="..\ThirdParties\FileSearcher\FileSearcher.csproj">
       <Project>{b0f2ffcc-02f2-450c-ad5a-b60c685e2112}</Project>

@@ -9,16 +9,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaMind.EngineBuilderConte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaMind.EngineProcessor", "MetaMind.EngineProcessor\MetaMind.EngineProcessor.csproj", "{0A5D6A10-F746-4B7D-9BCA-09269F593D6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaMind.Perseverance", "MetaMind.Perseverance\MetaMind.Perseverance.csproj", "{91A424B6-E62B-4B7A-B30D-331C7E3AF5F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaMind.Runtime", "MetaMind.Perseverance\MetaMind.Runtime.csproj", "{91A424B6-E62B-4B7A-B30D-331C7E3AF5F0}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8944C3AB-1865-49CF-9E84-1ECC42AD2C3E} = {8944C3AB-1865-49CF-9E84-1ECC42AD2C3E}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaMind.PerseveranceBuilder", "MetaMind.PerseveranceBuilder\MetaMind.PerseveranceBuilder\MetaMind.PerseveranceBuilder.csproj", "{5718D82F-2AC8-42BB-A7F0-5309BED3D883}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaMind.RuntimeBuilder", "MetaMind.PerseveranceBuilder\MetaMind.PerseveranceBuilder\MetaMind.RuntimeBuilder.csproj", "{5718D82F-2AC8-42BB-A7F0-5309BED3D883}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaMind.PerseveranceBuilderContent", "MetaMind.PerseveranceBuilder\MetaMind.PerseveranceBuilderContent\MetaMind.PerseveranceBuilderContent.contentproj", "{27ADEECF-12FD-45F1-BE25-A91AC50F003D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaMind.RuntimeBuilderContent", "MetaMind.PerseveranceBuilder\MetaMind.PerseveranceBuilderContent\MetaMind.RuntimeBuilderContent.contentproj", "{27ADEECF-12FD-45F1-BE25-A91AC50F003D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaMind.PerseveranceUnitTest", "MetaMind.PerseveranceUnitTest\MetaMind.PerseveranceUnitTest.csproj", "{5CE94B1A-EB7A-464D-94DD-24BC91344B40}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaMind.RuntimeTest", "MetaMind.PerseveranceUnitTest\MetaMind.RuntimeTest.csproj", "{5CE94B1A-EB7A-464D-94DD-24BC91344B40}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaMind.Engine", "MetaMind.Engine\MetaMind.Engine.csproj", "{8944C3AB-1865-49CF-9E84-1ECC42AD2C3E}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -35,9 +35,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaMind.AcutanceBuilder", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaMind.AcutanceBuilderContent", "MetaMind.AcutanceBuilder\MetaMind.AcutanceBuilderContent\MetaMind.AcutanceBuilderContent.contentproj", "{61B849FB-36B4-4D37-AD86-F27E94E11E32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaMind.PerseveranceService", "MetaMind.PerseveranceService\MetaMind.PerseveranceService.csproj", "{61829F1D-D89D-4B13-BB47-4B13DAFFB205}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaMind.RuntimeService", "MetaMind.PerseveranceService\MetaMind.RuntimeService.csproj", "{61829F1D-D89D-4B13-BB47-4B13DAFFB205}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaMind.PerseveranceHost", "MetaMind.PerseveranceHost\MetaMind.PerseveranceHost.csproj", "{7AB9FC74-C671-41B1-9D26-9FBF03E275B4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaMind.RuntimeHost", "MetaMind.PerseveranceHost\MetaMind.RuntimeHost.csproj", "{7AB9FC74-C671-41B1-9D26-9FBF03E275B4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaMind.AcutanceUnitTest", "MetaMind.AcutanceUnitTest\MetaMind.AcutanceUnitTest.csproj", "{6ABDAA0C-3E4A-48C6-8D37-67A07D32C25E}"
 EndProject

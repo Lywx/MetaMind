@@ -4,9 +4,9 @@
     using System.ServiceModel.Description;
 
     using MetaMind.Engine;
-    using MetaMind.Perseverance;
-    using MetaMind.PerseveranceService.Services;
-    using MetaMind.PerseveranceService.Settings;
+    using MetaMind.Runtime;
+    using MetaMind.RuntimeService.Services;
+    using MetaMind.RuntimeService.Settings;
 
     public static class Program
     {
@@ -33,7 +33,7 @@
 
                     using (var engine = GameEngine.GetEngine())
                     {
-                        var runner = new Perseverance(engine);
+                        var runner = new Runtime(engine);
 
                         runner.Run();
                     }

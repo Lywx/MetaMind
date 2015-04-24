@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Perseverance.Guis.Widgets
+﻿namespace MetaMind.Runtime.Guis.Widgets
 {
     using MetaMind.Engine.Guis.Widgets.Items;
 
@@ -11,7 +11,8 @@
 
         public dynamic CreateData(IViewItem item)
         {
-            return Perseverance.Session.Motivation.Create(item.ViewSettings.Space);
+            var s = Runtime.SessionData;
+            return s.Motivation.Create();
         }
 
         public IItemGraphics CreateGraphics(IViewItem item)
@@ -21,7 +22,7 @@
 
         public void RemoveData(IViewItem item)
         {
-            Perseverance.Session.Motivation.Remove(item.ItemData, item.ViewSettings.Space);
+            Runtime.Session.Motivation.Remove(item.ItemData, item.ViewSettings.Space);
         }
     }
 }

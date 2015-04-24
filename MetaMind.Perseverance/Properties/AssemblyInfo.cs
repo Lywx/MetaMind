@@ -4,8 +4,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Meta Mind - Perseverance - Preprocessor")]
-[assembly: AssemblyProduct( "MetaMind.Perseverance" )]
+[assembly: AssemblyTitle("Meta Mind")]
+[assembly: AssemblyProduct("MetaMind.Runtime")]
 [assembly: AssemblyConfiguration( "" )]
 [assembly: AssemblyDescription( "" )]
 [assembly: AssemblyCompany( "" )]

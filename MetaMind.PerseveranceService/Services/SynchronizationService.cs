@@ -1,10 +1,9 @@
-﻿namespace MetaMind.PerseveranceService.Services
+﻿namespace MetaMind.RuntimeService.Services
 {
     using System.ServiceModel;
 
-    using MetaMind.Perseverance;
-    using MetaMind.Perseverance.Concepts;
-    using MetaMind.Perseverance.Concepts.Tasks;
+    using MetaMind.Runtime;
+    using MetaMind.Runtime.Concepts.Tasks;
 
     [ServiceContract]
     public interface ISynchronizationService
@@ -22,12 +21,12 @@
     {
         public ISynchronization FetchSynchronization()
         {
-            return Perseverance.Session.Cognition.Synchronization;
+            return Runtime.Session.Cognition.Synchronization;
         }
 
         public ISynchronizable FetchSynchronizationData()
         {
-            return Perseverance.Session.Cognition.Synchronization.SynchronizedData;
+            return Runtime.Session.Cognition.Synchronization.SynchronizedData;
         }
     }
 }

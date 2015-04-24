@@ -50,7 +50,7 @@ namespace MetaMind.Engine.Components
         /// <param name="settingsFile">The filename of the XACT settings file.</param>
         /// <param name="waveBankFile">The filename of the XACT wavebank file.</param>
         /// <param name="soundBankFile">The filename of the XACT soundbank file.</param>
-        public AudioManager(GameEngine engine, string settingsFile, string waveBankFile, string soundBankFile)
+        public AudioManager(GameEngine engine, string settingsFile, string waveBankFile, string soundBankFile, int updateOrder)
             : base(engine)
         {
             try
@@ -81,6 +81,15 @@ namespace MetaMind.Engine.Components
                 this.WaveBank    = null;
                 this.SoundBank   = null;
             }
+
+            if (engine == null)
+            {
+                throw new ArgumentNullException("engine");
+            }
+
+            engine.Components.Add(this);
+
+            this.UpdateOrder = updateOrder;
         }
 
         #endregion Initialization Methods

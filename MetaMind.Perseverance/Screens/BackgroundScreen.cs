@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Perseverance.Screens
+﻿namespace MetaMind.Runtime.Screens
 {
     using System;
 

@@ -1,11 +1,11 @@
-﻿namespace MetaMind.Perseverance.Screens
+﻿namespace MetaMind.Runtime.Screens
 {
     using System;
 
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Screens;
     using MetaMind.Engine.Services;
-    using MetaMind.Perseverance.Guis.Modules;
+    using MetaMind.Runtime.Guis.Modules;
 
     using Microsoft.Xna.Framework;
 
@@ -25,7 +25,7 @@
 
         public override void LoadContent(IGameInteropService interop)
         {
-            var cognition = Perseverance.Session.Cognition;
+            var cognition = Runtime.Session.Cognition;
 
             this.synchronization = new SynchronizationModule(
                 cognition.Consciousness,
@@ -43,8 +43,8 @@
 
             graphics.SpriteBatch.Begin();
 
-            this.motivation     .Draw(graphics, time, TransitionAlpha);
-            this.synchronization.Draw(graphics, time, TransitionAlpha);
+            this.motivation     .Draw(graphics, time, this.TransitionAlpha);
+            this.synchronization.Draw(graphics, time, this.TransitionAlpha);
 
             graphics.SpriteBatch.End();
         }

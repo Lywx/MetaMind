@@ -46,9 +46,10 @@
     <Reference Include="mscorlib" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MetaMind.PerseveranceBuilderContent\MetaMind.PerseveranceBuilderContent.contentproj">
-      <Name>MetaMind.PerseveranceBuilderContent</Name>
+    <ProjectReference Include="..\MetaMind.PerseveranceBuilderContent\MetaMind.RuntimeBuilderContent.contentproj">
+      <Name>MetaMind.RuntimeBuilderContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>
+      <Project>{27ADEECF-12FD-45F1-BE25-A91AC50F003D}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

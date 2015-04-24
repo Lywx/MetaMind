@@ -1,4 +1,4 @@
-namespace MetaMind.Perseverance.Guis.Widgets
+namespace MetaMind.Runtime.Guis.Widgets
 {
     using System;
 
@@ -8,7 +8,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
     public class MotivationViewSettings : PointListSettings
     {
-        //public BannerSetting BannerSetting = new BannerSetting();
+        public BannerSetting BannerSetting = new BannerSetting();
 
         public Vector2       TracerMargin;
 

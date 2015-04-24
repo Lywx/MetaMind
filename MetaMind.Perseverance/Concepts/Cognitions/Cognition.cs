@@ -1,6 +1,8 @@
-﻿namespace MetaMind.Perseverance.Concepts.Cognitions
+﻿namespace MetaMind.Runtime.Concepts.Cognitions
 {
     using System.Runtime.Serialization;
+
+    using MetaMind.Runtime.Concepts.Synchronizations;
 
     public interface ICognition
     {

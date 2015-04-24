@@ -1,15 +1,15 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="SynchronizationStartedEventArgs.cs" company="UESTC">
-//   Copyright (c) 2014 Wuxiang Lin
+//   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Perseverance.Events
+namespace MetaMind.Runtime.Events
 {
     using System;
 
-    using MetaMind.Perseverance.Concepts;
+    using MetaMind.Runtime.Concepts.Synchronizations;
 
     public class SynchronizationStartedEventArgs : EventArgs
     {

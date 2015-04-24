@@ -5,7 +5,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Perseverance.Guis.Widgets
+namespace MetaMind.Runtime.Guis.Widgets
 {
     using System.Globalization;
 
@@ -68,8 +68,8 @@ namespace MetaMind.Perseverance.Guis.Widgets
         {
             get
             {
-                return ExtPoint.ToVector2(ItemControl.RootFrame.Rectangle.Center)
-                       + ExtPoint.ToVector2(ItemSettings.NameMargin);
+                return ExtPoint.ToVector2(this.ItemControl.RootFrame.Rectangle.Center)
+                       + ExtPoint.ToVector2(this.ItemSettings.NameMargin);
             }
         }
 
@@ -79,7 +79,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            if (!ItemControl.Active)
+            if (!this.ItemControl.Active)
             {
                 return;
             }
@@ -101,17 +101,17 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
         protected override void DrawId(IGameGraphicsService graphics, byte alpha)
         {
-            //FontManager.DrawStringCenteredHV(
-            //    ItemSettings.IdFont,
-            //    ItemControl.Id.ToString(new CultureInfo("en-US")),
-            //    this.IdCenterPosition(),
-            //    !Item.IsEnabled(ItemState.Item_Pending) ? ItemSettings.IdColor : ItemSettings.IdPendingColor,
-            //    ItemSettings.IdSize);
+            FontManager.DrawStringCenteredHV(
+                this.ItemSettings.IdFont,
+                this.ItemControl.Id.ToString(new CultureInfo("en-US")),
+                this.IdCenterPosition(),
+                !this.Item.IsEnabled(ItemState.Item_Pending) ? this.ItemSettings.IdColor : this.ItemSettings.IdPendingColor,
+                this.ItemSettings.IdSize);
         }
 
         private void DrawName(byte alpha)
         {
-            if (!Item.IsEnabled(ItemState.Item_Selected))
+            if (!this.Item.IsEnabled(ItemState.Item_Selected))
             {
                 return;
             }

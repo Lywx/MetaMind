@@ -5,11 +5,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Perseverance.Events
+namespace MetaMind.Runtime.Events
 {
     using System;
 
-    using MetaMind.Perseverance.Concepts.Tasks;
+    using MetaMind.Runtime.Concepts.Tasks;
 
     public class SynchronizationStoppedEventArgs : EventArgs
     {

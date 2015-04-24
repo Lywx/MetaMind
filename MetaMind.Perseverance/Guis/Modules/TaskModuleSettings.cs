@@ -5,12 +5,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Perseverance.Guis.Modules
+namespace MetaMind.Runtime.Guis.Modules
 {
     using System;
 
     using MetaMind.Engine;
-    using MetaMind.Perseverance.Guis.Widgets;
+    using MetaMind.Runtime.Guis.Widgets;
 
     using Microsoft.Xna.Framework;
 
@@ -29,7 +29,7 @@ namespace MetaMind.Perseverance.Guis.Modules
                                         ColumnNumDisplay = 1,
                                         ColumnNumMax     = 1,
 
-                                        //RowNumDisplay    = GameEngine.GraphicsSettings.IsFullscreen ? 13 : 9,
+                                        RowNumDisplay = GameEngine.GraphicsSettings.IsFullscreen ? 13 : 9,
                                         RowNumMax        = 100,
 
                                         PointMargin = new Point(

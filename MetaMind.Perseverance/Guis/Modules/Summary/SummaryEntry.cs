@@ -1,4 +1,4 @@
-namespace MetaMind.Perseverance.Guis.Modules.Summary
+namespace MetaMind.Runtime.Guis.Modules.Summary
 {
     using System;
 

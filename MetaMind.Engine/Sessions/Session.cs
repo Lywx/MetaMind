@@ -6,8 +6,6 @@ namespace MetaMind.Engine.Sessions
 
     using MetaMind.Engine.Components;
 
-    using Microsoft.Xna.Framework;
-
     [DataContract]
     public sealed class Session<TData> : ISession<TData>
         where TData : ISessionData, new()
@@ -25,7 +23,7 @@ namespace MetaMind.Engine.Sessions
         #region Session Data 
 
         [DataMember]
-        private TData Data { get; set; }
+        public TData Data { get; set; }
 
         #endregion
 
@@ -46,24 +44,24 @@ namespace MetaMind.Engine.Sessions
 
         #region Save and Load
 
-        public static Session<TData> LoadSave()
+        public static Session<TData> Load()
         {
             if (File.Exists(XmlPath))
             {
-                // auto-backup the old file
+                // Auto-backup the old file
                 File.Copy(XmlPath, XmlPath + ".bak", true);
 
-                // load from save
-                LoadSave(XmlPath);
+                // Load from save
+                Load(XmlPath);
             }
             else if (File.Exists(XmlPath + ".bak"))
             {
-                // load from the backup
-                LoadSave(XmlPath + ".bak");
+                // Load from the backup
+                Load(XmlPath + ".bak");
             }
             else
             {
-                // create a new singleton
+                // Create a new singleton
                 Singleton = new Session<TData>();
             }
 
@@ -82,11 +80,11 @@ namespace MetaMind.Engine.Sessions
             }
             catch (IOException)
             {
-                // skip because there may be other instance trying to save
+                // Skip because there may be other instance trying to save
             }
         }
 
-        private static void LoadSave(string path)
+        private static void Load(string path)
         {
             using (var file = File.OpenRead(path))
             {
@@ -109,9 +107,9 @@ namespace MetaMind.Engine.Sessions
 
         #region Update
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
-            this.Data.Update(gameTime);
+            this.Data.Update();
         }
 
         #endregion Update

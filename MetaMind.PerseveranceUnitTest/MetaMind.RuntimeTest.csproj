@@ -6,8 +6,8 @@
     <ProjectGuid>{5CE94B1A-EB7A-464D-94DD-24BC91344B40}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MetaMind.PerseveranceUnitTest</RootNamespace>
-    <AssemblyName>MetaMind.PerseveranceUnitTest</AssemblyName>
+    <RootNamespace>MetaMind.RuntimeTest</RootNamespace>
+    <AssemblyName>MetaMind.RuntimeTest</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -72,9 +72,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MetaMind.Perseverance\MetaMind.Perseverance.csproj">
+    <ProjectReference Include="..\MetaMind.Perseverance\MetaMind.Runtime.csproj">
       <Project>{91a424b6-e62b-4b7a-b30d-331c7e3af5f0}</Project>
-      <Name>MetaMind.Perseverance</Name>
+      <Name>MetaMind.Runtime</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

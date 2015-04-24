@@ -5,13 +5,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Perseverance.Guis.Widgets
+namespace MetaMind.Runtime.Guis.Widgets
 {
     using MetaMind.Engine.Components.Events;
     using MetaMind.Engine.Guis.Widgets.Items;
-    using MetaMind.Perseverance.Concepts.Cognitions;
-    using MetaMind.Perseverance.Events;
-    using MetaMind.Perseverance.Sessions;
+    using MetaMind.Runtime.Events;
+    using MetaMind.Runtime.Sessions;
 
     public class TaskItemSyncControl : ViewItemComponent
     {

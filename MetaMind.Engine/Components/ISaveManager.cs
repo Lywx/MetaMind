@@ -1,6 +1,8 @@
 namespace MetaMind.Engine.Components
 {
-    public interface ISaveManager
+    using Microsoft.Xna.Framework;
+
+    public interface ISaveManager : IGameComponent
     {
         void Save();
 

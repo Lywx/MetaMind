@@ -1,4 +1,4 @@
-namespace MetaMind.Perseverance.Guis.Modules
+namespace MetaMind.Runtime.Guis.Modules
 {
     using MetaMind.Engine;
     using MetaMind.Engine.Components.Fonts;

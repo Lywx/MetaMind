@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Perseverance.Sessions
+﻿namespace MetaMind.Runtime.Sessions
 {
     public enum SessionEventType
     {

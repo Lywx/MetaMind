@@ -5,8 +5,7 @@
 
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Services;
-    using MetaMind.Perseverance.Concepts.Cognitions;
-    using MetaMind.Perseverance.Guis.Modules;
+    using MetaMind.Runtime.Guis.Modules;
 
     using Microsoft.Xna.Framework;
 

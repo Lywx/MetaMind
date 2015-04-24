@@ -5,15 +5,14 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Perseverance.Guis.Widgets
+namespace MetaMind.Runtime.Guis.Widgets
 {
-    using MetaMind.Engine;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Regions;
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Services;
-    using MetaMind.Perseverance.Concepts.Tasks;
+    using MetaMind.Runtime.Concepts.Tasks;
 
     using Microsoft.Xna.Framework;
 
@@ -62,13 +61,13 @@ namespace MetaMind.Perseverance.Guis.Widgets
                     {
                         // itme deletion is handled by item control
                         // auto select last item
-                        if (View.Items.Count > 1)
+                        if (this.View.Items.Count > 1)
                         {
                             // this will be called before item deletion
                             if (this.Selection.SelectedId != null && 
-                                this.Selection.SelectedId > View.Items.Count - 2)
+                                this.Selection.SelectedId > this.View.Items.Count - 2)
                             {
-                                this.Selection.Select(View.Items.Count - 2);
+                                this.Selection.Select(this.View.Items.Count - 2);
                             }
                         }
                     }

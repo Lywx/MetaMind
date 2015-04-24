@@ -1,11 +1,11 @@
-﻿namespace MetaMind.Perseverance.Screens
+﻿namespace MetaMind.Runtime.Screens
 {
     using System;
 
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Screens;
     using MetaMind.Engine.Services;
-    using MetaMind.Perseverance.Guis.Modules;
+    using MetaMind.Runtime.Guis.Modules;
 
     using Microsoft.Xna.Framework;
 
@@ -28,14 +28,14 @@
 
             spriteBatch.Begin();
 
-            this.summary.Draw(graphics, time, TransitionAlpha);
+            this.summary.Draw(graphics, time, this.TransitionAlpha);
 
             spriteBatch.End();
         }
 
         public override void LoadContent(IGameInteropService interop)
         {
-            this.summary = new SummaryModule(Perseverance.Session.Cognition, new SummarySettings());
+            this.summary = new SummaryModule(Runtime.Session.Cognition, new SummarySettings());
             this.summary.LoadContent(interop);
         }
 

@@ -1,8 +1,8 @@
-﻿namespace MetaMind.Perseverance.Guis.Modules.Synchronization
+﻿namespace MetaMind.Runtime.Guis.Modules.Synchronization
 {
     using MetaMind.Engine.Components.Events;
-    using MetaMind.Perseverance.Concepts;
-    using MetaMind.Perseverance.Sessions;
+    using MetaMind.Runtime.Concepts.Synchronizations;
+    using MetaMind.Runtime.Sessions;
 
     internal class SynchronizationModuleSynchronizationStopListener : Listener
     {

@@ -26,7 +26,7 @@ namespace MetaMind.Engine
         {
             // Callled after construction of GameEngine
             this.Interop = GameEngine.Service.Interop;
-            this.Interop.Game.Add(this);
+            this.Interop.Game.Plug(this);
         }
 
         #endregion

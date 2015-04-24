@@ -41,12 +41,12 @@
 
         protected virtual void DrawId(IGameGraphicsService graphics, byte alpha)
         {
-            //graphics.String.DrawStringCenteredHV(
-            //    ItemSettings.IdFont,
-            //    ItemControl.Id.ToString(new CultureInfo("en-US")),
-            //    this.IdCenterPosition(),
-            //    ExtColor.MakeTransparent(ItemSettings.IdColor, alpha),
-            //    ItemSettings.IdSize);
+            graphics.String.DrawStringCenteredHV(
+                ItemSettings.IdFont,
+                ItemControl.Id.ToString(new CultureInfo("en-US")),
+                this.IdCenterPosition(),
+                ExtColor.MakeTransparent(ItemSettings.IdColor, alpha),
+                ItemSettings.IdSize);
         }
 
         protected virtual void DrawNameFrame(IGameGraphicsService graphics, byte alpha)

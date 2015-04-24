@@ -1,11 +1,10 @@
-namespace MetaMind.Perseverance.Guis.Widgets
+namespace MetaMind.Runtime.Guis.Widgets
 {
-    using MetaMind.Engine;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Services;
-    using MetaMind.Perseverance.Guis.Modules;
+    using MetaMind.Runtime.Guis.Modules;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
@@ -45,9 +44,9 @@ namespace MetaMind.Perseverance.Guis.Widgets
         {
             // only need to remove from gui
             // tasks are not stored centralizedly
-            View.Items.Remove(Item);
+            this.View.Items.Remove(this.Item);
 
-            Item.Dispose();
+            this.Item.Dispose();
         }
 
         #endregion Operations
@@ -71,7 +70,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
             // keyboard
             //-----------------------------------------------------------------
-            if (ViewSettings.KeyboardEnabled)
+            if (this.ViewSettings.KeyboardEnabled)
             {
                 if (this.AcceptInput)
                 {
@@ -101,7 +100,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
 
                         if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))
                         {
-                            View.Disable(ViewState.Item_Editting);
+                            this.View.Disable(ViewState.Item_Editting);
                             this.Item.Disable(ItemState.Item_Pending);
                         }
                     }
@@ -113,7 +112,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
                         // normal status
                         if (input.State.Keyboard.IsActionTriggered(KeyboardActions.TaskEditItem))
                         {
-                            View.Enable(ViewState.Item_Editting);
+                            this.View.Enable(ViewState.Item_Editting);
                             this.Item.Enable(ItemState.Item_Pending);
                         }
 

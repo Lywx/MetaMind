@@ -99,5 +99,13 @@ namespace MetaMind.Engine.Services
                 return this.interop.Screen;
             }
         }
+
+        public ISaveManager Save
+        {
+            get
+            {
+                return this.interop.Save;
+            }
+        }
     }
 }

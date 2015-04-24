@@ -1,14 +1,11 @@
-namespace MetaMind.Perseverance.Guis.Widgets
+namespace MetaMind.Runtime.Guis.Widgets
 {
     using System.Collections.Generic;
 
-    using MetaMind.Engine;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Services;
-    using MetaMind.Perseverance.Concepts.Tasks;
-    using MetaMind.Perseverance.Guis.Modules;
-
-    using IGameInteropService = MetaMind.Engine.Services.IGameInteropService;
+    using MetaMind.Runtime.Concepts.Tasks;
+    using MetaMind.Runtime.Guis.Modules;
 
     public class TaskItemViewControlInMotivation : ViewItemViewControl2D
     {
@@ -38,7 +35,7 @@ namespace MetaMind.Perseverance.Guis.Widgets
             }
 
             var process = this.GameInterop.Process;
-            process.AttachProcess(new TaskItemSwapProcessInMotivation(draggingItem, Item, tasks));
+            process.AttachProcess(new TaskItemSwapProcessInMotivation(draggingItem, this.Item, tasks));
         }
     }
 }

@@ -1,4 +1,4 @@
-namespace MetaMind.Perseverance.Concepts
+namespace MetaMind.Runtime.Concepts.Synchronizations
 {
     using System;
     using System.Linq;

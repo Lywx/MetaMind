@@ -1,4 +1,4 @@
-namespace MetaMind.Perseverance.Guis.Modules.Synchronization
+namespace MetaMind.Runtime.Guis.Modules.Synchronization
 {
     using System;
 

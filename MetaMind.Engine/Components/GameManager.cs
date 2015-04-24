@@ -7,34 +7,39 @@
 
 namespace MetaMind.Engine.Components
 {
-    using System.Collections.Generic;
+    using System;
 
     using Microsoft.Xna.Framework;
 
     public class GameManager : IGameManager
     {
-        private readonly GameComponentCollection components;
+        private GameComponentCollection Components { get; set; }
 
-        private readonly List<IGame> games = new List<IGame>();
+        private IGame Game { get; set; }
 
         #region Constructors
 
         public GameManager(GameEngine engine)
         {
-            this.components = engine.Components;
+            this.Components = engine.Components;
         }
 
         #endregion
 
-        public void Add(IGame game)
+        public void Plug(IGame game)
         {
-            this.games     .Add(game);
-            this.components.Add(game);
+            if (this.Game != null)
+            {
+                throw new InvalidOperationException("Game exists already.");
+            }
+
+            this.Game = game;
+            this.Components.Add(game);
         }
 
         public void OnExiting()
         {
-            this.games.ForEach(component => component.OnExiting());
+            this.Game.OnExiting();
         }
     }
 }

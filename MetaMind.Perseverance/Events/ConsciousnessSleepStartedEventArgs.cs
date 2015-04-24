@@ -5,11 +5,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Perseverance.Events
+namespace MetaMind.Runtime.Events
 {
     using System;
 
-    using MetaMind.Perseverance.Concepts.Cognitions;
+    using MetaMind.Runtime.Concepts.Cognitions;
 
     public class ConsciousnessSleepStartedEventArgs : EventArgs
     {
@@ -24,7 +24,7 @@ namespace MetaMind.Perseverance.Events
         {
             get
             {
-                return consciousness;
+                return this.consciousness;
             }
         }
     }
