@@ -92,10 +92,6 @@
       <Project>{8944c3ab-1865-49cf-9e84-1ecc42ad2c3e}</Project>
       <Name>MetaMind.Engine</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MetaMind.Perseverance\MetaMind.Runtime.csproj">
-      <Project>{91a424b6-e62b-4b7a-b30d-331c7e3af5f0}</Project>
-      <Name>MetaMind.Runtime</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -106,6 +106,11 @@ namespace MetaMind.Engine.Services
             {
                 return this.interop.Save;
             }
+
+            set
+            {
+                this.interop.Save = value;
+            }
         }
     }
 }

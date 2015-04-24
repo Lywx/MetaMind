@@ -7,7 +7,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MetaMind.PerseveranceBuilderContentContent</RootNamespace>
+    <RootNamespace>MetaMind.RuntimeBuilderContentContent</RootNamespace>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
     <MonoGamePlatform>Windows</MonoGamePlatform>

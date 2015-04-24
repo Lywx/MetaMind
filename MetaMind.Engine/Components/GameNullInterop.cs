@@ -25,6 +25,8 @@ namespace MetaMind.Engine.Components
 
         public IScreenManager Screen { get; private set; }
 
+        public ISaveManager Save { get; set; }
+
         public void Initialize()
         {
         }

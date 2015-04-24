@@ -46,7 +46,7 @@
     <Reference Include="mscorlib" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MetaMind.PerseveranceBuilderContent\MetaMind.RuntimeBuilderContent.contentproj">
+    <ProjectReference Include="..\MetaMind.RuntimeBuilderContent\MetaMind.RuntimeBuilderContent.contentproj">
       <Name>MetaMind.RuntimeBuilderContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>
       <Project>{27ADEECF-12FD-45F1-BE25-A91AC50F003D}</Project>
