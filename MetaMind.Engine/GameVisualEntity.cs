@@ -116,11 +116,5 @@ namespace MetaMind.Engine
         public virtual void Draw(IGameGraphicsService graphics, GameTime time, byte alpha) { }
 
         #endregion
-
-        #region Update
-
-        public virtual void UpdateGraphics(IGameGraphicsService graphics, GameTime time) { }
-
-        #endregion
     }
 }

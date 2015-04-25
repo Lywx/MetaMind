@@ -1,4 +1,4 @@
-namespace MetaMind.EngineUnitTest.Parsers
+namespace MetaMind.EngineTest.Parsers
 {
     using MetaMind.Engine.Parsers.Grammars;
 

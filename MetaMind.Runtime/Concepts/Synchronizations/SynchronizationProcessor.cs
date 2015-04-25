@@ -13,40 +13,34 @@ namespace MetaMind.Runtime.Concepts.Synchronizations
     using System;
     using System.Runtime.Serialization;
 
-    using MetaMind.Engine.Concepts;
-
     [DataContract]
     public class SynchronizationProcessor
     {
+
         [DataMember]
-        public ISynchronizable Data { get; private set; }
+        public ISynchronizationData Data { get; set; }
 
-        public SynchronizationData DataSynchronization
-        {
-            get { return this.Data.SynchronizationData; }
-        }
-
-        public void Accept(ISynchronizable data)
+        public void Accept(ISynchronizationData data)
         {
             this.Data = data;
 
-            this.DataSynchronization.SynchronizationSpan += new SynchronizationSpan();
-            this.DataSynchronization.IsSynchronizing = true;
+            this.Data.SynchronizationSpan += new SynchronizationSpan();
+            this.Data.IsSynchronizing = true;
         }
 
         public void Release(out TimeSpan timePassed)
         {
-            timePassed = this.Data.SynchronizationData.SynchronizationSpan.End();
+            timePassed = this.Data.SynchronizationSpan.End();
 
-            this.DataSynchronization.IsSynchronizing = false;
+            this.Data.IsSynchronizing = false;
             this.Data = null;
         }
 
         public void Abort()
         {
-            this.DataSynchronization.SynchronizationSpan.Abort();
+            this.Data.SynchronizationSpan.Abort();
 
-            this.DataSynchronization.IsSynchronizing = false;
+            this.Data.IsSynchronizing = false;
 
             this.Data = null;
         }
@@ -55,7 +49,7 @@ namespace MetaMind.Runtime.Concepts.Synchronizations
         {
             if (isEnabled)
             {
-                this.DataSynchronization.SynchronizationSpan.Accelaration = acceleration;
+                this.Data.SynchronizationSpan.Accelaration = acceleration;
             }
         }
     }

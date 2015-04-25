@@ -100,6 +100,10 @@ namespace MetaMind.Engine.Sessions
                 {
                     Singleton = new Session<TData>();
                 }
+                catch (XmlException)
+                {
+                    Singleton = new Session<TData>();
+                }
             }
         }
 

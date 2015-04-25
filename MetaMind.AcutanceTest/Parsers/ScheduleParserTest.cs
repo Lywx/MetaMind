@@ -1,11 +1,8 @@
-﻿namespace MetaMind.AcutanceUnitTest.Parsers
+﻿namespace MetaMind.AcutanceTest.Parsers
 {
-    using System;
-    using System.IO;
-    using System.Linq;
-
     using MetaMind.Acutance.Parsers.Elements;
     using MetaMind.Acutance.Parsers.Grammars;
+    using MetaMind.AcutanceTest;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 

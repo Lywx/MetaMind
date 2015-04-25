@@ -17,11 +17,12 @@
 
         public Motivation()
         {
+            this.ProgressionData = new ProgressionData();
         }
 
         #region Progression Data
 
-        public ProgressionData ProgressionData { get; set; }
+        public IProgressionData ProgressionData { get; set; }
 
         public string ProgressionName
         {

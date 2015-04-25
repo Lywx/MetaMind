@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Experience.cs" company="UESTC">
-//   Copyright (c) 2014 Wuxiang Lin
+//   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -12,8 +12,5 @@ namespace MetaMind.Runtime.Concepts.Motivations
     [DataContract]
     public class Experience : IExperience
     {
-        public Experience()
-        {
-        }
     }
 }

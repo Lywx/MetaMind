@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Components
 {
     using MetaMind.Engine.Services;
 
-    public interface IGameInterop : IGameInputableComponent, IGameInteropService
+    public interface IGameInterop : IGameControllableComponent, IGameInteropService
     {
         void OnExiting();
     }

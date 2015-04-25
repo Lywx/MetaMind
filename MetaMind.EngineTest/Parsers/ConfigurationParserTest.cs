@@ -1,8 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace MetaMind.EngineUnitTest.Parsers
+﻿namespace MetaMind.EngineTest.Parsers
 {
     using MetaMind.Engine.Parsers.Grammars;
+
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using Sprache;
 

@@ -1,15 +1,9 @@
 namespace MetaMind.Engine.Guis.Widgets.Items
 {
-    using System;
-    using System.Diagnostics;
-
     using MetaMind.Engine.Guis.Elements;
 
     public interface IItemRootFrame : IDraggableFrame
     {
-        void Disable();
-
-        void Enable();
     }
 
     public class ItemRootFrame : DraggableFrame, IItemRootFrame
@@ -36,18 +30,12 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         public override void Dispose()
         {
-            try
-            {
-                // TODO: ??
-                this.MouseLeftClicked        -= this.SelectItsItem;
-                this.MouseLeftClickedOutside -= this.UnselectItsItem;
+            this.MouseLeftClicked        -= this.SelectItsItem;
+            this.MouseLeftClickedOutside -= this.UnselectItsItem;
 
-                this.Item = null;
-            }
-            finally
-            {
-                base.Dispose();
-            }
+            this.Item = null;
+
+            base.Dispose();
         }
 
         public void Enable()
@@ -57,12 +45,12 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         private void SelectItsItem(object sender, FrameEventArgs e)
         {
-            this.Item.ItemControl.MouseSelectsIt();
+            ((ViewItemControl1D)this.Item.ItemControl).MouseSelectsIt();
         }
 
         private void UnselectItsItem(object sender, FrameEventArgs e)
         {
-            this.Item.ItemControl.MouseUnselectsIt();
+            ((ViewItemControl1D)this.Item.ItemControl).MouseUnselectsIt();
         }
     }
 }

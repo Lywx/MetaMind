@@ -62,7 +62,6 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Concepts\ExperienceTest.cs" />
     <Compile Include="Parsers\BasicParserTest.cs" />
     <Compile Include="Parsers\ConfigurationParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

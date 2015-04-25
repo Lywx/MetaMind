@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Components.Inputs
 {
     using System;
 
-    public interface IInputEvent : IGameInputableComponent
+    public interface IInputEvent : IGameControllableComponent
     {
         /// <summary>
         /// Event raised when a character has been entered.

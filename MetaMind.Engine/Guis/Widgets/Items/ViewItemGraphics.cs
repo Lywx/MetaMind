@@ -3,6 +3,7 @@
     using System;
     using System.Globalization;
 
+    using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
@@ -11,18 +12,20 @@
 
     public class ViewItemGraphics : ViewItemComponent, IItemGraphics
     {
+        public ViewItemGraphics(IViewItem item)
+            : base(item)
+        {
+            this.RootFrame = this.ItemControl.RootFrame;
+
+            this.IdCenterPosition =   () => this.RootFrame.Center.ToVector2();
+            this.ItemCenterPosition = () => this.RootFrame.Center.ToVector2();
+        }
+
         protected Func<Vector2> IdCenterPosition { get; set; }
 
         protected Func<Vector2> ItemCenterPosition { get; set; }
 
-        public ViewItemGraphics(IViewItem item)
-            : base(item)
-        {
-            var rootFrame = ItemControl.RootFrame;
-
-            IdCenterPosition   = () => new Vector2(rootFrame.Rectangle.Right + 10, rootFrame.Rectangle.Top - 10);
-            ItemCenterPosition = () => ExtPoint.ToVector2(rootFrame.Center);
-        }
+        protected IItemRootFrame RootFrame { get; set; }
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
@@ -41,12 +44,14 @@
 
         protected virtual void DrawId(IGameGraphicsService graphics, byte alpha)
         {
-            graphics.String.DrawStringCenteredHV(
+            graphics.StringDrawer.DrawString(
                 ItemSettings.IdFont,
                 ItemControl.Id.ToString(new CultureInfo("en-US")),
                 this.IdCenterPosition(),
                 ExtColor.MakeTransparent(ItemSettings.IdColor, alpha),
-                ItemSettings.IdSize);
+                ItemSettings.IdSize,
+                StringHAlign.Center,
+                StringVAlign.Center);
         }
 
         protected virtual void DrawNameFrame(IGameGraphicsService graphics, byte alpha)
@@ -73,7 +78,7 @@
                 this.DrawNameFrameWith(graphics, this.ItemSettings.NameFrameMouseOverColor, alpha);
             }
             else if (Item.IsEnabled(ItemState.Item_Mouse_Over) &&
-                     !Item.IsEnabled(ItemState.Item_Selected))
+                    !Item.IsEnabled(ItemState.Item_Selected))
             {
                 this.FillNameFrameWith(graphics, this.ItemSettings.NameFrameRegularColor, alpha);
                 this.DrawNameFrameWith(graphics, this.ItemSettings.NameFrameMouseOverColor, alpha);

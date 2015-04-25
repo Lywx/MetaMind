@@ -2,13 +2,11 @@ namespace MetaMind.Runtime.Concepts.Synchronizations
 {
     using System.Runtime.Serialization;
 
-    using MetaMind.Engine.Concepts;
-
     public interface ISynchronizable
     {
         string SynchronizationName { get; }
 
-        SynchronizationData SynchronizationData { get; set; }
+        ISynchronizationData SynchronizationData { get; set; }
     }
 
     public interface ISynchronizationData

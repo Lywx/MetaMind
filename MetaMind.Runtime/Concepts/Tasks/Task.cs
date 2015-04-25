@@ -20,7 +20,7 @@
         #region Progression Data
 
         [DataMember]
-        public ProgressionData ProgressionData { get; set; }
+        public IProgressionData ProgressionData { get; set; }
 
         public string ProgressionName
         {
@@ -43,7 +43,7 @@
         }
 
         [DataMember]
-        public SynchronizationData SynchronizationData { get; set; }
+        public ISynchronizationData SynchronizationData { get; set; }
 
         #endregion
     }

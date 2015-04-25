@@ -4,7 +4,6 @@ namespace MetaMind.Acutance.Guis.Modules
     using MetaMind.Engine;
     using MetaMind.Engine.Components.Graphics;
     using MetaMind.Engine.Settings.Loaders;
-    using MetaMind.Runtime.Guis.Widgets;
 
     using Microsoft.Xna.Framework;
 

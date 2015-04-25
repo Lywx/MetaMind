@@ -9,7 +9,7 @@ namespace MetaMind.Runtime.Concepts.Progressions
 {
     public interface IProgressable
     {
-        ProgressionData ProgressionData { get; set; }
+        IProgressionData ProgressionData { get; set; }
 
         string ProgressionName { get; }
     }

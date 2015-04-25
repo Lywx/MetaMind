@@ -100,6 +100,7 @@
     <Compile Include="Concepts\Motivations\IExperience.cs" />
     <Compile Include="Concepts\Progressions\ProgressionData.cs" />
     <Compile Include="Concepts\Synchronizations\SynchronizationData.cs" />
+    <Compile Include="Concepts\Synchronizations\SynchronizationSpan.cs" />
     <Compile Include="Events\ConsciousnessSleepStartedEventArgs.cs" />
     <Compile Include="Events\ConsciousnessSleepStoppedEventArgs.cs" />
     <Compile Include="Concepts\Synchronizations\Synchronization.cs" />
@@ -113,8 +114,6 @@
     <Compile Include="Concepts\Motivations\Experience.cs" />
     <Compile Include="Concepts\Tasks\Task.cs" />
     <Compile Include="Extensions\ExtInt32.cs" />
-    <Compile Include="Guis\Modules\MotivationModuleFactory.cs" />
-    <Compile Include="Guis\Modules\MotivationModuleGameStartedListener.cs" />
     <Compile Include="Events\SynchronizationAlertedEventArgs.cs" />
     <Compile Include="Guis\Modules\Summary\SummaryEntry.cs" />
     <Compile Include="Guis\Modules\Summary\SummaryFactory.cs" />
@@ -126,32 +125,13 @@
     <Compile Include="Guis\Modules\Synchronization\SynchronizationModuleControl.cs" />
     <Compile Include="Guis\Modules\Synchronization\SynchronizationModuleGraphics.cs" />
     <Compile Include="Guis\Modules\Synchronization\SynchronizationProgressBar.cs" />
-    <Compile Include="Guis\Modules\TaskModule.cs" />
-    <Compile Include="Guis\Modules\TaskModuleSettings.cs" />
     <Compile Include="Guis\Modules\SummaryModule.cs" />
     <Compile Include="Guis\Modules\SummarySettings.cs" />
     <Compile Include="Guis\Widgets\MotivationItemControl.cs" />
-    <Compile Include="Guis\Widgets\MotivationItemTransitProcess.cs" />
-    <Compile Include="Guis\Widgets\MotivationItemFactory.cs" />
     <Compile Include="Guis\Widgets\MotivationItemGraphics.cs" />
-    <Compile Include="Guis\Widgets\MotivationItemSettings.cs" />
-    <Compile Include="Guis\Widgets\MotivationItemSwapProcess.cs" />
-    <Compile Include="Guis\Widgets\MotivationItemFrameControl.cs" />
-    <Compile Include="Guis\Widgets\MotivationItemSymbolGraphics.cs" />
-    <Compile Include="Guis\Widgets\MotivationItemTaskControl.cs" />
-    <Compile Include="Guis\Widgets\MotivationItemTaskGraphics.cs" />
-    <Compile Include="Guis\Widgets\MotivationItemViewControl.cs" />
-    <Compile Include="Guis\Modules\MotivationModuleSettings.cs" />
-    <Compile Include="Guis\Widgets\MotivationViewControl.cs" />
-    <Compile Include="Guis\Widgets\MotivationViewFactory.cs" />
-    <Compile Include="Guis\Widgets\MotivationViewGraphics.cs" />
-    <Compile Include="Guis\Modules\MotivationModule.cs" />
-    <Compile Include="Guis\Widgets\MotivationViewSettings.cs" />
-    <Compile Include="Guis\Widgets\TaskItemErrorControl.cs" />
     <Compile Include="Guis\Widgets\TaskItemFrameControl.cs" />
     <Compile Include="Guis\Widgets\TaskItemSettings.cs" />
-    <Compile Include="Guis\Widgets\TaskItemSwapProcessInMotivation.cs" />
-    <Compile Include="Guis\Widgets\TaskItemSyncControl.cs" />
+    <Compile Include="Guis\Widgets\ViewItemSyncControl.cs" />
     <Compile Include="Guis\Modules\SynchronizationModule.cs" />
     <Compile Include="Guis\Modules\SynchronizationMonitor.cs" />
     <Compile Include="Guis\Modules\SynchronizationSettings.cs" />
@@ -159,13 +139,7 @@
     <Compile Include="Guis\Modules\Synchronization\SynchronizationModuleSynchronizationStopListener.cs" />
     <Compile Include="Guis\Widgets\TimelineScale.cs" />
     <Compile Include="Guis\Widgets\TaskItemControl.cs" />
-    <Compile Include="Guis\Widgets\TaskItemFactory.cs" />
     <Compile Include="Guis\Widgets\TaskItemGraphics.cs" />
-    <Compile Include="Guis\Widgets\TaskItemViewControlInMotivation.cs" />
-    <Compile Include="Guis\Widgets\TaskViewControl.cs" />
-    <Compile Include="Guis\Widgets\TaskViewFactory.cs" />
-    <Compile Include="Guis\Widgets\TaskViewGraphics.cs" />
-    <Compile Include="Guis\Widgets\TaskViewSettings.cs" />
     <Compile Include="Runtime.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -175,7 +149,6 @@
     <Compile Include="Sessions\ISessionData.cs" />
     <Compile Include="Sessions\SessionData.cs" />
     <Compile Include="Sessions\SessionEventType.cs" />
-    <Compile Include="Guis\Modules\SynchronizationSleepStartedEventListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FastMember">
@@ -204,7 +177,7 @@
       <Project>{8944c3ab-1865-49cf-9e84-1ecc42ad2c3e}</Project>
       <Name>MetaMind.Engine</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MetaMind.PerseveranceBuilder\MetaMind.PerseveranceBuilder\MetaMind.RuntimeBuilder.csproj">
+    <ProjectReference Include="..\MetaMind.RuntimeBuilder\MetaMind.RuntimeBuilder\MetaMind.RuntimeBuilder.csproj">
       <Project>{5718d82f-2ac8-42bb-a7f0-5309bed3d883}</Project>
       <Name>MetaMind.RuntimeBuilder</Name>
     </ProjectReference>

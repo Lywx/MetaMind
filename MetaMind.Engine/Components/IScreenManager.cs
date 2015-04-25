@@ -4,7 +4,7 @@ namespace MetaMind.Engine.Components
 
     using Microsoft.Xna.Framework;
 
-    public interface IScreenManager : IGameInputableComponent
+    public interface IScreenManager : IGameControllableComponent
     {
         #region Screen Data
 

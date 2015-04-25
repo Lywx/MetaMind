@@ -13,11 +13,24 @@ namespace MetaMind.Runtime.Events
 
     public class SynchronizationStartedEventArgs : EventArgs
     {
-        public readonly ISynchronizable Data;
+        private readonly ISynchronizationData data;
 
-        public SynchronizationStartedEventArgs(ISynchronizable data)
+        public SynchronizationStartedEventArgs(ISynchronizationData data)
         {
-            this.Data = data;
+            if (data == null)
+            {
+                throw new ArgumentNullException("data");
+            }
+
+            this.data = data;
+        }
+
+        public ISynchronizationData Data
+        {
+            get
+            {
+                return this.data;
+            }
         }
     }
 }

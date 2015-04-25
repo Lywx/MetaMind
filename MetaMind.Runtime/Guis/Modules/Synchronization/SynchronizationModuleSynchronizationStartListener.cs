@@ -9,8 +9,6 @@
 
     internal class SynchronizationModuleSynchronizationStartListener : Listener
     {
-        private readonly ISynchronization synchronization;
-
         public SynchronizationModuleSynchronizationStartListener(ISynchronization synchronization)
         {
             if (synchronization == null)
@@ -18,10 +16,12 @@
                 throw new ArgumentNullException("synchronization");
             }
 
-            this.synchronization = synchronization;
+            this.Synchronization = synchronization;
 
             this.RegisteredEvents.Add((int)SessionEventType.SyncStarted);
         }
+
+        private ISynchronization Synchronization { get; set; }
 
         public override bool HandleEvent(IEvent e)
         {
@@ -29,9 +29,9 @@
             var data = synchronizationStartedEventArgs.Data;
 
             // uncomment this to enforce fixed entry start/stop
-            //// if (synchronization.IsEnabled) return true;
+            //// if (Synchronization.IsEnabled) return true;
 
-            this.synchronization.TryStart(data);
+            this.Synchronization.TryStart(data);
 
             return true;
         }

@@ -9,6 +9,7 @@ namespace MetaMind.Runtime.Guis.Widgets
 {
     using System.Globalization;
 
+    using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Services;
 
@@ -16,15 +17,9 @@ namespace MetaMind.Runtime.Guis.Widgets
 
     public class MotivationItemGraphics : ViewItemGraphics
     {
-        private readonly MotivationItemSymbolGraphics symbol;
-
-        private readonly MotivationItemTaskGraphics task;
-
         public MotivationItemGraphics(IViewItem item)
             : base(item)
         {
-            this.symbol = new MotivationItemSymbolGraphics(item);
-            this.task   = new MotivationItemTaskGraphics(item);
         }
 
         #region Graphics Data
@@ -84,29 +79,25 @@ namespace MetaMind.Runtime.Guis.Widgets
                 return;
             }
 
-            // main motivation item
-            this.symbol.Draw(graphics, time, alpha);
 
             this.DrawName(alpha);
             this.DrawId(graphics, alpha);
-
-            // sub task view
-            this.task.Draw(graphics, time, alpha);
         }
 
         public override void Update(GameTime time)
         {
-            this.symbol.Update(time);
         }
 
         protected override void DrawId(IGameGraphicsService graphics, byte alpha)
         {
-            FontManager.DrawStringCenteredHV(
+            graphics.StringDrawer.DrawString(
                 this.ItemSettings.IdFont,
                 this.ItemControl.Id.ToString(new CultureInfo("en-US")),
                 this.IdCenterPosition(),
                 !this.Item.IsEnabled(ItemState.Item_Pending) ? this.ItemSettings.IdColor : this.ItemSettings.IdPendingColor,
-                this.ItemSettings.IdSize);
+                this.ItemSettings.IdSize,
+                StringHAlign.Center,
+                StringVAlign.Center);
         }
 
         private void DrawName(byte alpha)

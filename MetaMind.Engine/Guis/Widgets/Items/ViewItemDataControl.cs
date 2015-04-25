@@ -11,7 +11,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items
     using System.Reflection;
 
     using MetaMind.Engine.Components.Fonts;
-    using MetaMind.Engine.Concepts;
     using MetaMind.Engine.Events;
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Services;
@@ -44,14 +43,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         }
 
         protected IViewItemCharModifier CharModifier { get; private set; }
-
-        public void EditExperience(string targetName)
-        {
-            this.EditStart(targetName, false);
-
-            this.CharModifier.ValueModified += this.RefreshEditingExperience;
-            this.CharModifier.ModificationEnded += this.TerminateEditing;
-        }
 
         public void EditInt(string targetName)
         {
@@ -102,18 +93,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             {
                 this.CharModifier.Initialize(property.GetValue(ItemData).ToString(), showCursor);
             }
-        }
-
-        private void RefreshEditingExperience(object sender, ViewItemDataEventArgs e)
-        {
-            var inputString = ((Font)this.ItemSettings.NameFont).PrintableString(e.NewValue);
-
-            // parse input to experience
-            int integer;
-            var succeded = int.TryParse(inputString, out integer);
-            var experience = new SynchronizationSpan(DateTime.Now, DateTime.Now, TimeSpan.FromHours(integer));
-
-            this.RefreshValue(ItemData, succeded ? experience : SynchronizationSpan.Zero);
         }
 
         private void RefreshEditingInt(object sender, ViewItemDataEventArgs e)

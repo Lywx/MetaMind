@@ -37,7 +37,7 @@ namespace MetaMind.Runtime.Components
         public override void Load()
         {
             Runtime.Session = Session<SessionData>.Load();
-            Runtime.SessionData = Runtime.Session.Data
+            Runtime.SessionData = Runtime.Session.Data;
         }
 
         #endregion Operations

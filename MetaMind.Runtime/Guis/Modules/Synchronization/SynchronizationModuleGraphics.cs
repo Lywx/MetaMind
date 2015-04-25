@@ -19,8 +19,6 @@ namespace MetaMind.Runtime.Guis.Modules.Synchronization
 
         private string StateInfoTrue  = "Gaining Synchronicity";
 
-        private List<GameVisualEntity> entities;
-
         public SynchronizationModuleGraphics(SynchronizationModule module, IConsciousness consciousness, ISynchronization synchronization)
             : base(module)
         {
@@ -112,7 +110,7 @@ namespace MetaMind.Runtime.Guis.Modules.Synchronization
                 StringVAlign.Center,
                 false);
 
-            this.entities = new List<GameVisualEntity>
+            this.Entities = new GameVisualEntityCollection<IGameVisualEntity>
                                 {
                                     progressBar,
 
@@ -133,22 +131,22 @@ namespace MetaMind.Runtime.Guis.Modules.Synchronization
             // Empty point frames
             for (var i = 0; i < this.Synchronization.SynchronizedHourMax; ++i)
             {
-                this.entities.Add(factory.CreatePointFrame(this.StateInfoCenterPosition, i, SynchronizationPointSide.Left));
-                this.entities.Add(factory.CreatePointFrame(this.StateInfoCenterPosition, i, SynchronizationPointSide.Right));
+                this.Entities.Add(factory.CreatePointFrame(this.StateInfoCenterPosition, i, SynchronizationPointSide.Left));
+                this.Entities.Add(factory.CreatePointFrame(this.StateInfoCenterPosition, i, SynchronizationPointSide.Right));
             }
 
             // Yesterday points
             for (var i = 0; i < this.Synchronization.SynchronizedHourYesterday; ++i)
             {
-                this.entities.Add(factory.CreatePoint(this.StateInfoCenterPosition, i, "", () => this.Settings.BarFrameDescendColor, SynchronizationPointSide.Left));
-                this.entities.Add(factory.CreatePoint(this.StateInfoCenterPosition, i, "", () => this.Settings.BarFrameDescendColor, SynchronizationPointSide.Right));
+                this.Entities.Add(factory.CreatePoint(this.StateInfoCenterPosition, i, "", () => this.Settings.BarFrameDescendColor, SynchronizationPointSide.Left));
+                this.Entities.Add(factory.CreatePoint(this.StateInfoCenterPosition, i, "", () => this.Settings.BarFrameDescendColor, SynchronizationPointSide.Right));
             }
 
             // Today points
             for (var i = 0; i < this.Synchronization.SynchronizedHourToday; ++i)
             {
-                this.entities.Add(factory.CreatePoint(this.StateInfoCenterPosition, i, "", () => this.Settings.BarFrameAscendColor, SynchronizationPointSide.Left));
-                this.entities.Add(factory.CreatePoint(this.StateInfoCenterPosition, i, "", () => this.Settings.BarFrameAscendColor, SynchronizationPointSide.Right));
+                this.Entities.Add(factory.CreatePoint(this.StateInfoCenterPosition, i, "", () => this.Settings.BarFrameAscendColor, SynchronizationPointSide.Left));
+                this.Entities.Add(factory.CreatePoint(this.StateInfoCenterPosition, i, "", () => this.Settings.BarFrameAscendColor, SynchronizationPointSide.Right));
             }
         }
 
@@ -157,6 +155,8 @@ namespace MetaMind.Runtime.Guis.Modules.Synchronization
         private IConsciousness Consciousness { get; set; }
 
         private ISynchronization Synchronization { get; set; }
+
+        private GameVisualEntityCollection<IGameVisualEntity> Entities { get; set; }
 
         #endregion
 
@@ -206,7 +206,7 @@ namespace MetaMind.Runtime.Guis.Modules.Synchronization
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            foreach (var entity in this.entities)
+            foreach (var entity in this.Entities)
             {
                 entity.Draw(graphics, time, alpha);
             }

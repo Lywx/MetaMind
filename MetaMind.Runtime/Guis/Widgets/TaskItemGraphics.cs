@@ -2,6 +2,7 @@ namespace MetaMind.Runtime.Guis.Widgets
 {
     using System;
 
+    using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Services;
 
@@ -18,16 +19,13 @@ namespace MetaMind.Runtime.Guis.Widgets
         public TaskItemGraphics(IViewItem item)
             : base(item)
         {
+            var itemControl = this.ItemControl as TaskItemControl;
+            this.IdCenterPosition = () => ExtPoint.ToVector2(itemControl.IdFrame.Center);
         }
 
         #endregion Constructors
 
         #region Structure Position
-
-        protected override Vector2 IdCenterPosition()
-        {
-            get { return ExtPoint.ToVector2(this.ItemControl.IdFrame.Center); }
-        }
 
         private Vector2 ExperienceCenter
         {
@@ -57,16 +55,6 @@ namespace MetaMind.Runtime.Guis.Widgets
         private Vector2 RationaleCenter
         {
             get { return ExtPoint.ToVector2(this.ItemControl.RationaleFrame.Center); }
-        }
-
-        private Rectangle RandomHighlight(GameTime gameTime, int flashLength, Rectangle rectangle)
-        {
-            var thick = Runtime.Session.Random.Next(flashLength);
-            return new Rectangle(
-                rectangle.X - thick,
-                rectangle.Y - thick,
-                rectangle.Width + thick * 2,
-                rectangle.Height + thick * 2);
         }
 
         private Rectangle SinwaveHighlight(GameTime gameTime, int flashLength, Rectangle rectangle)
@@ -104,7 +92,7 @@ namespace MetaMind.Runtime.Guis.Widgets
 
         private void DrawExperience(IGameGraphicsService graphics, byte alpha)
         {
-            graphics.String.DrawStringCenteredHV(
+            graphics.StringDrawer.DrawString(
                 this.ItemSettings.IdFont,
                 string.Format(
                     "{0} : {1} : {2}",
@@ -113,7 +101,7 @@ namespace MetaMind.Runtime.Guis.Widgets
                     this.ItemData.Experience.Duration.Seconds.ToString()),
                 this.ExperienceCenter,
                 ExtColor.MakeTransparent(this.ItemSettings.ExperienceColor, alpha),
-                this.ItemSettings.ExperienceSize);
+                this.ItemSettings.ExperienceSize,StringHAlign.Center, StringVAlign.Center);
         }
 
         private void DrawExperienceFrame(IGameGraphicsService graphics, byte alpha)

@@ -1,20 +1,20 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ExperienceTest.cs" company="UESTC">
+// <copyright file="SynchronizationSpanTest.cs" company="UESTC">
 //   Copyright (c) 2014 Lin Wuxiang
 //   All Rights Reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.EngineUnitTest.Concepts
+namespace MetaMind.RuntimeTest
 {
     using System;
 
-    using MetaMind.Engine.Concepts;
+    using MetaMind.Runtime.Concepts.Synchronizations;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
-    public class ExperienceTest
+    public class SynchronizationSpanTest
     {
         [TestMethod]
         public void Addition()

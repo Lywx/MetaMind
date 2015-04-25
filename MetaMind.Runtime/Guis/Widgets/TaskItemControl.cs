@@ -4,7 +4,6 @@ namespace MetaMind.Runtime.Guis.Widgets
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Services;
-    using MetaMind.Runtime.Guis.Modules;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
@@ -17,13 +16,7 @@ namespace MetaMind.Runtime.Guis.Widgets
             : base(item)
         {
             this.ItemFrameControl = new TaskItemFrameControl(item);
-            this.ItemSyncControl  = new TaskItemSyncControl(item);
-
-            // only add this control when 
-            if (item.View.Parent is TaskModule)
-            {
-                this.ItemViewControl = new TaskItemViewControlInMotivation(item);
-            }
+            this.ItemSyncControl  = new ViewItemSyncControl(item);
         }
 
         public ItemDataFrame ExperienceFrame { get { return ((TaskItemFrameControl)this.ItemFrameControl).ExperienceFrame; } }
@@ -34,7 +27,7 @@ namespace MetaMind.Runtime.Guis.Widgets
 
         public ItemDataFrame ProgressFrame { get { return ((TaskItemFrameControl)this.ItemFrameControl).ProgressFrame; } }
 
-        public TaskItemSyncControl ItemSyncControl { get; private set; }
+        public ViewItemSyncControl ItemSyncControl { get; private set; }
 
         #endregion Constructors
 
@@ -88,11 +81,6 @@ namespace MetaMind.Runtime.Guis.Widgets
                             this.ItemDataControl.EditInt("Done");
                         }
 
-                        if (input.State.Keyboard.IsKeyTriggered(Keys.E))
-                        {
-                            this.ItemDataControl.EditExperience("SynchronizationSpan");
-                        }
-
                         if (input.State.Keyboard.IsKeyTriggered(Keys.L))
                         {
                             this.ItemDataControl.EditInt("Load");
@@ -105,11 +93,11 @@ namespace MetaMind.Runtime.Guis.Widgets
                         }
                     }
 
-                    // enter synchronization when
-                    // accepting input but not locked
+                    // Enter synchronization when
+                    // Accepting input but not locked
                     if (!this.Locked)
                     {
-                        // normal status
+                        // Normal status
                         if (input.State.Keyboard.IsActionTriggered(KeyboardActions.TaskEditItem))
                         {
                             this.View.Enable(ViewState.Item_Editting);

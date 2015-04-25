@@ -18,8 +18,6 @@ namespace MetaMind.Runtime.Concepts.Synchronizations
 
         TimeSpan ElapsedTimeSinceTransition { get; }
 
-        ISynchronizable SynchronizedData { get; }
-
         #endregion
 
         #region Statistics
@@ -50,7 +48,7 @@ namespace MetaMind.Runtime.Concepts.Synchronizations
 
         void Stop();
 
-        void TryStart(ISynchronizable data);
+        void TryStart(ISynchronizationData data);
 
         #endregion
 

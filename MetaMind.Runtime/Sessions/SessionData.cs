@@ -6,6 +6,8 @@
     using MetaMind.Runtime.Concepts.Motivations;
 
     [DataContract]
+    [KnownType(typeof(Cognition))]
+    [KnownType(typeof(Experience))]
     public class SessionData : ISessionData
     {
         public SessionData()

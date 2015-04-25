@@ -72,6 +72,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="GameControllableEntityCollection.cs" />
+    <Compile Include="GameEntityCollection.cs" />
+    <Compile Include="GameVisualEntityCollection.cs" />
     <Compile Include="Guis\Widgets\Visual\Box.cs" />
     <Compile Include="Components\AudioManager.cs" />
     <Compile Include="Components\Events\IEvent.cs" />
@@ -135,6 +138,7 @@
     <Compile Include="Guis\Console\OutputLine.cs" />
     <Compile Include="Guis\Console\Renderer.cs" />
     <Compile Include="Guis\IModuleControl.cs" />
+    <Compile Include="IGameControllableEntity.cs" />
     <Compile Include="Services\GameEngineNumericalService.cs" />
     <Compile Include="GameVisualEntity.cs" />
     <Compile Include="Services\GameEngineGraphicsService.cs" />
@@ -165,7 +169,7 @@
     <Compile Include="IGameEngine.cs" />
     <Compile Include="IGameEntity.cs" />
     <Compile Include="Components\IGameGraphics.cs" />
-    <Compile Include="IGameInputableComponent.cs" />
+    <Compile Include="IGameControllableComponent.cs" />
     <Compile Include="Services\IGameNumerical.cs" />
     <Compile Include="Services\IGameNumericalService.cs" />
     <Compile Include="Services\IGameService.cs" />
@@ -199,7 +203,6 @@
     <Compile Include="Components\SaveManager.cs" />
     <Compile Include="Components\ScreenManager.cs" />
     <Compile Include="Components\ScreenSettings.cs" />
-    <Compile Include="Concepts\SynchronizationSpan.cs" />
     <Compile Include="Components\Fonts\StringExt.cs" />
     <Compile Include="Extensions\ExtType.cs" />
     <Compile Include="Game.cs" />

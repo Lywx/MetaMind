@@ -35,7 +35,7 @@
 
         public override void LoadContent(IGameInteropService interop)
         {
-            this.summary = new SummaryModule(Runtime.Session.Cognition, new SummarySettings());
+            this.summary = new SummaryModule(Runtime.SessionData.Cognition, new SummarySettings());
             this.summary.LoadContent(interop);
         }
 

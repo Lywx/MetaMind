@@ -1,4 +1,4 @@
-﻿namespace MetaMind.AcutanceUnitTest.Parsers
+﻿namespace MetaMind.AcutanceTest.Parsers
 {
     using MetaMind.Acutance.Parsers.Elements;
     using MetaMind.Acutance.Parsers.Grammars;

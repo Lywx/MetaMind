@@ -70,6 +70,13 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SynchronizationSpanTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MetaMind.Runtime\MetaMind.Runtime.csproj">
+      <Project>{91A424B6-E62B-4B7A-B30D-331C7E3AF5F0}</Project>
+      <Name>MetaMind.Runtime</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

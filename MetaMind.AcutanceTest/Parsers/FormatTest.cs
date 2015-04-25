@@ -1,4 +1,4 @@
-﻿namespace MetaMind.AcutanceUnitTest.Parsers
+﻿namespace MetaMind.AcutanceTest.Parsers
 {
     using System.Collections.Generic;
 

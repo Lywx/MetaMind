@@ -4,7 +4,7 @@ namespace MetaMind.Runtime.Concepts.Synchronizations
     using System.Linq;
     using System.Runtime.Serialization;
 
-    [DataContract(Name = "Synchronization")]
+    [DataContract]
     public class Synchronization : ISynchronization
     {
         #region Components
@@ -73,14 +73,6 @@ namespace MetaMind.Runtime.Concepts.Synchronizations
             get
             {
                 return this.description.LevelStates[this.Level];
-            }
-        }
-
-        public ISynchronizable SynchronizedData
-        {
-            get
-            {
-                return this.processor.Data;
             }
         }
 
@@ -183,7 +175,7 @@ namespace MetaMind.Runtime.Concepts.Synchronizations
             this.statistics.ResetDaily();
         }
 
-        public void Start(ISynchronizable data)
+        public void Start(ISynchronizationData data)
         {
             this.processor.Accept(data);
             this.timer.Start();
@@ -217,7 +209,7 @@ namespace MetaMind.Runtime.Concepts.Synchronizations
             }
         }
 
-        public void TryStart(ISynchronizable data)
+        public void TryStart(ISynchronizationData data)
         {
             if (this.Enabled)
             {

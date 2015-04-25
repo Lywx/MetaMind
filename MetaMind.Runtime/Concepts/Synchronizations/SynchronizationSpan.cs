@@ -1,8 +1,7 @@
-﻿namespace MetaMind.Engine.Concepts
+﻿namespace MetaMind.Runtime.Concepts.Synchronizations
 {
     using System;
     using System.Globalization;
-    using System.Runtime.CompilerServices;
     using System.Runtime.Serialization;
 
     [DataContract]

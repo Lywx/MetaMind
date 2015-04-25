@@ -39,7 +39,7 @@ namespace MetaMind.Runtime.Concepts.Cognitions
             consciousness.KnownAwakeSpan += this.AwakeSpan;
 
             var console = this.GameInterop.Console;
-            console.WriteLine(string.Format("MESSAGE: {0} in Awakening", this.AwakeSpan.ToString("hh':'mm':'ss''")));
+            console.WriteLine(string.Format("MESSAGE: Awake {0}", this.AwakeSpan.ToString("hh':'mm':'ss''")));
 
             var @event = this.GameInterop.Event;
             @event.TriggerEvent(new Event((int)SessionEventType.SleepStarted, new ConsciousnessSleepStartedEventArgs(consciousness)));

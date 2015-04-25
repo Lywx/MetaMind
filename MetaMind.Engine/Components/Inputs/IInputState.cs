@@ -1,6 +1,6 @@
 namespace MetaMind.Engine.Components.Inputs
 {
-    public interface IInputState : IGameInputableComponent
+    public interface IInputState : IGameControllableComponent
     {
         IKeyboardInputState Keyboard { get; }
 

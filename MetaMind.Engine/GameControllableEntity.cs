@@ -8,7 +8,7 @@ namespace MetaMind.Engine
     using Microsoft.Xna.Framework;
 
     [DataContract]
-    public class GameControllableEntity : GameVisualEntity, IInputable
+    public class GameControllableEntity : GameVisualEntity, IGameControllableEntity
     {
         #region States
 
