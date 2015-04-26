@@ -17,7 +17,7 @@ namespace MetaMind.Engine.Components
 
         public FileManager File { get; private set; }
 
-        public IGameEngine Engine { get; private set; }
+        public GameEngine Engine { get; private set; }
 
         public IEventManager Event { get; private set; }
 

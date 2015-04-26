@@ -1,7 +1,6 @@
-namespace MetaMind.Runtime.Guis.Modules.Synchronization
+namespace MetaMind.Runtime.Guis.Modules
 {
     using System;
-    using System.Collections.Generic;
 
     using MetaMind.Engine;
     using MetaMind.Engine.Components.Fonts;
@@ -10,6 +9,7 @@ namespace MetaMind.Runtime.Guis.Modules.Synchronization
     using MetaMind.Engine.Services;
     using MetaMind.Runtime.Concepts.Cognitions;
     using MetaMind.Runtime.Concepts.Synchronizations;
+    using MetaMind.Runtime.Guis.Modules.Synchronization;
 
     using Microsoft.Xna.Framework;
 
@@ -67,23 +67,23 @@ namespace MetaMind.Runtime.Guis.Modules.Synchronization
                 StringVAlign.Center,
                 false);
 
-            var dailySyncRatePrefix = new Label(
+            var dailyRatePrefix = new Label(
                 () => this.Settings.SynchronizationRateFont,
                 () => this.Consciousness.IsAwake
-                    ? (this.Synchronization.PotentialSynchronizedTimeToday.TotalSeconds
+                    ? (this.Synchronization.SynchronizedTimeTodayBestCase.TotalSeconds
                        / ((IConsciousnessAwake)this.Consciousness.State).AwakeSpan.TotalSeconds * 100).ToString("F0")
                     : "",
-                () => this.DailySyncRateCenterPosition,
+                () => this.DailyRateCenterPosition,
                 () => Color.White,
                 () => 2.0f,
                 StringHAlign.Left,
                 StringVAlign.Center,
                 false);
 
-            var dailySyncRateSubfix = new Label(
+            var dailyRateSubfix = new Label(
                 () => this.Settings.SynchronizationRateFont,
                 () => this.Consciousness.IsAwake ? " %" : "",
-                () => this.DailySyncRateCenterPosition,
+                () => this.DailyRateCenterPosition,
                 () => Color.White,
                 () => 1f,
                 StringHAlign.Right,
@@ -119,8 +119,8 @@ namespace MetaMind.Runtime.Guis.Modules.Synchronization
 
                                     accumulationInfo, // 00:00:14
 
-                                    dailySyncRatePrefix, // 80
-                                    dailySyncRateSubfix, // %
+                                    dailyRatePrefix, // 80
+                                    dailyRateSubfix, // %
 
                                     accelerationInfoPrefix, // x
                                     accelerationInfoSubfix // 1.2
@@ -178,7 +178,7 @@ namespace MetaMind.Runtime.Guis.Modules.Synchronization
             }
         }
 
-        private Vector2 DailySyncRateCenterPosition
+        private Vector2 DailyRateCenterPosition
         {
             get
             {
@@ -206,10 +206,7 @@ namespace MetaMind.Runtime.Guis.Modules.Synchronization
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            foreach (var entity in this.Entities)
-            {
-                entity.Draw(graphics, time, alpha);
-            }
+            this.Entities.Draw(graphics, time, alpha);
         }
     }
 }

@@ -60,7 +60,7 @@ namespace MetaMind.Engine.Services
             }
         }
 
-        public IGameEngine Engine
+        public GameEngine Engine
         {
             get
             {

@@ -62,11 +62,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         protected IInputEvent InputEvent { get; private set; }
 
-        private void RegisterDependency()
-        {
-            this.InputEvent = this.GameInput.Event;
-        }
-
         #endregion
 
         #region Constructors
@@ -74,7 +69,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         public ViewItemCharModifier(IViewItem item)
             : base(item)
         {
-            this.RegisterDependency();
+            this.InputEvent = this.GameInput.Event;
 
             this.InputEvent.CharEntered += this.DetectCharEntered;
             this.InputEvent.KeyDown     += this.DetectEnterKeyDown;

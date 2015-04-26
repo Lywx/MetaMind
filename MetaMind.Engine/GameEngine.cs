@@ -68,8 +68,9 @@ namespace MetaMind.Engine
 
         protected override void LoadContent()
         {
-            // FIXME: Need to contruct after FontManager LoadContent.
-            // TODO:  It may be possible to change the underlying mechanism to move this code inside the contruction of GameEngine.Interop
+            // Need to contruct after FontManager.LoadContent(). 
+
+            // TODO: It may be possible to change the underlying mechanism to move this code inside the contruction of GameEngine.Interop
             this.Interop.Console = new GameConsole(
                 this,
                 this.Graphics.SpriteBatch,

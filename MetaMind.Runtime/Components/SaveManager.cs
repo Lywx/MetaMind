@@ -12,21 +12,6 @@ namespace MetaMind.Runtime.Components
         {
         }
 
-        public override void Initialize()
-        {
-            // Dependency
-            this.Interop = GameEngine.Service.Interop;
-
-            base.Initialize();
-        }
-
-        #region Dependency
-
-        private IGameInteropService Interop { get; set; }
-
-        #endregion
-
-
         #region Operations
 
         public override void Save()

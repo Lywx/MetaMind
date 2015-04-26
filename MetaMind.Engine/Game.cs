@@ -25,7 +25,7 @@ namespace MetaMind.Engine
             : base(engine)
         {
             // Callled after construction of GameEngine
-            this.Interop = GameEngine.Service.Interop;
+            this.Interop = engine.Interop;
             this.Interop.Game.Plug(this);
         }
 

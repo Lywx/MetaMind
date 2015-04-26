@@ -11,62 +11,12 @@
 
     using Microsoft.Xna.Framework;
 
-    namespace Synchronization
-    {
-        using System.Linq;
-
-        using MetaMind.Engine.Components.Events;
-        using MetaMind.Runtime.Screens;
-        using MetaMind.Runtime.Sessions;
-
-        public class SynchronizationModuleSleepStartedEventListener : Listener
-        {
-            private readonly ISynchronization synchronization;
-
-            private readonly SynchronizationModule synchronizationModule;
-
-            public SynchronizationModuleSleepStartedEventListener(
-                ISynchronization synchronization,
-                SynchronizationModule synchronizationModule)
-            {
-                this.synchronization = synchronization;
-                this.synchronizationModule = synchronizationModule;
-
-                this.RegisteredEvents.Add((int)SessionEventType.SleepStarted);
-            }
-
-            public override bool HandleEvent(IEvent @event)
-            {
-                if (this.synchronization.Enabled)
-                {
-                    this.synchronizationModule.StopSynchronizing();
-                }
-
-                this.synchronization.ResetTomorrow();
-
-                var screenManager = this.GameInterop.Screen;
-
-                var motivation = screenManager.Screens.First(screen => screen is MotivationScreen);
-                if (motivation != null)
-                {
-                    motivation.Exit();
-                }
-
-                screenManager.AddScreen(new SummaryScreen());
-
-                return true;
-            }
-        }
-    }
-
+    /// <summary>
+    /// This module control all the interaction with the Synchronization and Consciousness object, 
+    /// since Synchronization is only a data class.
+    /// </summary>
     public class SynchronizationModule : Module<SynchronizationSettings>
     {
-        private readonly SynchronizationMonitor monitor;
-
-        private IConsciousness Consciousness { get; set; }
-
-        private ISynchronization Synchronization { get; set; }
-
         #region Constructors
 
         public SynchronizationModule(IConsciousness consciousness, ISynchronization synchronization, SynchronizationSettings settings)
@@ -85,61 +35,18 @@
             this.Consciousness   = consciousness;
             this.Synchronization = synchronization;
 
-            this.Control  = new SynchronizationModuleControl(this);
+            this.Control  = new SynchronizationModuleControl(this, this.Consciousness, this.Synchronization);
             this.Graphics = new SynchronizationModuleGraphics(this, this.Consciousness, this.Synchronization);
-
-            this.monitor = new SynchronizationMonitor(this.Synchronization);
         }
 
         #endregion Constructors
 
-        #region Load and Unload
+        #region Dependency
 
-        public override void LoadContent(IGameInteropService interop)
-        {
-            this.Listeners.Add(new SynchronizationModuleSynchronizationStartListener(this.Synchronization)); 
-            this.Listeners.Add(new SynchronizationModuleSynchronizationStopListener(this.Synchronization, this));
-            this.Listeners.Add(new SynchronizationModuleSleepStartedEventListener(this.Synchronization, this));
+        private IConsciousness Consciousness { get; set; }
 
-            base.LoadContent(interop);
-        }
+        private ISynchronization Synchronization { get; set; }
 
-        #endregion
-
-        #region Operations
-
-        public void StopSynchronizing()
-        {
-            this.Synchronization.Stop();
-            this.monitor        .Stop();
-        }
-
-        #endregion Operations
-
-        #region Update
-
-        public override void Update(GameTime time)
-        {
-            this.monitor.TryStart();
-
-            // UNDONE: Won't work
-            this.monitor.Update(time);
-        }
-
-        public override void UpdateInput(IGameInputService input, GameTime time)
-        {
-            if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Awaken))
-            {
-                // TODO: integrate
-                this.Consciousness.Awaken();
-                this.Synchronization.ResetToday();
-            }
-
-            if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Sleep))
-            {
-                this.Consciousness.Sleep();
-            }
-        }
         #endregion
     }
 }

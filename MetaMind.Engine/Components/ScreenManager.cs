@@ -123,7 +123,7 @@ namespace MetaMind.Engine.Components
                 throw new ArgumentNullException("spriteBatch");
             }
 
-            engine.Components.Add(this);
+            this.Game.Components.Add(this);
 
             this.SpriteBatch = spriteBatch;
             this.Settings    = settings;
@@ -143,9 +143,11 @@ namespace MetaMind.Engine.Components
             this.isInitialized = true;
 
             // Register service before LoadContent, which is called by base.Initialize()
-            this.Graphics = GameEngine.Service.Graphics;
-            this.Input    = GameEngine.Service.Input;
-            this.Interop  = GameEngine.Service.Interop;
+            var engine = (GameEngine)this.Game;
+
+            this.Graphics = engine.Graphics;
+            this.Input    = engine.Input;
+            this.Interop  = engine.Interop;
 
             base.Initialize();            
         }

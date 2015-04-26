@@ -103,8 +103,6 @@
     <Compile Include="Components\Inputs\MouseButton.cs" />
     <Compile Include="Components\Inputs\MouseEventArgs.cs" />
     <Compile Include="Components\Inputs\MouseKeys.cs" />
-    <Compile Include="Components\Inputs\NullInputEvent.cs" />
-    <Compile Include="Components\Inputs\NullInputState.cs" />
     <Compile Include="Components\IProcessManager.cs" />
     <Compile Include="Components\ISaveManager.cs" />
     <Compile Include="Components\IScreenManager.cs" />

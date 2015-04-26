@@ -19,7 +19,7 @@ namespace MetaMind.Engine.Services
 
         IGameManager Game { get; }
 
-        IGameEngine Engine { get; }
+        GameEngine Engine { get; }
 
         IProcessManager Process { get; }
 

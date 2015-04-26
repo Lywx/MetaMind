@@ -4,7 +4,7 @@ namespace MetaMind.Engine.Guis
 
     using IDrawable = MetaMind.Engine.IDrawable;
 
-    public interface IModuleGraphics : IUpdateable, IDrawable, IInputable
+    public interface IModuleGraphics : IUpdateable, IDrawable, IInputable, IGameEntity
     {
     }
 }

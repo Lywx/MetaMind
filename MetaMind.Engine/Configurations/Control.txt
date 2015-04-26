@@ -55,8 +55,8 @@ CommandSortItem   = S with LeftControl
 
 " Synchronization Control
 
-Awaken       = A with LeftControl and LeftShift
-Sleep        = S with LeftControl and LeftShift
+Awaken = A with LeftControl and LeftShift
+Sleep  = S with LeftControl and LeftShift
 
 " Basic Commands
 

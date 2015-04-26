@@ -1,58 +1,19 @@
 namespace MetaMind.Runtime.Guis.Modules
 {
-    using System.Collections.Generic;
-    using System.Linq;
-
-    using MetaMind.Engine;
-    using MetaMind.Engine.Components.Events;
-    using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis;
-    using MetaMind.Engine.Services;
     using MetaMind.Runtime.Concepts.Cognitions;
     using MetaMind.Runtime.Concepts.Synchronizations;
-    using MetaMind.Runtime.Extensions;
-    using MetaMind.Runtime.Guis.Modules.Summary;
-
-    using Microsoft.Xna.Framework;
-
-    namespace Summary
-    {
-        using MetaMind.Runtime.Screens;
-        using MetaMind.Runtime.Sessions;
-
-        public class SummaryModuleSleepStoppedListener : Listener
-        {
-            public SummaryModuleSleepStoppedListener()
-            {
-                this.RegisteredEvents.Add((int)SessionEventType.SleepStopped);
-            }
-
-            public override bool HandleEvent(IEvent @event)
-            {
-                var screenManager = this.GameInterop.Screen;
-
-                var summary = screenManager.Screens.First(screen => screen is SummaryScreen);
-                if (summary != null)
-                {
-                    summary.Exit();
-                }
-
-                screenManager.AddScreen(new MotivationScreen());
-
-                return true;
-            }
-        }
-    }
 
     public class SummaryModule : Module<SummarySettings>
     {
-        public SummaryModule(ICognition cognition, SummarySettings settings)
+        public SummaryModule(IConsciousness consciousness, ISynchronization synchronization, SummarySettings settings)
             : base(settings)
         {
-            this.Cognition       = cognition;
-            this.Synchronization = cognition.Synchronization;
+            this.Consciousness   = consciousness;
+            this.Synchronization = synchronization;
 
-            this.Entities = new GameVisualEntityCollection<IGameVisualEntity>();
+            this.Control  = new SummaryModuleControl(this, this.Consciousness, this.Synchronization);
+            this.Graphics = new SummaryModuleGraphics(this, this.Consciousness, this.Synchronization);
         }
 
         ~SummaryModule()
@@ -62,119 +23,10 @@ namespace MetaMind.Runtime.Guis.Modules
 
         #region Dependency
 
-        private ICognition Cognition { get; set; }
+        private IConsciousness Consciousness { get; set; }
 
         private ISynchronization Synchronization { get; set; }
 
-        private GameVisualEntityCollection<IGameVisualEntity> Entities { get; set; }
-
         #endregion
-
-        #region Load and Unload
-
-        public override void LoadContent(IGameInteropService interop)
-        {
-            var factory = new SummaryFactory(this.Settings);
-
-            this.Entities.Add(
-                new SummaryTitle(
-                    () => this.Settings.TitleFont,
-                    () => "Summary",
-                    () => this.Settings.TitleCenter,
-                    () => this.Settings.TitleColor,
-                    () => this.Settings.TitleSize));
-
-            // Daily statistics
-            this.Entities.Add(
-                factory.CreateEntry(
-                    1,
-                    "Hours in Synchronization:",
-                    () => this.Synchronization.SynchronizedHourYesterday.ToSummary(),
-                    Color.White));
-
-            this.Entities.Add(
-                factory.CreateEntry(
-                    3,
-                    "Hours in Good Profession:",
-                    () => (-this.Settings.HourOfGood).ToSummary(),
-                    Color.Red));
-            this.Entities.Add(
-                factory.CreateEntry(
-                    4,
-                    "Hours in Lofty Profession:",
-                    () => (-this.Settings.HourOfLofty).ToSummary(),
-                    Color.Red));
-
-            this.Entities.Add(factory.CreateSplit(5, Color.Red));
-
-            this.Entities.Add(
-                factory.CreateEntry(
-                    () => 6,
-                    () => "",
-                    () => (this.Synchronization.SynchronizedHourYesterday - this.Settings.HourOfGood - this.Settings.HourOfLofty).ToSummary(),
-                    () => (this.Synchronization.SynchronizedHourYesterday - this.Settings.HourOfGood - this.Settings.HourOfLofty >= 0 ? Color.White : Color.Red)));
-
-            // Weekly statistics
-            this.Entities.Add(
-                factory.CreateEntry(
-                    8,
-                    "Hours in Synchronization In Recent 7 Days:",
-                    () => ((int)this.Synchronization.SynchronizedTimeRecentWeek.TotalHours).ToSummary(),
-                    Color.White));
-
-            this.Entities.Add(
-                factory.CreateEntry(
-                    10,
-                    "Len Bosack's Records in 7 Days:",
-                    () => (-this.Settings.HourOfWorldRecord).ToSummary(),
-                    Color.Red));
-
-            this.Entities.Add(factory.CreateSplit(11, Color.Red));
-
-            this.Entities.Add(
-                factory.CreateEntry(
-                    () => 12,
-                    () => "",
-                    () => ((int)this.Synchronization.SynchronizedTimeRecentWeek.TotalHours - this.Settings.HourOfWorldRecord).ToSummary(),
-                    () => ((int)this.Synchronization.SynchronizedTimeRecentWeek.TotalHours - this.Settings.HourOfWorldRecord >= 0
-                         ? Color.Gold
-                         : Color.Red)));
-
-            this.Listeners.Add(new SummaryModuleSleepStoppedListener());
-
-            base.LoadContent(interop);
-        }
-
-        #endregion
-
-        #region Update
-
-        public override void UpdateInput(IGameInputService input, GameTime time)
-        {
-            var keyboard = input.State.Keyboard;
-
-            if (keyboard.IsActionTriggered(KeyboardActions.Awaken))
-            {
-                this.Cognition.Consciousness.Awaken();
-            }
-
-            if (keyboard.IsActionTriggered(KeyboardActions.Sleep))
-            {
-                this.Cognition.Consciousness.Sleep();
-            }
-        }
-        #endregion
-
-        #region Draw
-
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
-        {
-            foreach (var entity in this.Entities)
-            {
-                entity.Draw(graphics, time, alpha);
-            }
-        }
-
-        #endregion 
     }
 }

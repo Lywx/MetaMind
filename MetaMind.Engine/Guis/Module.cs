@@ -4,14 +4,12 @@ namespace MetaMind.Engine.Guis
 
     using Microsoft.Xna.Framework;
 
-    /// FIXME: Won't work now.
     /// <summary>
     /// Module is the most outer shell of gui object that load and unload
     /// data from data source. The behavior is of maximum abstraction.
     /// </summary>
     /// <remarks>
-    /// Compatible with previous GameControllableEntity implementation, as long as
-    /// the derived class override the widget implementation.
+    /// Compatible with previous GameControllableEntity implementation.
     /// </remarks>
     public class Module<TModuleSettings> : GameControllableEntity, IModule
     {
@@ -58,6 +56,11 @@ namespace MetaMind.Engine.Guis
             if (this.Control != null)
             {
                 this.Control.LoadContent(interop);
+            }
+
+            if (this.Graphics != null)
+            {
+                this.Graphics.LoadContent(interop);
             }
 
             base.LoadContent(interop);

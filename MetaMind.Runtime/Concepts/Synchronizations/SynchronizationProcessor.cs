@@ -16,7 +16,6 @@ namespace MetaMind.Runtime.Concepts.Synchronizations
     [DataContract]
     public class SynchronizationProcessor
     {
-
         [DataMember]
         public ISynchronizationData Data { get; set; }
 
@@ -41,7 +40,6 @@ namespace MetaMind.Runtime.Concepts.Synchronizations
             this.Data.SynchronizationSpan.Abort();
 
             this.Data.IsSynchronizing = false;
-
             this.Data = null;
         }
 

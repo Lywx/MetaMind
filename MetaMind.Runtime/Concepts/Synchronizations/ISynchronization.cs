@@ -34,7 +34,7 @@ namespace MetaMind.Runtime.Concepts.Synchronizations
 
         TimeSpan SynchronizedTimeToday { get; }
 
-        TimeSpan PotentialSynchronizedTimeToday { get; }
+        TimeSpan SynchronizedTimeTodayBestCase { get; }
 
         #endregion
 

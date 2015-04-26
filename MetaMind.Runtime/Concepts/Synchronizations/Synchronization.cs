@@ -14,6 +14,7 @@ namespace MetaMind.Runtime.Concepts.Synchronizations
 
         [DataMember]
         private readonly SynchronizationProcessor processor = new SynchronizationProcessor();
+
         [DataMember]
         private readonly SynchronizationStatistics statistics = new SynchronizationStatistics();
 
@@ -21,6 +22,14 @@ namespace MetaMind.Runtime.Concepts.Synchronizations
         private readonly SynchronizationTimer timer = new SynchronizationTimer();
 
         #endregion Components
+
+        #region Constructors
+
+        public Synchronization()
+        {
+        }
+
+        #endregion
 
         #region State Data
 
@@ -95,14 +104,6 @@ namespace MetaMind.Runtime.Concepts.Synchronizations
 
         #region Statistic Data
 
-        public TimeSpan PotentialSynchronizedTimeToday
-        {
-            get
-            {
-                return this.SynchronizedTimeToday + (this.Enabled ? this.ElapsedTimeSinceTransition : TimeSpan.Zero);
-            }
-        }
-
         public int SynchronizedHourMax
         {
             get
@@ -147,6 +148,14 @@ namespace MetaMind.Runtime.Concepts.Synchronizations
             }
         }
 
+        public TimeSpan SynchronizedTimeTodayBestCase
+        {
+            get
+            {
+                return this.SynchronizedTimeToday + (this.Enabled ? this.ElapsedTimeSinceTransition : TimeSpan.Zero);
+            }
+        }
+
         public TimeSpan SynchronizedTimeYesterday
         {
             get
@@ -178,7 +187,7 @@ namespace MetaMind.Runtime.Concepts.Synchronizations
         public void Start(ISynchronizationData data)
         {
             this.processor.Accept(data);
-            this.timer.Start();
+            this.timer    .Start();
         }
 
         public void Stop()
@@ -194,7 +203,7 @@ namespace MetaMind.Runtime.Concepts.Synchronizations
             }
             else
             {
-                // to avoid possible invalid time passed.
+                // To avoid possible invalid time passed.
                 this.statistics.Add(this.timer.ElapsedTimeSinceTransition);
             }
 
