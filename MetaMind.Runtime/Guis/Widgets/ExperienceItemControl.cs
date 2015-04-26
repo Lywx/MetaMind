@@ -8,9 +8,9 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
-    public class MotivationItemControl : ViewItemControl1D
+    public class ExperienceItemControl : ViewItemControl1D
     {
-        public MotivationItemControl(IViewItem item)
+        public ExperienceItemControl(IViewItem item)
             : base(item)
         {
         }

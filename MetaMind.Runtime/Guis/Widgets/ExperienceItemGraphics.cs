@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MotivationItemGraphics.cs" company="UESTC">
+// <copyright file="ExperienceItemGraphics.cs" company="UESTC">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -15,33 +15,30 @@ namespace MetaMind.Runtime.Guis.Widgets
 
     using Microsoft.Xna.Framework;
 
-    public class MotivationItemGraphics : ViewItemGraphics
+    public class ExperienceItemGraphics : ViewItemGraphics
     {
-        public MotivationItemGraphics(IViewItem item)
+        public ExperienceItemGraphics(IViewItem item)
             : base(item)
         {
+            this.IdCenterPosition =
+                () =>
+                new Vector2(
+                    this.ItemControl.RootFrame.Rectangle.Center.X,
+                    this.ItemControl.RootFrame.Rectangle.Top - 15);
         }
 
         #region Graphics Data
 
-        //protected override Vector2 IdCenterPosition()
-        //{
-        //    get
-        //    {
-        //        return new Vector2(ItemControl.RootFrame.Rectangle.Center.X, ItemControl.RootFrame.Rectangle.Top - 15);
-        //    }
-        //}
-
-        //private string NameCropped
-        //{
-        //    get
-        //    {
-        //        return FontManager.CropMonospacedString(
-        //            ItemData.Name,
-        //            ItemSettings.NameSize,
-        //            ViewSettings.PointMargin.X * 6);
-        //    }
-        //}
+        private string NameCropped
+        {
+            get
+            {
+                return FontManager.CropMonospacedString(
+                    ItemData.Name,
+                    ItemSettings.NameSize,
+                    ViewSettings.PointMargin.X * 6);
+            }
+        }
 
         private string HelpInformation
         {

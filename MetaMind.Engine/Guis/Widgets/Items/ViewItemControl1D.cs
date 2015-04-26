@@ -34,28 +34,18 @@
 
         public override void Dispose()
         {
-            try
+            if (this.ItemFrameControl != null)
             {
-                if (this.ItemFrameControl != null)
-                {
-                    this.ItemFrameControl.Dispose();
-                }
-
-                this.ItemFrameControl = null;
-
-                if (this.ItemDataControl != null)
-                {
-                    this.ItemDataControl.Dispose();
-                }
-
-                this.ItemDataControl  = null;
-
-                // don't set item view control to null
+                this.ItemFrameControl.Dispose();
             }
-            finally
+
+            if (this.ItemDataControl != null)
             {
-                base.Dispose();
+                this.ItemDataControl.Dispose();
             }
+
+            // Don't set item view control to null
+            base.Dispose();
         }
 
         #endregion 
