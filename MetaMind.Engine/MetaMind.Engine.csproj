@@ -76,6 +76,7 @@
     <Compile Include="GameEntityCollection.cs" />
     <Compile Include="GameVisualEntityCollection.cs" />
     <Compile Include="Guis\Widgets\Items\IItemRootFrame.cs" />
+    <Compile Include="Guis\Widgets\Items\IViewItemComponent.cs" />
     <Compile Include="Guis\Widgets\Items\IViewItemFrameControl.cs" />
     <Compile Include="Guis\Widgets\Views\IPointGridControl.cs" />
     <Compile Include="Guis\Widgets\Views\IPointViewScrollControl2D.cs" />

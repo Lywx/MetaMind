@@ -6,7 +6,7 @@ namespace MetaMind.Runtime.Guis.Widgets
 
     using Microsoft.Xna.Framework;
 
-    public class ExperienceItemSettings : ItemSettings, IAdjustable
+    public class ExperienceItemSettings : ItemSettings
     {
         public float NameSize                      = 0.7f;
 
@@ -55,15 +55,5 @@ namespace MetaMind.Runtime.Guis.Widgets
             this.IdSize       = 0.7f;
             this.IdFrameSize  = new Point(24, 24);
         }
-
-        public virtual void Configure()
-        {
-            this.RootFrameSize = this.NameFrameSize;
-        }
-    }
-
-    public interface IAdjustable
-    {
-        void Configure();
     }
 }

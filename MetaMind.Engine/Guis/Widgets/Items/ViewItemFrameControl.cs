@@ -75,11 +75,13 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         protected virtual void UpdateFrameLogics()
         {
             // frame activation
-            if (this.Item.IsEnabled(ItemState.Item_Active) && !this.Item.IsEnabled(ItemState.Item_Dragging))
+            if (this.Item.IsEnabled(ItemState.Item_Active) && 
+               !this.Item.IsEnabled(ItemState.Item_Dragging))
             {
                 this.RootFrame.Enable();
             }
-            else if (!this.Item.IsEnabled(ItemState.Item_Active) && !this.Item.IsEnabled(ItemState.Item_Dragging))
+            else if (!this.Item.IsEnabled(ItemState.Item_Active) && 
+                     !this.Item.IsEnabled(ItemState.Item_Dragging))
             {
                 this.RootFrame.Disable();
             }
@@ -89,19 +91,12 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         public override void Dispose()
         {
-            try
+            if (this.RootFrame != null)
             {
-                if (this.RootFrame != null)
-                {
-                    this.RootFrame.Dispose();
-                }
+                this.RootFrame.Dispose();
+            }
 
-                this.RootFrame = null;
-            }
-            finally
-            {
-                base.Dispose();
-            }
+            base.Dispose();
         }
     }
 }

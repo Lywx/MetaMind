@@ -23,9 +23,9 @@ namespace MetaMind.Runtime.Guis.Widgets
                     if (!this.Item.IsEnabled(ItemState.Item_Dragging) && 
                         !this.Item.IsEnabled(ItemState.Item_Swaping))
                     {
-                        IPointViewScrollControl scroll = this.ViewControl.Scroll;
+                        IContinousViewScrollControl scroll = this.ViewControl.Scroll;
 
-                        return scoll.RootCenterPoint(this.ItemControl.Id).ToVector2() + new Vector2(0, this.ItemSettings.IdFrameSize.Y);
+                        return scroll.RootCenterPoint(this.ItemControl.Id).ToVector2() + new Vector2(0, this.ItemSettings.IdFrameSize.Y);
                     }
 
                     if (this.Item.IsEnabled(ItemState.Item_Swaping))
@@ -85,8 +85,8 @@ namespace MetaMind.Runtime.Guis.Widgets
         {
             base.UpdateInput(input, time);
 
-            this.NameFrame       .UpdateInput(input, time);
-            this.LHoldFrame .UpdateInput(input, time);
+            this.NameFrame .UpdateInput(input, time);
+            this.LHoldFrame.UpdateInput(input, time);
             this.RHoldFrame.UpdateInput(input, time);
         }
 
@@ -95,15 +95,19 @@ namespace MetaMind.Runtime.Guis.Widgets
             ((ExperienceItemSettings)this.ItemSettings).ExperienceFrameSize.X = middleWidth;
             ((ExperienceItemSettings)this.ItemSettings).ProgressFrameSize.X   = middleWidth;
 
-            this.RootFrame       .Location = this.RootFrameLocation()       .ToPoint();
-            this.NameFrame       .Location = this.NameFrameLocation()       .ToPoint();
-            this.LHoldFrame .Location = this.LHolderFrameLocation() .ToPoint();
+            this.RootFrame.Location = this.RootFrameLocation().ToPoint();
+            this.NameFrame.Location = this.NameFrameLocation().ToPoint();
+            this.LHoldFrame.Location = this.LHolderFrameLocation().ToPoint();
             this.RHoldFrame.Location = this.RHolderFrameLocation().ToPoint();
 
-            this.RootFrame       .Size = this.ItemSettings.RootFrameSize;
-            this.NameFrame       .Size = this.ItemSettings.NameFrameSize;
-            this.LHoldFrame .Size = this.ItemSettings.LeftHolderFrameSize;
+            this.RootFrame.Size = this.ItemSettings.RootFrameSize;
+            this.NameFrame.Size = this.ItemSettings.NameFrameSize;
+            this.LHoldFrame.Size = this.ItemSettings.LeftHolderFrameSize;
             this.RHoldFrame.Size = this.ItemSettings.RightHolderFrameSize;
         }
+    }
+
+    public interface IContinousViewScrollControl
+    {
     }
 }

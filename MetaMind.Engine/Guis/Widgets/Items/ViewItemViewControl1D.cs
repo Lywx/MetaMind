@@ -21,6 +21,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         {
         }
 
+        #region Selection
+
         public void MouseSelectsIt()
         {
             this.ViewControl.Selection.Select(this.ItemControl.Id);
@@ -33,6 +35,10 @@ namespace MetaMind.Engine.Guis.Widgets.Items
                 this.ViewControl.Selection.Clear();
             }
         }
+
+        #endregion
+
+        #region Process
 
         public virtual void ExchangeIt(IGameInteropService interop, IViewItem draggingItem, IView targetView)
         {
@@ -55,13 +61,18 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
             this.Item.Enable(ItemState.Item_Swaping);
 
-            var originCenter = this        .ViewControl.Scroll.RootCenterPoint(this        .ItemControl.Id);
+            var originCenter = this.ViewControl.Scroll.RootCenterPoint(this.ItemControl.Id);
             var targetCenter = draggingItem.ViewControl.Scroll.RootCenterPoint(draggingItem.ItemControl.Id);
 
             this.ViewControl.Swap.Initialize(originCenter, targetCenter);
 
             interop.Process.AttachProcess(new ViewItemSwapProcess(draggingItem, this.Item));
         }
+
+
+        #endregion
+
+        #region Update
 
         public override void Update(GameTime time)
         {
@@ -79,8 +90,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         {
             this.ItemControl.Id = this.View.Items.IndexOf(this.Item);
 
-            if (this.View.IsEnabled(ViewState.View_Active) &&
-                this.ViewControl.Scroll.CanDisplay(this.ItemControl.Id))
+            if (this.View.IsEnabled(ViewState.View_Active) && this.ViewControl.Scroll.CanDisplay(this.ItemControl.Id))
             {
                 this.Item.Enable(ItemState.Item_Active);
             }
@@ -133,5 +143,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
                 }
             }
         }
+
+        #endregion
     }
 }
