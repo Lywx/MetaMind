@@ -46,8 +46,9 @@
             synchronization.LoadContent(interop);
             this.Entities.Add(synchronization);
 
-            //var experience = 
-            //experience.LoadContent(interop);
+            var experience = 
+            experience.LoadContent(interop);
+            this.Entities.Add(experience);
         }
 
         public override void UnloadContent(IGameInteropService interop)

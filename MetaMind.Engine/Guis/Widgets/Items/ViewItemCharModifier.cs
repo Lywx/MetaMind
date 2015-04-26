@@ -32,7 +32,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         void Release();
     }
 
-    public class ViewItemCharModifier : ViewItemComponent, IViewItemCharModifier, IViewItemCharPostProcessor
+    public class ViewItemCharModifier : ViewItemComponent, IViewItemCharModifier, IViewItemCharProcessor
     {
         #region Input Settings
 

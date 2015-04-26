@@ -10,7 +10,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         {
             this.ItemViewControl  = new ViewItemViewControl2D(item);
             this.ItemFrameControl = new ViewItemFrameControl(item);
-            this.ItemDataControl  = new ViewItemDataControl(item);
+            this.ItemDataControl  = new ViewItemDataModifier(item);
         }
 
 
@@ -18,8 +18,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         #region Public Properties
 
-        public int           Column    { get; set; }
-        public int           Row       { get; set; }
+        public int Column { get; set; }
+
+        public int Row { get; set; }
 
         #endregion Public Properties
     }

@@ -15,7 +15,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     using Microsoft.Xna.Framework;
 
-    public class KnowledgeItemFileDataControl : ViewItemDataControl
+    public class KnowledgeItemFileDataControl : ViewItemDataModifier
     {
         private readonly string filePrompt = "File > ";
 
@@ -80,7 +80,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             {
                 this.searchEnded = false;
 
-                var processor = this.CharModifier as IViewItemCharPostProcessor;
+                var processor = this.CharModifier as IViewItemCharProcessor;
                 if (processor != null)
                 {
                     var raw      = processor.RemoveCursor(e.NewValue);

@@ -1,6 +1,6 @@
 namespace MetaMind.Engine.Guis.Widgets.Items
 {
-    public interface IViewItemCharPostProcessor
+    public interface IViewItemCharProcessor
     {
         string RemoveCursor(string dirty);
     }

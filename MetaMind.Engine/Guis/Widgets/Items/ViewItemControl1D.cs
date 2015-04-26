@@ -16,7 +16,7 @@
         {
             this.ItemFrameControl = new ViewItemFrameControl(item);
             this.ItemViewControl  = new ViewItemViewControl1D(item);
-            this.ItemDataControl  = new ViewItemDataControl(item);
+            this.ItemDataControl  = new ViewItemDataModifier(item);
         }
 
         #endregion
@@ -67,7 +67,7 @@
             get { return this.ItemFrameControl.RootFrame; }
         }
 
-        protected ViewItemDataControl ItemDataControl { get; set; }
+        protected ViewItemDataModifier ItemDataControl { get; set; }
 
         protected dynamic ItemFrameControl { get; set; }
 

@@ -155,7 +155,7 @@
     <Compile Include="Services\GameEngineService.cs" />
     <Compile Include="Guis\Particles\ParticleSpawner.cs" />
     <Compile Include="Guis\Widgets\Items\IViewItem.cs" />
-    <Compile Include="Guis\Widgets\Items\IViewItemCharPostProcessor.cs" />
+    <Compile Include="Guis\Widgets\Items\IViewItemCharProcessor.cs" />
     <Compile Include="Guis\Widgets\Visual\Label.cs" />
     <Compile Include="Guis\Widgets\Views\ContinuousViewSettings.cs" />
     <Compile Include="Guis\Widgets\Views\IPointListControl.cs" />
@@ -263,7 +263,7 @@
     <Compile Include="Guis\Widgets\Items\ViewItemControl1D.cs" />
     <Compile Include="Guis\Widgets\Items\ViewItemControl2D.cs" />
     <Compile Include="Guis\Widgets\Items\ViewItemData.cs" />
-    <Compile Include="Guis\Widgets\Items\ViewItemDataControl.cs" />
+    <Compile Include="Guis\Widgets\Items\ViewItemDataModifier.cs" />
     <Compile Include="Events\ViewItemDataEventArgs.cs" />
     <Compile Include="Guis\Widgets\Items\ViewItemExchangable.cs" />
     <Compile Include="Guis\Widgets\Items\ViewItemExchangeless.cs" />

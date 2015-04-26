@@ -2,14 +2,9 @@
 {
     using System;
 
-    using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis;
-    using MetaMind.Engine.Services;
     using MetaMind.Runtime.Concepts.Cognitions;
     using MetaMind.Runtime.Concepts.Synchronizations;
-    using MetaMind.Runtime.Guis.Modules.Synchronization;
-
-    using Microsoft.Xna.Framework;
 
     /// <summary>
     /// This module control all the interaction with the Synchronization and Consciousness object, 

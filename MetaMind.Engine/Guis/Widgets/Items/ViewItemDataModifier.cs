@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ViewItemDataControl.cs" company="UESTC">
+// <copyright file="ViewItemDataModifier.cs" company="UESTC">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -17,20 +17,24 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
     using Microsoft.Xna.Framework;
 
-    public class ViewItemDataControl : ViewItemComponent
+    public class ViewItemDataModifier : ViewItemComponent
     {
         private string dataName;
 
-        public ViewItemDataControl(IViewItem item)
+        public ViewItemDataModifier(IViewItem item)
             : base(item)
         {
             this.CharModifier = new ViewItemCharModifier(item);
         }
 
-        ~ViewItemDataControl()
+        ~ViewItemDataModifier()
         {
             this.Dispose();
         }
+
+        protected IViewItemCharModifier CharModifier { get; private set; }
+
+        #region IDisposable
 
         public override void Dispose()
         {
@@ -42,36 +46,29 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             base.Dispose();
         }
 
-        protected IViewItemCharModifier CharModifier { get; private set; }
+        #endregion
+
+        #region Edit and Refresh
+
+        public void EditCancel()
+        {
+            this.CharModifier.Cancel();
+        }
 
         public void EditInt(string targetName)
         {
             this.EditStart(targetName, false);
 
-            this.CharModifier.ValueModified += this.RefreshEditingInt;
-            this.CharModifier.ModificationEnded += this.TerminateEditing;
+            this.CharModifier.ValueModified += this.RefreshInt;
+            this.CharModifier.ModificationEnded += this.EditTerminate;
         }
-        
+
         public void EditString(string targetName)
         {
             this.EditStart(targetName, true);
 
-            this.CharModifier.ValueModified += this.RefreshEditingString;
-            this.CharModifier.ModificationEnded += this.TerminateEditing;
-        }
-
-        public void EditCancel()
-        {
-           this.CharModifier.Cancel(); 
-        }
-
-        public override void UpdateInput(IGameInputService input, GameTime time)
-        {
-            this.CharModifier.UpdateInput(input, time);
-        }
-
-        public override void Update(GameTime time)
-        {
+            this.CharModifier.ValueModified += this.RefreshString;
+            this.CharModifier.ModificationEnded += this.EditTerminate;
         }
 
         private void EditStart(string targetName, bool showCursor)
@@ -95,7 +92,13 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             }
         }
 
-        private void RefreshEditingInt(object sender, ViewItemDataEventArgs e)
+        private void EditTerminate(object sender, EventArgs e)
+        {
+            Item.Disable(ItemState.Item_Editing);
+            View.Disable(ViewState.Item_Editting);
+        }
+
+        private void RefreshInt(object sender, ViewItemDataEventArgs e)
         {
             var inputString = ((Font)this.ItemSettings.NameFont).PrintableString(e.NewValue);
 
@@ -106,7 +109,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             this.RefreshValue(ItemData, succeded ? result : 0);
         }
 
-        private void RefreshEditingString(object sender, ViewItemDataEventArgs e)
+        private void RefreshString(object sender, ViewItemDataEventArgs e)
         {
             // make sure name is exactly the same as the displayed name
             var inputString = ((Font)this.ItemSettings.NameFont).PrintableString(e.NewValue);
@@ -129,10 +132,15 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             }
         }
 
-        private void TerminateEditing(object sender, EventArgs e)
+        #endregion
+
+        #region Update
+
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            Item.Disable(ItemState.Item_Editing);
-            View.Disable(ViewState.Item_Editting);
+            this.CharModifier.UpdateInput(input, time);
         }
+
+        #endregion
     }
 }

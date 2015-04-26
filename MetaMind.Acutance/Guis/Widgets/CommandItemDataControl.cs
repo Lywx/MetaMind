@@ -5,7 +5,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     using Microsoft.Xna.Framework;
 
-    public class CommandItemDataControl : ViewItemDataControl
+    public class CommandItemDataControl : ViewItemDataModifier
     {
         public CommandItemDataControl(IViewItem item)
             : base(item)
