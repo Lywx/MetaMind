@@ -129,8 +129,8 @@
     <Compile Include="Guis\Modules\Synchronization\SynchronizationProgressBar.cs" />
     <Compile Include="Guis\Modules\SummaryModule.cs" />
     <Compile Include="Guis\Modules\SummarySettings.cs" />
-    <Compile Include="Guis\Widgets\MotivationItemControl.cs" />
-    <Compile Include="Guis\Widgets\MotivationItemGraphics.cs" />
+    <Compile Include="Guis\Widgets\ExperienceItemControl.cs" />
+    <Compile Include="Guis\Widgets\ExperienceItemGraphics.cs" />
     <Compile Include="Guis\Widgets\TaskItemFrameControl.cs" />
     <Compile Include="Guis\Widgets\TaskItemSettings.cs" />
     <Compile Include="Guis\Widgets\ViewItemSyncControl.cs" />
