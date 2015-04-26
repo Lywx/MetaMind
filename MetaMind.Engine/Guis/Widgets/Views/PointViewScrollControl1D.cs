@@ -58,7 +58,7 @@
         public Point RootCenterPoint(int id)
         {
             return new Point(
-                this.ViewSettings.Direction == PointViewSettings1D.ScrollDirection.Right ?
+                this.ViewSettings.Direction == PointViewDirection.Normal ?
                 this.ViewSettings.PointStart.X - (this.XOffset * this.ViewSettings.PointMargin.X) + id * this.ViewSettings.PointMargin.X :
                 this.ViewSettings.PointStart.X + (this.XOffset * this.ViewSettings.PointMargin.X) - id * this.ViewSettings.PointMargin.X,
                 this.ViewSettings.PointStart.Y);

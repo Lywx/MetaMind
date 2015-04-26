@@ -1,12 +1,8 @@
 ﻿namespace MetaMind.Engine.Guis.Widgets.Views
 {
-    using Microsoft.Xna.Framework;
-
-    public interface IPointViewScrollControlVertical
+    public interface IPointViewScrollControlVertical : IPointViewScrollControl
     {
         int YOffset { get; }
-
-        bool CanDisplay(int id);
 
         bool IsDownToDisplay(int row);
 
@@ -17,9 +13,5 @@
         void MoveUp();
 
         void MoveUpToTop();
-
-        Point RootCenterPoint(int id);
-
-        void Zoom(int id);
     }
 }

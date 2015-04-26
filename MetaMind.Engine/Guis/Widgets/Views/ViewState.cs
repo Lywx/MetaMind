@@ -2,16 +2,13 @@
 {
     public enum ViewState
     {
-        // ReSharper disable InconsistentNaming
         View_Active,
 
         View_Has_Focus,
         View_Has_Selection,
 
-        Item_Editting,
-        Item_Dragging,
+        View_Editting,
 
-        // ReSharper restore InconsistentNaming
         StateNum,
     }
 

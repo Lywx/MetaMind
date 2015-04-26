@@ -63,7 +63,7 @@
                     // normal status
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.MotivationEditItem))
                     {
-                        this.View.Enable(ViewState.Item_Editting);
+                        this.View.Enable(ViewState.View_Editting);
                         this.Item.Enable(ItemState.Item_Pending);
                     }
 
@@ -82,7 +82,7 @@
 
                         if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))
                         {
-                            this.View.Disable(ViewState.Item_Editting);
+                            this.View.Disable(ViewState.View_Editting);
                             this.Item.Disable(ItemState.Item_Pending);
                         }
                     }
@@ -90,9 +90,7 @@
 
                 if (!this.Locked)
                 {
-                    // should be outside of the accepting input state
-                    // task view is parallel with item input
-                    //this.ItemTaskControl.UpdateInput(input, time);
+                    // 
                 }
             }
         }

@@ -18,8 +18,8 @@
 
         public PickableFrame()
         {
-            this.InputEvent.MouseDoubleClick += this.DetectMouseLeftDoubleClick;
-            this.InputEvent.MouseDoubleClick += this.DetectMouseRightDoubleClick;
+            this.InputEvent.MouseDoubleClick += this.DetectMouseLeftClickDouble;
+            this.InputEvent.MouseDoubleClick += this.DetectMouseRightClickDouble;
         }
 
         ~PickableFrame()
@@ -31,13 +31,13 @@
         {
             this.MouseLeftClicked         = null;
             this.MouseLeftClickedOutside  = null;
-            this.MouseLeftDoubleClicked   = null;
+            this.MouseLeftClickedDouble   = null;
             this.MouseRightClicked        = null;
             this.MouseRightClickedOutside = null;
-            this.MouseRightDoubleClicked  = null;
+            this.MouseRightClickedDouble  = null;
 
-            this.InputEvent.MouseDoubleClick -= this.DetectMouseLeftDoubleClick;
-            this.InputEvent.MouseDoubleClick -= this.DetectMouseRightDoubleClick;
+            this.InputEvent.MouseDoubleClick -= this.DetectMouseLeftClickDouble;
+            this.InputEvent.MouseDoubleClick -= this.DetectMouseRightClickDouble;
 
             base.Dispose();
         }
@@ -50,13 +50,13 @@
 
         public event EventHandler<FrameEventArgs> MouseLeftClickedOutside;
 
-        public event EventHandler<FrameEventArgs> MouseLeftDoubleClicked;
+        public event EventHandler<FrameEventArgs> MouseLeftClickedDouble;
 
         public event EventHandler<FrameEventArgs> MouseRightClicked;
 
         public event EventHandler<FrameEventArgs> MouseRightClickedOutside;
 
-        public event EventHandler<FrameEventArgs> MouseRightDoubleClicked;
+        public event EventHandler<FrameEventArgs> MouseRightClickedDouble;
 
         protected override void DetectMouseLeftPressed(object sender, MouseEventArgs e)
         {
@@ -65,10 +65,10 @@
             if (this.IsEnabled(FrameState.Mouse_Over) && this.MouseLeftPress(e))
             {
                 this.Disable(FrameState.Mouse_Left_Clicked_Outside);
-                this.Disable(FrameState.Mouse_Left_Double_Clicked);
+                this.Disable(FrameState.Mouse_Left_Clicked_Double);
                 this.Disable(FrameState.Mouse_Right_Clicked);
                 this.Disable(FrameState.Mouse_Right_Clicked_Outside);
-                this.Disable(FrameState.Mouse_Right_Double_Clicked);
+                this.Disable(FrameState.Mouse_Right_Clicked_Double);
 
                 this.Enable(FrameState.Mouse_Left_Clicked);
                 if (this.MouseLeftClicked != null)
@@ -79,10 +79,10 @@
             else if (!this.IsEnabled(FrameState.Mouse_Over) && this.MouseLeftPress(e))
             {
                 this.Disable(FrameState.Mouse_Left_Clicked);
-                this.Disable(FrameState.Mouse_Left_Double_Clicked);
+                this.Disable(FrameState.Mouse_Left_Clicked_Double);
                 this.Disable(FrameState.Mouse_Right_Clicked);
                 this.Disable(FrameState.Mouse_Right_Clicked_Outside);
-                this.Disable(FrameState.Mouse_Right_Double_Clicked);
+                this.Disable(FrameState.Mouse_Right_Clicked_Double);
 
                 this.Enable(FrameState.Mouse_Left_Clicked_Outside);
 
@@ -101,9 +101,9 @@
             {
                 this.Disable(FrameState.Mouse_Left_Clicked);
                 this.Disable(FrameState.Mouse_Left_Clicked_Outside);
-                this.Disable(FrameState.Mouse_Left_Double_Clicked);
+                this.Disable(FrameState.Mouse_Left_Clicked_Double);
                 this.Disable(FrameState.Mouse_Right_Clicked_Outside);
-                this.Disable(FrameState.Mouse_Right_Double_Clicked);
+                this.Disable(FrameState.Mouse_Right_Clicked_Double);
 
                 this.Enable(FrameState.Mouse_Right_Clicked);
                 if (this.MouseRightClicked != null)
@@ -115,9 +115,9 @@
             {
                 this.Disable(FrameState.Mouse_Left_Clicked);
                 this.Disable(FrameState.Mouse_Left_Clicked_Outside);
-                this.Disable(FrameState.Mouse_Left_Double_Clicked);
+                this.Disable(FrameState.Mouse_Left_Clicked_Double);
                 this.Disable(FrameState.Mouse_Right_Clicked);
-                this.Disable(FrameState.Mouse_Right_Double_Clicked);
+                this.Disable(FrameState.Mouse_Right_Clicked_Double);
 
                 this.Enable(FrameState.Mouse_Right_Clicked_Outside);
                 if (this.MouseRightClickedOutside != null)
@@ -127,43 +127,43 @@
             }
         }
 
-        private void DetectMouseLeftDoubleClick(object sender, MouseEventArgs e)
+        private void DetectMouseLeftClickDouble(object sender, MouseEventArgs e)
         {
             if (this.IsEnabled(FrameState.Mouse_Over) && this.MouseLeftPress(e))
             {
                 this.Disable(FrameState.Mouse_Left_Clicked);
-                this.Disable(FrameState.Mouse_Right_Double_Clicked);
+                this.Disable(FrameState.Mouse_Right_Clicked_Double);
 
-                this.Enable(FrameState.Mouse_Left_Double_Clicked);
-                if (this.MouseLeftDoubleClicked != null)
+                this.Enable(FrameState.Mouse_Left_Clicked_Double);
+                if (this.MouseLeftClickedDouble != null)
                 {
-                    this.MouseLeftDoubleClicked(this, new FrameEventArgs(FrameEventType.Mouse_Left_Double_Clicked));
+                    this.MouseLeftClickedDouble(this, new FrameEventArgs(FrameEventType.Mouse_Left_Double_Clicked));
                 }
             }
             else
             {
                 this.Disable(FrameState.Mouse_Left_Clicked);
-                this.Disable(FrameState.Mouse_Left_Double_Clicked);
+                this.Disable(FrameState.Mouse_Left_Clicked_Double);
             }
         }
 
-        private void DetectMouseRightDoubleClick(object sender, MouseEventArgs e)
+        private void DetectMouseRightClickDouble(object sender, MouseEventArgs e)
         {
             if (this.IsEnabled(FrameState.Mouse_Over) && this.MouseRightPress(e))
             {
                 this.Disable(FrameState.Mouse_Right_Clicked);
                 this.Disable(FrameState.Mouse_Left_Clicked);
 
-                this.Enable(FrameState.Mouse_Right_Double_Clicked);
-                if (this.MouseRightDoubleClicked != null)
+                this.Enable(FrameState.Mouse_Right_Clicked_Double);
+                if (this.MouseRightClickedDouble != null)
                 {
-                    this.MouseRightDoubleClicked(this, new FrameEventArgs(FrameEventType.Mouse_Right_Double_Clicked));
+                    this.MouseRightClickedDouble(this, new FrameEventArgs(FrameEventType.Mouse_Right_Double_Clicked));
                 }
             }
             else
             {
                 this.Disable(FrameState.Mouse_Right_Clicked);
-                this.Disable(FrameState.Mouse_Right_Double_Clicked);
+                this.Disable(FrameState.Mouse_Right_Clicked_Double);
             }
         }
 

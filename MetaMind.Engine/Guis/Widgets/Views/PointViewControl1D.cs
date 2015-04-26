@@ -56,7 +56,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public virtual void MoveLeft()
         {
-            if (ViewSettings.Direction == PointViewSettings1D.ScrollDirection.Left)
+            if (ViewSettings.Direction == PointViewDirection.Inverse)
             {
                 // invert for left scrolling view
                 this.Selection.MoveRight();
@@ -69,7 +69,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public virtual void MoveRight()
         {
-            if (ViewSettings.Direction == PointViewSettings1D.ScrollDirection.Left)
+            if (ViewSettings.Direction == PointViewDirection.Inverse)
             {
                 // invert for left scrolling view
                 this.Selection.MoveLeft();
@@ -102,7 +102,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
         }
 
-        public void SuperMoveLeft()
+        public void FastMoveLeft()
         {
             for (var i = 0; i < ViewSettings.ColumnNumDisplay; i++)
             {
@@ -110,7 +110,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
         }
 
-        public void SuperMoveRight()
+        public void FastMoveRight()
         {
             for (var i = 0; i < ViewSettings.ColumnNumDisplay; i++)
             {
@@ -182,7 +182,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             {
                 return View.IsEnabled(ViewState.View_Active) &&
                        View.IsEnabled(ViewState.View_Has_Focus) &&
-                       !View.IsEnabled(ViewState.Item_Editting);
+                      !View.IsEnabled(ViewState.View_Editting);
             }
         }
 
@@ -232,12 +232,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastLeft))
                     {
-                        this.SuperMoveLeft();
+                        this.FastMoveLeft();
                     }
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastRight))
                     {
-                        this.SuperMoveRight();
+                        this.FastMoveRight();
                     }
 
                     // escape

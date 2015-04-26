@@ -43,20 +43,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         #endregion
 
         #region Update Input
-
-        /// <summary>
-        /// Make view reject input when editing task view.
-        /// </summary>
-        public override bool AcceptInput
-        {
-            get
-            {
-                return base.AcceptInput && !this.View.Items.Exists(item => item.ItemControl.ItemTaskControl.TaskTracer != null
-                                ? item.ItemControl.ItemTaskControl.TaskTracer.View.Control.Locked
-                                : false);
-            }
-        }
-
+        
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
             this.UpdateRegionClick(input, time);
@@ -83,7 +70,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         protected virtual Rectangle RegionPositioning(dynamic viewSettings, dynamic itemSettings)
         {
-            if (this.ViewSettings.Direction == PointViewSettings1D.ScrollDirection.Left)
+            if (this.ViewSettings.Direction == PointViewDirection.Inverse)
             {
                 return ExtRectangle.RectangleByCenter(
                         viewSettings.PointStart.X - viewSettings.PointMargin.X * (viewSettings.ColumnNumDisplay / 2),

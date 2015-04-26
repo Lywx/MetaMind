@@ -10,7 +10,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public Color HighlightColor = Palette.TransparentColor1;
 
-        public PointListSettings(Point start, Point margin, ScrollDirection direction)
+        public PointListSettings(Point start, Point margin, PointViewDirection direction)
             : base(start, margin, direction)
         {
         }

@@ -14,8 +14,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         void MoveRight();
 
-        void SuperMoveLeft();
+        void FastMoveLeft();
 
-        void SuperMoveRight();
+        void FastMoveRight();
     }
 }

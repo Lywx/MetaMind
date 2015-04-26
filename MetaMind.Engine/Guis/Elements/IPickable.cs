@@ -18,12 +18,12 @@ namespace MetaMind.Engine.Guis.Elements
 
         event EventHandler<FrameEventArgs> MouseLeftClickedOutside;
 
-        event EventHandler<FrameEventArgs> MouseLeftDoubleClicked;
+        event EventHandler<FrameEventArgs> MouseLeftClickedDouble;
 
         event EventHandler<FrameEventArgs> MouseRightClicked;
 
         event EventHandler<FrameEventArgs> MouseRightClickedOutside;
 
-        event EventHandler<FrameEventArgs> MouseRightDoubleClicked;
+        event EventHandler<FrameEventArgs> MouseRightClickedDouble;
     }
 }

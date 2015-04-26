@@ -144,15 +144,13 @@
                 return;
             }
 
-            // mouse
-            //-----------------------------------------------------------------
+            // Mouse
             if (this.ViewSettings.MouseEnabled)
             {
                 this.ItemFrameControl.UpdateInput(time);
             }
 
-            // keyboard
-            //-----------------------------------------------------------------
+            // Keyboard
             if (this.ViewSettings.KeyboardEnabled)
             {
                 this.ItemDataControl.UpdateInput(input, time);

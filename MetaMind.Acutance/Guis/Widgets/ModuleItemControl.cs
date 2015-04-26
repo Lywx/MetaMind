@@ -27,18 +27,18 @@ namespace MetaMind.Acutance.Guis.Widgets
             
             this.ItemFileControl  = new ModuleItemFileControl(item);
 
-            this.NameFrame.MouseLeftDoubleClicked += this.RetrieveIt;
+            this.NameFrame.MouseLeftClickedDouble += this.RetrieveIt;
         }
         
         #endregion Constructors
 
         public ModuleItemFileControl ItemFileControl { get; private set; }
 
-        public ItemDataFrame IdFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).IdFrame; } }
+        public PickableFrame IdFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).IdFrame; } }
 
-        public ItemDataFrame NameFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).NameFrame; } }
+        public PickableFrame NameFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).NameFrame; } }
 
-        public ItemDataFrame ExperienceFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).ExperienceFrame; } }
+        public PickableFrame ExperienceFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).ExperienceFrame; } }
 
 
         #region Events

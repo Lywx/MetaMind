@@ -26,12 +26,17 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         int RowFrom(int id);
 
-        void SuperMoveDown();
+        void FastMoveUp();
 
-        void SuperMoveLeft();
+        void FastMoveDown();
 
-        void SuperMoveRight();
+        #region 
 
-        void SuperMoveUp();
+        void FastMoveLeft();
+
+        void FastMoveRight();
+
+        #endregion
+
     }
 }

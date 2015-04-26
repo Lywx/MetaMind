@@ -1,7 +1,7 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
     using MetaMind.Engine;
-    using MetaMind.Engine.Extensions;
+    using MetaMind.Engine.Guis.Elements;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Services;
 
@@ -45,9 +45,9 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
         }
 
-        public ItemDataFrame IdFrame { get; private set; }
+        public PickableFrame IdFrame { get; private set; }
 
-        public ItemDataFrame NameFrame { get; private set; }
+        public PickableFrame NameFrame { get; private set; }
 
         private Vector2 IdFrameLocation
         {

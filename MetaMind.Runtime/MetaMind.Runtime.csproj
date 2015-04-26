@@ -131,8 +131,8 @@
     <Compile Include="Guis\Modules\SummarySettings.cs" />
     <Compile Include="Guis\Widgets\ExperienceItemControl.cs" />
     <Compile Include="Guis\Widgets\ExperienceItemGraphics.cs" />
-    <Compile Include="Guis\Widgets\TaskItemFrameControl.cs" />
-    <Compile Include="Guis\Widgets\TaskItemSettings.cs" />
+    <Compile Include="Guis\Widgets\ExperienceItemFrameControl.cs" />
+    <Compile Include="Guis\Widgets\ExperienceItemSettings.cs" />
     <Compile Include="Guis\Widgets\ViewItemSyncControl.cs" />
     <Compile Include="Guis\Modules\SynchronizationModule.cs" />
     <Compile Include="Guis\Modules\SynchronizationMonitor.cs" />

@@ -1,7 +1,7 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
     using MetaMind.Engine;
-    using MetaMind.Engine.Extensions;
+    using MetaMind.Engine.Guis.Elements;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Services;
 
@@ -9,11 +9,11 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     public class TraceItemFrameControl : ViewItemFrameControl
     {
-        public ItemDataFrame NameFrame { get; private set; }
+        public PickableFrame NameFrame { get; private set; }
 
-        public ItemDataFrame IdFrame { get; private set; }
+        public PickableFrame IdFrame { get; private set; }
 
-        public ItemDataFrame ExperienceFrame { get; private set; }
+        public PickableFrame ExperienceFrame { get; private set; }
 
         public TraceItemFrameControl(IViewItem item)
             : base(item)

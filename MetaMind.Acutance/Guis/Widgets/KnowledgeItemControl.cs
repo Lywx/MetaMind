@@ -49,7 +49,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Public Properties
 
-        public ItemDataFrame IdFrame
+        public PickableFrame IdFrame
         {
             get
             {
@@ -57,7 +57,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             }
         }
 
-        public ItemDataFrame NameFrame
+        public PickableFrame NameFrame
         {
             get
             {
@@ -90,7 +90,7 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             // mouse and keyboard in modifier
             // -----------------------------------------------------------------
-            base.UpdateInput(, time);
+            base.UpdateInput(input, time);
 
             // keyboard
             // -----------------------------------------------------------------
@@ -121,7 +121,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
                         if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.Escape))
                         {
-                            this.View.Disable(ViewState.Item_Editting);
+                            this.View.Disable(ViewState.View_Editting);
                             this.Item.Disable(ItemState.Item_Pending);
                         }
                     }
@@ -131,7 +131,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                         // normal status
                         if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.KnowledgeEditItem))
                         {
-                            this.View.Enable(ViewState.Item_Editting);
+                            this.View.Enable(ViewState.View_Editting);
                             this.Item.Enable(ItemState.Item_Pending);
                         }
                     }

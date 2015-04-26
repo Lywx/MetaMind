@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Guis.Elements
 
         Mouse_Left_Clicked,
         Mouse_Left_Clicked_Outside,
-        Mouse_Left_Double_Clicked,
+        Mouse_Left_Clicked_Double,
 
         Mouse_Left_Dragged_Out,
 
@@ -18,12 +18,13 @@ namespace MetaMind.Engine.Guis.Elements
 
         Mouse_Right_Clicked,
         Mouse_Right_Clicked_Outside,
-        Mouse_Right_Double_Clicked,
+        Mouse_Right_Clicked_Double,
 
         Mouse_Right_Dragged_Out,
 
-        Frame_Initialized,
         Frame_Active,
+        
+        Frame_Initialized,
 
         // whether frame position is being moved
         Frame_Moved,

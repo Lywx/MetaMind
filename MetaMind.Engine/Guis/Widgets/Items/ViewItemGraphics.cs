@@ -4,11 +4,11 @@
     using System.Globalization;
 
     using MetaMind.Engine.Components.Fonts;
+    using MetaMind.Engine.Guis.Elements;
+    using MetaMind.Engine.Guis.Widgets.Visual;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
-
-    using Primtives2D;
 
     public class ViewItemGraphics : ViewItemComponent, IItemGraphics
     {
@@ -16,12 +16,92 @@
             : base(item)
         {
             this.RootFrame = this.ItemControl.RootFrame;
+            this.NameFrame = this.ItemControl.NameFrame;
 
             this.IdCenterPosition =   () => this.RootFrame.Center.ToVector2();
             this.ItemCenterPosition = () => this.RootFrame.Center.ToVector2();
+
+            this.IdLabel = new Label(
+                () => this.ItemSettings.IdFont,
+                () => this.ItemControl.Id.ToString(new CultureInfo("en-US")),
+                () => this.IdCenterPosition(),
+                () => this.ItemSettings.IdColor,
+                () => this.ItemSettings.IdSize,
+                StringHAlign.Center,
+                StringVAlign.Center,
+                false);
+
+            this.NameFilledBox = new Box(
+                () => this.NameFrame.Rectangle.Crop((Point)this.ItemSettings.NameFrameMargin),
+                () =>
+                    {
+                        if (this.Item.IsEnabled(ItemState.Item_Pending))
+                        {
+                            return this.ItemSettings.NameFramePendingColor;
+                        }
+
+                        if (this.Item.IsEnabled(ItemState.Item_Editing))
+                        {
+                            return this.ItemSettings.NameFrameModificationColor;
+                        }
+
+                        if (this.Item.IsEnabled(ItemState.Item_Mouse_Over) && 
+                            this.Item.IsEnabled(ItemState.Item_Selected))
+                        {
+                            return this.ItemSettings.NameFrameSelectionColor;
+                        }
+
+                        if (this.Item.IsEnabled(ItemState.Item_Mouse_Over) && 
+                           !this.Item.IsEnabled(ItemState.Item_Selected))
+                        {
+                            return this.ItemSettings.NameFrameRegularColor;
+                        }
+
+                        if (this.Item.IsEnabled(ItemState.Item_Selected))
+                        {
+                            return this.ItemSettings.NameFrameSelectionColor;
+                        }
+
+                        return this.ItemSettings.NameFrameRegularColor;
+                    },
+                () => true);
+
+            this.NameDrawnBox = new Box(
+                () => this.NameFrame.Rectangle.Crop((Point)this.ItemSettings.NameFrameMargin),
+                () =>
+                    {
+                        if (this.Item.IsEnabled(ItemState.Item_Mouse_Over) && 
+                            this.Item.IsEnabled(ItemState.Item_Editing))
+                        {
+                            return this.ItemSettings.NameFrameMouseOverColor;
+                        }
+                        
+                        if (this.Item.IsEnabled(ItemState.Item_Mouse_Over) && 
+                            this.Item.IsEnabled(ItemState.Item_Selected))
+                        {
+                            return this.ItemSettings.NameFrameMouseOverColor;
+                        }
+                        
+                        if (this.Item.IsEnabled(ItemState.Item_Mouse_Over) && 
+                           !this.Item.IsEnabled(ItemState.Item_Selected))
+                        {
+                            return this.ItemSettings.NameFrameMouseOverColor;
+                        }
+
+                        return Color.Transparent;
+                    },
+                () => false);
         }
 
+        protected IPickableFrame NameFrame { get; set; }
+
+        protected Box NameFilledBox { get; set; }
+
+        protected Box NameDrawnBox { get; set; }
+
         protected Func<Vector2> IdCenterPosition { get; set; }
+
+        protected Label IdLabel { get; set; }
 
         protected Func<Vector2> ItemCenterPosition { get; set; }
 
@@ -29,85 +109,16 @@
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            if (!ItemControl.Active && !Item.IsEnabled(ItemState.Item_Dragging))
+            if (!ItemControl.Active && 
+                !Item.IsEnabled(ItemState.Item_Dragging))
             {
                 return;
             }
 
-            this.DrawNameFrame(graphics, alpha);
-            this.DrawId(graphics, alpha);
-        }
+            this.NameDrawnBox .Draw(graphics, time, alpha);
+            this.NameFilledBox.Draw(graphics, time, alpha);
 
-        public override void Update(GameTime time)
-        {
-        }
-
-        protected virtual void DrawId(IGameGraphicsService graphics, byte alpha)
-        {
-            graphics.StringDrawer.DrawString(
-                ItemSettings.IdFont,
-                ItemControl.Id.ToString(new CultureInfo("en-US")),
-                this.IdCenterPosition(),
-                ExtColor.MakeTransparent(ItemSettings.IdColor, alpha),
-                ItemSettings.IdSize,
-                StringHAlign.Center,
-                StringVAlign.Center);
-        }
-
-        protected virtual void DrawNameFrame(IGameGraphicsService graphics, byte alpha)
-        {
-            if (Item.IsEnabled(ItemState.Item_Pending))
-            {
-                this.FillNameFrameWith(graphics, this.ItemSettings.NameFramePendingColor, alpha);
-            }
-            else if (Item.IsEnabled(ItemState.Item_Mouse_Over) &&
-                     Item.IsEnabled(ItemState.Item_Editing))
-            {
-                this.FillNameFrameWith(graphics, this.ItemSettings.NameFrameModificationColor, alpha);
-                this.DrawNameFrameWith(graphics, this.ItemSettings.NameFrameMouseOverColor, alpha);
-            }
-            else if (!Item.IsEnabled(ItemState.Item_Mouse_Over) &&
-                     Item.IsEnabled(ItemState.Item_Editing))
-            {
-                this.FillNameFrameWith(graphics, this.ItemSettings.NameFrameModificationColor, alpha);
-            }
-            else if (Item.IsEnabled(ItemState.Item_Mouse_Over) &&
-                     Item.IsEnabled(ItemState.Item_Selected))
-            {
-                this.FillNameFrameWith(graphics, this.ItemSettings.NameFrameSelectionColor, alpha);
-                this.DrawNameFrameWith(graphics, this.ItemSettings.NameFrameMouseOverColor, alpha);
-            }
-            else if (Item.IsEnabled(ItemState.Item_Mouse_Over) &&
-                    !Item.IsEnabled(ItemState.Item_Selected))
-            {
-                this.FillNameFrameWith(graphics, this.ItemSettings.NameFrameRegularColor, alpha);
-                this.DrawNameFrameWith(graphics, this.ItemSettings.NameFrameMouseOverColor, alpha);
-            }
-            else if (Item.IsEnabled(ItemState.Item_Selected))
-            {
-                this.FillNameFrameWith(graphics, this.ItemSettings.NameFrameSelectionColor, alpha);
-            }
-            else
-            {
-                this.FillNameFrameWith(graphics, this.ItemSettings.NameFrameRegularColor, alpha);
-            }
-        }
-
-        protected void DrawNameFrameWith(IGameGraphicsService graphics, Color color, byte alpha)
-        {
-            Primitives2D.DrawRectangle(
-                graphics.SpriteBatch,
-                ExtRectangle.Crop(ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin),
-                color.MakeTransparent(alpha),
-                1f);
-        }
-
-        protected void FillNameFrameWith(IGameGraphicsService graphics, Color color, byte alpha)
-        {
-            Primitives2D.FillRectangle(
-                graphics.SpriteBatch,
-                ExtRectangle.Crop(ItemControl.NameFrame.Rectangle, ItemSettings.NameFrameMargin),
-                color.MakeTransparent(alpha));
+            this.IdLabel.Draw(graphics, time, alpha);
         }
     }
 }

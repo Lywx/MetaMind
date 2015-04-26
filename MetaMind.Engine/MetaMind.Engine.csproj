@@ -75,6 +75,12 @@
     <Compile Include="GameControllableEntityCollection.cs" />
     <Compile Include="GameEntityCollection.cs" />
     <Compile Include="GameVisualEntityCollection.cs" />
+    <Compile Include="Guis\Widgets\Items\IItemRootFrame.cs" />
+    <Compile Include="Guis\Widgets\Items\IViewItemFrameControl.cs" />
+    <Compile Include="Guis\Widgets\Views\IPointGridControl.cs" />
+    <Compile Include="Guis\Widgets\Views\IPointViewScrollControl2D.cs" />
+    <Compile Include="Guis\Widgets\Views\IPointViewScrollControl.cs" />
+    <Compile Include="Guis\Widgets\Views\PointViewDirection.cs" />
     <Compile Include="Guis\Widgets\Visual\Box.cs" />
     <Compile Include="Components\AudioManager.cs" />
     <Compile Include="Components\Events\IEvent.cs" />
@@ -232,7 +238,6 @@
     <Compile Include="Guis\Widgets\Views\PointListControl.cs" />
     <Compile Include="Guis\Widgets\Views\PointListSettings.cs" />
     <Compile Include="Guis\Widgets\Items\IItemGraphics.cs" />
-    <Compile Include="Guis\Widgets\Items\ItemDataFrame.cs" />
     <Compile Include="Guis\Widgets\Items\ItemEntity.cs" />
     <Compile Include="Guis\Widgets\Items\ItemRootFrame.cs" />
     <Compile Include="Guis\Widgets\Items\ItemSettings.cs" />

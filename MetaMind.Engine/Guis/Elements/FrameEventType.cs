@@ -2,12 +2,10 @@
 {
     public enum FrameEventType
     {
-        //------------------------------------------------------------------
         // Basic
         Mouse_Enter,
         Mouse_Leave,
 
-        //------------------------------------------------------------------
         // Left
         Mouse_Left_Pressed,
         Mouse_Left_Released,
@@ -19,7 +17,6 @@
 
         Mouse_Left_Dragged_Out,
 
-        //------------------------------------------------------------------
         // Right
         Mouse_Right_Pressed,
         Mouse_Right_Released,
@@ -31,13 +28,11 @@
 
         Mouse_Right_Dragged_Out,
 
-        //------------------------------------------------------------------
         // Change
         Frame_Moved,
         Frame_Dragged,
         Frame_Dropped,
 
-        //------------------------------------------------------------------
         EventNum,
     }
 }

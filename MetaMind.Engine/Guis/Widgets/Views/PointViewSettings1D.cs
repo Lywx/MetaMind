@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         public int ColumnNumMax     = 500;
 
         //---------------------------------------------------------------------
-        public ScrollDirection Direction = ScrollDirection.Right;
+        public PointViewDirection Direction = PointViewDirection.Normal;
 
         //---------------------------------------------------------------------
         public Point PointMargin = new Point(51, 0);
@@ -20,17 +20,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             this.PointStart = start;
         }
 
-        public PointViewSettings1D(Point start, Point margin, ScrollDirection direction)
+        public PointViewSettings1D(Point start, Point margin, PointViewDirection direction)
         {
             this.PointStart  = start;
             this.PointMargin = margin;
 
             this.Direction   = direction;
-        }
-
-        public enum ScrollDirection
-        {
-            Left, Right
         }
     }
 }

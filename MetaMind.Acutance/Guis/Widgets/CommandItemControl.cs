@@ -25,7 +25,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             this.ItemViewControl  = new ViewItemViewSmartControl<ViewItemSmartSwapProcess>(item, source);
             this.ItemDataControl  = new CommandItemDataControl(item);
 
-            this.NameFrame.MouseLeftDoubleClicked += this.RetrieveKnowledge;
+            this.NameFrame.MouseLeftClickedDouble += this.RetrieveKnowledge;
         }
 
         /// <remarks>
@@ -39,9 +39,9 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #endregion Constructors
 
-        public ItemDataFrame IdFrame { get { return ((KnowledgeItemFrameControl)ItemFrameControl).IdFrame; } }
+        public PickableFrame IdFrame { get { return ((KnowledgeItemFrameControl)ItemFrameControl).IdFrame; } }
 
-        public ItemDataFrame NameFrame { get { return ((KnowledgeItemFrameControl)ItemFrameControl).NameFrame; } }
+        public PickableFrame NameFrame { get { return ((KnowledgeItemFrameControl)ItemFrameControl).NameFrame; } }
 
         #region Events
 

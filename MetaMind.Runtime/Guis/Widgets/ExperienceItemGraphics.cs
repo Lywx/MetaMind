@@ -7,121 +7,63 @@
 
 namespace MetaMind.Runtime.Guis.Widgets
 {
-    using System.Globalization;
+    using System;
 
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Guis.Widgets.Visual;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
     public class ExperienceItemGraphics : ViewItemGraphics
     {
+        private readonly string HelpInformation = "N:Name";
+
         public ExperienceItemGraphics(IViewItem item)
             : base(item)
         {
-            this.IdCenterPosition =
-                () =>
-                new Vector2(
-                    this.ItemControl.RootFrame.Rectangle.Center.X,
-                    this.ItemControl.RootFrame.Rectangle.Top - 15);
+            this.IdCenterPosition = () => new Vector2(this.RootFrame.Rectangle.Center.X, this.RootFrame.Rectangle.Top - 15);
+            this.NameCenterPosition = () => this.RootFrame.Rectangle.Center.ToVector2() + this.ItemSettings.NameMargin.ToVector2();
+            this.HelpCenterPosition = this.NameCenterPosition;
+
+            this.IdLabel.TextColor = () =>
+                !this.Item.IsEnabled(ItemState.Item_Pending)
+                    ? (Color)this.ItemSettings.IdColor
+                    : (Color)this.ItemSettings.IdPendingColor;
+
+            this.NameLabel = new Label(
+                () => this.Item.IsEnabled(ItemState.Item_Pending) ? this.ItemSettings.HelpFont : this.ItemSettings.NameFont,
+                () => this.Item.IsEnabled(ItemState.Item_Pending) ? this.HelpInformation : this.ItemData.Name,
+                this.NameCenterPosition,
+                () => this.Item.IsEnabled(ItemState.Item_Pending) ? this.ItemSettings.HelpColor : this.ItemSettings.NameColor,
+                () => this.Item.IsEnabled(ItemState.Item_Pending) ? this.ItemSettings.HelpSize : this.ItemSettings.NameSize,
+                StringHAlign.Center,
+                StringVAlign.Center,
+                false);
         }
 
-        #region Graphics Data
+        protected Label NameLabel { get; set; }
 
-        private string NameCropped
-        {
-            get
-            {
-                return FontManager.CropMonospacedString(
-                    ItemData.Name,
-                    ItemSettings.NameSize,
-                    ViewSettings.PointMargin.X * 6);
-            }
-        }
+        protected Func<Vector2> NameCenterPosition { get; set; }
 
-        private string HelpInformation
-        {
-            get
-            {
-                return "N:Name";
-            }
-        }
-
-        private Vector2 HelpLocation
-        {
-            get
-            {
-                return this.NameLocation;
-            }
-        }
-
-        private Vector2 NameLocation
-        {
-            get
-            {
-                return ExtPoint.ToVector2(this.ItemControl.RootFrame.Rectangle.Center)
-                       + ExtPoint.ToVector2(this.ItemSettings.NameMargin);
-            }
-        }
-
-        #endregion
+        protected Func<Vector2> HelpCenterPosition { get; set; }
 
         #region Update and Draw
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            if (!this.ItemControl.Active)
+            if (!ItemControl.Active && 
+                !Item.IsEnabled(ItemState.Item_Dragging))
             {
                 return;
             }
 
+            this.NameDrawnBox .Draw(graphics, time, alpha);
+            this.NameFilledBox.Draw(graphics, time, alpha);
 
-            this.DrawName(alpha);
-            this.DrawId(graphics, alpha);
-        }
-
-        public override void Update(GameTime time)
-        {
-        }
-
-        protected override void DrawId(IGameGraphicsService graphics, byte alpha)
-        {
-            graphics.StringDrawer.DrawString(
-                this.ItemSettings.IdFont,
-                this.ItemControl.Id.ToString(new CultureInfo("en-US")),
-                this.IdCenterPosition(),
-                !this.Item.IsEnabled(ItemState.Item_Pending) ? this.ItemSettings.IdColor : this.ItemSettings.IdPendingColor,
-                this.ItemSettings.IdSize,
-                StringHAlign.Center,
-                StringVAlign.Center);
-        }
-
-        private void DrawName(byte alpha)
-        {
-            if (!this.Item.IsEnabled(ItemState.Item_Selected))
-            {
-                return;
-            }
-
-            //if (Item.IsEnabled(ItemState.Item_Pending))
-            //{
-            //    FontManager.DrawStringCenteredHV(
-            //        ItemSettings.HelpFont,
-            //        this.HelpInformation,
-            //        this.HelpLocation,
-            //        ExtColor.MakeTransparent(ItemSettings.HelpColor, alpha),
-            //        ItemSettings.HelpSize);
-            //}
-            //else
-            //{
-            //    FontManager.DrawStringCenteredHV(
-            //        ItemSettings.NameFont,
-            //        this.NameCropped,
-            //        this.NameLocation,
-            //        ExtColor.MakeTransparent(ItemSettings.NameColor, alpha),
-            //        ItemSettings.NameSize);
-            //}
+            this.IdLabel  .Draw(graphics, time, alpha);
+            this.NameLabel.Draw(graphics, time, alpha);
         }
 
         #endregion

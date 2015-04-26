@@ -9,19 +9,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     using Microsoft.Xna.Framework;
 
-    public interface IPointGridControl : IPointViewControl2D
-    {
-        bool Locked { get; }
-
-        PointViewRegion Region { get; }
-
-        PointViewScrollBar ScrollBar { get; }
-
-        void ScrollDown();
-
-        void ScrollUp();
-    }
-
     public class PointGridControl : PointViewControl2D, IPointGridControl
     {
         public PointGridControl(IView view, PointGridSettings viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
@@ -114,7 +101,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public bool Locked
         {
-            get { return this.View.IsEnabled(ViewState.Item_Editting); }
+            get { return this.View.IsEnabled(ViewState.View_Editting); }
         }
 
         public override void UpdateInput(IGameInputService input, GameTime time)
@@ -156,22 +143,22 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastUp))
                     {
-                        this.SuperMoveUp();
+                        this.FastMoveUp();
                     }
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastDown))
                     {
-                        this.SuperMoveDown();
+                        this.FastMoveDown();
                     }
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastLeft))
                     {
-                        this.SuperMoveLeft();
+                        this.FastMoveLeft();
                     }
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastRight))
                     {
-                        this.SuperMoveRight();
+                        this.FastMoveRight();
                     }
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))

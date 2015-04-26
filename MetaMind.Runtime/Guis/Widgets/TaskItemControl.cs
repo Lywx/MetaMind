@@ -1,6 +1,7 @@
 namespace MetaMind.Runtime.Guis.Widgets
 {
     using MetaMind.Engine.Components.Inputs;
+    using MetaMind.Engine.Guis.Elements;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Services;
@@ -15,17 +16,17 @@ namespace MetaMind.Runtime.Guis.Widgets
         public TaskItemControl(IViewItem item)
             : base(item)
         {
-            this.ItemFrameControl = new TaskItemFrameControl(item);
+            this.ItemFrameControl = new ExperienceItemFrameControl(item);
             this.ItemSyncControl  = new ViewItemSyncControl(item);
         }
 
-        public ItemDataFrame ExperienceFrame { get { return ((TaskItemFrameControl)this.ItemFrameControl).ExperienceFrame; } }
+        public PickableFrame ExperienceFrame { get { return ((ExperienceItemFrameControl)this.ItemFrameControl).ExperienceFrame; } }
 
-        public ItemDataFrame IdFrame { get { return ((TaskItemFrameControl)this.ItemFrameControl).IdFrame; } }
+        public PickableFrame IdFrame { get { return ((ExperienceItemFrameControl)this.ItemFrameControl).LHoldFrame; } }
 
-        public ItemDataFrame NameFrame { get { return ((TaskItemFrameControl)this.ItemFrameControl).NameFrame; } }
+        public PickableFrame NameFrame { get { return ((ExperienceItemFrameControl)this.ItemFrameControl).NameFrame; } }
 
-        public ItemDataFrame ProgressFrame { get { return ((TaskItemFrameControl)this.ItemFrameControl).ProgressFrame; } }
+        public PickableFrame ProgressFrame { get { return ((ExperienceItemFrameControl)this.ItemFrameControl).RHoldFrame; } }
 
         public ViewItemSyncControl ItemSyncControl { get; private set; }
 
@@ -57,12 +58,10 @@ namespace MetaMind.Runtime.Guis.Widgets
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            // mouse and keyboard in modifier
-            //-----------------------------------------------------------------
+            // Mouse and keyboard in modifier
             base.UpdateInput(input, time);
 
-            // keyboard
-            //-----------------------------------------------------------------
+            // Keyboard
             if (this.ViewSettings.KeyboardEnabled)
             {
                 if (this.AcceptInput)
@@ -88,7 +87,7 @@ namespace MetaMind.Runtime.Guis.Widgets
 
                         if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))
                         {
-                            this.View.Disable(ViewState.Item_Editting);
+                            this.View.Disable(ViewState.View_Editting);
                             this.Item.Disable(ItemState.Item_Pending);
                         }
                     }
@@ -100,7 +99,7 @@ namespace MetaMind.Runtime.Guis.Widgets
                         // Normal status
                         if (input.State.Keyboard.IsActionTriggered(KeyboardActions.TaskEditItem))
                         {
-                            this.View.Enable(ViewState.Item_Editting);
+                            this.View.Enable(ViewState.View_Editting);
                             this.Item.Enable(ItemState.Item_Pending);
                         }
 

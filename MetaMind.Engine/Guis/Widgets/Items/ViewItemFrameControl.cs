@@ -12,10 +12,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
     using Microsoft.Xna.Framework;
 
-    public interface IViewItemFrameControl : IUpdateable, IInputable
-    {
-    }
-
     public class ViewItemFrameControl : ViewItemComponent, IViewItemFrameControl
     {
         public ViewItemFrameControl(IViewItem item)

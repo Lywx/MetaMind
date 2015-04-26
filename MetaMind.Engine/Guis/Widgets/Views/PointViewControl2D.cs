@@ -37,7 +37,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             this.Selection.MoveUp();
         }
 
-        public virtual void SuperMoveDown()
+        public virtual void FastMoveDown()
         {
             for (var i = 0; i < this.ViewSettings.RowNumDisplay; i++)
             {
@@ -45,7 +45,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
         }
 
-        public virtual void SuperMoveUp()
+        public virtual void FastMoveUp()
         {
             for (var i = 0; i < this.ViewSettings.RowNumDisplay; i++)
             {
@@ -84,12 +84,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastUp))
                     {
-                        this.SuperMoveUp();
+                        this.FastMoveUp();
                     }
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastDown))
                     {
-                        this.SuperMoveDown();
+                        this.FastMoveDown();
                     }
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Left))
@@ -104,12 +104,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastLeft))
                     {
-                        this.SuperMoveLeft();
+                        this.FastMoveLeft();
                     }
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastRight))
                     {
-                        this.SuperMoveRight();
+                        this.FastMoveRight();
                     }
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))

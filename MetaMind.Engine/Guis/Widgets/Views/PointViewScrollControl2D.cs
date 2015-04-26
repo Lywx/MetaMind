@@ -4,11 +4,6 @@
 
     using Microsoft.Xna.Framework;
 
-    public interface IPointViewScrollControl2D : IPointViewScrollControlHorizontal, IPointViewScrollControlVertical
-    {
-        bool CanDisplay(int row, int column);
-    }
-
     public class PointViewScrollControl2D : ViewComponent, IPointViewScrollControl2D
     {
         private int xOffset;

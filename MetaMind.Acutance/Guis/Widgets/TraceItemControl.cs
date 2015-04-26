@@ -5,6 +5,7 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Acutance.Concepts;
     using MetaMind.Engine;
     using MetaMind.Engine.Components.Inputs;
+    using MetaMind.Engine.Guis.Elements;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Services;
@@ -23,11 +24,11 @@ namespace MetaMind.Acutance.Guis.Widgets
             this.ItemViewControl  = new ViewItemViewSmartControl<ViewItemSmartSwapProcess>(item, source);
         }
 
-        public ItemDataFrame IdFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).IdFrame; } }
+        public PickableFrame IdFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).IdFrame; } }
 
-        public ItemDataFrame NameFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).NameFrame; } }
+        public PickableFrame NameFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).NameFrame; } }
 
-        public ItemDataFrame ExperienceFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).ExperienceFrame; } }
+        public PickableFrame ExperienceFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).ExperienceFrame; } }
 
         #endregion Constructors
 
@@ -77,7 +78,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
                         if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.Escape))
                         {
-                            this.View.Disable(ViewState.Item_Editting);
+                            this.View.Disable(ViewState.View_Editting);
                             this.Item.Disable(ItemState.Item_Pending);
                         }
                     }
@@ -87,7 +88,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                         // normal status
                         if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.TraceEditItem))
                         {
-                            this.View.Enable(ViewState.Item_Editting);
+                            this.View.Enable(ViewState.View_Editting);
                             this.Item.Enable(ItemState.Item_Pending);
                         }
 
