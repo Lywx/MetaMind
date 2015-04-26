@@ -71,9 +71,9 @@
             }
 
             if (this.Frame.IsEnabled(FrameState.Mouse_Left_Clicked) ||
-                this.Frame.IsEnabled(FrameState.Mouse_Left_Clicked_Double) ||
+                this.Frame.IsEnabled(FrameState.Mouse_Left_Double_Clicked) ||
                 this.Frame.IsEnabled(FrameState.Mouse_Right_Clicked) ||
-                this.Frame.IsEnabled(FrameState.Mouse_Right_Clicked_Double))
+                this.Frame.IsEnabled(FrameState.Mouse_Right_Double_Clicked))
             {
                 this.Enable(RegionState.Region_Has_Focus);
             }

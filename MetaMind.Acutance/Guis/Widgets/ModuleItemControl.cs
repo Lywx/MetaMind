@@ -27,7 +27,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             
             this.ItemFileControl  = new ModuleItemFileControl(item);
 
-            this.NameFrame.MouseLeftClickedDouble += this.RetrieveIt;
+            this.NameFrame.MouseLeftDoubleClicked += this.RetrieveIt;
         }
         
         #endregion Constructors

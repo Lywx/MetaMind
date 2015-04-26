@@ -25,7 +25,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             this.ItemViewControl  = new ViewItemViewSmartControl<ViewItemSmartSwapProcess>(item, source);
             this.ItemDataControl  = new CommandItemDataControl(item);
 
-            this.NameFrame.MouseLeftClickedDouble += this.RetrieveKnowledge;
+            this.NameFrame.MouseLeftDoubleClicked += this.RetrieveKnowledge;
         }
 
         /// <remarks>
