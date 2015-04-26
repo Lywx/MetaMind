@@ -63,12 +63,12 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             get
             {
-                if (!this.Item.IsEnabled(ItemState.Item_Dragging) && !this.Item.IsEnabled(ItemState.Item_Swaping))
+                if (!this.Item.IsEnabled(ItemState.Item_Is_Dragging) && !this.Item.IsEnabled(ItemState.Item_Is_Swaping))
                 {
                     return ExtPoint.ToVector2(this.ViewControl.Scroll.RootCenterPoint(this.ItemControl.Id))
                            + new Vector2(this.ItemSettings.IdFrameSize.X, 0);
                 }
-                else if (this.Item.IsEnabled(ItemState.Item_Swaping))
+                else if (this.Item.IsEnabled(ItemState.Item_Is_Swaping))
                 {
                     return this.ViewControl.Swap.RootCenterPoint().ToVector2() + new Vector2(this.ItemSettings.IdFrameSize.X, 0);
                 }

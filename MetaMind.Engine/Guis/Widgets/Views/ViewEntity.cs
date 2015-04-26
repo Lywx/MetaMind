@@ -1,25 +1,7 @@
 namespace MetaMind.Engine.Guis.Widgets.Views
 {
     using System;
-
-    using Microsoft.Xna.Framework;
-
-    using IDrawable = MetaMind.Engine.IDrawable;
-
-    public interface IViewEntity : IInputable, IDrawable, IUpdateable
-    {
-        dynamic ItemSettings { get; }
-
-        bool[] States { get; }
-
-        dynamic ViewSettings { get; }
-
-        void Disable(ViewState state);
-
-        void Enable(ViewState state);
-
-        bool IsEnabled(ViewState state);
-    }
+    using System.Linq;
 
     public abstract class ViewEntity : GameControllableEntity, IViewEntity
     {
@@ -27,38 +9,65 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         protected ViewEntity(ICloneable viewSettings, ICloneable itemSettings)
         {
+            if (viewSettings == null)
+            {
+                throw new ArgumentNullException("viewSettings");
+            }
+
+            if (itemSettings == null)
+            {
+                throw new ArgumentNullException("itemSettings");
+            }
+
             this.ViewSettings = viewSettings;
             this.ItemSettings = itemSettings;
 
-            this.Enable(ViewState.View_Active);
+            for (var i = 0; i < (int)ViewState.StateNum; i++)
+            {
+                this.states[i] = () => false;
+            }
+
+            this[ViewState.View_Is_Active] = () => true;
         }
 
         #endregion Constructors
 
         #region IViewEntity
 
-        private bool[] states = new bool[(int)ViewState.StateNum];
+        #region Settings
 
         public dynamic ItemSettings { get; private set; }
 
-        public bool[] States { get { return this.states; } }
-
         public dynamic ViewSettings { get; private set; }
 
-        public void Disable(ViewState state)
+        #endregion
+
+        #region States
+
+        private readonly Func<bool>[] states = new Func<bool>[(int)ViewState.StateNum];
+
+        public bool[] States
         {
-            state.DisableStateIn(this.states);
+            get
+            {
+                return this.states.Select(state => state()).ToArray();
+            }
         }
 
-        public void Enable(ViewState state)
+        public Func<bool> this[ViewState state]
         {
-            state.EnableStateIn(this.states);
+            get
+            {
+                return this.states[(int)state];
+            }
+
+            set
+            {
+                this.states[(int)state] = value;
+            }
         }
 
-        public bool IsEnabled(ViewState state)
-        {
-            return state.IsStateEnabledIn(this.states);
-        }
+        #endregion
 
         #endregion IViewEntity
     }

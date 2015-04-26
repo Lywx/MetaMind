@@ -66,7 +66,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            if (!ItemControl.Active && !Item.IsEnabled(ItemState.Item_Dragging))
+            if (!ItemControl.Active && !Item.IsEnabled(ItemState.Item_Is_Dragging))
             {
                 return;
             }
@@ -109,14 +109,14 @@ namespace MetaMind.Acutance.Guis.Widgets
             Primitives2D.FillRectangle(
                 ScreenManager.SpriteBatch,
                 ExtRectangle.Crop(ItemControl.IdFrame.Rectangle, ItemSettings.IdFrameMargin),
-                Item.IsEnabled(ItemState.Item_Pending)
+                Item.IsEnabled(ItemState.Item_Is_Pending)
                     ? ExtColor.MakeTransparent(ItemSettings.IdFramePendingColor, alpha)
                     : ExtColor.MakeTransparent(ItemSettings.IdFrameColor, alpha));
         }
 
         protected virtual void DrawName(byte alpha)
         {
-            if (Item.IsEnabled(ItemState.Item_Pending))
+            if (Item.IsEnabled(ItemState.Item_Is_Pending))
             {
                 FontManager.DrawString(
                     ItemSettings.HelpFont,

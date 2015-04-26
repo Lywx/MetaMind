@@ -81,8 +81,8 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             get
             {
-                return this.Item.IsEnabled(ItemState.Item_Editing) || 
-                       this.Item.IsEnabled(ItemState.Item_Pending);
+                return this.Item[ItemState.Item_Is_Editing]() || 
+                       this.Item[ItemState.Item_Is_Pending]();
             }
         }
 

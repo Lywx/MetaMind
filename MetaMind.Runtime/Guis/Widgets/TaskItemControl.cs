@@ -51,8 +51,8 @@ namespace MetaMind.Runtime.Guis.Widgets
         {
             get
             {
-                return this.Item.IsEnabled(ItemState.Item_Editing) || 
-                       this.Item.IsEnabled(ItemState.Item_Pending);
+                return this.Item[ItemState.Item_Is_Editing]() || 
+                       this.Item[ItemState.Item_Is_Pending]();
             }
         }
 
@@ -67,7 +67,7 @@ namespace MetaMind.Runtime.Guis.Widgets
                 if (this.AcceptInput)
                 {
                     // in pending status
-                    if (this.Item.IsEnabled(ItemState.Item_Pending))
+                    if (this.Item[ItemState.Item_Is_Pending]())
                     {
                         if (input.State.Keyboard.IsKeyTriggered(Keys.N))
                         {
@@ -87,8 +87,8 @@ namespace MetaMind.Runtime.Guis.Widgets
 
                         if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))
                         {
-                            this.View.Disable(ViewState.View_Editting);
-                            this.Item.Disable(ItemState.Item_Pending);
+                            this.View[ViewState.View_Is_Editing] = ()=> false;
+                            this.Item[ItemState.Item_Is_Pending] = ()=> false;
                         }
                     }
 
@@ -99,8 +99,8 @@ namespace MetaMind.Runtime.Guis.Widgets
                         // Normal status
                         if (input.State.Keyboard.IsActionTriggered(KeyboardActions.TaskEditItem))
                         {
-                            this.View.Enable(ViewState.View_Editting);
-                            this.Item.Enable(ItemState.Item_Pending);
+                            this.View[ViewState.View_Is_Editing] = ()=> true;
+                            this.Item[ItemState.Item_Is_Pending] = ()=> true;
                         }
 
                         if (input.State.Keyboard.IsActionTriggered(KeyboardActions.TaskDeleteItem))

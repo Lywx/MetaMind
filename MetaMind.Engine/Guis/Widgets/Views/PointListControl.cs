@@ -26,18 +26,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         protected override void UpdateViewFocus()
         {
-            if (this.Region.IsEnabled(RegionState.Region_Has_Focus))
-            {
-                this.View.Enable(ViewState.View_Has_Focus);
-            }
-            else if (this.View.IsEnabled(ViewState.View_Has_Selection))
-            {
-                this.View.Enable(ViewState.View_Has_Focus);
-            }
-            else
-            {
-                this.View.Disable(ViewState.View_Has_Focus);
-            }
+            // TODO: Moved ?
+            this.View[ViewState.View_Has_Focus] = () => this.Region[RegionState.Region_Has_Focus]() || this.View[ViewState.View_Has_Selection]();
         }
 
         #endregion

@@ -46,10 +46,10 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public void Clear()
         {
-            this.Frame.Disable(FrameState.Mouse_Left_Clicked);
-            this.Frame.Disable(FrameState.Mouse_Left_Double_Clicked);
-            this.Frame.Disable(FrameState.Mouse_Right_Clicked);
-            this.Frame.Disable(FrameState.Mouse_Right_Double_Clicked);
+            this.Frame[FrameState.Mouse_Left_Clicked] = () => false;
+            this.Frame[FrameState.Mouse_Left_Double_Clicked] = () => false;
+            this.Frame[FrameState.Mouse_Right_Clicked] = () => false;
+            this.Frame[FrameState.Mouse_Right_Double_Clicked] = () => false;
         }
 
         public override void Update(GameTime time)

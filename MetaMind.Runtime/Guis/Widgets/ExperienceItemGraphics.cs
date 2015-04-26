@@ -28,16 +28,16 @@ namespace MetaMind.Runtime.Guis.Widgets
             this.HelpCenterPosition = this.NameCenterPosition;
 
             this.IdLabel.TextColor = () =>
-                !this.Item.IsEnabled(ItemState.Item_Pending)
+                !this.Item[ItemState.Item_Is_Pending]()
                     ? (Color)this.ItemSettings.IdColor
                     : (Color)this.ItemSettings.IdPendingColor;
 
             this.NameLabel = new Label(
-                () => this.Item.IsEnabled(ItemState.Item_Pending) ? this.ItemSettings.HelpFont : this.ItemSettings.NameFont,
-                () => this.Item.IsEnabled(ItemState.Item_Pending) ? this.HelpInformation : this.ItemData.Name,
+                () => this.Item[ItemState.Item_Is_Pending]() ? this.ItemSettings.HelpFont : this.ItemSettings.NameFont,
+                () => this.Item[ItemState.Item_Is_Pending]() ? this.HelpInformation : this.ItemData.Name,
                 this.NameCenterPosition,
-                () => this.Item.IsEnabled(ItemState.Item_Pending) ? this.ItemSettings.HelpColor : this.ItemSettings.NameColor,
-                () => this.Item.IsEnabled(ItemState.Item_Pending) ? this.ItemSettings.HelpSize : this.ItemSettings.NameSize,
+                () => this.Item[ItemState.Item_Is_Pending]() ? this.ItemSettings.HelpColor : this.ItemSettings.NameColor,
+                () => this.Item[ItemState.Item_Is_Pending]() ? this.ItemSettings.HelpSize : this.ItemSettings.NameSize,
                 StringHAlign.Center,
                 StringVAlign.Center,
                 false);
@@ -54,7 +54,7 @@ namespace MetaMind.Runtime.Guis.Widgets
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
             if (!ItemControl.Active && 
-                !Item.IsEnabled(ItemState.Item_Dragging))
+                !Item[ItemState.Item_Is_Dragging]())
             {
                 return;
             }

@@ -22,18 +22,18 @@ namespace MetaMind.Engine.Guis.Elements
 
         Mouse_Right_Dragged_Out,
 
-        Frame_Active,
+        Frame_Is_Active,
         
-        Frame_Initialized,
+        Frame_Is_Initialized,
 
-        // whether frame position is being moved
-        Frame_Moved,
+        // Whether frame position is being moved
+        Frame_Is_Moved,
 
-        // whether frame is prepare to be dragged
-        Frame_Holding,
+        // Whether frame is prepare to be dragged
+        Frame_Is_Holding,
 
-        // whether frame is dragged by mouse
-        Frame_Dragging,
+        // Whether frame is dragged by mouse
+        Frame_Is_Dragging,
 
         StateNum,
     }

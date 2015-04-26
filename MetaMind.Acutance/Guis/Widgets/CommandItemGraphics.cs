@@ -16,7 +16,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            if (!ItemControl.Active && !Item.IsEnabled(ItemState.Item_Dragging))
+            if (!this.ItemControl.Active && !this.Item.IsEnabled(ItemState.Item_Is_Dragging))
             {
                 return;
             }

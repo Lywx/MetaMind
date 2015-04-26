@@ -16,14 +16,14 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         public override void SwapIt(IGameInteropService interop, IViewItem draggingItem)
         {
             // state checking
-            if (this.Item.IsEnabled(ItemState.Item_Swaping))
+            if (this.Item[ItemState.Item_Is_Swaping]())
             {
                 return;
             }
 
             // state control
             {
-                this.Item.Enable(ItemState.Item_Swaping);
+                this.Item[ItemState.Item_Is_Swaping] = () => true;
             }
 
             var originCenter = this        .ViewControl.Scroll.RootCenterPoint(this        .ItemControl.Id);

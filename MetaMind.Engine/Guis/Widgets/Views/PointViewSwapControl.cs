@@ -72,8 +72,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
             Debug.Assert(assertion, "Target view does not have a Region property named 'Region'.");
 
-            if (targetView.Control.Region.IsEnabled(RegionState.Region_Mouse_Over) &&
-               !draggingItem.IsEnabled(ItemState.Item_Exchanging))
+            if (targetView.Control.Region[RegionState.Region_Mouse_Over]()  &&
+               !draggingItem[ItemState.Item_Is_Transiting]() )
             {
                 draggingItem.ItemControl.ExchangeIt(draggingItem, targetView);
             }
@@ -87,14 +87,14 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         /// </remarks>
         public void WatchSwapFrom(IViewItem draggingItem, IView targetView)
         {
-            Predicate<IViewItem> touched = t => t.IsEnabled(ItemState.Item_Mouse_Over);
+            Predicate<IViewItem> touched = t => t[ItemState.Item_Is_Mouse_Over]() ;
             Predicate<IViewItem> another = t => !ReferenceEquals(t, draggingItem);
 
-            var active = targetView.Items.FindAll(t => t.IsEnabled(ItemState.Item_Active));
+            var active = targetView.Items.FindAll(t => t[ItemState.Item_Is_Active]() );
             var swapping = active.FindAll(touched).Find(another);
 
             if (swapping != null && 
-               !swapping.IsEnabled(ItemState.Item_Swaping))
+               !swapping[ItemState.Item_Is_Swaping]() )
             {
                 swapping.ItemControl.SwapIt(draggingItem);
             }

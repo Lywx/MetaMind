@@ -19,14 +19,10 @@ namespace MetaMind.Engine.Guis.Widgets.Regions
 
         int Height { get; set; }
 
-        bool[] States { get; }
-
         int Width { get; set; }
 
         int X { get; set; }
 
         int Y { get; set; }
-
-        bool IsEnabled(RegionState state);
     }
 }

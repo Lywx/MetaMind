@@ -3,51 +3,33 @@ namespace MetaMind.Engine.Guis.Widgets.Items
     public enum ItemState
     {
         // whether is inside view region
-        Item_Active,
+        Item_Is_Active,
 
         // whether is visible
-        Item_Visible,
+        Item_Is_Visible,
 
         // whether is under mouse cursor
-        Item_Mouse_Over,
+        Item_Is_Mouse_Over,
 
         // whether is selected
-        Item_Selected,
+        Item_Is_Selected,
 
         // whether is in pre-edit mode
-        Item_Pending,
+        Item_Is_Pending,
 
         // whether is editing
-        Item_Editing,
+        Item_Is_Editing,
 
         // whether is swapping with another item
-        Item_Swaping,
+        Item_Is_Swaping,
 
         // whether is exchanging to another view
-        Item_Exchanging,
+        Item_Is_Transiting,
 
         // whether is dragging by mouse
-        Item_Dragging,
+        Item_Is_Dragging,
 
         //------------------------------------------------------------------
         StateNum,
-    }
-
-    public static class ItemStateExt
-    {
-        public static void EnableStateIn(this ItemState state, bool[] states)
-        {
-            states[(int)state] = true;
-        }
-
-        public static void DisableStateIn(this ItemState state, bool[] states)
-        {
-            states[(int)state] = false;
-        }
-
-        public static bool IsStateEnabledIn(this ItemState state, bool[] states)
-        {
-            return states[(int)state];
-        }
     }
 }

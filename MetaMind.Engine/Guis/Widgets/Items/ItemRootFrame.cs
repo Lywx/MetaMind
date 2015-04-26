@@ -21,7 +21,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         public void Disable()
         {
-            this.Disable(FrameState.Frame_Active);
+            this[FrameState.Frame_Is_Active] = () => false;
         }
 
         public override void Dispose()
@@ -36,7 +36,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         public void Enable()
         {
-            this.Enable(FrameState.Frame_Active);
+            this[FrameState.Frame_Is_Active] = () => true;
         }
 
         private void SelectItsItem(object sender, FrameEventArgs e)

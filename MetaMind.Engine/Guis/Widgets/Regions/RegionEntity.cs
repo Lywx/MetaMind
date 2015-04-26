@@ -1,35 +1,35 @@
 namespace MetaMind.Engine.Guis.Widgets.Regions
 {
-    public abstract class RegionEntity : GameControllableEntity
+    using System;
+    using System.Linq;
+
+    public abstract class RegionEntity : GameControllableEntity, IRegionEntity
     {
-        #region Constructors
+        #region States
+
+        private readonly Func<bool>[] states = new Func<bool>[(int)RegionState.StateNum];
+
+        public bool[] States { get { return this.states.Select(state => state()).ToArray(); } }
 
         protected RegionEntity()
         {
-            this.states = new bool[(int)RegionState.StateNum];
+            for (var i = 0; i < (int)RegionState.StateNum; i++)
+            {
+                this.states[i] = () => false;
+            }
         }
 
-        #endregion
-
-        #region States
-
-        private bool[] states;
-
-        public bool[] States { get { return this.states; } }
-
-        public void Disable(RegionState state)
+        public Func<bool> this[RegionState state]
         {
-            state.DisableStateIn(this.states);
-        }
+            get
+            {
+                return this.states[(int)state];
+            }
 
-        public void Enable(RegionState state)
-        {
-            state.EnableStateIn(this.states);
-        }
-
-        public bool IsEnabled(RegionState state)
-        {
-            return state.IsStateEnabledIn(this.states);
+            set
+            {
+                this.states[(int)state] = value;
+            }
         }
 
         #endregion States

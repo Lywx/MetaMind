@@ -51,8 +51,8 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             get
             {
-                return this.Item.IsEnabled(ItemState.Item_Editing) || 
-                       this.Item.IsEnabled(ItemState.Item_Pending);
+                return this.Item.IsEnabled(ItemState.Item_Is_Editing) || 
+                       this.Item[ItemState.Item_Is_Pending]()
             }
         }
 
@@ -69,7 +69,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                 if (this.AcceptInput)
                 {
                     // in pending status
-                    if (this.Item.IsEnabled(ItemState.Item_Pending))
+                    if (this.Item.IsEnabled(ItemState.Item_Is_Pending))
                     {
                         if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.N))
                         {
@@ -78,8 +78,8 @@ namespace MetaMind.Acutance.Guis.Widgets
 
                         if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.Escape))
                         {
-                            this.View.Disable(ViewState.View_Editting);
-                            this.Item.Disable(ItemState.Item_Pending);
+                            this.View.Disable(ViewState.View_Is_Editing);
+                            this.Item.Disable(ItemState.Item_Is_Pending);
                         }
                     }
 
@@ -88,8 +88,8 @@ namespace MetaMind.Acutance.Guis.Widgets
                         // normal status
                         if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.TraceEditItem))
                         {
-                            this.View.Enable(ViewState.View_Editting);
-                            this.Item.Enable(ItemState.Item_Pending);
+                            this.View[View.State.View_Editting] = () => true;
+                            this.Item.Enable(ItemState.Item_Is_Pending);
                         }
 
                         if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.TraceDeleteItem))

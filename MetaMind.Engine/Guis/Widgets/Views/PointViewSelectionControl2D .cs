@@ -52,7 +52,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             this.previousId = this.currentId;
             this.currentId = null;
 
-            this.View.Disable(ViewState.View_Has_Selection);
+            this.View[ViewState.View_Has_Selection] = () => false;
         }
 
         public bool IsSelected(int id)

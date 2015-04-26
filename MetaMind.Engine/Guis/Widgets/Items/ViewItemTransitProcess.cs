@@ -50,7 +50,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         private void Initialize()
         {
-            this.SrcItem.Enable(ItemState.Item_Exchanging);
+            this.SrcItem[ItemState.Item_Is_Transiting] = () => true;
 
             this.srcFrame.MouseDropped += this.TransitWhenMouseInsideRegion;
         }
@@ -100,7 +100,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         /// </summary>
         private void TransitTerminate()
         {
-            this.SrcItem.Disable(ItemState.Item_Exchanging);
+            this.SrcItem[ItemState.Item_Is_Transiting] = () => false;
         }
 
         #endregion Exchange Operations
@@ -109,7 +109,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         private void TransitWhenMouseInsideRegion(object sender, FrameEventArgs e)
         {
-            if (this.desRegion.IsEnabled(RegionState.Region_Mouse_Over))
+            if (this.desRegion[RegionState.Region_Mouse_Over]())
             {
                 // This is a event driven method which does not obey the 
                 // normal update process or it will cause sudden graphical 

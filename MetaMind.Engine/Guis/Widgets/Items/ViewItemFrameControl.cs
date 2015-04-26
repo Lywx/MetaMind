@@ -28,23 +28,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         {
             this.RootFrame.UpdateInput(input, time);
 
-            if (this.RootFrame.IsEnabled(FrameState.Mouse_Over))
-            {
-                this.Item.Enable(ItemState.Item_Mouse_Over);
-            }
-            else
-            {
-                this.Item.Disable(ItemState.Item_Mouse_Over);
-            }
-
-            if (this.RootFrame.IsEnabled(FrameState.Frame_Dragging))
-            {
-                this.Item.Enable(ItemState.Item_Dragging);
-            }
-            else
-            {
-                this.Item.Disable(ItemState.Item_Dragging);
-            }
+            this.Item[ItemState.Item_Is_Mouse_Over]  = this.RootFrame[FrameState.Mouse_Over];
+            this.Item[ItemState.Item_Is_Dragging] = this.RootFrame[FrameState.Frame_Is_Dragging];
         }
 
         public override void Update(GameTime time)
@@ -55,11 +40,11 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         protected virtual void UpdateFrameGeometry()
         {
-            if (!this.Item.IsEnabled(ItemState.Item_Dragging) && !this.Item.IsEnabled(ItemState.Item_Swaping))
+            if (!this.Item[ItemState.Item_Is_Dragging]() && !this.Item[ItemState.Item_Is_Swaping]())
             {
                 this.RootFrame.Center = this.ViewControl.Scroll.RootCenterPoint(this.ItemControl.Id);
             }
-            else if (this.Item.IsEnabled(ItemState.Item_Swaping))
+            else if (this.Item[ItemState.Item_Is_Swaping]())
             {
                 this.RootFrame.Center = this.ViewControl.Swap.RootCenterPoint();
             }
@@ -75,13 +60,13 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         protected virtual void UpdateFrameLogics()
         {
             // frame activation
-            if (this.Item.IsEnabled(ItemState.Item_Active) && 
-               !this.Item.IsEnabled(ItemState.Item_Dragging))
+            if (this.Item[ItemState.Item_Is_Active]() && 
+               !this.Item[ItemState.Item_Is_Dragging]())
             {
                 this.RootFrame.Enable();
             }
-            else if (!this.Item.IsEnabled(ItemState.Item_Active) && 
-                     !this.Item.IsEnabled(ItemState.Item_Dragging))
+            else if (!this.Item[ItemState.Item_Is_Active]() && 
+                     !this.Item[ItemState.Item_Is_Dragging]())
             {
                 this.RootFrame.Disable();
             }

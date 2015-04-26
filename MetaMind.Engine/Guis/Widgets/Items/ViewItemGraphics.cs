@@ -35,29 +35,29 @@
                 () => this.NameFrame.Rectangle.Crop((Point)this.ItemSettings.NameFrameMargin),
                 () =>
                     {
-                        if (this.Item.IsEnabled(ItemState.Item_Pending))
+                        if (this.Item[ItemState.Item_Is_Pending]())
                         {
                             return this.ItemSettings.NameFramePendingColor;
                         }
 
-                        if (this.Item.IsEnabled(ItemState.Item_Editing))
+                        if (this.Item[ItemState.Item_Is_Editing]())
                         {
                             return this.ItemSettings.NameFrameModificationColor;
                         }
 
-                        if (this.Item.IsEnabled(ItemState.Item_Mouse_Over) && 
-                            this.Item.IsEnabled(ItemState.Item_Selected))
+                        if (this.Item[ItemState.Item_Is_Mouse_Over]() && 
+                            this.Item[ItemState.Item_Is_Selected]())
                         {
                             return this.ItemSettings.NameFrameSelectionColor;
                         }
 
-                        if (this.Item.IsEnabled(ItemState.Item_Mouse_Over) && 
-                           !this.Item.IsEnabled(ItemState.Item_Selected))
+                        if (this.Item[ItemState.Item_Is_Mouse_Over]() && 
+                           !this.Item[ItemState.Item_Is_Selected]())
                         {
                             return this.ItemSettings.NameFrameRegularColor;
                         }
 
-                        if (this.Item.IsEnabled(ItemState.Item_Selected))
+                        if (this.Item[ItemState.Item_Is_Selected]())
                         {
                             return this.ItemSettings.NameFrameSelectionColor;
                         }
@@ -70,20 +70,20 @@
                 () => this.NameFrame.Rectangle.Crop((Point)this.ItemSettings.NameFrameMargin),
                 () =>
                     {
-                        if (this.Item.IsEnabled(ItemState.Item_Mouse_Over) && 
-                            this.Item.IsEnabled(ItemState.Item_Editing))
+                        if (this.Item[ItemState.Item_Is_Mouse_Over]() && 
+                            this.Item[ItemState.Item_Is_Editing]())
                         {
                             return this.ItemSettings.NameFrameMouseOverColor;
                         }
                         
-                        if (this.Item.IsEnabled(ItemState.Item_Mouse_Over) && 
-                            this.Item.IsEnabled(ItemState.Item_Selected))
+                        if (this.Item[ItemState.Item_Is_Mouse_Over]() && 
+                            this.Item[ItemState.Item_Is_Selected]())
                         {
                             return this.ItemSettings.NameFrameMouseOverColor;
                         }
                         
-                        if (this.Item.IsEnabled(ItemState.Item_Mouse_Over) && 
-                           !this.Item.IsEnabled(ItemState.Item_Selected))
+                        if (this.Item[ItemState.Item_Is_Mouse_Over]() && 
+                           !this.Item[ItemState.Item_Is_Selected]())
                         {
                             return this.ItemSettings.NameFrameMouseOverColor;
                         }
@@ -110,7 +110,7 @@
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
             if (!ItemControl.Active && 
-                !Item.IsEnabled(ItemState.Item_Dragging))
+                !Item[ItemState.Item_Is_Dragging]())
             {
                 return;
             }

@@ -73,7 +73,7 @@ namespace MetaMind.Runtime.Guis.Widgets
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            if (!this.ItemControl.Active && !this.Item.IsEnabled(ItemState.Item_Dragging))
+            if (!this.ItemControl.Active && !this.Item[ItemState.Item_Is_Dragging]())
             {
                 return;
             }
@@ -114,7 +114,7 @@ namespace MetaMind.Runtime.Guis.Widgets
 
         private void DrawIdFrame(IGameGraphicsService graphics, byte alpha)
         {
-            if (this.Item.IsEnabled(ItemState.Item_Pending))
+            if (this.Item[ItemState.Item_Is_Pending]())
             {
                 Primitives2D.FillRectangle(
                     graphics.SpriteBatch,
@@ -132,7 +132,7 @@ namespace MetaMind.Runtime.Guis.Widgets
 
         private void DrawName(IGameGraphicsService graphics, byte alpha)
         {
-            //if (this.Item.IsEnabled(ItemState.Item_Pending))
+            //if (this.Item[ItemState.Item_Is_Pending]())
             //{
             //    graphics.StringDrawer.DrawString(
             //        ItemSettings.HelpFont,

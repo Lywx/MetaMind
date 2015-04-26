@@ -75,9 +75,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         {
             this.dataName = targetName;
 
-            Item.Disable(ItemState.Item_Pending);
-            Item.Enable(ItemState.Item_Editing);
-            View.Enable(ViewState.View_Editting);
+            Item[ItemState.Item_Is_Pending] = () => false;
+            Item[ItemState.Item_Is_Editing] = () => true;
+            View[ViewState.View_Is_Editing] = () => true;
 
             FieldInfo field = ItemData.GetType().GetField(targetName);
             if (field != null)
@@ -94,8 +94,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         private void EditTerminate(object sender, EventArgs e)
         {
-            Item.Disable(ItemState.Item_Editing);
-            View.Disable(ViewState.View_Editting);
+            Item[ItemState.Item_Is_Editing]  = () => false;
+            View[ViewState.View_Is_Editing] = () => false;
         }
 
         private void RefreshInt(object sender, ViewItemDataEventArgs e)

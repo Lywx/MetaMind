@@ -61,25 +61,25 @@
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            if (this.Frame.IsEnabled(FrameState.Mouse_Over))
+            if (this.Frame[FrameState.Mouse_Over]())
             {
-                this.Enable(RegionState.Region_Mouse_Over);
+                this[RegionState.Region_Mouse_Over] = () => true;
             }
             else
             {
-                this.Disable(RegionState.Region_Mouse_Over);
+                this[RegionState.Region_Mouse_Over] = () => false;
             }
 
-            if (this.Frame.IsEnabled(FrameState.Mouse_Left_Clicked) ||
-                this.Frame.IsEnabled(FrameState.Mouse_Left_Double_Clicked) ||
-                this.Frame.IsEnabled(FrameState.Mouse_Right_Clicked) ||
-                this.Frame.IsEnabled(FrameState.Mouse_Right_Double_Clicked))
+            if (this.Frame[FrameState.Mouse_Left_Clicked]() ||
+                this.Frame[FrameState.Mouse_Left_Double_Clicked]() ||
+                this.Frame[FrameState.Mouse_Right_Clicked]() ||
+                this.Frame[FrameState.Mouse_Right_Double_Clicked]())
             {
-                this.Enable(RegionState.Region_Has_Focus);
+                this[RegionState.Region_Has_Focus] = () => true;
             }
             else
             {
-                this.Disable(RegionState.Region_Has_Focus);
+                this[RegionState.Region_Has_Focus] = () => false;
             }
         }
     }

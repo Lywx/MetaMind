@@ -42,24 +42,24 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         public virtual void ExchangeIt(IGameInteropService interop, IViewItem draggingItem, IView targetView)
         {
-            if (this.Item.IsEnabled(ItemState.Item_Exchanging))
+            if (this.Item[ItemState.Item_Is_Transiting]())
             {
                 return;
             }
 
-            this.Item.Enable(ItemState.Item_Exchanging);
+            this.Item[ItemState.Item_Is_Transiting] = () => true;
 
             interop.Process.AttachProcess(new ViewItemTransitProcess(draggingItem, targetView));
         }
 
         public virtual void SwapIt(IGameInteropService interop, IViewItem draggingItem)
         {
-            if (this.Item.IsEnabled(ItemState.Item_Swaping))
+            if (this.Item[ItemState.Item_Is_Swaping]())
             {
                 return;
             }
 
-            this.Item.Enable(ItemState.Item_Swaping);
+            this.Item[ItemState.Item_Is_Swaping] = () => true;
 
             var originCenter = this.ViewControl.Scroll.RootCenterPoint(this.ItemControl.Id);
             var targetCenter = draggingItem.ViewControl.Scroll.RootCenterPoint(draggingItem.ItemControl.Id);
@@ -90,14 +90,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         {
             this.ItemControl.Id = this.View.Items.IndexOf(this.Item);
 
-            if (this.View.IsEnabled(ViewState.View_Active) && this.ViewControl.Scroll.CanDisplay(this.ItemControl.Id))
-            {
-                this.Item.Enable(ItemState.Item_Active);
-            }
-            else
-            {
-                this.Item.Disable(ItemState.Item_Active);
-            }
+            // TODO: May be moved to ?
+            this.Item[ItemState.Item_Is_Active] =
+                () => this.View[ViewState.View_Is_Active]() && this.ViewControl.Scroll.CanDisplay(this.ItemControl.Id);
         }
 
         /// <summary>
@@ -108,28 +103,28 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             if (this.ViewControl.Selection.IsSelected(this.ItemControl.Id))
             {
                 // Unify mouse and keyboard selection
-                if (!this.Item.IsEnabled(ItemState.Item_Selected))
+                if (!this.Item[ItemState.Item_Is_Selected]())
                 {
                     this.ItemControl.CommonSelectsIt();
                 }
 
-                this.Item.Enable(ItemState.Item_Selected);
+                this.Item[ItemState.Item_Is_Selected] = ()=> true;
             }
             else
             {
                 // Unify mouse and keyboard selection
-                if (this.Item.IsEnabled(ItemState.Item_Selected))
+                if (this.Item[ItemState.Item_Is_Selected]())
                 {
                     this.ItemControl.CommonUnselectsIt();
                 }
 
-                this.Item.Disable(ItemState.Item_Selected);
+                this.Item[ItemState.Item_Is_Selected] = ()=> false;
             }
         }
 
         private void UpdateViewSwap()
         {
-            if (this.Item.IsEnabled(ItemState.Item_Dragging))
+            if (this.Item[ItemState.Item_Is_Dragging]())
             {
                 foreach (var observor in this.ViewControl.Swap.Observors)
                 {

@@ -126,7 +126,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             var orignialDraggedItemView = this.DraggingItem.View;
 
             orignialDraggedItemView.Control.Selection.Clear();
-            orignialDraggedItemView.Disable(ViewState.View_Has_Focus);
+            orignialDraggedItemView[ViewState.View_Has_Focus] = () => false;
 
             originalSwappingItemView.Control.Selection.Select(0);
             originalSwappingItemView.Enable(ViewState.View_Has_Focus);
@@ -167,7 +167,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             this.DraggingItem.ItemControl.MouseSelectsIt();
 
             // stop swapping state
-            this.SwappingItem.Disable(ItemState.Item_Swaping);
+            this.SwappingItem[ItemState.Item_Is_Swaping]();
         }
         #endregion
     }

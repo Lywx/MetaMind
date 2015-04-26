@@ -28,7 +28,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
                 // item could be null when diposed
                 if (item != null && 
-                    item.IsEnabled(ItemState.Item_Active))
+                    item[ItemState.Item_Is_Active]())
                 {
                     item.Draw(graphics, gameTime, alpha);
                 }

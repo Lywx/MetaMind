@@ -1,5 +1,7 @@
 namespace MetaMind.Engine.Guis.Elements
 {
+    using System;
+
     using Microsoft.Xna.Framework;
 
     using IDrawable = MetaMind.Engine.IDrawable;
@@ -8,10 +10,6 @@ namespace MetaMind.Engine.Guis.Elements
     {
         bool[] States { get; }
 
-        void Disable(FrameState state);
-
-        void Enable(FrameState state);
-
-        bool IsEnabled(FrameState state);
+        Func<bool> this[FrameState state] { get; set; }
     }
 }

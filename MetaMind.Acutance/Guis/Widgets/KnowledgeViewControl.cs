@@ -190,7 +190,7 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             if (this.Region.IsEnabled(RegionState.Region_Has_Focus))
             {
-                this.View.Enable(ViewState.View_Has_Focus);
+                this.View[ViewState.View_Has_Focus] = ()=> ;
             }
             else
             {

@@ -139,7 +139,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         private void DetectCharEntered(object sender, CharEnteredEventArgs e)
         {
-            if (!this.Item.IsEnabled(ItemState.Item_Editing))
+            if (!this.Item[ItemState.Item_Is_Editing]())
             {
                 return;
             }
@@ -158,7 +158,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         private void DetectEnterKeyDown(object sender, KeyEventArgs e)
         {
-            if (!this.Item.IsEnabled(ItemState.Item_Editing))
+            if (!this.Item[ItemState.Item_Is_Editing]())
             {
                 return;
             }
@@ -393,7 +393,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
             if (keyboard.IsActionTriggered(KeyboardActions.Escape))
             {
-                if (this.Item.IsEnabled(ItemState.Item_Editing))
+                if (this.Item[ItemState.Item_Is_Editing]())
                 {
                     this.Cancel();
                 }

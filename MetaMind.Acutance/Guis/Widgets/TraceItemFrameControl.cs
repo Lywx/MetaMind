@@ -80,13 +80,13 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             get
             {
-                if (!Item.IsEnabled(ItemState.Item_Dragging) && !Item.IsEnabled(ItemState.Item_Swaping))
+                if (!Item.IsEnabled(ItemState.Item_Is_Dragging) && !Item.IsEnabled(ItemState.Item_Is_Swaping))
                 {
                     return ExtPoint.ToVector2(ViewControl.Scroll.RootCenterPoint(ItemControl.Id))
                            + new Vector2(ItemSettings.IdFrameSize.X, 0)
                            + new Vector2(ItemSettings.ExperienceFrameSize.X, 0);
                 }
-                else if (Item.IsEnabled(ItemState.Item_Swaping))
+                else if (Item.IsEnabled(ItemState.Item_Is_Swaping))
                 {
                     return ViewControl.Swap.RootCenterPoint().ToVector2() + new Vector2(ItemSettings.IdFrameSize.X, 0)
                            + new Vector2(ItemSettings.ExperienceFrameSize.X, 0);

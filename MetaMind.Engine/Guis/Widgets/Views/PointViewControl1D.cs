@@ -23,9 +23,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             this.ItemFactory = itemFactory;
 
-            this.Swap      = new PointViewSwapControl(View, ViewSettings, this.ItemSettings);
-            this.Scroll    = new PointViewScrollControl1D(View, ViewSettings, this.ItemSettings);
-            this.Selection = new PointViewSelectionControl1D(View, ViewSettings, this.ItemSettings);
+            this.Swap      = new PointViewSwapControl(this.View, this.ViewSettings, this.ItemSettings);
+            this.Scroll    = new PointViewScrollControl1D(this.View, this.ViewSettings, this.ItemSettings);
+            this.Selection = new PointViewSelectionControl1D(this.View, this.ViewSettings, this.ItemSettings);
         }
 
         protected PointViewControl1D(IView view, PointViewSettings2D viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
@@ -123,12 +123,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public bool Active
         {
-            get { return View.IsEnabled(ViewState.View_Active); }
+            get { return View[ViewState.View_Is_Active](); }
         }
 
         public override void Update(GameTime time)
         {
-            if (View.IsEnabled(ViewState.View_Active))
+            if (View[ViewState.View_Is_Active]())
             {
                 this.UpdateViewLogics();
                 this.UpdateItem(time);
@@ -144,14 +144,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         protected virtual void UpdateViewFocus()
         {
-            if (View.IsEnabled(ViewState.View_Has_Selection))
-            {
-                View.Enable(ViewState.View_Has_Focus);
-            }
-            else
-            {
-                View.Disable(ViewState.View_Has_Focus);
-            }
+            // TODO: MOVED?
+            this.View[ViewState.View_Has_Focus] = () => this.View[ViewState.View_Has_Selection]();
         }
 
         protected virtual void UpdateViewLogics()
@@ -162,14 +156,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         protected virtual void UpdateViewSelection()
         {
-            if (this.Selection.HasSelected)
-            {
-                View.Enable(ViewState.View_Has_Selection);
-            }
-            else
-            {
-                View.Disable(ViewState.View_Has_Selection);
-            }
+            // TODO: Move?
+            this.View[ViewState.View_Has_Selection] = () => this.Selection.HasSelected();
         }
 
         #endregion Update Structure
@@ -180,9 +168,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             get
             {
-                return View.IsEnabled(ViewState.View_Active) &&
-                       View.IsEnabled(ViewState.View_Has_Focus) &&
-                      !View.IsEnabled(ViewState.View_Editting);
+                return this.View[ViewState.View_Is_Active]() && 
+                       this.View[ViewState.View_Has_Focus]() && 
+                      !this.View[ViewState.View_Is_Editing]();
             }
         }
 
@@ -253,8 +241,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             if (this.AcceptInput)
             {
-                // mouse
-                // ------------------------------------------------------------------
+                // Mouse
                 if (ViewSettings.MouseEnabled)
                 {
                     if (input.State.Mouse.IsWheelScrolledUp)

@@ -86,26 +86,26 @@ namespace MetaMind.Engine.Guis.Elements
             this.RelativePosition = new Point(mouse.X - this.Rectangle.X, mouse.Y - this.Rectangle.Y);
 
             // ready to decide
-            this.Enable(FrameState.Frame_Holding);
+            this[FrameState.Frame_Is_Holding] = () => true;
 
             // cancel with another button
-            if (this.IsEnabled(FrameState.Frame_Dragging))
+            if (this[FrameState.Frame_Is_Dragging]())
             {
-                this.Disable(FrameState.Frame_Holding);
-                this.Disable(FrameState.Frame_Dragging);
+                this[FrameState.Frame_Is_Holding] = () => false;
+                this[FrameState.Frame_Is_Dragging] = () => false;
             }
         }
 
         private void ResetRecordPosition(object sender, EventArgs e)
         {
-            if (this.IsEnabled(FrameState.Frame_Dragging) && this.MouseDropped != null)
+            if (this[FrameState.Frame_Is_Dragging]() && this.MouseDropped != null)
             {
                 this.MouseDropped(this, new FrameEventArgs(FrameEventType.Frame_Dropped));
             }
 
             // stop deciding
-            this.Disable(FrameState.Frame_Holding);
-            this.Disable(FrameState.Frame_Dragging);
+            this[FrameState.Frame_Is_Holding] = () => false;
+            this[FrameState.Frame_Is_Dragging] = () => false;
         }
 
         #endregion Events
@@ -119,7 +119,7 @@ namespace MetaMind.Engine.Guis.Elements
             var mouse = input.State.Mouse.CurrentState;
             var mouseLocation = new Point(mouse.X, mouse.Y);
 
-            if (this.IsEnabled(FrameState.Frame_Dragging))
+            if (this[FrameState.Frame_Is_Dragging]())
             {
                 // keep up rectangle position with the mouse position
                 this.Rectangle = new Rectangle(
@@ -137,13 +137,13 @@ namespace MetaMind.Engine.Guis.Elements
             var isWithinHoldLen = mouseLocation.DistanceFrom(this.PressedPosition).Length() > holdLen;
 
             // decide whether is dragging
-            if (this.IsEnabled(FrameState.Frame_Holding) && isWithinHoldLen)
+            if (this[FrameState.Frame_Is_Holding]() && isWithinHoldLen)
             {
                 // stop deciding
-                this.Disable(FrameState.Frame_Holding);
+                this[FrameState.Frame_Is_Holding] = () => false;
 
                 // successfully drag
-                this.Enable(FrameState.Frame_Dragging);
+                this[FrameState.Frame_Is_Dragging] = () => true;
 
                 if (this.MouseDragged != null)
                 {

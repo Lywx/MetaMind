@@ -73,7 +73,7 @@
         ///     state and call CommonSelectsIt.
         /// </summary>
         /// <remarks>
-        ///     This method is unified only when selection control won't modify Item_Selected state.
+        ///     This method is unified only when selection control won't modify Item_Is_Selected state.
         /// </remarks>
         public virtual void CommonSelectsIt()
         {
@@ -84,7 +84,7 @@
         ///     both by mouse and keyboard selection.
         /// </summary>
         /// <remarks>
-        ///     This method is unified only when selection control won't modify Item_Selected state.
+        ///     This method is unified only when selection control won't modify Item_Is_Selected state.
         /// </remarks>
         public virtual void CommonUnselectsIt()
         {
@@ -126,15 +126,15 @@
         {
             get
             {
-                return this.Item.IsEnabled(ItemState.Item_Active) &&
-                       this.Item.IsEnabled(ItemState.Item_Selected) &&
-                      !this.Item.IsEnabled(ItemState.Item_Editing);
+                return this.Item[ItemState.Item_Is_Active]() &&
+                       this.Item[ItemState.Item_Is_Selected]() &&
+                      !this.Item[ItemState.Item_Is_Editing]();
             }
         }
 
         public bool Active
         {
-            get { return this.Item.IsEnabled(ItemState.Item_Active); }
+            get { return this.Item[ItemState.Item_Is_Active](); }
         }
 
         public override void UpdateInput(IGameInputService input, GameTime time)

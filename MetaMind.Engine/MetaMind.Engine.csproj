@@ -75,12 +75,17 @@
     <Compile Include="GameControllableEntityCollection.cs" />
     <Compile Include="GameEntityCollection.cs" />
     <Compile Include="GameVisualEntityCollection.cs" />
+    <Compile Include="Guis\Widgets\Items\IItemEntity.cs" />
     <Compile Include="Guis\Widgets\Items\IItemRootFrame.cs" />
+    <Compile Include="Guis\Widgets\Items\ItemState.cs" />
     <Compile Include="Guis\Widgets\Items\IViewItemComponent.cs" />
     <Compile Include="Guis\Widgets\Items\IViewItemFrameControl.cs" />
+    <Compile Include="Guis\Widgets\Items\ViewItemTransitProcess.cs" />
+    <Compile Include="Guis\Widgets\Regions\IRegionEntity.cs" />
     <Compile Include="Guis\Widgets\Views\IPointGridControl.cs" />
     <Compile Include="Guis\Widgets\Views\IPointViewScrollControl2D.cs" />
     <Compile Include="Guis\Widgets\Views\IPointViewScrollControl.cs" />
+    <Compile Include="Guis\Widgets\Views\IViewEntity.cs" />
     <Compile Include="Guis\Widgets\Views\PointViewDirection.cs" />
     <Compile Include="Guis\Widgets\Visual\Box.cs" />
     <Compile Include="Components\AudioManager.cs" />
@@ -149,7 +154,6 @@
     <Compile Include="Services\GameEngineGraphicsService.cs" />
     <Compile Include="Services\GameEngineInputService.cs" />
     <Compile Include="Services\GameEngineInteropService.cs" />
-    <Compile Include="Guis\Elements\FrameStateExt.cs" />
     <Compile Include="Guis\Elements\IFrameEntity.cs" />
     <Compile Include="Guis\IGroup.cs" />
     <Compile Include="Guis\IGroupControl.cs" />
@@ -242,12 +246,10 @@
     <Compile Include="Guis\Widgets\Items\ItemEntity.cs" />
     <Compile Include="Guis\Widgets\Items\ItemRootFrame.cs" />
     <Compile Include="Guis\Widgets\Items\ItemSettings.cs" />
-    <Compile Include="Guis\Widgets\Items\ItemState.cs" />
     <Compile Include="Guis\Widgets\Regions\IRegion.cs" />
     <Compile Include="Guis\Widgets\Regions\Region.cs" />
     <Compile Include="Guis\Widgets\Regions\RegionEntity.cs" />
     <Compile Include="Guis\Widgets\Regions\RegionState.cs" />
-    <Compile Include="Guis\Widgets\Items\ViewItemTransitProcess.cs" />
     <Compile Include="Guis\Widgets\Views\IPointViewSelectionControl.cs" />
     <Compile Include="Guis\Widgets\Views\PointViewScrollBar.cs" />
     <Compile Include="Guis\Widgets\Views\ViewScrollBarSettings.cs" />
@@ -268,7 +270,6 @@
     <Compile Include="Guis\Widgets\Items\ViewItemComponent.cs" />
     <Compile Include="Guis\Widgets\Items\ViewItemControl1D.cs" />
     <Compile Include="Guis\Widgets\Items\ViewItemControl2D.cs" />
-    <Compile Include="Guis\Widgets\Items\ViewItemData.cs" />
     <Compile Include="Guis\Widgets\Items\ViewItemDataModifier.cs" />
     <Compile Include="Events\ViewItemDataEventArgs.cs" />
     <Compile Include="Guis\Widgets\Items\ViewItemExchangable.cs" />

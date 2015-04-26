@@ -7,6 +7,9 @@
 
 namespace MetaMind.Engine.Guis.Elements
 {
+    using System;
+    using System.Linq;
+
     using MetaMind.Engine.Components.Inputs;
 
     public abstract class FrameEntity : GameControllableEntity, IFrameEntity
@@ -26,42 +29,39 @@ namespace MetaMind.Engine.Guis.Elements
             this.InputEvent = this.GameInput.Event;
             this.InputState = this.GameInput.State;
 
-            this.states = new bool[(int)FrameState.StateNum];
+            for (var i = 0; i < (int)FrameState.StateNum; i++)
+            {
+                this.states[i] = () => false;
+            }
         }
 
         #endregion Constructors and Destructors
 
         #region State Data
 
-        private readonly bool[] states;
+        private readonly Func<bool>[] states = new Func<bool>[(int)FrameState.StateNum];
 
         public bool[] States
         {
             get
             {
-                return this.states;
+                return this.states.Select(state => state()).ToArray();
+            }
+        }
+
+        public Func<bool> this[FrameState state]
+        {
+            get
+            {
+                return this.states[(int)state];
+            }
+
+            set
+            {
+                this.states[(int)state] = value;
             }
         }
 
         #endregion State Data
-
-        #region State Control
-
-        public void Disable(FrameState state)
-        {
-            state.DisableStateIn(this.states);
-        }
-
-        public void Enable(FrameState state)
-        {
-            state.EnableStateIn(this.states);
-        }
-
-        public bool IsEnabled(FrameState state)
-        {
-            return state.IsStateEnabledIn(this.states);
-        }
-
-        #endregion State Control
     }
 }

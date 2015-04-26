@@ -42,14 +42,14 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             if (View.IsEnabled(ViewState.View_Has_Focus))
             {
-                Item.Enable(ItemState.Item_Selected);
+                Item.Enable(ItemState.Item_Is_Selected);
             }
             else
             {
-                Item.Disable(ItemState.Item_Selected);
+                Item.Disable(ItemState.Item_Is_Selected);
             }
 
-            if (Item.IsEnabled(ItemState.Item_Editing))
+            if (Item.IsEnabled(ItemState.Item_Is_Editing))
             {
                 CharModifier.ValueModified     += this.StartSearch;
                 CharModifier.ModificationEnded += this.StartSearch;

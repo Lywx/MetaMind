@@ -43,8 +43,8 @@
         {
             get
             {
-                return this.Item.IsEnabled(ItemState.Item_Editing) || 
-                       this.Item.IsEnabled(ItemState.Item_Pending);
+                return this.Item[ItemState.Item_Is_Editing]() || 
+                       this.Item[ItemState.Item_Is_Pending]();
             }
         }
 
@@ -63,8 +63,8 @@
                     // normal status
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.MotivationEditItem))
                     {
-                        this.View.Enable(ViewState.View_Editting);
-                        this.Item.Enable(ItemState.Item_Pending);
+                        this.View[ViewState.View_Is_Editing] = () => true;
+                        this.Item[ItemState.Item_Is_Pending]  = () => true;
                     }
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.MotivationDeleteItem))
@@ -73,7 +73,7 @@
                     }
 
                     // in pending status
-                    if (this.Item.IsEnabled(ItemState.Item_Pending))
+                    if (this.Item[ItemState.Item_Is_Pending]())
                     {
                         if (input.State.Keyboard.IsKeyTriggered(Keys.N))
                         {
@@ -82,8 +82,8 @@
 
                         if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))
                         {
-                            this.View.Disable(ViewState.View_Editting);
-                            this.Item.Disable(ItemState.Item_Pending);
+                            this.View[ViewState.View_Is_Editing] = () => false;
+                            this.Item[ItemState.Item_Is_Pending]  = () => false;
                         }
                     }
                 }
