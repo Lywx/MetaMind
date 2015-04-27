@@ -8,8 +8,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         {
             this.Item = item;
 
-            this.MouseLeftClicked        += this.SelectItsItem;
-            this.MouseLeftClickedOutside += this.UnselectItsItem;
+            this.MouseLeftPressed        += this.SelectItsItem;
+            this.MouseLeftPressedOutside += this.UnselectItsItem;
         }
 
         ~ItemRootFrame()
@@ -26,8 +26,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         public override void Dispose()
         {
-            this.MouseLeftClicked        -= this.SelectItsItem;
-            this.MouseLeftClickedOutside -= this.UnselectItsItem;
+            this.MouseLeftPressed        -= this.SelectItsItem;
+            this.MouseLeftPressedOutside -= this.UnselectItsItem;
 
             this.Item = null;
 

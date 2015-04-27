@@ -56,7 +56,7 @@ namespace MetaMind.Engine.Guis.Elements
                 return this.states[(int)state];
             }
 
-            set
+            protected set
             {
                 this.states[(int)state] = value;
             }

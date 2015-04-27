@@ -32,7 +32,7 @@ namespace MetaMind.Engine
         protected IGameNumericalService GameNumerical { get; private set; }
 
         [OnDeserialized]
-        public void RegisterDependency(StreamingContext context)
+        private void RegisterDependency(StreamingContext context)
         {
             this.RegisterDependency();
         }

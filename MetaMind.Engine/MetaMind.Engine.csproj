@@ -72,9 +72,19 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Guis\Elements\Inputs\ButtonDoubleClick.cs" />
+    <Compile Include="Guis\Elements\Inputs\ButtonHistory.cs" />
+    <Compile Include="Guis\Elements\Inputs\ButtonPress.cs" />
+    <Compile Include="Guis\Elements\Inputs\ButtonState.cs" />
+    <Compile Include="Guis\Elements\Inputs\MouseOver.cs" />
+    <Compile Include="Guis\Elements\Inputs\PositionHistory.cs" />
+    <Compile Include="Guis\Elements\Inputs\PositionState.cs" />
     <Compile Include="GameControllableEntityCollection.cs" />
     <Compile Include="GameEntityCollection.cs" />
     <Compile Include="GameVisualEntityCollection.cs" />
+    <Compile Include="Guis\Elements\Inputs\MouseAutomata.cs" />
+    <Compile Include="Guis\Elements\Inputs\MouseState.cs" />
+    <Compile Include="Guis\Elements\PickableFrame.cs" />
     <Compile Include="Guis\Widgets\Items\IItemEntity.cs" />
     <Compile Include="Guis\Widgets\Items\IItemRootFrame.cs" />
     <Compile Include="Guis\Widgets\Items\ItemState.cs" />
@@ -114,7 +124,7 @@
     <Compile Include="Components\Events\Listener.cs" />
     <Compile Include="Components\Inputs\IKeyboardInputState.cs" />
     <Compile Include="Components\Inputs\KeyEventArgs.cs" />
-    <Compile Include="Components\Inputs\MouseButton.cs" />
+    <Compile Include="Guis\Elements\Inputs\MouseButton.cs" />
     <Compile Include="Components\Inputs\MouseEventArgs.cs" />
     <Compile Include="Components\Inputs\MouseKeys.cs" />
     <Compile Include="Components\IProcessManager.cs" />
@@ -233,8 +243,6 @@
     <Compile Include="Guis\Elements\IDraggableFrame.cs" />
     <Compile Include="Guis\Elements\IPickableFrame.cs" />
     <Compile Include="Guis\Elements\IPressableFrame.cs" />
-    <Compile Include="Guis\Elements\PickableFrame.cs" />
-    <Compile Include="Guis\Elements\PressableFrame.cs" />
     <Compile Include="Guis\Widgets\Items\ViewItemSmartSwapProcess.cs" />
     <Compile Include="Guis\Widgets\Items\ViewItemViewSmartControl.cs" />
     <Compile Include="Guis\Widgets\Views\ContinuousView.cs" />

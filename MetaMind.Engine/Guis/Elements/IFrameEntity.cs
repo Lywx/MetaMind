@@ -4,12 +4,10 @@ namespace MetaMind.Engine.Guis.Elements
 
     using Microsoft.Xna.Framework;
 
-    using IDrawable = MetaMind.Engine.IDrawable;
-
-    public interface IFrameEntity : IUpdateable, IDrawable, IInputable
+    public interface IFrameEntity : IUpdateable, Engine.IDrawable, IInputable
     {
         bool[] States { get; }
 
-        Func<bool> this[FrameState state] { get; set; }
+        Func<bool> this[FrameState state] { get; }
     }
 }

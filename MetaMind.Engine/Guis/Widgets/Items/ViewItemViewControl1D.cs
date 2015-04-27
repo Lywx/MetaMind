@@ -91,8 +91,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             this.ItemControl.Id = this.View.Items.IndexOf(this.Item);
 
             // TODO: May be moved to ?
-            this.Item[ItemState.Item_Is_Active] =
-                () => this.View[ViewState.View_Is_Active]() && this.ViewControl.Scroll.CanDisplay(this.ItemControl.Id);
+            this.Item[ItemState.Item_Is_Active] = () => this.View[ViewState.View_Is_Active]() && this.ViewControl.Scroll.CanDisplay(this.ItemControl.Id);
         }
 
         /// <summary>
@@ -108,7 +107,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
                     this.ItemControl.CommonSelectsIt();
                 }
 
-                this.Item[ItemState.Item_Is_Selected] = ()=> true;
+                this.Item[ItemState.Item_Is_Selected] = () => true;
             }
             else
             {
@@ -118,7 +117,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
                     this.ItemControl.CommonUnselectsIt();
                 }
 
-                this.Item[ItemState.Item_Is_Selected] = ()=> false;
+                this.Item[ItemState.Item_Is_Selected] = () => false;
             }
         }
 

@@ -17,15 +17,15 @@ namespace MetaMind.Engine.Guis.Elements
 
         event EventHandler<FrameEventArgs> MouseLeftPressed;
 
-        event EventHandler<FrameEventArgs> MouseLeftReleased;
+        event EventHandler<FrameEventArgs> MouseLeftPressedOutside;
 
-        event EventHandler<FrameEventArgs> MouseLeftDraggedOutside;
+        event EventHandler<FrameEventArgs> MouseLeftReleased;
 
         event EventHandler<FrameEventArgs> MouseRightPressed;
 
-        event EventHandler<FrameEventArgs> MouseRightReleased;
+        event EventHandler<FrameEventArgs> MouseRightPressedOutside;
 
-        event EventHandler<FrameEventArgs> MouseRightDraggedOutside;
+        event EventHandler<FrameEventArgs> MouseRightReleased;
 
         event EventHandler<FrameEventArgs> FrameMoved;
     }

@@ -15,17 +15,16 @@ namespace MetaMind.Engine.Guis.Elements
 
     public class DraggableFrame : PickableFrame, IDraggableFrame
     {
-        #region Control Data
+        private readonly int mouseHoldLen = 6;
 
-        private const int holdLen = 6;
+        private Point mouseLocation;
 
-        private Point PressedPosition { get; set; }
+        private Point mousePressedPosition;
 
-        private Point RelativePosition { get; set; }
-
-        #endregion Control Data
-
-        #region Constructors and Destructors
+        /// <summary>
+        /// Mouse position relative to rectangle
+        /// </summary>
+        private Point mouseRelativePosition;
 
         public DraggableFrame(Rectangle rectangle)
             : this()
@@ -33,7 +32,7 @@ namespace MetaMind.Engine.Guis.Elements
             this.Populate(rectangle);
         }
 
-        public DraggableFrame()
+        protected DraggableFrame()
         {
             this.MouseLeftPressed   += this.RecordPressPosition;
             this.MouseLeftReleased  += this.ResetRecordPosition;
@@ -47,8 +46,6 @@ namespace MetaMind.Engine.Guis.Elements
             this.Dispose();
         }
 
-        #endregion
-
         #region IDiposable
 
         public override void Dispose()
@@ -58,9 +55,9 @@ namespace MetaMind.Engine.Guis.Elements
             this.MouseDropped = null;
 
             // Clean handlers
-            this.MouseLeftPressed -= this.RecordPressPosition;
-            this.MouseLeftReleased -= this.ResetRecordPosition;
-            this.MouseRightPressed -= this.RecordPressPosition;
+            this.MouseLeftPressed   -= this.RecordPressPosition;
+            this.MouseLeftReleased  -= this.ResetRecordPosition;
+            this.MouseRightPressed  -= this.RecordPressPosition;
             this.MouseRightReleased -= this.ResetRecordPosition;
 
             base.Dispose();
@@ -79,11 +76,11 @@ namespace MetaMind.Engine.Guis.Elements
             var mouse = InputState.Mouse.CurrentState;
 
             // origin for deciding whether is dragging
-            this.PressedPosition = new Point(mouse.X, mouse.Y);
+            this.mousePressedPosition = new Point(mouse.X, mouse.Y);
 
             // save relative position of mouse compared to rectangle
             // mouse y-axis value is fixed at y-axis center of the rectangle
-            this.RelativePosition = new Point(mouse.X - this.Rectangle.X, mouse.Y - this.Rectangle.Y);
+            this.mouseRelativePosition = new Point(mouse.X - this.Rectangle.X, mouse.Y - this.Rectangle.Y);
 
             // ready to decide
             this[FrameState.Frame_Is_Holding] = () => true;
@@ -103,7 +100,7 @@ namespace MetaMind.Engine.Guis.Elements
                 this.MouseDropped(this, new FrameEventArgs(FrameEventType.Frame_Dropped));
             }
 
-            // stop deciding
+            // Stop deciding
             this[FrameState.Frame_Is_Holding] = () => false;
             this[FrameState.Frame_Is_Dragging] = () => false;
         }
@@ -117,24 +114,22 @@ namespace MetaMind.Engine.Guis.Elements
             base.UpdateInput(input, time);
 
             var mouse = input.State.Mouse.CurrentState;
-            var mouseLocation = new Point(mouse.X, mouse.Y);
+            this.mouseLocation = new Point(mouse.X, mouse.Y);
 
             if (this[FrameState.Frame_Is_Dragging]())
             {
                 // keep up rectangle position with the mouse position
                 this.Rectangle = new Rectangle(
-                    mouseLocation.X - this.RelativePosition.X, 
-                    mouseLocation.Y - this.RelativePosition.Y, 
+                    this.mouseLocation.X - this.mouseRelativePosition.X, 
+                    this.mouseLocation.Y - this.mouseRelativePosition.Y, 
                     this.Rectangle.Width, 
                     this.Rectangle.Height);
             }
         }
 
-        protected override void UpdateStates(Point mouseLocation)
+        public override void Update(GameTime time)
         {
-            base.UpdateStates(mouseLocation);
-
-            var isWithinHoldLen = mouseLocation.DistanceFrom(this.PressedPosition).Length() > holdLen;
+            var isWithinHoldLen = mouseLocation.DistanceFrom(this.mousePressedPosition).Length() > mouseHoldLen;
 
             // decide whether is dragging
             if (this[FrameState.Frame_Is_Holding]() && isWithinHoldLen)

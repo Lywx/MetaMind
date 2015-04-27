@@ -14,15 +14,7 @@ namespace MetaMind.Engine.Guis.Elements
     /// </summary>
     public interface IPickable
     {
-        event EventHandler<FrameEventArgs> MouseLeftClicked;
-
-        event EventHandler<FrameEventArgs> MouseLeftClickedOutside;
-
         event EventHandler<FrameEventArgs> MouseLeftDoubleClicked;
-
-        event EventHandler<FrameEventArgs> MouseRightClicked;
-
-        event EventHandler<FrameEventArgs> MouseRightClickedOutside;
 
         event EventHandler<FrameEventArgs> MouseRightDoubleClicked;
     }

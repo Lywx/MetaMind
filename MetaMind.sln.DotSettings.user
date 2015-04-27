@@ -5,6 +5,7 @@
   &lt;Assembly Path="C:\Users\Wuxiang\Documents\Visual Studio 2013\Projects\MetaMind\ThirdParties\Sprache.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
 	<s:Int64 x:Key="/Default/Environment/SearchAndNavigation/DefaultOccurencesGroupingIndex/@EntryValue">2</s:Int64>
+	
 	<s:Boolean x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestSessionPersistentData/=BCDEF3F981104D78856DE0882610D253/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestSessionPersistentData/=BCDEF3F981104D78856DE0882610D253/Name/@EntryValue">FormatTest</s:String>
 	<s:String x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestSessionPersistentData/=BCDEF3F981104D78856DE0882610D253/XmlSerializedElements/@EntryValue">&lt;Session&gt;&lt;Elements /&gt;&lt;/Session&gt;</s:String>

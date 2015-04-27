@@ -13,6 +13,8 @@ namespace MetaMind.Engine.Components.Inputs
     using System;
     using System.Runtime.InteropServices;
 
+    using MetaMind.Engine.Guis.Elements.Inputs;
+
     using Microsoft.Xna.Framework.Input;
 
     public class InputEvent : InputSync, IInputEvent

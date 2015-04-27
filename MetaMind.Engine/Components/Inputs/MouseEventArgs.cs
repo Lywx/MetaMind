@@ -2,6 +2,8 @@ namespace MetaMind.Engine.Components.Inputs
 {
     using System;
 
+    using MetaMind.Engine.Guis.Elements.Inputs;
+
     using Microsoft.Xna.Framework;
 
     public class MouseEventArgs : EventArgs

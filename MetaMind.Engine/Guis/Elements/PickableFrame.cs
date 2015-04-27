@@ -1,14 +1,17 @@
-﻿namespace MetaMind.Engine.Guis.Elements
-{
-    using System;
+﻿using System;
 
+namespace MetaMind.Engine.Guis.Elements
+{
     using MetaMind.Engine.Components.Inputs;
+    using MetaMind.Engine.Guis.Elements.Inputs;
 
     using Microsoft.Xna.Framework;
 
-    public class PickableFrame : PressableFrame, IPickableFrame
+    public class PickableFrame : FrameEntity, IPickableFrame
     {
-        #region Constructors and Destructors
+        private MouseAutomata mouse = new MouseAutomata();
+
+        private Rectangle rectangle = new Rectangle();
 
         public PickableFrame(Rectangle rectangle)
             : this()
@@ -18,8 +21,28 @@
 
         public PickableFrame()
         {
-            this.InputEvent.MouseDoubleClick += this.DetectMouseLeftDoubleClick;
-            this.InputEvent.MouseDoubleClick += this.DetectMouseRightDoubleClick;
+            this.InputEvent.MouseMove        += this.EventMouseMove;
+            this.InputEvent.MouseUp          += this.EventMouseUp;
+            this.InputEvent.MouseDown        += this.EventMouseDown;
+            this.InputEvent.MouseDoubleClick += this.EventMouseDoubleClick;
+
+            this.FrameMoved                  += this.FrameFrameMoved;
+
+            this.IsActive = true;
+
+            // Only for debugging purpose
+            this[FrameState.Mouse_Over]                   = () => this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Left_Pressed]           = () => this.mouse.IsLButtonPressed && this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Left_Pressed_Outside]   = () => this.mouse.IsLButtonPressed && !this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Left_Released]          = () => this.mouse.IsLButtonReleased;
+            this[FrameState.Mouse_Left_Double_Clicked]    = () => this.mouse.IsLButtonDoubleClicked && this.mouse.IsMouseOver;
+
+            this[FrameState.Mouse_Right_Pressed]          = () => this.mouse.IsRButtonPressed && this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Right_Pressed_Outside]  = () => this.mouse.IsRButtonPressed && !this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Right_Released]         = () => this.mouse.IsRButtonReleased;
+            this[FrameState.Mouse_Right_Double_Clicked]   = () => this.mouse.IsRButtonDoubleClicked && this.mouse.IsMouseOver;
+
+            this[FrameState.Frame_Is_Active]     = () => this.IsActive;
         }
 
         ~PickableFrame()
@@ -27,146 +50,272 @@
             this.Dispose();
         }
 
+        #region IDisposable
+
         public override void Dispose()
         {
-            this.MouseLeftClicked         = null;
-            this.MouseLeftClickedOutside  = null;
+            // Clean events
+            this.MouseEnter               = null;
+            this.MouseLeave               = null;
+            this.MouseLeftPressed         = null;
+            this.MouseLeftPressedOutside  = null;
+            this.MouseLeftReleased        = null;
             this.MouseLeftDoubleClicked   = null;
-            this.MouseRightClicked        = null;
-            this.MouseRightClickedOutside = null;
+            this.MouseRightPressed        = null;
+            this.MouseRightPressedOutside = null;
+            this.MouseRightReleased       = null;
             this.MouseRightDoubleClicked  = null;
 
-            this.InputEvent.MouseDoubleClick -= this.DetectMouseLeftDoubleClick;
-            this.InputEvent.MouseDoubleClick -= this.DetectMouseRightDoubleClick;
+            this.FrameMoved               = null;
+
+            // Clean handlers
+            this.InputEvent.MouseMove        -= this.EventMouseMove;
+            this.InputEvent.MouseDown        -= this.EventMouseDown;
+            this.InputEvent.MouseUp          -= this.EventMouseUp;
+            this.InputEvent.MouseDoubleClick -= this.EventMouseDoubleClick;
 
             base.Dispose();
         }
 
-        #endregion Constructors
+        #endregion IDisposable
 
-        #region Events
+        public event EventHandler<FrameEventArgs> FrameMoved;
 
-        public event EventHandler<FrameEventArgs> MouseLeftClicked;
+        public event EventHandler<FrameEventArgs> MouseEnter;
 
-        public event EventHandler<FrameEventArgs> MouseLeftClickedOutside;
+        public event EventHandler<FrameEventArgs> MouseLeave;
+
+        public event EventHandler<FrameEventArgs> MouseLeftPressed;
+
+        public event EventHandler<FrameEventArgs> MouseLeftPressedOutside;
 
         public event EventHandler<FrameEventArgs> MouseLeftDoubleClicked;
 
-        public event EventHandler<FrameEventArgs> MouseRightClicked;
+        public event EventHandler<FrameEventArgs> MouseLeftReleased;
 
-        public event EventHandler<FrameEventArgs> MouseRightClickedOutside;
+        public event EventHandler<FrameEventArgs> MouseRightPressed;
 
+        public event EventHandler<FrameEventArgs> MouseRightPressedOutside; 
+        
+        public event EventHandler<FrameEventArgs> MouseRightReleased;
+        
         public event EventHandler<FrameEventArgs> MouseRightDoubleClicked;
 
-        protected override void DetectMouseLeftPressed(object sender, MouseEventArgs e)
+        public Point Center
         {
-            base.DetectMouseLeftPressed(sender, e);
+            get { return this.Rectangle.Center; }
+            set { this.Populate(value, this.Size); }
+        }
 
-            if (this[FrameState.Mouse_Over]() && this.MouseLeftPress(e))
+        public int Height
+        {
+            get { return this.Rectangle.Height; }
+            set { this.Rectangle = new Rectangle(this.Rectangle.X, this.Rectangle.Y, this.Rectangle.Width, value); }
+        }
+
+        public bool IsActive { get; set; }
+
+        public Point Location
+        {
+            get { return this.Rectangle.Location; }
+            set { this.Populate(new Rectangle(value.X, value.Y, this.Rectangle.Width, this.Rectangle.Height)); }
+        }
+
+        public Rectangle Rectangle
+        {
+            get
             {
-                this[FrameState.Mouse_Left_Clicked_Outside] = () => false;
-                this[FrameState.Mouse_Left_Double_Clicked] = () => false;
-                this[FrameState.Mouse_Right_Clicked] = () => false;
-                this[FrameState.Mouse_Right_Clicked_Outside] = () => false;
-                this[FrameState.Mouse_Right_Double_Clicked] = () => false;
-
-                this[FrameState.Mouse_Left_Clicked] = () => true;
-                if (this.MouseLeftClicked != null)
-                {
-                    this.MouseLeftClicked(this, new FrameEventArgs(FrameEventType.Mouse_Left_Clicked));
-                }
+                return this.rectangle;
             }
-            else if (!this[FrameState.Mouse_Over]() && this.MouseLeftPress(e))
+
+            set
             {
-                this[FrameState.Mouse_Left_Clicked] = () => false;
-                this[FrameState.Mouse_Left_Double_Clicked] = () => false;
-                this[FrameState.Mouse_Right_Clicked] = () => false;
-                this[FrameState.Mouse_Right_Clicked_Outside] = () => false;
-                this[FrameState.Mouse_Right_Double_Clicked] = () => false;
-
-                this[FrameState.Mouse_Left_Clicked_Outside] = () => true;
-
-                if (this.MouseLeftClickedOutside != null)
+                var deltaLocation = this.rectangle.Location.DistanceFrom(value.Location);
+                var hasMoved = deltaLocation.Length() > 0f;
+                if (hasMoved && this.FrameMoved != null)
                 {
-                    this.MouseLeftClickedOutside(this, new FrameEventArgs(FrameEventType.Mouse_Left_Clicked_Outside));
+                    this.FrameMoved(this, new FrameEventArgs(FrameEventType.Frame_Moved));
+                }
+
+                this.rectangle = value;
+            }
+        }
+
+        public Point Size
+        {
+            get { return new Point(this.Rectangle.Width, this.Rectangle.Height); }
+            set { this.Populate(this.Center, value); }
+        }
+
+        public int Width
+        {
+            get { return this.Rectangle.Width; }
+            set { this.Rectangle = new Rectangle(this.Rectangle.X, this.Rectangle.Y, value, this.Rectangle.Height); }
+        }
+
+        public int X
+        {
+            get { return this.Rectangle.X; }
+            set { this.Rectangle = new Rectangle(value, this.Rectangle.Y, this.Rectangle.Width, this.Rectangle.Height); }
+        }
+
+        public int Y
+        {
+            get { return this.Rectangle.Y; }
+            set { this.Rectangle = new Rectangle(this.Rectangle.X, value, this.Rectangle.Width, this.Rectangle.Height); }
+        }
+
+        protected bool IsLButton(MouseEventArgs e)
+        {
+            return e.Button == MouseButton.Left;
+        }
+
+        protected bool IsMouseOver(Point location)
+        {
+            return this.IsActive && this.rectangle.Contains(location);
+        }
+
+        protected bool IsRButton(MouseEventArgs e)
+        {
+            return e.Button == MouseButton.Right;
+        }
+
+        protected void Populate(Point center, Point size)
+        {
+            this.Populate(center.ToRectangleCenter(size));
+        }
+
+        protected void Populate(Rectangle rect)
+        {
+            this.rectangle = rect;
+        }
+
+        private void EventMouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (this.mouse.IsMouseOver)
+            {
+                if (this.IsLButton(e))
+                {
+                    mouse.LDoubleClick();
+                    mouse.RClear();
+
+                    if (this.MouseLeftDoubleClicked != null)
+                    {
+                        this.MouseLeftDoubleClicked(this, new FrameEventArgs(FrameEventType.Mouse_Left_Double_Clicked));
+                    }
+
+                    return;
+                }
+                else if (this.IsRButton(e))
+                {
+                    mouse.LClear();
+                    mouse.RDoubleClick();
+
+                    if (this.MouseRightDoubleClicked != null)
+                    {
+                        this.MouseRightDoubleClicked(this, new FrameEventArgs(FrameEventType.Mouse_Right_Double_Clicked));
+                    }
+
+                    return;
                 }
             }
         }
 
-        protected override void DetectMouseRightPressed(object sender, MouseEventArgs e)
+        private void EventMouseDown(object sender, MouseEventArgs e)
         {
-            base.DetectMouseRightPressed(sender, e);
-
-            if (this[FrameState.Mouse_Over]() && this.MouseRightPress(e))
+            if (this.IsLButton(e))
             {
-                this[FrameState.Mouse_Left_Clicked]          = () => false;
-                this[FrameState.Mouse_Left_Clicked_Outside]  = () => false;
-                this[FrameState.Mouse_Left_Double_Clicked]   = () => false;
-                this[FrameState.Mouse_Right_Clicked_Outside] = () => false;
-                this[FrameState.Mouse_Right_Double_Clicked]  = () => false;
+                mouse.LPress();
+                mouse.RClear();
 
-                this[FrameState.Mouse_Right_Clicked] = () => true;
-                if (this.MouseRightClicked != null)
+                if (this.mouse.IsMouseOver && this.MouseLeftPressed != null)
                 {
-                    this.MouseRightClicked(this, new FrameEventArgs(FrameEventType.Mouse_Right_Clicked));
+                    this.MouseLeftPressed(this, new FrameEventArgs(FrameEventType.Mouse_Left_Pressed));
                 }
+
+                if (!this.mouse.IsMouseOver && this.MouseLeftPressedOutside != null)
+                {
+                    this.MouseLeftPressedOutside(this, new FrameEventArgs(FrameEventType.Mouse_Left_Pressed_Outside));
+                }
+
+                return;
             }
-            else if (!this[FrameState.Mouse_Over]() && this.MouseRightPress(e))
+            else if (this.IsRButton(e))
             {
-                this[FrameState.Mouse_Left_Clicked]         = () => false;
-                this[FrameState.Mouse_Left_Clicked_Outside] = () => false;
-                this[FrameState.Mouse_Left_Double_Clicked]  = () => false;
-                this[FrameState.Mouse_Right_Clicked]        = () => false;
-                this[FrameState.Mouse_Right_Double_Clicked] = () => false;
+                mouse.RPress();
+                mouse.LClear();
 
-                this[FrameState.Mouse_Right_Clicked_Outside] = () => true;
-                if (this.MouseRightClickedOutside != null)
+                if (this.mouse.IsMouseOver && this.MouseRightPressed != null)
                 {
-                    this.MouseRightClickedOutside(this, new FrameEventArgs(FrameEventType.Mouse_Right_Clicked_Outside));
+                    this.MouseRightPressed(this, new FrameEventArgs(FrameEventType.Mouse_Right_Pressed));
                 }
+
+                if (!this.mouse.IsMouseOver && this.MouseRightPressedOutside != null)
+                {
+                    this.MouseRightPressedOutside(this, new FrameEventArgs(FrameEventType.Mouse_Right_Pressed_Outside));
+                }
+
+                return;
             }
         }
 
-        private void DetectMouseLeftDoubleClick(object sender, MouseEventArgs e)
+        private void EventMouseMove(object sender, MouseEventArgs e)
         {
-            if (this[FrameState.Mouse_Over]() && this.MouseLeftPress(e))
+            if (!this.mouse.IsMouseOver && this.IsMouseOver(e.Location))
             {
-                this[FrameState.Mouse_Left_Clicked] = () => false;
-                this[FrameState.Mouse_Right_Double_Clicked] = () => false;
+                mouse.Enter();
 
-                this[FrameState.Mouse_Left_Double_Clicked] = () => true;
-                if (this.MouseLeftDoubleClicked != null)
+                if (this.MouseEnter != null)
                 {
-                    this.MouseLeftDoubleClicked(this, new FrameEventArgs(FrameEventType.Mouse_Left_Double_Clicked));
+                    this.MouseEnter(this, new FrameEventArgs(FrameEventType.Mouse_Enter));
                 }
+
+                return;
             }
-            else
+
+            if (this.mouse.IsMouseOver && !this.IsMouseOver(e.Location))
             {
-                this[FrameState.Mouse_Left_Clicked] = () => false;
-                this[FrameState.Mouse_Left_Double_Clicked] = () => false;
+                mouse.Leave();
+
+                if (this.MouseLeave != null)
+                {
+                    this.MouseLeave(this, new FrameEventArgs(FrameEventType.Mouse_Leave));
+                }
+
+                return;
             }
         }
 
-        private void DetectMouseRightDoubleClick(object sender, MouseEventArgs e)
+        private void EventMouseUp(object sender, MouseEventArgs e)
         {
-            if (this[FrameState.Mouse_Over]() && this.MouseRightPress(e))
+            if (this.IsLButton(e))
             {
-                this[FrameState.Mouse_Right_Clicked] = () => false;
-                this[FrameState.Mouse_Left_Clicked] = () => false;
+                mouse.LRelease();
 
-                this[FrameState.Mouse_Right_Double_Clicked] = () => true;
-                if (this.MouseRightDoubleClicked != null)
+                if (this.MouseLeftReleased != null)
                 {
-                    this.MouseRightDoubleClicked(this, new FrameEventArgs(FrameEventType.Mouse_Right_Double_Clicked));
+                    this.MouseLeftReleased(this, new FrameEventArgs(FrameEventType.Mouse_Left_Released));
                 }
+
+                return;
             }
-            else
+            else if (this.IsRButton(e))
             {
-                this[FrameState.Mouse_Right_Clicked] = () => false;
-                this[FrameState.Mouse_Right_Double_Clicked] = () => false;
+                mouse.RRelease();
+
+                if (this.MouseRightPressed != null)
+                {
+                    this.MouseRightPressed(this, new FrameEventArgs(FrameEventType.Mouse_Right_Released));
+                }
+
+                return;
             }
         }
 
-        #endregion Events
+        private void FrameFrameMoved(object sender, FrameEventArgs e)
+        {
+            var location = this.InputState.Mouse.CurrentState;
+            this.EventMouseMove(null, new MouseEventArgs(MouseButton.None, 0, location.X, location.Y, 0));
+        }
     }
 }

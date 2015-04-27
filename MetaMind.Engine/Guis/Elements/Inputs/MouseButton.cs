@@ -1,4 +1,4 @@
-namespace MetaMind.Engine.Components.Inputs
+namespace MetaMind.Engine.Guis.Elements.Inputs
 {
     public enum MouseButton
     {

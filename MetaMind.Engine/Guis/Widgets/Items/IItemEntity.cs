@@ -2,9 +2,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 {
     using System;
 
-    using IDrawable = MetaMind.Engine.IDrawable;
-
-    public interface IItemEntity : IInputable, IDrawable
+    public interface IItemEntity : IInputable, Engine.IDrawable
     {
         #region States
 

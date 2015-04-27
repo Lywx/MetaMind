@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="MouseInputState.cs" company="UESTC">
-//   Copyright (c) 2014 Wuxiang Lin
+//   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -122,20 +122,12 @@ namespace MetaMind.Engine.Components.Inputs
 
         #endregion Input State
 
-        #region Constructors
-
-        public MouseInputState()
-        {
-        }
-
-        #endregion Constructors
-
         #region Update
 
         public void UpdateInput(GameTime gameTime)
         {
             this.previousState = this.currentState;
-            this.currentState  = Mouse.GetState();
+            this.currentState = Mouse.GetState();
         }
 
         #endregion Update

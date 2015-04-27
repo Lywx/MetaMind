@@ -70,9 +70,9 @@
                 this[RegionState.Region_Mouse_Over] = () => false;
             }
 
-            if (this.Frame[FrameState.Mouse_Left_Clicked]() ||
+            if (this.Frame[FrameState.Mouse_Left_Pressed]() ||
                 this.Frame[FrameState.Mouse_Left_Double_Clicked]() ||
-                this.Frame[FrameState.Mouse_Right_Clicked]() ||
+                this.Frame[FrameState.Mouse_Right_Pressed]() ||
                 this.Frame[FrameState.Mouse_Right_Double_Clicked]())
             {
                 this[RegionState.Region_Has_Focus] = () => true;

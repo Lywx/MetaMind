@@ -10,23 +10,23 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     public class View : ViewEntity, IView
     {
-        public View(PointViewSettings1D viewSettings, ItemSettings itemSettings, IViewFactory factory)
-            : this(viewSettings, itemSettings, factory)
-        {
-            this.Items = new List<IViewItem>(viewSettings.ColumnNumMax);
-        }
+        //public View(PointViewSettings1D viewSettings, ItemSettings itemSettings, IViewFactory factory)
+        //    : this(viewSettings, itemSettings, factory)
+        //{
+        //    this.Items = new List<IViewItem>(viewSettings.ColumnNumMax);
+        //}
 
-        public View(PointViewSettings2D viewSettings, ItemSettings itemSettings, IViewFactory factory)
-            : this(viewSettings, itemSettings, factory)
-        {
-            this.Items = new List<IViewItem>(viewSettings.RowNumMax * viewSettings.ColumnNumMax);
-        }
+        //public View(PointViewSettings2D viewSettings, ItemSettings itemSettings, IViewFactory factory)
+        //    : this(viewSettings, itemSettings, factory)
+        //{
+        //    this.Items = new List<IViewItem>(viewSettings.RowNumMax * viewSettings.ColumnNumMax);
+        //}
 
-        public View(ContinuousViewSettings viewSettings, ItemSettings itemSettings, IViewFactory factory)
-            : this(viewSettings, itemSettings, factory)
-        {
-            this.Items = new List<IViewItem>();
-        }
+        //public View(ContinuousViewSettings viewSettings, ItemSettings itemSettings, IViewFactory factory)
+        //    : this(viewSettings, itemSettings, factory)
+        //{
+        //    this.Items = new List<IViewItem>();
+        //}
 
         protected View(ViewSettings viewSettings, ItemSettings itemSettings, IViewFactory factory)
             : base(viewSettings, itemSettings)

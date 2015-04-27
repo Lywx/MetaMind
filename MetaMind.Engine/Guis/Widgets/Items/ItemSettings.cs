@@ -32,14 +32,4 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             return this.MemberwiseClone();
         }
     }
-
-    public class ItemViewSettings
-    {
-        
-    }
-
-    public class ViewModelSettings
-    {
-        
-    }
 }

@@ -46,9 +46,10 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public void Clear()
         {
-            this.Frame[FrameState.Mouse_Left_Clicked] = () => false;
-            this.Frame[FrameState.Mouse_Left_Double_Clicked] = () => false;
-            this.Frame[FrameState.Mouse_Right_Clicked] = () => false;
+            // TODO: ??
+            this.Frame[FrameState.Mouse_Left_Pressed] =         () => false;
+            this.Frame[FrameState.Mouse_Left_Double_Clicked] =  () => false;
+            this.Frame[FrameState.Mouse_Right_Pressed] =        () => false;
             this.Frame[FrameState.Mouse_Right_Double_Clicked] = () => false;
         }
 
