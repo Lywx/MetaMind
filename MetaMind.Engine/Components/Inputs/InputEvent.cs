@@ -34,6 +34,13 @@ namespace MetaMind.Engine.Components.Inputs
         public InputEvent(GameEngine engine, int updateOrder)
             : base(engine, updateOrder)
         {
+            if (engine == null)
+            {
+                throw new ArgumentNullException("engine");
+            }
+
+            this.Game.Components.Add(this);
+
             var window = engine.Window;
             
             // This handler has to be a field that not gabbage collected during the running of GameEngine.
@@ -170,9 +177,14 @@ namespace MetaMind.Engine.Components.Inputs
         {
             var returnCode = CallWindowProc(this.wndProc, hWnd, msg, wParam, lParam);
 
-            if (!this.Controllable)
+            // halt when input count exceeds
+            if (!this.AcceptInput)
             {
                 return returnCode;
+            }
+            else
+            {
+                this.SyncInput();
             }
 
             switch (msg)

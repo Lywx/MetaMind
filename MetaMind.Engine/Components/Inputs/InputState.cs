@@ -7,6 +7,8 @@
 
 namespace MetaMind.Engine.Components.Inputs
 {
+    using System;
+
     using Microsoft.Xna.Framework;
 
     /// <summary>
@@ -39,6 +41,13 @@ namespace MetaMind.Engine.Components.Inputs
         public InputState(GameEngine engine, int updateOrder)
             : base(engine)
         {
+            if (engine == null)
+            {
+                throw new ArgumentNullException("engine");
+            }
+
+            this.Game.Components.Add(this);
+            
             this.UpdateOrder = updateOrder;
 
             this.keyboard = new KeyboardInputState();

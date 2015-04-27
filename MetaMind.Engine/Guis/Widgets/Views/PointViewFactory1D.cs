@@ -18,7 +18,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         protected virtual dynamic CreateControl(IView view, PointViewSettings1D viewSettings, ICloneable itemSettings)
         {
-            return new PointViewControl1D(view, viewSettings, itemSettings, new ViewItemFactory1D());
+            //return new PointViewControl1D(view, viewSettings, itemSettings, new ViewItemFactory1D());
+            return null;
         }
 
         protected virtual IViewGraphics CreateGraphics(IView view, PointViewSettings1D viewSettings, ICloneable itemSettings)

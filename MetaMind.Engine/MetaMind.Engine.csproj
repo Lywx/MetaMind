@@ -85,6 +85,7 @@
     <Compile Include="Guis\Widgets\Views\IPointGridControl.cs" />
     <Compile Include="Guis\Widgets\Views\IPointViewScrollControl2D.cs" />
     <Compile Include="Guis\Widgets\Views\IPointViewScrollControl.cs" />
+    <Compile Include="Guis\Widgets\Views\IViewComponent.cs" />
     <Compile Include="Guis\Widgets\Views\IViewEntity.cs" />
     <Compile Include="Guis\Widgets\Views\PointViewDirection.cs" />
     <Compile Include="Guis\Widgets\Visual\Box.cs" />
@@ -283,7 +284,7 @@
     <Compile Include="Guis\Widgets\Views\IViewGraphics.cs" />
     <Compile Include="Guis\Widgets\Views\IPointViewScrollControlHorizontal.cs" />
     <Compile Include="Guis\Widgets\Views\IPointViewScrollControlVertical.cs" />
-    <Compile Include="Guis\Widgets\Views\PointView.cs" />
+    <Compile Include="Guis\Widgets\Views\View.cs" />
     <Compile Include="Guis\Widgets\Views\PointViewFactory1D.cs" />
     <Compile Include="Guis\Widgets\Views\PointViewFactory2D.cs" />
     <Compile Include="Guis\Widgets\Views\ViewGraphics.cs" />

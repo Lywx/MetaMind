@@ -188,14 +188,8 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         protected override void UpdateViewFocus()
         {
-            if (this.Region.IsEnabled(RegionState.Region_Has_Focus))
-            {
-                this.View[ViewState.View_Has_Focus] = ()=> ;
-            }
-            else
-            {
-                this.View.Disable(ViewState.View_Has_Focus);
-            }
+            +
+            this.View[ViewState.View_Has_Focus] = () => this.Region[RegionState.Region_Has_Focus]();
         }
 
         #endregion Update

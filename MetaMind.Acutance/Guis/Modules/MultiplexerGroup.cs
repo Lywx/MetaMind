@@ -50,17 +50,17 @@ namespace MetaMind.Acutance.Guis.Modules
         public MultiplexerGroup(MultiplexerGroupSettings settings)
             : base(settings)
         {
-            this.ModuleView = new PointView(
+            this.ModuleView = new View(
                 this.Settings.ModuleViewSettings,
                 this.Settings.ModuleItemSettings,
                 this.Settings.ModuleViewFactory);
 
-            this.CommandView = new PointView(
+            this.CommandView = new View(
                 this.Settings.CommandViewSettings,
                 this.Settings.CommandItemSettings,
                 this.Settings.CommandViewFactory);
 
-            this.KnowledgeView = new PointView(
+            this.KnowledgeView = new View(
                 this.Settings.KnowledgeViewSettings,
                 this.Settings.KnowledgeItemSettings,
                 this.Settings.KnowledgeViewFactory);

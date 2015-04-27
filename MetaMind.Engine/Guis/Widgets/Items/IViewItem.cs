@@ -9,6 +9,10 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 {
     using System;
 
+    using MetaMind.Engine.Guis.Widgets.Views;
+
+    using Microsoft.Xna.Framework;
+
     public interface IViewItem : IItemEntity, IDisposable
     {
         dynamic ItemControl { get; set; }
@@ -17,10 +21,12 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         IItemGraphics ItemGraphics { get; set; }
 
-        dynamic View { get; }
+        IView View { get; }
 
         dynamic ViewControl { get; }
 
         dynamic ViewSettings { get; }
+
+        void UpdateView(GameTime time);
     }
 }

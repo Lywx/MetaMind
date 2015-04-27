@@ -99,11 +99,11 @@
 
             if (this[FrameState.Mouse_Over]() && this.MouseRightPress(e))
             {
-                this[FrameState.Mouse_Left_Clicked] = () => false;
-                this[FrameState.Mouse_Left_Clicked_Outside] = () => false;
-                this[FrameState.Mouse_Left_Double_Clicked] = () => false;
+                this[FrameState.Mouse_Left_Clicked]          = () => false;
+                this[FrameState.Mouse_Left_Clicked_Outside]  = () => false;
+                this[FrameState.Mouse_Left_Double_Clicked]   = () => false;
                 this[FrameState.Mouse_Right_Clicked_Outside] = () => false;
-                this[FrameState.Mouse_Right_Double_Clicked] = () => false;
+                this[FrameState.Mouse_Right_Double_Clicked]  = () => false;
 
                 this[FrameState.Mouse_Right_Clicked] = () => true;
                 if (this.MouseRightClicked != null)
@@ -113,10 +113,10 @@
             }
             else if (!this[FrameState.Mouse_Over]() && this.MouseRightPress(e))
             {
-                this[FrameState.Mouse_Left_Clicked] = () => false;
+                this[FrameState.Mouse_Left_Clicked]         = () => false;
                 this[FrameState.Mouse_Left_Clicked_Outside] = () => false;
-                this[FrameState.Mouse_Left_Double_Clicked] = () => false;
-                this[FrameState.Mouse_Right_Clicked] = () => false;
+                this[FrameState.Mouse_Left_Double_Clicked]  = () => false;
+                this[FrameState.Mouse_Right_Clicked]        = () => false;
                 this[FrameState.Mouse_Right_Double_Clicked] = () => false;
 
                 this[FrameState.Mouse_Right_Clicked_Outside] = () => true;

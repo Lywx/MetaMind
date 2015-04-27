@@ -6,32 +6,24 @@
     {
         #region Input Handling Counter
 
-        private const int InputSyncCountOut = 1;
+        /// <summary>
+        /// This is used to determine how many events is triggered as an input. 
+        /// It is based on the idea that msg is sequential on different input type.
+        /// </summary>
+        private const int InputCountSyncThreshod = 6;
 
-        private int inputCount;
+        private int InputCount { get; set; }
 
         #endregion Input Handling Counter
 
         #region State Data
 
-        /// <summary>
-        /// Gets a value indicating whether this instance is updating input.
-        /// </summary>
-        public bool Controllable { get; private set; }
+        protected bool AcceptInput { get; set; }
 
         #endregion 
 
         #region Contructors
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="engine"></param>
-        /// <param name="updateOrder">It is very sensible. It need to be higher 
-        /// than the sync standard's value so that once this instance finished 
-        /// updating input(which a process between calling UpdateInput method 
-        /// and calling Update method), it is freezed before sync standard 
-        /// updating. </param>
         protected InputSync(GameEngine engine, int updateOrder)
             : base(engine)
         {
@@ -42,45 +34,26 @@
 
         #region Update and Draw
 
-        /// <summary>
-        /// Hook up with sync standard to keep in sync
-        /// </summary>
-        /// <param name="gameTime"></param>
-        public override void Update(GameTime gameTime)
-        {
-            if (!this.Enabled)
-            {
-                return;
-            }
-
-            this.inputCount += 1;
-
-            // use this mechanism to make sure when UpdateInput is used
-            // Update method won't set the Enabled to false, which happens is cases
-            // of not using UpdateInput in GameScreen class.
-            if (this.inputCount > InputSyncCountOut)
-            {
-                this.Reset();
-
-                this.Controllable = false;
-            }
-        }
-
-        /// <summary>
-        /// Enable event firing that is in sync with standard. It must be called before 
-        /// the sync standarad's Update method.
-        /// </summary>
-        /// <param name="gameTime"></param>
         public void UpdateInput(GameTime gameTime)
         {
-            this.Reset();
-
-            this.Controllable = true;
+            this.ResetInput();
         }
 
-        private void Reset()
+        protected void SyncInput()
         {
-            this.inputCount = 0;
+            this.InputCount += 1;
+
+            if (this.InputCount >= InputCountSyncThreshod)
+            {
+                this.AcceptInput = false;
+            }
+        }
+
+        private void ResetInput()
+        {
+            this.InputCount = 0;
+
+            this.AcceptInput = true;
         }
         #endregion Update and Draw
     }

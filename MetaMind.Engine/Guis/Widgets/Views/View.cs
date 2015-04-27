@@ -7,37 +7,39 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     using Microsoft.Xna.Framework;
 
-    public class PointView : ViewEntity, IView
+    public class View : ViewEntity, IView
     {
-        public PointView(PointViewSettings1D viewSettings, ItemSettings itemSettings, IViewFactory factory, dynamic parent = null)
-            : base(viewSettings, itemSettings)
+        public View(PointViewSettings1D viewSettings, ItemSettings itemSettings, IViewFactory factory)
+            : this(viewSettings, itemSettings, factory)
         {
             this.Items = new List<IViewItem>(viewSettings.ColumnNumMax);
-
-            this.Control  = factory.CreateControl(this, viewSettings, itemSettings);
-            this.Graphics = factory.CreateGraphics(this, viewSettings, itemSettings);
-
-            this.Parent = parent;
         }
 
-        public PointView(PointViewSettings2D viewSettings, ItemSettings itemSettings, IViewFactory factory, dynamic parent = null)
-            : base(viewSettings, itemSettings)
+        public View(PointViewSettings2D viewSettings, ItemSettings itemSettings, IViewFactory factory)
+            : this(viewSettings, itemSettings, factory)
         {
             this.Items = new List<IViewItem>(viewSettings.RowNumMax * viewSettings.ColumnNumMax);
+        }
 
+        public View(ContinuousViewSettings viewSettings, ItemSettings itemSettings, IViewFactory factory)
+            : this(viewSettings, itemSettings, factory)
+        {
+            this.Items = new List<IViewItem>();
+        }
+
+        protected View(ViewSettings viewSettings, ItemSettings itemSettings, IViewFactory factory)
+            : base(viewSettings, itemSettings)
+        {
             this.Control  = factory.CreateControl(this, viewSettings, itemSettings);
             this.Graphics = factory.CreateGraphics(this, viewSettings, itemSettings);
-
-            this.Parent = parent;
         }
+
 
         public dynamic Control { get; set; }
 
         public IViewGraphics Graphics { get; set; }
 
         public List<IViewItem> Items { get; set; }
-
-        public dynamic Parent { get; private set; }
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {

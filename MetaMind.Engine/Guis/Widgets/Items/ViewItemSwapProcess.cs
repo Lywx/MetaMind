@@ -129,7 +129,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             orignialDraggedItemView[ViewState.View_Has_Focus] = () => false;
 
             originalSwappingItemView.Control.Selection.Select(0);
-            originalSwappingItemView.Enable(ViewState.View_Has_Focus);
+            originalSwappingItemView[ViewState.View_Has_Focus] = () => true;
 
             draggedExchangable.ExchangeTo(originalSwappingItemView, this.SwappingItem.ItemControl.Id);
             swappingExchangable.ExchangeTo(orignialDraggedItemView, this.DraggingItem.ItemControl.Id);

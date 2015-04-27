@@ -78,10 +78,8 @@ namespace MetaMind.Runtime.Guis.Widgets
                 return;
             }
 
-            this.DrawNameFrame(graphics, alpha);
             this.DrawName(graphics, alpha);
             this.DrawIdFrame(graphics, alpha);
-            this.DrawId(graphics, alpha);
             this.DrawExperienceFrame(graphics, alpha);
             this.DrawExperience(graphics, alpha);
             this.DrawProgressFrame(graphics, alpha);

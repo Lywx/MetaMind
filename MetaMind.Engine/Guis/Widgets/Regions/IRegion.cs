@@ -13,7 +13,7 @@ namespace MetaMind.Engine.Guis.Widgets.Regions
 
     using IDrawable = MetaMind.Engine.IDrawable;
 
-    public interface IRegion : IUpdateable, IDrawable, IInputable  
+    public interface IRegion : IUpdateable, IDrawable, IInputable, IRegionEntity
     {
         IPickableFrame Frame { get; set; }
 

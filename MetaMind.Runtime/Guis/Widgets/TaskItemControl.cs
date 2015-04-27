@@ -20,8 +20,6 @@ namespace MetaMind.Runtime.Guis.Widgets
             this.ItemSyncControl  = new ViewItemSyncControl(item);
         }
 
-        public PickableFrame ExperienceFrame { get { return ((ExperienceItemFrameControl)this.ItemFrameControl).ExperienceFrame; } }
-
         public PickableFrame IdFrame { get { return ((ExperienceItemFrameControl)this.ItemFrameControl).LHoldFrame; } }
 
         public PickableFrame NameFrame { get { return ((ExperienceItemFrameControl)this.ItemFrameControl).NameFrame; } }
@@ -87,8 +85,8 @@ namespace MetaMind.Runtime.Guis.Widgets
 
                         if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))
                         {
-                            this.View[ViewState.View_Is_Editing] = ()=> false;
-                            this.Item[ItemState.Item_Is_Pending] = ()=> false;
+                            this.View[ViewState.View_Is_Editing] = () => false;
+                            this.Item[ItemState.Item_Is_Pending] = () => false;
                         }
                     }
 
@@ -99,8 +97,8 @@ namespace MetaMind.Runtime.Guis.Widgets
                         // Normal status
                         if (input.State.Keyboard.IsActionTriggered(KeyboardActions.TaskEditItem))
                         {
-                            this.View[ViewState.View_Is_Editing] = ()=> true;
-                            this.Item[ItemState.Item_Is_Pending] = ()=> true;
+                            this.View[ViewState.View_Is_Editing] = () => true;
+                            this.Item[ItemState.Item_Is_Pending] = () => true;
                         }
 
                         if (input.State.Keyboard.IsActionTriggered(KeyboardActions.TaskDeleteItem))

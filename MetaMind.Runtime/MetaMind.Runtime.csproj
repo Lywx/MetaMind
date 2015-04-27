@@ -115,6 +115,8 @@
     <Compile Include="Concepts\Tasks\Task.cs" />
     <Compile Include="Extensions\ExtInt32.cs" />
     <Compile Include="Events\SynchronizationAlertedEventArgs.cs" />
+    <Compile Include="Guis\Modules\ExperienceModule.cs" />
+    <Compile Include="Guis\Modules\ExperienceSettings.cs" />
     <Compile Include="Guis\Modules\SummaryModuleControl.cs" />
     <Compile Include="Guis\Modules\SummaryModuleGraphics.cs" />
     <Compile Include="Guis\Modules\Summary\SummaryEntry.cs" />

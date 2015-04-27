@@ -182,8 +182,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         protected void UpdateItemInput(IGameInputService input, GameTime gameTime)
         {
-            // item input
-            // -----------------------------------------------------------------
             foreach (var item in View.Items.ToArray())
             {
                 item.UpdateInput(input, gameTime);

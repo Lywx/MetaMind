@@ -93,7 +93,6 @@ namespace MetaMind.Engine
 
         protected void UpdateInput(GameTime gameTime)
         {
-            // TODO: Playtest
             this.Input  .UpdateInput(gameTime);
             this.Interop.UpdateInput(gameTime);
         }

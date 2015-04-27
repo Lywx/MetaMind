@@ -87,7 +87,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         protected virtual void Transit()
         {
-            this.SrcItem.View.Disable(ViewState.View_Has_Focus);
+            this.SrcItem.View[ViewState.View_Has_Focus] = () => false;
             this.SrcItem.ViewControl.Selection.Clear();
 
             var position = this.DesSelection.PreviousSelectedId != null ? (int)this.DesSelection.PreviousSelectedId : 0;

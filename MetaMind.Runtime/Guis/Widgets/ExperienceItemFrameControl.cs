@@ -20,26 +20,26 @@ namespace MetaMind.Runtime.Guis.Widgets
 
             this.RootFrameLocation = () =>
                 {
-                    if (!this.Item[ItemState.Item_Is_Dragging]() && 
-                        !this.Item[ItemState.Item_Is_Swaping]())
-                    {
-                        IContinousViewScrollControl scroll = this.ViewControl.Scroll;
+                    //if (!this.Item[ItemState.Item_Is_Dragging]() && 
+                    //    !this.Item[ItemState.Item_Is_Swaping]())
+                    //{
+                    //    IContinousViewScrollControl scroll = this.ViewControl.Scroll;
 
-                        return scroll.RootCenterPoint(this.ItemControl.Id).ToVector2() + new Vector2(0, this.ItemSettings.IdFrameSize.Y);
-                    }
+                    //    return scroll.RootCenterPoint(this.ItemControl.Id).ToVector2() + new Vector2(0, this.ItemSettings.IdFrameSize.Y);
+                    //}
 
-                    if (this.Item[ItemState.Item_Is_Swaping]())
-                    {
-                        return this.ViewControl.Swap.RootCenterPoint().ToVector2() + new Vector2(0, this.ItemSettings.IdFrameSize.Y);
-                    }
+                    //if (this.Item[ItemState.Item_Is_Swaping]())
+                    //{
+                    //    return this.ViewControl.Swap.RootCenterPoint().ToVector2() + new Vector2(0, this.ItemSettings.IdFrameSize.Y);
+                    //}
 
                     return this.RootFrame.Location.ToVector2();
                 };
 
             this.NameFrameLocation = this.RootFrameLocation;
 
-            this.LHolderFrameLocation = () => { };
-            this.RHolderFrameLocation = () => { };
+            //this.LHolderFrameLocation = () => { };
+            //this.RHolderFrameLocation = () => { };
         }
 
         ~ExperienceItemFrameControl()
@@ -92,9 +92,6 @@ namespace MetaMind.Runtime.Guis.Widgets
 
         protected override void UpdateFrameGeometry()
         {
-            ((ExperienceItemSettings)this.ItemSettings).ExperienceFrameSize.X = middleWidth;
-            ((ExperienceItemSettings)this.ItemSettings).ProgressFrameSize.X   = middleWidth;
-
             this.RootFrame.Location = this.RootFrameLocation().ToPoint();
             this.NameFrame.Location = this.NameFrameLocation().ToPoint();
             this.LHoldFrame.Location = this.LHolderFrameLocation().ToPoint();

@@ -2,6 +2,7 @@
 {
     using System;
 
+    using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
@@ -41,7 +42,7 @@
 
         public IItemGraphics ItemGraphics { get; set; }
 
-        public dynamic View { get; protected set; }
+        public IView View { get; protected set; }
 
         public dynamic ViewControl
         {
