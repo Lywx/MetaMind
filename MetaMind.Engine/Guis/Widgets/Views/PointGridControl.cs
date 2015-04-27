@@ -102,15 +102,14 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             this.UpdateItemInput(input, time);
         }
 
-        protected void UpdateKeyboardMotion(IGameInputService input, GameTime gameTime)
+        protected void UpdateKeyboardMotion(IGameInputService input, GameTime time)
         {
             if (this.AcceptInput)
             {
-                // keyboard
-                // ---------------------------------------------------------------------
+                // Keyboard
                 if (this.ViewSettings.KeyboardEnabled)
                 {
-                    // movement
+                    // Movement
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Left))
                     {
                         this.MoveLeft();

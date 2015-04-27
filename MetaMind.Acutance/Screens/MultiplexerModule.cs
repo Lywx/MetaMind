@@ -19,7 +19,7 @@ namespace MetaMind.Acutance.Screens
             : base(null)
         {
             this.multiplexer = new MultiplexerGroup(new MultiplexerGroupSettings());
-            this.multiplexer.Load(gameFile, gameInput, gameInterop, gameSound);
+            this.multiplexer.LoadContent(gameFile, gameInput, gameInterop, gameSound);
 
             this.synchronization = new SynchronizationGroup(new SynchronizationGroupSettings());
             this.synchronization.Load();
@@ -33,7 +33,7 @@ namespace MetaMind.Acutance.Screens
 
         public override void LoadContent(IGameInteropService interop)
         {
-            this.multiplexer    .Load(gameFile, input, interop, audio);
+            this.multiplexer    .LoadContent(gameFile, input, interop, audio);
             this.synchronization.Load(gameFile, input, interop, audio);
         }
 

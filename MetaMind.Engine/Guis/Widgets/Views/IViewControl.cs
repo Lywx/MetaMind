@@ -1,8 +1,10 @@
 ﻿namespace MetaMind.Engine.Guis.Widgets.Views
 {
+    using System;
+
     using MetaMind.Engine.Guis.Widgets.Items;
 
-    public interface IPointViewControl : IInputable
+    public interface IViewControl : IViewComponent, IInputable, IDisposable
     {
         IViewItemFactory ItemFactory { get; }
 

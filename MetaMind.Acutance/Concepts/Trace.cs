@@ -4,8 +4,6 @@ namespace MetaMind.Acutance.Concepts
     using System.Diagnostics;
     using System.Runtime.Serialization;
 
-    using MetaMind.Engine.Concepts;
-
     [DataContract]
     public class Trace : IDisposable
     {
@@ -37,11 +35,6 @@ namespace MetaMind.Acutance.Concepts
             {
                 this.timer.Stop();
             }
-
-            this.timer = null;
-
-            this.Name       = null;
-            this.SynchronizationSpan = null;
         }
 
         [OnDeserialized]

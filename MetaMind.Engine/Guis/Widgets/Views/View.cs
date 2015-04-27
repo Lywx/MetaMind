@@ -1,5 +1,6 @@
 namespace MetaMind.Engine.Guis.Widgets.Views
 {
+    using System;
     using System.Collections.Generic;
 
     using MetaMind.Engine.Guis.Widgets.Items;
@@ -34,12 +35,41 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             this.Graphics = factory.CreateGraphics(this, viewSettings, itemSettings);
         }
 
+        public View(ViewSettings viewSettings, ItemSettings itemSettings, IViewControl control, IViewGraphics graphics, List<IViewItem> items)
+            : base(viewSettings, itemSettings)
+        {
+            if (control == null)
+            {
+                throw new ArgumentNullException("control");
+            }
+
+            if (graphics == null)
+            {
+                throw new ArgumentNullException("graphics");
+            }
+
+            if (items == null)
+            {
+                throw new ArgumentNullException("items");
+            }
+
+            this.Items    = items;
+            
+            this.Control  = control;
+            this.Graphics = graphics;
+        }
+
+        #region Dependency
 
         public dynamic Control { get; set; }
 
         public IViewGraphics Graphics { get; set; }
 
         public List<IViewItem> Items { get; set; }
+
+        #endregion
+
+        #region IView
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
@@ -56,5 +86,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             this.Control .Update(time);
             this.Graphics.Update(time);
         }
+
+        #endregion
     }
 }

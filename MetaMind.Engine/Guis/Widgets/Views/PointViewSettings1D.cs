@@ -4,15 +4,14 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     public class PointViewSettings1D : ViewSettings
     {
-        //---------------------------------------------------------------------
         public int ColumnNumDisplay = 10;
+
         public int ColumnNumMax     = 500;
 
-        //---------------------------------------------------------------------
         public PointViewDirection Direction = PointViewDirection.Normal;
 
-        //---------------------------------------------------------------------
-        public Point PointMargin = new Point(51, 0);
+        public Point PointMargin = new Point(50, 0);
+
         public Point PointStart;
 
         public PointViewSettings1D(Point start)

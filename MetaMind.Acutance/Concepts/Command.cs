@@ -7,7 +7,6 @@ namespace MetaMind.Acutance.Concepts
     using MetaMind.Acutance.Sessions;
     using MetaMind.Engine;
     using MetaMind.Engine.Components.Events;
-    using MetaMind.Engine.Concepts;
 
     public interface ICommand
     {
@@ -55,11 +54,13 @@ namespace MetaMind.Acutance.Concepts
             this.Dispose();
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             this.Timer.Dispose();
 
             this.State = CommandState.Terminated;
+
+            base.Dispose();
         }
 
         public SynchronizationSpan SynchronizationSpan
@@ -102,8 +103,9 @@ namespace MetaMind.Acutance.Concepts
         {
             this.State = CommandState.Transiting;
 
-            this.Interop.Event.QueueEvent(new Event((int)SessionEventType.CommandNotified, new CommandNotifiedEventArgs(this)));
-            this.Interop.Event.QueueEvent(new Event((int)SessionEventType.KnowledgeRetrieved, new KnowledgeRetrievedEventArgs(this.Path, this.Offset)));
+            var @event = this.GameInterop.Event;
+            @event.QueueEvent(new Event((int)SessionEventType.CommandNotified, new CommandNotifiedEventArgs(this)));
+            @event.QueueEvent(new Event((int)SessionEventType.KnowledgeRetrieved, new KnowledgeRetrievedEventArgs(this.Path, this.Offset)));
         }
 
         private void UpdateState()

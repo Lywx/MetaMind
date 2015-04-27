@@ -3,8 +3,6 @@ namespace MetaMind.Acutance.Concepts
     using System;
     using System.Runtime.Serialization;
 
-    using MetaMind.Engine.Concepts;
-
     public enum CommandRepetion
     {
         EveryMoment,

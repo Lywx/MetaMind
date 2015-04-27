@@ -4,8 +4,6 @@ namespace MetaMind.Acutance.Concepts
     using System.Diagnostics;
     using System.Runtime.Serialization;
 
-    using MetaMind.Engine.Concepts;
-
     [DataContract]
     public class CommandTimerWithTimeout : CommandTimer
     {

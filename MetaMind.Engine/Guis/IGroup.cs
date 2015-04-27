@@ -1,6 +1,6 @@
 namespace MetaMind.Engine.Guis
 {
-    public interface IGroup<TGroupSettings>
+    public interface IGroup<out TGroupSettings> : IGameControllableEntity
     {
         TGroupSettings Settings { get; }
 

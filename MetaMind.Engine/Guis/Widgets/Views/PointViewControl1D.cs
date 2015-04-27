@@ -16,7 +16,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     using Microsoft.Xna.Framework;
 
-    public class PointViewControl1D : ViewComponent, IPointViewControl
+    public class PointViewControl1D : ViewComponent, IPointViewControl1D
     {
         public PointViewControl1D(IView view, PointViewSettings1D viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
             : base(view, viewSettings, itemSettings)

@@ -83,6 +83,7 @@
     <Compile Include="Guis\Widgets\Items\ViewItemTransitProcess.cs" />
     <Compile Include="Guis\Widgets\Regions\IRegionEntity.cs" />
     <Compile Include="Guis\Widgets\Views\IPointGridControl.cs" />
+    <Compile Include="Guis\Widgets\Views\IPointViewControl1D.cs" />
     <Compile Include="Guis\Widgets\Views\IPointViewScrollControl2D.cs" />
     <Compile Include="Guis\Widgets\Views\IPointViewScrollControl.cs" />
     <Compile Include="Guis\Widgets\Views\IViewComponent.cs" />
@@ -279,7 +280,7 @@
     <Compile Include="Guis\Widgets\Items\ViewItemSwapProcess.cs" />
     <Compile Include="Guis\Widgets\Items\ViewItemViewControl1D.cs" />
     <Compile Include="Guis\Widgets\Items\ViewItemViewControl2D.cs" />
-    <Compile Include="Guis\Widgets\Views\IPointViewControl.cs" />
+    <Compile Include="Guis\Widgets\Views\IViewControl.cs" />
     <Compile Include="Guis\Widgets\Views\IViewFactory.cs" />
     <Compile Include="Guis\Widgets\Views\IViewGraphics.cs" />
     <Compile Include="Guis\Widgets\Views\IPointViewScrollControlHorizontal.cs" />

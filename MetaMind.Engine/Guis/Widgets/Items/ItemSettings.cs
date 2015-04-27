@@ -9,14 +9,12 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
     public class ItemSettings : ICloneable
     {
-        //---------------------------------------------------------------------
         public Point RootFrameSize   = new Point(24, 24);
 
         public Point RootFrameMargin = new Point(2, 2);
 
         public Color RootFrameColor  = Color.Transparent;
 
-        //---------------------------------------------------------------------
         public float IdSize        = 0.7f;
 
         public Color IdColor       = Color.White;
@@ -33,5 +31,15 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         {
             return this.MemberwiseClone();
         }
+    }
+
+    public class ItemViewSettings
+    {
+        
+    }
+
+    public class ViewModelSettings
+    {
+        
     }
 }

@@ -29,8 +29,6 @@ namespace MetaMind.Acutance.Guis.Modules
 
             // Session 
             this.Listeners.Add(new MultiplexerGroupSessionSavedListener(this));
-
-            base.LoadInterop(interop);
         }
 
         #endregion
@@ -53,7 +51,7 @@ namespace MetaMind.Acutance.Guis.Modules
             this.ModuleView = new View(
                 this.Settings.ModuleViewSettings,
                 this.Settings.ModuleItemSettings,
-                this.Settings.ModuleViewFactory);
+                this.Settings.ModuleViewFactory.CreateControl());
 
             this.CommandView = new View(
                 this.Settings.CommandViewSettings,
@@ -81,18 +79,20 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public void LoadConfiguration()
         {
-            this.CommandFormatDataLoad();
+            new FormatUtils().LoadConfiguration();
         }
 
         #endregion
 
         #region Load and Unload
 
-        public void Load(IGameInputService input, IGameInteropService interop)
+        public override void LoadContent(IGameInteropService interop)
         {
             this.LoadConfiguration();
             this.LoadData();
             this.LoadEvents(interop);
+
+            base.LoadContent(interop);
         }
 
         private void LoadData()
@@ -101,18 +101,7 @@ namespace MetaMind.Acutance.Guis.Modules
             this.LoadScheduleData();
         }
 
-        public void Unload(IGameInputService input, IGameInteropService interop)
-        {
-            this.UnloadInterop(interop);
-        }
-
         #region Commands
-
-        private void CommandFormatDataLoad()
-        {
-            new FormatUtils().LoadConfiguration();
-        }
-
 
         #endregion
 
