@@ -189,13 +189,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         #region Configurations
 
-        protected virtual Rectangle RegionPositioning(dynamic viewSettings, dynamic itemSettings)
+        protected virtual Rectangle RegionPositioning()
         {
             return new Rectangle(
-                viewSettings.PointStart.X,
-                viewSettings.PointStart.Y,
-                viewSettings.ColumnNumDisplay * itemSettings.NameFrameSize.X,
-                viewSettings.RowNumDisplay    * itemSettings.NameFrameSize.Y);
+                this.ViewSettings.PointStart.X,
+                this.ViewSettings.PointStart.Y,
+                this.ViewSettings.ColumnNumDisplay * this.ItemSettings.NameFrameSize.X,
+                this.ViewSettings.RowNumDisplay    * this.ItemSettings.NameFrameSize.Y);
         }
 
         #endregion Configurations

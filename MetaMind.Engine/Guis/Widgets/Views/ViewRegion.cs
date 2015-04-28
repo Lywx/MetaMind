@@ -8,15 +8,15 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     public class ViewRegion : Region
     {
-        public ViewRegion(Rectangle rectangle, Func<Point> getLocation)
-            : base(rectangle)
+        public ViewRegion(Func<Rectangle> bounds)
+            : base(bounds())
         {
-            this.GetLocation = getLocation;
+            this.Bounds = bounds;
         }
 
         #region Dependency
 
-        protected Func<Point> GetLocation { get; set; }
+        protected Func<Rectangle> Bounds { get; set; }
 
         #endregion
 
@@ -24,7 +24,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public override void Update(GameTime time)
         {
-            this.Location = this.GetLocation();
+            this.Rectangle = this.Bounds();
         }
 
         #endregion

@@ -196,7 +196,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Configurations
 
-        protected override Rectangle RegionPositioning(dynamic viewSettings, dynamic itemSettings)
+        protected override Rectangle RegionPositioning()
         {
             return new Rectangle(
                 viewSettings.PointStart.X,
