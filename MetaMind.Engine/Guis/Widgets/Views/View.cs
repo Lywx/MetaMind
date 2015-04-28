@@ -10,42 +10,22 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     public class View : ViewEntity, IView
     {
-        //public View(PointViewSettings1D viewSettings, ItemSettings itemSettings, IViewFactory factory)
-        //    : this(viewSettings, itemSettings, factory)
-        //{
-        //    this.Items = new List<IViewItem>(viewSettings.ColumnNumMax);
-        //}
-
-        //public View(PointViewSettings2D viewSettings, ItemSettings itemSettings, IViewFactory factory)
-        //    : this(viewSettings, itemSettings, factory)
-        //{
-        //    this.Items = new List<IViewItem>(viewSettings.RowNumMax * viewSettings.ColumnNumMax);
-        //}
-
-        //public View(ContinuousViewSettings viewSettings, ItemSettings itemSettings, IViewFactory factory)
-        //    : this(viewSettings, itemSettings, factory)
-        //{
-        //    this.Items = new List<IViewItem>();
-        //}
-
-        protected View(ViewSettings viewSettings, ItemSettings itemSettings, IViewFactory factory)
+        public View(ICloneable viewSettings, IViewFactory viewFactory, ICloneable itemSettings, List<IViewItem> items)
             : base(viewSettings, itemSettings)
         {
-            this.Logic  = factory.CreateControl(this, viewSettings, itemSettings);
-            this.Visual = factory.CreateGraphics(this, viewSettings, itemSettings);
-        }
-
-        public View(ViewSettings viewSettings, ItemSettings itemSettings, IViewControl logic, IViewVisualControl visual, List<IViewItem> items)
-            : base(viewSettings, itemSettings)
-        {
-            if (logic == null)
+            if (viewSettings == null)
             {
-                throw new ArgumentNullException("logic");
+                throw new ArgumentNullException("viewSettings");
             }
 
-            if (visual == null)
+            if (viewFactory == null)
             {
-                throw new ArgumentNullException("visual");
+                throw new ArgumentNullException("viewFactory");
+            }
+
+            if (itemSettings == null)
+            {
+                throw new ArgumentNullException("itemSettings");
             }
 
             if (items == null)
@@ -53,19 +33,19 @@ namespace MetaMind.Engine.Guis.Widgets.Views
                 throw new ArgumentNullException("items");
             }
 
-            this.Items    = items;
-            
-            this.Logic  = logic;
-            this.Visual = visual;
-        }
+            this.Items = items;
 
+            this.Logic  = viewFactory.CreateLogicControl(this, viewSettings, itemSettings);
+            this.Visual = viewFactory.CreateVisualControl(this, viewSettings, itemSettings);
+        }
+        
         #region Dependency
+
+        public List<IViewItem> Items { get; set; }
 
         public dynamic Logic { get; set; }
 
         public IViewVisualControl Visual { get; set; }
-
-        public List<IViewItem> Items { get; set; }
 
         #endregion
 
@@ -73,18 +53,31 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            this.Visual.Draw(graphics, time, alpha);
-        }
-
-        public override void UpdateInput(IGameInputService input, GameTime time)
-        {
-            this.Logic.Update(input, time);
+            if (this.Visual != null)
+            {
+                this.Visual.Draw(graphics, time, alpha);
+            }
         }
 
         public override void Update(GameTime time)
         {
-            this.Logic .Update(time);
-            this.Visual.Update(time);
+            if (this.Logic != null)
+            {
+                this.Logic.Update(time);
+            }
+
+            if (this.Visual != null)
+            {
+                this.Visual.Update(time);
+            }
+        }
+
+        public override void UpdateInput(IGameInputService input, GameTime time)
+        {
+            if (this.Logic != null)
+            {
+                this.Logic.Update(input, time);
+            }
         }
 
         #endregion

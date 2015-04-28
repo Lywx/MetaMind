@@ -1,15 +1,13 @@
 namespace MetaMind.Runtime.Guis.Widgets
 {
-    using System;
-
+    using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Views;
 
     public class TimelineScale : ViewVisualComponent
     {
-        public TimelineScale(IView view, ICloneable viewSettings, ICloneable itemSettings)
+        protected TimelineScale(IView view, ViewSettings viewSettings, ItemSettings itemSettings)
             : base(view, viewSettings, itemSettings)
         {
-
         }
 
         private float Scale { get; set; }

@@ -117,8 +117,8 @@
     <Compile Include="Events\SynchronizationAlertedEventArgs.cs" />
     <Compile Include="Guis\Modules\ExperienceModule.cs" />
     <Compile Include="Guis\Modules\ExperienceSettings.cs" />
-    <Compile Include="Guis\Modules\SummaryModuleControl.cs" />
-    <Compile Include="Guis\Modules\SummaryModuleGraphics.cs" />
+    <Compile Include="Guis\Modules\SummaryModuleLogicControl.cs" />
+    <Compile Include="Guis\Modules\SummaryModuleVisualControl.cs" />
     <Compile Include="Guis\Modules\Summary\SummaryEntry.cs" />
     <Compile Include="Guis\Modules\Summary\SummaryFactory.cs" />
     <Compile Include="Guis\Modules\Summary\SummarySplit.cs" />
@@ -126,12 +126,12 @@
     <Compile Include="Guis\Modules\Synchronization\SynchronizationPoint.cs" />
     <Compile Include="Guis\Modules\Synchronization\SynchronizationPointSide.cs" />
     <Compile Include="Guis\Modules\Synchronization\SynchronizationFactory.cs" />
-    <Compile Include="Guis\Modules\SynchronizationModuleControl.cs" />
-    <Compile Include="Guis\Modules\SynchronizationModuleGraphics.cs" />
+    <Compile Include="Guis\Modules\SynchronizationModuleLogicControl.cs" />
+    <Compile Include="Guis\Modules\SynchronizationModuleVisualControl.cs" />
     <Compile Include="Guis\Modules\Synchronization\SynchronizationProgressBar.cs" />
     <Compile Include="Guis\Modules\SummaryModule.cs" />
     <Compile Include="Guis\Modules\SummarySettings.cs" />
-    <Compile Include="Guis\Widgets\ExperienceItemControl.cs" />
+    <Compile Include="Guis\Widgets\ExperienceItemLogicControl.cs" />
     <Compile Include="Guis\Widgets\ExperienceItemVisualControl.cs" />
     <Compile Include="Guis\Widgets\ExperienceItemFrameControl.cs" />
     <Compile Include="Guis\Widgets\ExperienceItemSettings.cs" />
@@ -140,7 +140,7 @@
     <Compile Include="Guis\Modules\SynchronizationMonitor.cs" />
     <Compile Include="Guis\Modules\SynchronizationSettings.cs" />
     <Compile Include="Guis\Widgets\TimelineScale.cs" />
-    <Compile Include="Guis\Widgets\TaskItemControl.cs" />
+    <Compile Include="Guis\Widgets\TaskItemLogicControl.cs" />
     <Compile Include="Guis\Widgets\TaskItemVisualControl.cs" />
     <Compile Include="Runtime.cs" />
     <Compile Include="Program.cs" />

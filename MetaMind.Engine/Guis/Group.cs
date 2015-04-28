@@ -8,9 +8,9 @@ namespace MetaMind.Engine.Guis
     {
         public TGroupSettings Settings { get; protected set; }
 
-        public IGroupControl  Control  { get; protected set; }
+        public IGroupLogicControl  Logic  { get; protected set; }
 
-        public IGroupGraphics Graphics { get; protected set; }
+        public IGroupVisualControl Visual { get; protected set; }
 
         #region Constructors
 
@@ -23,19 +23,19 @@ namespace MetaMind.Engine.Guis
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            this.Graphics.Draw(graphics, time, alpha);
+            this.Visual.Draw(graphics, time, alpha);
         }
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.Control .Update(time);
-            this.Graphics.Update(time);
+            this.Logic .Update(time);
+            this.Visual.Update(time);
         }
 
         public override void Update(GameTime time)
         {
-            this.Control .Update(time);
-            this.Graphics.Update(time);
+            this.Logic .Update(time);
+            this.Visual.Update(time);
         }
     }
 }

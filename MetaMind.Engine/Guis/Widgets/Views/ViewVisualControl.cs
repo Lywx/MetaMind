@@ -16,21 +16,14 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            this.DrawItems(graphics, time, alpha);
-        }
-
-        protected void DrawItems(IGameGraphicsService graphics, GameTime gameTime, byte alpha)
-        {
-            foreach (var item in View.Items.ToArray())
+            foreach (var item in this.View.Items.ToArray())
             {
-                // TODO: Possible separation of active and inactive storage and looping 
-                //       to improve cpu performace
+                // TODO: Possible separation of active and inactive storage and looping to improve cpu performace
 
                 // item could be null when diposed
-                if (item != null && 
-                    item[ItemState.Item_Is_Active]())
+                if (item[ItemState.Item_Is_Active]())
                 {
-                    item.Draw(graphics, gameTime, alpha);
+                    item.Draw(graphics, time, alpha);
                 }
             }
         }

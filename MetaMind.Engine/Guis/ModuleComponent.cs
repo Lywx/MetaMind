@@ -1,9 +1,9 @@
 
 namespace MetaMind.Engine.Guis
 {
-    public abstract class ModuleComponent<TModule, TModuleSettings, TModuleControl> : GameControllableEntity, IInputable, IDrawable
-        where                             TModule                                   : Module<TModuleSettings>
-        where                             TModuleControl                            : ModuleControl<TModule, TModuleSettings, TModuleControl>
+    public abstract class ModuleComponent<TModule, TModuleSettings, TModuleLogic> : GameControllableEntity, IInputable, IDrawable
+        where                             TModule                                 : Module<TModuleSettings>
+        where                             TModuleLogic                            : ModuleLogicControl<TModule, TModuleSettings, TModuleLogic>
     {
         private readonly TModule module;
 
@@ -12,11 +12,11 @@ namespace MetaMind.Engine.Guis
             this.module = module;
         }
 
-        protected TModuleControl Control
+        protected TModuleLogic Logic
         {
             get
             {
-                return (TModuleControl)this.module.Control;
+                return (TModuleLogic)this.module.Logic;
             }
         }
 

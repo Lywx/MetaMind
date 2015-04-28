@@ -10,6 +10,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     using System;
 
     using MetaMind.Engine.Guis.Widgets.Regions;
+    using MetaMind.Engine.Guis.Widgets.Views.PointView;
     using MetaMind.Engine.Guis.Widgets.Visual;
     using MetaMind.Engine.Services;
 
@@ -23,7 +24,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         private readonly IRegion viewRegion;
 
-        private readonly PointViewSettings2D viewSettings;
+        private readonly PointView2DSettings viewSettings;
 
         private readonly ViewScrollbarSettings settings;
 
@@ -31,7 +32,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         
         private int brightness;
         
-        public ViewVerticalScrollBar(PointViewSettings2D viewSettings, IPointViewVerticalScrollControl viewScroll, IPointView2DLogicControl viewLogic, IRegion viewRegion, ViewScrollbarSettings scrollbarSettings)
+        public ViewVerticalScrollBar(PointView2DSettings viewSettings, IPointViewVerticalScrollControl viewScroll, IPointView2DLogicControl viewLogic, IRegion viewRegion, ViewScrollbarSettings scrollbarSettings)
         {
             this.viewScroll   = viewScroll;
             this.viewLogic    = viewLogic;
@@ -77,6 +78,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         public override void Update(GameTime time)
         {
             this.brightness -= this.settings.BrightnessDecreasingStep;
+            
             if (this.brightness < 0)
             {
                 this.brightness = 0;

@@ -4,8 +4,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     public interface IViewFactory
     {
-        dynamic CreateControl(IView view, ICloneable viewSettings, ICloneable itemSettings);
+        dynamic CreateLogicControl(IView view, ICloneable viewSettings, ICloneable itemSettings);
 
-        IViewVisualControl CreateGraphics(IView view, ICloneable viewSettings, ICloneable itemSettings);
+        IViewVisualControl CreateVisualControl(IView view, ICloneable viewSettings, ICloneable itemSettings);
     }
 }

@@ -41,12 +41,12 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         private void SelectItsItem(object sender, FrameEventArgs e)
         {
-            ((ViewItemControl1D)this.Item.ItemLogic).MouseSelectsIt();
+            ((ViewItem1DLogicControl)this.Item.ItemLogic).MouseSelectsIt();
         }
 
         private void UnselectItsItem(object sender, FrameEventArgs e)
         {
-            ((ViewItemControl1D)this.Item.ItemLogic).MouseUnselectsIt();
+            ((ViewItem1DLogicControl)this.Item.ItemLogic).MouseUnselectsIt();
         }
     }
 }

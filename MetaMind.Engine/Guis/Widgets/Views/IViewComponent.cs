@@ -4,7 +4,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     public interface IViewComponent : IUpdateable
     {
-        dynamic ViewControl { get; }
+        dynamic ViewLogic { get; }
 
         IView View { get; }
 

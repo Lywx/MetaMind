@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 {
     using MetaMind.Engine.Services;
 
-    public class ViewItemViewSmartControl<TViewItemWSwapProcess> : ViewItemViewControl2D
+    public class ViewItemViewSmartControl<TViewItemWSwapProcess> : ViewItemView2DControl
         where TViewItemWSwapProcess : ViewItemSwapProcess, new()
     {
         private dynamic dataSource;

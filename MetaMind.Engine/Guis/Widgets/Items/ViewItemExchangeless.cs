@@ -15,9 +15,9 @@
             this.View         = view;
             this.ViewSettings = viewSettings;
 
-            this.ItemData     = itemFactory.CreateData(this);
-            this.ItemLogic  = itemFactory.CreateControl(this);
-            this.ItemVisual = itemFactory.CreateGraphics(this);
+            this.ItemData   = itemFactory.CreateData(this);
+            this.ItemLogic  = itemFactory.CreateLogicControl(this);
+            this.ItemVisual = itemFactory.CreateVisualControl(this);
         }
 
         public ViewItemExchangeless(dynamic view, ICloneable viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory, dynamic itemData)
@@ -26,9 +26,10 @@
             this.View         = view;
             this.ViewSettings = viewSettings;
 
-            this.ItemData     = itemData;
-            this.ItemLogic  = itemFactory.CreateControl(this);
-            this.ItemVisual = itemFactory.CreateGraphics(this);
+            this.ItemData   = itemData;
+
+            this.ItemLogic  = itemFactory.CreateLogicControl(this);
+            this.ItemVisual = itemFactory.CreateVisualControl(this);
         }
 
         ~ViewItemExchangeless()
@@ -79,19 +80,14 @@
 
         public override void Dispose()
         {
-            try
+            // Don't set item control to null
+            // Because the reference is used in the loop that cannot dispose itself
+            if (this.ItemLogic != null)
             {
-                // don't set item control to null
-                // because the reference is used in the loop
-                // that cannot dispose itself
                 this.ItemLogic.Dispose();
+            }
 
-                this.ItemVisual = null;
-            }
-            finally
-            {
-                base.Dispose();
-            }
+            base.Dispose();
         }
     }
 }

@@ -4,12 +4,12 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     public class CommandItemFactory : ViewItemFactory2D
     {
-        public override dynamic CreateControl(IViewItem item)
+        public override dynamic CreateLogicControl(IViewItem item)
         {
-            return new CommandItemControl(item, Acutance.Session.Commandlist.Commands);
+            return new CommandItemLogicControl(item, Acutance.Session.Commandlist.Commands);
         }
 
-        public override IItemVisualControl CreateGraphics(IViewItem item)
+        public override IItemVisualControl CreateVisualControl(IViewItem item)
         {
             return new CommandItemVisualControl(item);
         }

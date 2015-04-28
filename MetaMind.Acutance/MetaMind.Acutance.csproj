@@ -84,7 +84,7 @@
     <Compile Include="Guis\Widgets\CommandItemDataControl.cs" />
     <Compile Include="Events\KnowledgeReloadedEventArgs.cs" />
     <Compile Include="Guis\Widgets\KnowledgeViewSearchControl.cs" />
-    <Compile Include="Guis\Widgets\ModuleItemControl.cs" />
+    <Compile Include="Guis\Widgets\ModuleItemLogicControl.cs" />
     <Compile Include="Guis\Widgets\ModuleItemFactory.cs" />
     <Compile Include="Guis\Widgets\ModuleItemFileControl.cs" />
     <Compile Include="Guis\Widgets\ModuleItemVisualControl.cs" />
@@ -107,7 +107,7 @@
     <Compile Include="Guis\Modules\SynchronizationGroup.cs" />
     <Compile Include="Guis\Modules\MultiplexerGroupSettings.cs" />
     <Compile Include="Events\CommandAlertedEventArgs.cs" />
-    <Compile Include="Guis\Widgets\CommandItemControl.cs" />
+    <Compile Include="Guis\Widgets\CommandItemLogicControl.cs" />
     <Compile Include="Guis\Widgets\CommandItemFactory.cs" />
     <Compile Include="Guis\Widgets\CommandItemVisualControl.cs" />
     <Compile Include="Guis\Widgets\CommandItemSettings.cs" />
@@ -116,7 +116,7 @@
     <Compile Include="Guis\Widgets\CommandViewFactory.cs" />
     <Compile Include="Guis\Widgets\CommandViewGraphics.cs" />
     <Compile Include="Guis\Widgets\CommandViewSettings.cs" />
-    <Compile Include="Guis\Widgets\KnowledgeItemControl.cs" />
+    <Compile Include="Guis\Widgets\KnowledgeItemLogicControl.cs" />
     <Compile Include="Guis\Widgets\KnowledgeItemFileDataControl.cs" />
     <Compile Include="Guis\Widgets\KnowledgeItemFactory.cs" />
     <Compile Include="Guis\Widgets\KnowledgeItemFrameControl.cs" />
@@ -127,7 +127,7 @@
     <Compile Include="Guis\Widgets\KnowledgeViewGraphics.cs" />
     <Compile Include="Guis\Widgets\KnowledgeViewSettings.cs" />
     <Compile Include="Events\ModuleCreatedEventArgs.cs" />
-    <Compile Include="Guis\Widgets\TraceItemControl.cs" />
+    <Compile Include="Guis\Widgets\TraceItemLogicControl.cs" />
     <Compile Include="Guis\Widgets\TraceItemFactory.cs" />
     <Compile Include="Guis\Widgets\TraceItemFrameControl.cs" />
     <Compile Include="Guis\Widgets\TraceItemVisualControl.cs" />

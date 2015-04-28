@@ -2,8 +2,8 @@ namespace MetaMind.Engine.Guis
 {
     public interface IModule : IGameControllableEntity
     {
-        IModuleControl Control { get; }
+        IModuleLogicControl Logic { get; }
 
-        IModuleGraphics Graphics { get; }
+        IModuleVisualControl Visual { get; }
     }
 }

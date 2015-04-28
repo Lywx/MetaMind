@@ -17,10 +17,10 @@ namespace MetaMind.Engine.Guis.Widgets.Items
     {
         #region Item Data
 
-        dynamic ItemLogic { get; set; }
-
         dynamic ItemData { get; set; }
 
+        dynamic ItemLogic { get; set; }
+        
         IItemVisualControl ItemVisual { get; set; }
 
         #endregion

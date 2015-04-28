@@ -14,6 +14,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         IItemVisualControl ItemVisualControl { get; }
 
+
+        // TODO: I felt like i don;t need to have a itemsettings in view
         dynamic ItemSettings { get; }
 
         #endregion Item Components

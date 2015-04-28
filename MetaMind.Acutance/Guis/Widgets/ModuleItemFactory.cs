@@ -13,9 +13,9 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public IModulelist Modulelist { get; set; }
 
-        public override dynamic CreateControl(IViewItem item)
+        public override dynamic CreateLogicControl(IViewItem item)
         {
-            return new ModuleItemControl(item, this.Modulelist.Modules);
+            return new ModuleItemLogicControl(item, this.Modulelist.Modules);
         }
 
         public dynamic CreateData(RawKnowledgeFileBuffer buffer)
@@ -27,7 +27,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             return module;
         }
 
-        public override IItemVisualControl CreateGraphics(IViewItem item)
+        public override IItemVisualControl CreateVisualControl(IViewItem item)
         {
             return new ModuleItemVisualControl(item);
         }

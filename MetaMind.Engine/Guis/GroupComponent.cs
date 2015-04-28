@@ -4,9 +4,9 @@ namespace MetaMind.Engine.Guis
 
     using IDrawable = MetaMind.Engine.IDrawable;
 
-    public class GroupComponent<TGroup, TGroupSettings, TGroupControl> : GameControllableEntity, IUpdateable, IDrawable, IInputable
-        where                   TGroup        : Group<TGroupSettings>
-        where                   TGroupControl : GroupControl<TGroup, TGroupSettings, TGroupControl>
+    public class GroupComponent<TGroup, TGroupSettings, TGroupLogic> : GameControllableEntity, IUpdateable, IDrawable, IInputable
+        where                   TGroup      : Group<TGroupSettings>
+        where                   TGroupLogic : GroupLogicControl<TGroup, TGroupSettings, TGroupLogic>
     {
         private readonly TGroup group;
 
@@ -15,10 +15,10 @@ namespace MetaMind.Engine.Guis
             this.group = group;
         }
 
-        public TGroupSettings GroupSettings { get { return this.@group.Settings; } }
+        public TGroupSettings GroupSettings { get { return this.group.Settings; } }
 
-        protected TGroupControl Control { get { return (TGroupControl)this.@group.Control; } }
+        protected TGroupLogic Control { get { return (TGroupLogic)this.group.Logic; } }
 
-        protected TGroup Group { get { return this.@group; } }
+        protected TGroup Group { get { return this.group; } }
     }
 }

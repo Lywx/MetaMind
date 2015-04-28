@@ -14,6 +14,7 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Regions;
     using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Engine.Guis.Widgets.Views.PointView;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
@@ -29,6 +30,8 @@ namespace MetaMind.Acutance.Guis.Widgets
             this.AddBlankItem();
 
             this.SearchControl = new KnowledgeViewSearchControl(view,viewSettings, itemSettings);
+
+            this.View[ViewState.View_Has_Focus] = this.Region[RegionState.Region_Has_Focus];
         }
 
 
@@ -162,9 +165,9 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.UpdateRegionClick(input, time);
-            this.UpdateMouseScroll(input);
-            this.UpdateKeyboardMotion(input, time);
+            this.UpdateInputOfRegion(input, time);
+            this.UpdateInputOfMouse(input, time);
+            this.UpdateInputOfKeyboard(input, time);
 
             if (this.AcceptInput)
             {
@@ -184,12 +187,6 @@ namespace MetaMind.Acutance.Guis.Widgets
                     item.UpdateInput(time);
                 }
             }
-        }
-
-        protected override void UpdateViewFocus()
-        {
-            +
-            this.View[ViewState.View_Has_Focus] = () => this.Region[RegionState.Region_Has_Focus]();
         }
 
         #endregion Update

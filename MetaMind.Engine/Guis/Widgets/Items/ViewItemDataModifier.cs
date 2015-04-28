@@ -100,21 +100,15 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         private void RefreshInt(object sender, ViewItemDataEventArgs e)
         {
-            var inputString = ((Font)this.ItemSettings.NameFont).PrintableString(e.NewValue);
-
-            // parse input to int
             int result;
-            var succeded = int.TryParse(inputString, out result);
+            var succeded = int.TryParse(Font.ContentRegular.PrintableString(e.NewValue), out result);
 
             this.RefreshValue(ItemData, succeded ? result : 0);
         }
 
         private void RefreshString(object sender, ViewItemDataEventArgs e)
         {
-            // make sure name is exactly the same as the displayed name
-            var inputString = ((Font)this.ItemSettings.NameFont).PrintableString(e.NewValue);
-
-            this.RefreshValue(ItemData, inputString);
+            this.RefreshValue(this.ItemData, Font.ContentRegular.PrintableString(e.NewValue));
         }
 
         private void RefreshValue(dynamic itemData, dynamic value)

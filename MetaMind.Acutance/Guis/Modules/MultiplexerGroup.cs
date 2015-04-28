@@ -51,7 +51,7 @@ namespace MetaMind.Acutance.Guis.Modules
             this.ModuleView = new View(
                 this.Settings.ModuleViewSettings,
                 this.Settings.ModuleItemSettings,
-                this.Settings.ModuleViewFactory.CreateControl());
+                this.Settings.ModuleViewFactory.CreateLogicControl());
 
             this.CommandView = new View(
                 this.Settings.CommandViewSettings,

@@ -32,15 +32,15 @@ namespace MetaMind.Acutance.Guis.Widgets
         /// <param name="offset">offset of line number when loading file</param>
         public void LoadResult(string path, bool relative, int offset)
         {
-            ViewControl.FileItem.ItemControl.SetName(Path.GetFileName(path));
+            this.ViewLogic.FileItem.ItemControl.SetName(Path.GetFileName(path));
 
             if (relative)
             {
                 path = FileManager.DataPath(path);
             }
 
-            ViewControl.ClearNonControlItems();
-            ViewControl.ClearResultItems();
+            this.ViewLogic.ClearNonControlItems();
+            this.ViewLogic.ClearResultItems();
 
             try
             {
@@ -49,13 +49,13 @@ namespace MetaMind.Acutance.Guis.Widgets
                 {
                     this.LoadResultFromFile(path, offset);
 
-                    ViewControl.Scroll.MoveUpToTop();
+                    this.ViewLogic.Scroll.MoveUpToTop();
                 }
                 else
                 {
                     this.LoadResultFromDirectory(path);
 
-                    ViewControl.Scroll.MoveUpToTop();
+                    this.ViewLogic.Scroll.MoveUpToTop();
                 }
             }
             catch (FileNotFoundException)
@@ -68,13 +68,13 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public void Search(string fileName)
         {
-            if (ViewControl.FileItem == null)
+            if (this.ViewLogic.FileItem == null)
             {
                 return;
             }
 
-            ViewControl.ClearNonControlItems();
-            ViewControl.ClearResultItems();
+            this.ViewLogic.ClearNonControlItems();
+            this.ViewLogic.ClearResultItems();
 
             var searchName     = SearchSettings.SearchName(fileName, true);
             var searcherParams = SearchSettings.SearchParams(searchName);
@@ -83,7 +83,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public void SearchStop()
         {
-            ViewControl.FileItem.ItemControl.EditCancel();
+            this.ViewLogic.FileItem.ItemControl.EditCancel();
 
             Searcher.Stop();
         }
@@ -92,12 +92,12 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             foreach (var dir in Directory.GetDirectories(path).Take(this.directoryNumMax))
             {
-                ViewControl.AddResultItem(FileManager.DataRelativePath(dir));
+                this.ViewLogic.AddResultItem(FileManager.DataRelativePath(dir));
             }
 
             foreach (var file in Directory.GetFiles(path).Take(this.fileNumMax))
             {
-                ViewControl.AddResultItem(FileManager.DataRelativePath(file));
+                this.ViewLogic.AddResultItem(FileManager.DataRelativePath(file));
             }
         }
 
@@ -109,11 +109,11 @@ namespace MetaMind.Acutance.Guis.Widgets
                 return;
             }
 
-            ViewControl.FileBuffer = query.Buffer;
+            this.ViewLogic.FileBuffer = query.Buffer;
 
             foreach (var entry in query.Data)
             {
-                ViewControl.AddItem(entry);
+                this.ViewLogic.AddItem(entry);
             }
         }
 
@@ -132,9 +132,9 @@ namespace MetaMind.Acutance.Guis.Widgets
                 return;
             }
 
-            ViewControl.RemoveBlankItem();
-            ViewControl.AddResultItem(relativePath);
-            ViewControl.AddBlankItem();
+            this.ViewLogic.RemoveBlankItem();
+            this.ViewLogic.AddResultItem(relativePath);
+            this.ViewLogic.AddBlankItem();
         }
     }
 }

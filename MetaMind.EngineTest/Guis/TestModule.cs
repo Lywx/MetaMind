@@ -2,7 +2,10 @@
 {
     using MetaMind.Engine;
     using MetaMind.Engine.Guis;
+    using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Regions;
+    using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Engine.Guis.Widgets.Views.PointView;
     using MetaMind.Engine.Services;
     using MetaMind.Engine.Testers;
 
@@ -14,12 +17,15 @@
     {
         private Region region;
 
+        private View view;
+
         public TestModule(object settings)
             : base(settings)
         {
             this.Entities = new GameControllableEntityCollection<GameControllableEntity>();
             
             this.region = new Region(new Rectangle(50, 50, 50, 50));
+            this.view   = new PointView1D(new PointView2DSettings(new Point(50, 50)), new ItemSettings());
             
             this.Entities.Add(this.region);
         }

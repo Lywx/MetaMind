@@ -3,6 +3,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
     using System.Diagnostics;
 
     using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Engine.Guis.Widgets.Views.PointView;
 
     using Microsoft.Xna.Framework;
 

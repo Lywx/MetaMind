@@ -1,17 +1,15 @@
 ﻿namespace MetaMind.Engine.Guis.Widgets.Items
 {
+    using System;
+
     public interface IViewItemFactory
     {
-        dynamic CreateControl(IViewItem item);
+        Func<IViewItem, dynamic> Data { get; set; }
 
         dynamic CreateData(IViewItem item);
 
-        IItemVisualControl CreateGraphics(IViewItem item);
-    }
+        dynamic CreateLogicControl(IViewItem item);
 
-    // TODO: Replace Factory CreateData
-    public interface IViewItemDataBinding
-    {
-        dynamic CreateData(IViewItem item);
+        IItemVisualControl CreateVisualControl(IViewItem item);
     }
 }

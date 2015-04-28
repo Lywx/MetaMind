@@ -4,8 +4,9 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     using MetaMind.Acutance.Concepts;
     using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Engine.Guis.Widgets.Views.PointView;
 
-    public class ModuleViewFactory : PointViewFactory2D
+    public class ModuleViewFactory : PointView2DFactory
     {
         public ModuleViewFactory(IModulelist modulelist)
         {
@@ -14,12 +15,12 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public IModulelist Modulelist { get; private set; }
 
-        protected override dynamic CreateLogicControl(IView view, PointViewSettings2D viewSettings, ICloneable itemSettings)
+        protected override dynamic CreateLogicControl(IView view, PointView2DSettings viewSettings, ICloneable itemSettings)
         {
             return new ModuleViewLogicControl(view, (ModuleViewSettings)viewSettings, (ModuleItemSettings)itemSettings, new ModuleItemFactory(this.Modulelist));
         }
 
-        protected override IViewVisualControl CreateVisualControl(IView view, PointViewSettings2D viewSettings, ICloneable itemSettings)
+        protected override IViewVisualControl CreateVisualControl(IView view, PointView2DSettings viewSettings, ICloneable itemSettings)
         {
             return new TraceViewGraphics(view, (ModuleViewSettings)viewSettings, (ModuleItemSettings)itemSettings);
         }

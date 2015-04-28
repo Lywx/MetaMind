@@ -12,8 +12,8 @@ namespace MetaMind.Runtime.Guis.Modules
             this.Consciousness   = consciousness;
             this.Synchronization = synchronization;
 
-            this.Control  = new SummaryModuleControl(this, this.Consciousness, this.Synchronization);
-            this.Graphics = new SummaryModuleGraphics(this, this.Consciousness, this.Synchronization);
+            this.Logic  = new SummaryModuleLogicControl(this, this.Consciousness, this.Synchronization);
+            this.Visual = new SummaryModuleVisualControl(this, this.Consciousness, this.Synchronization);
         }
 
         ~SummaryModule()

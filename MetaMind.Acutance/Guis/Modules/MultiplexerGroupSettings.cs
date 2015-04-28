@@ -5,6 +5,7 @@ namespace MetaMind.Acutance.Guis.Modules
     using MetaMind.Acutance.Concepts;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Engine.Guis.Widgets.Views.PointView;
 
     public class MultiplexerGroupSettings
     {
@@ -25,7 +26,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public IViewFactory ModuleViewFactory { get; set; }
 
-        public PointViewSettings2D ModuleViewSettings { get; set; }
+        public PointView2DSettings ModuleViewSettings { get; set; }
 
         private IModulelist Modulelist { get; set; }
 
@@ -44,7 +45,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public IViewFactory CommandViewFactory { get; set; }
 
-        public PointViewSettings2D CommandViewSettings { get; set; }
+        public PointView2DSettings CommandViewSettings { get; set; }
 
         #endregion Command View Data
 
@@ -54,7 +55,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
         public IViewFactory KnowledgeViewFactory { get; set; }
 
-        public PointViewSettings2D KnowledgeViewSettings { get; set; }
+        public PointView2DSettings KnowledgeViewSettings { get; set; }
 
         #endregion Knowledge View Data
     }

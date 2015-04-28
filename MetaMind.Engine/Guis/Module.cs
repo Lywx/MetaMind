@@ -29,9 +29,9 @@ namespace MetaMind.Engine.Guis
 
         #region Components
 
-        public IModuleControl Control { get; protected set; }
+        public IModuleLogicControl Logic { get; protected set; }
 
-        public IModuleGraphics Graphics { get; protected set; }
+        public IModuleVisualControl Visual { get; protected set; }
 
         public TModuleSettings Settings { get; protected set; }
 
@@ -41,9 +41,9 @@ namespace MetaMind.Engine.Guis
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            if (this.Graphics != null)
+            if (this.Visual != null)
             {
-                this.Graphics.Draw(graphics, time, alpha);
+                this.Visual.Draw(graphics, time, alpha);
             }
         }
 
@@ -53,14 +53,14 @@ namespace MetaMind.Engine.Guis
 
         public override void LoadContent(IGameInteropService interop)
         {
-            if (this.Control != null)
+            if (this.Logic != null)
             {
-                this.Control.LoadContent(interop);
+                this.Logic.LoadContent(interop);
             }
 
-            if (this.Graphics != null)
+            if (this.Visual != null)
             {
-                this.Graphics.LoadContent(interop);
+                this.Visual.LoadContent(interop);
             }
 
             base.LoadContent(interop);
@@ -68,9 +68,9 @@ namespace MetaMind.Engine.Guis
 
         public override void UnloadContent(IGameInteropService interop)
         {
-            if (this.Control != null)
+            if (this.Logic != null)
             {
-                this.Control.UnloadContent(interop);
+                this.Logic.UnloadContent(interop);
             }
 
             base.UnloadContent(interop);
@@ -82,27 +82,27 @@ namespace MetaMind.Engine.Guis
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            if (this.Control != null)
+            if (this.Logic != null)
             {
-                this.Control.UpdateInput(input, time);
+                this.Logic.UpdateInput(input, time);
             }
 
-            if (this.Graphics != null)
+            if (this.Visual != null)
             {
-                this.Graphics.UpdateInput(input, time);
+                this.Visual.UpdateInput(input, time);
             }
         }
 
         public override void Update(GameTime time)
         {
-            if (this.Control != null)
+            if (this.Logic != null)
             {
-                this.Control.Update(time);
+                this.Logic.Update(time);
             }
 
-            if (this.Graphics != null)
+            if (this.Visual != null)
             {
-                this.Graphics.Update(time);
+                this.Visual.Update(time);
             }
         }
 

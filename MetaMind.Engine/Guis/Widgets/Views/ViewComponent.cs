@@ -18,7 +18,7 @@
 
         #region IViewComponent
 
-        public dynamic ViewControl
+        public dynamic ViewLogic
         {
             get
             {

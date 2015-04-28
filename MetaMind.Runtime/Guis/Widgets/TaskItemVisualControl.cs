@@ -19,7 +19,7 @@ namespace MetaMind.Runtime.Guis.Widgets
         public TaskItemVisualControl(IViewItem item)
             : base(item)
         {
-            var itemControl = this.ItemControl as TaskItemControl;
+            var itemControl = this.ItemControl as TaskItemLogicControl;
             this.IdCenterPosition = () => ExtPoint.ToVector2(itemControl.IdFrame.Center);
         }
 

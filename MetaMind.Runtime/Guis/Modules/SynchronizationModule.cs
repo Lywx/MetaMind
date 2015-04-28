@@ -30,8 +30,8 @@
             this.Consciousness   = consciousness;
             this.Synchronization = synchronization;
 
-            this.Control  = new SynchronizationModuleControl(this, this.Consciousness, this.Synchronization);
-            this.Graphics = new SynchronizationModuleGraphics(this, this.Consciousness, this.Synchronization);
+            this.Logic  = new SynchronizationModuleLogicControl(this, this.Consciousness, this.Synchronization);
+            this.Visual = new SynchronizationModuleVisualControl(this, this.Consciousness, this.Synchronization);
         }
 
         #endregion Constructors
