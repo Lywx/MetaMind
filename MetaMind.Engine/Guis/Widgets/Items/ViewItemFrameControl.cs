@@ -28,7 +28,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         {
             this.RootFrame.UpdateInput(input, time);
 
-            this.Item[ItemState.Item_Is_Mouse_Over]  = this.RootFrame[FrameState.Mouse_Over];
+            this.Item[ItemState.Item_Is_Mouse_Over]  = this.RootFrame[FrameState.Mouse_Is_Over];
             this.Item[ItemState.Item_Is_Dragging] = this.RootFrame[FrameState.Frame_Is_Dragging];
         }
 

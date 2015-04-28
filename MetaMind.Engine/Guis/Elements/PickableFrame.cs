@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Guis.Elements
 
     public class PickableFrame : FrameEntity, IPickableFrame
     {
-        private MouseAutomata mouse = new MouseAutomata();
+        private readonly MouseAutomata mouse = new MouseAutomata();
 
         private Rectangle rectangle = new Rectangle();
 
@@ -30,19 +30,19 @@ namespace MetaMind.Engine.Guis.Elements
 
             this.IsActive = true;
 
-            // Only for debugging purpose
-            this[FrameState.Mouse_Over]                   = () => this.mouse.IsMouseOver;
-            this[FrameState.Mouse_Left_Pressed]           = () => this.mouse.IsLButtonPressed && this.mouse.IsMouseOver;
-            this[FrameState.Mouse_Left_Pressed_Outside]   = () => this.mouse.IsLButtonPressed && !this.mouse.IsMouseOver;
-            this[FrameState.Mouse_Left_Released]          = () => this.mouse.IsLButtonReleased;
-            this[FrameState.Mouse_Left_Double_Clicked]    = () => this.mouse.IsLButtonDoubleClicked && this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Is_Over]                   = () => this.mouse.IsMouseOver;
 
-            this[FrameState.Mouse_Right_Pressed]          = () => this.mouse.IsRButtonPressed && this.mouse.IsMouseOver;
-            this[FrameState.Mouse_Right_Pressed_Outside]  = () => this.mouse.IsRButtonPressed && !this.mouse.IsMouseOver;
-            this[FrameState.Mouse_Right_Released]         = () => this.mouse.IsRButtonReleased;
-            this[FrameState.Mouse_Right_Double_Clicked]   = () => this.mouse.IsRButtonDoubleClicked && this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Is_Left_Pressed]           = () => this.mouse.IsLButtonPressed && this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Is_Left_Pressed_Outside]   = () => this.mouse.IsLButtonPressed && !this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Is_Left_Released]          = () => this.mouse.IsLButtonReleased;
+            this[FrameState.Mouse_Is_Left_Double_Clicked]    = () => this.mouse.IsLButtonDoubleClicked && this.mouse.IsMouseOver;
 
-            this[FrameState.Frame_Is_Active]     = () => this.IsActive;
+            this[FrameState.Mouse_Is_Right_Pressed]          = () => this.mouse.IsRButtonPressed && this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Is_Right_Pressed_Outside]  = () => this.mouse.IsRButtonPressed && !this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Is_Right_Released]         = () => this.mouse.IsRButtonReleased;
+            this[FrameState.Mouse_Is_Right_Double_Clicked]   = () => this.mouse.IsRButtonDoubleClicked && this.mouse.IsMouseOver;
+
+            this[FrameState.Frame_Is_Active] = () => this.IsActive;
         }
 
         ~PickableFrame()
@@ -303,9 +303,9 @@ namespace MetaMind.Engine.Guis.Elements
             {
                 mouse.RRelease();
 
-                if (this.MouseRightPressed != null)
+                if (this.MouseRightReleased != null)
                 {
-                    this.MouseRightPressed(this, new FrameEventArgs(FrameEventType.Mouse_Right_Released));
+                    this.MouseRightReleased(this, new FrameEventArgs(FrameEventType.Mouse_Right_Released));
                 }
 
                 return;

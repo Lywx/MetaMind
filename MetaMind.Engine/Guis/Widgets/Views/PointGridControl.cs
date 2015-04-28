@@ -14,13 +14,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         public PointGridControl(IView view, PointGridSettings viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
             : base(view, viewSettings, itemSettings, itemFactory)
         {
-            this.Region    = new PointViewRegion(view, viewSettings, itemSettings, this.RegionPositioning);
+            this.Region    = new ViewRegion(this.RegionPositioning);
             this.ScrollBar = new PointViewScrollBar(view, viewSettings, itemSettings, viewSettings.ScrollBarSettings);
         }
 
         #region Public Properties
 
-        public PointViewRegion Region { get; protected set; }
+        public ViewRegion Region { get; protected set; }
 
         public PointViewScrollBar ScrollBar { get; protected set; }
 

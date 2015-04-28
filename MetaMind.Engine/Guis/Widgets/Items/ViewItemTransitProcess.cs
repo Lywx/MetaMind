@@ -109,7 +109,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         private void TransitWhenMouseInsideRegion(object sender, FrameEventArgs e)
         {
-            if (this.desRegion[RegionState.Region_Mouse_Over]())
+            if (this.desRegion[RegionState.Mouse_Is_Over]())
             {
                 // This is a event driven method which does not obey the 
                 // normal update process or it will cause sudden graphical 

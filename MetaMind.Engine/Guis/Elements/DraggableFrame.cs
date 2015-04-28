@@ -13,6 +13,8 @@ namespace MetaMind.Engine.Guis.Elements
 
     using Microsoft.Xna.Framework;
 
+    using Stateless;
+
     public class DraggableFrame : PickableFrame, IDraggableFrame
     {
         private readonly int mouseHoldLen = 6;
@@ -34,17 +36,89 @@ namespace MetaMind.Engine.Guis.Elements
 
         protected DraggableFrame()
         {
-            this.MouseLeftPressed   += this.RecordPressPosition;
-            this.MouseLeftReleased  += this.ResetRecordPosition;
+            // State machine
+            this.StateMachine = new StateMachine<State, Trigger>(State.Released);
 
-            this.MouseRightPressed  += this.RecordPressPosition;
-            this.MouseRightReleased += this.ResetRecordPosition;
+            // Possible cross interference 
+            this.StateMachine.Configure(State.Released).PermitReentry(Trigger.Released);
+            this.StateMachine.Configure(State.Released).Permit(Trigger.Pressed, State.Pressing);
+            this.StateMachine.Configure(State.Released).Ignore(Trigger.DraggedWithinRange);
+            this.StateMachine.Configure(State.Released).Ignore(Trigger.DraggedOutOfRange);
+
+            // Possible cross interference
+            this.StateMachine.Configure(State.Pressing).PermitReentry(Trigger.Pressed);
+            this.StateMachine.Configure(State.Pressing).Permit(Trigger.Released, State.Released);
+            this.StateMachine.Configure(State.Pressing).Permit(Trigger.DraggedWithinRange, State.Holding);
+            this.StateMachine.Configure(State.Pressing).Permit(Trigger.DraggedOutOfRange, State.Dragging);
+
+            this.StateMachine.Configure(State.Holding).PermitReentry(Trigger.DraggedWithinRange);
+            this.StateMachine.Configure(State.Holding).Permit(Trigger.DraggedOutOfRange, State.Dragging);
+
+            // Possible cross interference
+            this.StateMachine.Configure(State.Holding).Permit(Trigger.Pressed, State.Pressing);
+            this.StateMachine.Configure(State.Holding).Permit(Trigger.Released, State.Released);
+
+            // Possible cross interference
+            this.StateMachine.Configure(State.Dragging).Permit(Trigger.Pressed, State.Released);
+            this.StateMachine.Configure(State.Dragging).Permit(Trigger.Released, State.Released);
+            this.StateMachine.Configure(State.Dragging).Ignore(Trigger.DraggedOutOfRange);
+            this.StateMachine.Configure(State.Dragging).Ignore(Trigger.DraggedWithinRange);
+
+            this.StateMachine.Configure(State.Dragging).OnEntry(() =>
+                {
+                    if (this.MouseDragged != null)
+                    {
+                        this.MouseDragged(this, new FrameEventArgs(FrameEventType.Frame_Dragged));
+                    }
+                });
+
+            this.StateMachine.Configure(State.Dragging).OnExit(() =>
+                {
+                    if (this.MouseDropped != null)
+                    {
+                        this.MouseDropped(this, new FrameEventArgs(FrameEventType.Frame_Dropped));
+                    }
+                });
+
+            // Events
+            this.MouseLeftPressed += this.FrameMousePressed;
+            this.MouseLeftReleased += this.FrameMouseReleased;
+
+            this.MouseRightPressed += this.FrameMousePressed;
+            this.MouseRightReleased += this.FrameMouseReleased;
+
+            // States
+            this[FrameState.Frame_Is_Holding] = () => this.StateMachine.IsInState(State.Holding);
+            this[FrameState.Frame_Is_Dragging] = () => this.StateMachine.IsInState(State.Dragging);
         }
 
         ~DraggableFrame()
         {
             this.Dispose();
         }
+
+        protected enum State
+        {
+            Pressing,
+
+            Holding,
+
+            Dragging,
+
+            Released,
+        }
+
+        protected enum Trigger
+        {
+            Pressed,
+
+            DraggedWithinRange,
+            DraggedOutOfRange,
+
+            Released,
+        }
+
+        protected StateMachine<State, Trigger> StateMachine { get; set; }
 
         #region IDiposable
 
@@ -55,10 +129,11 @@ namespace MetaMind.Engine.Guis.Elements
             this.MouseDropped = null;
 
             // Clean handlers
-            this.MouseLeftPressed   -= this.RecordPressPosition;
-            this.MouseLeftReleased  -= this.ResetRecordPosition;
-            this.MouseRightPressed  -= this.RecordPressPosition;
-            this.MouseRightReleased -= this.ResetRecordPosition;
+            this.MouseLeftPressed   -= this.FrameMousePressed;
+            this.MouseRightPressed  -= this.FrameMousePressed;
+            
+            this.MouseLeftReleased  -= this.FrameMouseReleased;
+            this.MouseRightReleased -= this.FrameMouseReleased;
 
             base.Dispose();
         }
@@ -71,7 +146,7 @@ namespace MetaMind.Engine.Guis.Elements
 
         public event EventHandler<FrameEventArgs> MouseDropped;
 
-        private void RecordPressPosition(object sender, FrameEventArgs e)
+        private void FrameMousePressed(object sender, FrameEventArgs e)
         {
             var mouse = InputState.Mouse.CurrentState;
 
@@ -82,43 +157,33 @@ namespace MetaMind.Engine.Guis.Elements
             // mouse y-axis value is fixed at y-axis center of the rectangle
             this.mouseRelativePosition = new Point(mouse.X - this.Rectangle.X, mouse.Y - this.Rectangle.Y);
 
-            // ready to decide
-            this[FrameState.Frame_Is_Holding] = () => true;
-
-            // cancel with another button
-            if (this[FrameState.Frame_Is_Dragging]())
-            {
-                this[FrameState.Frame_Is_Holding] = () => false;
-                this[FrameState.Frame_Is_Dragging] = () => false;
-            }
+            this.StateMachine.Fire(Trigger.Pressed);
         }
 
-        private void ResetRecordPosition(object sender, EventArgs e)
+        private void FrameMouseReleased(object sender, EventArgs e)
         {
-            if (this[FrameState.Frame_Is_Dragging]() && this.MouseDropped != null)
-            {
-                this.MouseDropped(this, new FrameEventArgs(FrameEventType.Frame_Dropped));
-            }
-
-            // Stop deciding
-            this[FrameState.Frame_Is_Holding] = () => false;
-            this[FrameState.Frame_Is_Dragging] = () => false;
+            this.StateMachine.Fire(Trigger.Released);
         }
 
         #endregion Events
 
         #region Update
 
+        public override void Update(GameTime time)
+        {
+            var isOutOfHoldLen = mouseLocation.DistanceFrom(this.mousePressedPosition).Length() > mouseHoldLen;
+
+            this.StateMachine.Fire(isOutOfHoldLen ? Trigger.DraggedOutOfRange : Trigger.DraggedWithinRange);
+        }
+
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            base.UpdateInput(input, time);
-
             var mouse = input.State.Mouse.CurrentState;
             this.mouseLocation = new Point(mouse.X, mouse.Y);
 
-            if (this[FrameState.Frame_Is_Dragging]())
+            if (this.StateMachine.IsInState(State.Dragging))
             {
-                // keep up rectangle position with the mouse position
+                // Keep rectangle relative position to the mouse position from changing 
                 this.Rectangle = new Rectangle(
                     this.mouseLocation.X - this.mouseRelativePosition.X, 
                     this.mouseLocation.Y - this.mouseRelativePosition.Y, 
@@ -126,27 +191,6 @@ namespace MetaMind.Engine.Guis.Elements
                     this.Rectangle.Height);
             }
         }
-
-        public override void Update(GameTime time)
-        {
-            var isWithinHoldLen = mouseLocation.DistanceFrom(this.mousePressedPosition).Length() > mouseHoldLen;
-
-            // decide whether is dragging
-            if (this[FrameState.Frame_Is_Holding]() && isWithinHoldLen)
-            {
-                // stop deciding
-                this[FrameState.Frame_Is_Holding] = () => false;
-
-                // successfully drag
-                this[FrameState.Frame_Is_Dragging] = () => true;
-
-                if (this.MouseDragged != null)
-                {
-                    this.MouseDragged(this, new FrameEventArgs(FrameEventType.Frame_Dragged));
-                }
-            }
-        }
-
         #endregion Update
     }
 }

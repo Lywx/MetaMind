@@ -271,7 +271,6 @@
     <Compile Include="Guis\Particles\ShapelessParticle.cs" />
     <Compile Include="Settings\Loaders\IParameter.cs" />
     <Compile Include="Settings\Loaders\IParameterLoader.cs" />
-    <Compile Include="Testers\StateGraphicTester.cs" />
     <Compile Include="Guis\Widgets\Items\IViewItemFactory.cs" />
     <Compile Include="Guis\Widgets\Items\ViewItemFactory1D.cs" />
     <Compile Include="Guis\Widgets\Items\ViewItemFactory2D.cs" />
@@ -301,7 +300,7 @@
     <Compile Include="Guis\Widgets\Views\PointViewControl1D.cs" />
     <Compile Include="Guis\Widgets\Views\PointViewControl2D.cs" />
     <Compile Include="Guis\Widgets\Views\ViewEntity.cs" />
-    <Compile Include="Guis\Widgets\Views\PointViewRegion.cs" />
+    <Compile Include="Guis\Widgets\Views\ViewRegion.cs" />
     <Compile Include="Guis\Widgets\Views\PointViewScrollControl1D.cs" />
     <Compile Include="Guis\Widgets\Views\PointViewScrollControl2D.cs" />
     <Compile Include="Guis\Widgets\Views\PointViewSelectionControl1D.cs" />
@@ -332,6 +331,7 @@
     <Compile Include="Components\Graphics\GraphicsSettings.cs" />
     <Compile Include="Settings\Loaders\ConfigurationFileLoader.cs" />
     <Compile Include="Settings\Systems\Monitor.cs" />
+    <Compile Include="Testers\StateVisualEntity.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FileSearcher">
@@ -359,6 +359,10 @@
     <ProjectReference Include="..\MetaMind.EngineBuilder\MetaMind.EngineBuilder\MetaMind.EngineBuilder.csproj">
       <Project>{492c04cf-f181-48af-b919-fcd639ed711c}</Project>
       <Name>MetaMind.EngineBuilder</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ThirdParties\Stateless\Stateless\Stateless.csproj">
+      <Project>{A15EEC02-60EC-4705-A58B-A6ECD55A9628}</Project>
+      <Name>Stateless</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

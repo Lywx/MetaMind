@@ -2,14 +2,14 @@
 {
     using MetaMind.Engine.Parsers.Grammars;
 
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
 
     using Sprache;
 
-    [TestClass]
+    [TestFixture]
     public class ConfigurationParserTest
     {
-        [TestMethod]
+        [Test]
         public void ConfigurationCompact()
         {
             var input = "a=b";
@@ -20,7 +20,7 @@
             Assert.AreEqual("b", parsed.Value);
         }
 
-        [TestMethod]
+        [Test]
         public void ConfigurationConcise()
         {
             var input = "a = b";
@@ -31,7 +31,7 @@
             Assert.AreEqual("b", parsed.Value);
         }
 
-        [TestMethod]
+        [Test]
         public void ConfigurationLong()
         {
             var input = "aaa = bbb";
@@ -42,7 +42,7 @@
             Assert.AreEqual("bbb", parsed.Value);
         }
 
-        [TestMethod]
+        [Test]
         public void ConfigurationLhsTwo()
         {
             var input = "a b = b";
@@ -59,7 +59,7 @@
             }
         }
 
-        [TestMethod]
+        [Test]
         public void ConfigurationRhsTwo()
         {
             var input = "a = b c";
@@ -76,7 +76,7 @@
             }
         }
 
-        [TestMethod]
+        [Test]
         public void ConfigurationComment()
         {
             var input = "\" a = b c";
@@ -87,7 +87,7 @@
             Assert.AreEqual(null, parsed.Value);
         }
 
-        [TestMethod]
+        [Test]
         public void ConfigurationNonComment()
         {
             var input = "a = b c";

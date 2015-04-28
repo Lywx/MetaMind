@@ -1,5 +1,8 @@
 ﻿namespace MetaMind.Engine.Guis.Elements.Inputs
 {
+    /// <summary>
+    /// Implemented as a pushdown automata
+    /// </summary>
     internal class MouseAutomata
     {
         private ButtonHistory lbutton = new ButtonHistory();

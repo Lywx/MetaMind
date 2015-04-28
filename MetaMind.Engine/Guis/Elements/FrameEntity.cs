@@ -39,6 +39,9 @@ namespace MetaMind.Engine.Guis.Elements
 
         #region State Data
 
+        /// <remarks>
+        /// For debugging and easy usage
+        /// </remarks>
         private readonly Func<bool>[] states = new Func<bool>[(int)FrameState.StateNum];
 
         public bool[] States

@@ -4,7 +4,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     {
         bool Locked { get; }
 
-        PointViewRegion Region { get; }
+        ViewRegion Region { get; }
 
         PointViewScrollBar ScrollBar { get; }
 

@@ -2,13 +2,13 @@ namespace MetaMind.EngineTest.Parsers
 {
     using MetaMind.Engine.Parsers.Grammars;
 
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
 
     using Sprache;
 
     public class BasicParserTest
     {
-        [TestMethod]
+        [Test]
         public void ABracketedText()
         {
             var input = "[Hello World]";
@@ -18,7 +18,7 @@ namespace MetaMind.EngineTest.Parsers
             Assert.AreEqual("Hello World", parsed);
         }
 
-        [TestMethod]
+        [Test]
         public void AWord()
         {
             // a word is a string of non-whitespace characters
@@ -29,7 +29,7 @@ namespace MetaMind.EngineTest.Parsers
             Assert.AreEqual("Hello", parsed);
         }
 
-        [TestMethod]
+        [Test]
         public void AWordInsideABracket()
         {
             var input = "[Hello]";
@@ -40,7 +40,7 @@ namespace MetaMind.EngineTest.Parsers
             Assert.AreEqual("Hello", parsed);
         }
 
-        [TestMethod]
+        [Test]
         public void TwoWordInsideABracket()
         {
             var input = "[Hello World]";

@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Runtime.Guis.Modules
+﻿namespace MetaMind.EngineTest.Guis
 {
     using MetaMind.Engine;
     using MetaMind.Engine.Guis;
@@ -10,23 +10,27 @@
 
     using Primtives2D;
 
-    public class ExperienceModule : Module<ExperienceSettings>
+    public class TestModule : Module<object>
     {
-        private Region pickableFrame;
+        private Region region;
 
-        public ExperienceModule(ExperienceSettings settings)
+        public TestModule(object settings)
             : base(settings)
         {
             this.Entities = new GameControllableEntityCollection<GameControllableEntity>();
-            this.pickableFrame = new Region(new Rectangle(50, 50, 50, 50));
-            this.Entities.Add(this.pickableFrame);
+            
+            this.region = new Region(new Rectangle(50, 50, 50, 50));
+            
+            this.Entities.Add(this.region);
         }
 
         private GameControllableEntityCollection<GameControllableEntity> Entities { get; set; }
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            Primitives2D.DrawRectangle(graphics.SpriteBatch, this.pickableFrame.Rectangle, Color.Red);
+            StateVisualTester.Draw(graphics, this.region.States, typeof(RegionState), new Point(500, 50), 10, 50);
+
+            Primitives2D.FillRectangle(graphics.SpriteBatch, this.region.Rectangle, Color.White);
         }
 
         public override void Update(GameTime time)

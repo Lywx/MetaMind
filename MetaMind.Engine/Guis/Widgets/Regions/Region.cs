@@ -5,16 +5,47 @@
 
     using Microsoft.Xna.Framework;
 
+    using Stateless;
+
     public class Region : RegionEntity, IRegion
     {
+        protected StateMachine<State, Trigger> StateMachine { get; private set; }
+
         public Region(Rectangle rectangle)
         {
+            // State machine
+            this.StateMachine = new StateMachine<State, Trigger>(State.LostFocus);
+
+            this.StateMachine.Configure(State.LostFocus).PermitReentry(Trigger.PressedOutside);
+            this.StateMachine.Configure(State.LostFocus).Permit(Trigger.PressedInside, State.HasFocus);
+
+            this.StateMachine.Configure(State.HasFocus).PermitReentry(Trigger.PressedInside);
+            this.StateMachine.Configure(State.HasFocus).Permit(Trigger.PressedOutside, State.LostFocus);
+
+            // Frame events
             this.Frame = new PickableFrame(rectangle);
+
+            this.Frame.MouseLeftPressed        += this.FrameMouseLeftPressed;
+            this.Frame.MouseLeftPressedOutside += this.FrameMouseLeftPressedOutside;
+
+            // Region states
+            this[RegionState.Mouse_Is_Over] = this.Frame[FrameState.Mouse_Is_Over];
+
+            this[RegionState.Region_Has_Focus] = () => this.StateMachine.IsInState(State.HasFocus);
         }
 
-        public Region(int x, int y, int width, int height) :
-            this(new Rectangle(x, y, width, height))
+        protected enum State
         {
+            HasFocus,
+
+            LostFocus,
+        }
+
+        protected enum Trigger
+        {
+            PressedInside,
+
+            PressedOutside,
         }
 
         public IPickableFrame Frame { get; set; }
@@ -59,28 +90,14 @@
         {
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime time)
+        private void FrameMouseLeftPressed(object sender, FrameEventArgs e)
         {
-            if (this.Frame[FrameState.Mouse_Over]())
-            {
-                this[RegionState.Region_Mouse_Over] = () => true;
-            }
-            else
-            {
-                this[RegionState.Region_Mouse_Over] = () => false;
-            }
+            this.StateMachine.Fire(Trigger.PressedInside);
+        }
 
-            if (this.Frame[FrameState.Mouse_Left_Pressed]() ||
-                this.Frame[FrameState.Mouse_Left_Double_Clicked]() ||
-                this.Frame[FrameState.Mouse_Right_Pressed]() ||
-                this.Frame[FrameState.Mouse_Right_Double_Clicked]())
-            {
-                this[RegionState.Region_Has_Focus] = () => true;
-            }
-            else
-            {
-                this[RegionState.Region_Has_Focus] = () => false;
-            }
+        private void FrameMouseLeftPressedOutside(object sender, FrameEventArgs e)
+        {
+            this.StateMachine.Fire(Trigger.PressedOutside);
         }
     }
 }

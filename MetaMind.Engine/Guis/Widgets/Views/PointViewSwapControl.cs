@@ -72,7 +72,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
             Debug.Assert(assertion, "Target view does not have a Region property named 'Region'.");
 
-            if (targetView.Control.Region[RegionState.Region_Mouse_Over]()  &&
+            if (targetView.Control.Region[RegionState.Mouse_Is_Over]()  &&
                !draggingItem[ItemState.Item_Is_Transiting]() )
             {
                 draggingItem.ItemControl.ExchangeIt(draggingItem, targetView);

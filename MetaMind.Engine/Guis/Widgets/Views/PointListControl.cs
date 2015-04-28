@@ -13,12 +13,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         public PointListControl(IView view, PointViewSettings1D viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
             : base(view, viewSettings, itemSettings, itemFactory)
         {
-            this.Region = new PointViewRegion(view, viewSettings, itemSettings, this.RegionPositioning);
+            this.Region = new ViewRegion(view, viewSettings, itemSettings, this.RegionPositioning);
         }
 
         #region Public Properties
 
-        public PointViewRegion Region { get; private set; }
+        public ViewRegion Region { get; private set; }
 
         #endregion Public Properties
 
