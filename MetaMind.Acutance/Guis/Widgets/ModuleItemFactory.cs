@@ -27,9 +27,9 @@ namespace MetaMind.Acutance.Guis.Widgets
             return module;
         }
 
-        public override IItemGraphics CreateGraphics(IViewItem item)
+        public override IItemVisualControl CreateGraphics(IViewItem item)
         {
-            return new ModuleItemGraphics(item);
+            return new ModuleItemVisualControl(item);
         }
 
         public void RemoveData(IViewItem item)

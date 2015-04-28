@@ -24,7 +24,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         public dynamic ItemControl
         {
-            get { return this.Item.ItemControl; }
+            get { return this.Item.ItemLogic; }
         }
 
         public dynamic ItemData
@@ -32,9 +32,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             get { return this.Item.ItemData; }
         }
 
-        public IItemGraphics ItemGraphics
+        public IItemVisualControl ItemVisualControl
         {
-            get { return this.Item.ItemGraphics; }
+            get { return this.Item.ItemVisual; }
         }
 
         public dynamic ItemSettings
@@ -53,7 +53,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         public dynamic ViewControl
         {
-            get { return this.View.Control; }
+            get { return this.View.Logic; }
         }
 
         public dynamic ViewSettings

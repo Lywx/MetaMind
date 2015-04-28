@@ -38,7 +38,7 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             View.Items.Remove(Item);
 
-            View.Control.ItemFactory.RemoveData(Item);
+            View.Logic.ItemFactory.RemoveData(Item);
 
             Item.Dispose();
         }
@@ -101,7 +101,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
                 // special
                 //----------------------------------------------------------------- 
-                if (View.Control.AcceptInput)
+                if (View.Logic.AcceptInput)
                 {
                     if (!this.Locked)
                     {

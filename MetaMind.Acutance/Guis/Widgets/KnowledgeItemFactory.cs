@@ -10,9 +10,9 @@ namespace MetaMind.Acutance.Guis.Widgets
             return new KnowledgeItemControl(item);
         }
 
-        public override IItemGraphics CreateGraphics(IViewItem item)
+        public override IItemVisualControl CreateGraphics(IViewItem item)
         {
-            return new KnowledgeItemGraphics(item);
+            return new KnowledgeItemVisualControl(item);
         }
 
         public void RemoveData(IViewItem item)

@@ -13,9 +13,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     public interface IView : IViewEntity
     {
-        dynamic Control { get; set; }
+        dynamic Logic { get; set; }
 
-        IViewGraphics Graphics { get; set; }
+        IViewVisualControl Visual { get; set; }
 
         List<IViewItem> Items { get; set; }
     }

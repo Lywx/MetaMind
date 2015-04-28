@@ -11,13 +11,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             this.Items = new List<IViewItem>();
 
-            this.Control  = factory.CreateControl(this, viewSettings, itemSettings);
-            this.Graphics = factory.CreateGraphics(this, viewSettings, itemSettings);
+            this.Logic  = factory.CreateControl(this, viewSettings, itemSettings);
+            this.Visual = factory.CreateGraphics(this, viewSettings, itemSettings);
         }
 
-        public dynamic Control { get; set; }
+        public dynamic Logic { get; set; }
 
-        public IViewGraphics Graphics { get; set; }
+        public IViewVisualControl Visual { get; set; }
 
         public List<IViewItem> Items { get; set; }
     }

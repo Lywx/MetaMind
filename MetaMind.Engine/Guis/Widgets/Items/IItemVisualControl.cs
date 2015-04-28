@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IItemGraphics.cs" company="UESTC">
+// <copyright file="IItemVisualControl.cs" company="UESTC">
 //   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -11,7 +11,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
     using IDrawable = MetaMind.Engine.IDrawable;
 
-    public interface IItemGraphics : IDrawable, IInputable, IUpdateable
+    public interface IItemVisualControl : IDrawable, IInputable, IUpdateable
     {
     }
 }

@@ -23,14 +23,14 @@ namespace MetaMind.Runtime.Guis.Widgets
                     //if (!this.Item[ItemState.Item_Is_Dragging]() && 
                     //    !this.Item[ItemState.Item_Is_Swaping]())
                     //{
-                    //    IContinousViewScrollControl scroll = this.ViewControl.Scroll;
+                    //    IContinousViewScrollControl scroll = this.ViewLogic.Scroll;
 
-                    //    return scroll.RootCenterPoint(this.ItemControl.Id).ToVector2() + new Vector2(0, this.ItemSettings.IdFrameSize.Y);
+                    //    return scroll.RootCenterPoint(this.ItemLogic.Id).ToVector2() + new Vector2(0, this.ItemSettings.IdFrameSize.Y);
                     //}
 
                     //if (this.Item[ItemState.Item_Is_Swaping]())
                     //{
-                    //    return this.ViewControl.Swap.RootCenterPoint().ToVector2() + new Vector2(0, this.ItemSettings.IdFrameSize.Y);
+                    //    return this.ViewLogic.Swap.RootCenterPoint().ToVector2() + new Vector2(0, this.ItemSettings.IdFrameSize.Y);
                     //}
 
                     return this.RootFrame.Location.ToVector2();

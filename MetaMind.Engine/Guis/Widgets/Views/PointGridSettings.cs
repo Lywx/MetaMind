@@ -1,13 +1,12 @@
 namespace MetaMind.Engine.Guis.Widgets.Views
 {
-    using MetaMind.Engine.Settings;
     using MetaMind.Engine.Settings.Colors;
 
     using Microsoft.Xna.Framework;
 
     public class PointGridSettings : PointViewSettings2D
     {
-        public readonly ViewScrollBarSettings ScrollBarSettings = new ViewScrollBarSettings();
+        public readonly ViewScrollbarSettings ScrollbarSettings = new ViewScrollbarSettings();
 
         public Point BorderMargin = new Point(4, 4);
 

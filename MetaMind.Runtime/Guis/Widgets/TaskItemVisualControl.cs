@@ -10,13 +10,13 @@ namespace MetaMind.Runtime.Guis.Widgets
 
     using Primtives2D;
 
-    public class TaskItemGraphics : ViewItemGraphics
+    public class TaskItemVisualControl : ViewItemVisualControl
     {
         private const string HelpInformation = "N D:one E:xp L:oad R:ationale";
 
         #region Constructors
 
-        public TaskItemGraphics(IViewItem item)
+        public TaskItemVisualControl(IViewItem item)
             : base(item)
         {
             var itemControl = this.ItemControl as TaskItemControl;

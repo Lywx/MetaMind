@@ -1,6 +1,6 @@
 ﻿namespace MetaMind.Engine.Guis.Widgets.Views
 {
-    public interface IPointViewScrollControlHorizontal : IPointViewScrollControl
+    public interface IPointViewHorizontalScrollControl : IPointViewScrollControl
     {
         int XOffset { get; }
 

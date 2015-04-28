@@ -31,21 +31,21 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         protected View(ViewSettings viewSettings, ItemSettings itemSettings, IViewFactory factory)
             : base(viewSettings, itemSettings)
         {
-            this.Control  = factory.CreateControl(this, viewSettings, itemSettings);
-            this.Graphics = factory.CreateGraphics(this, viewSettings, itemSettings);
+            this.Logic  = factory.CreateControl(this, viewSettings, itemSettings);
+            this.Visual = factory.CreateGraphics(this, viewSettings, itemSettings);
         }
 
-        public View(ViewSettings viewSettings, ItemSettings itemSettings, IViewControl control, IViewGraphics graphics, List<IViewItem> items)
+        public View(ViewSettings viewSettings, ItemSettings itemSettings, IViewControl logic, IViewVisualControl visual, List<IViewItem> items)
             : base(viewSettings, itemSettings)
         {
-            if (control == null)
+            if (logic == null)
             {
-                throw new ArgumentNullException("control");
+                throw new ArgumentNullException("logic");
             }
 
-            if (graphics == null)
+            if (visual == null)
             {
-                throw new ArgumentNullException("graphics");
+                throw new ArgumentNullException("visual");
             }
 
             if (items == null)
@@ -55,15 +55,15 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
             this.Items    = items;
             
-            this.Control  = control;
-            this.Graphics = graphics;
+            this.Logic  = logic;
+            this.Visual = visual;
         }
 
         #region Dependency
 
-        public dynamic Control { get; set; }
+        public dynamic Logic { get; set; }
 
-        public IViewGraphics Graphics { get; set; }
+        public IViewVisualControl Visual { get; set; }
 
         public List<IViewItem> Items { get; set; }
 
@@ -73,18 +73,18 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            this.Graphics.Draw(graphics, time, alpha);
+            this.Visual.Draw(graphics, time, alpha);
         }
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.Control.Update(input, time);
+            this.Logic.Update(input, time);
         }
 
         public override void Update(GameTime time)
         {
-            this.Control .Update(time);
-            this.Graphics.Update(time);
+            this.Logic .Update(time);
+            this.Visual.Update(time);
         }
 
         #endregion

@@ -28,7 +28,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             this.DraggingItem = draggingItem;
 
             this.SwappingItem    = swappingItem;
-            this.SwappingControl = swappingItem.ViewControl.Swap;
+            this.SwappingControl = swappingItem.ViewLogic.Swap;
 
             this.CommonSource = commonSource;
 
@@ -54,7 +54,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             this.DraggingItem = draggingItem;
 
             this.SwappingItem    = swappingItem;
-            this.SwappingControl = swappingItem.ViewControl.Swap;
+            this.SwappingControl = swappingItem.ViewLogic.Swap;
 
             this.CommonSource = commonSource;
 
@@ -125,14 +125,14 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             var originalSwappingItemView = this.SwappingItem.View;
             var orignialDraggedItemView = this.DraggingItem.View;
 
-            orignialDraggedItemView.Control.Selection.Clear();
+            orignialDraggedItemView.Logic.Selection.Clear();
             orignialDraggedItemView[ViewState.View_Has_Focus] = () => false;
 
-            originalSwappingItemView.Control.Selection.Select(0);
+            originalSwappingItemView.Logic.Selection.Select(0);
             originalSwappingItemView[ViewState.View_Has_Focus] = () => true;
 
-            draggedExchangable.ExchangeTo(originalSwappingItemView, this.SwappingItem.ItemControl.Id);
-            swappingExchangable.ExchangeTo(orignialDraggedItemView, this.DraggingItem.ItemControl.Id);
+            draggedExchangable.ExchangeTo(originalSwappingItemView, this.SwappingItem.ItemLogic.Id);
+            swappingExchangable.ExchangeTo(orignialDraggedItemView, this.DraggingItem.ItemLogic.Id);
         }
 
         protected virtual void SwapDataInList()
@@ -153,18 +153,18 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         protected virtual void SwapInView()
         {
             // swap id then sort
-            var swappingId = this.SwappingItem.ItemControl.Id;
+            var swappingId = this.SwappingItem.ItemLogic.Id;
 
-            this.SwappingItem.ItemControl.Id = this.DraggingItem.ItemControl.Id;
-            this.DraggingItem.ItemControl.Id = swappingId;
+            this.SwappingItem.ItemLogic.Id = this.DraggingItem.ItemLogic.Id;
+            this.DraggingItem.ItemLogic.Id = swappingId;
 
-            this.SwappingItem.View.Control.SortItems(PointViewSortMode.Id);
+            this.SwappingItem.View.Logic.SortItems(PointViewSortMode.Id);
         }
 
         protected void SwapTerminate()
         {
             // refine selection to make sure the overall effect is smooth
-            this.DraggingItem.ItemControl.MouseSelectsIt();
+            this.DraggingItem.ItemLogic.MouseSelectsIt();
 
             // stop swapping state
             this.SwappingItem[ItemState.Item_Is_Swaping]();

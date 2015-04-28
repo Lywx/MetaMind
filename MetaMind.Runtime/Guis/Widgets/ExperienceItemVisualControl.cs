@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ExperienceItemGraphics.cs" company="UESTC">
+// <copyright file="ExperienceItemVisualControl.cs" company="UESTC">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -16,11 +16,11 @@ namespace MetaMind.Runtime.Guis.Widgets
 
     using Microsoft.Xna.Framework;
 
-    public class ExperienceItemGraphics : ViewItemGraphics
+    public class ExperienceItemVisualControl : ViewItemVisualControl
     {
         private readonly string HelpInformation = "N:Name";
 
-        public ExperienceItemGraphics(IViewItem item)
+        public ExperienceItemVisualControl(IViewItem item)
             : base(item)
         {
             this.IdCenterPosition = () => new Vector2(this.RootFrame.Rectangle.Center.X, this.RootFrame.Rectangle.Top - 15);

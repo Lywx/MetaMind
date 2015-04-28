@@ -22,9 +22,9 @@ namespace MetaMind.Acutance.Guis.Widgets
             return Tracelist.Create();
         }
 
-        public override IItemGraphics CreateGraphics(IViewItem item)
+        public override IItemVisualControl CreateGraphics(IViewItem item)
         {
-            return new TraceItemGraphics(item);
+            return new TraceItemVisualControl(item);
         }
 
         public void RemoveData(IViewItem item)

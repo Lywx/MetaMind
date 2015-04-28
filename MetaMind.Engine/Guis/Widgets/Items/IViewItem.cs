@@ -15,18 +15,34 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
     public interface IViewItem : IItemEntity, IDisposable
     {
-        dynamic ItemControl { get; set; }
+        #region Item Data
+
+        dynamic ItemLogic { get; set; }
 
         dynamic ItemData { get; set; }
 
-        IItemGraphics ItemGraphics { get; set; }
+        IItemVisualControl ItemVisual { get; set; }
+
+        #endregion
+
+        #region View Data
 
         IView View { get; }
 
-        dynamic ViewControl { get; }
+        dynamic ViewLogic { get; }
 
         dynamic ViewSettings { get; }
 
+        #endregion
+
+        #region Update
+
+        /// <summary>
+        /// Update logic related with IView.
+        /// </summary>
+        /// <param name="time"></param>
         void UpdateView(GameTime time);
+
+        #endregion
     }
 }

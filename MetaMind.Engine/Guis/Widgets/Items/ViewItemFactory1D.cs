@@ -9,9 +9,9 @@
 
         public abstract dynamic CreateData(IViewItem item);
 
-        public IItemGraphics CreateGraphics(IViewItem item)
+        public IItemVisualControl CreateGraphics(IViewItem item)
         {
-            return new ViewItemGraphics(item);
+            return new ViewItemVisualControl(item);
         }
     }
 }

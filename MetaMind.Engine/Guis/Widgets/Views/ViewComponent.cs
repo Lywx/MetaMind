@@ -22,7 +22,7 @@
         {
             get
             {
-                return this.View.Control;
+                return this.View.Logic;
             }
         }
 

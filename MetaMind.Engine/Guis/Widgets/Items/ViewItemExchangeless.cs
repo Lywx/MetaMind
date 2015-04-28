@@ -16,8 +16,8 @@
             this.ViewSettings = viewSettings;
 
             this.ItemData     = itemFactory.CreateData(this);
-            this.ItemControl  = itemFactory.CreateControl(this);
-            this.ItemGraphics = itemFactory.CreateGraphics(this);
+            this.ItemLogic  = itemFactory.CreateControl(this);
+            this.ItemVisual = itemFactory.CreateGraphics(this);
         }
 
         public ViewItemExchangeless(dynamic view, ICloneable viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory, dynamic itemData)
@@ -27,8 +27,8 @@
             this.ViewSettings = viewSettings;
 
             this.ItemData     = itemData;
-            this.ItemControl  = itemFactory.CreateControl(this);
-            this.ItemGraphics = itemFactory.CreateGraphics(this);
+            this.ItemLogic  = itemFactory.CreateControl(this);
+            this.ItemVisual = itemFactory.CreateGraphics(this);
         }
 
         ~ViewItemExchangeless()
@@ -36,17 +36,17 @@
             this.Dispose();
         }
 
-        public dynamic ItemControl { get; set; }
+        public dynamic ItemLogic { get; set; }
 
         public dynamic ItemData { get; set; }
 
-        public IItemGraphics ItemGraphics { get; set; }
+        public IItemVisualControl ItemVisual { get; set; }
 
         public IView View { get; protected set; }
 
-        public dynamic ViewControl
+        public dynamic ViewLogic
         {
-            get { return this.View.Control; }
+            get { return this.View.Logic; }
         }
 
         public dynamic ViewSettings { get; protected set; }
@@ -55,26 +55,26 @@
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            this.ItemGraphics.Draw(graphics, time, alpha);
+            this.ItemVisual.Draw(graphics, time, alpha);
         }
 
         #endregion
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.ItemControl .Update(input, time);
-            this.ItemGraphics.UpdateInput(input, time);
+            this.ItemLogic .Update(input, time);
+            this.ItemVisual.UpdateInput(input, time);
         }
 
         public override void UpdateView(GameTime gameTime)
         {
-            this.ItemControl.UpdateView(gameTime);
+            this.ItemLogic.UpdateView(gameTime);
         }
 
         public override void Update(GameTime time)
         {
-            this.ItemControl .Update(time);
-            this.ItemGraphics.Update(time);
+            this.ItemLogic .Update(time);
+            this.ItemVisual.Update(time);
         }
 
         public override void Dispose()
@@ -84,9 +84,9 @@
                 // don't set item control to null
                 // because the reference is used in the loop
                 // that cannot dispose itself
-                this.ItemControl.Dispose();
+                this.ItemLogic.Dispose();
 
-                this.ItemGraphics = null;
+                this.ItemVisual = null;
             }
             finally
             {

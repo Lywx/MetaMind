@@ -7,9 +7,9 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     using Microsoft.Xna.Framework;
 
-    public class CommandItemGraphics : TraceItemGraphics
+    public class CommandItemVisualControl : TraceItemVisualControl
     {
-        public CommandItemGraphics(IViewItem item)
+        public CommandItemVisualControl(IViewItem item)
             : base(item)
         {
         }

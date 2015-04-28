@@ -6,6 +6,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     {
         dynamic CreateControl(IView view, ICloneable viewSettings, ICloneable itemSettings);
 
-        IViewGraphics CreateGraphics(IView view, ICloneable viewSettings, ICloneable itemSettings);
+        IViewVisualControl CreateGraphics(IView view, ICloneable viewSettings, ICloneable itemSettings);
     }
 }

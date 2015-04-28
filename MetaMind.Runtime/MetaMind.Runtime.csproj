@@ -132,7 +132,7 @@
     <Compile Include="Guis\Modules\SummaryModule.cs" />
     <Compile Include="Guis\Modules\SummarySettings.cs" />
     <Compile Include="Guis\Widgets\ExperienceItemControl.cs" />
-    <Compile Include="Guis\Widgets\ExperienceItemGraphics.cs" />
+    <Compile Include="Guis\Widgets\ExperienceItemVisualControl.cs" />
     <Compile Include="Guis\Widgets\ExperienceItemFrameControl.cs" />
     <Compile Include="Guis\Widgets\ExperienceItemSettings.cs" />
     <Compile Include="Guis\Widgets\ViewItemSyncControl.cs" />
@@ -141,7 +141,7 @@
     <Compile Include="Guis\Modules\SynchronizationSettings.cs" />
     <Compile Include="Guis\Widgets\TimelineScale.cs" />
     <Compile Include="Guis\Widgets\TaskItemControl.cs" />
-    <Compile Include="Guis\Widgets\TaskItemGraphics.cs" />
+    <Compile Include="Guis\Widgets\TaskItemVisualControl.cs" />
     <Compile Include="Runtime.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

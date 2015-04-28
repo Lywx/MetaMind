@@ -1,6 +1,6 @@
 namespace MetaMind.Engine.Guis.Widgets.Views
 {
-    public interface IPointViewControl1D : IViewControl
+    public interface IPointView1DLogicControl : IViewControl
     {
         #region View Data
 
@@ -18,13 +18,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         #region Movement Operations 
 
-        void FastMoveLeft();
+        void FastMovePrevious();
 
-        void FastMoveRight();
+        void FastMoveNext();
 
-        void MoveLeft();
+        void MovePrevious();
 
-        void MoveRight();
+        void MoveNext();
 
         #endregion
     }

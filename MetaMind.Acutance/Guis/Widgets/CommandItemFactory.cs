@@ -9,9 +9,9 @@ namespace MetaMind.Acutance.Guis.Widgets
             return new CommandItemControl(item, Acutance.Session.Commandlist.Commands);
         }
 
-        public override IItemGraphics CreateGraphics(IViewItem item)
+        public override IItemVisualControl CreateGraphics(IViewItem item)
         {
-            return new CommandItemGraphics(item);
+            return new CommandItemVisualControl(item);
         }
 
         public void RemoveData(IViewItem item)

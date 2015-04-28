@@ -4,9 +4,9 @@
 
     using Microsoft.Xna.Framework;
 
-    public class PointViewScrollControl1D : ViewComponent, IPointViewScrollControlHorizontal
+    public class PointViewHorizontalScrollControl : ViewComponent, IPointViewHorizontalScrollControl
     {
-        public PointViewScrollControl1D(IView view, PointViewSettings1D viewSettings, ItemSettings itemSettings)
+        public PointViewHorizontalScrollControl(IView view, PointViewSettings1D viewSettings, ItemSettings itemSettings)
             : base(view, viewSettings, itemSettings)
         {
         }

@@ -4,16 +4,17 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Engine;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Guis.Widgets.Regions;
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
-    public class CommandViewControl : PointGridControl
+    public class ModuleViewLogicControl : PointGridLogicControl
     {
         #region Constructors
 
-        public CommandViewControl(IView view, CommandViewSettings viewSettings, CommandItemSettings itemSettings, CommandItemFactory itemFactory)
+        public ModuleViewLogicControl(IView view, ModuleViewSettings viewSettings, ModuleItemSettings itemSettings, ModuleItemFactory itemFactory)
             : base(view, viewSettings, itemSettings, itemFactory)
         {
         }
@@ -22,10 +23,10 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Operations
 
-        public void AddItem(Command entry)
+        public void AddItem(Module entry)
         {
-            var item = new ViewItemExchangeless(View, ViewSettings, ItemSettings, ItemFactory, entry);
-            View.Items.Add(item);
+            var item = new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory, entry);
+            this.View.Items.Add(item);
         }
 
         public override void SortItems(PointViewSortMode sortMode)
@@ -36,15 +37,16 @@ namespace MetaMind.Acutance.Guis.Widgets
             {
                 case PointViewSortMode.Name:
                     {
-                        ViewSettings.Source.Sort(CommandSortMode.Name);
+                        ViewSettings.Source.Sort(ModuleSortMode.Name);
                     }
 
                     break;
-            }
+            } 
         }
 
+        #endregion Operations
 
-        #endregion
+        #region Update
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
@@ -56,11 +58,26 @@ namespace MetaMind.Acutance.Guis.Widgets
             {
                 // keyboard
                 // ---------------------------------------------------------------------
-                if (ViewSettings.KeyboardEnabled)
+                if (this.ViewSettings.KeyboardEnabled)
                 {
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.CommandClearItem))
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.ModuleDeleteItem))
                     {
-                        var notEmpty = View.Items.Count;
+                        // itme deletion is handled by item control
+                        // auto select last item
+                        if (View.Items.Count > 1)
+                        {
+                            // this will be called before item deletion
+                            if (this.Selection.SelectedId != null && 
+                                this.Selection.SelectedId > View.Items.Count - 2)
+                            {
+                                this.Selection.Select(View.Items.Count - 2);
+                            }
+                        }
+                    }
+
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.ModuleClearItem))
+                    {
+                        var notEmpty = this.View.Items.Count;
                         if (notEmpty > 0)
                         {
                             this.Selection.Select(notEmpty - 1);
@@ -71,18 +88,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                         }
                     }
 
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.CommandDeleteItem))
-                    {
-                        // itme deletion is handled by item control
-                        // auto select last item
-                        if (View.Items.Count > 1)
-                        {
-                            // this will be commanded before item deletion
-                            this.Selection.Select(View.Items.Count - 2);
-                        }
-                    }
-
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.CommandSortItem))
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.ModuleSortItem))
                     {
                         this.SortItems(PointViewSortMode.Name);
                     }
@@ -92,9 +98,23 @@ namespace MetaMind.Acutance.Guis.Widgets
             this.UpdateItemInput(input, time);
         }
 
+        protected override void UpdateViewFocus()
+        {
+            if (this.Region.IsEnabled(RegionState.Region_Has_Focus))
+            {
+                this.View[ViewState.View_Has_Focus] = ()=> ;
+            }
+            else
+            {
+                this.View.Disable(ViewState.View_Has_Focus);
+            }
+        }
+
+        #endregion Update
+
         #region Configurations
 
-        protected override Rectangle RegionPositioning()
+        protected override Rectangle RegionBounds()
         {
             return new Rectangle(
                 viewSettings.PointStart.X,

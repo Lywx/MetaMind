@@ -7,9 +7,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     using Microsoft.Xna.Framework;
 
-    public class ViewGraphics : ViewVisualComponent, IViewGraphics
+    public class ViewVisualControl : ViewVisualComponent, IViewVisualControl
     {
-        public ViewGraphics(IView view, ICloneable viewSettings, ICloneable itemSettings)
+        public ViewVisualControl(IView view, ICloneable viewSettings, ICloneable itemSettings)
             : base(view, viewSettings, itemSettings)
         {
         }

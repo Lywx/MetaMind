@@ -8,12 +8,14 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     using Microsoft.Xna.Framework;
 
-    public class PointListControl : PointViewControl1D, IPointListControl
+    public class PointListControl : PointView1DLogicControl, IPointListControl
     {
         public PointListControl(IView view, PointViewSettings1D viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
             : base(view, viewSettings, itemSettings, itemFactory)
         {
-            this.Region = new ViewRegion(view, viewSettings, itemSettings, this.RegionPositioning);
+            this.Region = new ViewRegion(this.RegionBounds);
+
+            this.View[ViewState.View_Has_Focus] = () => this.Region[RegionState.Region_Has_Focus]() || this.View[ViewState.View_Has_Selection]();
         }
 
         #region Public Properties
@@ -21,17 +23,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         public ViewRegion Region { get; private set; }
 
         #endregion Public Properties
-
-        #region Update Structure
-
-        protected override void UpdateViewFocus()
-        {
-            // TODO: Moved ?
-            this.View[ViewState.View_Has_Focus] = () => this.Region[RegionState.Region_Has_Focus]() || this.View[ViewState.View_Has_Selection]();
-        }
-
-        #endregion
-
+        
         #region Update Input
         
         public override void UpdateInput(IGameInputService input, GameTime time)
@@ -58,21 +50,21 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         #region Configuration
 
-        protected virtual Rectangle RegionPositioning(dynamic viewSettings, dynamic itemSettings)
+        protected virtual Rectangle RegionBounds()
         {
             if (this.ViewSettings.Direction == PointViewDirection.Inverse)
             {
                 return ExtRectangle.RectangleByCenter(
-                        viewSettings.PointStart.X - viewSettings.PointMargin.X * (viewSettings.ColumnNumDisplay / 2),
-                        viewSettings.PointStart.Y,
-                        viewSettings.PointMargin.X * viewSettings.ColumnNumDisplay,
+                        this.ViewSettings.PointStart.X - this.ViewSettings.PointMargin.X * (this.ViewSettings.ColumnNumDisplay / 2),
+                        this.ViewSettings.PointStart.Y,
+                        this.ViewSettings.PointMargin.X * this.ViewSettings.ColumnNumDisplay,
                         0);
             }
 
             return ExtRectangle.RectangleByCenter(
-                    viewSettings.PointStart.X + viewSettings.PointMargin.X * (viewSettings.ColumnNumDisplay / 2),
-                    viewSettings.PointStart.Y,
-                    viewSettings.PointMargin.X * viewSettings.ColumnNumDisplay,
+                    this.ViewSettings.PointStart.X + this.ViewSettings.PointMargin.X * (this.ViewSettings.ColumnNumDisplay / 2),
+                    this.ViewSettings.PointStart.Y,
+                    this.ViewSettings.PointMargin.X * this.ViewSettings.ColumnNumDisplay,
                     0);
         }
 

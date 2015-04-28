@@ -10,11 +10,11 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     using Primtives2D;
 
-    public class TraceItemGraphics : ViewItemGraphics
+    public class TraceItemVisualControl : ViewItemVisualControl
     {
         #region Constructors
 
-        public TraceItemGraphics(IViewItem item)
+        public TraceItemVisualControl(IViewItem item)
             : base(item)
         {
         }

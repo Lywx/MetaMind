@@ -6,11 +6,11 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     using Microsoft.Xna.Framework;
 
-    public class ModuleItemGraphics : TraceItemGraphics
+    public class KnowledgeItemVisualControl : TraceItemVisualControl
     {
         #region Constructors
 
-        public ModuleItemGraphics(IViewItem item)
+        public KnowledgeItemVisualControl(IViewItem item)
             : base(item)
         {
         }
@@ -18,6 +18,10 @@ namespace MetaMind.Acutance.Guis.Widgets
         #endregion Constructors
 
         #region Update and Draw
+
+        public override void Update(GameTime time)
+        {
+        }
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
@@ -28,18 +32,18 @@ namespace MetaMind.Acutance.Guis.Widgets
 
             this.DrawNameFrame(graphics, 255);
 
-            if (ItemData.IsPopulating)
+            if (ItemData.IsTitle)
             {
-                this.FillNameFrameWith(graphics, this.ItemSettings.NameFrameRunningColor, alpha);
+                this.FillNameFrameWith(graphics, this.ItemSettings.NameFrameTitleColor, alpha);
             }
 
+            this.FillNameFrameWith(graphics, this.ItemSettings.NameFrameRunningColor, alpha);
+
             this.DrawName(255);
-            this.DrawExperienceFrame(255);
-            this.DrawExperience(255);
             this.DrawIdFrame(255);
             this.DrawId(TODO, 255);
         }
 
-        #endregion
+        #endregion Draw
     }
 }

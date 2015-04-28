@@ -1,12 +1,22 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ViewScrollbarSettings.cs" company="UESTC">
+//   Copyright (c) 2015 Wuxiang Lin
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace MetaMind.Engine.Guis.Widgets.Views
 {
     using Microsoft.Xna.Framework;
 
-    public class ViewScrollBarSettings
+    public class ViewScrollbarSettings
     {
-        public Color Color                    = Color.White;
-        public byte  BrightnessMax            = 200;
-        public byte  BrightnessTransitionRate = 10;
-        public int   Width                    = 5;
+        public byte BrightnessMax = 200;
+
+        public byte BrightnessDecreasingStep = 10;
+
+        public Color Color = Color.White;
+
+        public int Width = 5;
     }
 }

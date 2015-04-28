@@ -18,11 +18,11 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     using Microsoft.Xna.Framework;
 
-    public class KnowledgeViewControl : PointGridControl
+    public class KnowledgeViewLogicControl : PointGridLogicControl
     {
         #region Constructors
 
-        public KnowledgeViewControl(IView view, KnowledgeViewSettings viewSettings, KnowledgeItemSettings itemSettings, KnowledgeItemFactory itemFactory)
+        public KnowledgeViewLogicControl(IView view, KnowledgeViewSettings viewSettings, KnowledgeItemSettings itemSettings, KnowledgeItemFactory itemFactory)
             : base(view, viewSettings, itemSettings, itemFactory)
         {
             this.AddFileItem();
@@ -196,7 +196,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Configurations
 
-        protected override Rectangle RegionPositioning()
+        protected override Rectangle RegionBounds()
         {
             return new Rectangle(
                 viewSettings.PointStart.X,

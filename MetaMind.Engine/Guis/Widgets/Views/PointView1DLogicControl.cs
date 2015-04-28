@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PointViewControl1D.cs" company="UESTC">
+// <copyright file="PointView1DLogicControl.cs" company="UESTC">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -16,19 +16,21 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     using Microsoft.Xna.Framework;
 
-    public class PointViewControl1D : ViewComponent, IPointViewControl1D
+    public class PointView1DLogicControl : ViewComponent, IPointView1DLogicControl
     {
-        public PointViewControl1D(IView view, PointViewSettings1D viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
+        public PointView1DLogicControl(IView view, PointViewSettings1D viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
             : base(view, viewSettings, itemSettings)
         {
             this.ItemFactory = itemFactory;
 
             this.Swap      = new PointViewSwapControl(this.View, this.ViewSettings, this.ItemSettings);
-            this.Scroll    = new PointViewScrollControl1D(this.View, this.ViewSettings, this.ItemSettings);
+            this.Scroll    = new PointViewHorizontalScrollControl(this.View, this.ViewSettings, this.ItemSettings);
             this.Selection = new PointViewSelectionControl1D(this.View, this.ViewSettings, this.ItemSettings);
+
+            this.View[ViewState.View_Has_Focus] = this.View[ViewState.View_Has_Selection];
         }
 
-        protected PointViewControl1D(IView view, PointViewSettings2D viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
+        protected PointView1DLogicControl(IView view, PointViewSettings2D viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
             : base(view, viewSettings, itemSettings)
         {
             this.ItemFactory = itemFactory;
@@ -54,7 +56,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             View.Items.Add(item);
         }
 
-        public virtual void MoveLeft()
+        public virtual void MovePrevious()
         {
             if (ViewSettings.Direction == PointViewDirection.Inverse)
             {
@@ -67,7 +69,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
         }
 
-        public virtual void MoveRight()
+        public virtual void MoveNext()
         {
             if (ViewSettings.Direction == PointViewDirection.Inverse)
             {
@@ -87,34 +89,34 @@ namespace MetaMind.Engine.Guis.Widgets.Views
                 case PointViewSortMode.Name:
                     {
                         View.Items = View.Items.OrderBy(item => item.ItemData.Name).ToList();
-                        View.Items.ForEach(item => item.ItemControl.Id = View.Items.IndexOf(item));
+                        View.Items.ForEach(item => item.ItemLogic.Id = View.Items.IndexOf(item));
                     }
 
                     break;
 
                 case PointViewSortMode.Id:
                     {
-                        View.Items = View.Items.OrderBy(item => item.ItemControl.Id).ToList();
-                        View.Items.ForEach(item => item.ItemControl.Id = View.Items.IndexOf(item));
+                        View.Items = View.Items.OrderBy(item => item.ItemLogic.Id).ToList();
+                        View.Items.ForEach(item => item.ItemLogic.Id = View.Items.IndexOf(item));
                     }
 
                     break;
             }
         }
 
-        public void FastMoveLeft()
+        public void FastMovePrevious()
         {
             for (var i = 0; i < ViewSettings.ColumnNumDisplay; i++)
             {
-                this.MoveLeft();
+                this.MovePrevious();
             }
         }
 
-        public void FastMoveRight()
+        public void FastMoveNext()
         {
             for (var i = 0; i < ViewSettings.ColumnNumDisplay; i++)
             {
-                this.MoveRight();
+                this.MoveNext();
             }
         }
         #endregion Operations
@@ -145,7 +147,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         protected virtual void UpdateViewFocus()
         {
             // TODO: MOVED?
-            this.View[ViewState.View_Has_Focus] = () => this.View[ViewState.View_Has_Selection]();
         }
 
         protected virtual void UpdateViewLogics()
@@ -208,22 +209,22 @@ namespace MetaMind.Engine.Guis.Widgets.Views
                     // movement
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Left))
                     {
-                        this.MoveLeft();
+                        this.MovePrevious();
                     }
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Right))
                     {
-                        this.MoveRight();
+                        this.MoveNext();
                     }
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastLeft))
                     {
-                        this.FastMoveLeft();
+                        this.FastMovePrevious();
                     }
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastRight))
                     {
-                        this.FastMoveRight();
+                        this.FastMoveNext();
                     }
 
                     // escape

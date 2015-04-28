@@ -67,15 +67,15 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         /// </remarks>
         public void WatchExchangeIn(IViewItem draggingItem, IView targetView)
         {
-            Type control  = targetView.Control.GetType();
+            Type control  = targetView.Logic.GetType();
             var assertion = control.HasProperty("Region");
 
             Debug.Assert(assertion, "Target view does not have a Region property named 'Region'.");
 
-            if (targetView.Control.Region[RegionState.Mouse_Is_Over]()  &&
+            if (targetView.Logic.Region[RegionState.Mouse_Is_Over]()  &&
                !draggingItem[ItemState.Item_Is_Transiting]() )
             {
-                draggingItem.ItemControl.ExchangeIt(draggingItem, targetView);
+                draggingItem.ItemLogic.ExchangeIt(draggingItem, targetView);
             }
         }
 
@@ -96,7 +96,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             if (swapping != null && 
                !swapping[ItemState.Item_Is_Swaping]() )
             {
-                swapping.ItemControl.SwapIt(draggingItem);
+                swapping.ItemLogic.SwapIt(draggingItem);
             }
         }
     }

@@ -22,10 +22,10 @@ namespace MetaMind.Acutance.Guis.Modules
 
             if (eventArgs != null)
             {
-                var moduleEntry = moduleView.Control.ItemFactory.CreateData(eventArgs.Buffer);
+                var moduleEntry = moduleView.Logic.ItemFactory.CreateData(eventArgs.Buffer);
 
-                this.moduleView.Control.AddItem(moduleEntry);
-                this.moduleView.Control.SortItems(PointViewSortMode.Name);
+                this.moduleView.Logic.AddItem(moduleEntry);
+                this.moduleView.Logic.SortItems(PointViewSortMode.Name);
             }
 
             return true;

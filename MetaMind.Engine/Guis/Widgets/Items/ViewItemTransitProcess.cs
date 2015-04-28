@@ -38,12 +38,12 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             this.SrcItem = srcItem as IViewItemExchangable;
             Debug.Assert(this.SrcItem != null, "Item is not exchangable.");
 
-            this.srcFrame = srcItem.ItemControl.RootFrame;
+            this.srcFrame = srcItem.ItemLogic.RootFrame;
 
             // Destination part
             this.DesView      = desView;
-            this.desRegion    = desView.Control.Region;
-            this.DesSelection = desView.Control.Selection;
+            this.desRegion    = desView.Logic.Region;
+            this.DesSelection = desView.Logic.Selection;
 
             this.Initialize();
         }
@@ -88,7 +88,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         protected virtual void Transit()
         {
             this.SrcItem.View[ViewState.View_Has_Focus] = () => false;
-            this.SrcItem.ViewControl.Selection.Clear();
+            this.SrcItem.ViewLogic.Selection.Clear();
 
             var position = this.DesSelection.PreviousSelectedId != null ? (int)this.DesSelection.PreviousSelectedId : 0;
 

@@ -12,7 +12,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         dynamic ItemData { get; }
 
-        IItemGraphics ItemGraphics { get; }
+        IItemVisualControl ItemVisualControl { get; }
 
         dynamic ItemSettings { get; }
 

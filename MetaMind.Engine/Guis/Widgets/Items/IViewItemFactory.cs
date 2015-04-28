@@ -6,7 +6,7 @@
 
         dynamic CreateData(IViewItem item);
 
-        IItemGraphics CreateGraphics(IViewItem item);
+        IItemVisualControl CreateGraphics(IViewItem item);
     }
 
     // TODO: Replace Factory CreateData

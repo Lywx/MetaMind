@@ -9,20 +9,20 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     using Microsoft.Xna.Framework;
 
-    public class PointGridControl : PointViewControl2D, IPointGridControl
+    public class PointGridLogicControl : PointView2DLogicControl, IPointGridLogicControl
     {
-        public PointGridControl(IView view, PointGridSettings viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
+        public PointGridLogicControl(IView view, PointGridSettings viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
             : base(view, viewSettings, itemSettings, itemFactory)
         {
-            this.Region    = new ViewRegion(this.RegionPositioning);
-            this.ScrollBar = new PointViewScrollBar(view, viewSettings, itemSettings, viewSettings.ScrollBarSettings);
+            this.Region    = new ViewRegion(this.RegionBounds);
+            this.ScrollBar = new ViewVerticalScrollBar(viewSettings, this.Scroll, this, this.Region, viewSettings.ScrollbarSettings);
         }
 
         #region Public Properties
 
         public ViewRegion Region { get; protected set; }
 
-        public PointViewScrollBar ScrollBar { get; protected set; }
+        public ViewVerticalScrollBar ScrollBar { get; protected set; }
 
         #endregion Public Properties
 
@@ -34,13 +34,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             this.Selection.MoveDown();
         }
 
-        public override void MoveLeft()
+        public override void MovePrevious()
         {
             this.ScrollBar.Trigger();
             this.Selection.MoveLeft();
         }
 
-        public override void MoveRight()
+        public override void MoveNext()
         {
             this.ScrollBar.Trigger();
             this.Selection.MoveRight();
@@ -112,12 +112,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views
                     // Movement
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Left))
                     {
-                        this.MoveLeft();
+                        this.MovePrevious();
                     }
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Right))
                     {
-                        this.MoveRight();
+                        this.MoveNext();
                     }
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Up))
@@ -142,12 +142,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastLeft))
                     {
-                        this.FastMoveLeft();
+                        this.FastMovePrevious();
                     }
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastRight))
                     {
-                        this.FastMoveRight();
+                        this.FastMoveNext();
                     }
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))
@@ -189,7 +189,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         #region Configurations
 
-        protected virtual Rectangle RegionPositioning()
+        protected virtual Rectangle RegionBounds()
         {
             return new Rectangle(
                 this.ViewSettings.PointStart.X,

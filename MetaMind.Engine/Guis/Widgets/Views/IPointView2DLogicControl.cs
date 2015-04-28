@@ -1,6 +1,6 @@
 namespace MetaMind.Engine.Guis.Widgets.Views
 {
-    public interface IPointViewControl2D : IViewControl
+    public interface IPointView2DLogicControl : IViewControl
     {
         #region View Data
 

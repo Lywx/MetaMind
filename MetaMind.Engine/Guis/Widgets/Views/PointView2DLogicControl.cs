@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PointViewControl2D.cs" company="UESTC">
+// <copyright file="PointView2DLogicControl.cs" company="UESTC">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -15,9 +15,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     using Microsoft.Xna.Framework;
 
-    public class PointViewControl2D : PointViewControl1D, IPointViewControl2D
+    public class PointView2DLogicControl : PointView1DLogicControl, IPointView2DLogicControl
     {
-        public PointViewControl2D(IView view, PointViewSettings2D viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
+        public PointView2DLogicControl(IView view, PointViewSettings2D viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
             : base(view, viewSettings, itemSettings, itemFactory)
         {
             this.Swap      = new PointViewSwapControl(this.View, this.ViewSettings, this.ItemSettings);
@@ -94,22 +94,22 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Left))
                     {
-                        this.MoveLeft();
+                        this.MovePrevious();
                     }
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Right))
                     {
-                        this.MoveRight();
+                        this.MoveNext();
                     }
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastLeft))
                     {
-                        this.FastMoveLeft();
+                        this.FastMovePrevious();
                     }
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastRight))
                     {
-                        this.FastMoveRight();
+                        this.FastMoveNext();
                     }
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))

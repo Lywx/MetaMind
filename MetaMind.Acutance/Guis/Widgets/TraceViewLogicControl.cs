@@ -10,11 +10,11 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     using Microsoft.Xna.Framework;
 
-    public class ModuleViewControl : PointGridControl
+    public class TraceViewLogicControl : PointGridLogicControl
     {
         #region Constructors
 
-        public ModuleViewControl(IView view, ModuleViewSettings viewSettings, ModuleItemSettings itemSettings, ModuleItemFactory itemFactory)
+        public TraceViewLogicControl(IView view, TraceViewSettings viewSettings, TraceItemSettings itemSettings, TraceItemFactory itemFactory)
             : base(view, viewSettings, itemSettings, itemFactory)
         {
         }
@@ -23,25 +23,10 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Operations
 
-        public void AddItem(Module entry)
+        public void AddItem(Trace entry)
         {
             var item = new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory, entry);
-            this.View.Items.Add(item);
-        }
-
-        public override void SortItems(PointViewSortMode sortMode)
-        {
-            base.SortItems(sortMode);
-
-            switch (sortMode)
-            {
-                case PointViewSortMode.Name:
-                    {
-                        ViewSettings.Source.Sort(ModuleSortMode.Name);
-                    }
-
-                    break;
-            } 
+            View.Items.Add(item);
         }
 
         #endregion Operations
@@ -60,24 +45,29 @@ namespace MetaMind.Acutance.Guis.Widgets
                 // ---------------------------------------------------------------------
                 if (this.ViewSettings.KeyboardEnabled)
                 {
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.ModuleDeleteItem))
+                    // list management
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.TraceCreateItem))
+                    {
+                        this.AddItem();
+
+                        // auto select new item
+                        this.Selection.Select(this.View.Items.Count - 1);
+                    }
+
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.TraceDeleteItem))
                     {
                         // itme deletion is handled by item control
                         // auto select last item
-                        if (View.Items.Count > 1)
+                        if (this.View.Items.Count > 1)
                         {
                             // this will be called before item deletion
-                            if (this.Selection.SelectedId != null && 
-                                this.Selection.SelectedId > View.Items.Count - 2)
-                            {
-                                this.Selection.Select(View.Items.Count - 2);
-                            }
+                            this.Selection.Select(this.View.Items.Count - 2);
                         }
                     }
 
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.ModuleClearItem))
+                    if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.TraceClearItem))
                     {
-                        var notEmpty = this.View.Items.Count;
+                        var notEmpty = View.Items.Count;
                         if (notEmpty > 0)
                         {
                             this.Selection.Select(notEmpty - 1);
@@ -86,11 +76,6 @@ namespace MetaMind.Acutance.Guis.Widgets
                         {
                             this.Selection.Select(0);
                         }
-                    }
-
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.ModuleSortItem))
-                    {
-                        this.SortItems(PointViewSortMode.Name);
                     }
                 }
             }
@@ -102,11 +87,11 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             if (this.Region.IsEnabled(RegionState.Region_Has_Focus))
             {
-                this.View[ViewState.View_Has_Focus] = ()=> ;
+                View[View.State.View_Has_Focus] = () => true;
             }
             else
             {
-                this.View.Disable(ViewState.View_Has_Focus);
+                View.Disable(ViewState.View_Has_Focus);
             }
         }
 
@@ -114,7 +99,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Configurations
 
-        protected override Rectangle RegionPositioning()
+        protected override Rectangle RegionBounds()
         {
             return new Rectangle(
                 viewSettings.PointStart.X,

@@ -86,7 +86,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                     var raw      = processor.RemoveCursor(e.NewValue);
                     var fileName = raw.Replace(this.filePrompt, string.Empty);
 
-                    View.Control.Search(fileName);
+                    View.Logic.Search(fileName);
                 }
             }
         }

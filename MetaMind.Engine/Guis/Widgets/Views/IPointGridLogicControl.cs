@@ -1,12 +1,12 @@
 namespace MetaMind.Engine.Guis.Widgets.Views
 {
-    public interface IPointGridControl : IPointViewControl2D
+    public interface IPointGridLogicControl : IPointView2DLogicControl
     {
         bool Locked { get; }
 
         ViewRegion Region { get; }
 
-        PointViewScrollBar ScrollBar { get; }
+        ViewVerticalScrollBar ScrollBar { get; }
 
         void ScrollDown();
 

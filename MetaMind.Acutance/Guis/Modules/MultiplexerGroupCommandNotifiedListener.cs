@@ -27,25 +27,25 @@ namespace MetaMind.Acutance.Guis.Modules
             {
                 var notifiedCommand = eventArgs.NotifiedCommandCommand;
 
-                this.commandView.Control.AddItem(notifiedCommand);
-                this.commandView.Control.SortItems(PointViewSortMode.Name);
+                this.commandView.Logic.AddItem(notifiedCommand);
+                this.commandView.Logic.SortItems(PointViewSortMode.Name);
 
                 // possibly unnecessary
                 var notifiedItem = this.commandView.Items.Find(item => ReferenceEquals(item.ItemData, notifiedCommand));
 
-                int id = notifiedItem.ItemControl.Id;
+                int id = notifiedItem.ItemLogic.Id;
 
-                this.commandView.Control.Selection.Select(id);
-                this.commandView.Control.Scroll   .Zoom(id);
+                this.commandView.Logic.Selection.Select(id);
+                this.commandView.Logic.Scroll   .Zoom(id);
 
                 // asynchronous speaking
                 Acutance.Synthesizer.SpeakAsync(notifiedCommand.Name);
             }
 
-            this.knowledgeView.Control.Selection.Clear();
-            this.knowledgeView.Control.Region   .Clear();
-            this.moduleView   .Control.Selection.Clear();
-            this.moduleView   .Control.Region   .Clear();
+            this.knowledgeView.Logic.Selection.Clear();
+            this.knowledgeView.Logic.Region   .Clear();
+            this.moduleView   .Logic.Selection.Clear();
+            this.moduleView   .Logic.Region   .Clear();
 
             return true;
         }

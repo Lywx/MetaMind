@@ -27,7 +27,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             }
 
             var originCenter = this        .ViewControl.Scroll.RootCenterPoint(this        .ItemControl.Id);
-            var targetCenter = draggingItem.ViewControl.Scroll.RootCenterPoint(draggingItem.ItemControl.Id);
+            var targetCenter = draggingItem.ViewLogic.Scroll.RootCenterPoint(draggingItem.ItemLogic.Id);
 
             ViewControl.Swap.Initialize(originCenter, targetCenter);
 

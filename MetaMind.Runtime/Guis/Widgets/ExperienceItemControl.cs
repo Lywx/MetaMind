@@ -30,7 +30,7 @@
             // remove from gui
             this.View.Items.Remove(this.Item);
 
-            this.View.Control.ItemFactory.RemoveData(this.Item);
+            this.View.Logic.ItemFactory.RemoveData(this.Item);
 
             this.Item.Dispose();
         }

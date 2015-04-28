@@ -10,9 +10,9 @@
 
     using Microsoft.Xna.Framework;
 
-    public class ViewItemGraphics : ViewItemComponent, IItemGraphics
+    public class ViewItemVisualControl : ViewItemComponent, IItemVisualControl
     {
-        public ViewItemGraphics(IViewItem item)
+        public ViewItemVisualControl(IViewItem item)
             : base(item)
         {
             this.RootFrame = this.ItemControl.RootFrame;

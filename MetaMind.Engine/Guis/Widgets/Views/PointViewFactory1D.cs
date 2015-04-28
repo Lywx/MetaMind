@@ -11,20 +11,20 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             return this.CreateControl(view, (PointViewSettings1D)viewSettings, itemSettings);
         }
 
-        public IViewGraphics CreateGraphics(IView view, ICloneable viewSettings, ICloneable itemSettings)
+        public IViewVisualControl CreateGraphics(IView view, ICloneable viewSettings, ICloneable itemSettings)
         {
             return this.CreateGraphics(view, (PointViewSettings1D)viewSettings, itemSettings);
         }
 
         protected virtual dynamic CreateControl(IView view, PointViewSettings1D viewSettings, ICloneable itemSettings)
         {
-            //return new PointViewControl1D(view, viewSettings, itemSettings, new ViewItemFactory1D());
+            //return new PointView1DLogicControl(view, viewSettings, itemSettings, new ViewItemFactory1D());
             return null;
         }
 
-        protected virtual IViewGraphics CreateGraphics(IView view, PointViewSettings1D viewSettings, ICloneable itemSettings)
+        protected virtual IViewVisualControl CreateGraphics(IView view, PointViewSettings1D viewSettings, ICloneable itemSettings)
         {
-            return new ViewGraphics(view, viewSettings, itemSettings);
+            return new ViewVisualControl(view, viewSettings, itemSettings);
         }
     }
 }
