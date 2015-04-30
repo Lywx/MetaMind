@@ -113,7 +113,7 @@ namespace MetaMind.Acutance.Guis.Modules
             {
                 if (module.Parent == null)
                 {
-                    this.ModuleView.Logic.AddItem(module);
+                    this.ModuleView.ViewLogic.AddItem(module);
                 }
             }
         }

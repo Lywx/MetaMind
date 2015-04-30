@@ -4,11 +4,6 @@
 
     using MetaMind.Engine.Guis.Widgets.Views;
 
-    public interface IViewItemExchangable : IViewItem
-    {
-        void ExchangeTo(IView towards, int position);
-    }
-
     public class ViewItemExchangable : ViewItemExchangeless, IViewItemExchangable
     {
         public ViewItemExchangable(IView view, ICloneable viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
@@ -16,8 +11,8 @@
         {
         }
 
-        public ViewItemExchangable(IView view, ICloneable viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory, object itemData)
-            : base(view, viewSettings, itemSettings, itemFactory, itemData)
+        public ViewItemExchangable(IView view, ICloneable viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory, dynamic itemData)
+            : base(view, viewSettings, itemSettings, itemFactory, (object)itemData)
         {
         }
 

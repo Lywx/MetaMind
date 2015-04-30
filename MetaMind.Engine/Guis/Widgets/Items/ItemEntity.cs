@@ -21,7 +21,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             this.ItemSettings = itemSettings;
         }
 
-        public ICloneable ItemSettings { get; protected set; }
+        public dynamic ItemSettings { get; protected set; }
 
         #region States
 

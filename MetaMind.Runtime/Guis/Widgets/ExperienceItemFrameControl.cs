@@ -4,6 +4,7 @@ namespace MetaMind.Runtime.Guis.Widgets
 
     using MetaMind.Engine.Guis.Elements;
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Guis.Widgets.Items.ItemFrames;
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Services;
 
@@ -23,14 +24,14 @@ namespace MetaMind.Runtime.Guis.Widgets
                     //if (!this.Item[ItemState.Item_Is_Dragging]() && 
                     //    !this.Item[ItemState.Item_Is_Swaping]())
                     //{
-                    //    IContinousViewScrollControl scroll = this.ViewLogic.Scroll;
+                    //    IContinousViewScrollControl scroll = this.ViewLogic.ViewScroll;
 
-                    //    return scroll.RootCenterPoint(this.ItemLogic.Id).ToVector2() + new Vector2(0, this.ItemSettings.IdFrameSize.Y);
+                    //    return scroll.RootCenterPosition(this.ItemLogic.Id).ToVector2() + new Vector2(0, this.ItemSettings.IdFrameSize.Y);
                     //}
 
                     //if (this.Item[ItemState.Item_Is_Swaping]())
                     //{
-                    //    return this.ViewLogic.Swap.RootCenterPoint().ToVector2() + new Vector2(0, this.ItemSettings.IdFrameSize.Y);
+                    //    return this.ViewLogic.ViewSwap.RootCenterPosition().ToVector2() + new Vector2(0, this.ItemSettings.IdFrameSize.Y);
                     //}
 
                     return this.RootFrame.Location.ToVector2();

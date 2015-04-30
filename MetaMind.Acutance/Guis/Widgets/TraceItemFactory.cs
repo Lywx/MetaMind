@@ -14,7 +14,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public override dynamic CreateLogicControl(IViewItem item)
         {
-            return new TraceItemLogicControl(item, Tracelist.Traces);
+            return new TraceItemLogic(item, Tracelist.Traces);
         }
 
         public override dynamic CreateData(IViewItem item)
@@ -22,9 +22,9 @@ namespace MetaMind.Acutance.Guis.Widgets
             return Tracelist.Create();
         }
 
-        public override IItemVisualControl CreateVisualControl(IViewItem item)
+        public override IItemVisual CreateVisualControl(IViewItem item)
         {
-            return new TraceItemVisualControl(item);
+            return new TraceItemVisual(item);
         }
 
         public void RemoveData(IViewItem item)

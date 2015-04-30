@@ -1,132 +1,233 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Comment CommentText="GameScreens serve as the secondary Game Loop.">
-    <Position X="2.271" Y="2.51" Height="0.563" Width="3.252" />
+  <Comment CommentText="The Primary Game Loop Composes GameComponents.">
+    <Position X="12.406" Y="0.5" Height="0.312" Width="3.335" />
   </Comment>
-  <Comment CommentText="Game.Components serve as the primary Game Loop.">
-    <Position X="2.281" Y="0.5" Height="0.667" Width="3.252" />
-  </Comment>
-  <Comment CommentText="Game Content">
-    <Position X="9.25" Y="1.24" Height="0.291" Width="1.512" />
+  <Comment CommentText="The Game Content">
+    <Position X="12.458" Y="4.844" Height="0.291" Width="1.512" />
   </Comment>
   <Comment CommentText="Game Window Based">
-    <Position X="2.26" Y="1.25" Height="0.313" Width="1.502" />
+    <Position X="12.434" Y="6.77" Height="0.313" Width="1.502" />
   </Comment>
-  <Class Name="MetaMind.Engine.Components.ProcessManager" Collapsed="true">
-    <Position X="7.5" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAAAAAAABAAQAAAEAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Components\ProcessManager.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="MetaMind.Engine.GameEngine" Collapsed="true">
+  <Comment CommentText="GameScreens serve as the Secondary Game Loop.">
+    <Position X="15.958" Y="0.5" Height="0.291" Width="3.252" />
+  </Comment>
+  <Class Name="MetaMind.Engine.GameEngine">
     <Position X="0.5" Y="0.5" Width="1.5" />
+    <Members>
+      <Method Name="Draw" Hidden="true" />
+      <Method Name="GameEngine" Hidden="true" />
+      <Method Name="Initialize" Hidden="true" />
+      <Method Name="LoadContent" Hidden="true" />
+      <Method Name="OnExiting" Hidden="true" />
+      <Method Name="UnloadContent" Hidden="true" />
+      <Method Name="Update" Hidden="true" />
+      <Method Name="UpdateInput" Hidden="true" />
+    </Members>
     <TypeIdentifier>
-      <HashCode>AASAEAAAAAAAAwAAAABQAAAAGAAAQAAAEAAAAAAAAAQ=</HashCode>
+      <HashCode>EASAEAAAAAAAAwAAAABQAAAAGAAAQAAAEAAAAAAAAAQ=</HashCode>
       <FileName>GameEngine.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="MetaMind.Engine.Components.ScreenManager" Collapsed="true">
-    <Position X="4" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQQVAgAAAAAAwAAAABQAAAAGgAAiAAExIAAgAAACEQ=</HashCode>
-      <FileName>Components\ScreenManager.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="MetaMind.Engine.Components.EventManager" Collapsed="true">
-    <Position X="5.75" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>QAQAAAAACAAAERAgAAAEAAABAIARIACAAAgAAEAAIAA=</HashCode>
-      <FileName>Components\EventManager.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="MetaMind.Engine.Components.GameManager" Collapsed="true">
-    <Position X="9.25" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAKAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
-      <FileName>Components\GameManager.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="MetaMind.Engine.Components.AudioManager" Collapsed="true">
-    <Position X="11" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAAAAAGAEAAAAQAAAAAUAAACIAAAAAAQAACBAAAI=</HashCode>
-      <FileName>Components\AudioManager.cs</FileName>
-    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Service" />
+      <Property Name="Input" />
+      <Property Name="Interop" />
+      <Property Name="Graphics" />
+    </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="MetaMind.Engine.Components.Graphics.GraphicsManager" Collapsed="true">
-    <Position X="5.75" Y="3.25" Width="1.5" />
+    <Position X="10.75" Y="10.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAQAEAAAAAAAAQCAACAAApAAAAAAAAAA=</HashCode>
       <FileName>Components\Graphics\GraphicsManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaMind.Engine.Components.Graphics.GraphicsSettings" Collapsed="true">
-    <Position X="5.75" Y="4.5" Width="1.5" />
+    <Position X="10.75" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAARAAABAQARABAAEAQAAAAAAAAAAAAAAAAAAg=</HashCode>
       <FileName>Components\Graphics\GraphicsSettings.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="MetaMind.Engine.Game" Collapsed="true">
-    <Position X="9.25" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AACAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
-      <FileName>Game.cs</FileName>
-    </TypeIdentifier>
+  <Class Name="Microsoft.Xna.Framework.Content.ContentManager" Collapsed="true">
+    <Position X="10.75" Y="3" Width="1.5" />
+    <TypeIdentifier />
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="MetaMind.Engine.Components.Inputs.InputEvent" Collapsed="true">
-    <Position X="0.5" Y="1.5" Width="1.5" />
+  <Class Name="MetaMind.Engine.Components.GameEngineGraphics">
+    <Position X="13.5" Y="9.25" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AIgAAiAAAgAAgkSAKAgAQAaAAQBIEEAACIAoAJ2UMHQ=</HashCode>
-      <FileName>Components\Inputs\InputEvent.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAABAAAwAAAAAASAAQ=</HashCode>
+      <FileName>Components\GameEngineGraphics.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Manager" />
+      <Property Name="Settings" />
+      <Property Name="StringDrawer" />
+      <Property Name="Font" />
+    </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="MetaMind.Engine.Components.Inputs.InputState" Collapsed="true">
-    <Position X="2.25" Y="1.5" Width="1.5" />
+  <Interface Name="MetaMind.Engine.Components.IGameInterop">
+    <Position X="4" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAgAAAAIAAAAAAAAQAAQAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Components\Inputs\InputState.cs</FileName>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\IGameInterop.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="MetaMind.Engine.Components.Fonts.FontManager" Collapsed="true">
-    <Position X="7.5" Y="3.25" Width="1.5" />
+  </Interface>
+  <Interface Name="MetaMind.Engine.Services.IGameInteropService">
+    <Position X="6.25" Y="0.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>ABAAEAAAAAAAAQAAAABAAAAAAAAAAAAAAAAAAAAAAAw=</HashCode>
-      <FileName>Components\Fonts\FontManager.cs</FileName>
+      <HashCode>AACAAIAAAgAAAAAABgEAAAAAAggEAAAABAAAAAAAAAA=</HashCode>
+      <FileName>Services\IGameInteropService.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
+    <ShowAsAssociation>
+      <Property Name="Audio" />
+      <Property Name="Content" />
+      <Property Name="Event" />
+      <Property Name="Game" />
+      <Property Name="Engine" />
+      <Property Name="Process" />
+      <Property Name="Screen" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Components.IGameInput" Collapsed="true">
+    <Position X="4" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\IGameInput.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Services.IGameInputService">
+    <Position X="6.25" Y="3.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Services\IGameInputService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Event" />
+      <Property Name="State" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Components.Inputs.IInputEvent" Collapsed="true">
+    <Position X="10.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgEQAAAgAAAAAAAAAEAAAAIAIAAiAAAA=</HashCode>
+      <FileName>Components\Inputs\IInputEvent.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Components.Inputs.IInputState" Collapsed="true">
+    <Position X="10.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\Inputs\IInputState.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Components.IScreenManager" Collapsed="true">
+    <Position X="10.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAACAAAhIAAAAAAAEA=</HashCode>
+      <FileName>Components\IScreenManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Screens" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Components.IProcessManager" Collapsed="true">
+    <Position X="10.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\IProcessManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Components.IEventManager" Collapsed="true">
+    <Position X="10.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAABAAAAAAAAABAAAQIAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Components\IEventManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Components.IAudioManager" Collapsed="true">
+    <Position X="10.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAUAAAAIAAAAAAQAACBAAAA=</HashCode>
+      <FileName>Components\IAudioManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Components.IGameManager" Collapsed="true">
+    <Position X="10.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Components\IGameManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Components.IGameGraphics" Collapsed="true">
+    <Position X="4" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\IGameGraphics.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Services.IGameGraphicsService">
+    <Position X="6.25" Y="10" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAwAAAAAAQAAA=</HashCode>
+      <FileName>Services\IGameGraphicsService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Manager" />
+      <Property Name="Settings" />
+      <Property Name="StringDrawer" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Components.Fonts.IStringDrawer" Collapsed="true">
+    <Position X="10.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\Fonts\IStringDrawer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Components.Fonts.IFontManager" Collapsed="true">
+    <Position X="10.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\Fonts\IFontManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Interface Name="MetaMind.Engine.Screens.IGameScreen" Collapsed="true">
-    <Position X="0.5" Y="2.5" Width="1.5" />
+    <Position X="20" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BAwAEAAAAAAAIgAEEAIQAAAAQAAAAggAIIAGAAAABBQ=</HashCode>
+      <HashCode>AAwAEAAAAAAAAgAEEAIQAAAAQAAAAggAIAAGAAAABAQ=</HashCode>
       <FileName>Screens\IGameScreen.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MetaMind.Engine.Guis.IModule" Collapsed="true">
-    <Position X="0.5" Y="5.5" Width="1.5" />
+    <Position X="20" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAgACEAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAIAAAAA=</HashCode>
       <FileName>Guis\IModule.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MetaMind.Engine.Guis.IGroup&lt;TGroupSettings&gt;" Collapsed="true">
-    <Position X="0.5" Y="6.5" Width="1.5" />
+    <Position X="20" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAACAAAAAAAgAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgCAAAIAAAAA=</HashCode>
       <FileName>Guis\IGroup.cs</FileName>
     </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Services.IGameService">
+    <Position X="1" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAAAGAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Services\IGameService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Input" />
+      <Property Name="Interop" />
+      <Property Name="Graphics" />
+    </ShowAsAssociation>
   </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

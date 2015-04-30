@@ -6,10 +6,14 @@
     {
         Func<IViewItem, dynamic> Data { get; set; }
 
+        Func<IViewItem, dynamic> Logic { get; set; }
+
+        Func<IViewItem, dynamic> Visual { get; set; }
+
         dynamic CreateData(IViewItem item);
 
-        dynamic CreateLogicControl(IViewItem item);
+        dynamic CreateLogic(IViewItem item);
 
-        IItemVisualControl CreateVisualControl(IViewItem item);
+        IItemVisual CreateVisual(IViewItem item);
     }
 }

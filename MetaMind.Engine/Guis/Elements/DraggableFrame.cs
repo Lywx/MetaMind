@@ -81,10 +81,10 @@ namespace MetaMind.Engine.Guis.Elements
                 });
 
             // Events
-            this.MouseLeftPressed += this.FrameMousePressed;
+            this.MouseLeftPressed  += this.FrameMousePressed;
             this.MouseLeftReleased += this.FrameMouseReleased;
 
-            this.MouseRightPressed += this.FrameMousePressed;
+            this.MouseRightPressed  += this.FrameMousePressed;
             this.MouseRightReleased += this.FrameMouseReleased;
 
             // States
@@ -96,29 +96,6 @@ namespace MetaMind.Engine.Guis.Elements
         {
             this.Dispose();
         }
-
-        protected enum State
-        {
-            Pressing,
-
-            Holding,
-
-            Dragging,
-
-            Released,
-        }
-
-        protected enum Trigger
-        {
-            Pressed,
-
-            DraggedWithinRange,
-            DraggedOutOfRange,
-
-            Released,
-        }
-
-        protected StateMachine<State, Trigger> StateMachine { get; set; }
 
         #region IDiposable
 
@@ -138,7 +115,35 @@ namespace MetaMind.Engine.Guis.Elements
             base.Dispose();
         }
 
-        #endregion 
+        #endregion
+
+        #region State Machine
+
+        protected enum State
+        {
+            Pressing,
+
+            Holding,
+
+            Dragging,
+
+            Released,
+        }
+
+        protected enum Trigger
+        {
+            Pressed,
+
+            DraggedWithinRange,
+
+            DraggedOutOfRange,
+
+            Released,
+        }
+
+        protected StateMachine<State, Trigger> StateMachine { get; set; }
+
+        #endregion
 
         #region Events
 

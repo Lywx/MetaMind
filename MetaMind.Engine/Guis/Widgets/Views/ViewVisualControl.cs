@@ -9,8 +9,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     public class ViewVisualControl : ViewVisualComponent, IViewVisualControl
     {
-        public ViewVisualControl(IView view, ICloneable viewSettings, ICloneable itemSettings)
-            : base(view, viewSettings, itemSettings)
+        public ViewVisualControl(IView view)
+            : base(view)
         {
         }
 

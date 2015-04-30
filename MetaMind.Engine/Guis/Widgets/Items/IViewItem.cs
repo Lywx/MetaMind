@@ -21,7 +21,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         dynamic ItemLogic { get; set; }
         
-        IItemVisualControl ItemVisual { get; set; }
+        IItemVisual ItemVisual { get; set; }
 
         #endregion
 

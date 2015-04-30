@@ -18,11 +18,15 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         #endregion Constructors and Destructors
 
-        #region Item Components
+        #region Direct Dependency
 
         public IViewItem Item { get; private set; }
 
-        public dynamic ItemControl
+        #endregion 
+
+        #region Indirect Dependency
+
+        public dynamic ItemLogic
         {
             get { return this.Item.ItemLogic; }
         }
@@ -32,28 +36,24 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             get { return this.Item.ItemData; }
         }
 
-        public IItemVisualControl ItemVisualControl
-        {
-            get { return this.Item.ItemVisual; }
-        }
-
         public dynamic ItemSettings
         {
             get { return this.Item.ItemSettings; }
         }
 
-        #endregion Item Components
-
-        #region View Components
+        public IItemVisual ItemVisual
+        {
+            get { return this.Item.ItemVisual; }
+        }
 
         public IView View
         {
             get { return this.Item.View; }
         }
 
-        public dynamic ViewControl
+        public dynamic ViewLogic
         {
-            get { return this.View.Logic; }
+            get { return this.View.ViewLogic; }
         }
 
         public dynamic ViewSettings

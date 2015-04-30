@@ -8,14 +8,12 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         IViewItem Item { get; }
 
-        dynamic ItemControl { get; }
+        dynamic ItemLogic { get; }
 
         dynamic ItemData { get; }
 
-        IItemVisualControl ItemVisualControl { get; }
+        IItemVisual ItemVisual { get; }
 
-
-        // TODO: I felt like i don;t need to have a itemsettings in view
         dynamic ItemSettings { get; }
 
         #endregion Item Components
@@ -24,7 +22,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         IView View { get; }
 
-        dynamic ViewControl { get; }
+        dynamic ViewLogic { get; }
 
         dynamic ViewSettings { get; }
 

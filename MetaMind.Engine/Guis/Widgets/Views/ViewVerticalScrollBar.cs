@@ -11,6 +11,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     using MetaMind.Engine.Guis.Widgets.Regions;
     using MetaMind.Engine.Guis.Widgets.Views.PointView;
+    using MetaMind.Engine.Guis.Widgets.Views.PointView.ViewScroll;
     using MetaMind.Engine.Guis.Widgets.Visual;
     using MetaMind.Engine.Services;
 
@@ -20,7 +21,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     {
         private readonly IPointViewVerticalScrollControl viewScroll;
 
-        private readonly IPointView2DLogicControl viewLogic;
+        private readonly IPointView2DLogic viewLogic;
 
         private readonly IRegion viewRegion;
 
@@ -32,7 +33,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         
         private int brightness;
         
-        public ViewVerticalScrollBar(PointView2DSettings viewSettings, IPointViewVerticalScrollControl viewScroll, IPointView2DLogicControl viewLogic, IRegion viewRegion, ViewScrollbarSettings scrollbarSettings)
+        public ViewVerticalScrollBar(PointView2DSettings viewSettings, IPointViewVerticalScrollControl viewScroll, IPointView2DLogic viewLogic, IRegion viewRegion, ViewScrollbarSettings scrollbarSettings)
         {
             this.viewScroll   = viewScroll;
             this.viewLogic    = viewLogic;
@@ -48,7 +49,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             get
             {
-                var distance = this.viewRegion.Height * (float)this.viewScroll.YOffset
+                var distance = this.viewRegion.Height * (float)this.viewScroll.OffsetY
                                / (this.viewLogic.RowNum - this.viewSettings.RowNumDisplay)
                                * (1 - (float)this.viewSettings.RowNumDisplay / this.viewLogic.RowNum);
 

@@ -4,7 +4,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.PointView
 
     using Microsoft.Xna.Framework;
 
-    public class PointListSettings : PointView1DSettings
+    public class PointListSettings : PointViewHorizontalSettings
     {
         public Point BorderMargin = new Point(4, 4);
 

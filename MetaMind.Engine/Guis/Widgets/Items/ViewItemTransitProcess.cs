@@ -3,9 +3,11 @@ namespace MetaMind.Engine.Guis.Widgets.Items
     using System.Diagnostics;
 
     using MetaMind.Engine.Guis.Elements;
+    using MetaMind.Engine.Guis.Widgets.Items.ItemFrames;
     using MetaMind.Engine.Guis.Widgets.Regions;
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Guis.Widgets.Views.PointView;
+    using MetaMind.Engine.Guis.Widgets.Views.PointView.ViewSelection;
 
     using Microsoft.Xna.Framework;
 
@@ -43,8 +45,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
             // Destination part
             this.DesView      = desView;
-            this.desRegion    = desView.Logic.Region;
-            this.DesSelection = desView.Logic.Selection;
+            this.desRegion    = desView.ViewLogic.Region;
+            this.DesSelection = desView.ViewLogic.Selection;
 
             this.Initialize();
         }

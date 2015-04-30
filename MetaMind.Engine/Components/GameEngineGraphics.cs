@@ -24,8 +24,8 @@ namespace MetaMind.Engine.Components
             this.Settings = new GraphicsSettings();
             this.Manager  = new GraphicsManager(engine, this.Settings);
             
-            this.SpriteBatch = new SpriteBatch(this.Manager.GraphicsDevice);
-            this.StringDrawer      = new StringDrawer(this.SpriteBatch);
+            this.SpriteBatch  = new SpriteBatch(this.Manager.GraphicsDevice);
+            this.StringDrawer = new StringDrawer(this.SpriteBatch);
             
             this.Font = new FontManager(engine);
         }

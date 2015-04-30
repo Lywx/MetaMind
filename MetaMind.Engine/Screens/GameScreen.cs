@@ -265,7 +265,7 @@ namespace MetaMind.Engine.Screens
         #region Operations
 
         /// <summary>
-        /// Tells the screen to go away. Unlike ScreenManager.RemoveScreen, which
+        /// Tells the screen to go away. Unlike Screens.RemoveScreen, which
         /// instantly kills the screen, this method respects the transition timings
         /// and will give the screen a chance to gradually transition off.
         /// </summary>

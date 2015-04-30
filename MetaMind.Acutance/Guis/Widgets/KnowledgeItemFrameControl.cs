@@ -3,6 +3,7 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Engine;
     using MetaMind.Engine.Guis.Elements;
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Guis.Widgets.Items.ItemFrames;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
@@ -23,26 +24,19 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public override void Dispose()
         {
-            try
+            if (this.NameFrame != null)
             {
-                if (this.NameFrame != null)
-                {
-                    this.NameFrame.Dispose();
-                }
-
-                this.NameFrame = null;
-
-                if (this.IdFrame != null)
-                {
-                    this.IdFrame.Dispose();
-                }
-
-                this.IdFrame = null;
+                this.NameFrame.Dispose();
             }
-            finally
+
+            this.NameFrame = null;
+
+            if (this.IdFrame != null)
             {
-                base.Dispose();
+                this.IdFrame.Dispose();
             }
+
+            base.Dispose();
         }
 
         public PickableFrame IdFrame { get; private set; }
@@ -65,12 +59,12 @@ namespace MetaMind.Acutance.Guis.Widgets
             {
                 if (!this.Item.IsEnabled(ItemState.Item_Is_Dragging) && !this.Item.IsEnabled(ItemState.Item_Is_Swaping))
                 {
-                    return ExtPoint.ToVector2(this.ViewControl.Scroll.RootCenterPoint(this.ItemControl.Id))
+                    return ExtPoint.ToVector2(this.ViewLogic.Scroll.RootCenterPoint(this.ItemLogic.Id))
                            + new Vector2(this.ItemSettings.IdFrameSize.X, 0);
                 }
                 else if (this.Item.IsEnabled(ItemState.Item_Is_Swaping))
                 {
-                    return this.ViewControl.Swap.RootCenterPoint().ToVector2() + new Vector2(this.ItemSettings.IdFrameSize.X, 0);
+                    return this.ViewLogic.Swap.RootCenterPoint().ToVector2() + new Vector2(this.ItemSettings.IdFrameSize.X, 0);
                 }
                 else
                 {

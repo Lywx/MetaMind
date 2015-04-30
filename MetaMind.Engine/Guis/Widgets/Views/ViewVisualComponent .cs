@@ -7,12 +7,10 @@
 
 namespace MetaMind.Engine.Guis.Widgets.Views
 {
-    using System;
-
     public class ViewVisualComponent : ViewComponent, IViewVisualComponent
     {
-        protected ViewVisualComponent(IView view, ICloneable viewSettings, ICloneable itemSettings)
-            : base(view, viewSettings, itemSettings)
+        protected ViewVisualComponent(IView view)
+            : base(view)
         {
         }
     }

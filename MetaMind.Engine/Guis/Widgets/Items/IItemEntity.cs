@@ -12,6 +12,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         #endregion
 
-        ICloneable ItemSettings { get; }
+        dynamic ItemSettings { get; }
     }
 }

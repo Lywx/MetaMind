@@ -35,17 +35,18 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
             this.Items = items;
 
-            this.Logic  = viewFactory.CreateLogicControl(this, viewSettings, itemSettings);
-            this.Visual = viewFactory.CreateVisualControl(this, viewSettings, itemSettings);
+            // Composition root of view
+            this.ViewLogic  = viewFactory.CreateLogicControl(this, viewSettings, itemSettings);
+            this.ViewVisual = viewFactory.CreateVisualControl(this, viewSettings, itemSettings);
         }
         
         #region Dependency
 
         public List<IViewItem> Items { get; set; }
 
-        public dynamic Logic { get; set; }
+        public dynamic ViewLogic { get; set; }
 
-        public IViewVisualControl Visual { get; set; }
+        public IViewVisualControl ViewVisual { get; set; }
 
         #endregion
 
@@ -53,30 +54,30 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            if (this.Visual != null)
+            if (this.ViewVisual != null)
             {
-                this.Visual.Draw(graphics, time, alpha);
+                this.ViewVisual.Draw(graphics, time, alpha);
             }
         }
 
         public override void Update(GameTime time)
         {
-            if (this.Logic != null)
+            if (this.ViewLogic != null)
             {
-                this.Logic.Update(time);
+                ((IUpdateable)this.ViewLogic).Update(time);
             }
 
-            if (this.Visual != null)
+            if (this.ViewVisual != null)
             {
-                this.Visual.Update(time);
+                this.ViewVisual.Update(time);
             }
         }
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            if (this.Logic != null)
+            if (this.ViewLogic != null)
             {
-                this.Logic.Update(input, time);
+                ((IInputable)this.ViewLogic).UpdateInput(input, time);
             }
         }
 

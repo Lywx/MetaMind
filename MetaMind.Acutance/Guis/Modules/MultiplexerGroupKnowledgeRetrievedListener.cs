@@ -25,7 +25,7 @@ namespace MetaMind.Acutance.Guis.Modules
                 // so that path is null
                 eventArgs.Path != null)
             {
-                this.knowledgeView.Logic.LoadResult(eventArgs.Path, false, eventArgs.Offset);
+                this.knowledgeView.ViewLogic.LoadResult(eventArgs.Path, false, eventArgs.Offset);
             }
 
             return true;

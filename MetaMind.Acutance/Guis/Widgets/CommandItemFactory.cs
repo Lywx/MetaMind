@@ -6,12 +6,12 @@ namespace MetaMind.Acutance.Guis.Widgets
     {
         public override dynamic CreateLogicControl(IViewItem item)
         {
-            return new CommandItemLogicControl(item, Acutance.Session.Commandlist.Commands);
+            return new CommandItemLogic(item, Acutance.Session.Commandlist.Commands);
         }
 
-        public override IItemVisualControl CreateVisualControl(IViewItem item)
+        public override IItemVisual CreateVisualControl(IViewItem item)
         {
-            return new CommandItemVisualControl(item);
+            return new CommandItemVisual(item);
         }
 
         public void RemoveData(IViewItem item)

@@ -35,7 +35,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
             GameEngine.Event.QueueEvent(moduleReloadedEvent);
 
-            this.ItemControl.DeleteIt();
+            this.ItemLogic.DeleteIt();
         }
     }
 }

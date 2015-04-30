@@ -7,12 +7,12 @@ namespace MetaMind.Acutance.Guis.Widgets
     {
         public override dynamic CreateLogicControl(IViewItem item)
         {
-            return new KnowledgeItemLogicControl(item);
+            return new KnowledgeItemLogic(item);
         }
 
-        public override IItemVisualControl CreateVisualControl(IViewItem item)
+        public override IItemVisual CreateVisualControl(IViewItem item)
         {
-            return new KnowledgeItemVisualControl(item);
+            return new KnowledgeItemVisual(item);
         }
 
         public void RemoveData(IViewItem item)

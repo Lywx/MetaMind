@@ -57,7 +57,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
             if (!searcherHandlerAdded)
             {
-                Searcher searcher = ViewControl.Searcher;
+                Searcher searcher = this.ViewLogic.Searcher;
                 searcher.ThreadEnded += this.SearchEnded;
 
                 this.searcherHandlerAdded = true;
@@ -86,7 +86,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                     var raw      = processor.RemoveCursor(e.NewValue);
                     var fileName = raw.Replace(this.filePrompt, string.Empty);
 
-                    View.Logic.Search(fileName);
+                    View.ViewLogic.Search(fileName);
                 }
             }
         }

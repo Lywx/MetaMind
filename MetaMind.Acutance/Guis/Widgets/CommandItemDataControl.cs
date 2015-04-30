@@ -17,7 +17,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             if (ItemData.State == CommandState.Running || 
                 ItemData.State == CommandState.Terminated)
             {
-                ItemControl.DeleteIt();
+                this.ItemLogic.DeleteIt();
             }
         }
     }

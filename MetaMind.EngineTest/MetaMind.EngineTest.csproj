@@ -51,6 +51,10 @@
     <Compile Include="Test.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="LightInject, Version=3.0.2.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LightInject.3.0.2.6\lib\net45\LightInject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MSBuildProgramFiles32)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
@@ -74,6 +78,10 @@
     <ProjectReference Include="..\MetaMind.Engine\MetaMind.Engine.csproj">
       <Project>{8944c3ab-1865-49cf-9e84-1ecc42ad2c3e}</Project>
       <Name>MetaMind.Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MetaMind.Runtime\MetaMind.Runtime.csproj">
+      <Project>{91A424B6-E62B-4B7A-B30D-331C7E3AF5F0}</Project>
+      <Name>MetaMind.Runtime</Name>
     </ProjectReference>
     <ProjectReference Include="..\ThirdParties\Primitives2D\Primitives2D.csproj">
       <Project>{39ad1482-1881-4852-a05d-dc61b0d3446a}</Project>

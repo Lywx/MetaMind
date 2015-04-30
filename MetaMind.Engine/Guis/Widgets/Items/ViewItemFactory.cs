@@ -4,7 +4,10 @@
 
     public sealed class ViewItemFactory : IViewItemFactory
     {
-        public ViewItemFactory(Func<IViewItem, dynamic> logic, Func<IViewItem, dynamic> visual, Func<IViewItem, dynamic> data)
+        public ViewItemFactory(
+            Func<IViewItem, dynamic> logic,
+            Func<IViewItem, IItemVisual> visual,
+            Func<IViewItem, dynamic> data)
         {
             if (visual == null)
             {
@@ -37,12 +40,12 @@
             return this.Data(item);
         }
 
-        public dynamic CreateLogicControl(IViewItem item)
+        public dynamic CreateLogic(IViewItem item)
         {
             return this.Logic(item);
         }
 
-        public IItemVisualControl CreateVisualControl(IViewItem item)
+        public IItemVisual CreateVisual(IViewItem item)
         {
             return this.Visual(item);
         }

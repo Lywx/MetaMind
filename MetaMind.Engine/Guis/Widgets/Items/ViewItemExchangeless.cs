@@ -16,8 +16,8 @@
             this.ViewSettings = viewSettings;
 
             this.ItemData   = itemFactory.CreateData(this);
-            this.ItemLogic  = itemFactory.CreateLogicControl(this);
-            this.ItemVisual = itemFactory.CreateVisualControl(this);
+            this.ItemLogic  = itemFactory.CreateLogic(this);
+            this.ItemVisual = itemFactory.CreateVisual(this);
         }
 
         public ViewItemExchangeless(dynamic view, ICloneable viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory, dynamic itemData)
@@ -28,8 +28,8 @@
 
             this.ItemData   = itemData;
 
-            this.ItemLogic  = itemFactory.CreateLogicControl(this);
-            this.ItemVisual = itemFactory.CreateVisualControl(this);
+            this.ItemLogic  = itemFactory.CreateLogic(this);
+            this.ItemVisual = itemFactory.CreateVisual(this);
         }
 
         ~ViewItemExchangeless()
@@ -37,20 +37,31 @@
             this.Dispose();
         }
 
+        #region Direct Dependency
+
+        public IView   View { get; protected set; }
+
+        public dynamic ViewSettings { get; protected set; }
+
         public dynamic ItemLogic { get; set; }
 
         public dynamic ItemData { get; set; }
 
-        public IItemVisualControl ItemVisual { get; set; }
+        public IItemVisual ItemVisual { get; set; }
 
-        public IView View { get; protected set; }
+        #endregion
+
+        #region Indirect Depedency
 
         public dynamic ViewLogic
         {
-            get { return this.View.Logic; }
+            get
+            {
+                return this.View.ViewLogic;
+            }
         }
 
-        public dynamic ViewSettings { get; protected set; }
+        #endregion
 
         #region Draw
 
@@ -63,8 +74,8 @@
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.ItemLogic .Update(input, time);
-            this.ItemVisual.UpdateInput(input, time);
+            ((IInputable)this.ItemLogic).UpdateInput(input, time);
+            this.ItemVisual             .UpdateInput(input, time);
         }
 
         public override void UpdateView(GameTime gameTime)
@@ -74,8 +85,8 @@
 
         public override void Update(GameTime time)
         {
-            this.ItemLogic .Update(time);
-            this.ItemVisual.Update(time);
+            ((IUpdateable)this.ItemLogic).Update(time);
+            this.ItemVisual              .Update(time);
         }
 
         public override void Dispose()

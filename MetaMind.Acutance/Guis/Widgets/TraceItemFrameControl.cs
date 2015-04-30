@@ -3,6 +3,7 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Engine;
     using MetaMind.Engine.Guis.Elements;
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Guis.Widgets.Items.ItemFrames;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
@@ -82,13 +83,13 @@ namespace MetaMind.Acutance.Guis.Widgets
             {
                 if (!Item.IsEnabled(ItemState.Item_Is_Dragging) && !Item.IsEnabled(ItemState.Item_Is_Swaping))
                 {
-                    return ExtPoint.ToVector2(ViewControl.Scroll.RootCenterPoint(ItemControl.Id))
+                    return ExtPoint.ToVector2(this.ViewLogic.Scroll.RootCenterPoint(this.ItemLogic.Id))
                            + new Vector2(ItemSettings.IdFrameSize.X, 0)
                            + new Vector2(ItemSettings.ExperienceFrameSize.X, 0);
                 }
                 else if (Item.IsEnabled(ItemState.Item_Is_Swaping))
                 {
-                    return ViewControl.Swap.RootCenterPoint().ToVector2() + new Vector2(ItemSettings.IdFrameSize.X, 0)
+                    return this.ViewLogic.Swap.RootCenterPoint().ToVector2() + new Vector2(ItemSettings.IdFrameSize.X, 0)
                            + new Vector2(ItemSettings.ExperienceFrameSize.X, 0);
                 }
                 else
