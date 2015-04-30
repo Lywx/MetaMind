@@ -8,9 +8,9 @@ namespace MetaMind.Engine.Guis
     {
         public TGroupSettings Settings { get; protected set; }
 
-        public IGroupLogicControl  Logic  { get; protected set; }
+        public IGroupLogic  Logic  { get; protected set; }
 
-        public IGroupVisualControl Visual { get; protected set; }
+        public IGroupVisual Visual { get; protected set; }
 
         #region Constructors
 

@@ -4,8 +4,8 @@ namespace MetaMind.Engine.Guis
     {
         TGroupSettings Settings { get; }
 
-        IGroupLogicControl Logic { get; }
+        IGroupLogic Logic { get; }
 
-        IGroupVisualControl Visual { get; }
+        IGroupVisual Visual { get; }
     }
 }

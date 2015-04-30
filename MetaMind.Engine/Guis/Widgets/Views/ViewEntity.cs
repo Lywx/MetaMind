@@ -7,21 +7,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     {
         #region Constructors
 
-        protected ViewEntity(ICloneable viewSettings, ICloneable itemSettings)
+        protected ViewEntity()
         {
-            if (viewSettings == null)
-            {
-                throw new ArgumentNullException("viewSettings");
-            }
-
-            if (itemSettings == null)
-            {
-                throw new ArgumentNullException("itemSettings");
-            }
-
-            this.ViewSettings = viewSettings;
-            this.ItemSettings = itemSettings;
-
             for (var i = 0; i < (int)ViewState.StateNum; i++)
             {
                 this.states[i] = () => false;
@@ -33,14 +20,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         #endregion Constructors
 
         #region IViewEntity
-
-        #region Settings
-
-        public dynamic ItemSettings { get; private set; }
-
-        public dynamic ViewSettings { get; private set; }
-
-        #endregion
 
         #region States
 

@@ -5,6 +5,7 @@
     using MetaMind.Engine;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Guis.Widgets.Items.ItemData;
     using MetaMind.Engine.Guis.Widgets.Items.ItemView;
     using MetaMind.Engine.Guis.Widgets.Regions;
     using MetaMind.Engine.Guis.Widgets.Views;
@@ -46,7 +47,7 @@
                         item =>
                         new ViewItemLogic(
                             item,
-                            Program.Container.GetInstance<ExperienceItemLogic>(),
+                            new ExperienceItemLogic(item),
                             new ViewItemViewControl(item),
                             new ViewItemDataModifier(item)),
                         item => new ViewItemVisual(item),

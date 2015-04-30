@@ -111,7 +111,7 @@
     <Compile Include="Guis\Widgets\Views\PointView\IPointView1DLogic.cs" />
     <Compile Include="Guis\Widgets\Views\PointView\ViewScroll\IPointView2DScrollControl.cs" />
     <Compile Include="Guis\Widgets\Views\PointView\ViewScroll\IPointViewScrollControl.cs" />
-    <Compile Include="Guis\Widgets\Views\PointView\ViewSelection\IPointView1DSelectionControl.cs" />
+    <Compile Include="Guis\Widgets\Views\PointView\ViewSelection\IPointViewHorizontalSelectionControl.cs" />
     <Compile Include="Guis\Widgets\Views\PointView\ViewSelection\IPointView2DSelectionControl.cs" />
     <Compile Include="Guis\Widgets\Views\IViewComponent.cs" />
     <Compile Include="Guis\Widgets\Views\IViewEntity.cs" />
@@ -188,8 +188,8 @@
     <Compile Include="Services\GameEngineInteropService.cs" />
     <Compile Include="Guis\Elements\IFrameEntity.cs" />
     <Compile Include="Guis\IGroup.cs" />
-    <Compile Include="Guis\IGroupLogicControl.cs" />
-    <Compile Include="Guis\IGroupVisualControl.cs" />
+    <Compile Include="Guis\IGroupLogic.cs" />
+    <Compile Include="Guis\IGroupVisual.cs" />
     <Compile Include="Guis\IModule.cs" />
     <Compile Include="Guis\IModuleVisualControl.cs" />
     <Compile Include="Guis\Particles\IParticle.cs" />
@@ -277,7 +277,7 @@
     <Compile Include="Guis\Widgets\Regions\Region.cs" />
     <Compile Include="Guis\Widgets\Regions\RegionEntity.cs" />
     <Compile Include="Guis\Widgets\Regions\RegionState.cs" />
-    <Compile Include="Guis\Widgets\Views\PointView\ViewSelection\IPointViewSelectionControl.cs" />
+    <Compile Include="Guis\Widgets\Views\PointView\ViewSelection\IViewSelectionControl.cs" />
     <Compile Include="Guis\Widgets\Views\ViewVerticalScrollBar.cs" />
     <Compile Include="Guis\Widgets\Views\ViewScrollbarSettings.cs" />
     <Compile Include="Guis\Widgets\Views\ViewSettings.cs" />
@@ -319,7 +319,7 @@
     <Compile Include="Guis\Widgets\Views\ViewRegion.cs" />
     <Compile Include="Guis\Widgets\Views\PointView\ViewScroll\PointViewHorizontalScrollControl.cs" />
     <Compile Include="Guis\Widgets\Views\PointView\ViewScroll\PointView2DScrollControl.cs" />
-    <Compile Include="Guis\Widgets\Views\PointView\ViewSelection\PointView1DSelectionControl.cs" />
+    <Compile Include="Guis\Widgets\Views\PointView\ViewSelection\PointViewHorizontalSelectionControl.cs" />
     <Compile Include="Guis\Widgets\Views\PointView\ViewSelection\PointView2DSelectionControl.cs" />
     <Compile Include="Guis\Widgets\Views\PointView\PointViewHorizontalSettings.cs" />
     <Compile Include="Guis\Widgets\Views\PointView\PointView2DSettings.cs" />
@@ -328,8 +328,8 @@
     <Compile Include="Guis\Widgets\Views\PointView\ViewSwap\ViewSwapControl.cs" />
     <Compile Include="Guis\Group.cs" />
     <Compile Include="Guis\GroupComponent.cs" />
-    <Compile Include="Guis\GroupLogicControl.cs" />
-    <Compile Include="Guis\GroupVisualControl.cs" />
+    <Compile Include="Guis\GroupLogic.cs" />
+    <Compile Include="Guis\GroupVisual.cs" />
     <Compile Include="Guis\Module.cs" />
     <Compile Include="Guis\ModuleComponent.cs" />
     <Compile Include="Guis\ModuleLogicControl.cs" />
@@ -414,7 +414,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Class Diagrams\Components.cd" />
-    <None Include="Guis\Widgets\Views\PointView\ViewSwap\ClassDiagram.cd" />
+    <None Include="Guis\Widgets\Views\ClassDiagrams\ViewLogic.cd" />
     <None Include="Content\ConsoleFont.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

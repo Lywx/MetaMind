@@ -1,6 +1,6 @@
 namespace MetaMind.Engine.Guis.Widgets.Views.PointView.ViewSelection
 {
-    public interface IPointView2DSelectionControl : IPointView1DSelectionControl
+    public interface IPointView2DSelectionControl : IPointViewHorizontalSelectionControl
     {
         void MoveDown();
 

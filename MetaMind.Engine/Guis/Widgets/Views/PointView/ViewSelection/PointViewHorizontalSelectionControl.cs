@@ -1,24 +1,51 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PointView1DSelectionControl.cs" company="UESTC">
-//   Copyright (c) 2014 Wuxiang Lin
+// <copyright file="PointViewHorizontalSelectionControl.cs" company="UESTC">
+//   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace MetaMind.Engine.Guis.Widgets.Views.PointView.ViewSelection
 {
-    using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Guis.Widgets.Views.PointView.ViewScroll;
 
-    public class PointView1DSelectionControl : ViewComponent, IPointView1DSelectionControl
+    public class PointViewHorizontalSelectionControl : ViewComponent, IPointViewHorizontalSelectionControl
     {
         private int? currentColumn;
 
         private int? previousColumn;
 
-        public PointView1DSelectionControl(IView view, PointViewHorizontalSettings viewSettings, ItemSettings itemSettings)
-            : base(view, viewSettings, itemSettings)
+        #region Constructors
+
+        public PointViewHorizontalSelectionControl(IView view)
+            : base(view)
         {
         }
+
+        #endregion
+
+        #region Dependency
+
+        protected IViewScrollSupport ViewScrollSupport
+        {
+            get
+            {
+                return this.ViewLogic as IViewScrollSupport;
+            }
+        }
+
+        protected IPointViewHorizontalScrollControl ViewScroll
+        {
+            get
+            {
+                // Two layer certification
+                return this.ViewScrollSupport != null
+                           ? this.ViewScrollSupport.ViewScroll as IPointViewHorizontalScrollControl
+                           : null;
+            }
+        }
+
+        #endregion Dependency
 
         public bool HasPreviouslySelected
         {
@@ -70,9 +97,10 @@ namespace MetaMind.Engine.Guis.Widgets.Views.PointView.ViewSelection
                 this.Select(column);
             }
 
-            if (this.ViewLogic.Scroll.IsLeftToDisplay(column))
+            if (this.ViewScroll != null && 
+                this.ViewScroll.IsLeftToDisplay(column))
             {
-                this.ViewLogic.Scroll.MoveLeft();
+                this.ViewScroll.MoveLeft();
             }
         }
 
@@ -92,9 +120,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views.PointView.ViewSelection
                 this.Select(column);
             }
 
-            if (this.ViewLogic.Scroll.IsRightToDisplay(column))
+            if (this.ViewScroll != null && this.ViewScroll.IsRightToDisplay(column))
             {
-                this.ViewLogic.Scroll.MoveRight();
+                this.ViewScroll.MoveRight();
             }
         }
 

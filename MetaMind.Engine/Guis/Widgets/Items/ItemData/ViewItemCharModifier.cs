@@ -5,7 +5,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Engine.Guis.Widgets.Items
+namespace MetaMind.Engine.Guis.Widgets.Items.ItemData
 {
     using System;
     using System.Globalization;

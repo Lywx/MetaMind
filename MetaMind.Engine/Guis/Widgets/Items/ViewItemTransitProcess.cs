@@ -27,7 +27,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         private readonly IRegion desRegion;
 
-        protected IPointViewSelectionControl DesSelection { get; private set; }
+        protected IViewSelectionControl DesSelection { get; private set; }
 
         protected IView DesView { get; private set; }
 

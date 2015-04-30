@@ -5,7 +5,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Engine.Guis.Widgets.Items
+namespace MetaMind.Engine.Guis.Widgets.Items.ItemData
 {
     using System;
     using System.Reflection;
@@ -75,27 +75,27 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         {
             this.dataName = targetName;
 
-            Item[ItemState.Item_Is_Pending] = () => false;
-            Item[ItemState.Item_Is_Editing] = () => true;
-            View[ViewState.View_Is_Editing] = () => true;
+            this.Item[ItemState.Item_Is_Pending] = () => false;
+            this.Item[ItemState.Item_Is_Editing] = () => true;
+            this.View[ViewState.View_Is_Editing] = () => true;
 
-            FieldInfo field = ItemData.GetType().GetField(targetName);
+            FieldInfo field = this.ItemData.GetType().GetField(targetName);
             if (field != null)
             {
-                this.CharModifier.Initialize(field.GetValue(ItemData).ToString(), showCursor);
+                this.CharModifier.Initialize(field.GetValue(this.ItemData).ToString(), showCursor);
             }
 
-            PropertyInfo property = ItemData.GetType().GetProperty(targetName);
+            PropertyInfo property = this.ItemData.GetType().GetProperty(targetName);
             if (property != null)
             {
-                this.CharModifier.Initialize(property.GetValue(ItemData).ToString(), showCursor);
+                this.CharModifier.Initialize(property.GetValue(this.ItemData).ToString(), showCursor);
             }
         }
 
         private void EditTerminate(object sender, EventArgs e)
         {
-            Item[ItemState.Item_Is_Editing]  = () => false;
-            View[ViewState.View_Is_Editing] = () => false;
+            this.Item[ItemState.Item_Is_Editing]  = () => false;
+            this.View[ViewState.View_Is_Editing] = () => false;
         }
 
         private void RefreshInt(object sender, ViewItemDataEventArgs e)
@@ -103,7 +103,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             int result;
             var succeded = int.TryParse(Font.ContentRegular.PrintableString(e.NewValue), out result);
 
-            this.RefreshValue(ItemData, succeded ? result : 0);
+            this.RefreshValue(this.ItemData, succeded ? result : 0);
         }
 
         private void RefreshString(object sender, ViewItemDataEventArgs e)

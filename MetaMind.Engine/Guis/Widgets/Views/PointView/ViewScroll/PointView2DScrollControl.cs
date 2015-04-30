@@ -4,6 +4,11 @@
 
     using Microsoft.Xna.Framework;
 
+    /// <summary>
+    /// Dependent on PointView2DSettings IPointView2DLogic
+    /// </summary>
+    /// <see cref="PointView2DSettings"/>
+    /// <see cref="IPointView2DLogic"/>
     public class PointView2DScrollControl : ViewComponent, IPointView2DScrollControl
     {
         private int offsetX;
@@ -19,13 +24,23 @@
             }
 
             this.ViewSettings = viewSettings;
-
-            // TODO: HOW TO DO THIs
-            if (!this.ViewLogic is IPointView2DLogic)
-            {
-                throw new ArgumentException("viewLogic");
-            }
         }
+
+        #region Dependency
+
+        private new PointView2DSettings ViewSettings { get; set; }
+
+        private int ColumnFrom(int id)
+        {
+            return ((IPointView2DLogic)this.ViewLogic).ColumnFrom(id);
+        }
+
+        private int RowFrom(int id)
+        {
+            return ((IPointView2DLogic)this.ViewLogic).RowFrom(id);
+        }
+
+        #endregion
 
         public int OffsetX
         {
@@ -64,12 +79,6 @@
         {
             get { return this.OffsetY > 0; }
         }
-
-        #region Dependency
-
-        private new PointView2DSettings ViewSettings { get; set; }
-
-        #endregion
 
         public bool CanDisplay(int row, int column)
         {
@@ -178,16 +187,6 @@
                     this.MoveDown();
                 }
             }
-        }
-
-        private int ColumnFrom(int id)
-        {
-            return ((IPointView2DLogic)this.ViewLogic).ColumnFrom(id);
-        }
-
-        private int RowFrom(int id)
-        {
-            return ((IPointView2DLogic)this.ViewLogic).RowFrom(id);
         }
     }
 }

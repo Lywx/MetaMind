@@ -1,5 +1,6 @@
 namespace MetaMind.Engine.Guis.Widgets.Items
 {
+    using System;
     using System.Diagnostics;
 
     using MetaMind.Engine.Guis.Widgets.Views;
@@ -10,30 +11,30 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
     using Process = MetaMind.Engine.Components.Processes.Process;
 
-    ///  TODO: Variable name need to be changed
-
     public class ViewItemSwapProcess : Process
     {
         private const int UpdateNum = 6;
 
-        private bool initialized;
-
-        protected dynamic CommonSource { get; private set; }
-
-        protected IViewItem DraggingItem { get; private set; }
-
-        protected IViewSwapControl Control { get; private set; }
-
-        protected IViewItem SwappingItem { get; private set; }
+        private bool initialized; // TODO:FIXME
 
         #region Constructors
 
         public ViewItemSwapProcess(IViewItem draggingItem, IViewItem swappingItem, dynamic commonSource = null)
         {
-            this.DraggingItem = draggingItem;
+            if (draggingItem == null)
+            {
+                throw new ArgumentNullException("draggingItem");
+            }
 
-            this.SwappingItem    = swappingItem;
-            this.Control = swappingItem.ViewLogic.Swap;
+            if (swappingItem == null)
+            {
+                throw new ArgumentNullException("swappingItem");
+            }
+
+            this.DraggingItem = draggingItem;
+            this.SwappingItem = swappingItem;
+
+            this.SwapControl = swappingItem.ViewLogic.ViewSwap;
 
             this.CommonSource = commonSource;
 
@@ -44,6 +45,16 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         {
             this.initialized = false;
         }
+
+        #endregion
+
+        #region Dependency
+
+        protected IViewItem DraggingItem { get; private set; }
+
+        protected IViewItem SwappingItem { get; private set; }
+
+        protected IViewSwapControl SwapControl { get; private set; }
 
         #endregion
 
@@ -59,7 +70,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             this.DraggingItem = draggingItem;
 
             this.SwappingItem = swappingItem;
-            this.Control = swappingItem.ViewLogic.Swap;
+            this.SwapControl = swappingItem.ViewLogic.Swap;
 
             this.CommonSource = commonSource;
 
@@ -102,9 +113,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         public override void Update(GameTime time)
         {
-            this.Control.Progress += 1f / UpdateNum;
+            this.SwapControl.Progress += 1f / UpdateNum;
 
-            if (this.Control.Progress > 1)
+            if (this.SwapControl.Progress > 1)
             {
                 this.Succeed();
             }

@@ -28,7 +28,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.PointView
 
             this.ViewSwap      = new ViewSwapControl(this.View, this.ViewSettings, this.ItemSettings);
             this.ViewScroll    = new PointViewHorizontalScrollControl(this.View, this.ViewSettings, this.ItemSettings);
-            this.ViewSelection = new PointView1DSelectionControl(this.View, this.ViewSettings, this.ItemSettings);
+            this.ViewSelection = new PointViewHorizontalSelectionControl(this.View, this.ViewSettings, this.ItemSettings);
         }
 
         protected PointView1DLogic(

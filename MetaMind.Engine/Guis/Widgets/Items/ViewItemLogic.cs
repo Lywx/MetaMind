@@ -90,28 +90,6 @@
 
         #endregion 
 
-        #region Operations
-
-        /// <summary>
-        ///     Only used by root frame event handler, which will cause common select method to be called. as a result unifying the
-        ///     mouse and keyboard selection effect.
-        /// </summary>
-        public void MouseSelectsIt()
-        {
-            this.ItemViewControl.MouseSelectsIt();
-        }
-
-        /// <summary>
-        ///     Same as ViewDoSelect. Only used by root frame event handler, which will cause common unselect method to be called.
-        ///     As a result unifying the mouse and keyboard un-selection effect.
-        /// </summary>
-        public void MouseUnselectsIt()
-        {
-            this.ItemViewControl.MouseUnselectsIt();
-        }
-
-        #endregion Operations
-
         #region Update
 
         public virtual bool AcceptInput

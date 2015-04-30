@@ -1,4 +1,4 @@
-namespace MetaMind.Engine.Guis.Widgets.Items
+namespace MetaMind.Engine.Guis.Widgets.Items.ItemData
 {
     public interface IViewItemCharProcessor
     {

@@ -1,6 +1,7 @@
 ﻿
 namespace MetaMind.Engine.Guis.Widgets.Items
 {
+    using MetaMind.Engine.Guis.Widgets.Items.ItemData;
     using MetaMind.Engine.Guis.Widgets.Items.ItemFrames;
     using MetaMind.Engine.Guis.Widgets.Items.ItemView;
     using MetaMind.Engine.Guis.Widgets.Views.PointView.ViewItem;
@@ -18,7 +19,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             this.ItemFrameControl = new ViewItemFrameControl(item);
             this.ItemDataControl  = new ViewItemDataModifier(item);
         }
-
 
         #endregion Constructors
 

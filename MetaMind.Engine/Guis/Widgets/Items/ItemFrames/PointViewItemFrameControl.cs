@@ -11,19 +11,11 @@ namespace MetaMind.Engine.Guis.Widgets.Items.ItemFrames
         {
         }
 
-        protected new IViewScrollSupport ViewLogic
-        {
-            get
-            {
-                return base.ViewLogic;
-            }
-        }
-
         protected IViewSwapControl ViewSwap
         {
             get
             {
-                return this.ViewLogic.ViewScroll;
+                return ((IViewSwapSupport)this.ViewLogic).ViewSwap;
             }
         }
 
@@ -31,7 +23,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.ItemFrames
         {
             get
             {
-                return this.ViewLogic.ViewScroll;
+                return ((IViewScrollSupport)this.ViewLogic).ViewScroll;
             }
         }
 

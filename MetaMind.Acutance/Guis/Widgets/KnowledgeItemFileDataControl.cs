@@ -11,6 +11,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     using MetaMind.Engine.Events;
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Guis.Widgets.Items.ItemData;
     using MetaMind.Engine.Guis.Widgets.Views;
 
     using Microsoft.Xna.Framework;

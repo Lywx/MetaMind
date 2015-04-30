@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Interface Name="MetaMind.Engine.Guis.Widgets.Views.PointView.ViewSwap.IViewSwapControl">
+    <Position X="10.75" Y="7.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAABABCAACA=</HashCode>
+      <FileName>Guis\Widgets\Views\PointView\ViewSwap\IViewSwapControl.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Guis.Widgets.Views.PointView.ViewSwap.ICrossViewSwapObservor">
+    <Position X="12.75" Y="10.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Guis\Widgets\Views\PointView\ViewSwap\ICrossViewSwapObservor.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Guis.Widgets.Views.PointView.ViewSwap.ICrossViewTransitObservor">
+    <Position X="9.5" Y="10.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Guis\Widgets\Views\PointView\ViewSwap\ICrossViewTransitObservor.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Guis.Widgets.Views.IViewLogic">
+    <Position X="2.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Guis\Widgets\Views\IViewLogic.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Guis.Widgets.Views.IViewScrollSupport">
+    <Position X="0.5" Y="5.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Guis\Widgets\Views\IViewScrollSupport.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Guis.Widgets.Views.IViewSelectionSupport">
+    <Position X="2.75" Y="5.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Guis\Widgets\Views\IViewSelectionSupport.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Guis.Widgets.Views.IViewSwapSupport">
+    <Position X="5" Y="5.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Guis\Widgets\Views\IViewSwapSupport.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Guis.Widgets.Views.PointView.ViewScroll.IPointViewScrollControl">
+    <Position X="0.5" Y="7.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAQAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Guis\Widgets\Views\PointView\ViewScroll\IPointViewScrollControl.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Guis.Widgets.Views.PointView.ViewScroll.IPointViewVerticalScrollControl">
+    <Position X="3.25" Y="9.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAQAAAAAAAAAAAAAAAAAQAAAABBAQAAAAAAAAAA=</HashCode>
+      <FileName>Guis\Widgets\Views\PointView\ViewScroll\IPointViewVerticalScrollControl.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Guis.Widgets.Views.PointView.ViewScroll.IPointViewHorizontalScrollControl">
+    <Position X="0.5" Y="9.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAEAAAAAAAAAAAAACIQAAAAAAAAAA=</HashCode>
+      <FileName>Guis\Widgets\Views\PointView\ViewScroll\IPointViewHorizontalScrollControl.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Guis.Widgets.Views.PointView.ViewScroll.IPointView2DScrollControl" Collapsed="true">
+    <Position X="0.5" Y="12.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Guis\Widgets\Views\PointView\ViewScroll\IPointView2DScrollControl.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Guis.Widgets.Views.PointView.ViewSelection.IViewSelectionControl">
+    <Position X="6.25" Y="7.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAAEAAAAAAAAABAAAAAAQAAQABIAAA=</HashCode>
+      <FileName>Guis\Widgets\Views\PointView\ViewSelection\IViewSelectionControl.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Guis.Widgets.Views.PointView.ViewSelection.IPointViewHorizontalSelectionControl">
+    <Position X="6.25" Y="10.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAAAAAAAAA=</HashCode>
+      <FileName>Guis\Widgets\Views\PointView\ViewSelection\IPointViewHorizontalSelectionControl.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Guis.Widgets.Views.PointView.ViewSelection.IPointView2DSelectionControl">
+    <Position X="6.25" Y="12.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Guis\Widgets\Views\PointView\ViewSelection\IPointView2DSelectionControl.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Guis.Widgets.Items.ItemView.IViewSwapContent">
+    <Position X="5" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>Guis\Widgets\Items\ItemView\IViewSwapContent.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Guis.Widgets.Items.ItemView.IViewSelectionContent">
+    <Position X="2.75" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAABAAA=</HashCode>
+      <FileName>Guis\Widgets\Items\ItemView\IViewSelectionContent.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Guis.Widgets.Items.ItemView.IViewTransitContent">
+    <Position X="7.25" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Guis\Widgets\Items\ItemView\IViewTransitContent.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MetaMind.Engine.Guis.Widgets.Items.IViewItemLogic">
+    <Position X="5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAEAAAAAAAAAAAAAAAAEACQAAAAAI=</HashCode>
+      <FileName>Guis\Widgets\Items\IViewItemLogic.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

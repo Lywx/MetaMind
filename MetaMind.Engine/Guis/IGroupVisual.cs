@@ -4,7 +4,7 @@
 
     using IDrawable = MetaMind.Engine.IDrawable;
 
-    public interface IGroupVisualControl : IInputable, IDrawable, IUpdateable
+    public interface IGroupVisual : IInputable, IDrawable, IUpdateable
     {
     }
 }

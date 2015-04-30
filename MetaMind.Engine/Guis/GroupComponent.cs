@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Guis
 
     public class GroupComponent<TGroup, TGroupSettings, TGroupLogic> : GameControllableEntity, IUpdateable, IDrawable, IInputable
         where                   TGroup      : Group<TGroupSettings>
-        where                   TGroupLogic : GroupLogicControl<TGroup, TGroupSettings, TGroupLogic>
+        where                   TGroupLogic : GroupLogic<TGroup, TGroupSettings, TGroupLogic>
     {
         private readonly TGroup group;
 
