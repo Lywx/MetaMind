@@ -36,7 +36,7 @@ namespace MetaMind.Runtime.Guis.Widgets
         {
             // only need to remove from gui
             // tasks are not stored centralizedly
-            this.View.Items.Remove(this.Item);
+            this.View.ViewItems.Remove(this.Item);
 
             this.Item.Dispose();
         }

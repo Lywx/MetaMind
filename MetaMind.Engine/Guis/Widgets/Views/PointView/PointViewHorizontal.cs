@@ -4,6 +4,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.PointView
     using System.Collections.Generic;
 
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Guis.Widgets.Views.Factories;
+    using MetaMind.Engine.Guis.Widgets.Views.Settings;
 
     public class PointViewHorizontal : View
     {

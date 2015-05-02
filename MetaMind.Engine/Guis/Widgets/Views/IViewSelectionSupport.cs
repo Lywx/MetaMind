@@ -1,10 +1,8 @@
 ﻿namespace MetaMind.Engine.Guis.Widgets.Views
 {
-    using System;
-
     using Sprache;
 
-    public interface IViewSelectionSupport : IViewComponent, IInput, IDisposable
+    public interface IViewSelectionSupport : IViewComponent, IInput
     {
         dynamic ViewSelection { get; }
     }

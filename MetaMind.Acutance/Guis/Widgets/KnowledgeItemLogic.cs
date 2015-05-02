@@ -11,7 +11,9 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Elements;
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Guis.Widgets.Items.Logic;
     using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Engine.Guis.Widgets.Views.Settings;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
@@ -145,7 +147,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public void EditCancel()
         {
-            ItemDataControl.EditCancel();
+            this.ItemDataControl.EditCancel();
         }
 
         public void SetName(string fileName)

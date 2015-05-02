@@ -20,7 +20,7 @@
         public void DeleteIt()
         {
             // remove from gui
-            this.View.Items.Remove(this.Item);
+            this.View.ViewItems.Remove(this.Item);
 
             this.View.ViewLogic.ItemFactory.RemoveData(this.Item);
 

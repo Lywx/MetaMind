@@ -11,12 +11,12 @@ namespace MetaMind.RuntimeTest
 
     using MetaMind.Runtime.Concepts.Synchronizations;
 
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
 
-    [TestClass]
+    [TestFixture]
     public class SynchronizationSpanTest
     {
-        [TestMethod]
+        [Test]
         public void Addition()
         {
             var exp1 = new SynchronizationSpan(
@@ -36,7 +36,7 @@ namespace MetaMind.RuntimeTest
             Assert.AreEqual(exp.RecentEndTime, new DateTime(2014, 7, 22, 0, 0, 0));
         }
 
-        [TestMethod]
+        [Test]
         public void Duration()
         {
             var exp = new SynchronizationSpan(
@@ -47,7 +47,7 @@ namespace MetaMind.RuntimeTest
             Assert.AreEqual(exp.Duration, TimeSpan.FromDays(1));
         }
 
-        [TestMethod]
+        [Test]
         public void Subtraction()
         {
             var exp1 = new SynchronizationSpan(

@@ -26,18 +26,13 @@ MetaMind.RuntimeBuilder/MetaMind.RuntimeBuilderContent/obj/
 MetaMind.EngineBuilder/MetaMind.EngineBuilderContent/obj/
 MetaMind.RuntimeTest/obj/
 MetaMind.RuntimeTest/bin/
-MetaMind.RuntimeBuilder/MetaMind.RuntimeBuilderContent/Textures/Screens/Background/Thumbs.db
-MetaMind.RuntimeBuilder/MetaMind.RuntimeBuilderContent/Textures/UIs/Thumbs.db
 MetaMind.EngineTest/bin/
-MetaMind.EngineBuilder/MetaMind.EngineBuilderContent/Textures/Screens/Thumbs.db
-MetaMind.EngineBuilder/MetaMind.EngineBuilderContent/Textures/Thumbs.db
 MetaMind.EngineTest/obj/
 MetaMind.RuntimeBuilder/MetaMind.RuntimeBuilderContent/bin/
 MetaMind.RuntimeBuilder/MetaMind.RuntimeBuilderContent/Audio/
 MetaMind.Acutance/bin/
 MetaMind.AcutanceBuilder/MetaMind.AcutanceBuilder/obj/
 MetaMind.AcutanceBuilder/MetaMind.AcutanceBuilderContent/obj/
-MetaMind.AcutanceBuilder/MetaMind.AcutanceBuilder/bin/Windows/Content/Audio/Audio.xgs
 MetaMind.Acutance/obj/
 MetaMind.RuntimeHost/bin/
 MetaMind.RuntimeService/bin/
@@ -46,5 +41,5 @@ MetaMind.RuntimeHost/obj/
 MetaMind.Acutance/Service References/
 MetaMind.AcutanceTest/obj/
 MetaMind.AcutanceTest/bin/
-MetaMind.EngineBuilder/MetaMind.EngineBuilderContent/Fonts/Bitmaps/Thumbs.db
 MetaMind.v12.suo
+MetaMind.AcutanceBuilder/MetaMind.AcutanceBuilder/bin/

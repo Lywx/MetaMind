@@ -2,7 +2,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 {
     using MetaMind.Acutance.Concepts;
     using MetaMind.Engine.Guis.Widgets.Items;
-    using MetaMind.Engine.Guis.Widgets.Items.ItemData;
+    using MetaMind.Engine.Guis.Widgets.Items.Data;
 
     using Microsoft.Xna.Framework;
 

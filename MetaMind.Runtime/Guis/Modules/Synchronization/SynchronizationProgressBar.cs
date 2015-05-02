@@ -4,6 +4,7 @@ namespace MetaMind.Runtime.Guis.Modules.Synchronization
 
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Widgets.Visual;
+    using MetaMind.Engine.Guis.Widgets.Visuals;
     using MetaMind.Engine.Services;
     using MetaMind.Engine.Settings.Colors;
     using MetaMind.Runtime.Concepts.Synchronizations;

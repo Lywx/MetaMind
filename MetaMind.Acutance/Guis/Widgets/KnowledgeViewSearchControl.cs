@@ -119,7 +119,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         private void RefreshSearchResult(FoundInfoEventArgs e)
         {
-            if (View.Items.Count > this.resultNumMax)
+            if (View.ViewItems.Count > this.resultNumMax)
             {
                 return;
             }

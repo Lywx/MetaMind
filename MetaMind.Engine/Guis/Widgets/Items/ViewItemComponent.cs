@@ -1,6 +1,8 @@
 namespace MetaMind.Engine.Guis.Widgets.Items
 {
+    using MetaMind.Engine.Guis.Widgets.Items.Extensions;
     using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Engine.Guis.Widgets.Views.Extensions;
 
     public class ViewItemComponent : GameControllableEntity, IViewItemComponent
     {
@@ -26,41 +28,30 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         #region Indirect Dependency
 
-        public dynamic ItemLogic
-        {
-            get { return this.Item.ItemLogic; }
-        }
-
-        public dynamic ItemData
-        {
-            get { return this.Item.ItemData; }
-        }
-
-        public dynamic ItemSettings
-        {
-            get { return this.Item.ItemSettings; }
-        }
-
-        public IItemVisual ItemVisual
-        {
-            get { return this.Item.ItemVisual; }
-        }
-
         public IView View
         {
-            get { return this.Item.View; }
+            get
+            {
+                return this.Item.View;
+            } 
         }
 
-        public dynamic ViewLogic
+        public IViewExtension ViewExtension
         {
-            get { return this.View.ViewLogic; }
+            get
+            {
+                return this.View.ViewExtension;
+            }
         }
 
-        public dynamic ViewSettings
+        public IViewItemExtension ItemExtension
         {
-            get { return this.Item.ViewSettings; }
+            get
+            {
+                return this.Item.ItemExtension;
+            }
         }
 
-        #endregion View Components
+        #endregion 
     }
 }

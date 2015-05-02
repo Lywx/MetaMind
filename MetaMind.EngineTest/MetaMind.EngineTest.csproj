@@ -42,13 +42,17 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Guis\TestModule.cs" />
-    <Compile Include="Guis\TestScreen.cs" />
+    <Compile Include="Guis\PlayTest_Region.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Guis\PlayTest_Screen.cs" />
+    <Compile Include="Guis\Test_Settings.cs" />
+    <Compile Include="Guis\Test_ViewItem.cs" />
     <Compile Include="Parsers\BasicParserTest.cs" />
     <Compile Include="Parsers\ConfigurationParserTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Test.cs" />
+    <Compile Include="GameEngineTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="LightInject, Version=3.0.2.6, Culture=neutral, processorArchitecture=MSIL">
@@ -58,9 +62,17 @@
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MSBuildProgramFiles32)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="Moq, Version=4.2.1502.911, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.2.1502.0911\lib\net40\Moq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Primtives2D, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdParties\Primitives2D\bin\Debug\Primtives2D.dll</HintPath>
     </Reference>
     <Reference Include="Sprache">
       <HintPath>..\ThirdParties\Sprache.dll</HintPath>
@@ -78,14 +90,6 @@
     <ProjectReference Include="..\MetaMind.Engine\MetaMind.Engine.csproj">
       <Project>{8944c3ab-1865-49cf-9e84-1ecc42ad2c3e}</Project>
       <Name>MetaMind.Engine</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MetaMind.Runtime\MetaMind.Runtime.csproj">
-      <Project>{91A424B6-E62B-4B7A-B30D-331C7E3AF5F0}</Project>
-      <Name>MetaMind.Runtime</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ThirdParties\Primitives2D\Primitives2D.csproj">
-      <Project>{39ad1482-1881-4852-a05d-dc61b0d3446a}</Project>
-      <Name>Primitives2D</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

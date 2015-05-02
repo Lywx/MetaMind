@@ -1,5 +1,7 @@
 ﻿namespace MetaMind.Engine.Guis.Widgets.Views
 {
+    using MetaMind.Engine.Guis.Widgets.Views.Extensions;
+
     /// <summary>
     /// ViewComponent hooks all neccesary external information to the View object, 
     /// which allows view-wise substitution of settings. The dynamic typing allows 
@@ -20,33 +22,7 @@
 
         public IView View { get; private set; }
 
-        #endregion
-
-        #region IViewComponent
-
-        public dynamic ItemSettings
-        {
-            get
-            {
-                return this.View.ItemSettings;
-            }
-        }
-
-        public dynamic ViewLogic
-        {
-            get
-            {
-                return this.View.ViewLogic;
-            }
-        }
-
-        public dynamic ViewSettings
-        {
-            get
-            {
-                return this.View.ViewSettings;
-            }
-        }
+        public IViewExtension ViewExtension { get;private set; }
 
         #endregion
     }

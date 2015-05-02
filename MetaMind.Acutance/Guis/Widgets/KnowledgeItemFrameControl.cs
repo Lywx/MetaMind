@@ -3,7 +3,7 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Engine;
     using MetaMind.Engine.Guis.Elements;
     using MetaMind.Engine.Guis.Widgets.Items;
-    using MetaMind.Engine.Guis.Widgets.Items.ItemFrames;
+    using MetaMind.Engine.Guis.Widgets.Items.Frames;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;

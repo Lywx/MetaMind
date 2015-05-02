@@ -4,8 +4,11 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Engine;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Guis.Widgets.Items.Settings;
     using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Engine.Guis.Widgets.Views.Logic;
     using MetaMind.Engine.Guis.Widgets.Views.PointView;
+    using MetaMind.Engine.Guis.Widgets.Views.Settings;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
@@ -25,8 +28,8 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public void AddItem(Command entry)
         {
-            var item = new ViewItemExchangeless(View, ViewSettings, ItemSettings, ItemFactory, entry);
-            View.Items.Add(item);
+            var item = new ViewItem(View, ViewSettings, ItemSettings, ItemFactory, entry);
+            View.ViewItems.Add(item);
         }
 
         public override void SortItems(PointViewSortMode sortMode)
@@ -61,7 +64,7 @@ namespace MetaMind.Acutance.Guis.Widgets
                 {
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.CommandClearItem))
                     {
-                        var notEmpty = View.Items.Count;
+                        var notEmpty = View.ViewItems.Count;
                         if (notEmpty > 0)
                         {
                             this.ViewSelection.Select(notEmpty - 1);
@@ -76,10 +79,10 @@ namespace MetaMind.Acutance.Guis.Widgets
                     {
                         // itme deletion is handled by item control
                         // auto select last item
-                        if (View.Items.Count > 1)
+                        if (View.ViewItems.Count > 1)
                         {
                             // this will be commanded before item deletion
-                            this.ViewSelection.Select(View.Items.Count - 2);
+                            this.ViewSelection.Select(View.ViewItems.Count - 2);
                         }
                     }
 

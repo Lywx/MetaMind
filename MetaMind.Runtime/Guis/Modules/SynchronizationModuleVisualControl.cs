@@ -6,6 +6,7 @@ namespace MetaMind.Runtime.Guis.Modules
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Widgets.Visual;
+    using MetaMind.Engine.Guis.Widgets.Visuals;
     using MetaMind.Engine.Services;
     using MetaMind.Runtime.Concepts.Cognitions;
     using MetaMind.Runtime.Concepts.Synchronizations;

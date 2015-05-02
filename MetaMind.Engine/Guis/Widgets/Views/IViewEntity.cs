@@ -11,10 +11,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     public interface IViewEntity : IGameControllableEntity
     {
-        dynamic ItemSettings { get; }
-
-        dynamic ViewSettings { get; }
-
         #region States
 
         bool[] States { get; }

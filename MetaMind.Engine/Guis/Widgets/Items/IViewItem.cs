@@ -9,6 +9,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 {
     using System;
 
+    using MetaMind.Engine.Guis.Widgets.Items.Extensions;
+    using MetaMind.Engine.Guis.Widgets.Items.Logic;
+    using MetaMind.Engine.Guis.Widgets.Items.Visuals;
     using MetaMind.Engine.Guis.Widgets.Views;
 
     using Microsoft.Xna.Framework;
@@ -17,21 +20,22 @@ namespace MetaMind.Engine.Guis.Widgets.Items
     {
         #region Item Data
 
+        /// <summary>
+        /// Data that is to be presented.
+        /// </summary>
         dynamic ItemData { get; set; }
 
-        dynamic ItemLogic { get; set; }
+        IViewItemLogic ItemLogic { get; }
         
-        IItemVisual ItemVisual { get; set; }
+        IViewItemVisual ItemVisual { get; }
+
+        IViewItemExtension ItemExtension { get; }
 
         #endregion
 
         #region View Data
 
         IView View { get; }
-
-        dynamic ViewLogic { get; }
-
-        dynamic ViewSettings { get; }
 
         #endregion
 

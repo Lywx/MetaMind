@@ -21,7 +21,11 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             this.ItemSettings = itemSettings;
         }
 
-        public dynamic ItemSettings { get; protected set; }
+        #region Settings
+
+        public object ItemSettings { get; protected set; }
+
+        #endregion
 
         #region States
 

@@ -5,6 +5,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         // whether is inside view region
         Item_Is_Active,
 
+        // whether is accepting input
+        Item_Is_Inputting,
+
         // whether is visible
         Item_Is_Visible,
 

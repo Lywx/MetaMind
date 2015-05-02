@@ -32,7 +32,7 @@ namespace MetaMind.Acutance.Guis.Modules
                 this.commandView.ViewLogic.SortItems(PointViewSortMode.Name);
 
                 // possibly unnecessary
-                var notifiedItem = this.commandView.Items.Find(item => ReferenceEquals(item.ItemData, notifiedCommand));
+                var notifiedItem = this.commandView.ViewItems.Find(item => ReferenceEquals(item.ItemData, notifiedCommand));
 
                 int id = notifiedItem.ItemLogic.Id;
 

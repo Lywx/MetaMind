@@ -12,7 +12,7 @@
         {
             using (var engine = new GameEngine())
             {
-                var test = new Test(engine);
+                var test = new GameEngineTest(engine);
                 test.Run();
             }
         }

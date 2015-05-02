@@ -10,7 +10,9 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Elements;
     using MetaMind.Engine.Guis.Widgets.Items;
-    using MetaMind.Engine.Guis.Widgets.Items.ItemView;
+    using MetaMind.Engine.Guis.Widgets.Items.Logic;
+    using MetaMind.Engine.Guis.Widgets.Items.Swaps;
+    using MetaMind.Engine.Guis.Widgets.Items.Views;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
@@ -64,7 +66,7 @@ namespace MetaMind.Acutance.Guis.Widgets
         /// </remarks>
         public void DeleteIt()
         {
-            View.Items.Remove(Item);
+            View.ViewItems.Remove(Item);
 
             // reset corresponding command entry to turn to running state
             ItemData.Reset();

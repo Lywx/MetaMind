@@ -4,6 +4,7 @@ namespace MetaMind.Runtime.Guis.Modules.Summary
 
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Guis.Widgets.Visual;
+    using MetaMind.Engine.Guis.Widgets.Visuals;
 
     using Microsoft.Xna.Framework;
 

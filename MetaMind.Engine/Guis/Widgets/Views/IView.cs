@@ -10,13 +10,21 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     using System.Collections.Generic;
 
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Guis.Widgets.Views.Extensions;
+    using MetaMind.Engine.Guis.Widgets.Views.Logic;
+    using MetaMind.Engine.Guis.Widgets.Views.Settings;
+    using MetaMind.Engine.Guis.Widgets.Views.Visuals;
 
     public interface IView : IViewEntity
     {
-        dynamic ViewLogic { get; set; }
+        IViewLogic ViewLogic { get; }
 
-        IViewVisualControl ViewVisual { get; set; }
+        IViewVisual ViewVisual { get; set; }
 
-        List<IViewItem> Items { get; set; }
+        List<IViewItem> ViewItems { get; }
+
+        IViewExtension ViewExtension { get; }
+
+        ViewSettings ViewSettings { get; set; }
     }
 }

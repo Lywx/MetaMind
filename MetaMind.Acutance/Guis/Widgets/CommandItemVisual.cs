@@ -3,6 +3,7 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Engine;
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Guis.Widgets.Items.Settings;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
@@ -35,7 +36,7 @@ namespace MetaMind.Acutance.Guis.Widgets
             string name = ItemData.Name;
 
             string text = FontManager.CropMonospacedString(
-                this.ItemLogic.Id > 0 ? FormatUtils.Paddle(name, View.Items[this.ItemLogic.Id - 1].ItemData.Name) : name,
+                this.ItemLogic.Id > 0 ? FormatUtils.Paddle(name, View.ViewItems[this.ItemLogic.Id - 1].ItemData.Name) : name,
                 ItemSettings.NameSize,
                 ItemSettings.NameFrameSize.X - ItemSettings.NameXLMargin * 2);
 

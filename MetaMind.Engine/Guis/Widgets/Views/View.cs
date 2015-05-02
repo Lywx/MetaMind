@@ -4,14 +4,18 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     using System.Collections.Generic;
 
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Guis.Widgets.Items.Settings;
+    using MetaMind.Engine.Guis.Widgets.Views.Factories;
+    using MetaMind.Engine.Guis.Widgets.Views.Logic;
+    using MetaMind.Engine.Guis.Widgets.Views.Settings;
+    using MetaMind.Engine.Guis.Widgets.Views.Visuals;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
     public class View : ViewEntity, IView
     {
-        public View(ICloneable viewSettings, IViewFactory viewFactory, ICloneable itemSettings, List<IViewItem> items)
-            : base(viewSettings, itemSettings)
+        public View(ViewSettings viewSettings, IViewFactory viewFactory, ItemSettings itemSettings, List<IViewItem> viewItems)
         {
             if (viewSettings == null)
             {
@@ -28,12 +32,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views
                 throw new ArgumentNullException("itemSettings");
             }
 
-            if (items == null)
+            if (viewItems == null)
             {
-                throw new ArgumentNullException("items");
+                throw new ArgumentNullException("viewItems");
             }
 
-            this.Items = items;
+            this.ViewItems = viewItems;
 
             // Composition root of view
             this.ViewLogic  = viewFactory.CreateLogicControl(this, viewSettings, itemSettings);
@@ -42,11 +46,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         
         #region Dependency
 
-        public List<IViewItem> Items { get; set; }
+        public List<IViewItem> ViewItems { get; set; }
 
-        public dynamic ViewLogic { get; set; }
+        public IViewLogic ViewLogic { get; set; }
 
-        public IViewVisualControl ViewVisual { get; set; }
+        public IViewVisual ViewVisual { get; set; }
 
         #endregion
 
@@ -64,7 +68,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             if (this.ViewLogic != null)
             {
-                ((IUpdateable)this.ViewLogic).Update(time);
+                this.ViewLogic.Update(time);
             }
 
             if (this.ViewVisual != null)
@@ -77,7 +81,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             if (this.ViewLogic != null)
             {
-                ((IInputable)this.ViewLogic).UpdateInput(input, time);
+                this.ViewLogic.UpdateInput(input, time);
             }
         }
 

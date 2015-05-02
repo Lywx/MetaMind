@@ -131,17 +131,9 @@
     <Compile Include="Guis\Modules\Synchronization\SynchronizationProgressBar.cs" />
     <Compile Include="Guis\Modules\SummaryModule.cs" />
     <Compile Include="Guis\Modules\SummarySettings.cs" />
-    <Compile Include="Guis\Widgets\ExperienceItemLogic.cs" />
-    <Compile Include="Guis\Widgets\ExperienceItemVisual.cs" />
-    <Compile Include="Guis\Widgets\ExperienceItemFrameControl.cs" />
-    <Compile Include="Guis\Widgets\ExperienceItemSettings.cs" />
-    <Compile Include="Guis\Widgets\ViewItemSyncControl.cs" />
     <Compile Include="Guis\Modules\SynchronizationModule.cs" />
     <Compile Include="Guis\Modules\SynchronizationMonitor.cs" />
     <Compile Include="Guis\Modules\SynchronizationSettings.cs" />
-    <Compile Include="Guis\Widgets\TimelineScale.cs" />
-    <Compile Include="Guis\Widgets\TaskItemLogic.cs" />
-    <Compile Include="Guis\Widgets\TaskItemVisual.cs" />
     <Compile Include="Runtime.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -153,6 +145,10 @@
     <Compile Include="Sessions\SessionEventType.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="LightInject, Version=3.0.2.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LightInject.3.0.2.6\lib\net45\LightInject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
@@ -166,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\" />
+    <Folder Include="Guis\Widgets\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MetaMind.EngineBuilder\MetaMind.EngineBuilder\MetaMind.EngineBuilder.csproj">
@@ -212,6 +209,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

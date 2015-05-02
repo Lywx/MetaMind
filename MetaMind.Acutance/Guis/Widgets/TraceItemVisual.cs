@@ -4,6 +4,8 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Engine.Concepts;
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Guis.Widgets.Items.Settings;
+    using MetaMind.Engine.Guis.Widgets.Items.Visuals;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;

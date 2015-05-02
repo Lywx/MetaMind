@@ -12,9 +12,12 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Engine.Components.Events;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Guis.Widgets.Items.Settings;
     using MetaMind.Engine.Guis.Widgets.Regions;
     using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Engine.Guis.Widgets.Views.Logic;
     using MetaMind.Engine.Guis.Widgets.Views.PointView;
+    using MetaMind.Engine.Guis.Widgets.Views.Settings;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
@@ -47,14 +50,14 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public IViewItem BlankItem
         {
-            get { return View.Items.Count > 0 ? View.Items.Where(item => item.ItemData.IsBlank).First() : null; }
+            get { return View.ViewItems.Count > 0 ? View.ViewItems.Where(item => item.ItemData.IsBlank).First() : null; }
         }
 
         public RawKnowledgeFileBuffer FileBuffer { get; set; }
         
         public IViewItem FileItem
         {
-            get { return View.Items.Count > 0 ? View.Items.Where(item => item.ItemData.IsFile).First() : null; }
+            get { return View.ViewItems.Count > 0 ? View.ViewItems.Where(item => item.ItemData.IsFile).First() : null; }
         }
 
         public Searcher Searcher
@@ -80,8 +83,8 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public void AddItem(Knowledge entry)
         {
-            var item = new ViewItemExchangeless(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory, entry);
-            View.Items.Add(item);
+            var item = new ViewItem(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory, entry);
+            View.ViewItems.Add(item);
         }
 
         public void AddResultItem(string relativePath)
@@ -92,18 +95,18 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public void ClearNonControlItems()
         {
-            foreach (var item in this.View.Items.FindAll(item => !item.ItemData.IsControl))
+            foreach (var item in this.View.ViewItems.FindAll(item => !item.ItemData.IsControl))
             {
-                View.Items.Remove(item);
+                View.ViewItems.Remove(item);
                 item.Dispose();
             }
         }
 
         public void ClearResultItems()
         {
-            foreach (var item in this.View.Items.FindAll(item => item.ItemData.IsResult))
+            foreach (var item in this.View.ViewItems.FindAll(item => item.ItemData.IsResult))
             {
-                View.Items.Remove(item);
+                View.ViewItems.Remove(item);
                 item.Dispose();
             }
         }
@@ -116,15 +119,15 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public void InsertItem(int index, Knowledge entry)
         {
-            var item = new ViewItemExchangeless(View, ViewSettings, ItemSettings, ItemFactory, entry);
-            View.Items.Insert(index, item);
+            var item = new ViewItem(View, ViewSettings, ItemSettings, ItemFactory, entry);
+            View.ViewItems.Insert(index, item);
         }
 
         public void RemoveBlankItem()
         {
             if (this.BlankItem != null)
             {
-                View.Items.Remove(this.BlankItem);
+                View.ViewItems.Remove(this.BlankItem);
             }
         }
 
@@ -180,9 +183,9 @@ namespace MetaMind.Acutance.Guis.Widgets
                 }
             }
 
-            if (View.Items.Count > 0)
+            if (View.ViewItems.Count > 0)
             {
-                foreach (var item in View.Items.FindAll(item => item.ItemData.IsControl && !item.ItemData.IsBlank).ToArray())
+                foreach (var item in View.ViewItems.FindAll(item => item.ItemData.IsControl && !item.ItemData.IsBlank).ToArray())
                 {
                     item.UpdateInput(time);
                 }

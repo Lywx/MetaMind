@@ -3,9 +3,9 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Acutance.Concepts;
     using MetaMind.Engine;
     using MetaMind.Engine.Components.Inputs;
-    using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Regions;
     using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Engine.Guis.Widgets.Views.Logic;
     using MetaMind.Engine.Guis.Widgets.Views.PointView;
     using MetaMind.Engine.Services;
 
@@ -27,7 +27,7 @@ namespace MetaMind.Acutance.Guis.Widgets
         public void AddItem(Trace entry)
         {
             var item = new ViewItemExchangable(this.View, this.ViewSettings, this.ItemSettings, this.ItemFactory, entry);
-            View.Items.Add(item);
+            View.ViewItems.Add(item);
         }
 
         #endregion Operations
@@ -52,23 +52,23 @@ namespace MetaMind.Acutance.Guis.Widgets
                         this.AddItem();
 
                         // auto select new item
-                        this.ViewSelection.Select(this.View.Items.Count - 1);
+                        this.ViewSelection.Select(this.View.ViewItems.Count - 1);
                     }
 
                     if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.TraceDeleteItem))
                     {
                         // itme deletion is handled by item control
                         // auto select last item
-                        if (this.View.Items.Count > 1)
+                        if (this.View.ViewItems.Count > 1)
                         {
                             // this will be called before item deletion
-                            this.ViewSelection.Select(this.View.Items.Count - 2);
+                            this.ViewSelection.Select(this.View.ViewItems.Count - 2);
                         }
                     }
 
                     if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.TraceClearItem))
                     {
-                        var notEmpty = View.Items.Count;
+                        var notEmpty = View.ViewItems.Count;
                         if (notEmpty > 0)
                         {
                             this.ViewSelection.Select(notEmpty - 1);
