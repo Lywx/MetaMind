@@ -4,14 +4,14 @@
     using MetaMind.Acutance.Parsers.Grammars;
     using MetaMind.AcutanceTest;
 
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
 
     using Sprache;
 
-    [TestClass]
+    [TestFixture]
     public class ScheduleParserTest
     {
-        [TestMethod]
+        [Test]
         public void ScheduleDayVerbose()
         {
             var input = "Monday";
@@ -43,7 +43,7 @@
             Assert.AreEqual(DayTag.Sunday, parsed);
         }
 
-        [TestMethod]
+        [Test]
         public void ScheduleDayConcise()
         {
             var input = "Mon";
@@ -80,7 +80,7 @@
         }
 
 
-        [TestMethod]
+        [Test]
         public void ScheduleRepetition()
         {
             var input = "Everyday";
@@ -101,7 +101,7 @@
             Assert.AreEqual(RepetitionTag.Unspecified, parsed);
         }
 
-        [TestMethod]
+        [Test]
         public void ScheduleDate()
         {
             var input = "Everyday - 8:0:0";
@@ -120,7 +120,7 @@
         }
 
 
-        [TestMethod]
+        [Test]
         public void ScheduleASchedule()
         {
             var input = TestResources.AScheduleSample;
@@ -135,7 +135,7 @@
             Assert.AreEqual(TestResources.AScheduleSampleScheduleContent, parsed.Content);
         }
 
-        [TestMethod]
+        [Test]
         public void ScheduleTwoSchedule()
         {
             var input = TestResources.TwoScheduleSample;
@@ -145,7 +145,7 @@
             Assert.AreEqual(2, parsed.Schedules.Count);
         }
 
-        [TestMethod]
+        [Test]
         public void ScheduleCommandExtraction()
         {
             var input = TestResources.AScheduleSampleScheduleContent;
@@ -155,7 +155,7 @@
             Assert.AreEqual(TestResources.AScheduleSampleCommandContent, parsed);
         }
 
-        [TestMethod]
+        [Test]
         public void ScheduleCommandInvariance()
         {
             var input = TestResources.AScheduleSampleCommandContent;

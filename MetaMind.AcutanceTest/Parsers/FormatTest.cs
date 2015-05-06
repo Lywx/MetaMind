@@ -4,9 +4,9 @@
 
     using MetaMind.Engine.Components.Fonts;
 
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
 
-    [TestClass]
+    [TestFixture]
     public class FormatTest
     {
         private static readonly string sanityComposed  = "              >               > Start";
@@ -14,7 +14,7 @@
         private static readonly string normalReference = "Acutance      > Check         > Song";
         private static readonly string normalRaddled   = "                              > Start";
 
-        [TestMethod]
+        [Test]
         public void ComposeTest()
         {
             var heads = new List<string> { "Acutance", "Check" };
@@ -24,7 +24,7 @@
             Assert.AreEqual(normalComposed, actualComposed);
         }
 
-        [TestMethod]
+        [Test]
         public void ComposeSanityTest()
         {
             var heads = new List<string> { "", "" };
@@ -34,7 +34,7 @@
             Assert.AreEqual(sanityComposed, actualComposed);
         }
 
-        [TestMethod]
+        [Test]
         public void DisintegrateTest()
         {
             var heads = FormatUtils.Disintegrate(normalComposed, 14, "", "> ", "", "");
@@ -44,7 +44,7 @@
             Assert.AreEqual("Start"   , heads[2]);
         }
 
-        [TestMethod]
+        [Test]
         public void PaddleTest()
         {
             var actual = FormatUtils.Paddle(normalComposed, normalReference, 14, "", "> ", "", "");

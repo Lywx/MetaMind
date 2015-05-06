@@ -12,7 +12,7 @@ namespace MetaMind.Acutance.Concepts
         public readonly TimeSpan Transition = TimeSpan.FromSeconds(30);
 
         [DataMember]
-        public SynchronizationSpan SynchronizationSpan { get; protected set; }
+        public TimeSpan SynchronizationSpan { get; protected set; }
 
         public abstract bool IsAutoReseting { get; }
 
@@ -20,7 +20,6 @@ namespace MetaMind.Acutance.Concepts
 
         public virtual void Dispose()
         {
-            this.SynchronizationSpan = SynchronizationSpan.Zero;
         }
 
         [OnDeserialized]

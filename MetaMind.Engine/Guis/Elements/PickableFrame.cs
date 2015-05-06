@@ -79,6 +79,8 @@ namespace MetaMind.Engine.Guis.Elements
 
         #endregion IDisposable
 
+        #region Events
+
         public event EventHandler<FrameEventArgs> FrameMoved;
 
         public event EventHandler<FrameEventArgs> MouseEnter;
@@ -95,30 +97,124 @@ namespace MetaMind.Engine.Guis.Elements
 
         public event EventHandler<FrameEventArgs> MouseRightPressed;
 
-        public event EventHandler<FrameEventArgs> MouseRightPressedOutside; 
-        
+        public event EventHandler<FrameEventArgs> MouseRightPressedOutside;
+
         public event EventHandler<FrameEventArgs> MouseRightReleased;
-        
+
         public event EventHandler<FrameEventArgs> MouseRightDoubleClicked;
+
+        private void OnFrameMoved()
+        {
+            if (this.FrameMoved != null)
+            {
+                this.FrameMoved(this, new FrameEventArgs(FrameEventType.Frame_Moved));
+            }
+        }
+
+        private void OnMouseRightDoubleClicked()
+        {
+            if (this.MouseRightDoubleClicked != null)
+            {
+                this.MouseRightDoubleClicked(this, new FrameEventArgs(FrameEventType.Mouse_Right_Double_Clicked));
+            }
+        }
+
+        private void OnMouseLeftDoubleClicked()
+        {
+            if (this.MouseLeftDoubleClicked != null)
+            {
+                this.MouseLeftDoubleClicked(this, new FrameEventArgs(FrameEventType.Mouse_Left_Double_Clicked));
+            }
+        }
+
+        private void OnMouseLeftPressedOutside()
+        {
+            if (this.MouseLeftPressedOutside != null)
+            {
+                this.MouseLeftPressedOutside(this, new FrameEventArgs(FrameEventType.Mouse_Left_Pressed_Outside));
+            }
+        }
+
+        private void OnMouseLeftPressed()
+        {
+            if (this.MouseLeftPressed != null)
+            {
+                this.MouseLeftPressed(this, new FrameEventArgs(FrameEventType.Mouse_Left_Pressed));
+            }
+        }
+
+        private void OnMouseLeave()
+        {
+            if (this.MouseLeave != null)
+            {
+                this.MouseLeave(this, new FrameEventArgs(FrameEventType.Mouse_Leave));
+            }
+        }
+
+        private void OnMouseEnter()
+        {
+            if (this.MouseEnter != null)
+            {
+                this.MouseEnter(this, new FrameEventArgs(FrameEventType.Mouse_Enter));
+            }
+        }
+
+        private void OnMouseRightReleased()
+        {
+            if (this.MouseRightReleased != null)
+            {
+                this.MouseRightReleased(this, new FrameEventArgs(FrameEventType.Mouse_Right_Released));
+            }
+        }
+
+        private void OnMouseLeftReleased()
+        {
+            if (this.MouseLeftReleased != null)
+            {
+                this.MouseLeftReleased(this, new FrameEventArgs(FrameEventType.Mouse_Left_Released));
+            }
+        }
+
+        #endregion
+
+        #region Frame Data
 
         public Point Center
         {
-            get { return this.Rectangle.Center; }
-            set { this.Populate(value, this.Size); }
+            get
+            {
+                return this.Rectangle.Center;
+            }
+            set
+            {
+                this.Populate(value, this.Size);
+            }
         }
 
         public int Height
         {
-            get { return this.Rectangle.Height; }
-            set { this.Rectangle = new Rectangle(this.Rectangle.X, this.Rectangle.Y, this.Rectangle.Width, value); }
+            get
+            {
+                return this.Rectangle.Height;
+            }
+            set
+            {
+                this.Rectangle = new Rectangle(this.Rectangle.X, this.Rectangle.Y, this.Rectangle.Width, value);
+            }
         }
 
         public bool IsActive { get; set; }
 
         public Point Location
         {
-            get { return this.Rectangle.Location; }
-            set { this.Populate(new Rectangle(value.X, value.Y, this.Rectangle.Width, this.Rectangle.Height)); }
+            get
+            {
+                return this.Rectangle.Location;
+            }
+            set
+            {
+                this.Populate(new Rectangle(value.X, value.Y, this.Rectangle.Width, this.Rectangle.Height));
+            }
         }
 
         public Rectangle Rectangle
@@ -132,9 +228,9 @@ namespace MetaMind.Engine.Guis.Elements
             {
                 var deltaLocation = this.rectangle.Location.DistanceFrom(value.Location);
                 var hasMoved = deltaLocation.Length() > 0f;
-                if (hasMoved && this.FrameMoved != null)
+                if (hasMoved)
                 {
-                    this.FrameMoved(this, new FrameEventArgs(FrameEventType.Frame_Moved));
+                    this.OnFrameMoved();
                 }
 
                 this.rectangle = value;
@@ -143,27 +239,53 @@ namespace MetaMind.Engine.Guis.Elements
 
         public Point Size
         {
-            get { return new Point(this.Rectangle.Width, this.Rectangle.Height); }
-            set { this.Populate(this.Center, value); }
+            get
+            {
+                return new Point(this.Rectangle.Width, this.Rectangle.Height);
+            }
+            set
+            {
+                this.Populate(this.Center, value);
+            }
         }
 
         public int Width
         {
-            get { return this.Rectangle.Width; }
-            set { this.Rectangle = new Rectangle(this.Rectangle.X, this.Rectangle.Y, value, this.Rectangle.Height); }
+            get
+            {
+                return this.Rectangle.Width;
+            }
+            set
+            {
+                this.Rectangle = new Rectangle(this.Rectangle.X, this.Rectangle.Y, value, this.Rectangle.Height);
+            }
         }
 
         public int X
         {
-            get { return this.Rectangle.X; }
-            set { this.Rectangle = new Rectangle(value, this.Rectangle.Y, this.Rectangle.Width, this.Rectangle.Height); }
+            get
+            {
+                return this.Rectangle.X;
+            }
+            set
+            {
+                this.Rectangle = new Rectangle(value, this.Rectangle.Y, this.Rectangle.Width, this.Rectangle.Height);
+            }
         }
 
         public int Y
         {
-            get { return this.Rectangle.Y; }
-            set { this.Rectangle = new Rectangle(this.Rectangle.X, value, this.Rectangle.Width, this.Rectangle.Height); }
+            get
+            {
+                return this.Rectangle.Y;
+            }
+            set
+            {
+                this.Rectangle = new Rectangle(this.Rectangle.X, value, this.Rectangle.Width, this.Rectangle.Height);
+            }
         }
+
+        #endregion
 
         protected bool IsLButton(MouseEventArgs e)
         {
@@ -199,10 +321,7 @@ namespace MetaMind.Engine.Guis.Elements
                     mouse.LDoubleClick();
                     mouse.RClear();
 
-                    if (this.MouseLeftDoubleClicked != null)
-                    {
-                        this.MouseLeftDoubleClicked(this, new FrameEventArgs(FrameEventType.Mouse_Left_Double_Clicked));
-                    }
+                    this.OnMouseLeftDoubleClicked();
 
                     return;
                 }
@@ -211,10 +330,7 @@ namespace MetaMind.Engine.Guis.Elements
                     mouse.LClear();
                     mouse.RDoubleClick();
 
-                    if (this.MouseRightDoubleClicked != null)
-                    {
-                        this.MouseRightDoubleClicked(this, new FrameEventArgs(FrameEventType.Mouse_Right_Double_Clicked));
-                    }
+                    this.OnMouseRightDoubleClicked();
 
                     return;
                 }
@@ -228,14 +344,14 @@ namespace MetaMind.Engine.Guis.Elements
                 mouse.LPress();
                 mouse.RClear();
 
-                if (this.mouse.IsMouseOver && this.MouseLeftPressed != null)
+                if (this.mouse.IsMouseOver)
                 {
-                    this.MouseLeftPressed(this, new FrameEventArgs(FrameEventType.Mouse_Left_Pressed));
+                    this.OnMouseLeftPressed();
                 }
 
-                if (!this.mouse.IsMouseOver && this.MouseLeftPressedOutside != null)
+                if (!this.mouse.IsMouseOver)
                 {
-                    this.MouseLeftPressedOutside(this, new FrameEventArgs(FrameEventType.Mouse_Left_Pressed_Outside));
+                    this.OnMouseLeftPressedOutside();
                 }
 
                 return;
@@ -265,10 +381,7 @@ namespace MetaMind.Engine.Guis.Elements
             {
                 mouse.Enter();
 
-                if (this.MouseEnter != null)
-                {
-                    this.MouseEnter(this, new FrameEventArgs(FrameEventType.Mouse_Enter));
-                }
+                this.OnMouseEnter();
 
                 return;
             }
@@ -277,10 +390,7 @@ namespace MetaMind.Engine.Guis.Elements
             {
                 mouse.Leave();
 
-                if (this.MouseLeave != null)
-                {
-                    this.MouseLeave(this, new FrameEventArgs(FrameEventType.Mouse_Leave));
-                }
+                this.OnMouseLeave();
 
                 return;
             }
@@ -292,10 +402,7 @@ namespace MetaMind.Engine.Guis.Elements
             {
                 mouse.LRelease();
 
-                if (this.MouseLeftReleased != null)
-                {
-                    this.MouseLeftReleased(this, new FrameEventArgs(FrameEventType.Mouse_Left_Released));
-                }
+                this.OnMouseLeftReleased();
 
                 return;
             }
@@ -303,10 +410,7 @@ namespace MetaMind.Engine.Guis.Elements
             {
                 mouse.RRelease();
 
-                if (this.MouseRightReleased != null)
-                {
-                    this.MouseRightReleased(this, new FrameEventArgs(FrameEventType.Mouse_Right_Released));
-                }
+                this.OnMouseRightReleased();
 
                 return;
             }

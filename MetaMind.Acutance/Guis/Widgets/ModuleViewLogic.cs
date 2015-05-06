@@ -57,13 +57,12 @@ namespace MetaMind.Acutance.Guis.Widgets
             this.UpdateInputOfMouse(input, time);
             this.UpdateInputOfKeyboard(input, time);
 
-            if (this.AcceptInput)
+            if (this.View[ViewState.View_Is_Inputting]())
             {
-                // keyboard
-                // ---------------------------------------------------------------------
+                // Keyboard
                 if (this.ViewSettings.KeyboardEnabled)
                 {
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.ModuleDeleteItem))
+                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.ModuleDeleteItem))
                     {
                         // itme deletion is handled by item control
                         // auto select last item
@@ -108,10 +107,10 @@ namespace MetaMind.Acutance.Guis.Widgets
         protected override Rectangle RegionBounds()
         {
             return new Rectangle(
-                viewSettings.PointStart.X,
-                viewSettings.PointStart.Y,
-                viewSettings.ColumnNumDisplay * (itemSettings.NameFrameSize.X + itemSettings.IdFrameSize.X + itemSettings.ExperienceFrameSize.X),
-                viewSettings.RowNumDisplay    * itemSettings.NameFrameSize.Y);
+                this.viewSettings.PointStart.X,
+                this.viewSettings.PointStart.Y,
+                this.viewSettings.ColumnNumDisplay * (itemSettings.NameFrameSize.X + itemSettings.IdFrameSize.X + itemSettings.ExperienceFrameSize.X),
+                this.viewSettings.RowNumDisplay    * itemSettings.NameFrameSize.Y);
         }
 
         #endregion Configurations

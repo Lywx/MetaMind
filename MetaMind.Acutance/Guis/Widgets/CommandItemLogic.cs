@@ -10,9 +10,9 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Elements;
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Guis.Widgets.Items.Interactions;
     using MetaMind.Engine.Guis.Widgets.Items.Logic;
     using MetaMind.Engine.Guis.Widgets.Items.Swaps;
-    using MetaMind.Engine.Guis.Widgets.Items.Views;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
@@ -24,17 +24,13 @@ namespace MetaMind.Acutance.Guis.Widgets
         public CommandItemLogic(IViewItem item, List<Command> source )
             : base(item)
         {
-            this.ItemFrameControl = new KnowledgeItemFrameControl(item);
-            this.ItemViewControl  = new ViewItemViewSmartControl<ViewItemSmartSwapProcess>(item, source);
-            this.ItemDataControl  = new CommandItemDataControl(item);
+            this.ItemFrame = new KnowledgeItemFrameControl(item);
+            this.ItemInteraction  = new ViewItemViewSmartControl<ViewItemSmartSwapProcess>(item, source);
+            this.ItemModel  = new CommandItemDataControl(item);
 
             this.NameFrame.MouseLeftDoubleClicked += this.RetrieveKnowledge;
         }
 
-        /// <remarks>
-        /// Don't need to remove delegate RetrieveIt, for NameFrame may be disposed by
-        /// ItemFrameControl.
-        /// </remarks>>
         ~CommandItemLogic()
         {
             this.Dispose();
@@ -42,9 +38,9 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #endregion Constructors
 
-        public PickableFrame IdFrame { get { return ((KnowledgeItemFrameControl)this.ItemFrameControl).IdFrame; } }
+        public PickableFrame IdFrame { get { return ((KnowledgeItemFrameControl)this.ItemFrame).IdFrame; } }
 
-        public PickableFrame NameFrame { get { return ((KnowledgeItemFrameControl)this.ItemFrameControl).NameFrame; } }
+        public PickableFrame NameFrame { get { return ((KnowledgeItemFrameControl)this.ItemFrame).NameFrame; } }
 
         #region Events
 

@@ -1,13 +1,6 @@
 ﻿namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
 {
-    using Microsoft.Xna.Framework;
-
-    public interface IPointViewScrollControl : IViewSrollControl
+    public interface IPointViewScrollControl : IViewScrollControl
     {
-        bool CanDisplay(int id);
-
-        Point RootCenterPosition(int id); 
-
-        void Zoom(int id);
     }
 }

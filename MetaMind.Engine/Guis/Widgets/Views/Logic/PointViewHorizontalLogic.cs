@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="PointViewHorizontalLogic.cs" company="UESTC">
-//   Copyright (c) 2014 Wuxiang Lin
+//   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -8,12 +8,12 @@
 namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 {
     using System;
-    using System.Linq;
 
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Items.Factories;
-    using MetaMind.Engine.Guis.Widgets.Views.Extensions;
+    using MetaMind.Engine.Guis.Widgets.Views.Layers;
+    using MetaMind.Engine.Guis.Widgets.Views.Layouts;
     using MetaMind.Engine.Guis.Widgets.Views.PointView;
     using MetaMind.Engine.Guis.Widgets.Views.Scrolls;
     using MetaMind.Engine.Guis.Widgets.Views.Selections;
@@ -23,82 +23,98 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
     using Microsoft.Xna.Framework;
 
-    public class ViewLogic : ViewComponent, IViewLogic
-    {
-        protected ViewLogic(IView view)
-            : base(view)
-        {
-        }
-
-        public IViewItemFactory ItemFactory { get; private set; }
-    }
-
-    public class PointViewHorizontalLogic : ViewComponent, IPointViewHorizontalLogic
+    public class PointViewHorizontalLogic : ViewLogic, IPointViewHorizontalLogic
     {
         private readonly PointViewHorizontalSettings viewSettings;
 
-        public PointViewHorizontalLogic(IView view, IViewItemFactory itemFactory)
-            : base(view)
-        {
-            this.viewSettings = this.ViewExtension.Get<PointViewHorizontalExtension>().ViewSettings;
-
-            this.ItemFactory = itemFactory;
-
-            this.ViewSwap      = new ViewSwapControl(this.View);
-            this.ViewScroll    = new PointViewHorizontalScrollControl(this.View);
-            this.ViewSelection = new PointViewHorizontalSelectionControl(this.View);
-        }
-
-        // TODO: this is wrong
-
         protected PointViewHorizontalLogic(
-            IView      view,
-            IViewItemFactory itemFactory,
-            IPointViewHorizontalScrollControl viewScroll,
-            IPointViewHorizontalSelectionControl viewSelection,
-            viewSwap)
-            : base(view)
+            IView                 view,
+            IViewScrollControl    viewScroll,
+            IViewSelectionControl viewSelection,
+            IViewSwapControl      viewSwap,
+            IViewLayout           viewLayout,
+            IViewItemFactory itemFactory)
+            : base(view, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory)
         {
-            if (itemFactory == null)
-            {
-                throw new ArgumentNullException("itemFactory");
-            }
+            var viewLayer = this.ViewGetLayer<PointViewHorizontalLayer>();
+            this.viewSettings = viewLayer.ViewSettings;
 
-            if (viewScroll == null)
-            {
-                throw new ArgumentNullException("viewScroll");
-            }
-
-            if (viewSelection == null)
-            {
-                throw new ArgumentNullException("viewSelection");
-            }
-
-            if (viewSwap == null)
-            {
-                throw new ArgumentNullException("viewSwap");
-            }
-
-            this.ItemFactory = itemFactory;
-
-            this.ViewScroll    = viewScroll;
-            this.ViewSelection = viewSelection;
-            this.ViewSwap      = viewSwap;
-
-            this.View[ViewState.View_Has_Focus] = this.View[ViewState.View_Has_Selection] = this.ViewSelection.HasSelected();
-
-            this.viewSettings = this.ViewExtension.Get<PointViewHorizontalExtension>().ViewSettings;
+            this.View[ViewState.View_Has_Focus] = this.View[ViewState.View_Has_Selection] = () => viewLayer.ViewSelection.HasSelected;
         }
 
-        #region Dependency
+        #region View Logic Property Injection
 
-        public IViewItemFactory ItemFactory { get; protected set; }
+        public new IPointViewHorizontalSelectionControl ViewSelection
+        {
+            get
+            {
+                // Local Default
+                if (base.ViewSelection == null)
+                {
+                    base.ViewSelection = new PointViewHorizontalSelectionControl(this.View);
+                }
 
-        public IPointViewHorizontalScrollControl ViewScroll { get; protected set; }
+                return (IPointViewHorizontalSelectionControl)base.ViewSelection;
+            }
 
-        public IPointViewHorizontalSelectionControl ViewSelection { get; protected set; }
+            set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException("value");
+                }
+                
+                if (base.ViewSelection != null)
+                {
+                    throw new InvalidOperationException();
+                }
 
-        public PointViewHorizontalSwap ViewSwap { get; protected set; }
+                this.ViewSelection = value;
+            }
+        }
+
+        public new IPointViewHorizontalScrollControl ViewScroll
+        {
+            get
+            {
+                // Local Default
+                if (base.ViewScroll == null)
+                {
+                    base.ViewScroll = new PointViewHorizontalScrollControl(this.View);
+                }
+
+                return (IPointViewHorizontalScrollControl)base.ViewScroll;
+            }
+
+            set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException("value");
+                }
+                
+                if (base.ViewScroll != null)
+                {
+                    throw new InvalidOperationException();
+                }
+
+                this.ViewScroll = value;
+            }
+        }
+
+        public new IPointViewHorizontalSwapControl ViewSwap
+        {
+            get
+            {
+                // Local Default
+                if (base.ViewSwap == null)
+                {
+                    base.ViewSwap = new PointViewHorizontalSwapControl(this.View);
+                }
+
+                return (IPointViewHorizontalSwapControl)base.ViewSwap;
+            } 
+        }
 
         #endregion
 
@@ -106,13 +122,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public void AddItem()
         {
-            var item = new ViewItem(this.View, this.ItemSettings, this.ItemFactory);
-            this.View.ViewItems.Add(item);
+            var item = new ViewItem(this.View, this.View.ItemSettings, this.ItemFactory);
+            this.View.Items.Add(item);
         }
 
         public virtual void MoveLeft()
         {
-            if (this.viewSettings.Direction == PointViewHorizontalDirection.Inverse)
+            if (this.viewSettings.Direction == PointViewDirection.Inverse)
             {
                 // Invert for left scrolling view
                 this.ViewSelection.MoveRight();
@@ -125,7 +141,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public virtual void MoveRight()
         {
-            if (this.viewSettings.Direction == PointViewHorizontalDirection.Inverse)
+            if (this.viewSettings.Direction == PointViewDirection.Inverse)
             {
                 // Invert for left scrolling view
                 this.ViewSelection.MoveLeft();
@@ -133,29 +149,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             else
             {
                 this.ViewSelection.MoveRight();
-            }
-        }
-
-        // TODO: TO MOVE
-        public virtual void SortItems(PointViewSortMode sortMode)
-        {
-            switch (sortMode)
-            {
-                case PointViewSortMode.Name:
-                    {
-                        this.View.ViewItems = this.View.ViewItems.OrderBy(item => item.ItemData.Name).ToList();
-                        this.View.ViewItems.ForEach(item => item.ItemLogic.Id = this.View.ViewItems.IndexOf(item));
-                    }
-
-                    break;
-
-                case PointViewSortMode.Id:
-                    {
-                        this.View.ViewItems = this.View.ViewItems.OrderBy(item => item.ItemLogic.Id).ToList();
-                        this.View.ViewItems.ForEach(item => item.ItemLogic.Id = this.View.ViewItems.IndexOf(item));
-                    }
-
-                    break;
             }
         }
 
@@ -179,24 +172,19 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         #region Update Structure
 
-        public bool Active
-        {
-            get { return this.View[ViewState.View_Is_Active](); }
-        }
-
         public override void Update(GameTime time)
         {
             if (this.View[ViewState.View_Is_Active]())
             {
                 // TODO: Possible thread safety issue
-                foreach (var item in this.View.ViewItems.ToArray())
+                foreach (var item in this.View.Items.ToArray())
                 {
                     item.Update(time);
                 }
             }
             else
             {
-                foreach (var item in this.View.ViewItems)
+                foreach (var item in this.View.Items)
                 {
                     item.UpdateView(time);
                 }
@@ -207,20 +195,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         #region Update Input
 
-        public virtual bool AcceptInput
-        {
-            get
-            {
-                return this.View[ViewState.View_Is_Active]() && 
-                      !this.View[ViewState.View_Is_Editing]() && 
-                       this.View[ViewState.View_Has_Focus]();
-            }
-        }
-
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            // /TODO: REMMOVE or change?
-            if (input.State.Keyboard.IsActionPressed(KeyboardActions.TaskCreateItem))
+            if (input.State.Keyboard.IsActionPressed(KeyboardActions.CommonCreateItem))
             {
                 this.AddItem();
             }
@@ -231,7 +208,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         protected void UpdateInputOfItems(IGameInputService input, GameTime time)
         {
-            foreach (var item in this.View.ViewItems.ToArray())
+            foreach (var item in this.View.Items.ToArray())
             {
                 item.UpdateInput(input, time);
             }
@@ -239,7 +216,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         protected virtual void UpdateInputOfKeyboard(IGameInputService input, GameTime time)
         {
-            if (this.AcceptInput)
+            if (this.View[ViewState.View_Is_Inputting]())
             {
                 // Keyboard
                 if (this.viewSettings.KeyboardEnabled)
@@ -268,7 +245,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
                     // Escape
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))
                     {
-                        this.ViewSelection.Clear();
+                        this.ViewSelection.Cancel();
                     }
                 }
             }
@@ -276,7 +253,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         protected virtual void UpdateInputOfMouse(IGameInputService input, GameTime time)
         {
-            if (this.AcceptInput)
+            if (this.View[ViewState.View_Is_Inputting]())
             {
                 // Mouse
                 if (this.viewSettings.MouseEnabled)

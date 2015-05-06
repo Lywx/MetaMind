@@ -1,7 +1,9 @@
 namespace MetaMind.Engine.Guis.Widgets.Items.Logic
 {
+    using MetaMind.Engine.Guis.Widgets.Items.Data;
     using MetaMind.Engine.Guis.Widgets.Items.Frames;
-    using MetaMind.Engine.Guis.Widgets.Items.Views;
+    using MetaMind.Engine.Guis.Widgets.Items.Interactions;
+    using MetaMind.Engine.Guis.Widgets.Items.Layouts;
 
     using Microsoft.Xna.Framework;
 
@@ -9,17 +11,13 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Logic
     {
         #region Components
 
-        dynamic ItemDataControl { get; set; }
+        IViewItemDataModel ItemModel { get; set; }
 
-        IViewItemFrameControl ItemFrame { get; set; }
+        IViewItemFrame ItemFrame { get; set; }
 
-        IViewItemViewControl ItemView { get; set; }
+        IViewItemInteraction ItemInteraction { get; set; }
 
-        #endregion
-
-        #region Item Identification
-
-        int Id { get; set; }
+        IViewItemLayout ItemLayout { get; set; }
 
         #endregion
 

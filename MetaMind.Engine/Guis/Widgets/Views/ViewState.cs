@@ -4,6 +4,8 @@
     {
         View_Is_Active,
 
+        View_Is_Inputting,
+
         View_Is_Editing,
 
         View_Has_Focus,

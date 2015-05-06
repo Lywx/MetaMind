@@ -8,13 +8,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Visuals
     public class ViewVisual : ViewVisualComponent, IViewVisual
     {
         public ViewVisual(IView view)
-            : base(view)
+            : base(view, "viewVisual")
         {
         }
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            foreach (var item in this.View.ViewItems.ToArray())
+            foreach (var item in this.View.Items.ToArray())
             {
                 // TODO: Possible separation of active and inactive storage and looping to improve cpu performace
 

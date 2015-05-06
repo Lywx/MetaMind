@@ -1,13 +1,14 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ViewSelectionControl2D.cs" company="UESTC">
-//   Copyright (c) 2014 Wuxiang Lin
+//   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 {
-    using MetaMind.Engine.Guis.Widgets.Views.Extensions;
+    using MetaMind.Engine.Guis.Widgets.Views.Layers;
+    using MetaMind.Engine.Guis.Widgets.Views.Layouts;
     using MetaMind.Engine.Guis.Widgets.Views.Logic;
     using MetaMind.Engine.Guis.Widgets.Views.Scrolls;
 
@@ -17,6 +18,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 
         private readonly IPointView2DScrollControl viewScroll;
 
+        private readonly IPointView2DLayout viewLayout;
+
         private int? currentId;
 
         private int? previousId;
@@ -24,8 +27,10 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
         public PointView2DSelectionControl(IView view)
             : base(view)
         {
-            this.viewLogic = this.ViewExtension.Get<PointView2DExtension>().ViewLogic;
-            this.viewScroll = this.viewLogic.
+            var viewLayer = this.ViewGetLayer<PointView2DLayer>();
+            this.viewLogic = viewLayer.ViewLogic;
+            this.viewScroll = viewLayer.ViewScroll;
+            this.viewLayout = viewLogic.ViewLayout;
         }
 
         public bool HasPreviouslySelected
@@ -48,27 +53,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
             get { return this.currentId; }
         }
 
-        #region Indirect Dependency
-
-        private int ColumnNum
-        {
-            get
-            {
-                return this.viewLogic.ColumnNum;
-            }
-        }
-
-        private int RowNum
-        {
-            get
-            {
-                return this.viewLogic.RowNum;
-            }
-        }
-
-        #endregion
-
-        public void Clear()
+        public void Cancel()
         {
             this.previousId = this.currentId;
             this.currentId = null;
@@ -90,8 +75,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
             }
 
             var id     = this.currentId.Value;
-            var column = this.viewLogic.ColumnFrom(id);
-            var row    = this.viewLogic.RowFrom(id);
+            var column = this.viewLayout.ColumnFrom(id);
+            var row    = this.viewLayout.RowFrom(id);
 
             if (!this.IsBottommost(row))
             {
@@ -114,8 +99,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
             }
 
             var id     = this.currentId.Value;
-            var column = this.ColumnFrom(id);
-            var row    = this.RowFrom(id);
+            var column = this.viewLayout.ColumnFrom(id);
+            var row    = this.viewLayout.RowFrom(id);
 
             if (!this.IsLeftmost(column))
             {
@@ -138,8 +123,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
             }
 
             var id     = this.currentId.Value;
-            var column = this.viewLogic.ColumnFrom(id);
-            var row    = this.viewLogic.RowFrom(id);
+            var column = this.viewLayout.ColumnFrom(id);
+            var row    = this.viewLayout.RowFrom(id);
 
             if (!this.IsRightmost(column))
             {
@@ -162,8 +147,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
             }
 
             var id     = this.currentId.Value;
-            var column = this.viewLogic.ColumnFrom(id);
-            var row    = this.viewLogic.RowFrom(id);
+            var column = this.viewLayout.ColumnFrom(id);
+            var row    = this.viewLayout.RowFrom(id);
 
             if (!this.IsTopmost(row))
             {
@@ -183,19 +168,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
             this.currentId = id;
         }
 
-        private int ColumnFrom(int id)
-        {
-            return this.viewLogic.ColumnFrom(id);
-        }
-
-        private int IdFrom(int row, int column)
-        {
-            return this.viewLogic.IdFrom(row, column);
-        }
-
         private bool IsBottommost(int row)
         {
-            return row >= this.RowNum - 1;
+            return row >= this.viewLayout.RowNum - 1;
         }
 
         private bool IsLeftmost(int column)
@@ -205,7 +180,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 
         private bool IsRightmost(int column)
         {
-            return column >= this.ColumnNum - 1;
+            return column >= this.viewLayout.ColumnNum - 1;
         }
 
         private bool IsTopmost(int row)
@@ -218,15 +193,10 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
             this.Select(this.previousId.HasValue ? this.previousId.Value : 0);
         }
 
-        private int RowFrom(int id)
-        {
-            return this.viewLogic.RowFrom(id);
-        }
-
         private void Select(int row, int column)
         {
             this.previousId = this.currentId;
-            this.currentId = this.IdFrom(row, column);
+            this.currentId = this.viewLayout.IdFrom(row, column);
         }
     }
 }

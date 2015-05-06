@@ -47,7 +47,6 @@
     </Compile>
     <Compile Include="Guis\PlayTest_Screen.cs" />
     <Compile Include="Guis\Test_Settings.cs" />
-    <Compile Include="Guis\Test_ViewItem.cs" />
     <Compile Include="Parsers\BasicParserTest.cs" />
     <Compile Include="Parsers\ConfigurationParserTest.cs" />
     <Compile Include="Program.cs" />
@@ -55,10 +54,6 @@
     <Compile Include="GameEngineTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="LightInject, Version=3.0.2.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\LightInject.3.0.2.6\lib\net45\LightInject.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MSBuildProgramFiles32)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>

@@ -87,7 +87,7 @@ namespace MetaMind.Acutance.Concepts
 
         public override void Reset()
         {
-            this.SynchronizationSpan = SynchronizationSpan.Zero;
+            this.SynchronizationSpan = TimeSpan.Zero;
         }
 
         public override void Update()

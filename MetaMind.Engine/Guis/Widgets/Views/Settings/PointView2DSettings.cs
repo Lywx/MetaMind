@@ -1,39 +1,26 @@
 namespace MetaMind.Engine.Guis.Widgets.Views.Settings
 {
-    using MetaMind.Engine.Components.Fonts;
-
     using Microsoft.Xna.Framework;
 
-    public class PointView2DSettings : ViewSettings
+    public class PointView2DSettings : PointViewHorizontalSettings
     {
-        public Font  NameFont   = Font.UiStatistics;
+        public int ColumnNumDisplay = 3;
 
-        public Color NameColor  = Color.White;
+        public int ColumnNumMax = 5;
 
-        public float NameSize   = 1.5f;
+        public int RowNumDisplay = 3;
 
-        public Point NameMargin = new Point(47, 47);
+        public int RowNumMax = 500;
 
-
-        public int   ColumnNumDisplay = 3;
-
-        public int   ColumnNumMax     = 5;
-
-        public int   RowNumDisplay    = 3;
-
-        public int   RowNumMax        = 500;
-
-
-        public Point PointStart;
-
-        public Point PointMargin = new Point(250, 150);
-
-        public PointView2DSettings(Point start)
+        public PointView2DSettings(Vector2 start)
+            : base(start)
         {
             this.PointStart = start;
+            this.PointMargin = new Vector2(250, 150);
         }
 
-        public PointView2DSettings(Point start, Point margin)
+        public PointView2DSettings(Vector2 start, Vector2 margin)
+            : base(start)
         {
             this.PointStart  = start;
             this.PointMargin = margin;

@@ -7,7 +7,6 @@
 
 namespace MetaMind.Acutance.Guis.Widgets
 {
-    using MetaMind.Engine;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Elements;
     using MetaMind.Engine.Guis.Widgets.Items;
@@ -26,22 +25,18 @@ namespace MetaMind.Acutance.Guis.Widgets
         public KnowledgeItemLogic(IViewItem item)
             : base(item)
         {
-            this.ItemFrameControl = new KnowledgeItemFrameControl(item);
+            this.ItemFrame = new KnowledgeItemFrameControl(item);
 
             if (ItemData.IsFile)
             {
-                this.ItemDataControl = new KnowledgeItemFileDataControl(item);
+                this.ItemModel = new KnowledgeItemFileDataControl(item);
             }
             else if (ItemData.IsResult)
             {
-                this.NameFrame.MouseLeftClicked += this.LoadKnowledge;
+                this.NameFrame.MouseLeftPressed += this.LoadKnowledge;
             }
         }
 
-        /// <remarks>
-        /// Don't need to remove delegate LoadKnowledge, for NameFrame may be diposed by
-        /// ItemFrameControl.
-        /// </remarks>>
         ~KnowledgeItemLogic()
         {
             this.Dispose();
@@ -55,7 +50,7 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             get
             {
-                return ((KnowledgeItemFrameControl)this.ItemFrameControl).IdFrame;
+                return ((KnowledgeItemFrameControl)this.ItemFrame).IdFrame;
             }
         }
 
@@ -63,7 +58,7 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             get
             {
-                return ((KnowledgeItemFrameControl)this.ItemFrameControl).NameFrame;
+                return ((KnowledgeItemFrameControl)this.ItemFrame).NameFrame;
             }
         }
 
@@ -106,13 +101,13 @@ namespace MetaMind.Acutance.Guis.Widgets
                         if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.N))
                         {
                             // pre-trim to keep consistent prompt display
-                            var fileDataControl = this.ItemDataControl as KnowledgeItemFileDataControl;
+                            var fileDataControl = this.ItemModel as KnowledgeItemFileDataControl;
                             if (fileDataControl != null)
                             {
                                 fileDataControl.TrimPrompt();
                             }
 
-                            this.ItemDataControl.EditString("Name");
+                            this.ItemModel.EditString("Name");
 
                             // compensate for pre-trim
                             if (fileDataControl != null)
@@ -147,12 +142,12 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public void EditCancel()
         {
-            this.ItemDataControl.EditCancel();
+            this.ItemModel.EditCancel();
         }
 
         public void SetName(string fileName)
         {
-            var itemDataControl = this.ItemDataControl as KnowledgeItemFileDataControl;
+            var itemDataControl = this.ItemModel as KnowledgeItemFileDataControl;
             if (itemDataControl != null)
             {
                 itemDataControl.SetName(fileName);

@@ -3,15 +3,15 @@
     using MetaMind.Acutance.Parsers.Elements;
     using MetaMind.Acutance.Parsers.Grammars;
 
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
 
     using Sprache;
 
-    [TestClass]
+    [TestFixture]
     public class KnowledgeParserTest
     {
-        [TestMethod]
-        public void KnowledgeATimeTagConciseFormat()
+        [Test]
+        public void KnowledgeATimeTagonciseFormat()
         {
             var input  = "20:30";
 
@@ -23,7 +23,7 @@
             Assert.AreEqual(30, parsed.Seconds);
         }
 
-        [TestMethod]
+        [Test]
         public void KnowledgeATimeTagFullFormat()
         {
             var input  = "10:20:30";
@@ -36,7 +36,7 @@
             Assert.AreEqual(30, parsed.Seconds);
         }
 
-        [TestMethod]
+        [Test]
         public void KnowledgeATitle()
         {
             var input = "## A Title";
@@ -47,7 +47,7 @@
             Assert.AreEqual("A Title", parsed.Name);
         }
 
-        [TestMethod]
+        [Test]
         public void KnowledgeATitleWithATimeTag()
         {
             var input = "## A Title [01:02:03]";
@@ -61,7 +61,7 @@
             Assert.AreEqual(3, parsed.Time.Seconds);
         }
 
-        [TestMethod]
+        [Test]
         public void KnowledgeAComplexTitleWithATimeTag()
         {
             var input = "## A Title That May Contains \",\" \".\" And Anythings. [01:02:03]";
@@ -75,7 +75,7 @@
             Assert.AreEqual(3, parsed.Time.Seconds);
         }
 
-        [TestMethod]
+        [Test]
         public void KnowledgeATitleWithBracket()
         {
             var input = "###### A Title []";
@@ -86,7 +86,7 @@
             Assert.AreEqual("A Title", parsed.Name);
         }
 
-        [TestMethod]
+        [Test]
         public void KnowledgeANormalTitleWithoutTimeTag()
         {
             var input = "###### A Title";
@@ -101,7 +101,7 @@
             Assert.AreEqual(0               , parsed.Time.Seconds);
         }
 
-        [TestMethod] public void KnowledgeAMomentTitleWithoutTimeTag()
+        [Test] public void KnowledgeAMomentTitleWithoutTimeTag()
         {
             var input  = "######! A Title";
             
@@ -115,7 +115,7 @@
             Assert.AreEqual(0               , parsed.Time.Seconds);
         }
 
-        [TestMethod] public void KnowledgeALinkTitleWithoutTimeTag()
+        [Test] public void KnowledgeALinkTitleWithoutTimeTag()
         {
             var input  = "##> A Title";
 

@@ -15,12 +15,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Settings
 
         #region Constructors 
 
-        public PointGridSettings(Point start)
+        public PointGridSettings(Vector2 start)
             : base(start)
         {
         }
 
-        public PointGridSettings(Point start, Point margin)
+        public PointGridSettings(Vector2 start, Vector2 margin)
             : base(start, margin)
         {
         }

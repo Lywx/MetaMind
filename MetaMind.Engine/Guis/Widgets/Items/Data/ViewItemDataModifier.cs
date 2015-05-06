@@ -12,7 +12,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
 
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Events;
-    using MetaMind.Engine.Guis.Widgets.Items.Extensions;
+    using MetaMind.Engine.Guis.Widgets.Items.Layers;
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Services;
 
@@ -20,12 +20,19 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
 
     public class ViewItemDataModifier : ViewItemComponent
     {
+        private readonly dynamic itemData;
+
+        private readonly ViewItemLayer itemLayer;
+
         private string dataName;
 
         public ViewItemDataModifier(IViewItem item)
             : base(item)
         {
             this.CharModifier = new ViewItemCharModifier(item);
+
+            this.itemLayer = this.ItemGetLayer<ViewItemLayer>();
+            this.itemData      = this.itemLayer.ItemData;
         }
 
         ~ViewItemDataModifier()
@@ -79,17 +86,17 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
             this.Item[ItemState.Item_Is_Pending] = () => false;
             this.Item[ItemState.Item_Is_Editing] = () => true;
             this.View[ViewState.View_Is_Editing] = () => true;
-
-            FieldInfo field = this.ItemExtension.Get<ViewItemExtension>().ItemData.GetType().GetField(targetName);
+ 
+            FieldInfo field = this.itemData.GetType().GetField(targetName);
             if (field != null)
             {
-                this.CharModifier.Initialize(field.GetValue(this.ItemExtension.Get<ViewItemExtension>().ItemData).ToString(), showCursor);
+                this.CharModifier.Initialize(field.GetValue(this.itemData).ToString(), showCursor);
             }
 
-            PropertyInfo property = this.ItemExtension.Get<ViewItemExtension>().ItemData.GetType().GetProperty(targetName);
+            PropertyInfo property = this.itemData.GetType().GetProperty(targetName);
             if (property != null)
             {
-                this.CharModifier.Initialize(property.GetValue(this.ItemExtension.Get<ViewItemExtension>().ItemData).ToString(), showCursor);
+                this.CharModifier.Initialize(property.GetValue(this.itemData).ToString(), showCursor);
             }
         }
 
@@ -102,28 +109,28 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
         private void RefreshInt(object sender, ViewItemDataEventArgs e)
         {
             int result;
-            var succeded = int.TryParse(Font.ContentRegular.PrintableString(e.NewValue), out result);
+            var succeeded = int.TryParse(Font.ContentRegular.PrintableString(e.NewValue), out result);
 
-            this.RefreshValue(this.ItemExtension.Get<ViewItemExtension>().ItemData, succeded ? result : 0);
+            this.RefreshValue(this.itemData, succeeded ? result : 0);
         }
 
         private void RefreshString(object sender, ViewItemDataEventArgs e)
         {
-            this.RefreshValue(this.ItemExtension.Get<ViewItemExtension>().ItemData, Font.ContentRegular.PrintableString(e.NewValue));
+            this.RefreshValue(this.itemData, Font.ContentRegular.PrintableString(e.NewValue));
         }
 
-        private void RefreshValue(dynamic itemData, dynamic value)
+        private void RefreshValue(dynamic data, dynamic value)
         {
-            FieldInfo field = itemData.GetType().GetField(this.dataName);
+            FieldInfo field = data.GetType().GetField(this.dataName);
             if (field != null)
             {
-                field.SetValue(itemData, value);
+                field.SetValue(data, value);
             }
 
-            PropertyInfo property = itemData.GetType().GetProperty(this.dataName);
+            PropertyInfo property = data.GetType().GetProperty(this.dataName);
             if (property != null)
             {
-                property.SetValue(itemData, value);
+                property.SetValue(data, value);
             }
         }
 

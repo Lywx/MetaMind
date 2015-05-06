@@ -1,58 +1,51 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="MultiplexerModule.cs" company="UESTC">
+//   Copyright (c) 2015 Wuxiang Lin
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace MetaMind.Acutance.Screens
 {
     using MetaMind.Acutance.Guis.Modules;
-    using MetaMind.Engine;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
-    
-
     public class MultiplexerModule : Module<object>
     {
-        private readonly MultiplexerGroup multiplexer;
-
-        private readonly SynchronizationGroup synchronization;
+        private MultiplexerGroup multiplexer;
 
         public MultiplexerModule()
             : base(null)
         {
-            this.multiplexer = new MultiplexerGroup(new MultiplexerGroupSettings());
-            this.multiplexer.LoadContent(gameFile, gameInput, gameInterop, gameSound);
-
-            this.synchronization = new SynchronizationGroup(new SynchronizationGroupSettings());
-            this.synchronization.Load();
         }
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            this.multiplexer    .Draw(graphics, time, alpha);
-            this.synchronization.Draw(graphics, time, alpha);
+            this.multiplexer.Draw(graphics, time, alpha);
         }
 
         public override void LoadContent(IGameInteropService interop)
         {
-            this.multiplexer    .LoadContent(gameFile, input, interop, audio);
-            this.synchronization.Load(gameFile, input, interop, audio);
+            this.multiplexer = new MultiplexerGroup(new MultiplexerGroupSettings());
+            this.multiplexer.LoadContent(interop);
         }
 
-        public override void Unload(IGameInputService input, IGameInteropService interop)
+        public override void UnloadContent(IGameInteropService interop)
         {
-            this.multiplexer    .Unload(gameFile, input, interop, audio);
-            this.synchronization.Unload(gameFile, input, interop, audio);
+            this.multiplexer.UnloadContent(interop);
         }
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.multiplexer    .UpdateInput(input, time);
-            this.synchronization.UpdateInput(input, time);
+            this.multiplexer.UpdateInput(input, time);
         }
 
         public override void Update(GameTime time)
         {
-            this.multiplexer    .Update(time);
-            this.synchronization.Update(time);
+            this.multiplexer.Update(time);
         }
     }
 }

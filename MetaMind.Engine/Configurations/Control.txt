@@ -14,6 +14,10 @@ FastDown  = J with LeftControl
 FastLeft  = H with LeftControl
 FastRight = L with LeftControl
 
+CommonCreateItem = O with LeftControl
+CommonDeleteItem = D with LeftControl
+CommonEditItem   = I with LeftControl
+
 " Motivation View Control
 
 MotivationCreateItem = O with Tab

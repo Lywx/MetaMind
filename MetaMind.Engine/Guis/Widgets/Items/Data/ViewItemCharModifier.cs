@@ -90,6 +90,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
 
         #region Events
 
+        private readonly object locker = new object();
+
         /// <summary>
         /// Occurs when modification ends as an explicitly implemented event
         /// which reduce duplicate delegates.
@@ -98,14 +100,21 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
         {
             add
             {
-                // First try to remove the handler, then re-add it
-                this.modificationEnded -= value;
-                this.modificationEnded += value;
+                // Avoid threading problems
+                lock (locker)
+                {
+                    // First try to remove the handler, then re-add it
+                    this.modificationEnded -= value;
+                    this.modificationEnded += value;
+                }
             }
 
             remove
             {
-                this.modificationEnded -= value;
+                lock (locker)
+                {
+                    this.modificationEnded -= value;
+                }
             }
         }
 
@@ -140,7 +149,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
 
             this.InsertCursor();
 
-            this.Modify();
+            this.OnValueModified(this.currentString.ToString());
         }
 
         private void DetectEnterKeyDown(object sender, KeyEventArgs e)
@@ -162,15 +171,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
 
         public void Cancel()
         {
-            if (this.ValueModified != null)
-            {
-                this.ValueModified(this, new ViewItemDataEventArgs(this.previousString));
-            }
-
-            if (this.modificationEnded != null)
-            {
-                this.modificationEnded(this, new ViewItemDataEventArgs(this.previousString));
-            }
+            this.OnValueModified(this.previousString);
+            this.OnModificationEnded(this.previousString);
 
             // only need to clear ValueModified, assuming ModificationEnded delegates
             // are not needing multiple time operations.
@@ -192,26 +194,27 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
             // remove index character after editing
             this.RemoveCursor();
 
-            if (this.ValueModified != null)
-            {
-                this.ValueModified(this, new ViewItemDataEventArgs(this.currentString.ToString()));
-            }
-
-            if (this.modificationEnded != null)
-            {
-                this.modificationEnded(this, new ViewItemDataEventArgs(this.currentString.ToString()));
-            }
+            this.OnValueModified(this.currentString.ToString());
+            this.OnModificationEnded(this.currentString.ToString());
 
             // only need to clear ValueModified, assuming ModificationEnded delegates
             // are not needing multiple time operations.
             this.ValueModified = null;
         }
 
-        private void Modify()
+        private void OnModificationEnded(string str)
+        {
+            if (this.modificationEnded != null)
+            {
+                this.modificationEnded(this, new ViewItemDataEventArgs(str));
+            }
+        }
+
+        private void OnValueModified(string str)
         {
             if (this.ValueModified != null)
             {
-                this.ValueModified(this, new ViewItemDataEventArgs(this.currentString.ToString()));
+                this.ValueModified(this, new ViewItemDataEventArgs(str));
             }
         }
 
@@ -276,7 +279,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
                 this.RemoveCursor();
                 this.DecrementCursor();
                 this.InsertCursor();
-                this.Modify();
+                this.OnValueModified(this.currentString.ToString());
             }
         }
 
@@ -287,7 +290,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
                 this.RemoveCursor();
                 this.IncrementCursor();
                 this.InsertCursor();
-                this.Modify();
+                this.OnValueModified(this.currentString.ToString());
             }
         }
 
@@ -367,7 +370,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
             this.RemoveCursor();
             this.HandleDelete();
             this.InsertCursor();
-            this.Modify();
+            this.OnValueModified(this.currentString.ToString());
         }
 
         #endregion 

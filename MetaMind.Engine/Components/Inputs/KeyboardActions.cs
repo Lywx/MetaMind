@@ -17,6 +17,10 @@ namespace MetaMind.Engine.Components.Inputs
         FastRight, 
 
         // List Management
+        CommonCreateItem,
+        CommonDeleteItem,
+        CommonEditItem,
+
         MotivationCreateItem, 
         MotivationDeleteItem, 
         MotivationEditItem, 

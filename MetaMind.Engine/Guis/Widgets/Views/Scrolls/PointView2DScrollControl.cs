@@ -1,7 +1,7 @@
 ﻿namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
 {
-    using System;
-
+    using MetaMind.Engine.Guis.Widgets.Views.Layers;
+    using MetaMind.Engine.Guis.Widgets.Views.Layouts;
     using MetaMind.Engine.Guis.Widgets.Views.Logic;
     using MetaMind.Engine.Guis.Widgets.Views.Settings;
 
@@ -10,37 +10,37 @@
     /// <summary>
     /// Dependent on PointView2DSettings IPointView2DLogic
     /// </summary>
-    /// <see cref="PointView2DSettings"/>
-    /// <see cref="IPointView2DLogic"/>
     public class PointView2DScrollControl : ViewComponent, IPointView2DScrollControl
     {
+        private readonly PointView2DSettings viewSettings;
+
+        private readonly IPointView2DLogic viewLogic;
+
         private int offsetX;
 
         private int offsetY;
 
-        public PointView2DScrollControl(IView view, PointView2DSettings viewSettings)
+        private IPointView2DLayout viewLayout;
+
+        public PointView2DScrollControl(IView view)
             : base(view)
         {
-            if (viewSettings == null)
-            {
-                throw new ArgumentNullException("viewSettings");
-            }
-
-            this.ViewSettings = viewSettings;
+            var viewLayer     = this.ViewGetLayer<PointView2DLayer>();
+            this.viewSettings = viewLayer.ViewSettings;
+            this.viewLogic    = viewLayer.ViewLogic;
+            this.viewLayout   = this.viewLogic.ViewLayout;
         }
 
         #region Dependency
 
-        private new PointView2DSettings ViewSettings { get; set; }
-
         private int ColumnFrom(int id)
         {
-            return ((IPointView2DLogic)this.ViewLogic).ColumnFrom(id);
+            return this.viewLayout.ColumnFrom(id);
         }
 
         private int RowFrom(int id)
         {
-            return ((IPointView2DLogic)this.ViewLogic).RowFrom(id);
+            return this.viewLayout.RowFrom(id);
         }
 
         #endregion
@@ -59,8 +59,8 @@
         {
             get
             {
-                return (this.ViewSettings.ColumnNumDisplay * (this.ViewSettings.RowNumDisplay + this.OffsetY) < this.ViewSettings.ColumnNumDisplay * this.ViewSettings.RowNumMax) && 
-                       (this.ViewSettings.ColumnNumMax * (this.ViewSettings.RowNumDisplay + this.OffsetY) < this.View.ViewItems.Count);
+                return (this.viewSettings.ColumnNumDisplay * (this.viewSettings.RowNumDisplay + this.OffsetY) < this.viewSettings.ColumnNumDisplay * this.viewSettings.RowNumMax) && 
+                       (this.viewSettings.ColumnNumMax * (this.viewSettings.RowNumDisplay + this.OffsetY) < this.View.Items.Count);
             }
         }
 
@@ -73,8 +73,8 @@
         {
             get
             {
-                return this.ViewSettings.RowNumDisplay * (this.ViewSettings.ColumnNumDisplay + this.OffsetX)
-                       < this.ViewSettings.RowNumDisplay * this.ViewSettings.ColumnNumMax;
+                return this.viewSettings.RowNumDisplay * (this.viewSettings.ColumnNumDisplay + this.OffsetX)
+                       < this.viewSettings.RowNumDisplay * this.viewSettings.ColumnNumMax;
             }
         }
 
@@ -85,8 +85,8 @@
 
         public bool CanDisplay(int row, int column)
         {
-            return this.OffsetX <= column && column < this.ViewSettings.ColumnNumDisplay + this.OffsetX &&
-                   this.OffsetY <= row    && row    < this.ViewSettings.RowNumDisplay    + this.OffsetY;
+            return this.OffsetX <= column && column < this.viewSettings.ColumnNumDisplay + this.OffsetX &&
+                   this.OffsetY <= row    && row    < this.viewSettings.RowNumDisplay    + this.OffsetY;
         }
 
         public bool CanDisplay(int id)
@@ -99,7 +99,7 @@
 
         public bool IsDownToDisplay(int row)
         {
-            return row > this.ViewSettings.RowNumDisplay + this.OffsetY - 1;
+            return row > this.viewSettings.RowNumDisplay + this.OffsetY - 1;
         }
 
         public bool IsLeftToDisplay(int column)
@@ -109,7 +109,7 @@
 
         public bool IsRightToDisplay(int column)
         {
-            return column > this.ViewSettings.ColumnNumDisplay + this.OffsetX - 1;
+            return column > this.viewSettings.ColumnNumDisplay + this.OffsetX - 1;
         }
 
         public bool IsUpToDisplay(int row)
@@ -154,13 +154,13 @@
             this.offsetY = 0;
         }
 
-        public Point RootCenterPosition(int id)
+        public Vector2 Position(int id)
         {
             var row    = this.RowFrom(id);
             var column = this.ColumnFrom(id);
-            return new Point(
-                this.ViewSettings.PointStart.X - this.OffsetX * this.ViewSettings.PointMargin.X + column * this.ViewSettings.PointMargin.X,
-                this.ViewSettings.PointStart.Y - this.OffsetY * this.ViewSettings.PointMargin.Y + row * this.ViewSettings.PointMargin.Y);
+            return new Vector2(
+                this.viewSettings.PointStart.X - this.OffsetX * this.viewSettings.PointMargin.X + column * this.viewSettings.PointMargin.X,
+                this.viewSettings.PointStart.Y - this.OffsetY * this.viewSettings.PointMargin.Y + row * this.viewSettings.PointMargin.Y);
         }
 
         public void Zoom(int id)

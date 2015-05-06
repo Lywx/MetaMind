@@ -10,7 +10,7 @@
 
     public class ViewItemVisual : ViewItemComponent, IViewItemVisual
     {
-        public ViewItemVisual(IViewItem item, IItemRootFrame root, Dictionary<string, object> elems)
+        public ViewItemVisual(IViewItem item, IViewItemRootFrame root, Dictionary<string, object> elems)
             : base(item)
         {
             this.IdCenterPosition   = () => root.Center.ToVector2();

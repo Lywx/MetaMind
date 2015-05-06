@@ -6,6 +6,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Items.Settings;
     using MetaMind.Engine.Guis.Widgets.Views.Factories;
+    using MetaMind.Engine.Guis.Widgets.Views.Layers;
     using MetaMind.Engine.Guis.Widgets.Views.Logic;
     using MetaMind.Engine.Guis.Widgets.Views.Settings;
     using MetaMind.Engine.Guis.Widgets.Views.Visuals;
@@ -15,7 +16,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     public class View : ViewEntity, IView
     {
-        public View(ViewSettings viewSettings, IViewFactory viewFactory, ItemSettings itemSettings, List<IViewItem> viewItems)
+        public View(ViewSettings viewSettings, IViewFactory viewFactory, ItemSettings itemSettings, List<IViewItem> items)
         {
             if (viewSettings == null)
             {
@@ -32,25 +33,37 @@ namespace MetaMind.Engine.Guis.Widgets.Views
                 throw new ArgumentNullException("itemSettings");
             }
 
-            if (viewItems == null)
+            if (items == null)
             {
-                throw new ArgumentNullException("viewItems");
+                throw new ArgumentNullException("items");
             }
 
-            this.ViewItems = viewItems;
+            this.Items        = items;
+            this.ItemSettings = itemSettings;
 
             // Composition root of view
-            this.ViewLogic  = viewFactory.CreateLogicControl(this, viewSettings, itemSettings);
-            this.ViewVisual = viewFactory.CreateVisualControl(this, viewSettings, itemSettings);
+            this.ViewLogic  = viewFactory.CreateLogic(this, viewSettings, itemSettings);
+            this.ViewVisual = viewFactory.CreateVisual(this, viewSettings, itemSettings);
+            this.ViewLayer  = viewFactory.CreateExtension(this);
+
+            this.ViewComponents = new Dictionary<string, object>();
         }
         
         #region Dependency
 
-        public List<IViewItem> ViewItems { get; set; }
+        public IViewLayer ViewLayer { get; private set; }
+
+        public Dictionary<string, object> ViewComponents { get; private set; }
+
+        public ViewSettings ViewSettings { get; set; }
 
         public IViewLogic ViewLogic { get; set; }
 
         public IViewVisual ViewVisual { get; set; }
+
+        public List<IViewItem> Items { get; set; }
+
+        public ItemSettings ItemSettings { get; set; }
 
         #endregion
 

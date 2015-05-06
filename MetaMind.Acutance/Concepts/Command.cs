@@ -7,12 +7,10 @@ namespace MetaMind.Acutance.Concepts
     using MetaMind.Acutance.Sessions;
     using MetaMind.Engine;
     using MetaMind.Engine.Components.Events;
+    using MetaMind.Testimony.Concepts.Synchronizations;
 
-    public interface ICommand
+    public interface ICommand : ISynchronizable
     {
-        [DataMember]
-        SynchronizationSpan SynchronizationSpan { get; }
-
         [DataMember]
         string Name { get; set; }
 
@@ -47,6 +45,9 @@ namespace MetaMind.Acutance.Concepts
             this.Path   = path;
             this.Offset = offset;
             this.Type   = type;
+
+            this.SynchronizationData = new SynchronizationData();
+            this.SynchronizationName
         }
 
         ~Command()
@@ -138,5 +139,15 @@ namespace MetaMind.Acutance.Concepts
         {
             this.Timer.Update();
         }
+
+        public string SynchronizationName
+        {
+            get
+            {
+                return this.Name;
+            }
+        }
+
+        public ISynchronizationData SynchronizationData { get; set; }
     }
 }

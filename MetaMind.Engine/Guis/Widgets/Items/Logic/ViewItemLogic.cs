@@ -2,9 +2,11 @@
 {
     using System;
 
+    using MetaMind.Engine.Guis.Widgets.Items.Data;
     using MetaMind.Engine.Guis.Widgets.Items.Frames;
-    using MetaMind.Engine.Guis.Widgets.Items.Views;
-    using MetaMind.Engine.Guis.Widgets.Views.Extensions;
+    using MetaMind.Engine.Guis.Widgets.Items.Interactions;
+    using MetaMind.Engine.Guis.Widgets.Items.Layouts;
+    using MetaMind.Engine.Guis.Widgets.Views.Layers;
     using MetaMind.Engine.Guis.Widgets.Views.Settings;
     using MetaMind.Engine.Services;
 
@@ -18,46 +20,32 @@
 
         #region Constructors
 
-        public ViewItemLogic(IViewItem item, IViewItemFrameControl itemFrame, IViewItemViewControl itemView, dynamic itemDataControl)
+        public ViewItemLogic(IViewItem item, IViewItemFrame itemFrame, IViewItemInteraction itemInteraction, IViewItemDataModel itemModel)
             : base(item)
         {
-            this.viewSettings = this.ItemExtension.Get<ViewExtension>().ViewSettings;
-
             if (itemFrame == null)
             {
                 throw new ArgumentNullException("itemFrame");
             }
 
-            if (itemView == null)
+            if (itemInteraction == null)
             {
-                throw new ArgumentNullException("itemView");
+                throw new ArgumentNullException("itemInteraction");
             }
 
-            if (itemDataControl == null)
+            if (itemModel == null)
             {
-                throw new ArgumentNullException("itemDataControl");
+                throw new ArgumentNullException("itemModel");
             }
 
-            this.ItemFrame = itemFrame;
-            this.ItemView  = itemView;
-            this.ItemDataControl  = itemDataControl;
+            this.ItemFrame       = itemFrame;
+            this.ItemInteraction = itemInteraction;
+            this.ItemModel       = itemModel;
 
-            this.PassInItemLogic();
-        }
+            var viewLayer = this.ViewGetLayer<ViewLayer>();
+            this.viewSettings  = viewLayer.ViewSettings;
 
-        private void PassInItemLogic()
-        {
-            this.Item[ItemState.Item_Is_Inputting] = this.ItemIsInputting;
-        }
-
-        protected virtual Func<bool> ItemIsInputting
-        {
-            get
-            {
-                return () => this.Item[ItemState.Item_Is_Active]() && 
-                             this.Item[ItemState.Item_Is_Selected]() && 
-                            !this.Item[ItemState.Item_Is_Editing]();
-            }
+            this.PassInLogic();
         }
 
         #endregion
@@ -73,34 +61,35 @@
 
         #region Dependency
 
-        public dynamic ItemDataControl { get; set; }
+        public IViewItemDataModel ItemModel { get; set; }
 
-        public IViewItemFrameControl ItemFrame { get; set; }
+        public IViewItemFrame ItemFrame { get; set; }
 
-        public IViewItemViewControl ItemView { get; set; }
+        public IViewItemInteraction ItemInteraction { get; set; }
+
+        public IViewItemLayout ItemLayout { get; set; }
 
         #endregion
 
-        public int Id { get; set; }
+        #region State Logic
 
-        #region IDisposable
-
-        public override void Dispose()
+        public void PassInLogic()
         {
-            if (this.ItemFrame != null)
-            {
-                this.ItemFrame.Dispose();
-            }
-
-            if (this.ItemDataControl != null)
-            {
-                ((IDisposable)this.ItemDataControl).Dispose();
-            }
-
-            base.Dispose();
+            this.Item[ItemState.Item_Is_Inputting] = this.ItemIsInputting;
         }
 
-        #endregion 
+        protected virtual Func<bool> ItemIsInputting
+        {
+            get
+            {
+                return () =>
+                    this.Item[ItemState.Item_Is_Active]() && 
+                    this.Item[ItemState.Item_Is_Selected]() && 
+                   !this.Item[ItemState.Item_Is_Editing]();
+            }
+        }
+
+        #endregion
 
         #region Update
 
@@ -110,21 +99,22 @@
             if (!this.isFrameInitialized)
             {
                 this.isFrameInitialized = true;
+
                 this.ItemFrame.Update(time);
             }
 
             // For better performance
             if (this.Item[ItemState.Item_Is_Active]())
             {
-                this.ItemFrame              .Update(time);
-                ((IUpdateable)this.ItemDataControl).Update(time);
+                this.ItemFrame.Update(time);
+                this.ItemModel.Update(time);
             }
         }
 
         public void UpdateView(GameTime gameTime)
         {
             // View activation is controlled by item view control
-            this.ItemView.Update(gameTime);
+            this.ItemInteraction.Update(gameTime);
         }
 
         public override void UpdateInput(IGameInputService input, GameTime time)
@@ -143,9 +133,33 @@
             // Keyboard
             if (this.viewSettings.KeyboardEnabled)
             {
-                ((IInputable)this.ItemDataControl).UpdateInput(input, time);
+                this.ItemModel.UpdateInput(input, time);
             }
         }
         #endregion Update
+
+        #region IDisposable
+
+        public override void Dispose()
+        {
+            if (this.ItemFrame != null)
+            {
+                this.ItemFrame.Dispose();
+            }
+
+            if (this.ItemInteraction != null)
+            {
+                this.ItemInteraction.Dispose();
+            }
+
+            if (this.ItemModel != null)
+            {
+                this.ItemModel.Dispose();
+            }
+
+            base.Dispose();
+        }
+
+        #endregion
     }
 }

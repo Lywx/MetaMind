@@ -1,17 +1,15 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
+    using System;
     using System.Collections.Generic;
 
     using MetaMind.Acutance.Concepts;
-    using MetaMind.Engine;
     using MetaMind.Engine.Components.Inputs;
-    using MetaMind.Engine.Guis.Elements;
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Guis.Widgets.Items.Interactions;
     using MetaMind.Engine.Guis.Widgets.Items.Logic;
     using MetaMind.Engine.Guis.Widgets.Items.Swaps;
-    using MetaMind.Engine.Guis.Widgets.Items.Views;
     using MetaMind.Engine.Guis.Widgets.Views;
-    using MetaMind.Engine.Guis.Widgets.Views.Settings;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
@@ -24,15 +22,9 @@ namespace MetaMind.Acutance.Guis.Widgets
         public TraceItemLogic(IViewItem item, List<Trace> source)
             : base(item)
         {
-            this.ItemFrameControl = new TraceItemFrameControl(item);
-            this.ItemViewControl  = new ViewItemViewSmartControl<ViewItemSmartSwapProcess>(item, source);
+            this.ItemFrame = new TraceItemFrame(item);
+            this.ItemInteraction  = new ViewItemViewSmartControl<ViewItemSmartSwapProcess>(item, source);
         }
-
-        public PickableFrame IdFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).IdFrame; } }
-
-        public PickableFrame NameFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).NameFrame; } }
-
-        public PickableFrame ExperienceFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).ExperienceFrame; } }
 
         #endregion Constructors
 
@@ -40,7 +32,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         private void DeleteIt()
         {
-            View.ViewItems.Remove(Item);
+            View.Items.Remove(Item);
 
             View.ViewLogic.ItemFactory.RemoveData(Item);
 
@@ -51,65 +43,61 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         #region Update
 
-        public bool Locked
+        public Func<bool> ItemIsLocking
         {
             get
             {
-                return this.Item.IsEnabled(ItemState.Item_Is_Editing) || 
-                       this.Item[ItemState.Item_Is_Pending]()
+                return () => this.Item[ItemState.Item_Is_Editing]() || this.Item[ItemState.Item_Is_Pending]();
             }
         }
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            // mouse and keyboard in modifier
-            //-----------------------------------------------------------------
-            base.UpdateInput(, time);
+            // Mouse and keyboard in modifier
+            base.UpdateInput(input, time);
 
-            // keyboard
-            //-----------------------------------------------------------------
-            if (ViewSettings.KeyboardEnabled)
+            // Keyboard
+            if (this.viewSettings.KeyboardEnabled)
             {
-                if (this.AcceptInput)
+                if (this.Item[ItemState.Item_Is_Inputting]())
                 {
                     // in pending status
-                    if (this.Item.IsEnabled(ItemState.Item_Is_Pending))
+                    if (this.Item[ItemState.Item_Is_Pending]())
                     {
-                        if (InputSequenceManager.Keyboard.IsKeyTriggered(Keys.N))
+                        if (input.State.Keyboard.IsKeyTriggered(Keys.N))
                         {
-                            this.ItemDataControl.EditString("Name");
+                            this.ItemModel.EditString("Name");
                         }
 
-                        if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.Escape))
+                        if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))
                         {
-                            this.View.Disable(ViewState.View_Is_Editing);
-                            this.Item.Disable(ItemState.Item_Is_Pending);
+                            this.View[ViewState.View_Is_Editing] = () => false;
+                            this.Item[ItemState.Item_Is_Pending] = () => false;
                         }
                     }
 
-                    if (!this.Locked)
+                    if (!this.Item[ItemState.Item_Is_Locking]())
                     {
                         // normal status
-                        if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.TraceEditItem))
+                        if (input.State.Keyboard.IsActionTriggered(KeyboardActions.TraceEditItem))
                         {
-                            this.View[View.State.View_Editting] = () => true;
-                            this.Item.Enable(ItemState.Item_Is_Pending);
+                            this.View[ViewState.View_Is_Editing] = () => true;
+                            this.Item[ItemState.Item_Is_Pending] = () => true;
                         }
 
-                        if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.TraceDeleteItem))
+                        if (input.State.Keyboard.IsActionTriggered(KeyboardActions.TraceDeleteItem))
                         {
                             this.DeleteIt();
                         }
                     }
                 }
 
-                // special
-                //----------------------------------------------------------------- 
-                if (View.ViewLogic.AcceptInput)
+                // Special
+                if (this.View[ViewState.View_Is_Inputting]())
                 {
-                    if (!this.Locked)
+                    if (!this.Item[ItemState.Item_Is_Locking]())
                     {
-                        if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.TraceClearItem))
+                        if (input.State.Keyboard.IsActionTriggered(KeyboardActions.TraceClearItem))
                         {
                             this.DeleteIt();
                         }

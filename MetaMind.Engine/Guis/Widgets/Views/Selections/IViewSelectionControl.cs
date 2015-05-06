@@ -1,24 +1,31 @@
-﻿namespace MetaMind.Engine.Guis.Widgets.Views.Selections
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="IViewSelectionControl.cs" company="UESTC">
+//   Copyright (c) 2015 Wuxiang Lin
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 {
     public interface IViewSelectionControl
     {
-        bool HasSelected { get; }
-
         bool HasPreviouslySelected { get; }
 
-        int? SelectedId { get; }
+        bool HasSelected { get; }
 
         int? PreviousSelectedId { get; }
 
-        void Clear();
+        int? SelectedId { get; }
+
+        void Cancel();
 
         bool IsSelected(int id);
 
         /// <summary>
-        /// Selects the specified id.
+        ///     Selects the specified id.
         /// </summary>
         /// <remarks>
-        /// All the selection has to be done by this function to enforce uniformity.
+        ///     All the selection has to be done by this function to enforce uniformity.
         /// </remarks>
         void Select(int id);
     }

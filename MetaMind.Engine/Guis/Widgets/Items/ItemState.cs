@@ -8,6 +8,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         // whether is accepting input
         Item_Is_Inputting,
 
+        // whether is locking specific input
+        Item_Is_Locking,
+
         // whether is visible
         Item_Is_Visible,
 
@@ -25,9 +28,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         // whether is swapping with another item
         Item_Is_Swaping,
-
-        // whether is exchanging to another view
-        Item_Is_Transiting,
 
         // whether is dragging by mouse
         Item_Is_Dragging,

@@ -1,24 +1,16 @@
 namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 {
+    using MetaMind.Engine.Guis.Widgets.Views.Layouts;
+    using MetaMind.Engine.Guis.Widgets.Views.Scrolls;
+    using MetaMind.Engine.Guis.Widgets.Views.Selections;
+
     public interface IPointView2DLogic : IViewLogic
     {
-        #region View Data
+        new IPointView2DLayout ViewLayout { get; }
 
-        bool AcceptInput { get; }
+        new IPointView2DSelectionControl ViewSelection { get; }
 
-        bool Active { get; }
-
-        int ColumnNum { get; }
-
-        int RowNum { get; }
-
-        int ColumnFrom(int id);
-
-        int IdFrom(int i, int j);
-
-        int RowFrom(int id);
-
-        #endregion View Data
+        new IPointView2DScrollControl ViewScroll { get; }
 
         #region Item Operations
 

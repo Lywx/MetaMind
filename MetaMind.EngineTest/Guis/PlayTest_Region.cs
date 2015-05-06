@@ -3,7 +3,6 @@
     using MetaMind.Engine;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Widgets.Regions;
-    using MetaMind.Engine.Guis.Widgets.Visual;
     using MetaMind.Engine.Guis.Widgets.Visuals;
     using MetaMind.Engine.Services;
 

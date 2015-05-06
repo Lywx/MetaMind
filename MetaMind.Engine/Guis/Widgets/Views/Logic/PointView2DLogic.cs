@@ -11,6 +11,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Widgets.Items.Factories;
+    using MetaMind.Engine.Guis.Widgets.Views.Layers;
+    using MetaMind.Engine.Guis.Widgets.Views.Layouts;
     using MetaMind.Engine.Guis.Widgets.Views.Scrolls;
     using MetaMind.Engine.Guis.Widgets.Views.Selections;
     using MetaMind.Engine.Guis.Widgets.Views.Settings;
@@ -21,33 +23,124 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
     public class PointView2DLogic : PointViewHorizontalLogic, IPointView2DLogic
     {
-        public PointView2DLogic(IView view, PointView2DSettings viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
-            : base(
-                view,
-                viewSettings,
-                itemSettings,
-                itemFactory,
-                new ViewSwapControl(view),
-                new PointView2DSelectionControl(view),
-                new PointView2DScrollControl(view, viewSettings, itemSettings))
+        private readonly PointView2DSettings viewSettings;
+
+        private readonly IPointView2DSelectionControl viewSelection;
+
+        public PointView2DLogic(IView view, IViewScrollControl viewScroll, IViewSelectionControl viewSelection, IViewSwapControl viewSwap, IViewLayout viewLayout, IViewItemFactory itemFactory)
+            : base(view, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory)
         {
+            var viewLayer = this.ViewGetLayer<PointView2DLayer>();
+            this.viewSettings  = viewLayer.ViewSettings;
+            this.viewSelection = viewLayer.ViewSelection;
         }
+
+        #region View Logic Property Injecetion
+
+        public new IPointView2DLayout ViewLayout
+        {
+            get
+            {
+                // Local Default
+                if (base.ViewLayout == null)
+                {
+                    base.ViewLayout = new PointView2DLayout(this.View);
+                }
+
+                return (IPointView2DLayout)base.ViewLayout;
+            }
+
+            protected set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException("value");
+                }
+                
+                if (base.ViewLayout != null)
+                {
+                    throw new InvalidOperationException();
+                }
+
+                this.ViewLayout = value;
+            }
+        }
+
+        public new IPointView2DSelectionControl ViewSelection
+        {
+            get
+            {
+                // Local Default
+                if (base.ViewSelection == null)
+                {
+                    base.ViewSelection = new PointView2DSelectionControl(this.View);
+                }
+
+                return (IPointView2DSelectionControl)base.ViewSelection;
+            }
+
+            protected set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException("value");
+                }
+                
+                if (base.ViewSelection != null)
+                {
+                    throw new InvalidOperationException();
+                }
+
+                this.ViewSelection = value;
+            }
+        }
+
+        public new IPointView2DScrollControl ViewScroll
+        {
+            get
+            {
+                // Local Default
+                if (base.ViewScroll == null)
+                {
+                    base.ViewScroll = new PointView2DScrollControl(this.View);
+                }
+
+                return (IPointView2DScrollControl)base.ViewScroll;
+            }
+
+            protected set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException("value");
+                }
+                
+                if (base.ViewScroll != null)
+                {
+                    throw new InvalidOperationException();
+                }
+
+                this.ViewScroll = value;
+            }
+        }
+
+        #endregion
 
         #region Operations
 
         public virtual void MoveDown()
         {
-            this.ViewSelection.MoveDown();
+            this.viewSelection.MoveDown();
         }
 
         public virtual void MoveUp()
         {
-            this.ViewSelection.MoveUp();
+            this.viewSelection.MoveUp();
         }
 
         public virtual void FastMoveDown()
         {
-            for (var i = 0; i < this.ViewSettings.RowNumDisplay; i++)
+            for (var i = 0; i < this.viewSettings.RowNumDisplay; i++)
             {
                 this.MoveDown();
             }
@@ -55,7 +148,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public virtual void FastMoveUp()
         {
-            for (var i = 0; i < this.ViewSettings.RowNumDisplay; i++)
+            for (var i = 0; i < this.viewSettings.RowNumDisplay; i++)
             {
                 this.MoveUp();
             }
@@ -74,10 +167,10 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         protected override void UpdateInputOfKeyboard(IGameInputService input, GameTime time)
         {
-            if (this.AcceptInput)
+            if (this.View[ViewState.View_Is_Inputting]())
             {
                 // Keyboard
-                if (this.ViewSettings.KeyboardEnabled)
+                if (this.viewSettings.KeyboardEnabled)
                 {
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Up))
                     {
@@ -121,58 +214,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))
                     {
-                        this.ViewSelection.Clear();
+                        this.ViewSelection.Cancel();
                     }
                 }
             }
         }
 
         #endregion Update
-
-        #region Grid Statistics
-
-        public int ColumnNum
-        {
-            get
-            {
-                return this.RowNum > 1 ? this.ViewSettings.ColumnNumMax : this.View.ViewItems.Count;
-            }
-        }
-
-        public int RowNum
-        {
-            get
-            {
-                var lastId = this.View.ViewItems.Count - 1;
-                return this.RowFrom(lastId) + 1;
-            }
-        }
-
-        public int ColumnFrom(int id)
-        {
-            return id % this.ViewSettings.ColumnNumMax;
-        }
-
-        public int IdFrom(int i, int j)
-        {
-            return i * this.ViewSettings.ColumnNumMax + j;
-        }
-
-        public int RowFrom(int id)
-        {
-            for (var row = 0; row < this.ViewSettings.RowNumMax; row++)
-            {
-                if (id - row * this.ViewSettings.ColumnNumMax >= 0)
-                {
-                    continue;
-                }
-
-                return row - 1;
-            }
-
-            return this.ViewSettings.RowNumMax - 1;
-        }
-
-        #endregion Grid Statistics
     }
 }

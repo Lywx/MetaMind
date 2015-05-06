@@ -11,12 +11,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Settings
 
         public Color HighlightColor = Palette.TransparentColor1;
 
-        public PointListSettings(Point start, Point margin, PointViewHorizontalDirection direction)
+        public PointListSettings(Vector2 start, Vector2 margin, PointViewDirection direction)
             : base(start, margin, direction)
         {
         }
 
-        public PointListSettings(Point start)
+        public PointListSettings(Vector2 start)
             : base(start)
         {
         }

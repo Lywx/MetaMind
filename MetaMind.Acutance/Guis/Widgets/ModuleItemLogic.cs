@@ -11,9 +11,9 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Elements;
     using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Guis.Widgets.Items.Interactions;
     using MetaMind.Engine.Guis.Widgets.Items.Logic;
     using MetaMind.Engine.Guis.Widgets.Items.Swaps;
-    using MetaMind.Engine.Guis.Widgets.Items.Views;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
@@ -25,8 +25,8 @@ namespace MetaMind.Acutance.Guis.Widgets
         public ModuleItemLogic(IViewItem item, List<Module> source)
             : base(item)
         {
-            this.ItemFrameControl = new TraceItemFrameControl(item);
-            this.ItemViewControl  = new ViewItemViewSmartControl<ViewItemSmartSwapProcess>(item, source);
+            this.ItemFrame = new TraceItemFrame(item);
+            this.ItemInteraction  = new ViewItemViewSmartControl<ViewItemSmartSwapProcess>(item, source);
             
             this.ItemFileControl  = new ModuleItemFileControl(item);
 
@@ -37,11 +37,11 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public ModuleItemFileControl ItemFileControl { get; private set; }
 
-        public PickableFrame IdFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).IdFrame; } }
+        public PickableFrame IdFrame { get { return ((TraceItemFrame)this.ItemFrame).IdFrame; } }
 
-        public PickableFrame NameFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).NameFrame; } }
+        public PickableFrame NameFrame { get { return ((TraceItemFrame)this.ItemFrame).NameFrame; } }
 
-        public PickableFrame ExperienceFrame { get { return ((TraceItemFrameControl)this.ItemFrameControl).ExperienceFrame; } }
+        public PickableFrame ExperienceFrame { get { return ((TraceItemFrame)this.ItemFrame).ExperienceFrame; } }
 
 
         #region Events

@@ -10,20 +10,19 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Settings
 
         public int ColumnNumMax     = 500;
 
+        public PointViewDirection Direction = PointViewDirection.Normal;
 
-        public PointViewHorizontalDirection Direction = PointViewHorizontalDirection.Normal;
 
+        public Vector2 PointMargin = new Vector2(50, 0);
 
-        public Point PointMargin = new Point(50, 0);
+        public Vector2 PointStart;
 
-        public Point PointStart;
-
-        public PointViewHorizontalSettings(Point start)
+        public PointViewHorizontalSettings(Vector2 start)
         {
             this.PointStart = start;
         }
 
-        public PointViewHorizontalSettings(Point start, Point margin, PointViewHorizontalDirection direction)
+        public PointViewHorizontalSettings(Vector2 start, Vector2 margin, PointViewDirection direction)
         {
             this.PointStart  = start;
             this.PointMargin = margin;

@@ -21,11 +21,6 @@
         {
             this.entities = new GameControllableEntityCollection<GameControllableEntity>();
 
-            // View Composition
-
-            // 
-
-
             var pointView = new View(new PointGridSettings(new Point(50, 50)), new PointView2DFactory(), )
             this.entities.Add(pointView);
         }

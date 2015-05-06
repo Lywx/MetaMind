@@ -1,15 +1,22 @@
 namespace MetaMind.Engine.Guis.Widgets.Items
 {
-    using MetaMind.Engine.Guis.Widgets.Items.Extensions;
-    using MetaMind.Engine.Guis.Widgets.Views;
-    using MetaMind.Engine.Guis.Widgets.Views.Extensions;
+    using System;
 
-    public class ViewItemComponent : GameControllableEntity, IViewItemComponent
+    using MetaMind.Engine.Guis.Widgets.Items.Layers;
+    using MetaMind.Engine.Guis.Widgets.Views;
+    using MetaMind.Engine.Guis.Widgets.Views.Layers;
+
+    public abstract class ViewItemComponent : GameControllableEntity, IViewItemComponent
     {
         #region Constructors and Destructors
 
         protected ViewItemComponent(IViewItem item)
         {
+            if (item == null)
+            {
+                throw new ArgumentNullException("item");
+            }
+
             this.Item = item;
         }
 
@@ -36,20 +43,30 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             } 
         }
 
-        public IViewExtension ViewExtension
+        private IViewLayer ViewLayer
         {
             get
             {
-                return this.View.ViewExtension;
+                return this.View.ViewLayer;
             }
         }
 
-        public IViewItemExtension ItemExtension
+        private IViewItemLayer ItemLayer
         {
             get
             {
-                return this.Item.ItemExtension;
+                return this.Item.ItemLayer;
             }
+        }
+
+        public T ItemGetLayer<T>() where T : class, IViewItemLayer 
+        {
+            return this.ItemLayer.Get<T>();
+        }
+
+        public T ViewGetLayer<T>() where T : class, IViewLayer
+        {
+            return this.ViewLayer.Get<T>();
         }
 
         #endregion 

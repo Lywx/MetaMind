@@ -1,12 +1,10 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
     using MetaMind.Acutance.Concepts;
-    using MetaMind.Engine;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Widgets.Regions;
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Guis.Widgets.Views.Logic;
-    using MetaMind.Engine.Guis.Widgets.Views.PointView;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;

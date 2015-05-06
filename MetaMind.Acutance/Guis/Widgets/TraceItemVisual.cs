@@ -1,8 +1,6 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
     using MetaMind.Engine;
-    using MetaMind.Engine.Concepts;
-    using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Items.Settings;
     using MetaMind.Engine.Guis.Widgets.Items.Visuals;

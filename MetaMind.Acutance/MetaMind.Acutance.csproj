@@ -103,8 +103,6 @@
     <Compile Include="Guis\Modules\MultiplexerGroupCommandNotifiedListener.cs" />
     <Compile Include="Guis\Modules\MultiplexerGroupKnowledgeRetrievedListener.cs" />
     <Compile Include="Guis\Modules\MultiplexerGroup.cs" />
-    <Compile Include="Guis\Modules\SynchronizationGroupSettings.cs" />
-    <Compile Include="Guis\Modules\SynchronizationGroup.cs" />
     <Compile Include="Guis\Modules\MultiplexerGroupSettings.cs" />
     <Compile Include="Events\CommandAlertedEventArgs.cs" />
     <Compile Include="Guis\Widgets\CommandItemLogic.cs" />
@@ -119,7 +117,7 @@
     <Compile Include="Guis\Widgets\KnowledgeItemLogic.cs" />
     <Compile Include="Guis\Widgets\KnowledgeItemFileDataControl.cs" />
     <Compile Include="Guis\Widgets\KnowledgeItemFactory.cs" />
-    <Compile Include="Guis\Widgets\KnowledgeItemFrameControl.cs" />
+    <Compile Include="Guis\Widgets\KnowledgeItemFrame.cs" />
     <Compile Include="Guis\Widgets\KnowledgeItemVisual.cs" />
     <Compile Include="Guis\Widgets\KnowledgeItemSettings.cs" />
     <Compile Include="Guis\Widgets\KnowledgeViewLogic.cs" />
@@ -129,7 +127,7 @@
     <Compile Include="Events\ModuleCreatedEventArgs.cs" />
     <Compile Include="Guis\Widgets\TraceItemLogic.cs" />
     <Compile Include="Guis\Widgets\TraceItemFactory.cs" />
-    <Compile Include="Guis\Widgets\TraceItemFrameControl.cs" />
+    <Compile Include="Guis\Widgets\TraceItemFrame.cs" />
     <Compile Include="Guis\Widgets\TraceItemVisual.cs" />
     <Compile Include="Guis\Widgets\TraceItemSettings.cs" />
     <Compile Include="Guis\Widgets\TraceViewLogic.cs" />
@@ -148,25 +146,25 @@
     <Compile Include="Parsers\Elements\Title.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Screens\BackgroundScreen.cs" />
     <Compile Include="Screens\MultiplexerModule.cs" />
-    <Compile Include="Service References\PerseveranceServiceReference\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Screens\MultiplexerScreen.cs" />
     <Compile Include="Sessions\SessionData.cs" />
     <Compile Include="Sessions\SessionEventType.cs" />
     <Compile Include="Settings\SearchSettings.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="FileSearcher">
+      <HintPath>..\ThirdParties\FileSearcher\bin\Debug\FileSearcher.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MSBuildProgramFiles32)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="Primtives2D">
+      <HintPath>..\ThirdParties\Primitives2D\bin\Debug\Primtives2D.dll</HintPath>
+    </Reference>
     <Reference Include="Sprache">
-      <HintPath>..\ThirdParties\Sprache.dll</HintPath>
+      <HintPath>..\ThirdParties\Sprache\bin\Sprache.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -184,36 +182,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icon.ico" />
-    <None Include="Service References\PerseveranceServiceReference\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\PerseveranceServiceReference\configuration.svcinfo" />
-    <None Include="Service References\PerseveranceServiceReference\configuration91.svcinfo" />
     <None Include="Properties\DataSources\MetaMind.Perseverance.Concepts.TaskEntries.TaskEntry.datasource" />
     <None Include="Properties\DataSources\MetaMind.PerseveranceService.CompositeType.datasource" />
-    <None Include="Service References\PerseveranceServiceReference\Arrays.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PerseveranceServiceReference\MetaMind.Engine.Concepts.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PerseveranceServiceReference\MetaMind.Engine.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PerseveranceServiceReference\MetaMind.Perseverance.Concepts.Cognitions.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PerseveranceServiceReference\MetaMind.Perseverance.Concepts.TaskEntries.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PerseveranceServiceReference\service.wsdl" />
-    <None Include="Service References\PerseveranceServiceReference\service.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PerseveranceServiceReference\service1.xsd">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\" />
@@ -231,23 +201,12 @@
       <Project>{8944c3ab-1865-49cf-9e84-1ecc42ad2c3e}</Project>
       <Name>MetaMind.Engine</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ThirdParties\FileSearcher\FileSearcher.csproj">
-      <Project>{b0f2ffcc-02f2-450c-ad5a-b60c685e2112}</Project>
-      <Name>FileSearcher</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ThirdParties\Primitives2D\Primitives2D.csproj">
-      <Project>{39ad1482-1881-4852-a05d-dc61b0d3446a}</Project>
-      <Name>Primitives2D</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\PerseveranceServiceReference\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

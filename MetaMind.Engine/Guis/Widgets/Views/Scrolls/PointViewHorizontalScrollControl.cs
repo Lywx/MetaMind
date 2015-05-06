@@ -1,6 +1,6 @@
 ﻿namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
 {
-    using MetaMind.Engine.Guis.Widgets.Views.Extensions;
+    using MetaMind.Engine.Guis.Widgets.Views.Layers;
     using MetaMind.Engine.Guis.Widgets.Views.PointView;
     using MetaMind.Engine.Guis.Widgets.Views.Settings;
 
@@ -13,7 +13,7 @@
         public PointViewHorizontalScrollControl(IView view)
             : base(view)
         {
-            this.viewSettings = this.ViewExtension.Get<PointViewHorizontalExtension>().ViewSettings;
+            this.viewSettings = this.ViewGetLayer<PointViewHorizontalLayer>().ViewSettings;
         }
 
         public int OffsetX { get; private set; }
@@ -30,10 +30,9 @@
         {
             get
             {
-                return (this.viewSettings.ColumnNumDisplay + this.OffsetX) < this.View.ViewItems.Count;
+                return (this.viewSettings.ColumnNumDisplay + this.OffsetX) < this.View.Items.Count;
             }
         }
-
 
         public bool CanDisplay(int id)
         {
@@ -67,10 +66,10 @@
             }
         }
 
-        public Point RootCenterPosition(int id)
+        public Vector2 Position(int id)
         {
-            return new Point(
-                this.viewSettings.Direction == PointViewHorizontalDirection.Normal
+            return new Vector2(
+                this.viewSettings.Direction == PointViewDirection.Normal
                     ? this.viewSettings.PointStart.X - (this.OffsetX * this.viewSettings.PointMargin.X) + id * this.viewSettings.PointMargin.X
                     : this.viewSettings.PointStart.X + (this.OffsetX * this.viewSettings.PointMargin.X) - id * this.viewSettings.PointMargin.X,
                 this.viewSettings.PointStart.Y);

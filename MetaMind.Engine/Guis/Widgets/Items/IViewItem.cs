@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 {
     using System;
 
-    using MetaMind.Engine.Guis.Widgets.Items.Extensions;
+    using MetaMind.Engine.Guis.Widgets.Items.Layers;
     using MetaMind.Engine.Guis.Widgets.Items.Logic;
     using MetaMind.Engine.Guis.Widgets.Items.Visuals;
     using MetaMind.Engine.Guis.Widgets.Views;
@@ -18,6 +18,18 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
     public interface IViewItem : IItemEntity, IDisposable
     {
+        #region Events
+
+        event EventHandler<EventArgs> Selected;
+
+        event EventHandler<EventArgs> Unselected;
+
+        event EventHandler<EventArgs> Swapped;
+
+        event EventHandler<EventArgs> Transited;
+
+        #endregion
+
         #region Item Data
 
         /// <summary>
@@ -26,10 +38,10 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         dynamic ItemData { get; set; }
 
         IViewItemLogic ItemLogic { get; }
-        
+
         IViewItemVisual ItemVisual { get; }
 
-        IViewItemExtension ItemExtension { get; }
+        IViewItemLayer ItemLayer { get; }
 
         #endregion
 

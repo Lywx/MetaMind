@@ -1,24 +1,50 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="IViewSwapControl.cs" company="UESTC">
+//   Copyright (c) 2015 Wuxiang Lin
+//   All Rights Reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace MetaMind.Engine.Guis.Widgets.Views.Swaps
 {
     using System;
-    using System.Collections.Generic;
+
+    using MetaMind.Engine.Guis.Widgets.Items;
+    using MetaMind.Engine.Guis.Widgets.Items.Layouts;
+    using MetaMind.Engine.Guis.Widgets.Items.Logic;
+    using MetaMind.Engine.Guis.Widgets.Views.Logic;
+    using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
-    public interface IViewSwapControl : ICrossViewSwapObservor, ICrossViewTransitObservor, IDisposable
+    public interface IViewSwapControl : IDisposable
     {
-        #region Observors
-
-        List<IView> Observors { get; }
+        #region Observers
 
         void AddObserver(IView view);
 
+        void RemoveObserver(IView view);
+
         #endregion
+
+        #region Status 
 
         float Progress { get; set; }
 
-        Point RootCenterPosition { get; }
+        Vector2 Position { get; }
 
-        void StartProcess(Point start, Point end);
+        #endregion
+
+        #region Process
+
+        void StartProcess(
+            IGameInteropService interop,
+            IViewItem touchedItem,
+            IViewItem draggingItem,
+            IViewLogic draggingViewLogic);
+
+        void WatchProcess(IViewItem item);
+
+        #endregion
     }
 }

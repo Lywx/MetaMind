@@ -1,0 +1,79 @@
+#@ 2015-05-24 15:37 ------------------------------------------------------------
+
+#@ Status Engine Is Building = true
+#@ Status Engine Is Built    = false 
+
+#@ 2015-05-24 15:40 ------------------------------------------------------------
+
+#@ Status OnmiFocus Is Examined = false
+#@ Status OnmiPlan Is Examined  = false
+
+> 1. I want to make OmniFocus to be a component of process
+> > 1. Where
+> > 2. What 
+> > 3. How
+> 
+> 2. I want to make OmniPlan to be a component of process
+> > 1. Where
+> > 2. What 
+> > 3. How
+
+#@ 2015-05-24 15:49 ------------------------------------------------------------
+
+> 1. Test Design
+> > 1. I provide F# code
+> > 2. The software launch F# engine to run the script automatically
+>  
+> 2. Process Design 
+> > 1. I provide F# code
+> > 2. The software launch F# engine to run the script automatically
+
+$ TestProcessSpan.Begin()
+$ TestProcessManual.Begin()
+
+1. provide status TestName     -> ok
+2. provide status TestAbility  -> ok
+3. provide status TestDuration -> ok
+
+$ TestProcessManual.End()
+$ TestProcessSpan.End()
+
+$ TestConclusion.Begin()
+
+1. provide status TestResult  -> ok
+2. provide status TestConvert -> ok
+
+$ TestConclusion.End()
+
+#@ 2015-05-24 18:05 ------------------------------------------------------------
+
+#@ Status New Idea Come = true
+
+> 1. Everything are processes.
+> > 1. Reading a book 
+> > 2. Physical actions
+> 
+> 2. Everything matters
+> > 1. Sequence of thoughts affects thinking speed.
+
+#@ 2015-05-24 18:27 ------------------------------------------------------------
+
+#@ Status New Idea Come = true
+ 
+> 1. Predefined processes
+> > 1. Predefined process span
+> > 2. Predefined process actions
+ 
+#@ 2015-05-24 18:51 ------------------------------------------------------------
+
+> 1. Is Automatic Testing a good concept for this?
+> > 1. How to test?
+> > > 1. Input attribute periodically then computation decided success or
+> > >    failure.
+> > > > 1. Approaches
+> > > > > 1. Windows Notification
+> > > 
+> > > 2. There mostly are no scientific theorems for you to use in your process.
+> > > > 1. You have to merge your instinct and logics to come up a test case.
+> > > > > 1. Maybe you want to grab a book for testing and experiment when you
+> > > > >    use this framework.

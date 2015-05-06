@@ -2,12 +2,13 @@
 {
     using System;
 
+    using MetaMind.Engine.Guis.Widgets.Items.Logic;
     using MetaMind.Engine.Guis.Widgets.Items.Visuals;
 
     public sealed class ViewItemFactory : IViewItemFactory
     {
         public ViewItemFactory(
-            Func<IViewItem, dynamic> logic,
+            Func<IViewItem, IViewItemLogic> logic,
             Func<IViewItem, IViewItemVisual> visual,
             Func<IViewItem, dynamic> data)
         {
@@ -33,16 +34,16 @@
 
         public Func<IViewItem, dynamic> Data { get; set; }
 
-        public Func<IViewItem, dynamic> Logic { get; set; }
+        public Func<IViewItem, IViewItemLogic> Logic { get; set; }
 
-        public Func<IViewItem, dynamic> Visual { get; set; }
+        public Func<IViewItem, IViewItemVisual> Visual { get; set; }
 
         public dynamic CreateData(IViewItem item)
         {
             return this.Data(item);
         }
 
-        public dynamic CreateLogic(IViewItem item)
+        public IViewItemLogic CreateLogic(IViewItem item)
         {
             return this.Logic(item);
         }

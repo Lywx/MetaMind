@@ -1,9 +1,10 @@
 namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 {
-    using System;
-
     using MetaMind.Engine.Guis.Widgets.Items.Factories;
     using MetaMind.Engine.Guis.Widgets.Regions;
+    using MetaMind.Engine.Guis.Widgets.Views.Extensions;
+    using MetaMind.Engine.Guis.Widgets.Views.Scrolls;
+    using MetaMind.Engine.Guis.Widgets.Views.Selections;
     using MetaMind.Engine.Guis.Widgets.Views.Settings;
     using MetaMind.Engine.Guis.Widgets.Views.Visuals;
     using MetaMind.Engine.Services;
@@ -12,20 +13,24 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
     public class PointGridLogic : PointView2DLogic, IPointGridLogic
     {
-        public PointGridLogic(IView view, PointGridSettings viewSettings, ICloneable itemSettings, IViewItemFactory itemFactory)
-            : base(view, viewSettings, itemSettings, itemFactory)
+        private IPointView2DSelectionControl viewSelection;
+
+        private IPointView2DScrollControl viewScroll;
+
+        public PointGridLogic(IView view, PointGridSettings viewSettings, IViewItemFactory itemFactory)
+            : base(view, viewSettings, itemFactory)
         {
+            var viewLayer = this.ViewGetLayer<PointView2DLayer>();
+            this.viewSelection = viewLayer.ViewSelection;
+            this.viewScroll = viewLayer.ViewScroll;
+
             this.Region    = new ViewRegion(this.RegionBounds);
-            this.Scrollbar = new ViewVerticalScrollBar(viewSettings, this.ViewScroll, this, this.Region, viewSettings.ScrollbarSettings);
+            this.Scrollbar = new ViewVerticalScrollBar(viewSettings, viewLayer.ViewScroll, this, this.Region, viewSettings.ScrollbarSettings);
 
             this.View[ViewState.View_Has_Focus] = () => this.Region[RegionState.Region_Has_Focus]() || this.View[ViewState.View_Has_Selection]();
         }
 
         #region Public Properties
-
-        public ViewRegion Region { get; protected set; }
-
-        public ViewVerticalScrollBar Scrollbar { get; protected set; }
 
         #endregion Public Properties
 
@@ -33,38 +38,38 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public override void MoveDown()
         {
-            this.Scrollbar.Trigger();
-            this.ViewSelection.MoveDown();
+            this.ViewGetComponent<ViewVerticalScrollBar>("verticalScrollbar").Trigger();
+            this.viewSelection.MoveDown();
         }
 
         public override void MoveLeft()
         {
-            this.Scrollbar.Trigger();
-            this.ViewSelection.MoveLeft();
+            this.ViewGetComponent<ViewVerticalScrollBar>("verticalScrollbar").Trigger();
+            this.viewSelection.MoveLeft();
         }
 
         public override void MoveRight()
         {
-            this.Scrollbar.Trigger();
-            this.ViewSelection.MoveRight();
+            this.ViewGetComponent<ViewVerticalScrollBar>("verticalScrollbar").Trigger();
+            this.viewSelection.MoveRight();
         }
 
         public override void MoveUp()
         {
-            this.Scrollbar.Trigger();
-            this.ViewSelection.MoveUp();
+            this.ViewGetComponent<ViewVerticalScrollBar>("verticalScrollbar").Trigger();
+            this.viewSelection.MoveUp();
         }
 
         public void ScrollDown()
         {
-            this.Scrollbar.Trigger();
-            this.ViewScroll   .MoveDown();
+            this.ViewGetComponent<ViewVerticalScrollBar>("verticalScrollbar").Trigger();
+            this.viewScroll.MoveDown();
         }
 
         public void ScrollUp()
         {
-            this.Scrollbar.Trigger();
-            this.ViewScroll   .MoveUp();
+            this.ViewGetComponent<ViewVerticalScrollBar>("verticalScrollbar").Trigger();
+            this.viewScroll.MoveUp();
         }
 
         #endregion Operations
@@ -97,9 +102,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         protected override void UpdateInputOfMouse(IGameInputService input, GameTime time)
         {
-            if (this.AcceptInput)
+            if (this.View[ViewState.View_Is_Inputting]())
             {
-                if (this.ViewSettings.MouseEnabled)
+                if (this.viewSettings.MouseEnabled)
                 {
                     if (input.State.Mouse.IsWheelScrolledUp)
                     {
@@ -116,7 +121,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         protected void UpdateInputOfRegion(IGameInputService input, GameTime gameTime)
         {
-            if (this.Active)
+            if (this.View[ViewState.View_Is_Inputting]())
             {
                 this.Region.UpdateInput(input, gameTime);
             }
