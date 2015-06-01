@@ -2,15 +2,14 @@ namespace MetaMind.Runtime.Guis.Widgets
 {
     using System;
 
+    using MetaMind.Engine.Guis.Widgets.Items.Frames;
     using MetaMind.Engine.Guis.Elements;
     using MetaMind.Engine.Guis.Widgets.Items;
-    using MetaMind.Engine.Guis.Widgets.Items.ItemFrames;
-    using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
 
-    public class ExperienceItemFrameControl : ViewItemFrameControl
+    public class ExperienceItemFrameControl : ViewItemFrame
     {
         public ExperienceItemFrameControl(IViewItem item)
             : base(item)
@@ -21,26 +20,26 @@ namespace MetaMind.Runtime.Guis.Widgets
 
             this.RootFrameLocation = () =>
                 {
-                    //if (!this.Item[ItemState.Item_Is_Dragging]() && 
-                    //    !this.Item[ItemState.Item_Is_Swaping]())
-                    //{
-                    //    IContinousViewScrollControl scroll = this.ViewLogic.ViewScroll;
+                    if (!this.Item[ItemState.Item_Is_Dragging]() &&
+                        !this.Item[ItemState.Item_Is_Swaping]())
+                    {
+                        IContinousViewScrollControl scroll = this.ViewLogic.ViewScroll;
 
-                    //    return scroll.RootCenterPosition(this.ItemLogic.Id).ToVector2() + new Vector2(0, this.ItemSettings.IdFrameSize.Y);
-                    //}
+                        return scroll.RootCenterPosition(this.ItemLogic.Id).ToVector2() + new Vector2(0, this.ItemSettings.IdFrameSize.Y);
+                    }
 
-                    //if (this.Item[ItemState.Item_Is_Swaping]())
-                    //{
-                    //    return this.ViewLogic.ViewSwap.RootCenterPosition().ToVector2() + new Vector2(0, this.ItemSettings.IdFrameSize.Y);
-                    //}
+                    if (this.Item[ItemState.Item_Is_Swaping]())
+                    {
+                        return this.ViewLogic.ViewSwap.RootCenterPosition().ToVector2() + new Vector2(0, this.ItemSettings.IdFrameSize.Y);
+                    }
 
                     return this.RootFrame.Location.ToVector2();
                 };
 
             this.NameFrameLocation = this.RootFrameLocation;
 
-            //this.LHolderFrameLocation = () => { };
-            //this.RHolderFrameLocation = () => { };
+            this.LHolderFrameLocation = () => { };
+            this.RHolderFrameLocation = () => { };
         }
 
         ~ExperienceItemFrameControl()
@@ -93,8 +92,8 @@ namespace MetaMind.Runtime.Guis.Widgets
 
         protected override void UpdateFrameGeometry()
         {
-            this.RootFrame.Location = this.RootFrameLocation().ToPoint();
-            this.NameFrame.Location = this.NameFrameLocation().ToPoint();
+            this.RootFrame.Location  = this.RootFrameLocation().ToPoint();
+            this.NameFrame.Location  = this.NameFrameLocation().ToPoint();
             this.LHoldFrame.Location = this.LHolderFrameLocation().ToPoint();
             this.RHoldFrame.Location = this.RHolderFrameLocation().ToPoint();
 
@@ -103,9 +102,5 @@ namespace MetaMind.Runtime.Guis.Widgets
             this.LHoldFrame.Size = this.ItemSettings.LeftHolderFrameSize;
             this.RHoldFrame.Size = this.ItemSettings.RightHolderFrameSize;
         }
-    }
-
-    public interface IContinousViewScrollControl
-    {
     }
 }

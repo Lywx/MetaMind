@@ -4,7 +4,6 @@ namespace MetaMind.Acutance.Guis.Modules
     using MetaMind.Acutance.Sessions;
     using MetaMind.Engine.Components.Events;
     using MetaMind.Engine.Guis.Widgets.Views;
-    using MetaMind.Engine.Guis.Widgets.Views.PointView;
 
     public class MultiplexerGroupModuleCreatedListener : Listener
     {

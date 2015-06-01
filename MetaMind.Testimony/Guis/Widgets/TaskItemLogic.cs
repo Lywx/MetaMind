@@ -1,5 +1,7 @@
 namespace MetaMind.Runtime.Guis.Widgets
 {
+    using System;
+    using Engine.Guis.Widgets.Items.Logic;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Elements;
     using MetaMind.Engine.Guis.Widgets.Items;
@@ -16,17 +18,8 @@ namespace MetaMind.Runtime.Guis.Widgets
         public TaskItemLogic(IViewItem item)
             : base(item)
         {
-            this.ItemFrameControl = new ExperienceItemFrameControl(item);
-            this.ItemSyncControl  = new ViewItemSyncControl(item);
+            this.ItemFrame = new ExperienceItemFrameControl(item);
         }
-
-        public PickableFrame IdFrame { get { return ((ExperienceItemFrameControl)this.ItemFrameControl).LHoldFrame; } }
-
-        public PickableFrame NameFrame { get { return ((ExperienceItemFrameControl)this.ItemFrameControl).NameFrame; } }
-
-        public PickableFrame ProgressFrame { get { return ((ExperienceItemFrameControl)this.ItemFrameControl).RHoldFrame; } }
-
-        public ViewItemSyncControl ItemSyncControl { get; private set; }
 
         #endregion Constructors
 
@@ -36,7 +29,7 @@ namespace MetaMind.Runtime.Guis.Widgets
         {
             // only need to remove from gui
             // tasks are not stored centralizedly
-            this.View.ViewItems.Remove(this.Item);
+            this.View.ViewLogic.Remove(this.Item);
 
             this.Item.Dispose();
         }
@@ -45,12 +38,12 @@ namespace MetaMind.Runtime.Guis.Widgets
 
         #region Update
 
-        public bool Locked
+        public Func<bool> ItemIsPending
         {
             get
             {
-                return this.Item[ItemState.Item_Is_Editing]() || 
-                       this.Item[ItemState.Item_Is_Pending]();
+                return () => this.Item[ItemState.Item_Is_Editing]() ||
+                             this.Item[ItemState.Item_Is_Pending]();
             }
         }
 
@@ -60,29 +53,13 @@ namespace MetaMind.Runtime.Guis.Widgets
             base.UpdateInput(input, time);
 
             // Keyboard
-            if (this.ViewSettings.KeyboardEnabled)
+            if (this.View.ViewSettings.KeyboardEnabled)
             {
-                if (this.AcceptInput)
+                if (this.ItemIsInputting())
                 {
-                    // in pending status
+                    // In pending status
                     if (this.Item[ItemState.Item_Is_Pending]())
                     {
-                        if (input.State.Keyboard.IsKeyTriggered(Keys.N))
-                        {
-                            this.ItemDataControl.EditString("Name");
-                        }
-
-                        // UNDONE: Won't work anymore
-                        if (input.State.Keyboard.IsKeyTriggered(Keys.D))
-                        {
-                            this.ItemDataControl.EditInt("Done");
-                        }
-
-                        if (input.State.Keyboard.IsKeyTriggered(Keys.L))
-                        {
-                            this.ItemDataControl.EditInt("Load");
-                        }
-
                         if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))
                         {
                             this.View[ViewState.View_Is_Editing] = () => false;
@@ -92,7 +69,7 @@ namespace MetaMind.Runtime.Guis.Widgets
 
                     // Enter synchronization when
                     // Accepting input but not locked
-                    if (!this.Locked)
+                    if (!this.ItemIsPending())
                     {
                         // Normal status
                         if (input.State.Keyboard.IsActionTriggered(KeyboardActions.TaskEditItem))
@@ -104,11 +81,6 @@ namespace MetaMind.Runtime.Guis.Widgets
                         if (input.State.Keyboard.IsActionTriggered(KeyboardActions.TaskDeleteItem))
                         {
                             this.DeleteIt();
-                        }
-
-                        if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Enter))
-                        {
-                            this.ItemSyncControl.SwitchSync();
                         }
                     }
                 }

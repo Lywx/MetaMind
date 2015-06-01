@@ -11,21 +11,16 @@ namespace MetaMind.Runtime.Guis.Widgets
 
     using MetaMind.Engine.Components.Events;
     using MetaMind.Engine.Guis.Widgets.Items;
-    using MetaMind.Runtime.Concepts.Synchronizations;
-    using MetaMind.Runtime.Events;
-    using MetaMind.Runtime.Sessions;
+    using Testimony.Concepts.Synchronizations;
+    using Testimony.Events;
+    using Testimony.Sessions;
 
     public class ViewItemSyncControl : ViewItemComponent
     {
         public ViewItemSyncControl(IViewItem item)
             : base(item)
         {
-            this.Synchronizable = this.ItemData as ISynchronizable;
-            if (this.Synchronizable == null)
-            {
-                throw new InvalidOperationException("Item data is not synchronizable.");
-            }
-
+            this.Synchronizable = (ISynchronizable) this.Item.ItemData;
             this.SynchronizationData = this.Synchronizable.SynchronizationData;
         }
 
@@ -36,13 +31,13 @@ namespace MetaMind.Runtime.Guis.Widgets
         public void StartSync()
         {
             var @event = this.GameInterop.Event;
-            @event.QueueEvent(new Event((int)SessionEventType.SyncStarted, new SynchronizationStartedEventArgs(this.ItemData)));
+            @event.QueueEvent(new Event((int)SessionEventType.SyncStarted, new SynchronizationStartedEventArgs(this.Item.ItemData)));
         }
 
         public void StopSync()
         {
             var @event = this.GameInterop.Event;
-            @event.QueueEvent(new Event((int)SessionEventType.SyncStopped, new SynchronizationStoppedEventArgs(this.ItemData)));
+            @event.QueueEvent(new Event((int)SessionEventType.SyncStopped, new SynchronizationStoppedEventArgs(this.Item.ItemData)));
         }
 
         public void SwitchSync()

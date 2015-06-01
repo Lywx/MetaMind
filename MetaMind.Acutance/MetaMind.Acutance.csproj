@@ -67,6 +67,7 @@
     <Compile Include="Concepts\Commandlist.cs" />
     <Compile Include="Concepts\CommandState.cs" />
     <Compile Include="Concepts\CommandType.cs" />
+    <Compile Include="Concepts\ICommand.cs" />
     <Compile Include="Concepts\ModuleLinker.cs" />
     <Compile Include="Concepts\KnowledgeLoader.cs" />
     <Compile Include="Concepts\KnowledgeQuery.cs" />
@@ -189,17 +190,13 @@
     <Folder Include="Content\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MetaMind.AcutanceBuilder\MetaMind.AcutanceBuilder\MetaMind.AcutanceBuilder.csproj">
-      <Project>{b2f2779e-2d35-409d-ac28-0661ca19f08f}</Project>
-      <Name>MetaMind.AcutanceBuilder</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MetaMind.EngineBuilder\MetaMind.EngineBuilder\MetaMind.EngineBuilder.csproj">
-      <Project>{492c04cf-f181-48af-b919-fcd639ed711c}</Project>
-      <Name>MetaMind.EngineBuilder</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MetaMind.Engine\MetaMind.Engine.csproj">
       <Project>{8944c3ab-1865-49cf-9e84-1ecc42ad2c3e}</Project>
       <Name>MetaMind.Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MetaMind.Testimony\MetaMind.Testimony.csproj">
+      <Project>{91A424B6-E62B-4B7A-B30D-331C7E3AF5F0}</Project>
+      <Name>MetaMind.Testimony</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

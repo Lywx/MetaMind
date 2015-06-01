@@ -55,10 +55,10 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>67BEA1F9D24E1C085A4EADBBF7D2E2B96CF5C048</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>C7D7980E34B511C9579B9D524133642DCAA04DCE</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>MetaMind.Perseverance_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>MetaMind.Testimony_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -84,7 +84,16 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Components\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Components\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Components\SaveManager.cs" />
     <Compile Include="Concepts\Cognitions\Cognition.cs" />
     <Compile Include="Concepts\Cognitions\Consciousness.cs" />
@@ -103,6 +112,7 @@
     <Compile Include="Concepts\Synchronizations\ISynchronizationData.cs" />
     <Compile Include="Concepts\Synchronizations\SynchronizationData.cs" />
     <Compile Include="Concepts\Synchronizations\SynchronizationSpan.cs" />
+    <Compile Include="Concepts\Tests\Test.cs" />
     <Compile Include="Events\ConsciousnessSleepStartedEventArgs.cs" />
     <Compile Include="Events\ConsciousnessSleepStoppedEventArgs.cs" />
     <Compile Include="Concepts\Synchronizations\Synchronization.cs" />
@@ -119,25 +129,32 @@
     <Compile Include="Events\SynchronizationAlertedEventArgs.cs" />
     <Compile Include="Guis\Modules\ExperienceModule.cs" />
     <Compile Include="Guis\Modules\ExperienceSettings.cs" />
-    <Compile Include="Guis\Modules\SummaryModuleLogicControl.cs" />
-    <Compile Include="Guis\Modules\SummaryModuleVisualControl.cs" />
+    <Compile Include="Guis\Modules\SummaryModuleLogic.cs" />
+    <Compile Include="Guis\Modules\SummaryModuleVisual.cs" />
     <Compile Include="Guis\Modules\Summary\SummaryEntry.cs" />
     <Compile Include="Guis\Modules\Summary\SummaryFactory.cs" />
     <Compile Include="Guis\Modules\Summary\SummarySplit.cs" />
     <Compile Include="Guis\Modules\Summary\SummaryTitle.cs" />
-    <Compile Include="Guis\Modules\Synchronization\SynchronizationPoint.cs" />
-    <Compile Include="Guis\Modules\Synchronization\SynchronizationPointSide.cs" />
-    <Compile Include="Guis\Modules\Synchronization\SynchronizationFactory.cs" />
-    <Compile Include="Guis\Modules\SynchronizationModuleLogicControl.cs" />
-    <Compile Include="Guis\Modules\SynchronizationModuleVisualControl.cs" />
-    <Compile Include="Guis\Modules\Synchronization\SynchronizationProgressBar.cs" />
+    <Compile Include="Guis\Modules\SynchronizationModuleLogic.cs" />
+    <Compile Include="Guis\Modules\SynchronizationModuleVisual.cs" />
     <Compile Include="Guis\Modules\SummaryModule.cs" />
     <Compile Include="Guis\Modules\SummarySettings.cs" />
     <Compile Include="Guis\Modules\SynchronizationModule.cs" />
     <Compile Include="Guis\Modules\SynchronizationMonitor.cs" />
     <Compile Include="Guis\Modules\SynchronizationSettings.cs" />
-    <Compile Include="Guis\Widgets\PointView2DFactory.cs" />
-    <Compile Include="Runtime.cs" />
+    <Compile Include="Guis\Modules\Synchronization\SynchronizationFactory.cs" />
+    <Compile Include="Guis\Modules\Synchronization\SynchronizationPoint.cs" />
+    <Compile Include="Guis\Modules\Synchronization\SynchronizationPointSide.cs" />
+    <Compile Include="Guis\Modules\Synchronization\SynchronizationProgressBar.cs" />
+    <Compile Include="Guis\Widgets\ExperienceItemFrameControl.cs" />
+    <Compile Include="Guis\Widgets\TestItemLogic.cs" />
+    <Compile Include="Guis\Widgets\ExperienceItemSettings.cs" />
+    <Compile Include="Guis\Widgets\ExperienceItemVisual.cs" />
+    <Compile Include="Guis\Widgets\TaskItemLogic.cs" />
+    <Compile Include="Guis\Widgets\TaskItemVisual.cs" />
+    <Compile Include="Guis\Widgets\TimelineScale.cs" />
+    <Compile Include="Guis\Widgets\ViewItemSyncControl.cs" />
+    <Compile Include="Testimony.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screens\BackgroundScreen.cs" />
@@ -148,43 +165,38 @@
     <Compile Include="Sessions\SessionEventType.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="FSharp.Compiler.Service, Version=0.0.89.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FSharp.Compiler.Service.0.0.89\lib\net45\FSharp.Compiler.Service.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FSharp.Core, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="LightInject, Version=3.0.2.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\LightInject.3.0.2.6\lib\net45\LightInject.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="MonoGame.Framework">
-      <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
+    <Reference Include="MonoGame.Framework, Version=3.5.0.195, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Primtives2D, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ThirdParties\Primitives2D\bin\Debug\Primtives2D.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Content\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MetaMind.EngineBuilder\MetaMind.EngineBuilder\MetaMind.EngineBuilder.csproj">
-      <Project>{492c04cf-f181-48af-b919-fcd639ed711c}</Project>
-      <Name>MetaMind.EngineBuilder</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MetaMind.Engine\MetaMind.Engine.csproj">
       <Project>{8944c3ab-1865-49cf-9e84-1ecc42ad2c3e}</Project>
       <Name>MetaMind.Engine</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MetaMind.TestimonyBuilder\MetaMind.TestimonyBuilder\MetaMind.TestimonyBuilder.csproj">
-      <Project>{5718d82f-2ac8-42bb-a7f0-5309bed3d883}</Project>
-      <Name>MetaMind.TestimonyBuilder</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Components\FSExecutor.fs" />
+    <Content Include="Components\StdStreamRedirector.fs" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -211,6 +223,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="Content\Content.mgcb" />
+    <Content Include="Content\Textures\Screens\Background\Sea Of Mind.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Textures\UIs\Heart.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Content\Audio\Win\Audio.xgs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Audio\Win\Sound Bank.xsb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Audio\Win\Wave Bank.xwb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

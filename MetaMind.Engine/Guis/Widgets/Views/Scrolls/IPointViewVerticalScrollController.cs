@@ -1,0 +1,17 @@
+﻿namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
+{
+    public interface IPointViewVerticalScrollController : IPointViewScrollController
+    {
+        int OffsetY { get; }
+
+        bool IsDownToDisplay(int row);
+
+        bool IsUpToDisplay(int row);
+
+        void MoveDown();
+
+        void MoveUp();
+
+        void MoveUpToTop();
+    }
+}

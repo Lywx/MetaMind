@@ -42,7 +42,7 @@ namespace MetaMind.Acutance.Concepts
 
         public override bool IsTransiting
         {
-            get { return this.SynchronizationSpan.CertainDuration >= this.Timeout; }
+            get { return this.Execution.CertainDuration >= this.Timeout; }
         }
 
         public override bool IsAutoReseting
@@ -58,7 +58,7 @@ namespace MetaMind.Acutance.Concepts
             this.timer = new Stopwatch();
             this.timer.Start();
 
-            this.SynchronizationSpan = SynchronizationSpan.Zero;
+            this.Execution = this.Execution.Zero;
         }
 
         public override void Update()
@@ -66,7 +66,7 @@ namespace MetaMind.Acutance.Concepts
             // disposal guard
             if (this.timer != null)
             {
-                this.SynchronizationSpan += this.timer.Elapsed;
+                this.Execution += this.timer.Elapsed;
 
                 this.timer.Restart();
             }

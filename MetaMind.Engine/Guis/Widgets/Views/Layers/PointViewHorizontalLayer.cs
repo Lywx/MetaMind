@@ -29,7 +29,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layers
             }
         }
 
-        public IPointViewHorizontalSelectionControl ViewSelection
+        public IPointViewHorizontalSelectionController ViewSelection
         {
             get
             {
@@ -37,7 +37,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layers
             }
         }
 
-        public IPointViewHorizontalSwapControl ViewSwap
+        public IPointViewHorizontalSwapController ViewSwap
         {
             get
             {
@@ -45,7 +45,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layers
             }
         }
 
-        public IPointViewHorizontalScrollControl ViewScroll
+        public IPointViewHorizontalScrollController ViewScroll
         {
             get
             {

@@ -9,9 +9,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
 
     public class PointViewHorizontalItemInteraction : ViewItemInteraction, IViewItemViewSelectionProvider, IViewItemViewSwapProvider
     {
-        private readonly IPointViewHorizontalSelectionControl viewSelection;
+        private readonly IPointViewHorizontalSelectionController viewSelection;
 
-        private readonly IViewSwapControl viewSwap;
+        private readonly IViewSwapController viewSwap;
 
 
         public PointViewHorizontalItemInteraction(IViewItem item, IViewItemLayout itemLayout, IViewItemLayoutInteraction itemLayoutInteraction)
@@ -66,7 +66,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
                 return;
             }
 
-            this.viewSwap.StartProcess(interop, this.Item, draggingItem, draggingItem.View.ViewLogic);
+            this.viewSwap.StartProcess(interop, this.Item, draggingItem, draggingItem.View);
         }
 
         public void ViewUpdateSwap()

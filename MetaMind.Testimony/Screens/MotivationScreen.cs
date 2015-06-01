@@ -37,7 +37,7 @@
 
         public override void LoadContent(IGameInteropService interop)
         {
-            var cognition = Runtime.SessionData.Cognition;
+            var cognition = Testimony.SessionData.Cognition;
 
             var synchronization = new SynchronizationModule(
                 cognition.Consciousness,

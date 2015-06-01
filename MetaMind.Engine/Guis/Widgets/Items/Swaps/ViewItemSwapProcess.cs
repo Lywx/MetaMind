@@ -8,6 +8,7 @@
 namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
 
     using MetaMind.Engine.Components.Processes;
@@ -18,7 +19,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
 
     using Microsoft.Xna.Framework;
 
-    public class ViewItemSwapProcess<T> : Process
+    public class ViewItemSwapProcess<TData> : Process
     {
         private const int UpdateNum = 6;
 
@@ -31,7 +32,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
             IViewItem      swappingItem, 
             IViewItemLogic swappingItemLogic, 
             IViewLogic     swappingViewLogic, 
-            IList<T> commonSource = null)
+            IList<TData> commonSource = null)
         {
             if (draggingItem == null)
             {
@@ -90,7 +91,14 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
 
         protected IViewItem SwappingItem { get; private set; }
 
-        protected IList<T> CommonSource { get; set; }
+        /// <summary>
+        /// Data model to manipulate data collection.
+        /// </summary>
+        /// <remarks>
+        /// I saw this IList<T> as a data model. It maintains a collection of data and 
+        /// it is easy to provide management method as extension method.
+        /// </remarks>>
+        protected IList<TData> CommonSource { get; set; }
 
         #endregion
 
@@ -139,6 +147,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
 
         protected virtual void SwapAroundView()
         {
+            this.SwapDataInList();
+
             // Replace each another in their origial view
             this.DraggingViewLogic.ViewSelection.Cancel();
             this.DraggingItem.View[ViewState.View_Has_Focus] = () => false;
@@ -168,6 +178,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
 
         protected virtual void SwapInView()
         {
+            this.SwapDataInList();
+
             // Swap id then sort
             var tempId = this.SwappingItemLogic.ItemLayout.Id;
             this.SwappingItemLogic.ItemLayout.Id = this.DraggingItemLogic.ItemLayout.Id;

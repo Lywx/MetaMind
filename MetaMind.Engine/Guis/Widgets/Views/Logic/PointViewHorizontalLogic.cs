@@ -5,6 +5,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections.Generic;
+
 namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 {
     using System;
@@ -14,7 +16,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
     using MetaMind.Engine.Guis.Widgets.Items.Factories;
     using MetaMind.Engine.Guis.Widgets.Views.Layers;
     using MetaMind.Engine.Guis.Widgets.Views.Layouts;
-    using MetaMind.Engine.Guis.Widgets.Views.PointView;
     using MetaMind.Engine.Guis.Widgets.Views.Scrolls;
     using MetaMind.Engine.Guis.Widgets.Views.Selections;
     using MetaMind.Engine.Guis.Widgets.Views.Settings;
@@ -23,18 +24,19 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
     using Microsoft.Xna.Framework;
 
-    public class PointViewHorizontalLogic : ViewLogic, IPointViewHorizontalLogic
+    public class PointViewHorizontalLogic<TData> : ViewLogic<TData>, IPointViewHorizontalLogic
     {
         private readonly PointViewHorizontalSettings viewSettings;
 
         protected PointViewHorizontalLogic(
-            IView                 view,
-            IViewScrollControl    viewScroll,
-            IViewSelectionControl viewSelection,
-            IViewSwapControl      viewSwap,
-            IViewLayout           viewLayout,
+            IView                    view,
+            IList<TData>             viewData,
+            IViewScrollController    viewScroll,
+            IViewSelectionController viewSelection,
+            IViewSwapController      viewSwap,
+            IViewLayout              viewLayout,
             IViewItemFactory itemFactory)
-            : base(view, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory)
+            : base(view, viewData, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory)
         {
             var viewLayer = this.ViewGetLayer<PointViewHorizontalLayer>();
             this.viewSettings = viewLayer.ViewSettings;
@@ -44,17 +46,17 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         #region View Logic Property Injection
 
-        public new IPointViewHorizontalSelectionControl ViewSelection
+        public new IPointViewHorizontalSelectionController ViewSelection
         {
             get
             {
                 // Local Default
                 if (base.ViewSelection == null)
                 {
-                    base.ViewSelection = new PointViewHorizontalSelectionControl(this.View);
+                    base.ViewSelection = new PointViewHorizontalSelectionController(this.View);
                 }
 
-                return (IPointViewHorizontalSelectionControl)base.ViewSelection;
+                return (IPointViewHorizontalSelectionController)base.ViewSelection;
             }
 
             set
@@ -73,17 +75,17 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             }
         }
 
-        public new IPointViewHorizontalScrollControl ViewScroll
+        public new IPointViewHorizontalScrollController ViewScroll
         {
             get
             {
                 // Local Default
                 if (base.ViewScroll == null)
                 {
-                    base.ViewScroll = new PointViewHorizontalScrollControl(this.View);
+                    base.ViewScroll = new PointViewHorizontalScrollController(this.View);
                 }
 
-                return (IPointViewHorizontalScrollControl)base.ViewScroll;
+                return (IPointViewHorizontalScrollController)base.ViewScroll;
             }
 
             set
@@ -102,17 +104,17 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             }
         }
 
-        public new IPointViewHorizontalSwapControl ViewSwap
+        public new IPointViewHorizontalSwapController ViewSwap
         {
             get
             {
                 // Local Default
                 if (base.ViewSwap == null)
                 {
-                    base.ViewSwap = new PointViewHorizontalSwapControl(this.View);
+                    base.ViewSwap = new PointViewHorizontalSwapController<TData>(this.View, (IList<TData>) this.ViewData);
                 }
 
-                return (IPointViewHorizontalSwapControl)base.ViewSwap;
+                return (IPointViewHorizontalSwapController)base.ViewSwap;
             } 
         }
 
@@ -128,7 +130,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public virtual void MoveLeft()
         {
-            if (this.viewSettings.Direction == PointViewDirection.Inverse)
+            if (this.viewSettings.Direction == ViewDirection.Inverse)
             {
                 // Invert for left scrolling view
                 this.ViewSelection.MoveRight();
@@ -141,7 +143,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public virtual void MoveRight()
         {
-            if (this.viewSettings.Direction == PointViewDirection.Inverse)
+            if (this.viewSettings.Direction == ViewDirection.Inverse)
             {
                 // Invert for left scrolling view
                 this.ViewSelection.MoveLeft();

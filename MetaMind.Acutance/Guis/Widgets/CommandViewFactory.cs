@@ -4,7 +4,6 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Guis.Widgets.Views.Factories;
-    using MetaMind.Engine.Guis.Widgets.Views.PointView;
     using MetaMind.Engine.Guis.Widgets.Views.Settings;
     using MetaMind.Engine.Guis.Widgets.Views.Visuals;
 

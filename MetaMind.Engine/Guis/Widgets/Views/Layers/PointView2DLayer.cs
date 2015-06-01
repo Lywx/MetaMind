@@ -21,7 +21,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layers
             }
         }
 
-        public IPointView2DScrollControl ViewScroll
+        public IPointView2DScrollController ViewScroll
         {
             get
             {
@@ -29,7 +29,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layers
             }
         }
 
-        public IPointView2DSelectionControl ViewSelection
+        public IPointView2DSelectionController ViewSelection
         {
             get
             {

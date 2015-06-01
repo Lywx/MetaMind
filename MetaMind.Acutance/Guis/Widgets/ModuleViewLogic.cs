@@ -6,7 +6,6 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Engine.Guis.Widgets.Regions;
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Guis.Widgets.Views.Logic;
-    using MetaMind.Engine.Guis.Widgets.Views.PointView;
     using MetaMind.Engine.Guis.Widgets.Views.Settings;
     using MetaMind.Engine.Services;
 

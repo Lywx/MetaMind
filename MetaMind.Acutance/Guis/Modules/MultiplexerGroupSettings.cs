@@ -7,7 +7,6 @@ namespace MetaMind.Acutance.Guis.Modules
     using MetaMind.Engine.Guis.Widgets.Items.Settings;
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Guis.Widgets.Views.Factories;
-    using MetaMind.Engine.Guis.Widgets.Views.PointView;
     using MetaMind.Engine.Guis.Widgets.Views.Settings;
 
     public class MultiplexerGroupSettings

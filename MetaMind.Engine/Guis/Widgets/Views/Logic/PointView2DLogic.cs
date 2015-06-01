@@ -8,7 +8,7 @@
 namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 {
     using System;
-
+    using System.Collections.Generic;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Widgets.Items.Factories;
     using MetaMind.Engine.Guis.Widgets.Views.Layers;
@@ -21,14 +21,14 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
     using Microsoft.Xna.Framework;
 
-    public class PointView2DLogic : PointViewHorizontalLogic, IPointView2DLogic
+    public class PointView2DLogic<TData> : PointViewHorizontalLogic<TData>, IPointView2DLogic
     {
         private readonly PointView2DSettings viewSettings;
 
-        private readonly IPointView2DSelectionControl viewSelection;
+        private readonly IPointView2DSelectionController viewSelection;
 
-        public PointView2DLogic(IView view, IViewScrollControl viewScroll, IViewSelectionControl viewSelection, IViewSwapControl viewSwap, IViewLayout viewLayout, IViewItemFactory itemFactory)
-            : base(view, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory)
+        public PointView2DLogic(IView view, IList<TData> viewData, IViewScrollController viewScroll, IViewSelectionController viewSelection, IViewSwapController viewSwap, IViewLayout viewLayout, IViewItemFactory itemFactory)
+            : base(view, viewData, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory)
         {
             var viewLayer = this.ViewGetLayer<PointView2DLayer>();
             this.viewSettings  = viewLayer.ViewSettings;
@@ -66,17 +66,17 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             }
         }
 
-        public new IPointView2DSelectionControl ViewSelection
+        public new IPointView2DSelectionController ViewSelection
         {
             get
             {
                 // Local Default
                 if (base.ViewSelection == null)
                 {
-                    base.ViewSelection = new PointView2DSelectionControl(this.View);
+                    base.ViewSelection = new PointView2DSelectionController(this.View);
                 }
 
-                return (IPointView2DSelectionControl)base.ViewSelection;
+                return (IPointView2DSelectionController)base.ViewSelection;
             }
 
             protected set
@@ -95,17 +95,17 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             }
         }
 
-        public new IPointView2DScrollControl ViewScroll
+        public new IPointView2DScrollController ViewScroll
         {
             get
             {
                 // Local Default
                 if (base.ViewScroll == null)
                 {
-                    base.ViewScroll = new PointView2DScrollControl(this.View);
+                    base.ViewScroll = new PointView2DScrollController(this.View);
                 }
 
-                return (IPointView2DScrollControl)base.ViewScroll;
+                return (IPointView2DScrollController)base.ViewScroll;
             }
 
             protected set

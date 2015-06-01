@@ -5,27 +5,35 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+
 namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 {
     using System;
-
+    using System.Collections;
+    using System.Collections.Generic;
     using MetaMind.Engine.Guis.Widgets.Items.Factories;
     using MetaMind.Engine.Guis.Widgets.Views.Layouts;
     using MetaMind.Engine.Guis.Widgets.Views.Scrolls;
     using MetaMind.Engine.Guis.Widgets.Views.Selections;
     using MetaMind.Engine.Guis.Widgets.Views.Swaps;
 
-    public abstract class ViewLogic : ViewComponent, IViewLogic
+    public abstract class ViewLogic<TData> : ViewComponent, IViewLogic
     {
         protected ViewLogic(
-            IView                 view, 
-            IViewScrollControl    viewScroll, 
-            IViewSelectionControl viewSelection, 
-            IViewSwapControl      viewSwap, 
-            IViewLayout           viewLayout,
+            IView                    view, 
+            IList<TData>             viewData, 
+            IViewScrollController    viewScroll,
+            IViewSelectionController viewSelection, 
+            IViewSwapController      viewSwap, 
+            IViewLayout              viewLayout,
             IViewItemFactory itemFactory)
             : this(view, itemFactory)
         {
+            if (viewData == null)
+            {
+                throw new ArgumentNullException("viewData");
+            }
+
             if (viewScroll == null)
             {
                 throw new ArgumentNullException("viewScroll");
@@ -46,6 +54,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
                 throw new ArgumentNullException("viewLayout");
             }
 
+            this.ViewData      = viewData;
             this.ViewScroll    = viewScroll;
             this.ViewSelection = viewSelection;
             this.ViewSwap      = viewSwap;
@@ -84,11 +93,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             }
         }
 
-        public IViewSelectionControl ViewSelection { get; protected set; }
+        public IList<TData> ViewData { get; private set; }
 
-        public IViewScrollControl ViewScroll { get; protected set; }
+        public IViewSelectionController ViewSelection { get; protected set; }
 
-        public IViewSwapControl ViewSwap { get; protected set; }
+        public IViewScrollController ViewScroll { get; protected set; }
+
+        public IViewSwapController ViewSwap { get; protected set; }
 
         public IViewLayout ViewLayout { get; protected set; }
 

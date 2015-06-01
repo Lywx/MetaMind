@@ -15,13 +15,13 @@ namespace MetaMind.Testimony.Components
 
         public override void Save()
         {
-            Runtime.Session.Save();
+            Testimony.Session.Save();
         }
 
         public override void Load()
         {
-            Runtime.Session = Session<SessionData>.Load();
-            Runtime.SessionData = Runtime.Session.Data;
+            Testimony.Session = Session<SessionData>.Load();
+            Testimony.SessionData = Testimony.Session.Data;
         }
 
         #endregion Operations

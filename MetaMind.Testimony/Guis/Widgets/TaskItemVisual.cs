@@ -1,7 +1,7 @@
 namespace MetaMind.Runtime.Guis.Widgets
 {
     using System;
-
+    using Engine.Guis.Widgets.Items.Visuals;
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Services;

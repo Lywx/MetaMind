@@ -2,6 +2,10 @@
 *.cache
 *.cachefile
 *.dll
+*.xap
+*.xgs
+*.xsb
+*.xwb
 
 packages/
 
@@ -12,8 +16,11 @@ ThirdParties/Primitives2D/bin/
 ThirdParties/FileSearcher/bin/
 ThirdParties/FileSearcher/obj/
 
+MetaMind.Engine/Content/obj/
+MetaMind.Engine/Content/Audio/
 MetaMind.Engine/obj/
 MetaMind.Engine/bin/
+MetaMind.EngineProcessor/Content/obj/
 MetaMind.EngineProcessor/obj/
 MetaMind.EngineProcessor/bin/
 MetaMind.EngineBuilder/MetaMind.EngineBuilder/bin/
@@ -23,21 +30,16 @@ MetaMind.EngineBuilder/MetaMind.EngineBuilderContent/obj/
 MetaMind.EngineTest/bin/
 MetaMind.EngineTest/obj/
 
-MetaMind.TestimonyBuilder/MetaMind.TestimonyBuilder/bin/
 MetaMind.Testimony/bin/
 MetaMind.Testimony/obj/
-MetaMind.TestimonyBuilder/MetaMind.TestimonyBuilder/obj/
-MetaMind.TestimonyBuilder/MetaMind.TestimonyBuilderContent/obj/
+MetaMind.Testimony/Content/obj/
+MetaMind.Testimony/Content/Audio/
 MetaMind.TestimonyTest/obj/
 MetaMind.TestimonyTest/bin/
-MetaMind.TestimonyBuilder/MetaMind.TestimonyBuilderContent/bin/
-MetaMind.TestimonyBuilder/MetaMind.TestimonyBuilderContent/Audio/
 
 MetaMind.Acutance/bin/
-MetaMind.AcutanceBuilder/MetaMind.AcutanceBuilder/obj/
-MetaMind.AcutanceBuilder/MetaMind.AcutanceBuilderContent/obj/
 MetaMind.Acutance/obj/
 MetaMind.AcutanceTest/obj/
 MetaMind.AcutanceTest/bin/
+
 MetaMind.v12.suo
-MetaMind.AcutanceBuilder/MetaMind.AcutanceBuilder/bin/

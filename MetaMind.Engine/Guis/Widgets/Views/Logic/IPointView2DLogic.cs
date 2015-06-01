@@ -8,9 +8,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
     {
         new IPointView2DLayout ViewLayout { get; }
 
-        new IPointView2DSelectionControl ViewSelection { get; }
+        new IPointView2DSelectionController ViewSelection { get; }
 
-        new IPointView2DScrollControl ViewScroll { get; }
+        new IPointView2DScrollController ViewScroll { get; }
 
         #region Item Operations
 

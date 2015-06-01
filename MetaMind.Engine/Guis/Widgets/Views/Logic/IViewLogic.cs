@@ -15,11 +15,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
     public interface IViewLogic : IViewComponent, IInputable
     {
-        IViewSelectionControl ViewSelection { get; }
+        IViewSelectionController ViewSelection { get; }
 
-        IViewScrollControl ViewScroll { get; }
+        IViewScrollController ViewScroll { get; }
 
-        IViewSwapControl ViewSwap { get; }
+        IViewSwapController ViewSwap { get; }
 
         IViewLayout ViewLayout { get; }
 

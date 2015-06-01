@@ -28,18 +28,27 @@ namespace MetaMind.Engine.Components
 
         public void Plug(IGame game)
         {
+            if (game == null)
+            {
+                throw new ArgumentNullException("game");
+            }
+
             if (this.Game != null)
             {
                 throw new InvalidOperationException("Game exists already.");
             }
 
             this.Game = game;
+
             this.Components.Add(game);
         }
 
         public void OnExiting()
         {
-            this.Game.OnExiting();
+            if (this.Game != null)
+            {
+                this.Game.OnExiting();
+            }
         }
     }
 }

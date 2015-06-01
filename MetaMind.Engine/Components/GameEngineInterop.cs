@@ -43,9 +43,11 @@ namespace MetaMind.Engine.Components
 
             this.Engine = engine;
 
-            var settingsFile  = @"Content\Audio\Audio.xgs";
-            var waveBankFile  = @"Content\Audio\Wave Bank.xwb";
-            var soundBankFile = @"Content\Audio\Sound Bank.xsb";
+#if WINDOWS 
+            var settingsFile  = @"Content\Audio\Win\Audio.xgs";
+            var waveBankFile  = @"Content\Audio\Win\Wave Bank.xwb";
+            var soundBankFile = @"Content\Audio\Win\Sound Bank.xsb";
+#endif
 
             this.Audio   = new AudioManager(engine, settingsFile, waveBankFile, soundBankFile, int.MaxValue);
             this.Event   = new EventManager(engine, 4);

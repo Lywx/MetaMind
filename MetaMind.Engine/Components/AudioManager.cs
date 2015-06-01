@@ -46,7 +46,7 @@ namespace MetaMind.Engine.Components
         /// <summary>
         /// Constructs the manager for audio playback of all cues.
         /// </summary>
-        /// <param name="game">The game that this component will be attached to.</param>
+        /// <param name="engine">The game engine that this component will be attached to.</param>
         /// <param name="settingsFile">The filename of the XACT settings file.</param>
         /// <param name="waveBankFile">The filename of the XACT wavebank file.</param>
         /// <param name="soundBankFile">The filename of the XACT soundbank file.</param>

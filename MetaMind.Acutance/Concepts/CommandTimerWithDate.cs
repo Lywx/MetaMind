@@ -21,7 +21,7 @@ namespace MetaMind.Acutance.Concepts
     {
         public CommandTimerWithDate(DateTime date, CommandRepetion repetion)
         {
-            this.Date        = date;
+            this.Date     = date;
             this.Repetion = repetion;
         }
 
@@ -87,12 +87,12 @@ namespace MetaMind.Acutance.Concepts
 
         public override void Reset()
         {
-            this.SynchronizationSpan = TimeSpan.Zero;
+            this.Execution = TimeSpan.Zero;
         }
 
         public override void Update()
         {
-            this.SynchronizationSpan.CertainDuration = DateTime.Now.TimeOfDay - this.Date.TimeOfDay;
+            this.Execution = DateTime.Now.TimeOfDay - this.Date.TimeOfDay;
         }
     }
 }

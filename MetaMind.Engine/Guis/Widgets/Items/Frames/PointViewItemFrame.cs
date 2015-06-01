@@ -9,13 +9,13 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Frames
 
     public class PointViewItemFrame : ViewItemFrame
     {
-        private readonly IViewScrollControl viewScroll;
+        private readonly IViewScrollController viewScroll;
 
-        private readonly IViewSwapControl viewSwap;
+        private readonly IViewSwapController viewSwap;
 
         private readonly IViewItemLayout itemLayout;
 
-        public PointViewItemFrame(IViewItem item, IViewItemLayout itemLayout, IViewScrollControl viewScroll, IViewSwapControl viewSwap)
+        public PointViewItemFrame(IViewItem item, IViewItemLayout itemLayout, IViewScrollController viewScroll, IViewSwapController viewSwap)
             : base(item)
         {
             if (itemLayout == null)

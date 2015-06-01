@@ -1,0 +1,60 @@
+
+#----------------------------- Global Properties ----------------------------#
+
+/outputDir:.\
+/intermediateDir:obj
+/platform:Windows
+/config:
+/profile:Reach
+/compress:False
+
+#-------------------------------- References --------------------------------#
+
+/reference:..\bin\Debug\MetaMind.EngineProcessor.dll
+
+#---------------------------------- Content ---------------------------------#
+
+#begin Fonts/SpriteFonts/NSimSunBoldFont.spritefont
+/importer:FontDescriptionImporter
+/processor:ChineseSpriteFontProcessor
+/processorParam:CharacterSet=Fonts\CharacterSets\Chinese5931.txt
+/processorParam:TextureFormat=Compressed
+/build:Fonts/SpriteFonts/NSimSunBoldFont.spritefont
+
+#begin Fonts/SpriteFonts/NSimSunBoldItalicFont.spritefont
+/importer:FontDescriptionImporter
+/processor:ChineseSpriteFontProcessor
+/processorParam:CharacterSet=Fonts\CharacterSets\Chinese5931.txt
+/processorParam:TextureFormat=Compressed
+/build:Fonts/SpriteFonts/NSimSunBoldItalicFont.spritefont
+
+#begin Fonts/SpriteFonts/NSimSunItalicFont.spritefont
+/importer:FontDescriptionImporter
+/processor:ChineseSpriteFontProcessor
+/processorParam:CharacterSet=Fonts\CharacterSets\Chinese5931.txt
+/processorParam:TextureFormat=Compressed
+/build:Fonts/SpriteFonts/NSimSunItalicFont.spritefont
+
+#begin Fonts/SpriteFonts/NSimSunRegularFont.spritefont
+/importer:FontDescriptionImporter
+/processor:ChineseSpriteFontProcessor
+/processorParam:CharacterSet=Fonts\CharacterSets\Chinese5931.txt
+/processorParam:TextureFormat=Compressed
+/build:Fonts/SpriteFonts/NSimSunRegularFont.spritefont
+
+#begin Fonts\BitmapFonts\UiRegularFont.bmp
+/importer:TextureImporter
+/processor:FontTextureProcessor
+/processorParam:FirstCharacter= 
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Color
+/build:Fonts\BitmapFonts\UiRegularFont.bmp
+
+#begin Fonts\BitmapFonts\UiStatisticsFont.bmp
+/importer:TextureImporter
+/processor:FontTextureProcessor
+/processorParam:FirstCharacter= 
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Color
+/build:Fonts\BitmapFonts\UiStatisticsFont.bmp
+

@@ -8,22 +8,21 @@
 namespace MetaMind.Runtime.Guis.Widgets
 {
     using System;
-
-    using MetaMind.Engine.Components.Fonts;
-    using MetaMind.Engine.Guis.Widgets.Items;
-    using MetaMind.Engine.Guis.Widgets.Visual;
-    using MetaMind.Engine.Services;
-
+    using Engine.Components.Fonts;
+    using Engine.Guis.Widgets.Items;
+    using Engine.Guis.Widgets.Items.Visuals;
+    using Engine.Guis.Widgets.Visuals;
+    using Engine.Services;
     using Microsoft.Xna.Framework;
 
     public class ExperienceItemVisual : ViewItemVisual
     {
-        private readonly string HelpInformation = "N:Name";
-
         public ExperienceItemVisual(IViewItem item)
             : base(item)
         {
-            this.IdCenterPosition = () => new Vector2(this.RootFrame.Rectangle.Center.X, this.RootFrame.Rectangle.Top - 15);
+            this.RootFrame = 
+
+            this.IdCenterPosition   = () => new Vector2(this.RootFrame.Rectangle.Center.X, this.RootFrame.Rectangle.Top - 15);
             this.NameCenterPosition = () => this.RootFrame.Rectangle.Center.ToVector2() + this.ItemSettings.NameMargin.ToVector2();
             this.HelpCenterPosition = this.NameCenterPosition;
 

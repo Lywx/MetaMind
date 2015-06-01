@@ -12,8 +12,8 @@ namespace MetaMind.Testimony.Guis.Modules
             this.Consciousness   = consciousness;
             this.Synchronization = synchronization;
 
-            this.Logic  = new SummaryModuleLogicControl(this, this.Consciousness, this.Synchronization);
-            this.Visual = new SummaryModuleVisualControl(this, this.Consciousness, this.Synchronization);
+            this.Logic  = new SummaryModuleLogic(this, this.Consciousness, this.Synchronization);
+            this.Visual = new SummaryModuleVisual(this, this.Consciousness, this.Synchronization);
         }
 
         ~SummaryModule()

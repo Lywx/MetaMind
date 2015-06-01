@@ -21,7 +21,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Visuals
 
     public class ViewVerticalScrollBar : GameVisualEntity
     {
-        private readonly IPointViewVerticalScrollControl viewScroll;
+        private readonly IPointViewVerticalScrollController viewScroll;
 
         private readonly IPointView2DLayout viewLayout;
 
@@ -35,7 +35,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Visuals
         
         private int scrollbarBrightness;
         
-        public ViewVerticalScrollBar(PointView2DSettings viewSettings, IPointViewVerticalScrollControl viewScroll, IPointView2DLayout viewLayout, IRegion viewRegion, ViewScrollbarSettings scrollbarSettings)
+        public ViewVerticalScrollBar(PointView2DSettings viewSettings, IPointViewVerticalScrollController viewScroll, IPointView2DLayout viewLayout, IRegion viewRegion, ViewScrollbarSettings scrollbarSettings)
         {
             if (viewSettings == null)
             {

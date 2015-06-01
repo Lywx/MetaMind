@@ -1,7 +1,5 @@
 namespace MetaMind.Engine.Guis.Widgets.Views.Settings
 {
-    using MetaMind.Engine.Guis.Widgets.Views.PointView;
-
     using Microsoft.Xna.Framework;
 
     public class PointViewHorizontalSettings : ViewSettings
@@ -10,7 +8,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Settings
 
         public int ColumnNumMax     = 500;
 
-        public PointViewDirection Direction = PointViewDirection.Normal;
+        public ViewDirection Direction = ViewDirection.Normal;
 
 
         public Vector2 PointMargin = new Vector2(50, 0);
@@ -22,7 +20,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Settings
             this.PointStart = start;
         }
 
-        public PointViewHorizontalSettings(Vector2 start, Vector2 margin, PointViewDirection direction)
+        public PointViewHorizontalSettings(Vector2 start, Vector2 margin, ViewDirection direction)
         {
             this.PointStart  = start;
             this.PointMargin = margin;

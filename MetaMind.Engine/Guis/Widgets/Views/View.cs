@@ -5,7 +5,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Items.Settings;
-    using MetaMind.Engine.Guis.Widgets.Views.Factories;
     using MetaMind.Engine.Guis.Widgets.Views.Layers;
     using MetaMind.Engine.Guis.Widgets.Views.Logic;
     using MetaMind.Engine.Guis.Widgets.Views.Settings;
@@ -16,16 +15,26 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     public class View : ViewEntity, IView
     {
-        public View(ViewSettings viewSettings, IViewFactory viewFactory, ItemSettings itemSettings, List<IViewItem> items)
+        public View(ViewSettings viewSettings, IViewLogic viewLogic, IViewVisual viewVisual, IViewLayer viewLayer, ItemSettings itemSettings, List<IViewItem> items)
         {
             if (viewSettings == null)
             {
                 throw new ArgumentNullException("viewSettings");
             }
 
-            if (viewFactory == null)
+            if (viewLogic == null)
             {
-                throw new ArgumentNullException("viewFactory");
+                throw new ArgumentNullException("viewLogic");
+            }
+
+            if (viewVisual == null)
+            {
+                throw new ArgumentNullException("viewVisual");
+            }
+
+            if (viewLayer == null)
+            {
+                throw new ArgumentNullException("viewLayer");
             }
 
             if (itemSettings == null)
@@ -38,15 +47,15 @@ namespace MetaMind.Engine.Guis.Widgets.Views
                 throw new ArgumentNullException("items");
             }
 
-            this.Items        = items;
-            this.ItemSettings = itemSettings;
-
-            // Composition root of view
-            this.ViewLogic  = viewFactory.CreateLogic(this, viewSettings, itemSettings);
-            this.ViewVisual = viewFactory.CreateVisual(this, viewSettings, itemSettings);
-            this.ViewLayer  = viewFactory.CreateExtension(this);
+            this.ViewSettings = viewSettings;
+            this.ViewLogic    = viewLogic;
+            this.ViewVisual   = viewVisual;
+            this.ViewLayer    = viewLayer;
 
             this.ViewComponents = new Dictionary<string, object>();
+
+            this.Items        = items;
+            this.ItemSettings = itemSettings;
         }
         
         #region Dependency

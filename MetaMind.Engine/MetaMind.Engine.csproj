@@ -251,9 +251,6 @@
     <Compile Include="Guis\Widgets\Items\Settings\ItemSettings.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Items\Swaps\ViewItemSmartSwapProcess.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Guis\Widgets\Items\Swaps\ViewItemSwapProcess.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -285,9 +282,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Guis\Widgets\Views\Layers\ViewLayer.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Guis\Widgets\Views\Factories\IViewFactory.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Guis\Widgets\Views\IView.cs">
@@ -324,61 +318,49 @@
     <Compile Include="Guis\Widgets\Views\Logic\ViewLogic.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Views\PointView\ContinuousViewHorizontal.cs">
+    <Compile Include="Guis\Widgets\Views\Settings\ViewDirection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Views\PointView\PointView2D.cs">
+    <Compile Include="Guis\Widgets\Views\Scrolls\IPointView2DScrollController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Views\PointView\PointViewDirection.cs">
+    <Compile Include="Guis\Widgets\Views\Scrolls\IPointViewHorizontalScrollController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Views\PointView\PointViewHorizontal.cs">
+    <Compile Include="Guis\Widgets\Views\Scrolls\IPointViewScrollController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Views\Scrolls\IPointView2DScrollControl.cs">
+    <Compile Include="Guis\Widgets\Views\Scrolls\IPointViewVerticalScrollController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Views\Scrolls\IPointViewHorizontalScrollControl.cs">
+    <Compile Include="Guis\Widgets\Views\Scrolls\IViewScrollController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Views\Scrolls\IPointViewScrollControl.cs">
+    <Compile Include="Guis\Widgets\Views\Scrolls\PointView2DScrollController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Views\Scrolls\IPointViewVerticalScrollControl.cs">
+    <Compile Include="Guis\Widgets\Views\Scrolls\PointViewHorizontalScrollController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Views\Scrolls\IViewScrollControl.cs">
+    <Compile Include="Guis\Widgets\Views\Selections\IPointView2DSelectionController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Views\Scrolls\PointView2DScrollControl.cs">
+    <Compile Include="Guis\Widgets\Views\Selections\IPointViewHorizontalSelectionController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Views\Scrolls\PointViewHorizontalScrollControl.cs">
+    <Compile Include="Guis\Widgets\Views\Selections\IViewSelectionController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Views\Selections\IPointView2DSelectionControl.cs">
+    <Compile Include="Guis\Widgets\Views\Selections\PointView2DSelectionController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Views\Selections\IPointViewHorizontalSelectionControl.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Guis\Widgets\Views\Selections\IViewSelectionControl.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Guis\Widgets\Views\Selections\PointView2DSelectionControl.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Guis\Widgets\Views\Selections\PointViewHorizontalSelectionControl.cs">
+    <Compile Include="Guis\Widgets\Views\Selections\PointViewHorizontalSelectionController.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Guis\Widgets\Views\Settings\ContinuousViewHorizontalSettings.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Guis\Widgets\Views\Settings\PointGridSettings.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Guis\Widgets\Views\Settings\PointListSettings.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Guis\Widgets\Views\Settings\PointView2DSettings.cs">
@@ -390,17 +372,13 @@
     <Compile Include="Guis\Widgets\Views\Settings\ViewSettings.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Views\Swaps\CrossViewSwapObserver.cs" />
-    <Compile Include="Guis\Widgets\Views\Swaps\ICrossViewSwapObservor.cs">
+    <Compile Include="Guis\Widgets\Views\Swaps\IPointView2DSwapController.cs" />
+    <Compile Include="Guis\Widgets\Views\Swaps\IPointViewHorizontalSwapController.cs" />
+    <Compile Include="Guis\Widgets\Views\Swaps\IViewSwapController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Views\Swaps\IPointView2DSwapControl.cs" />
-    <Compile Include="Guis\Widgets\Views\Swaps\IPointViewHorizontalSwapControl.cs" />
-    <Compile Include="Guis\Widgets\Views\Swaps\IViewSwapControl.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Guis\Widgets\Views\Swaps\PointViewHorizontalSwapControl.cs" />
-    <Compile Include="Guis\Widgets\Views\Swaps\ViewSwapControl.cs">
+    <Compile Include="Guis\Widgets\Views\Swaps\PointViewHorizontalSwapController.cs" />
+    <Compile Include="Guis\Widgets\Views\Swaps\ViewSwapController.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Guis\Widgets\Views\View.cs">
@@ -548,8 +526,8 @@
     <Compile Include="Guis\GroupVisual.cs" />
     <Compile Include="Guis\Module.cs" />
     <Compile Include="Guis\ModuleComponent.cs" />
-    <Compile Include="Guis\ModuleLogicControl.cs" />
-    <Compile Include="Guis\ModuleVisualControl.cs" />
+    <Compile Include="Guis\ModuleLogic.cs" />
+    <Compile Include="Guis\ModuleVisual.cs" />
     <Compile Include="GameControllableEntity.cs" />
     <Compile Include="Parsers\Grammars\LineGrammar.cs" />
     <Compile Include="Parsers\Grammars\ConfigurationFileGrammar.cs" />
@@ -591,12 +569,6 @@
     <Folder Include="Guis\Widgets\Items\Transits\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MetaMind.EngineBuilder\MetaMind.EngineBuilder\MetaMind.EngineBuilder.csproj">
-      <Project>{492c04cf-f181-48af-b919-fcd639ed711c}</Project>
-      <Name>MetaMind.EngineBuilder</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Configurations\Graphics.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -630,11 +602,38 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="ClassDiagrams\Guis\ViewVisual.cd" />
-    <None Include="ClassDiagrams\Components.cd" />
     <None Include="ClassDiagrams\Guis\View.cd" />
-    <None Include="Content\ConsoleFont.xnb">
+    <None Include="ClassDiagrams\Components.cd" />
+    <Content Include="Content\Fonts\NSimSunBoldFont.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Fonts\NSimSunBoldItalicFont.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Fonts\NSimSunItalicFont.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Fonts\NSimSunRegularFont.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Fonts\UiConsoleFont.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
+    <Content Include="Content\Fonts\UiRegularFont.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Fonts\UiStatisticsFont.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Textures\Screens\Blank.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Content\Audio\Win\Audio.xgs" />
+    <None Include="Content\Audio\Win\Sound Bank.xsb" />
+    <None Include="Content\Audio\Win\Wave Bank.xwb" />
+  </ItemGroup>
+  <ItemGroup>
+    <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

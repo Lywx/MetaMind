@@ -6,11 +6,11 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
 
     public class ViewItemLayoutInteraction : ViewItemComponent, IViewItemLayoutInteraction
     {
-        private readonly IViewSelectionControl viewSelection;
+        private readonly IViewSelectionController viewSelection;
 
-        private readonly IViewScrollControl viewScroll;
+        private readonly IViewScrollController viewScroll;
 
-        public ViewItemLayoutInteraction(IViewItem item, IViewSelectionControl viewSelection, IViewScrollControl viewScroll)
+        public ViewItemLayoutInteraction(IViewItem item, IViewSelectionController viewSelection, IViewScrollController viewScroll)
             : base(item)
         {
             this.viewSelection = viewSelection;

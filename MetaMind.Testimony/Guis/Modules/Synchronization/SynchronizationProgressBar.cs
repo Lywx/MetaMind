@@ -10,7 +10,7 @@ namespace MetaMind.Testimony.Guis.Modules.Synchronization
 
     using Microsoft.Xna.Framework;
 
-    public class SynchronizationProgressBar : ModuleComponent<SynchronizationModule, SynchronizationSettings, SynchronizationModuleLogicControl>
+    public class SynchronizationProgressBar : ModuleComponent<SynchronizationModule, SynchronizationSettings, SynchronizationModuleLogic>
     {
         public SynchronizationProgressBar(SynchronizationModule module, ISynchronization synchronization)
             : base(module)

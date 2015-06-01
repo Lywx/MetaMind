@@ -9,17 +9,6 @@ namespace MetaMind.Acutance.Concepts
     using MetaMind.Engine.Components.Events;
     using MetaMind.Testimony.Concepts.Synchronizations;
 
-    public interface ICommand : ISynchronizable
-    {
-        [DataMember]
-        string Name { get; set; }
-
-        [DataMember]
-        string Path { get; set; }
-
-        void Reset();
-    }
-
     [DataContract]
     public class Command : GameEntity, ICommand, IDisposable
     {
@@ -47,7 +36,6 @@ namespace MetaMind.Acutance.Concepts
             this.Type   = type;
 
             this.SynchronizationData = new SynchronizationData();
-            this.SynchronizationName
         }
 
         ~Command()
@@ -66,17 +54,25 @@ namespace MetaMind.Acutance.Concepts
 
         public SynchronizationSpan SynchronizationSpan
         {
-            get { return this.Timer.SynchronizationSpan; }
+            get { return this.Timer.Execution; }
         }
+
+        #region Display
 
         [DataMember]
         public string Name { get; set; }
+
+        #endregion
+
+        #region File
 
         [DataMember]
         public string Path { get; set; }
 
         [DataMember]
         public int Offset { get; set; }
+
+        #endregion
 
         [DataMember]
         public CommandState State { get; private set; }

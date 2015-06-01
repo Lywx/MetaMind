@@ -64,14 +64,14 @@ namespace MetaMind.Engine.Components.Fonts
         /// </summary>
         protected override void LoadContent()
         {
-            this.LoadFont(Font.UiRegular,    18, @"Fonts/BitmapFonts/RegularFont");
-            this.LoadFont(Font.UiStatistics, 18, @"Fonts/BitmapFonts/StatisticsFont");
-            this.LoadFont(Font.UiConsole   , 18, @"ConsoleFont");
+            this.LoadFont(Font.UiRegular,    18, @"Fonts/UiRegularFont");
+            this.LoadFont(Font.UiStatistics, 18, @"Fonts/UiStatisticsFont");
+            this.LoadFont(Font.UiConsole   , 18, @"Fonts/UiConsoleFont");
 
-            this.LoadFont(Font.ContentRegular,    18, @"Fonts/SpriteFonts/NSimSunRegularFont");
-            this.LoadFont(Font.ContentBold,       18, @"Fonts/SpriteFonts/NSimSunBoldFont");
-            this.LoadFont(Font.ContentItalic,     18, @"Fonts/SpriteFonts/NSimSunItalicFont");
-            this.LoadFont(Font.ContentBoldItalic, 18, @"Fonts/SpriteFonts/NSimSunBoldItalicFont");
+            this.LoadFont(Font.ContentRegular,    18, @"Fonts/NSimSunRegularFont");
+            this.LoadFont(Font.ContentBold,       18, @"Fonts/NSimSunBoldFont");
+            this.LoadFont(Font.ContentItalic,     18, @"Fonts/NSimSunItalicFont");
+            this.LoadFont(Font.ContentBoldItalic, 18, @"Fonts/NSimSunBoldItalicFont");
         }
 
         private void LoadFont(Font font, int fontSize, string path)
