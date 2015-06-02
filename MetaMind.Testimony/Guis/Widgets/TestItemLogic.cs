@@ -66,6 +66,7 @@
             {
                 if (this.ItemIsInputting())
                 {
+                    // TODO: Delete These
                     // Normal status
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.MotivationEditItem))
                     {

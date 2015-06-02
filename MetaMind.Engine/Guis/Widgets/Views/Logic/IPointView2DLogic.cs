@@ -11,31 +11,5 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
         new IPointView2DSelectionController ViewSelection { get; }
 
         new IPointView2DScrollController ViewScroll { get; }
-
-        #region Item Operations
-
-        void AddItem();
-
-        #endregion Item Operations
-
-        #region Movement Operations
-
-        void FastMoveDown();
-
-        void FastMoveLeft();
-
-        void FastMoveRight();
-
-        void FastMoveUp();
-
-        void MoveDown();
-
-        void MoveLeft();
-
-        void MoveRight();
-
-        void MoveUp();
-
-        #endregion Movement Operations
     }
 }

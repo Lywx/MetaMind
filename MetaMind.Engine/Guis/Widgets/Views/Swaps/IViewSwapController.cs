@@ -8,12 +8,8 @@
 namespace MetaMind.Engine.Guis.Widgets.Views.Swaps
 {
     using System;
-
-    using MetaMind.Engine.Guis.Widgets.Items;
-    using MetaMind.Engine.Guis.Widgets.Items.Layouts;
-    using MetaMind.Engine.Guis.Widgets.Items.Logic;
-    using MetaMind.Engine.Guis.Widgets.Views.Logic;
-    using MetaMind.Engine.Services;
+    using Items;
+    using Services;
 
     using Microsoft.Xna.Framework;
 

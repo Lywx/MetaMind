@@ -38,8 +38,8 @@
 
             var test = new List<Test>();
 
-            var view = new View(new TestViewSettings(new Vector2(50, 50),
-                        new Vector2(50, 26), 1, 1, 30, 100),
+            var view = new View(new TestViewSettings(new Vector2(40, 100),
+                        new Vector2(512+64+24, 26), 2, 2, 30, 100),
                     new TestItemSettings(),
                     new List<IViewItem>());
             view.ViewLayer = new PointView2DLayer(view);

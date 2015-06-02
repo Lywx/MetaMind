@@ -1,7 +1,7 @@
 " Screen Settings
 
 Resolution = 1280 720
-FPS        = 30
+FPS        = 60
 
 IsFullscreen = true
 

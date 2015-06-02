@@ -7,12 +7,11 @@
 
 namespace MetaMind.Engine.Guis.Widgets.Items.Frames
 {
-    using MetaMind.Engine.Guis.Elements;
-    using MetaMind.Engine.Guis.Widgets.Items.Layers;
-    using MetaMind.Engine.Services;
+    using Elements;
+    using Layers;
+    using Services;
 
     using Microsoft.Xna.Framework;
-    using Settings;
 
     public abstract class ViewItemFrame : ViewItemComponent, IViewItemFrame
     {
@@ -30,10 +29,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Frames
             var itemLayer = this.ItemGetLayer<ViewItemLayer>();
             var itemSettings = itemLayer.ItemSettings;
 
-            {
-                var frameSettings = itemSettings.Get<FrameSettings>("RootFrame");
-                this.RootFrame.Size = frameSettings.Size;
-            }
+            var rootFrameSettings = itemSettings.Get<FrameSettings>("RootFrame");
+            this.RootFrame.Size = rootFrameSettings.Size;
         }
 
         #region Dependency
@@ -51,10 +48,10 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Frames
 
         public override void Update(GameTime time)
         {
+            this.RootFrame.Update(time);
+
             this.UpdateFrameGeometry();
             this.UpdateFrameStates();
-
-            this.RootFrame.Update(time);
         }
 
         protected abstract void UpdateFrameGeometry();

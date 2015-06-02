@@ -173,11 +173,29 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         #region Update Input
 
+        protected override void UpdateInputOfMouse(IGameInputService input, GameTime time)
+        {
+            if (this.View[ViewState.View_Is_Inputting]())
+            {
+                if (this.ViewSettings.MouseEnabled)
+                {
+                    if (input.State.Mouse.IsWheelScrolledUp)
+                    {
+                        this.ViewScroll.MoveUp();
+                    }
+
+                    if (input.State.Mouse.IsWheelScrolledDown)
+                    {
+                        this.ViewScroll.MoveDown();
+                    }
+                }
+            }
+        }
+
         protected override void UpdateInputOfKeyboard(IGameInputService input, GameTime time)
         {
             if (this.View[ViewState.View_Is_Inputting]())
             {
-                // Keyboard
                 if (this.ViewSettings.KeyboardEnabled)
                 {
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Up))

@@ -10,7 +10,7 @@
         /// This is used to determine how many events is triggered as an input. 
         /// It is based on the idea that msg is sequential on different input type.
         /// </summary>
-        private const int InputCountSyncThreshod = 12;
+        private const int InputCountSyncThreshold = 12;
 
         private int InputCount { get; set; }
 
@@ -18,7 +18,7 @@
 
         #region State Data
 
-        protected bool AcceptInput { get; set; }
+        protected bool Controllable { get; set; }
 
         #endregion 
 
@@ -43,9 +43,9 @@
         {
             this.InputCount += 1;
 
-            if (this.InputCount >= InputCountSyncThreshod)
+            if (this.InputCount >= InputCountSyncThreshold)
             {
-                this.AcceptInput = false;
+                this.Controllable = false;
             }
         }
 
@@ -53,7 +53,7 @@
         {
             this.InputCount = 0;
 
-            this.AcceptInput = true;
+            this.Controllable = true;
         }
         #endregion Update and Draw
     }

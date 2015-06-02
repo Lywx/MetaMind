@@ -5,23 +5,21 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-
 namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 {
     using System;
-    using Items.Frames;
-    using Items.Logic;
-    using MetaMind.Engine.Components.Inputs;
-    using MetaMind.Engine.Guis.Widgets.Items;
-    using MetaMind.Engine.Guis.Widgets.Items.Factories;
-    using MetaMind.Engine.Guis.Widgets.Views.Layers;
-    using MetaMind.Engine.Guis.Widgets.Views.Layouts;
-    using MetaMind.Engine.Guis.Widgets.Views.Scrolls;
-    using MetaMind.Engine.Guis.Widgets.Views.Selections;
-    using MetaMind.Engine.Guis.Widgets.Views.Settings;
-    using MetaMind.Engine.Guis.Widgets.Views.Swaps;
-    using MetaMind.Engine.Services;
+    using System.Collections.Generic;
+
+    using Components.Inputs;
+    using Items;
+    using Items.Factories;
+    using Layers;
+    using Layouts;
+    using Scrolls;
+    using Selections;
+    using Services;
+    using Settings;
+    using Swaps;
 
     using Microsoft.Xna.Framework;
 
@@ -189,8 +187,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             {
                 foreach (var item in this.View.Items.ToArray())
                 {
-                    item.Update(time);
                     item.UpdateView(time);
+                    item.Update(time);
                 }
             }
             else

@@ -5,72 +5,80 @@ namespace MetaMind.Testimony.Guis.Widgets
     using Engine.Guis.Widgets.Items.Settings;
     using Engine.Guis.Widgets.Visuals;
     using Engine.Settings.Colors;
+
     using Microsoft.Xna.Framework;
 
     public class TestItemSettings : ItemSettings
     {
         private readonly FrameSettings rootFrame = new FrameSettings
         {
-            Size = new Point(256, 24),
+            Size   = new Point(24 + 64 + 512, 26),
             Margin = new Point(2, 2)
         };
 
         private readonly FrameSettings idFrame = new FrameSettings
         {
-            Size = new Point(24, 24),
-            Margin = new Point(2, 2)
+            Size   = new Point(24, 26),
+            Margin = new Point(2, 2),
+
+            RegularColor      = Palette.DarkRed,
+            MouseOverColor    = Palette.DarkRed,
+            PendingColor      = Palette.DarkRed,
+            ModificationColor = Palette.DarkRed,
+            SelectionColor    = Palette.DarkRed,
         };
 
         private readonly LabelSettings idLabel = new LabelSettings
         {
-            TextSize = 0.7f,
-            TextColor = Color.White,
-            TextFont = Font.UiStatistics,
+            TextSize   = 0.7f,
+            TextColor  = Color.White,
+            TextFont   = Font.UiStatistics,
             TextHAlign = StringHAlign.Center,
             TextVAlign = StringVAlign.Center,
         };
 
         private readonly FrameSettings nameFrame = new FrameSettings
         {
-            Size = new Point(256, 24),
+            Size   = new Point(512, 26),
             Margin = new Point(2, 2),
 
-            RegularColor      = Palette.Transparent2,
-            MouseOverColor    = new Color(23, 41, 61, 2),
-            PendingColor      = new Color(200, 200, 0, 2),
-            ModificationColor = new Color(0, 0, 0, 0),
+            RegularColor      = Palette.Transparent0,
+            MouseOverColor    = Palette.DimBlue,
+            PendingColor      = Palette.Transparent0,
+            ModificationColor = Palette.Transparent0,
             SelectionColor    = Palette.LightBlue,
         };
 
         private readonly LabelSettings nameLabel = new LabelSettings
         {
-            TextSize  = 0.7f,
-            TextColor = Color.White,
-            TextFont  = Font.ContentBold,
-            TextHAlign = StringHAlign.Right,
-            TextVAlign = StringVAlign.Center,
+            TextSize       = 0.8f,
+            TextColor      = Color.White,
+            TextFont       = Font.ContentBold,
+            TextHAlign     = StringHAlign.Right,
+            TextVAlign     = StringVAlign.Center,
 
             TextMonospaced = true,
         };
 
         private readonly FrameSettings statusFrame = new FrameSettings
         {
-            Size = new Point(64, 24),
+            Size   = new Point(64, 26),
             Margin = new Point(2, 2),
 
-            RegularColor      = Palette.Transparent2,
-            MouseOverColor    = new Color(23, 41, 61, 2),
-            PendingColor      = new Color(200, 200, 0, 2),
-            ModificationColor = new Color(0, 0, 0, 0),
-            SelectionColor    = Palette.LightBlue
+            RegularColor      = Palette.Transparent1,
+            MouseOverColor    = Palette.Transparent1,
+            PendingColor      = Palette.Transparent1,
+            ModificationColor = Palette.Transparent1,
+            SelectionColor    = Palette.Transparent1,
         };
 
         private readonly LabelSettings statusLabel = new LabelSettings{
-            TextSize = 0.7f,
-            TextColor = Color.White,
-            TextFont = Font.ContentBold,
-            TextHAlign = StringHAlign.Center,
-            TextVAlign = StringVAlign.Center
+            TextSize       = 0.7f,
+            TextColor      = Color.White,
+            TextFont       = Font.UiStatistics,
+            TextHAlign     = StringHAlign.Center,
+            TextVAlign     = StringVAlign.Center,
+            TextMonospaced = false,
         };
 
         public TestItemSettings()

@@ -1,38 +1,46 @@
 namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 {
-    using MetaMind.Engine.Guis.Widgets.Items.Factories;
-    using MetaMind.Engine.Guis.Widgets.Regions;
-    using MetaMind.Engine.Guis.Widgets.Views.Extensions;
-    using MetaMind.Engine.Guis.Widgets.Views.Scrolls;
-    using MetaMind.Engine.Guis.Widgets.Views.Selections;
-    using MetaMind.Engine.Guis.Widgets.Views.Settings;
-    using MetaMind.Engine.Guis.Widgets.Views.Visuals;
-    using MetaMind.Engine.Services;
+    using System.Collections.Generic;
+
+    using Items.Factories;
+    using Layers;
+    using Layouts;
+    using Scrolls;
+    using Selections;
+    using Services;
+    using Swaps;
+    using Visuals;
 
     using Microsoft.Xna.Framework;
 
-    public class PointGridLogic : PointView2DLogic, IPointGridLogic
+    public class PointGridLogic<TData> : PointView2DLogic<TData>, IPointGridLogic
     {
-        private IPointView2DSelectionControl viewSelection;
+        private IPointView2DSelectionController viewSelection;
 
-        private IPointView2DScrollControl viewScroll;
+        private IPointView2DScrollController viewScroll;
 
-        public PointGridLogic(IView view, PointGridSettings viewSettings, IViewItemFactory itemFactory)
-            : base(view, viewSettings, itemFactory)
+        public PointGridLogic(
+            IView                    view,
+            IList<TData>             viewData,
+            IViewScrollController    viewScroll,
+            IViewSelectionController viewSelection,
+            IViewSwapController      viewSwap,
+            IViewLayout              viewLayout,
+            IViewItemFactory itemFactory)
+            : base(view, viewData, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory)
         {
-            var viewLayer = this.ViewGetLayer<PointView2DLayer>();
-            this.viewSelection = viewLayer.ViewSelection;
-            this.viewScroll = viewLayer.ViewScroll;
-
-            this.Region    = new ViewRegion(this.RegionBounds);
+            this.Region = new ViewRegion(this.RegionBounds);
             this.Scrollbar = new ViewVerticalScrollBar(viewSettings, viewLayer.ViewScroll, this, this.Region, viewSettings.ScrollbarSettings);
 
             this.View[ViewState.View_Has_Focus] = () => this.Region[RegionState.Region_Has_Focus]() || this.View[ViewState.View_Has_Selection]();
         }
 
-        #region Public Properties
-
-        #endregion Public Properties
+        public override void SetupLayer()
+        {
+            var viewLayer = this.ViewGetLayer<PointView2DLayer>();
+            this.viewSelection = viewLayer.ViewSelection;
+            this.viewScroll = viewLayer.ViewScroll;
+        }
 
         #region Operations
 
@@ -104,7 +112,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
         {
             if (this.View[ViewState.View_Is_Inputting]())
             {
-                if (this.viewSettings.MouseEnabled)
+                if (this.ViewSettings.MouseEnabled)
                 {
                     if (input.State.Mouse.IsWheelScrolledUp)
                     {
@@ -134,12 +142,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
         protected virtual Rectangle RegionBounds()
         {
             return new Rectangle(
-                this.ViewSettings.PointStart.X,
-                this.ViewSettings.PointStart.Y,
+                (int)this.ViewSettings.Position.X,
+                (int)this.ViewSettings.Position.Y,
                 this.ViewSettings.ColumnNumDisplay * this.ItemSettings.NameFrameSize.X,
                 this.ViewSettings.RowNumDisplay    * this.ItemSettings.NameFrameSize.Y);
         }
 
         #endregion Configurations
+
     }
 }

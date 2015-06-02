@@ -6,6 +6,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
     using MetaMind.Engine.Guis.Widgets.Views.Selections;
     using MetaMind.Engine.Guis.Widgets.Views.Swaps;
     using MetaMind.Engine.Services;
+    using Microsoft.Xna.Framework;
 
     public class PointViewHorizontalItemInteraction : ViewItemInteraction, IViewItemViewSelectionProvider, IViewItemViewSwapProvider
     {
@@ -38,7 +39,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
             this.ItemLayoutInteraction.ViewDoUnselect(this.ItemLayout);
         }
 
-        public void ViewUpdateSelection()
+        public void ViewUpdateSelection(GameTime time)
         {
             if (this.viewSelection.IsSelected(this.ItemLayout.Id))
             {

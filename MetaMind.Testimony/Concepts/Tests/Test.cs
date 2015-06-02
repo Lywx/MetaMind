@@ -19,7 +19,7 @@ namespace MetaMind.Testimony.Concepts.Tests
         {
             this.Name = name;
 
-            this.Status = "Unknown";
+            this.Status = "READY";
 
             // Strucure 
             this.Parent   = null;

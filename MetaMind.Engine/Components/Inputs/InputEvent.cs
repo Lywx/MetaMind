@@ -45,13 +45,13 @@ namespace MetaMind.Engine.Components.Inputs
 
             var window = engine.Window;
             
-            // This handler has to be a field that not gabbage collected during the running of GameEngine.
+            // This handler has to be a field that not garbage collected during the running of GameEngine.
             this.hookProcHandler = this.HookProc;
 
             // Register hook API handler
             this.wndProc = (IntPtr)SetWindowLong(window.Handle, GWL_WNDPROC, (int)Marshal.GetFunctionPointerForDelegate(this.hookProcHandler));
-            
-            this.hIMC    = ImmGetContext(window.Handle);
+
+            this.hIMC = ImmGetContext(window.Handle);
         }
 
         #endregion Constructors
@@ -180,7 +180,7 @@ namespace MetaMind.Engine.Components.Inputs
             var returnCode = CallWindowProc(this.wndProc, hWnd, msg, wParam, lParam);
 
             // halt when input count exceeds
-            if (!this.AcceptInput)
+            if (!this.Controllable)
             {
                 return returnCode;
             }
@@ -216,6 +216,7 @@ namespace MetaMind.Engine.Components.Inputs
                     {
                         // convert wParam to byte for different IME encoding
                         var charBytes = BitConverter.GetBytes((int)wParam);
+
                         this.CharEntered(null, new CharEnteredEventArgs(charBytes, lParam.ToInt32()));
                     }
 

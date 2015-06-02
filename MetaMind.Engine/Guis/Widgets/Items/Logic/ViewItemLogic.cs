@@ -127,9 +127,7 @@
 
         public void UpdateView(GameTime time)
         {
-            // View activation is controlled by item view control
             this.ItemInteraction.Update(time);
-            this.ItemLayout     .Update(time);
         }
 
         public override void UpdateInput(IGameInputService input, GameTime time)

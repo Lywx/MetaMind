@@ -8,7 +8,7 @@
 namespace MetaMind.Testimony.Guis.Widgets
 {
     using System;
-
+    using Engine.Components.Fonts;
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Frames;
     using Engine.Guis.Widgets.Items.Visuals;

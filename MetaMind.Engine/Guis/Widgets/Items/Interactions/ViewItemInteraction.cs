@@ -13,6 +13,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
+    using Views;
 
     public class ViewItemInteraction : ViewItemComponent, IViewItemInteraction
     {
@@ -41,28 +42,35 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
 
         public override void Update(GameTime time)
         {
-            this.UpdateViewSelection();
+            this.UpdateViewScroll(time);
+            this.UpdateViewSelection(time);
 
             // For better performance
             if (this.Item[ItemState.Item_Is_Inputting]())
             {
-                this.UpdateViewSwap();
+                this.UpdateViewSwap(time);
             }
+        }
+
+        private void UpdateViewScroll(GameTime time)
+        {
+            this.ItemLayout.Update(time);
         }
 
         /// <summary>
         ///     Item active state determination based on selection and view state
         /// </summary>
-        private void UpdateViewSelection()
+        /// <param name="time"></param>
+        private void UpdateViewSelection(GameTime time)
         {
             var provider = this as IViewItemViewSelectionProvider;
             if (provider != null)
             {
-                provider.ViewUpdateSelection();
+                provider.ViewUpdateSelection(time);
             }
         }
 
-        private void UpdateViewSwap()
+        private void UpdateViewSwap(GameTime time)
         {
             var provider = this as IViewItemViewSwapProvider;
             if (provider != null)

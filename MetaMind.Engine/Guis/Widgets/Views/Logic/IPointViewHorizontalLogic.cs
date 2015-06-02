@@ -18,23 +18,5 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
         new IPointViewHorizontalSelectionController ViewSelection { get; }
 
         new IPointViewHorizontalScrollController ViewScroll { get; }
-
-        #region Item Operations 
-
-        void AddItem();
-
-        #endregion
-
-        #region Movement Operations 
-
-        void FastMoveLeft();
-
-        void FastMoveRight();
-
-        void MoveLeft();
-
-        void MoveRight();
-
-        #endregion
     }
 }

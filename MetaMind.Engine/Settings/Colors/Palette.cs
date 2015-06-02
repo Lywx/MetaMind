@@ -14,6 +14,8 @@ namespace MetaMind.Engine.Settings.Colors
 
     public static class Palette
     {
+        public static Color Transparent0 = new Color(0, 0, 0, 0);
+
         public static Color Transparent1 = new Color(20, 20, 20, 0);
 
         public static Color Transparent2 = new Color(60, 60, 60, 0);
@@ -36,6 +38,9 @@ namespace MetaMind.Engine.Settings.Colors
 
         public static Color DarkBlue    = new Color(0, 20, 250, 20);
 
+        public static Color DimBlue     = new Color(23, 41, 61, 2);
+
         public static Color DarkRed     = new Color(100, 0, 0, 20);
     }
+
 }

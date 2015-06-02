@@ -20,7 +20,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
 
     public class ViewItemSwapProcess<TData> : Process
     {
-        private const int UpdateNum = 6;
+        private const int UpdateNum = 2;
 
         #region Constructors
 

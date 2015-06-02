@@ -13,7 +13,7 @@ namespace MetaMind.Testimony.Guis.Widgets
     using Engine.Services;
     using Microsoft.Xna.Framework;
 
-    public class TestItemFrame : ViewItemFrame
+    public class TestItemFrame : PointViewItemFrame
     {
         private IViewItemLayout itemLayout;
 
@@ -51,31 +51,11 @@ namespace MetaMind.Testimony.Guis.Widgets
             this.itemSettings = itemLayer.ItemSettings;
             this.itemLayout = itemLayer.ItemLogic.ItemLayout;
 
-            var rootFrameSettings = this.itemSettings.Get<FrameSettings>("RootFrame");
             var idFrameSettings = this.itemSettings.Get<FrameSettings>("IdFrame");
             var nameFrameSettings = this.itemSettings.Get<FrameSettings>("NameFrame");
             var statusFrameSettings = this.itemSettings.Get<FrameSettings>("StatusFrame");
 
-            // id frame - status frame - root frame (name frame)
-            {
-                this.RootFrame.Size = rootFrameSettings.Size;
-                this.RootFrameLocation = () =>
-                {
-                    if (!this.Item[ItemState.Item_Is_Dragging]() &&
-                        !this.Item[ItemState.Item_Is_Swaping]())
-                    {
-                        return this.viewScroll.Position(this.itemLayout.Id);
-                    }
-
-                    if (this.Item[ItemState.Item_Is_Swaping]())
-                    {
-                        return this.viewSwap.Position;
-                    }
-
-                    return this.RootFrame.Location.ToVector2();
-                };
-            }
-
+            // id frame - status frame - name frame
             {
                 this.IdFrame.Size = idFrameSettings.Size;
                 this.IdFrameLocation = this.RootFrameLocation;
@@ -90,7 +70,6 @@ namespace MetaMind.Testimony.Guis.Widgets
                 this.NameFrame.Size = nameFrameSettings.Size;
                 this.NameFrameLocation = () => this.StatusFrameLocation() + new Vector2(statusFrameSettings.Size.X, 0);
             }
-
         }
 
         #endregion
@@ -106,8 +85,6 @@ namespace MetaMind.Testimony.Guis.Widgets
         #endregion
 
         #region Positions
-
-        public Func<Vector2> RootFrameLocation { get; protected set; }
 
         public Func<Vector2> NameFrameLocation { get; protected set; }
 
@@ -148,7 +125,7 @@ namespace MetaMind.Testimony.Guis.Widgets
 
         protected override void UpdateFrameGeometry()
         {
-            this.RootFrame.Location  = this.RootFrameLocation().ToPoint();
+            this.RootFrame.Location = this.RootFrameLocation().ToPoint();
             this.IdFrame.Location = this.IdFrameLocation().ToPoint();
             this.NameFrame.Location  = this.NameFrameLocation().ToPoint();
             this.StatusFrame.Location = this.StatusFrameLocation().ToPoint();
@@ -156,11 +133,13 @@ namespace MetaMind.Testimony.Guis.Widgets
 
         public override void Update(GameTime time)
         {
-            base.Update(time);
-
+            this.RootFrame.Update(time);
             this.IdFrame.Update(time);
             this.NameFrame.Update(time);
             this.StatusFrame.Update(time);
+
+            this.UpdateFrameGeometry();
+            this.UpdateFrameStates();
         }
     }
 }
