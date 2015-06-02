@@ -34,5 +34,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
         {
             return this.viewScroll.CanDisplay(itemLayout.Id);
         }
+
     }
 }

@@ -4,5 +4,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
 
     public interface IViewItemDataModel : IViewItemComponent, IUpdateable, IInputable
     {
+        void EditString(string targetName);
+
+        void EditInt(string targetName);
     }
 }

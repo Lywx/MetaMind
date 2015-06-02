@@ -9,8 +9,8 @@
 namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
+
     using MetaMind.Engine.Guis.Widgets.Items.Factories;
     using MetaMind.Engine.Guis.Widgets.Views.Layouts;
     using MetaMind.Engine.Guis.Widgets.Views.Scrolls;

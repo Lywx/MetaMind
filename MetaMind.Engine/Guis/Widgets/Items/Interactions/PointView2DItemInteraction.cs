@@ -7,22 +7,20 @@
 
 namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
 {
-    using MetaMind.Engine.Guis.Widgets.Items.Layers;
-    using MetaMind.Engine.Guis.Widgets.Items.Layouts;
-    using MetaMind.Engine.Guis.Widgets.Items.Logic;
-    using MetaMind.Engine.Guis.Widgets.Views.Layers;
+    using Layers;
+    using Layouts;
+    using Views.Layers;
 
     public class PointView2DItemInteraction : PointViewHorizontalItemInteraction
     {
-        private readonly PointView2DItemLogic itemLogic;
+        private readonly PointView2DItemLayer itemLayer;
+        private readonly PointView2DLayer viewLayer;
 
         public PointView2DItemInteraction(IViewItem item, IViewItemLayout itemLayout, IViewItemLayoutInteraction itemLayoutInteraction)
             : base(item, itemLayout, itemLayoutInteraction)
         {
-            var itemLayer = this.ItemGetLayer<PointView2DItemLayer>();
-            this.itemLogic = itemLayer.ItemLogic;
-
-            var viewLayer = this.ViewGetLayer<PointView2DLayer>();
+            this.itemLayer = this.ItemGetLayer<PointView2DItemLayer>();
+            this.viewLayer = this.ViewGetLayer<PointView2DLayer>();
         }
     }
 }

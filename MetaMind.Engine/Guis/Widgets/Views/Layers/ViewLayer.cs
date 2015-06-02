@@ -32,12 +32,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layers
 
         #endregion
 
-
-        public T Get<T>()
+        public T Get<T>() where T : class, IViewLayer
         {
-            if (this.GetType().IsSubclassOf(typeof(T)))
+            var type = this.GetType();
+            if (type == typeof (T) ||
+                type.IsSubclassOf(typeof (T)))
             {
-                return (T)Convert.ChangeType(this, typeof(T));
+                return this as T;
             }
 
             throw new InvalidOperationException(string.Format("This is not a {0}.", typeof(T).Name));

@@ -8,10 +8,14 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
 
     public class PointView2DItemLayout : ViewItemLayout, IPointViewItemLayout
     {
-        private readonly IPointView2DLayout viewLayout;
+        private IPointView2DLayout viewLayout;
 
-        protected PointView2DItemLayout(IViewItem item, IViewItemLayoutInteraction interaction)
+        public PointView2DItemLayout(IViewItem item, IViewItemLayoutInteraction interaction)
             : base(item, interaction)
+        {
+        }
+
+        public override void SetupLayer()
         {
             this.viewLayout = this.ViewGetLayer<PointView2DLayer>().ViewLayout;
         }

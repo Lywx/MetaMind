@@ -4,28 +4,30 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Settings
 
     public class PointViewHorizontalSettings : ViewSettings
     {
-        public int ColumnNumDisplay = 10;
+        public Vector2 Margin;
 
-        public int ColumnNumMax     = 500;
+        public Vector2 Position;
 
-        public ViewDirection Direction = ViewDirection.Normal;
+        public int ColumnNumDisplay;
 
+        public int ColumnNumMax;
 
-        public Vector2 PointMargin = new Vector2(50, 0);
+        public ViewDirection Direction;
 
-        public Vector2 PointStart;
-
-        public PointViewHorizontalSettings(Vector2 start)
+        public PointViewHorizontalSettings(
+            Vector2 position,
+            Vector2 margin,
+            int columnNumDisplay,
+            int columnNumMax,
+            ViewDirection direction = ViewDirection.Normal)
         {
-            this.PointStart = start;
-        }
+            this.Position  = position;
+            this.Margin = margin;
 
-        public PointViewHorizontalSettings(Vector2 start, Vector2 margin, ViewDirection direction)
-        {
-            this.PointStart  = start;
-            this.PointMargin = margin;
+            this.ColumnNumDisplay = columnNumDisplay;
+            this.ColumnNumMax     = columnNumMax;
 
-            this.Direction   = direction;
+            this.Direction = direction;
         }
     }
 }

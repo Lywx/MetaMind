@@ -15,6 +15,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layers
         {
         }
 
+        #region Layer
+
         /// <summary>
         /// Gets a interface to most general item logic.
         /// </summary>
@@ -39,14 +41,24 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layers
             get { return this.Item.ItemSettings; }
         }
 
-        public T Get<T>() where T : class
+
+        #endregion
+
+        #region Layer Operations
+
+        public T Get<T>() where T : class, IViewItemLayer
         {
-            if (this.GetType().IsSubclassOf(typeof(T)))
+            var type = this.GetType();
+            if (type == typeof (T) ||
+                type.IsSubclassOf(typeof (T)))
             {
-                return (T)Convert.ChangeType(this, typeof(T));
+                return this as T;
             }
 
-            throw new InvalidOperationException(string.Format("This is not a {0}.", typeof(T).Name));
+            throw new InvalidOperationException(
+                string.Format("This is not a {0}.", typeof (T).Name));
         }
+
+        #endregion
     }
 }

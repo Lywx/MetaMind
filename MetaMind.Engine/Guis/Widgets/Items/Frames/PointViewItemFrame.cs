@@ -1,11 +1,9 @@
 namespace MetaMind.Engine.Guis.Widgets.Items.Frames
 {
     using System;
-
-    using MetaMind.Engine.Guis.Widgets.Items.Layers;
-    using MetaMind.Engine.Guis.Widgets.Items.Layouts;
-    using MetaMind.Engine.Guis.Widgets.Views.Scrolls;
-    using MetaMind.Engine.Guis.Widgets.Views.Swaps;
+    using Layouts;
+    using Views.Scrolls;
+    using Views.Swaps;
 
     public class PointViewItemFrame : ViewItemFrame
     {

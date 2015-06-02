@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Guis.Widgets.Views.Layers;
 
-    public abstract class ViewItemComponent : GameControllableEntity, IViewItemComponent
+    public class ViewItemComponent : GameControllableEntity, IViewItemComponent
     {
         #region Constructors and Destructors
 
@@ -59,7 +59,11 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             }
         }
 
-        public T ItemGetLayer<T>() where T : class, IViewItemLayer 
+        #endregion
+
+        #region Layering
+
+        public T ItemGetLayer<T>() where T : class, IViewItemLayer
         {
             return this.ItemLayer.Get<T>();
         }
@@ -69,6 +73,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             return this.ViewLayer.Get<T>();
         }
 
-        #endregion 
+        public virtual void SetupLayer() { }
+
+        #endregion
     }
 }

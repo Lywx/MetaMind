@@ -4,8 +4,6 @@ namespace MetaMind.Acutance.Guis.Widgets
     using MetaMind.Engine.Extensions;
     using MetaMind.Engine.Guis.Widgets.Views;
     using MetaMind.Engine.Services;
-    using MetaMind.Runtime.Guis.Widgets;
-
     using Microsoft.Xna.Framework;
 
     using Primtives2D;

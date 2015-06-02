@@ -12,38 +12,45 @@
     /// </summary>
     public class PointView2DScrollController : ViewComponent, IPointView2DScrollController
     {
-        private readonly PointView2DSettings viewSettings;
-
-        private readonly IPointView2DLogic viewLogic;
+        private readonly PointView2DLayer viewLayer;
 
         private int offsetX;
 
         private int offsetY;
 
-        private IPointView2DLayout viewLayout;
-
         public PointView2DScrollController(IView view)
             : base(view)
         {
-            var viewLayer     = this.ViewGetLayer<PointView2DLayer>();
-            this.viewSettings = viewLayer.ViewSettings;
-            this.viewLogic    = viewLayer.ViewLogic;
-            this.viewLayout   = this.viewLogic.ViewLayout;
+            this.viewLayer = this.ViewGetLayer<PointView2DLayer>();
         }
 
-        #region Dependency
+        #region Indirect Dependency
+        protected PointView2DSettings ViewSettings
+        {
+            get { return this.viewLayer.ViewSettings; }
+        }
+
+        protected IPointView2DLogic ViewLogic
+        {
+            get { return this.viewLayer.ViewLogic; }
+        }
+
+        protected IPointView2DLayout ViewLayout
+        {
+            get { return this.ViewLogic.ViewLayout; }
+        }
+
+        #endregion
 
         private int ColumnFrom(int id)
         {
-            return this.viewLayout.ColumnFrom(id);
+            return this.ViewLayout.ColumnFrom(id);
         }
 
         private int RowFrom(int id)
         {
-            return this.viewLayout.RowFrom(id);
+            return this.ViewLayout.RowFrom(id);
         }
-
-        #endregion
 
         public int OffsetX
         {
@@ -59,8 +66,8 @@
         {
             get
             {
-                return (this.viewSettings.ColumnNumDisplay * (this.viewSettings.RowNumDisplay + this.OffsetY) < this.viewSettings.ColumnNumDisplay * this.viewSettings.RowNumMax) && 
-                       (this.viewSettings.ColumnNumMax * (this.viewSettings.RowNumDisplay + this.OffsetY) < this.View.Items.Count);
+                return (this.ViewSettings.ColumnNumDisplay * (this.ViewSettings.RowNumDisplay + this.OffsetY) < this.ViewSettings.ColumnNumDisplay * this.ViewSettings.RowNumMax) && 
+                       (this.ViewSettings.ColumnNumMax * (this.ViewSettings.RowNumDisplay + this.OffsetY) < this.View.Items.Count);
             }
         }
 
@@ -73,8 +80,8 @@
         {
             get
             {
-                return this.viewSettings.RowNumDisplay * (this.viewSettings.ColumnNumDisplay + this.OffsetX)
-                       < this.viewSettings.RowNumDisplay * this.viewSettings.ColumnNumMax;
+                return this.ViewSettings.RowNumDisplay * (this.ViewSettings.ColumnNumDisplay + this.OffsetX)
+                       < this.ViewSettings.RowNumDisplay * this.ViewSettings.ColumnNumMax;
             }
         }
 
@@ -85,8 +92,8 @@
 
         public bool CanDisplay(int row, int column)
         {
-            return this.OffsetX <= column && column < this.viewSettings.ColumnNumDisplay + this.OffsetX &&
-                   this.OffsetY <= row    && row    < this.viewSettings.RowNumDisplay    + this.OffsetY;
+            return this.OffsetX <= column && column < this.ViewSettings.ColumnNumDisplay + this.OffsetX &&
+                   this.OffsetY <= row    && row    < this.ViewSettings.RowNumDisplay    + this.OffsetY;
         }
 
         public bool CanDisplay(int id)
@@ -99,7 +106,7 @@
 
         public bool IsDownToDisplay(int row)
         {
-            return row > this.viewSettings.RowNumDisplay + this.OffsetY - 1;
+            return row > this.ViewSettings.RowNumDisplay + this.OffsetY - 1;
         }
 
         public bool IsLeftToDisplay(int column)
@@ -109,7 +116,7 @@
 
         public bool IsRightToDisplay(int column)
         {
-            return column > this.viewSettings.ColumnNumDisplay + this.OffsetX - 1;
+            return column > this.ViewSettings.ColumnNumDisplay + this.OffsetX - 1;
         }
 
         public bool IsUpToDisplay(int row)
@@ -159,8 +166,8 @@
             var row    = this.RowFrom(id);
             var column = this.ColumnFrom(id);
             return new Vector2(
-                this.viewSettings.PointStart.X - this.OffsetX * this.viewSettings.PointMargin.X + column * this.viewSettings.PointMargin.X,
-                this.viewSettings.PointStart.Y - this.OffsetY * this.viewSettings.PointMargin.Y + row * this.viewSettings.PointMargin.Y);
+                this.ViewSettings.Position.X - this.OffsetX * this.ViewSettings.Margin.X + column * this.ViewSettings.Margin.X,
+                this.ViewSettings.Position.Y - this.OffsetY * this.ViewSettings.Margin.Y + row * this.ViewSettings.Margin.Y);
         }
 
         public void Zoom(int id)

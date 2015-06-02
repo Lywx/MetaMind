@@ -14,7 +14,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
 
     using Microsoft.Xna.Framework;
 
-    public class ViewItemLayout : ViewItemComponent, IViewItemLayout, IUpdateable
+    public class ViewItemLayout : ViewItemComponent, IViewItemLayout
     {
         private readonly IViewItemLayoutInteraction interaction;
 
@@ -31,11 +31,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
             this.Item[ItemState.Item_Is_Active] = this.ItemIsActive;
         }
 
-        public override void Update(GameTime time)
-        {
-            this.Id = this.View.Items.IndexOf(this.Item);
-        }
-
         public Func<bool> ItemIsActive
         {
             get
@@ -46,5 +41,13 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
 
         public int Id { get; set; }
 
+        #region Update
+
+        public override void Update(GameTime time)
+        {
+            this.Id = this.View.Items.IndexOf(this.Item);
+        }
+
+        #endregion
     }
 }

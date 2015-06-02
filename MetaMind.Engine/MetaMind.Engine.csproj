@@ -156,7 +156,7 @@
     <Compile Include="Guis\Widgets\Items\Data\ViewItemCharModifier.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Items\Data\ViewItemDataModifier.cs">
+    <Compile Include="Guis\Widgets\Items\Data\ViewItemDataModel.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Guis\Widgets\Items\Interactions\IViewItemLayoutInteraction.cs" />
@@ -167,7 +167,7 @@
     <Compile Include="Guis\Widgets\Items\Layers\PointView2DItemLayer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Items\Layers\PointViewItemLayer.cs">
+    <Compile Include="Guis\Widgets\Items\Layers\PointViewHorizontalItemLayer.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Guis\Widgets\Items\Layers\ViewItemLayer.cs">
@@ -235,9 +235,9 @@
     </Compile>
     <Compile Include="Guis\Widgets\Items\Layouts\IPointViewItemLayout.cs" />
     <Compile Include="Guis\Widgets\Items\Layouts\IViewItemLayout.cs" />
-    <Compile Include="Guis\Widgets\Items\Layouts\IViewItemSorter.cs" />
     <Compile Include="Guis\Widgets\Items\Layouts\PointView2DItemLayout.cs" />
     <Compile Include="Guis\Widgets\Items\Layouts\ViewItemLayout.cs" />
+    <Compile Include="Guis\Widgets\Items\Logic\IPointView2DItemLogic.cs" />
     <Compile Include="Guis\Widgets\Items\Logic\IPointViewHorizontalItemLogic.cs" />
     <Compile Include="Guis\Widgets\Items\Logic\IViewItemLogic.cs">
       <SubType>Code</SubType>
@@ -266,9 +266,7 @@
     <Compile Include="Guis\Widgets\Items\Visuals\ViewItemFrameVisual.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Items\Visuals\ViewItemLabelVisual.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Guis\Widgets\Items\Visuals\ViewItemLabelVisual.cs" />
     <Compile Include="Guis\Widgets\Items\Visuals\ViewItemVisual.cs">
       <SubType>Code</SubType>
     </Compile>

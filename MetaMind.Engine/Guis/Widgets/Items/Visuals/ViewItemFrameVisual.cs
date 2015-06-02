@@ -17,7 +17,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Visuals
 
         private readonly Box frameBoxDrawn;
 
-        protected ViewItemFrameVisual(IViewItem item, IPressableFrame frame, FrameSettings frameSettings)
+        public ViewItemFrameVisual(IViewItem item, IPressableFrame frame, FrameSettings frameSettings)
             : base(item)
         {
             this.frame         = frame;

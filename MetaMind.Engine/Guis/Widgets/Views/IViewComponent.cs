@@ -10,8 +10,14 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     {
         IView View { get; }
 
+        #region Layering
+
         T ViewGetLayer<T>() where T : class, IViewLayer;
 
         T ViewGetComponent<T>(string id) where T : class;
+
+        void SetupLayer();
+
+        #endregion
     }
 }

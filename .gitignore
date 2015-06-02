@@ -23,9 +23,6 @@ MetaMind.Engine/bin/
 MetaMind.EngineProcessor/Content/obj/
 MetaMind.EngineProcessor/obj/
 MetaMind.EngineProcessor/bin/
-MetaMind.EngineBuilder/MetaMind.EngineBuilder/bin/
-MetaMind.EngineBuilder/MetaMind.EngineBuilder/obj/
-MetaMind.EngineBuilder/MetaMind.EngineBuilderContent/obj/
 
 MetaMind.EngineTest/bin/
 MetaMind.EngineTest/obj/

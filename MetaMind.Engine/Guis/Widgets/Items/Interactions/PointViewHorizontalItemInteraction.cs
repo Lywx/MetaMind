@@ -9,19 +9,23 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
 
     public class PointViewHorizontalItemInteraction : ViewItemInteraction, IViewItemViewSelectionProvider, IViewItemViewSwapProvider
     {
-        private readonly IPointViewHorizontalSelectionController viewSelection;
+        private IPointViewHorizontalSelectionController viewSelection;
 
-        private readonly IViewSwapController viewSwap;
+        private IViewSwapController viewSwap;
 
 
         public PointViewHorizontalItemInteraction(IViewItem item, IViewItemLayout itemLayout, IViewItemLayoutInteraction itemLayoutInteraction)
             : base(item, itemLayout, itemLayoutInteraction)
         {
-            var itemLayer = this.ItemGetLayer<PointViewItemLayer>();
+        }
 
+        public override void SetupLayer()
+        {
+            var itemLayer = this.ItemGetLayer<PointViewHorizontalItemLayer>();
             var viewLayer = this.ViewGetLayer<PointViewHorizontalLayer>();
+
             this.viewSelection = viewLayer.ViewSelection;
-            this.viewSwap      = viewLayer.ViewSwap;
+            this.viewSwap = viewLayer.ViewSwap;
         }
 
         public void ViewDoSelect()

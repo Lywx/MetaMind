@@ -15,6 +15,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
     using MetaMind.Engine.Guis.Widgets.Views;
 
     using Microsoft.Xna.Framework;
+    using Settings;
 
     public interface IViewItem : IItemEntity, IDisposable
     {
@@ -32,6 +33,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         #region Item Data
 
+        ItemSettings ItemSettings { get; set; }
+        
         /// <summary>
         /// Data that is to be presented.
         /// </summary>
@@ -58,6 +61,12 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         /// </summary>
         /// <param name="time"></param>
         void UpdateView(GameTime time);
+
+        #endregion
+
+        #region Layering
+
+        void SetupLayer();
 
         #endregion
     }

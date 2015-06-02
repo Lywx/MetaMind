@@ -14,13 +14,13 @@
 
     public class ViewItemLogic : ViewItemComponent, IViewItemLogic
     {
-        private readonly ViewSettings viewSettings;
+        private ViewSettings viewSettings;
 
         private bool isFrameInitialized;
 
         #region Constructors
 
-        public ViewItemLogic(IViewItem item, IViewItemFrame itemFrame, IViewItemInteraction itemInteraction, IViewItemDataModel itemModel)
+        public ViewItemLogic(IViewItem item, IViewItemFrame itemFrame, IViewItemInteraction itemInteraction, IViewItemDataModel itemModel, IViewItemLayout itemLayout)
             : base(item)
         {
             if (itemFrame == null)
@@ -38,12 +38,15 @@
                 throw new ArgumentNullException("itemModel");
             }
 
+            if (itemLayout == null)
+            {
+                throw new ArgumentNullException("itemLayout");
+            }
+
             this.ItemFrame       = itemFrame;
             this.ItemInteraction = itemInteraction;
             this.ItemModel       = itemModel;
-
-            var viewLayer = this.ViewGetLayer<ViewLayer>();
-            this.viewSettings  = viewLayer.ViewSettings;
+            this.ItemLayout      = itemLayout;
 
             this.PassInLogic();
         }
@@ -71,9 +74,20 @@
 
         #endregion
 
+        public override void SetupLayer()
+        {
+            var viewLayer = this.ViewGetLayer<ViewLayer>();
+            this.viewSettings  = viewLayer.ViewSettings;
+
+            this.ItemFrame      .SetupLayer();
+            this.ItemModel      .SetupLayer();
+            this.ItemLayout     .SetupLayer();
+            this.ItemInteraction.SetupLayer();
+        }
+
         #region State Logic
 
-        public void PassInLogic()
+        private void PassInLogic()
         {
             this.Item[ItemState.Item_Is_Inputting] = this.ItemIsInputting;
         }
@@ -111,10 +125,11 @@
             }
         }
 
-        public void UpdateView(GameTime gameTime)
+        public void UpdateView(GameTime time)
         {
             // View activation is controlled by item view control
-            this.ItemInteraction.Update(gameTime);
+            this.ItemInteraction.Update(time);
+            this.ItemLayout     .Update(time);
         }
 
         public override void UpdateInput(IGameInputService input, GameTime time)

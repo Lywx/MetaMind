@@ -12,16 +12,28 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Frames
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
+    using Settings;
 
     public abstract class ViewItemFrame : ViewItemComponent, IViewItemFrame
     {
         public ViewItemFrame(IViewItem item)
             : base(item)
         {
-            this.RootFrame = new ViewItemRootFrame(item) { Size = this.ItemGetLayer<ViewItemLayer>().ItemSettings.Get<FrameSettings>("RootFrame").Size };
+            this.RootFrame = new ViewItemRootFrame(this.Item);
 
-            this.Item[ItemState.Item_Is_Mouse_Over]  = this.RootFrame[FrameState.Mouse_Is_Over];
-            this.Item[ItemState.Item_Is_Dragging]    = this.RootFrame[FrameState.Frame_Is_Dragging];
+            this.Item[ItemState.Item_Is_Mouse_Over] = this.RootFrame[FrameState.Mouse_Is_Over];
+            this.Item[ItemState.Item_Is_Dragging] = this.RootFrame[FrameState.Frame_Is_Dragging];
+        }
+
+        public override void SetupLayer()
+        {
+            var itemLayer = this.ItemGetLayer<ViewItemLayer>();
+            var itemSettings = itemLayer.ItemSettings;
+
+            {
+                var frameSettings = itemSettings.Get<FrameSettings>("RootFrame");
+                this.RootFrame.Size = frameSettings.Size;
+            }
         }
 
         #region Dependency
@@ -41,6 +53,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Frames
         {
             this.UpdateFrameGeometry();
             this.UpdateFrameStates();
+
+            this.RootFrame.Update(time);
         }
 
         protected abstract void UpdateFrameGeometry();

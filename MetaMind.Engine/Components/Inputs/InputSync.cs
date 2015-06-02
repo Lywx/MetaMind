@@ -10,7 +10,7 @@
         /// This is used to determine how many events is triggered as an input. 
         /// It is based on the idea that msg is sequential on different input type.
         /// </summary>
-        private const int InputCountSyncThreshod = 6;
+        private const int InputCountSyncThreshod = 12;
 
         private int InputCount { get; set; }
 

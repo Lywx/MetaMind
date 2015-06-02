@@ -20,7 +20,7 @@ namespace MetaMind.Testimony.Components
 
         public override void Load()
         {
-            Testimony.Session = Session<SessionData>.Load();
+            Testimony.Session     = Session<SessionData>.Load();
             Testimony.SessionData = Testimony.Session.Data;
         }
 

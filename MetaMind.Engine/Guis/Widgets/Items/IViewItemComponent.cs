@@ -2,25 +2,23 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 {
     using System;
 
-    using MetaMind.Engine.Guis.Widgets.Items.Layers;
-    using MetaMind.Engine.Guis.Widgets.Views;
-    using MetaMind.Engine.Guis.Widgets.Views.Layers;
+    using Layers;
+    using Views;
+    using Views.Layers;
 
     public interface IViewItemComponent : IDisposable
     {
-        #region View
-
         IView View { get; }
-
-        T ViewGetLayer<T>() where T : class, IViewLayer;
-
-        #endregion
-
-        #region Item
 
         IViewItem Item { get; }
 
+        #region Layering
+
+        void SetupLayer();
+
         T ItemGetLayer<T>() where T : class, IViewItemLayer;
+
+        T ViewGetLayer<T>() where T : class, IViewLayer;
 
         #endregion
     }

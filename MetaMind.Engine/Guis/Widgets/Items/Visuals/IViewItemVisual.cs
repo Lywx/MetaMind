@@ -11,7 +11,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Visuals
 
     using IDrawable = MetaMind.Engine.IDrawable;
 
-    public interface IViewItemVisual : IDrawable, IInputable, IUpdateable
+    public interface IViewItemVisual : IViewItemComponent, IDrawable, IInputable, IUpdateable
     {
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace MetaMind.EngineTest.Guis
 {
+    using Engine.Testers;
     using MetaMind.Engine;
     using MetaMind.Engine.Guis;
     using MetaMind.Engine.Guis.Widgets.Regions;
@@ -12,6 +13,7 @@
     {
         private GameControllableEntityCollection<GameControllableEntity> control;
         private GameVisualEntityCollection<GameVisualEntity> visual;
+        private Region region;
 
         public PlayTest_Region(object settings)
             : base(settings)
@@ -20,7 +22,7 @@
             this.visual  = new GameVisualEntityCollection<GameVisualEntity>();
 
             // Region Control
-            var region = new Region(new Rectangle(50, 50, 50, 50));
+            this.region = new Region(new Rectangle(50, 50, 50, 50));
             this.control.Add(region);
 
             // Box Visual
@@ -32,6 +34,8 @@
         {
             this.control.Draw(graphics, time, alpha);
             this.visual .Draw(graphics, time, alpha);
+
+            StateVisualTester.Draw(graphics, typeof(RegionState), this.region.States, this.region.Location.ToVector2(), 10, 10);
         }
 
         public override void Update(GameTime time)

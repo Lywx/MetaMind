@@ -15,7 +15,9 @@
             this.tests = new GameControllableEntityCollection<GameControllableEntity>();
 
             var region = new PlayTest_Region(null);
-            tests.Add(region);
+            var frame = new PlayTest_Frame(null);
+            //tests.Add(region);
+            tests.Add(frame);
 
             base.LoadContent(interop);
         }

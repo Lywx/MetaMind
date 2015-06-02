@@ -1,7 +1,5 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
-    using MetaMind.Runtime.Guis.Widgets;
-
     using Microsoft.Xna.Framework;
 
     public class TraceViewSettings : TaskViewSettings

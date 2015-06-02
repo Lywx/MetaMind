@@ -57,7 +57,7 @@ namespace MetaMind.Engine
         protected IGameInputService GameInput { get; private set; }
 
         [OnDeserialized]
-        private new void RegisterDependency(StreamingContext context)
+        private void RegisterDependency(StreamingContext context)
         {
             this.RegisterDependency();
         }

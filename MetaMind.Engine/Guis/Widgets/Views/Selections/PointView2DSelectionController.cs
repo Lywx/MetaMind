@@ -14,11 +14,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 
     public class PointView2DSelectionController : ViewComponent, IPointView2DSelectionController
     {
-        private readonly IPointView2DLogic viewLogic; 
-
-        private readonly IPointView2DScrollController viewScroll;
-
-        private readonly IPointView2DLayout viewLayout;
+        private readonly PointView2DLayer viewLayer;
 
         private int? currentId;
 
@@ -27,11 +23,28 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
         public PointView2DSelectionController(IView view)
             : base(view)
         {
-            var viewLayer = this.ViewGetLayer<PointView2DLayer>();
-            this.viewLogic = viewLayer.ViewLogic;
-            this.viewScroll = viewLayer.ViewScroll;
-            this.viewLayout = viewLogic.ViewLayout;
+            this.viewLayer = this.ViewGetLayer<PointView2DLayer>();
         }
+
+        #region Indirect Dependency
+
+        protected IPointView2DLayout ViewLayout
+        {
+            get { return this.ViewLogic.ViewLayout; }
+        }
+
+        protected IPointView2DScrollController ViewScroll
+        {
+            get { return this.viewLayer.ViewScroll; }
+        }
+
+        protected IPointView2DLogic ViewLogic
+        {
+            get { return this.viewLayer.ViewLogic; }
+        }
+
+
+        #endregion
 
         public bool HasPreviouslySelected
         {
@@ -75,8 +88,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
             }
 
             var id     = this.currentId.Value;
-            var column = this.viewLayout.ColumnFrom(id);
-            var row    = this.viewLayout.RowFrom(id);
+            var column = this.ViewLayout.ColumnFrom(id);
+            var row    = this.ViewLayout.RowFrom(id);
 
             if (!this.IsBottommost(row))
             {
@@ -84,9 +97,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
                 this.Select(row, column);
             }
 
-            if (this.viewScroll.IsDownToDisplay(row))
+            if (this.ViewScroll.IsDownToDisplay(row))
             {
-                this.viewScroll.MoveDown();
+                this.ViewScroll.MoveDown();
             }
         }
 
@@ -99,8 +112,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
             }
 
             var id     = this.currentId.Value;
-            var column = this.viewLayout.ColumnFrom(id);
-            var row    = this.viewLayout.RowFrom(id);
+            var column = this.ViewLayout.ColumnFrom(id);
+            var row    = this.ViewLayout.RowFrom(id);
 
             if (!this.IsLeftmost(column))
             {
@@ -108,9 +121,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
                 this.Select(row, column);
             }
 
-            if (this.viewScroll.IsLeftToDisplay(column))
+            if (this.ViewScroll.IsLeftToDisplay(column))
             {
-                this.viewScroll.MoveLeft();
+                this.ViewScroll.MoveLeft();
             }
         }
 
@@ -123,8 +136,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
             }
 
             var id     = this.currentId.Value;
-            var column = this.viewLayout.ColumnFrom(id);
-            var row    = this.viewLayout.RowFrom(id);
+            var column = this.ViewLayout.ColumnFrom(id);
+            var row    = this.ViewLayout.RowFrom(id);
 
             if (!this.IsRightmost(column))
             {
@@ -132,9 +145,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
                 this.Select(row, column);
             }
 
-            if (this.viewScroll.IsRightToDisplay(column))
+            if (this.ViewScroll.IsRightToDisplay(column))
             {
-                this.viewScroll.MoveRight();
+                this.ViewScroll.MoveRight();
             }
         }
 
@@ -147,8 +160,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
             }
 
             var id     = this.currentId.Value;
-            var column = this.viewLayout.ColumnFrom(id);
-            var row    = this.viewLayout.RowFrom(id);
+            var column = this.ViewLayout.ColumnFrom(id);
+            var row    = this.ViewLayout.RowFrom(id);
 
             if (!this.IsTopmost(row))
             {
@@ -156,9 +169,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
                 this.Select(row, column);
             }
 
-            if (this.viewScroll.IsUpToDisplay(row))
+            if (this.ViewScroll.IsUpToDisplay(row))
             {
-                this.viewScroll.MoveUp();
+                this.ViewScroll.MoveUp();
             }
         }
 
@@ -170,7 +183,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 
         private bool IsBottommost(int row)
         {
-            return row >= this.viewLayout.RowNum - 1;
+            return row >= this.ViewLayout.RowNum - 1;
         }
 
         private bool IsLeftmost(int column)
@@ -180,7 +193,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 
         private bool IsRightmost(int column)
         {
-            return column >= this.viewLayout.ColumnNum - 1;
+            return column >= this.ViewLayout.ColumnNum - 1;
         }
 
         private bool IsTopmost(int row)
@@ -196,7 +209,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
         private void Select(int row, int column)
         {
             this.previousId = this.currentId;
-            this.currentId = this.viewLayout.IdFrom(row, column);
+            this.currentId = this.ViewLayout.IdFrom(row, column);
         }
     }
 }

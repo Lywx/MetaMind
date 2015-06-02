@@ -2,36 +2,31 @@
 {
     using System;
 
-    using MetaMind.Engine.Guis.Widgets.Items.Factories;
-    using MetaMind.Engine.Guis.Widgets.Items.Layers;
-    using MetaMind.Engine.Guis.Widgets.Items.Logic;
-    using MetaMind.Engine.Guis.Widgets.Items.Settings;
-    using MetaMind.Engine.Guis.Widgets.Items.Visuals;
-    using MetaMind.Engine.Guis.Widgets.Views;
-    using MetaMind.Engine.Services;
+    using Layers;
+    using Logic;
+    using Services;
+    using Settings;
+    using Views;
+    using Visuals;
 
     using Microsoft.Xna.Framework;
 
     public class ViewItem : ItemEntity, IViewItem
     {
-        public ViewItem(dynamic view, ItemSettings itemSettings, IViewItemFactory itemFactory)
-            : base(itemSettings)
+        public ViewItem(IView view, ItemSettings itemSettings)
         {
-            this.View = view;
+            if (view == null)
+            {
+                throw new ArgumentNullException("view");
+            }
 
-            this.ItemData   = itemFactory.CreateData(this);
-            this.ItemLogic  = itemFactory.CreateLogic(this);
-            this.ItemVisual = itemFactory.CreateVisual(this);
-        }
+            if (itemSettings == null)
+            {
+                throw new ArgumentNullException("itemSettings");
+            }
 
-        public ViewItem(dynamic view, ItemSettings itemSettings, IViewItemFactory itemFactory, dynamic itemData)
-            : base(itemSettings)
-        {
-            this.View = view;
-
-            this.ItemData   = itemData;
-            this.ItemLogic  = itemFactory.CreateLogic(this);
-            this.ItemVisual = itemFactory.CreateVisual(this);
+            this.View         = view;
+            this.ItemSettings = itemSettings;
         }
 
         ~ViewItem()
@@ -43,13 +38,15 @@
 
         public IView View { get; protected set; }
 
-        public IViewItemLogic ItemLogic { get; protected set; }
+        public ItemSettings ItemSettings { get; set; }
+
+        public IViewItemLogic ItemLogic { get; set; }
 
         public dynamic ItemData { get; set; }
 
-        public IViewItemVisual ItemVisual { get; protected set; }
+        public IViewItemVisual ItemVisual { get; set; }
 
-        public IViewItemLayer ItemLayer { get; protected set; }
+        public IViewItemLayer ItemLayer { get; set; }
 
         #endregion
 
@@ -101,7 +98,10 @@
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            this.ItemVisual.Draw(graphics, time, alpha);
+            if (this.ItemVisual != null)
+            {
+                this.ItemVisual.Draw(graphics, time, alpha);
+            }
         }
 
         #endregion
@@ -110,19 +110,42 @@
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.ItemLogic.UpdateInput(input, time);
-            this.ItemVisual.UpdateInput(input, time);
+            if (this.ItemLogic != null)
+            {
+                this.ItemLogic.UpdateInput(input, time);
+            }
+
+            if (this.ItemVisual != null)
+            {
+                this.ItemVisual.UpdateInput(input, time);
+            }
         }
 
         public override void UpdateView(GameTime gameTime)
         {
-            this.ItemLogic.UpdateView(gameTime);
+            if (this.ItemLogic != null)
+            {
+                this.ItemLogic.UpdateView(gameTime);
+            }
+        }
+
+        public void SetupLayer()
+        {
+            this.ItemLogic .SetupLayer();
+            this.ItemVisual.SetupLayer();
         }
 
         public override void Update(GameTime time)
         {
-            this.ItemLogic.Update(time);
-            this.ItemVisual.Update(time);
+            if (this.ItemLogic != null)
+            {
+                this.ItemLogic.Update(time);
+            }
+
+            if (this.ItemVisual != null)
+            {
+                this.ItemVisual.Update(time);
+            }
         }
 
         #endregion

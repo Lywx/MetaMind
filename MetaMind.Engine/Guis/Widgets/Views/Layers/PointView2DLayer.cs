@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layers
     using MetaMind.Engine.Guis.Widgets.Views.Selections;
     using MetaMind.Engine.Guis.Widgets.Views.Settings;
 
-    public class PointView2DLayer : ViewLayer
+    public class PointView2DLayer : PointViewHorizontalLayer
     {
         public PointView2DLayer(IView view)
             : base(view)
@@ -21,7 +21,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layers
             }
         }
 
-        public IPointView2DScrollController ViewScroll
+        public new IPointView2DScrollController ViewScroll
         {
             get
             {
@@ -29,7 +29,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layers
             }
         }
 
-        public IPointView2DSelectionController ViewSelection
+        public new IPointView2DSelectionController ViewSelection
         {
             get
             {

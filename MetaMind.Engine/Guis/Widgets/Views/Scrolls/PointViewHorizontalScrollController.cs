@@ -69,9 +69,9 @@
         {
             return new Vector2(
                 this.viewSettings.Direction == ViewDirection.Normal
-                    ? this.viewSettings.PointStart.X - (this.OffsetX * this.viewSettings.PointMargin.X) + id * this.viewSettings.PointMargin.X
-                    : this.viewSettings.PointStart.X + (this.OffsetX * this.viewSettings.PointMargin.X) - id * this.viewSettings.PointMargin.X,
-                this.viewSettings.PointStart.Y);
+                    ? this.viewSettings.Position.X - (this.OffsetX * this.viewSettings.Margin.X) + id * this.viewSettings.Margin.X
+                    : this.viewSettings.Position.X + (this.OffsetX * this.viewSettings.Margin.X) - id * this.viewSettings.Margin.X,
+                this.viewSettings.Position.Y);
         }
 
         public void Zoom(int id)

@@ -16,7 +16,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
     using Microsoft.Xna.Framework;
 
-    public class KnowledgeItemFileDataControl : ViewItemDataModifier
+    public class KnowledgeItemFileDataControl : ViewItemDataModel
     {
         private readonly string filePrompt = "File > ";
 

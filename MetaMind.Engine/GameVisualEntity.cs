@@ -66,7 +66,7 @@ namespace MetaMind.Engine
         protected IGameGraphicsService GameGraphics { get; private set; }
 
         [OnDeserialized]
-        private new void RegisterDependency(StreamingContext context)
+        private void RegisterDependency(StreamingContext context)
         {
             this.RegisterDependency();
         }

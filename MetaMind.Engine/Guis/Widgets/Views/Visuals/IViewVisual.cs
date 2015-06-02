@@ -2,7 +2,7 @@
 {
     using Microsoft.Xna.Framework;
 
-    public interface IViewVisual : Engine.IDrawable, IUpdateable
+    public interface IViewVisual : IViewComponent, Engine.IDrawable, IUpdateable
     {
     }
 }

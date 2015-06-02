@@ -35,6 +35,26 @@
 
         public Label(Func<Font> textFont, Func<string> text, Func<Vector2> textPosition, Func<Color> textColor, Func<float> textSize)
         {
+            if (text == null)
+            {
+                throw new ArgumentNullException("text");
+            }
+
+            if (textPosition == null)
+            {
+                throw new ArgumentNullException("textPosition");
+            }
+
+            if (textSize == null)
+            {
+                throw new ArgumentNullException("textSize");
+            }
+
+            if (textFont == null)
+            {
+                throw new ArgumentNullException("textFont");
+            }
+
             this.Text         = text;
             this.TextPosition = textPosition;
             this.TextSize     = textSize;

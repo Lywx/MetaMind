@@ -52,7 +52,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         #endregion
 
-        #region Component Layer
+        #region Layering
 
         private IViewLayer ViewLayer
         {
@@ -66,6 +66,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             return this.ViewLayer.Get<T>();
         }
+
+        public virtual void SetupLayer() { }
 
         #endregion
 

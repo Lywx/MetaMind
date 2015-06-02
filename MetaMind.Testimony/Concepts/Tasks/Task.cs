@@ -6,10 +6,10 @@
     using MetaMind.Testimony.Concepts.Synchronizations;
 
     [DataContract]
-    public class Task : IProgressable, ISynchronizable
+    public class Task : IProgressable, ISynchronizable, ITask
     {
         [DataMember]
-        public string Name = string.Empty;
+        public string Name { get; set; }
 
         public Task()
         {

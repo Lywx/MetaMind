@@ -10,22 +10,18 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Visuals
     {
         private readonly Label label;
 
-        private readonly LabelSettings labelSettings;
-
-        protected ViewItemLabelVisual(IViewItem item, LabelSettings labelSettings)
+        public ViewItemLabelVisual(IViewItem item, LabelSettings labelSettings)
             : base(item)
         {
             this.label = new Label(
-                () => this.labelSettings.Font,
-                () => this.labelSettings.Text(),
-                () => this.labelSettings.Position(),
-                () => this.labelSettings.Color,
-                () => this.labelSettings.Size,
-                StringHAlign.Center,
-                StringVAlign.Center,
-                false);
-
-            this.labelSettings = labelSettings;
+                () => labelSettings.TextFont,
+                labelSettings.Text,
+                labelSettings.TextPosition,
+                () => labelSettings.TextColor,
+                () => labelSettings.TextSize,
+                labelSettings.TextHAlign,
+                labelSettings.TextVAlign,
+                labelSettings.TextMonospaced);
         }
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)

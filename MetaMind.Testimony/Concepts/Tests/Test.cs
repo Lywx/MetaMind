@@ -7,6 +7,7 @@
 
 namespace MetaMind.Testimony.Concepts.Tests
 {
+    using System.Collections.Generic;
     using System.Runtime.Serialization;
 
     using MetaMind.Testimony.Concepts.Synchronizations;
@@ -18,24 +19,44 @@ namespace MetaMind.Testimony.Concepts.Tests
         {
             this.Name = name;
 
+            this.Status = "Unknown";
+
+            // Strucure 
+            this.Parent   = null;
+            this.Children = new List<ITest>();
+
+            // Synchronization
             this.SynchronizationData = new SynchronizationData();
         }
 
+        #region Test 
+
         public string Name { get; set; }
 
-        public string SynchronizationName
+        public string Code { get; set; }
+
+        public string Status { get; set; }
+
+        #endregion
+
+        #region Structure
+
+        public IList<ITest> Children { get; private set; }
+
+        public ITest Parent { get; private set; }
+
+        #endregion
+
+        #region Update
+
+        public void Update()
         {
-            get
-            {
-                return this.Name;
-            }
         }
 
-        public ISynchronizationData SynchronizationData { get; set; }
-    }
+        #endregion
 
-    public interface ITest : ISynchronizable
-    {
-        string Name { get; set; }
+        public string SynchronizationName { get { return this.Name; } }
+
+        public ISynchronizationData SynchronizationData { get; set; }
     }
 }

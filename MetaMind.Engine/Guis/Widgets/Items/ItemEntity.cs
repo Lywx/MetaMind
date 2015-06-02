@@ -11,25 +11,21 @@ namespace MetaMind.Engine.Guis.Widgets.Items
     using System.Linq;
 
     using Microsoft.Xna.Framework;
+    using Settings;
 
     public abstract class ItemEntity : GameControllableEntity, IItemEntity
     {
-        protected ItemEntity(ICloneable itemSettings)
+        protected ItemEntity()
         {
-            this.states = new Func<bool>[(int)ItemState.StateNum];
-
-            this.ItemSettings = itemSettings;
+            for (var i = 0; i < (int)ItemState.StateNum; i++)
+            {
+                this.states[i] = () => false;
+            }
         }
-
-        #region Settings
-
-        public object ItemSettings { get; protected set; }
-
-        #endregion
 
         #region States
 
-        private readonly Func<bool>[] states;
+        private readonly Func<bool>[] states = new Func<bool>[(int)ItemState.StateNum];
 
         public bool[] States
         {

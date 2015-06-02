@@ -45,12 +45,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
 
         #endregion Input Data
 
-        #region Dependency
-
-        protected IInputEvent InputEvent { get; private set; }
-
-        #endregion
-
         #region Constructors
 
         public ViewItemCharModifier(IViewItem item)
@@ -71,7 +65,13 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
             this.Dispose();
         }
 
-        #endregion 
+        #endregion
+
+        #region Dependency
+
+        protected IInputEvent InputEvent { get; private set; }
+
+        #endregion
 
         #region IDisposable
 

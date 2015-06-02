@@ -46,7 +46,7 @@
             synchronization.LoadContent(interop);
             this.Entities.Add(synchronization);
 
-            var experience = new ExperienceModule(new ExperienceSettings());
+            var experience = new TestModule(new TestSettings());
             experience.LoadContent(interop);
             this.Entities.Add(experience);
         }

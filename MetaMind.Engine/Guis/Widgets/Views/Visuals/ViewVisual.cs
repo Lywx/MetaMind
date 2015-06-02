@@ -8,7 +8,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Visuals
     public class ViewVisual : ViewVisualComponent, IViewVisual
     {
         public ViewVisual(IView view)
-            : base(view, "viewVisual")
+            : base(view)
         {
         }
 

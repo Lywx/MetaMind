@@ -10,7 +10,8 @@ using System.Collections.Generic;
 namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 {
     using System;
-
+    using Items.Frames;
+    using Items.Logic;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Items.Factories;
@@ -111,7 +112,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
                 // Local Default
                 if (base.ViewSwap == null)
                 {
-                    base.ViewSwap = new PointViewHorizontalSwapController<TData>(this.View, (IList<TData>) this.ViewData);
+                    base.ViewSwap = new PointViewHorizontalSwapController<TData>(this.View, this.ViewData);
                 }
 
                 return (IPointViewHorizontalSwapController)base.ViewSwap;
@@ -124,7 +125,15 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public void AddItem()
         {
-            var item = new ViewItem(this.View, this.View.ItemSettings, this.ItemFactory);
+            var item = new ViewItem(this.View, this.View.ItemSettings);
+
+            item.ItemLayer  = ItemFactory.CreateLayer(item);
+            item.ItemData   = ItemFactory.CreateData(item);
+            item.ItemLogic  = ItemFactory.CreateLogic(item);
+            item.ItemVisual = ItemFactory.CreateVisual(item);
+
+            item.SetupLayer();
+
             this.View.Items.Add(item);
         }
 
@@ -178,15 +187,15 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
         {
             if (this.View[ViewState.View_Is_Active]())
             {
-                // TODO: Possible thread safety issue
                 foreach (var item in this.View.Items.ToArray())
                 {
                     item.Update(time);
+                    item.UpdateView(time);
                 }
             }
             else
             {
-                foreach (var item in this.View.Items)
+                foreach (var item in this.View.Items.ToArray())
                 {
                     item.UpdateView(time);
                 }
@@ -199,12 +208,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            if (input.State.Keyboard.IsActionPressed(KeyboardActions.CommonCreateItem))
+            if (input.State.Keyboard.IsActionTriggered(KeyboardActions.CommonCreateItem))
             {
                 this.AddItem();
             }
 
             this.UpdateInputOfMouse(input, time);
+            this.UpdateInputOfKeyboard(input, time);
             this.UpdateInputOfItems(input, time);
         }
 

@@ -1,0 +1,166 @@
+namespace MetaMind.Testimony.Guis.Widgets
+{
+    using System;
+    using Engine.Guis.Elements;
+    using Engine.Guis.Widgets.Items;
+    using Engine.Guis.Widgets.Items.Frames;
+    using Engine.Guis.Widgets.Items.Layers;
+    using Engine.Guis.Widgets.Items.Layouts;
+    using Engine.Guis.Widgets.Items.Settings;
+    using Engine.Guis.Widgets.Views.Layers;
+    using Engine.Guis.Widgets.Views.Scrolls;
+    using Engine.Guis.Widgets.Views.Swaps;
+    using Engine.Services;
+    using Microsoft.Xna.Framework;
+
+    public class TestItemFrame : ViewItemFrame
+    {
+        private IViewItemLayout itemLayout;
+
+        private ItemSettings itemSettings;
+
+        private IViewSwapController viewSwap;
+
+        private IPointView2DScrollController viewScroll;
+
+        public TestItemFrame(IViewItem item)
+            : base(item)
+        {
+            this.IdFrame = new PickableFrame();
+            this.NameFrame = new PickableFrame();
+            this.StatusFrame = new PickableFrame();
+        }
+
+        ~TestItemFrame()
+        {
+            this.Dispose();
+        }
+
+        #region Layering
+
+        public override void SetupLayer()
+        {
+            base.SetupLayer();
+            
+            var viewLayer = this.ViewGetLayer<PointView2DLayer>();
+            var itemLayer = this.ItemGetLayer<PointView2DItemLayer>();
+
+            this.viewScroll = viewLayer.ViewLogic.ViewScroll;
+            this.viewSwap = viewLayer.ViewLogic.ViewSwap;
+
+            this.itemSettings = itemLayer.ItemSettings;
+            this.itemLayout = itemLayer.ItemLogic.ItemLayout;
+
+            var rootFrameSettings = this.itemSettings.Get<FrameSettings>("RootFrame");
+            var idFrameSettings = this.itemSettings.Get<FrameSettings>("IdFrame");
+            var nameFrameSettings = this.itemSettings.Get<FrameSettings>("NameFrame");
+            var statusFrameSettings = this.itemSettings.Get<FrameSettings>("StatusFrame");
+
+            // id frame - status frame - root frame (name frame)
+            {
+                this.RootFrame.Size = rootFrameSettings.Size;
+                this.RootFrameLocation = () =>
+                {
+                    if (!this.Item[ItemState.Item_Is_Dragging]() &&
+                        !this.Item[ItemState.Item_Is_Swaping]())
+                    {
+                        return this.viewScroll.Position(this.itemLayout.Id);
+                    }
+
+                    if (this.Item[ItemState.Item_Is_Swaping]())
+                    {
+                        return this.viewSwap.Position;
+                    }
+
+                    return this.RootFrame.Location.ToVector2();
+                };
+            }
+
+            {
+                this.IdFrame.Size = idFrameSettings.Size;
+                this.IdFrameLocation = this.RootFrameLocation;
+            }
+
+            {
+                this.StatusFrame.Size = statusFrameSettings.Size;
+                this.StatusFrameLocation = () => this.IdFrameLocation() + new Vector2(idFrameSettings.Size.X, 0);
+            }
+
+            {
+                this.NameFrame.Size = nameFrameSettings.Size;
+                this.NameFrameLocation = () => this.StatusFrameLocation() + new Vector2(statusFrameSettings.Size.X, 0);
+            }
+
+        }
+
+        #endregion
+
+        #region Frames
+
+        public PickableFrame IdFrame { get; private set; }
+
+        public PickableFrame NameFrame { get; private set; }
+
+        public PickableFrame StatusFrame { get; private set; }
+
+        #endregion
+
+        #region Positions
+
+        public Func<Vector2> RootFrameLocation { get; protected set; }
+
+        public Func<Vector2> NameFrameLocation { get; protected set; }
+
+        public Func<Vector2> IdFrameLocation { get; protected set; }
+
+        public Func<Vector2> StatusFrameLocation { get; protected set; }
+
+        #endregion
+
+        public override void Dispose()
+        {
+            if (this.NameFrame != null)
+            {
+                this.NameFrame.Dispose();
+            }
+
+            if (this.IdFrame != null)
+            {
+                this.IdFrame.Dispose();
+            }
+
+            if (this.StatusFrame != null)
+            {
+                this.StatusFrame.Dispose();
+            }
+
+            base.Dispose();
+        }
+
+        public override void UpdateInput(IGameInputService input, GameTime time)
+        {
+            base.UpdateInput(input, time);
+
+            this.IdFrame.UpdateInput(input, time);
+            this.NameFrame.UpdateInput(input, time);
+            this.StatusFrame.UpdateInput(input, time);
+        }
+
+        protected override void UpdateFrameGeometry()
+        {
+            this.RootFrame.Location  = this.RootFrameLocation().ToPoint();
+            this.IdFrame.Location = this.IdFrameLocation().ToPoint();
+            this.NameFrame.Location  = this.NameFrameLocation().ToPoint();
+            this.StatusFrame.Location = this.StatusFrameLocation().ToPoint();
+        }
+
+        public override void Update(GameTime time)
+        {
+            base.Update(time);
+
+            this.IdFrame.Update(time);
+            this.NameFrame.Update(time);
+            this.StatusFrame.Update(time);
+        }
+    }
+}

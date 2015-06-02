@@ -9,6 +9,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 {
     using System;
     using System.Collections.Generic;
+
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Guis.Widgets.Items.Factories;
     using MetaMind.Engine.Guis.Widgets.Views.Layers;
@@ -23,17 +24,31 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
     public class PointView2DLogic<TData> : PointViewHorizontalLogic<TData>, IPointView2DLogic
     {
-        private readonly PointView2DSettings viewSettings;
+        private readonly PointView2DLayer viewLayer;
 
-        private readonly IPointView2DSelectionController viewSelection;
+        // TODO: Do I really need constructor injection?
 
-        public PointView2DLogic(IView view, IList<TData> viewData, IViewScrollController viewScroll, IViewSelectionController viewSelection, IViewSwapController viewSwap, IViewLayout viewLayout, IViewItemFactory itemFactory)
+        public PointView2DLogic(
+            IView                    view,
+            IList<TData>             viewData,
+            IViewScrollController    viewScroll,
+            IViewSelectionController viewSelection,
+            IViewSwapController      viewSwap,
+            IViewLayout              viewLayout,
+            IViewItemFactory itemFactory)
             : base(view, viewData, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory)
         {
-            var viewLayer = this.ViewGetLayer<PointView2DLayer>();
-            this.viewSettings  = viewLayer.ViewSettings;
-            this.viewSelection = viewLayer.ViewSelection;
+            this.viewLayer = this.ViewGetLayer<PointView2DLayer>();
         }
+
+        #region Indirect Dependency
+
+        protected PointView2DSettings ViewSettings
+        {
+            get { return this.viewLayer.ViewSettings; }
+        }
+
+        #endregion
 
         #region View Logic Property Injecetion
 
@@ -130,17 +145,17 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public virtual void MoveDown()
         {
-            this.viewSelection.MoveDown();
+            this.ViewSelection.MoveDown();
         }
 
         public virtual void MoveUp()
         {
-            this.viewSelection.MoveUp();
+            this.ViewSelection.MoveUp();
         }
 
         public virtual void FastMoveDown()
         {
-            for (var i = 0; i < this.viewSettings.RowNumDisplay; i++)
+            for (var i = 0; i < this.ViewSettings.RowNumDisplay; i++)
             {
                 this.MoveDown();
             }
@@ -148,7 +163,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public virtual void FastMoveUp()
         {
-            for (var i = 0; i < this.viewSettings.RowNumDisplay; i++)
+            for (var i = 0; i < this.ViewSettings.RowNumDisplay; i++)
             {
                 this.MoveUp();
             }
@@ -158,19 +173,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         #region Update Input
 
-        public override void UpdateInput(IGameInputService input, GameTime time)
-        {
-            this.UpdateInputOfMouse(input, time);
-            this.UpdateInputOfKeyboard(input, time);
-            this.UpdateInputOfItems(input, time);
-        }
-
         protected override void UpdateInputOfKeyboard(IGameInputService input, GameTime time)
         {
             if (this.View[ViewState.View_Is_Inputting]())
             {
                 // Keyboard
-                if (this.viewSettings.KeyboardEnabled)
+                if (this.ViewSettings.KeyboardEnabled)
                 {
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Up))
                     {

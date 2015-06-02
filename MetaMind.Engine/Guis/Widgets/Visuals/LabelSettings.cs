@@ -1,22 +1,34 @@
 namespace MetaMind.Engine.Guis.Widgets.Visuals
 {
     using System;
-
-    using MetaMind.Engine.Components.Fonts;
-
+    using Components.Fonts;
     using Microsoft.Xna.Framework;
 
     public class LabelSettings : ICloneable
     {
-        public float Size;
+        public Color TextColor;
 
-        public Color Color;
+        public Font TextFont;
 
-        public Font Font;
+        public StringHAlign TextHAlign;
 
-        public Func<Vector2> Position;
+        public StringVAlign TextVAlign;
 
-        public Func<string> Text;
+        public bool TextMonospaced;
+
+        public float TextSize;
+
+        public Func<string> Text = () => "";
+
+        public Func<Vector2> TextPosition;
+
+        public LabelSettings()
+        {
+            this.TextHAlign = StringHAlign.Right;
+            this.TextVAlign = StringVAlign.Bottom;
+
+            this.TextMonospaced = false;
+        }
 
         public object Clone()
         {

@@ -15,26 +15,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     public class View : ViewEntity, IView
     {
-        public View(ViewSettings viewSettings, IViewLogic viewLogic, IViewVisual viewVisual, IViewLayer viewLayer, ItemSettings itemSettings, List<IViewItem> items)
+
+        public View(ViewSettings viewSettings, ItemSettings itemSettings, List<IViewItem> items)
         {
             if (viewSettings == null)
             {
                 throw new ArgumentNullException("viewSettings");
-            }
-
-            if (viewLogic == null)
-            {
-                throw new ArgumentNullException("viewLogic");
-            }
-
-            if (viewVisual == null)
-            {
-                throw new ArgumentNullException("viewVisual");
-            }
-
-            if (viewLayer == null)
-            {
-                throw new ArgumentNullException("viewLayer");
             }
 
             if (itemSettings == null)
@@ -48,10 +34,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
 
             this.ViewSettings = viewSettings;
-            this.ViewLogic    = viewLogic;
-            this.ViewVisual   = viewVisual;
-            this.ViewLayer    = viewLayer;
-
             this.ViewComponents = new Dictionary<string, object>();
 
             this.Items        = items;
@@ -60,7 +42,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         
         #region Dependency
 
-        public IViewLayer ViewLayer { get; private set; }
+        public IViewLayer ViewLayer { get; set; }
 
         public Dictionary<string, object> ViewComponents { get; private set; }
 
@@ -76,7 +58,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         #endregion
 
-        #region IView
+        #region Update and Draw
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
@@ -108,5 +90,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         }
 
         #endregion
+
+        public void SetupLayer()
+        {
+            this.ViewLogic .SetupLayer();
+            this.ViewVisual.SetupLayer();
+        }
     }
 }

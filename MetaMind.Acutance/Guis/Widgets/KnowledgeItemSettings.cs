@@ -13,8 +13,8 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             this.RootFrameSize = this.NameFrameSize;
 
-            this.NameFrameRegularColor = Palette.TransparentColor1;
-            this.NameFrameRunningColor = Palette.TransparentColor1;
+            this.NameFrameRegularColor = Palette.Transparent1;
+            this.NameFrameRunningColor = Palette.Transparent1;
         }
     }
 }

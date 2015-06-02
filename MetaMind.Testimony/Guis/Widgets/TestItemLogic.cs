@@ -1,26 +1,32 @@
-﻿namespace MetaMind.Runtime.Guis.Widgets
+﻿namespace MetaMind.Testimony.Guis.Widgets
 {
+    using Engine.Components.Inputs;
+    using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Data;
-    using Engine.Guis.Widgets.Items.Frames;
     using Engine.Guis.Widgets.Items.Interactions;
+    using Engine.Guis.Widgets.Items.Layouts;
     using Engine.Guis.Widgets.Items.Logic;
-    using MetaMind.Engine.Components.Inputs;
-    using MetaMind.Engine.Guis.Widgets.Items;
-    using MetaMind.Engine.Guis.Widgets.Views;
-    using MetaMind.Engine.Services;
-
+    using Engine.Guis.Widgets.Views;
+    using Engine.Services;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
-    public class TestItemLogic : ViewItemLogic
+    public class TestItemLogic : PointView2DItemLogic
     {
         public TestItemLogic(
-            IViewItem item, 
-            IViewItemFrame itemFrame,
+            IViewItem            item,
+            TestItemFrame        itemFrame,
             IViewItemInteraction itemInteraction,
-            IViewItemDataModel itemModel)
-            : base(item, itemFrame, itemInteraction, itemModel)
+            IViewItemDataModel   itemModel,
+            IViewItemLayout      itemLayout)
+            : base(item, itemFrame, itemInteraction, itemModel, itemLayout)
         {
+        }
+
+        public new TestItemFrame ItemFrame
+        {
+            get { return (TestItemFrame)base.ItemFrame; }
+            set { base.ItemFrame = value; }
         }
 
         #region Operations
@@ -28,9 +34,10 @@
         public void DeleteIt()
         {
             // remove from gui
-            this.View.ViewItems.Remove(this.Item);
+            this.View.Items.Remove(this.Item);
 
-            this.View.ViewLogic.ItemFactory.RemoveData(this.Item);
+            // TODO:???
+            //this.View.ViewLogic.ItemFactory.RemoveData(this.Item);
 
             this.Item.Dispose();
         }
@@ -55,9 +62,9 @@
 
             // keyboard
             //-----------------------------------------------------------------
-            if (this.ViewSettings.KeyboardEnabled)
+            if (this.View.ViewSettings.KeyboardEnabled)
             {
-                if (this.AcceptInput)
+                if (this.ItemIsInputting())
                 {
                     // Normal status
                     if (input.State.Keyboard.IsActionTriggered(KeyboardActions.MotivationEditItem))
@@ -76,7 +83,7 @@
                     {
                         if (input.State.Keyboard.IsKeyTriggered(Keys.N))
                         {
-                            this.ItemDataControl.EditString("Name");
+                            this.ItemModel.EditString("Name");
                         }
 
                         if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))

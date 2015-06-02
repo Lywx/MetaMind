@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 {
     using System;
 
-    public interface IItemEntity : IInputable, Engine.IDrawable
+    public interface IItemEntity : IInputable, IDrawable
     {
         #region States
 
@@ -11,7 +11,5 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         Func<bool> this[ItemState state] { get; set; }
 
         #endregion
-
-        dynamic ItemSettings { get; }
     }
 }

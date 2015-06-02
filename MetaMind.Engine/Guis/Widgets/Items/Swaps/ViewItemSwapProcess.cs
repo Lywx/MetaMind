@@ -8,14 +8,13 @@
 namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
 
-    using MetaMind.Engine.Components.Processes;
-    using MetaMind.Engine.Extensions;
-    using MetaMind.Engine.Guis.Widgets.Items.Logic;
-    using MetaMind.Engine.Guis.Widgets.Views;
-    using MetaMind.Engine.Guis.Widgets.Views.Logic;
+    using Components.Processes;
+    using Extensions;
+    using Logic;
+    using Views;
+    using Views.Logic;
 
     using Microsoft.Xna.Framework;
 
@@ -164,13 +163,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
 
         protected virtual void SwapDataInList()
         {
-            if (this.CommonSource == null || 
-               !this.CommonSource.Contains(this.DraggingItem.ItemData) || 
-               !this.CommonSource.Contains(this.SwappingItem.ItemData))
-            {
-                return;
-            }
-
             this.CommonSource.Swap(
                 (int)this.CommonSource.IndexOf(this.DraggingItem.ItemData), 
                 (int)this.CommonSource.IndexOf(this.SwappingItem.ItemData));

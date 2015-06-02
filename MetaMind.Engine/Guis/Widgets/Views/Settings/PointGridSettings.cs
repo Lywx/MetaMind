@@ -11,20 +11,23 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Settings
 
         public Point BorderMargin = new Point(4, 4);
 
-        public Color HighlightColor = Palette.TransparentColor1;
+        public Color HighlightColor = Palette.Transparent1;
 
         #region Constructors 
 
-        public PointGridSettings(Vector2 start)
-            : base(start)
-        {
-        }
-
-        public PointGridSettings(Vector2 start, Vector2 margin)
-            : base(start, margin)
-        {
-        }
 
         #endregion
+
+        public PointGridSettings(
+            Vector2 position,
+            Vector2 margin,
+            int columnNumDisplay,
+            int columnNumMax,
+            int rowNumDisplay,
+            int rowNumMax,
+            ViewDirection direction = ViewDirection.Normal)
+            : base(position, margin, columnNumDisplay, columnNumMax, rowNumDisplay, rowNumMax, direction)
+        {
+        }
     }
 }

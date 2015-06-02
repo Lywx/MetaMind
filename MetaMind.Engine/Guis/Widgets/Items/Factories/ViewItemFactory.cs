@@ -1,56 +1,71 @@
 ﻿namespace MetaMind.Engine.Guis.Widgets.Items.Factories
 {
     using System;
-
+    using Layers;
     using MetaMind.Engine.Guis.Widgets.Items.Logic;
     using MetaMind.Engine.Guis.Widgets.Items.Visuals;
 
     public sealed class ViewItemFactory : IViewItemFactory
     {
         public ViewItemFactory(
-            Func<IViewItem, IViewItemLogic> logic,
-            Func<IViewItem, IViewItemVisual> visual,
-            Func<IViewItem, dynamic> data)
+            Func<IViewItem, IViewItemLayer>  itemLayer,
+            Func<IViewItem, IViewItemLogic>  itemLogic,
+            Func<IViewItem, IViewItemVisual> itemVisual,
+            Func<IViewItem, dynamic>         itemData)
         {
-            if (visual == null)
+            if (itemLayer == null)
             {
-                throw new ArgumentNullException("visual");
+                throw new ArgumentNullException("itemLayer");
             }
 
-            if (logic == null)
+            if (itemLogic == null)
             {
-                throw new ArgumentNullException("logic");
+                throw new ArgumentNullException("itemLogic");
             }
 
-            if (data == null)
+            if (itemVisual == null)
             {
-                throw new ArgumentNullException("data");
+                throw new ArgumentNullException("itemVisual");
             }
 
-            this.Visual = visual;
-            this.Logic  = logic;
-            this.Data   = data;
+
+            if (itemData == null)
+            {
+                throw new ArgumentNullException("itemData");
+            }
+
+            this.ItemLayer  = itemLayer;
+            this.ItemLogic  = itemLogic;
+            this.ItemVisual = itemVisual;
+            this.ItemData   = itemData;
         }
 
-        public Func<IViewItem, dynamic> Data { get; set; }
+        private Func<IViewItem, IViewItemLayer> ItemLayer { get; set; }
 
-        public Func<IViewItem, IViewItemLogic> Logic { get; set; }
+        private Func<IViewItem, IViewItemLogic> ItemLogic { get; set; }
 
-        public Func<IViewItem, IViewItemVisual> Visual { get; set; }
+        private Func<IViewItem, IViewItemVisual> ItemVisual { get; set; }
+
+        private Func<IViewItem, dynamic> ItemData { get; set; }
 
         public dynamic CreateData(IViewItem item)
         {
-            return this.Data(item);
+            return this.ItemData(item);
         }
 
         public IViewItemLogic CreateLogic(IViewItem item)
         {
-            return this.Logic(item);
+            return this.ItemLogic(item);
         }
 
         public IViewItemVisual CreateVisual(IViewItem item)
         {
-            return this.Visual(item);
+            return this.ItemVisual(item);
+        }
+
+        public IViewItemLayer CreateLayer(IViewItem item)
+        {
+            return this.ItemLayer(item);
         }
     }
 }
