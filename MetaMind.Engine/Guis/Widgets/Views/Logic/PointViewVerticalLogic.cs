@@ -1,30 +1,25 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PointViewHorizontalLogic.cs" company="UESTC">
-//   Copyright (c) 2015 Wuxiang Lin
-//   All Rights Reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace MetaMind.Engine.Guis.Widgets.Views.Logic
+﻿namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 {
     using System;
     using System.Collections.Generic;
+
+    using Microsoft.Xna.Framework;
+
     using Components.Inputs;
     using Items.Factories;
     using Layers;
     using Layouts;
-    using Microsoft.Xna.Framework;
     using Scrolls;
     using Selections;
     using Services;
     using Settings;
     using Swaps;
 
-    public class PointViewHorizontalLogic<TData> : PointViewLogic<TData>, IPointViewHorizontalLogic
+    public class PointViewVerticalLogic<TData> : PointViewLogic<TData>, IPointViewVerticalLogic
     {
-        private PointViewHorizontalSettings viewSettings;
+        private PointViewVerticalSettings viewSettings;
 
-        protected PointViewHorizontalLogic(
+        protected PointViewVerticalLogic(
             IView                    view,
             IList<TData>             viewData,
             IViewScrollController    viewScroll,
@@ -36,21 +31,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
         {
         }
 
-        public override void SetupLayer()
-        {
-            var viewLayer = this.ViewGetLayer<PointViewHorizontalLayer>();
-            this.viewSettings = viewLayer.ViewSettings;
+        #region Property Injection
 
-            this.View[ViewState.View_Has_Focus] = this.View[ViewState.View_Has_Selection] = () => viewLayer.ViewSelection.HasSelected;
-        }
-
-        #region View Logic Property Injection
-
-        public new IPointViewHorizontalSelectionController ViewSelection
+        public new IPointViewVerticalSelectionController ViewSelection
         {
             get
             {
-                return (IPointViewHorizontalSelectionController)base.ViewSelection;
+                return (IPointViewVerticalSelectionController)base.ViewSelection;
             }
 
             set
@@ -69,11 +56,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             }
         }
 
-        public new IPointViewHorizontalScrollController ViewScroll
+        public new IPointViewVerticalScrollController ViewScroll
         {
             get
             {
-                return (IPointViewHorizontalScrollController)base.ViewScroll;
+                return (IPointViewVerticalScrollController)base.ViewScroll;
             }
 
             set
@@ -92,11 +79,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             }
         }
 
-        public new IPointViewHorizontalSwapController ViewSwap
+        public new IPointViewVerticalSwapController ViewSwap
         {
             get
             {
-                return (IPointViewHorizontalSwapController)base.ViewSwap;
+                return (IPointViewVerticalSwapController)base.ViewSwap;
             } 
 
             set
@@ -117,47 +104,57 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         #endregion
 
+        public override void SetupLayer()
+        {
+            base.SetupLayer();
+
+            var viewLayer = this.ViewGetLayer<PointViewVerticalLayer>();
+            this.viewSettings = viewLayer.ViewSettings;
+
+            this.View[ViewState.View_Has_Focus] = this.View[ViewState.View_Has_Selection] = () => viewLayer.ViewSelection.HasSelected;
+        }
+
         #region Operations
 
-        public virtual void MoveLeft()
+        public virtual void MoveUp()
         {
             if (this.viewSettings.Direction == ViewDirection.Inverse)
             {
                 // Invert for left scrolling view
-                this.ViewSelection.MoveRight();
+                this.ViewSelection.MoveUp();
             }
             else
             {
-                this.ViewSelection.MoveLeft();
+                this.ViewSelection.MoveDown();
             }
         }
 
-        public virtual void MoveRight()
+        public virtual void MoveDown()
         {
             if (this.viewSettings.Direction == ViewDirection.Inverse)
             {
                 // Invert for left scrolling view
-                this.ViewSelection.MoveLeft();
+                this.ViewSelection.MoveDown();
             }
             else
             {
-                this.ViewSelection.MoveRight();
+                this.ViewSelection.MoveUp();
             }
         }
 
-        public void FastMoveLeft()
+        public virtual void FastMoveDown()
         {
-            for (var i = 0; i < this.viewSettings.ColumnNumDisplay; i++)
+            for (var i = 0; i < this.viewSettings.RowNumDisplay; i++)
             {
-                this.MoveLeft();
+                this.MoveDown();
             }
         }
 
-        public void FastMoveRight()
+        public virtual void FastMoveUp()
         {
-            for (var i = 0; i < this.viewSettings.ColumnNumDisplay; i++)
+            for (var i = 0; i < this.viewSettings.RowNumDisplay; i++)
             {
-                this.MoveRight();
+                this.MoveUp();
             }
         }
 
@@ -170,24 +167,24 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
                 if (this.View.ViewSettings.KeyboardEnabled)
                 {
                     // Movement
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Left))
+                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Up))
                     {
-                        this.MoveLeft();
+                        this.MoveUp();
                     }
 
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Right))
+                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Down))
                     {
-                        this.MoveRight();
+                        this.MoveDown();
                     }
 
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastLeft))
+                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastUp))
                     {
-                        this.FastMoveLeft();
+                        this.FastMoveUp();
                     }
 
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastRight))
+                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastDown))
                     {
-                        this.FastMoveRight();
+                        this.FastMoveDown();
                     }
                 }
             }
@@ -201,12 +198,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
                 {
                     if (input.State.Mouse.IsWheelScrolledUp)
                     {
-                        this.ViewScroll.MoveLeft();
+                        this.ViewScroll.MoveUp();
                     }
 
                     if (input.State.Mouse.IsWheelScrolledDown)
                     {
-                        this.ViewScroll.MoveRight();
+                        this.ViewScroll.MoveDown();
                     }
                 }
             }

@@ -276,6 +276,7 @@
     <Compile Include="Guis\Widgets\Views\Layers\PointViewHorizontalLayer.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Guis\Widgets\Views\Layers\PointViewVerticalLayer.cs" />
     <Compile Include="Guis\Widgets\Views\Layers\ViewLayer.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -311,12 +312,16 @@
     <Compile Include="Guis\Widgets\Views\Logic\PointViewHorizontalLogic.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Guis\Widgets\Views\Logic\PointViewVerticalLogic.cs" />
+    <Compile Include="Guis\Widgets\Views\Logic\PointViewLogic.cs" />
     <Compile Include="Guis\Widgets\Views\Logic\ViewLogic.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Guis\Widgets\Views\Scrolls\PointView2DMultilineScrollController.cs" />
     <Compile Include="Guis\Widgets\Views\Scrolls\PointViewVerticalScrollController.cs" />
     <Compile Include="Guis\Widgets\Views\Selections\IPointViewVerticalSelectionController.cs" />
+    <Compile Include="Guis\Widgets\Views\Settings\PointViewSettings.cs" />
+    <Compile Include="Guis\Widgets\Views\Settings\PointViewVerticalSettings.cs" />
     <Compile Include="Guis\Widgets\Views\Settings\ViewDirection.cs">
       <SubType>Code</SubType>
     </Compile>

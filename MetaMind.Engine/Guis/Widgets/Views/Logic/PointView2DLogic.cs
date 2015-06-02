@@ -24,9 +24,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
     public class PointView2DLogic<TData> : PointViewHorizontalLogic<TData>, IPointView2DLogic
     {
-        private readonly PointView2DLayer viewLayer;
-
-        // TODO: Do I really need constructor injection?
+        private PointView2DSettings viewSettings;
 
         public PointView2DLogic(
             IView                    view,
@@ -38,30 +36,23 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             IViewItemFactory itemFactory)
             : base(view, viewData, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory)
         {
-            this.viewLayer = this.ViewGetLayer<PointView2DLayer>();
         }
 
         #region Indirect Dependency
 
         protected PointView2DSettings ViewSettings
         {
-            get { return this.viewLayer.ViewSettings; }
+            get { return this.viewSettings; }
         }
 
         #endregion
 
-        #region View Logic Property Injecetion
+        #region Property Injecetion
 
         public new IPointView2DLayout ViewLayout
         {
             get
             {
-                // Local Default
-                if (base.ViewLayout == null)
-                {
-                    base.ViewLayout = new PointView2DLayout(this.View);
-                }
-
                 return (IPointView2DLayout)base.ViewLayout;
             }
 
@@ -85,12 +76,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
         {
             get
             {
-                // Local Default
-                if (base.ViewSelection == null)
-                {
-                    base.ViewSelection = new PointView2DSelectionController(this.View);
-                }
-
                 return (IPointView2DSelectionController)base.ViewSelection;
             }
 
@@ -114,12 +99,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
         {
             get
             {
-                // Local Default
-                if (base.ViewScroll == null)
-                {
-                    base.ViewScroll = new PointView2DScrollController(this.View);
-                }
-
                 return (IPointView2DScrollController)base.ViewScroll;
             }
 
@@ -137,6 +116,18 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
                 this.ViewScroll = value;
             }
+        }
+
+        #endregion
+
+        #region Layering
+
+        public override void SetupLayer()
+        {
+            base.SetupLayer();
+
+            var viewLayer = this.ViewGetLayer<PointView2DLayer>();
+            this.viewSettings = viewLayer.ViewSettings;
         }
 
         #endregion
