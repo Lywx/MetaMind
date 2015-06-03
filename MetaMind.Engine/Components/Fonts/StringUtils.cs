@@ -75,7 +75,7 @@ namespace MetaMind.Engine.Components.Fonts
         /// </summary>
         public static string BreakStringByWord(Font font, string str, float scale, float maxLineWidth, bool monospaced)
         {
-            var spaceWidth = font.MeasureString(" ", scale).X;
+            var spaceWidth = font.MeasureString(" ", scale, monospaced).X;
 
             var result = new StringBuilder();
 
