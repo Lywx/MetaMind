@@ -1,9 +1,6 @@
 namespace MetaMind.Engine.Components.Fonts
 {
     using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
     using System.Text;
 
     public static class StringUtils
@@ -103,77 +100,6 @@ namespace MetaMind.Engine.Components.Fonts
             }
 
             return result.ToString();
-        }
-
-        /// <summary>
-        /// Break string using letter by letter method.
-        /// </summary>
-        public static string BreakStringByLetter(Font font, string str, float scale, float maxLineWidth, bool monospaced)
-        {
-            var lines = new List<string>();
-            var line = new StringBuilder();
-            var lineWidth = 0;
-            var index = 0;
-
-            while (index < str.Length)
-            {
-                while (lineWidth < maxLineWidth)
-                {
-                    // add current letter
-                    line.Append(str[index]);
-
-                    // measure length and decide whether to go into next line
-                    if (IsNextCharExisting(str, index))
-                    {
-                        lineWidth = (int)font.MeasureString(string.Concat(line.ToString(), str[index + 1]), scale, monospaced).X;
-                        index++;
-                    }
-                    else
-                    {
-                        lineWidth = (int)font.MeasureString(line.ToString(), scale, monospaced).X;
-                        index++;
-                        break;
-                    }
-                }
-
-                lines.Add(line.ToString());
-
-                // initialize next line
-                if (IsNextCharExisting(str, index))
-                {
-                    if (IsNextCharContinuous(str, index - 1))
-                    {
-                        line = new StringBuilder("-");
-                        lineWidth = 0;
-                    }
-                    else
-                    {
-                        line = new StringBuilder();
-                        lineWidth = 0;
-                    }
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            return string.Join("\n", lines);
-        }
-
-        private static bool IsNextCharContinuous(string text, int index)
-        {
-            var firstChar = text[index];
-            var secondChar = text[index + 1];
-
-            return firstChar.ToString(CultureInfo.InvariantCulture).IsAscii() && 
-                !char.IsWhiteSpace(firstChar) && 
-                !char.IsWhiteSpace(secondChar);
-        }
-
-        private static bool IsNextCharExisting(string text, int index)
-        {
-            return index + 1 < text.Count();
         }
 
         #endregion
