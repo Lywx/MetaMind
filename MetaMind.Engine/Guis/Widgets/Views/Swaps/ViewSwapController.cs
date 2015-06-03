@@ -8,13 +8,12 @@
 namespace MetaMind.Engine.Guis.Widgets.Views.Swaps
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics;
 
-    using MetaMind.Engine.Guis.Widgets.Items;
-    using MetaMind.Engine.Guis.Widgets.Items.Swaps;
-    using MetaMind.Engine.Services;
+    using Items;
+    using Items.Swaps;
+    using Services;
 
     using Microsoft.Xna.Framework;
 
@@ -40,6 +39,18 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Swaps
             this.viewData = viewData;
 
             this.viewObservers = new List<IView>();
+        }
+
+        #endregion
+
+        #region Protected Properties
+
+        /// <remarks>
+        /// View data model as a collections.
+        /// </remarks>>
+        protected IList<TData> ViewData
+        {
+            get { return this.viewData; }
         }
 
         #endregion
@@ -105,7 +116,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Swaps
                 touchedItem,
                 touchedItem.ItemLogic,
                 this.View.ViewLogic,
-                this.viewData));
+                this.ViewData));
         }
 
         public void WatchProcess(IViewItem item)

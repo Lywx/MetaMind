@@ -4,6 +4,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layers
 
     using MetaMind.Engine.Guis.Widgets.Views.Logic;
     using MetaMind.Engine.Guis.Widgets.Views.Settings;
+    using Scrolls;
+    using Selections;
+    using Swaps;
 
     /// <summary>
     /// A extension layer for extended and customized implementation of specific view components.
@@ -28,6 +31,21 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layers
         public ViewSettings ViewSettings
         {
             get { return this.View.ViewSettings; }
+        }
+
+        public IViewSelectionController ViewSelection
+        {
+            get { return this.ViewLogic.ViewSelection; }
+        }
+
+        public IViewScrollController ViewScroll
+        {
+            get { return this.ViewLogic.ViewScroll; }
+        }
+
+        public IViewSwapController ViewSwap
+        {
+            get { return this.ViewLogic.ViewSwap; }
         }
 
         #endregion

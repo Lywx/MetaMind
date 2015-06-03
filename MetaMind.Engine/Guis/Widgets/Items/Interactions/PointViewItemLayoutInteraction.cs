@@ -1,20 +1,35 @@
 namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
 {
-    using MetaMind.Engine.Guis.Widgets.Items.Layouts;
-    using MetaMind.Engine.Guis.Widgets.Views.Scrolls;
-    using MetaMind.Engine.Guis.Widgets.Views.Selections;
+    using System;
 
-    public class ViewItemLayoutInteraction : ViewItemComponent, IViewItemLayoutInteraction
+    using Layouts;
+    using Views.Scrolls;
+    using Views.Selections;
+
+    /// <summary>
+    /// A interface class connects the view selection and view scroll with item layout
+    /// </summary>
+    public class PointViewItemLayoutInteraction : ViewItemComponent, IViewItemLayoutInteraction
     {
         private readonly IViewSelectionController viewSelection;
 
         private readonly IViewScrollController viewScroll;
 
-        public ViewItemLayoutInteraction(IViewItem item, IViewSelectionController viewSelection, IViewScrollController viewScroll)
+        public PointViewItemLayoutInteraction(IViewItem item, IViewSelectionController viewSelection, IViewScrollController viewScroll)
             : base(item)
         {
+            if (viewSelection == null)
+            {
+                throw new ArgumentNullException("viewSelection");
+            }
+
+            if (viewScroll == null)
+            {
+                throw new ArgumentNullException("viewScroll");
+            }
+
             this.viewSelection = viewSelection;
-            this.viewScroll    = viewScroll;
+            this.viewScroll = viewScroll;
         }
 
         public void ViewDoSelect(IViewItemLayout itemLayout)
@@ -34,6 +49,5 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
         {
             return this.viewScroll.CanDisplay(itemLayout.Id);
         }
-
     }
 }

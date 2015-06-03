@@ -11,7 +11,7 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
-    public class TestItemLogic : PointView2DItemLogic
+    public class TestItemLogic : BlockViewVerticalItemLogic
     {
         public TestItemLogic(
             IViewItem            item,

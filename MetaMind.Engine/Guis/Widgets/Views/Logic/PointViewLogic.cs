@@ -16,16 +16,18 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
     public class PointViewLogic<TData> : ViewLogic<TData>
     {
         protected PointViewLogic(
-            IView                    view,
-            IList<TData>             viewData,
-            IViewScrollController    viewScroll,
+            IView view,
+            IList<TData> viewData,
+            IViewScrollController viewScroll,
             IViewSelectionController viewSelection,
-            IViewSwapController      viewSwap,
-            IViewLayout              viewLayout,
+            IViewSwapController viewSwap,
+            IViewLayout viewLayout,
             IViewItemFactory itemFactory)
             : base(view, viewData, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory)
         {
         }
+
+        #region Update
 
         public override void Update(GameTime time)
         {
@@ -44,20 +46,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
                     item.UpdateView(time);
                 }
             }
-        }
-
-        public void AddItem()
-        {
-            var item = new ViewItem(this.View, this.View.ItemSettings);
-
-            item.ItemLayer  = ItemFactory.CreateLayer(item);
-            item.ItemData   = ItemFactory.CreateData(item);
-            item.ItemLogic  = ItemFactory.CreateLogic(item);
-            item.ItemVisual = ItemFactory.CreateVisual(item);
-
-            item.SetupLayer();
-
-            this.View.Items.Add(item);
         }
 
         public override void UpdateInput(IGameInputService input, GameTime time)
@@ -87,7 +75,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
                 if (this.View.ViewSettings.KeyboardEnabled)
                 {
                     // Escape
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))
+                    if (
+                        input.State.Keyboard.IsActionTriggered(
+                            KeyboardActions.Escape))
                     {
                         this.ViewSelection.Cancel();
                     }
@@ -98,5 +88,25 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
         protected virtual void UpdateInputOfMouse(IGameInputService input, GameTime time)
         {
         }
+
+        #endregion
+
+        #region Operations
+
+        public void AddItem()
+        {
+            var item = new ViewItem(this.View, this.View.ItemSettings);
+
+            item.ItemLayer = this.ItemFactory.CreateLayer(item);
+            item.ItemData = this.ItemFactory.CreateData(item);
+            item.ItemLogic = this.ItemFactory.CreateLogic(item);
+            item.ItemVisual = this.ItemFactory.CreateVisual(item);
+
+            item.SetupLayer();
+
+            this.View.Items.Add(item);
+        }
+
+        #endregion
     }
 }

@@ -33,9 +33,9 @@
             }
         }
 
-        public bool CanDisplay(int id)
+        public bool CanDisplay(int row)
         {
-            var column = id;
+            var column = row;
             return this.OffsetX <= column && column < this.viewSettings.ColumnNumDisplay + this.OffsetX;
         }
 
@@ -65,20 +65,20 @@
             }
         }
 
-        public Vector2 Position(int id)
+        public Vector2 Position(int row)
         {
             return new Vector2(
                 this.viewSettings.Direction == ViewDirection.Normal
-                    ? this.viewSettings.Position.X - (this.OffsetX * this.viewSettings.Margin.X) + id * this.viewSettings.Margin.X
-                    : this.viewSettings.Position.X + (this.OffsetX * this.viewSettings.Margin.X) - id * this.viewSettings.Margin.X,
+                    ? this.viewSettings.Position.X - (this.OffsetX * this.viewSettings.Margin.X) + row * this.viewSettings.Margin.X
+                    : this.viewSettings.Position.X + (this.OffsetX * this.viewSettings.Margin.X) - row * this.viewSettings.Margin.X,
                 this.viewSettings.Position.Y);
         }
 
-        public void Zoom(int id)
+        public void Zoom(int row)
         {
-            if (!this.CanDisplay(id))
+            if (!this.CanDisplay(row))
             {
-                var column = id;
+                var column = row;
 
                 while (this.IsLeftToDisplay(column))
                 {

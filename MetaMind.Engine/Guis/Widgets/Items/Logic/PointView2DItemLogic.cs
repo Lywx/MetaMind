@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Logic
     using MetaMind.Engine.Guis.Widgets.Items.Frames;
     using MetaMind.Engine.Guis.Widgets.Items.Interactions;
 
-    public class PointView2DItemLogic : ViewItemLogic, IViewItemLogic, IPointView2DItemLogic
+    public class PointView2DItemLogic : ViewItemLogic, IPointView2DItemLogic 
     {
         #region Constructors
 
@@ -16,5 +16,10 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Logic
         }
 
         #endregion Constructors
+
+        public new IPointViewItemLayout ItemLayout
+        {
+            get { return (IPointViewItemLayout)base.ItemLayout; }
+        }
     }
 }

@@ -1,14 +1,15 @@
 namespace MetaMind.Engine.Guis.Widgets.Views.Layers
 {
+    using Layouts;
     using Logic;
     using Scrolls;
     using Selections;
     using Settings;
     using Swaps;
 
-    public class PointViewVerticalLayer : ViewLayer
+    public class PointViewVerticalLayer : PointViewLayer
     {
-        protected PointViewVerticalLayer(IView view) : base(view)
+        public PointViewVerticalLayer(IView view) : base(view)
         {
         }
 
@@ -22,19 +23,24 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layers
             get { return (IPointViewVerticalLogic) base.ViewLogic; }
         }
 
-        public IPointViewVerticalSelectionController ViewSelection
+        public new IPointViewVerticalSelectionController ViewSelection
         {
             get { return this.ViewLogic.ViewSelection; }
         }
 
-        public IPointViewVerticalSwapController ViewSwap
+        public new IPointViewVerticalSwapController ViewSwap
         {
             get { return this.ViewLogic.ViewSwap; }
         }
 
-        public IPointViewVerticalScrollController ViewScroll
+        public new IPointViewVerticalScrollController ViewScroll
         {
             get { return this.ViewLogic.ViewScroll; }
+        }
+
+        public IPointViewVerticalLayout ViewLayout
+        {
+            get { return this.ViewLogic.ViewLayout; }
         }
     }
 }

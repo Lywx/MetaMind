@@ -90,7 +90,7 @@ namespace MetaMind.Testimony.Guis.Widgets
 
             this.Add("NameFrame", this.nameFrame);
             this.Add("NameLabel", this.nameLabel);
-            this.Add("NameMargin", new Vector2(10, 10) * this.nameLabel.TextSize);
+            this.Add("NameMargin", new Vector2(5, 12) * this.nameLabel.TextSize);
 
             this.Add("StatusFrame", this.statusFrame);
             this.Add("StatusLabel", this.statusLabel);

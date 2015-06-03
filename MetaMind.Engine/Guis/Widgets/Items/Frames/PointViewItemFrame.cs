@@ -2,9 +2,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Frames
 {
     using System;
     using Layers;
-    using Views.Layers;
 
     using Microsoft.Xna.Framework;
+    using Views.Layers;
 
     public class PointViewItemFrame : ViewItemFrame
     {
@@ -17,10 +17,10 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Frames
         {
             base.SetupLayer();
 
-            var itemLayer = this.ItemGetLayer<PointViewHorizontalItemLayer>();
+            var itemLayer = this.ItemGetLayer<PointViewItemLayer>();
             var itemLayout = itemLayer.ItemLogic.ItemLayout;
 
-            var viewLayer = this.ViewGetLayer<PointViewHorizontalLayer>();
+            var viewLayer = this.ViewGetLayer<PointViewLayer>();
             var viewScroll = viewLayer.ViewScroll;
             var viewSwap = viewLayer.ViewSwap;
 

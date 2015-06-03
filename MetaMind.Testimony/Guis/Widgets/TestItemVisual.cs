@@ -10,7 +10,9 @@ namespace MetaMind.Testimony.Guis.Widgets
     using System;
     using Engine.Components.Fonts;
     using Engine.Guis.Widgets.Items;
+    using Engine.Guis.Widgets.Items.Data;
     using Engine.Guis.Widgets.Items.Frames;
+    using Engine.Guis.Widgets.Items.Layouts;
     using Engine.Guis.Widgets.Items.Visuals;
     using Engine.Guis.Widgets.Visuals;
     using Engine.Services;
@@ -81,12 +83,13 @@ namespace MetaMind.Testimony.Guis.Widgets
                 this.IdLabel = new ViewItemLabelVisual(this.Item, labelSettings);
             }
 
+            var nameFrameSettings = itemSettings.Get<FrameSettings>("NameFrame");
             this.NameFrame = new ViewItemFrameVisual(this.Item,
                 itemFrame.NameFrame,
-                itemSettings.Get<FrameSettings>("NameFrame"));
+                nameFrameSettings);
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("NameLabel");
-                labelSettings.Text = () => this.Item.ItemData.Name;
+                labelSettings.Text = () => StringUtils.BreakStringByWord(labelSettings.TextFont, ((IBlockViewVerticalItemData)this.Item.ItemData).BlockText, labelSettings.TextSize, nameFrameSettings.Size.X, true);
                 labelSettings.TextPosition = this.NamePosition;
 
                 this.NameLabel = new ViewItemLabelVisual(this.Item, labelSettings);

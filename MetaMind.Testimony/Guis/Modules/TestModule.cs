@@ -12,19 +12,21 @@
     using Engine.Guis.Widgets.Items.Data;
     using Engine.Guis.Widgets.Items.Factories;
     using Engine.Guis.Widgets.Items.Interactions;
+    using Engine.Guis.Widgets.Items.Layers;
     using Engine.Guis.Widgets.Items.Layouts;
     using Engine.Guis.Widgets.Views;
     using Engine.Guis.Widgets.Views.Layers;
     using Engine.Guis.Widgets.Views.Layouts;
     using Engine.Guis.Widgets.Views.Scrolls;
     using Engine.Guis.Widgets.Views.Selections;
+    using Engine.Guis.Widgets.Views.Settings;
     using Engine.Guis.Widgets.Views.Swaps;
     using Engine.Guis.Widgets.Views.Visuals;
     using Engine.Services;
     using Events;
     using Sessions;
     using Widgets;
-    
+
     using Microsoft.Xna.Framework;
 
     public class TestModule : Module<TestSettings>
@@ -38,46 +40,48 @@
 
             var test = new List<Test>();
 
-            var view = new View(new TestViewSettings(new Vector2(40, 100),
-                        new Vector2(512+64+24, 26), 2, 2, 30, 100),
+            var view = new View(
+                    new PointViewVerticalSettings(
+                        position     : new Vector2(40, 100),
+                        margin       : new Vector2(512 + 64 + 24, 26),
+                        rowNumDisplay: 30,
+                        rowNumMax    : 100),
+
                     new TestItemSettings(),
                     new List<IViewItem>());
-            view.ViewLayer = new PointView2DLayer(view);
 
-            var viewSelection = new PointView2DSelectionController(view);
-            var viewScroll = new PointView2DScrollController(view);
-            var viewSwap = new PointViewHorizontalSwapController<Test>(view, test);
-            var viewLayout = new PointView2DLayout(view);
-            
-            view.ViewLogic = new TestViewLogic<Test>(view,
-                test,
-                viewScroll,
-                viewSelection,
-                viewSwap,
-                viewLayout,
-                new ViewItemFactory(
-                    item => new TestItemLayer(item),
-                    delegate(IViewItem item)
-                    {
-                        var itemFrame = new TestItemFrame(item);
-                        var itemLayoutInteraction = new ViewItemLayoutInteraction(item, viewSelection, viewScroll);
-                        var itemLayout = new PointView2DItemLayout(item, itemLayoutInteraction);
-                        var itemInteraction = new PointView2DItemInteraction(item, itemLayout, itemLayoutInteraction);
-                        var itemModel = new ViewItemDataModel(item);
+            var viewSelection = new PointViewVerticalSelectionController(view);
+            var viewScroll = new BlockViewVerticalScrollController(view);
+            var viewSwap = new BlockViewVerticalSwapController<Test>(view, test);
+            var viewLayout = new BlockViewVerticalLayout(view);
 
-                        return new TestItemLogic(item, itemFrame, itemInteraction, itemModel, itemLayout);
-                    },
-                    item => new TestItemVisual(item),
-                    item =>
-                    {
-                        var test1 = new Test( "A Sample Txt aisjd lkasjf laskjd glksjfl ksdjfl kasdjl");
-                        test.Add(test1);
-                        return test1;
-                    })
-                );
+            var itemFactory = new ViewItemFactory(
+                item => new TestItemLayer(item),
+                item =>
+                {
+                    var itemFrame             = new TestItemFrame(item);
+                    var itemLayoutInteraction = new BlockViewVerticalItemLayoutInteraction(item, viewSelection, viewScroll);
+                    var itemLayout            = new BlockViewVerticalItemLayout(item, itemLayoutInteraction);
+                    var itemInteraction       = new PointViewItemInteraction(item, itemLayout, itemLayoutInteraction);
+                    var itemModel             = new ViewItemDataModel(item);
+
+                    return new TestItemLogic(item, itemFrame, itemInteraction, itemModel, itemLayout);
+                },
+                item => new TestItemVisual(item),
+                item =>
+                {
+                    var newTest = new Test("A Sample Knowing that millions of people around the world would be watching in person and on television and expecting great things from him — at least one more gold medal for America, if not another world record — during this, his fourth and surely his last appearance in the World Olympics, and realizing that his legs could no longer carry him down t");
+                    test.Add(newTest);
+                    return newTest;
+                });
+
+            view.ViewLayer  = new BlockViewVerticalLayer(view);
+            view.ViewLogic  = new TestViewLogic<Test>(view, test, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory);
             view.ViewVisual = new ViewVisual(view);
-            view[ViewState.View_Has_Focus] = () => true;
+
             view.SetupLayer();
+
+            view[ViewState.View_Has_Focus] = () => true;
 
             this.entities.Add(view);
 
@@ -115,7 +119,7 @@
         public void StopSync()
         {
             var @event = this.GameInterop.Event;
-            @event.QueueEvent(new Event((int) SessionEventType.SyncStopped, new SynchronizationStoppedEventArgs(this.SynchronizationData)));
+            @event.QueueEvent(new Event((int)SessionEventType.SyncStopped, new SynchronizationStoppedEventArgs(this.SynchronizationData)));
         }
 
         public void SwitchSync()

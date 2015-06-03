@@ -13,15 +13,15 @@ namespace MetaMind.Testimony.Guis.Widgets
     using Engine.Services;
     using Microsoft.Xna.Framework;
 
-    public class TestItemFrame : PointViewItemFrame
+    public class TestItemFrame : BlcokViewVerticalItemFrame
     {
-        private IViewItemLayout itemLayout;
-
         private ItemSettings itemSettings;
+
+        private IViewItemLayout itemLayout;
 
         private IViewSwapController viewSwap;
 
-        private IPointView2DScrollController viewScroll;
+        private IViewScrollController viewScroll;
 
         public TestItemFrame(IViewItem item)
             : base(item)
@@ -42,8 +42,8 @@ namespace MetaMind.Testimony.Guis.Widgets
         {
             base.SetupLayer();
             
-            var viewLayer = this.ViewGetLayer<PointView2DLayer>();
-            var itemLayer = this.ItemGetLayer<PointView2DItemLayer>();
+            var viewLayer = this.ViewGetLayer<PointViewLayer>();
+            var itemLayer = this.ItemGetLayer<PointViewItemLayer>();
 
             this.viewScroll = viewLayer.ViewLogic.ViewScroll;
             this.viewSwap = viewLayer.ViewLogic.ViewSwap;

@@ -10,8 +10,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
     {
         private IPointView2DLayout viewLayout;
 
-        public PointView2DItemLayout(IViewItem item, IViewItemLayoutInteraction interaction)
-            : base(item, interaction)
+        public PointView2DItemLayout(IViewItem item, IViewItemLayoutInteraction itemLayoutInteraction)
+            : base(item, itemLayoutInteraction)
         {
         }
 
@@ -24,45 +24,12 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
         {
             base.Update(time);
 
-            this.Row    = this.viewLayout.RowFrom(this.Id);
-            this.Column = this.viewLayout.ColumnFrom(this.Id);
+            this.Row    = this.viewLayout.RowOf(this.Id);
+            this.Column = this.viewLayout.ColumnOf(this.Id);
         }
 
         public int Row { get; set; }
 
         public int Column { get; set; }
-    }
-
-    public class PointViewVerticalMultilineItemLayout : ViewItemLayout, IPointViewItemLayout
-    {
-        private IPointView2DLayout viewLayout;
-
-        protected PointViewVerticalMultilineItemLayout(
-            IViewItem item,
-            IViewItemLayoutInteraction interaction) : base(item, interaction)
-        {
-        }
-
-        public int Row { get; set; }
-
-        public int Column { get; set; }
-
-        public int LineNum { get; set; }
-
-        public override void SetupLayer()
-        {
-            this.viewLayout = this.ViewGetLayer<PointView2DLayer>().ViewLayout;
-        }
-
-        public override void Update(GameTime time)
-        {
-            var thisIndex = this.View.Items.IndexOf(this.Item);
-            var previousId = (thisIndex != 0) ? this.View.Items[thisIndex - 1].ItemLogic.ItemLayout.Id : 0;
-
-            this.Id = previousId + this.LineNum;
-
-            this.Row    = this.viewLayout.RowFrom(this.Id);
-            this.Column = this.viewLayout.ColumnFrom(this.Id);
-        }
     }
 }

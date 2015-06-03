@@ -9,11 +9,12 @@ namespace MetaMind.Testimony.Concepts.Tests
 {
     using System.Collections.Generic;
     using System.Runtime.Serialization;
-
+    using Engine.Guis.Widgets.Items.Data;
+    using Engine.Guis.Widgets.Items.Layouts;
     using MetaMind.Testimony.Concepts.Synchronizations;
 
     [DataContract]
-    public class Test : ITest
+    public class Test : ITest, IBlockViewVerticalItemData
     {
         public Test(string name)
         {
@@ -58,5 +59,7 @@ namespace MetaMind.Testimony.Concepts.Tests
         public string SynchronizationName { get { return this.Name; } }
 
         public ISynchronizationData SynchronizationData { get; set; }
+
+        public string BlockText { get { return this.Name; } }
     }
 }

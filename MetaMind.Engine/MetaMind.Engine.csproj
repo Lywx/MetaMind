@@ -146,6 +146,7 @@
     <Compile Include="Guis\Console\OutputLine.cs" />
     <Compile Include="Guis\Console\Renderer.cs" />
     <Compile Include="Guis\IModuleLogicControl.cs" />
+    <Compile Include="Guis\Widgets\Items\Data\BlockViewVerticalItemData.cs" />
     <Compile Include="Guis\Widgets\Items\Data\IViewItemCharModifier.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -159,8 +160,12 @@
     <Compile Include="Guis\Widgets\Items\Data\ViewItemDataModel.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Guis\Widgets\Items\Frames\BlcokViewVerticalItemFrame.cs" />
+    <Compile Include="Guis\Widgets\Items\Interactions\BlockViewVerticalItemLayoutInteraction.cs" />
     <Compile Include="Guis\Widgets\Items\Interactions\IViewItemLayoutInteraction.cs" />
-    <Compile Include="Guis\Widgets\Items\Interactions\ViewItemLayoutInteraction.cs" />
+    <Compile Include="Guis\Widgets\Items\Interactions\PointViewItemLayoutInteraction.cs" />
+    <Compile Include="Guis\Widgets\Items\Layers\BlockViewVerticalItemLayer.cs" />
+    <Compile Include="Guis\Widgets\Items\Layers\BlockViewVerticalLayer.cs" />
     <Compile Include="Guis\Widgets\Items\Layers\IViewItemLayer.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -170,6 +175,9 @@
     <Compile Include="Guis\Widgets\Items\Layers\PointViewHorizontalItemLayer.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Guis\Widgets\Items\Layers\PointViewItemLayer.cs" />
+    <Compile Include="Guis\Widgets\Items\Layers\PointViewVerticalItemLayer.cs" />
+    <Compile Include="Guis\Widgets\Items\Layers\PointViewVerticalItemLogic.cs" />
     <Compile Include="Guis\Widgets\Items\Layers\ViewItemLayer.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -209,10 +217,7 @@
     <Compile Include="Guis\Widgets\Items\Interactions\IViewItemViewSwapProvider.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Items\Interactions\PointView2DItemInteraction.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Guis\Widgets\Items\Interactions\PointViewHorizontalItemInteraction.cs">
+    <Compile Include="Guis\Widgets\Items\Interactions\PointViewItemInteraction.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Guis\Widgets\Items\Interactions\ViewItemInteraction.cs">
@@ -230,18 +235,28 @@
     <Compile Include="Guis\Widgets\Items\IViewItemComponent.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Guis\Widgets\Items\Data\IBlockViewVerticalItemData.cs" />
+    <Compile Include="Guis\Widgets\Items\Layouts\IBlockViewVerticalItemLayout.cs" />
     <Compile Include="Guis\Widgets\Items\Layouts\IPointViewItemLayout.cs" />
     <Compile Include="Guis\Widgets\Items\Layouts\IViewItemLayout.cs" />
     <Compile Include="Guis\Widgets\Items\Layouts\PointView2DItemLayout.cs" />
+    <Compile Include="Guis\Widgets\Items\Layouts\PointViewHorizontalItemLayout.cs" />
+    <Compile Include="Guis\Widgets\Items\Layouts\PointViewVerticalItemLayout.cs" />
+    <Compile Include="Guis\Widgets\Items\Layouts\BlockViewVerticalItemLayout.cs" />
     <Compile Include="Guis\Widgets\Items\Layouts\ViewItemLayout.cs" />
+    <Compile Include="Guis\Widgets\Items\Logic\BlockViewVerticalItemLogic.cs" />
+    <Compile Include="Guis\Widgets\Items\Logic\IBlockViewVerticalItemLogic.cs" />
     <Compile Include="Guis\Widgets\Items\Logic\IPointView2DItemLogic.cs" />
     <Compile Include="Guis\Widgets\Items\Logic\IPointViewHorizontalItemLogic.cs" />
+    <Compile Include="Guis\Widgets\Items\Logic\IPointViewItemLogic.cs" />
+    <Compile Include="Guis\Widgets\Items\Logic\IPointViewVerticalItemLogic.cs" />
     <Compile Include="Guis\Widgets\Items\Logic\IViewItemLogic.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Guis\Widgets\Items\Logic\PointView2DItemLogic.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Guis\Widgets\Items\Logic\PointViewHorizontalItemLogic.cs" />
     <Compile Include="Guis\Widgets\Items\Logic\ViewItemLogic.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -276,6 +291,7 @@
     <Compile Include="Guis\Widgets\Views\Layers\PointViewHorizontalLayer.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Guis\Widgets\Views\Layers\PointViewLayer.cs" />
     <Compile Include="Guis\Widgets\Views\Layers\PointViewVerticalLayer.cs" />
     <Compile Include="Guis\Widgets\Views\Layers\ViewLayer.cs">
       <SubType>Code</SubType>
@@ -289,9 +305,13 @@
     <Compile Include="Guis\Widgets\Views\IViewEntity.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Guis\Widgets\Views\Layouts\BlockViewVerticalLayout.cs" />
     <Compile Include="Guis\Widgets\Views\Layouts\IPointView2DLayout.cs" />
     <Compile Include="Guis\Widgets\Views\Layouts\IPointViewHorizontalLayout.cs" />
+    <Compile Include="Guis\Widgets\Views\Layouts\IPointViewVerticalLayout.cs" />
     <Compile Include="Guis\Widgets\Views\Layouts\IViewLayout.cs" />
+    <Compile Include="Guis\Widgets\Views\Layouts\PointView2DLayout.cs" />
+    <Compile Include="Guis\Widgets\Views\Layouts\PointViewVerticalLayout.cs" />
     <Compile Include="Guis\Widgets\Views\Layouts\ViewLayout.cs" />
     <Compile Include="Guis\Widgets\Views\Logic\IPointGridLogic.cs">
       <SubType>Code</SubType>
@@ -317,9 +337,10 @@
     <Compile Include="Guis\Widgets\Views\Logic\ViewLogic.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Views\Scrolls\PointView2DMultilineScrollController.cs" />
+    <Compile Include="Guis\Widgets\Views\Scrolls\BlockViewVerticalScrollController.cs" />
     <Compile Include="Guis\Widgets\Views\Scrolls\PointViewVerticalScrollController.cs" />
     <Compile Include="Guis\Widgets\Views\Selections\IPointViewVerticalSelectionController.cs" />
+    <Compile Include="Guis\Widgets\Views\Selections\PointViewVerticalSelectionController.cs" />
     <Compile Include="Guis\Widgets\Views\Settings\PointViewSettings.cs" />
     <Compile Include="Guis\Widgets\Views\Settings\PointViewVerticalSettings.cs" />
     <Compile Include="Guis\Widgets\Views\Settings\ViewDirection.cs">
@@ -377,12 +398,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Guis\Widgets\Views\Swaps\IPointView2DSwapController.cs" />
-    <Compile Include="Guis\Widgets\Views\Swaps\IPointViewHorizontalSwapController.cs" />
     <Compile Include="Guis\Widgets\Views\Swaps\IPointVIewVerticalSwapController.cs" />
     <Compile Include="Guis\Widgets\Views\Swaps\IViewSwapController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Views\Swaps\PointViewHorizontalSwapController.cs" />
+    <Compile Include="Guis\Widgets\Views\Swaps\BlockViewVerticalSwapController.cs" />
     <Compile Include="Guis\Widgets\Views\Swaps\ViewSwapController.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -606,9 +626,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="ClassDiagrams\Guis\ViewVisual.cd" />
-    <None Include="ClassDiagrams\Guis\View.cd" />
-    <None Include="ClassDiagrams\Components.cd" />
     <Content Include="Content\Fonts\NSimSunBoldFont.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

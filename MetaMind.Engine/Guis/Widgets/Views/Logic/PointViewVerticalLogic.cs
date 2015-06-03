@@ -63,7 +63,7 @@
                 return (IPointViewVerticalScrollController)base.ViewScroll;
             }
 
-            set
+            private set
             {
                 if (value == null)
                 {
@@ -79,14 +79,35 @@
             }
         }
 
+        public new IPointViewVerticalLayout ViewLayout
+        {
+            get { return (IPointViewVerticalLayout) base.ViewLayout; }
+
+            private set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException("value");
+                }
+
+                if (base.ViewLayout != null)
+                {
+                    throw new InvalidOperationException();
+                }
+
+                this.ViewLayout = value;
+            }
+        }
+    
+
         public new IPointViewVerticalSwapController ViewSwap
         {
             get
             {
                 return (IPointViewVerticalSwapController)base.ViewSwap;
-            } 
+            }
 
-            set
+            private set
             {
                 if (value == null)
                 {
@@ -120,12 +141,11 @@
         {
             if (this.viewSettings.Direction == ViewDirection.Inverse)
             {
-                // Invert for left scrolling view
-                this.ViewSelection.MoveUp();
+                this.ViewSelection.MoveDown();
             }
             else
             {
-                this.ViewSelection.MoveDown();
+                this.ViewSelection.MoveUp();
             }
         }
 
@@ -133,12 +153,11 @@
         {
             if (this.viewSettings.Direction == ViewDirection.Inverse)
             {
-                // Invert for left scrolling view
-                this.ViewSelection.MoveDown();
+                this.ViewSelection.MoveUp();
             }
             else
             {
-                this.ViewSelection.MoveUp();
+                this.ViewSelection.MoveDown();
             }
         }
 

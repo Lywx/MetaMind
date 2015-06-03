@@ -104,5 +104,17 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
         public IViewLayout ViewLayout { get; protected set; }
 
         public IViewItemFactory ItemFactory { get; protected set; }
+
+
+        public override void SetupLayer()
+        {
+            base.SetupLayer();
+
+            this.ViewLayout   .SetupLayer();
+            this.ViewScroll   .SetupLayer();
+            this.ViewSelection.SetupLayer();
+            this.ViewSwap     .SetupLayer();
+            this.ViewLayout   .SetupLayer();
+        }
     }
 }

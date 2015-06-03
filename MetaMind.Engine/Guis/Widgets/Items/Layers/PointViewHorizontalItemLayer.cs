@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layers
 {
     using MetaMind.Engine.Guis.Widgets.Items.Logic;
 
-    public class PointViewHorizontalItemLayer : ViewItemLayer
+    public class PointViewHorizontalItemLayer : PointViewItemLayer
     {
         protected PointViewHorizontalItemLayer(IViewItem item)
             : base(item)

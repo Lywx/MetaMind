@@ -55,21 +55,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             {
                 return (IPointView2DLayout)base.ViewLayout;
             }
-
-            protected set
-            {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
-                
-                if (base.ViewLayout != null)
-                {
-                    throw new InvalidOperationException();
-                }
-
-                this.ViewLayout = value;
-            }
         }
 
         public new IPointView2DSelectionController ViewSelection
@@ -78,21 +63,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             {
                 return (IPointView2DSelectionController)base.ViewSelection;
             }
-
-            protected set
-            {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
-                
-                if (base.ViewSelection != null)
-                {
-                    throw new InvalidOperationException();
-                }
-
-                this.ViewSelection = value;
-            }
         }
 
         public new IPointView2DScrollController ViewScroll
@@ -100,21 +70,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             get
             {
                 return (IPointView2DScrollController)base.ViewScroll;
-            }
-
-            protected set
-            {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
-                
-                if (base.ViewScroll != null)
-                {
-                    throw new InvalidOperationException();
-                }
-
-                this.ViewScroll = value;
             }
         }
 

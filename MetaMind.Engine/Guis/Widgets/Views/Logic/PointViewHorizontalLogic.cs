@@ -52,21 +52,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             {
                 return (IPointViewHorizontalSelectionController)base.ViewSelection;
             }
-
-            set
-            {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
-                
-                if (base.ViewSelection != null)
-                {
-                    throw new InvalidOperationException();
-                }
-
-                this.ViewSelection = value;
-            }
         }
 
         public new IPointViewHorizontalScrollController ViewScroll
@@ -75,44 +60,14 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             {
                 return (IPointViewHorizontalScrollController)base.ViewScroll;
             }
-
-            set
-            {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
-                
-                if (base.ViewScroll != null)
-                {
-                    throw new InvalidOperationException();
-                }
-
-                this.ViewScroll = value;
-            }
         }
 
-        public new IPointViewHorizontalSwapController ViewSwap
+        public new IViewSwapController ViewSwap
         {
             get
             {
-                return (IPointViewHorizontalSwapController)base.ViewSwap;
+                return (IViewSwapController)base.ViewSwap;
             } 
-
-            set
-            {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
-                
-                if (base.ViewSwap != null)
-                {
-                    throw new InvalidOperationException();
-                }
-
-                this.ViewSwap = value;
-            }
         }
 
         #endregion

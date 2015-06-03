@@ -7,17 +7,24 @@
 
     public class PointViewVerticalScrollController : ViewComponent, IPointViewVerticalScrollController
     {
-        private readonly PointViewHorizontalSettings viewSettings;
+        private PointViewVerticalSettings viewSettings;
 
         public PointViewVerticalScrollController(IView view)
             : base(view)
         {
-            this.viewSettings = this.ViewGetLayer<PointViewHorizontalLayer>().ViewSettings;
+        }
+
+        public override void SetupLayer()
+        {
+            base.SetupLayer();
+
+            var viewLayer = this.ViewGetLayer<PointViewVerticalLayer>();
+            this.viewSettings = viewLayer.ViewSettings;
         }
 
         public int OffsetY { get; private set; }
 
-        private bool CanMoveLeft
+        private bool CanMoveUp
         {
             get
             {
@@ -25,18 +32,17 @@
             }
         }
 
-        private bool CanMoveRight
+        private bool CanMoveDown
         {
             get
             {
-                return (this.viewSettings.ColumnNumDisplay + this.OffsetY) < this.View.Items.Count;
+                return (this.viewSettings.RowNumDisplay + this.OffsetY) < this.View.Items.Count;
             }
         }
 
-        public bool CanDisplay(int id)
+        public bool CanDisplay(int row)
         {
-            var row = id;
-            return this.OffsetY <= row && row < this.viewSettings.ColumnNumDisplay + this.OffsetY;
+            return this.OffsetY <= row && row < this.viewSettings.RowNumDisplay + this.OffsetY;
         }
 
         public bool IsUpToDisplay(int row)
@@ -46,12 +52,12 @@
 
         public bool IsDownToDisplay(int row)
         {
-            return row > this.viewSettings.ColumnNumDisplay + this.OffsetY;
+            return row > this.viewSettings.RowNumDisplay + this.OffsetY;
         }
 
         public void MoveUp()
         {
-            if (this.CanMoveLeft)
+            if (this.CanMoveUp)
             {
                 --this.OffsetY;
             }
@@ -64,15 +70,14 @@
 
         public void MoveDown()
         {
-            if (this.CanMoveRight)
+            if (this.CanMoveDown)
             {
                 ++this.OffsetY;
             }
         }
 
-        public Vector2 Position(int id)
+        public virtual Vector2 Position(int row)
         {
-            var row = id;
             return new Vector2(
                 this.viewSettings.Position.X,
                 this.viewSettings.Direction == ViewDirection.Normal
@@ -80,12 +85,10 @@
                     : this.viewSettings.Position.Y + (this.OffsetY * this.viewSettings.Margin.Y) - row * this.viewSettings.Margin.Y);
         }
 
-        public void Zoom(int id)
+        public virtual void Zoom(int row)
         {
-            if (!this.CanDisplay(id))
+            if (!this.CanDisplay(row))
             {
-                var row = id;
-
                 while (this.IsUpToDisplay(row))
                 {
                     this.MoveUp();

@@ -4,7 +4,7 @@ namespace MetaMind.Testimony.Guis.Widgets
     using Engine.Guis.Widgets.Items.Layers;
     using Engine.Guis.Widgets.Items.Layouts;
 
-    public class TestItemLayer : PointView2DItemLayer
+    public class TestItemLayer : BlockViewVerticalItemLayer
     {
         public TestItemLayer(IViewItem item) : base(item)
         {
@@ -25,7 +25,7 @@ namespace MetaMind.Testimony.Guis.Widgets
             get { return this.ItemLogic.ItemFrame; }
         }
 
-        public IViewItemLayout ItemLayout
+        public new IViewItemLayout ItemLayout
         {
             get { return this.ItemLogic.ItemLayout; }
         }

@@ -4,6 +4,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layouts
     {
         int ColumnNum { get; }
 
-        int ColumnFrom(int id);
+        /// <summary>
+        /// Zero based index item column number.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        int ColumnOf(int id);
     }
 }

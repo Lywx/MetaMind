@@ -12,7 +12,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 
     public class PointViewHorizontalSelectionController : ViewComponent, IPointViewHorizontalSelectionController
     {
-        private readonly IPointViewHorizontalScrollController viewScroll;
+        private IPointViewHorizontalScrollController viewScroll;
 
         private int? currentColumn;
 
@@ -23,6 +23,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
         public PointViewHorizontalSelectionController(IView view)
             : base(view)
         {
+        }
+
+        public override void SetupLayer()
+        {
+            base.SetupLayer();
+
             var viewLayer = this.ViewGetLayer<PointViewHorizontalLayer>();
             this.viewScroll = viewLayer.ViewScroll;
         }
@@ -126,7 +132,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 
         private void Reverse()
         {
-            this.Select(this.previousColumn.HasValue ? this.previousColumn.Value : 0);
+            this.Select(this.previousColumn ?? 0);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
     public interface IPointViewHorizontalLogic : IViewLogic
     {
-        new IPointViewHorizontalSwapController ViewSwap { get; } 
+        new IViewSwapController ViewSwap { get; } 
 
         new IPointViewHorizontalSelectionController ViewSelection { get; }
 

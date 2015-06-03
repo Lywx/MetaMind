@@ -13,7 +13,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Swaps
 
     using Microsoft.Xna.Framework;
 
-    public interface IViewSwapController : IDisposable
+    public interface IViewSwapController : IViewComponent, IDisposable
     {
         #region Observers
 

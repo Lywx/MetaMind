@@ -42,7 +42,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         #region Indirect Dependency
 
-        public List<IViewItem> Item
+        public List<IViewItem> Items
         {
             get
             {

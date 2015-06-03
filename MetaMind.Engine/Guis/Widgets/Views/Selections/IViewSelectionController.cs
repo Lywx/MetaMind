@@ -7,7 +7,7 @@
 
 namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 {
-    public interface IViewSelectionController
+    public interface IViewSelectionController : IViewComponent
     {
         bool HasPreviouslySelected { get; }
 

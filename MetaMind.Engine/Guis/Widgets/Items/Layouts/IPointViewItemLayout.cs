@@ -5,8 +5,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
     /// </summary>
     public interface IPointViewItemLayout : IViewItemLayout
     {
-        int Row { get; set; }
+        int Row { get; }
 
-        int Column { get; set; }
+        int Column { get; }
     }
 }

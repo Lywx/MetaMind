@@ -16,17 +16,17 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
 
     public class ViewItemLayout : ViewItemComponent, IViewItemLayout
     {
-        private readonly IViewItemLayoutInteraction interaction;
+        private readonly IViewItemLayoutInteraction itemLayoutInteraction;
 
-        protected ViewItemLayout(IViewItem item, IViewItemLayoutInteraction interaction)
+        protected ViewItemLayout(IViewItem item, IViewItemLayoutInteraction itemLayoutInteraction)
             : base(item)
         {
-            if (interaction == null)
+            if (itemLayoutInteraction == null)
             {
-                throw new ArgumentNullException("interaction");
+                throw new ArgumentNullException("itemLayoutInteraction");
             }
 
-            this.interaction = interaction;
+            this.itemLayoutInteraction = itemLayoutInteraction;
 
             this.Item[ItemState.Item_Is_Active] = this.ItemIsActive;
         }
@@ -35,7 +35,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
         {
             get
             {
-                return () => this.View[ViewState.View_Is_Active]() && this.interaction.ViewCanDisplay(this);
+                return () => this.View[ViewState.View_Is_Active]() && this.itemLayoutInteraction.ViewCanDisplay(this);
             }
         }
 

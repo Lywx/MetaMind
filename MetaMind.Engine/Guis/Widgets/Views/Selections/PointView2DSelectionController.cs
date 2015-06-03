@@ -88,8 +88,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
             }
 
             var id     = this.currentId.Value;
-            var column = this.ViewLayout.ColumnFrom(id);
-            var row    = this.ViewLayout.RowFrom(id);
+            var column = this.ViewLayout.ColumnOf(id);
+            var row    = this.ViewLayout.RowOf(id);
 
             if (!this.IsBottommost(row))
             {
@@ -112,8 +112,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
             }
 
             var id     = this.currentId.Value;
-            var column = this.ViewLayout.ColumnFrom(id);
-            var row    = this.ViewLayout.RowFrom(id);
+            var column = this.ViewLayout.ColumnOf(id);
+            var row    = this.ViewLayout.RowOf(id);
 
             if (!this.IsLeftmost(column))
             {
@@ -136,8 +136,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
             }
 
             var id     = this.currentId.Value;
-            var column = this.ViewLayout.ColumnFrom(id);
-            var row    = this.ViewLayout.RowFrom(id);
+            var column = this.ViewLayout.ColumnOf(id);
+            var row    = this.ViewLayout.RowOf(id);
 
             if (!this.IsRightmost(column))
             {
@@ -160,8 +160,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
             }
 
             var id     = this.currentId.Value;
-            var column = this.ViewLayout.ColumnFrom(id);
-            var row    = this.ViewLayout.RowFrom(id);
+            var column = this.ViewLayout.ColumnOf(id);
+            var row    = this.ViewLayout.RowOf(id);
 
             if (!this.IsTopmost(row))
             {

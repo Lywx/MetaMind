@@ -73,8 +73,8 @@
 
             var draw = this.TextMonospaced
                            ? (Action<Font, string, Vector2, Color, float, StringHAlign, StringVAlign>)
-                             drawer.DrawMonospacedString
-                           : drawer.DrawString;
+                             ((font, str, position, color, scale, hAlign, vAlign) => drawer.DrawMonospacedString(font, str, position, color, scale, hAlign, vAlign))
+                           : ((font, str, position, color, scale, hAlign, vAlign) => drawer.DrawString(font, str, position, color, scale, hAlign, vAlign));
 
             draw(
                 this.TextFont(),

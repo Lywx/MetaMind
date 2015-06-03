@@ -20,7 +20,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
 
     public class ViewItemSwapProcess<TData> : Process
     {
-        private const int UpdateNum = 2;
+        private const int UpdateNum = 6;
 
         #region Constructors
 
@@ -148,7 +148,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
         {
             this.SwapDataInList();
 
-            // Replace each another in their origial view
+            // Replace each another in their original view
             this.DraggingViewLogic.ViewSelection.Cancel();
             this.DraggingItem.View[ViewState.View_Has_Focus] = () => false;
 
