@@ -50,9 +50,10 @@ namespace MetaMind.Engine.Components.Fonts
             var cjkCharCount = str.CJKExclusiveCharCount();
             var asciiCharCount = str.Length - cjkCharCount;
 
-            var monoSize = font.GetMono().AsciiSize(scale);
+            var monoFont = font.GetMono();
+            var monoSize = monoFont.AsciiSize(scale);
 
-            return new Vector2((asciiCharCount + cjkCharCount * 2) * monoSize, monoSize);
+            return new Vector2((asciiCharCount + cjkCharCount * 2) * monoSize.X, monoSize.Y);
         }
 
         public static Vector2 MeasureString(this Font font, string str, float scale, bool monospaced)

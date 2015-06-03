@@ -60,38 +60,55 @@ namespace MetaMind.Engine.Components.Fonts
             for (var i = 0; i < displayable.Length; ++i)
             {
                 var charPosition = isCJKCharExisting ? CJKCharAmendedPosition[i] : i;
-                var amendedPosition = position + new Vector2(charPosition * font.GetMono().AsciiSize(scale), 0);
+                var amendedPosition = position + new Vector2(charPosition * font.GetMono().AsciiSize(scale).X, 0);
 
                 this.DrawMonospacedChar(font, displayable[i], amendedPosition, color, scale);
             }
         }
 
-        public void DrawMonospacedString(Font font, string str, Vector2 position, Color color, float scale, StringHAlign HAlign, StringVAlign VAlign)
+        /// <param name="leading">vertical distance from line to line</param>
+        public void DrawMonospacedString(Font font, string str, Vector2 position, Color color, float scale, StringHAlign HAlign, StringVAlign VAlign, int leading = 0)
         {
-            var stringPrintable = font.PrintableString(str);
-            var stringSize      = font.MeasureMonospacedString(stringPrintable, scale);
-
-            if (VAlign == StringVAlign.Center)
+            if (leading == 0)
             {
-                position -= new Vector2(0, stringSize.Y / 2);
+                leading = (int)font.GetMono().AsciiSize(scale).Y * 2;
             }
 
-            if (VAlign == StringVAlign.Top)
-            {
-                position -= new Vector2(0, stringSize.Y);
-            }
+            var lines = str.Split('\n');
 
-            if (HAlign == StringHAlign.Center)
+            for (var i = 0; i < lines.Length; ++i)
             {
-                position -= new Vector2(stringSize.X / 2, 0);
-            }
+                var line = lines[i];
 
-            if (HAlign == StringHAlign.Left)
-            {
-                position -= new Vector2(stringSize.X, 0);
-            }
+                var lineString = font.PrintableString(line);
+                var lineSize = font.MeasureMonospacedString(lineString, scale);
 
-            this.DrawMonospacedString(font, stringPrintable, position, color, scale);
+                var linePosition = position;
+
+                linePosition += new Vector2(0, i * leading);
+
+                if (VAlign == StringVAlign.Center)
+                {
+                    linePosition -= new Vector2(0, lineSize.Y / 2);
+                }
+
+                if (VAlign == StringVAlign.Top)
+                {
+                    linePosition -= new Vector2(0, lineSize.Y);
+                }
+
+                if (HAlign == StringHAlign.Center)
+                {
+                    linePosition -= new Vector2(lineSize.X / 2, 0);
+                }
+
+                if (HAlign == StringHAlign.Left)
+                {
+                    linePosition -= new Vector2(lineSize.X, 0);
+                }
+
+                this.DrawMonospacedString(font, lineString, linePosition, color, scale);
+            }
         }
 
         public void DrawString(Font font, string str, Vector2 position, Color color, float scale)
@@ -104,32 +121,48 @@ namespace MetaMind.Engine.Components.Fonts
             SpriteBatch.DrawString(font.GetSprite(), font.PrintableString(str), position, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0);
         }
 
-        public void DrawString(Font font, string str, Vector2 position, Color color, float scale, StringHAlign HAlign, StringVAlign VAlign)
+        public void DrawString(Font font, string str, Vector2 position, Color color, float scale, StringHAlign HAlign, StringVAlign VAlign, int leading = 0)
         {
-            var stringPrintable = font.PrintableString(str);
-            var stringSize      = font.MeasureString(stringPrintable, scale);
-
-            if (VAlign == StringVAlign.Center)
+            if (leading == 0)
             {
-                position -= new Vector2(0, stringSize.Y / 2);
+                leading = (int)font.GetMono().AsciiSize(scale).Y * 2;
             }
 
-            if (VAlign == StringVAlign.Top)
-            {
-                position -= new Vector2(0, stringSize.Y);
-            }
+            var lines = str.Split('\n');
 
-            if (HAlign == StringHAlign.Center)
+            for (var i = 0; i < lines.Length; ++i)
             {
-                position -= new Vector2(stringSize.X / 2, 0);
-            }
+                var line = lines[i];
 
-            if (HAlign == StringHAlign.Left)
-            {
-                position -= new Vector2(stringSize.X, 0);
-            }
+                var lineString = font.PrintableString(line);
+                var lineSize = font.MeasureString(lineString, scale);
 
-            this.DrawString(font, stringPrintable, position, color, scale);
+                var linePosition = position;
+
+                linePosition += new Vector2(0, i * leading);
+
+                if (VAlign == StringVAlign.Center)
+                {
+                    linePosition -= new Vector2(0, lineSize.Y / 2);
+                }
+
+                if (VAlign == StringVAlign.Top)
+                {
+                    linePosition -= new Vector2(0, lineSize.Y);
+                }
+
+                if (HAlign == StringHAlign.Center)
+                {
+                    linePosition -= new Vector2(lineSize.X / 2, 0);
+                }
+
+                if (HAlign == StringHAlign.Left)
+                {
+                    linePosition -= new Vector2(lineSize.X, 0);
+                }
+
+                this.DrawString(font, lineString, linePosition, color, scale);
+            }
         }
 
         private void DrawMonospacedChar(Font font, char khar, Vector2 position, Color color, float scale)

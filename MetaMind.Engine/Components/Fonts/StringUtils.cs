@@ -19,7 +19,7 @@ namespace MetaMind.Engine.Components.Fonts
         public static string CropMonospacedStringByAsciiCount(string str, int count)
         {
             // HACK: May not use standard font here
-            return CropMonospacedString(str, 1.0f, (int)(count * Font.ContentRegular.GetMono().AsciiSize(1.0f)));
+            return CropMonospacedString(str, 1.0f, (int)(count * Font.ContentRegular.GetMono().AsciiSize(1.0f).X));
         }
 
         public static string CropString(Font font, string str, float scale, int maxLength, bool monospaced = false)
@@ -67,14 +67,15 @@ namespace MetaMind.Engine.Components.Fonts
         }
 
         #endregion 
+
         #region Breaking
 
         /// <summary>
         /// Break string using word by word method.
         /// </summary>
-        public static string BreakStringIntoLinesByWord(Font font, string str, float maxLineWidth)
+        public static string BreakStringByWord(Font font, string str, float scale, float maxLineWidth, bool monospaced)
         {
-            var spaceWidth = font.MeasureString(" ", 1f).X;
+            var spaceWidth = font.MeasureString(" ", scale).X;
 
             var result = new StringBuilder();
 
@@ -85,7 +86,7 @@ namespace MetaMind.Engine.Components.Fonts
                 var lineWidth = 0f;
                 foreach (var word in words)
                 {
-                    var size = font.MeasureString(word, 1f);
+                    var size = font.MeasureString(word, scale, monospaced);
                     if (lineWidth + size.X < maxLineWidth)
                     {
                         result.Append(word + " ");
@@ -107,12 +108,13 @@ namespace MetaMind.Engine.Components.Fonts
         /// <summary>
         /// Break string using letter by letter method.
         /// </summary>
-        public static List<string> BreakStringIntoListByLetter(Font font, string str, float scale, float maxLineWidth)
+        public static string BreakStringByLetter(Font font, string str, float scale, float maxLineWidth, bool monospaced)
         {
-            var stringList = new List<string>();
+            var lines = new List<string>();
             var line = new StringBuilder();
             var lineWidth = 0;
             var index = 0;
+
             while (index < str.Length)
             {
                 while (lineWidth < maxLineWidth)
@@ -123,18 +125,18 @@ namespace MetaMind.Engine.Components.Fonts
                     // measure length and decide whether to go into next line
                     if (IsNextCharExisting(str, index))
                     {
-                        lineWidth = (int)font.MeasureString(string.Concat(line.ToString(), str[index + 1]), scale).X;
+                        lineWidth = (int)font.MeasureString(string.Concat(line.ToString(), str[index + 1]), scale, monospaced).X;
                         index++;
                     }
                     else
                     {
-                        lineWidth = (int)font.MeasureString(line.ToString(), scale).X;
+                        lineWidth = (int)font.MeasureString(line.ToString(), scale, monospaced).X;
                         index++;
                         break;
                     }
                 }
 
-                stringList.Add(line.ToString());
+                lines.Add(line.ToString());
 
                 // initialize next line
                 if (IsNextCharExisting(str, index))
@@ -156,7 +158,7 @@ namespace MetaMind.Engine.Components.Fonts
                 }
             }
 
-            return stringList;
+            return string.Join("\n", lines);
         }
 
         private static bool IsNextCharContinuous(string text, int index)

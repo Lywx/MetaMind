@@ -1,8 +1,11 @@
 namespace MetaMind.Engine.Components.Fonts
 {
+    using Microsoft.Xna.Framework;
+
     public class MonoFont
     {
-        public float FontFactor = 2f / 3f;
+        // This is the width / height ratio
+        public float FontFactor = 73f / 102f;
 
         // This is a margin prefix to monospaced string to left-parallel normally spaced string
         public int FontMargin = 7;
@@ -17,9 +20,9 @@ namespace MetaMind.Engine.Components.Fonts
 
         public int FontSize { get; set; }
 
-        public float AsciiSize(float scale)
+        public Vector2 AsciiSize(float scale)
         {
-            return this.FontSize * this.FontFactor * scale;
+            return new Vector2(this.FontSize * this.FontFactor * scale, this.FontSize * scale);
         }
     }
 }
