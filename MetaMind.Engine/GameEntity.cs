@@ -158,7 +158,11 @@ namespace MetaMind.Engine
         {
         }
 
-        public virtual void UpdateBuffer()
+        public virtual void UpdateForwardBuffer()
+        {
+        }
+
+        public virtual void UpdateBackwardBuffer()
         {
         }
 

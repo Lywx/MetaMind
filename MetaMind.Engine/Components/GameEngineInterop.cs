@@ -50,9 +50,9 @@ namespace MetaMind.Engine.Components
 #endif
 
             this.Audio   = new AudioManager(engine, settingsFile, waveBankFile, soundBankFile, int.MaxValue);
-            this.Event   = new EventManager(engine, 4);
-            this.Process = new ProcessManager(engine, 5);
-            this.Screen  = new ScreenManager(engine, new ScreenSettings(), engine.Graphics.SpriteBatch, 3);
+            this.Event   = new EventManager(engine, 3);
+            this.Process = new ProcessManager(engine, 4);
+            this.Screen  = new ScreenManager(engine, new ScreenSettings(), engine.Graphics.SpriteBatch, 5);
 
             this.Content = engine.Content;
             this.File    = new FileManager();

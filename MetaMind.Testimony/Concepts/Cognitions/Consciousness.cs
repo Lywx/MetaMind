@@ -73,10 +73,6 @@
             this.State = new ConsciousnessAwake(this);
         }
 
-        ~Consciousness()
-        {
-        }
-
         #endregion 
 
 

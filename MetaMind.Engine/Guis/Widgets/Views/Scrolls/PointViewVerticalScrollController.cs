@@ -36,7 +36,7 @@
         {
             get
             {
-                return (this.viewSettings.RowNumDisplay + this.OffsetY) < this.View.Items.Count;
+                return (this.viewSettings.RowNumDisplay + this.OffsetY) < this.View.ItemsRead.Count;
             }
         }
 

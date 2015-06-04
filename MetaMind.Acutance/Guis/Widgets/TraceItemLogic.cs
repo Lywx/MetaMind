@@ -32,7 +32,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         private void DeleteIt()
         {
-            View.Items.Remove(Item);
+            View.ItemsWrite.Remove(Item);
 
             View.ViewLogic.ItemFactory.RemoveData(Item);
 

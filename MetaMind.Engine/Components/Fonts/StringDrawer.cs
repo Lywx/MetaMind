@@ -69,6 +69,11 @@ namespace MetaMind.Engine.Components.Fonts
         /// <param name="leading">vertical distance from line to line</param>
         public void DrawMonospacedString(Font font, string str, Vector2 position, Color color, float scale, StringHAlign hAlign, StringVAlign vAlign, int leading = 0)
         {
+            if (string.IsNullOrEmpty(str))
+            {
+                return;
+            }
+
             if (leading == 0)
             {
                 leading = (int)font.GetMono().AsciiSize(scale).Y * 2;
@@ -123,6 +128,11 @@ namespace MetaMind.Engine.Components.Fonts
 
         public void DrawString(Font font, string str, Vector2 position, Color color, float scale, StringHAlign hAlign, StringVAlign vAlign, int leading = 0)
         {
+            if (string.IsNullOrEmpty(str))
+            {
+                return;
+            }
+
             if (leading == 0)
             {
                 leading = (int)font.GetMono().AsciiSize(scale).Y * 2;

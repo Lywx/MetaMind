@@ -15,7 +15,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layers
             get { return (IBlockViewVerticalItemLogic)base.ItemLogic; }
         }
 
-        public new IBlockViewVerticalItemLayout ItemLayout
+        public IBlockViewVerticalItemLayout ItemLayout
         {
             get { return this.ItemLogic.ItemLayout; }
         }

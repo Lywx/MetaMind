@@ -14,7 +14,9 @@ namespace MetaMind.Engine
 
         #region Double Buffer
 
-        void UpdateBuffer();
+        void UpdateForwardBuffer();
+
+        void UpdateBackwardBuffer();
 
         #endregion
     }

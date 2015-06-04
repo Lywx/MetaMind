@@ -3,6 +3,7 @@ namespace MetaMind.Engine.Guis.Widgets
     using System;
     using System.Collections.Generic;
 
+    [Serializable]
     public class WidgetSettings : Dictionary<string, object>
     {
         public T Get<T>(string id)

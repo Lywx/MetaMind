@@ -150,7 +150,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Swaps
             Predicate<IViewItem> isTouched = t => t[ItemState.Item_Is_Mouse_Over]();
             Predicate<IViewItem> isAnother = t => !ReferenceEquals(t, draggedItem);
 
-            var swappingItem = touchedView.Items.
+            var swappingItem = touchedView.ItemsRead.
                 FindAll(isActive).
                 FindAll(isTouched).
                 Find(isAnother);

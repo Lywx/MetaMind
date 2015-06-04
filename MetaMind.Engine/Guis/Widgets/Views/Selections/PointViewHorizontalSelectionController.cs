@@ -127,7 +127,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 
         private bool IsRightmost(int column)
         {
-            return column >= this.View.Items.Count - 1;
+            return column >= this.View.ItemsRead.Count - 1;
         }
 
         private void Reverse()

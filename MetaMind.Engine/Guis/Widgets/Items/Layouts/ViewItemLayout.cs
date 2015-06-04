@@ -50,7 +50,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
 
         protected void UpdateId()
         {
-            this.Id = this.View.Items.IndexOf(this.Item);
+            this.Id = this.View.ItemsRead.IndexOf(this.Item);
         }
 
         #endregion

@@ -150,15 +150,15 @@
             }
         }
 
-        public override void UpdateBuffer()
+        public override void UpdateBackwardBuffer()
         {
-            base.UpdateBuffer();
+            base.UpdateBackwardBuffer();
 
             // This is order insensitive
-            this.ItemLayout     .UpdateBuffer();
-            this.ItemFrame      .UpdateBuffer();
-            this.ItemModel      .UpdateBuffer();
-            this.ItemInteraction.UpdateBuffer();
+            this.ItemLayout     .UpdateBackwardBuffer();
+            this.ItemFrame      .UpdateBackwardBuffer();
+            this.ItemModel      .UpdateBackwardBuffer();
+            this.ItemInteraction.UpdateBackwardBuffer();
         }
 
         #endregion Update

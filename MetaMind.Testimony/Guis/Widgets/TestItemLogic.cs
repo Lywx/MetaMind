@@ -34,7 +34,7 @@
         public void DeleteIt()
         {
             // remove from gui
-            this.View.Items.Remove(this.Item);
+            this.View.ItemsWrite.Remove(this.Item);
 
             // TODO:???
             //this.View.ViewLogic.ItemFactory.RemoveData(this.Item);

@@ -67,7 +67,7 @@
             get
             {
                 return (this.viewSettings.ColumnNumDisplay * (this.viewSettings.RowNumDisplay + this.OffsetY) < this.viewSettings.ColumnNumDisplay * this.viewSettings.RowNumMax) && 
-                       (this.viewSettings.ColumnNumMax * (this.viewSettings.RowNumDisplay + this.OffsetY) < this.View.Items.Count);
+                       (this.viewSettings.ColumnNumMax * (this.viewSettings.RowNumDisplay + this.OffsetY) < this.View.ItemsRead.Count);
             }
         }
 

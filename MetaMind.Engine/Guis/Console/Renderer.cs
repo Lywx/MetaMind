@@ -9,7 +9,7 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    internal class Renderer
+    internal class Renderer : IDisposable
     {
         private enum State
         {
@@ -322,6 +322,11 @@
         private bool IsInBounds(float yPosition)
         {
             return yPosition < this.openedPosition.Y + GameConsoleOptions.Options.Height;
+        }
+
+        public void Dispose()
+        {
+            this.pixel.Dispose();
         }
     }
 }

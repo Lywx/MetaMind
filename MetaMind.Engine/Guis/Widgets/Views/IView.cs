@@ -28,7 +28,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         ViewSettings ViewSettings { get; set; }
 
-        List<IViewItem> Items { get; set; }
+        List<IViewItem> ItemsRead { get; }
+
+        List<IViewItem> ItemsWrite { get; set; }
 
         ItemSettings ItemSettings { get; set; }
     }

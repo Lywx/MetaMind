@@ -3,18 +3,21 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     using System;
     using System.Collections.Generic;
 
-    using MetaMind.Engine.Guis.Widgets.Items;
-    using MetaMind.Engine.Guis.Widgets.Items.Settings;
-    using MetaMind.Engine.Guis.Widgets.Views.Layers;
-    using MetaMind.Engine.Guis.Widgets.Views.Logic;
-    using MetaMind.Engine.Guis.Widgets.Views.Settings;
-    using MetaMind.Engine.Guis.Widgets.Views.Visuals;
-    using MetaMind.Engine.Services;
-
     using Microsoft.Xna.Framework;
+
+    using Items;
+    using Items.Settings;
+    using Layers;
+    using Logic;
+    using Services;
+    using Settings;
+    using Visuals;
 
     public class View : ViewEntity, IView
     {
+        private readonly List<IViewItem>[] items = {new List<IViewItem>(), new List<IViewItem>()};
+
+        private int currentBuffer;
 
         public View(ViewSettings viewSettings, ItemSettings itemSettings, List<IViewItem> items)
         {
@@ -36,10 +39,10 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             this.ViewSettings = viewSettings;
             this.ViewComponents = new Dictionary<string, object>();
 
-            this.Items        = items;
+            this.ItemsWrite = items;
             this.ItemSettings = itemSettings;
         }
-        
+
         #region Dependency
 
         public IViewLayer ViewLayer { get; set; }
@@ -52,7 +55,17 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public IViewVisual ViewVisual { get; set; }
 
-        public List<IViewItem> Items { get; set; }
+        public List<IViewItem> ItemsRead
+        {
+            get { return this.items[this.currentBuffer]; }
+            private set { this.items[this.currentBuffer] = value; }
+        }
+
+        public List<IViewItem> ItemsWrite
+        {
+            get { return this.items[this.NextBuffer()]; }
+            set { this.items[this.NextBuffer()] = value; }
+        }
 
         public ItemSettings ItemSettings { get; set; }
 
@@ -99,21 +112,37 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
         }
 
-        public override void UpdateBuffer()
+        public override void UpdateForwardBuffer()
         {
-            base.UpdateBuffer();
+            base.UpdateForwardBuffer();
+
+            // Update read buffer updated in lasted loop to use in this loop
+            this.ItemsRead = this.ItemsWrite.GetRange(0, this.ItemsWrite.Count);
+        }
+
+        public override void UpdateBackwardBuffer()
+        {
+            base.UpdateBackwardBuffer();
+
+            // Swap buffer
+            this.currentBuffer = this.NextBuffer();
 
             if (this.ViewLogic != null)
             {
-                this.ViewLogic.UpdateBuffer();
+                this.ViewLogic.UpdateBackwardBuffer();
             }
 
             if (this.ViewVisual != null)
             {
-                this.ViewVisual.UpdateBuffer();
+                this.ViewVisual.UpdateBackwardBuffer();
             }
         }
 
         #endregion
+
+        private int NextBuffer()
+        {
+            return 1 - this.currentBuffer;
+        }
     }
 }

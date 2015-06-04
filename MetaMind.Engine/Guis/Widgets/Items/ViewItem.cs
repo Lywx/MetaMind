@@ -148,18 +148,18 @@
             }
         }
 
-        public override void UpdateBuffer()
+        public override void UpdateBackwardBuffer()
         {
-            base.UpdateBuffer();
+            base.UpdateBackwardBuffer();
 
             if (this.ItemLogic != null)
             {
-                this.ItemLogic.UpdateBuffer();
+                this.ItemLogic.UpdateBackwardBuffer();
             }
 
             if (this.ItemVisual != null)
             {
-                this.ItemVisual.UpdateBuffer();
+                this.ItemVisual.UpdateBackwardBuffer();
             }
         }
 

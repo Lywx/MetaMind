@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaMind.EngineProcessor", "MetaMind.EngineProcessor\MetaMind.EngineProcessor.csproj", "{0A5D6A10-F746-4B7D-9BCA-09269F593D6A}"
 EndProject
@@ -27,6 +27,11 @@ EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Tutorial1", "Tutorial1\Tutorial1.fsproj", "{DE532536-1ECF-41A5-8B64-F32B7521023E}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MetaMind.TestimonyScripting", "MetaMind.TestimonyScripting\MetaMind.TestimonyScripting.fsproj", "{06536545-052B-42CA-B440-040E83F1D51E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D520A7C7-AD3B-42CF-9173-54E436299186}"
+	ProjectSection(SolutionItems) = preProject
+		Performance1.psess = Performance1.psess
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

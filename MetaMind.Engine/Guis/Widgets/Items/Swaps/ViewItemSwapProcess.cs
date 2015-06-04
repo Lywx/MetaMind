@@ -155,8 +155,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
             //this.SwappingViewLogic.ViewSelection.Select(0);
             //this.SwappingItem.View[ViewState.View_Has_Focus] = () => true;
 
-            //this.SwappingItem.View.Items.SwapWith(
-            //    this.SwappingItem.View.Items, 
+            //this.SwappingItem.View.ItemsRead.SwapWith(
+            //    this.SwappingItem.View.ItemsRead, 
             //    this.SwappingItemLogic.ItemLayout.Id, 
             //    this.DraggingItemLogic.ItemLayout.Id);
         }
@@ -170,7 +170,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
 
         protected virtual void SwapInView()
         {
-            //this.SwapDataInList();
+            this.SwapDataInList();
             this.SwapItemInList();
             //this.SwappingViewLogic.ViewLayout.Sort(item => item.ItemLogic.ItemLayout.Id);
 
@@ -189,7 +189,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
             //var temp = this.SwappingItemLogic.ItemLayout.Id;
             //this. = this.DraggingItemLogic.ItemLayout.Id;
             //this. = temp;
-            this.SwappingItem.View.Items.Swap(SwappingItemLogic.ItemLayout.Id, DraggingItemLogic.ItemLayout.Id );
+            this.SwappingItem.View.ItemsWrite.Swap(SwappingItemLogic.ItemLayout.Id, DraggingItemLogic.ItemLayout.Id );
         }
 
         protected void SwapTerminate()

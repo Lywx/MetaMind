@@ -29,7 +29,7 @@
         {
             get
             {
-                return (this.viewSettings.ColumnNumDisplay + this.OffsetX) < this.View.Items.Count;
+                return (this.viewSettings.ColumnNumDisplay + this.OffsetX) < this.View.ItemsRead.Count;
             }
         }
 

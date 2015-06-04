@@ -23,7 +23,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layouts
         {
             get
             {
-                return this.RowNum > 1 ? this.viewSettings.ColumnNumMax : this.View.Items.Count;
+                return this.RowNum > 1 ? this.viewSettings.ColumnNumMax : this.View.ItemsRead.Count;
             }
         }
 
@@ -31,7 +31,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layouts
         {
             get
             {
-                var lastId = this.View.Items.Count - 1;
+                var lastId = this.View.ItemsRead.Count - 1;
                 return this.RowOf(lastId) + 1;
             }
         }

@@ -120,7 +120,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 
         private bool IsBottommost(int row)
         {
-            return row >= this.View.Items.Count - 1;
+            return row >= this.View.ItemsRead.Count - 1;
         }
 
         private void Reverse()

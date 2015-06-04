@@ -10,13 +10,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layouts
         {
         }
 
-        public int RowNum { get { return this.Items.Count; } }
+        public int RowNum { get { return this.ItemsRead.Count; } }
 
         public int RowOf(int id)
         {
-            if (this.Items.Count > id)
+            if (this.ItemsRead.Count > id)
             {
-                var itemLayer = this.Items[id].ItemLayer.ItemGetLayer <BlockViewVerticalItemLayer>();
+                var itemLayer = this.ItemsRead[id].ItemLayer.ItemGetLayer<BlockViewVerticalItemLayer>();
                 var itemLayout = itemLayer.ItemLayout;
 
                 return itemLayout.Row;
@@ -27,9 +27,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layouts
 
         public int RowIn(int id)
         {
-            if (this.Items.Count > id)
+            if (this.ItemsRead.Count > id)
             {
-                var itemLayer = this.Items[id].ItemLayer.ItemGetLayer<BlockViewVerticalItemLayer>();
+                var itemLayer = this.ItemsRead[id].ItemLayer.ItemGetLayer<BlockViewVerticalItemLayer>();
                 var itemLayout = itemLayer.ItemLayout;
 
                 return itemLayout.BlockRow;

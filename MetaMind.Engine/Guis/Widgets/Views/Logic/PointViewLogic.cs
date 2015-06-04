@@ -33,7 +33,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
         {
             if (this.View[ViewState.View_Is_Active]())
             {
-                foreach (var item in this.View.Items.ToArray())
+                foreach (var item in this.View.ItemsRead.ToArray())
                 {
                     item.UpdateView(time);
                     item.Update(time);
@@ -41,7 +41,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             }
             else
             {
-                foreach (var item in this.View.Items.ToArray())
+                foreach (var item in this.View.ItemsRead.ToArray())
                 {
                     item.UpdateView(time);
                 }
@@ -62,7 +62,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         protected void UpdateInputOfItems(IGameInputService input, GameTime time)
         {
-            foreach (var item in this.View.Items.ToArray())
+            foreach (var item in this.View.ItemsRead.ToArray())
             {
                 item.UpdateInput(input, time);
             }
@@ -104,7 +104,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
             item.SetupLayer();
 
-            this.View.Items.Add(item);
+            this.View.ItemsWrite.Add(item);
         }
 
         #endregion

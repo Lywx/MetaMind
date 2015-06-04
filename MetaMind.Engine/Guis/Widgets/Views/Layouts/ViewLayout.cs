@@ -20,8 +20,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layouts
 
         public void Sort(Func<IViewItem, dynamic> key)
         {
-            this.View.Items = this.View.Items.OrderBy(key).ToList();
-            this.View.Items.ForEach(item => item.ItemLogic.ItemLayout.Id = this.View.Items.IndexOf(item));
+            this.View.ItemsWrite = this.View.ItemsRead.OrderBy(key).ToList();
+            this.View.ItemsWrite.ForEach(item => item.ItemLogic.ItemLayout.Id = this.View.ItemsRead.IndexOf(item));
         }
     }
 }

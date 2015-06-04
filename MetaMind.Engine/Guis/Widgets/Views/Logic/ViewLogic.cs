@@ -123,20 +123,20 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         #region Update
 
-        public override void UpdateBuffer()
+        public override void UpdateBackwardBuffer()
         {
-            base.UpdateBuffer();
+            base.UpdateBackwardBuffer();
 
             // This is order insensitive
-            this.ViewLayout   .UpdateBuffer();
-            this.ViewScroll   .UpdateBuffer();
-            this.ViewSelection.UpdateBuffer();
-            this.ViewSwap     .UpdateBuffer();
-            this.ViewLayout   .UpdateBuffer();
+            this.ViewLayout   .UpdateBackwardBuffer();
+            this.ViewScroll   .UpdateBackwardBuffer();
+            this.ViewSelection.UpdateBackwardBuffer();
+            this.ViewSwap     .UpdateBackwardBuffer();
+            this.ViewLayout   .UpdateBackwardBuffer();
 
-            foreach (var item in Items.ToArray())
+            foreach (var item in this.ItemsRead.ToArray())
             {
-                item.UpdateBuffer();
+                item.UpdateBackwardBuffer();
             }
         }
 

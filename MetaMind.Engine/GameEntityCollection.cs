@@ -17,13 +17,27 @@
             }
         }
 
-        public void UpdateBuffer()
+        #region Buffer
+
+        public void UpdateBackwardBuffer()
         {
             foreach (var entity in this)
             {
-                entity.UpdateBuffer();
+                entity.UpdateBackwardBuffer();
             }
         }
+
+        public void UpdateForwardBuffer()
+        {
+            foreach (var entity in this)
+            {
+                entity.UpdateForwardBuffer();
+            }
+        }
+
+        #endregion
+
+        #region Load and Unload
 
         public void LoadContent(IGameInteropService interop)
         {
@@ -40,5 +54,7 @@
                 entity.UnloadContent(interop);
             }
         }
+
+        #endregion
     }
 }

@@ -18,8 +18,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
 
         private int[] row = new int[2];
 
-        private int[] id = new int[2];
-
         private ItemSettings itemSettings;
 
         private IPointViewVerticalLayout viewLayout;
@@ -58,28 +56,18 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
             this.BlockRow = this.BlockStringWrapped.Split('\n').Length - 1;
         }
 
-        public override int Id
-        {
-            get { return this.id[this.currentBuffer]; }
-            set
-            {
+        //public override int Row
+        //{
+        //    get { return this.row[this.currentBuffer]; }
+        //    protected set
+        //    {
+        //        this.row[this.NextBuffer()] = value;
 
-                this.id[this.NextBuffer()] = value;
-            }
-        }
-
-        public override int Row
-        {
-            get { return this.row[this.currentBuffer]; }
-            protected set
-            {
-                this.row[this.NextBuffer()] = value;
-
-                Debug.WriteLine("id {0} -> {1}", this.id[this.currentBuffer], this.id[this.NextBuffer()]);
-                Debug.WriteLine("row {0} -> {1}", this.row[this.currentBuffer], value);
+        //        Debug.WriteLine("id {0}", this.Id);
+        //        Debug.WriteLine("row {0} -> {1}", this.row[this.currentBuffer], value);
                 
-            }
-        }
+        //    }
+        //}
 
         public int BlockRow { get; protected set; }
 
@@ -101,7 +89,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
             return 1 - this.currentBuffer;
         }
 
-        public override void UpdateBuffer()
+        public override void UpdateBackwardBuffer()
         {
             this.currentBuffer = this.NextBuffer();
         }
