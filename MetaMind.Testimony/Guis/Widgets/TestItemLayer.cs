@@ -2,7 +2,6 @@ namespace MetaMind.Testimony.Guis.Widgets
 {
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Layers;
-    using Engine.Guis.Widgets.Items.Layouts;
 
     public class TestItemLayer : BlockViewVerticalItemLayer
     {
@@ -23,11 +22,6 @@ namespace MetaMind.Testimony.Guis.Widgets
         public TestItemFrame ItemFrame
         {
             get { return this.ItemLogic.ItemFrame; }
-        }
-
-        public new IViewItemLayout ItemLayout
-        {
-            get { return this.ItemLogic.ItemLayout; }
         }
     }
 }

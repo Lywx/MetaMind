@@ -25,7 +25,6 @@
         public void Update()
         {
             this.Cognition.Update();
-
             this.Test     .Update();
         }
     }

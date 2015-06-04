@@ -148,6 +148,21 @@
             }
         }
 
+        public override void UpdateBuffer()
+        {
+            base.UpdateBuffer();
+
+            if (this.ItemLogic != null)
+            {
+                this.ItemLogic.UpdateBuffer();
+            }
+
+            if (this.ItemVisual != null)
+            {
+                this.ItemVisual.UpdateBuffer();
+            }
+        }
+
         #endregion
 
         #region IDisposable

@@ -61,7 +61,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         #endregion
 
-        #region Layering
+        #region Layer
 
         public T ItemGetLayer<T>() where T : class, IViewItemLayer
         {

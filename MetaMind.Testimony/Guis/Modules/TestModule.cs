@@ -101,6 +101,7 @@
         public override void Update(GameTime time)
         {
             this.entities.Update(time);
+            this.entities.UpdateBuffer();
         }
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)

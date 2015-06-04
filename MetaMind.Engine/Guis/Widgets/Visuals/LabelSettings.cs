@@ -22,6 +22,8 @@ namespace MetaMind.Engine.Guis.Widgets.Visuals
 
         public Func<Vector2> TextPosition;
 
+        public int TextLeading;
+
         public LabelSettings()
         {
             this.TextHAlign = StringHAlign.Right;

@@ -21,6 +21,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Visuals
                 () => labelSettings.TextSize,
                 labelSettings.TextHAlign,
                 labelSettings.TextVAlign,
+                labelSettings.TextLeading,
                 labelSettings.TextMonospaced);
         }
 

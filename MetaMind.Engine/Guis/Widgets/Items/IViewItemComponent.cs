@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
     using Views;
     using Views.Layers;
 
-    public interface IViewItemComponent : IDisposable
+    public interface IViewItemComponent : IGameControllableEntity, IDisposable
     {
         IView View { get; }
 

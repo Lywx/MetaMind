@@ -56,6 +56,7 @@ namespace MetaMind.Testimony.Guis.Widgets
             TextFont       = Font.ContentBold,
             TextHAlign     = StringHAlign.Right,
             TextVAlign     = StringVAlign.Center,
+            TextLeading    = 26,
 
             TextMonospaced = true,
         };

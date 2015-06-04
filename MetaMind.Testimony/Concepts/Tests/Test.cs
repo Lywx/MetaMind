@@ -9,9 +9,9 @@ namespace MetaMind.Testimony.Concepts.Tests
 {
     using System.Collections.Generic;
     using System.Runtime.Serialization;
+
     using Engine.Guis.Widgets.Items.Data;
-    using Engine.Guis.Widgets.Items.Layouts;
-    using MetaMind.Testimony.Concepts.Synchronizations;
+    using Synchronizations;
 
     [DataContract]
     public class Test : ITest, IBlockViewVerticalItemData
@@ -60,6 +60,19 @@ namespace MetaMind.Testimony.Concepts.Tests
 
         public ISynchronizationData SynchronizationData { get; set; }
 
-        public string BlockText { get { return this.Name; } }
+        public string BlockStringRaw
+        {
+            get { return this.Name; }
+        }
+
+        public string BlockLabel
+        {
+            get { return "NameLabel"; }
+        }
+
+        public string BlockFrame
+        {
+            get { return "NameFrame"; }
+        }
     }
 }

@@ -89,7 +89,7 @@ namespace MetaMind.Testimony.Guis.Widgets
                 nameFrameSettings);
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("NameLabel");
-                labelSettings.Text = () => StringUtils.BreakStringByWord(labelSettings.TextFont, ((IBlockViewVerticalItemData)this.Item.ItemData).BlockText, labelSettings.TextSize, nameFrameSettings.Size.X, true);
+                labelSettings.Text = () => itemLayer.ItemLayout.BlockStringWrapped;
                 labelSettings.TextPosition = this.NamePosition;
 
                 this.NameLabel = new ViewItemLabelVisual(this.Item, labelSettings);

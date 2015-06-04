@@ -1,5 +1,6 @@
 namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
 {
+    using System.Diagnostics;
     using Microsoft.Xna.Framework;
 
     using Components.Fonts;
@@ -13,9 +14,15 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
 
     public class BlockViewVerticalItemLayout : PointViewVerticalItemLayout, IBlockViewVerticalItemLayout
     {
-        private IPointViewVerticalLayout viewLayout;
+        private int currentBuffer = 0;
+
+        private int[] row = new int[2];
+
+        private int[] id = new int[2];
 
         private ItemSettings itemSettings;
+
+        private IPointViewVerticalLayout viewLayout;
 
         public BlockViewVerticalItemLayout(
             IViewItem item,
@@ -32,21 +39,71 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
 
         public override void Update(GameTime time)
         {
-            this.Id = this.View.Items.IndexOf(this.Item);
+            this.UpdateId();
+            this.UpdateRow();
 
-            this.Row = this.Id > 0
-                ? this.viewLayout.RowOf(this.Id - 1)
-                  + this.viewLayout.RowIn(this.Id - 1)
-                : 0;
+            //Debug.WriteLine("id: {0}, row: {1}", this.Id, this.Row);
 
-            var nameLabelSettings = this.itemSettings.Get<LabelSettings>("NameLabel");
-            var nameFrameSettings = this.itemSettings.Get<FrameSettings>("NameFrame");
+            var label = this.itemSettings.Get<LabelSettings>(this.BlockData.BlockLabel);
+            var frame = this.itemSettings.Get<FrameSettings>(this.BlockData.BlockFrame);
 
-            this.BlockRow = StringUtils.BreakStringByWord(Font.ContentBold, ((IBlockViewVerticalItemData)this.Item.ItemData).BlockText, nameLabelSettings.TextSize, nameFrameSettings.Size.X, true).Split('\n').Length;
+            this.BlockStringWrapped =
+                StringUtils.BreakStringByWord(Font.ContentBold,
+                    this.BlockData.BlockStringRaw,
+                    label.TextSize,
+                    frame.Size.X,
+                    true);
+
+            // Remove the last empty string element by - 1
+            this.BlockRow = this.BlockStringWrapped.Split('\n').Length - 1;
         }
 
-        public int BlockRow { get; set; }
+        public override int Id
+        {
+            get { return this.id[this.currentBuffer]; }
+            set
+            {
 
-        public IBlockViewVerticalItemData 
+                this.id[this.NextBuffer()] = value;
+            }
+        }
+
+        public override int Row
+        {
+            get { return this.row[this.currentBuffer]; }
+            protected set
+            {
+                this.row[this.NextBuffer()] = value;
+
+                Debug.WriteLine("id {0} -> {1}", this.id[this.currentBuffer], this.id[this.NextBuffer()]);
+                Debug.WriteLine("row {0} -> {1}", this.row[this.currentBuffer], value);
+                
+            }
+        }
+
+        public int BlockRow { get; protected set; }
+
+        public IBlockViewVerticalItemData BlockData
+        {
+            get { return this.Item.ItemData; }
+        }
+
+        public string BlockStringWrapped { get; set; }
+
+        protected override void UpdateRow()
+        {
+            // Added a separating line between item by + 1
+            this.Row = this.Id > 0 ? this.viewLayout.RowOf(this.Id - 1) + this.viewLayout.RowIn(this.Id - 1) + 1 : 0;
+        }
+
+        private int NextBuffer()
+        {
+            return 1 - this.currentBuffer;
+        }
+
+        public override void UpdateBuffer()
+        {
+            this.currentBuffer = this.NextBuffer();
+        }
     }
 }

@@ -39,11 +39,16 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
             }
         }
 
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
 
         #region Update
 
         public override void Update(GameTime time)
+        {
+            this.UpdateId();
+        }
+
+        protected void UpdateId()
         {
             this.Id = this.View.Items.IndexOf(this.Item);
         }

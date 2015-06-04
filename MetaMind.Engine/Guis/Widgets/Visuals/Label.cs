@@ -23,13 +23,16 @@
 
         public StringVAlign TextVAlign { get; set; }
 
+        public int TextLeading { get; set; }
+
         public bool TextMonospaced { get; set; }
 
-        public Label(Func<Font> textFont, Func<string> text, Func<Vector2> textPosition, Func<Color> textColor, Func<float> textSize, StringHAlign textHAlign, StringVAlign textVAlign, bool textMonospaced)
+        public Label(Func<Font> textFont, Func<string> text, Func<Vector2> textPosition, Func<Color> textColor, Func<float> textSize, StringHAlign textHAlign, StringVAlign textVAlign, int textLeading=0, bool textMonospaced=false)
             : this(textFont, text, textPosition, textColor, textSize)
         {
             this.TextHAlign     = textHAlign;
             this.TextVAlign     = textVAlign;
+            this.TextLeading    = textLeading;
             this.TextMonospaced = textMonospaced;
         }
 
@@ -64,6 +67,8 @@
             this.TextHAlign = StringHAlign.Right;
             this.TextVAlign = StringVAlign.Bottom;
 
+            this.TextLeading = 0;
+
             this.TextMonospaced = false;
         }
 
@@ -72,9 +77,9 @@
             var drawer = graphics.StringDrawer;
 
             var draw = this.TextMonospaced
-                           ? (Action<Font, string, Vector2, Color, float, StringHAlign, StringVAlign>)
-                             ((font, str, position, color, scale, hAlign, vAlign) => drawer.DrawMonospacedString(font, str, position, color, scale, hAlign, vAlign))
-                           : ((font, str, position, color, scale, hAlign, vAlign) => drawer.DrawString(font, str, position, color, scale, hAlign, vAlign));
+                           ? (Action<Font, string, Vector2, Color, float, StringHAlign, StringVAlign, int>)
+                             ((font, str, position, color, scale, hAlign, vAlign, leading) => drawer.DrawMonospacedString(font, str, position, color, scale, hAlign, vAlign, leading))
+                           : ((font, str, position, color, scale, hAlign, vAlign, leading) => drawer.DrawString(font, str, position, color, scale, hAlign, vAlign, leading));
 
             draw(
                 this.TextFont(),
@@ -83,7 +88,8 @@
                 this.TextColor().MakeTransparent(alpha),
                 this.TextSize(),
                 this.TextHAlign,
-                this.TextVAlign);
+                this.TextVAlign,
+                this.TextLeading);
         }
     }
 }

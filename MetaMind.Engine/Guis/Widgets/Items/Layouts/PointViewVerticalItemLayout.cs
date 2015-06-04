@@ -14,12 +14,16 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
 
         public override void Update(GameTime time)
         {
-            base.Update(time);
+            this.UpdateId();
+            this.UpdateRow();
+        }
 
+        protected virtual void UpdateRow()
+        {
             this.Row = this.Id;
         }
 
-        public int Row { get; protected set; }
+        public virtual int Row { get; protected set; }
 
         public int Column
         {

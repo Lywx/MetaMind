@@ -17,11 +17,13 @@ namespace MetaMind.Testimony.Guis.Widgets
     {
         private ItemSettings itemSettings;
 
-        private IViewItemLayout itemLayout;
+        private IBlockViewVerticalItemLayout itemLayout;
 
         private IViewSwapController viewSwap;
 
         private IViewScrollController viewScroll;
+
+        private FrameSettings nameFrameSettings;
 
         public TestItemFrame(IViewItem item)
             : base(item)
@@ -42,8 +44,8 @@ namespace MetaMind.Testimony.Guis.Widgets
         {
             base.SetupLayer();
             
-            var viewLayer = this.ViewGetLayer<PointViewLayer>();
-            var itemLayer = this.ItemGetLayer<PointViewItemLayer>();
+            var viewLayer = this.ViewGetLayer<ViewLayer>();
+            var itemLayer = this.ItemGetLayer<TestItemLayer>();
 
             this.viewScroll = viewLayer.ViewLogic.ViewScroll;
             this.viewSwap = viewLayer.ViewLogic.ViewSwap;
@@ -52,7 +54,7 @@ namespace MetaMind.Testimony.Guis.Widgets
             this.itemLayout = itemLayer.ItemLogic.ItemLayout;
 
             var idFrameSettings = this.itemSettings.Get<FrameSettings>("IdFrame");
-            var nameFrameSettings = this.itemSettings.Get<FrameSettings>("NameFrame");
+            this.nameFrameSettings = this.itemSettings.Get<FrameSettings>("NameFrame");
             var statusFrameSettings = this.itemSettings.Get<FrameSettings>("StatusFrame");
 
             // id frame - status frame - name frame
@@ -129,6 +131,8 @@ namespace MetaMind.Testimony.Guis.Widgets
             this.IdFrame.Location = this.IdFrameLocation().ToPoint();
             this.NameFrame.Location  = this.NameFrameLocation().ToPoint();
             this.StatusFrame.Location = this.StatusFrameLocation().ToPoint();
+
+            this.NameFrame.Size = new Point(this.nameFrameSettings.Size.X, this.itemLayout.BlockRow * this.nameFrameSettings.Size.Y);
         }
 
         public override void Update(GameTime time)

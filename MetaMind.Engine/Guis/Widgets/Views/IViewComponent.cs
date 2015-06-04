@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     using Microsoft.Xna.Framework;
 
-    public interface IViewComponent : IUpdateable, IDisposable 
+    public interface IViewComponent : IGameControllableEntity, IUpdateable, IDisposable 
     {
         IView View { get; }
 

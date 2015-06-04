@@ -58,6 +58,16 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         #endregion
 
+        #region Layer
+
+        public void SetupLayer()
+        {
+            this.ViewLogic.SetupLayer();
+            this.ViewVisual.SetupLayer();
+        }
+
+        #endregion
+
         #region Update and Draw
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
@@ -89,12 +99,21 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
         }
 
-        #endregion
-
-        public void SetupLayer()
+        public override void UpdateBuffer()
         {
-            this.ViewLogic .SetupLayer();
-            this.ViewVisual.SetupLayer();
+            base.UpdateBuffer();
+
+            if (this.ViewLogic != null)
+            {
+                this.ViewLogic.UpdateBuffer();
+            }
+
+            if (this.ViewVisual != null)
+            {
+                this.ViewVisual.UpdateBuffer();
+            }
         }
+
+        #endregion
     }
 }

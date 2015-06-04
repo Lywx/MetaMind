@@ -11,5 +11,11 @@ namespace MetaMind.Engine
         void LoadContent(IGameInteropService interop);
         
         void UnloadContent(IGameInteropService interop);
+
+        #region Double Buffer
+
+        void UpdateBuffer();
+
+        #endregion
     }
 }

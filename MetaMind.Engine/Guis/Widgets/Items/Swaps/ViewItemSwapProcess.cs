@@ -146,19 +146,19 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
 
         protected virtual void SwapAroundView()
         {
-            this.SwapDataInList();
+            //this.SwapDataInList();
 
-            // Replace each another in their original view
-            this.DraggingViewLogic.ViewSelection.Cancel();
-            this.DraggingItem.View[ViewState.View_Has_Focus] = () => false;
+            //// Replace each another in their original view
+            //this.DraggingViewLogic.ViewSelection.Cancel();
+            //this.DraggingItem.View[ViewState.View_Has_Focus] = () => false;
 
-            this.SwappingViewLogic.ViewSelection.Select(0);
-            this.SwappingItem.View[ViewState.View_Has_Focus] = () => true;
+            //this.SwappingViewLogic.ViewSelection.Select(0);
+            //this.SwappingItem.View[ViewState.View_Has_Focus] = () => true;
 
-            this.SwappingItem.View.Items.SwapWith(
-                this.SwappingItem.View.Items, 
-                this.SwappingItemLogic.ItemLayout.Id, 
-                this.DraggingItemLogic.ItemLayout.Id);
+            //this.SwappingItem.View.Items.SwapWith(
+            //    this.SwappingItem.View.Items, 
+            //    this.SwappingItemLogic.ItemLayout.Id, 
+            //    this.DraggingItemLogic.ItemLayout.Id);
         }
 
         protected virtual void SwapDataInList()
@@ -170,23 +170,30 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
 
         protected virtual void SwapInView()
         {
-            this.SwapDataInList();
+            //this.SwapDataInList();
+            this.SwapItemInList();
+            //this.SwappingViewLogic.ViewLayout.Sort(item => item.ItemLogic.ItemLayout.Id);
 
-            // Swap id then sort
-            var tempId = this.SwappingItemLogic.ItemLayout.Id;
-            this.SwappingItemLogic.ItemLayout.Id = this.DraggingItemLogic.ItemLayout.Id;
-            this.DraggingItemLogic.ItemLayout.Id = tempId;
+            // Stop swapping state
+            this.SwappingItem[ItemState.Item_Is_Swaping] = () => false;
 
-            this.SwappingViewLogic.ViewLayout.Sort(item => item.ItemLogic.ItemLayout.Id);
+            // Refine selection to make sure the overall effect is smooth
+            this.DraggingItemLogic.ItemInteraction.ViewSelect();
+
+            //this.SwappingItem.UpdateView(new GameTime());
+            //this.DraggingItem.UpdateView(new GameTime());
+        }
+
+        private void SwapItemInList()
+        {
+            //var temp = this.SwappingItemLogic.ItemLayout.Id;
+            //this. = this.DraggingItemLogic.ItemLayout.Id;
+            //this. = temp;
+            this.SwappingItem.View.Items.Swap(SwappingItemLogic.ItemLayout.Id, DraggingItemLogic.ItemLayout.Id );
         }
 
         protected void SwapTerminate()
         {
-            // Refine selection to make sure the overall effect is smooth
-            this.DraggingItemLogic.ItemInteraction.ViewSelect();
-
-            // Stop swapping state
-            this.SwappingItem[ItemState.Item_Is_Swaping] = () => false;
         }
 
         #endregion

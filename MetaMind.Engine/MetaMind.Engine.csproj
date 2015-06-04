@@ -72,6 +72,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Extensions\ExtT.cs" />
     <Compile Include="Extensions\ExtList.cs" />
     <Compile Include="Guis\Elements\Inputs\ButtonDoubleClick.cs" />
     <Compile Include="Guis\Elements\Inputs\ButtonHistory.cs" />
@@ -146,7 +147,6 @@
     <Compile Include="Guis\Console\OutputLine.cs" />
     <Compile Include="Guis\Console\Renderer.cs" />
     <Compile Include="Guis\IModuleLogicControl.cs" />
-    <Compile Include="Guis\Widgets\Items\Data\BlockViewVerticalItemData.cs" />
     <Compile Include="Guis\Widgets\Items\Data\IViewItemCharModifier.cs">
       <SubType>Code</SubType>
     </Compile>

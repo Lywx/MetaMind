@@ -44,8 +44,7 @@ namespace MetaMind.Testimony.Guis.Modules
                 () => Color.White,
                 () => 1.1f,
                 StringHAlign.Center,
-                StringVAlign.Center,
-                false);
+                StringVAlign.Center);
 
             var statusInfo = new Label(
                 () => Font.UiStatistics,
@@ -54,8 +53,7 @@ namespace MetaMind.Testimony.Guis.Modules
                 () => Color.White,
                 () => 0.7f,
                 StringHAlign.Center,
-                StringVAlign.Center,
-                false);
+                StringVAlign.Center);
 
             var accumulationInfo = new Label(
                 () => Font.UiStatistics,
@@ -64,21 +62,18 @@ namespace MetaMind.Testimony.Guis.Modules
                 () => Color.White,
                 () => 0.7f,
                 StringHAlign.Right,
-                StringVAlign.Center,
-                false);
+                StringVAlign.Center);
 
             var dailyRatePrefix = new Label(
                 () => this.Settings.SynchronizationRateFont,
                 () => this.Consciousness.IsAwake
-                    ? (this.Synchronization.SynchronizedTimeTodayBestCase.TotalSeconds
-                       / ((IConsciousnessAwake)this.Consciousness.State).AwakeSpan.TotalSeconds * 100).ToString("F0")
+                    ? (this.Synchronization.SynchronizedTimeTodayBestCase. TotalSeconds / ((IConsciousnessAwake)this.Consciousness.State).AwakeSpan.TotalSeconds * 100).ToString("F0")
                     : "",
                 () => this.DailyRateCenterPosition,
                 () => Color.White,
                 () => 2.0f,
                 StringHAlign.Left,
-                StringVAlign.Center,
-                false);
+                StringVAlign.Center);
 
             var dailyRateSubfix = new Label(
                 () => this.Settings.SynchronizationRateFont,
@@ -87,8 +82,7 @@ namespace MetaMind.Testimony.Guis.Modules
                 () => Color.White,
                 () => 1f,
                 StringHAlign.Right,
-                StringVAlign.Center,
-                false);
+                StringVAlign.Center);
 
             var accelerationInfoPrefix = new Label(
                 () => Font.UiStatistics,
@@ -97,8 +91,7 @@ namespace MetaMind.Testimony.Guis.Modules
                 () => Color.White,
                 () => 1f,
                 StringHAlign.Left,
-                StringVAlign.Center,
-                false);
+                StringVAlign.Center);
 
             var accelerationInfoSubfix = new Label(
                 () => Font.UiStatistics,
@@ -107,8 +100,7 @@ namespace MetaMind.Testimony.Guis.Modules
                 () => Color.White,
                 () => 2.0f,
                 StringHAlign.Right,
-                StringVAlign.Center,
-                false);
+                StringVAlign.Center);
 
             this.Entities = new GameVisualEntityCollection<IGameVisualEntity>
                                 {

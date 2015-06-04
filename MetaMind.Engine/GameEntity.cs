@@ -158,6 +158,10 @@ namespace MetaMind.Engine
         {
         }
 
+        public virtual void UpdateBuffer()
+        {
+        }
+
         #endregion Update
 
         #region IDisposable

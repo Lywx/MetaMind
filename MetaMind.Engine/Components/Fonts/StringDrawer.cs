@@ -67,7 +67,7 @@ namespace MetaMind.Engine.Components.Fonts
         }
 
         /// <param name="leading">vertical distance from line to line</param>
-        public void DrawMonospacedString(Font font, string str, Vector2 position, Color color, float scale, StringHAlign HAlign, StringVAlign VAlign, int leading = 0)
+        public void DrawMonospacedString(Font font, string str, Vector2 position, Color color, float scale, StringHAlign hAlign, StringVAlign vAlign, int leading = 0)
         {
             if (leading == 0)
             {
@@ -87,22 +87,22 @@ namespace MetaMind.Engine.Components.Fonts
 
                 linePosition += new Vector2(0, i * leading);
 
-                if (VAlign == StringVAlign.Center)
+                if (vAlign == StringVAlign.Center)
                 {
                     linePosition -= new Vector2(0, lineSize.Y / 2);
                 }
 
-                if (VAlign == StringVAlign.Top)
+                if (vAlign == StringVAlign.Top)
                 {
                     linePosition -= new Vector2(0, lineSize.Y);
                 }
 
-                if (HAlign == StringHAlign.Center)
+                if (hAlign == StringHAlign.Center)
                 {
                     linePosition -= new Vector2(lineSize.X / 2, 0);
                 }
 
-                if (HAlign == StringHAlign.Left)
+                if (hAlign == StringHAlign.Left)
                 {
                     linePosition -= new Vector2(lineSize.X, 0);
                 }
@@ -121,7 +121,7 @@ namespace MetaMind.Engine.Components.Fonts
             SpriteBatch.DrawString(font.GetSprite(), font.PrintableString(str), position, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0);
         }
 
-        public void DrawString(Font font, string str, Vector2 position, Color color, float scale, StringHAlign HAlign, StringVAlign VAlign, int leading = 0)
+        public void DrawString(Font font, string str, Vector2 position, Color color, float scale, StringHAlign hAlign, StringVAlign vAlign, int leading = 0)
         {
             if (leading == 0)
             {
@@ -141,22 +141,22 @@ namespace MetaMind.Engine.Components.Fonts
 
                 linePosition += new Vector2(0, i * leading);
 
-                if (VAlign == StringVAlign.Center)
+                if (vAlign == StringVAlign.Center)
                 {
                     linePosition -= new Vector2(0, lineSize.Y / 2);
                 }
 
-                if (VAlign == StringVAlign.Top)
+                if (vAlign == StringVAlign.Top)
                 {
                     linePosition -= new Vector2(0, lineSize.Y);
                 }
 
-                if (HAlign == StringHAlign.Center)
+                if (hAlign == StringHAlign.Center)
                 {
                     linePosition -= new Vector2(lineSize.X / 2, 0);
                 }
 
-                if (HAlign == StringHAlign.Left)
+                if (hAlign == StringHAlign.Left)
                 {
                     linePosition -= new Vector2(lineSize.X, 0);
                 }

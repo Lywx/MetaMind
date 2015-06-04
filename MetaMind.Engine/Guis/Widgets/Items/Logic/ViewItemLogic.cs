@@ -149,6 +149,18 @@
                 this.ItemModel.UpdateInput(input, time);
             }
         }
+
+        public override void UpdateBuffer()
+        {
+            base.UpdateBuffer();
+
+            // This is order insensitive
+            this.ItemLayout     .UpdateBuffer();
+            this.ItemFrame      .UpdateBuffer();
+            this.ItemModel      .UpdateBuffer();
+            this.ItemInteraction.UpdateBuffer();
+        }
+
         #endregion Update
 
         #region IDisposable

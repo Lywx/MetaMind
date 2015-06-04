@@ -2,8 +2,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layers
 {
     using System;
 
-    using MetaMind.Engine.Guis.Widgets.Views.Logic;
-    using MetaMind.Engine.Guis.Widgets.Views.Settings;
+    using Logic;
+    using Settings;
     using Scrolls;
     using Selections;
     using Swaps;

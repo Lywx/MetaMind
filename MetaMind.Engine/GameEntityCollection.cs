@@ -17,6 +17,14 @@
             }
         }
 
+        public void UpdateBuffer()
+        {
+            foreach (var entity in this)
+            {
+                entity.UpdateBuffer();
+            }
+        }
+
         public void LoadContent(IGameInteropService interop)
         {
             foreach (var entity in this)

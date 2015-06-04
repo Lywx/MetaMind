@@ -105,16 +105,41 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public IViewItemFactory ItemFactory { get; protected set; }
 
+        #region Layer
 
         public override void SetupLayer()
         {
             base.SetupLayer();
 
+            // This is order insensitive
             this.ViewLayout   .SetupLayer();
             this.ViewScroll   .SetupLayer();
             this.ViewSelection.SetupLayer();
             this.ViewSwap     .SetupLayer();
             this.ViewLayout   .SetupLayer();
         }
+
+        #endregion
+
+        #region Update
+
+        public override void UpdateBuffer()
+        {
+            base.UpdateBuffer();
+
+            // This is order insensitive
+            this.ViewLayout   .UpdateBuffer();
+            this.ViewScroll   .UpdateBuffer();
+            this.ViewSelection.UpdateBuffer();
+            this.ViewSwap     .UpdateBuffer();
+            this.ViewLayout   .UpdateBuffer();
+
+            foreach (var item in Items.ToArray())
+            {
+                item.UpdateBuffer();
+            }
+        }
+
+        #endregion
     }
 }
