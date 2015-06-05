@@ -129,9 +129,6 @@ namespace MetaMind.Testimony.Guis.Widgets
             this.IdLabel.Draw(graphics, time, alpha);
             this.NameLabel.Draw(graphics, time, alpha);
             this.StatusLabel.Draw(graphics, time, alpha);
-
-            StateVisualTester.Draw(graphics, typeof(FrameState), this.itemFrame.RootFrame.States, this.IdCenterPosition(), 20, 20);
-            StateVisualTester.Draw(graphics, typeof(ItemState), this.Item.States, new Vector2(500, this.Item.ItemLogic.ItemLayout.Id * 300) , 420, 20);
         }
 
         #endregion
