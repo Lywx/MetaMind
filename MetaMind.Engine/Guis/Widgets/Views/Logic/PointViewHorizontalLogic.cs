@@ -74,6 +74,16 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         #region Operations
 
+        public virtual void ScrollLeft()
+        {
+            this.ViewScroll.MoveLeft();
+        }
+
+        public virtual void ScrollRight()
+        {
+            this.ViewScroll.MoveRight();
+        }
+
         public virtual void MoveLeft()
         {
             if (this.viewSettings.Direction == ViewDirection.Inverse)
@@ -116,6 +126,10 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             }
         }
 
+        #endregion Operations
+
+        #region Update Input
+
         protected override void UpdateInputOfKeyboard(IGameInputService input, GameTime time)
         {
             base.UpdateInputOfKeyboard(input, time);
@@ -124,23 +138,23 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             {
                 if (this.View.ViewSettings.KeyboardEnabled)
                 {
-                    // Movement
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Left))
+                    var keyboard = input.State.Keyboard;
+                    if (keyboard.IsActionTriggered(KeyboardActions.Left))
                     {
                         this.MoveLeft();
                     }
 
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Right))
+                    if (keyboard.IsActionTriggered(KeyboardActions.Right))
                     {
                         this.MoveRight();
                     }
 
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastLeft))
+                    if (keyboard.IsActionTriggered(KeyboardActions.FastLeft))
                     {
                         this.FastMoveLeft();
                     }
 
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastRight))
+                    if (keyboard.IsActionTriggered(KeyboardActions.FastRight))
                     {
                         this.FastMoveRight();
                     }
@@ -154,19 +168,20 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             {
                 if (this.View.ViewSettings.MouseEnabled)
                 {
-                    if (input.State.Mouse.IsWheelScrolledUp)
+                    var mouse = input.State.Mouse;
+                    if (mouse.IsWheelScrolledUp)
                     {
-                        this.ViewScroll.MoveLeft();
+                        this.ScrollLeft();
                     }
 
-                    if (input.State.Mouse.IsWheelScrolledDown)
+                    if (mouse.IsWheelScrolledDown)
                     {
-                        this.ViewScroll.MoveRight();
+                        this.ScrollRight();
                     }
                 }
             }
         }
 
-        #endregion Operations
+        #endregion
     }
 }

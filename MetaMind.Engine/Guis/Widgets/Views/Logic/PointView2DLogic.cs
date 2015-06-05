@@ -7,20 +7,19 @@
 
 namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 {
-    using System;
     using System.Collections.Generic;
 
-    using MetaMind.Engine.Components.Inputs;
-    using MetaMind.Engine.Guis.Widgets.Items.Factories;
-    using MetaMind.Engine.Guis.Widgets.Views.Layers;
-    using MetaMind.Engine.Guis.Widgets.Views.Layouts;
-    using MetaMind.Engine.Guis.Widgets.Views.Scrolls;
-    using MetaMind.Engine.Guis.Widgets.Views.Selections;
-    using MetaMind.Engine.Guis.Widgets.Views.Settings;
-    using MetaMind.Engine.Guis.Widgets.Views.Swaps;
-    using MetaMind.Engine.Services;
-
     using Microsoft.Xna.Framework;
+
+    using Components.Inputs;
+    using Items.Factories;
+    using Layers;
+    using Layouts;
+    using Scrolls;
+    using Selections;
+    using Services;
+    using Settings;
+    using Swaps;
 
     public class PointView2DLogic<TData> : PointViewHorizontalLogic<TData>, IPointView2DLogic
     {
@@ -47,7 +46,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         #endregion
 
-        #region Property Injecetion
+        #region Layer Injecetion 
 
         public new IPointView2DLayout ViewLayout
         {
@@ -75,7 +74,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         #endregion
 
-        #region Layering
+        #region Layer
 
         public override void SetupLayer()
         {
@@ -88,6 +87,16 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
         #endregion
 
         #region Operations
+
+        public virtual void ScrollDown()
+        {
+            this.ViewScroll.MoveDown();
+        }
+
+        public virtual void ScrollUp()
+        {
+            this.ViewScroll.MoveUp();
+        }
 
         public virtual void MoveDown()
         {
@@ -125,14 +134,15 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             {
                 if (this.ViewSettings.MouseEnabled)
                 {
-                    if (input.State.Mouse.IsWheelScrolledUp)
+                    var mouse = input.State.Mouse;
+                    if (mouse.IsWheelScrolledUp)
                     {
-                        this.ViewScroll.MoveUp();
+                        this.ScrollUp();
                     }
 
-                    if (input.State.Mouse.IsWheelScrolledDown)
+                    if (mouse.IsWheelScrolledDown)
                     {
-                        this.ViewScroll.MoveDown();
+                        this.ScrollDown();
                     }
                 }
             }
@@ -144,47 +154,48 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             {
                 if (this.ViewSettings.KeyboardEnabled)
                 {
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Up))
+                    var keyboard = input.State.Keyboard;
+                    if (keyboard.IsActionTriggered(KeyboardActions.Up))
                     {
                         this.MoveUp();
                     }
 
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Down))
+                    if (keyboard.IsActionTriggered(KeyboardActions.Down))
                     {
                         this.MoveDown();
                     }
 
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Left))
+                    if (keyboard.IsActionTriggered(KeyboardActions.Left))
                     {
                         this.MoveLeft();
                     }
 
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Right))
+                    if (keyboard.IsActionTriggered(KeyboardActions.Right))
                     {
                         this.MoveRight();
                     }
 
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastUp))
+                    if (keyboard.IsActionTriggered(KeyboardActions.FastUp))
                     {
                         this.FastMoveUp();
                     }
 
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastDown))
+                    if (keyboard.IsActionTriggered(KeyboardActions.FastDown))
                     {
                         this.FastMoveDown();
                     }
 
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastLeft))
+                    if (keyboard.IsActionTriggered(KeyboardActions.FastLeft))
                     {
                         this.FastMoveLeft();
                     }
 
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastRight))
+                    if (keyboard.IsActionTriggered(KeyboardActions.FastRight))
                     {
                         this.FastMoveRight();
                     }
 
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))
+                    if (keyboard.IsActionTriggered(KeyboardActions.Escape))
                     {
                         this.ViewSelection.Cancel();
                     }

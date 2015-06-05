@@ -62,7 +62,10 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
 
                 this.RowOffset += itemLayout.BlockRow;
 
-                ++this.currentId;
+                if (this.currentId < this.View.ItemsRead.Count - 1)
+                {
+                    ++this.currentId;
+                }
             }
         }
 
@@ -70,12 +73,15 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
         {
             if (this.CanMoveUp)
             {
+                if (this.currentId > 0)
+                {
+                    --this.currentId;
+                }
+
                 var itemLayer = this.ItemGetLayer(this.View.ItemsRead[this.currentId]);
                 var itemLayout = itemLayer.ItemLayout;
 
                 this.RowOffset -= itemLayout.BlockRow;
-
-                --this.currentId;
             }
         }
     }

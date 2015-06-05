@@ -70,6 +70,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 
         public void MoveLeft()
         {
+            if (this.View.ItemsRead.Count == 0)
+            {
+                return;
+            }
+
             if (!this.currentId.HasValue)
             {
                 this.Reverse();
@@ -93,6 +98,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 
         public void MoveRight()
         {
+            if (this.View.ItemsRead.Count == 0)
+            {
+                return;
+            }
+
             if (!this.currentId.HasValue)
             {
                 this.Reverse();

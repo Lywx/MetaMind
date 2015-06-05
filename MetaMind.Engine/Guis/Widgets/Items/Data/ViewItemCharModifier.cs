@@ -11,19 +11,21 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
     using System.Globalization;
     using System.Linq;
     using System.Text;
-
+    using System.Threading;
+    using System.Windows.Forms;
     using MetaMind.Engine.Components.Inputs;
     using MetaMind.Engine.Events;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Input;
+    using KeyEventArgs = Components.Inputs.KeyEventArgs;
+    using Keys = Microsoft.Xna.Framework.Input.Keys;
 
     public class ViewItemCharModifier : ViewItemComponent, IViewItemCharModifier, IViewItemCharProcessor
     {
         #region Input Settings
 
-        private readonly string cursorSymbol = "][";
+        private readonly string cursorSymbol = "_";
 
         // GB2312-80 for Sougou IME
         private readonly Encoding imeEncoding = Encoding.GetEncoding(54936);
@@ -345,7 +347,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
             // only increment when actually contains printable characters
             if (this.currentString.Length > previousLength)
             {
-                this.IncrementCursor();
+                this.IncrementCursor(this.currentString.Length - previousLength);
             }
         }
 
@@ -373,6 +375,16 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
             this.OnValueModified(this.currentString.ToString());
         }
 
+        private void PasteFromClipboard()
+        {
+            // Single thread paste
+            if (Thread.CurrentThread.GetApartmentState() == ApartmentState.STA)
+            {
+                this.HandleRegular(Clipboard.GetText());
+                this.OnValueModified(this.currentString.ToString());
+            }
+        }
+
         #endregion 
 
         #region Update and Draw
@@ -381,6 +393,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
         {
             var keyboard = input.State.Keyboard;
 
+            // 
             if (keyboard.IsActionTriggered(KeyboardActions.Escape))
             {
                 if (this.Item[ItemState.Item_Is_Editing]())
@@ -392,6 +405,12 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
             if (keyboard.CtrlDown && keyboard.IsKeyPressed(Keys.Back))
             {
                 this.DeleteAll();
+            }
+
+            // Clipboard paste
+            if (keyboard.CtrlDown && keyboard.IsKeyTriggered(Keys.V))
+            {
+                this.PasteFromClipboard();
             }
 
             if (this.ComboTriggered(keyboard, Keys.Left))

@@ -105,7 +105,7 @@ namespace MetaMind.Engine.Guis.Console
         /// <param name="action"></param>
         public void AddCommand(string name, Func<string[], string> action)
         {
-            this.AddCommand(name, action, "");
+            this.AddCommand(name, action, string.Empty);
         }
 
         /// <summary>

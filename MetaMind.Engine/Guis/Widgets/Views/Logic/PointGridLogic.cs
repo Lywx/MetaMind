@@ -1,7 +1,7 @@
 namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 {
     using System.Collections.Generic;
-
+    using Components.Inputs;
     using Items.Factories;
     using Layers;
     using Layouts;
@@ -114,12 +114,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             {
                 if (this.ViewSettings.MouseEnabled)
                 {
-                    if (input.State.Mouse.IsWheelScrolledUp)
+                    var mouse = input.State.Mouse;
+                    if (mouse.IsWheelScrolledUp)
                     {
                         this.ScrollUp();
                     }
 
-                    if (input.State.Mouse.IsWheelScrolledDown)
+                    if (mouse.IsWheelScrolledDown)
                     {
                         this.ScrollDown();
                     }

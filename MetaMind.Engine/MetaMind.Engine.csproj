@@ -331,6 +331,7 @@
     <Compile Include="Guis\Widgets\Views\Logic\IViewLogic.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Guis\Widgets\Views\Logic\PointGridLogic.cs" />
     <Compile Include="Guis\Widgets\Views\Logic\PointView2DLogic.cs">
       <SubType>Code</SubType>
     </Compile>

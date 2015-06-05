@@ -24,7 +24,7 @@
 
         public int RowOffset { get; protected set; }
 
-        protected bool CanMoveUp
+        protected virtual bool CanMoveUp
         {
             get
             {

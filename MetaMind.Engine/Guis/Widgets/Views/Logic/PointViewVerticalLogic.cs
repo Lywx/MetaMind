@@ -20,12 +20,12 @@
         private PointViewVerticalSettings viewSettings;
 
         protected PointViewVerticalLogic(
-            IView                    view,
-            IList<TData>             viewData,
-            IViewScrollController    viewScroll,
+            IView view,
+            IList<TData> viewData,
+            IViewScrollController viewScroll,
             IViewSelectionController viewSelection,
-            IViewSwapController      viewSwap,
-            IViewLayout              viewLayout,
+            IViewSwapController viewSwap,
+            IViewLayout viewLayout,
             IViewItemFactory itemFactory)
             : base(view, viewData, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory)
         {
@@ -46,7 +46,7 @@
                 {
                     throw new ArgumentNullException("value");
                 }
-                
+
                 if (base.ViewSelection != null)
                 {
                     throw new InvalidOperationException();
@@ -69,7 +69,7 @@
                 {
                     throw new ArgumentNullException("value");
                 }
-                
+
                 if (base.ViewScroll != null)
                 {
                     throw new InvalidOperationException();
@@ -81,7 +81,7 @@
 
         public new IPointViewVerticalLayout ViewLayout
         {
-            get { return (IPointViewVerticalLayout) base.ViewLayout; }
+            get { return (IPointViewVerticalLayout)base.ViewLayout; }
 
             private set
             {
@@ -98,7 +98,7 @@
                 this.ViewLayout = value;
             }
         }
-    
+
 
         public new IPointViewVerticalSwapController ViewSwap
         {
@@ -113,7 +113,7 @@
                 {
                     throw new ArgumentNullException("value");
                 }
-                
+
                 if (base.ViewSwap != null)
                 {
                     throw new InvalidOperationException();
@@ -125,6 +125,8 @@
 
         #endregion
 
+        #region Layer
+
         public override void SetupLayer()
         {
             base.SetupLayer();
@@ -132,10 +134,24 @@
             var viewLayer = this.ViewGetLayer<PointViewVerticalLayer>();
             this.viewSettings = viewLayer.ViewSettings;
 
-            this.View[ViewState.View_Has_Focus] = this.View[ViewState.View_Has_Selection] = () => viewLayer.ViewSelection.HasSelected;
+            this.View[ViewState.View_Has_Focus] =
+                this.View[ViewState.View_Has_Selection] =
+                    () => viewLayer.ViewSelection.HasSelected;
         }
 
+        #endregion
+
         #region Operations
+
+        public virtual void ScrollDown()
+        {
+            this.ViewScroll.MoveDown();
+        }
+
+        public virtual void ScrollUp()
+        {
+            this.ViewScroll.MoveUp();
+        }
 
         public virtual void MoveUp()
         {
@@ -177,6 +193,10 @@
             }
         }
 
+        #endregion Operations
+
+        #region Update Input
+
         protected override void UpdateInputOfKeyboard(IGameInputService input, GameTime time)
         {
             base.UpdateInputOfKeyboard(input, time);
@@ -186,22 +206,23 @@
                 if (this.View.ViewSettings.KeyboardEnabled)
                 {
                     // Movement
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Up))
+                    var keyboard = input.State.Keyboard;
+                    if (keyboard.IsActionTriggered(KeyboardActions.Up))
                     {
                         this.MoveUp();
                     }
 
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Down))
+                    if (keyboard.IsActionTriggered(KeyboardActions.Down))
                     {
                         this.MoveDown();
                     }
 
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastUp))
+                    if (keyboard.IsActionTriggered(KeyboardActions.FastUp))
                     {
                         this.FastMoveUp();
                     }
 
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.FastDown))
+                    if (keyboard.IsActionTriggered(KeyboardActions.FastDown))
                     {
                         this.FastMoveDown();
                     }
@@ -215,19 +236,20 @@
             {
                 if (this.View.ViewSettings.MouseEnabled)
                 {
-                    if (input.State.Mouse.IsWheelScrolledUp)
+                    var mouse = input.State.Mouse;
+                    if (mouse.IsWheelScrolledUp)
                     {
-                        this.ViewScroll.MoveUp();
+                        this.ScrollUp();
                     }
 
-                    if (input.State.Mouse.IsWheelScrolledDown)
+                    if (mouse.IsWheelScrolledDown)
                     {
-                        this.ViewScroll.MoveDown();
+                        this.ScrollDown();
                     }
                 }
             }
         }
 
-        #endregion Operations
+        #endregion
     }
 }

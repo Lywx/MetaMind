@@ -23,6 +23,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 
         public override void MoveUp()
         {
+            if (this.View.ItemsRead.Count == 0)
+            {
+                return;
+            }
+
             if (!this.CurrentSelectedId.HasValue)
             {
                 this.Reverse();
@@ -34,11 +39,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 
             if (!this.IsTopmost(id))
             {
-                this.Select(this.PreviousId(id));
+                this.Select(this.UpperId(id));
             }
 
             if (this.viewScroll != null && 
-                this.viewScroll.IsUpToDisplay(this.PreviousId(id)))
+                this.viewScroll.IsUpToDisplay(this.UpperId(id)))
             {
                 this.viewScroll.MoveUp();
             }
@@ -46,6 +51,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 
         public override void MoveDown()
         {
+            if (this.View.ItemsRead.Count == 0)
+            {
+                return;
+            }
+
             if (!this.CurrentSelectedId.HasValue)
             {
                 this.Reverse();
@@ -56,39 +66,30 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 
             if (!this.IsBottommost(id))
             {
-                this.Select(this.NextId(id));
+                this.Select(this.LowerId(id));
             }
 
             if (this.viewScroll != null && 
-                this.viewScroll.IsDownToDisplay(this.NextId(id)))
+                this.viewScroll.IsDownToDisplay(this.LowerId(id)))
             {
                 this.viewScroll.MoveDown();
             }
         }
 
-        protected override bool IsTopmost(int id)
-        {
-#if DEBUG
-            Debug.Assert(id >= 0);
-#endif
-            var itemLayer = this.ItemsRead[id].GetLayer<BlockViewVerticalItemLayer>();
-            return itemLayer.ItemLayout.Row <= 0;
-        }
-
         protected override bool IsBottommost(int id)
         {
 #if DEBUG
-            Debug.Assert(id < this.View.ItemsRead.Count);
+            Debug.Assert(this.View.ItemsRead.Count == 0 || id < this.View.ItemsRead.Count);
 #endif
             return id == this.View.ItemsRead.Count - 1;
         }
 
-        private int NextId(int id)
+        private int LowerId(int id)
         {
             return id < this.View.ItemsRead.Count - 1 ? id + 1 : this.View.ItemsRead.Count - 1;
         }
 
-        private int PreviousId(int id)
+        private int UpperId(int id)
         {
             return id > 0 ? id - 1 : id;
         }
