@@ -9,6 +9,7 @@ namespace MetaMind.Testimony.Guis.Widgets
 {
     using System;
     using Engine.Components.Fonts;
+    using Engine.Guis.Elements;
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Data;
     using Engine.Guis.Widgets.Items.Frames;
@@ -16,11 +17,13 @@ namespace MetaMind.Testimony.Guis.Widgets
     using Engine.Guis.Widgets.Items.Visuals;
     using Engine.Guis.Widgets.Visuals;
     using Engine.Services;
-
+    using Engine.Testers;
     using Microsoft.Xna.Framework;
 
     public class TestItemVisual : ViewItemVisual
     {
+        private TestItemFrame itemFrame;
+
         public TestItemVisual(IViewItem item)
             : base(item)
         {
@@ -61,7 +64,7 @@ namespace MetaMind.Testimony.Guis.Widgets
             // Layers
             var itemLayer = this.ItemGetLayer<TestItemLayer>();
             var itemSettings = itemLayer.ItemSettings;
-            var itemFrame = itemLayer.ItemFrame;
+            this. itemFrame = itemLayer.ItemFrame;
             var itemLayout = itemLayer.ItemLayout;
 
             // Positions
@@ -126,6 +129,9 @@ namespace MetaMind.Testimony.Guis.Widgets
             this.IdLabel.Draw(graphics, time, alpha);
             this.NameLabel.Draw(graphics, time, alpha);
             this.StatusLabel.Draw(graphics, time, alpha);
+
+            StateVisualTester.Draw(graphics, typeof(FrameState), this.itemFrame.RootFrame.States, this.IdCenterPosition(), 20, 20);
+            StateVisualTester.Draw(graphics, typeof(ItemState), this.Item.States, new Vector2(500, this.Item.ItemLogic.ItemLayout.Id * 300) , 420, 20);
         }
 
         #endregion

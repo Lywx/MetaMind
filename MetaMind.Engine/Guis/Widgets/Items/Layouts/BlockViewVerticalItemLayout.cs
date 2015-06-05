@@ -1,6 +1,5 @@
 namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
 {
-    using System.Diagnostics;
     using Microsoft.Xna.Framework;
 
     using Components.Fonts;
@@ -14,10 +13,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
 
     public class BlockViewVerticalItemLayout : PointViewVerticalItemLayout, IBlockViewVerticalItemLayout
     {
-        private int currentBuffer = 0;
-
-        private int[] row = new int[2];
-
         private ItemSettings itemSettings;
 
         private IPointViewVerticalLayout viewLayout;
@@ -40,8 +35,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
             this.UpdateId();
             this.UpdateRow();
 
-            //Debug.WriteLine("id: {0}, row: {1}", this.Id, this.Row);
-
             var label = this.itemSettings.Get<LabelSettings>(this.BlockData.BlockLabel);
             var frame = this.itemSettings.Get<FrameSettings>(this.BlockData.BlockFrame);
 
@@ -56,19 +49,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
             this.BlockRow = this.BlockStringWrapped.Split('\n').Length - 1;
         }
 
-        //public override int Row
-        //{
-        //    get { return this.row[this.currentBuffer]; }
-        //    protected set
-        //    {
-        //        this.row[this.NextBuffer()] = value;
-
-        //        Debug.WriteLine("id {0}", this.Id);
-        //        Debug.WriteLine("row {0} -> {1}", this.row[this.currentBuffer], value);
-                
-        //    }
-        //}
-
         public int BlockRow { get; protected set; }
 
         public IBlockViewVerticalItemData BlockData
@@ -82,16 +62,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
         {
             // Added a separating line between item by + 1
             this.Row = this.Id > 0 ? this.viewLayout.RowOf(this.Id - 1) + this.viewLayout.RowIn(this.Id - 1) + 1 : 0;
-        }
-
-        private int NextBuffer()
-        {
-            return 1 - this.currentBuffer;
-        }
-
-        public override void UpdateBackwardBuffer()
-        {
-            this.currentBuffer = this.NextBuffer();
         }
     }
 }

@@ -7,12 +7,15 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
     using MetaMind.Engine.Guis.Widgets.Views.Swaps;
     using MetaMind.Engine.Services;
     using Microsoft.Xna.Framework;
+    using Views.Scrolls;
 
     public class PointViewItemInteraction : ViewItemInteraction, IViewItemViewSelectionProvider, IViewItemViewSwapProvider
     {
         private IViewSelectionController viewSelection;
 
         private IViewSwapController viewSwap;
+
+        private IViewScrollController viewScroll;
 
 
         public PointViewItemInteraction(IViewItem item, IViewItemLayout itemLayout, IViewItemLayoutInteraction itemLayoutInteraction)
@@ -27,6 +30,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
 
             this.viewSelection = viewLayer.ViewSelection;
             this.viewSwap = viewLayer.ViewSwap;
+            this.viewScroll = viewLayer.ViewScroll;
         }
 
         public void ViewDoSelect()
@@ -56,7 +60,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
                 // Unify mouse and keyboard selection
                 if (this.Item[ItemState.Item_Is_Selected]())
                 {
-                    this.ItemSelect();
+                    this.ItemUnselect();
                 }
 
                 this.Item[ItemState.Item_Is_Selected] = () => false;
@@ -64,14 +68,21 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
             
         }
 
-        public void ViewDoSwap(IGameInteropService interop, IViewItem draggingItem)
+        public virtual void ViewDoSwap(IGameInteropService interop, IViewItem draggingItem)
         {
             if (this.Item[ItemState.Item_Is_Swaping]())
             {
                 return;
             }
 
-            this.viewSwap.StartProcess(interop, this.Item, draggingItem, draggingItem.View);
+            var draggingItemLayout = draggingItem.ItemLogic.ItemLayout;
+            var draggingViewScroll = draggingItem.View.ViewLogic.ViewScroll;
+            this.viewSwap.StartProcess(interop,
+                this.Item,
+                this.viewScroll.Position(this.ItemLayout.Id),
+                draggingItem,
+                draggingItem.View,
+                draggingViewScroll.Position(draggingItemLayout.Id));
         }
 
         public void ViewUpdateSwap()

@@ -27,6 +27,7 @@ namespace MetaMind.Engine.Guis.Elements
             this.InputEvent.MouseDoubleClick += this.EventMouseDoubleClick;
 
             this.FrameMoved                  += this.FrameFrameMoved;
+            this.FrameSized                  += this.FrameFrameMoved;
 
             this.IsActive = true;
 
@@ -67,6 +68,7 @@ namespace MetaMind.Engine.Guis.Elements
             this.MouseRightDoubleClicked  = null;
 
             this.FrameMoved               = null;
+            this.FrameSized               = null;
 
             // Clean handlers
             this.InputEvent.MouseMove        -= this.EventMouseMove;
@@ -82,6 +84,8 @@ namespace MetaMind.Engine.Guis.Elements
         #region Events
 
         public event EventHandler<FrameEventArgs> FrameMoved;
+
+        public event EventHandler<FrameEventArgs> FrameSized;
 
         public event EventHandler<FrameEventArgs> MouseEnter;
 
@@ -108,6 +112,14 @@ namespace MetaMind.Engine.Guis.Elements
             if (this.FrameMoved != null)
             {
                 this.FrameMoved(this, new FrameEventArgs(FrameEventType.Frame_Moved));
+            }
+        }
+
+        private void OnFrameSized()
+        {
+            if (this.FrameSized != null)
+            {
+                this.FrameSized(this, new FrameEventArgs(FrameEventType.Frame_Sized));
             }
         }
 
@@ -227,13 +239,21 @@ namespace MetaMind.Engine.Guis.Elements
             set
             {
                 var deltaLocation = this.rectangle.Location.DistanceFrom(value.Location);
+                var deltaSize = this.rectangle.Size.DistanceFrom(value.Size);
+
+                this.rectangle = value;
+
                 var hasMoved = deltaLocation.Length() > 0f;
+                var hasSized = deltaSize.Length() > 0;
                 if (hasMoved)
                 {
                     this.OnFrameMoved();
                 }
 
-                this.rectangle = value;
+                if (hasSized)
+                {
+                    this.OnFrameSized();
+                }
             }
         }
 
@@ -309,7 +329,7 @@ namespace MetaMind.Engine.Guis.Elements
 
         protected void Populate(Rectangle rect)
         {
-            this.rectangle = rect;
+            this.Rectangle = rect;
         }
 
         private void EventMouseDoubleClick(object sender, MouseEventArgs e)

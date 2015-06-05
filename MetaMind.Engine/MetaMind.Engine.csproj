@@ -72,6 +72,8 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Components\Processes\ProcessCounter.cs" />
+    <Compile Include="Components\Processes\StepProcess.cs" />
     <Compile Include="Extensions\ExtT.cs" />
     <Compile Include="Extensions\ExtList.cs" />
     <Compile Include="Guis\Elements\Inputs\ButtonDoubleClick.cs" />
@@ -161,6 +163,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Guis\Widgets\Items\Frames\BlcokViewVerticalItemFrame.cs" />
+    <Compile Include="Guis\Widgets\Items\Interactions\BlockViewVerticalItemInteraction.cs" />
     <Compile Include="Guis\Widgets\Items\Interactions\BlockViewVerticalItemLayoutInteraction.cs" />
     <Compile Include="Guis\Widgets\Items\Interactions\IViewItemLayoutInteraction.cs" />
     <Compile Include="Guis\Widgets\Items\Interactions\PointViewItemLayoutInteraction.cs" />
@@ -402,7 +405,6 @@
     <Compile Include="Guis\Widgets\Views\Swaps\IViewSwapController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Views\Swaps\BlockViewVerticalSwapController.cs" />
     <Compile Include="Guis\Widgets\Views\Swaps\ViewSwapController.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -595,7 +597,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Configurations\Graphics.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Configurations\Control.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

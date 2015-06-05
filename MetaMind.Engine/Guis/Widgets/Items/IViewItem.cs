@@ -27,6 +27,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         event EventHandler<EventArgs> Swapped;
 
+        event EventHandler<EventArgs> Swapping;
+
         event EventHandler<EventArgs> Transited;
 
         #endregion
@@ -65,6 +67,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         #endregion
 
         #region Layering
+
+        T GetLayer<T>() where T : class, IViewItemLayer;
 
         void SetupLayer();
 

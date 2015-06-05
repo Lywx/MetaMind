@@ -29,6 +29,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         // whether is swapping with another item
         Item_Is_Swaping,
 
+        // whether is just swapped with another item
+        Item_Is_Swapped,
+
         // whether is dragging by mouse
         Item_Is_Dragging,
 

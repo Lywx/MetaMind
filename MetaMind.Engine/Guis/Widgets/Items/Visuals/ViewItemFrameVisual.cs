@@ -6,6 +6,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Visuals
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
+    using Testers;
 
     public class ViewItemFrameVisual : ViewItemComponent, IViewItemVisual
     {

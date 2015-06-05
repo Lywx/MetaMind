@@ -24,6 +24,7 @@
 
         // Change
         Frame_Moved,
+        Frame_Sized,
         Frame_Dragged,
         Frame_Dropped,
 

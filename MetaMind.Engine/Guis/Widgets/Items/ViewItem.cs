@@ -58,10 +58,26 @@
 
         public event EventHandler<EventArgs> Swapped;
 
+        public event EventHandler<EventArgs> Swapping;
+
         public event EventHandler<EventArgs> Transited;
+
+        internal void OnSwapping()
+        {
+            this[ItemState.Item_Is_Swaping] = () => true;
+            this[ItemState.Item_Is_Swapped] = () => false;
+            
+            if (this.Swapping != null)
+            {
+                this.Swapping(this, EventArgs.Empty);
+            }
+        }
 
         internal void OnSwapped()
         {
+            this[ItemState.Item_Is_Swaping] = () => false;
+            this[ItemState.Item_Is_Swapped] = () => true;
+
             if (this.Swapped != null)
             {
                 this.Swapped(this, EventArgs.Empty);
@@ -129,12 +145,6 @@
             }
         }
 
-        public void SetupLayer()
-        {
-            this.ItemLogic .SetupLayer();
-            this.ItemVisual.SetupLayer();
-        }
-
         public override void Update(GameTime time)
         {
             if (this.ItemLogic != null)
@@ -161,6 +171,21 @@
             {
                 this.ItemVisual.UpdateBackwardBuffer();
             }
+        }
+
+        #endregion
+
+        #region Layer
+
+        public void SetupLayer()
+        {
+            this.ItemLogic.SetupLayer();
+            this.ItemVisual.SetupLayer();
+        }
+
+        public T GetLayer<T>() where T : class, IViewItemLayer
+        {
+            return this.ItemLayer.Get<T>();
         }
 
         #endregion

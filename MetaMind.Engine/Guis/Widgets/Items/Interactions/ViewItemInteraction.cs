@@ -9,11 +9,10 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
 {
     using System;
 
-    using MetaMind.Engine.Guis.Widgets.Items.Layouts;
-    using MetaMind.Engine.Services;
+    using Layouts;
+    using Services;
 
     using Microsoft.Xna.Framework;
-    using Views;
 
     public class ViewItemInteraction : ViewItemComponent, IViewItemInteraction
     {
@@ -114,8 +113,14 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
 
         #region Item Interaction
 
-        public virtual void ItemSelect()
+        public void ItemSelect()
         {
+            ((ViewItem)this.Item).OnSelected();
+        }
+
+        public void ItemUnselect()
+        {
+            ((ViewItem)this.Item).OnUnselected();
         }
 
         #endregion

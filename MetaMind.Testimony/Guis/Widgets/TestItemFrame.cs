@@ -132,6 +132,7 @@ namespace MetaMind.Testimony.Guis.Widgets
             this.NameFrame.Location  = this.NameFrameLocation().ToPoint();
             this.StatusFrame.Location = this.StatusFrameLocation().ToPoint();
 
+            this.RootFrame.Size = new Point(this.nameFrameSettings.Size.X, this.itemLayout.BlockRow * this.nameFrameSettings.Size.Y);
             this.NameFrame.Size = new Point(this.nameFrameSettings.Size.X, this.itemLayout.BlockRow * this.nameFrameSettings.Size.Y);
         }
 

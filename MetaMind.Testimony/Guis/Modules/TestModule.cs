@@ -51,9 +51,9 @@
                     new List<IViewItem>());
 
             var viewSelection = new PointViewVerticalSelectionController(view);
-            var viewScroll = new BlockViewVerticalScrollController(view);
-            var viewSwap = new BlockViewVerticalSwapController<Test>(view, test);
-            var viewLayout = new BlockViewVerticalLayout(view);
+            var viewScroll    = new BlockViewVerticalScrollController(view);
+            var viewSwap      = new ViewSwapController<Test>(view, test);
+            var viewLayout    = new BlockViewVerticalLayout(view);
 
             var itemFactory = new ViewItemFactory(
                 item => new TestItemLayer(item),
@@ -62,7 +62,7 @@
                     var itemFrame             = new TestItemFrame(item);
                     var itemLayoutInteraction = new BlockViewVerticalItemLayoutInteraction(item, viewSelection, viewScroll);
                     var itemLayout            = new BlockViewVerticalItemLayout(item, itemLayoutInteraction);
-                    var itemInteraction       = new PointViewItemInteraction(item, itemLayout, itemLayoutInteraction);
+                    var itemInteraction       = new BlockViewVerticalItemInteraction(item, itemLayout, itemLayoutInteraction);
                     var itemModel             = new ViewItemDataModel(item);
 
                     return new TestItemLogic(item, itemFrame, itemInteraction, itemModel, itemLayout);
@@ -70,7 +70,7 @@
                 item => new TestItemVisual(item),
                 item =>
                 {
-                    var newTest = new Test("A Sample Knowing that millions of people around the world would be watching in person and on television and expecting great things from him — at least one more gold medal for America, if not another world record — during this, his fourth and surely his last appearance in the World Olympics, and realizing that his legs could no longer carry him down t");
+                    var newTest = new Test("                                                                                                                                                                                                                                                                                                                                                          down t");
                     test.Add(newTest);
                     return newTest;
                 });

@@ -73,9 +73,14 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         #region Layer
 
+        public T GetLayer<T>() where T : class, IViewLayer
+        {
+            return this.ViewLayer.Get<T>();
+        }
+
         public void SetupLayer()
         {
-            this.ViewLogic.SetupLayer();
+            this.ViewLogic .SetupLayer();
             this.ViewVisual.SetupLayer();
         }
 

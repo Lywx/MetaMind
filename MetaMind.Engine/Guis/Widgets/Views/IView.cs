@@ -18,6 +18,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
     public interface IView : IViewEntity
     {
+        #region View Data
+
         IViewLogic ViewLogic { get; }
 
         IViewVisual ViewVisual { get; set; }
@@ -28,10 +30,22 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         ViewSettings ViewSettings { get; set; }
 
+        #endregion
+
+        #region Item Data
+
         List<IViewItem> ItemsRead { get; }
 
         List<IViewItem> ItemsWrite { get; set; }
 
         ItemSettings ItemSettings { get; set; }
+
+        #endregion
+
+        #region Layer
+
+        T GetLayer<T>() where T : class, IViewLayer;
+
+        #endregion
     }
 }

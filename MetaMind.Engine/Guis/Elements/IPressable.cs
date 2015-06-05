@@ -28,5 +28,7 @@ namespace MetaMind.Engine.Guis.Elements
         event EventHandler<FrameEventArgs> MouseRightReleased;
 
         event EventHandler<FrameEventArgs> FrameMoved;
+
+        event EventHandler<FrameEventArgs> FrameSized;
     }
 }

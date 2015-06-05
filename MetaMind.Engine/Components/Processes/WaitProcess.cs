@@ -17,24 +17,25 @@ namespace MetaMind.Engine.Components.Processes
 
         public WaitProcess(TimeSpan duration)
         {
-            TotalDuration = duration;
+            this.TotalDuration = duration;
         }
 
         public TimeSpan Duration { get; private set; }
 
         public override void Update(GameTime time)
         {
-            Duration -= time.ElapsedGameTime;
+            this.Duration -= time.ElapsedGameTime;
             if (Duration <= TimeSpan.Zero)
             {
-                Succeed();
+                this.Succeed();
             }
         }
 
         public override void OnInit()
         {
             base.OnInit();
-            Duration = TotalDuration;
+
+            this.Duration = this.TotalDuration;
         }
 
         public override void OnSuccess()

@@ -18,9 +18,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
 
     using Microsoft.Xna.Framework;
 
-    public class ViewItemSwapProcess<TData> : Process
+    public class ViewItemSwapProcess<TData> : StepProcess
     {
-        private const int UpdateNum = 6;
+        private readonly Func<bool> swappingItemIsMouseOver;
 
         #region Constructors
 
@@ -32,6 +32,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
             IViewItemLogic swappingItemLogic, 
             IViewLogic     swappingViewLogic, 
             IList<TData> commonSource = null)
+            : base(10)
         {
             if (draggingItem == null)
             {
@@ -72,11 +73,23 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
             this.SwappingViewLogic = swappingViewLogic;
 
             this.CommonSource = commonSource;
+
+            this.swappingItemIsMouseOver = this.SwappingItem[ItemState.Item_Is_Mouse_Over];
+            this.SwappingItem[ItemState.Item_Is_Mouse_Over] = () => false;
         }
 
         #endregion
 
         #region Dependency
+
+        /// <summary>
+        /// Temporary storage of original Func<bool>, which is temporarily and intentionally forced 
+        /// to false during swapping to avoid possible re-swapping behavior.
+        /// </summary>
+        protected Func<bool> SwappingItemIsMouseOver
+        {
+            get { return this.swappingItemIsMouseOver; }
+        }
 
         protected IViewItemLogic SwappingItemLogic { get; set; }
 
@@ -113,17 +126,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
 
         public override void OnSuccess()
         {
-            var inSameView = ReferenceEquals(this.SwappingItem.View, this.DraggingItem.View);
-            if (inSameView)
-            {
-                this.SwapInView();
-            }
-            else
-            {
-                this.SwapAroundView();
-            }
-
-            this.SwapTerminate();
         }
 
         #endregion
@@ -132,12 +134,34 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
 
         public override void Update(GameTime time)
         {
-            this.SwappingViewLogic.ViewSwap.Progress += 1f / UpdateNum;
+            base.Update(time);
+            this.UpdateVisual(time);
 
-            if (this.SwappingViewLogic.ViewSwap.Progress > 1)
+            if (this.CurrentFrame == this.LastFrame - 1)
             {
+                var inSameView = ReferenceEquals(this.SwappingItem.View, this.DraggingItem.View);
+                if (inSameView)
+                {
+                    this.SwapInView();
+                }
+                else
+                {
+                    this.SwapAroundView();
+                }
+
+                this.SwapTerminate();
+            }
+            else if (this.CurrentFrame == this.LastFrame)
+            {
+                this.SwapFinalize();
+
                 this.Succeed();
             }
+        }
+
+        protected void UpdateVisual(GameTime time)
+        {
+            this.SwappingViewLogic.ViewSwap.Progress = (float)Math.Pow(this.Progress, 2);
         }
 
         #endregion
@@ -146,19 +170,16 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
 
         protected virtual void SwapAroundView()
         {
-            //this.SwapDataInList();
+            this.SwapDataInList();
 
-            //// Replace each another in their original view
-            //this.DraggingViewLogic.ViewSelection.Cancel();
-            //this.DraggingItem.View[ViewState.View_Has_Focus] = () => false;
+            // Replace each another in their original view
+            this.DraggingViewLogic.ViewSelection.Cancel();
+            this.DraggingItem.View[ViewState.View_Has_Focus] = () => false;
 
-            //this.SwappingViewLogic.ViewSelection.Select(0);
-            //this.SwappingItem.View[ViewState.View_Has_Focus] = () => true;
+            this.SwappingViewLogic.ViewSelection.Select(0);
+            this.SwappingItem.View[ViewState.View_Has_Focus] = () => true;
 
-            //this.SwappingItem.View.ItemsRead.SwapWith(
-            //    this.SwappingItem.View.ItemsRead, 
-            //    this.SwappingItemLogic.ItemLayout.Id, 
-            //    this.DraggingItemLogic.ItemLayout.Id);
+            this.SwapItemAroundList();
         }
 
         protected virtual void SwapDataInList()
@@ -172,28 +193,42 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
         {
             this.SwapDataInList();
             this.SwapItemInList();
-            //this.SwappingViewLogic.ViewLayout.Sort(item => item.ItemLogic.ItemLayout.Id);
-
-            // Stop swapping state
-            this.SwappingItem[ItemState.Item_Is_Swaping] = () => false;
-
-            // Refine selection to make sure the overall effect is smooth
-            this.DraggingItemLogic.ItemInteraction.ViewSelect();
-
-            //this.SwappingItem.UpdateView(new GameTime());
-            //this.DraggingItem.UpdateView(new GameTime());
         }
 
         private void SwapItemInList()
         {
-            //var temp = this.SwappingItemLogic.ItemLayout.Id;
-            //this. = this.DraggingItemLogic.ItemLayout.Id;
-            //this. = temp;
-            this.SwappingItem.View.ItemsWrite.Swap(SwappingItemLogic.ItemLayout.Id, DraggingItemLogic.ItemLayout.Id );
+            this.SwappingItem.View.ItemsWrite.Swap(
+                SwappingItemLogic.ItemLayout.Id,
+                DraggingItemLogic.ItemLayout.Id);
+        }
+
+        private void SwapItemAroundList()
+        {
+            this.SwappingItem.View.ItemsRead.SwapWith(
+                this.SwappingItem.View.ItemsRead,
+                this.SwappingItemLogic.ItemLayout.Id,
+                this.DraggingItemLogic.ItemLayout.Id);
         }
 
         protected void SwapTerminate()
         {
+            ((ViewItem)this.SwappingItem).OnSwapped();
+
+            // Reselect the dragging item to make sure the overall effect is smooth.
+            // 
+            // It is calling from swapping item logic, because the swapping item's old 
+            // id will be the the dragging item's new id in next frame.
+            // 
+            // The selection is id based.
+
+            this.SwappingItemLogic.ItemInteraction.ViewSelect();
+        }
+
+        protected void SwapFinalize()
+        {
+            // Restore original Func<bool>
+            this.SwappingItem[ItemState.Item_Is_Mouse_Over] = this.SwappingItemIsMouseOver;
+            this.SwappingItem[ItemState.Item_Is_Swapped] = () => false;
         }
 
         #endregion

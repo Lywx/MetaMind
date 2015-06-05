@@ -87,27 +87,24 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Swaps
         {
             get
             {
+#if DEBUG
                 Debug.Assert(this.HasStarted, "Process has not be started yet.");
-
+#endif
                 return this.Start + (this.End - this.Start) * this.Progress;
             }
         }
 
         #endregion
 
-        public virtual void StartProcess(IGameInteropService interop, IViewItem touchedItem, IViewItem draggingItem, IView draggingView)
+        public virtual void StartProcess(IGameInteropService interop, IViewItem touchedItem, Vector2 touchedStart, IViewItem draggingItem, IView draggingView, Vector2 draggingEnd)
         {
             this.HasStarted = true;
             this.Progress   = 0f;
 
-            // Set swapping state 
-            touchedItem[ItemState.Item_Is_Swaping] = () => true;
+            this.Start = touchedStart;
+            this.End   = draggingEnd;
 
-            // Set start point
-            this.Start = this.View.ViewLogic.ViewScroll.Position(touchedItem.ItemLogic.ItemLayout.Id);
-
-            // Set end point
-            this.End = draggingView.ViewLogic.ViewScroll.Position(draggingItem.ItemLogic.ItemLayout.Id);
+            ((ViewItem)touchedItem).OnSwapping();
 
             interop.Process.AttachProcess(new ViewItemSwapProcess<TData>(
                 draggingItem,
@@ -141,14 +138,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Swaps
         /// <summary>
         /// Watching possible dragging item swapping in target view.
         /// </summary>
-        /// <remarks>
-        /// Valid universally.
-        /// </remarks>
-        private void WatchFrom(IViewItem draggedItem, IView touchedView)
+        private void WatchFrom(IViewItem draggingItem, IView touchedView)
         {
             Predicate<IViewItem> isActive  = t => t[ItemState.Item_Is_Active]();
             Predicate<IViewItem> isTouched = t => t[ItemState.Item_Is_Mouse_Over]();
-            Predicate<IViewItem> isAnother = t => !ReferenceEquals(t, draggedItem);
+            Predicate<IViewItem> isAnother = t => !ReferenceEquals(t, draggingItem);
 
             var swappingItem = touchedView.ItemsRead.
                 FindAll(isActive).
@@ -156,9 +150,15 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Swaps
                 Find(isAnother);
 
             if (swappingItem != null && 
-               !swappingItem[ItemState.Item_Is_Swaping]())
+
+               // Avoid repetitive swapping when swapping has not finished
+               !swappingItem[ItemState.Item_Is_Swaping]() && 
+               
+               // Avoid repetitive swapping when swapping is just finished
+               !swappingItem[ItemState.Item_Is_Swapped]())
             {
-                swappingItem.ItemLogic.ItemInteraction.ViewSwap(this.GameInterop, draggedItem);
+                var swappingItemInteraction = swappingItem.ItemLogic.ItemInteraction;
+                swappingItemInteraction.ViewSwap(this.GameInterop, draggingItem);
             }
         }
 
