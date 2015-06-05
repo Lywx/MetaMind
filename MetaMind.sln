@@ -28,11 +28,6 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Tutorial1", "Tutorial1\Tuto
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MetaMind.TestimonyScripting", "MetaMind.TestimonyScripting\MetaMind.TestimonyScripting.fsproj", "{06536545-052B-42CA-B440-040E83F1D51E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D520A7C7-AD3B-42CF-9173-54E436299186}"
-	ProjectSection(SolutionItems) = preProject
-		Performance1.psess = Performance1.psess
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Android|Any CPU = Android|Any CPU

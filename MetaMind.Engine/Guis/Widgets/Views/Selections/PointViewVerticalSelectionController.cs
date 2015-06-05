@@ -7,9 +7,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
     {
         private IPointViewVerticalScrollController viewScroll;
 
-        private int? currentRow;
+        private int? currentId;
 
-        private int? previousRow;
+        private int? previousId;
 
         #region Constructors
 
@@ -17,6 +17,10 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
             : base(view)
         {
         }
+
+        #endregion
+
+        #region Layer
 
         public override void SetupLayer()
         {
@@ -30,78 +34,77 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 
         public bool HasPreviouslySelected
         {
-            get { return this.previousRow != null; }
+            get { return this.previousId != null; }
         }
 
         public bool HasSelected
         {
-            get { return this.currentRow != null; }
+            get { return this.currentId != null; }
         }
 
         public int? PreviousSelectedId
         {
-            get { return this.previousRow; }
+            get { return this.previousId; }
         }
 
-        public int? SelectedId
+        public int? CurrentSelectedId
         {
-            get { return this.currentRow; }
+            get { return this.currentId; }
         }
 
         public void Cancel()
         {
-            this.previousRow = this.currentRow;
-            this.currentRow = null;
+            this.previousId = this.currentId;
+            this.currentId = null;
 
             this.View[ViewState.View_Has_Selection] = () => false;
         }
 
         public bool IsSelected(int id)
         {
-            return this.currentRow == id;
+            return this.currentId == id;
         }
 
-        public void MoveUp()
+        public virtual void MoveUp()
         {
-            if (!this.currentRow.HasValue)
+            if (!this.currentId.HasValue)
             {
                 this.Reverse();
 
                 return;
             }
 
-            var row = this.currentRow.Value;
+            var id = this.currentId.Value;
 
-            if (!this.IsTopmost(row))
+            if (!this.IsTopmost(id))
             {
-                row = row - 1;
-                this.Select(row);
+                this.Select(this.PreviousRow(id));
             }
 
             if (this.viewScroll != null && 
-                this.viewScroll.IsUpToDisplay(row))
+                this.viewScroll.IsUpToDisplay(this.PreviousRow(id)))
             {
                 this.viewScroll.MoveUp();
             }
         }
 
-        public void MoveDown()
+        public virtual void MoveDown()
         {
-            if (!this.currentRow.HasValue)
+            if (!this.currentId.HasValue)
             {
                 this.Reverse();
                 return;
             }
 
-            var column = this.currentRow.Value;
+            var id = this.currentId.Value;
 
-            if (!this.IsBottommost(column))
+            if (!this.IsBottommost(id))
             {
-                column = column + 1;
-                this.Select(column);
+                this.Select(this.NextRow(id));
             }
 
-            if (this.viewScroll != null && this.viewScroll.IsDownToDisplay(column))
+            if (this.viewScroll != null && 
+                this.viewScroll.IsDownToDisplay(this.NextRow(id)))
             {
                 this.viewScroll.MoveDown();
             }
@@ -109,23 +112,35 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 
         public void Select(int id)
         {
-            this.previousRow = this.currentRow;
-            this.currentRow = id;
+            this.previousId = this.currentId;
+            this.currentId = id;
         }
 
-        private bool IsTopmost(int row)
+        protected virtual bool IsTopmost(int id)
         {
+            var row = id;
             return row <= 0;
         }
 
-        private bool IsBottommost(int row)
+        protected virtual bool IsBottommost(int id)
         {
+            var row = id;
             return row >= this.View.ItemsRead.Count - 1;
         }
 
-        private void Reverse()
+        protected void Reverse()
         {
-            this.Select(this.previousRow ?? 0);
+            this.Select(this.previousId ?? 0);
+        }
+
+        private int NextRow(int id)
+        {
+            return id + 1;
+        }
+
+        private int PreviousRow(int id)
+        {
+            return id - 1;
         }
     }
 }

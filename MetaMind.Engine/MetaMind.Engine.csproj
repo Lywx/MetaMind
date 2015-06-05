@@ -316,6 +316,8 @@
     <Compile Include="Guis\Widgets\Views\Layouts\PointView2DLayout.cs" />
     <Compile Include="Guis\Widgets\Views\Layouts\PointViewVerticalLayout.cs" />
     <Compile Include="Guis\Widgets\Views\Layouts\ViewLayout.cs" />
+    <Compile Include="Guis\Widgets\Views\Logic\BlockViewVerticalLogic.cs" />
+    <Compile Include="Guis\Widgets\Views\Logic\IBlockViewVerticalLogic.cs" />
     <Compile Include="Guis\Widgets\Views\Logic\IPointGridLogic.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -341,7 +343,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Guis\Widgets\Views\Scrolls\BlockViewVerticalScrollController.cs" />
+    <Compile Include="Guis\Widgets\Views\Scrolls\IBlockViewVerticalScrollController.cs" />
     <Compile Include="Guis\Widgets\Views\Scrolls\PointViewVerticalScrollController.cs" />
+    <Compile Include="Guis\Widgets\Views\Selections\BlockViewVerticalSelectionController.cs" />
+    <Compile Include="Guis\Widgets\Views\Selections\IBlockViewVerticalSelectionController.cs" />
     <Compile Include="Guis\Widgets\Views\Selections\IPointViewVerticalSelectionController.cs" />
     <Compile Include="Guis\Widgets\Views\Selections\PointViewVerticalSelectionController.cs" />
     <Compile Include="Guis\Widgets\Views\Settings\PointViewSettings.cs" />

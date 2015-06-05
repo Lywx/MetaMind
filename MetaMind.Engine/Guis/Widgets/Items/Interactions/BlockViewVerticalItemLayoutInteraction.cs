@@ -32,7 +32,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
         }
 
         public void ViewDoSelect(IViewItemLayout itemLayout)
-        {
+        { 
             this.viewSelection.Select(itemLayout.Id);
         }
 

@@ -50,7 +50,7 @@
                     new TestItemSettings(),
                     new List<IViewItem>());
 
-            var viewSelection = new PointViewVerticalSelectionController(view);
+            var viewSelection = new BlockViewVerticalSelectionController(view);
             var viewScroll    = new BlockViewVerticalScrollController(view);
             var viewSwap      = new ViewSwapController<Test>(view, test);
             var viewLayout    = new BlockViewVerticalLayout(view);

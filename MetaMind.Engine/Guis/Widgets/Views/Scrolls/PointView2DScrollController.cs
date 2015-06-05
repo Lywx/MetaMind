@@ -18,9 +18,9 @@
 
         private PointView2DSettings viewSettings;
 
-        private int offsetX;
+        private int columnOffset;
 
-        private int offsetY;
+        private int rowOffset;
 
         public PointView2DScrollController(IView view)
             : base(view)
@@ -52,48 +52,48 @@
             return this.viewLayout.RowOf(id);
         }
 
-        public int OffsetX
+        public int ColumnOffset
         {
-            get { return this.offsetX; }
+            get { return this.columnOffset; }
         }
 
-        public int OffsetY
+        public int RowOffset
         {
-            get { return this.offsetY; }
+            get { return this.rowOffset; }
         }
 
         private bool CanMoveDown
         {
             get
             {
-                return (this.viewSettings.ColumnNumDisplay * (this.viewSettings.RowNumDisplay + this.OffsetY) < this.viewSettings.ColumnNumDisplay * this.viewSettings.RowNumMax) && 
-                       (this.viewSettings.ColumnNumMax * (this.viewSettings.RowNumDisplay + this.OffsetY) < this.View.ItemsRead.Count);
+                return (this.viewSettings.ColumnNumDisplay * (this.viewSettings.RowNumDisplay + this.RowOffset) < this.viewSettings.ColumnNumDisplay * this.viewSettings.RowNumMax) && 
+                       (this.viewSettings.ColumnNumMax * (this.viewSettings.RowNumDisplay + this.RowOffset) < this.View.ItemsRead.Count);
             }
         }
 
         private bool CanMoveLeft
         {
-            get { return this.OffsetX > 0; }
+            get { return this.ColumnOffset > 0; }
         }
 
         private bool CanMoveRight
         {
             get
             {
-                return this.viewSettings.RowNumDisplay * (this.viewSettings.ColumnNumDisplay + this.OffsetX)
+                return this.viewSettings.RowNumDisplay * (this.viewSettings.ColumnNumDisplay + this.ColumnOffset)
                        < this.viewSettings.RowNumDisplay * this.viewSettings.ColumnNumMax;
             }
         }
 
         private bool CanMoveUp
         {
-            get { return this.OffsetY > 0; }
+            get { return this.RowOffset > 0; }
         }
 
         public bool CanDisplay(int row, int column)
         {
-            return this.OffsetX <= column && column < this.viewSettings.ColumnNumDisplay + this.OffsetX &&
-                   this.OffsetY <= row    && row    < this.viewSettings.RowNumDisplay    + this.OffsetY;
+            return this.ColumnOffset <= column && column < this.viewSettings.ColumnNumDisplay + this.ColumnOffset &&
+                   this.RowOffset    <= row    && row    < this.viewSettings.RowNumDisplay    + this.RowOffset;
         }
 
         public bool CanDisplay(int id)
@@ -104,31 +104,31 @@
             return this.CanDisplay(row, column);
         }
 
-        public bool IsDownToDisplay(int row)
+        public bool IsDownToDisplay(int id)
         {
-            return row > this.viewSettings.RowNumDisplay + this.OffsetY - 1;
+            return id > this.viewSettings.RowNumDisplay + this.RowOffset - 1;
         }
 
-        public bool IsLeftToDisplay(int column)
+        public bool IsLeftToDisplay(int id)
         {
-            return column < this.OffsetX;
+            return id < this.ColumnOffset;
         }
 
-        public bool IsRightToDisplay(int column)
+        public bool IsRightToDisplay(int id)
         {
-            return column > this.viewSettings.ColumnNumDisplay + this.OffsetX - 1;
+            return id > this.viewSettings.ColumnNumDisplay + this.ColumnOffset - 1;
         }
 
-        public bool IsUpToDisplay(int row)
+        public bool IsUpToDisplay(int id)
         {
-            return row < this.OffsetY;
+            return id < this.RowOffset;
         }
 
         public void MoveDown()
         {
             if (this.CanMoveDown)
             {
-                this.offsetY = this.OffsetY + 1;
+                this.rowOffset = this.RowOffset + 1;
             }
         }
 
@@ -136,7 +136,7 @@
         {
             if (this.CanMoveLeft)
             {
-                this.offsetX = this.OffsetX - 1;
+                this.columnOffset = this.ColumnOffset - 1;
             }
         }
 
@@ -144,7 +144,7 @@
         {
             if (this.CanMoveRight)
             {
-                this.offsetX = this.OffsetX + 1;
+                this.columnOffset = this.ColumnOffset + 1;
             }
         }
 
@@ -152,13 +152,13 @@
         {
             if (this.CanMoveUp)
             {
-                this.offsetY = this.OffsetY - 1;
+                this.rowOffset = this.RowOffset - 1;
             }
         }
 
         public void MoveUpToTop()
         {
-            this.offsetY = 0;
+            this.rowOffset = 0;
         }
 
         public Vector2 Position(int id)
@@ -166,8 +166,8 @@
             var row    = this.RowFrom(id);
             var column = this.ColumnFrom(id);
             return new Vector2(
-                this.viewSettings.Position.X - this.OffsetX * this.viewSettings.Margin.X + column * this.viewSettings.Margin.X,
-                this.viewSettings.Position.Y - this.OffsetY * this.viewSettings.Margin.Y + row * this.viewSettings.Margin.Y);
+                this.viewSettings.Position.X - this.ColumnOffset * this.viewSettings.Margin.X + column * this.viewSettings.Margin.X,
+                this.viewSettings.Position.Y - this.RowOffset * this.viewSettings.Margin.Y + row * this.viewSettings.Margin.Y);
         }
 
         public void Zoom(int id)

@@ -1,6 +1,7 @@
 namespace MetaMind.Engine.Guis.Widgets.Views.Layouts
 {
     using System;
+    using Items;
     using Items.Layers;
 
     public class BlockViewVerticalLayout : ViewLayout, IPointViewVerticalLayout
@@ -16,7 +17,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layouts
         {
             if (this.ItemsRead.Count > id)
             {
-                var itemLayer = this.ItemsRead[id].ItemLayer.ItemGetLayer<BlockViewVerticalItemLayer>();
+                var itemLayer = this.ItemGetLayer<BlockViewVerticalItemLayer>(this.ItemsRead[id]);
                 var itemLayout = itemLayer.ItemLayout;
 
                 return itemLayout.Row;
@@ -29,7 +30,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layouts
         {
             if (this.ItemsRead.Count > id)
             {
-                var itemLayer = this.ItemsRead[id].ItemLayer.ItemGetLayer<BlockViewVerticalItemLayer>();
+                var itemLayer = this.ItemGetLayer<BlockViewVerticalItemLayer>(this.ItemsRead[id]);
                 var itemLayout = itemLayer.ItemLayout;
 
                 return itemLayout.BlockRow;

@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 {
     using System;
     using System.Collections.Generic;
-
+    using Items.Layers;
     using MetaMind.Engine.Guis.Widgets.Items;
     using MetaMind.Engine.Guis.Widgets.Views.Layers;
 
@@ -52,7 +52,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         #endregion
 
-        #region Layering
+        #region Layer
 
         private IViewLayer ViewLayer
         {
@@ -65,6 +65,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         public T ViewGetLayer<T>() where T : class, IViewLayer
         {
             return this.ViewLayer.Get<T>();
+        }
+
+        public T ItemGetLayer<T>(IViewItem item) where T : class, IViewItemLayer
+        {
+            return item.GetLayer<T>();
         }
 
         public virtual void SetupLayer() { }

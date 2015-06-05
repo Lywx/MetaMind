@@ -15,7 +15,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 
         int? PreviousSelectedId { get; }
 
-        int? SelectedId { get; }
+        int? CurrentSelectedId { get; }
 
         void Cancel();
 

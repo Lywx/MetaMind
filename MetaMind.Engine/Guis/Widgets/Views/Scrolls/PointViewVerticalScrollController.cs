@@ -22,79 +22,87 @@
             this.viewSettings = viewLayer.ViewSettings;
         }
 
-        public int OffsetY { get; private set; }
+        public int RowOffset { get; protected set; }
 
-        private bool CanMoveUp
+        protected bool CanMoveUp
         {
             get
             {
-                return this.OffsetY > 0;
+                return this.RowOffset > 0;
             }
         }
 
-        private bool CanMoveDown
+        protected virtual bool CanMoveDown
         {
             get
             {
-                return (this.viewSettings.RowNumDisplay + this.OffsetY) < this.View.ItemsRead.Count;
+                return (this.ViewSettings.RowNumDisplay + this.RowOffset) < this.View.ItemsRead.Count;
             }
         }
 
-        public bool CanDisplay(int row)
+        protected PointViewVerticalSettings ViewSettings
         {
-            return this.OffsetY <= row && row < this.viewSettings.RowNumDisplay + this.OffsetY;
+            get { return this.viewSettings; }
         }
 
-        public bool IsUpToDisplay(int row)
+        public bool CanDisplay(int id)
         {
-            return row < this.OffsetY - 1;
+            var row = id;
+            return this.RowOffset <= row && row < this.ViewSettings.RowNumDisplay + this.RowOffset;
         }
 
-        public bool IsDownToDisplay(int row)
+        public virtual bool IsUpToDisplay(int id)
         {
-            return row > this.viewSettings.RowNumDisplay + this.OffsetY;
+            var row = id;
+            return row < this.RowOffset - 1;
         }
 
-        public void MoveUp()
+        public virtual bool IsDownToDisplay(int id)
+        {
+            var row = id;
+            return row > this.ViewSettings.RowNumDisplay + this.RowOffset;
+        }
+
+        public virtual void MoveUp()
         {
             if (this.CanMoveUp)
             {
-                --this.OffsetY;
+                --this.RowOffset;
             }
         }
 
         public void MoveUpToTop()
         {
-            this.OffsetY = 0;
+            this.RowOffset = 0;
         }
 
-        public void MoveDown()
+        public virtual void MoveDown()
         {
             if (this.CanMoveDown)
             {
-                ++this.OffsetY;
+                ++this.RowOffset;
             }
         }
 
         public virtual Vector2 Position(int row)
         {
             return new Vector2(
-                this.viewSettings.Position.X,
-                this.viewSettings.Direction == ViewDirection.Normal
-                    ? this.viewSettings.Position.Y - (this.OffsetY * this.viewSettings.Margin.Y) + row * this.viewSettings.Margin.Y
-                    : this.viewSettings.Position.Y + (this.OffsetY * this.viewSettings.Margin.Y) - row * this.viewSettings.Margin.Y);
+                this.ViewSettings.Position.X,
+                this.ViewSettings.Direction == ViewDirection.Normal
+                    ? this.ViewSettings.Position.Y - (this.RowOffset * this.ViewSettings.Margin.Y) + row * this.ViewSettings.Margin.Y
+                    : this.ViewSettings.Position.Y + (this.RowOffset * this.ViewSettings.Margin.Y) - row * this.ViewSettings.Margin.Y);
         }
 
-        public virtual void Zoom(int row)
+        public virtual void Zoom(int id)
         {
-            if (!this.CanDisplay(row))
+            if (!this.CanDisplay(id))
             {
-                while (this.IsUpToDisplay(row))
+                while (this.IsUpToDisplay(id))
                 {
                     this.MoveUp();
                 }
 
-                while (this.IsDownToDisplay(row))
+                while (this.IsDownToDisplay(id))
                 {
                     this.MoveDown();
                 }

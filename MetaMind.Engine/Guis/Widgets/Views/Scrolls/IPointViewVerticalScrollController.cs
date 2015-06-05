@@ -2,11 +2,11 @@
 {
     public interface IPointViewVerticalScrollController : IPointViewScrollController
     {
-        int OffsetY { get; }
+        int RowOffset { get; }
 
-        bool IsDownToDisplay(int row);
+        bool IsDownToDisplay(int id);
 
-        bool IsUpToDisplay(int row);
+        bool IsUpToDisplay(int id);
 
         void MoveDown();
 

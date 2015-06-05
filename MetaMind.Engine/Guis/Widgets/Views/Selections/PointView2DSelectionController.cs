@@ -61,7 +61,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
             get { return this.previousId; }
         }
 
-        public int? SelectedId
+        public int? CurrentSelectedId
         {
             get { return this.currentId; }
         }

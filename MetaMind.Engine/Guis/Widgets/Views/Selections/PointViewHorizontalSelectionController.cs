@@ -14,9 +14,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
     {
         private IPointViewHorizontalScrollController viewScroll;
 
-        private int? currentColumn;
+        private int? currentId;
 
-        private int? previousColumn;
+        private int? previousId;
 
         #region Constructors
 
@@ -37,56 +37,55 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 
         public bool HasPreviouslySelected
         {
-            get { return this.previousColumn != null; }
+            get { return this.previousId != null; }
         }
 
         public bool HasSelected
         {
-            get { return this.currentColumn != null; }
+            get { return this.currentId != null; }
         }
 
         public int? PreviousSelectedId
         {
-            get { return this.previousColumn; }
+            get { return this.previousId; }
         }
 
-        public int? SelectedId
+        public int? CurrentSelectedId
         {
-            get { return this.currentColumn; }
+            get { return this.currentId; }
         }
 
         public void Cancel()
         {
-            this.previousColumn = this.currentColumn;
-            this.currentColumn = null;
+            this.previousId = this.currentId;
+            this.currentId = null;
 
             this.View[ViewState.View_Has_Selection] = () => false;
         }
 
         public bool IsSelected(int id)
         {
-            return this.currentColumn == id;
+            return this.currentId == id;
         }
 
         public void MoveLeft()
         {
-            if (!this.currentColumn.HasValue)
+            if (!this.currentId.HasValue)
             {
                 this.Reverse();
 
                 return;
             }
 
-            var column = this.currentColumn.Value;
+            var column = this.currentId.Value;
 
             if (!this.IsLeftmost(column))
             {
-                column = column - 1;
-                this.Select(column);
+                this.Select(PreviousColumn(column));
             }
 
             if (this.viewScroll != null && 
-                this.viewScroll.IsLeftToDisplay(column))
+                this.viewScroll.IsLeftToDisplay(PreviousColumn(column)))
             {
                 this.viewScroll.MoveLeft();
             }
@@ -94,21 +93,21 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 
         public void MoveRight()
         {
-            if (!this.currentColumn.HasValue)
+            if (!this.currentId.HasValue)
             {
                 this.Reverse();
                 return;
             }
 
-            var column = this.currentColumn.Value;
+            var column = this.currentId.Value;
 
             if (!this.IsRightmost(column))
             {
-                column = column + 1;
-                this.Select(column);
+                this.Select(NextColumn(column));
             }
 
-            if (this.viewScroll != null && this.viewScroll.IsRightToDisplay(column))
+            if (this.viewScroll != null && 
+                this.viewScroll.IsRightToDisplay(NextColumn(column)))
             {
                 this.viewScroll.MoveRight();
             }
@@ -116,8 +115,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 
         public void Select(int id)
         {
-            this.previousColumn = this.currentColumn;
-            this.currentColumn = id;
+            this.previousId = this.currentId;
+            this.currentId = id;
         }
 
         private bool IsLeftmost(int column)
@@ -132,7 +131,18 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 
         private void Reverse()
         {
-            this.Select(this.previousColumn ?? 0);
+            this.Select(this.previousId ?? 0);
         }
+
+        private int NextColumn(int column)
+        {
+            return column + 1;
+        }
+
+        private int PreviousColumn(int column)
+        {
+            return column - 1;
+        }
+
     }
 }

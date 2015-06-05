@@ -75,7 +75,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Visuals
         {
             get
             {
-                var distance = this.viewRegion.Height * (float)this.viewScroll.OffsetY
+                var distance = this.viewRegion.Height * (float)this.viewScroll.RowOffset
                                / (this.viewLayout.RowNum - this.viewSettings.RowNumDisplay)
                                * (1 - (float)this.viewSettings.RowNumDisplay / this.viewLayout.RowNum);
 

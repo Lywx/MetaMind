@@ -2,11 +2,11 @@
 {
     public interface IPointViewHorizontalScrollController : IPointViewScrollController
     {
-        int OffsetX { get; }
+        int ColumnOffset { get; }
 
-        bool IsLeftToDisplay(int column);
+        bool IsLeftToDisplay(int id);
 
-        bool IsRightToDisplay(int column);
+        bool IsRightToDisplay(int id);
 
         void MoveLeft();
 

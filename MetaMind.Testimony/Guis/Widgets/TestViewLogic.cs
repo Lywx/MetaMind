@@ -10,7 +10,7 @@
     using Engine.Guis.Widgets.Views.Selections;
     using Engine.Guis.Widgets.Views.Swaps;
 
-    public class TestViewLogic<TData> : PointViewVerticalLogic<TData>
+    public class TestViewLogic<TData> : BlockViewVerticalLogic<TData>
     {
         public TestViewLogic(
             IView                    view,
