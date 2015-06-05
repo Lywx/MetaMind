@@ -23,7 +23,7 @@ namespace MetaMind.Testimony.Guis.Widgets
 
             RegularColor      = Palette.DarkRed,
             MouseOverColor    = Palette.DarkRed,
-            PendingColor      = Palette.DarkRed,
+            PendingColor      = Palette.LightYellow,
             ModificationColor = Palette.DarkRed,
             SelectionColor    = Palette.DarkRed,
         };
@@ -45,7 +45,7 @@ namespace MetaMind.Testimony.Guis.Widgets
             RegularColor      = Palette.Transparent0,
             MouseOverColor    = Palette.DimBlue,
             PendingColor      = Palette.Transparent0,
-            ModificationColor = Palette.Transparent0,
+            ModificationColor = Palette.LightYellow,
             SelectionColor    = Palette.LightBlue,
         };
 
