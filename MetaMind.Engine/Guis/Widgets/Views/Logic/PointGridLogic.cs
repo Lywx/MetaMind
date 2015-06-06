@@ -1,83 +1,97 @@
 namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 {
     using System.Collections.Generic;
-    using Components.Inputs;
+
+    using Microsoft.Xna.Framework;
+
     using Items.Factories;
-    using Layers;
     using Layouts;
     using Scrolls;
     using Selections;
     using Services;
     using Swaps;
     using Visuals;
-
-    using Microsoft.Xna.Framework;
+    using Regions;
 
     public class PointGridLogic<TData> : PointView2DLogic<TData>, IPointGridLogic
     {
-        private IPointView2DSelectionController viewSelection;
+        private ViewVerticalScrollBar viewVerticalScrollbar;
 
-        private IPointView2DScrollController viewScroll;
+        private ViewRegion viewRegion;
 
         public PointGridLogic(
-            IView                    view,
-            IList<TData>             viewData,
-            IViewScrollController    viewScroll,
+            IView view,
+            IList<TData> viewData,
+            IViewScrollController viewScroll,
             IViewSelectionController viewSelection,
-            IViewSwapController      viewSwap,
-            IViewLayout              viewLayout,
+            IViewSwapController viewSwap,
+            IViewLayout viewLayout,
             IViewItemFactory itemFactory)
             : base(view, viewData, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory)
         {
-            this.Region = new ViewRegion(this.RegionBounds);
-            this.Scrollbar = new ViewVerticalScrollBar(viewSettings, viewLayer.ViewScroll, this, this.Region, viewSettings.ScrollbarSettings);
-
-            this.View[ViewState.View_Has_Focus] = () => this.Region[RegionState.Region_Has_Focus]() || this.View[ViewState.View_Has_Selection]();
         }
+
+        #region Configurations
+
+        #endregion Configurations
+
+        #region Layer
 
         public override void SetupLayer()
         {
-            var viewLayer = this.ViewGetLayer<PointView2DLayer>();
-            this.viewSelection = viewLayer.ViewSelection;
-            this.viewScroll = viewLayer.ViewScroll;
+            this.viewRegion = new ViewRegion(() => new Rectangle(
+                this.ViewSettings.ViewPosition.ToPoint(),
+                new Point(
+                    (int)(this.ViewSettings.ViewColumnDisplay * this.ViewSettings.ItemMargin.X),
+                    (int)(this.ViewSettings.ViewRowDisplay    * this.ViewSettings.ItemMargin.Y))));
+
+            this.ViewComponents.Add("ViewRegion", this.viewRegion);
+
+            this.View[ViewState.View_Has_Focus] = () => this.viewRegion[RegionState.Region_Has_Focus]() || this.View[ViewState.View_Has_Selection]();
+
+            var viewVerticalScrollbarSettings = this.ViewSettings.Get<ViewScrollbarSettings>("ViewVericalScrollbar");
+            this.viewVerticalScrollbar = new ViewVerticalScrollBar(this.ViewSettings, this.ViewScroll, this.ViewLayout, this.viewRegion, viewVerticalScrollbarSettings);
+            this.ViewComponents.Add("ViewVerticalScrollbar", this.viewVerticalScrollbar);
         }
+
+        #endregion
 
         #region Operations
 
         public override void MoveDown()
         {
-            this.ViewGetComponent<ViewVerticalScrollBar>("verticalScrollbar").Trigger();
-            this.viewSelection.MoveDown();
+            this.viewVerticalScrollbar.Trigger();
+            this.ViewSelection.MoveDown();
         }
 
         public override void MoveLeft()
         {
-            this.ViewGetComponent<ViewVerticalScrollBar>("verticalScrollbar").Trigger();
-            this.viewSelection.MoveLeft();
+            this.viewVerticalScrollbar.Trigger();
+            this.ViewSelection.MoveLeft();
         }
 
         public override void MoveRight()
         {
-            this.ViewGetComponent<ViewVerticalScrollBar>("verticalScrollbar").Trigger();
-            this.viewSelection.MoveRight();
+            this.viewVerticalScrollbar.Trigger();
+            this.ViewSelection.MoveRight();
         }
 
         public override void MoveUp()
         {
-            this.ViewGetComponent<ViewVerticalScrollBar>("verticalScrollbar").Trigger();
-            this.viewSelection.MoveUp();
+            this.viewVerticalScrollbar.Trigger();
+            this.ViewSelection.MoveUp();
         }
 
-        public void ScrollDown()
+        public override void ScrollDown()
         {
-            this.ViewGetComponent<ViewVerticalScrollBar>("verticalScrollbar").Trigger();
-            this.viewScroll.MoveDown();
+            this.viewVerticalScrollbar.Trigger();
+            this.ViewScroll.MoveDown();
         }
 
-        public void ScrollUp()
+        public override void ScrollUp()
         {
-            this.ViewGetComponent<ViewVerticalScrollBar>("verticalScrollbar").Trigger();
-            this.viewScroll.MoveUp();
+            this.viewVerticalScrollbar.Trigger();
+            this.ViewScroll.MoveUp();
         }
 
         #endregion Operations
@@ -86,19 +100,14 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public override void Update(GameTime time)
         {
-            base          .Update(time);
-            this.Region   .Update(time);
-            this.Scrollbar.Update(time);
+            base.Update(time);
+            this.viewRegion.Update(time);
+            this.viewVerticalScrollbar.Update(time);
         }
-        
+
         #endregion Update Structure
 
         #region Update Input
-
-        public bool Locked
-        {
-            get { return this.View[ViewState.View_Is_Editing](); }
-        }
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
@@ -108,48 +117,14 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             this.UpdateInputOfItems(input, time);
         }
 
-        protected override void UpdateInputOfMouse(IGameInputService input, GameTime time)
-        {
-            if (this.View[ViewState.View_Is_Inputting]())
-            {
-                if (this.ViewSettings.MouseEnabled)
-                {
-                    var mouse = input.State.Mouse;
-                    if (mouse.IsWheelScrolledUp)
-                    {
-                        this.ScrollUp();
-                    }
-
-                    if (mouse.IsWheelScrolledDown)
-                    {
-                        this.ScrollDown();
-                    }
-                }
-            }
-        }
-
         protected void UpdateInputOfRegion(IGameInputService input, GameTime gameTime)
         {
             if (this.View[ViewState.View_Is_Inputting]())
             {
-                this.Region.UpdateInput(input, gameTime);
+                this.viewRegion.UpdateInput(input, gameTime);
             }
         }
 
         #endregion Update Input
-
-        #region Configurations
-
-        protected virtual Rectangle RegionBounds()
-        {
-            return new Rectangle(
-                (int)this.ViewSettings.Position.X,
-                (int)this.ViewSettings.Position.Y,
-                this.ViewSettings.ColumnNumDisplay * this.ItemSettings.NameFrameSize.X,
-                this.ViewSettings.RowNumDisplay    * this.ItemSettings.NameFrameSize.Y);
-        }
-
-        #endregion Configurations
-
     }
 }

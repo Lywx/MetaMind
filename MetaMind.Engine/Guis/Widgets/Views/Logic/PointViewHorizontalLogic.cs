@@ -86,7 +86,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public virtual void MoveLeft()
         {
-            if (this.viewSettings.Direction == ViewDirection.Inverse)
+            if (this.viewSettings.ViewDirection == ViewDirection.Inverse)
             {
                 // Invert for left scrolling view
                 this.ViewSelection.MoveRight();
@@ -99,7 +99,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public virtual void MoveRight()
         {
-            if (this.viewSettings.Direction == ViewDirection.Inverse)
+            if (this.viewSettings.ViewDirection == ViewDirection.Inverse)
             {
                 // Invert for left scrolling view
                 this.ViewSelection.MoveLeft();
@@ -112,7 +112,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public void FastMoveLeft()
         {
-            for (var i = 0; i < this.viewSettings.ColumnNumDisplay; i++)
+            for (var i = 0; i < this.viewSettings.ViewColumnDisplay; i++)
             {
                 this.MoveLeft();
             }
@@ -120,7 +120,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public void FastMoveRight()
         {
-            for (var i = 0; i < this.viewSettings.ColumnNumDisplay; i++)
+            for (var i = 0; i < this.viewSettings.ViewColumnDisplay; i++)
             {
                 this.MoveRight();
             }

@@ -66,8 +66,8 @@
         {
             get
             {
-                return (this.viewSettings.ColumnNumDisplay * (this.viewSettings.RowNumDisplay + this.RowOffset) < this.viewSettings.ColumnNumDisplay * this.viewSettings.RowNumMax) && 
-                       (this.viewSettings.ColumnNumMax * (this.viewSettings.RowNumDisplay + this.RowOffset) < this.View.ItemsRead.Count);
+                return (this.viewSettings.ViewColumnDisplay * (this.viewSettings.ViewRowDisplay + this.RowOffset) < this.viewSettings.ViewColumnDisplay * this.viewSettings.ViewRowMax) && 
+                       (this.viewSettings.ViewColumnMax * (this.viewSettings.ViewRowDisplay + this.RowOffset) < this.View.ItemsRead.Count);
             }
         }
 
@@ -80,8 +80,8 @@
         {
             get
             {
-                return this.viewSettings.RowNumDisplay * (this.viewSettings.ColumnNumDisplay + this.ColumnOffset)
-                       < this.viewSettings.RowNumDisplay * this.viewSettings.ColumnNumMax;
+                return this.viewSettings.ViewRowDisplay * (this.viewSettings.ViewColumnDisplay + this.ColumnOffset)
+                       < this.viewSettings.ViewRowDisplay * this.viewSettings.ViewColumnMax;
             }
         }
 
@@ -92,8 +92,8 @@
 
         public bool CanDisplay(int row, int column)
         {
-            return this.ColumnOffset <= column && column < this.viewSettings.ColumnNumDisplay + this.ColumnOffset &&
-                   this.RowOffset    <= row    && row    < this.viewSettings.RowNumDisplay    + this.RowOffset;
+            return this.ColumnOffset <= column && column < this.viewSettings.ViewColumnDisplay + this.ColumnOffset &&
+                   this.RowOffset    <= row    && row    < this.viewSettings.ViewRowDisplay    + this.RowOffset;
         }
 
         public bool CanDisplay(int id)
@@ -106,7 +106,7 @@
 
         public bool IsDownToDisplay(int id)
         {
-            return id > this.viewSettings.RowNumDisplay + this.RowOffset - 1;
+            return id > this.viewSettings.ViewRowDisplay + this.RowOffset - 1;
         }
 
         public bool IsLeftToDisplay(int id)
@@ -116,7 +116,7 @@
 
         public bool IsRightToDisplay(int id)
         {
-            return id > this.viewSettings.ColumnNumDisplay + this.ColumnOffset - 1;
+            return id > this.viewSettings.ViewColumnDisplay + this.ColumnOffset - 1;
         }
 
         public bool IsUpToDisplay(int id)
@@ -166,8 +166,8 @@
             var row    = this.RowFrom(id);
             var column = this.ColumnFrom(id);
             return new Vector2(
-                this.viewSettings.Position.X - this.ColumnOffset * this.viewSettings.Margin.X + column * this.viewSettings.Margin.X,
-                this.viewSettings.Position.Y - this.RowOffset * this.viewSettings.Margin.Y + row * this.viewSettings.Margin.Y);
+                this.viewSettings.ViewPosition.X - this.ColumnOffset * this.viewSettings.ItemMargin.X + column * this.viewSettings.ItemMargin.X,
+                this.viewSettings.ViewPosition.Y - this.RowOffset * this.viewSettings.ItemMargin.Y + row * this.viewSettings.ItemMargin.Y);
         }
 
         public void Zoom(int id)

@@ -15,7 +15,6 @@
     using Engine.Guis.Widgets.Items.Layers;
     using Engine.Guis.Widgets.Items.Layouts;
     using Engine.Guis.Widgets.Views;
-    using Engine.Guis.Widgets.Views.Layers;
     using Engine.Guis.Widgets.Views.Layouts;
     using Engine.Guis.Widgets.Views.Scrolls;
     using Engine.Guis.Widgets.Views.Selections;
@@ -42,10 +41,10 @@
 
             var view = new View(
                     new PointViewVerticalSettings(
-                        position     : new Vector2(40, 100),
-                        margin       : new Vector2(512 + 64 + 24, 26),
-                        rowNumDisplay: 30,
-                        rowNumMax    : 100),
+                        itemMargin    : new Vector2(512 + 64 + 24, 26),
+                        viewPosition  : new Vector2(40, 100),
+                        viewRowDisplay: 30, 
+                        viewRowMax    : 100),
 
                     new TestItemSettings(),
                     new List<IViewItem>());
@@ -61,7 +60,7 @@
                 {
                     var itemFrame             = new TestItemFrame(item);
                     var itemLayoutInteraction = new BlockViewVerticalItemLayoutInteraction(item, viewSelection, viewScroll);
-                    var itemLayout            = new BlockViewVerticalItemLayout(item, itemLayoutInteraction);
+                    var itemLayout            = new TestItemLayout(item, itemLayoutInteraction);
                     var itemInteraction       = new BlockViewVerticalItemInteraction(item, itemLayout, itemLayoutInteraction);
                     var itemModel             = new ViewItemDataModel(item);
 
@@ -70,7 +69,7 @@
                 item => new TestItemVisual(item),
                 item =>
                 {
-                    var newTest = new Test("                                                                                                                                                                                                                                                                                                                                                          down t");
+                    var newTest = new Test("Namespace.Test Name", "Description: A year ago I wrote an essay for the New York Times titled “The Short Sentence as Gospel Truth.” It argued that authors express their most important ideas or dramatic moments in the shortest sentences. This turned out to be a popular piece, the most emailed of the day. Teachers and editors anointed the short sentence as the solution to many writing problems.");
                     test.Add(newTest);
                     return newTest;
                 });
@@ -81,7 +80,7 @@
 
             view.SetupLayer();
 
-            view[ViewState.View_Has_Focus] = () => true;
+            //view[ViewState.View_Has_Focus] = () => true;
 
             this.entities.Add(view);
 

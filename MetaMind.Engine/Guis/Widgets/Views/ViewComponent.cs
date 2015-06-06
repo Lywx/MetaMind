@@ -78,6 +78,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         #region Component Tree
 
+        public Dictionary<string, object> ViewComponents
+        {
+            get { return this.View.ViewComponents; }
+        }
+
         public T ViewGetComponent<T>(string id) where T : class
         {
             var t = (T)this.ViewGetComponent(id);

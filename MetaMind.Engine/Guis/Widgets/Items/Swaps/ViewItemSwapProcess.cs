@@ -74,6 +74,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
 
             this.CommonSource = commonSource;
 
+            // Temporarily disable the mouse over state (without affecting the inner working of the underlying frames)
             this.swappingItemIsMouseOver = this.SwappingItem[ItemState.Item_Is_Mouse_Over];
             this.SwappingItem[ItemState.Item_Is_Mouse_Over] = () => false;
         }

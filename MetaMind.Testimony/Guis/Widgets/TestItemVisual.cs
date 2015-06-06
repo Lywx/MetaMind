@@ -8,16 +8,13 @@
 namespace MetaMind.Testimony.Guis.Widgets
 {
     using System;
-    using Engine.Components.Fonts;
-    using Engine.Guis.Elements;
+
     using Engine.Guis.Widgets.Items;
-    using Engine.Guis.Widgets.Items.Data;
     using Engine.Guis.Widgets.Items.Frames;
-    using Engine.Guis.Widgets.Items.Layouts;
     using Engine.Guis.Widgets.Items.Visuals;
     using Engine.Guis.Widgets.Visuals;
     using Engine.Services;
-    using Engine.Testers;
+
     using Microsoft.Xna.Framework;
 
     public class TestItemVisual : ViewItemVisual
@@ -33,27 +30,33 @@ namespace MetaMind.Testimony.Guis.Widgets
 
         protected ViewItemLabelVisual IdLabel { get; set; }
 
+        protected ViewItemLabelVisual StatusLabel { get; set; }
+
         protected ViewItemLabelVisual NameLabel { get; set; }
 
-        protected ViewItemLabelVisual StatusLabel { get; set; }
+        protected ViewItemLabelVisual DescriptionLabel { get; set; }
 
         protected ViewItemFrameVisual IdFrame { get; set; }
 
+        protected ViewItemFrameVisual StatusFrame { get; set; }
+
         protected ViewItemFrameVisual NameFrame { get; set; }
 
-        protected ViewItemFrameVisual StatusFrame { get; set; }
+        protected ViewItemFrameVisual DescriptionFrame { get; set; }
 
         #endregion
 
         #region Positions
 
-        protected Func<Vector2> IdCenterPosition { get; set; }
+        protected Func<Vector2> ItemCenterPosition { get; set; }
 
-        protected Func<Vector2> NamePosition { get; set; }
+        protected Func<Vector2> IdCenterPosition { get; set; }
 
         protected Func<Vector2> StatusCenterPosition { get; set; }
 
-        protected Func<Vector2> ItemCenterPosition { get; set; }
+        protected Func<Vector2> NamePosition { get; set; }
+
+        protected Func<Vector2> DescriptionPosition { get; set; }
 
         #endregion
 
@@ -71,8 +74,10 @@ namespace MetaMind.Testimony.Guis.Widgets
             this.ItemCenterPosition = () => itemFrame.RootFrame.Center.ToVector2();
 
             this.IdCenterPosition = () => itemFrame.IdFrame.Center.ToVector2();
-            this.NamePosition = () => itemFrame.NameFrameLocation() + itemSettings.Get<Vector2>("NameMargin");
             this.StatusCenterPosition = () => itemFrame.StatusFrame.Center.ToVector2();
+
+            this.NamePosition = () => itemFrame.NameFrameLocation() + itemSettings.Get<Vector2>("NameMargin");
+            this.DescriptionPosition = () => itemFrame.DescriptionFrameLocation() + itemSettings.Get<Vector2>("DescriptionMargin");
 
             // Components
             this.IdFrame = new ViewItemFrameVisual(this.Item,
@@ -86,18 +91,6 @@ namespace MetaMind.Testimony.Guis.Widgets
                 this.IdLabel = new ViewItemLabelVisual(this.Item, labelSettings);
             }
 
-            var nameFrameSettings = itemSettings.Get<FrameSettings>("NameFrame");
-            this.NameFrame = new ViewItemFrameVisual(this.Item,
-                itemFrame.NameFrame,
-                nameFrameSettings);
-            {
-                var labelSettings = itemSettings.Get<LabelSettings>("NameLabel");
-                labelSettings.Text = () => itemLayer.ItemLayout.BlockStringWrapped;
-                labelSettings.TextPosition = this.NamePosition;
-
-                this.NameLabel = new ViewItemLabelVisual(this.Item, labelSettings);
-            }
-
             this.StatusFrame = new ViewItemFrameVisual(this.Item,
                 itemFrame.StatusFrame,
                 itemSettings.Get<FrameSettings>("StatusFrame"));
@@ -107,6 +100,30 @@ namespace MetaMind.Testimony.Guis.Widgets
                 labelSettings.TextPosition = this.StatusCenterPosition;
 
                 this.StatusLabel = new ViewItemLabelVisual(this.Item, labelSettings);
+            }
+
+            var nameFrameSettings = itemSettings.Get<FrameSettings>("NameFrame");
+            this.NameFrame = new ViewItemFrameVisual(this.Item,
+                itemFrame.NameFrame,
+                nameFrameSettings);
+            {
+                var labelSettings = itemSettings.Get<LabelSettings>("NameLabel");
+                labelSettings.Text = () => this.Item.ItemData.Name;
+                labelSettings.TextPosition = this.NamePosition;
+
+                this.NameLabel = new ViewItemLabelVisual(this.Item, labelSettings);
+            }
+
+            var descriptionFrameSettings = itemSettings.Get<FrameSettings>("DescriptionFrame");
+            this.DescriptionFrame = new ViewItemFrameVisual(this.Item,
+                itemFrame.DescriptionFrame,
+                descriptionFrameSettings);
+            {
+                var labelSettings = itemSettings.Get<LabelSettings>("DescriptionLabel");
+                labelSettings.Text = () => itemLayer.ItemLayout.BlockStringWrapped;
+                labelSettings.TextPosition = this.DescriptionPosition;
+
+                this.DescriptionLabel = new ViewItemLabelVisual(this.Item, labelSettings);
             }
         }
 
@@ -122,13 +139,19 @@ namespace MetaMind.Testimony.Guis.Widgets
                 return;
             }
 
+            // Frames
             this.IdFrame.Draw(graphics, time, alpha);
-            this.NameFrame.Draw(graphics, time, alpha);
             this.StatusFrame.Draw(graphics, time, alpha);
 
+            this.NameFrame.Draw(graphics, time, alpha);
+            this.DescriptionFrame.Draw(graphics, time, alpha);
+
+            // Labels
             this.IdLabel.Draw(graphics, time, alpha);
-            this.NameLabel.Draw(graphics, time, alpha);
             this.StatusLabel.Draw(graphics, time, alpha);
+
+            this.NameLabel.Draw(graphics, time, alpha);
+            this.DescriptionLabel.Draw(graphics, time, alpha);
         }
 
         #endregion

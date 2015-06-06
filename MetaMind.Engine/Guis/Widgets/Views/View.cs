@@ -86,7 +86,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         #endregion
 
-        #region Update and Draw
+        #region Draw
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
@@ -95,6 +95,10 @@ namespace MetaMind.Engine.Guis.Widgets.Views
                 this.ViewVisual.Draw(graphics, time, alpha);
             }
         }
+
+        #endregion
+
+        #region Update
 
         public override void Update(GameTime time)
         {
@@ -116,6 +120,10 @@ namespace MetaMind.Engine.Guis.Widgets.Views
                 this.ViewLogic.UpdateInput(input, time);
             }
         }
+
+        #endregion
+
+        #region Double Buffer
 
         public override void UpdateForwardBuffer()
         {
@@ -143,11 +151,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
         }
 
-        #endregion
-
         private int NextBuffer()
         {
             return 1 - this.currentBuffer;
         }
+
+        #endregion
     }
 }

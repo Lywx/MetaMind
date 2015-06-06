@@ -29,14 +29,14 @@
         {
             get
             {
-                return (this.viewSettings.ColumnNumDisplay + this.ColumnOffset) < this.View.ItemsRead.Count;
+                return (this.viewSettings.ViewColumnDisplay + this.ColumnOffset) < this.View.ItemsRead.Count;
             }
         }
 
         public bool CanDisplay(int id)
         {
             var column = id;
-            return this.ColumnOffset <= column && column < this.viewSettings.ColumnNumDisplay + this.ColumnOffset;
+            return this.ColumnOffset <= column && column < this.viewSettings.ViewColumnDisplay + this.ColumnOffset;
         }
 
         public bool IsLeftToDisplay(int id)
@@ -48,7 +48,7 @@
         public bool IsRightToDisplay(int id)
         {
             var column = id;
-            return column > this.viewSettings.ColumnNumDisplay + this.ColumnOffset;
+            return column > this.viewSettings.ViewColumnDisplay + this.ColumnOffset;
         }
 
         public void MoveLeft()
@@ -71,10 +71,10 @@
         {
             var column = id;
             return new Vector2(
-                this.viewSettings.Direction == ViewDirection.Normal
-                    ? this.viewSettings.Position.X - (this.ColumnOffset * this.viewSettings.Margin.X) + column * this.viewSettings.Margin.X
-                    : this.viewSettings.Position.X + (this.ColumnOffset * this.viewSettings.Margin.X) - column * this.viewSettings.Margin.X,
-                this.viewSettings.Position.Y);
+                this.viewSettings.ViewDirection == ViewDirection.Normal
+                    ? this.viewSettings.ViewPosition.X - (this.ColumnOffset * this.viewSettings.ItemMargin.X) + column * this.viewSettings.ItemMargin.X
+                    : this.viewSettings.ViewPosition.X + (this.ColumnOffset * this.viewSettings.ItemMargin.X) - column * this.viewSettings.ItemMargin.X,
+                this.viewSettings.ViewPosition.Y);
         }
 
         public void Zoom(int id)

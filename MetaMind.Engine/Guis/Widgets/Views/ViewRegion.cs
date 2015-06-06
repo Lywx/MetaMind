@@ -2,9 +2,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 {
     using System;
 
-    using MetaMind.Engine.Guis.Widgets.Regions;
-
     using Microsoft.Xna.Framework;
+
+    using Regions;
 
     public class ViewRegion : Region
     {

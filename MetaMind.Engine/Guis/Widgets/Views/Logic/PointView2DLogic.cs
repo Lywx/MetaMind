@@ -110,7 +110,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public virtual void FastMoveDown()
         {
-            for (var i = 0; i < this.ViewSettings.RowNumDisplay; i++)
+            for (var i = 0; i < this.ViewSettings.ViewRowDisplay; i++)
             {
                 this.MoveDown();
             }
@@ -118,7 +118,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public virtual void FastMoveUp()
         {
-            for (var i = 0; i < this.ViewSettings.RowNumDisplay; i++)
+            for (var i = 0; i < this.ViewSettings.ViewRowDisplay; i++)
             {
                 this.MoveUp();
             }

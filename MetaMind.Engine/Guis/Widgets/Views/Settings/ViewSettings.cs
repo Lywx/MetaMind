@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Settings
 {
     using System;
 
-    public class ViewSettings : ICloneable
+    public class ViewSettings : WidgetSettings, ICloneable
     {
         public bool MouseEnabled     = true;
 

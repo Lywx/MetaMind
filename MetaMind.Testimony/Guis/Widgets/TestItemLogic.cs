@@ -90,7 +90,7 @@
                         if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))
                         {
                             this.View[ViewState.View_Is_Editing] = () => false;
-                            this.Item[ItemState.Item_Is_Pending]  = () => false;
+                            this.Item[ItemState.Item_Is_Pending] = () => false;
                         }
                     }
                 }

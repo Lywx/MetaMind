@@ -19,14 +19,14 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Settings
         #endregion
 
         public PointGridSettings(
-            Vector2 position,
-            Vector2 margin,
-            int columnNumDisplay,
-            int columnNumMax,
-            int rowNumDisplay,
-            int rowNumMax,
-            ViewDirection direction = ViewDirection.Normal)
-            : base(position, margin, columnNumDisplay, columnNumMax, rowNumDisplay, rowNumMax, direction)
+            Vector2 viewPosition,
+            Vector2 itemMargin,
+            int viewColumnDisplay,
+            int viewColumnMax,
+            int viewRowDisplay,
+            int viewRowMax,
+            ViewDirection viewDirection = ViewDirection.Normal)
+            : base(itemMargin, viewPosition, viewColumnDisplay, viewColumnMax, viewRowDisplay, viewRowMax, viewDirection)
         {
         }
     }

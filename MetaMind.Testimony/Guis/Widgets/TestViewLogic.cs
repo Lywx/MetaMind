@@ -1,7 +1,6 @@
 ﻿namespace MetaMind.Testimony.Guis.Widgets
 {
     using System.Collections.Generic;
-
     using Engine.Guis.Widgets.Items.Factories;
     using Engine.Guis.Widgets.Views;
     using Engine.Guis.Widgets.Views.Layouts;

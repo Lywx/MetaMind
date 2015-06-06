@@ -1,9 +1,10 @@
 ﻿namespace MetaMind.Engine.Guis.Widgets.Items.Factories
 {
     using System;
+
     using Layers;
-    using MetaMind.Engine.Guis.Widgets.Items.Logic;
-    using MetaMind.Engine.Guis.Widgets.Items.Visuals;
+    using Logic;
+    using Visuals;
 
     public sealed class ViewItemFactory : IViewItemFactory
     {
@@ -27,7 +28,6 @@
             {
                 throw new ArgumentNullException("itemVisual");
             }
-
 
             if (itemData == null)
             {

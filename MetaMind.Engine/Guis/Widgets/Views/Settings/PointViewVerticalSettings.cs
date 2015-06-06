@@ -2,22 +2,17 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Settings
 {
     using Microsoft.Xna.Framework;
 
-    public class PointViewVerticalSettings : PointViewSettings
+    public class PointViewVerticalSettings : PointViewSettings, IPointViewVerticalSettings
     {
-        public int RowNumDisplay;
+        public int ViewRowDisplay { get; set; }
 
-        public int RowNumMax;
+        public int ViewRowMax { get; set; }
 
-        public PointViewVerticalSettings(
-            Vector2 position,
-            Vector2 margin,
-            int rowNumDisplay,
-            int rowNumMax,
-            ViewDirection direction = ViewDirection.Normal)
-            : base(position, margin, direction)
+        public PointViewVerticalSettings(Vector2 itemMargin, Vector2 viewPosition, int viewRowDisplay, int viewRowMax, ViewDirection viewDirection = ViewDirection.Normal)
+            : base(itemMargin, viewPosition, viewDirection)
         {
-            this.RowNumDisplay = rowNumDisplay;
-            this.RowNumMax     = rowNumMax;
+            this.ViewRowDisplay = viewRowDisplay;
+            this.ViewRowMax     = viewRowMax;
         }
     }
 }

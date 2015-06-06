@@ -141,6 +141,7 @@
     <Compile Include="Guis\Modules\Synchronization\SynchronizationProgressBar.cs" />
     <Compile Include="Guis\Widgets\TestItemFrame.cs" />
     <Compile Include="Guis\Widgets\TestItemLayer.cs" />
+    <Compile Include="Guis\Widgets\TestItemLayout.cs" />
     <Compile Include="Guis\Widgets\TestItemLogic.cs" />
     <Compile Include="Guis\Widgets\TestItemVisual.cs" />
     <Compile Include="Guis\Widgets\TestItemSettings.cs" />

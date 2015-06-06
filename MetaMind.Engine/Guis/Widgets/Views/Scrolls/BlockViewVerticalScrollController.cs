@@ -28,7 +28,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
             get
             {
                 var itemLayer = this.ItemGetLayer(this.View.ItemsRead.Last());
-                return (this.ViewSettings.RowNumDisplay + this.RowOffset) < itemLayer.ItemLayout.Row + itemLayer.ItemLayout.BlockRow;
+                return (this.ViewSettings.ViewRowDisplay + this.RowOffset) < itemLayer.ItemLayout.Row + itemLayer.ItemLayout.BlockRow;
             }
         }
 
@@ -49,8 +49,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
             var itemLayer = this.ItemGetLayer(this.View.ItemsRead[id]);
             var itemLayout = itemLayer.ItemLayout;
 
-            // No separation for the last line in display (no + 1)
-            return itemLayout.Row + itemLayout.BlockRow > this.ViewSettings.RowNumDisplay + this.RowOffset;
+            return itemLayout.Row + itemLayout.BlockRow > this.ViewSettings.ViewRowDisplay + this.RowOffset;
         }
 
         public override void MoveDown()

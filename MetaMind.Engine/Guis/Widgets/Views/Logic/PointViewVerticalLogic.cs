@@ -155,7 +155,7 @@
 
         public virtual void MoveUp()
         {
-            if (this.viewSettings.Direction == ViewDirection.Inverse)
+            if (this.viewSettings.ViewDirection == ViewDirection.Inverse)
             {
                 this.ViewSelection.MoveDown();
             }
@@ -167,7 +167,7 @@
 
         public virtual void MoveDown()
         {
-            if (this.viewSettings.Direction == ViewDirection.Inverse)
+            if (this.viewSettings.ViewDirection == ViewDirection.Inverse)
             {
                 this.ViewSelection.MoveUp();
             }
@@ -179,7 +179,7 @@
 
         public virtual void FastMoveDown()
         {
-            for (var i = 0; i < this.viewSettings.RowNumDisplay; i++)
+            for (var i = 0; i < this.viewSettings.ViewRowDisplay; i++)
             {
                 this.MoveDown();
             }
@@ -187,7 +187,7 @@
 
         public virtual void FastMoveUp()
         {
-            for (var i = 0; i < this.viewSettings.RowNumDisplay; i++)
+            for (var i = 0; i < this.viewSettings.ViewRowDisplay; i++)
             {
                 this.MoveUp();
             }

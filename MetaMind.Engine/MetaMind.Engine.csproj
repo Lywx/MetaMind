@@ -350,6 +350,9 @@
     <Compile Include="Guis\Widgets\Views\Selections\IBlockViewVerticalSelectionController.cs" />
     <Compile Include="Guis\Widgets\Views\Selections\IPointViewVerticalSelectionController.cs" />
     <Compile Include="Guis\Widgets\Views\Selections\PointViewVerticalSelectionController.cs" />
+    <Compile Include="Guis\Widgets\Views\Settings\IPointViewHorizontalSettings.cs" />
+    <Compile Include="Guis\Widgets\Views\Settings\IPointViewSettings.cs" />
+    <Compile Include="Guis\Widgets\Views\Settings\IPointViewVerticalSettings.cs" />
     <Compile Include="Guis\Widgets\Views\Settings\PointViewSettings.cs" />
     <Compile Include="Guis\Widgets\Views\Settings\PointViewVerticalSettings.cs" />
     <Compile Include="Guis\Widgets\Views\Settings\ViewDirection.cs">

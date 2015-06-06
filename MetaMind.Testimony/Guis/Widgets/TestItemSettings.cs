@@ -12,7 +12,7 @@ namespace MetaMind.Testimony.Guis.Widgets
     {
         private readonly FrameSettings rootFrame = new FrameSettings
         {
-            Size   = new Point(24 + 64 + 512, 26),
+            Size   = new Point(24 + 128 + 512, 26),
             Margin = new Point(2, 2)
         };
 
@@ -37,33 +37,9 @@ namespace MetaMind.Testimony.Guis.Widgets
             TextVAlign = StringVAlign.Center,
         };
 
-        private readonly FrameSettings nameFrame = new FrameSettings
-        {
-            Size   = new Point(512, 26),
-            Margin = new Point(2, 2),
-
-            RegularColor      = Palette.Transparent0,
-            MouseOverColor    = Palette.DimBlue,
-            PendingColor      = Palette.Transparent0,
-            ModificationColor = Palette.LightYellow,
-            SelectionColor    = Palette.LightBlue,
-        };
-
-        private readonly LabelSettings nameLabel = new LabelSettings
-        {
-            TextSize       = 0.8f,
-            TextColor      = Color.White,
-            TextFont       = Font.ContentBold,
-            TextHAlign     = StringHAlign.Right,
-            TextVAlign     = StringVAlign.Center,
-            TextLeading    = 26,
-
-            TextMonospaced = true,
-        };
-
         private readonly FrameSettings statusFrame = new FrameSettings
         {
-            Size   = new Point(64, 26),
+            Size   = new Point(128, 26),
             Margin = new Point(2, 2),
 
             RegularColor      = Palette.Transparent1,
@@ -82,6 +58,54 @@ namespace MetaMind.Testimony.Guis.Widgets
             TextMonospaced = false,
         };
 
+        private readonly FrameSettings nameFrame = new FrameSettings
+        {
+            Size   = new Point(512, 26),
+            Margin = new Point(2, 2),
+
+            RegularColor      = Palette.DimBlue,
+            MouseOverColor    = Palette.DimBlue,
+            PendingColor      = Palette.Transparent0,
+            ModificationColor = Palette.LightYellow,
+            SelectionColor    = Palette.LightBlue,
+        };
+
+        private readonly LabelSettings nameLabel = new LabelSettings
+        {
+            TextSize       = 0.8f,
+            TextColor      = Color.White,
+            TextFont       = Font.ContentRegular,
+            TextHAlign     = StringHAlign.Right,
+            TextVAlign     = StringVAlign.Center,
+            TextLeading    = 26,
+
+            TextMonospaced = true,
+        };
+
+        private readonly FrameSettings descriptionFrame = new FrameSettings
+        {
+            Size   = new Point(512, 26),
+            Margin = new Point(2, 2),
+
+            RegularColor      = Palette.Transparent0,
+            MouseOverColor    = Palette.DimBlue,
+            PendingColor      = Palette.Transparent0,
+            ModificationColor = Palette.Transparent0,
+            SelectionColor    = Palette.Transparent3,
+        };
+
+        private readonly LabelSettings descriptionLabel = new LabelSettings
+        {
+            TextSize       = 0.8f,
+            TextColor      = Color.White,
+            TextFont       = Font.ContentBold,
+            TextHAlign     = StringHAlign.Right,
+            TextVAlign     = StringVAlign.Center,
+            TextLeading    = 26,
+
+            TextMonospaced = true,
+        };
+
         public TestItemSettings()
         {
             this.Add("RootFrame", this.rootFrame);
@@ -92,6 +116,10 @@ namespace MetaMind.Testimony.Guis.Widgets
             this.Add("NameFrame", this.nameFrame);
             this.Add("NameLabel", this.nameLabel);
             this.Add("NameMargin", new Vector2(5, 12) * this.nameLabel.TextSize);
+
+            this.Add("DescriptionFrame", this.descriptionFrame);
+            this.Add("DescriptionLabel", this.descriptionLabel);
+            this.Add("DescriptionMargin", new Vector2(5, 12) * this.descriptionLabel.TextSize);
 
             this.Add("StatusFrame", this.statusFrame);
             this.Add("StatusLabel", this.statusLabel);

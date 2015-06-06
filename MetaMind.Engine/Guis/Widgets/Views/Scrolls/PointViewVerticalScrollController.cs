@@ -36,7 +36,7 @@
         {
             get
             {
-                return (this.ViewSettings.RowNumDisplay + this.RowOffset) < this.View.ItemsRead.Count;
+                return (this.ViewSettings.ViewRowDisplay + this.RowOffset) < this.View.ItemsRead.Count;
             }
         }
 
@@ -48,7 +48,7 @@
         public bool CanDisplay(int id)
         {
             var row = id;
-            return this.RowOffset <= row && row < this.ViewSettings.RowNumDisplay + this.RowOffset;
+            return this.RowOffset <= row && row < this.ViewSettings.ViewRowDisplay + this.RowOffset;
         }
 
         public virtual bool IsUpToDisplay(int id)
@@ -60,7 +60,7 @@
         public virtual bool IsDownToDisplay(int id)
         {
             var row = id;
-            return row > this.ViewSettings.RowNumDisplay + this.RowOffset;
+            return row > this.ViewSettings.ViewRowDisplay + this.RowOffset;
         }
 
         public virtual void MoveUp()
@@ -87,10 +87,10 @@
         public virtual Vector2 Position(int row)
         {
             return new Vector2(
-                this.ViewSettings.Position.X,
-                this.ViewSettings.Direction == ViewDirection.Normal
-                    ? this.ViewSettings.Position.Y - (this.RowOffset * this.ViewSettings.Margin.Y) + row * this.ViewSettings.Margin.Y
-                    : this.ViewSettings.Position.Y + (this.RowOffset * this.ViewSettings.Margin.Y) - row * this.ViewSettings.Margin.Y);
+                this.ViewSettings.ViewPosition.X,
+                this.ViewSettings.ViewDirection == ViewDirection.Normal
+                    ? this.ViewSettings.ViewPosition.Y - (this.RowOffset * this.ViewSettings.ItemMargin.Y) + row * this.ViewSettings.ItemMargin.Y
+                    : this.ViewSettings.ViewPosition.Y + (this.RowOffset * this.ViewSettings.ItemMargin.Y) - row * this.ViewSettings.ItemMargin.Y);
         }
 
         public virtual void Zoom(int id)

@@ -13,7 +13,7 @@
         {
             this.Cognition = new Cognition();
 
-            this.Test = new Test("Root");
+            this.Test = new Test("Root", "Root of tests");
         }
 
         [DataMember]

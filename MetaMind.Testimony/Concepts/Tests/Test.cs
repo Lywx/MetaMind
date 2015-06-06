@@ -7,6 +7,7 @@
 
 namespace MetaMind.Testimony.Concepts.Tests
 {
+    using System;
     using System.Collections.Generic;
     using System.Runtime.Serialization;
 
@@ -14,13 +15,29 @@ namespace MetaMind.Testimony.Concepts.Tests
     using Synchronizations;
 
     [DataContract]
+    [KnownType(typeof(Test))]
     public class Test : ITest, IBlockViewVerticalItemData
     {
-        public Test(string name)
+        public Test(string name, string description, string status = "SUCCESS")
         {
-            this.Name = name;
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
 
-            this.Status = "READY";
+            if (description == null)
+            {
+                throw new ArgumentNullException("description");
+            }
+
+            if (status == null)
+            {
+                throw new ArgumentNullException("status");
+            }
+
+            this.Name        = name;
+            this.Description = description;
+            this.Status      = status;
 
             // Strucure 
             this.Parent   = null;
@@ -32,18 +49,26 @@ namespace MetaMind.Testimony.Concepts.Tests
 
         #region Test 
 
+        [DataMember]
         public string Name { get; set; }
 
+        [DataMember]
         public string Code { get; set; }
 
+        [DataMember]
+        public string Description { get; set; }
+
+        [DataMember]
         public string Status { get; set; }
 
         #endregion
 
         #region Structure
 
+        [DataMember]
         public IList<ITest> Children { get; private set; }
 
+        [DataMember]
         public ITest Parent { get; private set; }
 
         #endregion
@@ -62,17 +87,17 @@ namespace MetaMind.Testimony.Concepts.Tests
 
         public string BlockStringRaw
         {
-            get { return this.Name; }
+            get { return this.Description; }
         }
 
         public string BlockLabel
         {
-            get { return "NameLabel"; }
+            get { return "DescriptionLabel"; }
         }
 
         public string BlockFrame
         {
-            get { return "NameFrame"; }
+            get { return "DescriptionFrame"; }
         }
     }
 }

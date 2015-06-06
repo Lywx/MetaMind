@@ -23,7 +23,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layouts
         {
             get
             {
-                return this.RowNum > 1 ? this.viewSettings.ColumnNumMax : this.View.ItemsRead.Count;
+                return this.RowNum > 1 ? this.viewSettings.ViewColumnMax : this.View.ItemsRead.Count;
             }
         }
 
@@ -38,19 +38,19 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layouts
 
         public int ColumnOf(int id)
         {
-            return id % this.viewSettings.ColumnNumMax;
+            return id % this.viewSettings.ViewColumnMax;
         }
 
         public int IdFrom(int i, int j)
         {
-            return i * this.viewSettings.ColumnNumMax + j;
+            return i * this.viewSettings.ViewColumnMax + j;
         }
 
         public int RowOf(int id)
         {
-            for (var row = 0; row < this.viewSettings.RowNumMax; row++)
+            for (var row = 0; row < this.viewSettings.ViewRowMax; row++)
             {
-                if (id - row * this.viewSettings.ColumnNumMax >= 0)
+                if (id - row * this.viewSettings.ViewColumnMax >= 0)
                 {
                     continue;
                 }
@@ -58,7 +58,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layouts
                 return row - 1;
             }
 
-            return this.viewSettings.RowNumMax - 1;
+            return this.viewSettings.ViewRowMax - 1;
         }
 
         public int RowIn(int id)

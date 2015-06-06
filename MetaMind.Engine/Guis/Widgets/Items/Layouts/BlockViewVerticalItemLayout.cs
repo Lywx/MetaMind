@@ -34,19 +34,27 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
         {
             this.UpdateId();
             this.UpdateRow();
+            this.UpdateBlockString();
+            this.UpdateBlockRow();
+        }
 
+        protected virtual void UpdateBlockRow()
+        {
+            // Remove the last empty string element by - 1
+            this.BlockRow = this.BlockStringWrapped.Split('\n').Length - 1;
+        }
+
+        protected virtual void UpdateBlockString()
+        {
             var label = this.itemSettings.Get<LabelSettings>(this.BlockData.BlockLabel);
             var frame = this.itemSettings.Get<FrameSettings>(this.BlockData.BlockFrame);
 
-            this.BlockStringWrapped =
-                StringUtils.BreakStringByWord(Font.ContentBold,
-                    this.BlockData.BlockStringRaw,
-                    label.TextSize,
-                    frame.Size.X,
-                    true);
-
-            // Remove the last empty string element by - 1
-            this.BlockRow = this.BlockStringWrapped.Split('\n').Length - 1;
+            this.BlockStringWrapped = StringUtils.BreakStringByWord(
+                label.TextFont,
+                this.BlockData.BlockStringRaw,
+                label.TextSize,
+                frame.Size.X,
+                true);
         }
 
         public int BlockRow { get; protected set; }
@@ -60,8 +68,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
 
         protected override void UpdateRow()
         {
-            // Added a separating line between item by + 1
-            this.Row = this.Id > 0 ? this.viewLayout.RowOf(this.Id - 1) + this.viewLayout.RowIn(this.Id - 1) + 1 : 0;
+            this.Row = this.Id > 0 ? this.viewLayout.RowOf(this.Id - 1) + this.viewLayout.RowIn(this.Id - 1) : 0;
         }
     }
 }

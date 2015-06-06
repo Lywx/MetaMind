@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Visuals
 {
     using Microsoft.Xna.Framework;
 
-    public class ViewScrollbarSettings
+    public class ViewScrollbarSettings 
     {
         public byte BrightnessMax = 200;
 
@@ -18,5 +18,10 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Visuals
         public Color Color = Color.White;
 
         public int Width = 5;
+
+        public ViewScrollbarSettings()
+        {
+            
+        }
     }
 }

@@ -19,15 +19,15 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Visuals
 
     using Microsoft.Xna.Framework;
 
-    public class ViewVerticalScrollBar : GameVisualEntity
+    public class ViewVerticalScrollBar : GameControllableEntity
     {
         private readonly IPointViewVerticalScrollController viewScroll;
 
-        private readonly IPointView2DLayout viewLayout;
+        private readonly IPointViewVerticalLayout viewLayout;
 
         private readonly IRegion viewRegion;
 
-        private readonly PointView2DSettings viewSettings;
+        private readonly IPointViewVerticalSettings viewSettings;
 
         private readonly ViewScrollbarSettings scrollbarSettings;
 
@@ -35,7 +35,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Visuals
         
         private int scrollbarBrightness;
         
-        public ViewVerticalScrollBar(PointView2DSettings viewSettings, IPointViewVerticalScrollController viewScroll, IPointView2DLayout viewLayout, IRegion viewRegion, ViewScrollbarSettings scrollbarSettings)
+        public ViewVerticalScrollBar(IPointViewVerticalSettings viewSettings, IPointViewVerticalScrollController viewScroll, IPointViewVerticalLayout viewLayout, IRegion viewRegion, ViewScrollbarSettings scrollbarSettings)
         {
             if (viewSettings == null)
             {
@@ -76,8 +76,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Visuals
             get
             {
                 var distance = this.viewRegion.Height * (float)this.viewScroll.RowOffset
-                               / (this.viewLayout.RowNum - this.viewSettings.RowNumDisplay)
-                               * (1 - (float)this.viewSettings.RowNumDisplay / this.viewLayout.RowNum);
+                               / (this.viewLayout.RowNum - this.viewSettings.ViewRowDisplay)
+                               * (1 - (float)this.viewSettings.ViewRowDisplay / this.viewLayout.RowNum);
 
                 // Top boundary reaches the top of the ViewRegion
                 // Bottom boundary reaches the bottom of the ViewRegion
@@ -85,13 +85,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Visuals
                     this.viewRegion.X + this.viewRegion.Width,
                     this.viewRegion.Y + (int)Math.Ceiling(distance),
                     this.scrollbarSettings.Width,
-                    this.viewRegion.Height * this.viewSettings.RowNumDisplay / this.viewLayout.RowNum);
+                    this.viewRegion.Height * this.viewSettings.ViewRowDisplay / this.viewLayout.RowNum);
             }
         }
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            if (this.viewLayout.RowNum > this.viewSettings.RowNumDisplay)
+            if (this.viewLayout.RowNum > this.viewSettings.ViewRowDisplay)
             {
                 this.scrollbarShape.Draw(graphics, time, Math.Min(alpha, (byte)this.scrollbarBrightness));
             }
