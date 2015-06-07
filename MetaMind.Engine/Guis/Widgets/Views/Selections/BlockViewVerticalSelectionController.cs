@@ -51,6 +51,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 
         public override void MoveDown()
         {
+            // Items is empty
             if (this.View.ItemsRead.Count == 0)
             {
                 return;
@@ -63,6 +64,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
             }
 
             var id = this.CurrentSelectedId.Value;
+
+            // Last item is deleted
+            if (id >= this.View.ItemsRead.Count)
+            {
+                return;
+            }
 
             if (!this.IsBottommost(id))
             {

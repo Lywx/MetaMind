@@ -12,9 +12,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
     using Microsoft.Xna.Framework;
 
     using Layouts;
-    using Regions;
     using Services;
     using Settings;
+    using Widgets.Regions;
     using Widgets.Visuals;
 
     public class ViewVerticalScrollbar : GameControllableEntity, IViewVerticalScrollbar
@@ -104,7 +104,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
 
         public override void Update(GameTime time)
         {
-            this.scrollbarBrightness -= this.scrollbarSettings.BrightnessDecreasingStep;
+            this.scrollbarBrightness -= (int)(this.scrollbarSettings.BrightnessFadeSpeed * time.ElapsedGameTime.TotalSeconds);
 
             if (this.scrollbarBrightness < 0)
             {

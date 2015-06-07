@@ -111,6 +111,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             {
                 this.ViewVisual.Update(time);
             }
+
+            foreach (var component in this.ViewComponents)
+            {
+                ((IUpdateable)component.Value).Update(time);
+            }
         }
 
         public override void UpdateInput(IGameInputService input, GameTime time)

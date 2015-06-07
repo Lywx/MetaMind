@@ -13,15 +13,10 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
     {
         public byte BrightnessMax = 200;
 
-        public byte BrightnessDecreasingStep = 10;
+        public int BrightnessFadeSpeed = 255 * 1;
 
         public Color Color = Color.White;
 
         public int Width = 5;
-
-        public ViewScrollbarSettings()
-        {
-            
-        }
     }
 }

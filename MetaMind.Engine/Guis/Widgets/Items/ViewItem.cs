@@ -94,6 +94,8 @@
 
         internal void OnUnselected()
         {
+            this[ItemState.Item_Is_Selected] = () => false;
+
             if (this.Unselected != null)
             {
                 this.Unselected(this, EventArgs.Empty);
@@ -102,6 +104,8 @@
 
         internal void OnSelected()
         {
+            this[ItemState.Item_Is_Selected] = () => true;
+
             if (this.Selected != null)
             {
                 this.Selected(this, EventArgs.Empty);

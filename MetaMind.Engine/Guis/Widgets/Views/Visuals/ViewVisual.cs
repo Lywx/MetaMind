@@ -4,6 +4,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Visuals
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
+    using IDrawable = Engine.IDrawable;
 
     public class ViewVisual : ViewVisualComponent, IViewVisual
     {
@@ -22,7 +23,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Visuals
         {
             foreach (var component in this.ViewComponents)
             {
-                ((IGameVisualEntity)component.Value).Draw(graphics, time, alpha);
+                ((IDrawable)component.Value).Draw(graphics, time, alpha);
             }
         }
 

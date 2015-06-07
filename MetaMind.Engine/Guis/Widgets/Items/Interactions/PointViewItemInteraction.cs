@@ -52,8 +52,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
                 {
                     this.ItemSelect();
                 }
-
-                this.Item[ItemState.Item_Is_Selected] = () => true;
             }
             else
             {
@@ -62,10 +60,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
                 {
                     this.ItemUnselect();
                 }
-
-                this.Item[ItemState.Item_Is_Selected] = () => false;
             }
-            
         }
 
         public virtual void ViewDoSwap(IGameInteropService interop, IViewItem draggingItem)

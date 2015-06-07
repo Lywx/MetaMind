@@ -11,6 +11,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
     using Services;
     using Swaps;
     using Regions;
+    using Widgets.Regions;
 
     public class PointGridLogic<TData> : PointView2DLogic<TData>, IPointGridLogic
     {

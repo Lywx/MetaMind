@@ -426,10 +426,11 @@
     <Compile Include="Guis\Widgets\Views\ViewEntity.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Views\ViewRegion.cs">
+    <Compile Include="Guis\Widgets\Views\Regions\ViewRegion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Views\ViewRegionSettings.cs" />
+    <Compile Include="Guis\Widgets\Views\Regions\ViewRegionSettings.cs" />
+    <Compile Include="Guis\Widgets\Views\Regions\ViewRegionVisual.cs" />
     <Compile Include="Guis\Widgets\Views\ViewState.cs">
       <SubType>Code</SubType>
     </Compile>
