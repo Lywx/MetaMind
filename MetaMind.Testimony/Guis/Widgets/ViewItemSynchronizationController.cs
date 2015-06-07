@@ -1,23 +1,21 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ViewItemSyncControl.cs" company="UESTC">
+// <copyright file="ViewItemSynchronizationController.cs" company="UESTC">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Runtime.Guis.Widgets
+namespace MetaMind.Testimony.Guis.Widgets
 {
-    using System;
+    using Concepts.Synchronizations;
+    using Engine.Components.Events;
+    using Engine.Guis.Widgets.Items;
+    using Events;
+    using Sessions;
 
-    using MetaMind.Engine.Components.Events;
-    using MetaMind.Engine.Guis.Widgets.Items;
-    using Testimony.Concepts.Synchronizations;
-    using Testimony.Events;
-    using Testimony.Sessions;
-
-    public class ViewItemSyncControl : ViewItemComponent
+    public class ViewItemSynchronizationController : ViewItemComponent
     {
-        public ViewItemSyncControl(IViewItem item)
+        public ViewItemSynchronizationController(IViewItem item)
             : base(item)
         {
             this.Synchronizable      = (ISynchronizable)this.Item.ItemData;

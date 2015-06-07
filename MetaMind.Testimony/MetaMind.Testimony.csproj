@@ -147,7 +147,7 @@
     <Compile Include="Guis\Widgets\TestItemSettings.cs" />
     <Compile Include="Guis\Widgets\TestViewLogic.cs" />
     <Compile Include="Guis\Widgets\TestViewSettings.cs" />
-    <Compile Include="Guis\Widgets\ViewItemSyncControl.cs" />
+    <Compile Include="Guis\Widgets\ViewItemSynchronizationController.cs" />
     <Compile Include="Testimony.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

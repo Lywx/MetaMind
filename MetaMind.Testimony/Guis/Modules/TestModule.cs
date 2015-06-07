@@ -1,7 +1,7 @@
 ﻿namespace MetaMind.Testimony.Guis.Modules
 {
     using System.Collections.Generic;
-
+    using System.Linq;
     using Concepts.Synchronizations;
     using Concepts.Tests;
     using Engine;
@@ -16,6 +16,7 @@
     using Engine.Guis.Widgets.Regions;
     using Engine.Guis.Widgets.Views;
     using Engine.Guis.Widgets.Views.Layouts;
+    using Engine.Guis.Widgets.Views.Regions;
     using Engine.Guis.Widgets.Views.Scrolls;
     using Engine.Guis.Widgets.Views.Selections;
     using Engine.Guis.Widgets.Views.Swaps;
@@ -94,9 +95,9 @@
             var viewRegion = new ViewRegion(
                 regionBounds: () => new Rectangle(
                     location: viewSettings.ViewPosition.ToPoint(),
-                    size    : new Point(
-                        x   : 512 + 128 + 24, 
-                        y: (int)(viewSettings.ViewRowDisplay * viewSettings.ItemMargin.Y))),
+                    size: new Point(
+                        x: 512 + 128 + 24,
+                        y: (int)((viewSettings.ViewRowDisplay - 3) * viewSettings.ItemMargin.Y))),
                 regionSettings: viewRegionSettings);
             view.ViewComponents.Add("ViewRegion", viewRegion);
             view[ViewState.View_Has_Focus] = () => viewRegion[RegionState.Region_Has_Focus]() || view[ViewState.View_Has_Selection]();
@@ -105,11 +106,12 @@
             var viewVerticalScrollbarSettings = viewSettings.Get<ViewScrollbarSettings>("ViewVerticalScrollbar");
             var viewVerticalScrollbar = new ViewVerticalScrollbar(viewSettings, viewScroll, viewLayout, viewRegion, viewVerticalScrollbarSettings);
             view.ViewComponents.Add("ViewVerticalScrollbar", viewVerticalScrollbar);
-            viewLayer.ViewLogic.ScrolledUp += (sender, args) => viewVerticalScrollbar.Trigger();
+            viewLayer.ViewLogic.ScrolledUp   += (sender, args) => viewVerticalScrollbar.Trigger();
             viewLayer.ViewLogic.ScrolledDown += (sender, args) => viewVerticalScrollbar.Trigger();
-            viewLayer.ViewLogic.MovedUp += (sender, args) => viewVerticalScrollbar.Trigger();
-            viewLayer.ViewLogic.MovedDown += (sender, args) => viewVerticalScrollbar.Trigger();
+            viewLayer.ViewLogic.MovedUp      += (sender, args) => viewVerticalScrollbar.Trigger();
+            viewLayer.ViewLogic.MovedDown    += (sender, args) => viewVerticalScrollbar.Trigger();
 
+            // Entities
             this.entities.Add(view);
 
             this.SynchronizationData = new SynchronizationData();
