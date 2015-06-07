@@ -37,7 +37,7 @@
         {
             this.entities = new GameControllableEntityCollection<View>();
 
-            var test = new List<Test>();
+            var tests = new List<Test>();
 
             // View settings
             var viewSettings = new TestViewSettings(
@@ -50,15 +50,12 @@
             var itemSettings = new TestItemSettings();
 
             // View
-            var view = new View(
-                    viewSettings,
-                    itemSettings,
-                    new List<IViewItem>());
+            var view = new View(viewSettings, itemSettings, new List<IViewItem>());
 
             // View composition
             var viewSelection = new BlockViewVerticalSelectionController(view);
             var viewScroll    = new BlockViewVerticalScrollController(view);
-            var viewSwap      = new ViewSwapController<Test>(view, test);
+            var viewSwap      = new ViewSwapController<Test>(view, tests);
             var viewLayout    = new BlockViewVerticalLayout(view);
 
             var viewLayer = new BlockViewVerticalLayer(view);
@@ -77,11 +74,11 @@
                 item => new TestItemVisual(item),
                 item =>
                 {
-                    var newTest = new Test("Namespace.Test Name", "Description: A year ago I wrote an essay for the New York Times titled “The Short Sentence as Gospel Truth.” It argued that authors express their most important ideas or dramatic moments in the shortest sentences. This turned out to be a popular piece, the most emailed of the day. Teachers and editors anointed the short sentence as the solution to many writing problems.");
-                    test.Add(newTest);
-                    return newTest;
+                    var test = new Test();
+                    tests.Add(test);
+                    return test;
                 });
-            var viewLogic = new TestViewLogic<Test>(view, test, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory);
+            var viewLogic = new TestViewLogic<Test>(view, tests, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory);
             var viewVisual = new GradientViewVisual(view);
 
             view.ViewLayer  = viewLayer;
