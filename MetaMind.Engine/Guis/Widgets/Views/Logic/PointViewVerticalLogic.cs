@@ -20,12 +20,12 @@
         private PointViewVerticalSettings viewSettings;
 
         protected PointViewVerticalLogic(
-            IView view,
-            IList<TData> viewData,
-            IViewScrollController viewScroll,
+            IView                    view,
+            IList<TData>             viewData,
+            IViewScrollController    viewScroll,
             IViewSelectionController viewSelection,
-            IViewSwapController viewSwap,
-            IViewLayout viewLayout,
+            IViewSwapController      viewSwap,
+            IViewLayout              viewLayout,
             IViewItemFactory itemFactory)
             : base(view, viewData, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory)
         {
@@ -39,21 +39,6 @@
             {
                 return (IPointViewVerticalSelectionController)base.ViewSelection;
             }
-
-            set
-            {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
-
-                if (base.ViewSelection != null)
-                {
-                    throw new InvalidOperationException();
-                }
-
-                this.ViewSelection = value;
-            }
         }
 
         public new IPointViewVerticalScrollController ViewScroll
@@ -62,65 +47,11 @@
             {
                 return (IPointViewVerticalScrollController)base.ViewScroll;
             }
-
-            private set
-            {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
-
-                if (base.ViewScroll != null)
-                {
-                    throw new InvalidOperationException();
-                }
-
-                this.ViewScroll = value;
-            }
         }
 
         public new IPointViewVerticalLayout ViewLayout
         {
             get { return (IPointViewVerticalLayout)base.ViewLayout; }
-
-            private set
-            {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
-
-                if (base.ViewLayout != null)
-                {
-                    throw new InvalidOperationException();
-                }
-
-                this.ViewLayout = value;
-            }
-        }
-
-
-        public new IPointViewVerticalSwapController ViewSwap
-        {
-            get
-            {
-                return (IPointViewVerticalSwapController)base.ViewSwap;
-            }
-
-            private set
-            {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
-
-                if (base.ViewSwap != null)
-                {
-                    throw new InvalidOperationException();
-                }
-
-                this.ViewSwap = value;
-            }
         }
 
         #endregion
@@ -134,26 +65,72 @@
             var viewLayer = this.ViewGetLayer<PointViewVerticalLayer>();
             this.viewSettings = viewLayer.ViewSettings;
 
-            this.View[ViewState.View_Has_Focus] =
-                this.View[ViewState.View_Has_Selection] =
-                    () => viewLayer.ViewSelection.HasSelected;
+            this.View[ViewState.View_Has_Focus] = this.View[ViewState.View_Has_Selection] = () => viewLayer.ViewSelection.HasSelected;
+        }
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler ScrolledUp;
+
+        public event EventHandler ScrolledDown;
+
+        public event EventHandler MovedUp;
+
+        public event EventHandler MovedDown;
+
+        private void OnScrolledUp()
+        {
+            if (this.ScrolledUp != null)
+            {
+                this.ScrolledUp(this, EventArgs.Empty);
+            }
+        }
+
+        private void OnScrolledDown()
+        {
+            if (this.ScrolledDown != null)
+            {
+                this.ScrolledDown(this, EventArgs.Empty);
+            }
+        }
+
+        private void OnMovedUp()
+        {
+            if (this.MovedUp != null)
+            {
+                this.MovedUp(this, EventArgs.Empty);
+            }
+        }
+
+        private void OnMovedDown()
+        {
+            if (this.MovedDown != null)
+            {
+                this.MovedDown(this, EventArgs.Empty);
+            }
         }
 
         #endregion
 
         #region Operations
 
-        public virtual void ScrollDown()
+        public void ScrollDown()
         {
             this.ViewScroll.MoveDown();
+
+            this.OnScrolledDown();
         }
 
-        public virtual void ScrollUp()
+        public void ScrollUp()
         {
             this.ViewScroll.MoveUp();
+
+            this.OnScrolledUp();
         }
 
-        public virtual void MoveUp()
+        public void MoveUp()
         {
             if (this.viewSettings.ViewDirection == ViewDirection.Inverse)
             {
@@ -163,9 +140,11 @@
             {
                 this.ViewSelection.MoveUp();
             }
+
+            this.OnMovedUp();
         }
 
-        public virtual void MoveDown()
+        public void MoveDown()
         {
             if (this.viewSettings.ViewDirection == ViewDirection.Inverse)
             {
@@ -175,9 +154,11 @@
             {
                 this.ViewSelection.MoveDown();
             }
+
+            this.OnMovedDown();
         }
 
-        public virtual void FastMoveDown()
+        public void FastMoveDown()
         {
             for (var i = 0; i < this.viewSettings.ViewRowDisplay; i++)
             {
@@ -185,7 +166,7 @@
             }
         }
 
-        public virtual void FastMoveUp()
+        public void FastMoveUp()
         {
             for (var i = 0; i < this.viewSettings.ViewRowDisplay; i++)
             {
@@ -205,7 +186,6 @@
             {
                 if (this.View.ViewSettings.KeyboardEnabled)
                 {
-                    // Movement
                     var keyboard = input.State.Keyboard;
                     if (keyboard.IsActionTriggered(KeyboardActions.Up))
                     {

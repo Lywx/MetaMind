@@ -10,22 +10,21 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
     using Selections;
     using Services;
     using Swaps;
-    using Visuals;
     using Regions;
 
     public class PointGridLogic<TData> : PointView2DLogic<TData>, IPointGridLogic
     {
-        private ViewVerticalScrollBar viewVerticalScrollbar;
+        private ViewVerticalScrollbar viewVerticalScrollbar;
 
         private ViewRegion viewRegion;
 
         public PointGridLogic(
-            IView view,
-            IList<TData> viewData,
-            IViewScrollController viewScroll,
+            IView                    view,
+            IList<TData>             viewData,
+            IViewScrollController    viewScroll,
             IViewSelectionController viewSelection,
-            IViewSwapController viewSwap,
-            IViewLayout viewLayout,
+            IViewSwapController      viewSwap,
+            IViewLayout              viewLayout,
             IViewItemFactory itemFactory)
             : base(view, viewData, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory)
         {
@@ -39,18 +38,18 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public override void SetupLayer()
         {
-            this.viewRegion = new ViewRegion(() => new Rectangle(
-                this.ViewSettings.ViewPosition.ToPoint(),
-                new Point(
-                    (int)(this.ViewSettings.ViewColumnDisplay * this.ViewSettings.ItemMargin.X),
-                    (int)(this.ViewSettings.ViewRowDisplay    * this.ViewSettings.ItemMargin.Y))));
-
+            this.viewRegion = new ViewRegion(
+                () => new Rectangle(this.ViewSettings.ViewPosition.ToPoint(),
+                    new Point(
+                        (int)(this.ViewSettings.ViewColumnDisplay * this.ViewSettings.ItemMargin.X),
+                        (int)(this.ViewSettings.ViewRowDisplay * this.ViewSettings.ItemMargin.Y))),
+                new ViewRegionSettings());
             this.ViewComponents.Add("ViewRegion", this.viewRegion);
 
             this.View[ViewState.View_Has_Focus] = () => this.viewRegion[RegionState.Region_Has_Focus]() || this.View[ViewState.View_Has_Selection]();
 
-            var viewVerticalScrollbarSettings = this.ViewSettings.Get<ViewScrollbarSettings>("ViewVericalScrollbar");
-            this.viewVerticalScrollbar = new ViewVerticalScrollBar(this.ViewSettings, this.ViewScroll, this.ViewLayout, this.viewRegion, viewVerticalScrollbarSettings);
+            var viewVerticalScrollbarSettings = this.ViewSettings.Get<ViewScrollbarSettings>("ViewVerticalScrollbar");
+            this.viewVerticalScrollbar = new ViewVerticalScrollbar(this.ViewSettings, this.ViewScroll, this.ViewLayout, this.viewRegion, viewVerticalScrollbarSettings);
             this.ViewComponents.Add("ViewVerticalScrollbar", this.viewVerticalScrollbar);
         }
 
@@ -60,8 +59,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public override void MoveDown()
         {
-            this.viewVerticalScrollbar.Trigger();
-            this.ViewSelection.MoveDown();
+            this.MoveDown(this.viewVerticalScrollbar);
         }
 
         public override void MoveLeft()

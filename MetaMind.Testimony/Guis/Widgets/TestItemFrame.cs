@@ -162,9 +162,11 @@ namespace MetaMind.Testimony.Guis.Widgets
             this.RootFrame.Size = new Point(
                 this.RootFrame.Size.X,
                 this.itemLayout.BlockRow * this.descriptionFrameSettings.Size.Y); 
-            // - 1 for name frame y margin
+
             this.DescriptionFrame.Size = new Point(
                 this.descriptionFrameSettings.Size.X,
+
+                // this.itemLayout.BlockRow - 1 for taken position of name frame 
                 (this.itemLayout.BlockRow - 1) * this.descriptionFrameSettings.Size.Y);
         }
 

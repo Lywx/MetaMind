@@ -10,9 +10,9 @@
 
     using Microsoft.Xna.Framework;
 
-    public class MotivationScreen : GameScreen
+    public class TestimonyScreen : GameScreen
     {
-        public MotivationScreen()
+        public TestimonyScreen()
         {
             this.TransitionOnTime  = TimeSpan.FromSeconds(2.5);
             this.TransitionOffTime = TimeSpan.FromSeconds(0.5);

@@ -62,13 +62,22 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             }
         }
 
-        public new IViewSwapController ViewSwap
+        public new IPointViewHorizontalLayout ViewLayout
         {
-            get
-            {
-                return (IViewSwapController)base.ViewSwap;
-            } 
+            get { return (IPointViewHorizontalLayout)base.ViewLayout; }
         }
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler ScrolledLeft;
+
+        public event EventHandler ScrolledRight;
+
+        public event EventHandler MovedLeft;
+
+        public event EventHandler MovedRight;
 
         #endregion
 

@@ -20,7 +20,7 @@ namespace MetaMind.Runtime.Guis.Widgets
         public ViewItemSyncControl(IViewItem item)
             : base(item)
         {
-            this.Synchronizable = (ISynchronizable) this.Item.ItemData;
+            this.Synchronizable      = (ISynchronizable)this.Item.ItemData;
             this.SynchronizationData = this.Synchronizable.SynchronizationData;
         }
 

@@ -15,10 +15,11 @@
 
         protected override void UpdateBlockRow()
         {
+            this.BlockRow = this.BlockStringWrapped.Split('\n').Length 
             // Remove the last empty string element by - 1
+                - 1 
             // Added the position for name frame by + 1
-            // Added the position for name frame by + 1
-            this.BlockRow = this.BlockStringWrapped.Split('\n').Length - 1 + 1;
+                + 1;
         }
     }
 }

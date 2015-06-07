@@ -5,7 +5,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Engine.Guis.Widgets.Views.Visuals
+namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
 {
     using Microsoft.Xna.Framework;
 

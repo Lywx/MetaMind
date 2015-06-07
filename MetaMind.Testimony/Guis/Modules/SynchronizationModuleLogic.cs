@@ -123,7 +123,7 @@ namespace MetaMind.Testimony.Guis.Modules
 
                 var screenManager = this.GameInterop.Screen;
 
-                var motivation = screenManager.Screens.First(screen => screen is MotivationScreen);
+                var motivation = screenManager.Screens.First(screen => screen is TestimonyScreen);
                 if (motivation != null)
                 {
                     motivation.Exit();

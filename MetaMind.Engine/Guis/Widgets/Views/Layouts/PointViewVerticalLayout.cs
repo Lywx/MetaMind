@@ -7,14 +7,14 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layouts
         {
         }
 
-        public int RowNum { get { return this.ItemsRead.Count; } }
+        public virtual int RowNum { get { return this.ItemsRead.Count; } }
 
-        public int RowOf(int id)
+        public virtual int RowOf(int id)
         {
             return id;
         }
 
-        public int RowIn(int id)
+        public virtual int RowIn(int id)
         {
             return 1;
         }

@@ -28,7 +28,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layers
             get { return this.ViewLogic.ViewSelection; }
         }
 
-        public new IPointViewVerticalSwapController ViewSwap
+        public new IViewSwapController ViewSwap
         {
             get { return this.ViewLogic.ViewSwap; }
         }

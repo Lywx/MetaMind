@@ -13,12 +13,11 @@
     using Engine.Guis.Widgets.Items.Factories;
     using Engine.Guis.Widgets.Items.Interactions;
     using Engine.Guis.Widgets.Items.Layers;
-    using Engine.Guis.Widgets.Items.Layouts;
+    using Engine.Guis.Widgets.Regions;
     using Engine.Guis.Widgets.Views;
     using Engine.Guis.Widgets.Views.Layouts;
     using Engine.Guis.Widgets.Views.Scrolls;
     using Engine.Guis.Widgets.Views.Selections;
-    using Engine.Guis.Widgets.Views.Settings;
     using Engine.Guis.Widgets.Views.Swaps;
     using Engine.Guis.Widgets.Views.Visuals;
     using Engine.Services;
@@ -39,21 +38,29 @@
 
             var test = new List<Test>();
 
-            var view = new View(
-                    new PointViewVerticalSettings(
-                        itemMargin    : new Vector2(512 + 64 + 24, 26),
-                        viewPosition  : new Vector2(40, 100),
-                        viewRowDisplay: 30, 
-                        viewRowMax    : 100),
+            // View settings
+            var viewSettings = new TestViewSettings(
+                itemMargin    : new Vector2(512 + 128 + 24, 26),
+                viewPosition  : new Vector2(40, 100),
+                viewRowDisplay: 30, 
+                viewRowMax    : 100);
 
-                    new TestItemSettings(),
+            // Item settings
+            var itemSettings = new TestItemSettings();
+
+            // View
+            var view = new View(
+                    viewSettings,
+                    itemSettings,
                     new List<IViewItem>());
 
+            // View composition
             var viewSelection = new BlockViewVerticalSelectionController(view);
             var viewScroll    = new BlockViewVerticalScrollController(view);
             var viewSwap      = new ViewSwapController<Test>(view, test);
             var viewLayout    = new BlockViewVerticalLayout(view);
 
+            var viewLayer = new BlockViewVerticalLayer(view);
             var itemFactory = new ViewItemFactory(
                 item => new TestItemLayer(item),
                 item =>
@@ -73,14 +80,35 @@
                     test.Add(newTest);
                     return newTest;
                 });
+            var viewLogic = new TestViewLogic<Test>(view, test, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory);
+            var viewVisual = new GradientViewVisual(view);
 
-            view.ViewLayer  = new BlockViewVerticalLayer(view);
-            view.ViewLogic  = new TestViewLogic<Test>(view, test, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory);
-            view.ViewVisual = new ViewVisual(view);
+            view.ViewLayer  = viewLayer;
+            view.ViewLogic  = viewLogic;
+            view.ViewVisual = viewVisual;
 
             view.SetupLayer();
 
-            //view[ViewState.View_Has_Focus] = () => true;
+            // View region 
+            var viewRegionSettings = new ViewRegionSettings();
+            var viewRegion = new ViewRegion(
+                regionBounds: () => new Rectangle(
+                    location: viewSettings.ViewPosition.ToPoint(),
+                    size    : new Point(
+                        x   : 512 + 128 + 24, 
+                        y: (int)(viewSettings.ViewRowDisplay * viewSettings.ItemMargin.Y))),
+                regionSettings: viewRegionSettings);
+            view.ViewComponents.Add("ViewRegion", viewRegion);
+            view[ViewState.View_Has_Focus] = () => viewRegion[RegionState.Region_Has_Focus]() || view[ViewState.View_Has_Selection]();
+
+            // View scrollbar
+            var viewVerticalScrollbarSettings = viewSettings.Get<ViewScrollbarSettings>("ViewVerticalScrollbar");
+            var viewVerticalScrollbar = new ViewVerticalScrollbar(viewSettings, viewScroll, viewLayout, viewRegion, viewVerticalScrollbarSettings);
+            view.ViewComponents.Add("ViewVerticalScrollbar", viewVerticalScrollbar);
+            viewLayer.ViewLogic.ScrolledUp += (sender, args) => viewVerticalScrollbar.Trigger();
+            viewLayer.ViewLogic.ScrolledDown += (sender, args) => viewVerticalScrollbar.Trigger();
+            viewLayer.ViewLogic.MovedUp += (sender, args) => viewVerticalScrollbar.Trigger();
+            viewLayer.ViewLogic.MovedDown += (sender, args) => viewVerticalScrollbar.Trigger();
 
             this.entities.Add(view);
 

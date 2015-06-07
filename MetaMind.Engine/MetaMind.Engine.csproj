@@ -268,6 +268,7 @@
     </Compile>
     <Compile Include="Guis\Widgets\Items\Swaps\ViewItemSwapProcess.cs">
       <SubType>Code</SubType>
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Guis\Widgets\Items\ViewItem.cs">
       <SubType>Code</SubType>
@@ -285,6 +286,7 @@
     <Compile Include="Guis\Widgets\Items\Visuals\ViewItemVisual.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Guis\Widgets\IWidgetSettings.cs" />
     <Compile Include="Guis\Widgets\Views\Layers\IViewLayer.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -345,7 +347,9 @@
     </Compile>
     <Compile Include="Guis\Widgets\Views\Scrolls\BlockViewVerticalScrollController.cs" />
     <Compile Include="Guis\Widgets\Views\Scrolls\IBlockViewVerticalScrollController.cs" />
+    <Compile Include="Guis\Widgets\Views\Scrolls\IViewVerticalScrollbar.cs" />
     <Compile Include="Guis\Widgets\Views\Scrolls\PointViewVerticalScrollController.cs" />
+    <Compile Include="Guis\Widgets\Views\Scrolls\VerticalScrollbarMixin.cs" />
     <Compile Include="Guis\Widgets\Views\Selections\BlockViewVerticalSelectionController.cs" />
     <Compile Include="Guis\Widgets\Views\Selections\IBlockViewVerticalSelectionController.cs" />
     <Compile Include="Guis\Widgets\Views\Selections\IPointViewVerticalSelectionController.cs" />
@@ -397,9 +401,6 @@
     <Compile Include="Guis\Widgets\Views\Settings\ContinuousViewHorizontalSettings.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Views\Settings\PointGridSettings.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Guis\Widgets\Views\Settings\PointView2DSettings.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -410,7 +411,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Guis\Widgets\Views\Swaps\IPointView2DSwapController.cs" />
-    <Compile Include="Guis\Widgets\Views\Swaps\IPointVIewVerticalSwapController.cs" />
     <Compile Include="Guis\Widgets\Views\Swaps\IViewSwapController.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -429,19 +429,22 @@
     <Compile Include="Guis\Widgets\Views\ViewRegion.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Guis\Widgets\Views\ViewRegionSettings.cs" />
     <Compile Include="Guis\Widgets\Views\ViewState.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Guis\Widgets\Views\Visuals\FadeViewVisual.cs" />
+    <Compile Include="Guis\Widgets\Views\Visuals\GradientViewVisual.cs" />
     <Compile Include="Guis\Widgets\Views\Visuals\IViewVisual.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Guis\Widgets\Views\Visuals\IViewVisualComponent.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Views\Visuals\ViewScrollbarSettings.cs">
+    <Compile Include="Guis\Widgets\Views\Scrolls\ViewScrollbarSettings.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Views\Visuals\ViewVerticalScrollBar.cs">
+    <Compile Include="Guis\Widgets\Views\Scrolls\ViewVerticalScrollBar.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Guis\Widgets\Views\Visuals\ViewVisual.cs">

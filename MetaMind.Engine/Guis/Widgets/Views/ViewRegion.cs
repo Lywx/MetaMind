@@ -1,22 +1,50 @@
 namespace MetaMind.Engine.Guis.Widgets.Views
 {
     using System;
-
     using Microsoft.Xna.Framework;
 
+    using Primtives2D;
     using Regions;
+    using Services;
 
     public class ViewRegion : Region
     {
-        public ViewRegion(Func<Rectangle> bounds)
-            : base(bounds())
+        private readonly Func<Rectangle> regionBounds;
+
+        private readonly ViewRegionSettings regionSettings;
+
+        public ViewRegion(Func<Rectangle> regionBounds, ViewRegionSettings regionSettings)
+            : base(regionBounds())
         {
-            this.Bounds = bounds;
+            if (regionBounds == null)
+            {
+                throw new ArgumentNullException("regionBounds");
+            }
+
+            if (regionSettings == null)
+            {
+                throw new ArgumentNullException("regionSettings");
+            }
+
+            this.regionBounds = regionBounds;
+            this.regionSettings = regionSettings;
         }
 
-        #region Dependency
+        #region Draw
 
-        protected Func<Rectangle> Bounds { get; set; }
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        {
+            Primitives2D.DrawRectangle(
+                graphics.SpriteBatch,
+                this.Frame.Rectangle.Extend(this.regionSettings.BorderMargin),
+                this.regionSettings.HighlightColor.MakeTransparent(alpha),
+                2f);
+
+            Primitives2D.FillRectangle(
+                graphics.SpriteBatch,
+                this.Frame.Rectangle,
+                this.regionSettings.HighlightColor.MakeTransparent(alpha));
+        }
 
         #endregion
 
@@ -24,7 +52,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public override void Update(GameTime time)
         {
-            this.Rectangle = this.Bounds();
+            this.Rectangle = this.regionBounds();
         }
 
         #endregion

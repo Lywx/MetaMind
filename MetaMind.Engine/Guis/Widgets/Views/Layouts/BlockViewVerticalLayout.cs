@@ -1,19 +1,34 @@
 namespace MetaMind.Engine.Guis.Widgets.Views.Layouts
 {
     using System;
+    using System.Linq;
     using Items;
     using Items.Layers;
+    using Items.Layouts;
 
-    public class BlockViewVerticalLayout : ViewLayout, IPointViewVerticalLayout
+    public class BlockViewVerticalLayout : PointViewVerticalLayout
     {
         public BlockViewVerticalLayout(IView view)
             : base(view)
         {
         }
 
-        public int RowNum { get { return this.ItemsRead.Count; } }
+        public override int RowNum
+        {
+            get
+            {
+                if (this.ItemsRead.Count > 0)
+                {
+                    var itemLayer = this.ItemsRead.Last().GetLayer<BlockViewVerticalItemLayer>();
+                    var itemLayout = itemLayer.ItemLayout;
+                    return itemLayout.BlockRow + itemLayout.Row;
+                }
 
-        public int RowOf(int id)
+                return 0;
+            }
+        }
+
+        public override int RowOf(int id)
         {
             if (this.ItemsRead.Count > id)
             {
@@ -26,7 +41,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layouts
             throw new IndexOutOfRangeException();
         }
 
-        public int RowIn(int id)
+        public override int RowIn(int id)
         {
             if (this.ItemsRead.Count > id)
             {

@@ -7,6 +7,7 @@
 
 namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 {
+    using System;
     using System.Collections.Generic;
 
     using Microsoft.Xna.Framework;
@@ -69,6 +70,38 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             get
             {
                 return (IPointView2DScrollController)base.ViewScroll;
+            }
+        }
+
+        public event EventHandler ScrolledUp;
+
+        public event EventHandler ScrolledDown;
+        
+        public event EventHandler MovedUp;
+
+        public event EventHandler MovedDown;
+
+        IPointViewVerticalSelectionController IPointViewVerticalLogic.ViewSelection
+        {
+            get
+            {
+                return this.ViewSelection;
+            }
+        }
+
+        IPointViewVerticalScrollController IPointViewVerticalLogic.ViewScroll
+        {
+            get
+            {
+                return this.ViewScroll;
+            }
+        }
+
+        IPointViewVerticalLayout IPointViewVerticalLogic.ViewLayout
+        {
+            get
+            {
+                return this.ViewLayout;
             }
         }
 

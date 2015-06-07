@@ -16,12 +16,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
     public class PointViewLogic<TData> : ViewLogic<TData>
     {
         protected PointViewLogic(
-            IView view,
-            IList<TData> viewData,
-            IViewScrollController viewScroll,
+            IView                    view,
+            IList<TData>             viewData,
+            IViewScrollController    viewScroll,
             IViewSelectionController viewSelection,
-            IViewSwapController viewSwap,
-            IViewLayout viewLayout,
+            IViewSwapController      viewSwap,
+            IViewLayout              viewLayout,
             IViewItemFactory itemFactory)
             : base(view, viewData, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory)
         {
@@ -50,11 +50,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            if (input.State.Keyboard.IsActionTriggered(KeyboardActions.CommonCreateItem))
-            {
-                this.AddItem();
-            }
-
             this.UpdateInputOfMouse(input, time);
             this.UpdateInputOfKeyboard(input, time);
             this.UpdateInputOfItems(input, time);
@@ -74,10 +69,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             {
                 if (this.View.ViewSettings.KeyboardEnabled)
                 {
-                    // Escape
-                    if (
-                        input.State.Keyboard.IsActionTriggered(
-                            KeyboardActions.Escape))
+                    var keyboard = input.State.Keyboard;
+                    if (keyboard.IsActionTriggered(KeyboardActions.CommonCreateItem))
+                    {
+                        this.AddItem();
+                    }
+
+                    if (keyboard.IsActionTriggered(KeyboardActions.Escape))
                     {
                         this.ViewSelection.Cancel();
                     }
@@ -97,9 +95,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
         {
             var item = new ViewItem(this.View, this.View.ItemSettings);
 
-            item.ItemLayer = this.ItemFactory.CreateLayer(item);
-            item.ItemData = this.ItemFactory.CreateData(item);
-            item.ItemLogic = this.ItemFactory.CreateLogic(item);
+            item.ItemLayer  = this.ItemFactory.CreateLayer(item);
+            item.ItemData   = this.ItemFactory.CreateData(item);
+            item.ItemLogic  = this.ItemFactory.CreateLogic(item);
             item.ItemVisual = this.ItemFactory.CreateVisual(item);
 
             item.SetupLayer();

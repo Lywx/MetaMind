@@ -1,11 +1,9 @@
 ﻿namespace MetaMind.Engine.Guis.Widgets.Regions
 {
-    using MetaMind.Engine.Guis.Elements;
-    using MetaMind.Engine.Services;
-
     using Microsoft.Xna.Framework;
 
     using Stateless;
+    using Elements;
 
     public class Region : RegionEntity, IRegion
     {
@@ -29,8 +27,7 @@
             this.Frame.MouseLeftPressedOutside += this.FrameMouseLeftPressedOutside;
 
             // Region states
-            this[RegionState.Mouse_Is_Over] = this.Frame[FrameState.Mouse_Is_Over];
-
+            this[RegionState.Mouse_Is_Over] = () => this.Frame[FrameState.Mouse_Is_Over]();
             this[RegionState.Region_Has_Focus] = () => this.StateMachine.IsInState(State.HasFocus);
         }
 
@@ -84,10 +81,6 @@
         {
             get { return this.Frame.Y; }
             set { this.Frame.Y = value; }
-        }
-
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
-        {
         }
 
         private void FrameMouseLeftPressed(object sender, FrameEventArgs e)

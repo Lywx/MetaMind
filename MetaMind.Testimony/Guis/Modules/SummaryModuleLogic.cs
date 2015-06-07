@@ -3,14 +3,14 @@
     using System;
     using System.Linq;
 
-    using MetaMind.Engine.Components.Events;
-    using MetaMind.Engine.Components.Inputs;
-    using MetaMind.Engine.Guis;
-    using MetaMind.Engine.Services;
-    using MetaMind.Testimony.Concepts.Cognitions;
-    using MetaMind.Testimony.Concepts.Synchronizations;
-    using MetaMind.Testimony.Screens;
-    using MetaMind.Testimony.Sessions;
+    using Engine.Components.Events;
+    using Engine.Components.Inputs;
+    using Engine.Guis;
+    using Engine.Services;
+    using Concepts.Cognitions;
+    using Concepts.Synchronizations;
+    using Screens;
+    using Sessions;
 
     using Microsoft.Xna.Framework;
 
@@ -77,7 +77,7 @@
                     summary.Exit();
                 }
 
-                screenManager.AddScreen(new MotivationScreen());
+                screenManager.AddScreen(new TestimonyScreen());
 
                 return true;
             }

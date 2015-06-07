@@ -1,25 +1,23 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ViewVerticalScrollBar.cs" company="UESTC">
+// <copyright file="ViewVerticalScrollbar.cs" company="UESTC">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Engine.Guis.Widgets.Views.Visuals
+namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
 {
     using System;
 
-    using MetaMind.Engine.Guis.Widgets.Regions;
-    using MetaMind.Engine.Guis.Widgets.Views.Layouts;
-    using MetaMind.Engine.Guis.Widgets.Views.Logic;
-    using MetaMind.Engine.Guis.Widgets.Views.Scrolls;
-    using MetaMind.Engine.Guis.Widgets.Views.Settings;
-    using MetaMind.Engine.Guis.Widgets.Visuals;
-    using MetaMind.Engine.Services;
-
     using Microsoft.Xna.Framework;
 
-    public class ViewVerticalScrollBar : GameControllableEntity
+    using Layouts;
+    using Regions;
+    using Services;
+    using Settings;
+    using Widgets.Visuals;
+
+    public class ViewVerticalScrollbar : GameControllableEntity, IViewVerticalScrollbar
     {
         private readonly IPointViewVerticalScrollController viewScroll;
 
@@ -35,7 +33,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Visuals
         
         private int scrollbarBrightness;
         
-        public ViewVerticalScrollBar(IPointViewVerticalSettings viewSettings, IPointViewVerticalScrollController viewScroll, IPointViewVerticalLayout viewLayout, IRegion viewRegion, ViewScrollbarSettings scrollbarSettings)
+        public ViewVerticalScrollbar(IPointViewVerticalSettings viewSettings, IPointViewVerticalScrollController viewScroll, IPointViewVerticalLayout viewLayout, IRegion viewRegion, ViewScrollbarSettings scrollbarSettings)
         {
             if (viewSettings == null)
             {
@@ -89,6 +87,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Visuals
             }
         }
 
+        #region Draw
+
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
             if (this.viewLayout.RowNum > this.viewSettings.ViewRowDisplay)
@@ -97,19 +97,30 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Visuals
             }
         }
 
-        public void Trigger()
-        {
-            this.scrollbarBrightness = this.scrollbarSettings.BrightnessMax;
-        }
+
+        #endregion
+
+        #region Update
 
         public override void Update(GameTime time)
         {
             this.scrollbarBrightness -= this.scrollbarSettings.BrightnessDecreasingStep;
-            
+
             if (this.scrollbarBrightness < 0)
             {
                 this.scrollbarBrightness = 0;
             }
         }
+
+        #endregion
+
+        #region Operations
+
+        public void Trigger()
+        {
+            this.scrollbarBrightness = this.scrollbarSettings.BrightnessMax;
+        }
+
+        #endregion
     }
 }

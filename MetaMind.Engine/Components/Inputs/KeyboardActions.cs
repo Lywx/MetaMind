@@ -25,15 +25,6 @@ namespace MetaMind.Engine.Components.Inputs
         MotivationDeleteItem, 
         MotivationEditItem, 
 
-        TaskCreateItem, 
-        TaskDeleteItem, 
-        TaskEditItem, 
-
-        TraceCreateItem, 
-        TraceDeleteItem, 
-        TraceEditItem, 
-        TraceClearItem, 
-
         KnowledgeEditItem,
         KnowledgeLoadBuffer,
 

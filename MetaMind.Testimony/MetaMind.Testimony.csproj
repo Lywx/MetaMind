@@ -146,11 +146,13 @@
     <Compile Include="Guis\Widgets\TestItemVisual.cs" />
     <Compile Include="Guis\Widgets\TestItemSettings.cs" />
     <Compile Include="Guis\Widgets\TestViewLogic.cs" />
+    <Compile Include="Guis\Widgets\TestViewSettings.cs" />
+    <Compile Include="Guis\Widgets\ViewItemSyncControl.cs" />
     <Compile Include="Testimony.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screens\BackgroundScreen.cs" />
-    <Compile Include="Screens\MotivationScreen.cs" />
+    <Compile Include="Screens\TestimonyScreen.cs" />
     <Compile Include="Screens\SummaryScreen.cs" />
     <Compile Include="Sessions\ISessionData.cs" />
     <Compile Include="Sessions\SessionData.cs" />
