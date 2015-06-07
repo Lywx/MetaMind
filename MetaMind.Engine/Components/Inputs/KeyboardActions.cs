@@ -21,10 +21,6 @@ namespace MetaMind.Engine.Components.Inputs
         CommonDeleteItem,
         CommonEditItem,
 
-        MotivationCreateItem, 
-        MotivationDeleteItem, 
-        MotivationEditItem, 
-
         KnowledgeEditItem,
         KnowledgeLoadBuffer,
 
@@ -39,7 +35,7 @@ namespace MetaMind.Engine.Components.Inputs
         CommandOpenItem,
         CommandSortItem,
 
-        // Synchronization
+        // Consciousness
         Awaken,
         Sleep,
 

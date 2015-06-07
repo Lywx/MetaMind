@@ -33,11 +33,9 @@
 
         public void DeleteIt()
         {
-            // remove from gui
             this.View.ItemsWrite.Remove(this.Item);
 
-            // TODO:???
-            //this.View.ViewLogic.ItemFactory.RemoveData(this.Item);
+            this.View.ViewLogic.ItemFactory.RemoveData(this.Item);
 
             this.Item.Dispose();
         }
@@ -68,13 +66,13 @@
                 {
                     // TODO: Delete These
                     // Normal status
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.MotivationEditItem))
+                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.CommonEditItem))
                     {
                         this.View[ViewState.View_Is_Editing] = () => true;
                         this.Item[ItemState.Item_Is_Pending]  = () => true;
                     }
 
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.MotivationDeleteItem))
+                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.CommonDeleteItem))
                     {
                         this.DeleteIt();
                     }

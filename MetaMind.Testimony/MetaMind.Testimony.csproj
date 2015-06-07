@@ -97,15 +97,11 @@
     <Compile Include="Concepts\Cognitions\IConsciousness.cs" />
     <Compile Include="Concepts\Cognitions\IConsciousnessAsleep.cs" />
     <Compile Include="Concepts\Cognitions\IConsciousnessAwake.cs" />
-    <Compile Include="Concepts\Progressions\IProgressable.cs" />
-    <Compile Include="Concepts\Progressions\IProgressionData.cs" />
     <Compile Include="Concepts\Synchronizations\ISynchronizable.cs" />
     <Compile Include="Concepts\Synchronizations\ISynchronization.cs" />
-    <Compile Include="Concepts\Progressions\ProgressionData.cs" />
     <Compile Include="Concepts\Synchronizations\ISynchronizationData.cs" />
     <Compile Include="Concepts\Synchronizations\SynchronizationData.cs" />
     <Compile Include="Concepts\Synchronizations\SynchronizationSpan.cs" />
-    <Compile Include="Concepts\Tasks\ITask.cs" />
     <Compile Include="Concepts\Tests\ITest.cs" />
     <Compile Include="Concepts\Tests\Test.cs" />
     <Compile Include="Events\ConsciousnessSleepStartedEventArgs.cs" />
@@ -117,7 +113,6 @@
     <Compile Include="Events\SynchronizationStartedEventArgs.cs" />
     <Compile Include="Events\SynchronizationStoppedEventArgs.cs" />
     <Compile Include="Concepts\Synchronizations\SynchronizationTimer.cs" />
-    <Compile Include="Concepts\Tasks\Task.cs" />
     <Compile Include="Extensions\ExtInt32.cs" />
     <Compile Include="Events\SynchronizationAlertedEventArgs.cs" />
     <Compile Include="Guis\Modules\TestModule.cs" />
