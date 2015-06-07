@@ -2,10 +2,8 @@ namespace MetaMind.Acutance.Sessions
 {
     using System.Runtime.Serialization;
 
-    using MetaMind.Acutance.Concepts;
-    using MetaMind.Engine.Sessions;
-
-    using Microsoft.Xna.Framework;
+    using Concepts;
+    using Engine.Sessions;
 
     [DataContract]
     [KnownType(typeof(Commandlist))]
@@ -42,7 +40,7 @@ namespace MetaMind.Acutance.Sessions
 
         #endregion Serialization
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
             this.Commandlist.Update();
             this.Modulelist .Update();

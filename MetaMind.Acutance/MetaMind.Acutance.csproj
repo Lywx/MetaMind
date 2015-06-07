@@ -128,13 +128,7 @@
     <Compile Include="Events\ModuleCreatedEventArgs.cs" />
     <Compile Include="Guis\Widgets\TraceItemLogic.cs" />
     <Compile Include="Guis\Widgets\TraceItemFactory.cs" />
-    <Compile Include="Guis\Widgets\TraceItemFrame.cs" />
-    <Compile Include="Guis\Widgets\TraceItemVisual.cs" />
-    <Compile Include="Guis\Widgets\TraceItemSettings.cs" />
     <Compile Include="Guis\Widgets\TraceViewLogic.cs" />
-    <Compile Include="Guis\Widgets\TraceViewFactory.cs" />
-    <Compile Include="Guis\Widgets\TraceViewGraphics.cs" />
-    <Compile Include="Guis\Widgets\TraceViewSettings.cs" />
     <Compile Include="Parsers\Elements\RawKnowledgeLink.cs" />
     <Compile Include="Parsers\Elements\TimeTag.cs" />
     <Compile Include="Parsers\Elements\ScheduleTag.cs" />

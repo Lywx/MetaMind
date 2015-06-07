@@ -1,22 +1,19 @@
 namespace MetaMind.Acutance.Guis.Widgets
 {
-    using System;
     using System.Collections.Generic;
 
-    using MetaMind.Acutance.Concepts;
-    using MetaMind.Acutance.Events;
-    using MetaMind.Acutance.Sessions;
-    using MetaMind.Engine;
-    using MetaMind.Engine.Components.Events;
-    using MetaMind.Engine.Components.Inputs;
-    using MetaMind.Engine.Guis.Elements;
-    using MetaMind.Engine.Guis.Widgets.Items;
-    using MetaMind.Engine.Guis.Widgets.Items.Interactions;
-    using MetaMind.Engine.Guis.Widgets.Items.Logic;
-    using MetaMind.Engine.Guis.Widgets.Items.Swaps;
-    using MetaMind.Engine.Services;
-
     using Microsoft.Xna.Framework;
+
+    using Concepts;
+    using Engine;
+    using Engine.Components.Events;
+    using Engine.Components.Inputs;
+    using Engine.Guis.Elements;
+    using Engine.Guis.Widgets.Items;
+    using Engine.Guis.Widgets.Items.Logic;
+    using Engine.Services;
+    using Events;
+    using Sessions;
 
     public class ModuleItemLogic : PointView2DItemLogic
     {
@@ -66,7 +63,7 @@ namespace MetaMind.Acutance.Guis.Widgets
 
         public void DeleteIt()
         {
-            View.ViewItems.Remove(this.Item);
+            View.Items.Remove(this.Item);
             
             View.ViewLogic.ItemFactory.RemoveData(this.Item);
         }
@@ -93,7 +90,7 @@ namespace MetaMind.Acutance.Guis.Widgets
         {
             // mouse and keyboard in modifier
             //-----------------------------------------------------------------
-            base.UpdateInput(, time);
+            base.UpdateInput(input, time);
 
             // keyboard
             //-----------------------------------------------------------------

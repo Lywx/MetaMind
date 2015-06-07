@@ -171,11 +171,11 @@ namespace MetaMind.Acutance.Guis.Widgets
             this.UpdateInputOfMouse(input, time);
             this.UpdateInputOfKeyboard(input, time);
 
-            if (this.AcceptInput)
+            if (this.View[ViewState.View_Is_Inputting]())
             {
                 if (this.ViewSettings.KeyboardEnabled)
                 {
-                    if (InputSequenceManager.Keyboard.IsActionTriggered(KeyboardActions.KnowledgeLoadBuffer))
+                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.KnowledgeLoadBuffer))
                     {
                         this.LoadBuffer();
                     }
@@ -200,8 +200,8 @@ namespace MetaMind.Acutance.Guis.Widgets
             return new Rectangle(
                 viewSettings.PointStart.X,
                 viewSettings.PointStart.Y,
-                viewSettings.ColumnNumDisplay * (itemSettings.NameFrameSize.X + itemSettings.IdFrameSize.X),
-                viewSettings.RowNumDisplay    * itemSettings.NameFrameSize.Y);
+                viewSettings.ViewColumnDisplay * (itemSettings.NameFrameSize.X + itemSettings.IdFrameSize.X),
+                viewSettings.ViewRowDisplay    * itemSettings.NameFrameSize.Y);
         }
 
         #endregion Configurations

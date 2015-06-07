@@ -1,27 +1,16 @@
 ﻿namespace MetaMind.Acutance
 {
     using System;
-    using System.ServiceModel;
-
-    using MetaMind.Acutance.PerseveranceServiceReference;
-    using MetaMind.Engine;
-    using MetaMind.RuntimeService.Settings;
+    using Engine;
 
     public static class Program
     {
         [STAThread]
         public static void Main(string[] args)
         {
-            var binding = new BasicHttpBinding();
-            var address = new EndpointAddress(ServiceSettings.Address);
-            var client  = new SynchronizationServiceClient(binding, address)
-                              {
-                                  InnerChannel = { OperationTimeout = TimeSpan.FromMilliseconds(20) }
-                              };
-
-            using (var engine = GameEngine.GetEngine())
+            using (var engine = new GameEngine())
             {
-                var runner = new Acutance(engine, client);
+                var runner = new Acutance(engine);
 
                 runner.Run();
             }

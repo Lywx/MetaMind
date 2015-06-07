@@ -102,8 +102,8 @@ namespace MetaMind.Acutance.Guis.Widgets
             return new Rectangle(
                 viewSettings.PointStart.X,
                 viewSettings.PointStart.Y,
-                viewSettings.ColumnNumDisplay * (itemSettings.NameFrameSize.X + itemSettings.IdFrameSize.X + itemSettings.ExperienceFrameSize.X),
-                viewSettings.RowNumDisplay    * itemSettings.NameFrameSize.Y);
+                viewSettings.ViewColumnDisplay * (itemSettings.NameFrameSize.X + itemSettings.IdFrameSize.X + itemSettings.ExperienceFrameSize.X),
+                viewSettings.ViewRowDisplay    * itemSettings.NameFrameSize.Y);
         }
 
         #endregion Configurations

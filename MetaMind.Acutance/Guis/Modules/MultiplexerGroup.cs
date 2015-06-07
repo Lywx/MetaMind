@@ -12,26 +12,7 @@ namespace MetaMind.Acutance.Guis.Modules
 
     public class MultiplexerGroup : Group<MultiplexerGroupSettings>, IConfigurationLoader
     {
-        #region Events
-
         // TODO: Redesign events
-        private void LoadEvents(IGameInteropService interop)
-        {
-            // Module View 
-            this.Listeners.Add(new MultiplexerGroupModuleCreatedListener(this.ModuleView));
-
-            // Command View 
-            this.Listeners.Add(new MultiplexerGroupCommandNotifiedListener(this.CommandView, this.ModuleView, this.KnowledgeView));
-
-            // Knowledge View 
-            this.Listeners.Add(new MultiplexerGroupKnowledgeRetrievedListener(this.KnowledgeView));
-            this.Listeners.Add(new MultiplexerGroupKnowledgeReloadListener(this.KnowledgeView));
-
-            // Session 
-            this.Listeners.Add(new MultiplexerGroupSessionSavedListener(this));
-        }
-
-        #endregion
 
         #region Views
 
@@ -95,36 +76,25 @@ namespace MetaMind.Acutance.Guis.Modules
             base.LoadContent(interop);
         }
 
+        private void LoadEvents(IGameInteropService interop)
+        {
+            // Module View 
+            this.Listeners.Add(new MultiplexerGroupModuleCreatedListener(this.ModuleView));
+
+            // Command View 
+            this.Listeners.Add(new MultiplexerGroupCommandNotifiedListener(this.CommandView, this.ModuleView, this.KnowledgeView));
+
+            // Knowledge View 
+            this.Listeners.Add(new MultiplexerGroupKnowledgeRetrievedListener(this.KnowledgeView));
+            this.Listeners.Add(new MultiplexerGroupKnowledgeReloadListener(this.KnowledgeView));
+
+            // Session 
+            this.Listeners.Add(new MultiplexerGroupSessionSavedListener(this));
+        }
+
         private void LoadData()
         {
             this.LoadModuleData();
-            this.LoadScheduleData();
-        }
-
-        #region Commands
-
-        #endregion
-
-        #region Module
-
-        private void LoadModuleData()
-        {
-            foreach (var module in this.Settings.Modules.ToArray())
-            {
-                if (module.Parent == null)
-                {
-                    this.ModuleView.ViewLogic.AddItem(module);
-                }
-            }
-        }
-
-        #endregion
-
-        #region Schedule
-
-        public void ScheduleDataReload()
-        {
-            this.ScheduleDataUnload();
             this.LoadScheduleData();
         }
 
@@ -137,16 +107,31 @@ namespace MetaMind.Acutance.Guis.Modules
             }
         }
 
+        private void LoadModuleData()
+        {
+            foreach (var module in this.Settings.Modules.ToArray())
+            {
+                if (module.Parent == null)
+                {
+                    this.ModuleView.ViewLogic.AddItem(module);
+                }
+            }
+        }
+
         private void ScheduleDataUnload()
         {
             CommandFileter.RemoveRunningShedule(this.Settings.Commands);
         }
 
-        #endregion
+        public void ScheduleDataReload()
+        {
+            this.ScheduleDataUnload();
+            this.LoadScheduleData();
+        }
 
         #endregion
 
-        #region Update and Draw
+        #region Draw
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
@@ -154,6 +139,10 @@ namespace MetaMind.Acutance.Guis.Modules
             this.KnowledgeView.Draw(graphics, time, alpha);
             this.CommandView  .Draw(graphics, time, alpha);
         }
+
+        #endregion
+
+        #region Update 
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
