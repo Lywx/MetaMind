@@ -86,6 +86,15 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         #endregion
 
+        #region Binding
+
+        public void SetupBinding()
+        {
+            this.ViewLogic.SetupBinding();
+        }
+
+        #endregion
+
         #region Draw
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)

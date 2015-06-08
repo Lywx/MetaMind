@@ -16,15 +16,15 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     using MetaMind.Engine.Guis.Widgets.Views.Settings;
     using MetaMind.Engine.Guis.Widgets.Views.Visuals;
 
-    public interface IView : IViewEntity
+    public interface IView : IViewEntity, IViewOperations 
     {
         #region View Data
 
-        IViewLogic ViewLogic { get; }
+        IViewLogic ViewLogic { get; set; }
 
         IViewVisual ViewVisual { get; set; }
 
-        IViewLayer ViewLayer { get; }
+        IViewLayer ViewLayer { get; set; }
 
         Dictionary<string, object> ViewComponents { get; }
 
@@ -39,12 +39,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         List<IViewItem> ItemsWrite { get; set; }
 
         ItemSettings ItemSettings { get; set; }
-
-        #endregion
-
-        #region Layer
-
-        T GetLayer<T>() where T : class, IViewLayer;
 
         #endregion
     }

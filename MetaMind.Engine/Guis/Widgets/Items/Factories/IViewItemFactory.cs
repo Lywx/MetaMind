@@ -6,8 +6,6 @@
 
     public interface IViewItemFactory
     {
-        dynamic CreateData(IViewItem item);
-
         IViewItemLogic CreateLogic(IViewItem item);
 
         IViewItemVisual CreateVisual(IViewItem item);

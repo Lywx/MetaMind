@@ -17,40 +17,16 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Swaps
 
     using Microsoft.Xna.Framework;
 
-    public class ViewSwapController<TData> : ViewComponent, IViewSwapController
+    public class ViewSwapController<TData> : ViewComponent, IViewSwapController<TData>
     {
-        /// <remarks>
-        /// View data model as a collections.
-        /// </remarks>>
-        private readonly IList<TData> viewData;
-
         private readonly List<IView> viewObservers;
 
         #region Constructors
 
-        public ViewSwapController(IView view, IList<TData> viewData)
+        public ViewSwapController(IView view)
             : base(view)
         {
-            if (viewData == null)
-            {
-                throw new ArgumentNullException("viewData");
-            }
-
-            this.viewData = viewData;
-
             this.viewObservers = new List<IView>();
-        }
-
-        #endregion
-
-        #region Protected Properties
-
-        /// <remarks>
-        /// View data model as a collections.
-        /// </remarks>>
-        protected IList<TData> ViewData
-        {
-            get { return this.viewData; }
         }
 
         #endregion
@@ -96,7 +72,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Swaps
 
         #endregion
 
-        public virtual void StartProcess(IGameInteropService interop, IViewItem touchedItem, Vector2 touchedStart, IViewItem draggingItem, IView draggingView, Vector2 draggingEnd)
+        public virtual void StartProcess(IGameInteropService interop, IViewItem touchedItem, Vector2 touchedStart, IViewItem draggingItem, IView draggingView, Vector2 draggingEnd, IList<TData> dataList)
         {
             this.HasStarted = true;
             this.Progress   = 0f;
@@ -113,7 +89,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Swaps
                 touchedItem,
                 touchedItem.ItemLogic,
                 this.View.ViewLogic,
-                this.ViewData));
+                dataList));
         }
 
         public void WatchProcess(IViewItem item)

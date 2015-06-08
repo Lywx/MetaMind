@@ -149,6 +149,7 @@
     <Compile Include="Guis\Console\OutputLine.cs" />
     <Compile Include="Guis\Console\Renderer.cs" />
     <Compile Include="Guis\IModuleLogicControl.cs" />
+    <Compile Include="Guis\Widgets\Items\Data\IViewItemBinding.cs" />
     <Compile Include="Guis\Widgets\Items\Data\IViewItemCharModifier.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -167,6 +168,8 @@
     <Compile Include="Guis\Widgets\Items\Interactions\BlockViewVerticalItemLayoutInteraction.cs" />
     <Compile Include="Guis\Widgets\Items\Interactions\IViewItemLayoutInteraction.cs" />
     <Compile Include="Guis\Widgets\Items\Interactions\PointViewItemLayoutInteraction.cs" />
+    <Compile Include="Guis\Widgets\Items\IViewItemComponentOperations.cs" />
+    <Compile Include="Guis\Widgets\Items\IViewItemOperations.cs" />
     <Compile Include="Guis\Widgets\Items\Layers\BlockViewVerticalItemLayer.cs" />
     <Compile Include="Guis\Widgets\Items\Layers\BlockViewVerticalLayer.cs" />
     <Compile Include="Guis\Widgets\Items\Layers\IViewItemLayer.cs">
@@ -287,6 +290,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Guis\Widgets\IWidgetSettings.cs" />
+    <Compile Include="Guis\Widgets\Views\IViewOperations.cs" />
     <Compile Include="Guis\Widgets\Views\Layers\IViewLayer.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -330,6 +334,7 @@
     <Compile Include="Guis\Widgets\Views\Logic\IViewLogic.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Guis\Widgets\Views\Logic\IViewLogicOperations.cs" />
     <Compile Include="Guis\Widgets\Views\Logic\PointView2DLogic.cs">
       <SubType>Code</SubType>
     </Compile>

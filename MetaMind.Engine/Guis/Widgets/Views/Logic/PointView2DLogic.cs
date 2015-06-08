@@ -13,6 +13,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
     using Microsoft.Xna.Framework;
 
     using Components.Inputs;
+    using Items.Data;
     using Items.Factories;
     using Layers;
     using Layouts;
@@ -22,7 +23,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
     using Settings;
     using Swaps;
 
-    public class PointView2DLogic<TData> : PointViewHorizontalLogic<TData>, IPointView2DLogic
+    public class PointView2DLogic<TData> : PointViewHorizontalLogic<TData>, IPointView2DLogic 
     {
         private PointView2DSettings viewSettings;
 
@@ -31,10 +32,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             IList<TData>             viewData,
             IViewScrollController    viewScroll,
             IViewSelectionController viewSelection,
-            IViewSwapController      viewSwap,
+            IViewSwapController<TData> viewSwap,
             IViewLayout              viewLayout,
+            IViewItemBinding<TData> itemBinding,
             IViewItemFactory itemFactory)
-            : base(view, viewData, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory)
+            : base(view, viewData, viewScroll, viewSelection, viewSwap, viewLayout, itemBinding, itemFactory)
         {
         }
 
@@ -73,14 +75,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             }
         }
 
-        public event EventHandler ScrolledUp;
-
-        public event EventHandler ScrolledDown;
-        
-        public event EventHandler MovedUp;
-
-        public event EventHandler MovedDown;
-
         IPointViewVerticalSelectionController IPointViewVerticalLogic.ViewSelection
         {
             get
@@ -107,6 +101,50 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         #endregion
 
+        #region Events
+
+        public event EventHandler ScrolledUp;
+
+        public event EventHandler ScrolledDown;
+
+        public event EventHandler MovedUp;
+
+        public event EventHandler MovedDown;
+
+        private void OnScrolledUp()
+        {
+            if (this.ScrolledUp != null)
+            {
+                this.ScrolledUp(this, EventArgs.Empty);
+            }
+        }
+
+        private void OnScrolledDown()
+        {
+            if (this.ScrolledDown != null)
+            {
+                this.ScrolledDown(this, EventArgs.Empty);
+            }
+        }
+
+        private void OnMovedUp()
+        {
+            if (this.MovedUp != null)
+            {
+                this.MovedUp(this, EventArgs.Empty);
+            }
+        }
+
+        private void OnMovedDown()
+        {
+            if (this.MovedDown != null)
+            {
+                this.MovedDown(this, EventArgs.Empty);
+            }
+        }
+
+        #endregion
+
         #region Layer
 
         public override void SetupLayer()
@@ -124,21 +162,29 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
         public virtual void ScrollDown()
         {
             this.ViewScroll.MoveDown();
+
+            this.OnScrolledDown();
         }
 
         public virtual void ScrollUp()
         {
             this.ViewScroll.MoveUp();
+
+            this.OnScrolledUp();
         }
 
         public virtual void MoveDown()
         {
             this.ViewSelection.MoveDown();
+
+            this.OnMovedDown();
         }
 
         public virtual void MoveUp()
         {
             this.ViewSelection.MoveUp();
+
+            this.OnMovedUp();
         }
 
         public virtual void FastMoveDown()

@@ -10,6 +10,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
     using System;
     using System.Collections.Generic;
     using Components.Inputs;
+    using Items.Data;
     using Items.Factories;
     using Layers;
     using Layouts;
@@ -20,7 +21,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
     using Settings;
     using Swaps;
 
-    public class PointViewHorizontalLogic<TData> : PointViewLogic<TData>, IPointViewHorizontalLogic
+    public class PointViewHorizontalLogic<TData> : PointViewLogic<TData>, IPointViewHorizontalLogic 
     {
         private PointViewHorizontalSettings viewSettings;
 
@@ -29,10 +30,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             IList<TData>             viewData,
             IViewScrollController    viewScroll,
             IViewSelectionController viewSelection,
-            IViewSwapController      viewSwap,
+            IViewSwapController<TData> viewSwap,
             IViewLayout              viewLayout,
+            IViewItemBinding<TData> itemBinding,
             IViewItemFactory itemFactory)
-            : base(view, viewData, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory)
+            : base(view, viewData, viewScroll, viewSelection, viewSwap, viewLayout, itemBinding, itemFactory)
         {
         }
 
@@ -79,6 +81,38 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public event EventHandler MovedRight;
 
+        private void OnScrolledLeft()
+        {
+            if (this.ScrolledLeft != null)
+            {
+                this.ScrolledLeft(this, EventArgs.Empty);
+            }
+        }
+
+        private void OnScrolledRight()
+        {
+            if (this.ScrolledRight != null)
+            {
+                this.ScrolledRight(this, EventArgs.Empty);
+            }
+        }
+
+        private void OnMovedLeft()
+        {
+            if (this.MovedLeft != null)
+            {
+                this.MovedLeft(this, EventArgs.Empty);
+            }
+        }
+
+        private void OnMovedRight()
+        {
+            if (this.MovedRight != null)
+            {
+                this.MovedRight(this, EventArgs.Empty);
+            }
+        }
+
         #endregion
 
         #region Operations
@@ -86,11 +120,15 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
         public virtual void ScrollLeft()
         {
             this.ViewScroll.MoveLeft();
+
+            this.OnScrolledLeft();
         }
 
         public virtual void ScrollRight()
         {
             this.ViewScroll.MoveRight();
+
+            this.OnScrolledRight();
         }
 
         public virtual void MoveLeft()
@@ -104,6 +142,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             {
                 this.ViewSelection.MoveLeft();
             }
+
+            this.OnMovedLeft();
         }
 
         public virtual void MoveRight()
@@ -117,6 +157,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             {
                 this.ViewSelection.MoveRight();
             }
+
+            this.OnMovedRight();
         }
 
         public void FastMoveLeft()

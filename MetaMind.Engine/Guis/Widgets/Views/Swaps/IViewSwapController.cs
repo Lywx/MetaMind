@@ -8,14 +8,15 @@
 namespace MetaMind.Engine.Guis.Widgets.Views.Swaps
 {
     using System;
+    using System.Collections.Generic;
     using Items;
     using Services;
 
     using Microsoft.Xna.Framework;
 
-    public interface IViewSwapController : IViewComponent, IDisposable
+    public interface IViewSwapController<TData> : IViewComponent, IDisposable
     {
-        #region Observers
+        #region Observers 
 
         void AddObserver(IView view);
 
@@ -33,7 +34,14 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Swaps
 
         #region Process
 
-        void StartProcess(IGameInteropService interop, IViewItem touchedItem, Vector2 touchedStart, IViewItem draggingItem, IView draggingView, Vector2 draggingEnd);
+        void StartProcess(
+            IGameInteropService interop,
+            IViewItem touchedItem,
+            Vector2   touchedStart,
+            IViewItem draggingItem,
+            IView     draggingView,
+            Vector2   draggingEnd,
+            IList<TData> dataList);
 
         void WatchProcess(IViewItem item);
 

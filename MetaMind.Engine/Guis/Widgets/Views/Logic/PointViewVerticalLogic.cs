@@ -6,6 +6,7 @@
     using Microsoft.Xna.Framework;
 
     using Components.Inputs;
+    using Items.Data;
     using Items.Factories;
     using Layers;
     using Layouts;
@@ -15,7 +16,7 @@
     using Settings;
     using Swaps;
 
-    public class PointViewVerticalLogic<TData> : PointViewLogic<TData>, IPointViewVerticalLogic
+    public class PointViewVerticalLogic<TData> : PointViewLogic<TData>, IPointViewVerticalLogic 
     {
         private PointViewVerticalSettings viewSettings;
 
@@ -24,10 +25,11 @@
             IList<TData>             viewData,
             IViewScrollController    viewScroll,
             IViewSelectionController viewSelection,
-            IViewSwapController      viewSwap,
+            IViewSwapController<TData> viewSwap,
             IViewLayout              viewLayout,
+            IViewItemBinding itemBinding,
             IViewItemFactory itemFactory)
-            : base(view, viewData, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory)
+            : base(view, viewData, viewScroll, viewSelection, viewSwap, viewLayout, itemBinding, itemFactory)
         {
         }
 

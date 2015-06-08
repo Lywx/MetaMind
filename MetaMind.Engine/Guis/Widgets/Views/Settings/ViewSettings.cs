@@ -4,9 +4,19 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Settings
 
     public class ViewSettings : WidgetSettings, ICloneable
     {
-        public bool MouseEnabled     = true;
+        #region Control
 
-        public bool KeyboardEnabled  = true;
+        public bool MouseEnabled = true;
+
+        public bool KeyboardEnabled = true;
+
+        #endregion
+
+        #region Properties
+
+        public bool ReadOnly = false;
+
+        #endregion
 
         public object Clone()
         {

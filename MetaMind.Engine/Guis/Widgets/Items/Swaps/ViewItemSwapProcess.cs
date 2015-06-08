@@ -37,7 +37,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
             IViewItem      swappingItem, 
             IViewItemLogic swappingItemLogic, 
             IViewLogic     swappingViewLogic, 
-            IList<TData> commonSource = null)
+            IList<TData> dataList = null)
             : base(10)
         {
             if (draggingItem == null)
@@ -78,7 +78,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
             this.SwappingItemLogic = swappingItemLogic;
             this.SwappingViewLogic = swappingViewLogic;
 
-            this.CommonSource = commonSource;
+            this.DataList = dataList;
 
             this.inSameView = ReferenceEquals(
                 this.SwappingItem.View,
@@ -116,7 +116,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
         /// I saw this IList<T> as a data model. It maintains a collection of data and 
         /// it is easy to provide management method as extension method.
         /// </remarks>>
-        protected IList<TData> CommonSource { get; set; }
+        protected IList<TData> DataList { get; set; }
 
         #endregion
 
@@ -212,9 +212,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
 
         protected virtual void SwapDataInList()
         {
-            this.CommonSource.Swap(
-                (int)this.CommonSource.IndexOf(this.DraggingItem.ItemData), 
-                (int)this.CommonSource.IndexOf(this.SwappingItem.ItemData));
+            this.DataList.Swap(
+                (int)this.DataList.IndexOf(this.DraggingItem.ItemData), 
+                (int)this.DataList.IndexOf(this.SwappingItem.ItemData));
         }
 
         private void SwapTerminate()

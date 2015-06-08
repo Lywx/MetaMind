@@ -14,10 +14,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items
     using MetaMind.Engine.Guis.Widgets.Items.Visuals;
     using MetaMind.Engine.Guis.Widgets.Views;
 
-    using Microsoft.Xna.Framework;
     using Settings;
 
-    public interface IViewItem : IItemEntity, IDisposable
+    public interface IViewItem : IViewItemOperations, IItemEntity, IDisposable
     {
         #region Events
 
@@ -53,24 +52,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         #region View Data
 
         IView View { get; }
-
-        #endregion
-
-        #region Update
-
-        /// <summary>
-        /// Update logic related with IView.
-        /// </summary>
-        /// <param name="time"></param>
-        void UpdateView(GameTime time);
-
-        #endregion
-
-        #region Layering
-
-        T GetLayer<T>() where T : class, IViewItemLayer;
-
-        void SetupLayer();
 
         #endregion
     }

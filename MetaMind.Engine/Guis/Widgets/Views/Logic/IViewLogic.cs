@@ -7,13 +7,14 @@
 
 namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 {
+    using Items.Data;
     using MetaMind.Engine.Guis.Widgets.Items.Factories;
     using MetaMind.Engine.Guis.Widgets.Views.Layouts;
     using MetaMind.Engine.Guis.Widgets.Views.Scrolls;
     using MetaMind.Engine.Guis.Widgets.Views.Selections;
     using MetaMind.Engine.Guis.Widgets.Views.Swaps;
 
-    public interface IViewLogic : IViewComponent, IInputable
+    public interface IViewLogic : IViewLogicOperations, IViewComponent, IInputable
     {
         IViewSelectionController ViewSelection { get; }
 
@@ -24,5 +25,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
         IViewLayout ViewLayout { get; }
 
         IViewItemFactory ItemFactory { get; }
+
+        IViewItemBinding ItemBinding { get; }
     }
 }
