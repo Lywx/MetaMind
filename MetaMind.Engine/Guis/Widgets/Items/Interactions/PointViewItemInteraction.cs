@@ -78,7 +78,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
                 draggingItem,
                 draggingItem.View,
                 draggingViewScroll.Position(draggingItemLayout.Id),
-                );
+                this.View.ViewData);
         }
 
         public void ViewUpdateSwap()

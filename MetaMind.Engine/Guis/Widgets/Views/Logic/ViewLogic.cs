@@ -21,24 +21,18 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
     using Microsoft.Xna.Framework;
     using Services;
 
-    public abstract class ViewLogic<TData> : ViewComponent, IViewLogic 
+    public abstract class ViewLogic : ViewComponent, IViewLogic
     {
         protected ViewLogic(
-            IView                    view,
-            IList<TData>             viewData,
-            IViewScrollController    viewScroll,
+            IView view,
+            IViewScrollController viewScroll,
             IViewSelectionController viewSelection,
-            IViewSwapController<TData> viewSwap,
-            IViewLayout              viewLayout,
-            IViewItemBinding<TData> itemBinding,
+            IViewSwapController viewSwap,
+            IViewLayout viewLayout,
+            IViewItemBinding itemBinding,
             IViewItemFactory itemFactory)
             : this(view, itemBinding, itemFactory)
         {
-            if (viewData == null)
-            {
-                throw new ArgumentNullException("viewData");
-            }
-
             if (viewScroll == null)
             {
                 throw new ArgumentNullException("viewScroll");
@@ -59,7 +53,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
                 throw new ArgumentNullException("viewLayout");
             }
 
-            this.ViewData      = viewData;
             this.ViewScroll    = viewScroll;
             this.ViewSelection = viewSelection;
             this.ViewSwap      = viewSwap;
@@ -103,8 +96,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
                 return () => true;
             }
         }
-
-        public IList<TData> ViewData { get; private set; }
 
         public IViewSelectionController ViewSelection { get; protected set; }
 

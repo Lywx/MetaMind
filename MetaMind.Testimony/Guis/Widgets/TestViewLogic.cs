@@ -1,6 +1,7 @@
 ﻿namespace MetaMind.Testimony.Guis.Widgets
 {
     using System.Collections.Generic;
+    using Engine.Guis.Widgets.Items.Data;
     using Engine.Guis.Widgets.Items.Factories;
     using Engine.Guis.Widgets.Views;
     using Engine.Guis.Widgets.Views.Layouts;
@@ -9,17 +10,17 @@
     using Engine.Guis.Widgets.Views.Selections;
     using Engine.Guis.Widgets.Views.Swaps;
 
-    public class TestViewLogic<TData> : BlockViewVerticalLogic<TData>
+    public class TestViewLogic : BlockViewVerticalLogic
     {
         public TestViewLogic(
-            IView                    view,
-            IList<TData>             viewData,
-            IViewScrollController    viewScroll,
+            IView view,
+            IViewScrollController viewScroll,
             IViewSelectionController viewSelection,
-            IViewSwapController      viewSwap,
-            IViewLayout              viewLayout,
+            IViewSwapController viewSwap,
+            IViewLayout viewLayout,
+            IViewItemBinding itemBinding,
             IViewItemFactory itemFactory)
-            : base(view, viewData, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory)
+            : base(view, viewScroll, viewSelection, viewSwap, viewLayout, itemBinding, itemFactory)
         {
         }
     }

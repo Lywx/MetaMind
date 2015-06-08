@@ -17,7 +17,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Swaps
 
     using Microsoft.Xna.Framework;
 
-    public class ViewSwapController<TData> : ViewComponent, IViewSwapController<TData>
+    public class ViewSwapController : ViewComponent, IViewSwapController
     {
         private readonly List<IView> viewObservers;
 
@@ -72,7 +72,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Swaps
 
         #endregion
 
-        public virtual void StartProcess(IGameInteropService interop, IViewItem touchedItem, Vector2 touchedStart, IViewItem draggingItem, IView draggingView, Vector2 draggingEnd, IList<TData> dataList)
+        public virtual void StartProcess(IGameInteropService interop, IViewItem touchedItem, Vector2 touchedStart, IViewItem draggingItem, IView draggingView, Vector2 draggingEnd, IList<dynamic> dataList)
         {
             this.HasStarted = true;
             this.Progress   = 0f;
@@ -82,7 +82,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Swaps
 
             ((ViewItem)touchedItem).OnSwapping();
 
-            interop.Process.AttachProcess(new ViewItemSwapProcess<TData>(
+            interop.Process.AttachProcess(new ViewItemSwapProcess(
                 draggingItem,
                 draggingItem.ItemLogic,
                 draggingView.ViewLogic,

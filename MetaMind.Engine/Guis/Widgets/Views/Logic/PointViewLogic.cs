@@ -8,18 +8,17 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
     using Selections;
     using Swaps;
 
-    public class PointViewLogic<TData> : ViewLogic<TData>
+    public class PointViewLogic : ViewLogic
     {
         protected PointViewLogic(
-            IView                    view,
-            IList<TData>             viewData,
-            IViewScrollController    viewScroll,
+            IView view,
+            IViewScrollController viewScroll,
             IViewSelectionController viewSelection,
-            IViewSwapController<TData> viewSwap,
-            IViewLayout              viewLayout,
-            IViewItemBinding<TData> itemBinding,
+            IViewSwapController viewSwap,
+            IViewLayout viewLayout,
+            IViewItemBinding itemBinding,
             IViewItemFactory itemFactory)
-            : base(view, viewData, viewScroll, viewSelection, viewSwap, viewLayout, itemBinding, itemFactory)
+            : base(view, viewScroll, viewSelection, viewSwap, viewLayout, itemBinding, itemFactory)
         {
         }
     }

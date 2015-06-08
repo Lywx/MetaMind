@@ -14,7 +14,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Swaps
 
     using Microsoft.Xna.Framework;
 
-    public interface IViewSwapController<TData> : IViewComponent, IDisposable
+    public interface IViewSwapController : IViewComponent, IDisposable
     {
         #region Observers 
 
@@ -41,7 +41,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Swaps
             IViewItem draggingItem,
             IView     draggingView,
             Vector2   draggingEnd,
-            IList<TData> dataList);
+            IList<dynamic> dataList);
 
         void WatchProcess(IViewItem item);
 

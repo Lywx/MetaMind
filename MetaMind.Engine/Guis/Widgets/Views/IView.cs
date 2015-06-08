@@ -16,7 +16,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     using MetaMind.Engine.Guis.Widgets.Views.Settings;
     using MetaMind.Engine.Guis.Widgets.Views.Visuals;
 
-    public interface IView : IViewEntity, IViewOperations 
+    public interface IView : IViewEntity, IViewOperations  
     {
         #region View Data
 
@@ -25,6 +25,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         IViewVisual ViewVisual { get; set; }
 
         IViewLayer ViewLayer { get; set; }
+
+        IList<dynamic> ViewData { get; }
 
         Dictionary<string, object> ViewComponents { get; }
 
@@ -41,5 +43,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         ItemSettings ItemSettings { get; set; }
 
         #endregion
+        
     }
 }

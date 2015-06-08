@@ -23,20 +23,19 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
     using Settings;
     using Swaps;
 
-    public class PointView2DLogic<TData> : PointViewHorizontalLogic<TData>, IPointView2DLogic 
+    public class PointView2DLogic : PointViewHorizontalLogic, IPointView2DLogic 
     {
         private PointView2DSettings viewSettings;
 
         public PointView2DLogic(
-            IView                    view,
-            IList<TData>             viewData,
-            IViewScrollController    viewScroll,
+            IView view,
+            IViewScrollController viewScroll,
             IViewSelectionController viewSelection,
-            IViewSwapController<TData> viewSwap,
-            IViewLayout              viewLayout,
-            IViewItemBinding<TData> itemBinding,
+            IViewSwapController viewSwap,
+            IViewLayout viewLayout,
+            IViewItemBinding itemBinding,
             IViewItemFactory itemFactory)
-            : base(view, viewData, viewScroll, viewSelection, viewSwap, viewLayout, itemBinding, itemFactory)
+            : base(view, viewScroll, viewSelection, viewSwap, viewLayout, itemBinding, itemFactory)
         {
         }
 

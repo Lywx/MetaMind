@@ -4,17 +4,6 @@
 
     using MetaMind.Testimony.Concepts.Synchronizations;
 
-    public interface ICognition
-    {
-        [DataMember]
-        IConsciousness Consciousness { get; set; }
-
-        [DataMember]
-        ISynchronization Synchronization { get; set; }
-
-        void Update();
-    }
-
     [DataContract]
     [KnownType(typeof(Consciousness))]
     [KnownType(typeof(Synchronization))]

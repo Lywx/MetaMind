@@ -16,20 +16,19 @@
     using Settings;
     using Swaps;
 
-    public class PointViewVerticalLogic<TData> : PointViewLogic<TData>, IPointViewVerticalLogic 
+    public class PointViewVerticalLogic : PointViewLogic, IPointViewVerticalLogic 
     {
         private PointViewVerticalSettings viewSettings;
 
         protected PointViewVerticalLogic(
-            IView                    view,
-            IList<TData>             viewData,
-            IViewScrollController    viewScroll,
+            IView view,
+            IViewScrollController viewScroll,
             IViewSelectionController viewSelection,
-            IViewSwapController<TData> viewSwap,
-            IViewLayout              viewLayout,
+            IViewSwapController viewSwap,
+            IViewLayout viewLayout,
             IViewItemBinding itemBinding,
             IViewItemFactory itemFactory)
-            : base(view, viewData, viewScroll, viewSelection, viewSwap, viewLayout, itemBinding, itemFactory)
+            : base(view, viewScroll, viewSelection, viewSwap, viewLayout, itemBinding, itemFactory)
         {
         }
 

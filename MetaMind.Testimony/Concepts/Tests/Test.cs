@@ -8,11 +8,10 @@
 namespace MetaMind.Testimony.Concepts.Tests
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Runtime.Serialization;
-
     using Engine.Guis.Widgets.Items.Data;
-    using Synchronizations;
 
     [DataContract]
     [KnownType(typeof(Test))]
@@ -42,18 +41,12 @@ namespace MetaMind.Testimony.Concepts.Tests
             // Strucure 
             this.Parent   = null;
             this.Children = new List<ITest>();
-
-            // Synchronization
-            this.SynchronizationData = new SynchronizationData();
         }
 
         #region Test 
 
         [DataMember]
         public string Name { get; set; }
-
-        [DataMember]
-        public string Code { get; set; }
 
         [DataMember]
         public string Description { get; set; }
@@ -68,22 +61,54 @@ namespace MetaMind.Testimony.Concepts.Tests
         [DataMember]
         public IList<ITest> Children { get; private set; }
 
+        public bool HasChildren
+        {
+            get { return this.Children != null && this.Children.Count != 0; }
+        }
+
         [DataMember]
         public ITest Parent { get; private set; }
 
-        #endregion
-
-        #region Update
-
-        public void Update()
+        public bool HasParent
         {
+            get { return this.Parent != null; }
+        }
+
+        public IEnumerable AllTests()
+        {
+            yield return this;
+
+            if (this.HasChildren)
+            {
+                foreach (var directChild in this.Children)
+                {
+                    yield return directChild;
+
+                    if (directChild.HasChildren)
+                    {
+                        foreach (var child in directChild.AllTests())
+                        {
+                            yield return child;
+                        }
+                    }
+                }
+            }
+        }
+
+        public IEnumerable ChildrenTests()
+        {
+            if (this.HasChildren)
+            {
+                foreach (var child in this.Children)
+                {
+                    yield return child;
+                }
+            }
         }
 
         #endregion
 
-        public string SynchronizationName { get { return this.Name; } }
-
-        public ISynchronizationData SynchronizationData { get; set; }
+        #region IBlockViewVerticalItemData
 
         public string BlockStringRaw
         {
@@ -99,5 +124,15 @@ namespace MetaMind.Testimony.Concepts.Tests
         {
             get { return "DescriptionFrame"; }
         }
+
+        #endregion
+
+        #region Update
+
+        public void Update()
+        {
+        }
+
+        #endregion
     }
 }

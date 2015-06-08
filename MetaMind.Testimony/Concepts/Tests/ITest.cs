@@ -1,32 +1,11 @@
 ﻿namespace MetaMind.Testimony.Concepts.Tests
 {
-    using System.Collections.Generic;
-    using Synchronizations;
-
-    public interface ITest : ISynchronizable
+    public interface ITest : ITestStructure, IInnerUpdatable
     {
-        #region Test
-
         string Name { get; set; }
-
-        string Code { get; set; }
 
         string Description { get; set; }
 
-        #endregion
-
-        #region Structure
-
-        IList<ITest> Children { get; }
-
-        ITest Parent { get; }
-
-        #endregion
-
-        #region Update
-
-        void Update();
-
-        #endregion
+        string Status { get; set; }
     }
 }

@@ -290,6 +290,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Guis\Widgets\IWidgetSettings.cs" />
+    <Compile Include="Guis\Widgets\Views\IViewComponentOperations.cs" />
     <Compile Include="Guis\Widgets\Views\IViewOperations.cs" />
     <Compile Include="Guis\Widgets\Views\Layers\IViewLayer.cs">
       <SubType>Code</SubType>

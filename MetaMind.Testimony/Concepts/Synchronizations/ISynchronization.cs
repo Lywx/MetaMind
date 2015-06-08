@@ -2,7 +2,7 @@ namespace MetaMind.Testimony.Concepts.Synchronizations
 {
     using System;
 
-    public interface ISynchronization
+    public interface ISynchronization : IInnerUpdatable, ISynchronizationOperations
     {
         #region State Data
 
@@ -35,26 +35,6 @@ namespace MetaMind.Testimony.Concepts.Synchronizations
         TimeSpan SynchronizedTimeToday { get; }
 
         TimeSpan SynchronizedTimeTodayBestCase { get; }
-
-        #endregion
-
-        #region Operations
-
-        void TryAbort();
-
-        void ResetTomorrow();
-
-        void ResetToday();
-
-        void Stop();
-
-        void TryStart(ISynchronizationData data);
-
-        #endregion
-
-        #region Update
-
-        void Update();
 
         #endregion
     }

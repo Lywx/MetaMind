@@ -30,37 +30,48 @@
 
     public class TestModule : Module<TestSettings>
     {
-        private readonly GameControllableEntityCollection<View> entities;
+        private readonly GameControllableEntityCollection<IView> entities = new GameControllableEntityCollection<IView>();
 
         public TestModule(TestSettings settings)
             : base(settings)
         {
-            this.entities = new GameControllableEntityCollection<View>();
+        }
 
-            var tests = new List<Test>();
+        #region Load and Unload
+
+        public override void LoadContent(IGameInteropService interop)
+        {
+            // Data
+            var root = Testimony.SessionData.Test;
+
+            // Data scanning
+
 
             // View settings
             var viewSettings = new TestViewSettings(
                 itemMargin    : new Vector2(512 + 128 + 24, 26),
                 viewPosition  : new Vector2(40, 100),
-                viewRowDisplay: 30, 
+                viewRowDisplay: 30,
                 viewRowMax    : 100);
 
             // Item settings
             var itemSettings = new TestItemSettings();
 
             // View
-            var view = new View(viewSettings, itemSettings, new List<IViewItem>());
+            var view = new View(viewSettings, root.Children.Select(t => (dynamic)t).ToList(), itemSettings, new List<IViewItem>());
 
             // View composition
             var viewSelection = new BlockViewVerticalSelectionController(view);
             var viewScroll    = new BlockViewVerticalScrollController(view);
-            var viewSwap      = new ViewSwapController<Test>(view, tests);
+            var viewSwap      = new ViewSwapController(view);
             var viewLayout    = new BlockViewVerticalLayout(view);
+            var viewLayer     = new BlockViewVerticalLayer(view);
 
-            var viewLayer = new BlockViewVerticalLayer(view);
+            // Item composition
             var itemFactory = new ViewItemFactory(
+
                 item => new TestItemLayer(item),
+
                 item =>
                 {
                     var itemFrame             = new TestItemFrame(item);
@@ -69,50 +80,63 @@
                     var itemInteraction       = new BlockViewVerticalItemInteraction(item, itemLayout, itemLayoutInteraction);
                     var itemModel             = new ViewItemDataModel(item);
 
-                    return new TestItemLogic(item, itemFrame, itemInteraction, itemModel, itemLayout);
+                    return new TestItemLogic(
+                        item,
+                        itemFrame,
+                        itemInteraction,
+                        itemModel,
+                        itemLayout);
                 },
-                item => new TestItemVisual(item),
-                item =>
-                {
-                    var test = new Test();
-                    tests.Add(test);
-                    return test;
-                });
-            var viewLogic = new TestViewLogic<Test>(view, tests, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory);
+
+                item => new TestItemVisual(item));
+
+            var itemBinding = new TestItemBinding(root);
+
+            // View setup
+            var viewLogic = new TestViewLogic(
+                view, 
+                viewScroll,
+                viewSelection,
+                viewSwap,
+                viewLayout,
+                itemBinding,
+                itemFactory);
+
             var viewVisual = new GradientViewVisual(view);
 
-            view.ViewLayer  = viewLayer;
-            view.ViewLogic  = viewLogic;
-            view.ViewVisual = viewVisual;
+            this.SetupView(view, viewLayer, viewLogic, viewVisual);
 
-            view.SetupLayer();
-
-            // View region 
-            var viewRegionSettings = new ViewRegionSettings();
-            var viewRegion = new ViewRegion(
-                regionBounds: () => new Rectangle(
-                    location: viewSettings.ViewPosition.ToPoint(),
-                    size: new Point(
-                        x: 512 + 128 + 24,
-                        y: (int)((viewSettings.ViewRowDisplay - 3) * viewSettings.ItemMargin.Y))),
-                regionSettings: viewRegionSettings);
-            view.ViewComponents.Add("ViewRegion", viewRegion);
-            view[ViewState.View_Has_Focus] = () => viewRegion[RegionState.Region_Has_Focus]() || view[ViewState.View_Has_Selection]();
-
-            // View scrollbar
-            var viewVerticalScrollbarSettings = viewSettings.Get<ViewScrollbarSettings>("ViewVerticalScrollbar");
-            var viewVerticalScrollbar = new ViewVerticalScrollbar(viewSettings, viewScroll, viewLayout, viewRegion, viewVerticalScrollbarSettings);
-            view.ViewComponents.Add("ViewVerticalScrollbar", viewVerticalScrollbar);
-            viewLayer.ViewLogic.ScrolledUp   += (sender, args) => viewVerticalScrollbar.Trigger();
-            viewLayer.ViewLogic.ScrolledDown += (sender, args) => viewVerticalScrollbar.Trigger();
-            viewLayer.ViewLogic.MovedUp      += (sender, args) => viewVerticalScrollbar.Trigger();
-            viewLayer.ViewLogic.MovedDown    += (sender, args) => viewVerticalScrollbar.Trigger();
+            var viewRegion = this.SetupViewRegion(view, viewSettings);
+            var viewScrollbar = this.SetupViewScrollbar(
+                view,
+                viewSettings,
+                viewLayer,
+                viewScroll,
+                viewLayout,
+                viewRegion);
 
             // Entities
             this.entities.Add(view);
 
+            // Synchronization
             this.SynchronizationData = new SynchronizationData();
+
+            base.LoadContent(interop);
         }
+
+
+        #endregion
+
+        #region Draw
+
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        {
+            this.entities.Draw(graphics, time, alpha);
+        }
+
+        #endregion
+
+        #region Update
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
@@ -131,12 +155,71 @@
             this.entities.UpdateBackwardBuffer();
         }
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        #endregion
+
+        #region Composition
+
+        private void SetupView(
+            IView view,
+            BlockViewVerticalLayer viewLayer,
+            TestViewLogic viewLogic,
+            GradientViewVisual viewVisual)
         {
-            this.entities.Draw(graphics, time, alpha);
+            view.ViewLayer = viewLayer;
+            view.ViewLogic = viewLogic;
+            view.ViewVisual = viewVisual;
+
+            view.SetupLayer();
+            view.SetupBinding();
         }
 
-        #region Pure Synchronization
+        private IViewVerticalScrollbar SetupViewScrollbar(IView view, TestViewSettings viewSettings, BlockViewVerticalLayer viewLayer, BlockViewVerticalScrollController viewScroll, BlockViewVerticalLayout viewLayout, ViewRegion viewRegion)
+        {
+            var viewVerticalScrollbarSettings = viewSettings.Get<ViewScrollbarSettings>("ViewVerticalScrollbar");
+
+            var viewScrollbar = new ViewVerticalScrollbar(
+                viewSettings,
+                viewScroll,
+                viewLayout,
+                viewRegion,
+                viewVerticalScrollbarSettings);
+
+            view.ViewComponents.Add("ViewVerticalScrollbar", viewScrollbar);
+
+            viewLayer.ViewLogic.ScrolledUp   += (sender, args) => viewScrollbar.Trigger();
+            viewLayer.ViewLogic.ScrolledDown += (sender, args) => viewScrollbar.Trigger();
+            viewLayer.ViewLogic.MovedUp      += (sender, args) => viewScrollbar.Trigger();
+            viewLayer.ViewLogic.MovedDown    += (sender, args) => viewScrollbar.Trigger();
+
+            return viewScrollbar;
+        }
+
+        private ViewRegion SetupViewRegion(IView view, TestViewSettings viewSettings)
+        {
+            var viewRegionSettings = new ViewRegionSettings();
+
+            var viewRegion = new ViewRegion(
+                regionBounds: () => new Rectangle(
+                    location: viewSettings.ViewPosition.ToPoint(),
+                    size: new Point(
+                        x: 512 + 128 + 24,
+                        y: (int)((viewSettings.ViewRowDisplay - 3) * viewSettings.ItemMargin.Y))),
+                regionSettings: viewRegionSettings);
+
+            view.ViewComponents.Add("ViewRegion", viewRegion);
+
+            view[ViewState.View_Has_Focus] = () => 
+                viewRegion[RegionState.Region_Has_Focus]() || 
+                view[ViewState.View_Has_Selection]();
+
+            return viewRegion;
+        }
+
+        #endregion
+
+        #region Synchronization
+
+        public ISynchronizationData SynchronizationData { get; set; }
 
         public void StartSync()
         {
@@ -161,8 +244,6 @@
                 this.StopSync();
             }
         }
-
-        public ISynchronizationData SynchronizationData { get; set; }
 
         #endregion
     }

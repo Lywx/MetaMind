@@ -8,11 +8,11 @@
 namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 {
     using Items.Data;
-    using MetaMind.Engine.Guis.Widgets.Items.Factories;
-    using MetaMind.Engine.Guis.Widgets.Views.Layouts;
-    using MetaMind.Engine.Guis.Widgets.Views.Scrolls;
-    using MetaMind.Engine.Guis.Widgets.Views.Selections;
-    using MetaMind.Engine.Guis.Widgets.Views.Swaps;
+    using Items.Factories;
+    using Layouts;
+    using Scrolls;
+    using Selections;
+    using Swaps;
 
     public interface IViewLogic : IViewLogicOperations, IViewComponent, IInputable
     {
@@ -20,9 +20,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         IViewScrollController ViewScroll { get; }
 
-        IViewSwapController ViewSwap { get; }
-
         IViewLayout ViewLayout { get; }
+
+        IViewSwapController ViewSwap { get; }
 
         IViewItemFactory ItemFactory { get; }
 

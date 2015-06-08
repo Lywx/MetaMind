@@ -13,17 +13,26 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     using Settings;
     using Visuals;
 
-    public class View : ViewEntity, IView
+    public partial class View : ViewEntity, IView
     {
-        private readonly List<IViewItem>[] items = {new List<IViewItem>(), new List<IViewItem>()};
+        private readonly List<IViewItem>[] items =
+        {
+            new List<IViewItem>(),
+            new List<IViewItem>()
+        };
 
         private int currentBuffer;
 
-        public View(ViewSettings viewSettings, ItemSettings itemSettings, List<IViewItem> items)
+        public View(ViewSettings viewSettings, IList<dynamic> viewData, ItemSettings itemSettings, List<IViewItem> items)
         {
             if (viewSettings == null)
             {
                 throw new ArgumentNullException("viewSettings");
+            }
+
+            if (viewData == null)
+            {
+                throw new ArgumentNullException("viewData");
             }
 
             if (itemSettings == null)
@@ -37,6 +46,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
 
             this.ViewSettings = viewSettings;
+            this.ViewData     = viewData;
+
             this.ViewComponents = new Dictionary<string, object>();
 
             this.ItemsWrite = items;
@@ -55,6 +66,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public IViewVisual ViewVisual { get; set; }
 
+        public IList<dynamic> ViewData { get; private set; }
+
         public List<IViewItem> ItemsRead
         {
             get { return this.items[this.currentBuffer]; }
@@ -70,7 +83,10 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         public ItemSettings ItemSettings { get; set; }
 
         #endregion
+    }
 
+    public partial class View 
+    {
         #region Layer
 
         public T GetLayer<T>() where T : class, IViewLayer
@@ -137,7 +153,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         #endregion
 
-        #region Double Buffer
+        #region Buffer
 
         public override void UpdateForwardBuffer()
         {

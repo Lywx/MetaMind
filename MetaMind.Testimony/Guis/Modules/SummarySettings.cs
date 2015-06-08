@@ -30,15 +30,12 @@ namespace MetaMind.Testimony.Guis.Modules
 
         public Color   TitleColor = Color.White;
 
-        //---------------------------------------------------------------------
         public Font  EntityFont = Font.UiStatistics;
 
         public float EntitySize = 1f;
 
-        //---------------------------------------------------------------------
         public int LineHeight = 25;
 
-        //---------------------------------------------------------------------
         public int HourOfGood = 10;
 
         public int HourOfLofty = 6;

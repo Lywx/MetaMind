@@ -8,18 +8,17 @@
     using Selections;
     using Swaps;
 
-    public class BlockViewVerticalLogic<TData> : PointViewVerticalLogic<TData>, IBlockViewVerticalLogic
+    public class BlockViewVerticalLogic : PointViewVerticalLogic, IBlockViewVerticalLogic
     {
         public BlockViewVerticalLogic(
             IView view,
-            IList<TData> viewData,
             IViewScrollController viewScroll,
             IViewSelectionController viewSelection,
-            IViewSwapController<TData> viewSwap,
+            IViewSwapController viewSwap,
             IViewLayout viewLayout,
-            IViewItemBinding<TData> itemBinding,
+            IViewItemBinding itemBinding,
             IViewItemFactory itemFactory)
-            : base(view, viewData, viewScroll, viewSelection, viewSwap, viewLayout, itemBinding, itemFactory)
+            : base(view, viewScroll, viewSelection, viewSwap, viewLayout, itemBinding, itemFactory)
         {
         }
 

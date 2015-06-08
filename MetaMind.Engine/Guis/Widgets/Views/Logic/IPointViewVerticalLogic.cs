@@ -5,7 +5,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
     using Scrolls;
     using Selections;
 
-    public interface IPointViewVerticalLogic : IViewLogic
+    public interface IPointViewVerticalLogic : IViewLogic 
     {
         new IPointViewVerticalLayout ViewLayout { get; }
 

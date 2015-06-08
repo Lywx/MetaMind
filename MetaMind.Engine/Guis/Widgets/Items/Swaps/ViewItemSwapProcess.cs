@@ -18,7 +18,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
 
     using Microsoft.Xna.Framework;
 
-    public class ViewItemSwapProcess<TData> : StepProcess
+    public class ViewItemSwapProcess : StepProcess
     {
         private readonly Func<bool> swappingItemIsMouseOver;
 
@@ -37,7 +37,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
             IViewItem      swappingItem, 
             IViewItemLogic swappingItemLogic, 
             IViewLogic     swappingViewLogic, 
-            IList<TData> dataList = null)
+            IList<dynamic> dataList = null)
             : base(10)
         {
             if (draggingItem == null)
@@ -116,7 +116,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
         /// I saw this IList<T> as a data model. It maintains a collection of data and 
         /// it is easy to provide management method as extension method.
         /// </remarks>>
-        protected IList<TData> DataList { get; set; }
+        protected IList<dynamic> DataList { get; set; }
 
         #endregion
 
