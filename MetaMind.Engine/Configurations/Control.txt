@@ -14,25 +14,13 @@ FastDown  = J with LeftControl
 FastLeft  = H with LeftControl
 FastRight = L with LeftControl
 
-CommonCreateItem = O with LeftControl
+CommonCreateItem = N with LeftControl
 CommonDeleteItem = D with LeftControl
 CommonEditItem   = I with LeftControl
 
-" Motivation View Control
-
-MotivationCreateItem = O with Tab
-MotivationDeleteItem = D with Tab
-MotivationEditItem   = I with Tab
-
-" Task View Control
-
-TaskCreateItem = O with LeftControl
-TaskDeleteItem = D with LeftControl
-TaskEditItem   = I with LeftControl
-
 " Trace View Control
 
-TraceCreateItem = O with LeftControl
+TraceCreateItem = N with LeftControl
 TraceDeleteItem = D with LeftControl
 TraceEditItem   = I with LeftControl
 TraceClearItem  = C with LeftControl

@@ -9,13 +9,13 @@ namespace MetaMind.Engine.Components.Fonts
         
         public static string CropMonospacedString(string str, float scale, int maxLength)
         {
-            // HACK: May not use standard font here
+            // FIXME: May not use standard font here
             return CropString(Font.ContentRegular, str, scale, maxLength, true);
         }
 
         public static string CropMonospacedStringByAsciiCount(string str, int count)
         {
-            // HACK: May not use standard font here
+            // FIXME: May not use standard font here
             return CropMonospacedString(str, 1.0f, (int)(count * Font.ContentRegular.GetMono().AsciiSize(1.0f).X));
         }
 

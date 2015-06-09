@@ -21,7 +21,7 @@ namespace MetaMind.Engine.Components.Fonts
 
         public static List<int> CJKExclusiveCharIndexes(this string str)
         {
-            // HACK: May not use standard font here.
+            // FIXME: May not use standard font here.
             return Font.UiRegular.NonPrintableCharIndexes(str);
         }
 
@@ -32,7 +32,7 @@ namespace MetaMind.Engine.Components.Fonts
 
         public static Vector2 MeasureMonospacedString(this string str, float scale)
         {
-            // HACK: May not use standard font here.
+            // FIXME: May not use standard font here.
             return Font.ContentRegular.MeasureMonospacedString(str, scale);
         }
 

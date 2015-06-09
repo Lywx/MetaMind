@@ -479,6 +479,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="IGameControllableEntity.cs" />
+    <Compile Include="IGameEngineOperations.cs" />
     <Compile Include="Services\GameEngineNumericalService.cs" />
     <Compile Include="GameVisualEntity.cs" />
     <Compile Include="Services\GameEngineGraphicsService.cs" />
