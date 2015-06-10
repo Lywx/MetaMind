@@ -13,7 +13,7 @@ namespace MetaMind.Engine.Services
 
         GameConsole Console { get; set; }
 
-        FileManager File { get; }
+        IFileManager File { get; }
 
         IEventManager Event { get; }
 

@@ -113,10 +113,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public void SetupBinding()
         {
-            foreach (var data in this.ItemBinding.AllData())
-            {
-                this.AddItem(data);
-            }
+            this.ItemBinding.
+            this.ResetItems();
         }
 
         #endregion
@@ -270,6 +268,16 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             item.SetupLayer();
 
             this.View.ItemsWrite.Add(item);
+        }
+
+        public void ResetItems()
+        {
+            this.ItemsWrite.Clear();
+
+            foreach (var data in this.ItemBinding.AllData)
+            {
+                this.AddItem(data);
+            }
         }
 
         #endregion

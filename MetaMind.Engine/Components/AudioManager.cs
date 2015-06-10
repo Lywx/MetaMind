@@ -22,6 +22,36 @@ namespace MetaMind.Engine.Components
     /// </remarks>
     public class AudioManager : GameComponent, IAudioManager
     {
+        public AudioManager(GameEngine engine, AudioEngine audioEngine, WaveBank waveBank, SoundBank soundBank) 
+            : base(engine)
+        {
+            if (engine == null)
+            {
+                throw new ArgumentNullException("engine");
+            }
+
+            if (audioEngine == null)
+            {
+                throw new ArgumentNullException("audioEngine");
+            }
+
+            if (waveBank == null)
+            {
+                throw new ArgumentNullException("waveBank");
+            }
+
+            if (soundBank == null)
+            {
+                throw new ArgumentNullException("soundBank");
+            }
+
+            this.AudioEngine = audioEngine;
+            this.WaveBank    = waveBank;
+            this.SoundBank   = soundBank;
+
+            engine.Components.Add(this);
+        }
+
         #region Audio Data
 
         /// <summary>
@@ -41,60 +71,7 @@ namespace MetaMind.Engine.Components
 
         #endregion Audio Data
 
-        #region Initialization Methods
-
-        /// <summary>
-        /// Constructs the manager for audio playback of all cues.
-        /// </summary>
-        /// <param name="engine">The game engine that this component will be attached to.</param>
-        /// <param name="settingsFile">The filename of the XACT settings file.</param>
-        /// <param name="waveBankFile">The filename of the XACT wavebank file.</param>
-        /// <param name="soundBankFile">The filename of the XACT soundbank file.</param>
-        public AudioManager(GameEngine engine, string settingsFile, string waveBankFile, string soundBankFile, int updateOrder)
-            : base(engine)
-        {
-            try
-            {
-                this.AudioEngine = new AudioEngine(settingsFile);
-                this.WaveBank    = new WaveBank(this.AudioEngine, waveBankFile);
-                this.SoundBank   = new SoundBank(this.AudioEngine, soundBankFile);
-            }
-            catch (NoAudioHardwareException)
-            {
-                // silently fall back to silence
-                this.AudioEngine = null;
-                this.WaveBank    = null;
-                this.SoundBank   = null;
-            }
-            catch (InvalidOperationException)
-            {
-                // no audio prepared
-
-                // silently fall back to silence
-                this.AudioEngine = null;
-                this.WaveBank    = null;
-                this.SoundBank   = null;
-            }
-            catch (NotImplementedException)
-            {
-                this.AudioEngine = null;
-                this.WaveBank    = null;
-                this.SoundBank   = null;
-            }
-
-            if (engine == null)
-            {
-                throw new ArgumentNullException("engine");
-            }
-
-            engine.Components.Add(this);
-
-            this.UpdateOrder = updateOrder;
-        }
-
-        #endregion Initialization Methods
-
-        #region Cue Methods
+        #region Cue 
 
         /// <summary>
         /// Retrieve a cue by name.
@@ -128,7 +105,7 @@ namespace MetaMind.Engine.Components
             }
         }
 
-        #endregion Cue Methods
+        #endregion Cue
 
         #region Music
 

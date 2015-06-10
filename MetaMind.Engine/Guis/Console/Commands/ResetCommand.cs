@@ -6,9 +6,9 @@
 
     internal class ResetCommand : IConsoleCommand
     {
-        private readonly FileManager file;
+        private readonly IFileManager file;
 
-        public ResetCommand(FileManager file)
+        public ResetCommand(IFileManager file)
         {
             if (file == null)
             {

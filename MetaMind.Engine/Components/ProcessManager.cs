@@ -24,7 +24,7 @@ namespace MetaMind.Engine.Components
 
         #region Constructors
 
-        public ProcessManager(GameEngine engine, int updateOrder)
+        public ProcessManager(GameEngine engine)
             : base(engine)
         {
             if (engine == null)
@@ -34,8 +34,6 @@ namespace MetaMind.Engine.Components
 
             engine.Components.Add(this);
             
-            this.UpdateOrder = updateOrder;
-
             this.processes = new List<IProcess>();
         }
 

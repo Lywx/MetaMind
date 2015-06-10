@@ -6,15 +6,45 @@
     using System.Threading;
     using System.Windows.Forms;
 
-    using MetaMind.Engine.Components.Fonts;
+    using Components.Fonts;
 
-    using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
     using Keys = Microsoft.Xna.Framework.Input.Keys;
 
     internal class InputProcessor
     {
+        private const int Backspace = 8;
+
+        private const int Enter = 13;
+
+        private const int Tab = 9;
+
+        private readonly CommandProcesser commandProcesser;
+
+        private bool isActive;
+
+        private bool isHandled;
+
+        public InputProcessor(CommandProcesser commandProcesser)
+        {
+            this.commandProcesser = commandProcesser;
+            this.CommandHistory = new CommandHistory();
+
+            this.Out    = new List<OutputLine>();
+            this.Buffer = new OutputLine("", OutputLineType.Command);
+
+            this.isActive = false;
+        }
+
+        public CommandHistory CommandHistory { get; set; }
+
+        public OutputLine Buffer { get; set; }
+
+        public List<OutputLine> Out { get; set; }
+
+        #region Events
+
         public event EventHandler Open = delegate { };
 
         public event EventHandler Close = delegate { };
@@ -23,44 +53,34 @@
 
         public event EventHandler ConsoleCommand = delegate { };
 
-        public CommandHistory CommandHistory { get; set; }
+        #endregion
 
-        public OutputLine Buffer { get; set; }
+        #region Form
 
-        public List<OutputLine> Out { get; set; }
-
-        private const int Backspace = 8;
-
-        private const int Enter = 13;
-
-        private const int Tab = 9;
-
-        private bool isActive, isHandled;
-
-        private readonly CommandProcesser commandProcesser;
-
-        public InputProcessor(CommandProcesser commandProcesser, GameWindow window)
+        public void SetupForm()
         {
-            this.commandProcesser = commandProcesser;
-            this.isActive = false;
-            this.CommandHistory = new CommandHistory();
-            this.Out = new List<OutputLine>();
-            this.Buffer = new OutputLine("", OutputLineType.Command);
-
-            var gameWinForm = this.GameWinForm();
-            gameWinForm.KeyPress += this.FormKeyPress;
-            gameWinForm.KeyDown += this.FormKeyDown;
+            var form = this.GameForm();
+            form.KeyPress += this.FormKeyPress;
+            form.KeyDown += this.FormKeyDown;
         }
 
         /// <summary>
         /// Force application to find current app window controls with System.Windows.Forms (Windows)
         /// </summary>
-        private Form GameWinForm()
+        /// <remarks>
+        /// Has to be called after GraphicsManager initialization, because by then the the windows 
+        /// form is constructed.
+        /// </remarks>>
+        private Form GameForm()
         {
-            var winFormsWindows = Application.OpenForms;
+            var forms = Application.OpenForms;
 
-            return (Form)Control.FromHandle(winFormsWindows[0].Handle);
+            return (Form)Control.FromHandle(forms[0].Handle);
         }
+
+        #endregion
+
+        #region Input
 
         private void FormKeyPress(Object sender, KeyPressEventArgs e)
         {
@@ -86,10 +106,7 @@
                     break;
 
                 case (char)Keys.Back:
-                    if (this.Buffer.Output.Length > 0)
-                    {
-                        this.Buffer.Output = this.Buffer.Output.Substring(0, this.Buffer.Output.Length - 1);
-                    }
+                    this.BackspaceBuffer();
 
                     break;
 
@@ -98,14 +115,41 @@
                     break;
 
                 default:
-                    if (IsPrintable(e.KeyChar))
-                    {
-                        this.Buffer.Output += e.KeyChar;
-                    }
+                    this.AddToOutput(e.KeyChar);
 
                     break;
             }
         }
+
+        private void FormKeyDown(object sender, KeyEventArgs e)
+        {
+            var keyboard = Keyboard.GetState();
+            if (keyboard.IsKeyDown(Keys.V) &&
+                keyboard.IsKeyDown(Keys.LeftControl))
+            {
+                this.PasteFromClipboard();
+            }
+
+            if (e.KeyValue == GameConsoleOptions.Options.ToggleKey)
+            {
+                this.ToggleConsole();
+                this.isHandled = true;
+            }
+
+            switch (e.KeyValue)
+            {
+                case 38:
+                    this.Buffer.Output = this.CommandHistory.Previous();
+                    break;
+                case 40:
+                    this.Buffer.Output = this.CommandHistory.Next();
+                    break;
+            }
+        }
+
+        #endregion
+
+        #region Operations
 
         public void AddToBuffer(string text)
         {
@@ -134,46 +178,36 @@
             }
         }
 
-        private void FormKeyDown(object sender, KeyEventArgs e)
+        private void AddToOutput(char c)
         {
-            // Ctrl + V
-            if (Keyboard.GetState().IsKeyDown(Keys.V) && 
-                Keyboard.GetState().IsKeyDown(Keys.LeftControl)) 
+            if (GameConsoleOptions.Options.Font.IsPrintable(c))
             {
-                // Thread Apartment must be in Single-Threaded for the Clipboard to work
-                if (Thread.CurrentThread.GetApartmentState() == ApartmentState.STA)
-                {
-                    this.AddToBuffer(Clipboard.GetText());
-                }
-            }
-
-            if (e.KeyValue == GameConsoleOptions.Options.ToggleKey)
-            {
-                this.ToggleConsole();
-                this.isHandled = true;
-            }
-
-            switch (e.KeyValue)
-            {
-                case 38:
-                    this.Buffer.Output = this.CommandHistory.Previous();
-                    break;
-                case 40:
-                    this.Buffer.Output = this.CommandHistory.Next();
-                    break;
+                this.Buffer.Output += c;
             }
         }
 
-        private void ToggleConsole()
+        private void AutoComplete()
         {
-            this.isActive = !this.isActive;
-            if (this.isActive)
+            var lastSpacePosition = this.Buffer.Output.LastIndexOf(' ');
+            var textToMatch = lastSpacePosition < 0
+                ? this.Buffer.Output
+                : this.Buffer.Output.Substring(
+                    lastSpacePosition + 1,
+                    this.Buffer.Output.Length - lastSpacePosition - 1);
+            var match = this.MatchingCommand(textToMatch);
+            if (match == null)
             {
-                this.Open(this, EventArgs.Empty);
+                return;
             }
-            else
+            var restOfTheCommand = match.Name.Substring(textToMatch.Length);
+            this.Buffer.Output += restOfTheCommand + " ";
+        }
+
+        private void BackspaceBuffer()
+        {
+            if (this.Buffer.Output.Length > 0)
             {
-                this.Close(this, EventArgs.Empty);
+                this.Buffer.Output = this.Buffer.Output.Substring(0, this.Buffer.Output.Length - 1);
             }
         }
 
@@ -195,32 +229,42 @@
             this.Buffer.Output = "";
         }
 
-        private void AutoComplete()
+        private void ToggleConsole()
         {
-            var lastSpacePosition = this.Buffer.Output.LastIndexOf(' ');
-            var textToMatch = lastSpacePosition < 0
-                                  ? this.Buffer.Output
-                                  : this.Buffer.Output.Substring(
-                                      lastSpacePosition + 1,
-                                      this.Buffer.Output.Length - lastSpacePosition - 1);
-            var match = GetMatchingCommand(textToMatch);
-            if (match == null)
+            this.isActive = !this.isActive;
+            if (this.isActive)
             {
-                return;
+                this.Open(this, EventArgs.Empty);
             }
-            var restOfTheCommand = match.Name.Substring(textToMatch.Length);
-            this.Buffer.Output += restOfTheCommand + " ";
+            else
+            {
+                this.Close(this, EventArgs.Empty);
+            }
         }
 
-        private static IConsoleCommand GetMatchingCommand(string command)
+        #endregion
+
+        #region Auto Completion
+
+        private IConsoleCommand MatchingCommand(string command)
         {
             var matchingCommands = GameConsoleOptions.Commands.Where(c => c.Name != null && c.Name.StartsWith(command));
             return matchingCommands.FirstOrDefault();
         }
 
-        private static bool IsPrintable(char letter)
+        #endregion
+
+        #region 
+
+        private void PasteFromClipboard()
         {
-            return GameConsoleOptions.Options.Font.GetSprite().Characters.Contains(letter);
+            // Thread Apartment must be in Single-Threaded for the Clipboard to work
+            if (Thread.CurrentThread.GetApartmentState() == ApartmentState.STA)
+            {
+                this.AddToBuffer(Clipboard.GetText());
+            }
         }
+
+        #endregion
     }
 }

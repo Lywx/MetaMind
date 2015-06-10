@@ -7,9 +7,10 @@
     {
         public string Process(string buffer)
         {
-            string commandName = GetCommandName(buffer);
-            IConsoleCommand command = GameConsoleOptions.Commands.Where(c => c.Name == commandName).FirstOrDefault();
+            var commandName = GetCommandName(buffer);
             var arguments = GetArguments(buffer);
+
+            var command = GameConsoleOptions.Commands.FirstOrDefault(c => c.Name == commandName);
             if (command == null)
             {
                 return "ERROR: Command not found";
@@ -23,16 +24,17 @@
             {
                 commandOutput = "ERROR: " + ex.Message;
             }
+
             return commandOutput;
         }
 
-        static string GetCommandName(string buffer)
+        private static string GetCommandName(string buffer)
         {
             var firstSpace = buffer.IndexOf(' ');
             return buffer.Substring(0, firstSpace < 0 ? buffer.Length : firstSpace);
         }
 
-        static string[] GetArguments(string buffer)
+        private static string[] GetArguments(string buffer)
         {
             var firstSpace = buffer.IndexOf(' ');
             if (firstSpace < 0)

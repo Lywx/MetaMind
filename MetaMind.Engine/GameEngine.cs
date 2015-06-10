@@ -19,19 +19,147 @@ namespace MetaMind.Engine
 
     using Microsoft.Xna.Framework;
 
-    public class GameEngine : Microsoft.Xna.Framework.Game, IGameEngine
+    public partial class GameEngine : Microsoft.Xna.Framework.Game, IGameEngine
     {
-        public GameEngine()
+        private IGameGraphics graphics;
+
+        private IGameNumerical numerical;
+
+        private IGameInterop interop;
+
+        private IGameInput input;
+
+        public GameEngine(string content)
         {
-            // Graphics need to be constructed before Interop and Input 
-            // for Interop.Screen relies on Graphics.SpriteBatch.
-            this.Graphics = new GameEngineGraphics(this);
+            this.Content.RootDirectory = content;
+        }
 
-            this.Interop = new GameEngineInterop(this);
-            this.Input   = new GameEngineInput(this);
-            
-            this.Numerical = new GameEngineNumerical();
+        #region Global Service Provider
 
+        public static IGameService Service { get; private set; }
+
+        #endregion
+
+        #region Property Injection
+
+        public IGameGraphics Graphics
+        {
+            get
+            {
+                if (this.graphics == null)
+                {
+                    this.graphics = new GameNullGraphics();
+                }
+
+                return this.graphics;
+            }
+
+            set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException("value");
+                }
+
+                if (this.graphics != null)
+                {
+                    throw new InvalidOperationException();
+                }
+
+                this.graphics = value;
+            }
+        }
+
+        public IGameNumerical Numerical
+        {
+            get
+            {
+                if (this.numerical == null)
+                {
+                    this.numerical = new GameEngineNumerical();
+                }
+
+                return this.numerical;
+            }
+
+            set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException("value");
+                }
+
+                if (this.numerical != null)
+                {
+                    throw new InvalidOperationException();
+                }
+
+                this.numerical = value;
+            }
+        }
+
+        public IGameInterop Interop
+        {
+            get
+            {
+                if (this.interop == null)
+                {
+                    this.interop = new GameNullInterop();
+                }
+
+                return this.interop;
+            }
+
+            set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException("value");
+                }
+
+                if (this.interop != null)
+                {
+                    throw new InvalidOperationException();
+                }
+
+                this.interop = value;
+            }
+        }
+
+        public IGameInput Input
+        {
+            get
+            {
+                if (this.input == null)
+                {
+                    this.input = new GameNullInput();
+                }
+
+                return this.input;
+            }
+
+            set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException("value");
+                }
+
+                if (this.input != null)
+                {
+                    throw new InvalidOperationException();
+                }
+
+                this.input = value;
+            }
+        }
+
+        #endregion
+
+        #region Game
+
+        protected override void Initialize()
+        {
             // Service is loaded after GameEngine.Initialize. But it has to 
             // be constructed after Components.
             Service = new GameEngineService(
@@ -40,24 +168,8 @@ namespace MetaMind.Engine
                 new GameEngineInteropService(this.Interop),
                 new GameEngineNumericalService(this.Numerical));
 
-            this.Content.RootDirectory = "Content";
-        }
-
-        public static IGameService Service { get; private set; }
-
-        public IGameInput Input { get; private set; }
-
-        public IGameInterop Interop { get; private set; }
-
-        public IGameGraphics Graphics { get; private set; }
-
-        public IGameNumerical Numerical { get; private set; }
-
-        #region Game
-
-        protected override void Initialize()
-        {
-            this.Graphics.Initialize();
+            // Graphics has to initialized first
+            this.Graphics .Initialize();
 
             this.Input    .Initialize();
             this.Interop  .Initialize();
@@ -68,17 +180,7 @@ namespace MetaMind.Engine
 
         protected override void LoadContent()
         {
-            // Need to construct after FontManager.LoadContent(). 
 
-            // FIXME: It may be possible to change the underlying mechanism to move this code inside the contruction of GameEngine.Interop
-            this.Interop.Console = new GameConsole(
-                this,
-                this.Graphics.SpriteBatch,
-                this.Graphics.StringDrawer,
-                new GameConsoleOptions { Font = Font.UiConsole });
-
-            this.Interop.Console.AddCommand(new ResetCommand(this.Interop.File));
-            this.Interop.Console.AddCommand(new RestartCommand(this));
         }
 
         protected override void UnloadContent()
@@ -91,7 +193,7 @@ namespace MetaMind.Engine
             base.Update(gameTime);
         }
 
-        protected void UpdateInput(GameTime gameTime)
+        private void UpdateInput(GameTime gameTime)
         {
             this.Input  .UpdateInput(gameTime);
             this.Interop.UpdateInput(gameTime);
@@ -110,9 +212,11 @@ namespace MetaMind.Engine
             base        .OnExiting(sender, args);
         }
 
-
         #endregion
+    }
 
+    public partial class GameEngine
+    {
         #region Operations
 
         public void Restart()

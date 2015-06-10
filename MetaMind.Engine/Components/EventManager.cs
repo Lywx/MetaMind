@@ -47,7 +47,7 @@ namespace MetaMind.Engine.Components
 
         #region Constructors
 
-        public EventManager(GameEngine engine, int updateOrder)
+        public EventManager(GameEngine engine)
             : base(engine)
         {
             if (engine == null)
@@ -57,8 +57,6 @@ namespace MetaMind.Engine.Components
 
             engine.Components.Add(this);
             
-            this.UpdateOrder = updateOrder;
-
             this.knownEvents  = new List<int>();
             this.queuedEvents = new List<IEvent>();
             this.activeEvents = new List<IEvent>();

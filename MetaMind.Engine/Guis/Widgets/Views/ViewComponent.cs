@@ -50,6 +50,15 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             }
         }
 
+        public List<IViewItem> ItemsWrite
+        {
+            get
+            {
+                return this.View.ItemsWrite; 
+                
+            }
+        }
+
         #endregion
 
         #region Layer

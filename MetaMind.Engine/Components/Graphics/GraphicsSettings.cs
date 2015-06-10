@@ -10,11 +10,10 @@
 
 namespace MetaMind.Engine.Components.Graphics
 {
-    using System;
     using System.Windows.Forms;
 
-    using MetaMind.Engine.Settings.Loaders;
-    using MetaMind.Engine.Settings.Systems;
+    using Settings.Loaders;
+    using Settings.Systems;
 
     public class GraphicsSettings : IConfigurationLoader, IParameter
     {

@@ -14,6 +14,8 @@
 
         void AddItem(dynamic data);
 
+        void ResetItems();
+
         #endregion
     }
 }

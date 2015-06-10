@@ -1,5 +1,6 @@
 namespace MetaMind.Engine.Components
 {
+    using System;
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Components.Graphics;
 
@@ -16,18 +17,41 @@ namespace MetaMind.Engine.Components
 
         public IStringDrawer StringDrawer { get; private set; }
 
-        public IFontManager Font { get; private set; }
+        public IFontManager FontManager { get; private set; }
 
-        public GameEngineGraphics(GameEngine engine)
+        public GameEngineGraphics(GameEngine engine, GraphicsSettings settings, GraphicsManager manager)
             : base(engine)
         {
-            this.Settings = new GraphicsSettings();
-            this.Manager  = new GraphicsManager(engine, this.Settings);
+            if (engine == null)
+            {
+                throw new ArgumentNullException("engine");
+            }
+
+            if (settings == null)
+            {
+                throw new ArgumentNullException("settings");
+            }
+
+            if (manager == null)
+            {
+                throw new ArgumentNullException("manager");
+            }
+
+            this.Settings = settings;
+            this.Manager  = manager;
             
-            this.SpriteBatch  = new SpriteBatch(this.Manager.GraphicsDevice);
+            // No dependency injection here, because sprite batch is never replaced as long 
+            // as this is a MonoGame application.
+            this.SpriteBatch = new SpriteBatch(this.Manager.GraphicsDevice);
+
+            // No dependency injection here, because string drawer is a class focus on string 
+            // drawing. The functionality is never extended in the form of inheritance.
             this.StringDrawer = new StringDrawer(this.SpriteBatch);
-            
-            this.Font = new FontManager(engine);
+
+            // No dependency injection here, because font manager is a class focus on font 
+            // loading. It may extend but in the form of more internal operations.
+            // The functionality is never extended in the form of inheritance. 
+            this.FontManager = new FontManager(engine);
         }
 
         public override void Initialize()

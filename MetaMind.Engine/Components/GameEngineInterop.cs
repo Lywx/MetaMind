@@ -7,7 +7,7 @@ namespace MetaMind.Engine.Components
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
 
-    public class GameEngineInterop : IGameInterop
+    public partial class GameEngineInterop : IGameInterop
     {
         public IAudioManager Audio { get; private set; }
 
@@ -15,7 +15,7 @@ namespace MetaMind.Engine.Components
 
         public ContentManager Content { get; private set; }
 
-        public FileManager File { get; private set; }
+        public IFileManager File { get; private set; }
 
         public GameEngine Engine { get; private set; }
 
@@ -29,37 +29,65 @@ namespace MetaMind.Engine.Components
 
         public ISaveManager Save { get; set; }
 
-        public void OnExiting()
-        {
-            this.Game.OnExiting();
-        }
-
-        public GameEngineInterop(GameEngine engine)
+        public GameEngineInterop(GameEngine engine, IGameManager game, IAudioManager audio, IFileManager file, IEventManager @event, IProcessManager process, IScreenManager screen, GameConsole console)
         {
             if (engine == null)
             {
                 throw new ArgumentNullException("engine");
             }
 
+            if (game == null)
+            {
+                throw new ArgumentNullException("game");
+            }
+
+            if (audio == null)
+            {
+                throw new ArgumentNullException("audio");
+            }
+
+            if (file == null)
+            {
+                throw new ArgumentNullException("file");
+            }
+
+            if (@event == null)
+            {
+                throw new ArgumentNullException("@event");
+            }
+
+            if (process == null)
+            {
+                throw new ArgumentNullException("process");
+            }
+
+            if (screen == null)
+            {
+                throw new ArgumentNullException("screen");
+            }
+
+            if (console == null)
+            {
+                throw new ArgumentNullException("console");
+            }
+
             this.Engine = engine;
 
-#if WINDOWS 
-            var settingsFile  = @"Content\Audio\Win\Audio.xgs";
-            var waveBankFile  = @"Content\Audio\Win\Wave Bank.xwb";
-            var soundBankFile = @"Content\Audio\Win\Sound Bank.xsb";
-#endif
+            this.Audio   = audio;
+            this.File    = file;
+            this.Event   = @event;
+            this.Game    = game;
+            this.Process = process;
+            this.Screen  = screen;
 
-            this.Audio   = new AudioManager(engine, settingsFile, waveBankFile, soundBankFile, int.MaxValue);
-            this.Event   = new EventManager(engine, 3);
-            this.Process = new ProcessManager(engine, 4);
-            this.Screen  = new ScreenManager(engine, new ScreenSettings(), engine.Graphics.SpriteBatch, 5);
+            this.Console = console;
 
             this.Content = engine.Content;
-            this.File    = new FileManager();
-
-            this.Game = new GameManager(engine);
         }
-        
+    }
+
+    public partial class GameEngineInterop
+    {
         public void Initialize()
         {
             // Initialize components that aren't initialized during GameComponents initialization
@@ -68,6 +96,11 @@ namespace MetaMind.Engine.Components
         public void UpdateInput(GameTime gameTime)
         {
             this.Screen.UpdateInput(gameTime);
+        }
+
+        public void OnExiting()
+        {
+            this.Game.OnExiting();
         }
     }
 }

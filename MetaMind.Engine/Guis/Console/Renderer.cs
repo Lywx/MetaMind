@@ -81,18 +81,24 @@
 
         private readonly int maxCharactersPerLine;
 
-        public Renderer(Game game, SpriteBatch spriteBatch, IStringDrawer stringDrawer, InputProcessor inputProcessor)
+        public Renderer(GameEngine engine, SpriteBatch spriteBatch, IStringDrawer stringDrawer, InputProcessor inputProcessor)
         {
+            this.spriteBatch    = spriteBatch;
+            this.stringDrawer   = stringDrawer;
+            this.inputProcessor = inputProcessor;
+
             this.currentState = State.Closed;
-            this.width = game.GraphicsDevice.Viewport.Width;
+
+            this.width = engine.GraphicsDevice.Viewport.Width;
+
             this.position = this.closedPosition = new Vector2(GameConsoleOptions.Options.Margin, -GameConsoleOptions.Options.Height);
             this.openedPosition = new Vector2(GameConsoleOptions.Options.Margin, 0);
-            this.spriteBatch = spriteBatch;
-            this.stringDrawer = stringDrawer;
-            this.inputProcessor = inputProcessor;
-            this.pixel = new Texture2D(game.GraphicsDevice, 1, 1);
+
+            this.pixel = new Texture2D(engine.GraphicsDevice, 1, 1);
             this.pixel.SetData(new[] { Color.White });
+
             this.firstCommandPositionOffset = Vector2.Zero;
+
             this.oneCharacterWidth = GameConsoleOptions.Options.Font.MeasureString("x").X;
             this.maxCharactersPerLine = (int)((this.Bounds.Width - GameConsoleOptions.Options.Padding * 2) / this.oneCharacterWidth);
         }
@@ -195,7 +201,7 @@
             var split = SplitCommand(this.inputProcessor.Buffer.ToString(), this.maxCharactersPerLine).Last();
 
             pos.X += GameConsoleOptions.Options.Font.MeasureMonospacedString(split, 1f).X;
-            pos.Y -= GameConsoleOptions.Options.Font.GetSprite().LineSpacing;
+            pos.Y -= GameConsoleOptions.Options.Font.Sprite().LineSpacing;
 
             this.stringDrawer.DrawMonospacedString(
                 GameConsoleOptions.Options.Font,
@@ -226,8 +232,8 @@
                     this.stringDrawer.DrawMonospacedString(GameConsoleOptions.Options.Font, line, pos, color, 1f);
                 }
 
-                this.ValidateFirstCommandPosition(pos.Y + GameConsoleOptions.Options.Font.GetSprite().LineSpacing);
-                pos.Y += GameConsoleOptions.Options.Font.GetSprite().LineSpacing;
+                this.ValidateFirstCommandPosition(pos.Y + GameConsoleOptions.Options.Font.Sprite().LineSpacing);
+                pos.Y += GameConsoleOptions.Options.Font.Sprite().LineSpacing;
             }
             return pos;
         }
@@ -315,7 +321,7 @@
         {
             if (!this.IsInBounds(nextCommandY))
             {
-                this.firstCommandPositionOffset.Y -= GameConsoleOptions.Options.Font.GetSprite().LineSpacing;
+                this.firstCommandPositionOffset.Y -= GameConsoleOptions.Options.Font.Sprite().LineSpacing;
             }
         }
 

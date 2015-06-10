@@ -17,11 +17,39 @@ namespace MetaMind.Engine.Guis.Console
     using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Guis.Console.Commands;
 
-    using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
     public class GameConsole
     {
+        private readonly GameConsoleComponent console;
+
+        public GameConsole(GameEngine engine, SpriteBatch spriteBatch, IStringDrawer stringDrawer)
+            : this(engine, spriteBatch, stringDrawer, new IConsoleCommand[0], new GameConsoleOptions())
+        {
+        }
+
+        public GameConsole(GameEngine engine, SpriteBatch spriteBatch, IStringDrawer stringDrawer, GameConsoleOptions options)
+            : this(engine, spriteBatch, stringDrawer, new IConsoleCommand[0], options)
+        {
+        }
+
+        public GameConsole(GameEngine engine, SpriteBatch spriteBatch, IStringDrawer stringDrawer, IEnumerable<IConsoleCommand> commands)
+            : this(engine, spriteBatch, stringDrawer, commands, new GameConsoleOptions())
+        {
+        }
+
+        public GameConsole(GameEngine engine, SpriteBatch spriteBatch, IStringDrawer stringDrawer, IEnumerable<IConsoleCommand> commands, GameConsoleOptions options)
+        {
+            // Has to initialized before GameConsoleComponent
+            GameConsoleOptions.Options  = options;
+            GameConsoleOptions.Commands = commands.ToList();
+            
+            this.console = new GameConsoleComponent(engine, this, spriteBatch, stringDrawer);
+            this.Enabled = true;
+
+            engine.Components.Add(this.console);
+        }
+
         public GameConsoleOptions Options
         {
             get
@@ -51,34 +79,7 @@ namespace MetaMind.Engine.Guis.Console
             }
         }
 
-        private readonly GameConsoleComponent console;
-
-        public GameConsole(Game game, SpriteBatch spriteBatch, IStringDrawer stringDrawer)
-            : this(game, spriteBatch, stringDrawer, new IConsoleCommand[0], new GameConsoleOptions())
-        {
-        }
-
-        public GameConsole(Game game, SpriteBatch spriteBatch, IStringDrawer stringDrawer, GameConsoleOptions options)
-            : this(game, spriteBatch, stringDrawer, new IConsoleCommand[0], options)
-        {
-        }
-
-        public GameConsole(Game game, SpriteBatch spriteBatch, IStringDrawer stringDrawer, IEnumerable<IConsoleCommand> commands)
-            : this(game, spriteBatch, stringDrawer, commands, new GameConsoleOptions())
-        {
-        }
-
-        public GameConsole(Game game, SpriteBatch spriteBatch, IStringDrawer stringDrawer, IEnumerable<IConsoleCommand> commands, GameConsoleOptions options)
-        {
-            GameConsoleOptions.Options = options;
-            GameConsoleOptions.Commands = commands.ToList();
-            
-            this.Enabled = true;
-            this.console = new GameConsoleComponent(this, game, spriteBatch, stringDrawer);
-            
-            game.Services.AddService(typeof(GameConsole), this);
-            game.Components.Add(this.console);
-        }
+        #region Operations
 
         /// <summary>
         ///     Write directly to the output stream of the console
@@ -118,5 +119,7 @@ namespace MetaMind.Engine.Guis.Console
         {
             this.Commands.Add(new CustomCommand(name, action, description));
         }
+
+        #endregion
     }
 }

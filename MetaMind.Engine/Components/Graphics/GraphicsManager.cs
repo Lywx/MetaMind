@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Components.Graphics
     {
         #region Dependency
 
-        public GraphicsSettings Settings { get; set; }
+        protected GraphicsSettings Settings { get; set; }
 
         protected GameEngine Engine { get; set; }
         #endregion
@@ -17,6 +17,16 @@ namespace MetaMind.Engine.Components.Graphics
         public GraphicsManager(GameEngine engine, GraphicsSettings settings)
             : base(engine)
         {
+            if (engine == null)
+            {
+                throw new ArgumentNullException("engine");
+            }
+
+            if (settings == null)
+            {
+                throw new ArgumentNullException("settings");
+            }
+
             this.Engine   = engine;
             this.Settings = settings;
 
@@ -55,7 +65,7 @@ namespace MetaMind.Engine.Components.Graphics
 
         private void ApplySettings()
         {
-            // fixed drawing order in 3d graphics
+            // Fixed drawing order in 3d graphics
             this.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
             this.ApplyFrameSettings(this.Engine, this.Settings);

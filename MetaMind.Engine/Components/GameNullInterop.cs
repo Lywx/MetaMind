@@ -13,7 +13,7 @@ namespace MetaMind.Engine.Components
 
         public GameConsole Console { get; set; }
 
-        public FileManager File { get; private set; }
+        public IFileManager File { get; private set; }
 
         public GameEngine Engine { get; private set; }
 

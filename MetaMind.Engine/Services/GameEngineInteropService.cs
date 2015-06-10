@@ -52,7 +52,7 @@ namespace MetaMind.Engine.Services
             }
         }
 
-        public FileManager File
+        public IFileManager File
         {
             get
             {

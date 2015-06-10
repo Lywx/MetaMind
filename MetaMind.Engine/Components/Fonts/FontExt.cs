@@ -10,53 +10,61 @@ namespace MetaMind.Engine.Components.Fonts
     {
         private static IFontManager fontManager;
 
-        public static string PrintableString(this Font font, string str)
+        #region Access
+
+        public static SpriteFont Sprite(this Font font)
         {
-            return font.GetSprite().PrintableString(str);
+            return font.Info().SpriteFont;
         }
 
-        public static List<int> NonPrintableCharIndexes(this Font font, string str)
-        {
-            return font.GetSprite().NonPrintableCharIndexes(str);
-        }
-
-        public static SpriteFont GetSprite(this Font font)
-        {
-            return font.GetInfo().SpriteFont;
-        }
-
-        public static FontInfo GetInfo(this Font font)
+        public static FontInfo Info(this Font font)
         {
             return fontManager.Fonts[font];
         }
 
-        public static MonoFont GetMono(this Font font)
+        public static MonoFont Mono(this Font font)
         {
-            return font.GetInfo().MonoFont;
+            return font.Info().MonoFont;
         }
+
+        #endregion
+
+        #region Measure
 
         public static Vector2 MeasureString(this Font font, string text)
         {
-            return font.GetSprite().MeasureString(text);
+            return font.Sprite().MeasureString(text);
         }
 
-        public static Vector2 MeasureString(this Font font, string text, float scale)
+        public static Vector2 MeasureString(
+            this Font font,
+            string text,
+            float scale)
         {
             return font.MeasureString(text) * scale;
         }
 
-        public static Vector2 MeasureMonospacedString(this Font font, string str, float scale)
+        public static Vector2 MeasureMonospacedString(
+            this Font font,
+            string str,
+            float scale)
         {
             var cjkCharCount = str.CJKExclusiveCharCount();
             var asciiCharCount = str.Length - cjkCharCount;
 
-            var monoFont = font.GetMono();
+            var monoFont = font.Mono();
             var monoSize = monoFont.AsciiSize(scale);
 
-            return new Vector2((asciiCharCount + cjkCharCount * 2) * monoSize.X, monoSize.Y);
+            return new Vector2(
+                (asciiCharCount + cjkCharCount * 2) * monoSize.X,
+                monoSize.Y);
         }
 
-        public static Vector2 MeasureString(this Font font, string str, float scale, bool monospaced)
+        public static Vector2 MeasureString(
+            this Font font,
+            string str,
+            float scale,
+            bool monospaced)
         {
             if (monospaced)
             {
@@ -66,6 +74,28 @@ namespace MetaMind.Engine.Components.Fonts
             return font.MeasureString(str, scale);
         }
 
+        #endregion
+
+        #region Printable
+
+        public static bool IsPrintable(this Font font, char c)
+        {
+            return font.Sprite().Characters.Contains(c);
+        }
+
+        public static string PrintableString(this Font font, string str)
+        {
+            return font.Sprite().PrintableString(str);
+        }
+
+        public static List<int> NonPrintableCharIndexes(
+            this Font font,
+            string str)
+        {
+            return font.Sprite().NonPrintableCharIndexes(str);
+        }
+
+        #endregion
 
         public static void Initialize(IFontManager fontManager)
         {

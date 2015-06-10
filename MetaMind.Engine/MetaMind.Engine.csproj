@@ -71,11 +71,15 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Components\Processes\ProcessCounter.cs" />
     <Compile Include="Components\Processes\StepProcess.cs" />
     <Compile Include="Extensions\ExtT.cs" />
     <Compile Include="Extensions\ExtList.cs" />
+    <Compile Include="GameEngineConfigurer.cs" />
     <Compile Include="Guis\Elements\Inputs\ButtonDoubleClick.cs" />
     <Compile Include="Guis\Elements\Inputs\ButtonHistory.cs" />
     <Compile Include="Guis\Elements\Inputs\ButtonPress.cs" />
@@ -479,6 +483,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="IGameControllableEntity.cs" />
+    <Compile Include="IGameEngineConfigurer.cs" />
     <Compile Include="IGameEngineOperations.cs" />
     <Compile Include="Services\GameEngineNumericalService.cs" />
     <Compile Include="GameVisualEntity.cs" />
@@ -667,9 +672,15 @@
     <Content Include="Content\Textures\Screens\Blank.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Content\Audio\Win\Audio.xgs" />
-    <None Include="Content\Audio\Win\Sound Bank.xsb" />
-    <None Include="Content\Audio\Win\Wave Bank.xwb" />
+    <None Include="Content\Audio\Win\Audio.xgs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Audio\Win\Sound Bank.xsb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Audio\Win\Wave Bank.xwb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />

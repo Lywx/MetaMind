@@ -37,6 +37,11 @@ namespace MetaMind.Engine.Components
 
         #endregion Constructors
 
+        /// <summary>
+        /// Get path of file data folder.
+        /// </summary>
+        /// <param name="relativePath">Path related to DataFolder</param>
+        /// <returns></returns>
         public static string DataPath(string relativePath)
         {
             return Path.Combine(DataFolderPath, relativePath);

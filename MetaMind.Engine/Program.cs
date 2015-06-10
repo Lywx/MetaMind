@@ -1,18 +1,27 @@
 namespace MetaMind.Engine
 {
     using System;
+    using Components;
+    using Components.Fonts;
+    using Components.Graphics;
+    using Guis.Console;
+    using Guis.Console.Commands;
+    using Microsoft.Xna.Framework.Audio;
 
 #if WINDOWS || LINUX
 
     public static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         private static void Main(string[] args)
         {
-            using (var engine = new GameEngine()) engine.Run();
+            using (var engine = new GameEngine(@"Content"))
+            {
+                var configurer = new GameEngineConfigurer();
+                configurer.Configure(engine);
+
+                engine.Run();
+            }
         }
     }
 

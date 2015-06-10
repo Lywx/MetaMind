@@ -105,7 +105,7 @@ namespace MetaMind.Engine.Components
         /// <summary>
         /// Constructs a new screen manager component.
         /// </summary>
-        public ScreenManager(GameEngine engine, ScreenSettings settings, SpriteBatch spriteBatch, int updateOrder)
+        public ScreenManager(GameEngine engine, ScreenSettings settings, SpriteBatch spriteBatch)
             : base(engine)
         {
             if (engine == null)
@@ -123,12 +123,10 @@ namespace MetaMind.Engine.Components
                 throw new ArgumentNullException("spriteBatch");
             }
 
-            this.Game.Components.Add(this);
-
             this.SpriteBatch = spriteBatch;
             this.Settings    = settings;
-        
-            this.UpdateOrder = updateOrder;
+
+            engine.Components.Add(this);
         }
 
         #endregion Constructors

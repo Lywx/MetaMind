@@ -60,7 +60,7 @@ namespace MetaMind.Engine.Components.Fonts
             for (var i = 0; i < displayable.Length; ++i)
             {
                 var charPosition = isCJKCharExisting ? CJKCharAmendedPosition[i] : i;
-                var amendedPosition = position + new Vector2(charPosition * font.GetMono().AsciiSize(scale).X, 0);
+                var amendedPosition = position + new Vector2(charPosition * font.Mono().AsciiSize(scale).X, 0);
 
                 this.DrawMonospacedChar(font, displayable[i], amendedPosition, color, scale);
             }
@@ -76,7 +76,7 @@ namespace MetaMind.Engine.Components.Fonts
 
             if (leading == 0)
             {
-                leading = (int)font.GetMono().AsciiSize(scale).Y * 2;
+                leading = (int)font.Mono().AsciiSize(scale).Y * 2;
             }
 
             var lines = str.Split('\n');
@@ -123,7 +123,7 @@ namespace MetaMind.Engine.Components.Fonts
                 return;
             }
 
-            SpriteBatch.DrawString(font.GetSprite(), font.PrintableString(str), position, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0);
+            SpriteBatch.DrawString(font.Sprite(), font.PrintableString(str), position, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0);
         }
 
         public void DrawString(Font font, string str, Vector2 position, Color color, float scale, StringHAlign hAlign, StringVAlign vAlign, int leading = 0)
@@ -135,7 +135,7 @@ namespace MetaMind.Engine.Components.Fonts
 
             if (leading == 0)
             {
-                leading = (int)font.GetMono().AsciiSize(scale).Y * 2;
+                leading = (int)font.Mono().AsciiSize(scale).Y * 2;
             }
 
             var lines = str.Split('\n');
@@ -175,11 +175,11 @@ namespace MetaMind.Engine.Components.Fonts
             }
         }
 
-        private void DrawMonospacedChar(Font font, char khar, Vector2 position, Color color, float scale)
+        private void DrawMonospacedChar(Font font, char c, Vector2 position, Color color, float scale)
         {
-            var str = khar.ToString(CultureInfo.InvariantCulture);
+            var str = c.ToString(CultureInfo.InvariantCulture);
 
-            position += new Vector2(font.GetMono().FontMargin - font.MeasureString(str, scale).X / 2, 0);
+            position += new Vector2(font.Mono().FontMargin - font.MeasureString(str, scale).X / 2, 0);
 
             this.DrawString(font, str, position, color, scale);
         }

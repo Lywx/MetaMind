@@ -10,8 +10,11 @@
         [STAThread]
         static void Main()
         {
-            using (var engine = new GameEngine())
+            using (var engine = new GameEngine(@"Content"))
             {
+                var configurer = new GameEngineConfigurer();
+                configurer.Configure(engine);
+
                 var test = new GameEngineTest(engine);
                 test.Run();
             }
