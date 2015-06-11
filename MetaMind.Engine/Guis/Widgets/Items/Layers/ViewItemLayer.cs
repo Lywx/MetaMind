@@ -1,7 +1,7 @@
 namespace MetaMind.Engine.Guis.Widgets.Items.Layers
 {
     using System;
-
+    using Data;
     using MetaMind.Engine.Guis.Widgets.Items.Logic;
     using MetaMind.Engine.Guis.Widgets.Items.Settings;
 
@@ -40,7 +40,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layers
         {
             get { return this.Item.ItemSettings; }
         }
-
 
         #endregion
 

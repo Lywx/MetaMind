@@ -41,7 +41,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Swaps
             IViewItem draggingItem,
             IView     draggingView,
             Vector2   draggingEnd,
-            IList<dynamic> dataList);
+            IReadOnlyList<object> dataList);
 
         void WatchProcess(IViewItem item);
 

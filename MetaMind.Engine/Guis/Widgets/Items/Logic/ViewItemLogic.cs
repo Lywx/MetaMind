@@ -242,7 +242,7 @@
         {
             this.View.ItemsWrite.Remove(this.Item);
 
-            this.View.ViewLogic.ItemBinding.RemoveData(this.Item);
+            this.View.ViewLogic.ViewBinding.RemoveData(this.Item);
 
             this.Item.Dispose();
         }

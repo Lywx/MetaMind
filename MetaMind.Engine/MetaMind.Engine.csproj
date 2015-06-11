@@ -153,7 +153,7 @@
     <Compile Include="Guis\Console\OutputLine.cs" />
     <Compile Include="Guis\Console\Renderer.cs" />
     <Compile Include="Guis\IModuleLogicControl.cs" />
-    <Compile Include="Guis\Widgets\Items\Data\IViewItemBinding.cs" />
+    <Compile Include="Guis\Widgets\Items\Data\IViewBinding.cs" />
     <Compile Include="Guis\Widgets\Items\Data\IViewItemCharModifier.cs">
       <SubType>Code</SubType>
     </Compile>

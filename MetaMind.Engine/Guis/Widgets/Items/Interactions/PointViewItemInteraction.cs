@@ -1,5 +1,7 @@
 namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
 {
+    using System.Collections.Generic;
+    using Data;
     using MetaMind.Engine.Guis.Widgets.Items.Layers;
     using MetaMind.Engine.Guis.Widgets.Items.Layouts;
     using MetaMind.Engine.Guis.Widgets.Views.Layers;
@@ -17,6 +19,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
 
         private IViewScrollController viewScroll;
 
+        private IViewBinding viewBinding;
 
         public PointViewItemInteraction(IViewItem item, IViewItemLayout itemLayout, IViewItemLayoutInteraction itemLayoutInteraction)
             : base(item, itemLayout, itemLayoutInteraction)
@@ -31,6 +34,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
             this.viewSelection = viewLayer.ViewSelection;
             this.viewSwap = viewLayer.ViewSwap;
             this.viewScroll = viewLayer.ViewScroll;
+            this.viewBinding = viewLayer.ViewBinding;
         }
 
         public void ViewDoSelect()
@@ -70,15 +74,19 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
                 return;
             }
 
-            var draggingItemLayout = draggingItem.ItemLogic.ItemLayout;
-            var draggingViewScroll = draggingItem.View.ViewLogic.ViewScroll;
+            var draggingItemLayer = draggingItem.GetLayer<PointViewItemLayer>();
+            var draggingItemLayout = draggingItemLayer.ItemLayout;
+            
+            var draggingViewLayer = draggingItem.View.GetLayer<PointViewLayer>();
+            var draggingViewScroll = draggingViewLayer.ViewScroll;
+
             this.viewSwap.StartProcess(interop,
                 this.Item,
                 this.viewScroll.Position(this.ItemLayout.Id),
                 draggingItem,
                 draggingItem.View,
                 draggingViewScroll.Position(draggingItemLayout.Id),
-                this.View.ViewData);
+                this.viewBinding.AllData);
         }
 
         public void ViewUpdateSwap()

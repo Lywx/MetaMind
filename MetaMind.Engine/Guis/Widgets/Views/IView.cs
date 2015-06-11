@@ -26,8 +26,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         IViewLayer ViewLayer { get; set; }
 
-        IList<dynamic> ViewData { get; }
-
         Dictionary<string, object> ViewComponents { get; }
 
         ViewSettings ViewSettings { get; set; }

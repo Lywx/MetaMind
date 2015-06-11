@@ -1,7 +1,7 @@
 namespace MetaMind.Engine.Guis.Widgets.Views.Layers
 {
     using System;
-
+    using Items.Data;
     using Logic;
     using Settings;
     using Scrolls;
@@ -46,6 +46,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layers
         public IViewSwapController ViewSwap
         {
             get { return this.ViewLogic.ViewSwap; }
+        }
+
+        public IViewBinding ViewBinding
+        {
+            get { return this.ViewLogic.ViewBinding; }
         }
 
         #endregion

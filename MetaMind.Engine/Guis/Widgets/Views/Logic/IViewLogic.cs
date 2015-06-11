@@ -24,8 +24,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         IViewSwapController ViewSwap { get; }
 
-        IViewItemFactory ItemFactory { get; }
+        IViewBinding ViewBinding { get; }
 
-        IViewItemBinding ItemBinding { get; }
+        IViewItemFactory ItemFactory { get; }
     }
 }

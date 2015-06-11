@@ -37,7 +37,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
             IViewItem      swappingItem, 
             IViewItemLogic swappingItemLogic, 
             IViewLogic     swappingViewLogic, 
-            IList<dynamic> dataList = null)
+            IReadOnlyList<object> dataList = null)
             : base(10)
         {
             if (draggingItem == null)
@@ -116,7 +116,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
         /// I saw this IList<T> as a data model. It maintains a collection of data and 
         /// it is easy to provide management method as extension method.
         /// </remarks>>
-        protected IList<dynamic> DataList { get; set; }
+        protected IReadOnlyList<object> DataList { get; set; }
 
         #endregion
 
@@ -204,17 +204,18 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
 
         private void SwapItemAroundList()
         {
-            this.SwappingItem.View.ItemsRead.SwapWith(
-                this.SwappingItem.View.ItemsRead,
+            this.SwappingItem.View.ItemsWrite.SwapWith(
+                this.SwappingItem.View.ItemsWrite,
                 this.SwappingItemLogic.ItemLayout.Id,
                 this.DraggingItemLogic.ItemLayout.Id);
         }
 
         protected virtual void SwapDataInList()
         {
-            this.DataList.Swap(
-                (int)this.DataList.IndexOf(this.DraggingItem.ItemData), 
-                (int)this.DataList.IndexOf(this.SwappingItem.ItemData));
+            var mutableList = ((IList<object>)this.DataList);
+            mutableList.Swap(
+                (int)mutableList.IndexOf(this.DraggingItem.ItemData), 
+                (int)mutableList.IndexOf(this.SwappingItem.ItemData));
         }
 
         private void SwapTerminate()

@@ -2,12 +2,15 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
 {
     using System.Collections.Generic;
 
-    public interface IViewItemBinding 
+    public interface IViewBinding 
     {
         dynamic AddData(IViewItem item);
 
         dynamic RemoveData(IViewItem item);
 
-        IList<dynamic> AllData { get; }
+        /// <summary>
+        /// Gets the covariant list.
+        /// </summary>
+        IReadOnlyList<object> AllData { get; }
     }
 }

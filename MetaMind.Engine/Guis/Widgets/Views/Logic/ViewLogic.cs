@@ -29,9 +29,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             IViewSelectionController viewSelection,
             IViewSwapController viewSwap,
             IViewLayout viewLayout,
-            IViewItemBinding itemBinding,
             IViewItemFactory itemFactory)
-            : this(view, itemBinding, itemFactory)
+            : this(view, itemFactory)
         {
             if (viewScroll == null)
             {
@@ -59,20 +58,14 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             this.ViewLayout    = viewLayout;
         }
 
-        private ViewLogic(IView view, IViewItemBinding itemBinding, IViewItemFactory itemFactory)
+        private ViewLogic(IView view, IViewItemFactory itemFactory)
             : base(view)
         {
-            if (itemBinding == null)
-            {
-                throw new ArgumentNullException("itemBinding");
-            }
-
             if (itemFactory == null)
             {
                 throw new ArgumentNullException("itemFactory");
             }
 
-            this.ItemBinding = itemBinding;
             this.ItemFactory = itemFactory;
 
             this.View[ViewState.View_Is_Active]    = this.ViewIsActive;
@@ -107,13 +100,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public IViewItemFactory ItemFactory { get; protected set; }
 
-        public IViewItemBinding ItemBinding { get; private set; }
+        public IViewBinding ViewBinding { get; set; }
 
         #region Binding
 
         public void SetupBinding()
         {
-            this.ItemBinding.
             this.ResetItems();
         }
 
@@ -247,7 +239,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
                 item.ItemLogic  = this.ItemFactory.CreateLogic(item);
                 item.ItemVisual = this.ItemFactory.CreateVisual(item);
 
-                item.ItemData = this.ItemBinding.AddData(item);
+                item.ItemData = this.ViewBinding.AddData(item);
 
                 item.SetupLayer();
 
@@ -274,7 +266,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
         {
             this.ItemsWrite.Clear();
 
-            foreach (var data in this.ItemBinding.AllData)
+            foreach (var data in this.ViewBinding.AllData)
             {
                 this.AddItem(data);
             }

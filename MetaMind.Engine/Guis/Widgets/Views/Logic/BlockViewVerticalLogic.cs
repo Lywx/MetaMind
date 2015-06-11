@@ -1,7 +1,5 @@
 ﻿namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 {
-    using System.Collections.Generic;
-    using Items.Data;
     using Items.Factories;
     using Layouts;
     using Scrolls;
@@ -16,9 +14,8 @@
             IViewSelectionController viewSelection,
             IViewSwapController viewSwap,
             IViewLayout viewLayout,
-            IViewItemBinding itemBinding,
             IViewItemFactory itemFactory)
-            : base(view, viewScroll, viewSelection, viewSwap, viewLayout, itemBinding, itemFactory)
+            : base(view, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory)
         {
         }
 

@@ -20,15 +20,8 @@
     {
         private PointViewVerticalSettings viewSettings;
 
-        protected PointViewVerticalLogic(
-            IView view,
-            IViewScrollController viewScroll,
-            IViewSelectionController viewSelection,
-            IViewSwapController viewSwap,
-            IViewLayout viewLayout,
-            IViewItemBinding itemBinding,
-            IViewItemFactory itemFactory)
-            : base(view, viewScroll, viewSelection, viewSwap, viewLayout, itemBinding, itemFactory)
+        protected PointViewVerticalLogic(IView view, IViewScrollController viewScroll, IViewSelectionController viewSelection, IViewSwapController viewSwap, IViewLayout viewLayout, IViewItemFactory itemFactory)
+            : base(view, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory)
         {
         }
 

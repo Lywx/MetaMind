@@ -23,17 +23,16 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         private int currentBuffer;
 
-        public View(ViewSettings viewSettings, IList<dynamic> viewData, ItemSettings itemSettings, List<IViewItem> items)
+        public View(ViewSettings viewSettings, ItemSettings itemSettings, List<IViewItem> items)
         {
             if (viewSettings == null)
             {
                 throw new ArgumentNullException("viewSettings");
             }
 
-            if (viewData == null)
-            {
-                throw new ArgumentNullException("viewData");
-            }
+            this.ViewSettings = viewSettings;
+
+            this.ViewComponents = new Dictionary<string, object>();
 
             if (itemSettings == null)
             {
@@ -45,13 +44,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
                 throw new ArgumentNullException("items");
             }
 
-            this.ViewSettings = viewSettings;
-            this.ViewData     = viewData;
-
-            this.ViewComponents = new Dictionary<string, object>();
-
-            this.ItemsWrite = items;
             this.ItemSettings = itemSettings;
+            this.ItemsWrite = items;
         }
 
         #region Dependency
@@ -65,8 +59,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         public IViewLogic ViewLogic { get; set; }
 
         public IViewVisual ViewVisual { get; set; }
-
-        public IList<dynamic> ViewData { get; private set; }
 
         public List<IViewItem> ItemsRead
         {
@@ -137,9 +129,15 @@ namespace MetaMind.Engine.Guis.Widgets.Views
                 this.ViewVisual.Update(time);
             }
 
-            foreach (var component in this.ViewComponents)
+            foreach (var pair in this.ViewComponents)
             {
-                ((IUpdateable)component.Value).Update(time);
+                var component  = pair.Value;
+                var updateable = component as IUpdateable;
+
+                if (updateable != null)
+                {
+                    updateable.Update(time);
+                }
             }
         }
 

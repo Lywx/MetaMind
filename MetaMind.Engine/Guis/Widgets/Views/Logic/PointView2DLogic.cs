@@ -33,9 +33,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
             IViewSelectionController viewSelection,
             IViewSwapController viewSwap,
             IViewLayout viewLayout,
-            IViewItemBinding itemBinding,
+            IViewBinding binding,
             IViewItemFactory itemFactory)
-            : base(view, viewScroll, viewSelection, viewSwap, viewLayout, itemBinding, itemFactory)
+            : base(view, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory)
         {
         }
 
