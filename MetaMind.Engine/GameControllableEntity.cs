@@ -1,6 +1,7 @@
 namespace MetaMind.Engine
 {
     using System;
+    using System.Diagnostics;
     using System.Runtime.Serialization;
 
     using MetaMind.Engine.Services;
@@ -101,7 +102,16 @@ namespace MetaMind.Engine
 
         private void SetupService()
         {
-            this.GameInput = GameEngine.Service.Input;
+            if (GameEngine.Service != null)
+            {
+                this.GameInput = GameEngine.Service.Input;
+            }
+#if DEBUG
+            else
+            {
+                Debug.WriteLine("Warning: GameEngine.Service = null");
+            }
+#endif
         }
 
         #endregion

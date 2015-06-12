@@ -53,7 +53,7 @@
                 new GameConsoleOptions
                 {
                     Font            = Font.UiConsole,
-                    BackgroundColor = new Color(0, 0, 0, 256 * 2 / 3)
+                    BackgroundColor = new Color(0, 0, 0, 256 * 3 / 4)
                 });
             console.AddCommand(new ResetCommand(file));
             console.AddCommand(new RestartCommand(engine));

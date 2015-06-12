@@ -21,7 +21,6 @@ namespace MetaMind.Engine.Components.Inputs
         CommonDeleteItem,
         CommonEditItem,
 
-        KnowledgeEditItem,
         KnowledgeLoadBuffer,
 
         ModuleClearItem,
@@ -36,8 +35,12 @@ namespace MetaMind.Engine.Components.Inputs
         CommandSortItem,
 
         // Consciousness
-        Awaken,
-        Sleep,
+        ConsciousnessAwaken,
+        ConsciousnessSleep,
+
+        // Fsi Session
+        TestPause,
+        TestRerun,
 
         // General
         Enter, 

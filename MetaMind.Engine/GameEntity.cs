@@ -9,6 +9,7 @@ namespace MetaMind.Engine
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Runtime.Serialization;
 
     using MetaMind.Engine.Components.Events;
@@ -44,6 +45,12 @@ namespace MetaMind.Engine
                 this.GameInterop = GameEngine.Service.Interop;
                 this.GameNumerical = GameEngine.Service.Numerical;
             }
+#if DEBUG
+            else
+            {
+                Debug.WriteLine("Warning: GameEngine.Service = null");
+            }
+#endif
         }
 
         #endregion 

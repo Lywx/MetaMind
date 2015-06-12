@@ -1,6 +1,5 @@
 namespace MetaMind.Engine.Guis.Widgets.Items.Visuals
 {
-    using MetaMind.Engine.Components.Fonts;
     using MetaMind.Engine.Guis.Widgets.Visuals;
     using MetaMind.Engine.Services;
 
@@ -25,6 +24,11 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Visuals
                 labelSettings.TextMonospaced);
         }
 
+        public Label Label
+        {
+            get { return this.label; }
+        }
+
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
             if (!this.Item[ItemState.Item_Is_Active]() && 
@@ -33,7 +37,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Visuals
                 return;
             }
 
-            this.label.Draw(graphics, time, alpha);
+            this.Label.Draw(graphics, time, alpha);
         }
     }
 }

@@ -8,6 +8,7 @@
 namespace MetaMind.Engine
 {
     using System;
+    using System.Diagnostics;
     using System.Runtime.Serialization;
 
     using MetaMind.Engine.Services;
@@ -82,7 +83,16 @@ namespace MetaMind.Engine
 
         private void SetupService()
         {
-            this.GameGraphics = GameEngine.Service.Graphics;
+            if (GameEngine.Service != null)
+            {
+                this.GameGraphics = GameEngine.Service.Graphics;
+            }
+#if DEBUG
+            else
+            {
+                Debug.WriteLine("Warning: GameEngine.Service = null");
+            }
+#endif
         }
 
         #endregion

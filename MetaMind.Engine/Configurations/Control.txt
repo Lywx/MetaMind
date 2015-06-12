@@ -18,16 +18,8 @@ CommonCreateItem = N with LeftControl
 CommonDeleteItem = D with LeftControl
 CommonEditItem   = I with LeftControl
 
-" Trace View Control
-
-TraceCreateItem = N with LeftControl
-TraceDeleteItem = D with LeftControl
-TraceEditItem   = I with LeftControl
-TraceClearItem  = C with LeftControl
-
 " Knowledge View Control
 
-KnowledgeEditItem   = I with LeftControl
 KnowledgeLoadBuffer = L with LeftControl
 
 " Module View Control
@@ -45,10 +37,15 @@ CommandDeleteItem = D with LeftControl
 CommandOpenItem   = O with LeftControl 
 CommandSortItem   = S with LeftControl
 
+" Test Control
+
+TestPause = P with LeftControl and LeftShift
+TestRerun = R with LeftControl and LeftShift
+
 " Synchronization Control
 
-Awaken = A with LeftControl and LeftShift
-Sleep  = S with LeftControl and LeftShift
+ConsciousnessAwaken = A with LeftControl and LeftShift
+ConsciousnessSleep  = S with LeftControl and LeftShift
 
 " Basic Commands
 
