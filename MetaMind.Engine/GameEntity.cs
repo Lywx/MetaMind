@@ -32,15 +32,18 @@ namespace MetaMind.Engine
         protected IGameNumericalService GameNumerical { get; private set; }
 
         [OnDeserialized]
-        private void RegisterDependency(StreamingContext context)
+        private void SetupService(StreamingContext context)
         {
-            this.RegisterDependency();
+            this.SetupService();
         }
 
-        private void RegisterDependency()
+        private void SetupService()
         {
-            this.GameInterop = GameEngine.Service.Interop;
-            this.GameNumerical = GameEngine.Service.Numerical;
+            if (GameEngine.Service != null)
+            {
+                this.GameInterop = GameEngine.Service.Interop;
+                this.GameNumerical = GameEngine.Service.Numerical;
+            }
         }
 
         #endregion 
@@ -49,7 +52,7 @@ namespace MetaMind.Engine
 
         protected GameEntity()
         {
-            this.RegisterDependency();
+            this.SetupService();
 
             this.Listeners = new List<IListener>();
         }

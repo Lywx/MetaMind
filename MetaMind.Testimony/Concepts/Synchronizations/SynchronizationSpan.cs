@@ -129,6 +129,7 @@
         public static SynchronizationSpan operator +(SynchronizationSpan lhs, SynchronizationSpan rhs)
         {
             SynchronizationSpan span;
+
             if (lhs.IsEnded && rhs.IsEnded)
             {
                 span = new SynchronizationSpan(
@@ -169,6 +170,7 @@
         public void Abort()
         {
             this.RecentEndTime = DateTime.Now;
+
             this.IsEnded = true;
         }
 

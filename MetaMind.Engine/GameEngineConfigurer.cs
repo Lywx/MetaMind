@@ -5,7 +5,7 @@
     using Components.Graphics;
     using Guis.Console;
     using Guis.Console.Commands;
-
+    using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Audio;
 
     public class GameEngineConfigurer : IGameEngineConfigurer
@@ -50,7 +50,11 @@
                 engine,
                 graphics.SpriteBatch,
                 graphics.StringDrawer,
-                new GameConsoleOptions { Font = Font.UiConsole });
+                new GameConsoleOptions
+                {
+                    Font            = Font.UiConsole,
+                    BackgroundColor = new Color(0, 0, 0, 256 * 2 / 3)
+                });
             console.AddCommand(new ResetCommand(file));
             console.AddCommand(new RestartCommand(engine));
 

@@ -105,9 +105,14 @@
     <Compile Include="Concepts\Synchronizations\ISynchronizationOperations.cs" />
     <Compile Include="Concepts\Synchronizations\SynchronizationData.cs" />
     <Compile Include="Concepts\Synchronizations\SynchronizationSpan.cs" />
-    <Compile Include="Concepts\Tests\IScript.cs" />
+    <Compile Include="Concepts\Tests\ITestComputation.cs" />
+    <Compile Include="Concepts\Tests\ITestOperations.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Scripting\IScriptOperations.cs" />
+    <Compile Include="Scripting\IScript.cs" />
     <Compile Include="Concepts\Tests\ITest.cs" />
     <Compile Include="Concepts\Tests\ITestStructure.cs" />
+    <Compile Include="Scripting\Script.cs" />
     <Compile Include="Concepts\Tests\Test.cs" />
     <Compile Include="Events\ConsciousnessSleepStartedEventArgs.cs" />
     <Compile Include="Events\ConsciousnessSleepStoppedEventArgs.cs" />
@@ -139,7 +144,9 @@
     <Compile Include="Guis\Modules\Synchronization\SynchronizationPoint.cs" />
     <Compile Include="Guis\Modules\Synchronization\SynchronizationPointSide.cs" />
     <Compile Include="Guis\Modules\Synchronization\SynchronizationProgressBar.cs" />
-    <Compile Include="Guis\Widgets\TestItemBinding.cs" />
+    <Compile Include="Scripting\ScriptRunner.cs" />
+    <Compile Include="Scripting\ScriptSearcher.cs" />
+    <Compile Include="Guis\Widgets\TestViewBinding.cs" />
     <Compile Include="Guis\Widgets\TestItemFrame.cs" />
     <Compile Include="Guis\Widgets\TestItemLayer.cs" />
     <Compile Include="Guis\Widgets\TestItemLayout.cs" />
@@ -149,6 +156,7 @@
     <Compile Include="Guis\Widgets\TestViewLogic.cs" />
     <Compile Include="Guis\Widgets\TestViewSettings.cs" />
     <Compile Include="Guis\Widgets\Items\ViewItemSynchronizationController.cs" />
+    <Compile Include="Scripting\FsiSession.cs" />
     <Compile Include="Testimony.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -160,8 +168,13 @@
     <Compile Include="Sessions\SessionEventType.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="LightInject, Version=3.0.2.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\LightInject.3.0.2.6\lib\net45\LightInject.dll</HintPath>
+    <Reference Include="FSharp.Compiler.Service, Version=0.0.89.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\FSharp.Compiler.Service.0.0.89\lib\net45\FSharp.Compiler.Service.dll</HintPath>
+    </Reference>
+    <Reference Include="FSharp.Core, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="LightInject, Version=3.0.2.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LightInject.3.0.2.7\lib\net45\LightInject.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -185,6 +198,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Configurations\Test.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

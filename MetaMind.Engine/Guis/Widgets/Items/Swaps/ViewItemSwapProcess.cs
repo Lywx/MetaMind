@@ -8,6 +8,7 @@
 namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
 
     using Components.Processes;
@@ -212,9 +213,11 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
 
         protected virtual void SwapDataInList()
         {
-            var mutableList = ((IList<object>)this.DataList);
-            mutableList.Swap(
-                (int)mutableList.IndexOf(this.DraggingItem.ItemData), 
+            dynamic mutableList = this.DataList;
+
+            ExtList.Swap(
+                mutableList,
+                (int)mutableList.IndexOf(this.DraggingItem.ItemData),
                 (int)mutableList.IndexOf(this.SwappingItem.ItemData));
         }
 

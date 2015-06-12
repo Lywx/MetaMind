@@ -1,13 +1,13 @@
 ﻿namespace MetaMind.Testimony.Concepts.Tests
 {
     using System.Collections;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
 
     public interface ITestStructure
     {
-        IList<ITest> Children { get; }
+        ObservableCollection<Test> Children { get; }
 
-        ITest Parent { get; }
+        Test Parent { get; }
 
         bool HasParent { get; }
 

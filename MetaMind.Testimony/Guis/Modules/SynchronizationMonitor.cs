@@ -16,16 +16,18 @@
     /// </summary>
     public class SynchronizationMonitor : GameComponent
     {
-        #region Cues
+        private readonly IGameInteropService interop;
+
+        private readonly ISynchronization synchronization;
 
         private string SynchronizingFalseCue = "Windows Proximity Connection";
 
         private string SynchronizingTrueCue  = "Windows Proximity Notification";
 
-        #endregion
-
         private bool     actived;
+
         private DateTime alertMoment   = DateTime.Now;
+
         private TimeSpan attentionSpan = TimeSpan.FromSeconds(5);
 
         public SynchronizationMonitor(GameEngine engine, ISynchronization synchronization)
@@ -41,45 +43,22 @@
                 throw new ArgumentNullException("synchronization");
             }
 
-            this.GameInterop = engine.Interop;
-            this.Game.Components.Add(this);
-            
-            this.Synchronization = synchronization;
+            this.synchronization = synchronization;
+
+            this.interop = engine.Interop;
+
+            engine.Components.Add(this);
         }
 
-        #region Dependency
-
-        private IGameInteropService GameInterop { get; set; }
-
-        private ISynchronization Synchronization { get; set; }
-
-        #endregion
-
-        public void Start()
-        {
-            this.actived = true;
-        }
-
-        public void Stop()
-        {
-            this.actived = false;
-        }
-
-        public void TryStart()
-        {
-            if (!this.actived)
-            {
-                this.Start();
-            }
-        }
+        #region Update
 
         public override void Update(GameTime gameTime)
         {
             if (DateTime.Now - this.alertMoment > this.attentionSpan)
             {
-                var audio = this.GameInterop.Audio;
+                var audio = this.interop.Audio;
 
-                if (this.Synchronization.Enabled)
+                if (this.synchronization.Enabled)
                 {
                     audio.PlayMusic(this.SynchronizingTrueCue);
 
@@ -96,9 +75,13 @@
             }
         }
 
+        #endregion
+
+        #region Operations
+
         private void Alert()
         {
-            var @event = this.GameInterop.Event;
+            var @event = this.interop.Event;
             @event.QueueEvent(new Event((int)SessionEventType.SyncAlerted, new SynchronizationAlertedEventArgs()));
         }
 
@@ -107,9 +90,29 @@
             this.alertMoment = DateTime.Now;
         }
 
+        public void Start()
+        {
+            this.actived = true;
+        }
+
+        public void TryStart()
+        {
+            if (!this.actived)
+            {
+                this.Start();
+            }
+        }
+
+        public void Stop()
+        {
+            this.actived = false;
+        }
+
         public void Exit()
         {
             this.Game.Components.Remove(this);
         }
+
+        #endregion
     }
 }

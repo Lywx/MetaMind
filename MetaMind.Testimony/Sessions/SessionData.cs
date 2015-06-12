@@ -6,26 +6,35 @@
 
     [DataContract]
     [KnownType(typeof(Cognition))]
-    [KnownType(typeof(Test))]
     public class SessionData : ISessionData
     {
         public SessionData()
         {
             this.Cognition = new Cognition();
 
-            this.Test = new Test("Root", "Root of tests");
+            this.Reset();
         }
 
         [DataMember]
         public ICognition Cognition { get; private set; }
 
-        [DataMember]
         public ITest Test { get; private set; }
 
         public void Update()
         {
             this.Cognition.Update();
             this.Test     .Update();
+        }
+
+        private void Reset()
+        {
+            this.Test = new Test("Root", "Root of tests");
+        }
+
+        [OnDeserialized]
+        private void Reset(StreamingContext context)
+        {
+            this.Reset();
         }
     }
 }

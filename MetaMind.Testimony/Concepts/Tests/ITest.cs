@@ -1,6 +1,9 @@
 ﻿namespace MetaMind.Testimony.Concepts.Tests
 {
-    public interface ITest : ITestStructure, IInnerUpdatable
+    public interface ITest : ITestStructure,
+        ITestComputation,
+        ITestOperations,
+        IInnerUpdatable
     {
         string Name { get; set; }
 

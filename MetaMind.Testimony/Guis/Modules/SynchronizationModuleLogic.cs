@@ -91,6 +91,7 @@ namespace MetaMind.Testimony.Guis.Modules
 
             this.Monitor.Update(time);
         }
+
         #endregion
 
         private class SleepStartedListener : Listener

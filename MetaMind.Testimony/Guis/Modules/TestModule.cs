@@ -1,9 +1,12 @@
 ﻿namespace MetaMind.Testimony.Guis.Modules
 {
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
+
+    using Microsoft.Xna.Framework;
+
     using Concepts.Synchronizations;
-    using Concepts.Tests;
     using Engine;
     using Engine.Components.Events;
     using Engine.Components.Inputs;
@@ -23,10 +26,9 @@
     using Engine.Guis.Widgets.Views.Visuals;
     using Engine.Services;
     using Events;
+    using Scripting;
     using Sessions;
     using Widgets;
-
-    using Microsoft.Xna.Framework;
 
     public class TestModule : Module<TestSettings>
     {
@@ -38,14 +40,15 @@
         }
 
         #region Load and Unload
-
+                                                                                                           
         public override void LoadContent(IGameInteropService interop)
         {
             // Data
-            var root = Testimony.SessionData.Test;
+            var test = Testimony.SessionData.Test;
 
-            // Data scanning
-
+            var searcher = new ScriptSearcher();
+            var loader = new ScriptRunner(searcher);
+            loader.Run();
 
             // View settings
             var viewSettings = new TestViewSettings(
@@ -58,7 +61,7 @@
             var itemSettings = new TestItemSettings();
 
             // View
-            var view = new View(viewSettings, root.Children.Select(t => (dynamic)t).ToList(), itemSettings, new List<IViewItem>());
+            var view = new View(viewSettings, itemSettings, new List<IViewItem>());
 
             // View composition
             var viewSelection = new BlockViewVerticalSelectionController(view);
@@ -90,17 +93,15 @@
 
                 item => new TestItemVisual(item));
 
-            var itemBinding = new TestItemBinding(root);
-
             // View setup
             var viewLogic = new TestViewLogic(
-                view, 
+                view,
                 viewScroll,
                 viewSelection,
                 viewSwap,
                 viewLayout,
-                itemBinding,
                 itemFactory);
+            viewLogic.ViewBinding = new TestViewBinding(viewLogic, test.Children);
 
             var viewVisual = new GradientViewVisual(view);
 
@@ -124,6 +125,11 @@
             base.LoadContent(interop);
         }
 
+        private void S()
+        {
+            // Data scanning
+            Testimony.FsiSession.EvalScript("Script.fsx");
+        }
 
         #endregion
 
@@ -140,7 +146,8 @@
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Enter))
+            var keyboard = input.State.Keyboard;
+            if (keyboard.IsActionTriggered(KeyboardActions.Enter))
             {
                 this.SwitchSync();
             }
@@ -173,7 +180,13 @@
             view.SetupBinding();
         }
 
-        private IViewVerticalScrollbar SetupViewScrollbar(IView view, TestViewSettings viewSettings, BlockViewVerticalLayer viewLayer, BlockViewVerticalScrollController viewScroll, BlockViewVerticalLayout viewLayout, ViewRegion viewRegion)
+        private IViewVerticalScrollbar SetupViewScrollbar(
+            IView view,
+            TestViewSettings viewSettings,
+            BlockViewVerticalLayer viewLayer,
+            BlockViewVerticalScrollController viewScroll,
+            BlockViewVerticalLayout viewLayout,
+            ViewRegion viewRegion)
         {
             var viewVerticalScrollbarSettings = viewSettings.Get<ViewScrollbarSettings>("ViewVerticalScrollbar");
 

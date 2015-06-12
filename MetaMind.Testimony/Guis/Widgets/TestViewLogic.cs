@@ -12,15 +12,8 @@
 
     public class TestViewLogic : BlockViewVerticalLogic
     {
-        public TestViewLogic(
-            IView view,
-            IViewScrollController viewScroll,
-            IViewSelectionController viewSelection,
-            IViewSwapController viewSwap,
-            IViewLayout viewLayout,
-            IViewItemBinding itemBinding,
-            IViewItemFactory itemFactory)
-            : base(view, viewScroll, viewSelection, viewSwap, viewLayout, itemBinding, itemFactory)
+        public TestViewLogic(IView view, IViewScrollController viewScroll, IViewSelectionController viewSelection, IViewSwapController viewSwap, IViewLayout viewLayout, IViewItemFactory itemFactory)
+            : base(view, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory)
         {
         }
     }

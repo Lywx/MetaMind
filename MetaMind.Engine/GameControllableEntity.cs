@@ -38,6 +38,11 @@ namespace MetaMind.Engine
 
         #endregion States
 
+        protected GameControllableEntity()
+        {
+            this.SetupService();
+        }
+
         #region Events        
 
         public event EventHandler<EventArgs> ControllableChanged;
@@ -50,28 +55,6 @@ namespace MetaMind.Engine
 
         protected virtual void OnInputOrderChanged(object sender, EventArgs args)
         {
-        }
-
-        #region Dependency
-
-        protected IGameInputService GameInput { get; private set; }
-
-        [OnDeserialized]
-        private void RegisterDependency(StreamingContext context)
-        {
-            this.RegisterDependency();
-        }
-
-        private void RegisterDependency()
-        {
-            this.GameInput = GameEngine.Service.Input;
-        }
-
-        #endregion
-
-        protected GameControllableEntity()
-        {
-            this.RegisterDependency();
         }
 
         #endregion Events
@@ -105,5 +88,22 @@ namespace MetaMind.Engine
         public virtual void UpdateInput(IGameInputService input, GameTime time) { }
 
         #endregion Input
+
+        #region Service
+
+        protected IGameInputService GameInput { get; private set; }
+
+        [OnDeserialized]
+        private void SetupService(StreamingContext context)
+        {
+            this.SetupService();
+        }
+
+        private void SetupService()
+        {
+            this.GameInput = GameEngine.Service.Input;
+        }
+
+        #endregion
     }
 }

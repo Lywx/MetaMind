@@ -45,6 +45,15 @@ namespace MetaMind.Engine
 
         #endregion
 
+        #region Constructors
+
+        protected GameVisualEntity()
+        {
+            this.SetupService();
+        }
+
+        #endregion
+
         #region Events
 
         public event EventHandler<EventArgs> DrawOrderChanged;
@@ -61,28 +70,19 @@ namespace MetaMind.Engine
 
         #endregion
 
-        #region Dependency
+        #region Service
 
         protected IGameGraphicsService GameGraphics { get; private set; }
 
         [OnDeserialized]
-        private void RegisterDependency(StreamingContext context)
+        private void SetupService(StreamingContext context)
         {
-            this.RegisterDependency();
+            this.SetupService();
         }
 
-        private void RegisterDependency()
+        private void SetupService()
         {
             this.GameGraphics = GameEngine.Service.Graphics;
-        }
-
-        #endregion
-
-        #region Constructors
-
-        protected GameVisualEntity()
-        {
-            this.RegisterDependency();
         }
 
         #endregion

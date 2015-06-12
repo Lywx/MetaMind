@@ -23,10 +23,13 @@ namespace MetaMind.Testimony
         [STAThread]
         private static void Main(string[] args)
         {
-            using (var engine = new GameEngine())
+            using (var engine = new GameEngine(@"Content"))
             {
-                var game = new Testimony(engine);
-                game.Run();
+                var configurer = new GameEngineConfigurer();
+                configurer.Configure(engine);
+
+                var testimony = new Testimony(engine);
+                testimony.Run();
             }
         }
     }

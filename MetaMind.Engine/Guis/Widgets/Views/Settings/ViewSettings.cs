@@ -14,7 +14,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Settings
 
         #region Properties
 
-        public bool ReadOnly = false;
+        public bool ReadOnly = true;
 
         #endregion
 

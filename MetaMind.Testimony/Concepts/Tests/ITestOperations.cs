@@ -1,6 +1,7 @@
 ﻿namespace MetaMind.Testimony.Concepts.Tests
 {
-    public interface IScript
+    public interface ITestOperations
     {
+        void Reset();
     }
 }

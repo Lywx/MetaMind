@@ -10,14 +10,16 @@ namespace MetaMind.Testimony.Concepts.Tests
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Runtime.Serialization;
+
     using Engine.Guis.Widgets.Items.Data;
 
     [DataContract]
     [KnownType(typeof(Test))]
-    public class Test : ITest, IBlockViewVerticalItemData
+    public partial class Test : ITest, IBlockViewVerticalItemData
     {
-        public Test(string name, string description, string status = "SUCCESS")
+        public Test(string name, string description)
         {
             if (name == null)
             {
@@ -29,21 +31,16 @@ namespace MetaMind.Testimony.Concepts.Tests
                 throw new ArgumentNullException("description");
             }
 
-            if (status == null)
-            {
-                throw new ArgumentNullException("status");
-            }
-
             this.Name        = name;
             this.Description = description;
-            this.Status      = status;
 
-            // Strucure 
             this.Parent   = null;
-            this.Children = new List<ITest>();
+            this.Children = new ObservableCollection<Test>();
+
+            this.Reset();
         }
 
-        #region Test 
+        #region Test
 
         [DataMember]
         public string Name { get; set; }
@@ -56,10 +53,33 @@ namespace MetaMind.Testimony.Concepts.Tests
 
         #endregion
 
+        #region IBlockViewVerticalItemData
+
+        public string BlockStringRaw
+        {
+            get { return this.Description; }
+        }
+
+        public string BlockLabel
+        {
+            get { return "DescriptionLabel"; }
+        }
+
+        public string BlockFrame
+        {
+            get { return "DescriptionFrame"; }
+        }
+
+        #endregion
+    }
+
+    [KnownType(typeof(List<ITest>))]
+    public partial class Test
+    {
         #region Structure
 
         [DataMember]
-        public IList<ITest> Children { get; private set; }
+        public ObservableCollection<Test> Children { get; private set; }
 
         public bool HasChildren
         {
@@ -67,7 +87,7 @@ namespace MetaMind.Testimony.Concepts.Tests
         }
 
         [DataMember]
-        public ITest Parent { get; private set; }
+        public Test Parent { get; private set; }
 
         public bool HasParent
         {
@@ -107,22 +127,29 @@ namespace MetaMind.Testimony.Concepts.Tests
         }
 
         #endregion
+    }
 
-        #region IBlockViewVerticalItemData
+    public partial class Test
+    {
+        [DataMember]
+        public TimeSpan TestSpan { get; set; }
 
-        public string BlockStringRaw
+        public Func<bool> TestPassed { get; set; }
+
+        public Func<string> TestStatus { get; set; }
+
+        #region Operations
+
+        [OnDeserialized]
+        public void Reset(StreamingContext context)
         {
-            get { return this.Description; }
+            this.Reset();
         }
 
-        public string BlockLabel
+        public void Reset()
         {
-            get { return "DescriptionLabel"; }
-        }
-
-        public string BlockFrame
-        {
-            get { return "DescriptionFrame"; }
+            this.TestPassed = () => false;
+            this.TestStatus = () => "";
         }
 
         #endregion
@@ -131,6 +158,7 @@ namespace MetaMind.Testimony.Concepts.Tests
 
         public void Update()
         {
+            this.Status = this.TestStatus();
         }
 
         #endregion
