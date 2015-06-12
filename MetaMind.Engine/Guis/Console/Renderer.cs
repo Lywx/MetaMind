@@ -260,7 +260,7 @@
         private Vector2 DrawCommands(IEnumerable<OutputLine> lines, Vector2 pos)
         {
             var originalX = pos.X;
-            foreach (var command in lines)
+            foreach (var command in lines.ToArray())
             {
                 if (command.Type == OutputLineType.Command)
                 {
