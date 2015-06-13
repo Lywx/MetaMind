@@ -20,9 +20,9 @@
 
         private readonly ISynchronization synchronization;
 
-        private string SynchronizingFalseCue = "Windows Proximity Connection";
+        private readonly string synchronizingFalseCue = "Synchronization False";
 
-        private string SynchronizingTrueCue  = "Windows Proximity Notification";
+        private readonly string synchronizingTrueCue = "Synchronization True";
 
         private bool     actived;
 
@@ -60,14 +60,14 @@
 
                 if (this.synchronization.Enabled)
                 {
-                    audio.PlayMusic(this.SynchronizingTrueCue);
+                    audio.PlayMusic(this.synchronizingTrueCue);
 
                     this.Confirm();
                     this.Alert();
                 }
                 else
                 {
-                    audio.PlayMusic(this.SynchronizingFalseCue);
+                    audio.PlayMusic(this.synchronizingFalseCue);
 
                     this.Confirm();
                     this.Alert();
