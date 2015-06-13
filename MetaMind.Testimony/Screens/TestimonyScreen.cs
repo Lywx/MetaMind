@@ -38,15 +38,13 @@
         public override void LoadContent(IGameInteropService interop)
         {
             var cognition = Testimony.SessionData.Cognition;
+            var test = Testimony.SessionData.Test;
 
-            var synchronization = new SynchronizationModule(
-                cognition.Consciousness,
-                cognition.Synchronization,
-                new SynchronizationSettings());
+            var synchronization = new SynchronizationModule(cognition, new SynchronizationSettings());
             synchronization.LoadContent(interop);
             this.Entities.Add(synchronization);
 
-            var experience = new TestModule(new TestSettings());
+            var experience = new TestModule(test, new TestModuleSettings());
             experience.LoadContent(interop);
             this.Entities.Add(experience);
         }

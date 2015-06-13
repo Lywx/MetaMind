@@ -12,6 +12,8 @@
     <AssemblyName>MetaMind.Testimony</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -27,8 +29,6 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -95,6 +95,7 @@
     <Compile Include="Concepts\Cognitions\ConsciousnessAsleep.cs" />
     <Compile Include="Concepts\Cognitions\ConsciousnessState.cs" />
     <Compile Include="Concepts\Cognitions\ICognition.cs" />
+    <Compile Include="Concepts\Cognitions\ICognitionProperties.cs" />
     <Compile Include="Concepts\Cognitions\IConsciousness.cs" />
     <Compile Include="Concepts\Cognitions\IConsciousnessAsleep.cs" />
     <Compile Include="Concepts\Cognitions\IConsciousnessAwake.cs" />
@@ -107,7 +108,12 @@
     <Compile Include="Concepts\Synchronizations\SynchronizationSpan.cs" />
     <Compile Include="Concepts\Tests\ITestComputation.cs" />
     <Compile Include="Concepts\Tests\ITestOperations.cs" />
+    <Compile Include="Guis\Modules\TestModuleLogic.cs" />
+    <Compile Include="Guis\Modules\TestModuleVisual.cs" />
+    <Compile Include="Concepts\Synchronizations\ISynchronizationController.cs" />
+    <Compile Include="Concepts\Synchronizations\SynchronizationController.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Scripting\FsiDebugger.cs" />
     <Compile Include="Scripting\IScriptOperations.cs" />
     <Compile Include="Scripting\IScript.cs" />
     <Compile Include="Concepts\Tests\ITest.cs" />
@@ -126,7 +132,7 @@
     <Compile Include="Extensions\ExtInt32.cs" />
     <Compile Include="Events\SynchronizationAlertedEventArgs.cs" />
     <Compile Include="Guis\Modules\TestModule.cs" />
-    <Compile Include="Guis\Modules\TestSettings.cs" />
+    <Compile Include="Guis\Modules\TestModuleSettings.cs" />
     <Compile Include="Guis\Modules\SummaryModuleLogic.cs" />
     <Compile Include="Guis\Modules\SummaryModuleVisual.cs" />
     <Compile Include="Guis\Modules\Summary\SummaryEntry.cs" />
@@ -244,6 +250,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="Tools\FSharp.Script.Move.fsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

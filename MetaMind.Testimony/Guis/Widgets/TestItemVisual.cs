@@ -14,7 +14,7 @@ namespace MetaMind.Testimony.Guis.Widgets
     using Engine.Guis.Widgets.Items.Visuals;
     using Engine.Guis.Widgets.Visuals;
     using Engine.Services;
-
+    using Engine.Settings.Colors;
     using Microsoft.Xna.Framework;
 
     public class TestItemVisual : ViewItemVisual
@@ -67,7 +67,7 @@ namespace MetaMind.Testimony.Guis.Widgets
             // Layers
             var itemLayer = this.ItemGetLayer<TestItemLayer>();
             var itemSettings = itemLayer.ItemSettings;
-            this. itemFrame = itemLayer.ItemFrame;
+            this.itemFrame = itemLayer.ItemFrame;
             var itemLayout = itemLayer.ItemLayout;
 
             // Positions
@@ -100,6 +100,11 @@ namespace MetaMind.Testimony.Guis.Widgets
                 labelSettings.TextPosition = this.StatusCenterPosition;
 
                 this.StatusLabel = new ViewItemLabelVisual(this.Item, labelSettings);
+                this.StatusLabel.Label.TextColor = () =>
+                        this.Item.ItemData.TestPassed()
+                            ? Palette.LightGreen
+                            : Palette.LightPink;
+                this.StatusLabel.Label.Text = () => this.Item.ItemData.Status;
             }
 
             var nameFrameSettings = itemSettings.Get<FrameSettings>("NameFrame");
@@ -128,12 +133,12 @@ namespace MetaMind.Testimony.Guis.Widgets
         }
 
         #endregion
-        
+
         #region Update and Draw
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            if (!this.Item[ItemState.Item_Is_Active]() && 
+            if (!this.Item[ItemState.Item_Is_Active]() &&
                 !this.Item[ItemState.Item_Is_Dragging]())
             {
                 return;

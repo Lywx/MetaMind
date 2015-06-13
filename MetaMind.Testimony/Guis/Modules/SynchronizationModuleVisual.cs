@@ -19,9 +19,20 @@ namespace MetaMind.Testimony.Guis.Modules
 
         private string StateInfoTrue  = "Gaining Synchronicity";
 
-        public SynchronizationModuleVisual(SynchronizationModule module, IConsciousness consciousness, ISynchronization synchronization)
+        private readonly ICognition cognition;
+
+        private readonly IConsciousness consciousness;
+
+        private readonly ISynchronization synchronization;
+
+        public SynchronizationModuleVisual(SynchronizationModule module, ICognition cognition, IConsciousness consciousness, ISynchronization synchronization)
             : base(module)
         {
+            if (cognition == null)
+            {
+                throw new ArgumentNullException("cognition");
+            }
+
             if (synchronization == null)
             {
                 throw new ArgumentNullException("synchronization");
@@ -32,14 +43,15 @@ namespace MetaMind.Testimony.Guis.Modules
                 throw new ArgumentNullException("consciousness");
             }
 
-            this.Synchronization = synchronization;
-            this.Consciousness = consciousness;
+            this.cognition = cognition;
+            this.synchronization = synchronization;
+            this.consciousness = consciousness;
 
-            var progressBar = new SynchronizationProgressBar(this.Module, this.Synchronization);
+            var progressBar = new SynchronizationProgressBar(this.Module, this.synchronization);
 
             var stateInfo = new Label(
                 () => Font.UiStatistics,
-                () => this.Synchronization.Enabled ? this.StateInfoTrue : this.StateInfoFalse,
+                () => this.synchronization.Enabled ? this.StateInfoTrue : this.StateInfoFalse,
                 () => this.StateInfoCenterPosition,
                 () => Color.White,
                 () => 1.1f,
@@ -48,7 +60,7 @@ namespace MetaMind.Testimony.Guis.Modules
 
             var statusInfo = new Label(
                 () => Font.UiStatistics,
-                () => string.Format("Level {0}: {1}", this.Synchronization.Level, this.Synchronization.State),
+                () => string.Format("Level {0}: {1}", this.synchronization.Level, this.synchronization.State),
                 () => this.StatusInfoCenterPosition,
                 () => Color.White,
                 () => 0.7f,
@@ -57,7 +69,7 @@ namespace MetaMind.Testimony.Guis.Modules
 
             var accumulationInfo = new Label(
                 () => Font.UiStatistics,
-                () => string.Format("{0}", this.Synchronization.ElapsedTimeSinceTransition.ToString("hh':'mm':'ss")),
+                () => string.Format("{0}", this.synchronization.ElapsedTimeSinceTransition.ToString("hh':'mm':'ss")),
                 () => this.AccumulationInfoPosition,
                 () => Color.White,
                 () => 0.7f,
@@ -66,8 +78,8 @@ namespace MetaMind.Testimony.Guis.Modules
 
             var dailyRatePrefix = new Label(
                 () => this.Settings.SynchronizationRateFont,
-                () => this.Consciousness.IsAwake
-                    ? (this.Synchronization.SynchronizedTimeTodayBestCase. TotalSeconds / ((IConsciousnessAwake)this.Consciousness.State).AwakeSpan.TotalSeconds * 100).ToString("F0")
+                () => this.consciousness.IsAwake
+                    ? cognition.SynchronizationRatio.ToString("F0")
                     : "",
                 () => this.DailyRateCenterPosition,
                 () => Color.White,
@@ -77,7 +89,7 @@ namespace MetaMind.Testimony.Guis.Modules
 
             var dailyRateSubfix = new Label(
                 () => this.Settings.SynchronizationRateFont,
-                () => this.Consciousness.IsAwake ? " %" : "",
+                () => this.consciousness.IsAwake ? " %" : "",
                 () => this.DailyRateCenterPosition,
                 () => Color.White,
                 () => 1f,
@@ -95,7 +107,7 @@ namespace MetaMind.Testimony.Guis.Modules
 
             var accelerationInfoSubfix = new Label(
                 () => Font.UiStatistics,
-                () => string.Format("{0}", this.Synchronization.Acceleration.ToString("F1")),
+                () => string.Format("{0}", this.synchronization.Acceleration.ToString("F1")),
                 () => this.AccelerationInfoCenterPosition,
                 () => Color.White,
                 () => 2.0f,
@@ -121,21 +133,21 @@ namespace MetaMind.Testimony.Guis.Modules
             var factory = new SynchronizationFactory(this.Settings);
 
             // Empty point frames
-            for (var i = 0; i < this.Synchronization.SynchronizedHourMax; ++i)
+            for (var i = 0; i < this.synchronization.SynchronizedHourMax; ++i)
             {
                 this.Entities.Add(factory.CreatePointFrame(this.StateInfoCenterPosition, i, SynchronizationPointSide.Left));
                 this.Entities.Add(factory.CreatePointFrame(this.StateInfoCenterPosition, i, SynchronizationPointSide.Right));
             }
 
             // Yesterday points
-            for (var i = 0; i < this.Synchronization.SynchronizedHourYesterday; ++i)
+            for (var i = 0; i < this.synchronization.SynchronizedHourYesterday; ++i)
             {
                 this.Entities.Add(factory.CreatePoint(this.StateInfoCenterPosition, i, "", () => this.Settings.BarFrameDescendColor, SynchronizationPointSide.Left));
                 this.Entities.Add(factory.CreatePoint(this.StateInfoCenterPosition, i, "", () => this.Settings.BarFrameDescendColor, SynchronizationPointSide.Right));
             }
 
             // Today points
-            for (var i = 0; i < this.Synchronization.SynchronizedHourToday; ++i)
+            for (var i = 0; i < this.synchronization.SynchronizedHourToday; ++i)
             {
                 this.Entities.Add(factory.CreatePoint(this.StateInfoCenterPosition, i, "", () => this.Settings.BarFrameAscendColor, SynchronizationPointSide.Left));
                 this.Entities.Add(factory.CreatePoint(this.StateInfoCenterPosition, i, "", () => this.Settings.BarFrameAscendColor, SynchronizationPointSide.Right));
@@ -143,10 +155,6 @@ namespace MetaMind.Testimony.Guis.Modules
         }
 
         #region Dependency
-
-        private IConsciousness Consciousness { get; set; }
-
-        private ISynchronization Synchronization { get; set; }
 
         private GameVisualEntityCollection<IGameVisualEntity> Entities { get; set; }
 

@@ -3,7 +3,7 @@
     using System.Runtime.Serialization;
     using Synchronizations;
 
-    public interface ICognition: IInnerUpdatable
+    public interface ICognition: IInnerUpdatable, ICognitionProperties
     {
         [DataMember]
         IConsciousness Consciousness { get; set; }

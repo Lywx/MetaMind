@@ -13,7 +13,7 @@ namespace MetaMind.Testimony.Guis.Widgets.Items
     using Events;
     using Sessions;
 
-    public class ViewItemSynchronizationController : ViewItemComponent
+    public class ViewItemSynchronizationController : ViewItemComponent, ISynchronizationController 
     {
         public ViewItemSynchronizationController(IViewItem item)
             : base(item)
@@ -26,27 +26,27 @@ namespace MetaMind.Testimony.Guis.Widgets.Items
 
         protected ISynchronizationData SynchronizationData { get; private set; }
 
-        public void StartSync()
+        public void StartSynchronization()
         {
             var @event = this.GameInterop.Event;
             @event.QueueEvent(new Event((int)SessionEventType.SyncStarted, new SynchronizationStartedEventArgs(this.Item.ItemData)));
         }
 
-        public void StopSync()
+        public void StopSynchronization()
         {
             var @event = this.GameInterop.Event;
             @event.QueueEvent(new Event((int)SessionEventType.SyncStopped, new SynchronizationStoppedEventArgs(this.Item.ItemData)));
         }
 
-        public void SwitchSync()
+        public void ToggleSynchronization()
         {
             if (!this.SynchronizationData.IsSynchronizing)
             {
-                this.StartSync();
+                this.StartSynchronization();
             }
             else
             {
-                this.StopSync();
+                this.StopSynchronization();
             }
         }
     }

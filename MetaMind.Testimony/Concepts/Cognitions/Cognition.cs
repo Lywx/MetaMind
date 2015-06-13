@@ -29,6 +29,18 @@
 
         #endregion Constructors
 
+        public int SynchronizationRatio
+        {
+            get
+            {
+                return this.Consciousness.IsAwake
+                    ? (int)
+                        (this.Synchronization.SynchronizedTimeTodayBestCase.TotalSeconds
+                         / ((IConsciousnessAwake)this.Consciousness.State).AwakeSpan.TotalSeconds * 100)
+                    : 0;
+            } 
+        }
+
         #region Update
 
         public void Update()

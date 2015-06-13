@@ -1,12 +1,11 @@
 ﻿namespace MetaMind.Testimony.Guis.Modules
 {
     using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Linq;
 
     using Microsoft.Xna.Framework;
 
     using Concepts.Synchronizations;
+    using Concepts.Tests;
     using Engine;
     using Engine.Components.Events;
     using Engine.Components.Inputs;
@@ -25,31 +24,32 @@
     using Engine.Guis.Widgets.Views.Swaps;
     using Engine.Guis.Widgets.Views.Visuals;
     using Engine.Services;
-    using Events;
-    using Scripting;
-    using Sessions;
     using Widgets;
 
-    public class TestModule : Module<TestSettings>
+    public class TestModule : Module<TestModuleSettings>
     {
         private readonly GameControllableEntityCollection<IView> entities = new GameControllableEntityCollection<IView>();
 
-        public TestModule(TestSettings settings)
+        private readonly ITest test;
+
+        public TestModule(ITest test, TestModuleSettings settings)
             : base(settings)
         {
+            this.test = test;
+
+            this.Logic  = new TestModuleLogic(this);
+            this.Visual = new TestModuleVisual(this);
+        }
+
+        public GameControllableEntityCollection<IView> Entities
+        {
+            get { return this.entities; }
         }
 
         #region Load and Unload
                                                                                                            
         public override void LoadContent(IGameInteropService interop)
         {
-            // Data
-            var test = Testimony.SessionData.Test;
-
-            var searcher = new ScriptSearcher();
-            var loader = new ScriptRunner(searcher);
-            loader.Run();
-
             // View settings
             var viewSettings = new TestViewSettings(
                 itemMargin    : new Vector2(512 + 128 + 24, 26),
@@ -117,27 +117,9 @@
                 viewRegion);
 
             // Entities
-            this.entities.Add(view);
-
-            // Synchronization
-            this.SynchronizationData = new SynchronizationData();
+            this.Entities.Add(view);
 
             base.LoadContent(interop);
-        }
-
-        private void S()
-        {
-            // Data scanning
-            Testimony.FsiSession.EvalScript("Script.fsx");
-        }
-
-        #endregion
-
-        #region Draw
-
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
-        {
-            this.entities.Draw(graphics, time, alpha);
         }
 
         #endregion
@@ -146,20 +128,18 @@
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            var keyboard = input.State.Keyboard;
-            if (keyboard.IsActionTriggered(KeyboardActions.Enter))
-            {
-                this.SwitchSync();
-            }
+            this.Entities.UpdateInput(input, time);
 
-            this.entities.UpdateInput(input, time);
+            base.UpdateInput(input, time);
         }
 
         public override void Update(GameTime time)
         {
-            this.entities.UpdateForwardBuffer();
-            this.entities.Update(time);
-            this.entities.UpdateBackwardBuffer();
+            this.Entities.UpdateForwardBuffer();
+            this.Entities.Update(time);
+            this.Entities.UpdateBackwardBuffer();
+
+            base.Update(time);
         }
 
         #endregion
@@ -226,36 +206,6 @@
                 view[ViewState.View_Has_Selection]();
 
             return viewRegion;
-        }
-
-        #endregion
-
-        #region Synchronization
-
-        public ISynchronizationData SynchronizationData { get; set; }
-
-        public void StartSync()
-        {
-            var @event = this.GameInterop.Event;
-            @event.QueueEvent(new Event((int)SessionEventType.SyncStarted, new SynchronizationStartedEventArgs(this.SynchronizationData)));
-        }
-
-        public void StopSync()
-        {
-            var @event = this.GameInterop.Event;
-            @event.QueueEvent(new Event((int)SessionEventType.SyncStopped, new SynchronizationStoppedEventArgs(this.SynchronizationData)));
-        }
-
-        public void SwitchSync()
-        {
-            if (!this.SynchronizationData.IsSynchronizing)
-            {
-                this.StartSync();
-            }
-            else
-            {
-                this.StopSync();
-            }
         }
 
         #endregion

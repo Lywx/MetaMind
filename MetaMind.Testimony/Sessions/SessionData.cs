@@ -28,7 +28,7 @@
 
         private void Reset()
         {
-            this.Test = new Test("Root", "Root of tests");
+            this.Test = new Test("Root", "Root of tests", "");
         }
 
         [OnDeserialized]

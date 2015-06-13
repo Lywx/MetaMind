@@ -55,13 +55,13 @@ namespace MetaMind.Testimony.Guis.Modules
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Awaken))
+            if (input.State.Keyboard.IsActionTriggered(KeyboardActions.ConsciousnessAwaken))
             {
                 // This trigger synchronization listener to reset today
                 this.Consciousness.Awaken();
             }
 
-            if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Sleep))
+            if (input.State.Keyboard.IsActionTriggered(KeyboardActions.ConsciousnessSleep))
             {
                 this.Consciousness.Sleep();
             }

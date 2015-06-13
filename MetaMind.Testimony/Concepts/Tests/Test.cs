@@ -9,17 +9,13 @@ namespace MetaMind.Testimony.Concepts.Tests
 {
     using System;
     using System.Collections;
-    using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.Runtime.Serialization;
 
     using Engine.Guis.Widgets.Items.Data;
 
-    [DataContract]
-    [KnownType(typeof(Test))]
     public partial class Test : ITest, IBlockViewVerticalItemData
     {
-        public Test(string name, string description)
+        public Test(string name, string description, string path)
         {
             if (name == null)
             {
@@ -33,6 +29,7 @@ namespace MetaMind.Testimony.Concepts.Tests
 
             this.Name        = name;
             this.Description = description;
+            this.Path        = path;
 
             this.Parent   = null;
             this.Children = new ObservableCollection<Test>();
@@ -42,14 +39,13 @@ namespace MetaMind.Testimony.Concepts.Tests
 
         #region Test
 
-        [DataMember]
         public string Name { get; set; }
 
-        [DataMember]
         public string Description { get; set; }
 
-        [DataMember]
         public string Status { get; set; }
+
+        public string Path { get; set; }
 
         #endregion
 
@@ -73,12 +69,10 @@ namespace MetaMind.Testimony.Concepts.Tests
         #endregion
     }
 
-    [KnownType(typeof(List<ITest>))]
     public partial class Test
     {
         #region Structure
 
-        [DataMember]
         public ObservableCollection<Test> Children { get; private set; }
 
         public bool HasChildren
@@ -86,7 +80,6 @@ namespace MetaMind.Testimony.Concepts.Tests
             get { return this.Children != null && this.Children.Count != 0; }
         }
 
-        [DataMember]
         public Test Parent { get; private set; }
 
         public bool HasParent
@@ -131,7 +124,6 @@ namespace MetaMind.Testimony.Concepts.Tests
 
     public partial class Test
     {
-        [DataMember]
         public TimeSpan TestSpan { get; set; }
 
         public Func<bool> TestPassed { get; set; }
@@ -140,16 +132,10 @@ namespace MetaMind.Testimony.Concepts.Tests
 
         #region Operations
 
-        [OnDeserialized]
-        public void Reset(StreamingContext context)
-        {
-            this.Reset();
-        }
-
         public void Reset()
         {
             this.TestPassed = () => false;
-            this.TestStatus = () => "";
+            this.TestStatus = () => this.TestPassed() ? "SUCCEEDED" : "FAILED";
         }
 
         #endregion
@@ -159,6 +145,11 @@ namespace MetaMind.Testimony.Concepts.Tests
         public void Update()
         {
             this.Status = this.TestStatus();
+
+            foreach (var child in this.Children)
+            {
+                child.Update();
+            }
         }
 
         #endregion

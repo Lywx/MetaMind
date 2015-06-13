@@ -1,10 +1,14 @@
 ﻿namespace MetaMind.Testimony.Scripting
 {
     using System;
+    using System.Collections.Generic;
+    using Engine;
 
-    public class ScriptRunner
+    public class ScriptRunner : GameEntity
     {
         private readonly ScriptSearcher searcher;
+
+        private List<string> searchResult;
 
         public ScriptRunner(ScriptSearcher searcher)
         {
@@ -16,14 +20,36 @@
             this.searcher = searcher;
         }
 
+        public void Search()
+        {
+            this.searchResult = this.searcher.SearchScriptPaths();
+        }
+
         public void Run()
         {
-            foreach (var path in this.searcher.SearchScriptPaths())
+            if (this.searchResult != null)
             {
-                var script = new Script(path);
+                var console = this.GameInterop.Console;
+                console.WriteLine("MESSAGE: Script evaluation started");
 
-                script.Run(Testimony.FsiSession);
+                foreach (var path in this.searchResult)
+                {
+                    var script = new Script(path);
+
+                    script.Run(Testimony.FsiSession);
+                }
             }
+            else
+            {
+                this.Search();
+                this.Run();
+            }
+        }
+
+        public void Rerun()
+        {
+            this.Search();
+            this.Run(); 
         }
     }
 }

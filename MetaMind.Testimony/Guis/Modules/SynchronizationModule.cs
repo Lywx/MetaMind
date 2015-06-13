@@ -12,36 +12,23 @@
     /// </summary>
     public class SynchronizationModule : Module<SynchronizationSettings>
     {
-        #region Constructors
+        private readonly IConsciousness consciousness;
 
-        public SynchronizationModule(IConsciousness consciousness, ISynchronization synchronization, SynchronizationSettings settings)
+        private readonly ISynchronization synchronization;
+
+        public SynchronizationModule(ICognition cognition, SynchronizationSettings settings)
             : base(settings)
         {
-            if (consciousness == null)
+            if (cognition == null)
             {
-                throw new ArgumentNullException("consciousness");
+                throw new ArgumentNullException("cognition");
             }
 
-            if (synchronization == null)
-            {
-                throw new ArgumentNullException("synchronization");
-            }
+            this.consciousness   = cognition.Consciousness;
+            this.synchronization = cognition.Synchronization;
 
-            this.Consciousness   = consciousness;
-            this.Synchronization = synchronization;
-
-            this.Logic  = new SynchronizationModuleLogic(this, this.Consciousness, this.Synchronization);
-            this.Visual = new SynchronizationModuleVisual(this, this.Consciousness, this.Synchronization);
+            this.Logic  = new SynchronizationModuleLogic(this, this.consciousness, this.synchronization);
+            this.Visual = new SynchronizationModuleVisual(this, cognition, this.consciousness, this.synchronization);
         }
-
-        #endregion Constructors
-
-        #region Dependency
-
-        private IConsciousness Consciousness { get; set; }
-
-        private ISynchronization Synchronization { get; set; }
-
-        #endregion
     }
 }

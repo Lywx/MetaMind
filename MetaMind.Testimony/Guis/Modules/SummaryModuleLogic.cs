@@ -49,12 +49,12 @@
         {
             var keyboard = input.State.Keyboard;
 
-            if (keyboard.IsActionTriggered(KeyboardActions.Awaken))
+            if (keyboard.IsActionTriggered(KeyboardActions.ConsciousnessAwaken))
             {
                 this.Consciousness.Awaken();
             }
 
-            if (keyboard.IsActionTriggered(KeyboardActions.Sleep))
+            if (keyboard.IsActionTriggered(KeyboardActions.ConsciousnessSleep))
             {
                 this.Consciousness.Sleep();
             }
