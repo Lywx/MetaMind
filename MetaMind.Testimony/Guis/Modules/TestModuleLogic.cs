@@ -44,6 +44,7 @@
 
             if (keyboard.IsActionTriggered(KeyboardActions.TestRerun))
             {
+                this.Module.Test.Reset();
                 this.scriptRunner.Rerun();
             }
 

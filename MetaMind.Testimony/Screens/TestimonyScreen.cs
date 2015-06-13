@@ -41,12 +41,12 @@
             var test = Testimony.SessionData.Test;
 
             var synchronization = new SynchronizationModule(cognition, new SynchronizationSettings());
-            synchronization.LoadContent(interop);
             this.Entities.Add(synchronization);
 
             var experience = new TestModule(test, new TestModuleSettings());
-            experience.LoadContent(interop);
             this.Entities.Add(experience);
+
+            this.Entities.LoadContent(interop);
         }
 
         public override void UnloadContent(IGameInteropService interop)

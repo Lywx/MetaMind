@@ -101,7 +101,7 @@ namespace MetaMind.Testimony.Guis.Widgets
 
                 this.StatusLabel = new ViewItemLabelVisual(this.Item, labelSettings);
                 this.StatusLabel.Label.TextColor = () =>
-                        this.Item.ItemData.TestPassed()
+                        this.Item.ItemData.Passed
                             ? Palette.LightGreen
                             : Palette.LightPink;
                 this.StatusLabel.Label.Text = () => this.Item.ItemData.Status;

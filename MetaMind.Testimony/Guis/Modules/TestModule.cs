@@ -1,14 +1,10 @@
 ﻿namespace MetaMind.Testimony.Guis.Modules
 {
     using System.Collections.Generic;
-
     using Microsoft.Xna.Framework;
 
-    using Concepts.Synchronizations;
     using Concepts.Tests;
     using Engine;
-    using Engine.Components.Events;
-    using Engine.Components.Inputs;
     using Engine.Guis;
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Data;
@@ -32,6 +28,8 @@
 
         private readonly ITest test;
 
+        private IView view;
+
         public TestModule(ITest test, TestModuleSettings settings)
             : base(settings)
         {
@@ -44,6 +42,16 @@
         public GameControllableEntityCollection<IView> Entities
         {
             get { return this.entities; }
+        }
+
+        public IView View
+        {
+            get { return this.view; }
+        }
+
+        public ITest Test
+        {
+            get { return this.test; }
         }
 
         #region Load and Unload
@@ -60,15 +68,15 @@
             // Item settings
             var itemSettings = new TestItemSettings();
 
-            // View
-            var view = new View(viewSettings, itemSettings, new List<IViewItem>());
+            // View construction
+            this.view = new View(viewSettings, itemSettings, new List<IViewItem>());
 
             // View composition
-            var viewSelection = new BlockViewVerticalSelectionController(view);
-            var viewScroll    = new BlockViewVerticalScrollController(view);
-            var viewSwap      = new ViewSwapController(view);
-            var viewLayout    = new BlockViewVerticalLayout(view);
-            var viewLayer     = new BlockViewVerticalLayer(view);
+            var viewSelection = new BlockViewVerticalSelectionController(this.View);
+            var viewScroll    = new BlockViewVerticalScrollController(this.View);
+            var viewSwap      = new ViewSwapController(this.View);
+            var viewLayout    = new BlockViewVerticalLayout(this.View);
+            var viewLayer     = new BlockViewVerticalLayer(this.View);
 
             // Item composition
             var itemFactory = new ViewItemFactory(
@@ -93,31 +101,25 @@
 
                 item => new TestItemVisual(item));
 
+            // View logic
+            var viewLogic  = new TestViewLogic(this.View, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory);
+            viewLogic.ViewBinding = new TestViewBinding(viewLogic, this.Test.Children);
+
+            // View visual
+            var viewVisual = new GradientViewVisual(this.View);
+
             // View setup
-            var viewLogic = new TestViewLogic(
-                view,
-                viewScroll,
-                viewSelection,
-                viewSwap,
-                viewLayout,
-                itemFactory);
-            viewLogic.ViewBinding = new TestViewBinding(viewLogic, test.Children);
+            this.View.ViewLayer = viewLayer;
+            this.View.ViewLogic = viewLogic;
+            this.View.ViewVisual = viewVisual;
 
-            var viewVisual = new GradientViewVisual(view);
-
-            this.SetupView(view, viewLayer, viewLogic, viewVisual);
-
-            var viewRegion = this.SetupViewRegion(view, viewSettings);
-            var viewScrollbar = this.SetupViewScrollbar(
-                view,
-                viewSettings,
-                viewLayer,
-                viewScroll,
-                viewLayout,
-                viewRegion);
+            var viewRegion = this.SetupViewRegion(this.View, viewSettings);
+            var viewScrollbar = this.SetupViewScrollbar(this.View, viewSettings, viewLayer, viewScroll, viewLayout, viewRegion);
 
             // Entities
-            this.Entities.Add(view);
+            this.Entities.Add(this.View);
+
+            this.Entities.LoadContent(interop);
 
             base.LoadContent(interop);
         }
@@ -145,20 +147,6 @@
         #endregion
 
         #region Composition
-
-        private void SetupView(
-            IView view,
-            BlockViewVerticalLayer viewLayer,
-            TestViewLogic viewLogic,
-            GradientViewVisual viewVisual)
-        {
-            view.ViewLayer = viewLayer;
-            view.ViewLogic = viewLogic;
-            view.ViewVisual = viewVisual;
-
-            view.SetupLayer();
-            view.SetupBinding();
-        }
 
         private IViewVerticalScrollbar SetupViewScrollbar(
             IView view,
@@ -201,9 +189,9 @@
 
             view.ViewComponents.Add("ViewRegion", viewRegion);
 
-            view[ViewState.View_Has_Focus] = () => 
-                viewRegion[RegionState.Region_Has_Focus]() || 
-                view[ViewState.View_Has_Selection]();
+            view[ViewState.View_Has_Focus] =
+                () => viewRegion[RegionState.Region_Has_Focus]() ||
+                      view[ViewState.View_Has_Selection]();
 
             return viewRegion;
         }
