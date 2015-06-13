@@ -4,10 +4,10 @@ namespace MetaMind.Testimony.Concepts.Tests
 
     public interface ITestComputation
     {
-        TimeSpan TestSpan { get; set; }
+        TimeSpan TestSpan { set; }
 
-        Func<bool> TestPassed { get; set; }
+        Func<bool> TestPassed { set; }
 
-        Func<string> TestStatus { get; set; }
+        Func<string> TestStatus { set; }
     }
 }

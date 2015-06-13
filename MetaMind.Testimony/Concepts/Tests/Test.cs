@@ -10,10 +10,12 @@ namespace MetaMind.Testimony.Concepts.Tests
     using System;
     using System.Collections;
     using System.Collections.ObjectModel;
-
+    using System.Linq;
+    using Engine;
+    using Engine.Components;
     using Engine.Guis.Widgets.Items.Data;
 
-    public partial class Test : ITest, IBlockViewVerticalItemData
+    public partial class Test : GameEntity, ITest, IBlockViewVerticalItemData
     {
         public Test(string name, string description, string path)
         {
@@ -39,13 +41,11 @@ namespace MetaMind.Testimony.Concepts.Tests
 
         #region Test
 
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
-        public string Description { get; set; }
+        public string Description { get; private set; }
 
-        public string Status { get; set; }
-
-        public string Path { get; set; }
+        public string Path { get; private set; }
 
         #endregion
 
@@ -124,16 +124,80 @@ namespace MetaMind.Testimony.Concepts.Tests
 
     public partial class Test
     {
+        private readonly string failingCue = "Test Failure";
+
+        private readonly string succeedingCue = "Test Success";
+
+        private bool passed;
+
+        public bool Passed
+        {
+            get { return this.passed; }
+            private set
+            {
+                var failing    = this.passed && !value;
+                var succeeding = !this.passed && value;
+
+                this.passed = value;
+
+                if (failing)
+                {
+                    this.OnFailing();
+                }
+
+                if (succeeding)
+                {
+                    this.OnSucceeding();
+                }
+            }
+        }
+
+        public string Status { get; private set; }
+
         public TimeSpan TestSpan { get; set; }
 
-        public Func<bool> TestPassed { get; set; }
+        public Func<bool> TestPassed { get; set; } 
 
         public Func<string> TestStatus { get; set; }
+
+        #region Events
+
+        public event EventHandler Succeeding;
+
+        public event EventHandler Failing;
+            
+        private void OnFailing()
+        {
+            var audio = this.GameInterop.Audio;
+            audio.PlayCue(failingCue);
+
+            if (this.Failing != null)
+            {
+                this.Failing(this, EventArgs.Empty);
+            }
+        }
+
+        private void OnSucceeding()
+        {
+            var audio = this.GameInterop.Audio;
+            audio.PlayCue(succeedingCue);
+
+            if (this.Succeeding != null)
+            {
+                this.Succeeding(this, EventArgs.Empty);
+            }
+        }
+
+        #endregion
+
 
         #region Operations
 
         public void Reset()
         {
+            this.Parent = null;
+            this.Children.Clear();
+
             this.TestPassed = () => false;
             this.TestStatus = () => this.TestPassed() ? "SUCCEEDED" : "FAILED";
         }
@@ -144,9 +208,10 @@ namespace MetaMind.Testimony.Concepts.Tests
 
         public void Update()
         {
+            this.Passed = this.TestPassed();
             this.Status = this.TestStatus();
 
-            foreach (var child in this.Children)
+            foreach (var child in this.Children.ToArray())
             {
                 child.Update();
             }

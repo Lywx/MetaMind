@@ -1,14 +1,27 @@
 ﻿namespace MetaMind.Testimony.Concepts.Tests
 {
-    public interface ITest : ITestStructure,
-        ITestComputation,
-        ITestOperations,
-        IInnerUpdatable
+    using System;
+
+    public interface ITest : ITestStructure, ITestComputation, ITestOperations, IInnerUpdatable
     {
-        string Name { get; set; }
+        #region Properties
 
-        string Description { get; set; }
+        string Name { get; }
 
-        string Status { get; set; }
+        string Description { get; }
+
+        string Status { get; }
+
+        bool Passed { get; }
+
+        #endregion
+
+        #region Events
+
+        event EventHandler Succeeding;
+
+        event EventHandler Failing;
+
+        #endregion
     }
 }
