@@ -16,7 +16,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     using MetaMind.Engine.Guis.Widgets.Views.Settings;
     using MetaMind.Engine.Guis.Widgets.Views.Visuals;
 
-    public interface IView : IViewEntity, IViewOperations  
+    public interface IView : IViewEntity, IViewOperations
     {
         #region View Data
 
@@ -36,6 +36,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         List<IViewItem> ItemsRead { get; }
 
+        /// <summary>
+        /// Items collection that is used to write to next frame.
+        /// </summary>
+        /// <remarks>
+        /// This collection should avoid being written twice in one frame, 
+        /// because of the possible operation collision using the ItemsRead data.
+        /// </remarks>
         List<IViewItem> ItemsWrite { get; set; }
 
         ItemSettings ItemSettings { get; set; }

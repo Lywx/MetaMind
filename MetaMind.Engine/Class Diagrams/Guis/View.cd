@@ -3,10 +3,13 @@
   <Comment CommentText="Universal Application Layer">
     <Position X="3.534" Y="5.918" Height="0.439" Width="1.7" />
   </Comment>
+  <Comment CommentText="ViewLogic/ItemLogic: &#xD;&#xA;&#xD;&#xA;The ViewLogic/ItemLogic family of class is the most outter abstraction of view operations operations. The logic allocates certain tasks to various controller. The deeper the operations hide from the ViewLogic, the subtler the operations are.">
+    <Position X="7.339" Y="3.663" Height="1.478" Width="2.967" />
+  </Comment>
   <Class Name="MetaMind.Engine.Guis.Widgets.Views.Settings.ViewSettings">
     <Position X="3.5" Y="6.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAgAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <HashCode>AAAAAgAAAQAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAABA=</HashCode>
       <FileName>Guis\Widgets\Views\Settings\ViewSettings.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -22,35 +25,35 @@
   <Interface Name="MetaMind.Engine.Guis.Widgets.Items.IViewItem">
     <Position X="0.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AABBAQAAAwAAAACAAAAQAQAAAQABAAAACAQAAgAAAAI=</HashCode>
+      <HashCode>AAABAAAAAwAAAACAAAAQAQAAAQABAAAAAAQAAgAAAAI=</HashCode>
       <FileName>Guis\Widgets\Items\IViewItem.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
+      <Property Name="ItemSettings" />
       <Property Name="ItemLogic" />
       <Property Name="ItemVisual" />
-      <Property Name="View" />
       <Property Name="ItemLayer" />
-      <Property Name="ItemSettings" />
+      <Property Name="View" />
     </ShowAsAssociation>
   </Interface>
   <Interface Name="MetaMind.Engine.Guis.Widgets.Views.IView">
     <Position X="0.5" Y="9" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AABBAAAAAAABAAAAAAAAAAAACAQAAEgAAAABAAAAAAQ=</HashCode>
+      <HashCode>AAABAAAAAAABAAAAAAAAAAAACAQAAEgAAAABAAAAAAQ=</HashCode>
       <FileName>Guis\Widgets\Views\IView.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="ViewLogic" />
       <Property Name="ViewVisual" />
+      <Property Name="ViewLayer" />
       <Property Name="ViewSettings" />
       <Property Name="ItemSettings" />
-      <Property Name="ViewLayer" />
     </ShowAsAssociation>
   </Interface>
   <Interface Name="MetaMind.Engine.Guis.Widgets.Views.Logic.IViewLogic">
     <Position X="0.5" Y="13.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIAAAABAAQAAAAAAAAAAAAAAAAAAAAAAAAQQAAAAAAA=</HashCode>
+      <HashCode>IIAAAABAAQAAAAAAAAAAAAAAAAAAAAAAAAQQAAAAAAA=</HashCode>
       <FileName>Guis\Widgets\Views\Logic\IViewLogic.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -68,10 +71,10 @@
       <FileName>Guis\Widgets\Items\Logic\IViewItemLogic.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
+      <Property Name="ItemModel" />
       <Property Name="ItemFrame" />
       <Property Name="ItemInteraction" />
       <Property Name="ItemLayout" />
-      <Property Name="ItemModel" />
     </ShowAsAssociation>
   </Interface>
   <Interface Name="MetaMind.Engine.Guis.Widgets.Items.Frames.IViewItemFrame" Collapsed="true">
@@ -144,13 +147,6 @@
       <FileName>Guis\Widgets\Items\Logic\IPointView2DItemLogic.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="MetaMind.Engine.Guis.Widgets.Views.Logic.IPointGridLogic">
-    <Position X="11" Y="17.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Guis\Widgets\Views\Logic\IPointGridLogic.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
   <Interface Name="MetaMind.Engine.Guis.Widgets.Views.Scrolls.IViewScrollController">
     <Position X="3.5" Y="13.5" Width="1.5" />
     <TypeIdentifier>
@@ -210,7 +206,7 @@
   <Interface Name="MetaMind.Engine.Guis.Widgets.Views.IViewComponent" Collapsed="true">
     <Position X="0.75" Y="17.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAEAAAAAAAAAAAgAAAAAAAAAAAABAAAAiAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Guis\Widgets\Views\IViewComponent.cs</FileName>
     </TypeIdentifier>
   </Interface>

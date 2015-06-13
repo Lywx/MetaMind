@@ -8,7 +8,6 @@
 namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
 
     using Components.Processes;
@@ -37,8 +36,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
             IViewLogic     draggingViewLogic, 
             IViewItem      swappingItem, 
             IViewItemLogic swappingItemLogic, 
-            IViewLogic     swappingViewLogic, 
-            IReadOnlyList<object> dataList = null)
+            IViewLogic     swappingViewLogic)
             : base(10)
         {
             if (draggingItem == null)
@@ -79,8 +77,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
             this.SwappingItemLogic = swappingItemLogic;
             this.SwappingViewLogic = swappingViewLogic;
 
-            this.DataList = dataList;
-
             this.inSameView = ReferenceEquals(
                 this.SwappingItem.View,
                 this.DraggingItem.View);
@@ -109,15 +105,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
         protected IViewItemLogic DraggingItemLogic { get; set; }
 
         protected IViewLogic SwappingViewLogic { get; set; }
-
-        /// <summary>
-        /// Data model to manipulate data collection.
-        /// </summary>
-        /// <remarks>
-        /// I saw this IList<T> as a data model. It maintains a collection of data and 
-        /// it is easy to provide management method as extension method.
-        /// </remarks>>
-        protected IReadOnlyList<object> DataList { get; set; }
 
         #endregion
 
@@ -179,8 +166,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
 
         protected virtual void SwapAroundView()
         {
-            this.SwapDataInList();
-
             // Temporarily take control of view focus state
             this.DraggingViewLogic.ViewSelection.Cancel();
             this.DraggingItem.View[ViewState.View_Has_Focus] = () => false;
@@ -192,7 +177,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
 
         protected virtual void SwapInView()
         {
-            this.SwapDataInList();
             this.SwapItemInList();
         }
 
@@ -209,16 +193,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
                 this.SwappingItem.View.ItemsWrite,
                 this.SwappingItemLogic.ItemLayout.Id,
                 this.DraggingItemLogic.ItemLayout.Id);
-        }
-
-        protected virtual void SwapDataInList()
-        {
-            dynamic mutableList = this.DataList;
-
-            ExtList.Swap(
-                mutableList,
-                (int)mutableList.IndexOf(this.DraggingItem.ItemData),
-                (int)mutableList.IndexOf(this.SwappingItem.ItemData));
         }
 
         private void SwapTerminate()

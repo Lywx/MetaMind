@@ -72,14 +72,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Swaps
 
         #endregion
 
-        public virtual void StartProcess(
-            IGameInteropService interop,
-            IViewItem touchedItem,
-            Vector2 touchedStart,
-            IViewItem draggingItem,
-            IView draggingView,
-            Vector2 draggingEnd,
-            IReadOnlyList<object> dataList)
+        public virtual void StartProcess(IGameInteropService interop, IViewItem touchedItem, Vector2 touchedStart, IViewItem draggingItem, IView draggingView, Vector2 draggingEnd)
         {
             this.HasStarted = true;
             this.Progress   = 0f;
@@ -95,8 +88,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Swaps
                 draggingView.ViewLogic,
                 touchedItem,
                 touchedItem.ItemLogic,
-                this.View.ViewLogic,
-                dataList));
+                this.View.ViewLogic));
         }
 
         public void WatchProcess(IViewItem item)

@@ -83,13 +83,14 @@ namespace MetaMind.Engine.Screens
             get { return this.isExiting; }
             protected internal set
             {
-                var fireEvent = !this.isExiting && value;
+                // fire when set false to true
+                var exiting = !this.isExiting && value;
+
                 this.isExiting = value;
 
-                if (fireEvent &&
-                    this.Exiting != null)
+                if (exiting)
                 {
-                    this.Exiting(this, EventArgs.Empty);
+                    this.OnExisting();
                 }
             }
         }
@@ -128,30 +129,19 @@ namespace MetaMind.Engine.Screens
 
         #endregion Screen State Data
 
-        protected GameScreen()
-        {
-            this.SetupService();
-        }
-
         #region Screen Events
 
         public event EventHandler Exiting;
 
-        #endregion Screen Events
-
-        #region Service
-
-        protected IGameInteropService Interop { get; set; }
-
-        private void SetupService()
+        public void OnExisting()
         {
-            if (GameEngine.Service != null)
+            if (this.Exiting != null)
             {
-                this.Interop = GameEngine.Service.Interop;
+                this.Exiting(this, EventArgs.Empty);
             }
         }
 
-        #endregion
+        #endregion Screen Events
 
         #region Load and Unload
 
@@ -265,6 +255,33 @@ namespace MetaMind.Engine.Screens
 
         #endregion Update
 
+        #region IDisposable
+
+        public virtual void Dispose()
+        {
+        }
+
+        #endregion IDisposable
+
+        protected GameScreen()
+        {
+            this.SetupService();
+        }
+
+        #region Service
+
+        protected IGameInteropService Interop { get; set; }
+
+        private void SetupService()
+        {
+            if (GameEngine.Service != null)
+            {
+                this.Interop = GameEngine.Service.Interop;
+            }
+        }
+
+        #endregion
+
         #region Operations
 
         /// <summary>
@@ -274,10 +291,11 @@ namespace MetaMind.Engine.Screens
         /// </summary>
         public void Exit()
         {
-            // flag that it should transition off and then exit.
+            // Flag that it should transition off and then exit.
             this.IsExiting = true;
 
             // If the screen has a zero transition time, remove it immediately.
+            // This clause is an extreme case which usually won't be triggered.
             if (this.TransitionOffTime == TimeSpan.Zero)
             {
                 var screen = this.Interop.Screen;
@@ -286,13 +304,5 @@ namespace MetaMind.Engine.Screens
         }
 
         #endregion Operations
-
-        #region IDisposable
-
-        public virtual void Dispose()
-        {
-        }
-
-        #endregion IDisposable
     }
 }

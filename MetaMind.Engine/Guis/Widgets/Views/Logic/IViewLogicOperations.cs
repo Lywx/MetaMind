@@ -4,7 +4,9 @@
     {
         #region Binding
 
-        void SetupBinding();
+        void LoadBinding();
+
+        void UnloadBinding();
 
         #endregion
 

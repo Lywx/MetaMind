@@ -58,8 +58,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
                 this.viewScroll.Position(this.itemLayout.Row),
                 draggingItem,
                 draggingItem.View,
-                draggingViewScroll.Position(draggingItemLayout.Row),
-                this.viewBinding.AllData);
+                draggingViewScroll.Position(draggingItemLayout.Row));
         }
     }
 }

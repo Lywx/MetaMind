@@ -100,7 +100,8 @@ namespace MetaMind.Engine.Components
 
         public void OnExiting()
         {
-            this.Game.OnExiting();
+            this.Screen.OnExiting();
+            this.Game  .OnExiting();
         }
     }
 }

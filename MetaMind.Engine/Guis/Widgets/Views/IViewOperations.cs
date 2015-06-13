@@ -8,14 +8,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         T GetLayer<T>() where T : class, IViewLayer;
 
-        void SetupLayer();
-
-        #endregion
-
-        #region Binding
-
-        void SetupBinding();
-
         #endregion
     }
 }

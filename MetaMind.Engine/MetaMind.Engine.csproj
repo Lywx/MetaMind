@@ -75,6 +75,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Components\IScreenManagerOperations.cs" />
     <Compile Include="Components\Processes\ProcessCounter.cs" />
     <Compile Include="Components\Processes\StepProcess.cs" />
     <Compile Include="Extensions\ExtT.cs" />
@@ -672,6 +673,9 @@
     <Content Include="Content\Textures\Screens\Blank.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Class Diagrams\Components.cd" />
+    <None Include="Class Diagrams\Guis\View.cd" />
+    <None Include="Class Diagrams\Guis\View Visual.cd" />
     <None Include="Content\Audio\Win\Audio.xgs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

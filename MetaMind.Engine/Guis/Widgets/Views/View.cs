@@ -86,22 +86,24 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             return this.ViewLayer.Get<T>();
         }
 
-        public void SetupLayer()
+        #endregion
+
+        public override void LoadContent(IGameInteropService interop)
         {
             this.ViewLogic .SetupLayer();
             this.ViewVisual.SetupLayer();
+
+            this.ViewLogic.LoadBinding();
+
+            base.LoadContent(interop);
         }
 
-        #endregion
-
-        #region Binding
-
-        public void SetupBinding()
+        public override void UnloadContent(IGameInteropService interop)
         {
-            this.ViewLogic.SetupBinding();
-        }
+            this.ViewLogic.UnloadBinding();
 
-        #endregion
+            base.UnloadContent(interop);
+        }
 
         #region Draw
 

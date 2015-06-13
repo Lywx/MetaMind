@@ -9,7 +9,7 @@
 namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 {
     using System;
-    using System.Collections.Generic;
+
     using Components.Inputs;
     using Items;
     using Items.Data;
@@ -104,9 +104,16 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         #region Binding
 
-        public void SetupBinding()
+        public void LoadBinding()
         {
+            this.ViewBinding.Bind();
+
             this.ResetItems();
+        }
+
+        public void UnloadBinding()
+        {
+            this.ViewBinding.Unbind();
         }
 
         #endregion

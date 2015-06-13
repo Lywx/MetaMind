@@ -18,7 +18,7 @@ namespace MetaMind.Engine.Components
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    public class ScreenManager : DrawableGameComponent, IScreenManager
+    public partial class ScreenManager : DrawableGameComponent, IScreenManager
     {
         #region Dependency
 
@@ -276,7 +276,10 @@ namespace MetaMind.Engine.Components
         }
 
         #endregion Update and Draw
+    }
 
+    public partial class ScreenManager
+    {
         #region Operations
 
         /// <summary>
@@ -344,5 +347,17 @@ namespace MetaMind.Engine.Components
         }
 
         #endregion Operations
+
+        #region Evente
+
+        /// <summary>
+        /// Called when the Game Engine is closed by Exit / Restart operations.
+        /// </summary>
+        public void OnExiting()
+        {
+            this.UnloadContent();
+        }
+
+        #endregion
     }
 }
