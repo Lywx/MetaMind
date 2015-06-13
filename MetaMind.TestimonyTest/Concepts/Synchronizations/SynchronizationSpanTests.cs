@@ -5,13 +5,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.TestimonyTest
+namespace MetaMind.TestimonyTest.Concepts.Synchronizations
 {
     using System;
-
-    using MetaMind.Testimony.Concepts.Synchronizations;
-
     using NUnit.Framework;
+    using Testimony.Concepts.Synchronizations;
 
     [TestFixture]
     public class SynchronizationSpanTests
