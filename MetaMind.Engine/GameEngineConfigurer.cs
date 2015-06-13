@@ -52,7 +52,8 @@
                 graphics.StringDrawer,
                 new GameConsoleOptions
                 {
-                    Font            = Font.UiConsole,
+                    Font = Font.UiConsole,
+                    Height = 850,
                     BackgroundColor = new Color(0, 0, 0, 256 * 3 / 4)
                 });
             console.AddCommand(new ResetCommand(file));

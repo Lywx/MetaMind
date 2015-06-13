@@ -99,7 +99,7 @@
 
             this.firstCommandPositionOffset = Vector2.Zero;
 
-            this.oneCharacterWidth = GameConsoleOptions.Options.Font.MeasureString("x").X;
+            this.oneCharacterWidth = GameConsoleOptions.Options.Font.MeasureMonospacedString("x", 1f).X;
             this.maxCharactersPerLine = (int)((this.Bounds.Width - GameConsoleOptions.Options.Padding * 2) / this.oneCharacterWidth);
         }
 

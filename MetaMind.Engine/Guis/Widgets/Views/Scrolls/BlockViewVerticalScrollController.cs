@@ -27,6 +27,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
         {
             get
             {
+#if DEBUG
+                Debug.Assert(0 < this.View.ItemsRead.Count);
+#endif
                 var itemLayer = this.ItemGetLayer(this.View.ItemsRead.Last());
                 return (this.ViewSettings.ViewRowDisplay + this.RowOffset) < itemLayer.ItemLayout.Row + itemLayer.ItemLayout.BlockRow;
             }
@@ -54,6 +57,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
 
         public override void MoveDown()
         {
+            // Items is empty
+            if (this.View.ItemsRead.Count == 0)
+            {
+                return;
+            }
+
             if (this.CanMoveDown)
             {
                 var itemLayer = this.ItemGetLayer(this.View.ItemsRead[this.currentId]);
@@ -70,6 +79,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
 
         public override void MoveUp()
         {
+            // Items is empty
+            if (this.View.ItemsRead.Count == 0)
+            {
+                return;
+            }
+
             if (this.CanMoveUp)
             {
                 if (this.currentId > 0)
