@@ -14,7 +14,7 @@
             ViewDirection viewDirection = ViewDirection.Normal)
             : base(itemMargin, viewPosition, viewRowDisplay, viewRowMax, viewDirection)
         {
-            this.Add("ViewVerticalScrollbar", new ViewScrollbarSettings());
+            this.Add("ViewVerticalScrollbar", new ViewScrollbarSettings { Width = 15 });
         }
     }
 }

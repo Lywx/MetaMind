@@ -6,6 +6,7 @@
     using Concepts.Tests;
     using Engine;
     using Engine.Guis;
+    using Engine.Guis.Elements;
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Data;
     using Engine.Guis.Widgets.Items.Factories;
@@ -113,8 +114,25 @@
             this.View.ViewLogic = viewLogic;
             this.View.ViewVisual = viewVisual;
 
-            var viewRegion = this.SetupViewRegion(this.View, viewSettings);
+            // View region
+            var viewRegionSettings = new ViewRegionSettings();
+            var viewRegion = new ViewRegion(
+                regionBounds: () => new Rectangle(
+                    location: viewSettings.ViewPosition.ToPoint(),
+                    size: new Point(
+                        x: 512 + 128 + 24,
+                        y: (int)(viewSettings.ViewRowDisplay * viewSettings.ItemMargin.Y))),
+                regionSettings: viewRegionSettings);
+            this.View.ViewComponents.Add("ViewRegion", viewRegion);
+
+            // View scrollbar
             var viewScrollbar = this.SetupViewScrollbar(this.View, viewSettings, viewLayer, viewScroll, viewLayout, viewRegion);
+
+            // View focus
+            this.View[ViewState.View_Has_Focus] = () =>
+                this.View[ViewState.View_Has_Selection]() ||
+                viewRegion[RegionState.Region_Has_Focus]() ||
+                viewScrollbar[FrameState.Frame_Is_Dragging]();
 
             // Entities
             this.Entities.Add(this.View);
@@ -158,42 +176,16 @@
         {
             var viewVerticalScrollbarSettings = viewSettings.Get<ViewScrollbarSettings>("ViewVerticalScrollbar");
 
-            var viewScrollbar = new ViewVerticalScrollbar(
-                viewSettings,
-                viewScroll,
-                viewLayout,
-                viewRegion,
-                viewVerticalScrollbarSettings);
+            var viewScrollbar = new ViewVerticalScrollbar(viewSettings, viewScroll, viewLayout, viewRegion, viewVerticalScrollbarSettings);
 
             view.ViewComponents.Add("ViewVerticalScrollbar", viewScrollbar);
 
-            viewLayer.ViewLogic.ScrolledUp   += (sender, args) => viewScrollbar.Trigger();
-            viewLayer.ViewLogic.ScrolledDown += (sender, args) => viewScrollbar.Trigger();
-            viewLayer.ViewLogic.MovedUp      += (sender, args) => viewScrollbar.Trigger();
-            viewLayer.ViewLogic.MovedDown    += (sender, args) => viewScrollbar.Trigger();
+            viewLayer.ViewLogic.ScrolledUp   += (sender, args) => viewScrollbar.Toggle();
+            viewLayer.ViewLogic.ScrolledDown += (sender, args) => viewScrollbar.Toggle();
+            viewLayer.ViewLogic.MovedUp      += (sender, args) => viewScrollbar.Toggle();
+            viewLayer.ViewLogic.MovedDown    += (sender, args) => viewScrollbar.Toggle();
 
             return viewScrollbar;
-        }
-
-        private ViewRegion SetupViewRegion(IView view, TestViewSettings viewSettings)
-        {
-            var viewRegionSettings = new ViewRegionSettings();
-
-            var viewRegion = new ViewRegion(
-                regionBounds: () => new Rectangle(
-                    location: viewSettings.ViewPosition.ToPoint(),
-                    size: new Point(
-                        x: 512 + 128 + 24,
-                        y: (int)((viewSettings.ViewRowDisplay - 3) * viewSettings.ItemMargin.Y))),
-                regionSettings: viewRegionSettings);
-
-            view.ViewComponents.Add("ViewRegion", viewRegion);
-
-            view[ViewState.View_Has_Focus] =
-                () => viewRegion[RegionState.Region_Has_Focus]() ||
-                      view[ViewState.View_Has_Selection]();
-
-            return viewRegion;
         }
 
         #endregion
