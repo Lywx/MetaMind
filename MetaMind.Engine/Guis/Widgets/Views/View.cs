@@ -149,6 +149,17 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             {
                 this.ViewLogic.UpdateInput(input, time);
             }
+
+            foreach (var pair in this.ViewComponents)
+            {
+                var component  = pair.Value;
+                var updateable = component as IInputable;
+
+                if (updateable != null)
+                {
+                    updateable.UpdateInput(input, time);
+                }
+            }
         }
 
         #endregion

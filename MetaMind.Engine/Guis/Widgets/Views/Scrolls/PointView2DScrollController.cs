@@ -60,6 +60,7 @@
         public int RowOffset
         {
             get { return this.rowOffset; }
+            set { this.rowOffset = value; }
         }
 
         private bool CanMoveDown

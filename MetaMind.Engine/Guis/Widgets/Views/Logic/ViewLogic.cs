@@ -271,7 +271,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public void ResetItems()
         {
-            this.ItemsWrite.Clear();
+            // TODO
+            //this.ItemsRead.ForEach(item => item.Dispose());
+            //this.ItemsRead.Clear();
+
+            //this.ItemsWrite.Clear();
 
             foreach (var data in this.ViewBinding.AllData)
             {

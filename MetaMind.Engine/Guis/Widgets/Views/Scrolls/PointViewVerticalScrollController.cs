@@ -7,6 +7,8 @@
 
     public class PointViewVerticalScrollController : ViewComponent, IPointViewVerticalScrollController
     {
+        private int rowOffset;
+
         private PointViewVerticalSettings viewSettings;
 
         public PointViewVerticalScrollController(IView view)
@@ -14,35 +16,24 @@
         {
         }
 
-        public override void SetupLayer()
+        protected PointViewVerticalSettings ViewSettings
         {
-            base.SetupLayer();
-
-            var viewLayer = this.ViewGetLayer<PointViewVerticalLayer>();
-            this.viewSettings = viewLayer.ViewSettings;
+            get { return this.viewSettings; }
         }
 
-        public int RowOffset { get; protected set; }
+        #region Display 
 
         protected virtual bool CanMoveUp
         {
-            get
-            {
-                return this.RowOffset > 0;
-            }
+            get { return this.RowOffset > this.RowOffsetMin; }
         }
 
         protected virtual bool CanMoveDown
         {
             get
             {
-                return (this.ViewSettings.ViewRowDisplay + this.RowOffset) < this.View.ItemsRead.Count;
+                return this.RowOffset < this.RowOffsetMax;
             }
-        }
-
-        protected PointViewVerticalSettings ViewSettings
-        {
-            get { return this.viewSettings; }
         }
 
         public bool CanDisplay(int id)
@@ -62,6 +53,65 @@
             var row = id;
             return row > this.ViewSettings.ViewRowDisplay + this.RowOffset;
         }
+
+        public virtual Vector2 Position(int row)
+        {
+            return new Vector2(
+                this.ViewSettings.ViewPosition.X,
+                this.ViewSettings.ViewDirection == ViewDirection.Normal
+                    ? this.ViewSettings.ViewPosition.Y - (this.RowOffset * this.ViewSettings.ItemMargin.Y) + row * this.ViewSettings.ItemMargin.Y
+                    : this.ViewSettings.ViewPosition.Y + (this.RowOffset * this.ViewSettings.ItemMargin.Y) - row * this.ViewSettings.ItemMargin.Y);
+        }
+
+        #endregion
+
+        #region Layer
+
+        public override void SetupLayer()
+        {
+            base.SetupLayer();
+
+            var viewLayer = this.ViewGetLayer<PointViewVerticalLayer>();
+            this.viewSettings = viewLayer.ViewSettings;
+        }
+
+        #endregion
+
+        #region State
+
+        public virtual int RowOffset
+        {
+            get { return this.rowOffset; }
+            set
+            {
+                if (value < 0)
+                {
+                    this.rowOffset = 0;
+                }
+                else if (value >= this.RowOffsetMax)
+                {
+                    this.rowOffset = this.View.ItemsRead.Count - this.ViewSettings.ViewRowDisplay;
+                }
+                else
+                {
+                    this.rowOffset = value;
+                }
+            }
+        }
+
+        protected virtual int RowOffsetMax
+        {
+            get { return this.View.ItemsRead.Count - this.ViewSettings.ViewRowDisplay; }
+        }
+
+        protected virtual int RowOffsetMin
+        {
+            get { return 0; }
+        }
+
+        #endregion
+
+        #region Operations
 
         public virtual void MoveUp()
         {
@@ -84,15 +134,6 @@
             }
         }
 
-        public virtual Vector2 Position(int row)
-        {
-            return new Vector2(
-                this.ViewSettings.ViewPosition.X,
-                this.ViewSettings.ViewDirection == ViewDirection.Normal
-                    ? this.ViewSettings.ViewPosition.Y - (this.RowOffset * this.ViewSettings.ItemMargin.Y) + row * this.ViewSettings.ItemMargin.Y
-                    : this.ViewSettings.ViewPosition.Y + (this.RowOffset * this.ViewSettings.ItemMargin.Y) - row * this.ViewSettings.ItemMargin.Y);
-        }
-
         public virtual void Zoom(int id)
         {
             if (!this.CanDisplay(id))
@@ -108,5 +149,7 @@
                 }
             }
         }
+
+        #endregion
     }
 }

@@ -1,7 +1,6 @@
 namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
 {
-    public interface IViewVerticalScrollbar : IGameControllableEntity
+    public interface IViewVerticalScrollbar : IViewScrollbar
     {
-        void Trigger();
     }
 }

@@ -2,10 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
-
+    using System.Linq.Expressions;
+    using System.Reflection;
     using Microsoft.Xna.Framework;
 
     using Components.Inputs;
+    using Extensions;
     using Items.Data;
     using Items.Factories;
     using Layers;
@@ -59,7 +61,33 @@
             var viewLayer = this.ViewGetLayer<PointViewVerticalLayer>();
             this.viewSettings = viewLayer.ViewSettings;
 
-            this.View[ViewState.View_Has_Focus] = this.View[ViewState.View_Has_Selection] = () => viewLayer.ViewSelection.HasSelected;
+            try
+            {
+                var expression = this.View[ViewState.View_Has_Selection].ToExpression();
+
+                if (expression.Equals<bool>(new Func<bool>(() => false).ToExpression()))
+                {
+                    this.View[ViewState.View_Has_Selection] = () => viewLayer.ViewSelection.HasSelected;
+                }
+            }
+            catch (ArgumentException)
+            {
+                // Must be already assigned to instance function, so it is desirable not to set the delegate
+            }
+
+            try
+            {
+                var expression = this.View[ViewState.View_Has_Focus].ToExpression();
+
+                if (expression.Equals<bool>(new Func<bool>(() => false).ToExpression()))
+                {
+                    this.View[ViewState.View_Has_Focus] = this.View[ViewState.View_Has_Selection];
+                }
+            }
+            catch (ArgumentException)
+            {
+                // Must be already assigned to instance function, so it is desirable not to set the delegate
+            }
         }
 
         #endregion

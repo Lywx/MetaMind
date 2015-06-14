@@ -9,6 +9,7 @@
         View_Is_Editing,
 
         View_Has_Focus,
+
         View_Has_Selection,
 
         StateNum,

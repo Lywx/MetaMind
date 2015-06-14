@@ -7,15 +7,20 @@
 
 namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
 {
+    using Engine.Settings.Colors;
     using Microsoft.Xna.Framework;
 
     public class ViewScrollbarSettings 
     {
-        public byte BrightnessMax = 200;
+        public byte ColorBrightnessMax = 255;
 
-        public int BrightnessFadeSpeed = 255 * 1;
+        public byte ColorBrightnessMin = 0;
 
-        public Color Color = Color.White;
+        public int ColorBrightnessFadeSpeed = 255 * 1;
+
+        public Color RegularColor = Palette.Transparent6;
+
+        public Color DraggingColor = Color.White;
 
         public int Width = 5;
     }

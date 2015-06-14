@@ -8,10 +8,7 @@
 namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 {
     using System;
-    using System.Collections.Generic;
-
     using Microsoft.Xna.Framework;
-
     using Components.Inputs;
     using Items.Data;
     using Items.Factories;

@@ -78,6 +78,8 @@
     <Compile Include="Components\IScreenManagerOperations.cs" />
     <Compile Include="Components\Processes\ProcessCounter.cs" />
     <Compile Include="Components\Processes\StepProcess.cs" />
+    <Compile Include="Extensions\ExtExpression.cs" />
+    <Compile Include="Extensions\ExtFunc.cs" />
     <Compile Include="Extensions\ExtT.cs" />
     <Compile Include="Extensions\ExtList.cs" />
     <Compile Include="GameEngineConfigurer.cs" />
@@ -354,8 +356,10 @@
     </Compile>
     <Compile Include="Guis\Widgets\Views\Scrolls\BlockViewVerticalScrollController.cs" />
     <Compile Include="Guis\Widgets\Views\Scrolls\IBlockViewVerticalScrollController.cs" />
+    <Compile Include="Guis\Widgets\Views\Scrolls\IViewScrollbar.cs" />
     <Compile Include="Guis\Widgets\Views\Scrolls\IViewVerticalScrollbar.cs" />
     <Compile Include="Guis\Widgets\Views\Scrolls\PointViewVerticalScrollController.cs" />
+    <Compile Include="Guis\Widgets\Views\Scrolls\ViewVerticalScrollbarVisual.cs" />
     <Compile Include="Guis\Widgets\Views\Selections\BlockViewVerticalSelectionController.cs" />
     <Compile Include="Guis\Widgets\Views\Selections\IBlockViewVerticalSelectionController.cs" />
     <Compile Include="Guis\Widgets\Views\Selections\IPointViewVerticalSelectionController.cs" />

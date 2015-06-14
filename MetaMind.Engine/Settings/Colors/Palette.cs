@@ -26,6 +26,10 @@ namespace MetaMind.Engine.Settings.Colors
 
         public static Color Transparent5 = new Color(160, 160, 160, 0);
 
+        public static Color Transparent6 = new Color(200, 200, 200, 0);
+
+        public static Color Transparent7 = new Color(240, 240, 240, 0);
+
         public static Color LightGreen  = new Color(78, 255, 27, 20);
 
         public static Color LightGrey   = new Color(0, 100, 50, 20);

@@ -10,6 +10,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
     {
         private int currentId;
 
+        private int rowOffset;
+
         public BlockViewVerticalScrollController(IView view) : base(view)
         {
         }
@@ -23,7 +25,29 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
 
         #endregion
 
-        protected override bool CanMoveDown
+        #region State
+
+        public override int RowOffset
+        {
+            get { return this.rowOffset; }
+            set
+            {
+                if (value < this.RowOffsetMin)
+                {
+                    this.rowOffset = this.RowOffsetMin;
+                }
+                else if (value > this.RowOffsetMax)
+                {
+                    this.rowOffset = this.RowOffsetMax;
+                }
+                else
+                {
+                    this.rowOffset = value;
+                }
+            }
+        }
+
+        protected override int RowOffsetMax
         {
             get
             {
@@ -31,7 +55,19 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
                 Debug.Assert(0 < this.View.ItemsRead.Count);
 #endif
                 var itemLayer = this.ItemGetLayer(this.View.ItemsRead.Last());
-                return (this.ViewSettings.ViewRowDisplay + this.RowOffset) < itemLayer.ItemLayout.Row + itemLayer.ItemLayout.BlockRow;
+                return itemLayer.ItemLayout.Row + itemLayer.ItemLayout.BlockRow - this.ViewSettings.ViewRowDisplay;
+            }
+        }
+
+        #endregion
+
+        #region Display
+
+        protected override bool CanMoveDown
+        {
+            get
+            {
+                return this.RowOffset < this.RowOffsetMax;
             }
         }
 
@@ -54,6 +90,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
 
             return itemLayout.Row + itemLayout.BlockRow > this.ViewSettings.ViewRowDisplay + this.RowOffset;
         }
+
+
+        #endregion
+
+        #region Operations
 
         public override void MoveDown()
         {
@@ -98,5 +139,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
                 this.RowOffset -= itemLayout.BlockRow;
             }
         }
+
+        #endregion
     }
 }
