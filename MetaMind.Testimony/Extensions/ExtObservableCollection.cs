@@ -1,12 +1,11 @@
 ﻿namespace MetaMind.Testimony.Extensions
 {
     using System;
-    using System.Collections.ObjectModel;
     using System.Linq;
 
     public static class ExtObservableCollection
     {
-        public static void Sort<T>(this ObservableCollection<T> collection) where T : IComparable<T>, IEquatable<T>
+        public static void Sort<T>(this System.Collections.ObjectModel.ObservableCollection<T> collection) where T : IComparable<T>, IEquatable<T>
         {
             var sortedCollection = collection.OrderBy(x => x).ToList();
 

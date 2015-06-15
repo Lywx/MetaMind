@@ -108,7 +108,9 @@
     <Compile Include="Concepts\Synchronizations\SynchronizationSpan.cs" />
     <Compile Include="Concepts\Tests\ITestComputation.cs" />
     <Compile Include="Concepts\Tests\ITestOperations.cs" />
+    <Compile Include="Concepts\Tests\TestOrganizer.cs" />
     <Compile Include="Concepts\Tests\TestSession.cs" />
+    <Compile Include="Extensions\ExtHashSet.cs" />
     <Compile Include="Extensions\ExtObservableCollection.cs" />
     <Compile Include="Guis\Modules\TestModuleLogic.cs" />
     <Compile Include="Guis\Modules\TestModuleVisual.cs" />

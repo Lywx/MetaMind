@@ -11,11 +11,11 @@
 
     public class TestViewBinding : IViewBinding
     {
-        private readonly ObservableCollection<Test> viewTests;
+        private readonly ObservableCollection<ITest> viewTests;
 
         private readonly IViewLogic viewLogic;
 
-        public TestViewBinding(IViewLogic viewLogic, ObservableCollection<Test> viewTests)
+        public TestViewBinding(IViewLogic viewLogic, ObservableCollection<ITest> viewTests)
         {
             if (viewLogic == null)
             {

@@ -9,9 +9,9 @@ namespace MetaMind.Testimony.Concepts.Tests
 {
     using System;
     using System.Collections;
-    using System.Collections.ObjectModel;
     using System.Linq;
     using Engine;
+    using Engine.Collections;
     using Engine.Guis.Widgets.Items.Data;
 
     public partial class Test : GameEntity, ITest, IBlockViewVerticalItemData
@@ -33,7 +33,7 @@ namespace MetaMind.Testimony.Concepts.Tests
             this.Path        = path;
 
             this.Parent   = null;
-            this.Children = new ObservableCollection<Test>();
+            this.Children = new ObservableCollection<ITest>();
 
             this.Reset();
         }
@@ -93,7 +93,7 @@ namespace MetaMind.Testimony.Concepts.Tests
             }
         }
 
-        public ObservableCollection<Test> Children { get; private set; }
+        public ObservableCollection<ITest> Children { get; private set; }
 
         public int ChildrenPassed
         {
@@ -126,6 +126,28 @@ namespace MetaMind.Testimony.Concepts.Tests
             get { return this.Parent != null; }
         }
 
+        public int CompareTo(ITest other)
+        {
+            return string.Compare(this.Name, other.Name, StringComparison.Ordinal);
+        }
+
+        public bool Equals(ITest other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         #endregion
     }
 
@@ -137,7 +159,7 @@ namespace MetaMind.Testimony.Concepts.Tests
 
         private readonly string succeedingCue = "Test Success";
 
-        private bool passed;
+        private bool passed = true;
 
         public bool Passed
         {
@@ -227,10 +249,7 @@ namespace MetaMind.Testimony.Concepts.Tests
             this.Parent = null;
             this.Children.Clear();
 
-            this.TestPassed = this.HasChildren
-                ? (Func<bool>)(() => false)
-                : () => this.ChildrenPassed == this.Children.Count;
-
+            this.TestPassed = () => this.ChildrenPassed == this.Children.Count;
             this.TestStatus = () => this.TestPassed() ? "SUCCEEDED" : "FAILED";
         }
 

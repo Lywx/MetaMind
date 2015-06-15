@@ -1,11 +1,11 @@
 ﻿namespace MetaMind.Testimony.Concepts.Tests
 {
     using System.Collections;
-    using System.Collections.ObjectModel;
+    using Engine.Collections;
 
     public interface ITestStructure
     {
-        ObservableCollection<Test> Children { get; }
+        ObservableCollection<ITest> Children { get; }
 
         Test Parent { get; }
 
