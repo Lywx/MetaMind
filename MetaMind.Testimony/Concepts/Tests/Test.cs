@@ -73,20 +73,6 @@ namespace MetaMind.Testimony.Concepts.Tests
     {
         #region Structure
 
-        public ObservableCollection<Test> Children { get; private set; }
-
-        public bool HasChildren
-        {
-            get { return this.Children != null && this.Children.Count != 0; }
-        }
-
-        public Test Parent { get; private set; }
-
-        public bool HasParent
-        {
-            get { return this.Parent != null; }
-        }
-
         public IEnumerable AllTests()
         {
             yield return this;
@@ -108,6 +94,16 @@ namespace MetaMind.Testimony.Concepts.Tests
             }
         }
 
+        public ObservableCollection<Test> Children { get; private set; }
+
+        public int ChildrenPassed
+        {
+            get
+            {
+                return this.Children.Count(child => child.Passed);
+            }
+        }
+
         public IEnumerable ChildrenTests()
         {
             if (this.HasChildren)
@@ -117,6 +113,18 @@ namespace MetaMind.Testimony.Concepts.Tests
                     yield return child;
                 }
             }
+        }
+
+        public bool HasChildren
+        {
+            get { return this.Children != null && this.Children.Count != 0; }
+        }
+
+        public Test Parent { get; private set; }
+
+        public bool HasParent
+        {
+            get { return this.Parent != null; }
         }
 
         #endregion
@@ -190,20 +198,6 @@ namespace MetaMind.Testimony.Concepts.Tests
 
         #endregion
 
-
-        #region Operations
-
-        public void Reset()
-        {
-            this.Parent = null;
-            this.Children.Clear();
-
-            this.TestPassed = () => false;
-            this.TestStatus = () => this.TestPassed() ? "SUCCEEDED" : "FAILED";
-        }
-
-        #endregion
-
         #region Update
 
         public void Update()
@@ -215,6 +209,19 @@ namespace MetaMind.Testimony.Concepts.Tests
             {
                 child.Update();
             }
+        }
+
+        #endregion
+
+        #region Operations
+
+        public void Reset()
+        {
+            this.Parent = null;
+            this.Children.Clear();
+
+            this.TestPassed = () => false;
+            this.TestStatus = () => this.TestPassed() ? "SUCCEEDED" : "FAILED";
         }
 
         #endregion

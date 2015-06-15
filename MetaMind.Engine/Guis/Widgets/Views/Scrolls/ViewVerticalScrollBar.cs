@@ -119,6 +119,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
             return new Rectangle(location, size);
         }
 
+        private int RectangleToIndex()
+        {
+            return this.DistanceToIndex(this.Rectangle.Y - this.viewRegion.Y, this.viewSettings.ViewRowDisplay, this.viewLayout.RowNum, this.viewRegion.Height);
+        }
+
         #endregion
 
         #region Draw
@@ -171,7 +176,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
                 else
                 {
                     this.Rectangle = new Rectangle(new Point(this.viewRegion.X + this.viewRegion.Width, this.Rectangle.Y), this.Rectangle.Size);
-                    this.viewScroll.RowOffset = this.DistanceToIndex(this.Rectangle.Y - this.viewRegion.Y, this.viewSettings.ViewRowDisplay, this.viewLayout.RowNum, this.viewRegion.Height);
+                    this.viewScroll.RowOffset = this.RectangleToIndex();
                 }
             }
         }

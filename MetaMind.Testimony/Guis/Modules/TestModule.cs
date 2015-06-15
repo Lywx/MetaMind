@@ -61,7 +61,7 @@
         {
             // View settings
             var viewSettings = new TestViewSettings(
-                itemMargin    : new Vector2(512 + 128 + 24, 26),
+                itemMargin    : new Vector2(1355 + 128 + 24, 26),
                 viewPosition  : new Vector2(40, 100),
                 viewRowDisplay: 30,
                 viewRowMax    : 100);
@@ -120,7 +120,7 @@
                 regionBounds: () => new Rectangle(
                     location: viewSettings.ViewPosition.ToPoint(),
                     size: new Point(
-                        x: 512 + 128 + 24,
+                        x: 1355 + 128 + 24,
                         y: (int)(viewSettings.ViewRowDisplay * viewSettings.ItemMargin.Y))),
                 regionSettings: viewRegionSettings);
             this.View.ViewComponents.Add("ViewRegion", viewRegion);

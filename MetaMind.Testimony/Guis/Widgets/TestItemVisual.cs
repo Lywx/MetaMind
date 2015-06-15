@@ -32,6 +32,8 @@ namespace MetaMind.Testimony.Guis.Widgets
 
         protected ViewItemLabelVisual StatusLabel { get; set; }
 
+        protected ViewItemLabelVisual StatisticsLabel { get; set; }
+
         protected ViewItemLabelVisual NameLabel { get; set; }
 
         protected ViewItemLabelVisual DescriptionLabel { get; set; }
@@ -39,6 +41,8 @@ namespace MetaMind.Testimony.Guis.Widgets
         protected ViewItemFrameVisual IdFrame { get; set; }
 
         protected ViewItemFrameVisual StatusFrame { get; set; }
+
+        protected ViewItemFrameVisual StatisticsFrame { get; set; }
 
         protected ViewItemFrameVisual NameFrame { get; set; }
 
@@ -54,6 +58,7 @@ namespace MetaMind.Testimony.Guis.Widgets
 
         protected Func<Vector2> StatusCenterPosition { get; set; }
 
+        protected Func<Vector2> StatisticsCenterPosition { get; set;}
         protected Func<Vector2> NamePosition { get; set; }
 
         protected Func<Vector2> DescriptionPosition { get; set; }
@@ -75,6 +80,7 @@ namespace MetaMind.Testimony.Guis.Widgets
 
             this.IdCenterPosition = () => itemFrame.IdFrame.Center.ToVector2();
             this.StatusCenterPosition = () => itemFrame.StatusFrame.Center.ToVector2();
+            this.StatisticsCenterPosition = () => itemFrame.StatisticsFrame.Center.ToVector2();
 
             this.NamePosition = () => itemFrame.NameFrameLocation() + itemSettings.Get<Vector2>("NameMargin");
             this.DescriptionPosition = () => itemFrame.DescriptionFrameLocation() + itemSettings.Get<Vector2>("DescriptionMargin");
@@ -105,6 +111,25 @@ namespace MetaMind.Testimony.Guis.Widgets
                             ? Palette.LightGreen
                             : Palette.LightPink;
                 this.StatusLabel.Label.Text = () => this.Item.ItemData.Status;
+            }
+
+            this.StatisticsFrame = new ViewItemFrameVisual(this.Item,
+                itemFrame.StatisticsFrame,
+                itemSettings.Get<FrameSettings>("StatisticsFrame"));
+            {
+                var labelSettings = itemSettings.Get<LabelSettings>("StatisticsLabel");
+                labelSettings.Text = () => this.Item.ItemData.Status;
+                labelSettings.TextPosition = this.StatisticsCenterPosition;
+
+                this.StatisticsLabel = new ViewItemLabelVisual(this.Item, labelSettings);
+                this.StatisticsLabel.Label.TextColor = () =>
+                        this.Item.ItemData.ChildrenPassed == this.Item.ItemData.Children.Count
+                            ? Palette.LightGreen
+                            : Palette.LightPink;
+                this.StatisticsLabel.Label.Text =
+                    () => string.Format("{0} / {1}",
+                        this.Item.ItemData.ChildrenPassed,
+                        this.Item.ItemData.Children.Count);
             }
 
             var nameFrameSettings = itemSettings.Get<FrameSettings>("NameFrame");
@@ -148,12 +173,22 @@ namespace MetaMind.Testimony.Guis.Widgets
             this.IdFrame.Draw(graphics, time, alpha);
             this.StatusFrame.Draw(graphics, time, alpha);
 
+            if (this.Item.ItemData.HasChildren)
+            {
+                this.StatisticsFrame.Draw(graphics, time, alpha);
+            }
+
             this.NameFrame.Draw(graphics, time, alpha);
             this.DescriptionFrame.Draw(graphics, time, alpha);
 
             // Labels
             this.IdLabel.Draw(graphics, time, alpha);
             this.StatusLabel.Draw(graphics, time, alpha);
+
+            if (this.Item.ItemData.HasChildren)
+            {
+                this.StatisticsLabel.Draw(graphics, time, alpha);
+            }
 
             this.NameLabel.Draw(graphics, time, alpha);
             this.DescriptionLabel.Draw(graphics, time, alpha);

@@ -12,7 +12,7 @@ namespace MetaMind.Testimony.Guis.Widgets
     {
         private readonly FrameSettings rootFrame = new FrameSettings
         {
-            Size   = new Point(24 + 128 + 512, 26),
+            Size   = new Point(24 + 128 + 1355, 26),
             Margin = new Point(2, 2)
         };
 
@@ -58,9 +58,30 @@ namespace MetaMind.Testimony.Guis.Widgets
             TextMonospaced = false,
         };
 
+        private readonly FrameSettings statisticsFrame = new FrameSettings
+        {
+            Size   = new Point(128, 26),
+            Margin = new Point(2, 2),
+
+            RegularColor      = Palette.Transparent1,
+            MouseOverColor    = Palette.Transparent1,
+            PendingColor      = Palette.Transparent1,
+            ModificationColor = Palette.Transparent1,
+            SelectionColor    = Palette.Transparent1,
+        };
+
+        private readonly LabelSettings statisticsLabel = new LabelSettings{
+            TextSize       = 0.7f,
+            TextColor      = Color.White,
+            TextFont       = Font.UiStatistics,
+            TextHAlign     = StringHAlign.Center,
+            TextVAlign     = StringVAlign.Center,
+            TextMonospaced = false,
+        };
+
         private readonly FrameSettings nameFrame = new FrameSettings
         {
-            Size   = new Point(512, 26),
+            Size   = new Point(1355, 26),
             Margin = new Point(2, 2),
 
             RegularColor      = Palette.DimBlue,
@@ -84,7 +105,7 @@ namespace MetaMind.Testimony.Guis.Widgets
 
         private readonly FrameSettings descriptionFrame = new FrameSettings
         {
-            Size   = new Point(512, 26),
+            Size   = new Point(1355, 26),
             Margin = new Point(2, 2),
 
             RegularColor      = Palette.Transparent0,
@@ -123,6 +144,9 @@ namespace MetaMind.Testimony.Guis.Widgets
 
             this.Add("StatusFrame", this.statusFrame);
             this.Add("StatusLabel", this.statusLabel);
+
+            this.Add("StatisticsFrame", this.statisticsFrame);
+            this.Add("StatisticsLabel", this.statisticsLabel);
         }
     }
 }
