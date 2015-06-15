@@ -78,6 +78,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Concepts\Tests\TestOrganizerTest.cs" />
     <Compile Include="Concepts\Tests\TestScriptTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Concepts\Synchronizations\SynchronizationSpanTests.cs" />
