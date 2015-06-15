@@ -21,8 +21,8 @@ namespace MetaMind.Testimony.Concepts.Tests
 
             var groups = new Dictionary<string, List<ITest>>();
             var groupNames =
-                tests.Select(child => this.LeftTrim(child.Name, level))
-                          .ToHashSet();
+                tests.Select(child => this.LeftCrop(child.Name, level))
+                     .ToHashSet();
 
             foreach (var groupName in groupNames)
             {
@@ -84,20 +84,12 @@ namespace MetaMind.Testimony.Concepts.Tests
             tests.Sort((test, other) => test.CompareTo(other));
         }
 
-        internal string LeftTrim(string name, int level = 1)
+        internal string LeftCrop(string name, int level = 1)
         {
             var nameGroup = name.Split('.');
             var nameTrimmed = string.Join(".", nameGroup.Take(level));
 
             return nameTrimmed;
-        }
-
-        internal string RightTrim(string name, int level = 1)
-        {
-            var nameGroup = name.Split('.');
-            var nameTrimmed = string.Join(".", nameGroup.Take(nameGroup.Length - level));
-
-            return string.IsNullOrEmpty(nameTrimmed) ? "^" : nameTrimmed;
         }
     }
 }

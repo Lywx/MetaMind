@@ -43,33 +43,18 @@
         }
 
         [Test]
-        public void LeftTrimTest()
+        public void LeftCropTest()
         {
             var organizer = new TestOrganizer();
 
             // Third level
-            Assert.AreEqual("A", organizer.LeftTrim("A.B.C"));
+            Assert.AreEqual("A", organizer.LeftCrop("A.B.C"));
 
             // Second level
-            Assert.AreEqual("A", organizer.LeftTrim("A.B"));
+            Assert.AreEqual("A", organizer.LeftCrop("A.B"));
 
             // Top level 
-            Assert.AreEqual("A", organizer.LeftTrim("A"));
-        }
-
-        [Test]
-        public void RightTrimTest()
-        {
-            var organizer = new TestOrganizer();
-
-            // Third level
-            Assert.AreEqual("A.B", organizer.RightTrim("A.B.C"));
-
-            // Second level
-            Assert.AreEqual("A", organizer.RightTrim("A.B"));
-
-            // Top level 
-            Assert.AreEqual("^", organizer.RightTrim("A"));
+            Assert.AreEqual("A", organizer.LeftCrop("A"));
         }
     }
 }
