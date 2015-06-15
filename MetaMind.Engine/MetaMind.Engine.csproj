@@ -75,6 +75,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Collections\ObservableCollection.cs" />
     <Compile Include="Components\IScreenManagerOperations.cs" />
     <Compile Include="Components\Processes\ProcessCounter.cs" />
     <Compile Include="Components\Processes\StepProcess.cs" />
