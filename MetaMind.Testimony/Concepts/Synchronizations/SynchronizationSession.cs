@@ -5,9 +5,9 @@ namespace MetaMind.Testimony.Concepts.Synchronizations
     using Events;
     using Sessions;
 
-    public class SynchronizationController : GameEntity, ISynchronizationController
+    public class SynchronizationSession : GameEntity, ISynchronizationController
     {
-        public SynchronizationController()
+        public SynchronizationSession()
         {
             this.SynchronizationData = new SynchronizationData();
         }

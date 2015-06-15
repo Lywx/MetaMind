@@ -12,7 +12,6 @@ namespace MetaMind.Testimony.Concepts.Tests
     using System.Collections.ObjectModel;
     using System.Linq;
     using Engine;
-    using Engine.Components;
     using Engine.Guis.Widgets.Items.Data;
 
     public partial class Test : GameEntity, ITest, IBlockViewVerticalItemData
@@ -132,6 +131,8 @@ namespace MetaMind.Testimony.Concepts.Tests
 
     public partial class Test
     {
+        public static TestSession TestSession { get; set; }
+
         private readonly string failingCue = "Test Failure";
 
         private readonly string succeedingCue = "Test Success";
@@ -176,8 +177,11 @@ namespace MetaMind.Testimony.Concepts.Tests
             
         private void OnFailing()
         {
-            var audio = this.GameInterop.Audio;
-            audio.PlayCue(failingCue);
+            if (TestSession.NotificationEnabled)
+            {
+                var audio = this.GameInterop.Audio;
+                audio.PlayCue(failingCue);
+            }
 
             if (this.Failing != null)
             {
@@ -187,8 +191,11 @@ namespace MetaMind.Testimony.Concepts.Tests
 
         private void OnSucceeding()
         {
-            var audio = this.GameInterop.Audio;
-            audio.PlayCue(succeedingCue);
+            if (TestSession.NotificationEnabled)
+            {
+                var audio = this.GameInterop.Audio;
+                audio.PlayCue(succeedingCue);
+            }
 
             if (this.Succeeding != null)
             {
@@ -220,7 +227,10 @@ namespace MetaMind.Testimony.Concepts.Tests
             this.Parent = null;
             this.Children.Clear();
 
-            this.TestPassed = () => false;
+            this.TestPassed = this.HasChildren
+                ? (Func<bool>)(() => false)
+                : () => this.ChildrenPassed == this.Children.Count;
+
             this.TestStatus = () => this.TestPassed() ? "SUCCEEDED" : "FAILED";
         }
 

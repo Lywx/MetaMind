@@ -6,6 +6,7 @@
     using Engine.Guis;
     using Engine.Services;
     using Concepts.Synchronizations;
+    using Concepts.Tests;
     using Scripting;
 
     public class TestModuleLogic : ModuleLogic<TestModule, TestModuleSettings, TestModuleLogic>
@@ -14,7 +15,9 @@
 
         private ScriptRunner scriptRunner;
 
-        private SynchronizationController synchronizationController;
+        private SynchronizationSession synchronizationSession;
+
+        private TestSession testSession;
 
         public TestModuleLogic(TestModule module) 
             : base(module)
@@ -27,8 +30,11 @@
             this.scriptRunner   = new ScriptRunner(this.scriptSearcher);
             this.scriptRunner.Search();
 
-            this.synchronizationController = new SynchronizationController();
-            this.synchronizationController.StartSynchronization();
+            this.synchronizationSession = new SynchronizationSession();
+            this.synchronizationSession.StartSynchronization();
+
+            this.testSession = new TestSession();
+            Test.TestSession = this.testSession;
 
             base.LoadContent(interop);
         }
@@ -39,7 +45,8 @@
 
             if (keyboard.IsActionTriggered(KeyboardActions.TestPause))
             {
-                this.synchronizationController.ToggleSynchronization();
+                this.synchronizationSession.ToggleSynchronization();
+                this.testSession.           ToggleNotification();
             }
 
             if (keyboard.IsActionTriggered(KeyboardActions.TestRerun))

@@ -10,7 +10,6 @@
 
     using Concepts;
     using Engine;
-    using Engine.Guis.Console;
     using Microsoft.FSharp.Compiler.Interactive;
     using Microsoft.FSharp.Core;
 
