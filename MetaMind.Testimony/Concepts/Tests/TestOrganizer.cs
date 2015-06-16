@@ -17,6 +17,13 @@ namespace MetaMind.Testimony.Concepts.Tests
             this.Organize(tests, tests);
         }
 
+        /// <summary>
+        /// Organize tests list into tree structure automatically inserting missing nodes.
+        /// </summary>
+        /// <param name="tests">Original tree structure</param>
+        /// <param name="groupedTests">Recursively refined tree structure</param>
+        /// <param name="groupedNames">Recursively refined group name</param>
+        /// <param name="level">Depth of recursion</param>
         private void Organize(IList<ITest> tests, IList<ITest> groupedTests, HashSet<string> groupedNames = null, int level = 1)
         {
             var groups = new Dictionary<string, List<ITest>>();
@@ -28,6 +35,7 @@ namespace MetaMind.Testimony.Concepts.Tests
                 return;
             }
 
+            // Group the tests according to the test name prefix
             foreach (var groupName in groupNames)
             {
                 groups[groupName] = new List<ITest>();
@@ -58,6 +66,7 @@ namespace MetaMind.Testimony.Concepts.Tests
                         var relocated = group.Value.Where(test => existing != test).ToList();
                         var relocatedChildren = existing.Children;
 
+                        // Relocate tests in group
                         groupedTests.RemoveRange(relocated);
                         groupedTests.RemoveRange(relocatedChildren);
 
@@ -75,6 +84,7 @@ namespace MetaMind.Testimony.Concepts.Tests
                     // Get the first path in group
                     var vacant = new Test(@group.Key, "", @group.Value[0].Path);
 
+                    // Relocate tests in group
                     groupedTests.RemoveRange(group.Value);
                     vacant.Children.AddRange(group.Value);
 
@@ -82,6 +92,7 @@ namespace MetaMind.Testimony.Concepts.Tests
                 }
             }
 
+            // Sorting in not essential for this process
             groupedTests.Sort((test, other) => test.CompareTo(other));
 
             // Modify the tests according to the grouped tests

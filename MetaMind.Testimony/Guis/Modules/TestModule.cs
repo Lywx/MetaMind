@@ -83,67 +83,8 @@
             // View construction
             this.view = new View(viewSettings, itemSettings, new List<IViewItem>());
 
-            // View composition
-            var viewSelection = new BlockViewVerticalSelectionController(this.View);
-            var viewScroll    = new BlockViewVerticalScrollController(this.View);
-            var viewSwap      = new ViewSwapController(this.View);
-            var viewLayout    = new BlockViewVerticalLayout(this.View);
-            var viewLayer     = new BlockViewVerticalLayer(this.View);
-
-            // Item composition
-            var itemFactory = new ViewItemFactory(
-
-                item => new TestItemLayer(item),
-
-                item =>
-                {
-                    var itemFrame             = new TestItemFrame(item);
-                    var itemLayoutInteraction = new BlockViewVerticalItemLayoutInteraction(item, viewSelection, viewScroll);
-                    var itemLayout            = new TestItemLayout(item, itemLayoutInteraction);
-                    var itemInteraction       = new BlockViewVerticalItemInteraction(item, itemLayout, itemLayoutInteraction);
-                    var itemModel             = new ViewItemDataModel(item);
-
-                    return new TestItemLogic(
-                        item,
-                        itemFrame,
-                        itemInteraction,
-                        itemModel,
-                        itemLayout);
-                },
-
-                item => new TestItemVisual(item));
-
-            // View logic
-            var viewLogic  = new TestViewLogic(this.View, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory);
-            viewLogic.ViewBinding = new TestViewBinding(viewLogic, this.test.Children, this.testSession);
-
-            // View visual
-            var viewVisual = new GradientViewVisual(this.View);
-
-            // View setup
-            this.View.ViewLayer = viewLayer;
-            this.View.ViewLogic = viewLogic;
-            this.View.ViewVisual = viewVisual;
-
-            // View region
-            var viewRegionSettings = new ViewRegionSettings();
-            var viewRegion = new ViewRegion(
-                regionBounds: () => new Rectangle(
-                    location: viewSettings.ViewPosition.ToPoint(),
-                    size: new Point(
-                        x: 1355 + 128 + 24,
-                        y: (int)(viewSettings.ViewRowDisplay * viewSettings.ItemMargin.Y))),
-                regionSettings: viewRegionSettings);
-            this.View.ViewComponents.Add("ViewRegion", viewRegion);
-
-            // View scrollbar
-            var viewScrollbar = this.SetupViewScrollbar(this.View, viewSettings, viewLayer, viewScroll, viewLayout, viewRegion);
-
-            // View focus
-            this.View[ViewState.View_Has_Focus] = () =>
-                this.View[ViewState.View_Has_Selection]() ||
-                viewRegion[RegionState.Region_Has_Focus]() ||
-                viewScrollbar[FrameState.Frame_Is_Dragging]();
+            var viewComposer = new TestViewComposer(this.testSession);
+            viewComposer.Compose(this.view, this.test);
 
             // Entities
             this.Entities.Add(this.View);
@@ -176,28 +117,6 @@
         #endregion
 
         #region Composition
-
-        private IViewVerticalScrollbar SetupViewScrollbar(
-            IView view,
-            TestViewSettings viewSettings,
-            BlockViewVerticalLayer viewLayer,
-            BlockViewVerticalScrollController viewScroll,
-            BlockViewVerticalLayout viewLayout,
-            ViewRegion viewRegion)
-        {
-            var viewVerticalScrollbarSettings = viewSettings.Get<ViewScrollbarSettings>("ViewVerticalScrollbar");
-
-            var viewScrollbar = new ViewVerticalScrollbar(viewSettings, viewScroll, viewLayout, viewRegion, viewVerticalScrollbarSettings);
-
-            view.ViewComponents.Add("ViewVerticalScrollbar", viewScrollbar);
-
-            viewLayer.ViewLogic.ScrolledUp   += (sender, args) => viewScrollbar.Toggle();
-            viewLayer.ViewLogic.ScrolledDown += (sender, args) => viewScrollbar.Toggle();
-            viewLayer.ViewLogic.MovedUp      += (sender, args) => viewScrollbar.Toggle();
-            viewLayer.ViewLogic.MovedDown    += (sender, args) => viewScrollbar.Toggle();
-
-            return viewScrollbar;
-        }
 
         #endregion
     }

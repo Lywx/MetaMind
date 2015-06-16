@@ -172,6 +172,16 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
             // Update read buffer updated in lasted loop to use in this loop
             this.ItemsRead = this.ItemsWrite.GetRange(0, this.ItemsWrite.Count);
+
+            if (this.ViewLogic != null)
+            {
+                this.ViewLogic.UpdateForwardBuffer();
+            }
+
+            if (this.ViewVisual != null)
+            {
+                this.ViewVisual.UpdateForwardBuffer();
+            }
         }
 
         public override void UpdateBackwardBuffer()

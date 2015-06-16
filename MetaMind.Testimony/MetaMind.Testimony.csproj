@@ -116,6 +116,7 @@
     <Compile Include="Guis\Modules\TestModuleVisual.cs" />
     <Compile Include="Concepts\Synchronizations\ISynchronizationController.cs" />
     <Compile Include="Concepts\Synchronizations\SynchronizationSession.cs" />
+    <Compile Include="Guis\Modules\TestViewComposer.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Scripting\FsiDebugger.cs" />
     <Compile Include="Scripting\IScriptOperations.cs" />

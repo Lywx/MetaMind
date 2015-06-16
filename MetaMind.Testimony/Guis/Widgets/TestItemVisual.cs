@@ -21,6 +21,8 @@ namespace MetaMind.Testimony.Guis.Widgets
     {
         private TestItemFrame itemFrame;
 
+        private TestItemLogic itemLogic;
+
         public TestItemVisual(IViewItem item)
             : base(item)
         {
@@ -30,7 +32,7 @@ namespace MetaMind.Testimony.Guis.Widgets
 
         protected ViewItemLabelVisual IdLabel { get; set; }
 
-        public ViewItemLabelVisual PlusLabel { get; set; }
+        protected ViewItemLabelVisual PlusLabel { get; set; }
 
         protected ViewItemLabelVisual StatusLabel { get; set; }
 
@@ -78,7 +80,7 @@ namespace MetaMind.Testimony.Guis.Widgets
         {
             // Layers
             var itemLayer = this.ItemGetLayer<TestItemLayer>();
-            var itemLogic = itemLayer.ItemLogic;
+            this.itemLogic = itemLayer.ItemLogic;
 
             // Avoid the implicit closure warning in Resharper
             this.itemFrame = itemLayer.ItemFrame;
@@ -114,7 +116,7 @@ namespace MetaMind.Testimony.Guis.Widgets
                 itemSettings.Get<FrameSettings>("PlusFrame"));
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("PlusLabel");
-                labelSettings.Text = () => itemLogic.Opened ? "+" : "-";
+                labelSettings.Text = () => itemLogic.IndexViewOpened ? "-" : "+";
                 labelSettings.TextPosition = this.PlusCenterPosition;
 
                 this.PlusLabel = new ViewItemLabelVisual(this.Item, labelSettings);
@@ -226,6 +228,12 @@ namespace MetaMind.Testimony.Guis.Widgets
 
             this.NameLabel.Draw(graphics, time, alpha);
             this.DescriptionLabel.Draw(graphics, time, alpha);
+
+            // Index view
+            if (this.itemLogic.IndexViewOpened)
+            {
+                this.itemLogic.IndexView.Draw(graphics, time, alpha);
+            }
         }
 
         #endregion

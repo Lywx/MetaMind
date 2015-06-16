@@ -2,9 +2,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Layouts
 {
     using System;
     using System.Linq;
-    using Items;
     using Items.Layers;
-    using Items.Layouts;
 
     public class BlockViewVerticalLayout : PointViewVerticalLayout
     {

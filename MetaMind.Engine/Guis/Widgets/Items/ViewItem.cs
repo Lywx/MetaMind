@@ -183,7 +183,7 @@
 
         public void SetupLayer()
         {
-            this.ItemLogic.SetupLayer();
+            this.ItemLogic .SetupLayer();
             this.ItemVisual.SetupLayer();
         }
 
@@ -198,9 +198,25 @@
 
         public override void Dispose()
         {
+            this.Selected   = null;
+            this.Unselected = null;
+            this.Swapped    = null;
+            this.Swapping   = null;
+            this.Transited  = null;
+
             if (this.ItemLogic != null)
             {
                 this.ItemLogic.Dispose();
+            }
+
+            if (this.ItemVisual != null)
+            {
+                this.ItemVisual.Dispose();
+            }
+
+            if (this.ItemLayer != null)
+            {
+                this.ItemLayer.Dispose();
             }
 
             base.Dispose();

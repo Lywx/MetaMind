@@ -3,7 +3,7 @@ namespace MetaMind.Testimony.Guis.Widgets
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Layers;
 
-    public class TestItemLayer : BlockViewVerticalItemLayer
+    public class TestItemLayer : IndexBlockViewVerticalItemLayer
     {
         public TestItemLayer(IViewItem item) : base(item)
         {
