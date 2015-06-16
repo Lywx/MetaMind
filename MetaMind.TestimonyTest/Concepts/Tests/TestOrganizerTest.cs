@@ -1,15 +1,22 @@
 ﻿namespace MetaMind.TestimonyTest.Concepts.Tests
 {
     using System;
-    using System.Linq;
     using NUnit.Framework;
     using Testimony.Concepts.Tests;
 
     [TestFixture]
     public class TestOrganizerTest
     {
+        private TestOrganizer organizer;
+
+        [TestFixtureSetUp]
+        private void SetupTest()
+        {
+            this.organizer = new TestOrganizer();
+        }
+
         [Test]
-        public void SortTest()
+        public void SortTest1()
         {
             var test = new Test("Root", "", "");
 
@@ -20,41 +27,65 @@
             test.Children.Add(new Test("A.Z.A", "", ""));
             test.Children.Add(new Test("A.K.A", "", ""));
 
-            var organizer = new TestOrganizer();
-            organizer.Organize(test.Children);
+            this.organizer.Organize(test);
 
-            Action<ITest> childrenWriteLine = t =>
-            {
-                Console.WriteLine(t.Name);
+            this.PrintChildrenTests(test);
+        }
 
-                foreach (var child in t.Children)
-                {
-                    Console.WriteLine(child.Name);
-                }
-            };
+        [Test]
+        public void SortTest2()
+        {
+            var test = new Test("Root", "", "");
 
-            foreach (var child in test.Children)
-            {
-                foreach (var c in child.Children)
-                {
-                    childrenWriteLine(c);
-                }
-            } 
+            test.Children.Add(new Test("A.A.A", "", ""));
+            test.Children.Add(new Test("A.A.C", "", ""));
+            test.Children.Add(new Test("A.Z.A", "", ""));
+            test.Children.Add(new Test("A.K.A", "", ""));
+
+            this.organizer.Organize(test);
+
+            this.PrintChildrenTests(test);
+        }
+
+        [Test]
+        public void SortTest3()
+        {
+            var test = new Test("Root", "", "");
+
+            test.Children.Add(new Test("A.A.A", "", ""));
+            test.Children.Add(new Test("A.A.C", "", ""));
+
+            this.organizer.Organize(test);
+
+            this.PrintChildrenTests(test);
         }
 
         [Test]
         public void LeftCropTest()
         {
-            var organizer = new TestOrganizer();
-
             // Third level
-            Assert.AreEqual("A", organizer.LeftCrop("A.B.C"));
+            Assert.AreEqual("A", this.organizer.LeftCrop("A.B.C"));
 
             // Second level
-            Assert.AreEqual("A", organizer.LeftCrop("A.B"));
+            Assert.AreEqual("A", this.organizer.LeftCrop("A.B"));
 
             // Top level 
-            Assert.AreEqual("A", organizer.LeftCrop("A"));
+            Assert.AreEqual("A", this.organizer.LeftCrop("A"));
+        }
+
+        private void PrintChildrenTests(ITest test)
+        {
+            foreach (var child in test.Children)
+            {
+                this.PrintTest(child);
+
+                this.PrintChildrenTests(child);
+            } 
+        }
+
+        private void PrintTest(ITest t)
+        {
+            Console.WriteLine(t.Name);
         }
     }
 }
