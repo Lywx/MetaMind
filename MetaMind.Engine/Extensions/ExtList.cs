@@ -7,6 +7,14 @@ namespace MetaMind.Engine.Extensions
 
     public static class ExtList
     {
+        public static void AddRange<T>(this IList<T> list, IEnumerable<T> collection)
+        {
+            foreach (var item in collection.Where(item => !list.Contains(item)).ToArray())
+            {
+                list.Add(item);
+            }
+        }
+
         public static void RemoveRange<T>(this IList<T> list, IEnumerable<T> collection)
         {
             foreach (var item in collection.Where(list.Contains).ToArray())
@@ -32,6 +40,7 @@ namespace MetaMind.Engine.Extensions
             secondList[firstIndex] = first;
         }
 
+        // http://stackoverflow.com/questions/15486/sorting-an-ilist-in-c-sharp 
         public static void Sort<T>(this IList<T> list, Comparison<T> comparison)
         {
             ArrayList.Adapter((IList)list).Sort(new ComparisonComparer<T>(comparison));

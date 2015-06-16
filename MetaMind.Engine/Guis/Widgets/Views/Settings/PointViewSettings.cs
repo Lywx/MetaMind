@@ -12,9 +12,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Settings
 
         public PointViewSettings(Vector2 itemMargin, Vector2 viewPosition, ViewDirection viewDirection = ViewDirection.Normal)
         {
-            this.ViewPosition = viewPosition;
             this.ItemMargin   = itemMargin;
 
+            this.ViewPosition = viewPosition;
             this.ViewDirection = viewDirection;
         }
     }

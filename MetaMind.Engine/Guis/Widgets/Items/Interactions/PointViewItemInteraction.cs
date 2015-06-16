@@ -1,13 +1,11 @@
 namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
 {
-    using System.Collections.Generic;
-    using Data;
-    using MetaMind.Engine.Guis.Widgets.Items.Layers;
-    using MetaMind.Engine.Guis.Widgets.Items.Layouts;
-    using MetaMind.Engine.Guis.Widgets.Views.Layers;
-    using MetaMind.Engine.Guis.Widgets.Views.Selections;
-    using MetaMind.Engine.Guis.Widgets.Views.Swaps;
-    using MetaMind.Engine.Services;
+    using Layers;
+    using Layouts;
+    using Views.Layers;
+    using Views.Selections;
+    using Views.Swaps;
+    using Services;
     using Microsoft.Xna.Framework;
     using Views.Scrolls;
 
@@ -19,12 +17,12 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
 
         private IViewScrollController viewScroll;
 
-        private IViewBinding viewBinding;
-
         public PointViewItemInteraction(IViewItem item, IViewItemLayout itemLayout, IViewItemLayoutInteraction itemLayoutInteraction)
             : base(item, itemLayout, itemLayoutInteraction)
         {
         }
+
+        #region Layer
 
         public override void SetupLayer()
         {
@@ -34,8 +32,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
             this.viewSelection = viewLayer.ViewSelection;
             this.viewSwap = viewLayer.ViewSwap;
             this.viewScroll = viewLayer.ViewScroll;
-            this.viewBinding = viewLayer.ViewBinding;
         }
+
+        #endregion
 
         public void ViewDoSelect()
         {
@@ -45,26 +44,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
         public void ViewDoUnselect()
         {
             this.ItemLayoutInteraction.ViewDoUnselect(this.ItemLayout);
-        }
-
-        public void ViewUpdateSelection(GameTime time)
-        {
-            if (this.viewSelection.IsSelected(this.ItemLayout.Id))
-            {
-                // Unify mouse and keyboard selection
-                if (!this.Item[ItemState.Item_Is_Selected]())
-                {
-                    this.ItemSelect();
-                }
-            }
-            else
-            {
-                // Unify mouse and keyboard selection
-                if (this.Item[ItemState.Item_Is_Selected]())
-                {
-                    this.ItemUnselect();
-                }
-            }
         }
 
         public virtual void ViewDoSwap(IGameInteropService interop, IViewItem draggingItem)
@@ -93,6 +72,26 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
             if (this.Item[ItemState.Item_Is_Dragging]())
             {
                 this.viewSwap.WatchProcess(this.Item);
+            }
+        }
+
+        public void ViewUpdateSelection(GameTime time)
+        {
+            if (this.viewSelection.IsSelected(this.ItemLayout.Id))
+            {
+                // Unify mouse and keyboard selection
+                if (!this.Item[ItemState.Item_Is_Selected]())
+                {
+                    this.ItemSelect();
+                }
+            }
+            else
+            {
+                // Unify mouse and keyboard selection
+                if (this.Item[ItemState.Item_Is_Selected]())
+                {
+                    this.ItemUnselect();
+                }
             }
         }
     }

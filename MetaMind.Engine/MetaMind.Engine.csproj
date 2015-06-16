@@ -260,6 +260,7 @@
     <Compile Include="Guis\Widgets\Items\Layouts\ViewItemLayout.cs" />
     <Compile Include="Guis\Widgets\Items\Logic\BlockViewVerticalItemLogic.cs" />
     <Compile Include="Guis\Widgets\Items\Logic\IBlockViewVerticalItemLogic.cs" />
+    <Compile Include="Guis\Widgets\Items\Logic\IMultiBlockViewVerticalItemLogic.cs" />
     <Compile Include="Guis\Widgets\Items\Logic\IPointView2DItemLogic.cs" />
     <Compile Include="Guis\Widgets\Items\Logic\IPointViewHorizontalItemLogic.cs" />
     <Compile Include="Guis\Widgets\Items\Logic\IPointViewItemLogic.cs" />
@@ -267,6 +268,7 @@
     <Compile Include="Guis\Widgets\Items\Logic\IViewItemLogic.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Guis\Widgets\Items\Logic\MultiBlockViewVerticalItemLogic.cs" />
     <Compile Include="Guis\Widgets\Items\Logic\PointView2DItemLogic.cs">
       <SubType>Code</SubType>
     </Compile>

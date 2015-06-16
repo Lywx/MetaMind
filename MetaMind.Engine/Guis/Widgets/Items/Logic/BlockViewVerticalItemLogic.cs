@@ -9,11 +9,11 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Logic
     public class BlockViewVerticalItemLogic : PointViewVerticalItemLogic, IBlockViewVerticalItemLogic
     {
         public BlockViewVerticalItemLogic(
-            IViewItem            item,
-            IViewItemFrame       itemFrame,
+            IViewItem item,
+            IViewItemFrame itemFrame,
             IViewItemInteraction itemInteraction,
-            IViewItemDataModel   itemModel,
-            IViewItemLayout      itemLayout)
+            IViewItemDataModel itemModel,
+            IViewItemLayout itemLayout)
             : base(item, itemFrame, itemInteraction, itemModel, itemLayout)
         {
         }

@@ -90,7 +90,7 @@ namespace MetaMind.Engine.Screens
 
                 if (exiting)
                 {
-                    this.OnExisting();
+                    this.OnExiting();
                 }
             }
         }
@@ -133,7 +133,7 @@ namespace MetaMind.Engine.Screens
 
         public event EventHandler Exiting;
 
-        public void OnExisting()
+        public void OnExiting()
         {
             if (this.Exiting != null)
             {

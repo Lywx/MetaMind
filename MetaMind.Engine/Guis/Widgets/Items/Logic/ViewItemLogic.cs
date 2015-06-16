@@ -2,13 +2,11 @@
 {
     using System;
     using Components.Inputs;
-    using MetaMind.Engine.Guis.Widgets.Items.Data;
-    using MetaMind.Engine.Guis.Widgets.Items.Frames;
-    using MetaMind.Engine.Guis.Widgets.Items.Interactions;
-    using MetaMind.Engine.Guis.Widgets.Items.Layouts;
-    using MetaMind.Engine.Guis.Widgets.Views.Layers;
-    using MetaMind.Engine.Guis.Widgets.Views.Settings;
-    using MetaMind.Engine.Services;
+    using Data;
+    using Frames;
+    using Interactions;
+    using Layouts;
+    using Services;
 
     using Microsoft.Xna.Framework;
     using Views;
