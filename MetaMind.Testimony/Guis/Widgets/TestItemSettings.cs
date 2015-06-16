@@ -28,7 +28,28 @@ namespace MetaMind.Testimony.Guis.Widgets
             SelectionColor    = Palette.DarkRed,
         };
 
+        private readonly FrameSettings plusFrame = new FrameSettings
+        {
+            Size   = new Point(24, 26),
+            Margin = new Point(2, 2),
+
+            RegularColor      = Palette.Transparent1,
+            MouseOverColor    = Palette.Transparent1,
+            PendingColor      = Palette.Transparent1,
+            ModificationColor = Palette.Transparent1,
+            SelectionColor    = Palette.Transparent1,
+        };
+
         private readonly LabelSettings idLabel = new LabelSettings
+        {
+            TextSize   = 0.7f,
+            TextColor  = Color.White,
+            TextFont   = Font.UiStatistics,
+            TextHAlign = StringHAlign.Center,
+            TextVAlign = StringVAlign.Center,
+        };
+
+        private readonly LabelSettings plusLabel = new LabelSettings
         {
             TextSize   = 0.7f,
             TextColor  = Color.White,
@@ -133,6 +154,9 @@ namespace MetaMind.Testimony.Guis.Widgets
 
             this.Add("IdFrame", this.idFrame);
             this.Add("IdLabel", this.idLabel);
+
+            this.Add("PlusFrame", this.plusFrame);
+            this.Add("PlusLabel", this.plusLabel);
 
             this.Add("NameFrame", this.nameFrame);
             this.Add("NameLabel", this.nameLabel);

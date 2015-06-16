@@ -10,7 +10,9 @@
 
         private List<string> searchResult;
 
-        public ScriptRunner(ScriptSearcher searcher)
+        private readonly FsiSession fsiSession;
+
+        public ScriptRunner(ScriptSearcher searcher, FsiSession fsiSession)
         {
             if (searcher == null)
             {
@@ -18,6 +20,13 @@
             }
 
             this.searcher = searcher;
+
+            if (fsiSession == null)
+            {
+                throw new ArgumentNullException("fsiSession");
+            }
+
+            this.fsiSession = fsiSession;
         }
 
         public void Search()
@@ -36,7 +45,7 @@
                 {
                     var script = new Script(path);
 
-                    script.Run(Testimony.FsiSession);
+                    script.Run(this.fsiSession);
                 }
             }
             else

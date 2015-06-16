@@ -2,8 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Collections.Specialized;
     using Concepts.Tests;
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Data;
@@ -11,28 +9,42 @@
 
     public class TestViewBinding : IViewBinding
     {
-        private readonly ObservableCollection<ITest> viewTests;
+        private readonly TestOrganizer testOrganizer = new TestOrganizer();
 
-        private readonly IViewLogic viewLogic;
+        private readonly TestSession testSession;
 
-        public TestViewBinding(IViewLogic viewLogic, ObservableCollection<ITest> viewTests)
+        private readonly List<ITest> tests;
+
+        private readonly IViewLogic testViewLogic;
+
+        public TestViewBinding(IViewLogic testViewLogic, List<ITest> tests, TestSession testSession)
         {
-            if (viewLogic == null)
+            if (testViewLogic == null)
             {
-                throw new ArgumentNullException("viewLogic");
+                throw new ArgumentNullException("testViewLogic");
             }
 
-            this.viewLogic = viewLogic;
-
-            if (viewTests == null)
+            if (tests == null)
             {
-                throw new ArgumentNullException("viewTests");
+                throw new ArgumentNullException("tests");
             }
 
-            this.viewTests = viewTests;
+            if (testSession == null)
+            {
+                throw new ArgumentNullException("testSession");
+            }
+
+            this.tests         = tests;
+            this.testViewLogic = testViewLogic;
+            this.testSession   = testSession;
         }
 
         #region 
+
+        public IReadOnlyList<object> AllData
+        {
+            get { return this.tests; }
+        }
 
         public dynamic AddData(IViewItem item)
         {
@@ -44,32 +56,28 @@
             return null;
         }
 
-        public IReadOnlyList<object> AllData
-        {
-            get { return this.viewTests; }
-        }
-
         #endregion
 
         #region Binding
 
         public void Bind()
         {
-            this.viewTests.CollectionChanged += this.ChildrenCollectionChanged;
+            testSession.FsiSession.Stopped += this.FsiSessionStopped;
         }
 
         public void Unbind()
         {
-            this.viewTests.CollectionChanged -= this.ChildrenCollectionChanged;
+            testSession.FsiSession.Stopped -= this.FsiSessionStopped;
         }
 
         #endregion
 
         #region Events
 
-        private void ChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void FsiSessionStopped(object sender, EventArgs e)
         {
-            this.viewLogic.ResetItems();
+            this.testOrganizer.Organize(this.tests);
+            this.testViewLogic.ResetItems();
         }
 
         #endregion

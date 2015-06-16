@@ -6,7 +6,7 @@
     using Engine.Guis.Widgets.Items.Layouts;
     using Engine.Guis.Widgets.Items.Logic;
 
-    public class TestItemLogic : BlockViewVerticalItemLogic
+    public class TestItemLogic : MultiBlockViewVerticalItemLogic
     {
         public TestItemLogic(
             IViewItem            item,

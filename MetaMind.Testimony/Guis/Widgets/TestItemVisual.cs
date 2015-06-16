@@ -30,6 +30,8 @@ namespace MetaMind.Testimony.Guis.Widgets
 
         protected ViewItemLabelVisual IdLabel { get; set; }
 
+        public ViewItemLabelVisual PlusLabel { get; set; }
+
         protected ViewItemLabelVisual StatusLabel { get; set; }
 
         protected ViewItemLabelVisual StatisticsLabel { get; set; }
@@ -39,6 +41,8 @@ namespace MetaMind.Testimony.Guis.Widgets
         protected ViewItemLabelVisual DescriptionLabel { get; set; }
 
         protected ViewItemFrameVisual IdFrame { get; set; }
+
+        protected ViewItemFrameVisual PlusFrame { get; set; }
 
         protected ViewItemFrameVisual StatusFrame { get; set; }
 
@@ -56,9 +60,12 @@ namespace MetaMind.Testimony.Guis.Widgets
 
         protected Func<Vector2> IdCenterPosition { get; set; }
 
+        protected Func<Vector2> PlusCenterPosition { get; set; }
+
         protected Func<Vector2> StatusCenterPosition { get; set; }
 
         protected Func<Vector2> StatisticsCenterPosition { get; set;}
+
         protected Func<Vector2> NamePosition { get; set; }
 
         protected Func<Vector2> DescriptionPosition { get; set; }
@@ -71,14 +78,19 @@ namespace MetaMind.Testimony.Guis.Widgets
         {
             // Layers
             var itemLayer = this.ItemGetLayer<TestItemLayer>();
-            var itemSettings = itemLayer.ItemSettings;
+            var itemLogic = itemLayer.ItemLogic;
+
+            // Avoid the implicit closure warning in Resharper
             this.itemFrame = itemLayer.ItemFrame;
+            var itemSettings = itemLayer.ItemSettings;
             var itemLayout = itemLayer.ItemLayout;
 
             // Positions
             this.ItemCenterPosition = () => itemFrame.RootFrame.Center.ToVector2();
 
             this.IdCenterPosition = () => itemFrame.IdFrame.Center.ToVector2();
+            this.PlusCenterPosition = () => itemFrame.PlusFrame.Center.ToVector2();
+
             this.StatusCenterPosition = () => itemFrame.StatusFrame.Center.ToVector2();
             this.StatisticsCenterPosition = () => itemFrame.StatisticsFrame.Center.ToVector2();
 
@@ -95,6 +107,17 @@ namespace MetaMind.Testimony.Guis.Widgets
                 labelSettings.TextPosition = this.IdCenterPosition;
 
                 this.IdLabel = new ViewItemLabelVisual(this.Item, labelSettings);
+            }
+
+            this.PlusFrame = new ViewItemFrameVisual(this.Item,
+                itemFrame.PlusFrame,
+                itemSettings.Get<FrameSettings>("PlusFrame"));
+            {
+                var labelSettings = itemSettings.Get<LabelSettings>("PlusLabel");
+                labelSettings.Text = () => itemLogic.Opened ? "+" : "-";
+                labelSettings.TextPosition = this.PlusCenterPosition;
+
+                this.PlusLabel = new ViewItemLabelVisual(this.Item, labelSettings);
             }
 
             this.StatusFrame = new ViewItemFrameVisual(this.Item,
@@ -171,6 +194,11 @@ namespace MetaMind.Testimony.Guis.Widgets
 
             // Frames
             this.IdFrame.Draw(graphics, time, alpha);
+            if (this.Item.ItemData.HasChildren)
+            {
+                this.PlusFrame.Draw(graphics, time, alpha);
+            }
+
             this.StatusFrame.Draw(graphics, time, alpha);
 
             if (this.Item.ItemData.HasChildren)
@@ -183,6 +211,12 @@ namespace MetaMind.Testimony.Guis.Widgets
 
             // Labels
             this.IdLabel.Draw(graphics, time, alpha);
+
+            if (this.Item.ItemData.HasChildren)
+            {
+                this.PlusLabel.Draw(graphics, time, alpha);
+            }
+
             this.StatusLabel.Draw(graphics, time, alpha);
 
             if (this.Item.ItemData.HasChildren)

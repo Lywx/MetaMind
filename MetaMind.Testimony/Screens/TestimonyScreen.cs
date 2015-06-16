@@ -1,13 +1,11 @@
 ﻿namespace MetaMind.Testimony.Screens
 {
     using System;
-
-    using MetaMind.Engine;
-    using MetaMind.Engine.Guis;
-    using MetaMind.Engine.Screens;
-    using MetaMind.Engine.Services;
-    using MetaMind.Testimony.Guis.Modules;
-
+    using Engine;
+    using Engine.Guis;
+    using Engine.Screens;
+    using Engine.Services;
+    using Guis.Modules;
     using Microsoft.Xna.Framework;
 
     public class TestimonyScreen : GameScreen
@@ -37,13 +35,14 @@
 
         public override void LoadContent(IGameInteropService interop)
         {
-            var cognition = Testimony.SessionData.Cognition;
-            var test = Testimony.SessionData.Test;
+            var cognition  = Testimony.SessionData.Cognition;
+            var test       = Testimony.SessionData.Test;
+            var fsiSession = Testimony.FsiSession;
 
             var synchronization = new SynchronizationModule(cognition, new SynchronizationSettings());
             this.Entities.Add(synchronization);
 
-            var experience = new TestModule(test, new TestModuleSettings());
+            var experience = new TestModule(new TestModuleSettings(), test, fsiSession);
             this.Entities.Add(experience);
 
             this.Entities.LoadContent(interop);

@@ -34,6 +34,7 @@ namespace MetaMind.Testimony.Guis.Widgets
             this.IdFrame = new PickableFrame();
             this.StatusFrame = new PickableFrame();
             this.StatisticsFrame = new PickableFrame();
+            this.PlusFrame = new PickableFrame();
 
             this.NameFrame = new PickableFrame();
             this.DescriptionFrame = new PickableFrame();
@@ -62,6 +63,7 @@ namespace MetaMind.Testimony.Guis.Widgets
             var idFrameSettings = this.itemSettings.Get<FrameSettings>("IdFrame");
             var statusFrameSettings = this.itemSettings.Get<FrameSettings>("StatusFrame");
             var statisticsFrameSettings = this.itemSettings.Get<FrameSettings>("StatisticsFrame");
+            var plusFrameSettings = this.itemSettings.Get<FrameSettings>("PlusFrame");
 
             this.nameFrameSettings = this.itemSettings.Get<FrameSettings>("NameFrame");
             this.descriptionFrameSettings = this.itemSettings.Get<FrameSettings>("DescriptionFrame");
@@ -84,6 +86,11 @@ namespace MetaMind.Testimony.Guis.Widgets
             }
 
             {
+                this.PlusFrame.Size = plusFrameSettings.Size;
+                this.PlusFrameLocation = () => this.IdFrameLocation() + new Vector2(0, idFrameSettings.Size.Y);
+            }
+
+            {
                 this.NameFrame.Size = nameFrameSettings.Size;
                 this.NameFrameLocation = () => this.StatusFrameLocation() + new Vector2(statusFrameSettings.Size.X, 0);
             }
@@ -100,11 +107,13 @@ namespace MetaMind.Testimony.Guis.Widgets
 
         public PickableFrame IdFrame { get; private set; }
 
+        public PickableFrame PlusFrame { get; set; }
         public PickableFrame NameFrame { get; private set; }
 
         public PickableFrame DescriptionFrame { get; private set; }
 
         public PickableFrame StatusFrame { get; private set; }
+
         public PickableFrame StatisticsFrame { get; set; }
 
         #endregion
@@ -112,6 +121,7 @@ namespace MetaMind.Testimony.Guis.Widgets
         #region Positions
 
         public Func<Vector2> IdFrameLocation { get; protected set; }
+        public Func<Vector2> PlusFrameLocation { get; set; }
 
         public Func<Vector2> StatusFrameLocation { get; protected set; }
 
@@ -128,6 +138,11 @@ namespace MetaMind.Testimony.Guis.Widgets
             if (this.IdFrame != null)
             {
                 this.IdFrame.Dispose();
+            }
+
+            if (this.PlusFrame != null)
+            {
+                this.PlusFrame.Dispose();
             }
 
             if (this.StatusFrame != null)
@@ -158,6 +173,8 @@ namespace MetaMind.Testimony.Guis.Widgets
             base.UpdateInput(input, time);
 
             this.IdFrame.UpdateInput(input, time);
+            this.PlusFrame.UpdateInput(input, time);
+
             this.StatusFrame.UpdateInput(input, time);
             this.StatisticsFrame.UpdateInput(input, time);
 
@@ -170,6 +187,8 @@ namespace MetaMind.Testimony.Guis.Widgets
             this.RootFrame.Location = this.RootFrameLocation().ToPoint();
 
             this.IdFrame.Location = this.IdFrameLocation().ToPoint();
+            this.PlusFrame.Location = this.PlusFrameLocation().ToPoint();
+
             this.StatusFrame.Location = this.StatusFrameLocation().ToPoint();
             this.StatisticsFrame.Location = this.StatisticsFrameLocation().ToPoint();
 
@@ -192,6 +211,8 @@ namespace MetaMind.Testimony.Guis.Widgets
             this.RootFrame.Update(time);
 
             this.IdFrame.Update(time);
+            this.PlusFrame.Update(time);
+
             this.StatusFrame.Update(time);
             this.StatisticsFrame.Update(time);
 

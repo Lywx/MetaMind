@@ -1,5 +1,6 @@
 ﻿namespace MetaMind.Testimony.Guis.Modules
 {
+    using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
 
@@ -21,6 +22,7 @@
     using Engine.Guis.Widgets.Views.Swaps;
     using Engine.Guis.Widgets.Views.Visuals;
     using Engine.Services;
+    using Scripting;
     using Widgets;
 
     public class TestModule : Module<TestModuleSettings>
@@ -29,14 +31,28 @@
 
         private readonly ITest test;
 
+        private readonly TestSession testSession;
+
         private IView view;
 
-        public TestModule(ITest test, TestModuleSettings settings)
+        public TestModule(TestModuleSettings settings, ITest test, FsiSession fsiSession)
             : base(settings)
         {
-            this.test = test;
+            if (test == null)
+            {
+                throw new ArgumentNullException("test");
+            }
 
-            this.Logic  = new TestModuleLogic(this);
+            if (fsiSession == null)
+            {
+                throw new ArgumentNullException("fsiSession");
+            }
+
+            this.test        = test;
+            this.testSession = new TestSession(fsiSession);
+            Test.TestSession = this.testSession;
+
+            this.Logic  = new TestModuleLogic(this, this.test, this.testSession);
             this.Visual = new TestModuleVisual(this);
         }
 
@@ -48,11 +64,6 @@
         public IView View
         {
             get { return this.view; }
-        }
-
-        public ITest Test
-        {
-            get { return this.test; }
         }
 
         #region Load and Unload
@@ -104,7 +115,7 @@
 
             // View logic
             var viewLogic  = new TestViewLogic(this.View, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory);
-            viewLogic.ViewBinding = new TestViewBinding(viewLogic, this.Test.Children);
+            viewLogic.ViewBinding = new TestViewBinding(viewLogic, this.test.Children, this.testSession);
 
             // View visual
             var viewVisual = new GradientViewVisual(this.View);

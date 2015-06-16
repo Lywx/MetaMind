@@ -1,5 +1,6 @@
 ﻿namespace MetaMind.Testimony.Guis.Modules
 {
+    using System;
     using Microsoft.Xna.Framework;
 
     using Engine.Components.Inputs;
@@ -17,24 +18,35 @@
 
         private SynchronizationSession synchronizationSession;
 
-        private TestSession testSession;
+        private readonly ITest test;
 
-        public TestModuleLogic(TestModule module) 
+        private readonly TestSession testSession;
+
+        public TestModuleLogic(TestModule module, ITest test, TestSession testSession) 
             : base(module)
         {
+            if (test == null)
+            {
+                throw new ArgumentNullException("test");
+            }
+
+            if (testSession == null)
+            {
+                throw new ArgumentNullException("testSession");
+            }
+
+            this.test        = test;
+            this.testSession = testSession;
         }
 
         public override void LoadContent(IGameInteropService interop)
         {
             this.scriptSearcher = new ScriptSearcher();
-            this.scriptRunner   = new ScriptRunner(this.scriptSearcher);
+            this.scriptRunner   = new ScriptRunner(this.scriptSearcher, this.testSession.FsiSession);
             this.scriptRunner.Search();
 
             this.synchronizationSession = new SynchronizationSession();
             this.synchronizationSession.StartSynchronization();
-
-            this.testSession = new TestSession();
-            Test.TestSession = this.testSession;
 
             base.LoadContent(interop);
         }
@@ -51,7 +63,7 @@
 
             if (keyboard.IsActionTriggered(KeyboardActions.TestRerun))
             {
-                this.Module.Test.Reset();
+                this.test.Reset();
                 this.scriptRunner.Rerun();
             }
 

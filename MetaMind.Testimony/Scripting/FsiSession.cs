@@ -15,9 +15,18 @@
 
     public class FsiSession : GameEntity, IInnerUpdatable
     {
-        private const string FsiPath = @"C:\Program Files (x86)\Microsoft SDKs\F#\3.1\Framework\v4.0\FsiAnyCPU.exe";
+        #region Fsi
 
-        private readonly string[] fsiArgs = { FsiPath, "--noninteractive", "--nologo", "--gui-" };
+        private const string FsiPath =
+            @"C:\Program Files (x86)\Microsoft SDKs\F#\3.1\Framework\v4.0\FsiAnyCPU.exe";
+
+        private readonly string[] fsiArgs =
+        {
+            FsiPath,
+            "--noninteractive",
+            "--nologo",
+            "--gui-"
+        };
 
         private readonly StringBuilder @out;
 
@@ -31,11 +40,25 @@
 
         private Shell.FsiEvaluationSession fsiSession;
 
-        private object threadLock = new object();
+        public StringBuilder Error
+        {
+            get { return this.error; }
+        }
+
+        public StringBuilder Out
+        {
+            get { return this.@out; }
+        }
+
+        #endregion
+
+        #region Thread
 
         private Thread threadCurrent;
 
         private readonly List<Thread> threadsQueued = new List<Thread>();
+
+        #endregion
 
         public FsiSession()
         {
@@ -55,44 +78,73 @@
                     inReader: this.inStream,
                     outWriter: this.outStream,
                     errorWriter: this.errorStream,
-                    collectible: FSharpOption<bool>.None);
-                //collectible: new FSharpOption<bool>(true));
+
+                    // Uncomment to disable reflection in shell
+
+                    // collectible: FSharpOption<bool>.None);
+
+                collectible: new FSharpOption<bool>(true));
             });
         }
 
-        public StringBuilder Error
+        #region Events
+
+        /// <summary>
+        /// End of a series of asynchronous session
+        /// </summary>>
+        public event EventHandler Stopped;
+            
+        /// <summary>
+        /// Start of a series of asynchronous session
+        /// </summary>>
+        public event EventHandler Started;
+
+        private void OnStopped()
         {
-            get { return this.error; }
+            // Safe threading
+            var stopped = this.Stopped;
+
+            if (stopped != null)
+            {
+                stopped(this, EventArgs.Empty);
+            }
         }
 
-        public StringBuilder Out
+        private void OnStarted()
         {
-            get { return this.@out; }
+            // Safe threading
+            var started = this.Started;
+
+            if (started != null)
+            {
+                started(this, EventArgs.Empty);
+            }
         }
 
-        #region FsiEvaluationSession
+        #endregion
+
+        #region Fsi Evaluation
 
         public void EvalScript(string filePath)
         {
             var actionName = "FsiSession.EvalScript";
-            var actionNotification = "MESSAGE: Script evaluation ended.";
 
             if (this.fsiSession != null)
             {
-                this.Start(actionName, () => this.DoEvalScript(filePath), actionNotification);
+                this.Start(actionName, () => this.DoEvalScript(filePath));
             }
             else
             {
-                this.Defer(actionName, () => this.EvalScript(filePath), actionNotification);
+                this.Defer(actionName, () => this.EvalScript(filePath));
             }
         }
 
         ///<summary>
         /// It is used to debug interactively with FsiDebugger. 
         ///</summary> 
-        public void EvalExpression(string code)
+        public object EvalExpression(string code)
         {
-            this.fsiSession.EvalExpression(code);
+            var expression = this.fsiSession.EvalExpression(code);
 #if DEBUG
             Debug.WriteLine(this.Out.ToString());
             this.Out.Clear();
@@ -100,6 +152,8 @@
             Debug.WriteLine(this.Error.ToString());
             this.Error.Clear();
 #endif
+
+            return expression.Value.ReflectionValue;
         }
 
         ///<summary>
@@ -141,26 +195,41 @@
 
         #region Thread
 
-        public void Start(string actionName, Action action, string actionNotification = null)
+        public void Continue()
+        {
+            if (this.threadCurrent == null &&
+                this.threadsQueued.Count != 0)
+            {
+                this.threadCurrent = this.threadsQueued.Last();
+                this.threadCurrent.Start();
+            }
+        }
+
+        public void Defer(string actionName, Action action)
+        {
+            this.threadsQueued.Add(new Thread(() => this.Process(action)) { Name = actionName });
+        }
+
+        public void Start(string actionName, Action action)
         {
             if (this.threadCurrent == null)
             {
-                this.threadCurrent = new Thread(() => this.Process(action, actionNotification)) { Name = actionName };
+                this.threadCurrent = new Thread(() => this.Process(action)) { Name = actionName };
                 this.threadCurrent.Start();
             }
             else
             {
-                this.Defer(actionName, action, actionNotification);
+                this.Defer(actionName, action);
             }
         }
 
-        public void Defer(string actionName, Action action, string actionNotification = null)
+        private void Process(Action action)
         {
-            this.threadsQueued.Add(new Thread(() => this.Process(action, actionNotification)) { Name = actionName });
-        }
+            if (this.threadsQueued.Count == 0)
+            {
+                this.OnStarted();
+            }
 
-        private void Process(Action action, string actionNotification)
-        {
             action();
 
             if (this.threadsQueued.Contains(this.threadCurrent))
@@ -170,24 +239,19 @@
 
             this.threadCurrent = null;
 
-            if (actionNotification != null)
+            if (this.threadsQueued.Count == 0)
             {
-                // The last thread is removed later by this.Process(Action)
-                if (this.threadsQueued.Count == 0)
-                {
-                    this.GameInterop.Console.WriteLine(actionNotification);
-                }
+                this.OnStopped();
             }
         }
 
+        #endregion
+
+        #region Update
+
         public void Update()
         {
-            if (this.threadCurrent == null &&
-                this.threadsQueued.Count != 0)
-            {
-                this.threadCurrent = this.threadsQueued.Last();
-                this.threadCurrent.Start();
-            }
+            this.Continue();
         }
 
         #endregion

@@ -9,6 +9,7 @@ namespace MetaMind.Testimony.Concepts.Tests
 {
     using System;
     using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
     using Engine;
     using Engine.Collections;
@@ -33,7 +34,7 @@ namespace MetaMind.Testimony.Concepts.Tests
             this.Path        = path;
 
             this.Parent   = null;
-            this.Children = new ObservableCollection<ITest>();
+            this.Children = new List<ITest>();
 
             this.Reset();
         }
@@ -93,7 +94,7 @@ namespace MetaMind.Testimony.Concepts.Tests
             }
         }
 
-        public ObservableCollection<ITest> Children { get; private set; }
+        public List<ITest> Children { get; private set; }
 
         public int ChildrenPassed
         {

@@ -7,56 +7,65 @@ namespace MetaMind.Testimony.Concepts.Tests
 
     public class TestOrganizer
     {
-        public void Organize(IList<ITest> tests)
+        public void Organize(ITest test)
         {
-            this.Organize(tests, tests.Count);
+            this.Organize(test.Children);
         }
 
-        private void Organize(IList<ITest> tests, int count, int level = 1)
+        public void Organize(IList<ITest> tests)
         {
-            if (tests.Count < 2)
+            this.Organize(tests, tests);
+        }
+
+        private void Organize(IList<ITest> tests, IList<ITest> groupedTests, HashSet<string> groupedNames = null, int level = 1)
+        {
+            var groups = new Dictionary<string, List<ITest>>();
+            var groupNames = this.UniqueGroupName(groupedTests, level);
+
+            // Return when group name is the same at the previous call
+            if (groupedNames != null && groupNames.SequenceEqual(groupedNames))
             {
                 return;
             }
-
-            var groups = new Dictionary<string, List<ITest>>();
-            var groupNames =
-                tests.Select(child => this.LeftCrop(child.Name, level))
-                     .ToHashSet();
 
             foreach (var groupName in groupNames)
             {
                 groups[groupName] = new List<ITest>();
 
-                foreach (var t in tests)
+                foreach (var test in groupedTests)
                 {
-                    if (t.Name.StartsWith(groupName))
+                    if (test.Name.StartsWith(groupName))
                     {
-                        groups[groupName].Add(t);
+                        groups[groupName].Add(test);
                     }
                 }
+            }
 
-                // Recursive when result is more polished
-                if (groups.Count < count)
-                {
-                    this.Organize(groups[groupName], groups.Count, level + 1);
-                }
+            foreach (var groupName in groupNames)
+            {
+                this.Organize(tests, groups[groupName], groupNames, level + 1);
             }
 
             foreach (var group in groups)
             {
                 var found = false;
 
-                foreach (var t in group.Value)
+                foreach (var existing in group.Value)
                 {
-                    if (t.Name == group.Key)
+                    if (existing.Name == group.Key)
                     {
-                        var relocated = @group.Value.Where(test => t != test).ToList();
+                        // Find the other tests in the same group that is children of existing parent
+                        var relocated = group.Value.Where(test => existing != test).ToList();
+                        var relocatedChildren = existing.Children;
 
-                        tests.RemoveRange(relocated);
-                        t.Children.AddRange(relocated);
+                        groupedTests.RemoveRange(relocated);
+                        groupedTests.RemoveRange(relocatedChildren);
+
+                        existing.Children.AddRange(relocated);
 
                         found = true;
+
+                        break;
                     }
                 }
 
@@ -66,22 +75,29 @@ namespace MetaMind.Testimony.Concepts.Tests
                     // Get the first path in group
                     var vacant = new Test(@group.Key, "", @group.Value[0].Path);
 
-                    tests.RemoveRange(group.Value);
+                    groupedTests.RemoveRange(group.Value);
                     vacant.Children.AddRange(group.Value);
 
-                    tests.Add(vacant);
+                    groupedTests.Add(vacant);
                 }
             }
 
-            // Remove the not grouped member in the tail of recursion.
-            // Since in the head recursion, "tests" is the not part of the "groups".
-            // As a result, when calling tests.RemoveRange() on tests on recursive Organize, 
-            // original "tests" is not affected. It is only possible to modify original "tests" 
-            // at the tail of recursion.
-            tests.RemoveRange(tests.Where(item => !groupNames.Contains(item.Name)));
+            groupedTests.Sort((test, other) => test.CompareTo(other));
 
-            // Sort at last
-            tests.Sort((test, other) => test.CompareTo(other));
+            // Modify the tests according to the grouped tests
+            if (level == 1)
+            {
+                tests.RemoveRange(groupedTests.Where(item => !groupNames.Contains(item.Name)));
+                tests.AddRange(groupedTests.Where(item => groupNames.Contains(item.Name) && !tests.Contains(item)));
+
+                tests.Sort((test, other) => test.CompareTo(other));
+            }
+        }
+
+        private HashSet<string> UniqueGroupName(IList<ITest> groupedTests, int level)
+        {
+            return groupedTests.Select(child => this.LeftCrop(child.Name, level))
+                               .ToHashSet();
         }
 
         internal string LeftCrop(string name, int level = 1)
