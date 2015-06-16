@@ -221,6 +221,10 @@ namespace MetaMind.Engine
 
         public void Restart()
         {
+            // Save immediately because the Exit is an asynchronous call, 
+            // which may not finished before Process.Start() is called
+            this.Interop.Save.Save();
+
             this.Exit();
 
             using (var p = Process.GetCurrentProcess())
