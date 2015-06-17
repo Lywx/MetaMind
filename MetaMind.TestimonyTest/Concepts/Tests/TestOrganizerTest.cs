@@ -7,12 +7,19 @@
     [TestFixture]
     public class TestOrganizerTest
     {
-        private TestOrganizer organizer;
-
-        [TestFixtureSetUp]
-        private void SetupTest()
+        [Test]
+        public void LeftCropTest()
         {
-            this.organizer = new TestOrganizer();
+            var organizer = new TestOrganizer();
+
+            // Third level
+            Assert.AreEqual("A", organizer.LeftCrop("A.B.C"));
+
+            // Second level
+            Assert.AreEqual("A", organizer.LeftCrop("A.B"));
+
+            // Top level 
+            Assert.AreEqual("A", organizer.LeftCrop("A"));
         }
 
         [Test]
@@ -27,9 +34,21 @@
             test.Children.Add(new Test("A.Z.A", "", ""));
             test.Children.Add(new Test("A.K.A", "", ""));
 
-            this.organizer.Organize(test);
+            var organizer = new TestOrganizer();
+            organizer.Organize(test);
 
-            this.PrintChildrenTests(test);
+            Assert.AreEqual("A",     test.Children[0].Name);
+            Assert.AreEqual("A.A",   test.Children[0].Children[0].Name);
+            Assert.AreEqual("A.A.A", test.Children[0].Children[0].Children[0].Name);
+            Assert.AreEqual("A.A.C", test.Children[0].Children[0].Children[1].Name);
+            Assert.AreEqual("A.B",   test.Children[0].Children[1].Name);
+            Assert.AreEqual("A.K",   test.Children[0].Children[2].Name);
+            Assert.AreEqual("A.K.A", test.Children[0].Children[2].Children[0].Name);
+            Assert.AreEqual("A.Z",   test.Children[0].Children[3].Name);
+            Assert.AreEqual("A.Z.A", test.Children[0].Children[3].Children[0].Name);
+
+            // Extra check
+            PrintChildrenTests(test);
         }
 
         [Test]
@@ -42,9 +61,20 @@
             test.Children.Add(new Test("A.Z.A", "", ""));
             test.Children.Add(new Test("A.K.A", "", ""));
 
-            this.organizer.Organize(test);
+            var organizer = new TestOrganizer();
+            organizer.Organize(test);
 
-            this.PrintChildrenTests(test);
+            Assert.AreEqual("A",     test.Children[0].Name);
+            Assert.AreEqual("A.A",   test.Children[0].Children[0].Name);
+            Assert.AreEqual("A.A.A", test.Children[0].Children[0].Children[0].Name);
+            Assert.AreEqual("A.A.C", test.Children[0].Children[0].Children[1].Name);
+            Assert.AreEqual("A.K",   test.Children[0].Children[1].Name);
+            Assert.AreEqual("A.K.A", test.Children[0].Children[1].Children[0].Name);
+            Assert.AreEqual("A.Z",   test.Children[0].Children[2].Name);
+            Assert.AreEqual("A.Z.A", test.Children[0].Children[2].Children[0].Name);
+
+            // Extra check
+            PrintChildrenTests(test);
         }
 
         [Test]
@@ -55,35 +85,53 @@
             test.Children.Add(new Test("A.A.A", "", ""));
             test.Children.Add(new Test("A.A.C", "", ""));
 
-            this.organizer.Organize(test);
+            var organizer = new TestOrganizer();
+            organizer.Organize(test);
 
-            this.PrintChildrenTests(test);
+            Assert.AreEqual("A",     test.Children[0].Name);
+            Assert.AreEqual("A.A",   test.Children[0].Children[0].Name);
+            Assert.AreEqual("A.A.A", test.Children[0].Children[0].Children[0].Name);
+            Assert.AreEqual("A.A.C", test.Children[0].Children[0].Children[1].Name);
+
+            // Extra check
+            PrintChildrenTests(test);
         }
 
         [Test]
-        public void LeftCropTest()
+        public void SortTest4()
         {
-            // Third level
-            Assert.AreEqual("A", this.organizer.LeftCrop("A.B.C"));
+            var test = new Test("Root", "", "");
 
-            // Second level
-            Assert.AreEqual("A", this.organizer.LeftCrop("A.B"));
+            test.Children.Add(new Test("A", "", ""));
+            test.Children.Add(new Test("A.A", "", ""));
+            test.Children.Add(new Test("A.A.C", "", ""));
+            test.Children.Add(new Test("A.A.A.C", "", ""));
 
-            // Top level 
-            Assert.AreEqual("A", this.organizer.LeftCrop("A"));
+            var organizer = new TestOrganizer();
+            organizer.Organize(test);
+
+            Assert.AreEqual("A",       test.Children[0].Name);
+            Assert.AreEqual("A.A",     test.Children[0].Children[0].Name);
+            Assert.AreEqual("A.A.A",   test.Children[0].Children[0].Children[0].Name);
+            Assert.AreEqual("A.A.A.C", test.Children[0].Children[0].Children[0].Children[0].Name);
+            Assert.AreEqual("A.A.C",   test.Children[0].Children[0].Children[1].Name);
+            Assert.AreEqual("A.A.A", test.Children[0].Children[0].Children[0].Name);
+
+            // Extra check
+            PrintChildrenTests(test);
         }
 
-        private void PrintChildrenTests(ITest test)
+        private static void PrintChildrenTests(ITest test)
         {
             foreach (var child in test.Children)
             {
-                this.PrintTest(child);
+                PrintTest(child);
 
-                this.PrintChildrenTests(child);
+                PrintChildrenTests(child);
             } 
         }
 
-        private void PrintTest(ITest t)
+        private static void PrintTest(ITest t)
         {
             Console.WriteLine(t.Name);
         }
