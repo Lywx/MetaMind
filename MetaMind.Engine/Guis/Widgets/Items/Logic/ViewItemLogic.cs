@@ -196,15 +196,17 @@
             // Keyboard
             if (this.View.ViewSettings.KeyboardEnabled)
             {
+                var keyboard = input.State.Keyboard;
+
                 if (this.ItemIsInputting())
                 {
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.CommonEditItem))
+                    if (keyboard.IsActionTriggered(KeyboardActions.CommonEditItem))
                     {
                         this.View[ViewState.View_Is_Editing] = () => true;
                         this.Item[ItemState.Item_Is_Pending] = () => true;
                     }
 
-                    if (input.State.Keyboard.IsActionTriggered(KeyboardActions.CommonDeleteItem))
+                    if (keyboard.IsActionTriggered(KeyboardActions.CommonDeleteItem))
                     {
                         this.DeleteItem();
                     }
@@ -212,7 +214,7 @@
                     // Pending status
                     if (this.Item[ItemState.Item_Is_Pending]())
                     {
-                        if (input.State.Keyboard.IsActionTriggered(KeyboardActions.Escape))
+                        if (keyboard.IsActionTriggered(KeyboardActions.Escape))
                         {
                             this.View[ViewState.View_Is_Editing] = () => false;
                             this.Item[ItemState.Item_Is_Pending] = () => false;

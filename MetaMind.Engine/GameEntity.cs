@@ -9,7 +9,6 @@ namespace MetaMind.Engine
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Runtime.Serialization;
 
     using MetaMind.Engine.Components.Events;
@@ -20,6 +19,12 @@ namespace MetaMind.Engine
     [DataContract]
     public class GameEntity : IGameEntity
     {
+        #region Entity Data
+
+        public Guid Guid { get; private set; }
+
+        #endregion
+
         #region Event Data
 
         protected List<IListener> Listeners { get; set; }
@@ -45,12 +50,6 @@ namespace MetaMind.Engine
                 this.GameInterop = GameEngine.Service.Interop;
                 this.GameNumerical = GameEngine.Service.Numerical;
             }
-#if DEBUG
-            else
-            {
-                Debug.WriteLine("Warning: GameEngine.Service = null");
-            }
-#endif
         }
 
         #endregion 
@@ -60,6 +59,8 @@ namespace MetaMind.Engine
         protected GameEntity()
         {
             this.SetupService();
+
+            this.Guid = Guid.NewGuid();
 
             this.Listeners = new List<IListener>();
         }

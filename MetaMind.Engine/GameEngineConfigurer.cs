@@ -56,7 +56,7 @@
                     Height = 850,
                     BackgroundColor = new Color(0, 0, 0, 256 * 3 / 4)
                 });
-            console.AddCommand(new ResetCommand(file));
+            console.AddCommand(new ResetCommand(engine, file));
             console.AddCommand(new RestartCommand(engine));
 
             var interop = new GameEngineInterop(

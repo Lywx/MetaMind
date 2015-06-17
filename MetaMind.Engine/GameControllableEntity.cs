@@ -106,12 +106,6 @@ namespace MetaMind.Engine
             {
                 this.GameInput = GameEngine.Service.Input;
             }
-#if DEBUG
-            else
-            {
-                Debug.WriteLine("Warning: GameEngine.Service = null");
-            }
-#endif
         }
 
         #endregion

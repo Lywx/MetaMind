@@ -87,12 +87,6 @@ namespace MetaMind.Engine
             {
                 this.GameGraphics = GameEngine.Service.Graphics;
             }
-#if DEBUG
-            else
-            {
-                Debug.WriteLine("Warning: GameEngine.Service = null");
-            }
-#endif
         }
 
         #endregion

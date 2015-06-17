@@ -8,14 +8,22 @@
     {
         private readonly IFileManager file;
 
-        public ResetCommand(IFileManager file)
+        private readonly GameEngine engine;
+
+        public ResetCommand(GameEngine engine, IFileManager file)
         {
+            if (engine == null)
+            {
+                throw new ArgumentNullException("engine");
+            }
+
             if (file == null)
             {
                 throw new ArgumentNullException("file");
             }
 
-            this.file = file;
+            this.file   = file;
+            this.engine = engine;
         }
 
         public string Description
@@ -36,6 +44,10 @@
 
         public string Execute(string[] arguments)
         {
+            // Must call restart first, because it will synchronously save the current session
+            this.engine.Restart();
+
+            // Delete the save file before next session is started
             this.file.DeleteSaveDirectory();
 
             return "";
