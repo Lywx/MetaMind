@@ -10,14 +10,14 @@
     {
         private FsiSession session;
 
-        [TestFixtureSetUp]
+        [SetUp]
         public void Setup()
         {
             this.session = new FsiSession();
             this.session.Out.Clear();
         }
 
-        [TestFixtureTearDown]
+        [TearDown]
         public void TearDown()
         {
             this.session.Out.Clear();
