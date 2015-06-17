@@ -27,7 +27,7 @@ namespace MetaMind.Testimony.Concepts.Tests
         private void Organize(IList<ITest> tests, IList<ITest> groupedTests, HashSet<string> groupedNames = null, int level = 1)
         {
             var groups = new Dictionary<string, List<ITest>>();
-            var groupNames = this.UniqueGroupName(groupedTests, level);
+            var groupNames = this.GroupNamesUnique(groupedTests, level);
 
             // Return when group name is the same at the previous call
             if (groupedNames != null && groupNames.SequenceEqual(groupedNames))
@@ -36,15 +36,33 @@ namespace MetaMind.Testimony.Concepts.Tests
             }
 
             // Group the tests according to the test name prefix
-            foreach (var groupName in groupNames)
+
+            var linkedTests = new LinkedList<ITest>(groupedTests);
+
+            // Reverse is to make A.A before A to reduce iteration afterwards
+            foreach (var groupName in groupNames.Reverse())
             {
                 groups[groupName] = new List<ITest>();
 
-                foreach (var test in groupedTests)
+                var current = linkedTests.First;
+                while (current != null)
                 {
+                    var test = current.Value;
+
                     if (test.Name.StartsWith(groupName))
                     {
                         groups[groupName].Add(test);
+
+                        // Remove added tests
+                        var removal = current;
+                        current = current.Next;
+
+                        // Avoid duplicate tests under different group name
+                        linkedTests.Remove(removal);
+                    }
+                    else
+                    {
+                        current = current.Next;
                     }
                 }
             }
@@ -63,13 +81,12 @@ namespace MetaMind.Testimony.Concepts.Tests
                     if (existing.Name == group.Key)
                     {
                         // Find the other tests in the same group that is children of existing parent
-                        var relocated = group.Value.Where(test => existing != test).ToList();
-                        var relocatedChildren = existing.Children;
+                        var relocated = group.Value
+                                             .Where(test => existing != test && existing.Name != test.Name)
+                                             .ToList();
 
                         // Relocate tests in group
                         groupedTests.RemoveRange(relocated);
-                        groupedTests.RemoveRange(relocatedChildren);
-
                         existing.Children.AddRange(relocated);
 
                         found = true;
@@ -82,7 +99,7 @@ namespace MetaMind.Testimony.Concepts.Tests
                 if (!found)
                 {
                     // Get the first path in group
-                    var vacant = new Test(@group.Key, "", @group.Value[0].Path);
+                    var vacant = new Test(@group.Key, "", @group.Value.Count != 0 ? @group.Value[0].Path : "");
 
                     // Relocate tests in group
                     groupedTests.RemoveRange(group.Value);
@@ -91,6 +108,10 @@ namespace MetaMind.Testimony.Concepts.Tests
                     groupedTests.Add(vacant);
                 }
             }
+
+            // Modify the grouped tests according to the grouped name
+            groupedTests.RemoveRange(groupedTests.Where(item => !groupNames.Contains(item.Name)));
+            groupedTests.AddRange(groupedTests.Where(item => groupNames.Contains(item.Name) && !groupedTests.Contains(item)));
 
             // Sorting in not essential for this process
             groupedTests.Sort((test, other) => test.CompareTo(other));
@@ -105,13 +126,13 @@ namespace MetaMind.Testimony.Concepts.Tests
             }
         }
 
-        private HashSet<string> UniqueGroupName(IList<ITest> groupedTests, int level)
+        private HashSet<string> GroupNamesUnique(IList<ITest> groupedTests, int level)
         {
-            return groupedTests.Select(child => this.LeftCrop(child.Name, level))
+            return groupedTests.Select(child => this.CropStart(child.Name, level))
                                .ToHashSet();
         }
 
-        internal string LeftCrop(string name, int level = 1)
+        internal string CropStart(string name, int level = 1)
         {
             var nameGroup = name.Split('.');
             var nameTrimmed = string.Join(".", nameGroup.Take(level));
