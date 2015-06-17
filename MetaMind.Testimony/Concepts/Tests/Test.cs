@@ -100,7 +100,7 @@ namespace MetaMind.Testimony.Concepts.Tests
         {
             get
             {
-                return this.Children.Count(child => child.Passed);
+                return this.Children.ToArray().Count(child => child.Passed);
             }
         }
 
