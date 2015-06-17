@@ -16,28 +16,28 @@
         }
 
         [Test]
-        public void LeftCropTest1()
+        public void CropStartTest1()
         {
             // Top level 
-            Assert.AreEqual("A", this.organizer.LeftCrop("A"));
+            Assert.AreEqual("A", this.organizer.CropStart("A"));
         }
 
         [Test]
-        public void LeftCropTest2()
+        public void CropStartTest2()
         {
             // Second level
-            Assert.AreEqual("A", this.organizer.LeftCrop("A.B"));
+            Assert.AreEqual("A", this.organizer.CropStart("A.B"));
         }
 
         [Test]
-        public void LeftCropTest3()
+        public void CropStartTest3()
         {
             // Third level
-            Assert.AreEqual("A", this.organizer.LeftCrop("A.B.C"));
+            Assert.AreEqual("A", this.organizer.CropStart("A.B.C"));
         }
 
         [Test]
-        public void SortTest1()
+        public void OrganizeTest1()
         {
             var test = new Test("Root", "", "");
 
@@ -65,7 +65,7 @@
         }
 
         [Test]
-        public void SortTest2()
+        public void OrganizeTest2()
         {
             var test = new Test("Root", "", "");
 
@@ -89,8 +89,8 @@
             PrintChildrenTests(test);
         }
 
-        [Test]
-        public void SortTest3()
+        [Test] 
+        public void OrganizeTest3()
         {
             var test = new Test("Root", "", "");
 
@@ -109,7 +109,26 @@
         }
 
         [Test]
-        public void SortTest4()
+        public void OrganizeTest4()
+        {
+            var test = new Test("Root", "", "");
+
+            test.Children.Add(new Test("A.A.A", "", ""));
+            test.Children.Add(new Test("A.A.A", "", ""));
+
+            organizer.Organize(test);
+
+            Assert.AreEqual("A", test.Children[0].Name);
+            Assert.AreEqual("A.A", test.Children[0].Children[0].Name);
+            Assert.AreEqual("A.A.A", test.Children[0].Children[0].Children[0].Name);
+            Assert.AreEqual("A.A.A", test.Children[0].Children[0].Children[1].Name);
+
+            // Extra check
+            PrintChildrenTests(test);
+        }
+
+        [Test]
+        public void OrganizeTest5()
         {
             var test = new Test("Root", "", "");
 
