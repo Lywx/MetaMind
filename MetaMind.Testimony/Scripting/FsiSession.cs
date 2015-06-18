@@ -195,22 +195,22 @@
 
         #region Thread
 
-        public void Continue()
+        protected void Continue()
         {
             if (this.threadCurrent == null &&
                 this.threadsQueued.Count != 0)
             {
-                this.threadCurrent = this.threadsQueued.Last();
+                this.threadCurrent = this.threadsQueued.First();
                 this.threadCurrent.Start();
             }
         }
 
-        public void Defer(string actionName, Action action)
+        protected void Defer(string actionName, Action action)
         {
             this.threadsQueued.Add(new Thread(() => this.Process(action)) { Name = actionName });
         }
 
-        public void Start(string actionName, Action action)
+        protected void Start(string actionName, Action action)
         {
             if (this.threadCurrent == null)
             {
@@ -223,7 +223,7 @@
             }
         }
 
-        private void Process(Action action)
+        protected new void Process(Action action)
         {
             if (this.threadsQueued.Count == 0)
             {

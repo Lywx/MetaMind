@@ -265,6 +265,7 @@
     <Compile Include="Guis\Widgets\Items\Logic\IBlockViewVerticalItemLogic.cs" />
     <Compile Include="Guis\Widgets\Items\Logic\IIndexBlockViewVerticalItemLogic.cs" />
     <Compile Include="Guis\Widgets\Items\Logic\IIndexBlockViewVerticalItemLogicOperations.cs" />
+    <Compile Include="Guis\Widgets\Items\Logic\IndexedBlockViewVerticalItemLogic.cs" />
     <Compile Include="Guis\Widgets\Items\Logic\IPointView2DItemLogic.cs" />
     <Compile Include="Guis\Widgets\Items\Logic\IPointViewHorizontalItemLogic.cs" />
     <Compile Include="Guis\Widgets\Items\Logic\IPointViewItemLogic.cs" />
@@ -341,6 +342,8 @@
     <Compile Include="Guis\Widgets\Views\Layouts\ViewLayout.cs" />
     <Compile Include="Guis\Widgets\Views\Logic\BlockViewVerticalLogic.cs" />
     <Compile Include="Guis\Widgets\Views\Logic\IBlockViewVerticalLogic.cs" />
+    <Compile Include="Guis\Widgets\Views\Logic\IndexBlockViewVerticalLogic.cs" />
+    <Compile Include="Guis\Widgets\Views\Logic\IndexedBlockViewVerticalLogic.cs" />
     <Compile Include="Guis\Widgets\Views\Logic\IPointView2DLogic.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -373,6 +376,7 @@
     <Compile Include="Guis\Widgets\Views\Selections\BlockViewVerticalSelectionController.cs" />
     <Compile Include="Guis\Widgets\Views\Selections\IBlockViewVerticalSelectionController.cs" />
     <Compile Include="Guis\Widgets\Views\Selections\IndexBlockViewVerticalSelectionController.cs" />
+    <Compile Include="Guis\Widgets\Views\Selections\IndexedBlockViewVerticalSelectionController.cs" />
     <Compile Include="Guis\Widgets\Views\Selections\IPointViewVerticalSelectionController.cs" />
     <Compile Include="Guis\Widgets\Views\Selections\PointViewVerticalSelectionController.cs" />
     <Compile Include="Guis\Widgets\Views\Settings\IPointViewHorizontalSettings.cs" />

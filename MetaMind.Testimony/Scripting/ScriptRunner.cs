@@ -38,13 +38,9 @@
         {
             if (this.searchResult != null)
             {
-                var console = this.GameInterop.Console;
-                console.WriteLine("MESSAGE: Script evaluation started");
-
                 foreach (var path in this.searchResult)
                 {
                     var script = new Script(path);
-
                     script.Run(this.fsiSession);
                 }
             }

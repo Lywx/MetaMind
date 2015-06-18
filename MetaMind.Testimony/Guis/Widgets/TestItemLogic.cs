@@ -37,7 +37,7 @@
 
         private void PlusFrameMouseLeftPressed(object sender, FrameEventArgs e)
         {
-            if (!this.IndexViewOpened)
+            if (!this.IndexedViewOpened)
             {
                 this.OpenIndexView();
             }

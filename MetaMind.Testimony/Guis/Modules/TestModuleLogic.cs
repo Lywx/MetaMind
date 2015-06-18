@@ -48,6 +48,9 @@
             this.synchronizationSession = new SynchronizationSession();
             this.synchronizationSession.StartSynchronization();
 
+            this.test.Reset();
+            this.scriptRunner.Rerun();
+
             base.LoadContent(interop);
         }
 

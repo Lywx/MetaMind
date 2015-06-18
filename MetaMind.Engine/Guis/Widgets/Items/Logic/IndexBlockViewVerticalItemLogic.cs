@@ -1,6 +1,7 @@
 namespace MetaMind.Engine.Guis.Widgets.Items.Logic
 {
     using System;
+    using Components.Inputs;
     using Data;
     using Frames;
     using Interactions;
@@ -16,16 +17,18 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Logic
     {
         #region Index View
 
-        private IView indexView;
+        private IView indexedView;
 
-        private readonly IIndexViewComposer indexViewComposer;
+        private readonly IIndexViewComposer indexedViewComposer;
 
-        public IView IndexView
+        public IView IndexedView
         {
-            get { return this.indexView; }
+            get { return this.indexedView; }
         }
 
-        public bool IndexViewOpened { get; protected set; }
+        public bool IndexedViewOpened { get; protected set; }
+
+        public Func<Vector2> IndexedViewPosition { get; set; }
 
         #endregion
 
@@ -42,7 +45,13 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Logic
 
         #endregion
 
-        public IndexBlockViewVerticalItemLogic(IViewItem item, IViewItemFrame itemFrame, IViewItemInteraction itemInteraction, IViewItemDataModel itemModel, IViewItemLayout itemLayout, IIndexViewComposer viewComposer)
+        public IndexBlockViewVerticalItemLogic(
+            IViewItem item,
+            IViewItemFrame itemFrame,
+            IViewItemInteraction itemInteraction,
+            IViewItemDataModel itemModel,
+            IViewItemLayout itemLayout,
+            IIndexViewComposer viewComposer)
             : base(item, itemFrame, itemInteraction, itemModel, itemLayout)
         {
             if (viewComposer == null)
@@ -50,7 +59,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Logic
                 throw new ArgumentNullException("viewComposer");
             }
 
-            this.indexViewComposer = viewComposer;
+            this.indexedViewComposer = viewComposer;
         }
 
         #region Layer
@@ -60,9 +69,17 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Logic
             base.SetupLayer();
 
             var viewLayer = this.ViewGetLayer<BlockViewVerticalLayer>();
+            this.viewScroll = viewLayer.ViewScroll;
             this.viewSettings = viewLayer.ViewSettings;
-            this.viewScroll   = viewLayer.ViewScroll;
+
+            var itemLayer = this.ItemGetLayer<IndexBlockViewVerticalItemLayer>();
+            var itemLayout = itemLayer.ItemLayout;
+
+            this.IndexedViewPosition = () => viewScroll.Position(itemLayout.Row + itemLayout.BlockRow);
+            // this.IndexedViewRowDisplay = () => viewSettings.ViewRowDisplay + viewScroll.RowOffset - itemLayout.Row - itemLayout.BlockRow;
         }
+
+        public Func<int> IndexedViewRowDisplay { get; set; }
 
         #endregion
 
@@ -70,20 +87,26 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Logic
 
         public void OpenIndexView()
         {
-            if (this.IndexView == null)
+            if (this.IndexedView == null)
             {
-                this.indexView = this.indexViewComposer.Construct(this.Item);
-                this.indexViewComposer.Compose(this.indexView, this.Item.ItemData);
+                this.indexedView = this.indexedViewComposer.Construct(this.Item);
+                this.indexedViewComposer.Compose(this.indexedView, this.Item.ItemData);
 
-                this.indexView.LoadContent(this.GameInterop);
+                this.indexedView.LoadContent(this.GameInterop);
             }
 
-            this.IndexViewOpened = true;
+            this.IndexedViewOpened = true;
+            //var indexViewLayer = this.IndexedView.GetLayer<BlockViewVerticalLayer>();
+            //var indexViewSettings = indexViewLayer.ViewSettings;
+            //if (indexViewSettings.ViewRowDisplay < 1)
+            //{
+            //    this.IndexedViewOpened = false;
+            //}
         }
 
         public void CloseIndexView()
         {
-            this.IndexViewOpened = false;
+            this.IndexedViewOpened = false;
         }
 
         #endregion
@@ -108,9 +131,27 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Logic
         {
             base.UpdateInput(input, time);
 
-            if (this.IndexViewOpened)
+            if (this.View.ViewSettings.KeyboardEnabled)
             {
-                this.indexView.UpdateInput(input, time);
+                var keyboard = input.State.Keyboard;
+
+                if (this.ItemIsInputting())
+                {
+                    if (keyboard.IsActionTriggered(KeyboardActions.Right))
+                    {
+                        this.OpenIndexView();
+                    }
+
+                    if (keyboard.IsActionTriggered(KeyboardActions.Left))
+                    {
+                        this.CloseIndexView();
+                    }
+                }
+            }
+
+            if (this.IndexedViewOpened)
+            {
+                this.indexedView.UpdateInput(input, time);
             }
         }
 
@@ -118,16 +159,23 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Logic
         {
             base.Update(time);
 
-            if (this.IndexViewOpened)
+            if (this.IndexedViewOpened)
             {
-
-                // this.Update
+                var indexedViewLayer = this.indexedView.GetLayer<BlockViewVerticalLayer>();
+                var indexedViewSettings = indexedViewLayer.ViewSettings;
+                indexedViewSettings.ViewPosition = this.IndexedViewPosition();
+                //indexedViewSettings.ViewRowDisplay = this.IndexViewRowDisplay();
+                //if (indexedViewSettings.ViewRowDisplay < 1)
+                //{
+                //    this.IndexedViewOpened = false;
+                //}
 
                 // To avoid flickering resulted of buffer, these three update 
                 // has to be reasonably close
-                this.indexView.UpdateForwardBuffer();
-                this.indexView.Update(time);
-                this.indexView.UpdateBackwardBuffer();
+
+                this.indexedView.UpdateForwardBuffer();
+                this.indexedView.Update(time);
+                this.indexedView.UpdateBackwardBuffer();
             }
         }
 

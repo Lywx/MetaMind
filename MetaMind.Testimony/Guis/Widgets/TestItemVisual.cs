@@ -116,7 +116,7 @@ namespace MetaMind.Testimony.Guis.Widgets
                 itemSettings.Get<FrameSettings>("PlusFrame"));
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("PlusLabel");
-                labelSettings.Text = () => itemLogic.IndexViewOpened ? "-" : "+";
+                labelSettings.Text = () => itemLogic.IndexedViewOpened ? "-" : "+";
                 labelSettings.TextPosition = this.PlusCenterPosition;
 
                 this.PlusLabel = new ViewItemLabelVisual(this.Item, labelSettings);
@@ -230,9 +230,9 @@ namespace MetaMind.Testimony.Guis.Widgets
             this.DescriptionLabel.Draw(graphics, time, alpha);
 
             // Index view
-            if (this.itemLogic.IndexViewOpened)
+            if (this.itemLogic.IndexedViewOpened)
             {
-                this.itemLogic.IndexView.Draw(graphics, time, alpha);
+                this.itemLogic.IndexedView.Draw(graphics, time, alpha);
             }
         }
 

@@ -9,9 +9,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Logic
 
         #region Index
 
-        bool IndexViewOpened { get; }
+        bool IndexedViewOpened { get; }
 
-        IView IndexView { get; }
+        IView IndexedView { get; }
 
         #endregion
     }

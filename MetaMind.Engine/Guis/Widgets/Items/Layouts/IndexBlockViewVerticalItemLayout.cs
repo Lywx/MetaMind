@@ -12,26 +12,26 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
         {
         }
 
-        public int IndexViewRow
+        public int IndexedViewRow
         {
             get
             {
                 var itemLayer = this.Item.GetLayer<IndexBlockViewVerticalItemLayer>();
                 var itemLogic = itemLayer.ItemLogic;
 
-                if (!itemLogic.IndexViewOpened)
+                if (!itemLogic.IndexedViewOpened)
                 {
                     return 0;
                 }
 
                 var rowNum = 0;
 
-                foreach (var item in itemLogic.IndexView.ItemsRead)
+                foreach (var item in itemLogic.IndexedView.ItemsRead)
                 {
                     var indexItemLayer = item.GetLayer<IndexBlockViewVerticalItemLayer>();
                     var indexItemLayout = indexItemLayer.ItemLayout;
 
-                    rowNum += indexItemLayout.BlockRow + indexItemLayout.IndexViewRow;
+                    rowNum += indexItemLayout.BlockRow + indexItemLayout.IndexedViewRow;
                 }
 
                 return rowNum;

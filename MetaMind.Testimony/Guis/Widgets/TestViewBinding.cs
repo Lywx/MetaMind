@@ -77,6 +77,8 @@
         private void FsiSessionStopped(object sender, EventArgs e)
         {
             this.testOrganizer.Organize(this.tests);
+
+            // Avoid thread context switch 
             this.testViewLogic.ResetItems();
         }
 

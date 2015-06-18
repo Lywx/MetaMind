@@ -112,11 +112,13 @@
     <Compile Include="Concepts\Tests\TestSession.cs" />
     <Compile Include="Extensions\ExtHashSet.cs" />
     <Compile Include="Extensions\ExtObservableCollection.cs" />
+    <Compile Include="Guis\Widgets\IndexedTestViewComposer.cs" />
     <Compile Include="Guis\Modules\TestModuleLogic.cs" />
     <Compile Include="Guis\Modules\TestModuleVisual.cs" />
     <Compile Include="Concepts\Synchronizations\ISynchronizationController.cs" />
     <Compile Include="Concepts\Synchronizations\SynchronizationSession.cs" />
-    <Compile Include="Guis\Modules\TestViewComposer.cs" />
+    <Compile Include="Guis\Widgets\TestViewComposer.cs" />
+    <Compile Include="Guis\Widgets\IndexedTestViewLogic.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Scripting\FsiDebugger.cs" />
     <Compile Include="Scripting\IScriptOperations.cs" />
