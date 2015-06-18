@@ -51,7 +51,7 @@ namespace MetaMind.Testimony.Guis.Widgets
 
         private readonly LabelSettings plusLabel = new LabelSettings
         {
-            TextSize   = 0.7f,
+            TextSize   = 1.0f,
             TextColor  = Color.White,
             TextFont   = Font.UiStatistics,
             TextHAlign = StringHAlign.Center,
