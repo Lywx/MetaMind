@@ -151,6 +151,8 @@
 
         public override void Update(GameTime time)
         {
+            base.Update(time);
+
             if (this.ItemLogic != null)
             {
                 this.ItemLogic.Update(time);

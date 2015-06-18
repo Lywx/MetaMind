@@ -9,7 +9,6 @@
 namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 {
     using System;
-
     using Components.Inputs;
     using Items;
     using Items.Data;
@@ -176,20 +175,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public override void Update(GameTime time)
         {
-            if (this.View[ViewState.View_Is_Active]())
+            base.Update(time);
+
+            foreach (var item in this.View.ItemsRead.ToArray())
             {
-                foreach (var item in this.View.ItemsRead.ToArray())
-                {
-                    item.UpdateView(time);
-                    item.Update(time);
-                }
-            }
-            else
-            {
-                foreach (var item in this.View.ItemsRead.ToArray())
-                {
-                    item.UpdateView(time);
-                }
+                item.UpdateView(time);
+                item.Update(time);
             }
         }
 
@@ -250,6 +241,10 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
                 item.SetupLayer();
 
+                // HOTFIX: Update item frame to avoid flickering
+                item.UpdateView(new GameTime());
+                item.Update(new GameTime());
+
                 this.View.ItemsWrite.Add(item);
             }
         }
@@ -266,6 +261,10 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
             item.SetupLayer();
 
+            // HOTFIX: Update item frame to avoid flickering
+            item.UpdateView(new GameTime());
+            item.Update(new GameTime());
+
             this.View.ItemsWrite.Add(item);
         }
 
@@ -275,7 +274,10 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
             foreach (var data in this.ViewBinding.AllData)
             {
-                this.AddItem(data);
+                // Safe threading
+                var localData = data;
+
+                this.Defer(() => this.AddItem(localData));
             }
         }
 

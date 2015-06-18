@@ -78,6 +78,8 @@ namespace MetaMind.Engine.Guis.Particles
 
         public override void Update(GameTime time)
         {
+            base.Update(time);
+
             this.AngularVelocity += (float)time.ElapsedGameTime.TotalSeconds * this.AngularAcceleration;
             this.Angle           += (float)time.ElapsedGameTime.TotalSeconds * this.AngularVelocity;
 

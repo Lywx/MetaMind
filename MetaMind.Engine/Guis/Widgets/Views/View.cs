@@ -88,12 +88,21 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         #endregion
 
+        #region Load and Unload
+
         public override void LoadContent(IGameInteropService interop)
         {
-            this.ViewLogic .SetupLayer();
-            this.ViewVisual.SetupLayer();
+            if (this.ViewLogic != null)
+            {
+                this.ViewLogic.SetupLayer();
 
-            this.ViewLogic.LoadBinding();
+                this.ViewLogic.LoadBinding();
+            }
+
+            if (this.ViewVisual != null)
+            {
+                this.ViewVisual.SetupLayer();
+            }
 
             base.LoadContent(interop);
         }
@@ -104,6 +113,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
             base.UnloadContent(interop);
         }
+
+
+        #endregion
 
         #region Draw
 
@@ -121,6 +133,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public override void Update(GameTime time)
         {
+            base.Update(time);
+
             if (this.ViewLogic != null)
             {
                 this.ViewLogic.Update(time);
@@ -170,8 +184,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             base.UpdateForwardBuffer();
 
-            // Update read buffer updated in lasted loop to use in this loop
-            this.ItemsRead = this.ItemsWrite.GetRange(0, this.ItemsWrite.Count);
+            // Update read buffer updated in lastest input / event / process loop to use in this loop
+            this.UpdateItemsReadBuffer();
 
             if (this.ViewLogic != null)
             {
@@ -188,6 +202,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             base.UpdateBackwardBuffer();
 
+            // Update read buffer updated in lastest update loop to use in this loop
+            this.UpdateItemsReadBuffer();
+
             // Swap buffer
             this.currentBuffer = this.NextBuffer();
 
@@ -200,6 +217,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             {
                 this.ViewVisual.UpdateBackwardBuffer();
             }
+        }
+
+        private void UpdateItemsReadBuffer()
+        {
+            this.ItemsRead = this.ItemsWrite.GetRange(0, this.ItemsWrite.Count);
         }
 
         private int NextBuffer()

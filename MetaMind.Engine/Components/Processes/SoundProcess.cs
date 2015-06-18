@@ -40,6 +40,8 @@ namespace MetaMind.Engine.Components.Processes
 
         public override void Update(GameTime time)
         {
+            base.Update(time);
+
             if (this.soundInstance.IsDisposed || this.soundInstance.State == SoundState.Stopped)
             {
                 this.Succeed();

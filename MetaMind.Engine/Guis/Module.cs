@@ -95,6 +95,8 @@ namespace MetaMind.Engine.Guis
 
         public override void Update(GameTime time)
         {
+            base.Update(time);
+
             if (this.Logic != null)
             {
                 this.Logic.Update(time);

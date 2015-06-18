@@ -2,7 +2,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 {
     using System.Diagnostics;
     using Items.Layers;
-    using Items.Layouts;
     using Scrolls;
 
     public class BlockViewVerticalSelectionController : PointViewVerticalSelectionController, IBlockViewVerticalSelectionController 
@@ -13,6 +12,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
         {
         }
 
+        #region Layer
+
         public override void SetupLayer()
         {
             base.SetupLayer();
@@ -20,6 +21,35 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
             var viewLayer = this.ViewGetLayer<BlockViewVerticalLayer>();
             this.viewScroll = viewLayer.ViewScroll;
         }
+
+        #endregion
+
+        #region State
+
+        protected override bool IsBottommost(int id)
+        {
+#if DEBUG
+            Debug.Assert(
+                this.View.ItemsRead.Count == 0 || id < this.View.ItemsRead.Count);
+#endif
+            return id == this.View.ItemsRead.Count - 1;
+        }
+
+        protected int LowerId(int id)
+        {
+            return id < this.View.ItemsRead.Count - 1
+                       ? id + 1
+                       : this.View.ItemsRead.Count - 1;
+        }
+
+        protected int UpperId(int id)
+        {
+            return id > 0 ? id - 1 : id;
+        }
+
+        #endregion
+
+        #region Operations
 
         public override void MoveUp()
         {
@@ -42,7 +72,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
                 this.Select(this.UpperId(id));
             }
 
-            if (this.viewScroll != null && 
+            if (this.viewScroll != null &&
                 this.viewScroll.IsUpToDisplay(this.UpperId(id)))
             {
                 this.viewScroll.MoveUp();
@@ -76,29 +106,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
                 this.Select(this.LowerId(id));
             }
 
-            if (this.viewScroll != null && 
+            if (this.viewScroll != null &&
                 this.viewScroll.IsDownToDisplay(this.LowerId(id)))
             {
                 this.viewScroll.MoveDown();
             }
         }
 
-        protected override bool IsBottommost(int id)
-        {
-#if DEBUG
-            Debug.Assert(this.View.ItemsRead.Count == 0 || id < this.View.ItemsRead.Count);
-#endif
-            return id == this.View.ItemsRead.Count - 1;
-        }
-
-        private int LowerId(int id)
-        {
-            return id < this.View.ItemsRead.Count - 1 ? id + 1 : this.View.ItemsRead.Count - 1;
-        }
-
-        private int UpperId(int id)
-        {
-            return id > 0 ? id - 1 : id;
-        }
+        #endregion
     }
 }

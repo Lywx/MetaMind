@@ -9,11 +9,10 @@ namespace MetaMind.Engine
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Runtime.Serialization;
-
-    using MetaMind.Engine.Components.Events;
-    using MetaMind.Engine.Services;
-
+    using Components.Events;
+    using Services;
     using Microsoft.Xna.Framework;
 
     [DataContract]
@@ -167,6 +166,7 @@ namespace MetaMind.Engine
 
         public virtual void Update(GameTime time)
         {
+            this.Continue(time);
         }
 
         public virtual void UpdateForwardBuffer()
@@ -178,6 +178,72 @@ namespace MetaMind.Engine
         }
 
         #endregion Update
+
+        #region Update  Queue
+
+        private Action updateAction;
+
+        private readonly List<Action> updateActions = new List<Action>();
+
+        private void OnStopped()
+        {
+        }
+
+        private void OnStarted()
+        {
+        }
+
+        protected virtual void Continue(GameTime time)
+        {
+            if (this.updateAction == null &&
+                this.updateActions.Count != 0)
+            {
+                this.updateAction = this.updateActions.First();
+                this.updateAction();
+            }
+        }
+
+        protected virtual void Defer(Action action)
+        {
+            this.updateActions.Add((() => this.Process(action)));
+        }
+
+        protected virtual void Start(Action action)
+        {
+            if (this.updateAction == null)
+            {
+                this.updateAction = () => this.Process(action);
+                this.updateAction();
+            }
+            else
+            {
+                this.Defer(action);
+            }
+        }
+
+        protected virtual void Process(Action action)
+        {
+            if (this.updateActions.Count == 0)
+            {
+                this.OnStarted();
+            }
+
+            action();
+
+            if (this.updateActions.Contains(this.updateAction))
+            {
+                this.updateActions.Remove(this.updateAction);
+            }
+
+            this.updateAction = null;
+
+            if (this.updateActions.Count == 0)
+            {
+                this.OnStopped();
+            }
+        }
+
+        #endregion
 
         #region IDisposable
 

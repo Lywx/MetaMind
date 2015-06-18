@@ -20,7 +20,11 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
 
         protected virtual void UpdateRow()
         {
-            this.Row = this.Id;
+            this.Row = this.Id >= 0
+                           ? this.Id
+
+                           // HACK: Avoid improperly located at first row when id < 0 which means it has not been added to ItemsReads
+                           : this.Id == 0 ? 0 : int.MinValue;
         }
 
         public virtual int Row { get; protected set; }

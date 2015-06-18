@@ -41,6 +41,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
 
         public override void Update(GameTime time)
         {
+            base.Update(time);
+
             this.UpdateViewScroll(time);
             this.UpdateViewSelection(time);
 

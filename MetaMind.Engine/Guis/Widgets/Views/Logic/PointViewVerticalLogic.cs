@@ -138,14 +138,14 @@
 
         #region Operations
 
-        public void ScrollDown()
+        public virtual void ScrollDown()
         {
             this.ViewScroll.MoveDown();
 
             this.OnScrolledDown();
         }
 
-        public void ScrollUp()
+        public virtual void ScrollUp()
         {
             this.ViewScroll.MoveUp();
 

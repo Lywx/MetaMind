@@ -26,6 +26,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
 
         public override void SetupLayer()
         {
+            base.SetupLayer();
+
             this.viewLayout = this.ViewGetLayer<BlockViewVerticalLayer>().ViewLayout;
             this.itemSettings = this.View.ItemSettings;
         }
@@ -68,7 +70,12 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
 
         protected override void UpdateRow()
         {
-            this.Row = this.Id > 0 ? this.viewLayout.RowOf(this.Id - 1) + this.viewLayout.RowIn(this.Id - 1) : 0;
+            this.Row = this.Id > 0
+                           ? this.viewLayout.RowOf(this.Id - 1)
+                             + this.viewLayout.RowIn(this.Id - 1)
+
+                           // HACK: Avoid improperly located at first row when id < 0 which means it has not been added to ItemsReads
+                           : this.Id == 0 ? 0 : int.MinValue;
         }
     }
 }

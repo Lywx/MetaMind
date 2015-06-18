@@ -34,6 +34,8 @@ namespace MetaMind.Engine.Guis
 
         public override void Update(GameTime time)
         {
+            base.Update(time);
+
             this.Logic .Update(time);
             this.Visual.Update(time);
         }

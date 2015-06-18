@@ -176,6 +176,8 @@ namespace MetaMind.Engine.Guis.Elements
 
         public override void Update(GameTime time)
         {
+            base.Update(time);
+
             var isOutOfHoldLen = mouseLocation.DistanceFrom(this.mousePressedPosition).Length() > mouseHoldLen;
 
             this.StateMachine.Fire(isOutOfHoldLen ? Trigger.DraggedOutOfRange : Trigger.DraggedWithinRange);

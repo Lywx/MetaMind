@@ -23,6 +23,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Visuals
 
         public override void Update(GameTime time)
         {
+            base.Update(time);
+
             if (this.View[ViewState.View_Has_Focus]())
             {
                 this.FocusAlpha += (int)(this.fadeSpeed * time.ElapsedGameTime.TotalSeconds);

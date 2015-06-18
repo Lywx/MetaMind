@@ -86,6 +86,8 @@ namespace MetaMind.Testimony.Guis.Modules
 
         public override void Update(GameTime time)
         {
+            base.Update(time);
+
             // Automatic monitoring
             this.Monitor.TryStart();
 

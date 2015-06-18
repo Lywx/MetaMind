@@ -15,6 +15,10 @@
     {
         private bool isFrameUpdated;
 
+        private Func<bool> itemIsInputting;
+
+        private Func<bool> itemIsLocking;
+
         #region Constructors
 
         public ViewItemLogic(IViewItem item, IViewItemFrame itemFrame, IViewItemInteraction itemInteraction, IViewItemDataModel itemModel, IViewItemLayout itemLayout)
@@ -44,8 +48,6 @@
             this.ItemInteraction = itemInteraction;
             this.ItemModel       = itemModel;
             this.ItemLayout      = itemLayout;
-
-            this.SetupLogic();
         }
 
         #endregion
@@ -104,6 +106,10 @@
 
         public override void SetupLayer()
         {
+            base.SetupLayer();
+
+            this.SetupLogic();
+
             this.ItemFrame      .SetupLayer();
             this.ItemModel      .SetupLayer();
             this.ItemLayout     .SetupLayer();
@@ -116,28 +122,42 @@
 
         private void SetupLogic()
         {
-            this.Item[ItemState.Item_Is_Inputting] = this.ItemIsInputting;
-            this.Item[ItemState.Item_Is_Locking]   = this.ItemIsLocking;
-        }
-
-        protected virtual Func<bool> ItemIsInputting
-        {
-            get
+            if (this.ItemIsInputting == null)
             {
-                return () =>
-                    this.Item[ItemState.Item_Is_Active]() && 
-                    this.Item[ItemState.Item_Is_Selected]() && 
-                   !this.Item[ItemState.Item_Is_Editing]();
+                this.ItemIsInputting = 
+                    () => this.Item[ItemState.Item_Is_Active]() &&
+                          this.Item[ItemState.Item_Is_Selected]() &&
+                         !this.Item[ItemState.Item_Is_Editing]();
+            }
+
+            if (this.ItemIsLocking == null)
+            {
+                this.ItemIsLocking = () =>
+                    this.Item[ItemState.Item_Is_Editing]() || 
+                    this.Item[ItemState.Item_Is_Pending]();
             }
         }
 
-        protected virtual Func<bool> ItemIsLocking
+        public Func<bool> ItemIsInputting
         {
             get
             {
-                return () =>
-                    this.Item[ItemState.Item_Is_Editing]() || 
-                    this.Item[ItemState.Item_Is_Pending]();
+                return this.itemIsInputting;
+            }
+            set
+            {
+                this.itemIsInputting = value;
+                this.Item[ItemState.Item_Is_Inputting] = value;
+            }
+        }
+
+        public Func<bool> ItemIsLocking
+        {
+            get { return this.itemIsLocking; }
+            set
+            {
+                this.itemIsLocking = value;
+                this.Item[ItemState.Item_Is_Locking] = value;
             }
         }
 
@@ -147,6 +167,8 @@
 
         public override void Update(GameTime time)
         {
+            base.Update(time);
+
             // Reduce lagging graphics 
             if (!this.isFrameUpdated)
             {
@@ -154,12 +176,14 @@
 
                 this.ItemFrame.Update(time);
             }
-
-            // For better performance
-            if (this.Item[ItemState.Item_Is_Active]())
+            else
             {
-                this.ItemFrame.Update(time);
-                this.ItemModel.Update(time);
+                // For better performance
+                if (this.Item[ItemState.Item_Is_Active]())
+                {
+                    this.ItemFrame.Update(time);
+                    this.ItemModel.Update(time);
+                }
             }
         }
 
@@ -198,7 +222,7 @@
             {
                 var keyboard = input.State.Keyboard;
 
-                if (this.ItemIsInputting())
+                if (this.Item[ItemState.Item_Is_Inputting]())
                 {
                     if (keyboard.IsActionTriggered(KeyboardActions.CommonEditItem))
                     {

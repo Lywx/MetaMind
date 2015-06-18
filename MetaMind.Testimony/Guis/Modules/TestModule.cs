@@ -2,26 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
-
     using Concepts.Tests;
     using Engine;
     using Engine.Guis;
-    using Engine.Guis.Elements;
     using Engine.Guis.Widgets.Items;
-    using Engine.Guis.Widgets.Items.Data;
-    using Engine.Guis.Widgets.Items.Factories;
-    using Engine.Guis.Widgets.Items.Interactions;
-    using Engine.Guis.Widgets.Items.Layers;
-    using Engine.Guis.Widgets.Regions;
     using Engine.Guis.Widgets.Views;
-    using Engine.Guis.Widgets.Views.Layouts;
-    using Engine.Guis.Widgets.Views.Regions;
-    using Engine.Guis.Widgets.Views.Scrolls;
-    using Engine.Guis.Widgets.Views.Selections;
-    using Engine.Guis.Widgets.Views.Swaps;
-    using Engine.Guis.Widgets.Views.Visuals;
     using Engine.Services;
+    using Microsoft.Xna.Framework;
     using Scripting;
     using Widgets;
 

@@ -39,6 +39,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
 
         public override void Update(GameTime time)
         {
+            base.Update(time);
+
             var brightness = (int)(this.ScrollbarSettings.ColorBrightnessFadeSpeed * time.ElapsedGameTime.TotalSeconds);
 
             if (this.scrollbar[FrameState.Mouse_Is_Over]() ||

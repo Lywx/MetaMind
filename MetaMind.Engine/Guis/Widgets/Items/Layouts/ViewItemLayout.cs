@@ -27,24 +27,57 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
             }
 
             this.itemLayoutInteraction = itemLayoutInteraction;
-
-            this.Item[ItemState.Item_Is_Active] = this.ItemIsActive;
         }
+
+        #region Layout
+
+        public virtual int Id { get; set; }
+
+        #endregion
+
+        #region Logic
+
+        private Func<bool> itemIsActive;
 
         public Func<bool> ItemIsActive
         {
-            get
+            get { return this.itemIsActive; }
+            set
             {
-                return () => this.View[ViewState.View_Is_Active]() && this.itemLayoutInteraction.ViewCanDisplay(this);
+                this.itemIsActive = value;
+                this.Item[ItemState.Item_Is_Active] = value;
             }
         }
 
-        public virtual int Id { get; set; }
+        private void SetupLogic()
+        {
+            if (this.ItemIsActive == null)
+            {
+                this.ItemIsActive =
+                    () => this.View[ViewState.View_Is_Active]() &&
+                          this.itemLayoutInteraction.ViewCanDisplay(this);
+            }
+        }
+
+        #endregion
+
+        #region Layer
+
+        public override void SetupLayer()
+        {
+            base.SetupLayer();
+
+            this.SetupLogic();
+        }
+
+        #endregion
 
         #region Update
 
         public override void Update(GameTime time)
         {
+            base.Update(time);
+
             this.UpdateId();
         }
 

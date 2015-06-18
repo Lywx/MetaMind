@@ -55,7 +55,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             get
             {
                 return this.View.ItemsWrite; 
-                
             }
         }
 

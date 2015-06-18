@@ -46,6 +46,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Regions
 
         public override void Update(GameTime time)
         {
+            base.Update(time);
+
             this.Rectangle = this.RegionBounds();
         }
 

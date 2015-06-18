@@ -24,6 +24,8 @@ namespace MetaMind.Engine.Components.Processes
 
         public override void Update(GameTime time)
         {
+            base.Update(time);
+
             this.Duration -= time.ElapsedGameTime;
             if (Duration <= TimeSpan.Zero)
             {

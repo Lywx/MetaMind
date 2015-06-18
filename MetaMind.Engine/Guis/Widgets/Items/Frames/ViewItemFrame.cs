@@ -48,6 +48,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Frames
 
         public override void Update(GameTime time)
         {
+            base.Update(time);
+
             this.RootFrame.Update(time);
 
             this.UpdateFrameGeometry();
