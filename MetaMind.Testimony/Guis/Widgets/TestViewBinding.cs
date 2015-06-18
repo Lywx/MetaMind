@@ -62,19 +62,19 @@
 
         public void Bind()
         {
-            testSession.FsiSession.Stopped += this.FsiSessionStopped;
+            testSession.FsiSession.ThreadStopped += this.FsiSessionThreadStopped;
         }
 
         public void Unbind()
         {
-            testSession.FsiSession.Stopped -= this.FsiSessionStopped;
+            testSession.FsiSession.ThreadStopped -= this.FsiSessionThreadStopped;
         }
 
         #endregion
 
         #region Events
 
-        private void FsiSessionStopped(object sender, EventArgs e)
+        private void FsiSessionThreadStopped(object sender, EventArgs e)
         {
             this.testOrganizer.Organize(this.tests);
 

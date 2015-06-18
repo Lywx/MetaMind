@@ -12,7 +12,6 @@ namespace MetaMind.Testimony.Concepts.Tests
     using System.Collections.Generic;
     using System.Linq;
     using Engine;
-    using Engine.Collections;
     using Engine.Guis.Widgets.Items.Data;
 
     public partial class Test : GameEntity, ITest, IBlockViewVerticalItemData

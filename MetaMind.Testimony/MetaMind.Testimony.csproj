@@ -119,7 +119,6 @@
     <Compile Include="Concepts\Synchronizations\SynchronizationSession.cs" />
     <Compile Include="Guis\Widgets\TestViewComposer.cs" />
     <Compile Include="Guis\Widgets\IndexedTestViewLogic.cs" />
-    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Scripting\FsiDebugger.cs" />
     <Compile Include="Scripting\IScriptOperations.cs" />
     <Compile Include="Scripting\IScript.cs" />

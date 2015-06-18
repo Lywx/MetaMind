@@ -1,6 +1,8 @@
 namespace MetaMind.Engine.Guis.Widgets.Views
 {
-    public interface IViewComponent : IGameControllableEntity, IViewComponentOperations
+    using Layers;
+
+    public interface IViewComponent : IGameControllableEntity, IViewComponentOperations, IViewLayerOperations
     {
         IView View { get; }
     }

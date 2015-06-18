@@ -11,6 +11,7 @@ namespace MetaMind.Testimony.Guis.Widgets
 
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Frames;
+    using Engine.Guis.Widgets.Items.Interactions;
     using Engine.Guis.Widgets.Items.Visuals;
     using Engine.Guis.Widgets.Visuals;
     using Engine.Services;
@@ -22,6 +23,8 @@ namespace MetaMind.Testimony.Guis.Widgets
         private TestItemFrame itemFrame;
 
         private TestItemLogic itemLogic;
+
+        private IIndexBlockViewVerticalItemInteraction itemInteraction;
 
         public TestItemVisual(IViewItem item)
             : base(item)
@@ -83,9 +86,10 @@ namespace MetaMind.Testimony.Guis.Widgets
             this.itemLogic = itemLayer.ItemLogic;
 
             // Avoid the implicit closure warning in Resharper
-            this.itemFrame = itemLayer.ItemFrame;
-            var itemSettings = itemLayer.ItemSettings;
-            var itemLayout = itemLayer.ItemLayout;
+            this.itemFrame       = itemLayer.ItemFrame;
+            var itemSettings     = itemLayer.ItemSettings;
+            var itemLayout       = itemLayer.ItemLayout;
+            this.itemInteraction = itemLayer.ItemInteraction;
 
             // Positions
             this.ItemCenterPosition = () => itemFrame.RootFrame.Center.ToVector2();
@@ -116,7 +120,7 @@ namespace MetaMind.Testimony.Guis.Widgets
                 itemSettings.Get<FrameSettings>("PlusFrame"));
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("PlusLabel");
-                labelSettings.Text = () => itemLogic.IndexedViewOpened ? "-" : "+";
+                labelSettings.Text = () => this.itemInteraction.IndexedViewOpened ? "-" : "+";
                 labelSettings.TextPosition = this.PlusCenterPosition;
 
                 this.PlusLabel = new ViewItemLabelVisual(this.Item, labelSettings);
@@ -188,9 +192,14 @@ namespace MetaMind.Testimony.Guis.Widgets
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            if (!this.Item[ItemState.Item_Is_Active]() &&
+            if (!this.Item[ItemState.Item_Is_Active]() && 
                 !this.Item[ItemState.Item_Is_Dragging]())
             {
+                if (this.itemInteraction.IndexedViewOpened)
+                {
+                    this.itemInteraction.IndexedView.Draw(graphics, time, alpha);
+                }
+
                 return;
             }
 
@@ -229,10 +238,10 @@ namespace MetaMind.Testimony.Guis.Widgets
             this.NameLabel.Draw(graphics, time, alpha);
             this.DescriptionLabel.Draw(graphics, time, alpha);
 
-            // Index view
-            if (this.itemLogic.IndexedViewOpened)
+            // Indexed view
+            if (this.itemInteraction.IndexedViewOpened)
             {
-                this.itemLogic.IndexedView.Draw(graphics, time, alpha);
+                this.itemInteraction.IndexedView.Draw(graphics, time, alpha);
             }
         }
 

@@ -1,5 +1,6 @@
 namespace MetaMind.Engine.Guis.Widgets.Items.Layers
 {
+    using Interactions;
     using Layouts;
     using Logic;
 
@@ -17,6 +18,11 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layers
         public new IIndexBlockViewVerticalItemLayout ItemLayout
         {
             get { return this.ItemLogic.ItemLayout; }
+        }
+
+        public new IIndexBlockViewVerticalItemInteraction ItemInteraction
+        {
+            get { return this.ItemLogic.ItemInteraction; }
         }
     }
 }

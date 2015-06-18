@@ -17,16 +17,16 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
             get
             {
                 var itemLayer = this.Item.GetLayer<IndexBlockViewVerticalItemLayer>();
-                var itemLogic = itemLayer.ItemLogic;
+                var itemInteraction = itemLayer.ItemInteraction;
 
-                if (!itemLogic.IndexedViewOpened)
+                if (!itemInteraction.IndexedViewOpened)
                 {
                     return 0;
                 }
 
                 var rowNum = 0;
 
-                foreach (var item in itemLogic.IndexedView.ItemsRead)
+                foreach (var item in itemInteraction.IndexedView.ItemsRead)
                 {
                     var indexItemLayer = item.GetLayer<IndexBlockViewVerticalItemLayer>();
                     var indexItemLayout = indexItemLayer.ItemLayout;

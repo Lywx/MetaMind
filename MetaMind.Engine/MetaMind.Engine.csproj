@@ -174,6 +174,9 @@
     <Compile Include="Guis\Widgets\Items\Frames\BlcokViewVerticalItemFrame.cs" />
     <Compile Include="Guis\Widgets\Items\Interactions\BlockViewVerticalItemInteraction.cs" />
     <Compile Include="Guis\Widgets\Items\Interactions\BlockViewVerticalItemLayoutInteraction.cs" />
+    <Compile Include="Guis\Widgets\Items\Interactions\IIndexBlockViewVerticalItemInteraction.cs" />
+    <Compile Include="Guis\Widgets\Items\Interactions\IndexBlockViewVerticalItemInteraction.cs" />
+    <Compile Include="Guis\Widgets\Items\Interactions\IViewItemIndexViewProvider.cs" />
     <Compile Include="Guis\Widgets\Items\Interactions\IViewItemLayoutInteraction.cs" />
     <Compile Include="Guis\Widgets\Items\Interactions\PointViewItemLayoutInteraction.cs" />
     <Compile Include="Guis\Widgets\Items\IViewItemComponentOperations.cs" />
@@ -184,6 +187,7 @@
     <Compile Include="Guis\Widgets\Items\Layers\IViewItemLayer.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Guis\Widgets\Items\Layers\IViewItemLayerOperations.cs" />
     <Compile Include="Guis\Widgets\Items\Layers\PointView2DItemLayer.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -304,6 +308,7 @@
     <Compile Include="Guis\Widgets\Items\Visuals\ViewItemVisual.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Guis\Widgets\Views\Layers\IViewAndItemLayerOperations.cs" />
     <Compile Include="Guis\Widgets\IWidgetSettings.cs" />
     <Compile Include="Guis\Widgets\Views\IViewComponentOperations.cs" />
     <Compile Include="Guis\Widgets\Views\IIndexViewComposer.cs" />
@@ -311,6 +316,7 @@
     <Compile Include="Guis\Widgets\Views\Layers\IViewLayer.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Guis\Widgets\Views\Layers\IViewLayerOperations.cs" />
     <Compile Include="Guis\Widgets\Views\Layers\PointView2DLayer.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -460,6 +466,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Guis\Widgets\Views\Visuals\FadeViewVisual.cs" />
+    <Compile Include="Guis\Widgets\Views\Visuals\GradientIndexedViewVisual.cs" />
+    <Compile Include="Guis\Widgets\Views\Visuals\GradientIndexViewVisual.cs" />
     <Compile Include="Guis\Widgets\Views\Visuals\GradientViewVisual.cs" />
     <Compile Include="Guis\Widgets\Views\Visuals\IViewVisual.cs">
       <SubType>Code</SubType>

@@ -1,6 +1,5 @@
 namespace MetaMind.Engine.Guis.Widgets.Items.Logic
 {
-    using System;
     using Components.Inputs;
     using Data;
     using Frames;
@@ -9,57 +8,29 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Logic
     using Layouts;
     using Microsoft.Xna.Framework;
     using Services;
-    using Views;
-    using Views.Scrolls;
-    using Views.Settings;
 
     public class IndexBlockViewVerticalItemLogic : BlockViewVerticalItemLogic, IIndexBlockViewVerticalItemLogic
     {
-        #region Index View
-
-        private IView indexedView;
-
-        private readonly IIndexViewComposer indexedViewComposer;
-
-        public IView IndexedView
-        {
-            get { return this.indexedView; }
-        }
-
-        public bool IndexedViewOpened { get; protected set; }
-
-        public Func<Vector2> IndexedViewPosition { get; set; }
-
-        #endregion
-
-        #region View
-
-        private PointViewVerticalSettings viewSettings;
-
-        private IBlockViewVerticalScrollController viewScroll;
-
-        public new IIndexBlockViewVerticalItemLayout ItemLayout
-        {
-            get { return (IIndexBlockViewVerticalItemLayout)base.ItemLayout; }
-        }
-
-        #endregion
+        private IIndexBlockViewVerticalItemInteraction itemInteraction;
 
         public IndexBlockViewVerticalItemLogic(
             IViewItem item,
             IViewItemFrame itemFrame,
             IViewItemInteraction itemInteraction,
             IViewItemDataModel itemModel,
-            IViewItemLayout itemLayout,
-            IIndexViewComposer viewComposer)
+            IViewItemLayout itemLayout)
             : base(item, itemFrame, itemInteraction, itemModel, itemLayout)
         {
-            if (viewComposer == null)
-            {
-                throw new ArgumentNullException("viewComposer");
-            }
+        }
 
-            this.indexedViewComposer = viewComposer;
+        public new IIndexBlockViewVerticalItemLayout ItemLayout
+        {
+            get { return (IIndexBlockViewVerticalItemLayout)base.ItemLayout; }
+        }
+
+        public new IIndexBlockViewVerticalItemInteraction ItemInteraction
+        {
+            get { return (IIndexBlockViewVerticalItemInteraction)base.ItemInteraction; }
         }
 
         #region Layer
@@ -68,59 +39,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Logic
         {
             base.SetupLayer();
 
-            var viewLayer = this.ViewGetLayer<BlockViewVerticalLayer>();
-            this.viewScroll = viewLayer.ViewScroll;
-            this.viewSettings = viewLayer.ViewSettings;
-
             var itemLayer = this.ItemGetLayer<IndexBlockViewVerticalItemLayer>();
-            var itemLayout = itemLayer.ItemLayout;
-
-            this.IndexedViewPosition = () => viewScroll.Position(itemLayout.Row + itemLayout.BlockRow);
-            // this.IndexedViewRowDisplay = () => viewSettings.ViewRowDisplay + viewScroll.RowOffset - itemLayout.Row - itemLayout.BlockRow;
-        }
-
-        public Func<int> IndexedViewRowDisplay { get; set; }
-
-        #endregion
-
-        #region Host View
-
-        public void OpenIndexView()
-        {
-            if (this.IndexedView == null)
-            {
-                this.indexedView = this.indexedViewComposer.Construct(this.Item);
-                this.indexedViewComposer.Compose(this.indexedView, this.Item.ItemData);
-
-                this.indexedView.LoadContent(this.GameInterop);
-            }
-
-            this.IndexedViewOpened = true;
-            //var indexViewLayer = this.IndexedView.GetLayer<BlockViewVerticalLayer>();
-            //var indexViewSettings = indexViewLayer.ViewSettings;
-            //if (indexViewSettings.ViewRowDisplay < 1)
-            //{
-            //    this.IndexedViewOpened = false;
-            //}
-        }
-
-        public void CloseIndexView()
-        {
-            this.IndexedViewOpened = false;
-        }
-
-        #endregion
-
-        #region Buffer
-
-        public override void UpdateBackwardBuffer()
-        {
-            base.UpdateBackwardBuffer();
-        }
-
-        public override void UpdateForwardBuffer()
-        {
-            base.UpdateForwardBuffer();
+            this.itemInteraction = itemLayer.ItemInteraction;
         }
 
         #endregion
@@ -139,46 +59,56 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Logic
                 {
                     if (keyboard.IsActionTriggered(KeyboardActions.Right))
                     {
-                        this.OpenIndexView();
+                        this.OpenIndexedView();
                     }
 
                     if (keyboard.IsActionTriggered(KeyboardActions.Left))
                     {
-                        this.CloseIndexView();
+                        this.CloseIndexedView();
                     }
                 }
-            }
 
-            if (this.IndexedViewOpened)
-            {
-                this.indexedView.UpdateInput(input, time);
+                if (!this.Item[ItemState.Item_Is_Locking]())
+                {
+                    // Extra components
+                    this.itemInteraction.UpdateInput(input, time);
+                }
             }
         }
 
-        public override void Update(GameTime time)
+        protected override void UpdateWhenUsual(GameTime time)
         {
-            base.Update(time);
+            this.ItemFrame.Update(time);
 
-            if (this.IndexedViewOpened)
+            // For better performance
+            if (this.Item[ItemState.Item_Is_Active]())
             {
-                var indexedViewLayer = this.indexedView.GetLayer<BlockViewVerticalLayer>();
-                var indexedViewSettings = indexedViewLayer.ViewSettings;
-                indexedViewSettings.ViewPosition = this.IndexedViewPosition();
-                //indexedViewSettings.ViewRowDisplay = this.IndexViewRowDisplay();
-                //if (indexedViewSettings.ViewRowDisplay < 1)
-                //{
-                //    this.IndexedViewOpened = false;
-                //}
-
-                // To avoid flickering resulted of buffer, these three update 
-                // has to be reasonably close
-
-                this.indexedView.UpdateForwardBuffer();
-                this.indexedView.Update(time);
-                this.indexedView.UpdateBackwardBuffer();
+                this.ItemModel.Update(time);
             }
         }
 
         #endregion
+
+        public void OpenIndexedView()
+        {
+            this.itemInteraction.OpenIndexedView();
+        }
+
+        public void CloseIndexedView()
+        {
+            this.itemInteraction.CloseIndexedView();
+        }
+
+        public void ToggleIndexView()
+        {
+            if (this.itemInteraction.IndexedViewOpened)
+            {
+                this.CloseIndexedView();
+            }
+            else
+            {
+                this.OpenIndexedView();
+            }
+        }
     }
 }

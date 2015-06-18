@@ -21,8 +21,6 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             new List<IViewItem>()
         };
 
-        private int currentBuffer;
-
         public View(ViewSettings viewSettings, ItemSettings itemSettings, List<IViewItem> items)
         {
             if (viewSettings == null)
@@ -84,6 +82,26 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         public T GetLayer<T>() where T : class, IViewLayer
         {
             return this.ViewLayer.Get<T>();
+        }
+
+        #endregion
+
+        #region Components
+
+        public T GetComponent<T>(string id) where T : class
+        {
+            var t = (T)this.ViewGetComponent(id);
+            if (t == null)
+            {
+                throw new InvalidOperationException(string.Format("ViewComponents has no child {0} of type {1}", id, typeof(T).Name));
+            }
+
+            return t;
+        }
+
+        private object ViewGetComponent(string id)
+        {
+            return this.ViewComponents.ContainsKey(id) ? this.ViewComponents[id] : null;
         }
 
         #endregion
@@ -179,6 +197,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         #endregion
 
         #region Buffer
+
+        private int currentBuffer;
 
         public override void UpdateForwardBuffer()
         {

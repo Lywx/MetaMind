@@ -18,7 +18,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     ///     which allows view-wise substitution of settings. The dynamic typing allows
     ///     customization
     /// </summary>
-    public abstract class ViewComponent : GameControllableEntity, IViewComponent 
+    public abstract class ViewComponent : GameControllableEntity, IViewComponent
     {
         #region Constructors
 
@@ -91,20 +91,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             get { return this.View.ViewComponents; }
         }
 
-        public T ViewGetComponent<T>(string id) where T : class
+        public T GetComponent<T>(string id) where T : class
         {
-            var t = (T)this.ViewGetComponent(id);
-            if (t == null)
-            {
-                throw new InvalidOperationException(string.Format("ViewComponents has no child {0} of type {1}", id, typeof(T).Name));
-            }
-
-            return t;
-        }
-
-        private object ViewGetComponent(string id)
-        {
-            return this.View.ViewComponents.ContainsKey(id) ? this.View.ViewComponents[id] : null;
+            return this.View.GetComponent<T>(id);
         }
 
         #endregion

@@ -6,7 +6,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Visuals
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
-    using Testers;
 
     public class ViewItemFrameVisual : ViewItemComponent, IViewItemVisual
     {
@@ -25,7 +24,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Visuals
             this.frameSettings = frameSettings;
             
             this.frameBoxFilled = new Box(
-                () => this.frame.Rectangle.Crop(this.frameSettings.Margin),
+                () => this.Frame.Rectangle.Crop(this.frameSettings.Margin),
                 () =>
                     {
                         if (this.Item[ItemState.Item_Is_Pending]())
@@ -60,7 +59,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Visuals
                 () => true);
 
             this.frameBoxDrawn = new Box(
-                () => this.frame.Rectangle.Crop(this.frameSettings.Margin),
+                () => this.Frame.Rectangle.Crop(this.frameSettings.Margin),
                 () =>
                     {
                         if (this.Item[ItemState.Item_Is_Mouse_Over]() && 
@@ -86,6 +85,21 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Visuals
                 () => false);
         }
 
+        protected Box FrameBoxDrawn
+        {
+            get { return this.frameBoxDrawn; }
+        }
+
+        protected Box FrameBoxFilled
+        {
+            get { return this.frameBoxFilled; }
+        }
+
+        protected IPressableFrame Frame
+        {
+            get { return this.frame; }
+        }
+
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
             if (!this.Item[ItemState.Item_Is_Active]() && 
@@ -94,8 +108,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Visuals
                 return;
             }
 
-            this.frameBoxDrawn .Draw(graphics, time, alpha);
-            this.frameBoxFilled.Draw(graphics, time, alpha);
+            this.FrameBoxDrawn .Draw(graphics, time, alpha);
+            this.FrameBoxFilled.Draw(graphics, time, alpha);
         }
     }
 }

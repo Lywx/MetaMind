@@ -4,7 +4,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Logic
     using Frames;
     using Interactions;
     using Layouts;
-    using Views;
 
     public class IndexedBlockViewVerticalItemLogic : IndexBlockViewVerticalItemLogic
     {
@@ -13,9 +12,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Logic
             IViewItemFrame itemFrame,
             IViewItemInteraction itemInteraction,
             IViewItemDataModel itemModel,
-            IViewItemLayout itemLayout,
-            IIndexViewComposer viewComposer)
-            : base(item, itemFrame, itemInteraction, itemModel, itemLayout, viewComposer)
+            IViewItemLayout itemLayout)
+            : base(item, itemFrame, itemInteraction, itemModel, itemLayout)
         {
         }
     }

@@ -166,7 +166,7 @@ namespace MetaMind.Engine
 
         public virtual void Update(GameTime time)
         {
-            this.Continue(time);
+            this.ContinueAction(time);
         }
 
         public virtual void UpdateForwardBuffer()
@@ -185,15 +185,15 @@ namespace MetaMind.Engine
 
         private readonly List<Action> updateActions = new List<Action>();
 
-        private void OnStopped()
+        private void OnActionStopped()
         {
         }
 
-        private void OnStarted()
+        private void OnActionStarted()
         {
         }
 
-        protected virtual void Continue(GameTime time)
+        protected virtual void ContinueAction(GameTime time)
         {
             if (this.updateAction == null &&
                 this.updateActions.Count != 0)
@@ -203,29 +203,29 @@ namespace MetaMind.Engine
             }
         }
 
-        protected virtual void Defer(Action action)
+        protected virtual void DeferAction(Action action)
         {
-            this.updateActions.Add((() => this.Process(action)));
+            this.updateActions.Add((() => this.ProcessAction(action)));
         }
 
-        protected virtual void Start(Action action)
+        protected virtual void StartAction(Action action)
         {
             if (this.updateAction == null)
             {
-                this.updateAction = () => this.Process(action);
+                this.updateAction = () => this.ProcessAction(action);
                 this.updateAction();
             }
             else
             {
-                this.Defer(action);
+                this.DeferAction(action);
             }
         }
 
-        protected virtual void Process(Action action)
+        protected virtual void ProcessAction(Action action)
         {
             if (this.updateActions.Count == 0)
             {
-                this.OnStarted();
+                this.OnActionStarted();
             }
 
             action();
@@ -239,7 +239,7 @@ namespace MetaMind.Engine
 
             if (this.updateActions.Count == 0)
             {
-                this.OnStopped();
+                this.OnActionStopped();
             }
         }
 

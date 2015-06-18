@@ -15,9 +15,8 @@
             TestItemFrame        itemFrame,
             IViewItemInteraction itemInteraction,
             IViewItemDataModel   itemModel,
-            IViewItemLayout      itemLayout,
-            IIndexViewComposer viewComposer)
-            : base(item, itemFrame, itemInteraction, itemModel, itemLayout, viewComposer)
+            IViewItemLayout      itemLayout)
+            : base(item, itemFrame, itemInteraction, itemModel, itemLayout)
         {
         }
 
@@ -37,14 +36,7 @@
 
         private void PlusFrameMouseLeftPressed(object sender, FrameEventArgs e)
         {
-            if (!this.IndexedViewOpened)
-            {
-                this.OpenIndexView();
-            }
-            else
-            {
-                this.CloseIndexView();
-            }
+            this.ToggleIndexView();
         }
 
         #endregion

@@ -69,7 +69,7 @@
             this.outStream = new StringWriter(this.@out);
             this.errorStream = new StringWriter(this.error);
 
-            this.Start("FsiSession.CreateSession", () =>
+            this.StartThread("FsiSession.CreateSession", () =>
             {
                 var fsiConfig   = Shell.FsiEvaluationSession.GetDefaultConfiguration();
                 this.fsiSession = Shell.FsiEvaluationSession.Create(
@@ -92,17 +92,17 @@
         /// <summary>
         /// End of a series of asynchronous session
         /// </summary>>
-        public event EventHandler Stopped;
+        public event EventHandler ThreadStopped;
             
         /// <summary>
         /// Start of a series of asynchronous session
         /// </summary>>
-        public event EventHandler Started;
+        public event EventHandler ThreadStarted;
 
-        private void OnStopped()
+        private void OnThreadStopped()
         {
             // Safe threading
-            var stopped = this.Stopped;
+            var stopped = this.ThreadStopped;
 
             if (stopped != null)
             {
@@ -110,10 +110,10 @@
             }
         }
 
-        private void OnStarted()
+        private void OnThreadStarted()
         {
             // Safe threading
-            var started = this.Started;
+            var started = this.ThreadStarted;
 
             if (started != null)
             {
@@ -131,11 +131,11 @@
 
             if (this.fsiSession != null)
             {
-                this.Start(actionName, () => this.DoEvalScript(filePath));
+                this.StartThread(actionName, () => this.DoEvalScript(filePath));
             }
             else
             {
-                this.Defer(actionName, () => this.EvalScript(filePath));
+                this.DeferThread(actionName, () => this.EvalScript(filePath));
             }
         }
 
@@ -195,7 +195,7 @@
 
         #region Thread
 
-        protected void Continue()
+        protected void ContinueThread()
         {
             if (this.threadCurrent == null &&
                 this.threadsQueued.Count != 0)
@@ -205,29 +205,29 @@
             }
         }
 
-        protected void Defer(string actionName, Action action)
+        protected void DeferThread(string actionName, Action action)
         {
-            this.threadsQueued.Add(new Thread(() => this.Process(action)) { Name = actionName });
+            this.threadsQueued.Add(new Thread(() => this.ProcessThread(action)) { Name = actionName });
         }
 
-        protected void Start(string actionName, Action action)
+        protected void StartThread(string actionName, Action action)
         {
             if (this.threadCurrent == null)
             {
-                this.threadCurrent = new Thread(() => this.Process(action)) { Name = actionName };
+                this.threadCurrent = new Thread(() => this.ProcessThread(action)) { Name = actionName };
                 this.threadCurrent.Start();
             }
             else
             {
-                this.Defer(actionName, action);
+                this.DeferThread(actionName, action);
             }
         }
 
-        protected new void Process(Action action)
+        protected new void ProcessThread(Action action)
         {
             if (this.threadsQueued.Count == 0)
             {
-                this.OnStarted();
+                this.OnThreadStarted();
             }
 
             action();
@@ -241,7 +241,7 @@
 
             if (this.threadsQueued.Count == 0)
             {
-                this.OnStopped();
+                this.OnThreadStopped();
             }
         }
 
@@ -251,7 +251,7 @@
 
         public void Update()
         {
-            this.Continue();
+            this.ContinueThread();
         }
 
         #endregion

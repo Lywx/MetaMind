@@ -277,7 +277,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
                 // Safe threading
                 var localData = data;
 
-                this.Defer(() => this.AddItem(localData));
+                this.DeferAction(() => this.AddItem(localData));
             }
         }
 

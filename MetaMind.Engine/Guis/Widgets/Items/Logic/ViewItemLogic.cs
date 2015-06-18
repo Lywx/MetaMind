@@ -174,28 +174,12 @@
             {
                 this.isFrameUpdated = true;
 
-                this.ItemFrame.Update(time);
+                this.UpdateWhenInit(time);
             }
             else
             {
-                // For better performance
-                if (this.Item[ItemState.Item_Is_Active]())
-                {
-                    this.ItemFrame.Update(time);
-                    this.ItemModel.Update(time);
-                }
+                this.UpdateWhenUsual(time);
             }
-        }
-
-        public override void UpdateBackwardBuffer()
-        {
-            base.UpdateBackwardBuffer();
-
-            // This is order insensitive
-            this.ItemLayout     .UpdateBackwardBuffer();
-            this.ItemFrame      .UpdateBackwardBuffer();
-            this.ItemModel      .UpdateBackwardBuffer();
-            this.ItemInteraction.UpdateBackwardBuffer();
         }
 
         public override void UpdateInput(IGameInputService input, GameTime time)
@@ -258,7 +242,48 @@
             this.ItemInteraction.Update(time);
         }
 
+        protected virtual void UpdateWhenInit(GameTime time)
+        {
+            this.ItemFrame.Update(time);
+        }
+
+        protected virtual void UpdateWhenUsual(GameTime time)
+        {
+            // For better performance
+            if (this.Item[ItemState.Item_Is_Active]())
+            {
+                this.ItemFrame.Update(time);
+                this.ItemModel.Update(time);
+            }
+        }
+
         #endregion Update
+
+        #region Buffer
+
+        public override void UpdateForwardBuffer()
+        {
+            base.UpdateForwardBuffer();
+
+            // This is order insensitive
+            this.ItemLayout     .UpdateForwardBuffer();
+            this.ItemFrame      .UpdateForwardBuffer();
+            this.ItemModel      .UpdateForwardBuffer();
+            this.ItemInteraction.UpdateForwardBuffer();
+        }
+
+        public override void UpdateBackwardBuffer()
+        {
+            base.UpdateBackwardBuffer();
+
+            // This is order insensitive
+            this.ItemLayout     .UpdateBackwardBuffer();
+            this.ItemFrame      .UpdateBackwardBuffer();
+            this.ItemModel      .UpdateBackwardBuffer();
+            this.ItemInteraction.UpdateBackwardBuffer();
+        }
+
+        #endregion
 
         #region Operations
 

@@ -22,8 +22,6 @@
 
     public class TestViewComposer : IIndexViewComposer
     {
-        private readonly TestSession testSession;
-
         private TestViewSettings viewSettings;
 
         private IViewLogic viewLogic;
@@ -41,7 +39,7 @@
                 throw new ArgumentNullException("testSeesion");
             }
 
-            this.testSession = testSeesion;
+            this.TestSession = testSeesion;
         }
 
         protected IView View { get; set; }
@@ -59,6 +57,8 @@
         protected ViewItemFactory ItemFactory { get; set; }
 
         protected dynamic ViewData { get; set; }
+
+        protected TestSession TestSession { get; set; }
 
         public virtual void Compose(IView view, dynamic viewData)
         {
@@ -114,47 +114,17 @@
             this.viewLayer     = new BlockViewVerticalLayer(this.View);
 
             // Item composition
-            this.ItemFactory = new ViewItemFactory(
-
-                item => new TestItemLayer(item),
-
-                item =>
-                {
-                    var itemFrame = new TestItemFrame(item);
-
-                    var itemLayoutInteraction = new BlockViewVerticalItemLayoutInteraction(
-                        item,
-                        this.ViewSelection,
-                        this.ViewScroll);
-
-                    var itemLayout = new TestItemLayout(item, itemLayoutInteraction);
-
-                    var itemInteraction = new BlockViewVerticalItemInteraction(
-                        item,
-                        itemLayout,
-                        itemLayoutInteraction);
-                    var itemModel = new ViewItemDataModel(item);
-
-                    return new TestItemLogic(
-                        item,
-                        itemFrame,
-                        itemInteraction,
-                        itemModel,
-                        itemLayout,
-                        new IndexedTestViewComposer(this.testSession));
-                },
-
-                item => new TestItemVisual(item));
+            this.AddItemFactory();
 
             // View logic
             this.viewLogic = this.AddViewLogic();
             this.viewLogic.ViewBinding = new TestViewBinding(
                 this.viewLogic,
                 test.Children,
-                this.testSession);
+                this.TestSession);
 
             // View visual
-            this.viewVisual = new GradientViewVisual(this.View);
+            this.viewVisual = this.AddViewVisual();
 
             // View setup
             this.View.ViewLayer = this.viewLayer;
@@ -178,7 +148,12 @@
                 this.ItemFactory);
         }
 
-        protected void AddViewRegion()
+        protected virtual GradientIndexViewVisual AddViewVisual()
+        {
+            return new GradientIndexViewVisual(this.View);
+        }
+
+        protected virtual void AddViewRegion()
         {
             var viewRegionSettings = new ViewRegionSettings();
             this.ViewRegion = new ViewRegion(
@@ -206,13 +181,50 @@
             this.viewLayer.ViewLogic.MovedDown    += (sender, args) => this.viewScrollbar.Toggle();
         }
 
+        protected virtual void AddItemFactory()
+        {
+            this.ItemFactory = new ViewItemFactory(
+
+                item => new TestItemLayer(item),
+
+                item =>
+                {
+                    var itemFrame = new TestItemFrame(item);
+
+                    var itemLayoutInteraction = new BlockViewVerticalItemLayoutInteraction(
+                        item,
+                        this.ViewSelection,
+                        this.ViewScroll);
+
+                    var itemLayout = new TestItemLayout(
+                        item,
+                        itemLayoutInteraction);
+
+                    var itemInteraction = new IndexBlockViewVerticalItemInteraction(
+                        item,
+                        itemLayout,
+                        itemLayoutInteraction,
+                        new IndexedTestViewComposer(this.View, this.TestSession));
+
+                    var itemModel = new ViewItemDataModel(item);
+
+                    return new TestItemLogic(
+                        item,
+                        itemFrame,
+                        itemInteraction,
+                        itemModel,
+                        itemLayout);
+                },
+
+                item => new TestItemVisual(item));
+        }
+
         protected virtual void SetupLogic()
         {
             this.View[ViewState.View_Has_Focus] =
                 () => this.View[ViewState.View_Has_Selection]() ||
                       this.ViewRegion[RegionState.Region_Has_Focus]() ||
                       this.viewScrollbar[FrameState.Frame_Is_Dragging]();
-            //this.View[VIewS]
         }
     }
 }

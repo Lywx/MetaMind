@@ -2,8 +2,10 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Logic
 {
     public interface IIndexBlockViewVerticalItemLogicOperations
     {
-        void OpenIndexView();
+        void OpenIndexedView();
 
-        void CloseIndexView();
+        void CloseIndexedView();
+
+        void ToggleIndexView();
     }
 }

@@ -16,7 +16,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     using MetaMind.Engine.Guis.Widgets.Views.Settings;
     using MetaMind.Engine.Guis.Widgets.Views.Visuals;
 
-    public interface IView : IViewEntity, IViewOperations
+    public interface IView : IViewEntity, IViewOperations, IViewComponentOperations 
     {
         #region View Data
 
