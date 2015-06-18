@@ -113,16 +113,12 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
                 this.indexedView.LoadContent(this.GameInterop);
             }
 
-            this.IndexedViewOpened = true;
-
             this.IndexedView[ViewState.View_Is_Active] = () => true;
         }
 
         public void CloseIndexedView()
         {
-            this.IndexedViewOpened = false;
-
-            this.IndexedView[ViewState.View_Is_Active] = () => true;
+            this.IndexedView[ViewState.View_Is_Active] = () => false;
         }
 
         #endregion

@@ -66,18 +66,12 @@ namespace MetaMind.Engine.Guis.Elements
 
             this.StateMachine.Configure(State.Dragging).OnEntry(() =>
                 {
-                    if (this.MouseDragged != null)
-                    {
-                        this.MouseDragged(this, new FrameEventArgs(FrameEventType.Frame_Dragged));
-                    }
+                    this.DeferAction(this.OnMouseDragged);
                 });
 
             this.StateMachine.Configure(State.Dragging).OnExit(() =>
                 {
-                    if (this.MouseDropped != null)
-                    {
-                        this.MouseDropped(this, new FrameEventArgs(FrameEventType.Frame_Dropped));
-                    }
+                    this.DeferAction(this.OnMouseDropped);
                 });
 
             // Events
@@ -151,6 +145,22 @@ namespace MetaMind.Engine.Guis.Elements
 
         public event EventHandler<FrameEventArgs> MouseDropped;
 
+        private void OnMouseDropped()
+        {
+            if (this.MouseDropped != null)
+            {
+                this.MouseDropped(this, new FrameEventArgs(FrameEventType.Frame_Dropped));
+            }
+        }
+
+        private void OnMouseDragged()
+        {
+            if (this.MouseDragged != null)
+            {
+                this.MouseDragged(this, new FrameEventArgs(FrameEventType.Frame_Dragged));
+            }
+        }
+
         private void FrameMousePressed(object sender, FrameEventArgs e)
         {
             var mouse = InputState.Mouse.CurrentState;
@@ -174,17 +184,10 @@ namespace MetaMind.Engine.Guis.Elements
 
         #region Update
 
-        public override void Update(GameTime time)
-        {
-            base.Update(time);
-
-            var isOutOfHoldLen = mouseLocation.DistanceFrom(this.mousePressedPosition).Length() > mouseHoldLen;
-
-            this.StateMachine.Fire(isOutOfHoldLen ? Trigger.DraggedOutOfRange : Trigger.DraggedWithinRange);
-        }
-
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
+            base.UpdateInput(input, time);
+
             var mouse = input.State.Mouse.CurrentState;
             this.mouseLocation = new Point(mouse.X, mouse.Y);
 
@@ -198,6 +201,16 @@ namespace MetaMind.Engine.Guis.Elements
                     this.Rectangle.Height);
             }
         }
+
+        public override void Update(GameTime time)
+        {
+            base.Update(time);
+
+            var isOutOfHoldLen = this.mouseLocation.DistanceFrom(this.mousePressedPosition).Length() > this.mouseHoldLen;
+
+            this.StateMachine.Fire(isOutOfHoldLen ? Trigger.DraggedOutOfRange : Trigger.DraggedWithinRange);
+        }
+
         #endregion Update
     }
 }

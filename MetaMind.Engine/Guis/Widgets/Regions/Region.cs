@@ -4,6 +4,7 @@
 
     using Stateless;
     using Elements;
+    using Services;
 
     public class Region : RegionEntity, IRegion
     {
@@ -31,6 +32,8 @@
             this[RegionState.Region_Has_Focus] = () => this.StateMachine.IsInState(State.HasFocus);
         }
 
+        #region State Machine
+
         protected enum State
         {
             HasFocus,
@@ -44,6 +47,10 @@
 
             PressedOutside,
         }
+
+        #endregion
+
+        #region Properties
 
         public IPickableFrame Frame { get; set; }
 
@@ -83,14 +90,28 @@
             set { this.Frame.Y = value; }
         }
 
+
+        #endregion
+
+        #region Events
+
         private void FrameMouseLeftPressed(object sender, FrameEventArgs e)
         {
             this.StateMachine.Fire(Trigger.PressedInside);
         }
 
-        private void FrameMouseLeftPressedOutside(object sender, FrameEventArgs e)
+        private void FrameMouseLeftPressedOutside(
+            object sender,
+            FrameEventArgs e)
         {
             this.StateMachine.Fire(Trigger.PressedOutside);
+        }
+
+        #endregion
+
+        public override void UpdateInput(IGameInputService input, GameTime time)
+        {
+            this.Frame.UpdateInput(input, time);
         }
     }
 }

@@ -193,7 +193,7 @@ namespace MetaMind.Engine
         {
         }
 
-        protected virtual void ContinueAction(GameTime time)
+        protected void ContinueAction(GameTime time)
         {
             if (this.updateAction == null &&
                 this.updateActions.Count != 0)
@@ -203,12 +203,25 @@ namespace MetaMind.Engine
             }
         }
 
-        protected virtual void DeferAction(Action action)
+        protected void FlushAction(GameTime time)
+        {
+            if (this.updateAction == null &&
+                this.updateActions.Count != 0)
+            {
+                foreach (var action in this.updateActions.ToArray())
+                {
+                    this.updateAction = action;
+                    this.updateAction();
+                }
+            }
+        }
+
+        protected void DeferAction(Action action)
         {
             this.updateActions.Add((() => this.ProcessAction(action)));
         }
 
-        protected virtual void StartAction(Action action)
+        protected void StartAction(Action action)
         {
             if (this.updateAction == null)
             {
@@ -221,7 +234,7 @@ namespace MetaMind.Engine
             }
         }
 
-        protected virtual void ProcessAction(Action action)
+        protected void ProcessAction(Action action)
         {
             if (this.updateActions.Count == 0)
             {

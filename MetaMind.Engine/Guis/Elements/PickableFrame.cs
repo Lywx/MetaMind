@@ -6,6 +6,7 @@ namespace MetaMind.Engine.Guis.Elements
     using MetaMind.Engine.Guis.Elements.Inputs;
 
     using Microsoft.Xna.Framework;
+    using Services;
 
     public class PickableFrame : FrameEntity, IPickableFrame
     {
@@ -123,14 +124,6 @@ namespace MetaMind.Engine.Guis.Elements
             }
         }
 
-        private void OnMouseRightDoubleClicked()
-        {
-            if (this.MouseRightDoubleClicked != null)
-            {
-                this.MouseRightDoubleClicked(this, new FrameEventArgs(FrameEventType.Mouse_Right_Double_Clicked));
-            }
-        }
-
         private void OnMouseLeftDoubleClicked()
         {
             if (this.MouseLeftDoubleClicked != null)
@@ -155,6 +148,14 @@ namespace MetaMind.Engine.Guis.Elements
             }
         }
 
+        private void OnMouseLeftReleased()
+        {
+            if (this.MouseLeftReleased != null)
+            {
+                this.MouseLeftReleased(this, new FrameEventArgs(FrameEventType.Mouse_Left_Released));
+            }
+        }
+
         private void OnMouseLeave()
         {
             if (this.MouseLeave != null)
@@ -171,6 +172,30 @@ namespace MetaMind.Engine.Guis.Elements
             }
         }
 
+        private void OnMouseRightDoubleClicked()
+        {
+            if (this.MouseRightDoubleClicked != null)
+            {
+                this.MouseRightDoubleClicked(this, new FrameEventArgs(FrameEventType.Mouse_Right_Double_Clicked));
+            }
+        }
+
+        private void OnMouseRightPressed()
+        {
+            if (this.MouseRightPressed != null)
+            {
+                this.MouseRightPressed(this, new FrameEventArgs(FrameEventType.Mouse_Right_Pressed));
+            }
+        }
+
+        private void OnMouseRightPressedOutside()
+        {
+            if (this.MouseRightPressedOutside != null)
+            {
+                this.MouseRightPressedOutside(this, new FrameEventArgs(FrameEventType.Mouse_Right_Pressed_Outside));
+            }
+        }
+
         private void OnMouseRightReleased()
         {
             if (this.MouseRightReleased != null)
@@ -179,12 +204,114 @@ namespace MetaMind.Engine.Guis.Elements
             }
         }
 
-        private void OnMouseLeftReleased()
+        private void EventMouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (this.MouseLeftReleased != null)
+            if (this.mouse.IsMouseOver)
             {
-                this.MouseLeftReleased(this, new FrameEventArgs(FrameEventType.Mouse_Left_Released));
+                if (this.IsLButton(e))
+                {
+                    this.mouse.LDoubleClick();
+                    this.mouse.RClear();
+
+                    this.DeferAction(this.OnMouseLeftDoubleClicked);
+
+                    return;
+                }
+                else if (this.IsRButton(e))
+                {
+                    this.mouse.LClear();
+                    this.mouse.RDoubleClick();
+
+                    this.DeferAction(this.OnMouseRightDoubleClicked);
+
+                    return;
+                }
             }
+        }
+
+        private void EventMouseDown(object sender, MouseEventArgs e)
+        {
+            if (this.IsLButton(e))
+            {
+                this.mouse.LPress();
+                this.mouse.RClear();
+
+                if (this.mouse.IsMouseOver)
+                {
+                    this.DeferAction(this.OnMouseLeftPressed);
+                }
+
+                if (!this.mouse.IsMouseOver)
+                {
+                    this.DeferAction(this.OnMouseLeftPressedOutside);
+                }
+
+                return;
+            }
+            else if (this.IsRButton(e))
+            {
+                this.mouse.RPress();
+                this.mouse.LClear();
+
+                if (this.mouse.IsMouseOver)
+                {
+                    this.DeferAction(this.OnMouseRightPressed);
+                }
+
+                if (!this.mouse.IsMouseOver)
+                {
+                    this.DeferAction(this.OnMouseRightPressedOutside);
+                }
+
+                return;
+            }
+        }
+
+        private void EventMouseMove(object sender, MouseEventArgs e)
+        {
+            if (!this.mouse.IsMouseOver && this.IsMouseOver(e.Location))
+            {
+                this.mouse.Enter();
+
+                this.DeferAction(this.OnMouseEnter);
+
+                return;
+            }
+
+            if (this.mouse.IsMouseOver && !this.IsMouseOver(e.Location))
+            {
+                this.mouse.Leave();
+
+                this.DeferAction(this.OnMouseLeave);
+
+                return;
+            }
+        }
+
+        private void EventMouseUp(object sender, MouseEventArgs e)
+        {
+            if (this.IsLButton(e))
+            {
+                this.mouse.LRelease();
+
+                this.DeferAction(this.OnMouseLeftReleased);
+
+                return;
+            }
+            else if (this.IsRButton(e))
+            {
+                this.mouse.RRelease();
+
+                this.DeferAction(this.OnMouseRightReleased);
+
+                return;
+            }
+        }
+
+        private void FrameFrameMoved(object sender, FrameEventArgs e)
+        {
+            var location = this.InputState.Mouse.CurrentState;
+            this.EventMouseMove(null, new MouseEventArgs(MouseButton.None, 0, location.X, location.Y, 0));
         }
 
         #endregion
@@ -247,12 +374,12 @@ namespace MetaMind.Engine.Guis.Elements
                 var hasSized = deltaSize.Length() > 0;
                 if (hasMoved)
                 {
-                    this.OnFrameMoved();
+                    this.DeferAction(this.OnFrameMoved);
                 }
 
                 if (hasSized)
                 {
-                    this.OnFrameSized();
+                    this.DeferAction(this.OnFrameSized);
                 }
             }
         }
@@ -307,6 +434,8 @@ namespace MetaMind.Engine.Guis.Elements
 
         #endregion
 
+        #region State
+
         protected bool IsLButton(MouseEventArgs e)
         {
             return e.Button == MouseButton.Left;
@@ -322,6 +451,8 @@ namespace MetaMind.Engine.Guis.Elements
             return e.Button == MouseButton.Right;
         }
 
+        #endregion
+
         protected void Populate(Point center, Point size)
         {
             this.Populate(center.ToRectangleCenter(size));
@@ -332,115 +463,13 @@ namespace MetaMind.Engine.Guis.Elements
             this.Rectangle = rect;
         }
 
-        private void EventMouseDoubleClick(object sender, MouseEventArgs e)
+        public override void Update(GameTime time)
         {
-            if (this.mouse.IsMouseOver)
-            {
-                if (this.IsLButton(e))
-                {
-                    mouse.LDoubleClick();
-                    mouse.RClear();
-
-                    // TODO: Make every frame event firing queued actions on update to separate completely input/update
-                    this.OnMouseLeftDoubleClicked();
-
-                    return;
-                }
-                else if (this.IsRButton(e))
-                {
-                    mouse.LClear();
-                    mouse.RDoubleClick();
-
-                    this.OnMouseRightDoubleClicked();
-
-                    return;
-                }
-            }
         }
 
-        private void EventMouseDown(object sender, MouseEventArgs e)
+        public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            if (this.IsLButton(e))
-            {
-                mouse.LPress();
-                mouse.RClear();
-
-                if (this.mouse.IsMouseOver)
-                {
-                    this.OnMouseLeftPressed();
-                }
-
-                if (!this.mouse.IsMouseOver)
-                {
-                    this.OnMouseLeftPressedOutside();
-                }
-
-                return;
-            }
-            else if (this.IsRButton(e))
-            {
-                mouse.RPress();
-                mouse.LClear();
-
-                if (this.mouse.IsMouseOver && this.MouseRightPressed != null)
-                {
-                    this.MouseRightPressed(this, new FrameEventArgs(FrameEventType.Mouse_Right_Pressed));
-                }
-
-                if (!this.mouse.IsMouseOver && this.MouseRightPressedOutside != null)
-                {
-                    this.MouseRightPressedOutside(this, new FrameEventArgs(FrameEventType.Mouse_Right_Pressed_Outside));
-                }
-
-                return;
-            }
-        }
-
-        private void EventMouseMove(object sender, MouseEventArgs e)
-        {
-            if (!this.mouse.IsMouseOver && this.IsMouseOver(e.Location))
-            {
-                mouse.Enter();
-
-                this.OnMouseEnter();
-
-                return;
-            }
-
-            if (this.mouse.IsMouseOver && !this.IsMouseOver(e.Location))
-            {
-                mouse.Leave();
-
-                this.OnMouseLeave();
-
-                return;
-            }
-        }
-
-        private void EventMouseUp(object sender, MouseEventArgs e)
-        {
-            if (this.IsLButton(e))
-            {
-                mouse.LRelease();
-
-                this.OnMouseLeftReleased();
-
-                return;
-            }
-            else if (this.IsRButton(e))
-            {
-                mouse.RRelease();
-
-                this.OnMouseRightReleased();
-
-                return;
-            }
-        }
-
-        private void FrameFrameMoved(object sender, FrameEventArgs e)
-        {
-            var location = this.InputState.Mouse.CurrentState;
-            this.EventMouseMove(null, new MouseEventArgs(MouseButton.None, 0, location.X, location.Y, 0));
+            this.FlushAction(time);
         }
     }
 }
