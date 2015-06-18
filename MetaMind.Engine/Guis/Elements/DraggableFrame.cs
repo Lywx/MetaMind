@@ -9,8 +9,6 @@ namespace MetaMind.Engine.Guis.Elements
 {
     using System;
 
-    using MetaMind.Engine.Services;
-
     using Microsoft.Xna.Framework;
 
     using Stateless;
@@ -184,11 +182,11 @@ namespace MetaMind.Engine.Guis.Elements
 
         #region Update
 
-        public override void UpdateInput(IGameInputService input, GameTime time)
+        public override void Update(GameTime time)
         {
-            base.UpdateInput(input, time);
+            base.Update(time);
 
-            var mouse = input.State.Mouse.CurrentState;
+            var mouse = this.GameInput.State.Mouse.CurrentState;
             this.mouseLocation = new Point(mouse.X, mouse.Y);
 
             if (this.StateMachine.IsInState(State.Dragging))
@@ -200,11 +198,6 @@ namespace MetaMind.Engine.Guis.Elements
                     this.Rectangle.Width, 
                     this.Rectangle.Height);
             }
-        }
-
-        public override void Update(GameTime time)
-        {
-            base.Update(time);
 
             var isOutOfHoldLen = this.mouseLocation.DistanceFrom(this.mousePressedPosition).Length() > this.mouseHoldLen;
 

@@ -58,22 +58,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Frames
 
         protected abstract void UpdateFrameGeometry();
 
-        /// <summary>
-        /// Updates frame states related to items.
-        /// </summary>
-        protected virtual void UpdateFrameStates()
-        {
-            if (this.Item[ItemState.Item_Is_Active]() && 
-               !this.Item[ItemState.Item_Is_Dragging]())
-            {
-                this.RootFrame.IsActive = true;
-            }
-            else if (!this.Item[ItemState.Item_Is_Active]() && 
-                     !this.Item[ItemState.Item_Is_Dragging]())
-            {
-                this.RootFrame.IsActive = false;
-            }
-        }
+        protected virtual void UpdateFrameStates() {}
 
         #endregion Update
 
