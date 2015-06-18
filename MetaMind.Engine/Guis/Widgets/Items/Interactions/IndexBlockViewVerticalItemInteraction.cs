@@ -7,19 +7,22 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
     using Services;
     using Views;
     using Views.Scrolls;
-    using Views.Settings;
 
     public class IndexBlockViewVerticalItemInteraction : BlockViewVerticalItemInteraction, IIndexBlockViewVerticalItemInteraction
     {
-        private PointViewVerticalSettings viewSettings;
-
         private IBlockViewVerticalScrollController viewScroll;
 
         private IView indexedView;
 
         private readonly IIndexViewComposer indexedViewComposer;
 
-        public bool IndexedViewOpened { get; protected set; }
+        public bool IndexedViewOpened
+        {
+            get
+            {
+                return this.IndexedView != null && this.IndexedView[ViewState.View_Is_Active]();
+            }
+        }
 
         public IndexBlockViewVerticalItemInteraction(
             IViewItem item,
@@ -51,7 +54,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
 
             var viewLayer = this.ViewGetLayer<BlockViewVerticalLayer>();
             this.viewScroll = viewLayer.ViewScroll;
-            this.viewSettings = viewLayer.ViewSettings;
 
             var itemLayer = this.ItemGetLayer<IndexBlockViewVerticalItemLayer>();
             var itemLayout = itemLayer.ItemLayout;
@@ -112,11 +114,15 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
             }
 
             this.IndexedViewOpened = true;
+
+            this.IndexedView[ViewState.View_Is_Active] = () => true;
         }
 
         public void CloseIndexedView()
         {
             this.IndexedViewOpened = false;
+
+            this.IndexedView[ViewState.View_Is_Active] = () => true;
         }
 
         #endregion

@@ -11,7 +11,7 @@ namespace MetaMind.Engine.Guis.Elements
     {
         private readonly MouseAutomata mouse = new MouseAutomata();
 
-        private Rectangle rectangle = new Rectangle();
+        private Rectangle rectangle;
 
         public PickableFrame(Rectangle rectangle)
             : this()

@@ -1,6 +1,5 @@
 namespace MetaMind.Engine.Guis.Widgets.Items.Logic
 {
-    using Components.Inputs;
     using Data;
     using Frames;
     using Interactions;
@@ -53,21 +52,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Logic
 
             if (this.View.ViewSettings.KeyboardEnabled)
             {
-                var keyboard = input.State.Keyboard;
-
-                if (this.ItemIsInputting())
-                {
-                    if (keyboard.IsActionTriggered(KeyboardActions.Right))
-                    {
-                        this.OpenIndexedView();
-                    }
-
-                    if (keyboard.IsActionTriggered(KeyboardActions.Left))
-                    {
-                        this.CloseIndexedView();
-                    }
-                }
-
                 if (!this.Item[ItemState.Item_Is_Locking]())
                 {
                     // Extra components

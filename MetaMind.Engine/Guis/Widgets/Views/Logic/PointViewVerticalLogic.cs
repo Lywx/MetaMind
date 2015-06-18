@@ -1,14 +1,10 @@
 ﻿namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq.Expressions;
-    using System.Reflection;
     using Microsoft.Xna.Framework;
 
     using Components.Inputs;
     using Extensions;
-    using Items.Data;
     using Items.Factories;
     using Layers;
     using Layouts;

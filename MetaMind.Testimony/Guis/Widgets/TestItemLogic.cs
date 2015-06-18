@@ -1,12 +1,12 @@
 ﻿namespace MetaMind.Testimony.Guis.Widgets
 {
+    using System.Diagnostics;
     using Engine.Guis.Elements;
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Data;
     using Engine.Guis.Widgets.Items.Interactions;
     using Engine.Guis.Widgets.Items.Layouts;
     using Engine.Guis.Widgets.Items.Logic;
-    using Engine.Guis.Widgets.Views;
 
     public class TestItemLogic : IndexBlockViewVerticalItemLogic
     {
@@ -29,14 +29,29 @@
         {
             base.SetupLayer();
 
-            this.ItemFrame.PlusFrame.MouseLeftPressed += this.PlusFrameMouseLeftPressed;
+            this.ItemFrame.RootFrame.MouseLeftDoubleClicked += this.RootFrameMouseLeftDoubleClicked;
+            this.ItemFrame.RootFrame.MouseRightDoubleClicked += this.RootFrameMouseRightDoubleClicked;
         }
 
         #region Events
 
-        private void PlusFrameMouseLeftPressed(object sender, FrameEventArgs e)
+        private void RootFrameMouseRightDoubleClicked(object sender, FrameEventArgs e)
+        {
+            this.OpenTestFile();
+        }
+
+        private void RootFrameMouseLeftDoubleClicked(object sender, FrameEventArgs e)
         {
             this.ToggleIndexView();
+        }
+
+        #endregion
+
+        #region Operations
+
+        private void OpenTestFile()
+        {
+            Process.Start(this.Item.ItemData.Path);
         }
 
         #endregion

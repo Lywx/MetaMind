@@ -91,7 +91,9 @@ namespace MetaMind.Testimony.Guis.Widgets
                         {
                             var hostViewRegion = this.viewHost.GetComponent<ViewRegion>("ViewRegion");
 
-                            return hostViewRegion.RegionBounds().Contains(itemFrame.NameFrame.Center);
+                            return 
+                                this.View[ViewState.View_Is_Active]() &&
+                                hostViewRegion.RegionBounds().Contains(itemFrame.NameFrame.Center);
                         }
                     };
 

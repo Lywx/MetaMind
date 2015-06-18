@@ -134,7 +134,7 @@
 
         protected virtual BlockViewVerticalSelectionController AddViewSelection()
         {
-            return new BlockViewVerticalSelectionController(this.View);
+            return new IndexBlockViewVerticalSelectionController(this.View);
         }
 
         protected virtual IViewLogic AddViewLogic()

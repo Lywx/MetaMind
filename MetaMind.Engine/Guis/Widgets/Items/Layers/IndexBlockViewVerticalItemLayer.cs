@@ -20,7 +20,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layers
             get { return this.ItemLogic.ItemLayout; }
         }
 
-        public new IIndexBlockViewVerticalItemInteraction ItemInteraction
+        public IIndexBlockViewVerticalItemInteraction ItemInteraction
         {
             get { return this.ItemLogic.ItemInteraction; }
         }

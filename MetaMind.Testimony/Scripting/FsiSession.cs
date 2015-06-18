@@ -223,7 +223,7 @@
             }
         }
 
-        protected new void ProcessThread(Action action)
+        protected void ProcessThread(Action action)
         {
             if (this.threadsQueued.Count == 0)
             {

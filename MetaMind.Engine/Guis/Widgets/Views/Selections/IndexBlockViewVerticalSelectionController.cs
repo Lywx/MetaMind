@@ -10,12 +10,10 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Selections
 
         public override void MoveUp()
         {
-            base.MoveUp();
         }
 
         public override void MoveDown()
         {
-            base.MoveDown();
         }
 
         #endregion
