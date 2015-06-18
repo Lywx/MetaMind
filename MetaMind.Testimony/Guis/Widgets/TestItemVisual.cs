@@ -16,6 +16,7 @@ namespace MetaMind.Testimony.Guis.Widgets
     using Engine.Guis.Widgets.Visuals;
     using Engine.Services;
     using Engine.Settings.Colors;
+    using Extensions;
     using Microsoft.Xna.Framework;
 
     public class TestItemVisual : ViewItemVisual
@@ -156,9 +157,9 @@ namespace MetaMind.Testimony.Guis.Widgets
                             ? Palette.LightGreen
                             : Palette.LightPink;
                 this.StatisticsLabel.Label.Text =
-                    () => string.Format("{0} / {1}",
-                        this.Item.ItemData.ChildrenPassed,
-                        this.Item.ItemData.Children.Count);
+                    () => this.Item.ItemData.PassedChanged
+                        ? string.Format("{0} ( {1} ) / {2}", this.Item.ItemData.ChildrenPassed, ExtInt32.ToSummary(this.Item.ItemData.PassedChange), this.Item.ItemData.Children.Count)
+                        : string.Format("{0} / {1}", this.Item.ItemData.ChildrenPassed, this.Item.ItemData.Children.Count);
             }
 
             var nameFrameSettings = itemSettings.Get<FrameSettings>("NameFrame");

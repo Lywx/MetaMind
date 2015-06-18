@@ -159,7 +159,13 @@ namespace MetaMind.Testimony.Concepts.Tests
 
         private readonly string succeedingCue = "Test Success";
 
+        private readonly TimeSpan passedChangedTimeout = TimeSpan.FromMinutes(15);
+
         private bool passed = true;
+        
+        private int passedChange;
+
+        private DateTime passedChangedTime;
 
         public bool Passed
         {
@@ -173,31 +179,37 @@ namespace MetaMind.Testimony.Concepts.Tests
 
                 if (failing)
                 {
-                    this.OnFailing();
+                    this.OnFail();
                 }
 
                 if (succeeding)
                 {
-                    this.OnSucceeding();
+                    this.OnSucceed();
                 }
             }
         }
 
+        public int PassedChange
+        {
+            get
+            {
+                return this.HasChildren
+                           ? this.Children.Sum(test => test.PassedChange)
+                           : this.passedChange;
+            }
+        }
+
+        public bool PassedChanged { get; private set; }
+
         public string Status { get; private set; }
-
-        public TimeSpan TestSpan { get; set; }
-
-        public Func<bool> TestPassed { get; set; } 
-
-        public Func<string> TestStatus { get; set; }
 
         #region Events
 
-        public event EventHandler Succeeding;
+        public event EventHandler Succeed;
 
-        public event EventHandler Failing;
+        public event EventHandler Fail;
             
-        private void OnFailing()
+        private void OnFail()
         {
             if (TestSession.NotificationEnabled)
             {
@@ -205,13 +217,16 @@ namespace MetaMind.Testimony.Concepts.Tests
                 audio.PlayCue(failingCue);
             }
 
-            if (this.Failing != null)
+            this.passedChange = -1;
+            this.passedChangedTime = DateTime.Now;
+
+            if (this.Fail != null)
             {
-                this.Failing(this, EventArgs.Empty);
+                this.Fail(this, EventArgs.Empty);
             }
         }
 
-        private void OnSucceeding()
+        private void OnSucceed()
         {
             if (TestSession.NotificationEnabled)
             {
@@ -219,9 +234,12 @@ namespace MetaMind.Testimony.Concepts.Tests
                 audio.PlayCue(succeedingCue);
             }
 
-            if (this.Succeeding != null)
+            this.passedChange = 1;
+            this.passedChangedTime = DateTime.Now;
+
+            if (this.Succeed != null)
             {
-                this.Succeeding(this, EventArgs.Empty);
+                this.Succeed(this, EventArgs.Empty);
             }
         }
 
@@ -231,13 +249,30 @@ namespace MetaMind.Testimony.Concepts.Tests
 
         public void Update()
         {
-            this.Passed = this.TestPassed();
-            this.Status = this.TestStatus();
+            this.Passed        = this.TestPassed();
+            this.Status        = this.TestStatus();
+            this.PassedChanged = this.TestPassedChanged();
 
             foreach (var child in this.Children.ToArray())
             {
                 child.Update();
             }
+        }
+
+        #endregion
+
+        #region Evaluation
+
+        public TimeSpan TestSpan { get; set; }
+
+        public Func<bool> TestPassed { get; set; } 
+
+        public Func<string> TestStatus { get; set; }
+
+        private bool TestPassedChanged()
+        {
+            return DateTime.Now - this.passedChangedTime
+                   < this.passedChangedTimeout;
         }
 
         #endregion

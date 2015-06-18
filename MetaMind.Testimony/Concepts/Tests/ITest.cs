@@ -18,13 +18,17 @@
 
         bool Passed { get; }
 
+        int PassedChange { get; }
+
+        bool PassedChanged { get; }
+
         #endregion
 
         #region Events
 
-        event EventHandler Succeeding;
+        event EventHandler Succeed;
 
-        event EventHandler Failing;
+        event EventHandler Fail;
 
         #endregion
     }
