@@ -101,7 +101,7 @@ namespace MetaMind.Engine.Components.Processes
             this.state = ProcessState.Running;
         }
 
-        public abstract void OnSuccess();
+        public abstract void OnSucceed();
 
         #endregion Process Transition
 

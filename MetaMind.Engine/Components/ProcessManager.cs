@@ -74,7 +74,7 @@ namespace MetaMind.Engine.Components
                     {
                         case ProcessState.Succeeded:
                             {
-                                process.OnSuccess();
+                                process.OnSucceed();
 
                                 // Continue child processes when succeeded
                                 var child = process.RemoveChild();

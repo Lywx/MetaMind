@@ -118,7 +118,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Swaps
         {
         }
 
-        public override void OnSuccess()
+        public override void OnSucceed()
         {
         }
 

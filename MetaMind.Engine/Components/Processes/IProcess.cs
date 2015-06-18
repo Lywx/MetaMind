@@ -37,7 +37,7 @@ namespace MetaMind.Engine.Components.Processes
 
         void OnInit();
 
-        void OnSuccess();
+        void OnSucceed();
 
         #endregion Transition
 

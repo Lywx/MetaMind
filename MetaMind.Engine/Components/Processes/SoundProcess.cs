@@ -34,7 +34,7 @@ namespace MetaMind.Engine.Components.Processes
             this.soundInstance.Play();
         }
 
-        public override void OnSuccess()
+        public override void OnSucceed()
         {
         }
 

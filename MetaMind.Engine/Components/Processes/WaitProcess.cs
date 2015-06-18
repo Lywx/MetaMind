@@ -40,7 +40,7 @@ namespace MetaMind.Engine.Components.Processes
             this.Duration = this.TotalDuration;
         }
 
-        public override void OnSuccess()
+        public override void OnSucceed()
         {
         }
 
