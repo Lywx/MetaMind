@@ -27,9 +27,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
 
         private readonly string cursorSymbol = "_";
 
-        // GB2312-80 for Sougou IME
-        private readonly Encoding imeEncoding = Encoding.GetEncoding(54936);
-
         private readonly char[] invalidChars = Enumerable.Range(0, char.MaxValue + 1)
                                                          .Select(i => (char)i)
                                                          .Where(char.IsControl)
@@ -142,12 +139,10 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
                 return;
             }
 
-            var newChars = this.imeEncoding.GetString(e.Character);
-
             // clean index character before processing
             this.RemoveCursor();
 
-            this.HandleControl(newChars);
+            this.HandleControl(e.Character.ToString());
 
             this.InsertCursor();
 

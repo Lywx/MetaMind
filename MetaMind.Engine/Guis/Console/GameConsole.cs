@@ -82,15 +82,6 @@ namespace MetaMind.Engine.Guis.Console
         #region Operations
 
         /// <summary>
-        ///     Write directly to the output stream of the console
-        /// </summary>
-        /// <param name="text"></param>
-        public void WriteLine(string text)
-        {
-            this.console.WriteLine(text);
-        }
-
-        /// <summary>
         /// Adds a new command to the console
         /// </summary>
         /// <param name="commands"></param>
@@ -118,6 +109,15 @@ namespace MetaMind.Engine.Guis.Console
         public void AddCommand(string name, Func<string[], string> action, string description)
         {
             this.Commands.Add(new CustomCommand(name, action, description));
+        }
+
+        /// <summary>
+        ///     Write directly to the output stream of the console
+        /// </summary>
+        /// <param name="text"></param>
+        public void WriteLine(string text)
+        {
+            this.console.WriteLine(text);
         }
 
         #endregion

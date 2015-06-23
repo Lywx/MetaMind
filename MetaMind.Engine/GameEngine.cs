@@ -12,9 +12,6 @@ namespace MetaMind.Engine
     using System.Reflection;
 
     using MetaMind.Engine.Components;
-    using MetaMind.Engine.Components.Fonts;
-    using MetaMind.Engine.Guis.Console;
-    using MetaMind.Engine.Guis.Console.Commands;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
@@ -104,7 +101,7 @@ namespace MetaMind.Engine
             {
                 if (this.interop == null)
                 {
-                    this.interop = new GameNullInterop();
+                    this.interop = new GameNullInterop(this);
                 }
 
                 return this.interop;
@@ -132,7 +129,7 @@ namespace MetaMind.Engine
             {
                 if (this.input == null)
                 {
-                    this.input = new GameNullInput();
+                    this.input = new GameNullInput(this);
                 }
 
                 return this.input;

@@ -84,29 +84,29 @@ namespace MetaMind.Engine.Guis.Elements
 
         #region Events
 
-        public event EventHandler<FrameEventArgs> FrameMoved;
+        public event EventHandler<FrameEventArgs> FrameMoved = delegate {};
 
-        public event EventHandler<FrameEventArgs> FrameSized;
+        public event EventHandler<FrameEventArgs> FrameSized = delegate {};
 
-        public event EventHandler<FrameEventArgs> MouseEnter;
+        public event EventHandler<FrameEventArgs> MouseEnter = delegate {};
 
-        public event EventHandler<FrameEventArgs> MouseLeave;
+        public event EventHandler<FrameEventArgs> MouseLeave = delegate {};
 
-        public event EventHandler<FrameEventArgs> MouseLeftPressed;
+        public event EventHandler<FrameEventArgs> MouseLeftPressed = delegate {};
 
-        public event EventHandler<FrameEventArgs> MouseLeftPressedOutside;
+        public event EventHandler<FrameEventArgs> MouseLeftPressedOutside = delegate {};
 
-        public event EventHandler<FrameEventArgs> MouseLeftDoubleClicked;
+        public event EventHandler<FrameEventArgs> MouseLeftDoubleClicked = delegate {};
 
-        public event EventHandler<FrameEventArgs> MouseLeftReleased;
+        public event EventHandler<FrameEventArgs> MouseLeftReleased = delegate {};
 
-        public event EventHandler<FrameEventArgs> MouseRightPressed;
+        public event EventHandler<FrameEventArgs> MouseRightPressed = delegate {};
 
-        public event EventHandler<FrameEventArgs> MouseRightPressedOutside;
+        public event EventHandler<FrameEventArgs> MouseRightPressedOutside = delegate {};
 
-        public event EventHandler<FrameEventArgs> MouseRightReleased;
+        public event EventHandler<FrameEventArgs> MouseRightReleased = delegate {};
 
-        public event EventHandler<FrameEventArgs> MouseRightDoubleClicked;
+        public event EventHandler<FrameEventArgs> MouseRightDoubleClicked = delegate {};
 
         private void OnFrameMoved()
         {

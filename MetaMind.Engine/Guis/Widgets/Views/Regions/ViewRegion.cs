@@ -55,7 +55,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Regions
 
         public void Blur()
         {
-            this.StateMachine.Fire(Trigger.PressedOutside);
+            this.Machine.Fire(Trigger.PressedOutside);
         }
 
         #endregion

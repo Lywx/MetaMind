@@ -45,9 +45,9 @@
 
         public int Margin { get; set; }
 
-        public bool OpenOnWrite { get; set; }
-
         public Font Font { get; set; }
+
+        public bool OpenOnWrite { get; set; }
 
         public Texture2D RoundedCorner { get; set; }
 
@@ -58,16 +58,23 @@
         public GameConsoleOptions()
         {
             // Default options
-            this.ToggleKey = 192; // tilde
+
+            // Tilde
+            this.ToggleKey = 192; 
+
             this.BackgroundColor = new Color(0, 0, 0, 125);
             this.FontColor = Color.White;
+
             this.AnimationSpeed = 1;
             this.CursorBlinkSpeed = 0.5f;
+
             this.Height = 300;
+            this.Margin = 30;
+            this.Padding = 30;
+
             this.Prompt = "$";
             this.Cursor = '_';
-            this.Padding = 30;
-            this.Margin = 30;
+
             this.OpenOnWrite = true;
         }
     }

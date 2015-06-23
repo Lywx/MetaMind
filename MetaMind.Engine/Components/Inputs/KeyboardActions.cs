@@ -38,8 +38,11 @@ namespace MetaMind.Engine.Components.Inputs
         ConsciousnessAwaken,
         ConsciousnessSleep,
 
+        // Synchronization
+        SynchronizationPause,
+        SynchronizationReverse,
+
         // Fsi Session
-        TestPause,
         TestRerun,
 
         // General

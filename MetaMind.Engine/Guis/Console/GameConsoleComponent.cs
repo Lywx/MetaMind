@@ -37,13 +37,14 @@
                 throw new ArgumentNullException("stringDrawer");
             }
 
-            this.console      = console;
-            this.spriteBatch  = spriteBatch;
+            this.console = console;
+
+            this.spriteBatch = spriteBatch;
             this.stringDrawer = stringDrawer;
 
             this.inputProcesser = new InputProcessor(new CommandProcesser());
-            this.inputProcesser.Open += (s, e) => this.renderer.Open();
-            this.inputProcesser.Close += (s, e) => this.renderer.Close();
+            this.inputProcesser.Opened += (s, e) => this.renderer.Open();
+            this.inputProcesser.Closed += (s, e) => this.renderer.Close();
 
             var builtinCommands = new IConsoleCommand[]
             {
@@ -51,19 +52,20 @@
                 new ExitCommand(engine),
                 new HelpCommand()
             };
+
             GameConsoleOptions.Commands.AddRange(builtinCommands);
         }
 
         public bool IsOpen
         {
-            get
-            {
-                return this.renderer.IsOpen;
-            }
+            get { return this.renderer.IsOpen; }
         }
+    }
 
-        #region DrawableComponent
+    #region DrawableComponent
 
+    internal partial class GameConsoleComponent
+    {
         protected override void LoadContent()
         {
             this.inputProcesser.SetupForm();
@@ -86,6 +88,7 @@
             this.renderer.Draw(gameTime);
 
             this.spriteBatch.End();
+
             base.Draw(gameTime);
         }
 
@@ -97,21 +100,27 @@
             }
 
             this.renderer.Update(gameTime);
+
             base.Update(gameTime);
         }
-
-        #endregion
     }
+
+    #endregion
+
+    #region Operations
 
     internal partial class GameConsoleComponent
     {
-        #region Operations
-
         public void WriteLine(string text)
         {
+            if (GameConsoleOptions.Options.OpenOnWrite)
+            {
+                this.inputProcesser.OpenConsole();
+            }
+
             this.inputProcesser.AddToOutput(text);
         }
-
-        #endregion
     }
+
+    #endregion
 }

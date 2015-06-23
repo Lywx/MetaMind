@@ -14,7 +14,7 @@ namespace MetaMind.Engine.Components.Inputs
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class InputState : GameComponent, IInputState
+    public class InputState : GameControllableComponent, IInputState
     {
         private readonly KeyboardInputState keyboard;
 
@@ -38,7 +38,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         #region Constructors
 
-        public InputState(GameEngine engine, int updateOrder)
+        public InputState(GameEngine engine)
             : base(engine)
         {
             if (engine == null)
@@ -48,8 +48,6 @@ namespace MetaMind.Engine.Components.Inputs
 
             this.Game.Components.Add(this);
             
-            this.UpdateOrder = updateOrder;
-
             this.keyboard = new KeyboardInputState();
             this.mouse    = new MouseInputState();
         }
@@ -58,7 +56,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         #region Update and Draw
 
-        public void UpdateInput(GameTime gameTime)
+        public override void UpdateInput(GameTime gameTime)
         {
             this.mouse   .UpdateInput(gameTime);
             this.keyboard.UpdateInput(gameTime);

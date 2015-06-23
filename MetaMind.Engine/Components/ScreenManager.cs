@@ -18,7 +18,7 @@ namespace MetaMind.Engine.Components
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    public partial class ScreenManager : DrawableGameComponent, IScreenManager
+    public partial class ScreenManager : GameControllableComponent, IScreenManager
     {
         #region Dependency
 
@@ -209,7 +209,7 @@ namespace MetaMind.Engine.Components
             }
         }
 
-        public void UpdateInput(GameTime gameTime)
+        public override void UpdateInput(GameTime gameTime)
         {
             this.UpdateActive((screen, access, time) => screen.UpdateInput(access, gameTime), this.Input, gameTime);
         }

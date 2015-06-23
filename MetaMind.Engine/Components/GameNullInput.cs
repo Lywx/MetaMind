@@ -4,17 +4,22 @@
 
     using Microsoft.Xna.Framework;
 
-    internal class GameNullInput : IGameInput
+    internal class GameNullInput : GameControllableComponent, IGameInput
     {
         public IInputEvent Event { get; private set; }
 
         public IInputState State { get; private set; }
 
-        public void Initialize()
+        public override void Initialize()
         {
         }
 
-        public void UpdateInput(GameTime gameTime)
+        public override void UpdateInput(GameTime gameTime)
+        {
+        }
+
+        public GameNullInput(GameEngine engine) 
+            : base(engine)
         {
         }
     }

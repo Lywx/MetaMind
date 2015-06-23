@@ -76,6 +76,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Collections\ObservableCollection.cs" />
+    <Compile Include="GameControllableComponent.cs" />
     <Compile Include="Components\IScreenManagerOperations.cs" />
     <Compile Include="Components\Processes\ProcessCounter.cs" />
     <Compile Include="Components\Processes\StepProcess.cs" />
@@ -109,7 +110,6 @@
     <Compile Include="Components\Fonts\IStringDrawer.cs" />
     <Compile Include="Components\Fonts\IFontManager.cs" />
     <Compile Include="Components\IGameManager.cs" />
-    <Compile Include="Components\Inputs\InputSync.cs" />
     <Compile Include="Components\Inputs\IInputEvent.cs" />
     <Compile Include="Components\Inputs\IInputState.cs" />
     <Compile Include="Components\Inputs\IMouseInputState.cs" />
@@ -510,6 +510,7 @@
     <Compile Include="Guis\Widgets\Visuals\Label.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="IGameControllableComponentOperations.cs" />
     <Compile Include="IGameControllableEntity.cs" />
     <Compile Include="IGameEngineConfigurer.cs" />
     <Compile Include="IGameEngineOperations.cs" />

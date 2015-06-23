@@ -8,18 +8,16 @@
 
     public class Region : RegionEntity, IRegion
     {
-        protected StateMachine<State, Trigger> StateMachine { get; private set; }
-
         public Region(Rectangle rectangle)
         {
             // State machine
-            this.StateMachine = new StateMachine<State, Trigger>(State.LostFocus);
+            this.Machine = new StateMachine<State, Trigger>(State.LostFocus);
 
-            this.StateMachine.Configure(State.LostFocus).PermitReentry(Trigger.PressedOutside);
-            this.StateMachine.Configure(State.LostFocus).Permit(Trigger.PressedInside, State.HasFocus);
+            this.Machine.Configure(State.LostFocus).PermitReentry(Trigger.PressedOutside);
+            this.Machine.Configure(State.LostFocus).Permit(Trigger.PressedInside, State.HasFocus);
 
-            this.StateMachine.Configure(State.HasFocus).PermitReentry(Trigger.PressedInside);
-            this.StateMachine.Configure(State.HasFocus).Permit(Trigger.PressedOutside, State.LostFocus);
+            this.Machine.Configure(State.HasFocus).PermitReentry(Trigger.PressedInside);
+            this.Machine.Configure(State.HasFocus).Permit(Trigger.PressedOutside, State.LostFocus);
 
             // Frame events
             this.Frame = new PickableFrame(rectangle);
@@ -29,7 +27,7 @@
 
             // Region states
             this[RegionState.Mouse_Is_Over] = () => this.Frame[FrameState.Mouse_Is_Over]();
-            this[RegionState.Region_Has_Focus] = () => this.StateMachine.IsInState(State.HasFocus);
+            this[RegionState.Region_Has_Focus] = () => this.Machine.IsInState(State.HasFocus);
         }
 
         #region State Machine
@@ -47,6 +45,8 @@
 
             PressedOutside,
         }
+
+        protected StateMachine<State, Trigger> Machine { get; private set; }
 
         #endregion
 
@@ -97,14 +97,12 @@
 
         private void FrameMouseLeftPressed(object sender, FrameEventArgs e)
         {
-            this.StateMachine.Fire(Trigger.PressedInside);
+            this.Machine.Fire(Trigger.PressedInside);
         }
 
-        private void FrameMouseLeftPressedOutside(
-            object sender,
-            FrameEventArgs e)
+        private void FrameMouseLeftPressedOutside(object sender, FrameEventArgs e)
         {
-            this.StateMachine.Fire(Trigger.PressedOutside);
+            this.Machine.Fire(Trigger.PressedOutside);
         }
 
         #endregion

@@ -5,8 +5,13 @@ namespace MetaMind.Engine.Components
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
 
-    internal class GameNullInterop : IGameInterop
+    internal class GameNullInterop : GameControllableComponent, IGameInterop
     {
+        public GameNullInterop(GameEngine engine) 
+            : base(engine)
+        {
+        }        
+        
         public IAudioManager Audio { get; private set; }
 
         public ContentManager Content { get; private set; }
@@ -27,15 +32,15 @@ namespace MetaMind.Engine.Components
 
         public ISaveManager Save { get; set; }
 
-        public void Initialize()
+        public override void Initialize()
+        {
+        }
+
+        public override void UpdateInput(GameTime gameTime)
         {
         }
 
         public void OnExiting()
-        {
-        }
-
-        public void UpdateInput(GameTime gameTime)
         {
         }
     }

@@ -1,7 +1,6 @@
 namespace MetaMind.Engine
 {
     using System;
-    using System.Diagnostics;
     using System.Runtime.Serialization;
 
     using MetaMind.Engine.Services;

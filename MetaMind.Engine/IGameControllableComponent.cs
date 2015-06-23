@@ -9,8 +9,8 @@ namespace MetaMind.Engine
 {
     using Microsoft.Xna.Framework;
 
-    public interface IGameControllableComponent : IGameComponent
+    public interface IGameControllableComponent : IGameComponent, IGameControllableComponentOperations 
     {
-        void UpdateInput(GameTime gameTime);
+        bool Controllable { get; }
     }
 }

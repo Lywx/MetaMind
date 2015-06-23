@@ -157,7 +157,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
 
         private void UpdateVisual(GameTime time)
         {
-            if (this.StateMachine.IsInState(State.Dragging))
+            if (this.Machine.IsInState(State.Dragging))
             {
                 this.scrollbarVisual.Toggle();
             }
@@ -169,7 +169,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
         {
             if (this.CanDisplay())
             {
-                if (!this.StateMachine.IsInState(State.Dragging))
+                if (!this.Machine.IsInState(State.Dragging))
                 {
                     this.Rectangle = this.IndexToRectangle();
                 }

@@ -45,13 +45,23 @@
 
         #region Events
 
-        public event EventHandler Open = delegate { };
+        public event EventHandler Opened = delegate { };
 
-        public event EventHandler Close = delegate { };
+        public event EventHandler Closed = delegate { };
 
-        public event EventHandler PlayerCommand = delegate { };
+        private void OnOpened()
+        {
+            this.isActive = true;
 
-        public event EventHandler ConsoleCommand = delegate { };
+            this.Opened(this, EventArgs.Empty);
+        }
+
+        private void OnClosed()
+        {
+            this.isActive = false;
+
+            this.Closed(this, EventArgs.Empty);
+        }
 
         #endregion
 
@@ -89,33 +99,36 @@
             if (this.isHandled)
             {
                 this.isHandled = false;
+
                 return;
             }
 
             if (!this.isActive)
             {
-                return; // console is opened -> accept input
+                return; 
             }
 
             this.CommandHistory.Reset();
 
             switch (e.KeyChar)
             {
-                case (char)Keys.Enter:
-                    this.ExecuteBuffer();
-                    break;
-
                 case (char)Keys.Back:
                     this.BackspaceBuffer();
 
                     break;
 
+                case (char)Keys.Enter:
+                    this.ExecuteBuffer();
+
+                    break;
+
                 case (char)Keys.Tab:
                     this.AutoComplete();
+
                     break;
 
                 default:
-                    this.AddToOutput(e.KeyChar);
+                    this.AddToBuffer(e.KeyChar);
 
                     break;
             }
@@ -151,6 +164,14 @@
 
         #region Operations
 
+        public void AddToOutput(string text)
+        {
+            foreach (var line in text.Split('\n'))
+            {
+                this.Out.Add(new OutputLine(line, OutputLineType.Output));
+            }
+        }
+
         public void AddToBuffer(string text)
         {
             var lines = text.Split('\n').Where(line => line != "").ToArray();
@@ -161,24 +182,11 @@
                 this.Buffer.Output += line;
                 this.ExecuteBuffer();
             }
+
             this.Buffer.Output += lines[i];
         }
 
-        public void AddToOutput(string text)
-        {
-            if (GameConsoleOptions.Options.OpenOnWrite)
-            {
-                this.isActive = true;
-                this.Open(this, EventArgs.Empty);
-            }
-
-            foreach (var line in text.Split('\n'))
-            {
-                this.Out.Add(new OutputLine(line, OutputLineType.Output));
-            }
-        }
-
-        private void AddToOutput(char c)
+        private void AddToBuffer(char c)
         {
             if (GameConsoleOptions.Options.Font.IsPrintable(c))
             {
@@ -186,19 +194,22 @@
             }
         }
 
-        private void AutoComplete()
+        public void AutoComplete()
         {
             var lastSpacePosition = this.Buffer.Output.LastIndexOf(' ');
+
             var textToMatch = lastSpacePosition < 0
-                ? this.Buffer.Output
-                : this.Buffer.Output.Substring(
-                    lastSpacePosition + 1,
-                    this.Buffer.Output.Length - lastSpacePosition - 1);
+                                  ? this.Buffer.Output
+                                  : this.Buffer.Output.Substring(
+                                      lastSpacePosition + 1,
+                                      this.Buffer.Output.Length - lastSpacePosition - 1);
+
             var match = this.MatchingCommand(textToMatch);
             if (match == null)
             {
                 return;
             }
+
             var restOfTheCommand = match.Name.Substring(textToMatch.Length);
             this.Buffer.Output += restOfTheCommand + " ";
         }
@@ -229,16 +240,34 @@
             this.Buffer.Output = "";
         }
 
-        private void ToggleConsole()
+        private void PasteFromClipboard()
         {
-            this.isActive = !this.isActive;
-            if (this.isActive)
+            // Thread Apartment must be in Single-Threaded for the Clipboard to work
+            if (Thread.CurrentThread.GetApartmentState() == ApartmentState.STA)
             {
-                this.Open(this, EventArgs.Empty);
+                this.AddToBuffer(Clipboard.GetText());
+            }
+        }
+
+        public void OpenConsole()
+        {
+            this.OnOpened();
+        }
+
+        public void CloseConsole()
+        {
+            this.OnClosed();
+        }
+
+        public void ToggleConsole()
+        {
+            if (!this.isActive)
+            {
+                this.OnOpened();
             }
             else
             {
-                this.Close(this, EventArgs.Empty);
+                this.OnClosed();
             }
         }
 
@@ -248,21 +277,13 @@
 
         private IConsoleCommand MatchingCommand(string command)
         {
+            if (string.IsNullOrEmpty(command))
+            {
+                return null;
+            }
+
             var matchingCommands = GameConsoleOptions.Commands.Where(c => c.Name != null && c.Name.StartsWith(command));
             return matchingCommands.FirstOrDefault();
-        }
-
-        #endregion
-
-        #region 
-
-        private void PasteFromClipboard()
-        {
-            // Thread Apartment must be in Single-Threaded for the Clipboard to work
-            if (Thread.CurrentThread.GetApartmentState() == ApartmentState.STA)
-            {
-                this.AddToBuffer(Clipboard.GetText());
-            }
         }
 
         #endregion

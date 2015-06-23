@@ -37,9 +37,13 @@ CommandDeleteItem = D with LeftControl
 CommandOpenItem   = O with LeftControl 
 CommandSortItem   = S with LeftControl
 
+" Synchronization Control
+
+SynchronizationPause   = P with LeftControl and LeftShift
+SynchronizationReverse = V with LeftControl and LeftShift
+
 " Test Control
 
-TestPause = P with LeftControl and LeftShift
 TestRerun = R with LeftControl and LeftShift
 
 " Synchronization Control

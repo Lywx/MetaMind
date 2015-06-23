@@ -35,39 +35,39 @@ namespace MetaMind.Engine.Guis.Elements
         protected DraggableFrame()
         {
             // State machine
-            this.StateMachine = new StateMachine<State, Trigger>(State.Released);
+            this.Machine = new StateMachine<State, Trigger>(State.Released);
 
             // Possible cross interference 
-            this.StateMachine.Configure(State.Released).PermitReentry(Trigger.Released);
-            this.StateMachine.Configure(State.Released).Permit(Trigger.Pressed, State.Pressing);
-            this.StateMachine.Configure(State.Released).Ignore(Trigger.DraggedWithinRange);
-            this.StateMachine.Configure(State.Released).Ignore(Trigger.DraggedOutOfRange);
+            this.Machine.Configure(State.Released).PermitReentry(Trigger.Released);
+            this.Machine.Configure(State.Released).Permit(Trigger.Pressed, State.Pressing);
+            this.Machine.Configure(State.Released).Ignore(Trigger.DraggedWithinRange);
+            this.Machine.Configure(State.Released).Ignore(Trigger.DraggedOutOfRange);
 
             // Possible cross interference
-            this.StateMachine.Configure(State.Pressing).PermitReentry(Trigger.Pressed);
-            this.StateMachine.Configure(State.Pressing).Permit(Trigger.Released, State.Released);
-            this.StateMachine.Configure(State.Pressing).Permit(Trigger.DraggedWithinRange, State.Holding);
-            this.StateMachine.Configure(State.Pressing).Permit(Trigger.DraggedOutOfRange, State.Dragging);
+            this.Machine.Configure(State.Pressing).PermitReentry(Trigger.Pressed);
+            this.Machine.Configure(State.Pressing).Permit(Trigger.Released, State.Released);
+            this.Machine.Configure(State.Pressing).Permit(Trigger.DraggedWithinRange, State.Holding);
+            this.Machine.Configure(State.Pressing).Permit(Trigger.DraggedOutOfRange, State.Dragging);
 
-            this.StateMachine.Configure(State.Holding).PermitReentry(Trigger.DraggedWithinRange);
-            this.StateMachine.Configure(State.Holding).Permit(Trigger.DraggedOutOfRange, State.Dragging);
-
-            // Possible cross interference
-            this.StateMachine.Configure(State.Holding).Permit(Trigger.Pressed, State.Pressing);
-            this.StateMachine.Configure(State.Holding).Permit(Trigger.Released, State.Released);
+            this.Machine.Configure(State.Holding).PermitReentry(Trigger.DraggedWithinRange);
+            this.Machine.Configure(State.Holding).Permit(Trigger.DraggedOutOfRange, State.Dragging);
 
             // Possible cross interference
-            this.StateMachine.Configure(State.Dragging).Permit(Trigger.Pressed, State.Released);
-            this.StateMachine.Configure(State.Dragging).Permit(Trigger.Released, State.Released);
-            this.StateMachine.Configure(State.Dragging).Ignore(Trigger.DraggedOutOfRange);
-            this.StateMachine.Configure(State.Dragging).Ignore(Trigger.DraggedWithinRange);
+            this.Machine.Configure(State.Holding).Permit(Trigger.Pressed, State.Pressing);
+            this.Machine.Configure(State.Holding).Permit(Trigger.Released, State.Released);
 
-            this.StateMachine.Configure(State.Dragging).OnEntry(() =>
+            // Possible cross interference
+            this.Machine.Configure(State.Dragging).Permit(Trigger.Pressed, State.Released);
+            this.Machine.Configure(State.Dragging).Permit(Trigger.Released, State.Released);
+            this.Machine.Configure(State.Dragging).Ignore(Trigger.DraggedOutOfRange);
+            this.Machine.Configure(State.Dragging).Ignore(Trigger.DraggedWithinRange);
+
+            this.Machine.Configure(State.Dragging).OnEntry(() =>
                 {
                     this.DeferAction(this.OnMouseDragged);
                 });
 
-            this.StateMachine.Configure(State.Dragging).OnExit(() =>
+            this.Machine.Configure(State.Dragging).OnExit(() =>
                 {
                     this.DeferAction(this.OnMouseDropped);
                 });
@@ -80,8 +80,8 @@ namespace MetaMind.Engine.Guis.Elements
             this.MouseRightReleased += this.FrameMouseReleased;
 
             // States
-            this[FrameState.Frame_Is_Holding] = () => this.StateMachine.IsInState(State.Holding);
-            this[FrameState.Frame_Is_Dragging] = () => this.StateMachine.IsInState(State.Dragging);
+            this[FrameState.Frame_Is_Holding] = () => this.Machine.IsInState(State.Holding);
+            this[FrameState.Frame_Is_Dragging] = () => this.Machine.IsInState(State.Dragging);
         }
 
         ~DraggableFrame()
@@ -133,7 +133,7 @@ namespace MetaMind.Engine.Guis.Elements
             Released,
         }
 
-        protected StateMachine<State, Trigger> StateMachine { get; set; }
+        protected StateMachine<State, Trigger> Machine { get; private set; }
 
         #endregion
 
@@ -170,12 +170,12 @@ namespace MetaMind.Engine.Guis.Elements
             // mouse y-axis value is fixed at y-axis center of the rectangle
             this.mouseRelativePosition = new Point(mouse.X - this.Rectangle.X, mouse.Y - this.Rectangle.Y);
 
-            this.StateMachine.Fire(Trigger.Pressed);
+            this.Machine.Fire(Trigger.Pressed);
         }
 
         private void FrameMouseReleased(object sender, EventArgs e)
         {
-            this.StateMachine.Fire(Trigger.Released);
+            this.Machine.Fire(Trigger.Released);
         }
 
         #endregion Events
@@ -189,7 +189,7 @@ namespace MetaMind.Engine.Guis.Elements
             var mouse = this.GameInput.State.Mouse.CurrentState;
             this.mouseLocation = new Point(mouse.X, mouse.Y);
 
-            if (this.StateMachine.IsInState(State.Dragging))
+            if (this.Machine.IsInState(State.Dragging))
             {
                 // Keep rectangle relative position to the mouse position from changing 
                 this.Rectangle = new Rectangle(
@@ -201,7 +201,7 @@ namespace MetaMind.Engine.Guis.Elements
 
             var isOutOfHoldLen = this.mouseLocation.DistanceFrom(this.mousePressedPosition).Length() > this.mouseHoldLen;
 
-            this.StateMachine.Fire(isOutOfHoldLen ? Trigger.DraggedOutOfRange : Trigger.DraggedWithinRange);
+            this.Machine.Fire(isOutOfHoldLen ? Trigger.DraggedOutOfRange : Trigger.DraggedWithinRange);
         }
 
         #endregion Update

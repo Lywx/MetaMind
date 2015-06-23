@@ -7,7 +7,7 @@ namespace MetaMind.Engine.Components
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
 
-    public partial class GameEngineInterop : IGameInterop
+    public partial class GameEngineInterop : GameControllableComponent, IGameInterop
     {
         public IAudioManager Audio { get; private set; }
 
@@ -30,6 +30,7 @@ namespace MetaMind.Engine.Components
         public ISaveManager Save { get; set; }
 
         public GameEngineInterop(GameEngine engine, IGameManager game, IAudioManager audio, IFileManager file, IEventManager @event, IProcessManager process, IScreenManager screen, GameConsole console)
+            : base(engine)
         {
             if (engine == null)
             {
@@ -88,12 +89,12 @@ namespace MetaMind.Engine.Components
 
     public partial class GameEngineInterop
     {
-        public void Initialize()
+        public override void Initialize()
         {
             // Initialize components that aren't initialized during GameComponents initialization
         }
 
-        public void UpdateInput(GameTime gameTime)
+        public override void UpdateInput(GameTime gameTime)
         {
             this.Screen.UpdateInput(gameTime);
         }
