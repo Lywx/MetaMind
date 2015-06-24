@@ -331,6 +331,11 @@ namespace MetaMind.Engine.Components
             this.screensToUpdate.Remove(screen);
         }
 
+        public void EraseScreenFrom(int index)
+        {
+            this.screens.Skip(index).ToList().ForEach(s => s.Exit());
+        }
+
         /// <summary>
         /// Prints a list of all the screens, for debugging.
         /// </summary>

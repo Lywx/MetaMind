@@ -1,5 +1,6 @@
 namespace MetaMind.Engine.Components
 {
+    using System;
     using Microsoft.Xna.Framework;
     using Screens;
 
@@ -11,6 +12,11 @@ namespace MetaMind.Engine.Components
         /// Adds a new screen to the screen manager.
         /// </summary>
         void AddScreen(IGameScreen screen);
+
+        /// <summary>
+        /// Exits all screen at and after the index.
+        /// </summary>
+        void EraseScreenFrom(int index);
 
         /// <summary>
         /// Helper draws a translucent black fullscreen sprite, used for fading
