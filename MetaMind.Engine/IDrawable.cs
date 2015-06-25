@@ -2,11 +2,7 @@ namespace MetaMind.Engine
 {
     using System;
 
-    using MetaMind.Engine.Services;
-
-    using Microsoft.Xna.Framework;
-
-    public interface IDrawable
+    public interface IDrawable : IDrawableOperations 
     {
         event EventHandler<EventArgs> DrawOrderChanged;
 
@@ -15,7 +11,5 @@ namespace MetaMind.Engine
         int DrawOrder { get; }
 
         bool Visible { get; }
-
-        void Draw(IGameGraphicsService graphics, GameTime time, byte alpha);
     }
 }

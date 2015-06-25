@@ -7,7 +7,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Logic
 
     using Microsoft.Xna.Framework;
 
-    public interface IViewItemLogic : IViewItemComponent, IUpdateable, IInputable
+    public interface IViewItemLogic : IViewItemComponent
     {
         #region Components
 

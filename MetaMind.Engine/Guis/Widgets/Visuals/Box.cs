@@ -12,22 +12,22 @@ namespace MetaMind.Engine.Guis.Widgets.Visuals
 
     public class Box : GameVisualEntity
     {
-        public Box(Func<Rectangle> bounds, Func<Color> color, Func<bool> filled)
+        public Box(Func<Rectangle> bounds, Func<Color> color, Func<bool> colorFilled)
         {
             this.Bounds = bounds;
-            this.Color  = color;
-            this.Filled = filled;
+            this.Color       = color;
+            this.ColorFilled = colorFilled;
         }
 
         public Func<Rectangle> Bounds { get; set; }
 
         public Func<Color> Color { get; set; }
 
-        public Func<bool> Filled { get; set; }
+        public Func<bool> ColorFilled { get; set; }
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            var draw = this.Filled()
+            var draw = this.ColorFilled()
                            ? Primitives2D.FillRectangle
                            : new Action<SpriteBatch, Rectangle, Color>(Primitives2D.DrawRectangle);
 

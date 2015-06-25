@@ -3,12 +3,11 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     using System;
     using System.Collections.Generic;
 
-    using Microsoft.Xna.Framework;
-
     using Items;
     using Items.Settings;
     using Layers;
     using Logic;
+    using Microsoft.Xna.Framework;
     using Services;
     using Settings;
     using Visuals;
@@ -166,7 +165,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             foreach (var pair in this.ViewComponents)
             {
                 var component  = pair.Value;
-                var updateable = component as IUpdateable;
+                var updateable = component as IOuterUpdateable;
 
                 if (updateable != null)
                 {

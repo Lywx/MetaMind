@@ -27,9 +27,9 @@
             this.tests.UpdateInput(input, time);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
-            this.tests.Update(gameTime);
+            this.tests.Update(time);
         }
 
         public override void Draw(IGameGraphicsService graphics, GameTime time)

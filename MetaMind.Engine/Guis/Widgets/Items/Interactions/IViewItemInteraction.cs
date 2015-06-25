@@ -7,16 +7,12 @@
 
 namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
 {
-    using System;
-
-    using MetaMind.Engine.Services;
-
-    using Microsoft.Xna.Framework;
+    using Services;
 
     /// <summary>
     ///     Item interaction with view, other items.
     /// </summary>
-    public interface IViewItemInteraction : IViewItemComponent, IUpdateable, IDisposable
+    public interface IViewItemInteraction : IViewItemComponent
     {
         /// <summary>
         /// Customized action for item which would be triggered after selection.

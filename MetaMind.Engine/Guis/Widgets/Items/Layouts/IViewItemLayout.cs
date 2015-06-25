@@ -8,9 +8,8 @@
 namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
 {
     using System;
-    using Microsoft.Xna.Framework;
 
-    public interface IViewItemLayout : IViewItemComponent, IUpdateable 
+    public interface IViewItemLayout : IViewItemComponent 
     {
         int Id { get; set; }
 

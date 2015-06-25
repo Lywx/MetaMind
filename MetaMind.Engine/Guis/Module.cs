@@ -1,7 +1,6 @@
 namespace MetaMind.Engine.Guis
 {
     using MetaMind.Engine.Services;
-
     using Microsoft.Xna.Framework;
 
     /// <summary>

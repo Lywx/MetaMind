@@ -6,9 +6,11 @@ namespace MetaMind.Engine.Screens
 
     using Microsoft.Xna.Framework;
 
-    public class GameScreen : IGameScreen
+    #region Screen Manager Operations
+
+    public partial class GameScreen : IGameScreen
     {
-        #region Screen Options Data
+        #region Screen Data
 
         private bool isPopup = false;
 
@@ -47,9 +49,9 @@ namespace MetaMind.Engine.Screens
             protected set { this.transitionOnTime = value; }
         }
 
-        #endregion Screen Options Data
+        #endregion Screen Data
 
-        #region Screen State Data
+        #region Screen State 
 
         private bool isExiting = false;
 
@@ -127,7 +129,7 @@ namespace MetaMind.Engine.Screens
 
         protected bool HasOtherScreenFocus { get; set; }
 
-        #endregion Screen State Data
+        #endregion Screen State
 
         #region Screen Events
 
@@ -143,39 +145,7 @@ namespace MetaMind.Engine.Screens
 
         #endregion Screen Events
 
-        #region Load and Unload
-
-        public virtual void LoadContent(IGameInteropService interop)
-        {
-        }
-
-
-        public virtual void UnloadContent(IGameInteropService interop)
-        {
-        }
-
-        #endregion Load and Unload
-
-        #region Draw
-
-        /// <summary>
-        /// This is called when the screen should draw itself.
-        /// </summary>
-        public virtual void Draw(IGameGraphicsService graphics, GameTime time)
-        {
-        }
-
-        #endregion Draw
-
         #region Update
-
-        public virtual void Update(GameTime gameTime)
-        {
-        }
-
-        public virtual void UpdateInput(IGameInputService input, GameTime time)
-        {
-        }
 
         public virtual void UpdateScreen(IGameInteropService interop, GameTime time, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
         {
@@ -225,7 +195,7 @@ namespace MetaMind.Engine.Screens
         /// <summary>
         /// Helper for updating the screen transition position.
         /// </summary>
-        private bool UpdateTransition(GameTime gameTime, TimeSpan transitionOff, int direction)
+        private bool UpdateTransition(GameTime time, TimeSpan transitionOff, int direction)
         {
             // How much should we move by?
             float transitionDelta;
@@ -236,16 +206,21 @@ namespace MetaMind.Engine.Screens
             }
             else
             {
-                transitionDelta = (float)(gameTime.ElapsedGameTime.TotalMilliseconds / transitionOff.TotalMilliseconds);
+                transitionDelta =
+                    (float)
+                    (time.ElapsedGameTime.TotalMilliseconds
+                     / transitionOff.TotalMilliseconds);
             }
 
             // Update the transition position.
             this.transitionPosition += transitionDelta * direction;
 
             // Did we reach the end of the transition?
-            if ((this.transitionPosition <= 0) || (this.transitionPosition >= 1))
+            if ((this.transitionPosition <= 0)
+                || (this.transitionPosition >= 1))
             {
-                this.transitionPosition = MathHelper.Clamp(this.transitionPosition, 0, 1);
+                this.transitionPosition =
+                    MathHelper.Clamp(this.transitionPosition, 0, 1);
                 return false;
             }
 
@@ -254,33 +229,6 @@ namespace MetaMind.Engine.Screens
         }
 
         #endregion Update
-
-        #region IDisposable
-
-        public virtual void Dispose()
-        {
-        }
-
-        #endregion IDisposable
-
-        protected GameScreen()
-        {
-            this.SetupService();
-        }
-
-        #region Service
-
-        protected IGameInteropService Interop { get; set; }
-
-        private void SetupService()
-        {
-            if (GameEngine.Service != null)
-            {
-                this.Interop = GameEngine.Service.Interop;
-            }
-        }
-
-        #endregion
 
         #region Operations
 
@@ -298,11 +246,94 @@ namespace MetaMind.Engine.Screens
             // This clause is an extreme case which usually won't be triggered.
             if (this.TransitionOffTime == TimeSpan.Zero)
             {
-                var screen = this.Interop.Screen;
+                var screen = this.GameInterop.Screen;
                 screen.RemoveScreen(this);
             }
         }
 
         #endregion Operations
+
+        #region IDisposable
+
+        public virtual void Dispose()
+        {
+        }
+
+        #endregion IDisposable
     }
+
+    #endregion
+
+    #region Game Service
+
+    public partial class GameScreen
+    {
+        protected GameScreen()
+        {
+            this.Layers = new GameControllableEntityCollection<IGameLayer>();
+
+            this.SetupService();
+        }
+
+        protected IGameInteropService GameInterop { get; set; }
+
+        private void SetupService()
+        {
+            if (GameEngine.Service != null)
+            {
+                this.GameInterop = GameEngine.Service.Interop;
+            }
+        }
+    }
+
+    #endregion
+
+    #region Game Layer
+
+    public partial class GameScreen
+    {
+        protected GameControllableEntityCollection<IGameLayer> Layers { get; private set; }
+
+        #region Load and Unload
+
+        public virtual void LoadContent(IGameInteropService interop)
+        {
+            this.Layers.LoadContent(interop);
+        }
+
+        public virtual void UnloadContent(IGameInteropService interop)
+        {
+            this.Layers.UnloadContent(interop);
+        }
+
+        #endregion
+
+        #region Draw
+
+        /// <summary>
+        /// This is called when the screen should draw itself.
+        /// </summary>
+        public virtual void Draw(IGameGraphicsService graphics, GameTime time)
+        {
+            this.Layers.Draw(graphics, time, this.TransitionAlpha);
+        }
+
+        #endregion Draw
+
+        #region Update
+
+        public virtual void Update(GameTime time)
+        {
+            this.Layers.Update(time);
+        }
+
+        public virtual void UpdateInput(IGameInputService input, GameTime time)
+        {
+            this.Layers.UpdateInput(input, time);
+        }
+
+        #endregion
+    }
+
+    #endregion
 }

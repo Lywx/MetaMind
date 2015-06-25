@@ -1,8 +1,6 @@
 namespace MetaMind.Engine.Guis.Widgets.Items.Data
 {
-    using Microsoft.Xna.Framework;
-
-    public interface IViewItemDataModel : IViewItemComponent, IUpdateable, IInputable
+    public interface IViewItemDataModel : IViewItemComponent
     {
         void EditString(string targetName);
 

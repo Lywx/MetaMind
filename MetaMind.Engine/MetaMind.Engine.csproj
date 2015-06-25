@@ -157,6 +157,13 @@
     <Compile Include="Guis\Console\OutputLine.cs" />
     <Compile Include="Guis\Console\Renderer.cs" />
     <Compile Include="Guis\IModuleLogicControl.cs" />
+    <Compile Include="Guis\Layers\CircularGameLayer.cs" />
+    <Compile Include="Guis\Layers\ICircularLayerManager.cs" />
+    <Compile Include="Guis\Layers\ICircularLayerOperations.cs" />
+    <Compile Include="Guis\Layers\ILayerManager.cs" />
+    <Compile Include="Guis\Layers\ILayerManagerOperations.cs" />
+    <Compile Include="Guis\Widgets\Buttons\Button.cs" />
+    <Compile Include="Guis\Widgets\Buttons\ButtonSettings.cs" />
     <Compile Include="Guis\Widgets\Items\Data\IViewBinding.cs" />
     <Compile Include="Guis\Widgets\Items\Data\IViewItemCharModifier.cs">
       <SubType>Code</SubType>
@@ -510,10 +517,20 @@
     <Compile Include="Guis\Widgets\Visuals\Label.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="IBufferDoubleUpdateable.cs" />
+    <Compile Include="IDrawableOperations.cs" />
     <Compile Include="IGameControllableComponentOperations.cs" />
     <Compile Include="IGameControllableEntity.cs" />
     <Compile Include="IGameEngineConfigurer.cs" />
     <Compile Include="IGameEngineOperations.cs" />
+    <Compile Include="IInputableOperations.cs" />
+    <Compile Include="IInteroperableOperations.cs" />
+    <Compile Include="IOuterUpdateable.cs" />
+    <Compile Include="IOuterUpdateableOperations.cs" />
+    <Compile Include="Screens\GameLayer.cs" />
+    <Compile Include="Screens\IGameLayer.cs" />
+    <Compile Include="Screens\IGameLayerOperations.cs" />
+    <Compile Include="Screens\IGameScreenOperations.cs" />
     <Compile Include="Services\GameEngineNumericalService.cs" />
     <Compile Include="GameVisualEntity.cs" />
     <Compile Include="Services\GameEngineGraphicsService.cs" />

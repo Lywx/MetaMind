@@ -12,7 +12,7 @@ namespace MetaMind.Engine.Components.Inputs
     using Microsoft.Xna.Framework;
 
     /// <summary>
-    /// This is a game component that implements IUpdateable.
+    /// This is a game component that implements IOuterUpdateable.
     /// </summary>
     public class InputState : GameControllableComponent, IInputState
     {

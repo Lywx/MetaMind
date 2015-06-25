@@ -2,9 +2,7 @@ namespace MetaMind.Engine.Guis.Elements
 {
     using System;
 
-    using Microsoft.Xna.Framework;
-
-    public interface IFrameEntity : IUpdateable, Engine.IDrawable, IInputable
+    public interface IFrameEntity : IInputable
     {
         bool[] States { get; }
 

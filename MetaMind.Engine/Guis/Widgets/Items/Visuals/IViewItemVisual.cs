@@ -7,11 +7,7 @@
 
 namespace MetaMind.Engine.Guis.Widgets.Items.Visuals
 {
-    using Microsoft.Xna.Framework;
-
-    using IDrawable = MetaMind.Engine.IDrawable;
-
-    public interface IViewItemVisual : IViewItemComponent, IDrawable, IInputable, IUpdateable
+    public interface IViewItemVisual : IViewItemComponent
     {
     }
 }

@@ -28,7 +28,7 @@ namespace MetaMind.Engine.Components.Fonts
 
         #region Dependency
 
-        private IGameInteropService Interop { get; set; }
+        private IGameInteropService GameInterop { get; set; }
 
         #endregion
 
@@ -50,7 +50,7 @@ namespace MetaMind.Engine.Components.Fonts
         public override void Initialize()
         {
             // It has to register service before LoadContent.
-            this.Interop = GameEngine.Service.Interop;
+            this.GameInterop = GameEngine.Service.Interop;
 
             base.Initialize();
 
@@ -81,7 +81,7 @@ namespace MetaMind.Engine.Components.Fonts
                 this.Fonts = new Dictionary<Font, FontInfo>();
             }
 
-            var spriteFont = this.Interop.Content.Load<SpriteFont>(path);
+            var spriteFont = this.GameInterop.Content.Load<SpriteFont>(path);
 
             this.Fonts[font] = new FontInfo(font, spriteFont, fontSize);
         }

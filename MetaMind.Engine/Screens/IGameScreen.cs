@@ -1,11 +1,8 @@
 namespace MetaMind.Engine.Screens
 {
-    using MetaMind.Engine.Services;
-
-    using Microsoft.Xna.Framework;
     using System;
 
-    public interface IGameScreen : IDisposable
+    public interface IGameScreen : IGameScreenOperations, IInteroperableOperations, IDisposable
     {
         #region Screen Option Data
 
@@ -73,48 +70,5 @@ namespace MetaMind.Engine.Screens
         event EventHandler Exiting;
 
         #endregion Screen Events
-
-        #region Load and Unload
-
-        void LoadContent(IGameInteropService interop);
-
-        void UnloadContent(IGameInteropService interop);
-
-        #endregion Load and Unload
-
-        #region Update
-
-        void Update(GameTime gameTime);
-        
-        void UpdateInput(IGameInputService input, GameTime time);
-
-        /// <summary>
-        /// Allows the screen to run logic, such as updating the transition position.
-        /// Unlike other update method, this method is called regardless of whether the screen
-        /// is active, hidden, or in the middle of a transition.
-        /// </summary>
-        void UpdateScreen(Services.IGameInteropService interop, GameTime time, bool hasOtherScreenFocus, bool isCoveredByOtherScreen);
-
-        #endregion Update
-
-        #region Draw
-
-        /// <summary>
-        /// This is called when the screen should draw itself.
-        /// </summary>
-        void Draw(IGameGraphicsService graphics, GameTime time);
-
-        #endregion Draw
-
-        #region Operations
-
-        /// <summary>
-        /// Tells the screen to go away. Unlike Screens.RemoveScreen, which
-        /// instantly kills the screen, this method respects the transition timings
-        /// and will give the screen a chance to gradually transition off.
-        /// </summary>
-        void Exit();
-
-        #endregion Operations
     }
 }

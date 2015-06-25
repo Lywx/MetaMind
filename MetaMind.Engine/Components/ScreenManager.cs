@@ -92,11 +92,11 @@ namespace MetaMind.Engine.Components
 
         #region Engine Data
         
-        private IGameGraphicsService Graphics { get; set; }
+        private IGameGraphicsService GameGraphics { get; set; }
 
-        private IGameInputService Input { get; set; }
+        private IGameInputService GameInput { get; set; }
 
-        private IGameInteropService Interop { get; set; }
+        private IGameInteropService GameInterop { get; set; }
 
         #endregion Engine Data
 
@@ -143,9 +143,9 @@ namespace MetaMind.Engine.Components
             // Register service before LoadContent, which is called by base.Initialize()
             var engine = (GameEngine)this.Game;
 
-            this.Graphics = engine.Graphics;
-            this.Input    = engine.Input;
-            this.Interop  = engine.Interop;
+            this.GameGraphics = engine.Graphics;
+            this.GameInput    = engine.Input;
+            this.GameInterop  = engine.Interop;
 
             base.Initialize();            
         }
@@ -156,12 +156,12 @@ namespace MetaMind.Engine.Components
 
         protected override void LoadContent()
         {
-            this.blankTexture = this.Interop.Content.Load<Texture2D>(@"Textures\Screens\Blank");
+            this.blankTexture = this.GameInterop.Content.Load<Texture2D>(@"Textures\Screens\Blank");
 
             // Tell each of the screens to load their content.
             foreach (var screen in this.screens)
             {
-                screen.LoadContent(this.Interop);
+                screen.LoadContent(this.GameInterop);
             }
         }
 
@@ -170,7 +170,7 @@ namespace MetaMind.Engine.Components
             // Tell each of the screens to unload their content.
             foreach (var screen in this.screens)
             {
-                screen.UnloadContent(this.Interop);
+                screen.UnloadContent(this.GameInterop);
             }
         }
 
@@ -188,7 +188,7 @@ namespace MetaMind.Engine.Components
             {
                 foreach (var screen in this.screens.Where(screen => screen.ScreenState != GameScreenState.Hidden))
                 {
-                    screen.Draw(this.Graphics, gameTime);
+                    screen.Draw(this.GameGraphics, gameTime);
                 }
             }
         }
@@ -211,7 +211,7 @@ namespace MetaMind.Engine.Components
 
         public override void UpdateInput(GameTime gameTime)
         {
-            this.UpdateActive((screen, access, time) => screen.UpdateInput(access, gameTime), this.Input, gameTime);
+            this.UpdateActive((screen, access, time) => screen.UpdateInput(access, gameTime), this.GameInput, gameTime);
         }
 
         private void UpdateActive<TAccess>(Action<IGameScreen, TAccess, GameTime> action, TAccess access, GameTime gameTime)
@@ -247,7 +247,7 @@ namespace MetaMind.Engine.Components
                 this.screensToUpdate.RemoveAt(this.screensToUpdate.Count - 1);
 
                 // Update the screen transition
-                screen.UpdateScreen(this.Interop, gameTime, hasOtherScreenFocus, isCoveredByOtherScreen);
+                screen.UpdateScreen(this.GameInterop, gameTime, hasOtherScreenFocus, isCoveredByOtherScreen);
 
                 if (screen.ScreenState == GameScreenState.TransitionOn ||
                     screen.ScreenState == GameScreenState.Active)
@@ -292,7 +292,7 @@ namespace MetaMind.Engine.Components
             // If we have a graphics device, tell the screen to load content.
             if (this.isInitialized)
             {
-                screen.LoadContent(this.Interop);
+                screen.LoadContent(this.GameInterop);
             }
 
             this.screens.Add(screen);
@@ -324,7 +324,7 @@ namespace MetaMind.Engine.Components
             // If we have a graphics device, tell the screen to unload content.
             if (this.isInitialized)
             {
-                screen.UnloadContent(this.Interop);
+                screen.UnloadContent(this.GameInterop);
             }
 
             this.screens.Remove(screen);

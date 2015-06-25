@@ -9,18 +9,12 @@ namespace MetaMind.Engine
 {
     using System;
 
-    using MetaMind.Engine.Services;
-
-    using Microsoft.Xna.Framework;
-
-    public interface IInputable : IUpdateable
+    public interface IInputable : IOuterUpdateable, IInputableOperations
     {
         event EventHandler<EventArgs> ControllableChanged;
 
         event EventHandler<EventArgs> InputOrderChanged;
 
         int InputOrder { get; }
-
-        void UpdateInput(IGameInputService input, GameTime time);
     }
 }

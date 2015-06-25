@@ -21,7 +21,7 @@ namespace MetaMind.Engine.Components
 
         public IEventManager Event { get; private set; }
 
-        public IGameManager Game { get; private set; }
+        public new IGameManager Game { get; private set; }
 
         public IProcessManager Process { get; private set; }
 
