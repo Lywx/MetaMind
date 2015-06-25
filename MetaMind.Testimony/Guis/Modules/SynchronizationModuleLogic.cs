@@ -10,10 +10,10 @@ namespace MetaMind.Testimony.Guis.Modules
     using MetaMind.Testimony.Concepts.Cognitions;
     using MetaMind.Testimony.Concepts.Synchronizations;
     using MetaMind.Testimony.Events;
-    using MetaMind.Testimony.Screens;
     using MetaMind.Testimony.Sessions;
 
     using Microsoft.Xna.Framework;
+    using Screens;
 
     public class SynchronizationModuleLogic : ModuleLogic<SynchronizationModule, SynchronizationSettings, SynchronizationModuleLogic>
     {
@@ -55,15 +55,24 @@ namespace MetaMind.Testimony.Guis.Modules
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            if (input.State.Keyboard.IsActionTriggered(KeyboardActions.ConsciousnessAwaken))
+            var keyboard = input.State.Keyboard;
+
+            // Consciousness
+            if (keyboard.IsActionTriggered(KeyboardActions.ConsciousnessAwaken))
             {
                 // This trigger synchronization listener to reset today
                 this.Consciousness.Awaken();
             }
 
-            if (input.State.Keyboard.IsActionTriggered(KeyboardActions.ConsciousnessSleep))
+            if (keyboard.IsActionTriggered(KeyboardActions.ConsciousnessSleep))
             {
                 this.Consciousness.Sleep();
+            }
+
+            // Reverse Synchronization 
+            if (keyboard.IsActionTriggered(KeyboardActions.SynchronizationReverse))
+            {
+                this.Synchronization.TryAbort();
             }
         }
 
@@ -126,12 +135,8 @@ namespace MetaMind.Testimony.Guis.Modules
 
                 var screenManager = this.GameInterop.Screen;
 
-                var motivation = screenManager.Screens.First(screen => screen is TestimonyScreen);
-                if (motivation != null)
-                {
-                    motivation.Exit();
-                }
-
+                // Remove screens on the background screen
+                screenManager.EraseScreenFrom(1); 
                 screenManager.AddScreen(new SummaryScreen());
 
                 return true;

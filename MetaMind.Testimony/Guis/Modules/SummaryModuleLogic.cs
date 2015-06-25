@@ -9,10 +9,10 @@
     using Engine.Services;
     using Concepts.Cognitions;
     using Concepts.Synchronizations;
-    using Screens;
     using Sessions;
 
     using Microsoft.Xna.Framework;
+    using Screens;
 
     public class SummaryModuleLogic : ModuleLogic<SummaryModule, SummarySettings, SummaryModuleLogic>
     {
@@ -71,13 +71,10 @@
             {
                 var screenManager = this.GameInterop.Screen;
 
-                var summary = screenManager.Screens.First(screen => screen is SummaryScreen);
-                if (summary != null)
-                {
-                    summary.Exit();
-                }
+                screenManager.EraseScreenFrom(1);
 
-                screenManager.AddScreen(new TestimonyScreen());
+                // Remove screens on the background screen
+                screenManager.AddScreen(new MainScreen());
 
                 return true;
             }

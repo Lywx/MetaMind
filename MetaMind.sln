@@ -24,6 +24,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ThirdParties", "ThirdPartie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Primitives2D", "ThirdParties\Primitives2D\Primitives2D.csproj", "{39AD1482-1881-4852-A05D-DC61B0D3446A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stateless", "ThirdParties\Stateless\Stateless\Stateless.csproj", "{A15EEC02-60EC-4705-A58B-A6ECD55A9628}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Android|Any CPU = Android|Any CPU
@@ -298,11 +300,39 @@ Global
 		{39AD1482-1881-4852-A05D-DC61B0D3446A}.Windows8|Any CPU.Build.0 = Release|Any CPU
 		{39AD1482-1881-4852-A05D-DC61B0D3446A}.Windows8|x86.ActiveCfg = Release|x86
 		{39AD1482-1881-4852-A05D-DC61B0D3446A}.Windows8|x86.Build.0 = Release|x86
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.Android|Any CPU.ActiveCfg = Release|Any CPU
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.Android|Any CPU.Build.0 = Release|Any CPU
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.Android|x86.ActiveCfg = Release|Any CPU
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.iOS|Any CPU.ActiveCfg = Release|Any CPU
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.iOS|Any CPU.Build.0 = Release|Any CPU
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.iOS|x86.ActiveCfg = Release|Any CPU
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.Linux|Any CPU.ActiveCfg = Release|Any CPU
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.Linux|Any CPU.Build.0 = Release|Any CPU
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.Linux|x86.ActiveCfg = Release|Any CPU
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.OSX|Any CPU.ActiveCfg = Release|Any CPU
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.OSX|Any CPU.Build.0 = Release|Any CPU
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.OSX|x86.ActiveCfg = Release|Any CPU
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.PSM|Any CPU.ActiveCfg = Release|Any CPU
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.PSM|Any CPU.Build.0 = Release|Any CPU
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.PSM|x86.ActiveCfg = Release|Any CPU
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.Release|x86.ActiveCfg = Release|Any CPU
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.Windows|Any CPU.ActiveCfg = Release|Any CPU
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.Windows|Any CPU.Build.0 = Release|Any CPU
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.Windows|x86.ActiveCfg = Release|Any CPU
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.Windows8|Any CPU.ActiveCfg = Release|Any CPU
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.Windows8|Any CPU.Build.0 = Release|Any CPU
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628}.Windows8|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{39AD1482-1881-4852-A05D-DC61B0D3446A} = {628A7BED-2420-4754-8A3B-9122B73F421B}
+		{A15EEC02-60EC-4705-A58B-A6ECD55A9628} = {628A7BED-2420-4754-8A3B-9122B73F421B}
 	EndGlobalSection
 EndGlobal

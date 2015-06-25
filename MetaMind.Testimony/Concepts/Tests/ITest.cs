@@ -2,8 +2,14 @@
 {
     using System;
 
-    public interface ITest : ITestStructure, ITestComputation, ITestOperations,
-        IComparable<ITest>, IEquatable<ITest>,
+    public interface ITest : 
+        ITestComputation,
+        ITestOrganization,
+        ITestOperations,
+
+        IComparable<ITest>, 
+        IEquatable<ITest>,
+
         IInnerUpdatable
     {
         #region Properties
@@ -12,15 +18,7 @@
 
         string Description { get; }
         
-        string Status { get; }
-
         string Path { get; }
-
-        bool Passed { get; }
-
-        int PassedChange { get; }
-
-        bool PassedChanged { get; }
 
         #endregion
 

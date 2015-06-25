@@ -1,11 +1,10 @@
-namespace MetaMind.Testimony.Guis.Widgets
+namespace MetaMind.Testimony.Guis.Widgets.Tests
 {
     using Engine.Components.Fonts;
     using Engine.Guis.Widgets.Items.Frames;
     using Engine.Guis.Widgets.Items.Settings;
     using Engine.Guis.Widgets.Visuals;
     using Engine.Settings.Colors;
-
     using Microsoft.Xna.Framework;
 
     public class TestItemSettings : ItemSettings
@@ -28,6 +27,15 @@ namespace MetaMind.Testimony.Guis.Widgets
             SelectionColor    = Palette.DarkRed,
         };
 
+        private readonly LabelSettings idLabel = new LabelSettings
+        {
+            TextSize   = 0.7f,
+            TextColor  = Color.White,
+            TextFont   = Font.UiStatistics,
+            TextHAlign = StringHAlign.Center,
+            TextVAlign = StringVAlign.Center,
+        };
+
         private readonly FrameSettings plusFrame = new FrameSettings
         {
             Size   = new Point(24, 26),
@@ -38,15 +46,6 @@ namespace MetaMind.Testimony.Guis.Widgets
             PendingColor      = Palette.Transparent1,
             ModificationColor = Palette.Transparent1,
             SelectionColor    = Palette.Transparent1,
-        };
-
-        private readonly LabelSettings idLabel = new LabelSettings
-        {
-            TextSize   = 0.7f,
-            TextColor  = Color.White,
-            TextFont   = Font.UiStatistics,
-            TextHAlign = StringHAlign.Center,
-            TextVAlign = StringVAlign.Center,
         };
 
         private readonly LabelSettings plusLabel = new LabelSettings
@@ -107,8 +106,8 @@ namespace MetaMind.Testimony.Guis.Widgets
 
             RegularColor      = Palette.DimBlue,
             MouseOverColor    = Palette.DimBlue,
-            PendingColor      = Palette.Transparent0,
-            ModificationColor = Palette.LightYellow,
+            PendingColor      = Palette.LightBlue,
+            ModificationColor = Palette.DimBlue,
             SelectionColor    = Palette.LightBlue,
         };
 
@@ -131,7 +130,7 @@ namespace MetaMind.Testimony.Guis.Widgets
 
             RegularColor      = Palette.Transparent0,
             MouseOverColor    = Palette.DimBlue,
-            PendingColor      = Palette.Transparent0,
+            PendingColor      = Palette.Transparent3,
             ModificationColor = Palette.Transparent0,
             SelectionColor    = Palette.Transparent3,
         };

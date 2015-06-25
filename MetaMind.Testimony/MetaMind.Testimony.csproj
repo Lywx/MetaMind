@@ -100,6 +100,13 @@
     <Compile Include="Concepts\Cognitions\IConsciousnessAsleep.cs" />
     <Compile Include="Concepts\Cognitions\IConsciousnessAwake.cs" />
     <Compile Include="Concepts\IInnerUpdatable.cs" />
+    <Compile Include="Concepts\Operations\IOperation.cs" />
+    <Compile Include="Concepts\Operations\IOperationComputation.cs" />
+    <Compile Include="Concepts\Operations\IOperationOperations.cs" />
+    <Compile Include="Concepts\Operations\IOption.cs" />
+    <Compile Include="Concepts\Operations\IOptionOperation.cs" />
+    <Compile Include="Concepts\Operations\Operation.cs" />
+    <Compile Include="Concepts\Operations\Option.cs" />
     <Compile Include="Concepts\Synchronizations\ISynchronizable.cs" />
     <Compile Include="Concepts\Synchronizations\ISynchronization.cs" />
     <Compile Include="Concepts\Synchronizations\ISynchronizationData.cs" />
@@ -112,18 +119,32 @@
     <Compile Include="Concepts\Tests\TestSession.cs" />
     <Compile Include="Extensions\ExtHashSet.cs" />
     <Compile Include="Extensions\ExtObservableCollection.cs" />
-    <Compile Include="Guis\Widgets\IndexedTestViewComposer.cs" />
+    <Compile Include="Guis\Layers\OperationLayer.cs" />
+    <Compile Include="Guis\Modules\OperationModule.cs" />
+    <Compile Include="Guis\Modules\OperationSettings.cs" />
+    <Compile Include="Guis\Widgets\Operations\OperationItemLogic.cs" />
+    <Compile Include="Guis\Widgets\Options\OptionItemFrame.cs" />
+    <Compile Include="Guis\Widgets\Options\OptionItemLogic.cs" />
+    <Compile Include="Guis\Widgets\Options\OptionItemSettings.cs" />
+    <Compile Include="Guis\Widgets\Options\OptionItemVisual.cs" />
+    <Compile Include="Guis\Widgets\Options\OptionViewBinding.cs" />
+    <Compile Include="Guis\Widgets\Options\OptionViewSettings.cs" />
+    <Compile Include="Guis\Widgets\Tests\IndexedTestViewComposer.cs" />
     <Compile Include="Guis\Modules\TestModuleLogic.cs" />
     <Compile Include="Guis\Modules\TestModuleVisual.cs" />
     <Compile Include="Concepts\Synchronizations\ISynchronizationController.cs" />
     <Compile Include="Concepts\Synchronizations\SynchronizationSession.cs" />
-    <Compile Include="Guis\Widgets\TestViewComposer.cs" />
-    <Compile Include="Guis\Widgets\IndexedTestViewLogic.cs" />
+    <Compile Include="Guis\Widgets\Options\OptionItemLayer.cs" />
+    <Compile Include="Guis\Widgets\Tests\TestViewComposer.cs" />
+    <Compile Include="Guis\Widgets\Tests\IndexedTestViewLogic.cs" />
+    <Compile Include="Guis\Layers\TestLayer.cs" />
+    <Compile Include="Guis\Screens\OptionScreen.cs" />
+    <Compile Include="Guis\Layers\SynchronizationLayer.cs" />
     <Compile Include="Scripting\FsiDebugger.cs" />
     <Compile Include="Scripting\IScriptOperations.cs" />
     <Compile Include="Scripting\IScript.cs" />
     <Compile Include="Concepts\Tests\ITest.cs" />
-    <Compile Include="Concepts\Tests\ITestStructure.cs" />
+    <Compile Include="Concepts\Tests\ITestOrganization.cs" />
     <Compile Include="Scripting\Script.cs" />
     <Compile Include="Concepts\Tests\Test.cs" />
     <Compile Include="Events\ConsciousnessSleepStartedEventArgs.cs" />
@@ -158,23 +179,23 @@
     <Compile Include="Guis\Modules\Synchronization\SynchronizationProgressBar.cs" />
     <Compile Include="Scripting\ScriptRunner.cs" />
     <Compile Include="Scripting\ScriptSearcher.cs" />
-    <Compile Include="Guis\Widgets\TestViewBinding.cs" />
-    <Compile Include="Guis\Widgets\TestItemFrame.cs" />
-    <Compile Include="Guis\Widgets\TestItemLayer.cs" />
-    <Compile Include="Guis\Widgets\TestItemLayout.cs" />
-    <Compile Include="Guis\Widgets\TestItemLogic.cs" />
-    <Compile Include="Guis\Widgets\TestItemVisual.cs" />
-    <Compile Include="Guis\Widgets\TestItemSettings.cs" />
-    <Compile Include="Guis\Widgets\TestViewLogic.cs" />
-    <Compile Include="Guis\Widgets\TestViewSettings.cs" />
+    <Compile Include="Guis\Widgets\Tests\TestViewBinding.cs" />
+    <Compile Include="Guis\Widgets\Tests\TestItemFrame.cs" />
+    <Compile Include="Guis\Widgets\Tests\TestItemLayer.cs" />
+    <Compile Include="Guis\Widgets\Tests\TestItemLayout.cs" />
+    <Compile Include="Guis\Widgets\Tests\TestItemLogic.cs" />
+    <Compile Include="Guis\Widgets\Tests\TestItemVisual.cs" />
+    <Compile Include="Guis\Widgets\Tests\TestItemSettings.cs" />
+    <Compile Include="Guis\Widgets\Tests\TestViewLogic.cs" />
+    <Compile Include="Guis\Widgets\Tests\TestViewSettings.cs" />
     <Compile Include="Guis\Widgets\Items\ViewItemSynchronizationController.cs" />
     <Compile Include="Scripting\FsiSession.cs" />
     <Compile Include="Testimony.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Screens\BackgroundScreen.cs" />
-    <Compile Include="Screens\TestimonyScreen.cs" />
-    <Compile Include="Screens\SummaryScreen.cs" />
+    <Compile Include="Guis\Screens\BackgroundScreen.cs" />
+    <Compile Include="Guis\Screens\MainScreen.cs" />
+    <Compile Include="Guis\Screens\SummaryScreen.cs" />
     <Compile Include="Sessions\ISessionData.cs" />
     <Compile Include="Sessions\SessionData.cs" />
     <Compile Include="Sessions\SessionEventType.cs" />
@@ -192,7 +213,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MonoGame.Framework, Version=3.5.0.195, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Primtives2D, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -207,6 +228,10 @@
     <ProjectReference Include="..\MetaMind.Engine\MetaMind.Engine.csproj">
       <Project>{8944c3ab-1865-49cf-9e84-1ecc42ad2c3e}</Project>
       <Name>MetaMind.Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ThirdParties\Stateless\Stateless\Stateless.csproj">
+      <Project>{A15EEC02-60EC-4705-A58B-A6ECD55A9628}</Project>
+      <Name>Stateless</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

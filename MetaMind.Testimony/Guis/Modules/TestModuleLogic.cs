@@ -58,7 +58,7 @@
         {
             var keyboard = input.State.Keyboard;
 
-            if (keyboard.IsActionTriggered(KeyboardActions.TestPause))
+            if (keyboard.IsActionTriggered(KeyboardActions.SynchronizationPause))
             {
                 this.synchronizationSession.ToggleSynchronization();
                 this.testSession.           ToggleNotification();

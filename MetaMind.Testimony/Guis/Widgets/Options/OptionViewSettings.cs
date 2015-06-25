@@ -1,16 +1,16 @@
-﻿namespace MetaMind.Testimony.Guis.Widgets
+namespace MetaMind.Testimony.Guis.Widgets.Options
 {
     using Engine.Guis.Widgets.Views.Scrolls;
     using Engine.Guis.Widgets.Views.Settings;
     using Microsoft.Xna.Framework;
 
-    public class TestViewSettings : PointViewVerticalSettings
+    public class OptionViewSettings : PointViewVerticalSettings
     {
-        public TestViewSettings(
+        public OptionViewSettings(
             Vector2 itemMargin,
-            Vector2 viewPosition,
-            int viewRowDisplay,
-            int viewRowMax,
+            Vector2       viewPosition,
+            int           viewRowDisplay,
+            int           viewRowMax,
             ViewDirection viewDirection = ViewDirection.Normal)
             : base(itemMargin, viewPosition, viewRowDisplay, viewRowMax, viewDirection)
         {

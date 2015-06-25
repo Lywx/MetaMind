@@ -1,11 +1,9 @@
-﻿namespace MetaMind.Testimony.Screens
+﻿namespace MetaMind.Testimony.Guis.Screens
 {
     using System;
-
-    using MetaMind.Engine.Guis.Modules;
-    using MetaMind.Engine.Screens;
-    using MetaMind.Engine.Services;
-
+    using Engine.Guis.Modules;
+    using Engine.Screens;
+    using Engine.Services;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -63,9 +61,9 @@
             this.particles.UpdateInput(input, time);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
-            this.particles.Update(gameTime);
+            this.particles.Update(time);
         }
         #endregion Update and Draw
     }

@@ -2,13 +2,12 @@
 {
     using System.Collections;
     using System.Collections.Generic;
-    using Engine.Collections;
 
-    public interface ITestStructure
+    public interface ITestOrganization
     {
         List<ITest> Children { get; }
 
-        Test Parent { get; }
+        Test Parent { get; set; }
 
         bool HasParent { get; }
 

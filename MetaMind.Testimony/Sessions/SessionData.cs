@@ -1,6 +1,7 @@
 ﻿namespace MetaMind.Testimony.Sessions
 {
     using System.Runtime.Serialization;
+    using Concepts.Operations;
     using Concepts.Tests;
     using MetaMind.Testimony.Concepts.Cognitions;
 
@@ -17,6 +18,8 @@
 
         [DataMember]
         public ICognition Cognition { get; private set; }
+
+        public IOperation Operations { get; private set; }
 
         public ITest Test { get; private set; }
 

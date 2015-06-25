@@ -1,11 +1,12 @@
-namespace MetaMind.Testimony.Guis.Widgets
+namespace MetaMind.Testimony.Guis.Widgets.Tests
 {
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Layers;
 
     public class TestItemLayer : IndexBlockViewVerticalItemLayer
     {
-        public TestItemLayer(IViewItem item) : base(item)
+        public TestItemLayer(IViewItem item) 
+            : base(item)
         {
         }
 

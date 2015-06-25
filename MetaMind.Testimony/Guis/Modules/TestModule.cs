@@ -10,7 +10,7 @@
     using Engine.Services;
     using Microsoft.Xna.Framework;
     using Scripting;
-    using Widgets;
+    using Widgets.Tests;
 
     public class TestModule : Module<TestModuleSettings>
     {
@@ -62,7 +62,7 @@
                 itemMargin    : new Vector2(1355 + 128 + 24, 26),
                 viewPosition  : new Vector2(40, 100),
                 viewRowDisplay: 30,
-                viewRowMax    : 100);
+                viewRowMax    : int.MaxValue);
 
             // Item settings
             var itemSettings = new TestItemSettings();
@@ -75,7 +75,6 @@
 
             // Entities
             this.Entities.Add(this.View);
-
             this.Entities.LoadContent(interop);
 
             base.LoadContent(interop);

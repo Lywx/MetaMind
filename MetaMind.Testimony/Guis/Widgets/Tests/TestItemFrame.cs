@@ -1,7 +1,6 @@
-namespace MetaMind.Testimony.Guis.Widgets
+namespace MetaMind.Testimony.Guis.Widgets.Tests
 {
     using System;
-
     using Engine.Guis.Elements;
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Frames;
@@ -11,7 +10,6 @@ namespace MetaMind.Testimony.Guis.Widgets
     using Engine.Guis.Widgets.Views.Scrolls;
     using Engine.Guis.Widgets.Views.Swaps;
     using Engine.Services;
-
     using Microsoft.Xna.Framework;
 
     public class TestItemFrame : BlcokViewVerticalItemFrame
@@ -91,13 +89,13 @@ namespace MetaMind.Testimony.Guis.Widgets
             }
 
             {
-                this.NameFrame.Size = nameFrameSettings.Size;
+                this.NameFrame.Size = this.nameFrameSettings.Size;
                 this.NameFrameLocation = () => this.StatusFrameLocation() + new Vector2(statusFrameSettings.Size.X, 0);
             }
 
             {
-                this.DescriptionFrame.Size = descriptionFrameSettings.Size;
-                this.DescriptionFrameLocation = () => this.NameFrameLocation() + new Vector2(0, nameFrameSettings.Size.Y);
+                this.DescriptionFrame.Size = this.descriptionFrameSettings.Size;
+                this.DescriptionFrameLocation = () => this.NameFrameLocation() + new Vector2(0, this.nameFrameSettings.Size.Y);
             }
         }
 

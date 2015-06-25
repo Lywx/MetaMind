@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Testimony.Guis.Widgets
+﻿namespace MetaMind.Testimony.Guis.Widgets.Tests
 {
     using System.Diagnostics;
     using Engine.Guis.Elements;
@@ -29,20 +29,20 @@
         {
             base.SetupLayer();
 
-            this.ItemFrame.RootFrame.MouseLeftDoubleClicked += this.RootFrameMouseLeftDoubleClicked;
-            this.ItemFrame.RootFrame.MouseRightDoubleClicked += this.RootFrameMouseRightDoubleClicked;
+            this.ItemFrame.RootFrame.MouseLeftPressed  += this.RootFrameMouseLeftPressed;
+            this.ItemFrame.RootFrame.MouseRightPressed += this.RootFrameMouseRightPressed;
         }
 
         #region Events
 
-        private void RootFrameMouseRightDoubleClicked(object sender, FrameEventArgs e)
-        {
-            this.OpenTestFile();
-        }
-
-        private void RootFrameMouseLeftDoubleClicked(object sender, FrameEventArgs e)
+        private void RootFrameMouseLeftPressed(object sender, FrameEventArgs e)
         {
             this.ToggleIndexView();
+        }
+
+        private void RootFrameMouseRightPressed(object sender, FrameEventArgs e)
+        {
+            this.OpenTestFile();
         }
 
         #endregion

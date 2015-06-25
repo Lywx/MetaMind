@@ -5,10 +5,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Testimony.Guis.Widgets
+namespace MetaMind.Testimony.Guis.Widgets.Tests
 {
     using System;
-
+    using Concepts.Tests;
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Frames;
     using Engine.Guis.Widgets.Items.Interactions;
@@ -22,8 +22,6 @@ namespace MetaMind.Testimony.Guis.Widgets
     public class TestItemVisual : ViewItemVisual
     {
         private TestItemFrame itemFrame;
-
-        private TestItemLogic itemLogic;
 
         private IIndexBlockViewVerticalItemInteraction itemInteraction;
 
@@ -84,7 +82,6 @@ namespace MetaMind.Testimony.Guis.Widgets
         {
             // Layers
             var itemLayer = this.ItemGetLayer<TestItemLayer>();
-            this.itemLogic = itemLayer.ItemLogic;
 
             // Avoid the implicit closure warning in Resharper
             this.itemFrame       = itemLayer.ItemFrame;
@@ -92,21 +89,23 @@ namespace MetaMind.Testimony.Guis.Widgets
             var itemLayout       = itemLayer.ItemLayout;
             this.itemInteraction = itemLayer.ItemInteraction;
 
+            ITest itemData = this.Item.ItemData;
+
             // Positions
-            this.ItemCenterPosition = () => itemFrame.RootFrame.Center.ToVector2();
+            this.ItemCenterPosition = () => this.itemFrame.RootFrame.Center.ToVector2();
 
-            this.IdCenterPosition = () => itemFrame.IdFrame.Center.ToVector2();
-            this.PlusCenterPosition = () => itemFrame.PlusFrame.Center.ToVector2();
+            this.IdCenterPosition = () => this.itemFrame.IdFrame.Center.ToVector2();
+            this.PlusCenterPosition = () => this.itemFrame.PlusFrame.Center.ToVector2();
 
-            this.StatusCenterPosition = () => itemFrame.StatusFrame.Center.ToVector2();
-            this.StatisticsCenterPosition = () => itemFrame.StatisticsFrame.Center.ToVector2();
+            this.StatusCenterPosition = () => this.itemFrame.StatusFrame.Center.ToVector2();
+            this.StatisticsCenterPosition = () => this.itemFrame.StatisticsFrame.Center.ToVector2();
 
-            this.NamePosition = () => itemFrame.NameFrameLocation() + itemSettings.Get<Vector2>("NameMargin");
-            this.DescriptionPosition = () => itemFrame.DescriptionFrameLocation() + itemSettings.Get<Vector2>("DescriptionMargin");
+            this.NamePosition = () => this.itemFrame.NameFrameLocation() + itemSettings.Get<Vector2>("NameMargin");
+            this.DescriptionPosition = () => this.itemFrame.DescriptionFrameLocation() + itemSettings.Get<Vector2>("DescriptionMargin");
 
             // Components
             this.IdFrame = new ViewItemFrameVisual(this.Item,
-                itemFrame.IdFrame,
+                this.itemFrame.IdFrame,
                 itemSettings.Get<FrameSettings>("IdFrame"));
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("IdLabel");
@@ -117,7 +116,7 @@ namespace MetaMind.Testimony.Guis.Widgets
             }
 
             this.PlusFrame = new ViewItemFrameVisual(this.Item,
-                itemFrame.PlusFrame,
+                this.itemFrame.PlusFrame,
                 itemSettings.Get<FrameSettings>("PlusFrame"));
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("PlusLabel");
@@ -128,47 +127,49 @@ namespace MetaMind.Testimony.Guis.Widgets
             }
 
             this.StatusFrame = new ViewItemFrameVisual(this.Item,
-                itemFrame.StatusFrame,
+                this.itemFrame.StatusFrame,
                 itemSettings.Get<FrameSettings>("StatusFrame"));
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("StatusLabel");
-                labelSettings.Text = () => this.Item.ItemData.Status;
+                labelSettings.Text = () => itemData.TestStatus;
                 labelSettings.TextPosition = this.StatusCenterPosition;
 
                 this.StatusLabel = new ViewItemLabelVisual(this.Item, labelSettings);
                 this.StatusLabel.Label.TextColor = () =>
-                        this.Item.ItemData.Passed
+                        itemData.TestPassed
                             ? Palette.LightGreen
                             : Palette.LightPink;
-                this.StatusLabel.Label.Text = () => this.Item.ItemData.Status;
+                this.StatusLabel.Label.Text = () => itemData.TestStatus;
             }
 
             this.StatisticsFrame = new ViewItemFrameVisual(this.Item,
-                itemFrame.StatisticsFrame,
+                this.itemFrame.StatisticsFrame,
                 itemSettings.Get<FrameSettings>("StatisticsFrame"));
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("StatisticsLabel");
-                labelSettings.Text = () => this.Item.ItemData.Status;
+                labelSettings.Text = () => itemData.TestStatus;
                 labelSettings.TextPosition = this.StatisticsCenterPosition;
 
                 this.StatisticsLabel = new ViewItemLabelVisual(this.Item, labelSettings);
                 this.StatisticsLabel.Label.TextColor = () =>
-                        this.Item.ItemData.ChildrenPassed == this.Item.ItemData.Children.Count
+                        itemData.ChildrenTestPassed == itemData.Children.Count
                             ? Palette.LightGreen
                             : Palette.LightPink;
-                this.StatisticsLabel.Label.Text =
-                    () => this.Item.ItemData.PassedChanged
-                        ? string.Format("{0} ( {1} ) / {2}", this.Item.ItemData.ChildrenPassed, ExtInt32.ToSummary(this.Item.ItemData.PassedChange), this.Item.ItemData.Children.Count)
-                        : string.Format("{0} / {1}", this.Item.ItemData.ChildrenPassed, this.Item.ItemData.Children.Count);
+                this.StatisticsLabel.Label.Text = () =>
+                    {
+                        return itemData.TestResultChanged
+                                   ? string.Format("{0} ( {1} ) / {2}", itemData.ChildrenTestPassed, itemData.TestResultVariation.ToSummary(), itemData.Children.Count)
+                                   : string.Format("{0} / {1}", itemData.ChildrenTestPassed, itemData.Children.Count);
+                    };
             }
 
             var nameFrameSettings = itemSettings.Get<FrameSettings>("NameFrame");
             this.NameFrame = new ViewItemFrameVisual(this.Item,
-                itemFrame.NameFrame,
+                this.itemFrame.NameFrame,
                 nameFrameSettings);
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("NameLabel");
-                labelSettings.Text = () => this.Item.ItemData.Name;
+                labelSettings.Text = () => itemData.Name;
                 labelSettings.TextPosition = this.NamePosition;
 
                 this.NameLabel = new ViewItemLabelVisual(this.Item, labelSettings);
@@ -176,7 +177,7 @@ namespace MetaMind.Testimony.Guis.Widgets
 
             var descriptionFrameSettings = itemSettings.Get<FrameSettings>("DescriptionFrame");
             this.DescriptionFrame = new ViewItemFrameVisual(this.Item,
-                itemFrame.DescriptionFrame,
+                this.itemFrame.DescriptionFrame,
                 descriptionFrameSettings);
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("DescriptionLabel");

@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Testimony.Guis.Widgets
+﻿namespace MetaMind.Testimony.Guis.Widgets.Tests
 {
     using System;
     using System.Collections.Generic;
@@ -62,12 +62,12 @@
 
         public void Bind()
         {
-            testSession.FsiSession.ThreadStopped += this.FsiSessionThreadStopped;
+            this.testSession.FsiSession.ThreadStopped += this.FsiSessionThreadStopped;
         }
 
         public void Unbind()
         {
-            testSession.FsiSession.ThreadStopped -= this.FsiSessionThreadStopped;
+            this.testSession.FsiSession.ThreadStopped -= this.FsiSessionThreadStopped;
         }
 
         #endregion

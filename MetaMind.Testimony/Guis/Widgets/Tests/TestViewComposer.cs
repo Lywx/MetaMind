@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Testimony.Guis.Widgets
+﻿namespace MetaMind.Testimony.Guis.Widgets.Tests
 {
     using System;
     using System.Collections.Generic;

@@ -4,10 +4,20 @@ namespace MetaMind.Testimony.Concepts.Tests
 
     public interface ITestComputation
     {
+        string TestStatus { get; }
+
+        bool TestPassed { get; }
+
+        int ChildrenTestPassed { get; }
+
+        int TestResultVariation { get; }
+
+        bool TestResultChanged { get; }
+
         TimeSpan TestSpan { set; }
 
-        Func<bool> TestPassed { set; }
+        Func<bool> TestMethod { set; }
 
-        Func<string> TestStatus { set; }
+        Func<string> TestStatusSelector { set; }
     }
 }

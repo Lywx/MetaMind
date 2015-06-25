@@ -1,12 +1,10 @@
-﻿namespace MetaMind.Testimony.Screens
+﻿namespace MetaMind.Testimony.Guis.Screens
 {
     using System;
-
-    using MetaMind.Engine.Guis;
-    using MetaMind.Engine.Screens;
-    using MetaMind.Engine.Services;
-    using MetaMind.Testimony.Guis.Modules;
-
+    using Engine.Guis;
+    using Engine.Screens;
+    using Engine.Services;
+    using Guis.Modules;
     using Microsoft.Xna.Framework;
 
     public class SummaryScreen : GameScreen
@@ -36,20 +34,23 @@
         public override void LoadContent(IGameInteropService interop)
         {
             var cognition = Testimony.SessionData.Cognition;
-            this.summary = new SummaryModule(cognition.Consciousness, cognition.Synchronization, new SummarySettings());
+
+            this.summary = new SummaryModule(
+                cognition.Consciousness,
+                cognition.Synchronization,
+                new SummarySettings());
             this.summary.LoadContent(interop);
         }
 
         public override void UnloadContent(IGameInteropService interop)
         {
-            base.UnloadContent(interop);
-
+            base        .UnloadContent(interop);
             this.summary.UnloadContent(interop);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
-            this.summary.Update(gameTime);
+            this.summary.Update(time);
         }
 
         public override void UpdateInput(IGameInputService input, GameTime time)
