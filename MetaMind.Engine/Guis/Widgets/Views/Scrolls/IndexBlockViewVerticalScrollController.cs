@@ -16,8 +16,13 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
             get
             {
 #if DEBUG
-                Debug.Assert(0 < this.View.ItemsRead.Count);
+                Debug.Assert(0 <= this.View.ItemsRead.Count);
 #endif
+                if (this.View.ItemsRead.Count == 0)
+                {
+                    return 0;
+                }
+
                 var itemLayer = this.ItemGetLayer(this.View.ItemsRead.Last());
 
                 // Including the extra row owned by the indexed view

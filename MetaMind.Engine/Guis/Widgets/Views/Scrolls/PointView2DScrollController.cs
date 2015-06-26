@@ -18,10 +18,6 @@
 
         private PointView2DSettings viewSettings;
 
-        private int columnOffset;
-
-        private int rowOffset;
-
         public PointView2DScrollController(IView view)
             : base(view)
         {
@@ -52,16 +48,9 @@
             return this.viewLayout.RowOf(id);
         }
 
-        public int ColumnOffset
-        {
-            get { return this.columnOffset; }
-        }
+        public int ColumnOffset { get; set; }
 
-        public int RowOffset
-        {
-            get { return this.rowOffset; }
-            set { this.rowOffset = value; }
-        }
+        public int RowOffset { get; set; }
 
         private bool CanMoveDown
         {
@@ -129,7 +118,7 @@
         {
             if (this.CanMoveDown)
             {
-                this.rowOffset = this.RowOffset + 1;
+                this.RowOffset = this.RowOffset + 1;
             }
         }
 
@@ -137,7 +126,7 @@
         {
             if (this.CanMoveLeft)
             {
-                this.columnOffset = this.ColumnOffset - 1;
+                this.ColumnOffset = this.ColumnOffset - 1;
             }
         }
 
@@ -145,7 +134,7 @@
         {
             if (this.CanMoveRight)
             {
-                this.columnOffset = this.ColumnOffset + 1;
+                this.ColumnOffset = this.ColumnOffset + 1;
             }
         }
 
@@ -153,13 +142,13 @@
         {
             if (this.CanMoveUp)
             {
-                this.rowOffset = this.RowOffset - 1;
+                this.RowOffset = this.RowOffset - 1;
             }
         }
 
         public void MoveUpToTop()
         {
-            this.rowOffset = 0;
+            this.RowOffset = 0;
         }
 
         public Vector2 Position(int id)
@@ -198,6 +187,12 @@
                     this.MoveDown();
                 }
             }
+        }
+
+        public void Reset()
+        {
+            this.RowOffset    = 0;
+            this.ColumnOffset = 0;
         }
     }
 }

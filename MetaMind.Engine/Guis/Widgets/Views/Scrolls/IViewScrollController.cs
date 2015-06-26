@@ -16,6 +16,8 @@
 
         void Zoom(int id);
 
+        void Reset();
+
         #endregion
     }
 }

@@ -270,6 +270,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public void ResetItems()
         {
+            this.ViewScroll.Reset();
+
             this.ItemsWrite.Clear();
 
             foreach (var data in this.ViewBinding.AllData)

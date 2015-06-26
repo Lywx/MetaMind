@@ -150,6 +150,11 @@
             }
         }
 
+        public void Reset()
+        {
+            this.RowOffset = 0;
+        }
+
         #endregion
     }
 }

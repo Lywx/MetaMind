@@ -92,5 +92,10 @@
                 }
             }
         }
+
+        public void Reset()
+        {
+            this.ColumnOffset = 0;
+        }
     }
 }
