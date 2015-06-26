@@ -40,6 +40,7 @@ namespace MetaMind.Testimony.Concepts.Operations
         public void Reset()
         {
             // Structure
+            this.Parent = null;
             this.Children = new List<IOperationDescription>();
         }
 

@@ -1,4 +1,4 @@
-namespace MetaMind.Testimony.Guis.Widgets.IndexViews
+namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Tests
 {
     using System;
     using Engine.Guis.Elements;
@@ -8,9 +8,8 @@ namespace MetaMind.Testimony.Guis.Widgets.IndexViews
     using Engine.Guis.Widgets.Items.Settings;
     using Engine.Services;
     using Microsoft.Xna.Framework;
-    using Tests;
 
-    public class StandardItemFrame : BlcokViewVerticalItemFrame
+    public class TestItemFrame : BlcokViewVerticalItemFrame
     {
         private ItemSettings itemSettings;
 
@@ -20,7 +19,7 @@ namespace MetaMind.Testimony.Guis.Widgets.IndexViews
 
         private FrameSettings descriptionFrameSettings;
 
-        public StandardItemFrame(IViewItem item)
+        public TestItemFrame(IViewItem item)
             : base(item)
         {
             this.IdFrame = new PickableFrame();
@@ -32,7 +31,7 @@ namespace MetaMind.Testimony.Guis.Widgets.IndexViews
             this.DescriptionFrame = new PickableFrame();
         }
 
-        ~StandardItemFrame()
+        ~TestItemFrame()
         {
             this.Dispose();
         }
@@ -43,7 +42,7 @@ namespace MetaMind.Testimony.Guis.Widgets.IndexViews
         {
             base.SetupLayer();
             
-            var itemLayer = this.ItemGetLayer<StandardItemLayer>();
+            var itemLayer = this.ItemGetLayer<TestItemLayer>();
 
             this.itemSettings = itemLayer.ItemSettings;
             this.itemLayout = itemLayer.ItemLogic.ItemLayout;
@@ -56,8 +55,11 @@ namespace MetaMind.Testimony.Guis.Widgets.IndexViews
             this.nameFrameSettings = this.itemSettings.Get<FrameSettings>("NameFrame");
             this.descriptionFrameSettings = this.itemSettings.Get<FrameSettings>("DescriptionFrame");
 
-            // id frame - status frame     - name frame
-            //          - statistics frame - description frame       
+            // —————————————————————————————————————————    
+            // id frame | status frame     | name frame
+            // —————————————————————————————————————————    
+            //          | statistics frame | description frame       
+            // —————————————————————————————————————————    
             {
                 this.IdFrame.Size = idFrameSettings.Size;
                 this.IdFrameLocation = this.RootFrameLocation;

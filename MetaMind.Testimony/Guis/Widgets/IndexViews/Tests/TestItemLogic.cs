@@ -12,7 +12,7 @@
     {
         public TestItemLogic(
             IViewItem            item,
-            StandardItemFrame    itemFrame,
+            TestItemFrame    itemFrame,
             IViewItemInteraction itemInteraction,
             IViewItemDataModel   itemModel,
             IViewItemLayout      itemLayout)
@@ -20,9 +20,9 @@
         {
         }
 
-        public new StandardItemFrame ItemFrame
+        public new TestItemFrame ItemFrame
         {
-            get { return (StandardItemFrame)base.ItemFrame; }
+            get { return (TestItemFrame)base.ItemFrame; }
         }
 
         public override void SetupLayer()

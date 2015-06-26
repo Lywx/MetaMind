@@ -6,11 +6,13 @@
     using Engine;
     using Engine.Guis;
     using Engine.Guis.Widgets.Items;
+    using Engine.Guis.Widgets.Items.Frames;
     using Engine.Guis.Widgets.Views;
     using Engine.Services;
     using Microsoft.Xna.Framework;
     using Widgets.IndexViews;
     using Widgets.IndexViews.Operations;
+    using Widgets.IndexViews.Tests;
 
     public class OperationModule : Module<OperationModuleSettings>
     {
@@ -53,8 +55,8 @@
                 viewRowMax    : int.MaxValue);
 
             // Item settings
-            var itemSettings = new StandardIndexItemSettings();
-
+            var itemSettings = new TestIndexItemSettings();
+            itemSettings.Get<FrameSettings>("StatusFrame").Size = new Point(128, 52);
 
             // View construction
             this.View = new View(viewSettings, itemSettings, new List<IViewItem>());

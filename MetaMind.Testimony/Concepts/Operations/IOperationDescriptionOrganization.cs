@@ -5,5 +5,11 @@
     public interface IOperationDescriptionOrganization
     {
         List<IOperationDescription> Children { get; }
+
+        IOperationDescription Parent { get; }
+
+        bool HasChildren { get; }
+
+        bool HasParent { get; }
     }
 }

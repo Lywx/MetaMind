@@ -79,14 +79,14 @@ namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Tests
 
                 item =>
                 {
-                    var itemFrame = new StandardItemFrame(item);
+                    var itemFrame = new TestItemFrame(item);
 
                     var itemLayoutInteraction = new BlockViewVerticalItemLayoutInteraction(
                         item,
                         this.ViewSelection,
                         this.ViewScroll);
 
-                    var itemLayout = new StandardIndexItemLayout(
+                    var itemLayout = new TestIndexItemLayout(
                         item,
                         itemLayoutInteraction)
                     {

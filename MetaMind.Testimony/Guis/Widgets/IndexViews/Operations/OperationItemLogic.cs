@@ -8,6 +8,7 @@
     using Engine.Guis.Widgets.Items.Interactions;
     using Engine.Guis.Widgets.Items.Layouts;
     using Engine.Guis.Widgets.Items.Logic;
+    using Tests;
 
     public class OperationItemLogic : IndexBlockViewVerticalItemLogic 
     {
@@ -21,9 +22,9 @@
         {
         }
 
-        public new StandardItemFrame ItemFrame
+        public new OperationItemFrame ItemFrame
         {
-            get { return (StandardItemFrame)base.ItemFrame; }
+            get { return (OperationItemFrame)base.ItemFrame; }
         }
 
         public override void SetupLayer()

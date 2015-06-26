@@ -9,6 +9,7 @@
     using Engine.Guis.Widgets.Items.Factories;
     using Engine.Guis.Widgets.Items.Interactions;
     using Engine.Guis.Widgets.Items.Layers;
+    using Engine.Guis.Widgets.Items.Settings;
     using Engine.Guis.Widgets.Regions;
     using Engine.Guis.Widgets.Views;
     using Engine.Guis.Widgets.Views.Layouts;
@@ -19,6 +20,7 @@
     using Engine.Guis.Widgets.Views.Swaps;
     using Engine.Guis.Widgets.Views.Visuals;
     using Microsoft.Xna.Framework;
+    using Tests;
 
     /// <summary>
     /// Composers are not intended to be reused.
@@ -95,7 +97,7 @@
             var hostViewScroll = hostViewLayer.ViewScroll;
 
             var indexViewSettings = (StandardIndexViewSettings)item.View.ViewSettings.Clone();
-            var indexItemSettings = (StandardIndexItemSettings)item.View.ItemSettings.Clone();
+            var indexItemSettings = (ItemSettings)item.View.ItemSettings.Clone();
 
             indexViewSettings.ViewRowDisplay = hostViewSettings.ViewRowDisplay - itemLayout.Row - itemLayout.BlockRow;
             indexViewSettings.ViewPosition   = hostViewScroll.Position(itemLayout.Row + itemLayout.BlockRow);
@@ -192,14 +194,14 @@
 
                 item =>
                 {
-                    var itemFrame = new StandardItemFrame(item);
+                    var itemFrame = new OperationItemFrame(item);
 
                     var itemLayoutInteraction = new BlockViewVerticalItemLayoutInteraction(
                         item,
                         this.ViewSelection,
                         this.ViewScroll);
 
-                    var itemLayout = new StandardIndexItemLayout(
+                    var itemLayout = new TestIndexItemLayout(
                         item,
                         itemLayoutInteraction);
 

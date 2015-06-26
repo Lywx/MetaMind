@@ -1,19 +1,65 @@
 ﻿namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Operations
 {
+    using System;
     using Concepts.Operations;
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Frames;
+    using Engine.Guis.Widgets.Items.Interactions;
     using Engine.Guis.Widgets.Items.Visuals;
     using Engine.Guis.Widgets.Visuals;
+    using Engine.Services;
     using Engine.Settings.Colors;
     using Microsoft.Xna.Framework;
-    using Tests;
 
-    public class OperationItemVisual : TestItemVisual
+    public class OperationItemVisual : ViewItemVisual
     {
         public OperationItemVisual(IViewItem item) : base(item)
         {
         }
+
+        protected OperationItemFrame ItemFrame { get; set; }
+
+        protected IIndexBlockViewVerticalItemInteraction ItemInteraction { get; set; }
+
+        #region Components
+
+        protected ViewItemLabelVisual IdLabel { get; set; }
+
+        protected ViewItemLabelVisual PlusLabel { get; set; }
+
+        protected ViewItemLabelVisual StatusLabel { get; set; }
+
+        protected ViewItemLabelVisual NameLabel { get; set; }
+
+        protected ViewItemLabelVisual DescriptionLabel { get; set; }
+
+        protected ViewItemFrameVisual IdFrame { get; set; }
+
+        protected ViewItemFrameVisual PlusFrame { get; set; }
+
+        protected ViewItemFrameVisual StatusFrame { get; set; }
+
+        protected ViewItemFrameVisual NameFrame { get; set; }
+
+        protected ViewItemFrameVisual DescriptionFrame { get; set; }
+
+        #endregion
+
+        #region Positions
+
+        protected Func<Vector2> ItemCenterPosition { get; set; }
+
+        protected Func<Vector2> IdCenterPosition { get; set; }
+
+        protected Func<Vector2> PlusCenterPosition { get; set; }
+
+        protected Func<Vector2> StatusCenterPosition { get; set; }
+
+        protected Func<Vector2> NamePosition { get; set; }
+
+        protected Func<Vector2> DescriptionPosition { get; set; }
+
+        #endregion
 
         public override void SetupLayer()
         {
@@ -35,7 +81,6 @@
             this.PlusCenterPosition = () => this.ItemFrame.PlusFrame.Center.ToVector2();
 
             this.StatusCenterPosition = () => this.ItemFrame.StatusFrame.Center.ToVector2();
-            this.StatisticsCenterPosition = () => this.ItemFrame.StatisticsFrame.Center.ToVector2();
 
             this.NamePosition = () => this.ItemFrame.NameFrameLocation() + itemSettings.Get<Vector2>("NameMargin");
             this.DescriptionPosition = () => this.ItemFrame.DescriptionFrameLocation() + itemSettings.Get<Vector2>("DescriptionMargin");
@@ -68,26 +113,22 @@
                 itemSettings.Get<FrameSettings>("StatusFrame"));
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("StatusLabel");
-                labelSettings.Text = () => itemData.OperationStatus;
+                labelSettings.Text = () =>
+                    itemData.HasChildren
+                        ? string.Format(
+                            "{0} / {1}",
+                            itemData.ChildrenOperationActivated,
+                            itemData.Children.Count)
+                        : itemData.OperationStatus;
                 labelSettings.TextPosition = this.StatusCenterPosition;
 
                 this.StatusLabel = new ViewItemLabelVisual(this.Item, labelSettings);
                 this.StatusLabel.Label.TextColor = () =>
-                        itemData.IsOperationActivated
+                    itemData.HasChildren
+                        ? Color.White
+                        : itemData.IsOperationActivated
                             ? Palette.LightGreen
                             : Palette.LightPink;
-            }
-
-            this.StatisticsFrame = new ViewItemFrameVisual(this.Item,
-                this.ItemFrame.StatisticsFrame,
-                itemSettings.Get<FrameSettings>("StatisticsFrame"));
-            {
-                var labelSettings = itemSettings.Get<LabelSettings>("StatisticsLabel");
-                labelSettings.TextPosition = this.StatisticsCenterPosition;
-
-                this.StatisticsLabel = new ViewItemLabelVisual(this.Item, labelSettings);
-                this.StatisticsLabel.Label.TextColor = () => Color.White;
-                this.StatisticsLabel.Label.Text = () => string.Format("{0} / {1}", itemData.ChildrenOperationActivated, itemData.Children.Count);
             }
 
             var nameFrameSettings = itemSettings.Get<FrameSettings>("NameFrame");
@@ -114,5 +155,54 @@
                 this.DescriptionLabel = new ViewItemLabelVisual(this.Item, labelSettings);
             }
         }
+
+        #region Update and Draw
+
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        {
+            if (!this.Item[ItemState.Item_Is_Active]() && 
+                !this.Item[ItemState.Item_Is_Dragging]())
+            {
+                if (this.ItemInteraction.IndexedViewOpened)
+                {
+                    this.ItemInteraction.IndexedView.Draw(graphics, time, alpha);
+                }
+
+                return;
+            }
+
+            // Frames
+            this.IdFrame.Draw(graphics, time, alpha);
+            if (this.Item.ItemData.HasChildren)
+            {
+                this.PlusFrame.Draw(graphics, time, alpha);
+            }
+
+            this.StatusFrame.Draw(graphics, time, alpha);
+
+            this.NameFrame.Draw(graphics, time, alpha);
+            this.DescriptionFrame.Draw(graphics, time, alpha);
+
+            // Labels
+            this.IdLabel.Draw(graphics, time, alpha);
+
+            if (this.Item.ItemData.HasChildren)
+            {
+                this.PlusLabel.Draw(graphics, time, alpha);
+            }
+
+            this.StatusLabel.Draw(graphics, time, alpha);
+
+            this.NameLabel.Draw(graphics, time, alpha);
+            this.DescriptionLabel.Draw(graphics, time, alpha);
+
+            // Indexed view
+            if (this.ItemInteraction.IndexedViewOpened)
+            {
+                this.ItemInteraction.IndexedView.Draw(graphics, time, alpha);
+            }
+        }
+
+        #endregion
     }
 }

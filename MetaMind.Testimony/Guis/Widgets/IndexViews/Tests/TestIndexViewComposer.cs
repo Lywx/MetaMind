@@ -95,7 +95,7 @@
             var hostViewScroll = hostViewLayer.ViewScroll;
 
             var indexViewSettings = (StandardIndexViewSettings)item.View.ViewSettings.Clone();
-            var indexItemSettings = (StandardIndexItemSettings)item.View.ItemSettings.Clone();
+            var indexItemSettings = (TestIndexItemSettings)item.View.ItemSettings.Clone();
 
             indexViewSettings.ViewRowDisplay = hostViewSettings.ViewRowDisplay - itemLayout.Row - itemLayout.BlockRow;
             indexViewSettings.ViewPosition   = hostViewScroll.Position(itemLayout.Row + itemLayout.BlockRow);
@@ -192,14 +192,14 @@
 
                 item =>
                 {
-                    var itemFrame = new StandardItemFrame(item);
+                    var itemFrame = new TestItemFrame(item);
 
                     var itemLayoutInteraction = new BlockViewVerticalItemLayoutInteraction(
                         item,
                         this.ViewSelection,
                         this.ViewScroll);
 
-                    var itemLayout = new StandardIndexItemLayout(
+                    var itemLayout = new TestIndexItemLayout(
                         item,
                         itemLayoutInteraction);
 

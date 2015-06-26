@@ -130,6 +130,7 @@
     <Compile Include="Guis\Modules\OperationModule.cs" />
     <Compile Include="Guis\Modules\OperationModuleSettings.cs" />
     <Compile Include="Guis\Modules\OperationSettings.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemFrame.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemLayer.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemLogic.cs" />
     <Compile Include="Guis\Widgets\BlockViews\Options\OptionItemFrame.cs" />
@@ -142,7 +143,6 @@
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationIndexViewComposer.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemVisual.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationViewBinding.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\StandardItemLayer.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Tests\TestIndexedViewComposer.cs" />
     <Compile Include="Guis\Modules\TestModuleLogic.cs" />
     <Compile Include="Guis\Modules\TestModuleVisual.cs" />
@@ -193,12 +193,12 @@
     <Compile Include="Scripting\ScriptRunner.cs" />
     <Compile Include="Scripting\ScriptSearcher.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Tests\TestViewBinding.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\StandardItemFrame.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Tests\TestItemFrame.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Tests\TestItemLayer.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\StandardIndexItemLayout.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Tests\TestIndexItemLayout.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Tests\TestItemLogic.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Tests\TestItemVisual.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\StandardIndexItemSettings.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Tests\TestIndexItemSettings.cs" />
     <Compile Include="Guis\Widgets\IndexViews\StandardIndexViewSettings.cs" />
     <Compile Include="Guis\Widgets\Items\ViewItemSynchronizationController.cs" />
     <Compile Include="Scripting\FsiSession.cs" />

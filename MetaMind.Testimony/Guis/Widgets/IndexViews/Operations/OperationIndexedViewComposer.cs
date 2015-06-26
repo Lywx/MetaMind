@@ -10,6 +10,7 @@ namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Operations
     using Engine.Guis.Widgets.Views.Regions;
     using Engine.Guis.Widgets.Views.Selections;
     using Engine.Guis.Widgets.Views.Visuals;
+    using Tests;
 
     /// <summary>
     /// Composers are not intended to be reused.
@@ -79,14 +80,14 @@ namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Operations
 
                 item =>
                 {
-                    var itemFrame = new StandardItemFrame(item);
+                    var itemFrame = new OperationItemFrame(item);
 
                     var itemLayoutInteraction = new BlockViewVerticalItemLayoutInteraction(
                         item,
                         this.ViewSelection,
                         this.ViewScroll);
 
-                    var itemLayout = new StandardIndexItemLayout(
+                    var itemLayout = new TestIndexItemLayout(
                         item,
                         itemLayoutInteraction)
                     {

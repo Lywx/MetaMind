@@ -66,7 +66,7 @@
                 viewRowMax    : int.MaxValue);
 
             // Item settings
-            var itemSettings = new StandardIndexItemSettings();
+            var itemSettings = new TestIndexItemSettings();
 
             // View construction
             this.view = new View(viewSettings, itemSettings, new List<IViewItem>());

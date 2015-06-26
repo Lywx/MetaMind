@@ -26,7 +26,7 @@ namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Tests
         {
         }
 
-        protected StandardItemFrame ItemFrame { get; set; }
+        protected TestItemFrame ItemFrame { get; set; }
 
         protected IIndexBlockViewVerticalItemInteraction ItemInteraction { get; set; }
 

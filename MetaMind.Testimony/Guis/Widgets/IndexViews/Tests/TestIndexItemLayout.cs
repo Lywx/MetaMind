@@ -1,12 +1,12 @@
-﻿namespace MetaMind.Testimony.Guis.Widgets.IndexViews
+﻿namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Tests
 {
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Interactions;
     using Engine.Guis.Widgets.Items.Layouts;
 
-    public class StandardIndexItemLayout : IndexBlockViewVerticalItemLayout
+    public class TestIndexItemLayout : IndexBlockViewVerticalItemLayout
     {
-        public StandardIndexItemLayout(
+        public TestIndexItemLayout(
             IViewItem item,
             IViewItemLayoutInteraction itemLayoutInteraction)
             : base(item, itemLayoutInteraction)
