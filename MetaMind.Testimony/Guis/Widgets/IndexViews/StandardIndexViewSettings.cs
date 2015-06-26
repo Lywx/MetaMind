@@ -1,12 +1,12 @@
-﻿namespace MetaMind.Testimony.Guis.Widgets.Tests
+﻿namespace MetaMind.Testimony.Guis.Widgets.IndexViews
 {
     using Engine.Guis.Widgets.Views.Scrolls;
     using Engine.Guis.Widgets.Views.Settings;
     using Microsoft.Xna.Framework;
 
-    public class TestViewSettings : PointViewVerticalSettings
+    public class StandardIndexViewSettings : PointViewVerticalSettings
     {
-        public TestViewSettings(
+        public StandardIndexViewSettings(
             Vector2 itemMargin,
             Vector2 viewPosition,
             int viewRowDisplay,

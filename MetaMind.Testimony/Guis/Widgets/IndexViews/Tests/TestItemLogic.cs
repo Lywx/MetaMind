@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Testimony.Guis.Widgets.Tests
+﻿namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Tests
 {
     using System.Diagnostics;
     using Engine.Guis.Elements;
@@ -12,7 +12,7 @@
     {
         public TestItemLogic(
             IViewItem            item,
-            TestItemFrame        itemFrame,
+            StandardItemFrame    itemFrame,
             IViewItemInteraction itemInteraction,
             IViewItemDataModel   itemModel,
             IViewItemLayout      itemLayout)
@@ -20,9 +20,9 @@
         {
         }
 
-        public new TestItemFrame ItemFrame
+        public new StandardItemFrame ItemFrame
         {
-            get { return (TestItemFrame)base.ItemFrame; }
+            get { return (StandardItemFrame)base.ItemFrame; }
         }
 
         public override void SetupLayer()

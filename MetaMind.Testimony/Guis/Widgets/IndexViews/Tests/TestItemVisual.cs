@@ -5,7 +5,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Testimony.Guis.Widgets.Tests
+namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Tests
 {
     using System;
     using Concepts.Tests;
@@ -21,7 +21,7 @@ namespace MetaMind.Testimony.Guis.Widgets.Tests
 
     public class TestItemVisual : ViewItemVisual
     {
-        private TestItemFrame itemFrame;
+        private StandardItemFrame itemFrame;
 
         private IIndexBlockViewVerticalItemInteraction itemInteraction;
 

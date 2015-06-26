@@ -1,4 +1,4 @@
-namespace MetaMind.Testimony.Guis.Widgets.Tests
+namespace MetaMind.Testimony.Guis.Widgets.IndexViews
 {
     using System;
     using Engine.Guis.Elements;
@@ -6,27 +6,21 @@ namespace MetaMind.Testimony.Guis.Widgets.Tests
     using Engine.Guis.Widgets.Items.Frames;
     using Engine.Guis.Widgets.Items.Layouts;
     using Engine.Guis.Widgets.Items.Settings;
-    using Engine.Guis.Widgets.Views.Layers;
-    using Engine.Guis.Widgets.Views.Scrolls;
-    using Engine.Guis.Widgets.Views.Swaps;
     using Engine.Services;
     using Microsoft.Xna.Framework;
+    using Tests;
 
-    public class TestItemFrame : BlcokViewVerticalItemFrame
+    public class StandardItemFrame : BlcokViewVerticalItemFrame
     {
         private ItemSettings itemSettings;
 
         private IBlockViewVerticalItemLayout itemLayout;
 
-        private IViewSwapController viewSwap;
-
-        private IViewScrollController viewScroll;
-
         private FrameSettings nameFrameSettings;
 
         private FrameSettings descriptionFrameSettings;
 
-        public TestItemFrame(IViewItem item)
+        public StandardItemFrame(IViewItem item)
             : base(item)
         {
             this.IdFrame = new PickableFrame();
@@ -38,7 +32,7 @@ namespace MetaMind.Testimony.Guis.Widgets.Tests
             this.DescriptionFrame = new PickableFrame();
         }
 
-        ~TestItemFrame()
+        ~StandardItemFrame()
         {
             this.Dispose();
         }
@@ -49,11 +43,7 @@ namespace MetaMind.Testimony.Guis.Widgets.Tests
         {
             base.SetupLayer();
             
-            var viewLayer = this.ViewGetLayer<ViewLayer>();
             var itemLayer = this.ItemGetLayer<TestItemLayer>();
-
-            this.viewScroll = viewLayer.ViewLogic.ViewScroll;
-            this.viewSwap = viewLayer.ViewLogic.ViewSwap;
 
             this.itemSettings = itemLayer.ItemSettings;
             this.itemLayout = itemLayer.ItemLogic.ItemLayout;

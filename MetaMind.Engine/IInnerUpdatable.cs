@@ -1,4 +1,4 @@
-namespace MetaMind.Testimony.Concepts
+namespace MetaMind.Engine
 {
     public interface IInnerUpdatable
     {

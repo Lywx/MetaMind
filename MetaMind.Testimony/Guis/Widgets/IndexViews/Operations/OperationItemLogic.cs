@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Testimony.Guis.Widgets.Operations
+﻿namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Operations
 {
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Data;
@@ -7,7 +7,7 @@
     using Engine.Guis.Widgets.Items.Layouts;
     using Engine.Guis.Widgets.Items.Logic;
 
-    public class OperationItemLogic : BlockViewVerticalItemLogic 
+    public class OperationItemLogic : IndexBlockViewVerticalItemLogic 
     {
         public OperationItemLogic(
             IViewItem            item,

@@ -12,16 +12,18 @@
     public partial class Operation<TProcedure, TTransition> : IOperation, IOperationOperations<TTransition>
     {
         public Operation(
-            string                                operationName,
-            string                                operationDescription,
             StateMachine<TProcedure, TTransition> operationMachine,
-            Dictionary<TProcedure, string>   procedureNames,
-            Dictionary<TProcedure, string>   procedureDescriptions,
-            Dictionary<TProcedure, TimeSpan> procedureSpans,
-            Dictionary<TTransition, string> transitionNames,
-            Dictionary<TTransition, string> transitionDescriptions)
-            : this(operationName, operationDescription, operationMachine)
+            IDictionary<TProcedure, string>   procedureNames,
+            IDictionary<TProcedure, string>   procedureDescriptions,
+            IDictionary<TProcedure, TimeSpan> procedureSpans,
+            IDictionary<TTransition, string> transitionNames,
+            IDictionary<TTransition, string> transitionDescriptions)
         {
+            if (operationMachine == null)
+            {
+                throw new ArgumentNullException("operationMachine");
+            }
+
             if (procedureNames == null)
             {
                 throw new ArgumentNullException("procedureNames");
@@ -47,6 +49,8 @@
                 throw new ArgumentNullException("transitionDescriptions");
             }
 
+            this.Machine = operationMachine;
+
             this.ProcedureNames        = procedureNames;
             this.ProcedureDescriptions = procedureDescriptions;
             this.ProcedureSpans        = procedureSpans;
@@ -55,32 +59,6 @@
             this.TransitionDescriptions = transitionDescriptions;
         }
         
-        private Operation(string operationName, string operationDescription, StateMachine<TProcedure, TTransition> operationMachine)
-        {
-            if (operationName == null)
-            {
-                throw new ArgumentNullException("operationName");
-            }
-
-            if (operationDescription == null)
-            {
-                throw new ArgumentNullException("operationDescription");
-            }
-
-            if (operationMachine == null)
-            {
-                throw new ArgumentNullException("operationMachine");
-            }
-
-            this.Name        = operationName;
-            this.Description = operationDescription;
-            this.Machine     = operationMachine;
-        }
-
-        public string Name { get; private set;}
-
-        public string Description { get; private set; }
-
         protected StateMachine<TProcedure, TTransition> Machine { get; private set; }
     }
 
@@ -90,15 +68,18 @@
 
     public partial class Operation<TProcedure, TTransition> : GameEntity
     {
-        public Dictionary<TProcedure, string> ProcedureNames { get; private set; }
+        /// <remarks>
+        /// Compatible with F# dict.
+        /// </remarks>
+        public IDictionary<TProcedure, string> ProcedureNames { get; private set; }
 
-        public Dictionary<TProcedure, string> ProcedureDescriptions { get; private set; }
+        public IDictionary<TProcedure, string> ProcedureDescriptions { get; private set; }
 
-        public Dictionary<TProcedure, TimeSpan> ProcedureSpans { get; private set; }
+        public IDictionary<TProcedure, TimeSpan> ProcedureSpans { get; private set; }
 
-        public Dictionary<TTransition, string> TransitionNames { get; private set; }
+        public IDictionary<TTransition, string> TransitionNames { get; private set; }
 
-        public Dictionary<TTransition, string> TransitionDescriptions { get; private set; }
+        public IDictionary<TTransition, string> TransitionDescriptions { get; private set; }
 
         public void Accept(TTransition trigger)
         {

@@ -1,8 +1,8 @@
-﻿namespace MetaMind.Testimony.Guis.Widgets.Tests
+﻿namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Operations
 {
     using System;
     using System.Collections.Generic;
-    using Concepts.Tests;
+    using Concepts.Operations;
     using Engine.Guis.Elements;
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Data;
@@ -20,9 +20,12 @@
     using Engine.Guis.Widgets.Views.Visuals;
     using Microsoft.Xna.Framework;
 
-    public class TestViewComposer : IIndexViewComposer
+    /// <summary>
+    /// Composers are not intended to be reused.
+    /// </summary>
+    public class OperationIndexViewComposer : IIndexViewComposer
     {
-        private TestViewSettings viewSettings;
+        private StandardIndexViewSettings viewSettings;
 
         private IViewLogic viewLogic;
 
@@ -32,14 +35,14 @@
 
         private IViewVerticalScrollbar viewScrollbar;
 
-        public TestViewComposer(TestSession testSeesion)
+        public OperationIndexViewComposer(OperationSession operationSeesion)
         {
-            if (testSeesion == null)
+            if (operationSeesion == null)
             {
-                throw new ArgumentNullException("testSeesion");
+                throw new ArgumentNullException("operationSeesion");
             }
 
-            this.TestSession = testSeesion;
+            this.OperationSession = operationSeesion;
         }
 
         protected IView View { get; set; }
@@ -58,7 +61,7 @@
 
         protected dynamic ViewData { get; set; }
 
-        protected TestSession TestSession { get; set; }
+        protected OperationSession OperationSession { get; set; }
 
         public virtual void Compose(IView view, dynamic viewData)
         {
@@ -72,7 +75,7 @@
                 throw new ArgumentNullException("viewData");
             }
 
-            this.View = view;
+            this.View     = view;
             this.ViewData = viewData;
 
             this.AddView();
@@ -91,8 +94,8 @@
             var hostViewSettings = hostViewLayer.ViewSettings;
             var hostViewScroll = hostViewLayer.ViewScroll;
 
-            var indexViewSettings = (TestViewSettings)item.View.ViewSettings.Clone();
-            var indexItemSettings = (TestItemSettings)item.View.ItemSettings.Clone();
+            var indexViewSettings = (StandardIndexViewSettings)item.View.ViewSettings.Clone();
+            var indexItemSettings = (StandardIndexItemSettings)item.View.ItemSettings.Clone();
 
             indexViewSettings.ViewRowDisplay = hostViewSettings.ViewRowDisplay - itemLayout.Row - itemLayout.BlockRow;
             indexViewSettings.ViewPosition   = hostViewScroll.Position(itemLayout.Row + itemLayout.BlockRow);
@@ -102,9 +105,9 @@
 
         protected void AddView()
         {
-            var test = (Test)this.ViewData;
+            IOperationDescription operation = this.ViewData;
 
-            this.viewSettings = (TestViewSettings)this.View.ViewSettings;
+            this.viewSettings = (StandardIndexViewSettings)this.View.ViewSettings;
 
             // View composition
             this.ViewSelection = this.AddViewSelection();
@@ -118,10 +121,10 @@
 
             // View logic
             this.viewLogic = this.AddViewLogic();
-            this.viewLogic.ViewBinding = new TestViewBinding(
+            this.viewLogic.ViewBinding = new OperationViewBinding(
                 this.viewLogic,
-                test.Children,
-                this.TestSession);
+                operation,
+                this.OperationSession);
 
             // View visual
             this.viewVisual = this.AddViewVisual();
@@ -139,7 +142,7 @@
 
         protected virtual IViewLogic AddViewLogic()
         {
-            return new TestViewLogic(
+            return new IndexBlockViewVerticalLogic(
                 this.View,
                 this.ViewScroll,
                 this.ViewSelection,
@@ -185,18 +188,18 @@
         {
             this.ItemFactory = new ViewItemFactory(
 
-                item => new TestItemLayer(item),
+                item => new OperationItemLayer(item),
 
                 item =>
                 {
-                    var itemFrame = new TestItemFrame(item);
+                    var itemFrame = new StandardItemFrame(item);
 
                     var itemLayoutInteraction = new BlockViewVerticalItemLayoutInteraction(
                         item,
                         this.ViewSelection,
                         this.ViewScroll);
 
-                    var itemLayout = new TestItemLayout(
+                    var itemLayout = new StandardIndexItemLayout(
                         item,
                         itemLayoutInteraction);
 
@@ -204,11 +207,11 @@
                         item,
                         itemLayout,
                         itemLayoutInteraction,
-                        new IndexedTestViewComposer(this.View, this.TestSession));
+                        new OperationIndexedViewComposer(this.View, this.OperationSession));
 
                     var itemModel = new ViewItemDataModel(item);
 
-                    return new TestItemLogic(
+                    return new OperationItemLogic(
                         item,
                         itemFrame,
                         itemInteraction,
@@ -216,7 +219,7 @@
                         itemLayout);
                 },
 
-                item => new TestItemVisual(item));
+                item => new OperationItemVisual(item));
         }
 
         protected virtual void SetupLogic()

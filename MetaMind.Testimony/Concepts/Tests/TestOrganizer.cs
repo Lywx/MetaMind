@@ -1,12 +1,9 @@
 namespace MetaMind.Testimony.Concepts.Tests
 {
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Linq;
-    using System.Threading;
     using Engine.Extensions;
     using Extensions;
-    using ThreadState = System.Threading.ThreadState;
 
     public class TestOrganizer
     {

@@ -61,7 +61,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
 
         public int BlockRow { get; protected set; }
 
-        public IBlockViewVerticalItemData BlockData
+        public IBlockViewItemData BlockData
         {
             get { return this.Item.ItemData; }
         }

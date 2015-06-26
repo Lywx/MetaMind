@@ -1,6 +1,7 @@
 namespace MetaMind.Testimony.Concepts.Synchronizations
 {
     using System;
+    using Engine;
 
     public interface ISynchronization : IInnerUpdatable, ISynchronizationOperations
     {

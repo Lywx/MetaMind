@@ -1,9 +1,9 @@
 ﻿namespace MetaMind.Testimony.Sessions
 {
     using System.Runtime.Serialization;
+    using Concepts.Cognitions;
     using Concepts.Operations;
     using Concepts.Tests;
-    using MetaMind.Testimony.Concepts.Cognitions;
 
     [DataContract]
     [KnownType(typeof(Cognition))]
@@ -19,19 +19,22 @@
         [DataMember]
         public ICognition Cognition { get; private set; }
 
-        public IOperation Operations { get; private set; }
+        public IOperationDescription Operation { get; private set; }
 
         public ITest Test { get; private set; }
 
         public void Update()
         {
             this.Cognition.Update();
+
             this.Test     .Update();
+            this.Operation.Update();
         }
 
         private void Reset()
         {
-            this.Test = new Test("Root", "", "");
+            this.Test      = new Test("Root", "", "");
+            this.Operation = new OperationDescription("Root", "", "");
         }
 
         [OnDeserialized]

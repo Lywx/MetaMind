@@ -261,7 +261,7 @@
     <Compile Include="Guis\Widgets\Items\IViewItemComponent.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Items\Data\IBlockViewVerticalItemData.cs" />
+    <Compile Include="Guis\Widgets\Items\Data\IBlockViewItemData.cs" />
     <Compile Include="Guis\Widgets\Items\Layouts\IBlockViewVerticalItemLayout.cs" />
     <Compile Include="Guis\Widgets\Items\Layouts\IIndexBlockViewVerticalItemLayout.cs" />
     <Compile Include="Guis\Widgets\Items\Layouts\IndexBlockViewVerticalItemLayout.cs" />
@@ -523,6 +523,7 @@
     <Compile Include="IGameControllableEntity.cs" />
     <Compile Include="IGameEngineConfigurer.cs" />
     <Compile Include="IGameEngineOperations.cs" />
+    <Compile Include="IInnerUpdatable.cs" />
     <Compile Include="IInputableOperations.cs" />
     <Compile Include="IInteroperableOperations.cs" />
     <Compile Include="IOuterUpdateable.cs" />

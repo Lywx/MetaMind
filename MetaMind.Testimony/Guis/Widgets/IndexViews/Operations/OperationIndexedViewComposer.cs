@@ -1,7 +1,7 @@
-namespace MetaMind.Testimony.Guis.Widgets.Tests
+namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Operations
 {
     using System;
-    using Concepts.Tests;
+    using Concepts.Operations;
     using Engine.Guis.Widgets.Items.Data;
     using Engine.Guis.Widgets.Items.Factories;
     using Engine.Guis.Widgets.Items.Interactions;
@@ -11,12 +11,15 @@ namespace MetaMind.Testimony.Guis.Widgets.Tests
     using Engine.Guis.Widgets.Views.Selections;
     using Engine.Guis.Widgets.Views.Visuals;
 
-    public class IndexedTestViewComposer : TestViewComposer
+    /// <summary>
+    /// Composers are not intended to be reused.
+    /// </summary>
+    public class OperationIndexedViewComposer : OperationIndexViewComposer
     {
         private readonly IView viewHost;
 
-        public IndexedTestViewComposer(IView viewHost, TestSession testSeesion)
-            : base(testSeesion)
+        public OperationIndexedViewComposer(IView viewHost, OperationSession operationSeesion)
+            : base(operationSeesion)
         {
             if (viewHost == null)
             {
@@ -54,7 +57,7 @@ namespace MetaMind.Testimony.Guis.Widgets.Tests
 
         protected override IViewLogic AddViewLogic()
         {
-            return new IndexedTestViewLogic(
+            return new IndexedBlockViewVerticalLogic(
                 this.View,
                 this.ViewScroll,
                 this.ViewSelection,
@@ -72,18 +75,18 @@ namespace MetaMind.Testimony.Guis.Widgets.Tests
         {
             this.ItemFactory = new ViewItemFactory(
 
-                item => new TestItemLayer(item),
+                item => new OperationItemLayer(item),
 
                 item =>
                 {
-                    var itemFrame = new TestItemFrame(item);
+                    var itemFrame = new StandardItemFrame(item);
 
                     var itemLayoutInteraction = new BlockViewVerticalItemLayoutInteraction(
                         item,
                         this.ViewSelection,
                         this.ViewScroll);
 
-                    var itemLayout = new TestItemLayout(
+                    var itemLayout = new StandardIndexItemLayout(
                         item,
                         itemLayoutInteraction)
                     {
@@ -101,11 +104,11 @@ namespace MetaMind.Testimony.Guis.Widgets.Tests
                         item,
                         itemLayout,
                         itemLayoutInteraction, 
-                        new IndexedTestViewComposer(this.View, this.TestSession));
+                        new OperationIndexedViewComposer(this.View, this.OperationSession));
 
                     var itemModel = new ViewItemDataModel(item);
 
-                    return new TestItemLogic(
+                    return new OperationItemLogic(
                         item,
                         itemFrame,
                         itemInteraction,
@@ -113,7 +116,7 @@ namespace MetaMind.Testimony.Guis.Widgets.Tests
                         itemLayout);
                 },
 
-                item => new TestItemVisual(item));
+                item => new OperationItemVisual(item));
         }
 
         protected override void AddViewRegion()

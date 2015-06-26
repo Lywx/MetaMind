@@ -1,4 +1,4 @@
-namespace MetaMind.Testimony.Guis.Widgets.Tests
+namespace MetaMind.Testimony.Guis.Widgets.IndexViews
 {
     using Engine.Components.Fonts;
     using Engine.Guis.Widgets.Items.Frames;
@@ -7,7 +7,7 @@ namespace MetaMind.Testimony.Guis.Widgets.Tests
     using Engine.Settings.Colors;
     using Microsoft.Xna.Framework;
 
-    public class TestItemSettings : ItemSettings
+    public class StandardIndexItemSettings : ItemSettings
     {
         private readonly FrameSettings rootFrame = new FrameSettings
         {
@@ -147,7 +147,7 @@ namespace MetaMind.Testimony.Guis.Widgets.Tests
             TextMonospaced = true,
         };
 
-        public TestItemSettings()
+        public StandardIndexItemSettings()
         {
             this.Add("RootFrame", this.rootFrame);
 

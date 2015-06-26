@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
     {
         int BlockRow { get; }
 
-        IBlockViewVerticalItemData BlockData { get; }
+        IBlockViewItemData BlockData { get; }
 
         /// <summary>
         /// Wrapped block text content

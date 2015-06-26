@@ -29,7 +29,7 @@
 
         public override void LoadContent(IGameInteropService interop)
         {
-            this.Modules.Add();
+            //this.Modules.Add();
             this.Modules.LoadContent(interop);
 
             base.LoadContent(interop);

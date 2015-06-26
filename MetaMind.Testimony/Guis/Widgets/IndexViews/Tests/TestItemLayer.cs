@@ -1,4 +1,4 @@
-namespace MetaMind.Testimony.Guis.Widgets.Tests
+namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Tests
 {
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Layers;
@@ -10,9 +10,9 @@ namespace MetaMind.Testimony.Guis.Widgets.Tests
         {
         }
 
-        public new TestItemSettings ItemSettings
+        public new StandardIndexItemSettings ItemSettings
         {
-            get { return (TestItemSettings)base.ItemSettings; }
+            get { return (StandardIndexItemSettings)base.ItemSettings; }
         }
 
         public new TestItemLogic ItemLogic
@@ -20,7 +20,7 @@ namespace MetaMind.Testimony.Guis.Widgets.Tests
             get { return (TestItemLogic)base.ItemLogic; }
         }
 
-        public TestItemFrame ItemFrame
+        public StandardItemFrame ItemFrame
         {
             get { return this.ItemLogic.ItemFrame; }
         }

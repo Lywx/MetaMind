@@ -1,6 +1,6 @@
 ﻿namespace MetaMind.Engine.Guis.Widgets.Items.Data
 {
-    public interface IBlockViewVerticalItemData
+    public interface IBlockViewItemData
     {
         /// <summary>
         /// Raw text content to display on the block.

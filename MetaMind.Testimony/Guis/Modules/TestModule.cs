@@ -10,7 +10,8 @@
     using Engine.Services;
     using Microsoft.Xna.Framework;
     using Scripting;
-    using Widgets.Tests;
+    using Widgets.IndexViews;
+    using Widgets.IndexViews.Tests;
 
     public class TestModule : Module<TestModuleSettings>
     {
@@ -58,19 +59,19 @@
         public override void LoadContent(IGameInteropService interop)
         {
             // View settings
-            var viewSettings = new TestViewSettings(
+            var viewSettings = new StandardIndexViewSettings(
                 itemMargin    : new Vector2(1355 + 128 + 24, 26),
                 viewPosition  : new Vector2(40, 100),
                 viewRowDisplay: 30,
                 viewRowMax    : int.MaxValue);
 
             // Item settings
-            var itemSettings = new TestItemSettings();
+            var itemSettings = new StandardIndexItemSettings();
 
             // View construction
             this.view = new View(viewSettings, itemSettings, new List<IViewItem>());
 
-            var viewComposer = new TestViewComposer(this.testSession);
+            var viewComposer = new TestIndexViewComposer(this.testSession);
             viewComposer.Compose(this.view, this.test);
 
             // Entities
@@ -99,10 +100,6 @@
 
             base.Update(time);
         }
-
-        #endregion
-
-        #region Composition
 
         #endregion
     }

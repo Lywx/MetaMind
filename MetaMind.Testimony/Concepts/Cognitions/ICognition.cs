@@ -1,6 +1,7 @@
 ﻿namespace MetaMind.Testimony.Concepts.Cognitions
 {
     using System.Runtime.Serialization;
+    using Engine;
     using Synchronizations;
 
     public interface ICognition: IInnerUpdatable, ICognitionProperties

@@ -1,6 +1,7 @@
 ﻿namespace MetaMind.Testimony.Concepts.Tests
 {
     using System;
+    using Engine;
 
     public interface ITest : 
         ITestComputation,
@@ -8,7 +9,6 @@
         ITestOperations,
 
         IComparable<ITest>, 
-        IEquatable<ITest>,
 
         IInnerUpdatable
     {

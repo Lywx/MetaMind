@@ -279,8 +279,8 @@ namespace MetaMind.Testimony.Concepts.Tests
             this.Parent = null;
             this.Children.Clear();
 
-            this.testResultVariation = 0;
             this.testResultChangedTime = DateTime.MinValue;
+            this.testResultVariation = 0;
 
             this.TestMethod = () => this.ChildrenTestPassed == this.Children.Count;
             this.TestStatusSelector = () => this.TestMethod() ? "SUCCEEDED" : "FAILED";
@@ -304,33 +304,9 @@ namespace MetaMind.Testimony.Concepts.Tests
 
     #endregion
 
-    #region IEqualable
+    #region IBlockViewItemData
 
-    public partial class Test
-    {
-        public bool Equals(ITest other)
-        {
-            if (other == null)
-            {
-                return false;
-            }
-
-            if (ReferenceEquals(this, other))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-    }
-
-    #endregion
-
-    #region IBlockViewVerticalItemData
-
-    public partial class Test : IBlockViewVerticalItemData 
+    public partial class Test : IBlockViewItemData 
     {
         public string BlockStringRaw
         {

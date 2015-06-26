@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Testimony.Guis.Widgets.Tests
+﻿namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Tests
 {
     using System;
     using System.Collections.Generic;
@@ -9,7 +9,7 @@
 
     public class TestViewBinding : IViewBinding
     {
-        private readonly TestOrganizer testOrganizer = new TestOrganizer();
+        private readonly TestOrganizer treeOrganizer = new TestOrganizer();
 
         private readonly TestSession testSession;
 
@@ -76,7 +76,7 @@
 
         private void FsiSessionThreadStopped(object sender, EventArgs e)
         {
-            this.testOrganizer.Organize(this.tests);
+            this.treeOrganizer.Organize(this.tests);
 
             // Avoid thread context switch 
             this.testViewLogic.ResetItems();
