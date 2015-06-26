@@ -42,9 +42,9 @@ CommandSortItem   = S with LeftControl
 SynchronizationPause   = P with LeftControl and LeftShift
 SynchronizationReverse = V with LeftControl and LeftShift
 
-" Test Control
+" Fsi Session Control
 
-TestRerun = R with LeftControl and LeftShift
+SessionRerun = R with LeftControl and LeftShift
 
 " Synchronization Control
 

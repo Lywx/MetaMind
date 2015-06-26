@@ -43,7 +43,7 @@ namespace MetaMind.Engine.Components.Inputs
         SynchronizationReverse,
 
         // Fsi Session
-        TestRerun,
+        SessionRerun,
 
         // General
         Enter, 

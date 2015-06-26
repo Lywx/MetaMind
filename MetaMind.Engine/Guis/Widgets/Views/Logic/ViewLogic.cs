@@ -270,9 +270,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public void ResetItems()
         {
-            this.ViewScroll.Reset();
-
             this.ItemsWrite.Clear();
+
+            // HOTFIX: Has to be after the item clear(in this.ItemsRead) 
+            // because it is possible to view scroll control
+            // to use the this.ItemsRead information in Reset()
+            this.DeferAction(this.ViewScroll.Reset);
 
             foreach (var data in this.ViewBinding.AllData)
             {
