@@ -2,6 +2,7 @@ namespace MetaMind.Testimony.Concepts.Operations
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Engine.Guis.Widgets.Items.Data;
 
     #region Operation Description
@@ -27,7 +28,7 @@ namespace MetaMind.Testimony.Concepts.Operations
             this.Description = description;
             this.Path        = path;
 
-            this.Children = new List<IOperationDescription>();
+            this.Reset();
         }
 
         public string Name { get; private set; }
@@ -36,16 +37,18 @@ namespace MetaMind.Testimony.Concepts.Operations
 
         public string Path { get; private set; }
 
-        public IOperation Operation { get; set; }
-
         public void Reset()
         {
-            
+            // Structure
+            this.Children = new List<IOperationDescription>();
         }
 
         public void Update()
         {
-            this.Operation.Update();
+            if (this.Operation != null)
+            {
+                this.Operation.Update();
+            }
         }
     }
 
@@ -72,12 +75,54 @@ namespace MetaMind.Testimony.Concepts.Operations
 
     #endregion
 
+    #region IComparable
+
     public partial class OperationDescription
     {
         public int CompareTo(IOperationDescription other)
         {
             return string.Compare(this.Name, other.Name, StringComparison.Ordinal);
         }
+    }
+
+    #endregion
+
+    public partial class OperationDescription
+    {
+
+        public IOperation Operation { get; set; }
+
+
+        public bool IsOperationActivated
+        {
+            get
+            {
+                return 
+                    this.Operation != null && 
+                    this.Operation.IsOperationActivated;
+            }
+        }
+
+        public int ChildrenOperationActivated
+        {
+            get
+            {
+                return this.Children.Count(item => item.IsOperationActivated);
+            }
+        }
+
+        public string OperationStatus
+        {
+            get
+            {
+                return this.Operation == null
+                           ? ""
+                           : this.Operation.IsOperationActivated
+                                 ? "ACTIVATED"
+                                 : "UNACTIVATED";
+            }
+        }
+        
     }
 
     #region IBlockViewItemData

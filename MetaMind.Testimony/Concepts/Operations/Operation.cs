@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Engine;
+    using Extensions;
     using Guis.Screens;
     using Stateless;
 
@@ -13,20 +14,14 @@
     {
         public Operation(
             StateMachine<TProcedure, TTransition> operationMachine,
-            IDictionary<TProcedure, string>   procedureNames,
             IDictionary<TProcedure, string>   procedureDescriptions,
             IDictionary<TProcedure, TimeSpan> procedureSpans,
-            IDictionary<TTransition, string> transitionNames,
             IDictionary<TTransition, string> transitionDescriptions)
         {
+            this.IsOperationActivated = false;
             if (operationMachine == null)
             {
                 throw new ArgumentNullException("operationMachine");
-            }
-
-            if (procedureNames == null)
-            {
-                throw new ArgumentNullException("procedureNames");
             }
 
             if (procedureDescriptions == null)
@@ -39,11 +34,6 @@
                 throw new ArgumentNullException("procedureSpans");
             }
 
-            if (transitionNames == null)
-            {
-                throw new ArgumentNullException("transitionNames");
-            }
-
             if (transitionDescriptions == null)
             {
                 throw new ArgumentNullException("transitionDescriptions");
@@ -51,14 +41,14 @@
 
             this.Machine = operationMachine;
 
-            this.ProcedureNames        = procedureNames;
+            this.ProcedureNames        = typeof(TProcedure).ToDict<TProcedure>();
             this.ProcedureDescriptions = procedureDescriptions;
             this.ProcedureSpans        = procedureSpans;
 
-            this.TransitionNames        = transitionNames;
+            this.TransitionNames = typeof(TTransition).ToDict<TTransition>();
             this.TransitionDescriptions = transitionDescriptions;
         }
-        
+
         protected StateMachine<TProcedure, TTransition> Machine { get; private set; }
     }
 
@@ -68,10 +58,7 @@
 
     public partial class Operation<TProcedure, TTransition> : GameEntity
     {
-        /// <remarks>
-        /// Compatible with F# dict.
-        /// </remarks>
-        public IDictionary<TProcedure, string> ProcedureNames { get; private set; }
+        public IDictionary<TProcedure, string> ProcedureNames { get; set; }
 
         public IDictionary<TProcedure, string> ProcedureDescriptions { get; private set; }
 
@@ -118,13 +105,7 @@
 
         public bool IsProcedureTransitioning { get; set; }
 
-        public void Start()
-        {
-        }
-
-        public void End()
-        {
-        }
+        public bool IsOperationActivated { get; set; }
 
         public void Update()
         {

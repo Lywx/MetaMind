@@ -1,10 +1,12 @@
 ﻿namespace MetaMind.Testimony.Guis.Layers
 {
+    using Concepts.Operations;
     using Engine;
     using Engine.Guis;
     using Engine.Screens;
     using Engine.Services;
     using Microsoft.Xna.Framework;
+    using Modules;
 
     public class OperationLayer : GameLayer
     {
@@ -29,7 +31,11 @@
 
         public override void LoadContent(IGameInteropService interop)
         {
-            //this.Modules.Add();
+            this.Modules.Add(
+                new OperationModule(
+                    new OperationModuleSettings(),
+                    Testimony.SessionData.Operation,
+                    new OperationSession(Testimony.FsiSession)));
             this.Modules.LoadContent(interop);
 
             base.LoadContent(interop);

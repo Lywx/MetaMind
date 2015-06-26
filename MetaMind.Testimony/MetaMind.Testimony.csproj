@@ -102,6 +102,8 @@
     <Compile Include="Concepts\Operations\IOperation.cs" />
     <Compile Include="Concepts\Operations\IOperationComputation.cs" />
     <Compile Include="Concepts\Operations\IOperationDescription.cs" />
+    <Compile Include="Concepts\Operations\IOperationDescriptionComputation.cs" />
+    <Compile Include="Concepts\Operations\IOperationDescriptionOperations.cs" />
     <Compile Include="Concepts\Operations\IOperationDescriptionOrganization.cs" />
     <Compile Include="Concepts\Operations\IOperationOperations.cs" />
     <Compile Include="Concepts\Operations\IOption.cs" />
@@ -121,10 +123,12 @@
     <Compile Include="Concepts\Operations\OperationOrganizer.cs" />
     <Compile Include="Concepts\Tests\TestOrganizer.cs" />
     <Compile Include="Concepts\Tests\TestSession.cs" />
+    <Compile Include="Extensions\ExtEnum.cs" />
     <Compile Include="Extensions\ExtHashSet.cs" />
     <Compile Include="Extensions\ExtObservableCollection.cs" />
     <Compile Include="Guis\Layers\OperationLayer.cs" />
     <Compile Include="Guis\Modules\OperationModule.cs" />
+    <Compile Include="Guis\Modules\OperationModuleSettings.cs" />
     <Compile Include="Guis\Modules\OperationSettings.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemLayer.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemLogic.cs" />
@@ -138,6 +142,7 @@
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationIndexViewComposer.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemVisual.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationViewBinding.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\StandardItemLayer.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Tests\TestIndexedViewComposer.cs" />
     <Compile Include="Guis\Modules\TestModuleLogic.cs" />
     <Compile Include="Guis\Modules\TestModuleVisual.cs" />

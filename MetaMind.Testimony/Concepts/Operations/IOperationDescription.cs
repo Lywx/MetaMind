@@ -5,6 +5,8 @@
 
     public interface IOperationDescription : 
         IOperationDescriptionOrganization,
+        IOperationDescriptionOperations,
+        IOperationDescriptionComputation,
 
         IComparable<IOperationDescription>,
 
@@ -15,7 +17,5 @@
         string Description { get; }
 
         string Path { get; }
-
-        IOperation Operation { get; set; }
     }
 }

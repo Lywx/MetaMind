@@ -43,7 +43,7 @@ namespace MetaMind.Testimony.Guis.Widgets.IndexViews
         {
             base.SetupLayer();
             
-            var itemLayer = this.ItemGetLayer<TestItemLayer>();
+            var itemLayer = this.ItemGetLayer<StandardItemLayer>();
 
             this.itemSettings = itemLayer.ItemSettings;
             this.itemLayout = itemLayer.ItemLogic.ItemLayout;
@@ -96,6 +96,7 @@ namespace MetaMind.Testimony.Guis.Widgets.IndexViews
         public PickableFrame IdFrame { get; private set; }
 
         public PickableFrame PlusFrame { get; set; }
+
         public PickableFrame NameFrame { get; private set; }
 
         public PickableFrame DescriptionFrame { get; private set; }

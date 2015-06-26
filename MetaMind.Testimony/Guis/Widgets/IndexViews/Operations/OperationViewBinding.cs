@@ -55,7 +55,10 @@
             return null;
         }
 
-        public IReadOnlyList<object> AllData { get; private set; }
+        public IReadOnlyList<object> AllData
+        {
+            get { return this.operation.Children; }
+        }
 
         #region Binding
 

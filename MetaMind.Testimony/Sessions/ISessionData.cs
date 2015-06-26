@@ -1,5 +1,6 @@
 ﻿namespace MetaMind.Testimony.Sessions
 {
+    using Concepts.Operations;
     using Concepts.Tests;
     using MetaMind.Testimony.Concepts.Cognitions;
 
@@ -8,5 +9,7 @@
         ICognition Cognition { get; }
 
         ITest Test { get; }
+
+        IOperationDescription Operation { get; }
     }
 }

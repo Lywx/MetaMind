@@ -9,17 +9,16 @@
     using Engine.Guis.Widgets.Views;
     using Engine.Services;
     using Microsoft.Xna.Framework;
-    using Scripting;
     using Widgets.IndexViews;
     using Widgets.IndexViews.Operations;
 
-    public class OperationModule : Module<TestModuleSettings>
+    public class OperationModule : Module<OperationModuleSettings>
     {
-        private List<IOperation> operations;
+        private readonly IOperationDescription operations;
 
-        private OperationSession operationSession;
+        private readonly OperationSession operationSession;
 
-        public OperationModule(TestModuleSettings settings, List<IOperation> operations, OperationSession operationSession)
+        public OperationModule(OperationModuleSettings settings, IOperationDescription operations, OperationSession operationSession)
             : base(settings)
         {
             if (operations == null)
@@ -56,10 +55,11 @@
             // Item settings
             var itemSettings = new StandardIndexItemSettings();
 
+
             // View construction
             this.View = new View(viewSettings, itemSettings, new List<IViewItem>());
 
-            var viewComposer = new OperationIndexViewComposer(new OperationSession(Testimony.FsiSession));
+            var viewComposer = new OperationIndexViewComposer(operationSession);
             viewComposer.Compose(this.View, this.operations);
 
             // Entities
@@ -70,6 +70,13 @@
         }
 
         #endregion
+
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        {
+            this.Entities.Draw(graphics, time, alpha);
+
+            base.Draw(graphics, time, alpha);
+        }
 
         #region Update
 

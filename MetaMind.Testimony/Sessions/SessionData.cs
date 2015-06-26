@@ -33,7 +33,7 @@
 
         private void Reset()
         {
-            this.Test      = new Test("Root", "", "");
+            this.Test = new Test("Root", "", "");
             this.Operation = new OperationDescription("Root", "", "");
         }
 

@@ -21,14 +21,14 @@ namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Tests
 
     public class TestItemVisual : ViewItemVisual
     {
-        private StandardItemFrame itemFrame;
-
-        private IIndexBlockViewVerticalItemInteraction itemInteraction;
-
         public TestItemVisual(IViewItem item)
             : base(item)
         {
         }
+
+        protected StandardItemFrame ItemFrame { get; set; }
+
+        protected IIndexBlockViewVerticalItemInteraction ItemInteraction { get; set; }
 
         #region Components
 
@@ -84,28 +84,28 @@ namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Tests
             var itemLayer = this.ItemGetLayer<TestItemLayer>();
 
             // Avoid the implicit closure warning in Resharper
-            this.itemFrame       = itemLayer.ItemFrame;
+            this.ItemFrame       = itemLayer.ItemFrame;
             var itemSettings     = itemLayer.ItemSettings;
             var itemLayout       = itemLayer.ItemLayout;
-            this.itemInteraction = itemLayer.ItemInteraction;
+            this.ItemInteraction = itemLayer.ItemInteraction;
 
             ITest itemData = this.Item.ItemData;
 
             // Positions
-            this.ItemCenterPosition = () => this.itemFrame.RootFrame.Center.ToVector2();
+            this.ItemCenterPosition = () => this.ItemFrame.RootFrame.Center.ToVector2();
 
-            this.IdCenterPosition = () => this.itemFrame.IdFrame.Center.ToVector2();
-            this.PlusCenterPosition = () => this.itemFrame.PlusFrame.Center.ToVector2();
+            this.IdCenterPosition = () => this.ItemFrame.IdFrame.Center.ToVector2();
+            this.PlusCenterPosition = () => this.ItemFrame.PlusFrame.Center.ToVector2();
 
-            this.StatusCenterPosition = () => this.itemFrame.StatusFrame.Center.ToVector2();
-            this.StatisticsCenterPosition = () => this.itemFrame.StatisticsFrame.Center.ToVector2();
+            this.StatusCenterPosition = () => this.ItemFrame.StatusFrame.Center.ToVector2();
+            this.StatisticsCenterPosition = () => this.ItemFrame.StatisticsFrame.Center.ToVector2();
 
-            this.NamePosition = () => this.itemFrame.NameFrameLocation() + itemSettings.Get<Vector2>("NameMargin");
-            this.DescriptionPosition = () => this.itemFrame.DescriptionFrameLocation() + itemSettings.Get<Vector2>("DescriptionMargin");
+            this.NamePosition = () => this.ItemFrame.NameFrameLocation() + itemSettings.Get<Vector2>("NameMargin");
+            this.DescriptionPosition = () => this.ItemFrame.DescriptionFrameLocation() + itemSettings.Get<Vector2>("DescriptionMargin");
 
             // Components
             this.IdFrame = new ViewItemFrameVisual(this.Item,
-                this.itemFrame.IdFrame,
+                this.ItemFrame.IdFrame,
                 itemSettings.Get<FrameSettings>("IdFrame"));
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("IdLabel");
@@ -116,18 +116,18 @@ namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Tests
             }
 
             this.PlusFrame = new ViewItemFrameVisual(this.Item,
-                this.itemFrame.PlusFrame,
+                this.ItemFrame.PlusFrame,
                 itemSettings.Get<FrameSettings>("PlusFrame"));
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("PlusLabel");
-                labelSettings.Text = () => this.itemInteraction.IndexedViewOpened ? "-" : "+";
+                labelSettings.Text = () => this.ItemInteraction.IndexedViewOpened ? "-" : "+";
                 labelSettings.TextPosition = this.PlusCenterPosition;
 
                 this.PlusLabel = new ViewItemLabelVisual(this.Item, labelSettings);
             }
 
             this.StatusFrame = new ViewItemFrameVisual(this.Item,
-                this.itemFrame.StatusFrame,
+                this.ItemFrame.StatusFrame,
                 itemSettings.Get<FrameSettings>("StatusFrame"));
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("StatusLabel");
@@ -139,15 +139,13 @@ namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Tests
                         itemData.TestPassed
                             ? Palette.LightGreen
                             : Palette.LightPink;
-                this.StatusLabel.Label.Text = () => itemData.TestStatus;
             }
 
             this.StatisticsFrame = new ViewItemFrameVisual(this.Item,
-                this.itemFrame.StatisticsFrame,
+                this.ItemFrame.StatisticsFrame,
                 itemSettings.Get<FrameSettings>("StatisticsFrame"));
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("StatisticsLabel");
-                labelSettings.Text = () => itemData.TestStatus;
                 labelSettings.TextPosition = this.StatisticsCenterPosition;
 
                 this.StatisticsLabel = new ViewItemLabelVisual(this.Item, labelSettings);
@@ -165,7 +163,7 @@ namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Tests
 
             var nameFrameSettings = itemSettings.Get<FrameSettings>("NameFrame");
             this.NameFrame = new ViewItemFrameVisual(this.Item,
-                this.itemFrame.NameFrame,
+                this.ItemFrame.NameFrame,
                 nameFrameSettings);
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("NameLabel");
@@ -177,7 +175,7 @@ namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Tests
 
             var descriptionFrameSettings = itemSettings.Get<FrameSettings>("DescriptionFrame");
             this.DescriptionFrame = new ViewItemFrameVisual(this.Item,
-                this.itemFrame.DescriptionFrame,
+                this.ItemFrame.DescriptionFrame,
                 descriptionFrameSettings);
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("DescriptionLabel");
@@ -197,9 +195,9 @@ namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Tests
             if (!this.Item[ItemState.Item_Is_Active]() && 
                 !this.Item[ItemState.Item_Is_Dragging]())
             {
-                if (this.itemInteraction.IndexedViewOpened)
+                if (this.ItemInteraction.IndexedViewOpened)
                 {
-                    this.itemInteraction.IndexedView.Draw(graphics, time, alpha);
+                    this.ItemInteraction.IndexedView.Draw(graphics, time, alpha);
                 }
 
                 return;
@@ -241,9 +239,9 @@ namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Tests
             this.DescriptionLabel.Draw(graphics, time, alpha);
 
             // Indexed view
-            if (this.itemInteraction.IndexedViewOpened)
+            if (this.ItemInteraction.IndexedViewOpened)
             {
-                this.itemInteraction.IndexedView.Draw(graphics, time, alpha);
+                this.ItemInteraction.IndexedView.Draw(graphics, time, alpha);
             }
         }
 
