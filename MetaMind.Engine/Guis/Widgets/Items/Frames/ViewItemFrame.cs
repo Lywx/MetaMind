@@ -7,6 +7,7 @@
 
 namespace MetaMind.Engine.Guis.Widgets.Items.Frames
 {
+    using System;
     using Elements;
     using Layers;
     using Services;
@@ -15,13 +16,18 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Frames
 
     public abstract class ViewItemFrame : ViewItemComponent, IViewItemFrame
     {
-        public ViewItemFrame(IViewItem item)
+        public ViewItemFrame(IViewItem item, IViewItemRootFrame itemRootFrame)
             : base(item)
         {
-            this.RootFrame = new ViewItemRootFrame(this.Item);
+            if (itemRootFrame == null)
+            {
+                throw new ArgumentNullException("itemRootFrame");
+            }
+
+            this.RootFrame = itemRootFrame;
 
             this.Item[ItemState.Item_Is_Mouse_Over] = this.RootFrame[FrameState.Mouse_Is_Over];
-            this.Item[ItemState.Item_Is_Dragging] = this.RootFrame[FrameState.Frame_Is_Dragging];
+            this.Item[ItemState.Item_Is_Dragging]   = this.RootFrame[FrameState.Frame_Is_Dragging];
         }
 
         public override void SetupLayer()

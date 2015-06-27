@@ -12,8 +12,8 @@
 
         private int gameLayerDisplayedIndex;
 
-        public CircularGameLayer(IGameScreen screen, byte alpha = byte.MaxValue)
-            : base(screen, alpha)
+        public CircularGameLayer(IGameScreen screen, byte transitionAlpha = byte.MaxValue)
+            : base(screen, transitionAlpha)
         {
         }
 
@@ -56,7 +56,7 @@
 
         public override void Update(GameTime time)
         {
-            this.GameLayerDisplayed.Update(time);
+            this.GameLayers.ForEach(layer => layer.Update(time));
 
             base.Update(time);
         }

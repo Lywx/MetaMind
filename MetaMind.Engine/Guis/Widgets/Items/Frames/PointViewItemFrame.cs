@@ -8,8 +8,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Frames
 
     public class PointViewItemFrame : ViewItemFrame
     {
-        public PointViewItemFrame(IViewItem item)
-            : base(item)
+        public PointViewItemFrame(IViewItem item, IViewItemRootFrame itemRootFrame)
+            : base(item, itemRootFrame)
         {
         }
 

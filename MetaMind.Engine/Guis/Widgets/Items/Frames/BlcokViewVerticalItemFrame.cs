@@ -5,7 +5,10 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Frames
 
     public class BlcokViewVerticalItemFrame : PointViewItemFrame
     {
-        public BlcokViewVerticalItemFrame(IViewItem item) : base(item)
+        public BlcokViewVerticalItemFrame(
+            IViewItem item,
+            IViewItemRootFrame itemRootFrame) 
+            : base(item, itemRootFrame)
         {
         }
 

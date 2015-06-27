@@ -1,18 +1,20 @@
 ﻿namespace MetaMind.Engine.Screens
 {
+    using System;
+
     public interface IGameLayer : IGameControllableEntity, IGameLayerOperations 
     {
         IGameScreen Screen { get; }
 
         #region State
 
-        bool IsActive { get; set; }
+        bool IsActive { get; }
 
         #endregion
 
         #region Graphics
 
-        byte Alpha { get; set; }
+        byte TransitionAlpha { get; }
 
         #endregion
     }

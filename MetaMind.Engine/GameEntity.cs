@@ -203,6 +203,11 @@ namespace MetaMind.Engine
             }
         }
 
+        protected void ClearAction(GameTime time)
+        {
+            this.updateActions.Clear();
+        }
+
         protected void FlushAction(GameTime time)
         {
             if (this.updateAction == null &&

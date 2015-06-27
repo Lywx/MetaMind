@@ -179,6 +179,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Guis\Widgets\Items\Frames\BlcokViewVerticalItemFrame.cs" />
+    <Compile Include="Guis\Widgets\Items\Frames\ViewItemPickableFrame.cs" />
     <Compile Include="Guis\Widgets\Items\Interactions\BlockViewVerticalItemInteraction.cs" />
     <Compile Include="Guis\Widgets\Items\Interactions\BlockViewVerticalItemLayoutInteraction.cs" />
     <Compile Include="Guis\Widgets\Items\Interactions\IIndexBlockViewVerticalItemInteraction.cs" />
@@ -219,7 +220,7 @@
     <Compile Include="Guis\Widgets\Items\Frames\IViewItemRootFrame.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Widgets\Items\Frames\ViewItemRootFrame.cs">
+    <Compile Include="Guis\Widgets\Items\Frames\ViewItemDraggableFrame.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Guis\Widgets\Items\Frames\IViewItemFrame.cs">

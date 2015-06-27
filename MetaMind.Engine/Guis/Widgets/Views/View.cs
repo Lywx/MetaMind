@@ -126,7 +126,10 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public override void UnloadContent(IGameInteropService interop)
         {
-            this.ViewLogic.UnloadBinding();
+            if (this.ViewLogic != null)
+            {
+                this.ViewLogic.UnloadBinding();
+            }
 
             base.UnloadContent(interop);
         }

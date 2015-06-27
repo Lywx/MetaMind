@@ -1,11 +1,11 @@
 namespace MetaMind.Engine.Guis.Widgets.Items.Frames
 {
-    using MetaMind.Engine.Guis.Elements;
-    using MetaMind.Engine.Guis.Widgets.Items.Logic;
+    using Elements;
+    using Logic;
 
-    public class ViewItemRootFrame : DraggableFrame, IViewItemRootFrame
+    public class ViewItemPickableFrame : PickableFrame, IViewItemRootFrame
     {
-        public ViewItemRootFrame(IViewItem item)
+        public ViewItemPickableFrame(IViewItem item)
         {
             this.Item = item;
 
@@ -13,7 +13,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Frames
             this.MouseLeftPressedOutside += this.ViewUnselect;
         }
 
-        ~ViewItemRootFrame()
+        ~ViewItemPickableFrame()
         {
             this.Dispose();
         }

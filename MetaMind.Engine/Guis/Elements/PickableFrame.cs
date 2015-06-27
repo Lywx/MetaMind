@@ -294,7 +294,10 @@ namespace MetaMind.Engine.Guis.Elements
             {
                 this.mouse.LRelease();
 
-                this.DeferAction(this.OnMouseLeftReleased);
+                if (this.mouse.IsMouseOver)
+                {
+                    this.DeferAction(this.OnMouseLeftReleased);
+                }
 
                 return;
             }
@@ -302,7 +305,10 @@ namespace MetaMind.Engine.Guis.Elements
             {
                 this.mouse.RRelease();
 
-                this.DeferAction(this.OnMouseRightReleased);
+                if (this.mouse.IsMouseOver)
+                {
+                    this.DeferAction(this.OnMouseRightReleased);
+                }
 
                 return;
             }
@@ -465,6 +471,7 @@ namespace MetaMind.Engine.Guis.Elements
 
         public override void Update(GameTime time)
         {
+            this.ClearAction(time);
         }
 
         public override void UpdateInput(IGameInputService input, GameTime time)

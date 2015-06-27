@@ -206,21 +206,17 @@ namespace MetaMind.Engine.Screens
             }
             else
             {
-                transitionDelta =
-                    (float)
-                    (time.ElapsedGameTime.TotalMilliseconds
-                     / transitionOff.TotalMilliseconds);
+                transitionDelta = (float)(time.ElapsedGameTime.TotalMilliseconds / transitionOff.TotalMilliseconds);
             }
 
             // Update the transition position.
             this.transitionPosition += transitionDelta * direction;
 
             // Did we reach the end of the transition?
-            if ((this.transitionPosition <= 0)
-                || (this.transitionPosition >= 1))
+            if (this.transitionPosition <= 0 || 
+                this.transitionPosition >= 1)
             {
-                this.transitionPosition =
-                    MathHelper.Clamp(this.transitionPosition, 0, 1);
+                this.transitionPosition = MathHelper.Clamp(this.transitionPosition, 0, 1);
                 return false;
             }
 
@@ -315,7 +311,8 @@ namespace MetaMind.Engine.Screens
         /// </summary>
         public virtual void Draw(IGameGraphicsService graphics, GameTime time)
         {
-            this.Layers.Draw(graphics, time, this.TransitionAlpha);
+            this.Layers
+                .ForEach(layer => layer.Draw(graphics, time, Math.Min(layer.TransitionAlpha, this.TransitionAlpha)));
         }
 
         #endregion Draw
@@ -324,12 +321,19 @@ namespace MetaMind.Engine.Screens
 
         public virtual void Update(GameTime time)
         {
-            this.Layers.Update(time);
+            this.Layers
+                .ForEach(layer => layer.UpdateTransition(time));
+
+            this.Layers
+                .FindAll(layer => layer.IsActive)
+                .ForEach(layer => layer.Update(time));
         }
 
         public virtual void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.Layers.UpdateInput(input, time);
+            this.Layers
+                .FindAll(layer => layer.IsActive)
+                .ForEach(layer => layer.UpdateInput(input, time));
         }
 
         #endregion
