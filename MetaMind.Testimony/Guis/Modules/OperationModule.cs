@@ -53,7 +53,7 @@
             var viewSettings = new StandardIndexViewSettings(
                 itemMargin    : new Vector2(1355 + 128 + 24, 26),
                 viewPosition  : new Vector2(40, 100),
-                viewRowDisplay: 30,
+                viewRowDisplay: 28,
                 viewRowMax    : int.MaxValue);
 
             // Item settings

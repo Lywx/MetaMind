@@ -8,14 +8,14 @@
     using Guis.Screens;
     using Stateless;
 
-    public class Operation
+    public class Operation : GameEntity
     {
         public static OperationSession Session { get; set; }
     }
 
     #region Operation
 
-    public partial class Operation<TProcedure, TTransition> : IOperation, IOperationOperations<TTransition>
+    public partial class Operation<TProcedure, TTransition> : Operation, IOperation, IOperationOperations<TTransition>
     {
         public Operation(
             StateMachine<TProcedure, TTransition> operationMachine,
@@ -60,7 +60,7 @@
 
     #region Operation Computation
 
-    public partial class Operation<TProcedure, TTransition> : GameEntity
+    public partial class Operation<TProcedure, TTransition>
     {
         public IDictionary<TTransition, string> TransitionNames { get; private set; }
 
@@ -89,7 +89,7 @@
             this.procedureTransitionedMoment = DateTime.Now;
         }
 
-        public List<IOption> RequestOptions()
+        private List<IOption> RequestOptions()
         {
             var transitions = this.Machine.PermittedTriggers;
 
@@ -104,7 +104,7 @@
                         transition)).Cast<IOption>().ToList();
         }
 
-        public void SendOptions()
+        private void SendOptions()
         {
             var screenManager = this.GameInterop.Screen;
             
@@ -122,14 +122,14 @@
     {
         private DateTime procedureTransitionedMoment;
 
-        public bool IsInitialized { get; set; }
+        private bool IsInitialized { get; set; }
 
         public bool IsActivated { get; private set; }
 
         public void Update()
         {
             // Pause updating when inactivated
-            if (!this.IsActivated || Operation.Session.IsLocked)
+            if (!this.IsActivated || Session.IsLocked)
             {
                 return;
             }
@@ -139,11 +139,12 @@
             {
                 this.IsInitialized = true;
 
+                // Make sure the procedureTransitionedMoment is initialized.
                 this.procedureTransitionedMoment = DateTime.Now;
             }
 
             var shouldTransit = this.ProcedureElapsed > this.ProcedureSpan;
-            if (shouldTransit)
+            if (shouldTransit && !Session.IsLocked)
             {
                 this.Lock();
 
@@ -160,12 +161,12 @@
 
         public void Unlock()
         {
-            Operation.Session.Unlock();
+            Session.Unlock();
         }
 
         public void Lock()
         {
-            Operation.Session.Lock();
+            Session.Lock();
         }
 
         #endregion

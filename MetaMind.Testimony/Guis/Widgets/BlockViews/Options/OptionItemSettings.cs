@@ -38,7 +38,7 @@
 
         private readonly FrameSettings nameFrame = new FrameSettings
         {
-            Size   = new Point(1355, 26),
+            Size   = new Point(128 + 1355, 26),
             Margin = new Point(2, 2),
 
             RegularColor      = Palette.DimBlue,
@@ -62,7 +62,7 @@
 
         private readonly FrameSettings descriptionFrame = new FrameSettings
         {
-            Size   = new Point(1355, 26),
+            Size   = new Point(24 + 128 + 1355, 26),
             Margin = new Point(2, 2),
 
             RegularColor      = Palette.Transparent0,
@@ -83,7 +83,6 @@
 
             TextMonospaced = true,
         };
-
 
         public OptionItemSettings()
         {
