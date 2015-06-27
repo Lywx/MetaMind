@@ -5,7 +5,6 @@
     using Concepts.Operations;
     using Engine;
     using Engine.Components.Fonts;
-    using Engine.Guis.Layers;
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Data;
     using Engine.Guis.Widgets.Items.Factories;
@@ -29,21 +28,32 @@
 
     public class OptionScreen : GameScreen
     {
+        private readonly string procedureName;
+
+        private readonly string procedureDescription;
+
         private readonly IGameLayer backgroundLayer;
 
         private readonly List<IOption> options;
 
         private IView optionView;
 
-        private IView procedureView;
+        private LabelBox procedureDescriptionLabelBox;
+
+        private LabelBox procedureNameLabelBox;
 
         private Label screenLabel;
 
-        public OptionScreen(IGameLayer backgroundLayer, List<IOption> options)
+        public OptionScreen(string procedureName, string procedureDescription, List<IOption> options, IGameLayer backgroundLayer)
         {
-            if (backgroundLayer == null)
+            if (procedureName == null)
             {
-                throw new ArgumentNullException("backgroundLayer");
+                throw new ArgumentNullException("procedureName");
+            }
+
+            if (procedureDescription == null)
+            {
+                throw new ArgumentNullException("procedureDescription");
             }
 
             if (options == null)
@@ -51,22 +61,33 @@
                 throw new ArgumentNullException("options");
             }
 
+            if (backgroundLayer == null)
+            {
+                throw new ArgumentNullException("backgroundLayer");
+            }
+
+            this.procedureName        = procedureName;
+            this.procedureDescription = procedureDescription;
+
             this.backgroundLayer = backgroundLayer;
             this.options = options;
 
             // Has to be a popup screen, or it can block the background
             this.IsPopup = true;
 
-            this.TransitionOnTime = TimeSpan.FromSeconds(0.5);
+            this.TransitionOnTime  = TimeSpan.FromSeconds(0.5);
             this.TransitionOffTime = TimeSpan.FromSeconds(0.5);
 
             this.Entities = new GameControllableEntityCollection<IGameControllableEntity>();
         }
 
-        protected GameControllableEntityCollection<IGameControllableEntity> Entities { get; private set; }
+        private GameControllableEntityCollection<IGameControllableEntity> Entities { get; set; }
 
         public override void LoadContent(IGameInteropService interop)
         {
+            const int viewWidth = 1355 + 128 + 24;
+            
+            // Screen label
             this.screenLabel = new Label
             {
                 TextFont     = () => Font.UiRegular,
@@ -76,10 +97,46 @@
                 TextSize     = () => 1f,
             };
 
+            this.procedureNameLabelBox = new LabelBox(
+                new LabelSettings
+                {
+                    TextFont       = Font.ContentRegular,
+                    Text           = () => this.procedureName,
+                    TextPosition   = () => new Vector2(40, 100),
+                    TextColor      = Color.White,
+                    TextSize       = 0.8f,
+                    TextLeading    = 26,
+                    TextMonospaced = true
+                },
+                new Vector2(5, 12) * 0.8f, 
+                new BoxSettings(() => new Rectangle(40, 100, viewWidth, 0))
+                {
+                    Color = () => Palette.DimBlue,
+                    ColorFilled = () => true,
+                });
+
+            this.procedureDescriptionLabelBox = new LabelBox(
+                new LabelSettings
+                {
+                    TextFont       = Font.ContentRegular,
+                    Text           = () => this.procedureDescription,
+                    TextPosition   = () => new Vector2(40, this.procedureNameLabelBox.Bottom),
+                    TextColor      = Color.White,
+                    TextSize       = 0.8f,
+                    TextLeading    = 26,
+                    TextMonospaced = true
+                },
+                new Vector2(5, 12) * 0.8f,
+                new BoxSettings(() => new Rectangle(40, this.procedureNameLabelBox.Bottom, viewWidth, 0))
+                {
+                    Color       = () => Palette.Transparent1,
+                    ColorFilled = () => true,
+                });
+
             // View settings
             var viewSettings = new OptionViewSettings(
-                itemMargin    : new Vector2(1355 + 128 + 24, 26),
-                viewPosition  : new Vector2(40, 100),
+                itemMargin    : new Vector2(viewWidth, 26),
+                viewPosition  : new Vector2(40, this.procedureDescriptionLabelBox.Bottom),
                 viewRowDisplay: 28,
                 viewRowMax    : int.MaxValue);
 
@@ -118,8 +175,8 @@
             };
             var viewVisual = new GradientViewVisual(this.optionView);
             var viewLayer  = new BlockViewVerticalLayer(this.optionView);
-            this.optionView.ViewLayer = viewLayer;
-            this.optionView.ViewLogic = viewLogic;
+            this.optionView.ViewLayer  = viewLayer;
+            this.optionView.ViewLogic  = viewLogic;
             this.optionView.ViewVisual = viewVisual;
 
             this.Entities.Add(this.optionView);
@@ -140,6 +197,9 @@
         public override void Draw(IGameGraphicsService graphics, GameTime time)
         {
             graphics.SpriteBatch.Begin();
+
+            this.procedureNameLabelBox       .Draw(graphics, time, this.TransitionAlpha);
+            this.procedureDescriptionLabelBox.Draw(graphics, time, this.TransitionAlpha);
 
             this.screenLabel.Draw(graphics, time, this.TransitionAlpha);
             this.Entities   .Draw(graphics, time, this.TransitionAlpha);

@@ -68,7 +68,17 @@
 
         public IDictionary<TProcedure, string> ProcedureNames { get; set; }
 
+        public string ProcedureName
+        {
+            get { return this.ProcedureNames[this.Machine.State]; }
+        }
+
         public IDictionary<TProcedure, string> ProcedureDescriptions { get; private set; }
+
+        public string ProcedureDescription
+        {
+            get { return this.ProcedureDescriptions[this.Machine.State]; }
+        }
 
         public IDictionary<TProcedure, TimeSpan> ProcedureSpans { get; private set; }
 
@@ -110,7 +120,7 @@
             
             var mainScreen = (MainScreen)screenManager.Screens.First(s => s is MainScreen);
 
-            screenManager.AddScreen(new OptionScreen(mainScreen.CircularLayers, this.RequestOptions()));
+            screenManager.AddScreen(new OptionScreen(this.ProcedureName, this.ProcedureDescription, this.RequestOptions(), mainScreen.CircularLayers));
         }
     }
 

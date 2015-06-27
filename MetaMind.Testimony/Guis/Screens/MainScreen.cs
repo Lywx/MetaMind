@@ -87,7 +87,7 @@
             {
                 TextFont     = () => Font.UiRegular,
                 Text         = () => this.CircularLayers.GameLayerDisplayed is TestLayer ? "Tests" : "Operations",
-                TextPosition = () => new Vector2(50, 845),
+                TextPosition = () => new Vector2(40, 845),
                 TextColor    = () => Palette.Transparent5,
                 TextSize     = () => 1f,
             };

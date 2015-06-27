@@ -27,7 +27,7 @@ namespace MetaMind.Engine.Guis.Widgets.Visuals
         public LabelSettings()
         {
             this.TextHAlign = StringHAlign.Right;
-            this.TextVAlign = StringVAlign.Bottom;
+            this.TextVAlign = StringVAlign.Center;
 
             this.TextMonospaced = false;
         }

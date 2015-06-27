@@ -495,6 +495,8 @@
     <Compile Include="Guis\Widgets\Views\Visuals\ViewVisualComponent .cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Guis\Widgets\Visuals\BoxSettings.cs" />
+    <Compile Include="Guis\Widgets\Visuals\LabelBox.cs" />
     <Compile Include="Guis\Widgets\Visuals\LabelSettings.cs" />
     <Compile Include="Guis\Widgets\WidgetSettings.cs" />
     <Compile Include="Guis\Widgets\Regions\IRegion.cs">
