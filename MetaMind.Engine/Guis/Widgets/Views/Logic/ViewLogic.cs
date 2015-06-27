@@ -270,6 +270,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 
         public void ResetItems()
         {
+            // Avoid repetitive item adding by calling ResetItems() multiple time
+            this.ItemsRead.Clear();
+
             this.ItemsWrite.Clear();
 
             // HOTFIX: Has to be after the item clear(in this.ItemsRead) 
