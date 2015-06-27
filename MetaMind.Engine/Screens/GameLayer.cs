@@ -5,6 +5,8 @@
 
     public class GameLayer : GameControllableEntity, IGameLayer
     {
+        private bool isFading;
+
         public GameLayer(IGameScreen screen, byte transitionAlpha = byte.MaxValue)
         {
             if (screen == null)
@@ -47,6 +49,11 @@
 
         public void FadeIn(TimeSpan time)
         {
+            if (this.isFading)
+            {
+                throw new InvalidOperationException("Layer is already fading.");
+            }
+
             var transitionCount = this.TransitionCount(time);
 
             Action increase = null;
@@ -66,14 +73,21 @@
                 else
                 {
                     this.IsActive = true;
+                    this.isFading = false;
                 }
             };
 
             this.DeferAction(increase);
+            this.isFading = true;
         }
 
         public void FadeOut(TimeSpan time)
         {
+            if (this.isFading)
+            {
+                throw new InvalidOperationException("Layer is already fading.");
+            }
+
             var transitionCount = this.TransitionCount(time);
 
             Action decrease = null;
@@ -93,11 +107,12 @@
                 else
                 {
                     this.IsActive = false;
+                    this.isFading = false;
                 }
             };
 
             this.DeferAction(decrease);
-            
+            this.isFading = true;
         }
 
         private int TransitionCount(TimeSpan time)
