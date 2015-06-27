@@ -9,8 +9,8 @@ namespace MetaMind.Testimony.Guis.Layers
 
     public class TestLayer : GameLayer
     {
-        public TestLayer(IGameScreen screen, byte alpha = byte.MaxValue)
-            : base(screen, alpha)
+        public TestLayer(IGameScreen screen, byte transitionAlpha = byte.MaxValue)
+            : base(screen, transitionAlpha)
         {
             this.Modules = new GameControllableEntityCollection<IModule>();
         }

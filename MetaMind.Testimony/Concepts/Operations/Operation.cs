@@ -8,6 +8,11 @@
     using Guis.Screens;
     using Stateless;
 
+    public class Operation
+    {
+        public static OperationSession Session { get; set; }
+    }
+
     #region Operation
 
     public partial class Operation<TProcedure, TTransition> : IOperation, IOperationOperations<TTransition>
@@ -18,7 +23,6 @@
             IDictionary<TProcedure, TimeSpan> procedureSpans,
             IDictionary<TTransition, string> transitionDescriptions)
         {
-            this.IsOperationActivated = false;
             if (operationMachine == null)
             {
                 throw new ArgumentNullException("operationMachine");
@@ -58,24 +62,34 @@
 
     public partial class Operation<TProcedure, TTransition> : GameEntity
     {
+        public IDictionary<TTransition, string> TransitionNames { get; private set; }
+
+        public IDictionary<TTransition, string> TransitionDescriptions { get; private set; }
+
         public IDictionary<TProcedure, string> ProcedureNames { get; set; }
 
         public IDictionary<TProcedure, string> ProcedureDescriptions { get; private set; }
 
         public IDictionary<TProcedure, TimeSpan> ProcedureSpans { get; private set; }
 
-        public IDictionary<TTransition, string> TransitionNames { get; private set; }
-
-        public IDictionary<TTransition, string> TransitionDescriptions { get; private set; }
-
-        public void Accept(TTransition trigger)
+        private TimeSpan ProcedureSpan
         {
-            this.Machine.Fire(trigger);
+            get { return this.ProcedureSpans[this.Machine.State]; }
+        }
+
+        private TimeSpan ProcedureElapsed
+        {
+            get { return DateTime.Now - this.procedureTransitionedMoment; }
+        }
+
+        public void Accept(TTransition transition)
+        {
+            this.Machine.Fire(transition);
 
             this.procedureTransitionedMoment = DateTime.Now;
         }
 
-        public List<IOption> Request()
+        public List<IOption> RequestOptions()
         {
             var transitions = this.Machine.PermittedTriggers;
 
@@ -90,31 +104,72 @@
                         transition)).Cast<IOption>().ToList();
         }
 
-        public void Send()
+        public void SendOptions()
         {
             var screenManager = this.GameInterop.Screen;
-            screenManager.AddScreen(new OptionScreen(this.Request()));
+            
+            var mainScreen = (MainScreen)screenManager.Screens.First(s => s is MainScreen);
+
+            screenManager.AddScreen(new OptionScreen(mainScreen.CircularLayers, this.RequestOptions()));
         }
     }
 
     #endregion
 
+    #region Operation Update
+
     public partial class Operation<TProcedure, TTransition>
     {
         private DateTime procedureTransitionedMoment;
 
-        public bool IsProcedureTransitioning { get; set; }
+        public bool IsInitialized { get; set; }
 
-        public bool IsOperationActivated { get; set; }
+        public bool IsActivated { get; private set; }
 
         public void Update()
         {
-            var isProcedureShouldTransit = DateTime.Now - this.procedureTransitionedMoment
-                                           > this.ProcedureSpans[this.Machine.State];
-            if (isProcedureShouldTransit && !this.IsProcedureTransitioning)
+            // Pause updating when inactivated
+            if (!this.IsActivated || Operation.Session.IsLocked)
             {
-                this.Send();
+                return;
+            }
+
+            // Record the first moment of updating
+            if (!this.IsInitialized)
+            {
+                this.IsInitialized = true;
+
+                this.procedureTransitionedMoment = DateTime.Now;
+            }
+
+            var shouldTransit = this.ProcedureElapsed > this.ProcedureSpan;
+            if (shouldTransit)
+            {
+                this.Lock();
+
+                this.SendOptions();
             }
         }
+
+        #region Operations
+
+        public void Toggle()
+        {
+            this.IsActivated = !this.IsActivated;
+        }
+
+        public void Unlock()
+        {
+            Operation.Session.Unlock();
+        }
+
+        public void Lock()
+        {
+            Operation.Session.Lock();
+        }
+
+        #endregion
     }
+
+    #endregion
 }

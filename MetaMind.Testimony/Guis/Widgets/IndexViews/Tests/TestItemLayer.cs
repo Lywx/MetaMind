@@ -15,9 +15,9 @@ namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Tests
             get { return (TestItemLogic)base.ItemLogic; }
         }
 
-        public new TestIndexItemSettings ItemSettings
+        public new TestItemSettings ItemSettings
         {
-            get { return (TestIndexItemSettings)base.ItemSettings; }
+            get { return (TestItemSettings)base.ItemSettings; }
         }
 
         public TestItemFrame ItemFrame

@@ -18,7 +18,7 @@ namespace MetaMind.Testimony.Concepts.Tests
 
     public partial class Test
     {
-        public static TestSession TestSession { get; set; }
+        public static TestSession Session { get; set; }
     }
 
     #endregion
@@ -181,7 +181,7 @@ namespace MetaMind.Testimony.Concepts.Tests
         {
             if (cause)
             {
-                if (TestSession.NotificationEnabled)
+                if (Session.NotificationEnabled)
                 {
                     var audio = this.GameInterop.Audio;
                     audio.PlayCue(failingCue);
@@ -205,7 +205,7 @@ namespace MetaMind.Testimony.Concepts.Tests
         {
             if (cause)
             {
-                if (TestSession.NotificationEnabled)
+                if (Session.NotificationEnabled)
                 {
                     var audio = this.GameInterop.Audio;
                     audio.PlayCue(succeedingCue);
@@ -283,7 +283,7 @@ namespace MetaMind.Testimony.Concepts.Tests
             this.testResultVariation = 0;
 
             this.TestMethod = () => this.ChildrenTestPassed == this.Children.Count;
-            this.TestStatusSelector = () => this.TestMethod() ? "SUCCEEDED" : "FAILED";
+            this.TestStatusSelector = () => this.TestMethod() ? "PASSED" : "FAILED";
         }
 
         #endregion

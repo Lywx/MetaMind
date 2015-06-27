@@ -1,4 +1,4 @@
-namespace MetaMind.Testimony.Guis.Widgets.Options
+namespace MetaMind.Testimony.Guis.Widgets.BlockViews.Options
 {
     using System;
     using Concepts.Operations;
@@ -58,7 +58,7 @@ namespace MetaMind.Testimony.Guis.Widgets.Options
             var itemSettings     = itemLayer.ItemSettings;
             var itemLayout       = itemLayer.ItemLayout;
 
-            IOption itemData = Item.ItemData;
+            IOption itemData = this.Item.ItemData;
             // Positions
             this.ItemCenterPosition = () => this.itemFrame.RootFrame.Center.ToVector2();
 

@@ -10,8 +10,8 @@
 
     public class OperationLayer : GameLayer
     {
-        public OperationLayer(IGameScreen screen, byte alpha = byte.MaxValue)
-            : base(screen, alpha)
+        public OperationLayer(IGameScreen screen, byte transitionAlpha = byte.MaxValue)
+            : base(screen, transitionAlpha)
         {
             this.Modules = new GameControllableEntityCollection<IModule>();
         }
@@ -35,7 +35,7 @@
                 new OperationModule(
                     new OperationModuleSettings(),
                     Testimony.SessionData.Operation,
-                    new OperationSession(Testimony.FsiSession)));
+                    Testimony.FsiSession));
             this.Modules.LoadContent(interop);
 
             base.LoadContent(interop);

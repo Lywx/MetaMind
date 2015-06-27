@@ -3,5 +3,7 @@
     public interface IOptionOperation
     {
         void Accept();
+
+        void Unlock();
     }
 }

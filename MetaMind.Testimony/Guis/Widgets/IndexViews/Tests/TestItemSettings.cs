@@ -7,7 +7,7 @@ namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Tests
     using Engine.Settings.Colors;
     using Microsoft.Xna.Framework;
 
-    public class TestIndexItemSettings : ItemSettings
+    public class TestItemSettings : ItemSettings
     {
         private readonly FrameSettings rootFrame = new FrameSettings
         {
@@ -147,7 +147,7 @@ namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Tests
             TextMonospaced = true,
         };
 
-        public TestIndexItemSettings()
+        public TestItemSettings()
         {
             this.Add("RootFrame", this.rootFrame);
 

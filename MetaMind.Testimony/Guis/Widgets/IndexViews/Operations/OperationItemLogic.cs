@@ -1,14 +1,13 @@
 ﻿namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Operations
 {
     using System.Diagnostics;
-    using Engine.Guis.Elements;
+    using Concepts.Operations;
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Data;
     using Engine.Guis.Widgets.Items.Frames;
     using Engine.Guis.Widgets.Items.Interactions;
     using Engine.Guis.Widgets.Items.Layouts;
     using Engine.Guis.Widgets.Items.Logic;
-    using Tests;
 
     public class OperationItemLogic : IndexBlockViewVerticalItemLogic 
     {
@@ -31,25 +30,18 @@
         {
             base.SetupLayer();
 
-            this.ItemFrame.RootFrame.MouseLeftPressed  += this.RootFrameMouseLeftPressed;
-            this.ItemFrame.RootFrame.MouseRightPressed += this.RootFrameMouseRightPressed;
+            this.ItemFrame.NameFrame       .MouseLeftPressed  += (o, args) => this.ToggleIndexView();
+            this.ItemFrame.DescriptionFrame.MouseLeftPressed  += (o, args) => this.ToggleIndexView();
+            this.ItemFrame.StatusFrame     .MouseLeftPressed  += (o, args) => this.ToggleOperation();
+            this.ItemFrame.RootFrame       .MouseRightPressed += (o, args) => this.OpenOperationFile();
         }
-
-        #region Events
-
-        private void RootFrameMouseLeftPressed(object sender, FrameEventArgs e)
-        {
-            this.ToggleIndexView();
-        }
-
-        private void RootFrameMouseRightPressed(object sender, FrameEventArgs e)
-        {
-            this.OpenOperationFile();
-        }
-
-        #endregion
 
         #region Operations
+
+        private void ToggleOperation()
+        {
+            ((IOperationDescription)this.Item.ItemData).Toggle();
+        }
 
         private void OpenOperationFile()
         {

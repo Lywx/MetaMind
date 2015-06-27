@@ -9,8 +9,8 @@
 
     public class SynchronizationLayer : GameLayer
     {
-        public SynchronizationLayer(IGameScreen screen, byte alpha = byte.MaxValue)
-            : base(screen, alpha)
+        public SynchronizationLayer(IGameScreen screen, byte transitionAlpha = byte.MaxValue)
+            : base(screen, transitionAlpha)
         {
             this.Modules = new GameControllableEntityCollection<IModule>();
         }

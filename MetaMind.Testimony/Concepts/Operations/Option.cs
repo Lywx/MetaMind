@@ -1,6 +1,7 @@
 namespace MetaMind.Testimony.Concepts.Operations
 {
     using System;
+    using Engine.Guis.Widgets.Items.Data;
 
     #region Option
 
@@ -54,6 +55,33 @@ namespace MetaMind.Testimony.Concepts.Operations
         {
             ((IOperationOperations<TTransition>)this.operation).Accept(this.Transition);
         }
+
+        public void Unlock()
+        {
+            this.operation.Unlock();
+        }
+    }
+
+    #endregion
+
+    #region
+
+    public partial class Option<TTransition> : IBlockViewItemData
+    {
+        public string BlockStringRaw
+        {
+            get { return this.Description; }
+        }
+
+        public string BlockLabel
+        {
+            get { return "DescriptionLabel"; }
+        }
+
+        public string BlockFrame
+        {
+            get { return "DescriptionFrame"; }
+        } 
     }
 
     #endregion

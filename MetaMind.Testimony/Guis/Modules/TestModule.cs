@@ -38,7 +38,7 @@
 
             this.test        = test;
             this.testSession = new TestSession(fsiSession);
-            Test.TestSession = this.testSession;
+            Test.Session = this.testSession;
 
             this.Logic  = new TestModuleLogic(this, this.test, this.testSession);
             this.Visual = new TestModuleVisual(this);
@@ -66,7 +66,7 @@
                 viewRowMax    : int.MaxValue);
 
             // Item settings
-            var itemSettings = new TestIndexItemSettings();
+            var itemSettings = new TestItemSettings();
 
             // View construction
             this.view = new View(viewSettings, itemSettings, new List<IViewItem>());

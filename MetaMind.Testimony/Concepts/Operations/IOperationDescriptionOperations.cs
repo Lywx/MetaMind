@@ -2,6 +2,8 @@
 {
     public interface IOperationDescriptionOperations
     {
+        void Toggle();
+
         void Reset();
     }
 }

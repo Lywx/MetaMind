@@ -4,6 +4,7 @@ namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Tests
     using Concepts.Tests;
     using Engine.Guis.Widgets.Items.Data;
     using Engine.Guis.Widgets.Items.Factories;
+    using Engine.Guis.Widgets.Items.Frames;
     using Engine.Guis.Widgets.Items.Interactions;
     using Engine.Guis.Widgets.Views;
     using Engine.Guis.Widgets.Views.Logic;
@@ -79,14 +80,14 @@ namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Tests
 
                 item =>
                 {
-                    var itemFrame = new TestItemFrame(item);
+                    var itemFrame = new TestItemFrame(item, new ViewItemPickableFrame(item));
 
                     var itemLayoutInteraction = new BlockViewVerticalItemLayoutInteraction(
                         item,
                         this.ViewSelection,
                         this.ViewScroll);
 
-                    var itemLayout = new TestIndexItemLayout(
+                    var itemLayout = new TestItemLayout(
                         item,
                         itemLayoutInteraction)
                     {

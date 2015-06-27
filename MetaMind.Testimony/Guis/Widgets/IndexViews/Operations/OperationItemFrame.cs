@@ -19,8 +19,8 @@ namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Operations
 
         private FrameSettings descriptionFrameSettings;
 
-        public OperationItemFrame(IViewItem item)
-            : base(item)
+        public OperationItemFrame(IViewItem item, IViewItemRootFrame itemRootFrame)
+            : base(item, itemRootFrame)
         {
             this.IdFrame     = new PickableFrame();
             this.StatusFrame = new PickableFrame();
@@ -53,11 +53,11 @@ namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Operations
             this.nameFrameSettings = this.itemSettings.Get<FrameSettings>("NameFrame");
             this.descriptionFrameSettings = this.itemSettings.Get<FrameSettings>("DescriptionFrame");
 
-            // —————————————————————————————————————————
-            //   id frame | status frame | name frame
-            // ———————————|              |——————————————
-            //            |              | description frame       
-            // —————————————————————————————————————————    
+            // +------------+--------------+-----------------------+  
+            // | id frame   |              | name frame            |
+            // +------------+ status frame +-----------------------+
+            // | plus frame |              | description frame     |
+            // +------------+--------------+-----------------------+
             {
                 this.IdFrame.Size = idFrameSettings.Size;
                 this.IdFrameLocation = this.RootFrameLocation;

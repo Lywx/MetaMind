@@ -3,9 +3,10 @@
     using Engine;
 
     public interface IOperation :
+        IOperationOperations,
         IOperationComputation, 
+
         IInnerUpdatable
     {
     }
-
 }

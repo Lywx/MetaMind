@@ -1,4 +1,4 @@
-namespace MetaMind.Testimony.Guis.Widgets.Options
+namespace MetaMind.Testimony.Guis.Widgets.BlockViews.Options
 {
     using System;
     using Engine.Guis.Elements;
@@ -17,8 +17,8 @@ namespace MetaMind.Testimony.Guis.Widgets.Options
 
         private FrameSettings descriptionFrameSettings;
 
-        public OptionItemFrame(IViewItem item)
-            : base(item)
+        public OptionItemFrame(IViewItem item, IViewItemRootFrame itemRootFrame)
+            : base(item, itemRootFrame)
         {
             this.IdFrame = new PickableFrame();
             this.NameFrame = new PickableFrame();
@@ -46,8 +46,11 @@ namespace MetaMind.Testimony.Guis.Widgets.Options
             var nameFrameSettings = this.itemSettings.Get<FrameSettings>("NameFrame");
             this.descriptionFrameSettings = this.itemSettings.Get<FrameSettings>("DescriptionFrame");
 
-            // id frame - name frame
-            // description frame       
+            // +----------+--------------------------------------+  
+            // | id frame | name frame                           |
+            // +----------+--------------------------------------+  
+            // | description frame                               |
+            // +-------------------------------------------------+  
             {
                 this.IdFrame.Size = idFrameSettings.Size;
                 this.IdFrameLocation = this.RootFrameLocation;

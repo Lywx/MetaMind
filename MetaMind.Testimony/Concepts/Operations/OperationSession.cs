@@ -17,6 +17,18 @@ namespace MetaMind.Testimony.Concepts.Operations
             this.fsiSession = fsiSession;
         }
 
+        public bool IsLocked { get; private set; }
+
         public FsiSession FsiSession { get { return this.fsiSession; } }
+
+        public void Unlock()
+        {
+            this.IsLocked = false;
+        }
+
+        public void Lock()
+        {
+            this.IsLocked = true;
+        }
     }
 }

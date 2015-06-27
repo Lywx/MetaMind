@@ -4,13 +4,13 @@
     using System.Collections.Generic;
     using Concepts.Operations;
     using Engine;
+    using Engine.Guis.Layers;
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Data;
     using Engine.Guis.Widgets.Items.Factories;
+    using Engine.Guis.Widgets.Items.Frames;
     using Engine.Guis.Widgets.Items.Interactions;
     using Engine.Guis.Widgets.Items.Layers;
-    using Engine.Guis.Widgets.Items.Layouts;
-    using Engine.Guis.Widgets.Items.Logic;
     using Engine.Guis.Widgets.Views;
     using Engine.Guis.Widgets.Views.Layouts;
     using Engine.Guis.Widgets.Views.Logic;
@@ -20,23 +20,32 @@
     using Engine.Guis.Widgets.Views.Visuals;
     using Engine.Screens;
     using Engine.Services;
-    using Guis.Widgets.Options;
     using Microsoft.Xna.Framework;
+    using Widgets.BlockViews.Options;
+    using Widgets.IndexViews.Tests;
 
     public class OptionScreen : GameScreen
     {
+        private readonly IGameLayer hiddenLayer;
+
         private readonly List<IOption> options;
 
         private View view;
 
-        public OptionScreen(List<IOption> options)
+        public OptionScreen(IGameLayer hiddenLayer, List<IOption> options)
         {
+            if (hiddenLayer == null)
+            {
+                throw new ArgumentNullException("hiddenLayer");
+            }
+
             if (options == null)
             {
                 throw new ArgumentNullException("options");
             }
 
-            this.options = options;
+            this.hiddenLayer = hiddenLayer;
+            this.options     = options;
 
             // Has to be a popup screen, or it can block the background
             this.IsPopup = true;
@@ -72,17 +81,17 @@
             var itemFactory =
                 new ViewItemFactory(
 
-                    item => new BlockViewVerticalItemLayer(item),
+                    item => new OptionItemLayer(item),
 
                     item =>
                     {
-                        var itemFrame             = new OptionItemFrame(item);
+                        var itemFrame             = new OptionItemFrame(item, new ViewItemPickableFrame(item));
                         var itemLayoutInteraction = new BlockViewVerticalItemLayoutInteraction(item, viewSelection, viewScroll);
-                        var itemLayout            = new BlockViewVerticalItemLayout(item, itemLayoutInteraction);
+                        var itemLayout            = new TestItemLayout(item, itemLayoutInteraction);
                         var itemInteraction       = new BlockViewVerticalItemInteraction(item, itemLayout, itemLayoutInteraction);
                         var itemModel             = new ViewItemDataModel(item);
 
-                        return new BlockViewVerticalItemLogic(item, itemFrame, itemInteraction, itemModel, itemLayout);
+                        return new OptionItemLogic(item, itemFrame, itemInteraction, itemModel, itemLayout);
                     },
 
                     item => new OptionItemVisual(item));
@@ -94,11 +103,25 @@
             var viewVisual = new GradientViewVisual(this.view);
             var viewLayer  = new BlockViewVerticalLayer(this.view);
             this.view.ViewLayer = viewLayer;
+            this.view.ViewLogic = viewLogic;
+            this.view.ViewVisual = viewVisual;
 
             this.Entities.Add(this.view);
 
             this.Entities.LoadContent(interop);
             base.LoadContent(interop);
+
+            this.hiddenLayer.FadeOut(TimeSpan.FromSeconds(0.5));
+
+            // Load Items
+            this.view.ViewLogic.ResetItems();
+        }
+
+        public override void UnloadContent(IGameInteropService interop)
+        {
+            base.UnloadContent(interop);
+
+            this.hiddenLayer.FadeIn(TimeSpan.FromSeconds(0.5));
         }
 
         public override void Draw(IGameGraphicsService graphics, GameTime time)
@@ -114,7 +137,10 @@
 
         public override void Update(GameTime time)
         {
+            this.Entities.UpdateForwardBuffer();
             this.Entities.Update(time);
+            this.Entities.UpdateBackwardBuffer();
+
             base.Update(time);
         }
 

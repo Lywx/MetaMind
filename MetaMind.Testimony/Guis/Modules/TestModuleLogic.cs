@@ -8,14 +8,9 @@
     using Engine.Services;
     using Concepts.Synchronizations;
     using Concepts.Tests;
-    using Scripting;
 
     public class TestModuleLogic : ModuleLogic<TestModule, TestModuleSettings, TestModuleLogic>
     {
-        private ScriptSearcher scriptSearcher;
-
-        private ScriptRunner scriptRunner;
-
         private SynchronizationSession synchronizationSession;
 
         private readonly ITest test;
@@ -41,15 +36,8 @@
 
         public override void LoadContent(IGameInteropService interop)
         {
-            this.scriptSearcher = new ScriptSearcher();
-            this.scriptRunner   = new ScriptRunner(this.scriptSearcher, this.testSession.FsiSession);
-            this.scriptRunner.Search();
-
             this.synchronizationSession = new SynchronizationSession();
             this.synchronizationSession.StartSynchronization();
-
-            this.test.Reset();
-            this.scriptRunner.Rerun();
 
             base.LoadContent(interop);
         }
@@ -62,12 +50,6 @@
             {
                 this.synchronizationSession.ToggleSynchronization();
                 this.testSession.           ToggleNotification();
-            }
-
-            if (keyboard.IsActionTriggered(KeyboardActions.TestRerun))
-            {
-                this.test.Reset();
-                this.scriptRunner.Rerun();
             }
 
             base.UpdateInput(input, time);

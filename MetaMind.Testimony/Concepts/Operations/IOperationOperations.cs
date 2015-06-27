@@ -1,13 +1,16 @@
 ﻿namespace MetaMind.Testimony.Concepts.Operations
 {
-    using System.Collections.Generic;
+    public interface IOperationOperations
+    {
+        void Toggle();
+
+        void Lock();
+
+        void Unlock();
+    }
 
     public interface IOperationOperations<in TTransition>
     {
-        void Accept(TTransition trigger);
-
-        List<IOption> Request();
-
-        void Send();
+        void Accept(TTransition transition);
     }
 }

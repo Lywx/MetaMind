@@ -50,6 +50,14 @@ namespace MetaMind.Testimony.Concepts.Operations
             {
                 this.Operation.Update();
             }
+
+            if (this.HasChildren)
+            {
+                foreach (var operation in this.Children)
+                {
+                    operation.Update();
+                }
+            }
         }
     }
 
@@ -88,6 +96,8 @@ namespace MetaMind.Testimony.Concepts.Operations
 
     #endregion
 
+    #region Operation Operations
+
     public partial class OperationDescription
     {
 
@@ -98,9 +108,8 @@ namespace MetaMind.Testimony.Concepts.Operations
         {
             get
             {
-                return 
-                    this.Operation != null && 
-                    this.Operation.IsOperationActivated;
+                return (this.Operation != null && this.Operation.IsActivated) ||
+                       (this.HasChildren && this.ChildrenOperationActivated == this.Children.Count);
             }
         }
 
@@ -118,13 +127,22 @@ namespace MetaMind.Testimony.Concepts.Operations
             {
                 return this.Operation == null
                            ? ""
-                           : this.Operation.IsOperationActivated
+                           : this.Operation.IsActivated
                                  ? "ACTIVATED"
-                                 : "UNACTIVATED";
+                                 : "INACTIVE";
             }
         }
-        
+
+        public void Toggle()
+        {
+            if (this.Operation != null)
+            {
+                this.Operation.Toggle();
+            }
+        }
     }
+
+    #endregion
 
     #region IBlockViewItemData
 

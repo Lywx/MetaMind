@@ -4,9 +4,9 @@
     using Engine.Guis.Widgets.Items.Interactions;
     using Engine.Guis.Widgets.Items.Layouts;
 
-    public class TestIndexItemLayout : IndexBlockViewVerticalItemLayout
+    public class TestItemLayout : IndexBlockViewVerticalItemLayout
     {
-        public TestIndexItemLayout(
+        public TestItemLayout(
             IViewItem item,
             IViewItemLayoutInteraction itemLayoutInteraction)
             : base(item, itemLayoutInteraction)

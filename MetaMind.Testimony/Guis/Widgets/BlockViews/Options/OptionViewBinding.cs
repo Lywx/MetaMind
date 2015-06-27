@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Testimony.Guis.Widgets.Options
+﻿namespace MetaMind.Testimony.Guis.Widgets.BlockViews.Options
 {
     using System;
     using System.Collections.Generic;

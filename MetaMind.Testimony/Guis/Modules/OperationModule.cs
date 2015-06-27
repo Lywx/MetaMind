@@ -10,6 +10,7 @@
     using Engine.Guis.Widgets.Views;
     using Engine.Services;
     using Microsoft.Xna.Framework;
+    using Scripting;
     using Widgets.IndexViews;
     using Widgets.IndexViews.Operations;
     using Widgets.IndexViews.Tests;
@@ -20,7 +21,7 @@
 
         private readonly OperationSession operationSession;
 
-        public OperationModule(OperationModuleSettings settings, IOperationDescription operations, OperationSession operationSession)
+        public OperationModule(OperationModuleSettings settings, IOperationDescription operations, FsiSession fsiSession)
             : base(settings)
         {
             if (operations == null)
@@ -28,13 +29,14 @@
                 throw new ArgumentNullException("operations");
             }
 
-            if (operationSession == null)
+            if (fsiSession == null)
             {
-                throw new ArgumentNullException("operationSession");
+                throw new ArgumentNullException("fsiSession");
             }
 
             this.operations       = operations;
-            this.operationSession = operationSession;
+            this.operationSession = new OperationSession(fsiSession);
+            Operation.Session     = operationSession;
 
             this.Entities = new GameControllableEntityCollection<IView>();
         }
@@ -55,8 +57,9 @@
                 viewRowMax    : int.MaxValue);
 
             // Item settings
-            var itemSettings = new TestIndexItemSettings();
-            itemSettings.Get<FrameSettings>("StatusFrame").Size = new Point(128, 52);
+            var itemSettings = new TestItemSettings();
+            var statusFrameSettings = itemSettings.Get<FrameSettings>("StatusFrame");
+            statusFrameSettings.Size = new Point(128, 52);
 
             // View construction
             this.View = new View(viewSettings, itemSettings, new List<IViewItem>());

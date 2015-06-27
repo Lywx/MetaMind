@@ -7,6 +7,7 @@
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Data;
     using Engine.Guis.Widgets.Items.Factories;
+    using Engine.Guis.Widgets.Items.Frames;
     using Engine.Guis.Widgets.Items.Interactions;
     using Engine.Guis.Widgets.Items.Layers;
     using Engine.Guis.Widgets.Regions;
@@ -95,7 +96,7 @@
             var hostViewScroll = hostViewLayer.ViewScroll;
 
             var indexViewSettings = (StandardIndexViewSettings)item.View.ViewSettings.Clone();
-            var indexItemSettings = (TestIndexItemSettings)item.View.ItemSettings.Clone();
+            var indexItemSettings = (TestItemSettings)item.View.ItemSettings.Clone();
 
             indexViewSettings.ViewRowDisplay = hostViewSettings.ViewRowDisplay - itemLayout.Row - itemLayout.BlockRow;
             indexViewSettings.ViewPosition   = hostViewScroll.Position(itemLayout.Row + itemLayout.BlockRow);
@@ -192,14 +193,14 @@
 
                 item =>
                 {
-                    var itemFrame = new TestItemFrame(item);
+                    var itemFrame = new TestItemFrame(item, new ViewItemPickableFrame(item));
 
                     var itemLayoutInteraction = new BlockViewVerticalItemLayoutInteraction(
                         item,
                         this.ViewSelection,
                         this.ViewScroll);
 
-                    var itemLayout = new TestIndexItemLayout(
+                    var itemLayout = new TestItemLayout(
                         item,
                         itemLayoutInteraction);
 

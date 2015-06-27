@@ -7,6 +7,7 @@
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Data;
     using Engine.Guis.Widgets.Items.Factories;
+    using Engine.Guis.Widgets.Items.Frames;
     using Engine.Guis.Widgets.Items.Interactions;
     using Engine.Guis.Widgets.Items.Layers;
     using Engine.Guis.Widgets.Items.Settings;
@@ -194,14 +195,14 @@
 
                 item =>
                 {
-                    var itemFrame = new OperationItemFrame(item);
+                    var itemFrame = new OperationItemFrame(item, new ViewItemPickableFrame(item));
 
                     var itemLayoutInteraction = new BlockViewVerticalItemLayoutInteraction(
                         item,
                         this.ViewSelection,
                         this.ViewScroll);
 
-                    var itemLayout = new TestIndexItemLayout(
+                    var itemLayout = new TestItemLayout(
                         item,
                         itemLayoutInteraction);
 

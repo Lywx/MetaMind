@@ -2,6 +2,7 @@
 {
     using System;
     using Engine.Components.Fonts;
+    using Engine.Components.Inputs;
     using Engine.Guis.Layers;
     using Engine.Guis.Widgets.Buttons;
     using Engine.Screens;
@@ -9,12 +10,17 @@
     using Engine.Settings.Colors;
     using Layers;
     using Microsoft.Xna.Framework;
+    using Scripting;
 
     public class MainScreen : GameScreen
     {
         private Button buttonPrevious;
 
         private Button buttonNext;
+
+        private ScriptSearcher scriptSearcher;
+
+        private ScriptRunner scriptRunner;
 
         public MainScreen()
         {
@@ -24,12 +30,16 @@
             this.IsPopup = true;
         }
 
-        private CircularGameLayer CircularLayers { get; set; }
+        public CircularGameLayer CircularLayers { get; private set; }
 
         #region Load and Unload
 
         public override void LoadContent(IGameInteropService interop)
         {
+            this.scriptSearcher = new ScriptSearcher();
+            this.scriptRunner   = new ScriptRunner(this.scriptSearcher, Testimony.FsiSession);
+            this.scriptRunner.Search();
+
             var graphics = interop.Engine.Graphics;
 
             const int buttonWidth = 30;
@@ -77,6 +87,9 @@
             this.CircularLayers.Add(new OperationLayer(this));
             this.Layers.Add(this.CircularLayers);
 
+            // First run of fsi session
+            this.RunScripts();
+
             base.LoadContent(interop);
         }
 
@@ -92,18 +105,33 @@
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
+            var keyboard = input.State.Keyboard;
+            if (keyboard.IsActionTriggered(KeyboardActions.SessionRerun))
+            {
+                this.RunScripts();
+            }
+
             this.buttonPrevious.UpdateInput(input, time);
             this.buttonNext    .UpdateInput(input, time);
 
             base.UpdateInput(input, time);
         }
 
+        private void RunScripts()
+        {
+            Testimony.SessionData.Operation.Reset();
+            Testimony.SessionData.Test     .Reset();
+
+            this.scriptRunner.Rerun();
+        }
+
         public override void Draw(IGameGraphicsService graphics, GameTime time)
         {
             graphics.SpriteBatch.Begin();
 
-            this.buttonPrevious.Draw(graphics, time, this.TransitionAlpha);
-            this.buttonNext    .Draw(graphics, time, this.TransitionAlpha);
+            // Buttons have the same alpha value as circular layer
+            this.buttonPrevious.Draw(graphics, time, Math.Min(this.TransitionAlpha, this.CircularLayers.TransitionAlpha));
+            this.buttonNext    .Draw(graphics, time, Math.Min(this.TransitionAlpha, this.CircularLayers.TransitionAlpha));
 
             graphics.SpriteBatch.End();
 
