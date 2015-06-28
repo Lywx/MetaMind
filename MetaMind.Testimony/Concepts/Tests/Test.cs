@@ -181,7 +181,7 @@ namespace MetaMind.Testimony.Concepts.Tests
         {
             if (cause)
             {
-                if (Session.NotificationEnabled)
+                if (Session.IsNotificationEnabled)
                 {
                     var audio = this.GameInterop.Audio;
                     audio.PlayCue(failingCue);
@@ -205,7 +205,7 @@ namespace MetaMind.Testimony.Concepts.Tests
         {
             if (cause)
             {
-                if (Session.NotificationEnabled)
+                if (Session.IsNotificationEnabled)
                 {
                     var audio = this.GameInterop.Audio;
                     audio.PlayCue(succeedingCue);

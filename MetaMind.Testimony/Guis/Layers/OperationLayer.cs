@@ -1,5 +1,6 @@
 ﻿namespace MetaMind.Testimony.Guis.Layers
 {
+    using System;
     using Concepts.Operations;
     using Engine;
     using Engine.Guis;
@@ -10,9 +11,18 @@
 
     public class OperationLayer : GameLayer
     {
-        public OperationLayer(IGameScreen screen, byte transitionAlpha = byte.MaxValue)
+        private readonly OperationSession operationSession;
+
+        public OperationLayer(OperationSession operationSession, IGameScreen screen, byte transitionAlpha = byte.MaxValue)
             : base(screen, transitionAlpha)
         {
+            if (operationSession == null)
+            {
+                throw new ArgumentNullException("operationSession");
+            }
+
+            this.operationSession = operationSession;
+
             this.Modules = new GameControllableEntityCollection<IModule>();
         }
 
@@ -33,9 +43,9 @@
         {
             this.Modules.Add(
                 new OperationModule(
+                    this.operationSession,
                     new OperationModuleSettings(),
-                    Testimony.SessionData.Operation,
-                    Testimony.FsiSession));
+                    Testimony.SessionData.Operation));
             this.Modules.LoadContent(interop);
 
             base.LoadContent(interop);

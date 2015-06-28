@@ -53,7 +53,7 @@ namespace MetaMind.Testimony.Concepts.Operations
 
             if (this.HasChildren)
             {
-                foreach (var operation in this.Children)
+                foreach (var operation in this.Children.ToArray())
                 {
                     operation.Update();
                 }

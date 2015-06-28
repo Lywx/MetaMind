@@ -10,7 +10,6 @@
     using Engine.Guis.Widgets.Views;
     using Engine.Services;
     using Microsoft.Xna.Framework;
-    using Scripting;
     using Widgets.IndexViews;
     using Widgets.IndexViews.Operations;
     using Widgets.IndexViews.Tests;
@@ -21,7 +20,7 @@
 
         private readonly OperationSession operationSession;
 
-        public OperationModule(OperationModuleSettings settings, IOperationDescription operations, FsiSession fsiSession)
+        public OperationModule(OperationSession operationSession, OperationModuleSettings settings, IOperationDescription operations)
             : base(settings)
         {
             if (operations == null)
@@ -29,13 +28,13 @@
                 throw new ArgumentNullException("operations");
             }
 
-            if (fsiSession == null)
+            if (operationSession == null)
             {
-                throw new ArgumentNullException("fsiSession");
+                throw new ArgumentNullException("operationSession");
             }
 
             this.operations       = operations;
-            this.operationSession = new OperationSession(fsiSession);
+            this.operationSession = operationSession;
             Operation.Session     = operationSession;
 
             this.Entities = new GameControllableEntityCollection<IView>();
@@ -53,7 +52,7 @@
             var viewSettings = new StandardIndexViewSettings(
                 itemMargin    : new Vector2(1355 + 128 + 24, 26),
                 viewPosition  : new Vector2(40, 100),
-                viewRowDisplay: 28,
+                viewRowDisplay: 30,
                 viewRowMax    : int.MaxValue);
 
             // Item settings
@@ -76,12 +75,16 @@
 
         #endregion
 
+        #region Draw
+
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
             this.Entities.Draw(graphics, time, alpha);
 
             base.Draw(graphics, time, alpha);
         }
+
+        #endregion
 
         #region Update
 

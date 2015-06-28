@@ -16,16 +16,16 @@
 
             this.fsiSession = fsiSession;
 
-            this.NotificationEnabled = true;
+            this.IsNotificationEnabled = true;
         }
 
-        public bool NotificationEnabled { get; private set; }
+        public bool IsNotificationEnabled { get; private set; }
 
         public FsiSession FsiSession { get { return this.fsiSession; } }
 
         public void ToggleNotification()
         {
-            this.NotificationEnabled = !this.NotificationEnabled;
+            this.IsNotificationEnabled = !this.IsNotificationEnabled;
         }
     }
 }

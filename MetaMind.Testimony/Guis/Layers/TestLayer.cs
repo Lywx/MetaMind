@@ -1,5 +1,7 @@
 namespace MetaMind.Testimony.Guis.Layers
 {
+    using System;
+    using Concepts.Tests;
     using Engine;
     using Engine.Guis;
     using Engine.Screens;
@@ -9,9 +11,18 @@ namespace MetaMind.Testimony.Guis.Layers
 
     public class TestLayer : GameLayer
     {
-        public TestLayer(IGameScreen screen, byte transitionAlpha = byte.MaxValue)
+        private readonly TestSession testSession;
+
+        public TestLayer(TestSession testSession, IGameScreen screen, byte transitionAlpha = byte.MaxValue)
             : base(screen, transitionAlpha)
         {
+            if (testSession == null)
+            {
+                throw new ArgumentNullException("testSession");
+            }
+
+            this.testSession = testSession;
+
             this.Modules = new GameControllableEntityCollection<IModule>();
         }
 
@@ -30,7 +41,7 @@ namespace MetaMind.Testimony.Guis.Layers
 
         public override void LoadContent(IGameInteropService interop)
         {
-            var testModule = new TestModule(new TestModuleSettings(), Testimony.SessionData.Test, Testimony.FsiSession);
+            var testModule = new TestModule(new TestModuleSettings(), Testimony.SessionData.Test, this.testSession);
 
             this.Modules.Add(testModule);
             this.Modules.LoadContent(interop);

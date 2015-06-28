@@ -1,6 +1,9 @@
 ﻿namespace MetaMind.Testimony.Guis.Screens
 {
     using System;
+    using Concepts.Operations;
+    using Concepts.Synchronizations;
+    using Concepts.Tests;
     using Engine.Components.Fonts;
     using Engine.Components.Inputs;
     using Engine.Guis.Layers;
@@ -21,6 +24,12 @@
 
         private Label screenLabel;
 
+        private SynchronizationSession synchronizationSession;
+
+        private TestSession testSession;
+
+        private OperationSession operationSession;
+
         private ScriptSearcher scriptSearcher;
 
         private ScriptRunner scriptRunner;
@@ -39,10 +48,22 @@
 
         public override void LoadContent(IGameInteropService interop)
         {
+            // Script runner
             this.scriptSearcher = new ScriptSearcher();
             this.scriptRunner   = new ScriptRunner(this.scriptSearcher, Testimony.FsiSession);
             this.scriptRunner.Search();
 
+            // Synchronization session
+            this.synchronizationSession = new SynchronizationSession();
+            this.synchronizationSession.StartSynchronization();
+
+            // Test session
+            this.testSession = new TestSession(Testimony.FsiSession);
+
+            // Operation session
+            this.operationSession = new OperationSession(Testimony.FsiSession);
+
+            // Buttons
             var graphics = interop.Engine.Graphics;
 
             const int buttonWidth = 30;
@@ -87,7 +108,7 @@
             {
                 TextFont     = () => Font.UiRegular,
                 Text         = () => this.CircularLayers.GameLayerDisplayed is TestLayer ? "Tests" : "Operations",
-                TextPosition = () => new Vector2(40, 845),
+                TextPosition = () => new Vector2(40, 25),
                 TextColor    = () => Palette.Transparent5,
                 TextSize     = () => 1f,
             };
@@ -95,8 +116,8 @@
             this.Layers.Add(new SynchronizationLayer(this));
 
             this.CircularLayers = new CircularGameLayer(this);
-            this.CircularLayers.Add(new TestLayer(this));
-            this.CircularLayers.Add(new OperationLayer(this));
+            this.CircularLayers.Add(new TestLayer(this.testSession, this));
+            this.CircularLayers.Add(new OperationLayer(this.operationSession, this));
             this.Layers.Add(this.CircularLayers);
 
             // First run of fsi session
@@ -119,9 +140,17 @@
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
             var keyboard = input.State.Keyboard;
+
             if (keyboard.IsActionTriggered(KeyboardActions.SessionRerun))
             {
                 this.RunScripts();
+            }
+
+            if (keyboard.IsActionTriggered(KeyboardActions.SynchronizationPause))
+            {
+                this.synchronizationSession.ToggleSynchronization();
+                this.operationSession      .ToggleNotification();
+                this.testSession.           ToggleNotification();
             }
 
             this.buttonPrevious.UpdateInput(input, time);

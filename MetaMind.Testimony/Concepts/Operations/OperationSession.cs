@@ -7,13 +7,13 @@ namespace MetaMind.Testimony.Concepts.Operations
     {
         private readonly TimeSpan unlockedTimeout = TimeSpan.FromSeconds(3);
 
-        private readonly FsiSession fsiSession;
-
         private DateTime unlockedMoment;
 
         private DateTime lockedMoment;
 
         private bool isLocked;
+
+        private readonly FsiSession fsiSession;
 
         public OperationSession(FsiSession fsiSession)
         {
@@ -23,6 +23,8 @@ namespace MetaMind.Testimony.Concepts.Operations
             }
 
             this.fsiSession = fsiSession;
+
+            this.IsNotificationEnabled = true;
         }
 
         public bool IsLocked
@@ -46,7 +48,14 @@ namespace MetaMind.Testimony.Concepts.Operations
             }
         }
 
+        public bool IsNotificationEnabled { get; set; }
+
         public FsiSession FsiSession { get { return this.fsiSession; } }
+
+        public void ToggleNotification()
+        {
+            this.IsNotificationEnabled = !this.IsNotificationEnabled;
+        }
 
         public void Unlock()
         {

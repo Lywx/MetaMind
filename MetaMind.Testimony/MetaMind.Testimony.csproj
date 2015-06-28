@@ -144,8 +144,6 @@
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemVisual.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationViewBinding.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Tests\TestIndexedViewComposer.cs" />
-    <Compile Include="Guis\Modules\TestModuleLogic.cs" />
-    <Compile Include="Guis\Modules\TestModuleVisual.cs" />
     <Compile Include="Concepts\Synchronizations\ISynchronizationController.cs" />
     <Compile Include="Concepts\Synchronizations\SynchronizationSession.cs" />
     <Compile Include="Guis\Widgets\BlockViews\Options\OptionItemLayer.cs" />

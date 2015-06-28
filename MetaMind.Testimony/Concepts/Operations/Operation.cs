@@ -116,10 +116,16 @@
 
         private void SendOptions()
         {
+            if (Session.IsNotificationEnabled)
+            {
+                var audio = this.GameInterop.Audio;
+                audio.PlayCue(transitioningCue);
+            }
+
             var screenManager = this.GameInterop.Screen;
             
             var mainScreen = (MainScreen)screenManager.Screens.First(s => s is MainScreen);
-
+            
             screenManager.AddScreen(new OptionScreen(this.ProcedureName, this.ProcedureDescription, this.RequestOptions(), mainScreen.CircularLayers));
         }
     }
@@ -130,6 +136,8 @@
 
     public partial class Operation<TProcedure, TTransition>
     {
+        private readonly string transitioningCue = "Operation Transition";
+
         private DateTime procedureTransitionedMoment;
 
         private bool IsInitialized { get; set; }

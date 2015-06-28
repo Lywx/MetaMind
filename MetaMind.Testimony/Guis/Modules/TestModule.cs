@@ -9,21 +9,16 @@
     using Engine.Guis.Widgets.Views;
     using Engine.Services;
     using Microsoft.Xna.Framework;
-    using Scripting;
     using Widgets.IndexViews;
     using Widgets.IndexViews.Tests;
 
     public class TestModule : Module<TestModuleSettings>
     {
-        private readonly GameControllableEntityCollection<IView> entities = new GameControllableEntityCollection<IView>();
-
         private readonly ITest test;
 
         private readonly TestSession testSession;
 
-        private IView view;
-
-        public TestModule(TestModuleSettings settings, ITest test, FsiSession fsiSession)
+        public TestModule(TestModuleSettings settings, ITest test, TestSession testSession)
             : base(settings)
         {
             if (test == null)
@@ -31,28 +26,21 @@
                 throw new ArgumentNullException("test");
             }
 
-            if (fsiSession == null)
+            if (testSession == null)
             {
-                throw new ArgumentNullException("fsiSession");
+                throw new ArgumentNullException("testSession");
             }
 
             this.test        = test;
-            this.testSession = new TestSession(fsiSession);
+            this.testSession = testSession;
             Test.Session = this.testSession;
 
-            this.Logic  = new TestModuleLogic(this, this.test, this.testSession);
-            this.Visual = new TestModuleVisual(this);
+            this.Entities = new GameControllableEntityCollection<IView>();
         }
 
-        public GameControllableEntityCollection<IView> Entities
-        {
-            get { return this.entities; }
-        }
+        private IView View { get; set; }
 
-        public IView View
-        {
-            get { return this.view; }
-        }
+        private GameControllableEntityCollection<IView> Entities { get; set; }
 
         #region Load and Unload
                                                                                                            
@@ -62,17 +50,17 @@
             var viewSettings = new StandardIndexViewSettings(
                 itemMargin    : new Vector2(1355 + 128 + 24, 26),
                 viewPosition  : new Vector2(40, 100),
-                viewRowDisplay: 28,
+                viewRowDisplay: 30,
                 viewRowMax    : int.MaxValue);
 
             // Item settings
             var itemSettings = new TestItemSettings();
 
             // View construction
-            this.view = new View(viewSettings, itemSettings, new List<IViewItem>());
+            this.View = new View(viewSettings, itemSettings, new List<IViewItem>());
 
             var viewComposer = new TestIndexViewComposer(this.testSession);
-            viewComposer.Compose(this.view, this.test);
+            viewComposer.Compose(this.View, this.test);
 
             // Entities
             this.Entities.Add(this.View);
@@ -83,7 +71,12 @@
 
         #endregion
 
-        #region Update
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        {
+            this.Entities.Draw(graphics, time, alpha);
+
+            base.Draw(graphics, time, alpha);
+        }
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
@@ -100,7 +93,5 @@
 
             base.Update(time);
         }
-
-        #endregion
     }
 }

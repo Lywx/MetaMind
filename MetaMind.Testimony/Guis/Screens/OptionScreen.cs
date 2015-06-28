@@ -92,7 +92,7 @@
             {
                 TextFont     = () => Font.UiRegular,
                 Text         = () => "Options",
-                TextPosition = () => new Vector2(50, 845),
+                TextPosition = () => new Vector2(40, 25),
                 TextColor    = () => Palette.Transparent5,
                 TextSize     = () => 1f,
             };
@@ -133,11 +133,13 @@
                     ColorFilled = () => true,
                 });
 
+            var graphics = interop.Engine.Graphics;
+
             // View settings
             var viewSettings = new OptionViewSettings(
                 itemMargin    : new Vector2(viewWidth, 26),
                 viewPosition  : new Vector2(40, this.procedureDescriptionLabelBox.Bottom),
-                viewRowDisplay: 28,
+                viewRowDisplay: (graphics.Settings.Height - this.procedureDescriptionLabelBox.Bottom - 72) / 26,
                 viewRowMax    : int.MaxValue);
 
             // Item settings
