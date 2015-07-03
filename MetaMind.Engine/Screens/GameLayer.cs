@@ -1,6 +1,7 @@
 ﻿namespace MetaMind.Engine.Screens
 {
     using System;
+    using System.Diagnostics;
     using Microsoft.Xna.Framework;
 
     public class GameLayer : GameControllableEntity, IGameLayer
@@ -51,7 +52,12 @@
         {
             if (this.isFading)
             {
-                throw new InvalidOperationException("Layer is already fading.");
+#if DEBUG
+                Debug.WriteLine("Layer is already fading.");
+#endif 
+                this.DeferAction(() => this.FadeIn(time));
+
+                return;
             }
 
             var transitionCount = this.TransitionCount(time);
@@ -85,7 +91,12 @@
         {
             if (this.isFading)
             {
-                throw new InvalidOperationException("Layer is already fading.");
+#if DEBUG
+                Debug.WriteLine("Layer is already fading.");
+#endif
+                this.DeferAction(() => this.FadeOut(time));
+
+                return;
             }
 
             var transitionCount = this.TransitionCount(time);
