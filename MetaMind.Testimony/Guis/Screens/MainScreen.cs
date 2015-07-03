@@ -55,7 +55,6 @@
 
             // Synchronization session
             this.synchronizationSession = new SynchronizationSession();
-            this.synchronizationSession.StartSynchronization();
 
             // Test session
             this.testSession = new TestSession(Testimony.FsiSession);

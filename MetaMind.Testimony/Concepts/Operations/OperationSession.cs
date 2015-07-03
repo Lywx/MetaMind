@@ -24,7 +24,7 @@ namespace MetaMind.Testimony.Concepts.Operations
 
             this.fsiSession = fsiSession;
 
-            this.IsNotificationEnabled = true;
+            this.IsNotificationEnabled = false;
         }
 
         public bool IsLocked

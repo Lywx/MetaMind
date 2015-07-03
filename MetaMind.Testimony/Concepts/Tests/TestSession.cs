@@ -16,7 +16,7 @@
 
             this.fsiSession = fsiSession;
 
-            this.IsNotificationEnabled = true;
+            this.IsNotificationEnabled = false;
         }
 
         public bool IsNotificationEnabled { get; private set; }
