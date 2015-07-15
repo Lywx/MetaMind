@@ -132,7 +132,7 @@ namespace MetaMind.Testimony.Concepts.Operations
         private HashSet<string> GroupNamesUnique(IList<IOperationDescription> groupedoperations, int level)
         {
             return groupedoperations.Select(child => this.CropStart(child.Name, level))
-                               .ToHashSet();
+                                    .ToHashSet();
         }
 
         internal string CropStart(string name, int level = 1)
