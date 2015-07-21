@@ -58,7 +58,7 @@ namespace MetaMind.Testimony.Concepts.Operations
 
         public void Unlock()
         {
-            this.operation.Unlock();
+            this.operation.UnlockTransition();
         }
     }
 

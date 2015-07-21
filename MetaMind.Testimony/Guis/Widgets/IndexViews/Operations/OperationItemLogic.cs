@@ -1,6 +1,5 @@
 ﻿namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Operations
 {
-    using System.Diagnostics;
     using Concepts.Operations;
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Data;
@@ -33,7 +32,7 @@
             this.ItemFrame.NameFrame       .MouseLeftPressed  += (o, args) => this.ToggleIndexView();
             this.ItemFrame.DescriptionFrame.MouseLeftPressed  += (o, args) => this.ToggleIndexView();
             this.ItemFrame.StatusFrame     .MouseLeftPressed  += (o, args) => this.ToggleOperation();
-            this.ItemFrame.RootFrame       .MouseRightPressed += (o, args) => this.OpenOperationFile();
+            this.ItemFrame.RootFrame       .MouseRightPressed += (o, args) => this.OpenFolderPath();
         }
 
         #region Operations
@@ -41,11 +40,6 @@
         private void ToggleOperation()
         {
             ((IOperationDescription)this.Item.ItemData).Toggle();
-        }
-
-        private void OpenOperationFile()
-        {
-            Process.Start(this.Item.ItemData.Path);
         }
 
         #endregion

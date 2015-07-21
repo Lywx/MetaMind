@@ -8,7 +8,6 @@
     using System.Text;
     using System.Threading;
 
-    using Concepts;
     using Engine;
     using Microsoft.FSharp.Compiler.Interactive;
     using Microsoft.FSharp.Core;
@@ -39,6 +38,10 @@
         private readonly StringWriter errorStream;
 
         private Shell.FsiEvaluationSession fsiSession;
+
+        public bool Verbose { get; set; }
+
+        public bool Debugging { get; set; }
 
         public StringBuilder Error
         {
@@ -93,7 +96,7 @@
         /// End of a series of asynchronous session
         /// </summary>>
         public event EventHandler ThreadStopped;
-            
+
         /// <summary>
         /// Start of a series of asynchronous session
         /// </summary>>
@@ -125,6 +128,12 @@
 
         #region Fsi Evaluation
 
+        private void Clear()
+        {
+            this.Out  .Clear();
+            this.Error.Clear();
+        }
+
         public void EvalScript(string filePath)
         {
             var actionName = "FsiSession.EvalScript";
@@ -145,13 +154,8 @@
         public object EvalExpression(string code)
         {
             var expression = this.fsiSession.EvalExpression(code);
-#if DEBUG
-            Debug.WriteLine(this.Out.ToString());
-            this.Out.Clear();
 
-            Debug.WriteLine(this.Error.ToString());
-            this.Error.Clear();
-#endif
+            this.WriteToOutput();
 
             return expression.Value.ReflectionValue;
         }
@@ -162,13 +166,8 @@
         public void EvalInteraction(string code)
         {
             this.fsiSession.EvalInteraction(code);
-#if DEBUG
-            Debug.WriteLine(this.Out.ToString());
-            this.Out.Clear();
 
-            Debug.WriteLine(this.Error.ToString());
-            this.Error.Clear();
-#endif
+            this.WriteToOutput();
         }
 
         private void DoEvalScript(string filePath)
@@ -176,19 +175,57 @@
             try
             {
                 this.fsiSession.EvalScript(filePath);
-#if DEBUG
-                Debug.WriteLine(this.Out.ToString());
-                this.Out.Clear();
 
-                Debug.WriteLine(this.Error.ToString());
-                this.Error.Clear();
-#endif
+                this.WriteToOutput();
             }
             catch (Exception)
             {
-                this.GameInterop.Console.WriteLine(
-                    string.Format("ERROR: Script evaluation at \"{0}\" failed.", filePath));
+                if (this.Debugging)
+                {
+                    var console = GameInterop.Console;
+
+                    console.WriteLine(this.Out  .ToString());
+                    console.WriteLine(this.Error.ToString());
+
+                    this.Clear();
+                }
+                else
+                {
+                    this.GameInterop.Console.WriteLine(string.Format("ERROR: Script evaluation at \"{0}\" failed.", filePath));
+                }
             }
+        }
+
+        private void WriteToOutput()
+        {
+            if (this.Verbose)
+            {
+                this.WriteToConsole();
+            }
+            else
+            {
+#if DEBUG
+                this.WriteToDebug();
+#endif
+            }
+        }
+
+        private void WriteToDebug()
+        {
+            Debug.WriteLine(this.Out.ToString());
+            Debug.WriteLine(this.Error.ToString());
+
+            this.Clear();
+        }
+
+        private void WriteToConsole()
+        {
+            var console = this.GameInterop.Console;
+
+            console.WriteLine(this.Out  .ToString());
+            console.WriteLine(this.Error.ToString());
+
+            this.Clear();
         }
 
         #endregion

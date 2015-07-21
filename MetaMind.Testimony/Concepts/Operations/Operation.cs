@@ -123,9 +123,8 @@
             }
 
             var screenManager = this.GameInterop.Screen;
-            
             var mainScreen = (MainScreen)screenManager.Screens.First(s => s is MainScreen);
-            
+
             screenManager.AddScreen(new OptionScreen(this.ProcedureName, this.ProcedureDescription, this.RequestOptions(), mainScreen.CircularLayers));
         }
     }
@@ -164,8 +163,7 @@
             var shouldTransit = this.ProcedureElapsed > this.ProcedureSpan;
             if (shouldTransit && !Session.IsLocked)
             {
-                this.Lock();
-
+                this.LockTransition();
                 this.SendOptions();
             }
         }
@@ -177,12 +175,12 @@
             this.IsActivated = !this.IsActivated;
         }
 
-        public void Unlock()
+        public void UnlockTransition()
         {
             Session.Unlock();
         }
 
-        public void Lock()
+        public void LockTransition()
         {
             Session.Lock();
         }

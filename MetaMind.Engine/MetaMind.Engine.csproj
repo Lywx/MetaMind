@@ -293,6 +293,7 @@
     <Compile Include="Guis\Widgets\Items\Logic\ViewItemLogic.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Guis\Widgets\Items\Logic\ViewItemLogicExt.cs" />
     <Compile Include="Guis\Widgets\Items\Settings\ItemSettings.cs">
       <SubType>Code</SubType>
     </Compile>

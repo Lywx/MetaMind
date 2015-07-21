@@ -126,6 +126,8 @@
     <Compile Include="Extensions\ExtEnum.cs" />
     <Compile Include="Extensions\ExtHashSet.cs" />
     <Compile Include="Extensions\ExtObservableCollection.cs" />
+    <Compile Include="Guis\Console\Commands\DebugCommand.cs" />
+    <Compile Include="Guis\Console\Commands\VerboseCommand.cs" />
     <Compile Include="Guis\Layers\OperationLayer.cs" />
     <Compile Include="Guis\Modules\OperationModule.cs" />
     <Compile Include="Guis\Modules\OperationModuleSettings.cs" />
@@ -209,6 +211,7 @@
     <Compile Include="Sessions\ISessionData.cs" />
     <Compile Include="Sessions\SessionData.cs" />
     <Compile Include="Sessions\SessionEventType.cs" />
+    <Compile Include="TestimonyConfigurer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Compiler.Service, Version=0.0.89.0, Culture=neutral, processorArchitecture=MSIL">
@@ -245,7 +248,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Configurations\Test.txt">
+    <Content Include="Configurations\Scripts.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Icon.ico" />

@@ -33,13 +33,13 @@
 
         public string ConfigurationFile
         {
-            get { return "Test.txt"; }
+            get { return "Scripts.txt"; }
         }
 
         public void LoadConfiguration()
         {
             var pairs = ConfigurationFileLoader.LoadUniquePairs(this);
-            this.searchFolder = FileManager.DataPath(pairs["TestFolder"]);;
+            this.searchFolder = FileManager.DataPath(pairs["ScriptFolder"]); ;
         }
 
         #endregion

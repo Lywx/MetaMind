@@ -25,7 +25,7 @@ namespace MetaMind.Testimony
         {
             using (var engine = new GameEngine(@"Content"))
             {
-                var configurer = new GameEngineConfigurer();
+                var configurer = new TestimonyConfigurer();
                 configurer.Configure(engine);
 
                 var testimony = new Testimony(engine);

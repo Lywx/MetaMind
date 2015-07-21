@@ -1,2 +1,2 @@
 ﻿" F# Scripts File Container
-TestFolder = .
+ScriptFolder = .

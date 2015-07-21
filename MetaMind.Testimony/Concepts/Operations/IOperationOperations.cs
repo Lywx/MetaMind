@@ -4,9 +4,9 @@
     {
         void Toggle();
 
-        void Lock();
+        void LockTransition();
 
-        void Unlock();
+        void UnlockTransition();
     }
 
     public interface IOperationOperations<in TTransition>

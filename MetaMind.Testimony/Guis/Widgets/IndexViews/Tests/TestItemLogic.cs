@@ -1,6 +1,5 @@
 ﻿namespace MetaMind.Testimony.Guis.Widgets.IndexViews.Tests
 {
-    using System.Diagnostics;
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Data;
     using Engine.Guis.Widgets.Items.Interactions;
@@ -30,16 +29,7 @@
 
             this.ItemFrame.NameFrame       .MouseLeftPressed  += (o, args) => this.ToggleIndexView();
             this.ItemFrame.DescriptionFrame.MouseLeftPressed  += (o, args) => this.ToggleIndexView();
-            this.ItemFrame.RootFrame       .MouseRightPressed += (o, args) => this.OpenTestFile();
+            this.ItemFrame.RootFrame       .MouseRightPressed += (o, args) => this.OpenFolderPath();
         }
-
-        #region Operations
-
-        private void OpenTestFile()
-        {
-            Process.Start(this.Item.ItemData.Path);
-        }
-
-        #endregion
     }
 }
