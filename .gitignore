@@ -6,7 +6,9 @@
 *.xgs
 *.xsb
 *.xwb
+*.user
 
+.vs/
 packages/
 
 TestResults/
@@ -20,6 +22,7 @@ MetaMind.Engine/Content/obj/
 MetaMind.Engine/Content/Audio/
 MetaMind.Engine/obj/
 MetaMind.Engine/bin/
+
 MetaMind.EngineProcessor/Content/obj/
 MetaMind.EngineProcessor/obj/
 MetaMind.EngineProcessor/bin/
@@ -27,16 +30,11 @@ MetaMind.EngineProcessor/bin/
 MetaMind.EngineTest/bin/
 MetaMind.EngineTest/obj/
 
-MetaMind.Testimony/bin/
-MetaMind.Testimony/obj/
-MetaMind.Testimony/Content/obj/
-MetaMind.Testimony/Content/Audio/
-MetaMind.TestimonyTest/obj/
-MetaMind.TestimonyTest/bin/
-
-MetaMind.Acutance/bin/
-MetaMind.Acutance/obj/
-MetaMind.AcutanceTest/obj/
-MetaMind.AcutanceTest/bin/
+MetaMind.Unity/bin/
+MetaMind.Unity/obj/
+MetaMind.Unity/Content/obj/
+MetaMind.Unity/Content/Audio/
+MetaMind.UnityTest/obj/
+MetaMind.UnityTest/bin/
 
 MetaMind.v12.suo

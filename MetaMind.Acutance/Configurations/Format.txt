@@ -1,2 +1,0 @@
-﻿" Format Length
-HeadLength = 14

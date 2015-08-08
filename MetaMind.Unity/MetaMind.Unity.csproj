@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{91A424B6-E62B-4B7A-B30D-331C7E3AF5F0}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MetaMind.Unity</RootNamespace>
+    <AssemblyName>MetaMind.Unity</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Windows\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Windows\Release\</OutputPath>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>C7D7980E34B511C9579B9D524133642DCAA04DCE</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>MetaMind.Testimony_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Components\SaveManager.cs" />
+    <Compile Include="Concepts\Cognitions\Cognition.cs" />
+    <Compile Include="Concepts\Cognitions\Consciousness.cs" />
+    <Compile Include="Concepts\Cognitions\ConsciousnessAwake.cs" />
+    <Compile Include="Concepts\Cognitions\ConsciousnessAsleep.cs" />
+    <Compile Include="Concepts\Cognitions\ConsciousnessState.cs" />
+    <Compile Include="Concepts\Cognitions\ICognition.cs" />
+    <Compile Include="Concepts\Cognitions\ICognitionProperties.cs" />
+    <Compile Include="Concepts\Cognitions\IConsciousness.cs" />
+    <Compile Include="Concepts\Cognitions\IConsciousnessAsleep.cs" />
+    <Compile Include="Concepts\Cognitions\IConsciousnessAwake.cs" />
+    <Compile Include="Concepts\Operations\IOperation.cs" />
+    <Compile Include="Concepts\Operations\IOperationComputation.cs" />
+    <Compile Include="Concepts\Operations\IOperationDescription.cs" />
+    <Compile Include="Concepts\Operations\IOperationDescriptionComputation.cs" />
+    <Compile Include="Concepts\Operations\IOperationDescriptionOperations.cs" />
+    <Compile Include="Concepts\Operations\IOperationDescriptionOrganization.cs" />
+    <Compile Include="Concepts\Operations\IOperationOperations.cs" />
+    <Compile Include="Concepts\Operations\IOption.cs" />
+    <Compile Include="Concepts\Operations\IOptionOperation.cs" />
+    <Compile Include="Concepts\Operations\Operation.cs" />
+    <Compile Include="Concepts\Operations\OperationDescription.cs" />
+    <Compile Include="Concepts\Operations\OperationSession.cs" />
+    <Compile Include="Concepts\Operations\Option.cs" />
+    <Compile Include="Concepts\Synchronizations\ISynchronizable.cs" />
+    <Compile Include="Concepts\Synchronizations\ISynchronization.cs" />
+    <Compile Include="Concepts\Synchronizations\ISynchronizationData.cs" />
+    <Compile Include="Concepts\Synchronizations\ISynchronizationOperations.cs" />
+    <Compile Include="Concepts\Synchronizations\SynchronizationData.cs" />
+    <Compile Include="Concepts\Synchronizations\SynchronizationSpan.cs" />
+    <Compile Include="Concepts\Tests\ITestComputation.cs" />
+    <Compile Include="Concepts\Tests\ITestOperations.cs" />
+    <Compile Include="Concepts\Operations\OperationOrganizer.cs" />
+    <Compile Include="Concepts\Tests\TestOrganizer.cs" />
+    <Compile Include="Concepts\Tests\TestSession.cs" />
+    <Compile Include="Extensions\ExtEnum.cs" />
+    <Compile Include="Extensions\ExtHashSet.cs" />
+    <Compile Include="Extensions\ExtObservableCollection.cs" />
+    <Compile Include="Guis\Console\Commands\DebugCommand.cs" />
+    <Compile Include="Guis\Console\Commands\VerboseCommand.cs" />
+    <Compile Include="Guis\Layers\OperationLayer.cs" />
+    <Compile Include="Guis\Modules\OperationModule.cs" />
+    <Compile Include="Guis\Modules\OperationModuleSettings.cs" />
+    <Compile Include="Guis\Modules\OperationSettings.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemFrame.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemLayer.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemLogic.cs" />
+    <Compile Include="Guis\Widgets\BlockViews\Options\OptionItemFrame.cs" />
+    <Compile Include="Guis\Widgets\BlockViews\Options\OptionItemLogic.cs" />
+    <Compile Include="Guis\Widgets\BlockViews\Options\OptionItemSettings.cs" />
+    <Compile Include="Guis\Widgets\BlockViews\Options\OptionItemVisual.cs" />
+    <Compile Include="Guis\Widgets\BlockViews\Options\OptionViewBinding.cs" />
+    <Compile Include="Guis\Widgets\BlockViews\Options\OptionViewSettings.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationIndexedViewComposer.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationIndexViewComposer.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemVisual.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationViewBinding.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Tests\TestIndexedViewComposer.cs" />
+    <Compile Include="Concepts\Synchronizations\ISynchronizationController.cs" />
+    <Compile Include="Concepts\Synchronizations\SynchronizationSession.cs" />
+    <Compile Include="Guis\Widgets\BlockViews\Options\OptionItemLayer.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Tests\TestIndexViewComposer.cs" />
+    <Compile Include="Guis\Layers\TestLayer.cs" />
+    <Compile Include="Guis\Screens\OptionScreen.cs" />
+    <Compile Include="Guis\Layers\SynchronizationLayer.cs" />
+    <Compile Include="Scripting\FsiDebugger.cs" />
+    <Compile Include="Scripting\IScriptOperations.cs" />
+    <Compile Include="Scripting\IScript.cs" />
+    <Compile Include="Concepts\Tests\ITest.cs" />
+    <Compile Include="Concepts\Tests\ITestOrganization.cs" />
+    <Compile Include="Scripting\Script.cs" />
+    <Compile Include="Concepts\Tests\Test.cs" />
+    <Compile Include="Events\ConsciousnessSleepStartedEventArgs.cs" />
+    <Compile Include="Events\ConsciousnessSleepStoppedEventArgs.cs" />
+    <Compile Include="Concepts\Synchronizations\Synchronization.cs" />
+    <Compile Include="Concepts\Synchronizations\SynchronizationStatistics.cs" />
+    <Compile Include="Concepts\Synchronizations\SynchronizationProcessor.cs" />
+    <Compile Include="Concepts\Synchronizations\SynchronizationDescription.cs" />
+    <Compile Include="Events\SynchronizationStartedEventArgs.cs" />
+    <Compile Include="Events\SynchronizationStoppedEventArgs.cs" />
+    <Compile Include="Concepts\Synchronizations\SynchronizationTimer.cs" />
+    <Compile Include="Extensions\ExtInt32.cs" />
+    <Compile Include="Events\SynchronizationAlertedEventArgs.cs" />
+    <Compile Include="Guis\Modules\TestModule.cs" />
+    <Compile Include="Guis\Modules\TestModuleSettings.cs" />
+    <Compile Include="Guis\Modules\SummaryModuleLogic.cs" />
+    <Compile Include="Guis\Modules\SummaryModuleVisual.cs" />
+    <Compile Include="Guis\Modules\Summary\SummaryEntry.cs" />
+    <Compile Include="Guis\Modules\Summary\SummaryFactory.cs" />
+    <Compile Include="Guis\Modules\Summary\SummarySplit.cs" />
+    <Compile Include="Guis\Modules\Summary\SummaryTitle.cs" />
+    <Compile Include="Guis\Modules\SynchronizationModuleLogic.cs" />
+    <Compile Include="Guis\Modules\SynchronizationModuleVisual.cs" />
+    <Compile Include="Guis\Modules\SummaryModule.cs" />
+    <Compile Include="Guis\Modules\SummarySettings.cs" />
+    <Compile Include="Guis\Modules\SynchronizationModule.cs" />
+    <Compile Include="Guis\Modules\SynchronizationMonitor.cs" />
+    <Compile Include="Guis\Modules\SynchronizationSettings.cs" />
+    <Compile Include="Guis\Modules\Synchronization\SynchronizationFactory.cs" />
+    <Compile Include="Guis\Modules\Synchronization\SynchronizationPoint.cs" />
+    <Compile Include="Guis\Modules\Synchronization\SynchronizationPointSide.cs" />
+    <Compile Include="Guis\Modules\Synchronization\SynchronizationProgressBar.cs" />
+    <Compile Include="Scripting\ScriptRunner.cs" />
+    <Compile Include="Scripting\ScriptSearcher.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Tests\TestViewBinding.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Tests\TestItemFrame.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Tests\TestItemLayer.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Tests\TestItemLayout.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Tests\TestItemLogic.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Tests\TestItemVisual.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Tests\TestItemSettings.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\StandardIndexViewSettings.cs" />
+    <Compile Include="Guis\Widgets\Items\ViewItemSynchronizationController.cs" />
+    <Compile Include="Scripting\FsiSession.cs" />
+    <Compile Include="Unity.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Guis\Screens\BackgroundScreen.cs" />
+    <Compile Include="Guis\Screens\MainScreen.cs" />
+    <Compile Include="Guis\Screens\SummaryScreen.cs" />
+    <Compile Include="Sessions\ISessionData.cs" />
+    <Compile Include="Sessions\SessionData.cs" />
+    <Compile Include="Sessions\SessionEventType.cs" />
+    <Compile Include="UnityEngineConfigurer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="FSharp.Compiler.Service, Version=0.0.89.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FSharp.Compiler.Service.0.0.89\lib\net45\FSharp.Compiler.Service.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FSharp.Core, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FSharp.Core.4.0.0.1\lib\net40\FSharp.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MonoGame.Framework, Version=3.5.0.195, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Primtives2D, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdParties\Primitives2D\bin\Debug\Primtives2D.dll</HintPath>
+    </Reference>
+    <Reference Include="Stateless, Version=2.4.0.1, Culture=neutral, PublicKeyToken=93038f0927583c9a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdParties\Stateless\Stateless\bin\Debug\Stateless.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\MetaMind.Engine\MetaMind.Engine.csproj">
+      <Project>{8944c3ab-1865-49cf-9e84-1ecc42ad2c3e}</Project>
+      <Name>MetaMind.Engine</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Configurations\Scripts.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 4.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Content.mgcb" />
+    <None Include="Content\Textures\Screens\Background\Clear.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Tools\FSharp.Script.Move.fsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

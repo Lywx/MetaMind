@@ -18,4 +18,4 @@ let rec CopyDirectory(srcDir : string, desDir : string, excepts : seq<string>) =
 
     |> Seq.iter (fun (dirPath) -> Path.Combine(desDir, Path.GetFileName(dirPath)) |> fun (desPath) -> CopyDirectory(dirPath, desPath, excepts))
 
-CopyDirectory(@"MetaMind.Testimony\bin\Debug", @"C:\Users\Wuxiang\Documents\Meta Mind", [ "Data"; "Save"; "app.publish" ])
+CopyDirectory(@"MetaMind.Unity\bin\Debug", @"D:\Users\Meta Mind", [ "Data"; "Save"; "app.publish" ])

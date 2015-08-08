@@ -1,0 +1,9 @@
+" Screen Settings
+
+Resolution = 1280 720
+FPS        = 30
+
+IsFullscreen = true
+
+" Mouse Settings
+IsMouseVisible = true

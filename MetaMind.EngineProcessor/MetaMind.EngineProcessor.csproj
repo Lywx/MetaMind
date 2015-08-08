@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MetaMind.EngineProcessor</RootNamespace>
     <AssemblyName>MetaMind.EngineProcessor</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
     <MonoGamePlatform>Windows</MonoGamePlatform>
   </PropertyGroup>

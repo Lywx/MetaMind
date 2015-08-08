@@ -1,6 +1,6 @@
 ﻿namespace MetaMind.Engine
 {
-    using MetaMind.Engine.Components;
+    using Components;
 
     public interface IGameEngine : IGameEngineOperations
     {

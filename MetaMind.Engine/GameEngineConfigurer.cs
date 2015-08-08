@@ -12,17 +12,21 @@
     {
         public virtual void Configure(GameEngine engine)
         {
+            // ------------
             // Game graphics
+            // ------------
             var graphicsSettings = new GraphicsSettings();
             var graphics = new GameEngineGraphics(
                 engine,
                 graphicsSettings,
                 new GraphicsManager(engine, graphicsSettings));
 
+            // ------------
             // Game interop
+            // ------------
             var game = new GameManager(engine);
 
-            // -- Audio
+            // Audio
             var audioSettings = @"Content\Audio\Win\Audio.xgs";
             var waveBankSettings = @"Content\Audio\Win\Wave Bank.xwb";
             var soundBankSettings = @"Content\Audio\Win\Sound Bank.xsb";
@@ -36,7 +40,7 @@
                 UpdateOrder = int.MaxValue
             };
 
-            // -- Others
+            // Others
             var file = new FileManager();
             var @event = new EventManager(engine) { UpdateOrder = 3 };
             var process = new ProcessManager(engine) { UpdateOrder = 4 };
@@ -45,7 +49,7 @@
                 new ScreenSettings(),
                 graphics.SpriteBatch) { UpdateOrder = 5 };
 
-            // -- Console
+            // Console
             var console = new GameConsole(
                 engine,
                 graphics.SpriteBatch,
@@ -69,16 +73,20 @@
                 screen,
                 console);
 
+            // ------------
             // Game input
+            // ------------
             var input = new GameEngineInput(engine);
 
+            // ------------
             // Game numerical
+            // ------------
             var numerical = new GameEngineNumerical();
 
             // Game engine property injection
-            engine.Graphics = graphics;
-            engine.Interop = interop;
-            engine.Input = input;
+            engine.Graphics  = graphics;
+            engine.Interop   = interop;
+            engine.Input     = input;
             engine.Numerical = numerical;
         }
 

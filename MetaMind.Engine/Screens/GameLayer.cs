@@ -1,47 +1,51 @@
 ﻿namespace MetaMind.Engine.Screens
 {
     using System;
-    using System.Diagnostics;
     using Microsoft.Xna.Framework;
 
     public class GameLayer : GameControllableEntity, IGameLayer
     {
-        private bool isFading;
-
         public GameLayer(IGameScreen screen, byte transitionAlpha = byte.MaxValue)
         {
             if (screen == null)
             {
-                throw new ArgumentNullException("screen");
+                throw new ArgumentNullException(nameof(screen));
             }
 
             this.Screen = screen;
 
             this.transitionAlpha = transitionAlpha;
-
-            this.IsActive = true;
         }
 
         public IGameScreen Screen { get; private set; }
 
-        private GameEngine Engine
-        {
-            get { return this.GameInterop.Engine; }
-        }
+        private GameEngine Engine => this.GameInterop.Engine;
 
         #region Layer States
 
-        public bool IsActive { get; set; }
+        private bool isFading;
+
+        public bool IsActive { get; set; } = true;
 
         #endregion
 
         #region Layer Graphics
 
+        private readonly int transitionAlphaMax = 255;
+
+        private readonly int transitionAlphaMin = 0;
+
         private float transitionAlpha;
 
-        public byte TransitionAlpha
+        public byte TransitionAlpha => (byte)this.transitionAlpha;
+
+        #endregion
+
+        #region Update
+
+        public void UpdateTransition(GameTime time)
         {
-            get { return (byte)this.transitionAlpha; }
+            this.ContinueAction(time);
         }
 
         #endregion
@@ -52,26 +56,23 @@
         {
             if (this.isFading)
             {
-#if DEBUG
-                Debug.WriteLine("Layer is already fading.");
-#endif 
                 this.DeferAction(() => this.FadeIn(time));
 
                 return;
             }
 
-            var transitionCount = this.TransitionCount(time);
+            var frames = this.TimeToFrame(time);
 
             Action increase = null;
             increase = () =>
             {
-                if (this.TransitionAlpha < 255)
+                if (this.TransitionAlpha < this.transitionAlphaMax)
                 {
-                    this.transitionAlpha += (float)255 / transitionCount;
+                    this.transitionAlpha += (float)this.transitionAlphaMax / frames;
 
-                    if (this.transitionAlpha > 255 - 0.1f)
+                    if (this.transitionAlpha > this.transitionAlphaMax - 0.1f)
                     {
-                        this.transitionAlpha = 255;
+                        this.transitionAlpha = this.transitionAlphaMax;
                     }
 
                     this.DeferAction(increase);
@@ -91,26 +92,23 @@
         {
             if (this.isFading)
             {
-#if DEBUG
-                Debug.WriteLine("Layer is already fading.");
-#endif
                 this.DeferAction(() => this.FadeOut(time));
 
                 return;
             }
 
-            var transitionCount = this.TransitionCount(time);
+            var frames = this.TimeToFrame(time);
 
             Action decrease = null;
             decrease = () =>
             {
-                if (this.TransitionAlpha > 0)
+                if (this.TransitionAlpha > this.transitionAlphaMin)
                 {
-                    this.transitionAlpha -= (float)255 / transitionCount;
+                    this.transitionAlpha -= (float)this.transitionAlphaMax / frames;
 
-                    if (this.transitionAlpha < 0 + 0.1f)
+                    if (this.transitionAlpha < this.transitionAlphaMin + 0.1f)
                     {
-                        this.transitionAlpha = 0;
+                        this.transitionAlpha = this.transitionAlphaMin;
                     }
 
                     this.DeferAction(decrease);
@@ -126,16 +124,11 @@
             this.isFading = true;
         }
 
-        private int TransitionCount(TimeSpan time)
-        {
-            return (int)(time.TotalMilliseconds / this.Engine.TargetElapsedTime.Milliseconds) + 1;
-        }
-
         #endregion
 
-        public void UpdateTransition(GameTime time)
+        private int TimeToFrame(TimeSpan time)
         {
-            this.ContinueAction(time);
+            return (int)(time.TotalMilliseconds / this.Engine.TargetElapsedTime.Milliseconds) + 1;
         }
     }
 }

@@ -20,7 +20,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layouts
         public BlockViewVerticalItemLayout(
             IViewItem item,
             IViewItemLayoutInteraction itemLayoutInteraction)
-            : base(item, itemLayoutInteraction)
+            : base(item, 
+                   itemLayoutInteraction)
         {
         }
 

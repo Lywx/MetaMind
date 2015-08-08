@@ -1,2 +1,0 @@
-﻿" Schedule File Container
-ScheduleFolder = Schedules
