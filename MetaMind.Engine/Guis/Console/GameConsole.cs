@@ -14,8 +14,8 @@ namespace MetaMind.Engine.Guis.Console
     using System.Collections.Generic;
     using System.Linq;
 
-    using MetaMind.Engine.Components.Fonts;
-    using MetaMind.Engine.Guis.Console.Commands;
+    using Components.Fonts;
+    using Commands;
 
     using Microsoft.Xna.Framework.Graphics;
 

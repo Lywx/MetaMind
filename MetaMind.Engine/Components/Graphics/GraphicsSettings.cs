@@ -72,14 +72,14 @@ namespace MetaMind.Engine.Components.Graphics
 
         public void LoadConfiguration()
         {
-            var configuration = ConfigurationFileLoader.LoadUniquePairs(this);
+            var configuration = ConfigurationLoader.LoadUniquePairs(this);
 
-            this.FPS    = ConfigurationFileLoader.ExtractMultipleInt(configuration, "FPS", 0, 30);
-            this.Width  = ConfigurationFileLoader.ExtractMultipleInt(configuration, "Resolution", 0, 800);
-            this.Height = ConfigurationFileLoader.ExtractMultipleInt(configuration, "Resolution", 1, 600);
+            this.FPS    = FileLoader.ExtractInts(configuration, "FPS", 0, 30);
+            this.Width  = FileLoader.ExtractInts(configuration, "Resolution", 0, 800);
+            this.Height = FileLoader.ExtractInts(configuration, "Resolution", 1, 600);
 
-            this.IsMouseVisible = ConfigurationFileLoader.ExtractBool(configuration, "IsMouseVisible", true);
-            this.IsFullscreen   = ConfigurationFileLoader.ExtractBool(configuration, "IsFullscreen", false);
+            this.IsMouseVisible = FileLoader.ExtractBool(configuration, "IsMouseVisible", true);
+            this.IsFullscreen   = FileLoader.ExtractBool(configuration, "IsFullscreen", false);
         }
 
         #endregion

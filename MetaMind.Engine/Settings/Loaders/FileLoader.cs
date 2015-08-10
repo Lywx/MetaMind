@@ -2,22 +2,18 @@
 
 namespace MetaMind.Engine.Settings.Loaders
 {
-    using System.IO;
-
-    using MetaMind.Engine.Components;
-    using MetaMind.Engine.Parsers.Grammars;
+    using Parsers.Grammars;
 
     using Sprache;
 
-    public static class ConfigurationFileLoader
+    public static class FileLoader
     {
         #region Configuration Pair Loading
 
-        public static List<KeyValuePair<string, string>> LoadDuplicablePairs(IConfigurationLoader loader)
+        public static List<KeyValuePair<string, string>> LoadDuplicablePairs(string[] lines)
         {
             var list = new List<KeyValuePair<string, string>>();
 
-            var lines = LoadAllLine(loader);
             foreach (var line in lines)
             {
                 if (string.IsNullOrWhiteSpace(line))
@@ -39,13 +35,13 @@ namespace MetaMind.Engine.Settings.Loaders
             }
 
             return list;
+            
         }
 
-        public static Dictionary<string, string> LoadUniquePairs(IConfigurationLoader loader)
+        public static Dictionary<string, string> LoadUniquePairs(string[] lines)
         {
             var list = new Dictionary<string, string>();
 
-            var lines = LoadAllLine(loader);
             foreach (var line in lines)
             {
                 if (string.IsNullOrWhiteSpace(line))
@@ -69,22 +65,17 @@ namespace MetaMind.Engine.Settings.Loaders
             return list;
         }
 
-        private static string[] LoadAllLine(IConfigurationLoader loader)
-        {
-            return File.ReadAllLines(FileManager.ConfigurationPath(loader));
-        }
-
         #endregion
 
         #region Configuration Extraction
 
-        public static bool ExtractBool(Dictionary<string, string> dict, string keyName, bool defaultValue)
+        public static bool ExtractBool(Dictionary<string, string> dict, string key, bool @default = false)
         {
             bool value;
-            var success = bool.TryParse(dict[keyName], out value);
+            var success = bool.TryParse(dict[key], out value);
             if (!success)
             {
-                value = defaultValue;
+                value = @default;
             }
 
             return value;
@@ -93,16 +84,33 @@ namespace MetaMind.Engine.Settings.Loaders
         /// <summary>
         /// Get integer value from multiple int string separated by single white space.
         /// </summary>
-        public static int ExtractMultipleInt(Dictionary<string, string> dict, string keyName, int index, int defaultValue)
+        public static int ExtractInts(Dictionary<string, string> dict, string key, int index, int @default = 0)
         {
             int value;
-            var success = int.TryParse(dict[keyName].Split(' ')[index], out value);
+            var success = int.TryParse(ValueAt(dict, key, index), out value);
             if (!success)
             {
-                value = defaultValue;
+                value = @default;
             }
 
             return value;
+        }
+
+        public static float ExtractFloats(Dictionary<string, string> dict, string key, int index, float @default = 0f)
+        {
+            float value;
+            var success = float.TryParse(ValueAt(dict, key, index), out value);
+            if (!success)
+            {
+                value = @default;
+            }
+
+            return value;
+        }
+
+        private static string ValueAt(Dictionary<string, string> dict, string key, int index)
+        {
+            return dict[key].Split(' ')[index];
         }
 
         #endregion

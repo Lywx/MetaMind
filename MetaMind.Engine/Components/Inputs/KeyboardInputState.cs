@@ -11,9 +11,9 @@ namespace MetaMind.Engine.Components.Inputs
     using System.Collections.Generic;
     using System.Linq;
 
-    using MetaMind.Engine.Parsers.Elements;
-    using MetaMind.Engine.Parsers.Grammars;
-    using MetaMind.Engine.Settings.Loaders;
+    using Parsers.Elements;
+    using Parsers.Grammars;
+    using Settings.Loaders;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
@@ -144,7 +144,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         private void ActionMapLoad()
         {
-            foreach (var pair in ConfigurationFileLoader.LoadDuplicablePairs(this))
+            foreach (var pair in ConfigurationLoader.LoadDuplicablePairs(this))
             {
                 this.ActionMapPairLoad(pair);
             }

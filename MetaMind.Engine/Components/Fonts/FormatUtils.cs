@@ -5,7 +5,7 @@ namespace MetaMind.Engine.Components.Fonts
     using System.Linq;
     using System.Text;
 
-    using MetaMind.Engine.Settings.Loaders;
+    using Settings.Loaders;
 
     public class FormatUtils : IConfigurationLoader
     {
@@ -216,9 +216,9 @@ namespace MetaMind.Engine.Components.Fonts
 
         public void LoadConfiguration()
         {
-            var configuration = ConfigurationFileLoader.LoadUniquePairs(this);
+            var configuration = ConfigurationLoader.LoadUniquePairs(this);
 
-            FormatUtils.Settings.HeadLength = ConfigurationFileLoader.ExtractMultipleInt(configuration, "HeadLength", 0, 10);
+            FormatUtils.Settings.HeadLength = FileLoader.ExtractInts(configuration, "HeadLength", 0, 10);
         }
 
         #endregion

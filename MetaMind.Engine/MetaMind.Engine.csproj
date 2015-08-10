@@ -576,6 +576,7 @@
     <Compile Include="Sessions\ISession.cs" />
     <Compile Include="Sessions\ISessionData.cs" />
     <Compile Include="Sessions\Session.cs" />
+    <Compile Include="Settings\Loaders\ConfigurationLoader.cs" />
     <Compile Include="Settings\Loaders\IConfigurationLoader.cs" />
     <Compile Include="Components\Inputs\InputEvent.cs" />
     <Compile Include="Components\Inputs\InputState.cs" />
@@ -636,7 +637,7 @@
     <Compile Include="Screens\GameScreenState.cs" />
     <Compile Include="Settings\Colors\Palette.cs" />
     <Compile Include="Components\Graphics\GraphicsSettings.cs" />
-    <Compile Include="Settings\Loaders\ConfigurationFileLoader.cs" />
+    <Compile Include="Settings\Loaders\FileLoader.cs" />
     <Compile Include="Settings\Systems\Monitor.cs" />
     <Compile Include="Testers\StateVisualTester.cs" />
   </ItemGroup>

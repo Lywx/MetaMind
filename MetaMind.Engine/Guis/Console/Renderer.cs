@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using MetaMind.Engine.Components.Fonts;
+    using Components.Fonts;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
