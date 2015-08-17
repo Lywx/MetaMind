@@ -118,9 +118,14 @@
     <Compile Include="Concepts\Synchronizations\ISynchronizationOperations.cs" />
     <Compile Include="Concepts\Synchronizations\SynchronizationData.cs" />
     <Compile Include="Concepts\Synchronizations\SynchronizationSpan.cs" />
-    <Compile Include="Concepts\Tests\ITestComputation.cs" />
+    <Compile Include="Concepts\Tests\TestTimer.cs" />
+    <Compile Include="Concepts\Tests\ITestEvaluation.cs" />
     <Compile Include="Concepts\Tests\ITestOperations.cs" />
     <Compile Include="Concepts\Operations\OperationOrganizer.cs" />
+    <Compile Include="Concepts\Tests\TestEffect.cs" />
+    <Compile Include="Concepts\Tests\TestEvaluation.cs" />
+    <Compile Include="Concepts\Tests\TestEventArgs.cs" />
+    <Compile Include="Concepts\Tests\TestOrganization.cs" />
     <Compile Include="Concepts\Tests\TestOrganizer.cs" />
     <Compile Include="Concepts\Tests\TestSession.cs" />
     <Compile Include="Extensions\ExtEnum.cs" />
@@ -214,8 +219,8 @@
     <Compile Include="UnityEngineConfigurer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="FSharp.Compiler.Service, Version=0.0.89.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FSharp.Compiler.Service.0.0.89\lib\net45\FSharp.Compiler.Service.dll</HintPath>
+    <Reference Include="FSharp.Compiler.Service, Version=1.4.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FSharp.Compiler.Service.1.4.0.1\lib\net45\FSharp.Compiler.Service.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FSharp.Core, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -276,10 +281,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Content.mgcb" />
-    <None Include="Content\Textures\Screens\Background\Clear.xnb">
+    <None Include="app.config" />
+    <None Include="Content\Audio\Win\Audio.xgs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
+    <None Include="Content\Audio\Win\Sound Bank.xsb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Audio\Win\Wave Bank.xwb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Texture\Backgrounds\Sea Of Mind.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Tools\FSharp.Script.Move.fsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

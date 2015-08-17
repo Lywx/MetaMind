@@ -4,9 +4,8 @@
     using Engine;
 
     public interface ITest : 
-        ITestComputation,
-        ITestOrganization,
         ITestOperations,
+        ITestOrganization,
 
         IComparable<ITest>, 
 
@@ -20,13 +19,17 @@
         
         string Path { get; }
 
+        ITestEvaluation Evaluation { get; }
+
+        ITestOrganization Organization { get; }
+
         #endregion
 
         #region Events
 
-        event EventHandler Succeed;
+        event EventHandler<TestEventArgs> Succeeded;
 
-        event EventHandler Failed;
+        event EventHandler<TestEventArgs> Failed;
 
         #endregion
     }

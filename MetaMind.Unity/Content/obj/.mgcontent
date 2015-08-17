@@ -4,6 +4,7 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/Wuxiang/Documents/Visual Studio 2015/Projects/MonoGame MetaMind/MetaMind.Unity/Content/Texture/Backgrounds/Sea Of Mind.png</File>
     <File>C:/Users/Wuxiang/Documents/Visual Studio 2015/Projects/MonoGame MetaMind/MetaMind.Unity/Content/Textures/Screens/Background/Clear.png</File>
     <File>C:/Users/Wuxiang/Documents/Visual Studio 2015/Projects/MonoGame MetaMind/MetaMind.Unity/Content/Textures/Screens/Background/Sea Of Mind.png</File>
     <File>C:/Users/Wuxiang/Documents/Visual Studio 2015/Projects/MonoGame MetaMind/MetaMind.Unity/Content/Textures/UIs/Heart.png</File>

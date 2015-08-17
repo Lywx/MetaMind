@@ -271,6 +271,8 @@ namespace MetaMind.Engine.Screens
             this.SetupService();
         }
 
+        protected IGameGraphicsService GameGraphics { get; private set; }
+
         protected IGameInteropService GameInterop { get; set; }
 
         private void SetupService()
@@ -278,6 +280,7 @@ namespace MetaMind.Engine.Screens
             if (GameEngine.Service != null)
             {
                 this.GameInterop = GameEngine.Service.Interop;
+                this.GameGraphics = GameEngine.Service.Graphics;
             }
         }
     }

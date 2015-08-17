@@ -10,6 +10,7 @@
     using Engine;
     using Microsoft.FSharp.Compiler.Interactive;
     using Microsoft.FSharp.Core;
+    using FsiEvaluationSession = Microsoft.FSharp.Compiler.Interactive.Shell.FsiEvaluationSession;
 
     public class FsiSession : GameEntity, IInnerUpdatable
     {
@@ -20,11 +21,11 @@
 
         private Shell.FsiEvaluationSessionHostConfig fsiConfig;
 
-        private string[] fsiArgv => new string[]{ this.fsiPath, "--noninteractive", "--nologo", "--gui-" };
+        private string[] fsiArgv => new string[]{ this.fsiPath, "--nologo", "--gui-" };
 
-        private readonly StringBuilder @out;
+        private readonly StringBuilder outBuilder;
 
-        private readonly StringBuilder error;
+        private readonly StringBuilder errorBuilder;
 
         private readonly StringReader inReader;
 
@@ -32,7 +33,7 @@
 
         private readonly StringWriter errorWriter;
 
-        private Shell.FsiEvaluationSession fsiSession;
+        private FsiEvaluationSession fsiSession;
 
         public bool Verbose { get; set; }
 
@@ -40,12 +41,12 @@
 
         public StringBuilder Error
         {
-            get { return this.error; }
+            get { return this.errorBuilder; }
         }
 
         public StringBuilder Out
         {
-            get { return this.@out; }
+            get { return this.outBuilder; }
         }
 
         #endregion
@@ -60,17 +61,17 @@
 
         public FsiSession()
         {
-            this.@out  = new StringBuilder();
-            this.error = new StringBuilder();
+            this.outBuilder = new StringBuilder();
+            this.errorBuilder = new StringBuilder();
 
             this.inReader    = new StringReader("");
-            this.outWriter   = new StringWriter(this.@out);
-            this.errorWriter = new StringWriter(this.error);
+            this.outWriter   = new StringWriter(this.outBuilder);
+            this.errorWriter = new StringWriter(this.errorBuilder);
 
             this.StartThread("FsiSession.CreateSession", () =>
             {
-                this.fsiConfig   = Shell.FsiEvaluationSession.GetDefaultConfiguration();
-                this.fsiSession = Shell.FsiEvaluationSession.Create(
+                this.fsiConfig  = FsiEvaluationSession.GetDefaultConfiguration();
+                this.fsiSession = FsiEvaluationSession.Create(
                     fsiConfig  : this.fsiConfig,
                     argv       : this.fsiArgv,
                     inReader   : this.inReader,

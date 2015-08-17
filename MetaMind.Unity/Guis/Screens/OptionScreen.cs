@@ -91,10 +91,11 @@
             this.screenLabel = new Label
             {
                 TextFont     = () => Font.UiRegular,
-                Text         = () => "Options",
-                TextPosition = () => new Vector2(40, 25),
+                Text         = () => "OPTIONS",
+                TextPosition = () => new Vector2(this.GameGraphics.Settings.Width / 2, 70),
                 TextColor    = () => Palette.Transparent5,
                 TextSize     = () => 1f,
+                TextHAlign   = StringHAlign.Center,
             };
 
             this.procedureNameLabelBox = new LabelBox(

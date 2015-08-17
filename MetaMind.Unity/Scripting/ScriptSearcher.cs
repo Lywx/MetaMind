@@ -17,7 +17,6 @@
             this.LoadConfiguration();
         }
 
-
         public List<string> SearchScriptPaths()
         {
             return this.SearchScriptPaths(this.searchFolder);
@@ -37,7 +36,7 @@
 
         public void LoadConfiguration()
         {
-            var pairs = ConfigurationFileLoader.LoadUniquePairs(this);
+            var pairs = ConfigurationLoader.LoadUniquePairs(this);
             this.searchFolder = FileManager.DataPath(pairs["ScriptFolder"]); ;
         }
 

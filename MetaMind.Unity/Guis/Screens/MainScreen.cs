@@ -106,10 +106,11 @@
             this.screenLabel = new Label
             {
                 TextFont     = () => Font.UiRegular,
-                Text         = () => this.CircularLayers.GameLayerDisplayed is TestLayer ? "Tests" : "Operations",
-                TextPosition = () => new Vector2(40, 25),
+                Text         = () => this.CircularLayers.GameLayerDisplayed is TestLayer ? "TESTS" : "OPERATIONS",
+                TextPosition = () => new Vector2(this.GameGraphics.Settings.Width / 2, 70),
                 TextColor    = () => Palette.Transparent5,
                 TextSize     = () => 1f,
+                TextHAlign   = StringHAlign.Center,
             };
 
             this.Layers.Add(new SynchronizationLayer(this));

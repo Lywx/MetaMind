@@ -11,8 +11,8 @@ namespace MetaMind.Engine
     using System.Diagnostics;
     using System.Reflection;
 
-    using MetaMind.Engine.Components;
-    using MetaMind.Engine.Services;
+    using Components;
+    using Services;
 
     using Microsoft.Xna.Framework;
 

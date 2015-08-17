@@ -27,9 +27,9 @@
 
         public override void LoadContent(IGameInteropService interop)
         {
-            this.particles = new ParticleModule(new ParticleSettings()) { SpawnRate = 2 };
+            this.particles = new ParticleModule(new ParticleSettings()) { SpawnRate = 1 };
 
-            this.background = interop.Content.Load<Texture2D>(@"Textures\Screens\Background\Clear");
+            this.background = interop.Content.Load<Texture2D>(@"Texture\Backgrounds\Sea Of Mind");
         }
 
         public override void UnloadContent(IGameInteropService interop)
@@ -50,7 +50,7 @@
 
             spriteBatch.Begin();
 
-            spriteBatch   .Draw(this.background, fullscreen, new Color(this.TransitionAlpha / 2, this.TransitionAlpha / 2, this.TransitionAlpha / 2));
+            spriteBatch   .Draw(this.background, fullscreen, new Color(0, 0, this.TransitionAlpha / 2));
             this.particles.Draw(graphics, time, this.TransitionAlpha);
 
             spriteBatch.End();

@@ -7,12 +7,10 @@
 
 namespace MetaMind.Unity.Concepts.Tests
 {
+    using Engine.Guis.Widgets.Items.Data;
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
-    using Engine;
-    using Engine.Guis.Widgets.Items.Data;
 
     #region Test Session
 
@@ -21,27 +19,32 @@ namespace MetaMind.Unity.Concepts.Tests
         public static TestSession Session { get; set; }
     }
 
-    #endregion
+    #endregion Test Session
 
     #region Test
 
     public partial class Test : ITest
     {
+        private ITestEvaluation evaluation;
+
         public Test(string name, string description, string path)
         {
             if (name == null)
             {
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
             }
 
             if (description == null)
             {
-                throw new ArgumentNullException("description");
+                throw new ArgumentNullException(nameof(description));
             }
 
-            this.Name        = name;
-            this.Description = description;
-            this.Path        = path;
+            this.Name          = name;
+            this.Description   = description;
+            this.Path          = path;
+
+            this.Effect       = new TestEffect(this);
+            this.Organization = new TestOrganization(this);
 
             this.Reset();
         }
@@ -50,245 +53,116 @@ namespace MetaMind.Unity.Concepts.Tests
 
         public string Description { get; private set; }
 
-        public string Status { get; private set; }
-
         public string Path { get; private set; }
-    }
 
-    #endregion
-
-    #region Test Structure
-
-    public partial class Test
-    {
-        public IEnumerable AllCollection()
-        {
-            yield return this;
-
-            if (this.HasChildren)
-            {
-                foreach (var directChild in this.Children)
-                {
-                    yield return directChild;
-
-                    if (directChild.HasChildren)
-                    {
-                        foreach (var child in directChild.AllCollection())
-                        {
-                            yield return child;
-                        }
-                    }
-                }
-            }
-        }
-
-        public List<ITest> Children { get; private set; } = new List<ITest>(); 
-
-        public int ChildrenPassedNum
+        public ITestEvaluation Evaluation
         {
             get
             {
-                return this.Children.ToArray().Count(child => child.IsPassed);
-            }
-        }
-
-        public IEnumerable ChildrenCollection()
-        {
-            if (this.HasChildren)
-            {
-                foreach (var child in this.Children)
+                if (this.evaluation == null)
                 {
-                    yield return child;
-                }
-            }
-        }
-
-        public bool HasChildren
-        {
-            get { return this.Children != null && this.Children.Count != 0; }
-        }
-
-        public Test Parent { get; set; } = null;
-
-        public bool HasParent
-        {
-            get { return this.Parent != null; }
-        }
-    }
-
-    #endregion
-
-    #region Test Computations
-
-    public partial class Test : GameEntity 
-    {
-        private readonly string failingCue = "Test Failure";
-
-        private readonly string succeedingCue = "Test Success";
-
-        private readonly TimeSpan resultChangedTimeout = TimeSpan.FromMinutes(3);
-
-        private int resultVariation;
-
-        private DateTime resultChangedTime;
-
-        private bool isPassed = true;
-
-        public bool IsPassed
-        {
-            get { return this.isPassed; }
-            private set
-            {
-                var failing    = this.isPassed && !value;
-                var succeeding = !this.isPassed && value;
-
-                this.isPassed = value;
-
-                if (failing)
-                {
-                    this.OnFail(true);
+                    this.evaluation = new TestEvaluation(this, DateTime.Now, TimeSpan.FromSeconds(1.0));
+                    this.EvaluationSubscribe();
                 }
 
-                if (succeeding)
-                {
-                    this.OnSucceed(true);
-                }
+                return this.evaluation;
             }
-        }
-
-        public int ResultVariationNum
-        {
-            get
+            set
             {
-                return this.HasChildren
-                           ? this.Children.Sum(test => test.ResultVariationNum)
-                           : this.resultVariation;
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
+                if (this.evaluation != null)
+                {
+                    this.evaluation.Dispose();
+                }
+
+                this.evaluation = value;
+                this.EvaluationSubscribe();
             }
         }
 
-        public bool IsResultChanged { get; private set; }
+        private void EvaluationSubscribe()
+        {
+            // It safely adds the event handler without dulplication.
+
+            // There wouldn't be thread safety problem because the 
+            // evaluation is only succeeded or failed in Update method.
+
+            this.Evaluation.Succeeded -= this.EvaluationSucceeded;
+            this.Evaluation.Succeeded += this.EvaluationSucceeded;
+
+            this.Evaluation.Failed -= this.EvaluationFailed;
+            this.Evaluation.Failed += this.EvaluationFailed;
+        }
+
+        private void EvaluationFailed(object e, TestEventArgs a)
+        {
+            this.Failed(this, a);
+        }
+
+        private void EvaluationSucceeded(object e, TestEventArgs a)
+        {
+            this.Succeeded(this, a);
+        }
+
+        public ITestOrganization Organization { get; private set; }
+
+        public TestEffect Effect { get; private set; }
 
         #region Events
 
-        public event EventHandler Succeed;
+        public event EventHandler<TestEventArgs> Succeeded = delegate { };
 
-        public event EventHandler Failed;
+        public event EventHandler<TestEventArgs> Failed = delegate { };
 
-        private void OnFail(bool isCause)
-        {
-            if (isCause)
-            {
-                if (Session.IsNotificationEnabled)
-                {
-                    var audio = this.GameInterop.Audio;
-                    audio.PlayCue(this.failingCue);
-                }
-            }
-
-            if (this.HasParent)
-            {
-                this.Parent.OnFail(false);
-            }
-
-            this.OnResultChange(-1);
-
-            if (this.Failed != null)
-            {
-                this.Failed(this, EventArgs.Empty);
-            }
-        }
-
-        private void OnSucceed(bool isCause)
-        {
-            if (isCause)
-            {
-                if (Session.IsNotificationEnabled)
-                {
-                    var audio = this.GameInterop.Audio;
-                    audio.PlayCue(this.succeedingCue);
-                }
-            }
-
-            if (this.HasParent)
-            {
-                this.Parent.OnFail(false);
-            }
-
-            this.OnResultChange(1);
-
-            if (this.Succeed != null)
-            {
-                this.Succeed(this, EventArgs.Empty);
-            }
-        }
-
-        private void OnResultChange(int change)
-        {
-            this.resultVariation = change;
-            this.resultChangedTime = DateTime.Now;
-        }
-
-        #endregion
-
-        #region Update
-
-        public void Update()
-        {
-            this.IsPassed = this.ResultSelector.Invoke();
-            this.Status = this.StatusSelector.Invoke();
-
-            this.IsResultChanged = DateTime.Now - this.resultChangedTime < this.resultChangedTimeout;
-
-            if (!this.IsResultChanged)
-            {
-                this.resultVariation = 0;
-            }
-
-            this.UpdateChildrenTests();
-        }
-
-        private void UpdateChildrenTests()
-        {
-            foreach (var child in this.Children.ToArray())
-            {
-                child.Parent = this;
-                child.Update();
-            }
-        }
-
-        #endregion
-
-        #region Evaluation
-
-        public TimeSpan EvaluationSpan { get; set; }
-
-        public Func<bool> ResultSelector { get; set; } 
-
-        public Func<string> StatusSelector { get; set; }
-
-        #endregion
+        #endregion Events
 
         #region Operations
 
         public void Reset()
         {
-            this.Parent = null;
-            this.Children.Clear();
-
-            this.resultChangedTime = DateTime.MinValue;
-            this.resultVariation = 0;
-
-            this.ResultSelector = () => this.ChildrenPassedNum == this.Children.Count;
-            this.StatusSelector = () => this.ResultSelector() ? "PASSED" : "FAILED";
+            this.Organization.Reset();
+            this.Evaluation  .Reset();
         }
 
-        #endregion
+        #endregion Operations
+
+        #region Update
+
+        public void Update()
+        {
+            this.Organization.Update();
+            this.Evaluation  .Update();
+        }
+
+        #endregion Update
     }
 
-    #endregion
+    #endregion Test
+
+    #region ITestOrganization
+
+    public partial class Test
+    {
+        public List<ITest> Children => this.Organization.Children;
+
+        public Test Parent => this.Organization.Parent;
+
+        public bool HasParent => this.Organization.HasParent;
+
+        public bool HasChildren => this.Organization.HasChildren;
+
+        public IEnumerable AllCollection => this.Organization.AllCollection;
+
+        public IEnumerable ChildrenCollection => this.Organization.ChildrenCollection;
+    }
+
+    #endregion ITestOrganization
 
     #region IComparable
-
 
     public partial class Test
     {
@@ -298,18 +172,18 @@ namespace MetaMind.Unity.Concepts.Tests
         }
     }
 
-    #endregion
+    #endregion IComparable
 
     #region IBlockViewItemData
 
-    public partial class Test : IBlockViewItemData 
+    public partial class Test : IBlockViewItemData
     {
         public string BlockStringRaw => this.Description;
 
-        public string BlockLabel => "DescriptionLabel"; 
+        public string BlockLabel => "DescriptionLabel";
 
         public string BlockFrame => "DescriptionFrame";
     }
 
-    #endregion
+    #endregion IBlockViewItemData
 }

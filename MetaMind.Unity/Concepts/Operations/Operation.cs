@@ -18,11 +18,17 @@
     public partial class Operation<TProcedure, TTransition> : Operation, IOperation, IOperationOperations<TTransition>
     {
         public Operation(
+            OperationDescription operationDescription,
             StateMachine<TProcedure, TTransition> operationMachine,
             IDictionary<TProcedure, string>   procedureDescriptions,
             IDictionary<TProcedure, TimeSpan> procedureSpans,
             IDictionary<TTransition, string> transitionDescriptions)
         {
+            if (operationDescription == null)
+            {
+                throw new ArgumentNullException(nameof(operationDescription));
+            }
+
             if (operationMachine == null)
             {
                 throw new ArgumentNullException(nameof(operationMachine));
@@ -42,6 +48,8 @@
             {
                 throw new ArgumentNullException(nameof(transitionDescriptions));
             }
+
+            operationDescription.Operation = this;
 
             this.Machine = operationMachine;
 

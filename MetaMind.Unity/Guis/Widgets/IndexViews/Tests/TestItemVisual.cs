@@ -131,12 +131,12 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
                 itemSettings.Get<FrameSettings>("StatusFrame"));
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("StatusLabel");
-                labelSettings.Text = () => itemData.Status;
+                labelSettings.Text = () => itemData.Evaluation.ResultStatus;
                 labelSettings.TextPosition = this.StatusCenterPosition;
 
                 this.StatusLabel = new ViewItemLabelVisual(this.Item, labelSettings);
                 this.StatusLabel.Label.TextColor = () =>
-                        itemData.IsPassed
+                        itemData.Evaluation.ResultPassed
                             ? Palette.LightGreen
                             : Palette.LightPink;
             }
@@ -150,14 +150,14 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 
                 this.StatisticsLabel = new ViewItemLabelVisual(this.Item, labelSettings);
                 this.StatisticsLabel.Label.TextColor = () =>
-                        itemData.ChildrenPassedNum == itemData.Children.Count
+                        itemData.Evaluation.ResultChildrenPassed == itemData.Children.Count
                             ? Palette.LightGreen
                             : Palette.LightPink;
                 this.StatisticsLabel.Label.Text = () =>
                     {
-                        return itemData.IsResultChanged
-                                   ? string.Format("{0} ( {1} ) / {2}", itemData.ChildrenPassedNum, itemData.ResultVariationNum.ToSummary(), itemData.Children.Count)
-                                   : string.Format("{0} / {1}", itemData.ChildrenPassedNum, itemData.Children.Count);
+                        return itemData.Evaluation.ResultChanged
+                                   ? string.Format("{0} ( {1} ) / {2}", itemData.Evaluation.ResultChildrenPassed, itemData.Evaluation.ResultChange.ToSummary(), itemData.Children.Count)
+                                   : string.Format("{0} / {1}", itemData.Evaluation.ResultChildrenPassed, itemData.Children.Count);
                     };
             }
 
