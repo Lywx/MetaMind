@@ -171,10 +171,10 @@
             }
             catch (Exception)
             {
+                var console = this.GameInterop.Console;
+
                 if (this.Debugging)
                 {
-                    var console = this.GameInterop.Console;
-
                     console.WriteLine(this.Out  .ToString());
                     console.WriteLine(this.Error.ToString());
 
@@ -182,7 +182,7 @@
                 }
                 else
                 {
-                    this.GameInterop.Console.WriteLine(string.Format("ERROR: Script evaluation at \"{0}\" failed.", filePath));
+                    console.WriteLine(string.Format("ERROR: Script evaluation at \"{0}\" failed.", filePath));
                 }
             }
         }

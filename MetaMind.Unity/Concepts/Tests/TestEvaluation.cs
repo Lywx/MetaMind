@@ -1,9 +1,10 @@
 ﻿namespace MetaMind.Unity.Concepts.Tests
 {
+    using Engine;
     using System;
     using System.Linq;
 
-    public class TestEvaluation : ITestEvaluation
+    public class TestEvaluation : GameEntity, ITestEvaluation
     {
         private readonly Test test;
 
@@ -139,8 +140,19 @@
 
         public void UpdateResult()
         {
-            this.ResultPassed = this.ResultSelector.Invoke();
-            this.ResultStatus = this.ResultStatusSelector.Invoke();
+            try
+            {
+                this.ResultPassed = this.ResultSelector      .Invoke();
+                this.ResultStatus = this.ResultStatusSelector.Invoke();
+            }
+            catch (Exception e)
+            {
+                var console = this.GameInterop.Console;
+                console.WriteLine(e.ToString());
+
+                this.ResultPassed = false;
+                this.ResultStatus = "ERROR";
+            }
 
             // true only if not timed out
             this.ResultChanged = DateTime.Now - this.resultChangedMoment < this.resultChangedTimeout;
@@ -213,7 +225,7 @@
 
         #region IDisosable
 
-        public void Dispose()
+        public override void Dispose()
         {
             this.Succeeded = null;
             this.Failed    = null;
@@ -222,6 +234,8 @@
             {
                 this.testTimer.Dispose();
             }
+
+            base.Dispose();
         }
 
         #endregion
