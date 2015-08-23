@@ -8,12 +8,9 @@
 namespace MetaMind.Engine
 {
     using System;
-    using System.Diagnostics;
     using System.Runtime.Serialization;
-
-    using MetaMind.Engine.Services;
-
     using Microsoft.Xna.Framework;
+    using Services;
 
     [DataContract]
     public class GameVisualEntity : GameEntity, IGameVisualEntity
@@ -48,7 +45,7 @@ namespace MetaMind.Engine
 
         #region Constructors
 
-        protected GameVisualEntity()
+        protected internal GameVisualEntity()
         {
             this.SetupService();
         }
@@ -73,7 +70,7 @@ namespace MetaMind.Engine
 
         #region Service
 
-        protected IGameGraphicsService GameGraphics { get; private set; }
+        protected internal IGameGraphicsService GameGraphics { get; private set; }
 
         [OnDeserialized]
         private void SetupService(StreamingContext context)

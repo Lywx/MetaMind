@@ -57,10 +57,10 @@
             this.synchronizationSession = new SynchronizationSession();
 
             // Test session
-            this.testSession = new TestSession(Unity.FsiSession);
+            this.testSession = new TestSession(Unity.FsiSession, Unity.SessionData.Cognition);
 
             // Operation session
-            this.operationSession = new OperationSession(Unity.FsiSession);
+            this.operationSession = new OperationSession(Unity.FsiSession, Unity.SessionData.Cognition);
 
             // Buttons
             var graphics = interop.Engine.Graphics;
@@ -116,7 +116,7 @@
             this.Layers.Add(new SynchronizationLayer(this));
 
             this.CircularLayers = new CircularGameLayer(this);
-            this.CircularLayers.Add(new TestLayer(this.testSession, this));
+            this.CircularLayers.Add(new TestLayer(this.testSession, Unity.SpeechSynthesizer, this));
             this.CircularLayers.Add(new OperationLayer(this.operationSession, this));
             this.Layers.Add(this.CircularLayers);
 
@@ -149,8 +149,6 @@
             if (keyboard.IsActionTriggered(KeyboardActions.SynchronizationPause))
             {
                 this.synchronizationSession.ToggleSynchronization();
-                this.operationSession      .ToggleNotification();
-                this.testSession.           ToggleNotification();
             }
 
             this.buttonPrevious.UpdateInput(input, time);

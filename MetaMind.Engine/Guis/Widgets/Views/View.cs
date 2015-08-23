@@ -24,25 +24,24 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             if (viewSettings == null)
             {
-                throw new ArgumentNullException("viewSettings");
+                throw new ArgumentNullException(nameof(viewSettings));
             }
-
-            this.ViewSettings = viewSettings;
-
-            this.ViewComponents = new Dictionary<string, object>();
 
             if (itemSettings == null)
             {
-                throw new ArgumentNullException("itemSettings");
+                throw new ArgumentNullException(nameof(itemSettings));
             }
 
             if (items == null)
             {
-                throw new ArgumentNullException("items");
+                throw new ArgumentNullException(nameof(items));
             }
 
+            this.ViewComponents = new Dictionary<string, object>();
+
+            this.ViewSettings = viewSettings;
             this.ItemSettings = itemSettings;
-            this.ItemsWrite = items;
+            this.ItemsWrite   = items;
         }
 
         #region Dependency
@@ -92,7 +91,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             var t = (T)this.ViewGetComponent(id);
             if (t == null)
             {
-                throw new InvalidOperationException(string.Format("ViewComponents has no child {0} of type {1}", id, typeof(T).Name));
+                throw new InvalidOperationException($"ViewComponents has no child {id} of type {typeof(T).Name}");
             }
 
             return t;
@@ -116,20 +115,14 @@ namespace MetaMind.Engine.Guis.Widgets.Views
                 this.ViewLogic.LoadBinding();
             }
 
-            if (this.ViewVisual != null)
-            {
-                this.ViewVisual.SetupLayer();
-            }
+            this.ViewVisual?.SetupLayer();
 
             base.LoadContent(interop);
         }
 
         public override void UnloadContent(IGameInteropService interop)
         {
-            if (this.ViewLogic != null)
-            {
-                this.ViewLogic.UnloadBinding();
-            }
+            this.ViewLogic?.UnloadBinding();
 
             base.UnloadContent(interop);
         }
@@ -141,10 +134,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            if (this.ViewVisual != null)
-            {
-                this.ViewVisual.Draw(graphics, time, alpha);
-            }
+            this.ViewVisual?.Draw(graphics, time, alpha);
         }
 
         #endregion
@@ -155,44 +145,26 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             base.Update(time);
 
-            if (this.ViewLogic != null)
-            {
-                this.ViewLogic.Update(time);
-            }
-
-            if (this.ViewVisual != null)
-            {
-                this.ViewVisual.Update(time);
-            }
+            this.ViewLogic?.Update(time);
+            this.ViewVisual?.Update(time);
 
             foreach (var pair in this.ViewComponents)
             {
                 var component  = pair.Value;
                 var updateable = component as IOuterUpdateable;
-
-                if (updateable != null)
-                {
-                    updateable.Update(time);
-                }
+                updateable?.Update(time);
             }
         }
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            if (this.ViewLogic != null)
-            {
-                this.ViewLogic.UpdateInput(input, time);
-            }
+            this.ViewLogic?.UpdateInput(input, time);
 
             foreach (var pair in this.ViewComponents)
             {
                 var component  = pair.Value;
                 var updateable = component as IInputable;
-
-                if (updateable != null)
-                {
-                    updateable.UpdateInput(input, time);
-                }
+                updateable?.UpdateInput(input, time);
             }
         }
 

@@ -53,11 +53,13 @@
                                                                                                            
         public override void LoadContent(IGameInteropService interop)
         {
+            var graphicsSettings = this.GameGraphics.Settings;
+
             // View settings
             var viewSettings = new StandardIndexViewSettings(
-                itemMargin    : new Vector2(1355 + 128 + 24, 26),
-                viewPosition  : new Vector2(40, 100),
-                viewRowDisplay: 30,
+                itemMargin    : new Vector2(graphicsSettings.Width - TestModuleSettings.ViewMargin.X * 2, TestModuleSettings.ItemMargin.Y),
+                viewPosition  : TestModuleSettings.ViewMargin,
+                viewRowDisplay: (int)((graphicsSettings.Height - TestModuleSettings.ViewMargin.Y) / TestModuleSettings.ItemMargin.Y - 1),
                 viewRowMax    : int.MaxValue);
 
             // Item settings

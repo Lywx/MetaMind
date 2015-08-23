@@ -40,10 +40,7 @@ namespace MetaMind.Engine.Guis
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            if (this.Visual != null)
-            {
-                this.Visual.Draw(graphics, time, alpha);
-            }
+            this.Visual?.Draw(graphics, time, alpha);
         }
 
         #endregion
@@ -52,25 +49,15 @@ namespace MetaMind.Engine.Guis
 
         public override void LoadContent(IGameInteropService interop)
         {
-            if (this.Logic != null)
-            {
-                this.Logic.LoadContent(interop);
-            }
-
-            if (this.Visual != null)
-            {
-                this.Visual.LoadContent(interop);
-            }
+            this.Logic? .LoadContent(interop);
+            this.Visual?.LoadContent(interop);
 
             base.LoadContent(interop);
         }
 
         public override void UnloadContent(IGameInteropService interop)
         {
-            if (this.Logic != null)
-            {
-                this.Logic.UnloadContent(interop);
-            }
+            this.Logic?.UnloadContent(interop);
 
             base.UnloadContent(interop);
         }
@@ -81,30 +68,16 @@ namespace MetaMind.Engine.Guis
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            if (this.Logic != null)
-            {
-                this.Logic.UpdateInput(input, time);
-            }
-
-            if (this.Visual != null)
-            {
-                this.Visual.UpdateInput(input, time);
-            }
+            this.Logic? .UpdateInput(input, time);
+            this.Visual?.UpdateInput(input, time);
         }
 
         public override void Update(GameTime time)
         {
             base.Update(time);
 
-            if (this.Logic != null)
-            {
-                this.Logic.Update(time);
-            }
-
-            if (this.Visual != null)
-            {
-                this.Visual.Update(time);
-            }
+            this.Logic? .Update(time);
+            this.Visual?.Update(time);
         }
 
         #endregion

@@ -64,7 +64,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -131,7 +131,6 @@
     <Compile Include="Extensions\ExtEnum.cs" />
     <Compile Include="Extensions\ExtHashSet.cs" />
     <Compile Include="Extensions\ExtObservableCollection.cs" />
-    <Compile Include="Guis\Console\Commands\DebugCommand.cs" />
     <Compile Include="Guis\Console\Commands\VerboseCommand.cs" />
     <Compile Include="Guis\Layers\OperationLayer.cs" />
     <Compile Include="Guis\Modules\OperationModule.cs" />
@@ -148,6 +147,7 @@
     <Compile Include="Guis\Widgets\BlockViews\Options\OptionViewSettings.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationIndexedViewComposer.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationIndexViewComposer.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemSettings.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemVisual.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationViewBinding.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Tests\TestIndexedViewComposer.cs" />
@@ -242,6 +242,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Speech" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup />

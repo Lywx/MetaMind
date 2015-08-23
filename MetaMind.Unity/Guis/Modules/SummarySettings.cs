@@ -12,10 +12,10 @@ namespace MetaMind.Unity.Guis.Modules
 
         public void LoadParameter(GraphicsSettings parameter)
         {
-            this.ScreenWidth = parameter.Width;
+            this.ViewportWidth = parameter.Width;
         }
 
-        public int ScreenWidth { get; set; }
+        public int ViewportWidth { get; set; }
 
         #endregion
 
@@ -47,7 +47,7 @@ namespace MetaMind.Unity.Guis.Modules
         {
             this.LoadParameter(this.GameGraphics.Settings);
 
-            this.TitleCenter = new Vector2(this.ScreenWidth / 2f, 100);
+            this.TitleCenter = new Vector2(this.ViewportWidth / 2f, 100);
         }
     }
 }

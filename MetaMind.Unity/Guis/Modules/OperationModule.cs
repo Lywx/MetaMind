@@ -25,12 +25,12 @@
         {
             if (operations == null)
             {
-                throw new ArgumentNullException("operations");
+                throw new ArgumentNullException(nameof(operations));
             }
 
             if (operationSession == null)
             {
-                throw new ArgumentNullException("operationSession");
+                throw new ArgumentNullException(nameof(operationSession));
             }
 
             this.operations       = operations;
@@ -48,17 +48,17 @@
                                                                                                            
         public override void LoadContent(IGameInteropService interop)
         {
+            var graphicsSettings = this.GameGraphics.Settings;
+
             // View settings
             var viewSettings = new StandardIndexViewSettings(
-                itemMargin    : new Vector2(1355 + 128 + 24, 26),
-                viewPosition  : new Vector2(40, 100),
-                viewRowDisplay: 30,
+                itemMargin    : new Vector2(graphicsSettings.Width - OperationModuleSettings.ViewMargin.X * 2, OperationModuleSettings.ItemMargin.Y),
+                viewPosition  : OperationModuleSettings.ViewMargin,
+                viewRowDisplay: (int)((graphicsSettings.Height - OperationModuleSettings.ViewMargin.Y) / OperationModuleSettings.ItemMargin.Y - 1),
                 viewRowMax    : int.MaxValue);
 
             // Item settings
-            var itemSettings = new TestItemSettings();
-            var statusFrameSettings = itemSettings.Get<FrameSettings>("StatusFrame");
-            statusFrameSettings.Size = new Point(128, 52);
+            var itemSettings = new OperationItemSettings();
 
             // View construction
             this.View = new View(viewSettings, itemSettings, new List<IViewItem>());

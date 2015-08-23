@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Concepts.Tests;
+    using Engine;
     using Engine.Guis.Elements;
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Data;
@@ -20,11 +21,12 @@
     using Engine.Guis.Widgets.Views.Swaps;
     using Engine.Guis.Widgets.Views.Visuals;
     using Microsoft.Xna.Framework;
+    using Modules;
 
     /// <summary>
     /// Composers are not intended to be reused.
     /// </summary>
-    public class TestIndexViewComposer : IIndexViewComposer
+    public class TestIndexViewComposer : GameVisualEntity, IIndexViewComposer
     {
         private StandardIndexViewSettings viewSettings;
 
@@ -40,7 +42,7 @@
         {
             if (testSeesion == null)
             {
-                throw new ArgumentNullException("testSeesion");
+                throw new ArgumentNullException(nameof(testSeesion));
             }
 
             this.TestSession = testSeesion;
@@ -68,15 +70,15 @@
         {
             if (view == null)
             {
-                throw new ArgumentNullException("view");
+                throw new ArgumentNullException(nameof(view));
             }
 
             if (viewData == null)
             {
-                throw new ArgumentNullException("viewData");
+                throw new ArgumentNullException(nameof(viewData));
             }
 
-            this.View = view;
+            this.View     = view;
             this.ViewData = viewData;
 
             this.AddView();
@@ -88,12 +90,12 @@
 
         public IView Construct(IViewItem item)
         {
-            var itemLayer = item.GetLayer<BlockViewVerticalItemLayer>();
+            var itemLayer  = item.GetLayer<BlockViewVerticalItemLayer>();
             var itemLayout = itemLayer.ItemLayout;
 
             var hostViewLayer = item.View.GetLayer<BlockViewVerticalLayer>();
             var hostViewSettings = hostViewLayer.ViewSettings;
-            var hostViewScroll = hostViewLayer.ViewScroll;
+            var hostViewScroll   = hostViewLayer.ViewScroll;
 
             var indexViewSettings = (StandardIndexViewSettings)item.View.ViewSettings.Clone();
             var indexItemSettings = (TestItemSettings)item.View.ItemSettings.Clone();
@@ -159,12 +161,14 @@
 
         protected virtual void AddViewRegion()
         {
+            var graphicsSettings = this.GameGraphics.Settings;
+
             var viewRegionSettings = new ViewRegionSettings();
             this.ViewRegion = new ViewRegion(
                 regionBounds: () => new Rectangle(
                     location: this.viewSettings.ViewPosition.ToPoint(), 
                     size: new Point(
-                        x: 1355 + 128 + 24,
+                        x: graphicsSettings.Width - (int)TestModuleSettings.ViewMargin.X * 2,
                         y: (int)(this.viewSettings.ViewRowDisplay * this.viewSettings.ItemMargin.Y))),
                 regionSettings: viewRegionSettings);
 

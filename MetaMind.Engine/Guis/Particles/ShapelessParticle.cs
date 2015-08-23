@@ -37,13 +37,13 @@ namespace MetaMind.Engine.Guis.Particles
 
         public void LoadParameter(GraphicsSettings parameter)
         {
-            this.ScreenWidth  = parameter.Width;
-            this.ScreenHeight = parameter.Height;
+            this.ViewportWidth  = parameter.Width;
+            this.ViewportHeight = parameter.Height;
         }
 
-        protected int ScreenHeight { get; set; }
+        protected int ViewportHeight { get; set; }
 
-        protected int ScreenWidth { get; set; }
+        protected int ViewportWidth { get; set; }
         
         #endregion
 

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Concepts.Operations;
+    using Engine;
     using Engine.Guis.Elements;
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Items.Data;
@@ -21,12 +22,13 @@
     using Engine.Guis.Widgets.Views.Swaps;
     using Engine.Guis.Widgets.Views.Visuals;
     using Microsoft.Xna.Framework;
+    using Modules;
     using Tests;
 
     /// <summary>
     /// Composers are not intended to be reused.
     /// </summary>
-    public class OperationIndexViewComposer : IIndexViewComposer
+    public class OperationIndexViewComposer : GameVisualEntity, IIndexViewComposer
     {
         private StandardIndexViewSettings viewSettings;
 
@@ -42,7 +44,7 @@
         {
             if (operationSeesion == null)
             {
-                throw new ArgumentNullException("operationSeesion");
+                throw new ArgumentNullException(nameof(operationSeesion));
             }
 
             this.OperationSession = operationSeesion;
@@ -70,12 +72,12 @@
         {
             if (view == null)
             {
-                throw new ArgumentNullException("view");
+                throw new ArgumentNullException(nameof(view));
             }
 
             if (viewData == null)
             {
-                throw new ArgumentNullException("viewData");
+                throw new ArgumentNullException(nameof(viewData));
             }
 
             this.View     = view;
@@ -161,12 +163,14 @@
 
         protected virtual void AddViewRegion()
         {
+            var graphicsSettings = this.GameGraphics.Settings;
+
             var viewRegionSettings = new ViewRegionSettings();
             this.ViewRegion = new ViewRegion(
                 regionBounds: () => new Rectangle(
                     location: this.viewSettings.ViewPosition.ToPoint(), 
                     size: new Point(
-                        x: 1355 + 128 + 24,
+                        x: graphicsSettings.Width - (int)OperationModuleSettings.ViewMargin.X * 2,
                         y: (int)(this.viewSettings.ViewRowDisplay * this.viewSettings.ItemMargin.Y))),
                 regionSettings: viewRegionSettings);
 

@@ -47,8 +47,8 @@ namespace MetaMind.Engine.Guis.Particles
             {
                 return this.Position.X + this.Size.X < 0 ||
                        this.Position.Y + this.Size.Y < 0 ||
-                       this.Position.X > this.ScreenWidth ||
-                       this.Position.Y > this.ScreenHeight;
+                       this.Position.X > this.ViewportWidth ||
+                       this.Position.Y > this.ViewportHeight;
             }
         }
 
@@ -108,8 +108,8 @@ namespace MetaMind.Engine.Guis.Particles
             this.Color = new Color(this.Random.Next(0, 100) / this.Deep, 50 / this.Deep, 50 / this.Deep, 50 / this.Deep);
 
             // anywhere on the sides of screen
-            var x = direction == FloatDirection.Left ? -(this.Width * this.Scale) : this.ScreenWidth;
-            var y = this.Random.Next(this.ScreenHeight);
+            var x = direction == FloatDirection.Left ? -(this.Width * this.Scale) : this.ViewportWidth;
+            var y = this.Random.Next(this.ViewportHeight);
             this.Position = new Vector2(x, y);
 
             return this;

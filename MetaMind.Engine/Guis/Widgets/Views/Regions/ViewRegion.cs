@@ -12,12 +12,12 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Regions
         {
             if (regionBounds == null)
             {
-                throw new ArgumentNullException("regionBounds");
+                throw new ArgumentNullException(nameof(regionBounds));
             }
 
             if (regionSettings == null)
             {
-                throw new ArgumentNullException("regionSettings");
+                throw new ArgumentNullException(nameof(regionSettings));
             }
 
             this.RegionBounds   = regionBounds;
@@ -34,10 +34,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Regions
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            if (this.RegionVisual != null)
-            {
-                this.RegionVisual.Draw(graphics, time, alpha);
-            }
+            this.RegionVisual?.Draw(graphics, time, alpha);
         }
 
         #endregion

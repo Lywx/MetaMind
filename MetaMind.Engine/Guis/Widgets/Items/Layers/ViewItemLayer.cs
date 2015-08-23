@@ -1,9 +1,8 @@
 namespace MetaMind.Engine.Guis.Widgets.Items.Layers
 {
     using System;
-    using Data;
-    using MetaMind.Engine.Guis.Widgets.Items.Logic;
-    using MetaMind.Engine.Guis.Widgets.Items.Settings;
+    using Logic;
+    using Settings;
 
     /// <summary>
     /// A extension layer for extended and customized implementation of specific item components.
@@ -20,26 +19,17 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layers
         /// <summary>
         /// Gets a interface to most general item logic.
         /// </summary>
-        public IViewItemLogic ItemLogic
-        {
-            get { return this.Item.ItemLogic; }
-        }
+        public IViewItemLogic ItemLogic => this.Item.ItemLogic;
 
         /// <summary>
         /// Gets a interface to most general data type.
         /// </summary>
-        public dynamic ItemData
-        {
-            get { return this.Item.ItemData; }
-        }
+        public dynamic ItemData => this.Item.ItemData;
 
         /// <summary>
         /// Gets a interface to most general item settings.
         /// </summary>
-        public ItemSettings ItemSettings
-        {
-            get { return this.Item.ItemSettings; }
-        }
+        public ItemSettings ItemSettings => this.Item.ItemSettings;
 
         #endregion
 
@@ -54,8 +44,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layers
                 return this as T;
             }
 
-            throw new InvalidOperationException(
-                string.Format("This is not a {0}.", typeof (T).Name));
+            throw new InvalidOperationException($"This is not a {typeof(T).Name}.");
         }
 
         #endregion

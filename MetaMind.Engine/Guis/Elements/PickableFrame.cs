@@ -459,6 +459,8 @@ namespace MetaMind.Engine.Guis.Elements
 
         #endregion
 
+        #region Initialization
+
         protected void Populate(Point center, Point size)
         {
             this.Populate(center.ToRectangleCenter(size));
@@ -469,6 +471,10 @@ namespace MetaMind.Engine.Guis.Elements
             this.Rectangle = rect;
         }
 
+        #endregion
+
+        #region Update
+
         public override void Update(GameTime time)
         {
             this.ClearAction(time);
@@ -478,5 +484,7 @@ namespace MetaMind.Engine.Guis.Elements
         {
             this.FlushAction(time);
         }
+
+        #endregion
     }
 }

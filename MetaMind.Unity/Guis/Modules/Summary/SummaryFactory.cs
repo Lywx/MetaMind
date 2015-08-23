@@ -23,8 +23,8 @@ namespace MetaMind.Unity.Guis.Modules.Summary
         {
             var font = new Func<Font>(() => this.Settings.EntityFont);
 
-            var captionPos    = new Func<Vector2>(() => new Vector2(this.Settings.ScreenWidth / 2f - 300, 150 + line() * this.Settings.LineHeight));
-            var statisticsPos = new Func<Vector2>(() => new Vector2(this.Settings.ScreenWidth / 2f + 260, 150 + line() * this.Settings.LineHeight));
+            var captionPos    = new Func<Vector2>(() => new Vector2(this.Settings.ViewportWidth / 2f - 300, 150 + line() * this.Settings.LineHeight));
+            var statisticsPos = new Func<Vector2>(() => new Vector2(this.Settings.ViewportWidth / 2f + 260, 150 + line() * this.Settings.LineHeight));
 
             var size = new Func<float>(() => this.Settings.EntitySize);
 
@@ -38,8 +38,8 @@ namespace MetaMind.Unity.Guis.Modules.Summary
 
         public SummarySplit CreateSplit(int line, Color color)
         {
-            var start = new Func<Vector2>(() => new Vector2(this.Settings.ScreenWidth / 2f - 300, 150 + line * this.Settings.LineHeight + this.Settings.LineHeight / 2));
-            var end   = new Func<Vector2>(() => new Vector2(this.Settings.ScreenWidth / 2f + 300, 150 + line * this.Settings.LineHeight + this.Settings.LineHeight / 2));
+            var start = new Func<Vector2>(() => new Vector2(this.Settings.ViewportWidth / 2f - 300, 150 + line * this.Settings.LineHeight + this.Settings.LineHeight / 2));
+            var end   = new Func<Vector2>(() => new Vector2(this.Settings.ViewportWidth / 2f + 300, 150 + line * this.Settings.LineHeight + this.Settings.LineHeight / 2));
             var size  = new Func<float>(() => this.Settings.EntitySize);
 
             return new SummarySplit(start, end, () => color, size);

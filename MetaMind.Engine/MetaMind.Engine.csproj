@@ -85,6 +85,7 @@
     <Compile Include="Extensions\ExtT.cs" />
     <Compile Include="Extensions\ExtList.cs" />
     <Compile Include="GameEngineConfigurer.cs" />
+    <Compile Include="Guis\Console\OutputLineType.cs" />
     <Compile Include="Guis\Elements\Inputs\ButtonDoubleClick.cs" />
     <Compile Include="Guis\Elements\Inputs\ButtonHistory.cs" />
     <Compile Include="Guis\Elements\Inputs\ButtonPress.cs" />
@@ -151,11 +152,11 @@
     <Compile Include="Guis\Console\Commands\RestartCommand.cs" />
     <Compile Include="Guis\Console\GameConsole.cs" />
     <Compile Include="Guis\Console\GameConsoleComponent.cs" />
-    <Compile Include="Guis\Console\GameConsoleOptions.cs" />
-    <Compile Include="Guis\Console\IConsoleCommand.cs" />
-    <Compile Include="Guis\Console\InputProcessor.cs" />
+    <Compile Include="Guis\Console\GameConsoleSettings.cs" />
+    <Compile Include="Guis\Console\Commands\IConsoleCommand.cs" />
+    <Compile Include="Guis\Console\GameConsoleProcessor.cs" />
     <Compile Include="Guis\Console\OutputLine.cs" />
-    <Compile Include="Guis\Console\Renderer.cs" />
+    <Compile Include="Guis\Console\GameConsoleRenderer.cs" />
     <Compile Include="Guis\IModuleLogicControl.cs" />
     <Compile Include="Guis\Layers\CircularGameLayer.cs" />
     <Compile Include="Guis\Layers\ICircularLayerManager.cs" />
@@ -294,6 +295,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Guis\Widgets\Items\Logic\ViewItemLogicExt.cs" />
+    <Compile Include="Guis\Widgets\Items\Settings\IItemSettings.cs" />
     <Compile Include="Guis\Widgets\Items\Settings\ItemSettings.cs">
       <SubType>Code</SubType>
     </Compile>

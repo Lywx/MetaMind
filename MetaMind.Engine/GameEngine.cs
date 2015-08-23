@@ -43,19 +43,14 @@ namespace MetaMind.Engine
         {
             get
             {
-                if (this.graphics == null)
-                {
-                    this.graphics = new GameNullGraphics();
-                }
-
-                return this.graphics;
+                return this.graphics ?? (this.graphics = new GameNullGraphics());
             }
 
             set
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 if (this.graphics != null)
@@ -71,19 +66,15 @@ namespace MetaMind.Engine
         {
             get
             {
-                if (this.numerical == null)
-                {
-                    this.numerical = new GameEngineNumerical();
-                }
-
-                return this.numerical;
+                return this.numerical
+                       ?? (this.numerical = new GameEngineNumerical());
             }
 
             set
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 if (this.numerical != null)
@@ -99,19 +90,15 @@ namespace MetaMind.Engine
         {
             get
             {
-                if (this.interop == null)
-                {
-                    this.interop = new GameNullInterop(this);
-                }
-
-                return this.interop;
+                return this.interop
+                       ?? (this.interop = new GameNullInterop(this));
             }
 
             set
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 if (this.interop != null)
@@ -139,7 +126,7 @@ namespace MetaMind.Engine
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 if (this.input != null)

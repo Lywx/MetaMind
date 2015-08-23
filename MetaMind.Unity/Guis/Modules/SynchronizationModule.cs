@@ -20,7 +20,7 @@
         {
             if (cognition == null)
             {
-                throw new ArgumentNullException("cognition");
+                throw new ArgumentNullException(nameof(cognition));
             }
 
             this.consciousness   = cognition.Consciousness;

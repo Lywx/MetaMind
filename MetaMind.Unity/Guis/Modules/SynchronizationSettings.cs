@@ -26,29 +26,33 @@
 
         public Vector2 SynchronizationDotFrameSize = new Vector2(8, 8);
 
+        private int viewportHeight;
+
+        private int viewportWidth;
+
         public SynchronizationSettings()
         {
             this.LoadParameter(this.GameGraphics.Settings);
 
-            this.BarFrameCenterPosition = new Vector2((float)this.ScreenWidth / 2, 16);
-        }
-
-        public object Clone()
-        {
-            return this.MemberwiseClone();
+            this.BarFrameCenterPosition = new Vector2((float)this.viewportWidth / 2, 16);
         }
 
         #region Parameters
 
         public void LoadParameter(GraphicsSettings parameter)
         {
-            this.ScreenWidth  = parameter.Width;
-            this.ScreenHeight = parameter.Height;
+            this.viewportWidth  = parameter.Width;
+            this.viewportHeight = parameter.Height;
         }
 
-        public int ScreenHeight { get; private set; }
+        #endregion
 
-        public int ScreenWidth { get; private set; }
+        #region IClonable
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
 
         #endregion
     }

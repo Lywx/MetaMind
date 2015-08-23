@@ -32,9 +32,9 @@ namespace MetaMind.Engine
 
         #region Dependency
         
-        protected IGameInteropService GameInterop { get; private set; }
+        protected internal IGameInteropService GameInterop { get; private set; }
 
-        protected IGameNumericalService GameNumerical { get; private set; }
+        protected internal IGameNumericalService GameNumerical { get; private set; }
 
         [OnDeserialized]
         private void SetupService(StreamingContext context)
@@ -55,7 +55,7 @@ namespace MetaMind.Engine
 
         #region Constructors
 
-        protected GameEntity()
+        protected internal GameEntity()
         {
             this.SetupService();
 

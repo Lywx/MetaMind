@@ -13,7 +13,7 @@ namespace MetaMind.Engine.Guis.Widgets
                 return (T)this[id];
             }
 
-            throw new InvalidOperationException(string.Format("Settings contain no {0}", id));
+            throw new InvalidOperationException($"Settings contain no {id}");
         }
     }
 }
