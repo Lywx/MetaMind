@@ -35,7 +35,7 @@ namespace MetaMind.Unity.Concepts.Tests
 
                 if (this.HasChildren)
                 {
-                    foreach (var directChild in this.Children)
+                    foreach (var directChild in this.Children.ToArray())
                     {
                         yield return directChild;
 
@@ -57,7 +57,7 @@ namespace MetaMind.Unity.Concepts.Tests
             {
                 if (this.HasChildren)
                 {
-                    foreach (var child in this.Children)
+                    foreach (var child in this.Children.ToArray())
                     {
                         yield return child;
                     }
