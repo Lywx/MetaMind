@@ -2,6 +2,6 @@
 {
     public interface ICognitionProperties
     {
-        int SynchronizationRatio { get; }
+        int SynchronizationRate { get; }
     }
 }

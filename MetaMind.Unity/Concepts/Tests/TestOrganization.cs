@@ -21,23 +21,17 @@ namespace MetaMind.Unity.Concepts.Tests
 
         public List<ITest> Children { get; private set; } = new List<ITest>();
 
-        public bool HasChildren
-        {
-            get { return this.Children != null && this.Children.Count != 0; }
-        }
+        public bool HasChildren => this.Children != null && this.Children.Count != 0;
 
-        public bool HasParent
-        {
-            get { return this.Parent != null; }
-        }
+        public bool HasParent => this.Parent != null;
 
         public Test Parent { get; set; } = null;
 
-        public IEnumerable AllCollection
+        public IEnumerable<ITest> AllCollection
         {
             get
             {
-                yield return this;
+                yield return this.test;
 
                 if (this.HasChildren)
                 {
@@ -57,7 +51,7 @@ namespace MetaMind.Unity.Concepts.Tests
             }
         }
 
-        public IEnumerable ChildrenCollection
+        public IEnumerable<ITest> ChildrenCollection
         {
             get
             {

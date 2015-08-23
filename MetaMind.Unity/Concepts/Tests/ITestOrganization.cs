@@ -14,8 +14,8 @@
 
         bool HasChildren { get; }
 
-        IEnumerable AllCollection { get; }
+        IEnumerable<ITest> AllCollection { get; }
 
-        IEnumerable ChildrenCollection { get; }
+        IEnumerable<ITest> ChildrenCollection { get; }
     }
 }

@@ -16,6 +16,10 @@ namespace MetaMind.Unity.Concepts.Tests
 
         int ResultChildrenPassed { get; }
 
+        int ResultAllPassed { get; }
+
+        float ResultAllPassedRate { get; }
+
         int ResultChange { get; }
 
         Func<bool> ResultSelector { set; }

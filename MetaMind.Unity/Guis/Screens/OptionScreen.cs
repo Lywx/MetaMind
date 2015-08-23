@@ -23,6 +23,7 @@
     using Engine.Services;
     using Engine.Settings.Colors;
     using Microsoft.Xna.Framework;
+    using Modules;
     using Widgets.BlockViews.Options;
     using Widgets.IndexViews.Tests;
 
@@ -48,22 +49,22 @@
         {
             if (procedureName == null)
             {
-                throw new ArgumentNullException("procedureName");
+                throw new ArgumentNullException(nameof(procedureName));
             }
 
             if (procedureDescription == null)
             {
-                throw new ArgumentNullException("procedureDescription");
+                throw new ArgumentNullException(nameof(procedureDescription));
             }
 
             if (options == null)
             {
-                throw new ArgumentNullException("options");
+                throw new ArgumentNullException(nameof(options));
             }
 
             if (backgroundLayer == null)
             {
-                throw new ArgumentNullException("backgroundLayer");
+                throw new ArgumentNullException(nameof(backgroundLayer));
             }
 
             this.procedureName        = procedureName;
@@ -85,17 +86,20 @@
 
         public override void LoadContent(IGameInteropService interop)
         {
-            const int viewWidth = 1355 + 128 + 24;
+            var graphicsSettings = this.GameGraphics.Settings;
+
+            var viewWidth = graphicsSettings.Width - (int)OperationModuleSettings.ViewMargin.X * 2;
             
             // Screen label
             this.screenLabel = new Label
             {
                 TextFont     = () => Font.UiRegular,
                 Text         = () => "OPTIONS",
-                TextPosition = () => new Vector2(this.GameGraphics.Settings.Width / 2, 70),
+                TextPosition = () => new Vector2(graphicsSettings.Width / 2.0f, 80),
                 TextColor    = () => Palette.Transparent5,
                 TextSize     = () => 1f,
                 TextHAlign   = StringHAlign.Center,
+                TextVAlign   = StringVAlign.Center,
             };
 
             this.procedureNameLabelBox = new LabelBox(
@@ -103,14 +107,14 @@
                 {
                     TextFont       = Font.ContentRegular,
                     Text           = () => this.procedureName,
-                    TextPosition   = () => new Vector2(40, 100),
+                    TextPosition   = () => OperationModuleSettings.ViewMargin.ToVector2(),
                     TextColor      = Color.White,
                     TextSize       = 0.8f,
-                    TextLeading    = 26,
+                    TextLeading    = (int)OperationModuleSettings.ItemMargin.Y,
                     TextMonospaced = true
                 },
                 new Vector2(5, 12) * 0.8f, 
-                new BoxSettings(() => new Rectangle(40, 100, viewWidth, 0))
+                new BoxSettings(() => new Rectangle(OperationModuleSettings.ViewMargin, new Point(viewWidth, 0)))
                 {
                     Color = () => Palette.DimBlue,
                     ColorFilled = () => true,
@@ -121,26 +125,24 @@
                 {
                     TextFont       = Font.ContentRegular,
                     Text           = () => this.procedureDescription,
-                    TextPosition   = () => new Vector2(40, this.procedureNameLabelBox.Bottom),
+                    TextPosition   = () => new Vector2(OperationModuleSettings.ViewMargin.X, this.procedureNameLabelBox.Bottom),
                     TextColor      = Color.White,
                     TextSize       = 0.8f,
-                    TextLeading    = 26,
+                    TextLeading    = (int)OperationModuleSettings.ItemMargin.Y,
                     TextMonospaced = true
                 },
                 new Vector2(5, 12) * 0.8f,
-                new BoxSettings(() => new Rectangle(40, this.procedureNameLabelBox.Bottom, viewWidth, 0))
+                new BoxSettings(() => new Rectangle((int)OperationModuleSettings.ViewMargin.X, this.procedureNameLabelBox.Bottom, viewWidth, 0))
                 {
                     Color       = () => Palette.Transparent1,
                     ColorFilled = () => true,
                 });
 
-            var graphics = interop.Engine.Graphics;
-
             // View settings
             var viewSettings = new OptionViewSettings(
-                itemMargin    : new Vector2(viewWidth, 26),
-                viewPosition  : new Vector2(40, this.procedureDescriptionLabelBox.Bottom),
-                viewRowDisplay: (graphics.Settings.Height - this.procedureDescriptionLabelBox.Bottom - 72) / 26,
+                itemMargin    : new Vector2(viewWidth, OperationModuleSettings.ItemMargin.Y),
+                viewPosition  : new Vector2(OperationModuleSettings.ViewMargin.X, this.procedureDescriptionLabelBox.Bottom),
+                viewRowDisplay: (graphicsSettings.Height - this.procedureDescriptionLabelBox.Bottom - 72) / (int)OperationModuleSettings.ItemMargin.Y,
                 viewRowMax    : int.MaxValue);
 
             // Item settings

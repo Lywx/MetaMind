@@ -107,16 +107,17 @@
             {
                 TextFont     = () => Font.UiRegular,
                 Text         = () => this.CircularLayers.GameLayerDisplayed is TestLayer ? "TESTS" : "OPERATIONS",
-                TextPosition = () => new Vector2(this.GameGraphics.Settings.Width / 2, 70),
+                TextPosition = () => new Vector2((float)this.GameGraphics.Settings.Width / 2, 80),
                 TextColor    = () => Palette.Transparent5,
                 TextSize     = () => 1f,
                 TextHAlign   = StringHAlign.Center,
+                TextVAlign   = StringVAlign.Center,
             };
 
             this.Layers.Add(new SynchronizationLayer(this));
 
             this.CircularLayers = new CircularGameLayer(this);
-            this.CircularLayers.Add(new TestLayer(this.testSession, Unity.SpeechSynthesizer, this));
+            this.CircularLayers.Add(new TestLayer(this.testSession, Unity.Speech, this));
             this.CircularLayers.Add(new OperationLayer(this.operationSession, this));
             this.Layers.Add(this.CircularLayers);
 

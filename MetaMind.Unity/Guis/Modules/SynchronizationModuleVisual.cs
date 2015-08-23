@@ -28,17 +28,17 @@ namespace MetaMind.Unity.Guis.Modules
         {
             if (cognition == null)
             {
-                throw new ArgumentNullException("cognition");
+                throw new ArgumentNullException(nameof(cognition));
             }
 
             if (synchronization == null)
             {
-                throw new ArgumentNullException("synchronization");
+                throw new ArgumentNullException(nameof(synchronization));
             }
 
             if (consciousness == null)
             {
-                throw new ArgumentNullException("consciousness");
+                throw new ArgumentNullException(nameof(consciousness));
             }
 
             this.cognition = cognition;
@@ -58,7 +58,7 @@ namespace MetaMind.Unity.Guis.Modules
 
             var statusInfo = new Label(
                 () => Font.UiStatistics,
-                () => string.Format("Level {0}: {1}", this.synchronization.Level, this.synchronization.State),
+                () => $"Level {this.synchronization.Level}: {this.synchronization.State}",
                 () => this.StatusInfoCenterPosition,
                 () => Color.White,
                 () => 0.7f,
@@ -67,7 +67,7 @@ namespace MetaMind.Unity.Guis.Modules
 
             var accumulationInfo = new Label(
                 () => Font.UiStatistics,
-                () => string.Format("{0}", this.synchronization.ElapsedTimeSinceTransition.ToString("hh':'mm':'ss")),
+                () => $"{this.synchronization.ElapsedTimeSinceTransition.ToString("hh':'mm':'ss")}",
                 () => this.AccumulationInfoPosition,
                 () => Color.White,
                 () => 0.7f,
@@ -77,7 +77,7 @@ namespace MetaMind.Unity.Guis.Modules
             var dailyRatePrefix = new Label(
                 () => this.Settings.SynchronizationRateFont,
                 () => this.consciousness.IsAwake
-                    ? cognition.SynchronizationRatio.ToString("F0")
+                    ? cognition.SynchronizationRate.ToString("F0")
                     : "",
                 () => this.DailyRateCenterPosition,
                 () => Color.White,
@@ -105,7 +105,7 @@ namespace MetaMind.Unity.Guis.Modules
 
             var accelerationInfoSubfix = new Label(
                 () => Font.UiStatistics,
-                () => string.Format("{0}", this.synchronization.Acceleration.ToString("F1")),
+                () => $"{this.synchronization.Acceleration.ToString("F1")}",
                 () => this.AccelerationInfoCenterPosition,
                 () => Color.White,
                 () => 2.0f,
@@ -160,45 +160,15 @@ namespace MetaMind.Unity.Guis.Modules
 
         #region Positional Data
 
-        private Vector2 AccelerationInfoCenterPosition
-        {
-            get
-            {
-                return this.StatusInfoCenterPosition + new Vector2(160, 0);
-            }
-        }
+        private Vector2 AccelerationInfoCenterPosition => this.StatusInfoCenterPosition + new Vector2(160, 0);
 
-        private Vector2 AccumulationInfoPosition
-        {
-            get
-            {
-                return this.StateInfoCenterPosition + new Vector2(170, 0);
-            }
-        }
+        private Vector2 AccumulationInfoPosition => this.StateInfoCenterPosition + new Vector2(170, 0);
 
-        private Vector2 DailyRateCenterPosition
-        {
-            get
-            {
-                return this.StatusInfoCenterPosition + new Vector2(-160, 0);
-            }
-        }
+        private Vector2 DailyRateCenterPosition => this.StatusInfoCenterPosition + new Vector2(-160, 0);
 
-        private Vector2 StateInfoCenterPosition
-        {
-            get
-            {
-                return this.Settings.BarFrameCenterPosition + new Vector2(0, 1);
-            }
-        }
+        private Vector2 StateInfoCenterPosition => this.Settings.BarFrameCenterPosition + new Vector2(0, 1);
 
-        private Vector2 StatusInfoCenterPosition
-        {
-            get
-            {
-                return this.Settings.BarFrameCenterPosition + new Vector2(0, 34);
-            }
-        }
+        private Vector2 StatusInfoCenterPosition => this.Settings.BarFrameCenterPosition + new Vector2(0, 34);
 
         #endregion
 

@@ -53,7 +53,7 @@
             // View settings
             var viewSettings = new StandardIndexViewSettings(
                 itemMargin    : new Vector2(graphicsSettings.Width - OperationModuleSettings.ViewMargin.X * 2, OperationModuleSettings.ItemMargin.Y),
-                viewPosition  : OperationModuleSettings.ViewMargin,
+                viewPosition  : OperationModuleSettings.ViewMargin.ToVector2(),
                 viewRowDisplay: (int)((graphicsSettings.Height - OperationModuleSettings.ViewMargin.Y) / OperationModuleSettings.ItemMargin.Y - 1),
                 viewRowMax    : int.MaxValue);
 

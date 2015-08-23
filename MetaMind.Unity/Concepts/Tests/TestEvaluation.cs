@@ -82,6 +82,17 @@
 
         private Func<string> ResultStatusSelectorDefault => () => this.ResultSelector.Invoke() ? "PASSED" : "FAILED";
 
+        public int ResultAllPassed
+        {
+            get
+            {
+                return this.test.AllCollection.ToArray()
+                    .Count(child => child.Evaluation.ResultPassed);
+            }
+        }
+
+        public float ResultAllPassedRate => ((float)this.ResultAllPassed / this.test.AllCollection.Count() * 100); 
+
         public int ResultChange
         {
             get

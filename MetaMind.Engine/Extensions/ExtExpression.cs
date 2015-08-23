@@ -117,10 +117,15 @@
         private static bool ValuesEqual(object x, object y)
         {
             if (ReferenceEquals(x, y))
+            {
                 return true;
-            if (x is ICollection
-                && y is ICollection)
+            }
+
+            if (x is ICollection &&
+                y is ICollection)
+            {
                 return CollectionsEqual((ICollection)x, (ICollection)y);
+            }
 
             return Equals(x, y);
         }
@@ -128,29 +133,33 @@
         private static ConstantValue TryCalculateConstant(Expression e)
         {
             if (e is ConstantExpression)
+            {
                 return new ConstantValue(true, ((ConstantExpression)e).Value);
+            }
+
             if (e is MemberExpression)
             {
                 var me = (MemberExpression)e;
                 var parentValue = TryCalculateConstant(me.Expression);
                 if (parentValue.IsDefined)
                 {
-                    var result =
-                        me.Member is FieldInfo
+                    var result = me.Member is FieldInfo
                             ? ((FieldInfo)me.Member).GetValue(parentValue.Value)
                             : ((PropertyInfo)me.Member).GetValue(
                                 parentValue.Value);
                     return new ConstantValue(true, result);
                 }
             }
+
             if (e is NewArrayExpression)
             {
                 var ae = ((NewArrayExpression)e);
                 var result = ae.Expressions.Select(TryCalculateConstant);
-                if (result.All(i => i.IsDefined))
-                    return new ConstantValue(
-                        true,
-                        result.Select(i => i.Value).ToArray());
+
+                // Avoid enumeration
+                var resultArray = result as ConstantValue[] ?? result.ToArray();
+                if (resultArray.All(i => i.IsDefined))
+                    return new ConstantValue(true, resultArray.Select(i => i.Value).ToArray());
             }
 
             return default(ConstantValue);
@@ -162,28 +171,27 @@
             LambdaExpression rootX,
             LambdaExpression rootY)
         {
-            return x.Count() == y.Count()
-                   && x.Select((e, i) => new {Expr = e, Index = i})
-                       .Join(
-                           y.Select((e, i) => new {Expr = e, Index = i}),
-                           o => o.Index,
-                           o => o.Index,
-                           (xe, ye) => new {X = xe.Expr, Y = ye.Expr})
-                       .All(o => ExpressionsEqual(o.X, o.Y, rootX, rootY));
+            return x.Count() == y.Count() && x.Select((e, i) => new { Expr = e, Index = i })
+                .Join(
+                    y.Select((e, i) => new { Expr = e, Index = i }),
+                    o => o.Index,
+                    o => o.Index,
+                    (xe, ye) => new { X = xe.Expr, Y = ye.Expr })
+                .All(o => ExpressionsEqual(o.X, o.Y, rootX, rootY));
         }
 
         private static bool CollectionsEqual(ICollection x, ICollection y)
         {
-            return x.Count == y.Count
-                   && x.Cast<object>().
-                       Select((e, i) => new {Expr = e, Index = i})
-                       .Join(
-                           y.Cast<object>().
-                               Select((e, i) => new {Expr = e, Index = i}),
-                           o => o.Index,
-                           o => o.Index,
-                           (xe, ye) => new {X = xe.Expr, Y = ye.Expr})
-                       .All(o => Equals(o.X, o.Y));
+            return 
+                x.Count == y.Count && 
+                x.Cast<object>()
+                    .Select((e, i) => new {Expr = e, Index = i})
+                    .Join(
+                        y.Cast<object>().Select((e, i) => new {Expr = e, Index = i}),
+                        o => o.Index,
+                        o => o.Index,
+                        (xe, ye) => new {X = xe.Expr, Y = ye.Expr})
+                    .All(o => Equals(o.X, o.Y));
         }
 
         private struct ConstantValue
@@ -191,10 +199,11 @@
             public ConstantValue(bool isDefined, object value) : this()
             {
                 IsDefined = isDefined;
-                Value = value;
+                Value     = value;
             }
 
             public bool IsDefined { get; private set; }
+
             public object Value { get; private set; }
         }
     }

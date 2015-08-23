@@ -8,6 +8,7 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
     using Engine.Settings.Colors;
     using Engine.Settings.Loaders;
     using Microsoft.Xna.Framework;
+    using Modules;
 
     public class TestItemSettings : ItemSettings, IParameterLoader<GraphicsSettings>
     {
@@ -141,7 +142,7 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 
             this.nameFrame = new FrameSettings
             {
-                Size   = new Point((1600 - 40 - 24 - 128) * this.viewportWidth / 1600, 26),
+                Size   = new Point(viewportWidth - TestModuleSettings.ViewMargin.X * 2 - 24 - 128, 26),
                 Margin = new Point(2, 2),
 
                 RegularColor      = Palette.DimBlue,
@@ -153,7 +154,7 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 
             this.descriptionFrame = new FrameSettings
             {
-                Size   = new Point((1600 - 40 - 24 - 128) * this.viewportWidth / 1600, 26),
+                Size   = new Point(viewportWidth - TestModuleSettings.ViewMargin.X * 2 - 24 - 128, 26),
                 Margin = new Point(2, 2),
 
                 RegularColor      = Palette.Transparent0,
@@ -165,7 +166,7 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 
             this.rootFrame = new FrameSettings
             {
-                Size   = new Point(24 + 128 + (1600 - 40 - 24 - 128) * this.viewportWidth / 1600, 26),
+                Size   = new Point(this.viewportWidth - TestModuleSettings.ViewMargin.X * 2, 26),
                 Margin = new Point(2, 2)
             };
 
@@ -192,8 +193,6 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
             this.Add("StatisticsFrame", this.statisticsFrame);
             this.Add("StatisticsLabel", this.statisticsLabel);
         }
-
-        private GraphicsSettings Settings => this.GameGraphics.Settings;
 
         public void LoadParameter(GraphicsSettings parameter)
         {

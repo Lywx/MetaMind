@@ -158,9 +158,9 @@ namespace MetaMind.Unity.Concepts.Tests
 
         public bool HasChildren => this.Organization.HasChildren;
 
-        public IEnumerable AllCollection => this.Organization.AllCollection;
+        public IEnumerable<ITest> AllCollection => this.Organization.AllCollection;
 
-        public IEnumerable ChildrenCollection => this.Organization.ChildrenCollection;
+        public IEnumerable<ITest> ChildrenCollection => this.Organization.ChildrenCollection;
     }
 
     #endregion ITestOrganization
