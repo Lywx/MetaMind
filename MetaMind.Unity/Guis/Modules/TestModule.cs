@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Speech.Synthesis;
     using Concepts.Tests;
     using Engine;
     using Engine.Guis;
@@ -18,22 +19,28 @@
 
         private readonly TestSession testSession;
 
-        public TestModule(TestModuleSettings settings, ITest test, TestSession testSession)
+        public TestModule(TestModuleSettings settings, ITest test, TestSession testSession, SpeechSynthesizer testSynthesizer)
             : base(settings)
         {
             if (test == null)
             {
-                throw new ArgumentNullException("test");
+                throw new ArgumentNullException(nameof(test));
             }
 
             if (testSession == null)
             {
-                throw new ArgumentNullException("testSession");
+                throw new ArgumentNullException(nameof(testSession));
+            }
+
+            if (testSynthesizer == null)
+            {
+                throw new ArgumentNullException(nameof(testSynthesizer));
             }
 
             this.test        = test;
             this.testSession = testSession;
             Test.Session = this.testSession;
+            Test.Speech  = testSynthesizer;
 
             this.Entities = new GameControllableEntityCollection<IView>();
         }

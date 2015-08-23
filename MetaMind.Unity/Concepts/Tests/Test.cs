@@ -11,12 +11,15 @@ namespace MetaMind.Unity.Concepts.Tests
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Speech.Synthesis;
 
     #region Test Session
 
     public partial class Test
     {
         public static TestSession Session { get; set; }
+
+        public static SpeechSynthesizer Speech { get; set; }
     }
 
     #endregion Test Session

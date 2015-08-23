@@ -31,7 +31,7 @@
             @event.TriggerEvent(new Event((int)SessionEventType.SleepStopped, new ConsciousnessSleepStoppedEventArgs(consciousness)));
 
             var console = this.GameInterop.Console;
-            console.WriteLine(string.Format("MESSAGE: Asleep {0}", asleepSpan.ToString("hh':'mm':'ss''")));
+            console.WriteLine($"MESSAGE: Asleep {asleepSpan.ToString("hh':'mm':'ss''")}");
 
             return new ConsciousnessAwake(consciousness);
         }

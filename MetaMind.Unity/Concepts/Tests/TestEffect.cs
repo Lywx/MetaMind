@@ -30,6 +30,8 @@
             {
                 var audio = this.GameInterop.Audio;
                 audio.PlayCue(this.failingCue);
+
+                Test.Speech.SpeakAsync($"{this.test.Name} failed.");
             }
         }
 
@@ -39,6 +41,8 @@
             {
                 var audio = this.GameInterop.Audio;
                 audio.PlayCue(this.succeedingCue);
+
+                Test.Speech.SpeakAsync($"{this.test.Name} succeeded.");
             }
         }
     }

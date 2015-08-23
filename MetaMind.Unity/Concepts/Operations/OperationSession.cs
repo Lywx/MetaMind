@@ -1,10 +1,13 @@
 namespace MetaMind.Unity.Concepts.Operations
 {
     using System;
+    using Cognitions;
     using Scripting;
 
     public class OperationSession
     {
+        private readonly ICognition cognition;
+
         #region Lock and Unlock
 
         private readonly TimeSpan unlockedTimeout = TimeSpan.FromSeconds(1);
@@ -52,12 +55,7 @@ namespace MetaMind.Unity.Concepts.Operations
 
         #region Notification
 
-        public bool IsNotificationEnabled { get; set; } = false;
-
-        public void ToggleNotification()
-        {
-            this.IsNotificationEnabled = !this.IsNotificationEnabled;
-        }
+        public bool IsNotificationEnabled => this.cognition.Synchronization.Enabled;
 
         #endregion
 
@@ -69,14 +67,20 @@ namespace MetaMind.Unity.Concepts.Operations
 
         #endregion
 
-        public OperationSession(FsiSession fsiSession)
+        public OperationSession(FsiSession fsiSession, ICognition cognition)
         {
             if (fsiSession == null)
             {
                 throw new ArgumentNullException(nameof(fsiSession));
             }
 
+            if (cognition == null)
+            {
+                throw new ArgumentNullException(nameof(cognition));
+            }
+
             this.fsiSession = fsiSession;
+            this.cognition  = cognition;
         }
     }
 }

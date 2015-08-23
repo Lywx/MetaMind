@@ -1,6 +1,7 @@
 namespace MetaMind.Unity.Guis.Layers
 {
     using System;
+    using System.Speech.Synthesis;
     using Concepts.Tests;
     using Engine;
     using Engine.Guis;
@@ -13,15 +14,23 @@ namespace MetaMind.Unity.Guis.Layers
     {
         private readonly TestSession testSession;
 
-        public TestLayer(TestSession testSession, IGameScreen screen, byte transitionAlpha = byte.MaxValue)
+        private readonly SpeechSynthesizer testSynthesizer;
+
+        public TestLayer(TestSession testSession, SpeechSynthesizer testSynthesizer, IGameScreen screen, byte transitionAlpha = byte.MaxValue)
             : base(screen, transitionAlpha)
         {
             if (testSession == null)
             {
-                throw new ArgumentNullException("testSession");
+                throw new ArgumentNullException(nameof(testSession));
             }
 
-            this.testSession = testSession;
+            if (testSynthesizer == null)
+            {
+                throw new ArgumentNullException(nameof(testSynthesizer));
+            }
+
+            this.testSession     = testSession;
+            this.testSynthesizer = testSynthesizer;
 
             this.Modules = new GameControllableEntityCollection<IModule>();
         }
@@ -41,7 +50,7 @@ namespace MetaMind.Unity.Guis.Layers
 
         public override void LoadContent(IGameInteropService interop)
         {
-            var testModule = new TestModule(new TestModuleSettings(), Unity.SessionData.Test, this.testSession);
+            var testModule = new TestModule(new TestModuleSettings(), Unity.SessionData.Test, this.testSession, this.testSynthesizer);
 
             this.Modules.Add(testModule);
             this.Modules.LoadContent(interop);
