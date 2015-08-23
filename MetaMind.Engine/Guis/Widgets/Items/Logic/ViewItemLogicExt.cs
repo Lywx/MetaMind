@@ -10,10 +10,10 @@
             Process.Start(itemLogic.Item.ItemData.Path);
         }
 
-        public static void OpenFolderPath(this ViewItemLogic itemLogic)
+        public static void SelectPath(this ViewItemLogic itemLogic)
         {
-            var directoryPath = Path.GetDirectoryName(itemLogic.Item.ItemData.Path);
-            Process.Start(directoryPath);
+            var argument = @"/select, " + itemLogic.Item.ItemData.Path;
+            Process.Start("explorer.exe", argument);
         }
     }
 }
