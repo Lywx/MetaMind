@@ -29,7 +29,7 @@
 
             this.ItemFrame.NameFrame       .MouseLeftPressed  += (o, args) => this.ToggleIndexView();
             this.ItemFrame.DescriptionFrame.MouseLeftPressed  += (o, args) => this.ToggleIndexView();
-            this.ItemFrame.RootFrame       .MouseRightPressed += (o, args) => this.OpenFolderPath();
+            this.ItemFrame.RootFrame       .MouseRightPressed += (o, args) => this.SelectPath();
         }
     }
 }
