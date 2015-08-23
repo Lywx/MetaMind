@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GraphicsSettings.cs" company="UESTC">
+// <copyright file="Settings.cs" company="UESTC">
 //   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -11,16 +11,18 @@
 namespace MetaMind.Engine.Components.Graphics
 {
     using System.Windows.Forms;
-
-    using Settings.Loaders;
-    using Settings.Systems;
+    using Engine.Settings.Loaders;
+    using Engine.Settings.Systems;
 
     public class GraphicsSettings : IConfigurationLoader, IParameter
     {
         #region Graphics Data
 
         private int height;
+
         private int width;
+
+        public float Aspect => (float)this.Width / this.Height;
 
         public int Height
         {
@@ -46,13 +48,7 @@ namespace MetaMind.Engine.Components.Graphics
 
         public int FPS { get; set; }
 
-        public Screen Screen
-        {
-            get
-            {
-                return Monitor.Screen;
-            }
-        }
+        public Screen Screen => Monitor.Screen;
 
         public bool IsFullscreen { get; set; }
 
@@ -62,13 +58,7 @@ namespace MetaMind.Engine.Components.Graphics
 
         #region Configuration
 
-        public string ConfigurationFile
-        {
-            get
-            {
-                return "Graphics.txt";
-            }
-        }
+        public string ConfigurationFile => "Graphics.txt";
 
         public void LoadConfiguration()
         {

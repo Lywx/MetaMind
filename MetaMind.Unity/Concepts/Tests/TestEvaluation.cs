@@ -103,24 +103,18 @@
 
         #region Events
 
-        public event EventHandler<TestEventArgs> Failed;
+        public event EventHandler<TestEventArgs> Failed = delegate {};
 
-        public event EventHandler<TestEventArgs> Succeeded;
+        public event EventHandler<TestEventArgs> Succeeded = delegate { };
 
         private void OnSucceed(bool isCause)
         {
-            if (this.Succeeded != null)
-            {
-                this.Succeeded(this, new TestEventArgs(isCause));
-            }
+            this.Succeeded.Invoke(this, new TestEventArgs(isCause));
         }
 
         private void OnFail(bool isCause)
         {
-            if (this.Failed != null)
-            {
-                this.Failed(this, new TestEventArgs(isCause));
-            }
+            this.Failed(this, new TestEventArgs(isCause));
         }
 
         private void OnResultChange(int change)
@@ -148,7 +142,7 @@
             catch (Exception e)
             {
                 var console = this.GameInterop.Console;
-                console.WriteLine(e.ToString());
+                console.WriteLine(e.ToString(), "ERROR");
 
                 this.ResultPassed = false;
                 this.ResultStatus = "ERROR";
@@ -230,10 +224,7 @@
             this.Succeeded = null;
             this.Failed    = null;
 
-            if (this.testTimer != null)
-            {
-                this.testTimer.Dispose();
-            }
+            this.testTimer?.Dispose();
 
             base.Dispose();
         }

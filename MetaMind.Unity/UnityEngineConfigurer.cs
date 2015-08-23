@@ -10,7 +10,6 @@
             base.Configure(engine);
 
             engine.Interop.Console.AddCommand(new VerboseCommand());
-            engine.Interop.Console.AddCommand(new DebugCommand());
         }
     }
 }

@@ -1,6 +1,8 @@
 namespace MetaMind.Engine.Components.Fonts
 {
     using System;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Text;
 
     public static class StringUtils
@@ -23,7 +25,7 @@ namespace MetaMind.Engine.Components.Fonts
         {
             if (maxLength < 1)
             {
-                throw new ArgumentOutOfRangeException("maxLength");
+                throw new ArgumentOutOfRangeException(nameof(maxLength));
             }
 
             var stringCropped = font.PrintableString(str);
@@ -67,6 +69,22 @@ namespace MetaMind.Engine.Components.Fonts
 
         #region Breaking
 
+        public static IEnumerable<string> BreakStringByCharacterToEnumerable(string command, int characterNum)
+        {
+            var lines = new List<string>();
+
+            while (command.Length > characterNum)
+            {
+                var splitCommand = command.Substring(0, characterNum);
+                lines.Add(splitCommand);
+
+                command = command.Substring(characterNum, command.Length - characterNum);
+            }
+
+            lines.Add(command);
+            return lines;
+        }
+
         /// <summary>
         /// Break string using word by word method.
         /// </summary>
@@ -100,6 +118,11 @@ namespace MetaMind.Engine.Components.Fonts
             }
 
             return result.ToString();
+        }
+
+        public static IEnumerable<string> BreakStringByWordToEnumerable(Font font, string str, float scale, float maxLineWidth, bool monospaced)
+        {
+            return BreakStringByWord(font, str, scale, maxLineWidth, monospaced).Split('\n');
         }
 
         #endregion

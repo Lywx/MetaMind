@@ -1,7 +1,7 @@
 ﻿namespace MetaMind.Engine.Components
 {
-    using MetaMind.Engine.Components.Fonts;
-    using MetaMind.Engine.Components.Graphics;
+    using Fonts;
+    using Graphics;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -20,12 +20,10 @@
 
         public void Initialize()
         {
-            
         }
 
         public void UpdateInput(GameTime gameTime)
         {
-            
         }
     }
 }

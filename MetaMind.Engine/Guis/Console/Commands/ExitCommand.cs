@@ -18,21 +18,9 @@ namespace MetaMind.Engine.Guis.Console.Commands
             this.game = game;
         }
 
-        public string Name
-        {
-            get
-            {
-                return "exit";
-            }
-        }
+        public string Name => "exit";
 
-        public string Description
-        {
-            get
-            {
-                return "Exists the engine";
-            }
-        }
+        public string Description => "Exists the engine";
 
         public string Execute(string[] arguments)
         {

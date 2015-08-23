@@ -12,6 +12,7 @@ namespace MetaMind.Engine.Components.Graphics
         protected GraphicsSettings Settings { get; set; }
 
         protected GameEngine Engine { get; set; }
+
         #endregion
 
         public GraphicsManager(GameEngine engine, GraphicsSettings settings)
@@ -19,12 +20,12 @@ namespace MetaMind.Engine.Components.Graphics
         {
             if (engine == null)
             {
-                throw new ArgumentNullException("engine");
+                throw new ArgumentNullException(nameof(engine));
             }
 
             if (settings == null)
             {
-                throw new ArgumentNullException("settings");
+                throw new ArgumentNullException(nameof(settings));
             }
 
             this.Engine   = engine;

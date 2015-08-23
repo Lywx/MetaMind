@@ -6,31 +6,19 @@
     {
         private readonly IGameEngine engine;
 
-        public string Name
-        {
-            get
-            {
-                return "restart";
-            }
-        }
-
-        public string Description
-        {
-            get
-            {
-                return "Restarts the engine";
-            }
-        }
-
         public RestartCommand(IGameEngine engine)
         {
             if (engine == null)
             {
-                throw new ArgumentNullException("engine");
+                throw new ArgumentNullException(nameof(engine));
             }
 
             this.engine = engine;
         }
+
+        public string Name => "restart";
+
+        public string Description => "Restarts the engine";
 
         public string Execute(string[] arguments)
         {

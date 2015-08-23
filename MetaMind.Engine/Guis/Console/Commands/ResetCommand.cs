@@ -2,7 +2,7 @@
 {
     using System;
 
-    using MetaMind.Engine.Components;
+    using Components;
 
     internal class ResetCommand : IConsoleCommand
     {
@@ -14,33 +14,21 @@
         {
             if (engine == null)
             {
-                throw new ArgumentNullException("engine");
+                throw new ArgumentNullException(nameof(engine));
             }
 
             if (file == null)
             {
-                throw new ArgumentNullException("file");
+                throw new ArgumentNullException(nameof(file));
             }
 
             this.file   = file;
             this.engine = engine;
         }
 
-        public string Description
-        {
-            get
-            {
-                return "Resets the save files";
-            }
-        }
+        public string Description => "Resets the save files";
 
-        public string Name
-        {
-            get
-            {
-                return "reset";
-            }
-        }
+        public string Name => "reset";
 
         public string Execute(string[] arguments)
         {

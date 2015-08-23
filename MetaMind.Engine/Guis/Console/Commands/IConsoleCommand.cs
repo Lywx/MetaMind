@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Engine.Guis.Console
+﻿namespace MetaMind.Engine.Guis.Console.Commands
 {
     public interface IConsoleCommand
     {

@@ -1,33 +1,37 @@
 ﻿namespace MetaMind.Engine.Guis.Console.Commands
 {
+    using System;
+
     internal class ClearCommand : IConsoleCommand
     {
-        public string Name
+        private readonly GameConsoleProcessor processor;
+
+        private readonly GameConsoleRenderer renderer;
+
+        public ClearCommand(GameConsoleProcessor processor, GameConsoleRenderer renderer)
         {
-            get
+            if (processor == null)
             {
-                return "clear";
+                throw new ArgumentNullException(nameof(processor));
             }
-        }
 
-        public string Description
-        {
-            get
+            if (renderer == null)
             {
-                return "Clears the console output";
+                throw new ArgumentNullException(nameof(renderer));
             }
-        }
 
-        private InputProcessor processor;
-
-        public ClearCommand(InputProcessor processor)
-        {
             this.processor = processor;
+            this.renderer = renderer;
         }
+
+        public string Name => "clear";
+
+        public string Description => "Clears the console output";
 
         public string Execute(string[] arguments)
         {
             this.processor.Out.Clear();
+            this.renderer.ResetCommandPosition();
 
             return "";
         }

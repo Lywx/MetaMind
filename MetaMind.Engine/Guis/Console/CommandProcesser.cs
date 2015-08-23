@@ -3,19 +3,21 @@
     using System;
     using System.Linq;
 
-    class CommandProcesser
+    internal class CommandProcesser
     {
         public string Process(string buffer)
         {
             var commandName = GetCommandName(buffer);
-            var arguments = GetArguments(buffer);
+            var arguments   = GetArguments(buffer);
 
-            var command = GameConsoleOptions.Commands.FirstOrDefault(c => c.Name == commandName);
+            var command = GameConsoleSettings.Commands.FirstOrDefault(c => c.Name == commandName);
             if (command == null)
             {
                 return "ERROR: Command not found";
             }
+
             string commandOutput;
+
             try
             {
                 commandOutput = command.Execute(arguments);

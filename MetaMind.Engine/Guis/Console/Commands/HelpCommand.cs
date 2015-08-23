@@ -5,42 +5,30 @@
 
     internal class HelpCommand : IConsoleCommand
     {
-        public string Name
-        {
-            get
-            {
-                return "help";
-            }
-        }
+        public string Name => "help";
 
-        public string Description
-        {
-            get
-            {
-                return "Displays the command description";
-            }
-        }
+        public string Description => "Displays the command description";
 
         public string Execute(string[] arguments)
         {
             if (arguments != null && arguments.Length >= 1)
             {
-                var command = GameConsoleOptions.Commands.Where(c => c.Name != null && c.Name == arguments[0]).FirstOrDefault();
+                var command = GameConsoleSettings.Commands.FirstOrDefault(c => c.Name != null && c.Name == arguments[0]);
                 if (command != null)
                 {
-                    return string.Format("{0}: {1}\n", command.Name, command.Description);
+                    return $"{command.Name}: {command.Description}\n";
                 }
 
                 return "ERROR: Invalid command '" + arguments[0] + "'";
             }
 
-            GameConsoleOptions.Commands.Sort(new CommandComparer());
+            GameConsoleSettings.Commands.Sort(new CommandComparer());
 
-            var pad  = GameConsoleOptions.Commands.Max(command => command.Name.Length);
+            var pad  = GameConsoleSettings.Commands.Max(command => command.Name.Length);
             var help = new StringBuilder();
-            foreach (var command in GameConsoleOptions.Commands)
+            foreach (var command in GameConsoleSettings.Commands)
             {
-                help.Append(command.Name.PadRight(pad) + " - " + string.Format("{0}\n", command.Description));
+                help.Append(command.Name.PadRight(pad) + " - " + $"{command.Description}\n");
             }
 
             return help.ToString();

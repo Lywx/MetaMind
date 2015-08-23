@@ -24,25 +24,25 @@ namespace MetaMind.Engine.Guis.Console
         private readonly GameConsoleComponent console;
 
         public GameConsole(GameEngine engine, SpriteBatch spriteBatch, IStringDrawer stringDrawer)
-            : this(engine, spriteBatch, stringDrawer, new IConsoleCommand[0], new GameConsoleOptions())
+            : this(engine, spriteBatch, stringDrawer, new IConsoleCommand[0], new GameConsoleSettings())
         {
         }
 
-        public GameConsole(GameEngine engine, SpriteBatch spriteBatch, IStringDrawer stringDrawer, GameConsoleOptions options)
-            : this(engine, spriteBatch, stringDrawer, new IConsoleCommand[0], options)
+        public GameConsole(GameEngine engine, SpriteBatch spriteBatch, IStringDrawer stringDrawer, GameConsoleSettings settings)
+            : this(engine, spriteBatch, stringDrawer, new IConsoleCommand[0], settings)
         {
         }
 
         public GameConsole(GameEngine engine, SpriteBatch spriteBatch, IStringDrawer stringDrawer, IEnumerable<IConsoleCommand> commands)
-            : this(engine, spriteBatch, stringDrawer, commands, new GameConsoleOptions())
+            : this(engine, spriteBatch, stringDrawer, commands, new GameConsoleSettings())
         {
         }
 
-        public GameConsole(GameEngine engine, SpriteBatch spriteBatch, IStringDrawer stringDrawer, IEnumerable<IConsoleCommand> commands, GameConsoleOptions options)
+        public GameConsole(GameEngine engine, SpriteBatch spriteBatch, IStringDrawer stringDrawer, IEnumerable<IConsoleCommand> commands, GameConsoleSettings settings)
         {
             // Has to initialized before GameConsoleComponent
-            GameConsoleOptions.Options  = options;
-            GameConsoleOptions.Commands = commands.ToList();
+            GameConsoleSettings.Settings  = settings;
+            GameConsoleSettings.Commands = commands.ToList();
             
             this.console = new GameConsoleComponent(engine, this, spriteBatch, stringDrawer);
             this.Enabled = true;
@@ -50,34 +50,14 @@ namespace MetaMind.Engine.Guis.Console
             engine.Components.Add(this.console);
         }
 
-        public GameConsoleOptions Options
-        {
-            get
-            {
-                return GameConsoleOptions.Options;
-            }
-        }
-
-        public List<IConsoleCommand> Commands
-        {
-            get
-            {
-                return GameConsoleOptions.Commands;
-            }
-        }
+        public List<IConsoleCommand> Commands => GameConsoleSettings.Commands;
 
         public bool Enabled { get; set; }
 
         /// <summary>
         ///     Indicates whether the console is currently opened
         /// </summary>
-        public bool Opened
-        {
-            get
-            {
-                return this.console.IsOpen;
-            }
-        }
+        public bool Opened => this.console.IsOpen;
 
         #region Operations
 
@@ -108,16 +88,28 @@ namespace MetaMind.Engine.Guis.Console
         /// <param name="description"></param>
         public void AddCommand(string name, Func<string[], string> action, string description)
         {
-            this.Commands.Add(new CustomCommand(name, action, description));
+            this.Commands.Add(new CustomCommand(name, description, action));
         }
 
         /// <summary>
         ///     Write directly to the output stream of the console
         /// </summary>
-        /// <param name="text"></param>
-        public void WriteLine(string text)
+        /// <param name="buffer"></param>
+        /// <param name="channel">Channel to write to, include "", "DEBUG", "ERROR"</param>
+        public void WriteLine(string buffer, string channel = "")
         {
-            this.console.WriteLine(text);
+            if (string.IsNullOrEmpty(channel))
+            {
+                this.console.WriteLine(buffer);
+            }
+            else if (string.Compare(channel, "DEBUG", StringComparison.OrdinalIgnoreCase) == 0)
+            {
+                this.console.WriteLine(buffer, OutputLineType.Debug);
+            }
+            else if (string.Compare(channel, "ERROR", StringComparison.OrdinalIgnoreCase) == 0)
+            {
+                this.console.WriteLine(buffer, OutputLineType.Error);
+            }
         }
 
         #endregion

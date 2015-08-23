@@ -37,17 +37,9 @@
 
         public bool Verbose { get; set; }
 
-        public bool Debugging { get; set; }
+        public StringBuilder Error => this.errorBuilder;
 
-        public StringBuilder Error
-        {
-            get { return this.errorBuilder; }
-        }
-
-        public StringBuilder Out
-        {
-            get { return this.outBuilder; }
-        }
+        public StringBuilder Out => this.outBuilder;
 
         #endregion
 
@@ -86,22 +78,19 @@
         /// <summary>
         /// End of a series of asynchronous session
         /// </summary>>
-        public event EventHandler ThreadStopped;
+        public event EventHandler ThreadStopped = delegate {};
 
         /// <summary>
         /// Start of a series of asynchronous session
         /// </summary>>
-        public event EventHandler ThreadStarted;
+        public event EventHandler ThreadStarted = delegate {};
 
         private void OnThreadStopped()
         {
             // Safe threading
             var stopped = this.ThreadStopped;
 
-            if (stopped != null)
-            {
-                stopped(this, EventArgs.Empty);
-            }
+            stopped?.Invoke(this, EventArgs.Empty);
         }
 
         private void OnThreadStarted()
@@ -109,10 +98,7 @@
             // Safe threading
             var started = this.ThreadStarted;
 
-            if (started != null)
-            {
-                started(this, EventArgs.Empty);
-            }
+            started?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion
@@ -173,17 +159,10 @@
             {
                 var console = this.GameInterop.Console;
 
-                if (this.Debugging)
-                {
-                    console.WriteLine(this.Out  .ToString());
-                    console.WriteLine(this.Error.ToString());
+                console.WriteLine(this.Out  .ToString(), "DEBUG");
+                console.WriteLine(this.Error.ToString(), "ERROR");
 
-                    this.Clear();
-                }
-                else
-                {
-                    console.WriteLine(string.Format("ERROR: Script evaluation at \"{0}\" failed.", filePath));
-                }
+                this.Clear();
             }
         }
 
@@ -213,8 +192,8 @@
         {
             var console = this.GameInterop.Console;
 
-            console.WriteLine(this.Out  .ToString());
-            console.WriteLine(this.Error.ToString());
+            console.WriteLine(this.Out  .ToString(), "DEBUG");
+            console.WriteLine(this.Error.ToString(), "ERROR");
 
             this.Clear();
         }

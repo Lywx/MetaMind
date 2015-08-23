@@ -2,22 +2,29 @@
 {
     using System;
 
-    class CustomCommand:IConsoleCommand
+    internal class CustomCommand : IConsoleCommand
     {
-        public string Name { get; private set; }
-        public string Description { get; private set; }
-
-        private Func<string[], string> action;
-
-        public CustomCommand(string name, Func<string[], string> action, string description)
+        public CustomCommand(string name, string description, Func<string[], string> action)
         {
-            this.Name = name;
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+
+            this.Name        = name;
             this.Description = description;
-            this.action = action;
+            this.Action      = action;
         }
+
+        public string Name { get; }
+
+        public string Description { get; }
+
+        public Func<string[], string> Action { get; }
+
         public string Execute(string[] arguments)
         {
-            return this.action(arguments);
+            return this.Action(arguments);
         }
     }
 }

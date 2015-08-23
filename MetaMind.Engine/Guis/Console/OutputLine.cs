@@ -1,22 +1,15 @@
 ﻿namespace MetaMind.Engine.Guis.Console
 {
-    internal enum OutputLineType
-    {
-        Command,
-
-        Output
-    }
-
     internal class OutputLine
     {
         public string Output { get; set; }
 
-        public OutputLineType Type { get; set; }
+        public OutputLineType Type { get; }
 
         public OutputLine(string output, OutputLineType type)
         {
             this.Output = output;
-            this.Type = type;
+            this.Type   = type;
         }
 
         public override string ToString()
