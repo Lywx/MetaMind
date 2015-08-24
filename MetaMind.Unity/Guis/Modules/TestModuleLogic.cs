@@ -51,7 +51,7 @@
             var viewSettings = new StandardIndexViewSettings(
                 itemMargin    : new Vector2(graphicsSettings.Width - TestModuleSettings.ViewMargin.X * 2, TestModuleSettings.ItemMargin.Y),
                 viewPosition  : TestModuleSettings.ViewMargin.ToVector2(),
-                viewRowDisplay: (int)((graphicsSettings.Height - TestModuleSettings.ViewMargin.Y) / TestModuleSettings.ItemMargin.Y - 1),
+                viewRowDisplay: (graphicsSettings.Height - TestModuleSettings.ViewMargin.Y) / TestModuleSettings.ItemMargin.Y - 1,
                 viewRowMax    : int.MaxValue);
 
             // Item settings
@@ -62,8 +62,6 @@
 
             var viewComposer = new TestIndexViewComposer(this.testSession);
             viewComposer.Compose(this.View, this.test);
-
-            // Completion label
 
             // Entities
             this.ControllableEntities.Add(this.View);

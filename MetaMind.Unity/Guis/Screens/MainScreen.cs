@@ -79,7 +79,7 @@
             this.buttonPrevious = new Button(
                 new Rectangle(0, buttonY, buttonWidth, buttonHeight), buttonSettings)
             {
-                MouseLeftPressedAction = () => this.CircularLayers.PreviousLayer(),
+                MouseLeftPressedAction = () => this.CircularLayers.Previous(),
                 Label =
                 {
                     TextFont   = () => Font.UiRegular,
@@ -92,7 +92,7 @@
             this.buttonNext = new Button(
                 new Rectangle(graphicsSettings.Width - buttonWidth, buttonY, buttonWidth, buttonHeight), buttonSettings)
             {
-                MouseLeftPressedAction = () => this.CircularLayers.NextLayer(),
+                MouseLeftPressedAction = () => this.CircularLayers.Next(),
                 Label =
                 {
                     TextFont   = () => Font.UiRegular,
@@ -104,11 +104,11 @@
 
             this.screenLabel = new Label
             {
-                TextFont     = () => Font.UiStatistics,
+                TextFont     = () => Font.UiRegular,
                 Text         = () => this.CircularLayers.GameLayerDisplayed is TestLayer ? "TESTS" : "OPERATIONS",
                 TextPosition = () => new Vector2((float)graphicsSettings.Width / 2, 90),
                 TextColor    = () => Palette.LightPink,
-                TextSize     = () => 1.1f,
+                TextSize     = () => 2.0f,
                 TextHAlign   = StringHAlign.Center,
                 TextVAlign   = StringVAlign.Center,
             };
@@ -117,7 +117,13 @@
 
             this.CircularLayers = new CircularGameLayer(this);
             this.CircularLayers.Add(new TestLayer(this.testSession, Unity.Speech, this));
-            this.CircularLayers.Add(new OperationLayer(this.operationSession, this));
+            this.CircularLayers.Add(
+                new OperationLayer(this.operationSession, this)
+                {
+                    IsActive        = false,
+                    TransitionAlpha = 0,
+                });
+
             this.Layers.Add(this.CircularLayers);
 
             // First run of fsi session

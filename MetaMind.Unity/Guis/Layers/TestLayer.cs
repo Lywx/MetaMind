@@ -41,7 +41,7 @@ namespace MetaMind.Unity.Guis.Layers
         {
             graphics.SpriteBatch.Begin();
 
-            this.Modules.Draw(graphics, time, alpha);
+            this.Modules.Draw(graphics, time, Math.Min(alpha, this.TransitionAlpha));
 
             graphics.SpriteBatch.End();
 
@@ -50,7 +50,7 @@ namespace MetaMind.Unity.Guis.Layers
 
         public override void LoadContent(IGameInteropService interop)
         {
-            var testModule = new TestModule(new TestModuleSettings(), Unity.SessionData.Test, this.testSession, this.testSynthesizer);
+            var testModule = new TestModule(new TestModuleSettings(), Unity.SessionData.Test, this.testSession, this.testSynthesizer, this);
 
             this.Modules.Add(testModule);
             this.Modules.LoadContent(interop);

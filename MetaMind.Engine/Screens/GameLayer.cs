@@ -21,6 +21,14 @@
 
         private GameEngine Engine => this.GameInterop.Engine;
 
+        #region Layer Events
+
+        public event EventHandler FadedIn = delegate { };
+
+        public event EventHandler FadedOut = delegate { };
+
+        #endregion
+
         #region Layer States
 
         private bool isFading;
@@ -37,13 +45,17 @@
 
         private float transitionAlpha;
 
-        public byte TransitionAlpha => (byte)this.transitionAlpha;
+        public byte TransitionAlpha
+        {
+            get { return (byte)this.transitionAlpha; }
+            set { this.transitionAlpha = value; }
+        }
 
         #endregion
 
         #region Update
 
-        public void UpdateTransition(GameTime time)
+        public virtual void UpdateTransition(GameTime time)
         {
             this.ContinueAction(time);
         }
@@ -61,31 +73,7 @@
                 return;
             }
 
-            var frames = this.TimeToFrame(time);
-
-            Action increase = null;
-            increase = () =>
-            {
-                if (this.TransitionAlpha < this.transitionAlphaMax)
-                {
-                    this.transitionAlpha += (float)this.transitionAlphaMax / frames;
-
-                    if (this.transitionAlpha > this.transitionAlphaMax - 0.1f)
-                    {
-                        this.transitionAlpha = this.transitionAlphaMax;
-                    }
-
-                    this.DeferAction(increase);
-                }
-                else
-                {
-                    this.IsActive = true;
-                    this.isFading = false;
-                }
-            };
-
-            this.DeferAction(increase);
-            this.isFading = true;
+            this.DeferAction(this.FadeInNextFrame(this.TimeToFrame(time)));
         }
 
         public void FadeOut(TimeSpan time)
@@ -97,10 +85,39 @@
                 return;
             }
 
-            var frames = this.TimeToFrame(time);
+            this.DeferAction(this.FadeOutNextFrame(this.TimeToFrame(time)));
+        }
 
-            Action decrease = null;
-            decrease = () =>
+        private Action FadeInNextFrame(int fadeInFrameNum)
+        {
+            return () =>
+            {
+                if (this.TransitionAlpha < this.transitionAlphaMax)
+                {
+                    this.transitionAlpha += (float)this.transitionAlphaMax / fadeInFrameNum;
+
+                    if (this.transitionAlpha > this.transitionAlphaMax - 0.1f)
+                    {
+                        this.transitionAlpha = this.transitionAlphaMax;
+                    }
+
+                    this.DeferAction(this.FadeInNextFrame(fadeInFrameNum));
+
+                    this.isFading = true;
+                }
+                else
+                {
+                    this.FadedIn(this, EventArgs.Empty);
+
+                    this.IsActive = true;
+                    this.isFading = false;
+                }
+            };
+        }
+
+        private Action FadeOutNextFrame(int frames)
+        {
+            return () =>
             {
                 if (this.TransitionAlpha > this.transitionAlphaMin)
                 {
@@ -111,17 +128,18 @@
                         this.transitionAlpha = this.transitionAlphaMin;
                     }
 
-                    this.DeferAction(decrease);
+                    this.DeferAction(this.FadeOutNextFrame(frames));
+
+                    this.isFading = true;
                 }
                 else
                 {
+                    this.FadedOut(this, EventArgs.Empty);
+
                     this.IsActive = false;
                     this.isFading = false;
                 }
             };
-
-            this.DeferAction(decrease);
-            this.isFading = true;
         }
 
         #endregion

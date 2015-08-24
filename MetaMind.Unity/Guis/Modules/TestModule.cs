@@ -1,10 +1,12 @@
 ﻿namespace MetaMind.Unity.Guis.Modules
 {
     using System;
-    using System.Linq;
     using System.Speech.Synthesis;
     using Concepts.Tests;
     using Engine.Guis;
+    using Engine.Screens;
+    using Layers;
+    using Screens;
 
     public class TestModule : Module<TestModuleSettings>
     {
@@ -12,7 +14,25 @@
 
         private readonly TestSession testSession;
 
-        public TestModule(TestModuleSettings settings, ITest test, TestSession testSession, SpeechSynthesizer testSynthesizer)
+        private readonly IGameLayer testLayer;
+
+        public TestModule(
+            TestModuleSettings settings,
+            ITest             test,
+            TestSession       testSession,
+            SpeechSynthesizer testSynthesizer,
+            IGameLayer        testLayer)
+            : this(settings, test, testSession, testSynthesizer)
+        {
+            if (testLayer == null)
+            {
+                throw new ArgumentNullException(nameof(testLayer));
+            }
+
+            this.testLayer = testLayer;
+        }
+
+        private TestModule(TestModuleSettings settings, ITest test, TestSession testSession, SpeechSynthesizer testSynthesizer)
             : base(settings)
         {
             if (test == null)

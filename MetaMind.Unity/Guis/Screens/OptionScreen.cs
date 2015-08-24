@@ -29,23 +29,23 @@
 
     public class OptionScreen : GameScreen
     {
-        private readonly string procedureName;
-
-        private readonly string procedureDescription;
-
-        private readonly IGameLayer backgroundLayer;
-
         private readonly List<IOption> options;
 
         private IView optionView;
+
+        private readonly string procedureName;
+
+        private readonly string procedureDescription;
 
         private LabelBox procedureDescriptionLabelBox;
 
         private LabelBox procedureNameLabelBox;
 
+        private readonly IGameLayer screenBackground;
+
         private Label screenLabel;
 
-        public OptionScreen(string procedureName, string procedureDescription, List<IOption> options, IGameLayer backgroundLayer)
+        public OptionScreen(string procedureName, string procedureDescription, List<IOption> options, IGameLayer screenBackground)
         {
             if (procedureName == null)
             {
@@ -62,16 +62,17 @@
                 throw new ArgumentNullException(nameof(options));
             }
 
-            if (backgroundLayer == null)
+            if (screenBackground == null)
             {
-                throw new ArgumentNullException(nameof(backgroundLayer));
+                throw new ArgumentNullException(nameof(screenBackground));
             }
 
             this.procedureName        = procedureName;
             this.procedureDescription = procedureDescription;
 
-            this.backgroundLayer = backgroundLayer;
             this.options = options;
+
+            this.screenBackground = screenBackground;
 
             // Has to be a popup screen, or it can block the background
             this.IsPopup = true;
@@ -189,14 +190,14 @@
             this.Entities.LoadContent(interop);
             base.LoadContent(interop);
 
-            this.backgroundLayer.FadeOut(TimeSpan.FromSeconds(0.5));
+            this.screenBackground.FadeOut(TimeSpan.FromSeconds(0.5));
         }
 
         public override void UnloadContent(IGameInteropService interop)
         {
             base.UnloadContent(interop);
 
-            this.backgroundLayer.FadeIn(TimeSpan.FromSeconds(0.5));
+            this.screenBackground.FadeIn(TimeSpan.FromSeconds(0.5));
         }
 
         public override void Draw(IGameGraphicsService graphics, GameTime time)

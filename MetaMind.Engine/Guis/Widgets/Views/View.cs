@@ -181,15 +181,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             // Update read buffer updated in lastest input / event / process loop to use in this loop
             this.UpdateItemsReadBuffer();
 
-            if (this.ViewLogic != null)
-            {
-                this.ViewLogic.UpdateForwardBuffer();
-            }
-
-            if (this.ViewVisual != null)
-            {
-                this.ViewVisual.UpdateForwardBuffer();
-            }
+            this.ViewLogic? .UpdateForwardBuffer();
+            this.ViewVisual?.UpdateForwardBuffer();
         }
 
         public override void UpdateBackwardBuffer()
@@ -202,15 +195,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
             // Swap buffer
             this.currentBuffer = this.NextBuffer();
 
-            if (this.ViewLogic != null)
-            {
-                this.ViewLogic.UpdateBackwardBuffer();
-            }
-
-            if (this.ViewVisual != null)
-            {
-                this.ViewVisual.UpdateBackwardBuffer();
-            }
+            this.ViewLogic? .UpdateBackwardBuffer();
+            this.ViewVisual?.UpdateBackwardBuffer();
         }
 
         private void UpdateItemsReadBuffer()

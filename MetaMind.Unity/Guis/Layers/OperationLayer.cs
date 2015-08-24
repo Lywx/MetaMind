@@ -18,7 +18,7 @@
         {
             if (operationSession == null)
             {
-                throw new ArgumentNullException("operationSession");
+                throw new ArgumentNullException(nameof(operationSession));
             }
 
             this.operationSession = operationSession;
@@ -32,7 +32,7 @@
         {
             graphics.SpriteBatch.Begin();
 
-            this.Modules.Draw(graphics, time, alpha);
+            this.Modules.Draw(graphics, time, Math.Min(alpha, this.TransitionAlpha));
 
             graphics.SpriteBatch.End();
 

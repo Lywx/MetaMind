@@ -1,9 +1,9 @@
 ﻿namespace MetaMind.Engine.Guis.Layers
 {
-    using System.Collections.Generic;
+    using System;
     using Engine;
-    using Engine.Screens;
-    using Engine.Services;
+    using Screens;
+    using Services;
     using Microsoft.Xna.Framework;
 
     public class CircularGameLayer : GameLayer, ICircularLayerManager
@@ -17,15 +17,9 @@
         {
         }
 
-        public List<IGameLayer> GameLayers
-        {
-            get { return this.gameLayers; }
-        }
+        public GameControllableEntityCollection<IGameLayer> GameLayers => this.gameLayers;
 
-        public IGameLayer GameLayerDisplayed
-        {
-            get { return this.GameLayers[this.gameLayerDisplayedIndex]; }
-        }
+        public IGameLayer GameLayerDisplayed => this.GameLayers[this.gameLayerDisplayedIndex];
 
         #region Load and Unload
 
@@ -49,37 +43,39 @@
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            this.GameLayerDisplayed.Draw(graphics, time, alpha);
+            this.GameLayers.Draw(graphics, time, alpha);
 
             base.Draw(graphics, time, alpha);
+        }
+
+        public override void UpdateTransition(GameTime time)
+        {
+            this.GameLayers.ForEach(layer => layer.UpdateTransition(time));
+            base                                  .UpdateTransition(time);
         }
 
         public override void Update(GameTime time)
         {
             this.GameLayers.ForEach(layer => layer.Update(time));
-
-            base.Update(time);
+            base                                  .Update(time);
         }
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
             this.GameLayerDisplayed.UpdateInput(input, time);
-
-            base.UpdateInput(input, time);
+            base                   .UpdateInput(input, time);
         }
 
         public override void UpdateBackwardBuffer()
         {
-            this.GameLayerDisplayed.UpdateBackwardBuffer();
-
-            base.UpdateBackwardBuffer();
+            this.GameLayers.UpdateBackwardBuffer();
+            base           .UpdateBackwardBuffer();
         }
 
         public override void UpdateForwardBuffer()
         {
-            this.GameLayerDisplayed.UpdateForwardBuffer();
-
-            base.UpdateForwardBuffer();
+            this.GameLayers.UpdateForwardBuffer();
+            base           .UpdateForwardBuffer();
         }
 
         #endregion
@@ -96,7 +92,23 @@
             this.GameLayers.Remove(layer);
         }
 
-        public void NextLayer()
+        public void Next()
+        {
+            this.Next(TimeSpan.FromSeconds(1));
+        }
+
+        public void Next(TimeSpan time)
+        {
+            var before = this.GameLayerDisplayed;
+            before.FadeOut(time);
+
+            this.NextLayer();
+
+            var after = this.GameLayerDisplayed;
+            after.FadeIn(time);
+        }
+
+        private void NextLayer()
         {
             if (this.gameLayerDisplayedIndex < this.GameLayers.Count - 1)
             {
@@ -108,7 +120,23 @@
             }
         }
 
-        public void PreviousLayer()
+        public void Previous()
+        {
+            this.Previous(TimeSpan.FromSeconds(1));
+        }
+
+        public void Previous(TimeSpan time)
+        {
+            var before = this.GameLayerDisplayed;
+            before.FadeOut(time);
+
+            this.PreviousLayer();
+
+            var after = this.GameLayerDisplayed;
+            after.FadeIn(time);
+        }
+
+        private void PreviousLayer()
         {
             if (this.gameLayerDisplayedIndex > 0)
             {
@@ -119,6 +147,11 @@
                 this.gameLayerDisplayedIndex = this.GameLayers.Count - 1;
             }
         }
+
+        //public void Transition()
+        //{
+        //    this.GameLayerDisplayed.FadeIn();
+        //}
 
         #endregion
     }
