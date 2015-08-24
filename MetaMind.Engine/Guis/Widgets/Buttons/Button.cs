@@ -23,15 +23,15 @@
                 () => this.Frame.Rectangle,
                 () =>
                 {
-                    if (this.Frame[FrameState.Mouse_Is_Over]())
-                    {
-                        return buttonSettings.MouseOverColor;
-                    }
-
-                    if (this.Frame[FrameState.Mouse_Is_Left_Pressed]() &&
+                    // Mouse is over when pressed
+                    if (this.Frame[FrameState.Mouse_Is_Left_Pressed]() ||
                         this.Frame[FrameState.Mouse_Is_Right_Pressed]())
                     {
                         return buttonSettings.MousePressedColor;
+                    }
+                    else if (this.Frame[FrameState.Mouse_Is_Over]())
+                    {
+                        return buttonSettings.MouseOverColor;
                     }
 
                     return buttonSettings.RegularColor;
@@ -42,15 +42,15 @@
                 () => this.Frame.Rectangle,
                 () =>
                 {
-                    if (this.Frame[FrameState.Mouse_Is_Over]())
-                    {
-                        return buttonSettings.BoundaryMouseOverColor;
-                    }
-
-                    if (this.Frame[FrameState.Mouse_Is_Left_Pressed]() &&
+                    // Mouse is over when pressed
+                    if (this.Frame[FrameState.Mouse_Is_Left_Pressed]() ||
                         this.Frame[FrameState.Mouse_Is_Right_Pressed]())
                     {
                         return buttonSettings.BoundaryMousePressedColor;
+                    }
+                    else if (this.Frame[FrameState.Mouse_Is_Over]())
+                    {
+                        return buttonSettings.BoundaryMouseOverColor;
                     }
 
                     return buttonSettings.BoundaryRegularColor;
@@ -95,15 +95,13 @@
         public override void Update(GameTime time)
         {
             this.Frame.Update(time);
-
-            base.Update(time);
+            base      .Update(time);
         }
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
             this.Frame.UpdateInput(input, time);
-
-            base.UpdateInput(input, time);
+            base      .UpdateInput(input, time);
         }
     }
 }
