@@ -95,8 +95,8 @@
             {
                 TextFont     = () => Font.UiRegular,
                 Text         = () => "OPTIONS",
-                TextPosition = () => new Vector2(graphicsSettings.Width / 2.0f, 80),
-                TextColor    = () => Palette.Transparent5,
+                TextPosition = () => new Vector2(graphicsSettings.Width / 2.0f, 90),
+                TextColor    = () => Palette.Transparent160,
                 TextSize     = () => 1f,
                 TextHAlign   = StringHAlign.Center,
                 TextVAlign   = StringVAlign.Center,
@@ -134,7 +134,7 @@
                 new Vector2(5, 12) * 0.8f,
                 new BoxSettings(() => new Rectangle((int)OperationModuleSettings.ViewMargin.X, this.procedureNameLabelBox.Bottom, viewWidth, 0))
                 {
-                    Color       = () => Palette.Transparent1,
+                    Color       = () => Palette.Transparent20,
                     ColorFilled = () => true,
                 });
 

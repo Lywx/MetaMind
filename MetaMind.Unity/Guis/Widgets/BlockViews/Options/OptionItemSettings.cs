@@ -65,11 +65,11 @@
             Size   = new Point(24 + 128 + 1355, 26),
             Margin = new Point(2, 2),
 
-            RegularColor      = Palette.Transparent0,
+            RegularColor      = Palette.Transparent,
             MouseOverColor    = Palette.DimBlue,
-            PendingColor      = Palette.Transparent3,
-            ModificationColor = Palette.Transparent0,
-            SelectionColor    = Palette.Transparent3,
+            PendingColor      = Palette.Transparent80,
+            ModificationColor = Palette.Transparent,
+            SelectionColor    = Palette.Transparent80,
         };
 
         private readonly LabelSettings descriptionLabel = new LabelSettings

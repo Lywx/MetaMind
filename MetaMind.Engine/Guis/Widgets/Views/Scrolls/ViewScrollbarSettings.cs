@@ -18,7 +18,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
 
         public int ColorBrightnessFadeSpeed = 255 * 1;
 
-        public Color RegularColor = Palette.Transparent6;
+        public Color RegularColor = Palette.Transparent200;
 
         public Color DraggingColor = Color.White;
 

@@ -20,7 +20,7 @@
 
         public Color   BarFrameDescendColor = Palette.LightPink;
 
-        public Color   SynchronizationPointFrameColor = Palette.Transparent1;
+        public Color   SynchronizationPointFrameColor = Palette.Transparent20;
 
         public Font    SynchronizationRateFont = Font.UiStatistics;
 

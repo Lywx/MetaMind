@@ -109,11 +109,11 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
                 Size   = new Point(24, 26),
                 Margin = new Point(2, 2),
 
-                RegularColor      = Palette.Transparent1,
-                MouseOverColor    = Palette.Transparent1,
-                PendingColor      = Palette.Transparent1,
-                ModificationColor = Palette.Transparent1,
-                SelectionColor    = Palette.Transparent1,
+                RegularColor      = Palette.Transparent20,
+                MouseOverColor    = Palette.Transparent20,
+                PendingColor      = Palette.Transparent20,
+                ModificationColor = Palette.Transparent20,
+                SelectionColor    = Palette.Transparent20,
             };
 
             this.statusFrame = new FrameSettings
@@ -121,11 +121,11 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
                 Size   = new Point(128, 26),
                 Margin = new Point(2, 2),
 
-                RegularColor      = Palette.Transparent1,
-                MouseOverColor    = Palette.Transparent1,
-                PendingColor      = Palette.Transparent1,
-                ModificationColor = Palette.Transparent1,
-                SelectionColor    = Palette.Transparent1,
+                RegularColor      = Palette.Transparent20,
+                MouseOverColor    = Palette.Transparent20,
+                PendingColor      = Palette.Transparent20,
+                ModificationColor = Palette.Transparent20,
+                SelectionColor    = Palette.Transparent20,
             };
 
             this.statisticsFrame = new FrameSettings
@@ -133,11 +133,11 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
                 Size   = new Point(128, 26),
                 Margin = new Point(2, 2),
 
-                RegularColor      = Palette.Transparent1,
-                MouseOverColor    = Palette.Transparent1,
-                PendingColor      = Palette.Transparent1,
-                ModificationColor = Palette.Transparent1,
-                SelectionColor    = Palette.Transparent1,
+                RegularColor      = Palette.Transparent20,
+                MouseOverColor    = Palette.Transparent20,
+                PendingColor      = Palette.Transparent20,
+                ModificationColor = Palette.Transparent20,
+                SelectionColor    = Palette.Transparent20,
             };
 
             this.nameFrame = new FrameSettings
@@ -157,11 +157,11 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
                 Size   = new Point(viewportWidth - TestModuleSettings.ViewMargin.X * 2 - 24 - 128, 26),
                 Margin = new Point(2, 2),
 
-                RegularColor      = Palette.Transparent0,
+                RegularColor      = Palette.Transparent,
                 MouseOverColor    = Palette.DimBlue,
-                PendingColor      = Palette.Transparent3,
-                ModificationColor = Palette.Transparent0,
-                SelectionColor    = Palette.Transparent3,
+                PendingColor      = Palette.Transparent80,
+                ModificationColor = Palette.Transparent,
+                SelectionColor    = Palette.Transparent80,
             };
 
             this.rootFrame = new FrameSettings

@@ -30,22 +30,22 @@
 
         public override void LoadContent(IGameInteropService interop)
         {
-            var testCompletionFont = Font.UiStatistics;
+            var testCompletionFont  = new Func<Font>(() => Font.UiStatistics);
             var testCompletionColor = new Func<Color>(() =>  this.test.Evaluation.ResultAllPassedRate > 50.0f ? Palette.LightGreen : Palette.LightPink);
 
             var testRatePrefix = new Label
             {
-                TextFont     = () => testCompletionFont,
+                TextFont     = testCompletionFont,
                 Text         = () => $"{this.test.Evaluation.ResultAllPassedRate.ToString("F0")}",
                 TextPosition = () => this.TestRateCenterPosition,
                 TextColor    = testCompletionColor,
-                TextSize     = () => 1.0f,
+                TextSize     = () => 2.0f,
                 TextHAlign   = StringHAlign.Left,
                 TextVAlign   = StringVAlign.Center,
             };
 
             var testRateSubfix = new Label { 
-                TextFont       = () => testCompletionFont,
+                TextFont       = testCompletionFont,
                 Text           = () => " %",
                 TextPosition   = () => this.TestRateCenterPosition,
                 TextColor      = testCompletionColor,
@@ -61,7 +61,7 @@
             base.LoadContent(interop);
         }
 
-        private Vector2 TestRateCenterPosition => new Vector2(this.GameGraphics.Settings.Width / 2 - 160, 80);
+        private Vector2 TestRateCenterPosition => new Vector2(this.GameGraphics.Settings.Width / 2 - 160, 90);
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {

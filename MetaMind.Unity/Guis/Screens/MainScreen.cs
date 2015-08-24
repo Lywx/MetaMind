@@ -62,23 +62,22 @@
             // Operation session
             this.operationSession = new OperationSession(Unity.FsiSession, Unity.SessionData.Cognition);
 
-            // Buttons
-            var graphics = interop.Engine.Graphics;
+            var graphicsSettings = this.GameGraphics.Settings;
 
+            // Buttons
             const int buttonWidth = 30;
             const int buttonHeight = 300;
-            var buttonY = (graphics.Settings.Height - buttonHeight) / 2;
+            var buttonY = (graphicsSettings.Height - buttonHeight) / 2;
             var buttonSettings = new ButtonSettings
             {
-                BoundaryRegularColor      = Palette.Transparent0,
-                BoundaryMouseOverColor    = Palette.DimBlue,
-                BoundaryMousePressedColor = Palette.Transparent6,
-                MouseOverColor            = Palette.Transparent1,
-                MousePressedColor         = Palette.Transparent6
+                BoundaryRegularColor      = Palette.Transparent,
+                BoundaryMouseOverColor    = Palette.Transparent,
+                BoundaryMousePressedColor = Palette.Transparent,
+                MouseOverColor            = Palette.Transparent20,
+                MousePressedColor         = Palette.Transparent40
             };
             this.buttonPrevious = new Button(
-                new Rectangle(0, buttonY, buttonWidth, buttonHeight),
-                buttonSettings)
+                new Rectangle(0, buttonY, buttonWidth, buttonHeight), buttonSettings)
             {
                 MouseLeftPressedAction = () => this.CircularLayers.PreviousLayer(),
                 Label =
@@ -91,7 +90,7 @@
             };
 
             this.buttonNext = new Button(
-                new Rectangle(graphics.Settings.Width - buttonWidth, buttonY, buttonWidth, buttonHeight), buttonSettings)
+                new Rectangle(graphicsSettings.Width - buttonWidth, buttonY, buttonWidth, buttonHeight), buttonSettings)
             {
                 MouseLeftPressedAction = () => this.CircularLayers.NextLayer(),
                 Label =
@@ -105,11 +104,11 @@
 
             this.screenLabel = new Label
             {
-                TextFont     = () => Font.UiRegular,
+                TextFont     = () => Font.UiStatistics,
                 Text         = () => this.CircularLayers.GameLayerDisplayed is TestLayer ? "TESTS" : "OPERATIONS",
-                TextPosition = () => new Vector2((float)this.GameGraphics.Settings.Width / 2, 80),
-                TextColor    = () => Palette.Transparent5,
-                TextSize     = () => 1f,
+                TextPosition = () => new Vector2((float)graphicsSettings.Width / 2, 90),
+                TextColor    = () => Palette.LightPink,
+                TextSize     = () => 1.1f,
                 TextHAlign   = StringHAlign.Center,
                 TextVAlign   = StringVAlign.Center,
             };
