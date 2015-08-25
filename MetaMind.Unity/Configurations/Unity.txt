@@ -1,0 +1,5 @@
+﻿" Scripts
+ScriptSearcher.SearchFolder = .
+
+" Tests
+TestMonitor.TestWarningRate = 10

@@ -10,16 +10,16 @@
     {
         private readonly string searchPattern = "*.fsx";
 
-        private string searchFolder;
-
         public ScriptSearcher()
         {
             this.LoadConfiguration();
         }
 
+        private string SearchFolder { get; set; }
+
         public List<string> SearchScriptPaths()
         {
-            return this.SearchScriptPaths(this.searchFolder);
+            return this.SearchScriptPaths(this.SearchFolder);
         }
 
         private List<string> SearchScriptPaths(string searchPath)
@@ -27,17 +27,14 @@
             return Directory.GetFiles(searchPath, this.searchPattern, SearchOption.AllDirectories).ToList();
         }
 
-        #region Configuration
+        #region Configurations
 
-        public string ConfigurationFile
-        {
-            get { return "Scripts.txt"; }
-        }
+        public string ConfigurationFile => "Unity.txt";
 
         public void LoadConfiguration()
         {
-            var pairs = ConfigurationLoader.LoadUniquePairs(this);
-            this.searchFolder = FileManager.DataPath(pairs["ScriptFolder"]); ;
+            var pairs         = ConfigurationLoader.LoadUniquePairs(this);
+            this.SearchFolder = FileManager.DataPath(pairs["ScriptSearcher.SearchFolder"]); ;
         }
 
         #endregion

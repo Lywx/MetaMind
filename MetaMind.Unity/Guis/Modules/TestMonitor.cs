@@ -3,10 +3,13 @@
     using System;
     using Concepts.Tests;
     using Engine;
+    using Engine.Settings.Loaders;
+
     using Microsoft.Xna.Framework;
+
     using GameComponent = Engine.GameComponent;
 
-    public class TestMonitor : GameComponent
+    public class TestMonitor : GameComponent, IConfigurationLoader
     {
         public static float TestWarningRate = 10f;
 
@@ -24,6 +27,8 @@
             this.test = test;
 
             engine.Components.Add(this);
+
+            this.LoadConfiguration();
         }
 
         public override void Update(GameTime gameTime)
@@ -35,5 +40,18 @@
 
             base.Update(gameTime);
         }
+
+        #region Configurations
+
+        public string ConfigurationFile => "Unity.txt";
+
+        public void LoadConfiguration()
+        {
+            var pairs = ConfigurationLoader.LoadUniquePairs(this);
+
+            TestWarningRate = FileLoader.ExtractFloats(pairs, "TestMonitor.TestWarningRate", 0, 10f);
+        }
+
+        #endregion
     }
 }
