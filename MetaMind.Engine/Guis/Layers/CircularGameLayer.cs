@@ -148,11 +148,6 @@
             }
         }
 
-        //public void Transition()
-        //{
-        //    this.GameLayerDisplayed.FadeIn();
-        //}
-
         #endregion
     }
 }

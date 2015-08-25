@@ -2,12 +2,12 @@
 {
     using System;
 
-    using MetaMind.Engine.Components.Fonts;
-    using MetaMind.Engine.Services;
+    using Components.Fonts;
+    using Services;
 
     using Microsoft.Xna.Framework;
 
-    public class Label : GameVisualEntity
+    public class Label : GameVisualEntity, ICloneable
     {
         public Label(Func<Font> textFont, Func<string> text, Func<Vector2> textPosition, Func<Color> textColor, Func<float> textSize, StringHAlign textHAlign, StringVAlign textVAlign, int textLeading=0, bool textMonospaced=false)
             : this(textFont, text, textPosition, textColor, textSize)
@@ -23,22 +23,22 @@
         {
             if (text == null)
             {
-                throw new ArgumentNullException("text");
+                throw new ArgumentNullException(nameof(text));
             }
 
             if (textPosition == null)
             {
-                throw new ArgumentNullException("textPosition");
+                throw new ArgumentNullException(nameof(textPosition));
             }
 
             if (textSize == null)
             {
-                throw new ArgumentNullException("textSize");
+                throw new ArgumentNullException(nameof(textSize));
             }
 
             if (textFont == null)
             {
-                throw new ArgumentNullException("textFont");
+                throw new ArgumentNullException(nameof(textFont));
             }
 
             this.Text         = text;
@@ -101,5 +101,14 @@
                 this.TextVAlign,
                 this.TextLeading);
         }
+
+        #region IClonable
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
+
+        #endregion
     }
 }

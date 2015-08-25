@@ -6,26 +6,24 @@
     using Engine;
     using Engine.Guis;
     using Engine.Guis.Widgets.Items;
-    using Engine.Guis.Widgets.Items.Frames;
     using Engine.Guis.Widgets.Views;
     using Engine.Services;
     using Microsoft.Xna.Framework;
     using Widgets.IndexViews;
     using Widgets.IndexViews.Operations;
-    using Widgets.IndexViews.Tests;
 
     public class OperationModule : Module<OperationModuleSettings>
     {
-        private readonly IOperationDescription operations;
+        private readonly IOperationDescription operation;
 
         private readonly OperationSession operationSession;
 
-        public OperationModule(OperationSession operationSession, OperationModuleSettings settings, IOperationDescription operations)
+        public OperationModule(OperationModuleSettings settings, IOperationDescription operation, OperationSession operationSession)
             : base(settings)
         {
-            if (operations == null)
+            if (operation == null)
             {
-                throw new ArgumentNullException(nameof(operations));
+                throw new ArgumentNullException(nameof(operation));
             }
 
             if (operationSession == null)
@@ -33,7 +31,7 @@
                 throw new ArgumentNullException(nameof(operationSession));
             }
 
-            this.operations       = operations;
+            this.operation       = operation;
             this.operationSession = operationSession;
             Operation.Session     = operationSession;
 
@@ -54,7 +52,7 @@
             var viewSettings = new StandardIndexViewSettings(
                 itemMargin    : new Vector2(graphicsSettings.Width - OperationModuleSettings.ViewMargin.X * 2, OperationModuleSettings.ItemMargin.Y),
                 viewPosition  : OperationModuleSettings.ViewMargin.ToVector2(),
-                viewRowDisplay: (int)((graphicsSettings.Height - OperationModuleSettings.ViewMargin.Y) / OperationModuleSettings.ItemMargin.Y - 1),
+                viewRowDisplay: (graphicsSettings.Height - OperationModuleSettings.ViewMargin.Y) / OperationModuleSettings.ItemMargin.Y - 1,
                 viewRowMax    : int.MaxValue);
 
             // Item settings
@@ -64,7 +62,7 @@
             this.View = new View(viewSettings, itemSettings, new List<IViewItem>());
 
             var viewComposer = new OperationIndexViewComposer(this.operationSession);
-            viewComposer.Compose(this.View, this.operations);
+            viewComposer.Compose(this.View, this.operation);
 
             // Entities
             this.Entities.Add(this.View);
@@ -80,8 +78,7 @@
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
             this.Entities.Draw(graphics, time, alpha);
-
-            base.Draw(graphics, time, alpha);
+            base         .Draw(graphics, time, alpha);
         }
 
         #endregion
@@ -91,8 +88,7 @@
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
             this.Entities.UpdateInput(input, time);
-
-            base.UpdateInput(input, time);
+            base         .UpdateInput(input, time);
         }
 
         public override void Update(GameTime time)
@@ -100,8 +96,7 @@
             this.Entities.UpdateForwardBuffer();
             this.Entities.Update(time);
             this.Entities.UpdateBackwardBuffer();
-
-            base.Update(time);
+            base         .Update(time);
         }
 
         #endregion

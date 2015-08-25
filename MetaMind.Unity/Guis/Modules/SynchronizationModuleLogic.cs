@@ -19,21 +19,21 @@ namespace MetaMind.Unity.Guis.Modules
         {
             if (consciousness == null)
             {
-                throw new ArgumentNullException("consciousness");
+                throw new ArgumentNullException(nameof(consciousness));
             }
 
             if (synchronization == null)
             {
-                throw new ArgumentNullException("synchronization");
+                throw new ArgumentNullException(nameof(synchronization));
             }
 
             this.Consciousness   = consciousness;
             this.Synchronization = synchronization;
 
-            this.Monitor = new SynchronizationMonitor(this.GameInterop.Engine, this.Synchronization);
+            this.SynchronizationMonitor = new SynchronizationMonitor(this.GameInterop.Engine, this.Synchronization);
         }
 
-        private SynchronizationMonitor Monitor { get; set; }
+        private SynchronizationMonitor SynchronizationMonitor { get; set; }
 
         private IConsciousness Consciousness { get; set; }
 
@@ -77,13 +77,13 @@ namespace MetaMind.Unity.Guis.Modules
 
         public void Stop()
         {
-            this.Synchronization.Stop();
-            this.Monitor        .Stop();
+            this.Synchronization       .Stop();
+            this.SynchronizationMonitor.Stop();
         }
 
         public void Exit()
         {
-            this.Monitor.Exit();
+            this.SynchronizationMonitor.Exit();
         }
 
         #endregion Operations
@@ -95,9 +95,7 @@ namespace MetaMind.Unity.Guis.Modules
             base.Update(time);
 
             // Automatic monitoring
-            this.Monitor.TryStart();
-
-            this.Monitor.Update(time);
+            this.SynchronizationMonitor.TryStart();
         }
 
         #endregion
@@ -197,7 +195,7 @@ namespace MetaMind.Unity.Guis.Modules
 
             public SynchronizationStoppedListener(ISynchronization synchronization, SynchronizationModuleLogic synchronizationLogic)
             {
-                this.synchronization        = synchronization;
+                this.synchronization      = synchronization;
                 this.synchronizationLogic = synchronizationLogic;
 
                 this.RegisteredEvents.Add((int)SessionEventType.SyncStopped);

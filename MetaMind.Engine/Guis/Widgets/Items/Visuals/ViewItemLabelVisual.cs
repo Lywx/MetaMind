@@ -1,7 +1,7 @@
 namespace MetaMind.Engine.Guis.Widgets.Items.Visuals
 {
-    using MetaMind.Engine.Guis.Widgets.Visuals;
-    using MetaMind.Engine.Services;
+    using Widgets.Visuals;
+    using Services;
 
     using Microsoft.Xna.Framework;
 
@@ -24,10 +24,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Visuals
                 labelSettings.TextMonospaced);
         }
 
-        public Label Label
-        {
-            get { return this.label; }
-        }
+        public Label Label => this.label;
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {

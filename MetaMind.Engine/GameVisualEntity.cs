@@ -31,10 +31,7 @@ namespace MetaMind.Engine
                 if (this.visible != value)
                 {
                     this.visible = value;
-                    if (this.VisibleChanged != null)
-                    {
-                        this.VisibleChanged(this, EventArgs.Empty);
-                    }
+                    this.VisibleChanged?.Invoke(this, EventArgs.Empty);
 
                     this.OnVisibleChanged(this, EventArgs.Empty);
                 }
@@ -70,7 +67,7 @@ namespace MetaMind.Engine
 
         #region Service
 
-        protected internal IGameGraphicsService GameGraphics { get; private set; }
+        protected IGameGraphicsService GameGraphics { get; private set; }
 
         [OnDeserialized]
         private void SetupService(StreamingContext context)
@@ -80,10 +77,7 @@ namespace MetaMind.Engine
 
         private void SetupService()
         {
-            if (GameEngine.Service != null)
-            {
-                this.GameGraphics = GameEngine.Service.Graphics;
-            }
+            this.GameGraphics = GameEngine.Service?.Graphics;
         }
 
         #endregion
@@ -104,10 +98,7 @@ namespace MetaMind.Engine
                 if (this.drawOrder != value)
                 {
                     this.drawOrder = value;
-                    if (this.DrawOrderChanged != null)
-                    {
-                        this.DrawOrderChanged(this, null);
-                    }
+                    this.DrawOrderChanged?.Invoke(this, null);
 
                     this.OnDrawOrderChanged(this, null);
                 }

@@ -266,9 +266,9 @@ namespace MetaMind.Engine.Screens
     {
         protected GameScreen()
         {
-            this.Layers = new GameControllableEntityCollection<IGameLayer>();
-
             this.SetupService();
+
+            this.Layers = new GameControllableEntityCollection<IGameLayer>();
         }
 
         protected IGameGraphicsService GameGraphics { get; private set; }
@@ -277,11 +277,8 @@ namespace MetaMind.Engine.Screens
 
         private void SetupService()
         {
-            if (GameEngine.Service != null)
-            {
-                this.GameInterop = GameEngine.Service.Interop;
-                this.GameGraphics = GameEngine.Service.Graphics;
-            }
+            this.GameInterop  = GameEngine.Service?.Interop;
+            this.GameGraphics = GameEngine.Service?.Graphics;
         }
     }
 

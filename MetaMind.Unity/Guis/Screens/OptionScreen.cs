@@ -96,8 +96,8 @@
             {
                 TextFont     = () => Font.UiRegular,
                 Text         = () => "OPTIONS",
-                TextPosition = () => new Vector2(graphicsSettings.Width / 2.0f, 90),
-                TextColor    = () => Palette.Transparent160,
+                TextPosition = () => new Vector2(graphicsSettings.Width / 2.0f, 80),
+                TextColor    = () => Color.White,
                 TextSize     = () => 1f,
                 TextHAlign   = StringHAlign.Center,
                 TextVAlign   = StringVAlign.Center,

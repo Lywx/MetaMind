@@ -8,7 +8,6 @@
     using Engine.Components.Inputs;
     using Engine.Guis.Layers;
     using Engine.Guis.Widgets.Buttons;
-    using Engine.Guis.Widgets.Visuals;
     using Engine.Screens;
     using Engine.Services;
     using Engine.Settings.Colors;
@@ -21,8 +20,6 @@
         private Button buttonPrevious;
 
         private Button buttonNext;
-
-        private Label screenLabel;
 
         private SynchronizationSession synchronizationSession;
 
@@ -102,27 +99,14 @@
                 }
             };
 
-            this.screenLabel = new Label
-            {
-                TextFont     = () => Font.UiRegular,
-                Text         = () => this.CircularLayers.GameLayerDisplayed is TestLayer ? "TESTS" : "OPERATIONS",
-                TextPosition = () => new Vector2((float)graphicsSettings.Width / 2, 90),
-                TextColor    = () => Palette.LightPink,
-                TextSize     = () => 2.0f,
-                TextHAlign   = StringHAlign.Center,
-                TextVAlign   = StringVAlign.Center,
-            };
-
             this.Layers.Add(new SynchronizationLayer(this));
 
             this.CircularLayers = new CircularGameLayer(this);
             this.CircularLayers.Add(new TestLayer(this.testSession, Unity.Speech, this));
-            this.CircularLayers.Add(
-                new OperationLayer(this.operationSession, this)
-                {
-                    IsActive        = false,
-                    TransitionAlpha = 0,
-                });
+            this.CircularLayers.Add(new OperationLayer(this.operationSession, this, 0)
+            {
+                IsActive = false
+            });
 
             this.Layers.Add(this.CircularLayers);
 
@@ -138,7 +122,6 @@
         {
             this.buttonPrevious.Update(time);
             this.buttonNext    .Update(time);
-            this.screenLabel   .Update(time);
 
             base.Update(time);
         }
@@ -178,7 +161,6 @@
             // Buttons have the same alpha value as circular layer
             this.buttonPrevious.Draw(graphics, time, Math.Min(this.TransitionAlpha, this.CircularLayers.TransitionAlpha));
             this.buttonNext    .Draw(graphics, time, Math.Min(this.TransitionAlpha, this.CircularLayers.TransitionAlpha));
-            this.screenLabel   .Draw(graphics, time, Math.Min(this.TransitionAlpha, this.CircularLayers.TransitionAlpha));
 
             graphics.SpriteBatch.End();
 

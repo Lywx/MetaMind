@@ -138,6 +138,7 @@
     <Compile Include="Guis\Modules\OperationSettings.cs" />
     <Compile Include="Guis\Modules\TestModuleLogic.cs" />
     <Compile Include="Guis\Modules\TestModuleVisual.cs" />
+    <Compile Include="Guis\Modules\TestMonitor.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemFrame.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemLayer.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemLogic.cs" />

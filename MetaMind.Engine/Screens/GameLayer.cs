@@ -5,7 +5,7 @@
 
     public class GameLayer : GameControllableEntity, IGameLayer
     {
-        public GameLayer(IGameScreen screen, byte transitionAlpha = byte.MaxValue)
+        protected GameLayer(IGameScreen screen, byte transitionAlpha = byte.MaxValue)
         {
             if (screen == null)
             {

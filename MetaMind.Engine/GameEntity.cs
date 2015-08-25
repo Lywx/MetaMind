@@ -32,9 +32,9 @@ namespace MetaMind.Engine
 
         #region Dependency
         
-        protected internal IGameInteropService GameInterop { get; private set; }
+        protected IGameInteropService GameInterop { get; private set; }
 
-        protected internal IGameNumericalService GameNumerical { get; private set; }
+        protected IGameNumericalService GameNumerical { get; private set; }
 
         [OnDeserialized]
         private void SetupService(StreamingContext context)
@@ -44,11 +44,8 @@ namespace MetaMind.Engine
 
         private void SetupService()
         {
-            if (GameEngine.Service != null)
-            {
-                this.GameInterop = GameEngine.Service.Interop;
-                this.GameNumerical = GameEngine.Service.Numerical;
-            }
+            this.GameInterop   = GameEngine.Service?.Interop;
+            this.GameNumerical = GameEngine.Service?.Numerical;
         }
 
         #endregion 
@@ -59,8 +56,7 @@ namespace MetaMind.Engine
         {
             this.SetupService();
 
-            this.Guid = Guid.NewGuid();
-
+            this.Guid      = Guid.NewGuid();
             this.Listeners = new List<IListener>();
         }
 
@@ -107,10 +103,7 @@ namespace MetaMind.Engine
                 if (this.enabled != value)
                 {
                     this.enabled = value;
-                    if (this.EnabledChanged != null)
-                    {
-                        this.EnabledChanged(this, EventArgs.Empty);
-                    }
+                    this.EnabledChanged?.Invoke(this, EventArgs.Empty);
 
                     this.OnEnabledChanged(this, null);
                 }
@@ -129,11 +122,13 @@ namespace MetaMind.Engine
         public virtual void UnloadContent(IGameInteropService interop)
         {
             // Maybe disposed already
-            if (this.Listeners != null)
+            if (this.Listeners == null)
             {
-                this.Listeners.ForEach(l => interop.Event.RemoveListener(l));
-                this.Listeners.Clear();
+                return;
             }
+
+            this.Listeners.ForEach(l => interop.Event.RemoveListener(l));
+            this.Listeners.Clear();
         }
 
         #endregion Load and Unload
@@ -239,7 +234,7 @@ namespace MetaMind.Engine
             }
         }
 
-        protected void ProcessAction(Action action)
+        private void ProcessAction(Action action)
         {
             if (this.updateActions.Count == 0)
             {

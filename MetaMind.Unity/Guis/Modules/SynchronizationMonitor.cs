@@ -4,18 +4,16 @@
     using Concepts.Synchronizations;
     using Engine;
     using Engine.Components.Events;
-    using Engine.Services;
     using Events;
     using Microsoft.Xna.Framework;
     using Sessions;
+    using GameComponent = Engine.GameComponent;
 
     /// <summary>
     /// An attention monitor during synchronization
     /// </summary>
     public class SynchronizationMonitor : GameComponent
     {
-        private readonly IGameInteropService interop;
-
         private readonly ISynchronization synchronization;
 
         private readonly string synchronizingFalseCue = "Synchronization False";
@@ -33,17 +31,15 @@
         {
             if (engine == null)
             {
-                throw new ArgumentNullException("engine");
+                throw new ArgumentNullException(nameof(engine));
             }
 
             if (synchronization == null)
             {
-                throw new ArgumentNullException("synchronization");
+                throw new ArgumentNullException(nameof(synchronization));
             }
 
             this.synchronization = synchronization;
-
-            this.interop = engine.Interop;
 
             engine.Components.Add(this);
         }
@@ -54,7 +50,7 @@
         {
             if (DateTime.Now - this.alertMoment > this.attentionSpan)
             {
-                var audio = this.interop.Audio;
+                var audio = this.GameInterop.Audio;
 
                 if (this.synchronization.Enabled)
                 {
@@ -79,7 +75,7 @@
 
         private void Alert()
         {
-            var @event = this.interop.Event;
+            var @event = this.GameInterop.Event;
             @event.QueueEvent(new Event((int)SessionEventType.SyncAlerted, new SynchronizationAlertedEventArgs()));
         }
 

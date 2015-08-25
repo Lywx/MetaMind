@@ -3,7 +3,7 @@ namespace MetaMind.Engine
     using System;
     using System.Runtime.Serialization;
 
-    using MetaMind.Engine.Services;
+    using Services;
 
     using Microsoft.Xna.Framework;
 
@@ -26,10 +26,7 @@ namespace MetaMind.Engine
                 if (this.controllable != value)
                 {
                     this.controllable = value;
-                    if (this.ControllableChanged != null)
-                    {
-                        this.ControllableChanged(this, EventArgs.Empty);
-                    }
+                    this.ControllableChanged?.Invoke(this, EventArgs.Empty);
 
                     this.OnControllableChanged(this, EventArgs.Empty);
                 }
@@ -45,9 +42,9 @@ namespace MetaMind.Engine
 
         #region Events        
 
-        public event EventHandler<EventArgs> ControllableChanged;
+        public event EventHandler<EventArgs> ControllableChanged = delegate { };
 
-        public event EventHandler<EventArgs> InputOrderChanged;
+        public event EventHandler<EventArgs> InputOrderChanged = delegate { };
 
         protected virtual void OnControllableChanged(object sender, EventArgs args)
         {
@@ -75,10 +72,7 @@ namespace MetaMind.Engine
                 if (this.inputOrder != value)
                 {
                     this.inputOrder = value;
-                    if (this.InputOrderChanged != null)
-                    {
-                        this.InputOrderChanged(this, null);
-                    }
+                    this.InputOrderChanged?.Invoke(this, null);
 
                     this.OnInputOrderChanged(this, null);
                 }
@@ -101,10 +95,7 @@ namespace MetaMind.Engine
 
         private void SetupService()
         {
-            if (GameEngine.Service != null)
-            {
-                this.GameInput = GameEngine.Service.Input;
-            }
+            this.GameInput = GameEngine.Service?.Input;
         }
 
         #endregion

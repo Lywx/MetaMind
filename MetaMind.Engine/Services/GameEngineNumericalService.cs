@@ -17,18 +17,12 @@ namespace MetaMind.Engine.Services
         {
             if (numerical == null)
             {
-                throw new ArgumentNullException("numerical");
+                throw new ArgumentNullException(nameof(numerical));
             }
 
             this.numerical = numerical;
         }
 
-        public Random Random
-        {
-            get
-            {
-                return this.numerical.Random;
-            }
-        }
+        public Random Random => this.numerical.Random;
     }
 }

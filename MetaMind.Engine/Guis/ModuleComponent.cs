@@ -12,28 +12,10 @@ namespace MetaMind.Engine.Guis
             this.module = module;
         }
 
-        protected TModuleLogic Logic
-        {
-            get
-            {
-                return (TModuleLogic)this.module.Logic;
-            }
-        }
+        protected TModuleLogic Logic => (TModuleLogic)this.module.Logic;
 
-        protected TModule Module
-        {
-            get
-            {
-                return this.module;
-            }
-        }
+        protected TModule Module => this.module;
 
-        protected TModuleSettings Settings
-        {
-            get
-            {
-                return this.module.Settings;
-            }
-        }
+        protected TModuleSettings Settings => this.module.Settings;
     }
 }

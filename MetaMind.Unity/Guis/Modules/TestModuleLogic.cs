@@ -34,12 +34,16 @@
             this.test        = test;
             this.testSession = testSession;
 
+            this.TestMonitor = new TestMonitor(this.GameInterop.Engine, this.test);
+
             this.ControllableEntities = new GameControllableEntityCollection<IGameControllableEntity>();
         }
 
         public GameControllableEntityCollection<IGameControllableEntity> ControllableEntities { get; set; }
 
-        private IView View { get; set; }
+        public TestMonitor TestMonitor { get; set; }
+
+        public IView View { get; set; }
 
         #region Load and Unload
                                                                                                            

@@ -12,8 +12,8 @@ namespace MetaMind.Engine.Components
     using System.Diagnostics;
     using System.Linq;
 
-    using MetaMind.Engine.Screens;
-    using MetaMind.Engine.Services;
+    using Screens;
+    using Services;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -49,14 +49,7 @@ namespace MetaMind.Engine.Components
         /// than the real master list, because screens should only ever be added
         /// or removed using the AddScreen and RemoveScreen methods.
         /// </summary>
-        public IGameScreen[] Screens
-        {
-            get
-            {
-                return this.screens.ToArray();
-            }
-        }
-
+        public IGameScreen[] Screens => this.screens.ToArray();
 
         #endregion Screen Data
 
@@ -110,17 +103,17 @@ namespace MetaMind.Engine.Components
         {
             if (engine == null)
             {
-                throw new ArgumentNullException("engine");
+                throw new ArgumentNullException(nameof(engine));
             }
 
             if (settings == null)
             {
-                throw new ArgumentNullException("settings");
+                throw new ArgumentNullException(nameof(settings));
             }
 
             if (spriteBatch == null)
             {
-                throw new ArgumentNullException("spriteBatch");
+                throw new ArgumentNullException(nameof(spriteBatch));
             }
 
             this.SpriteBatch = spriteBatch;
@@ -156,7 +149,7 @@ namespace MetaMind.Engine.Components
 
         protected override void LoadContent()
         {
-            this.blankTexture = this.GameInterop.Content.Load<Texture2D>(@"Textures\Screens\Blank");
+            this.blankTexture = this.GameInterop.Content.Load<Texture2D>(@"Texture\Screens\Blank");
 
             // Tell each of the screens to load their content.
             foreach (var screen in this.screens)

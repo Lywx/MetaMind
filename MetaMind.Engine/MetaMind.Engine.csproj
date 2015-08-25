@@ -76,6 +76,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Collections\ObservableCollection.cs" />
+    <Compile Include="Extensions\ExtVector3.cs" />
+    <Compile Include="GameComponent.cs" />
     <Compile Include="GameControllableComponent.cs" />
     <Compile Include="Components\IScreenManagerOperations.cs" />
     <Compile Include="Components\Processes\ProcessCounter.cs" />
@@ -724,7 +726,7 @@
     <Content Include="Content\Fonts\UiStatisticsFont.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Textures\Screens\Blank.xnb">
+    <Content Include="Content\Texture\Screens\Blank.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Class Diagrams\Components.cd" />

@@ -11,38 +11,11 @@ namespace Microsoft.Xna.Framework
 
     public static class ExtColor
     {
-        public static Color DecrementBrightnessBy(this Color color, int value)
+        public static Color WithBrightness(this Color color, float value)
         {
-            if (color.R <= color.G && color.R <= color.B)
-            {
-                color.R -= (byte)value;
-            }
-            else if (color.G <= color.R && color.G <= color.B)
-            {
-                color.G -= (byte)value;
-            }
-            else
-            {
-                color.B -= (byte)value;
-            }
-
-            return color;
-        }
-
-        public static Color IncrementBrightnessBy(this Color color, int value)
-        {
-            if (color.R >= color.G && color.R >= color.B)
-            {
-                color.R += (byte)value;
-            }
-            else if (color.G >= color.R && color.G >= color.B)
-            {
-                color.G += (byte)value;
-            }
-            else
-            {
-                color.B += (byte)value;
-            }
+            color.R = (byte)(color.R * value);
+            color.G = (byte)(color.G * value);
+            color.B = (byte)(color.B * value);
 
             return color;
         }
@@ -53,10 +26,11 @@ namespace Microsoft.Xna.Framework
             color.R = (byte)(alpha * color.R / 255);
             color.G = (byte)(alpha * color.G / 255);
             color.B = (byte)(alpha * color.B / 255);
+
             return color;
         }
 
-        private static void HsvToRgb(float h, float s, float v, out float r, out float g, out float b)
+        private static void HSVToRGB(float h, float s, float v, out float r, out float g, out float b)
         {
             // Keeps h from going over 360
             h = h - ((int)(h / 360) * 360);
@@ -110,7 +84,7 @@ namespace Microsoft.Xna.Framework
                     b = v;
                     break;
 
-                    // case 5
+                // case 5
                 default:
                     r = v;
                     g = p;
@@ -119,7 +93,7 @@ namespace Microsoft.Xna.Framework
             }
         }
 
-        private static void RgbToHsv(float r, float g, float b, out float h, out float s, out float v)
+        private static void RGBToHSV(float r, float g, float b, out float h, out float s, out float v)
         {
             const float tolerance = 0.1f;
 

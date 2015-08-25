@@ -7,17 +7,23 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Settings
     [DataContract]
     public class ItemSettings : WidgetSettings, IItemSettings, ICloneable
     {
-        private readonly GameVisualEntity visualEntity = new GameVisualEntity();
-
-        protected IGameGraphicsService GameGraphics => this.visualEntity.GameGraphics;
-
-        protected IGameInteropService GameInterop => this.visualEntity.GameInterop;
-
-        protected IGameNumericalService GameNumerical => this.visualEntity.GameNumerical;
-
-        public ItemSettings()
+        protected ItemSettings()
         {
+            this.SetupService();
         }
+
+        [OnDeserialized]
+        private void SetupService(StreamingContext context)
+        {
+            this.SetupService();
+        }
+
+        private void SetupService()
+        {
+            this.GameGraphics = GameEngine.Service?.Graphics;
+        }
+
+        protected IGameGraphicsService GameGraphics { get; set; }
 
         public int Width { get; private set; }
 

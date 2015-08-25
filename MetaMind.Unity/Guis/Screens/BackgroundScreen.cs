@@ -23,6 +23,14 @@
 
         #endregion Constructors
 
+        #region Static Properties 
+
+        public static float Brightness { get; set; } = 1f;
+
+        public static Vector3 Color { get; set; } = new Vector3(0, 0, 1);
+
+        #endregion
+
         #region Load and Unload
 
         public override void LoadContent(IGameInteropService interop)
@@ -50,7 +58,7 @@
 
             spriteBatch.Begin();
 
-            spriteBatch   .Draw(this.background, fullscreen, new Color(0, 0, this.TransitionAlpha / 2));
+            spriteBatch   .Draw(this.background, fullscreen, (Color * ((float)this.TransitionAlpha / 2)).ToColor().WithBrightness(Brightness));
             this.particles.Draw(graphics, time, this.TransitionAlpha);
 
             spriteBatch.End();
