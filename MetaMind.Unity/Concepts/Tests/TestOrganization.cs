@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace MetaMind.Unity.Concepts.Tests
+﻿namespace MetaMind.Unity.Concepts.Tests
 {
+    using System;
+    using System.Collections.Generic;
+
     public class TestOrganization : ITestOrganization
     {
         private readonly Test test;
@@ -27,18 +25,17 @@ namespace MetaMind.Unity.Concepts.Tests
 
         public Test Parent { get; set; } = null;
 
+        /// <summary>
+        /// All leaves of tests.
+        /// </summary>
         public IEnumerable<ITest> AllCollection
         {
             get
             {
-                yield return this.test;
-
                 if (this.HasChildren)
                 {
                     foreach (var directChild in this.Children.ToArray())
                     {
-                        yield return directChild;
-
                         if (directChild.Organization.HasChildren)
                         {
                             foreach (var child in directChild.Organization.AllCollection)
@@ -46,7 +43,15 @@ namespace MetaMind.Unity.Concepts.Tests
                                 yield return child;
                             }
                         }
+                        else
+                        {
+                            yield return directChild;
+                        }
                     }
+                }
+                else
+                {
+                    yield return this.test;
                 }
             }
         }

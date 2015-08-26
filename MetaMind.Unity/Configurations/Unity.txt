@@ -2,7 +2,7 @@
 ScriptSearcher.SearchFolder = .
 
 " Tests
-TestMonitor.TestWarningRate = 10
+TestMonitor.TestWarningRate = 30
 
 " Profilers
 ResourceMonitor.WarningCPUUsagePercentage = 10
