@@ -47,16 +47,10 @@
         {
             var input = "a b = b";
 
-            try
-            {
-                var parsed = ConfigurationFileGrammar.ConfigurationPairParser.Parse(input);
+            var parsed = ConfigurationFileGrammar.ConfigurationPairParser.Parse(input);
 
-                Assert.AreEqual("a b", parsed.Key);
-                Assert.AreEqual("b", parsed.Value);
-            }
-            catch (ParseException)
-            {
-            }
+            Assert.AreEqual("a b", parsed.Key);
+            Assert.AreEqual("b", parsed.Value);
         }
 
         [Test]
@@ -64,16 +58,10 @@
         {
             var input = "a = b c";
 
-            try
-            {
-                var parsed = ConfigurationFileGrammar.ConfigurationPairParser.Parse(input);
+            var parsed = ConfigurationFileGrammar.ConfigurationPairParser.Parse(input);
 
-                Assert.AreEqual("a", parsed.Key);
-                Assert.AreEqual("b c", parsed.Value);
-            }
-            catch (ParseException)
-            {
-            }
+            Assert.AreEqual("a", parsed.Key);
+            Assert.AreEqual("b c", parsed.Value);
         }
 
         [Test]
@@ -85,17 +73,6 @@
 
             Assert.AreEqual(null, parsed.Key);
             Assert.AreEqual(null, parsed.Value);
-        }
-
-        [Test]
-        public void ConfigurationNonComment()
-        {
-            var input = "a = b c";
-
-            var parsed = ConfigurationFileGrammar.ConfigurationLineParser.Parse(input);
-
-            Assert.AreEqual("a", parsed.Key);
-            Assert.AreEqual("b c", parsed.Value);
         }
 
         [Test]
