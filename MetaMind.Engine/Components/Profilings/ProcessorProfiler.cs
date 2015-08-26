@@ -23,19 +23,19 @@
             this.cpuCounter = new PerformanceCounter("Process", "% Processor Time", ProcessName);
         }
 
-        public double CPUUsagePercentage()
+        public void UpdateSample()
         {
             if (DateTime.Now - this.cpuUsagePercentageMeasuredMoment < TimeSpan.FromSeconds(1))
             {
-                return this.cpuUsagePercentage;
+                return;
             }
 
             // http://blogs.msdn.com/b/dotnetinterop/archive/2007/02/02/system-diagnostics-performancecounter-and-processor-time-on-multi-core-or-multi-cpu.aspx
             this.cpuUsagePercentage = this.cpuCounter.NextValue() / Environment.ProcessorCount;
             this.cpuUsagePercentageMeasuredMoment = DateTime.Now;
-
-            return this.cpuUsagePercentage;
         }
+
+        public double CpuUsagePercentage => this.cpuUsagePercentage;
 
         public void Dispose()
         {

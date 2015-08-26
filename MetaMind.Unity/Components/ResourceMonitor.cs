@@ -11,25 +11,31 @@ namespace MetaMind.Unity.Components
     {
         public ResourceMonitor(GameEngine engine) : base(engine)
         {
-            this.Profiler = new ProcessorProfiler();
+            this.Processor = new ProcessorProfiler();
+
+            this.LoadConfiguration();
         }
 
         private float WarningCPUUsagePercentage { get; set; }
 
         private DateTime WarningMoment { get; set; } = DateTime.Now;
 
-        private TimeSpan WarningInterval { get; set; } = TimeSpan.FromSeconds(5);
+        private TimeSpan WarningCPUUsageInterval { get; set; }
 
-        private ProcessorProfiler Profiler { get; set; }
+        private ProcessorProfiler Processor { get; set; }
 
         public override void Update(GameTime gameTime)
         {
-            var shouldWarningRepeat = DateTime.Now - this.WarningMoment > this.WarningInterval;
-            if (shouldWarningRepeat && this.Profiler.CPUUsagePercentage() > this.WarningCPUUsagePercentage)
+            this.Processor.UpdateSample();
+
+            var shouldWarningRepeat = DateTime.Now - this.WarningMoment > this.WarningCPUUsageInterval;
+            var shouldWarn = this.Processor.CpuUsagePercentage > this.WarningCPUUsagePercentage;
+
+            if (shouldWarningRepeat && shouldWarn)
             {
                 this.WarningMoment = DateTime.Now;
 
-                Unity.Speech.SpeakAsync($"CPU usage percentage reached {this.Profiler.CPUUsagePercentage().ToString("F1")}");
+                Unity.Speech.SpeakAsync($"CPU usage percentage reached {this.Processor.CpuUsagePercentage.ToString("F1")}");
             }
 
             base.Update(gameTime);
@@ -43,14 +49,15 @@ namespace MetaMind.Unity.Components
         {
             var pairs = ConfigurationLoader.LoadUniquePairs(this);
 
-            this.WarningCPUUsagePercentage = FileLoader.ExtractFloats(pairs, "ResourceMonitor.WarningCPUUsagePercentage", 0, 10);
+            this.WarningCPUUsageInterval = TimeSpan.FromMinutes(FileLoader.ExtractFloats(pairs, "ResourceMonitor.WarningCPUUsageInterval", 0, 5f));
+            this.WarningCPUUsagePercentage = FileLoader.ExtractFloats(pairs, "ResourceMonitor.WarningCPUUsagePercentage", 0, 10f);
         }
 
         #endregion
 
         protected override void Dispose(bool disposing)
         {
-            this.Profiler?.Dispose();
+            this.Processor?.Dispose();
 
             base.Dispose(disposing);
         }

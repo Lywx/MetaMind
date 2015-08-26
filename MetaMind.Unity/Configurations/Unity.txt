@@ -5,5 +5,5 @@ ScriptSearcher.SearchFolder = .
 TestMonitor.TestWarningRate = 30
 
 " Profilers
-ResourceMonitor.WarningCPUUsagePercentage = 10
-
+ResourceMonitor.WarningCPUUsagePercentage = 10 " Percents
+ResourceMonitor.WarningCPUUsageInterval   = 5 " Minutes
