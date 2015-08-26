@@ -9,21 +9,20 @@ namespace MetaMind.Engine.Parsers.Grammars
         public static Parser<KeyValuePair<string, string>> ConfigurationPairParser =
 
             // allow multiple word on left side
-            from lhs in Parse.AnyChar.Except(Parse.Chars('=', '\n')).AtLeastOnce()
-            from lspaces in Parse.WhiteSpace.Optional() 
+            from lhs in Parse.AnyChar.Except(Parse.Chars('=', '\"', '\n')).AtLeastOnce()
+            from lspaces in Parse.WhiteSpace.Optional()
             from eq in Parse.Char('=')
             from rspaces in Parse.WhiteSpace.Optional()
 
-            // allow multiple word on right side
-            from rhs in Parse.AnyChar.Except(Parse.Chars('=', '\n')).AtLeastOnce()
+                // allow multiple word on right side
+            from rhs in Parse.AnyChar.Except(Parse.Chars('=', '\"', '\n')).AtLeastOnce()
             select new KeyValuePair<string, string>(string.Concat(lhs).Trim(), string.Concat(rhs).Trim());
 
+        public static Parser<string> ConfigurationCommentParser = Parse.Regex("\"+(.*)");
+
         public static Parser<KeyValuePair<string, string>> ConfigurationLineParser =
-
-            // comment 
-            Parse.Regex("(.)*(\")+").AtLeastOnce().Return(new KeyValuePair<string, string>())
-
-                // pair
-                .Or(from pair in ConfigurationPairParser select pair);
+            from pair in ConfigurationPairParser.Optional()
+            from comment in ConfigurationCommentParser.Optional()
+            select pair.IsDefined ? pair.Get() : new KeyValuePair<string, string>();
     }
 }

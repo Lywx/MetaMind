@@ -1,6 +1,6 @@
 ﻿namespace MetaMind.EngineTest.Parsers
 {
-    using MetaMind.Engine.Parsers.Grammars;
+    using Engine.Parsers.Grammars;
 
     using NUnit.Framework;
 
@@ -77,7 +77,7 @@
         }
 
         [Test]
-        public void ConfigurationComment()
+        public void ConfigurationCommentOnly()
         {
             var input = "\" a = b c";
 
@@ -91,6 +91,17 @@
         public void ConfigurationNonComment()
         {
             var input = "a = b c";
+
+            var parsed = ConfigurationFileGrammar.ConfigurationLineParser.Parse(input);
+
+            Assert.AreEqual("a", parsed.Key);
+            Assert.AreEqual("b c", parsed.Value);
+        }
+
+        [Test]
+        public void ConfigurationCommentSubfix()
+        {
+            var input = "a = b c \" comment";
 
             var parsed = ConfigurationFileGrammar.ConfigurationLineParser.Parse(input);
 
