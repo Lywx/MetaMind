@@ -8,13 +8,7 @@
 namespace MetaMind.Engine.Components
 {
     using System.IO;
-
-    using MetaMind.Engine.Settings.Loaders;
-
-    public interface IFileManager
-    {
-        void DeleteSaveDirectory();
-    }
+    using Settings.Loaders;
 
     public class FileManager : IFileManager
     {
@@ -80,6 +74,10 @@ namespace MetaMind.Engine.Components
             {
                 Directory.Delete(SaveFolderPath, true);
             }
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

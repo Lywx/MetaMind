@@ -19,17 +19,8 @@
         {
         }
 
-        public new IBlockViewVerticalScrollController ViewScroll
-        {
-            get { return (IBlockViewVerticalScrollController)base.ViewScroll; }
-        }
+        public new IBlockViewVerticalScrollController ViewScroll => (IBlockViewVerticalScrollController)base.ViewScroll;
 
-        public new IBlockViewVerticalSelectionController ViewSelection
-        {
-            get
-            {
-                return (IBlockViewVerticalSelectionController)base.ViewSelection;
-            }
-        }
+        public new IBlockViewVerticalSelectionController ViewSelection => (IBlockViewVerticalSelectionController)base.ViewSelection;
     }
 }

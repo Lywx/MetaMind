@@ -13,6 +13,7 @@ namespace MetaMind.Engine.Components.Events
     public class Listener : GameEntity, IListener
     {
         private readonly List<int> registeredEvents;
+
         private readonly Func<IEvent, bool> handleEvents;
 
         public Listener(List<int> registeredEvents, Func<IEvent, bool> handleEvents)
@@ -26,13 +27,7 @@ namespace MetaMind.Engine.Components.Events
             this.registeredEvents = new List<int>();
         }
 
-        public List<int> RegisteredEvents
-        {
-            get
-            {
-                return this.registeredEvents;
-            }
-        }
+        public List<int> RegisteredEvents => this.registeredEvents;
 
         public virtual bool HandleEvent(IEvent e)
         {

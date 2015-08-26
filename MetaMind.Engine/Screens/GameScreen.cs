@@ -1,8 +1,7 @@
 namespace MetaMind.Engine.Screens
 {
     using System;
-
-    using MetaMind.Engine.Services;
+    using Services;
 
     using Microsoft.Xna.Framework;
 
@@ -137,10 +136,7 @@ namespace MetaMind.Engine.Screens
 
         public void OnExiting()
         {
-            if (this.Exiting != null)
-            {
-                this.Exiting(this, EventArgs.Empty);
-            }
+            this.Exiting?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion Screen Events
@@ -251,8 +247,21 @@ namespace MetaMind.Engine.Screens
 
         #region IDisposable
 
-        public virtual void Dispose()
+        public void Dispose()
         {
+            if (this.Layers != null)
+            {
+                foreach (var layer in this.Layers)
+                {
+                    layer.Dispose();
+                }
+
+                this.Layers.Clear();
+                this.Layers = null;
+            }
+
+            this.GameGraphics = null;
+            this.GameInterop  = null;
         }
 
         #endregion IDisposable
@@ -269,6 +278,11 @@ namespace MetaMind.Engine.Screens
             this.SetupService();
 
             this.Layers = new GameControllableEntityCollection<IGameLayer>();
+        }
+
+        ~GameScreen()
+        {
+            this.Dispose();
         }
 
         protected IGameGraphicsService GameGraphics { get; private set; }

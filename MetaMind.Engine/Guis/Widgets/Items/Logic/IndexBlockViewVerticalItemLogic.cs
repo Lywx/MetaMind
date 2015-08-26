@@ -22,15 +22,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Logic
         {
         }
 
-        public new IIndexBlockViewVerticalItemLayout ItemLayout
-        {
-            get { return (IIndexBlockViewVerticalItemLayout)base.ItemLayout; }
-        }
+        public new IIndexBlockViewVerticalItemLayout ItemLayout => (IIndexBlockViewVerticalItemLayout)base.ItemLayout;
 
-        public new IIndexBlockViewVerticalItemInteraction ItemInteraction
-        {
-            get { return (IIndexBlockViewVerticalItemInteraction)base.ItemInteraction; }
-        }
+        public new IIndexBlockViewVerticalItemInteraction ItemInteraction => (IIndexBlockViewVerticalItemInteraction)base.ItemInteraction;
 
         #region Layer
 

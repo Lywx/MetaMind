@@ -19,7 +19,7 @@ namespace MetaMind.Engine.Guis.Console
 
     using Microsoft.Xna.Framework.Graphics;
 
-    public class GameConsole
+    public class GameConsole : IDisposable
     {
         private readonly GameConsoleComponent console;
 
@@ -110,6 +110,15 @@ namespace MetaMind.Engine.Guis.Console
             {
                 this.console.WriteLine(buffer, OutputLineType.Error);
             }
+        }
+
+        #endregion
+
+        #region IDisposable
+
+        public void Dispose()
+        {
+            this.console.Dispose();
         }
 
         #endregion

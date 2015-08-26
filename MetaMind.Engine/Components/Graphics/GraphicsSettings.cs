@@ -11,8 +11,8 @@
 namespace MetaMind.Engine.Components.Graphics
 {
     using System.Windows.Forms;
-    using Engine.Settings.Loaders;
-    using Engine.Settings.Systems;
+    using Settings.Loaders;
+    using Settings.Systems;
 
     public class GraphicsSettings : IConfigurationLoader, IParameter
     {

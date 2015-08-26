@@ -1,6 +1,6 @@
 ﻿namespace MetaMind.Engine.Components
 {
-    using MetaMind.Engine.Components.Inputs;
+    using Inputs;
 
     using Microsoft.Xna.Framework;
 
@@ -32,6 +32,20 @@
         {
             this.Event.UpdateInput(gameTime);
             this.State.UpdateInput(gameTime);   
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this.Event.Dispose();
+                this.Event = null;
+
+                this.State.Dispose();
+                this.State = null;
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

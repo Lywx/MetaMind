@@ -30,7 +30,7 @@ namespace MetaMind.Engine.Components
         {
             if (game == null)
             {
-                throw new ArgumentNullException("game");
+                throw new ArgumentNullException(nameof(game));
             }
 
             if (this.Game != null)
@@ -45,10 +45,13 @@ namespace MetaMind.Engine.Components
 
         public void OnExiting()
         {
-            if (this.Game != null)
-            {
-                this.Game.OnExiting();
-            }
+            this.Game?.OnExiting();
+        }
+
+        public void Dispose()
+        {
+            this.Game?.Dispose();
+            this.Game = null;
         }
     }
 }

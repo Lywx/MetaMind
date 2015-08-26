@@ -36,7 +36,7 @@
 
         private readonly GameConsoleProcessor consoleProcessor;
 
-        private readonly Texture2D pixel;
+        private Texture2D pixel;
 
         #region Positional States
 
@@ -138,6 +138,11 @@
 
             this.oneCharacterWidth    = this.Settings.Font.MeasureMonospacedString("x", 1f).X;
             this.maxCharactersPerLine = (int)((this.Bounds.Width - this.Settings.Padding * 2) / this.oneCharacterWidth);
+        }
+
+        ~GameConsoleRenderer()
+        {
+            this.Dispose();
         }
 
         #region Settings
@@ -410,7 +415,8 @@
 
         public void Dispose()
         {
-            this.pixel.Dispose();
+            this.pixel?.Dispose();
+            this.pixel = null;
         }
 
         #endregion

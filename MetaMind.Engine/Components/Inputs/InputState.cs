@@ -20,21 +20,9 @@ namespace MetaMind.Engine.Components.Inputs
 
         private readonly MouseInputState mouse;
 
-        public IKeyboardInputState Keyboard
-        {
-            get
-            {
-                return this.keyboard;
-            }
-        }
+        public IKeyboardInputState Keyboard => this.keyboard;
 
-        public IMouseInputState Mouse
-        {
-            get
-            {
-                return this.mouse;
-            }
-        }
+        public IMouseInputState Mouse => this.mouse;
 
         #region Constructors
 
@@ -43,7 +31,7 @@ namespace MetaMind.Engine.Components.Inputs
         {
             if (engine == null)
             {
-                throw new ArgumentNullException("engine");
+                throw new ArgumentNullException(nameof(engine));
             }
 
             this.Game.Components.Add(this);

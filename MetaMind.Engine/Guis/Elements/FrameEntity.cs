@@ -10,7 +10,7 @@ namespace MetaMind.Engine.Guis.Elements
     using System;
     using System.Linq;
 
-    using MetaMind.Engine.Components.Inputs;
+    using Components.Inputs;
 
     public abstract class FrameEntity : GameControllableEntity, IFrameEntity
     {

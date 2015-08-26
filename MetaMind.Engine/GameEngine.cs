@@ -112,15 +112,7 @@ namespace MetaMind.Engine
 
         public IGameInput Input
         {
-            get
-            {
-                if (this.input == null)
-                {
-                    this.input = new GameNullInput(this);
-                }
-
-                return this.input;
-            }
+            get { return this.input ?? (this.input = new GameNullInput(this)); }
 
             set
             {
@@ -197,6 +189,20 @@ namespace MetaMind.Engine
         }
 
         #endregion
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // Don't set to null, for there is null checking in property 
+                // injection
+                this.Input?   .Dispose();
+                this.Interop? .Dispose();
+                this.Graphics?.Dispose();
+            }
+
+            base.Dispose(disposing);
+        }
     }
 
     public partial class GameEngine

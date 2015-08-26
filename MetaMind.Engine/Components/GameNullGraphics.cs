@@ -25,5 +25,9 @@
         public void UpdateInput(GameTime gameTime)
         {
         }
+
+        public void Dispose()
+        {
+        }
     }
 }

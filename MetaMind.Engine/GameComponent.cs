@@ -4,7 +4,7 @@ namespace MetaMind.Engine
 
     public class GameComponent : Microsoft.Xna.Framework.GameComponent
     {
-        protected GameComponent(Microsoft.Xna.Framework.Game game) : base(game)
+        protected GameComponent(GameEngine engine) : base(engine)
         {
             this.SetupService();
         }

@@ -1,10 +1,11 @@
 namespace MetaMind.Engine.Components
 {
-    using MetaMind.Engine.Components.Events;
+    using System;
+    using Events;
 
     using Microsoft.Xna.Framework;
 
-    public interface IEventManager : IGameComponent
+    public interface IEventManager : IGameComponent, IDisposable
     {
         void AddListener(IListener listener);
 

@@ -9,8 +9,7 @@ namespace MetaMind.Engine.Components.Fonts
 {
     using System;
     using System.Collections.Generic;
-
-    using MetaMind.Engine.Services;
+    using Services;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -39,7 +38,7 @@ namespace MetaMind.Engine.Components.Fonts
         {
             if (engine == null)
             {
-                throw new ArgumentNullException("engine");
+                throw new ArgumentNullException(nameof(engine));
             }
 
             engine.Components.Add(this);
@@ -95,5 +94,23 @@ namespace MetaMind.Engine.Components.Fonts
         }
 
         #endregion Load and Unload
+
+        #region IDisposable
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // SpriteFont is not disposable
+                this.Fonts?.Clear();
+                this.Fonts = null;
+
+                this.GameInterop = null;
+            }
+
+            base.Dispose(disposing);
+        }
+
+        #endregion
     }
 }

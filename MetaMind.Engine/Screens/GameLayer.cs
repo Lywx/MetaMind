@@ -17,6 +17,11 @@
             this.transitionAlpha = transitionAlpha;
         }
 
+        ~GameLayer()
+        {
+            this.Dispose();
+        }
+
         public IGameScreen Screen { get; private set; }
 
         private GameEngine Engine => this.GameInterop.Engine;
@@ -144,9 +149,28 @@
 
         #endregion
 
+        #region IDisposable
+
+        public override void Dispose()
+        {
+            this.FadedOut = null;
+            this.FadedIn  = null;
+
+            base.Dispose();
+        }
+
+        #endregion
+
+        #region Time Helpers
+
         private int TimeToFrame(TimeSpan time)
         {
-            return (int)(time.TotalMilliseconds / this.Engine.TargetElapsedTime.Milliseconds) + 1;
+            return
+                (int)
+                (time.TotalMilliseconds
+                 / this.Engine.TargetElapsedTime.Milliseconds) + 1;
         }
+
+        #endregion
     }
 }

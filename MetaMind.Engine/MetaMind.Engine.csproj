@@ -76,6 +76,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Collections\ObservableCollection.cs" />
+    <Compile Include="Components\IFileManager.cs" />
     <Compile Include="Extensions\ExtVector3.cs" />
     <Compile Include="GameComponent.cs" />
     <Compile Include="GameControllableComponent.cs" />
@@ -135,8 +136,6 @@
     <Compile Include="Components\FileManager.cs" />
     <Compile Include="Components\Fonts\FontManager.cs" />
     <Compile Include="Components\Fonts\Font.cs" />
-    <Compile Include="Components\Fonts\FormatUtils.cs" />
-    <Compile Include="Components\Fonts\FormatSettings.cs" />
     <Compile Include="Components\Fonts\StringUtils.cs" />
     <Compile Include="Components\Graphics\GraphicsManager.cs" />
     <Compile Include="GameEngine.cs" />
@@ -536,7 +535,7 @@
     <Compile Include="IInteroperableOperations.cs" />
     <Compile Include="IOuterUpdateable.cs" />
     <Compile Include="IOuterUpdateableOperations.cs" />
-    <Compile Include="Profilings\ProcessProfiling.cs" />
+    <Compile Include="Components\Profilings\ProcessorProfiler.cs" />
     <Compile Include="Screens\GameLayer.cs" />
     <Compile Include="Screens\IGameLayer.cs" />
     <Compile Include="Screens\IGameLayerOperations.cs" />

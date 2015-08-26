@@ -1,8 +1,8 @@
 namespace MetaMind.Engine.Components
 {
     using System;
-    using MetaMind.Engine.Components.Fonts;
-    using MetaMind.Engine.Components.Graphics;
+    using Fonts;
+    using Graphics;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -61,6 +61,28 @@ namespace MetaMind.Engine.Components
 
         protected override void LoadContent()
         {
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            try
+            {
+                if (disposing)
+                {
+                    this.Manager?.Dispose();
+                    this.Manager = null;
+
+                    this.SpriteBatch?.Dispose();
+                    this.SpriteBatch = null;
+
+                    this.FontManager?.Dispose();
+                    this.FontManager = null;
+                }
+            }
+            finally
+            {
+                base.Dispose(disposing);
+            }
         }
     }
 }

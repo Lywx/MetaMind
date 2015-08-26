@@ -11,7 +11,7 @@ namespace MetaMind.Engine.Components
     using System.Collections.Generic;
     using System.Linq;
 
-    using MetaMind.Engine.Components.Events;
+    using Events;
 
     using Microsoft.Xna.Framework;
 
@@ -27,21 +27,9 @@ namespace MetaMind.Engine.Components
 
         private List<IEvent> queuedEvents;
 
-        public List<int> KnownEvents
-        {
-            get
-            {
-                return this.knownEvents;
-            }
-        }
+        public List<int> KnownEvents => this.knownEvents;
 
-        public List<IListener> Listeners
-        {
-            get
-            {
-                return this.listeners;
-            }
-        }
+        public List<IListener> Listeners => this.listeners;
 
         #endregion
 
@@ -52,7 +40,7 @@ namespace MetaMind.Engine.Components
         {
             if (engine == null)
             {
-                throw new ArgumentNullException("engine");
+                throw new ArgumentNullException(nameof(engine));
             }
 
             engine.Components.Add(this);
@@ -202,8 +190,8 @@ namespace MetaMind.Engine.Components
 
                 for (var x = this.listeners.Count - 1; x >= 0; x--)
                 {
-                    if (this.listeners[x].RegisteredEvents.Contains(@event.EventType)
-                        && this.listeners[x].HandleEvent(@event))
+                    if (this.listeners[x].RegisteredEvents.Contains(@event.EventType) && 
+                        this.listeners[x].HandleEvent(@event))
                     {
                         @event.Handled = true;
                     }
@@ -248,5 +236,17 @@ namespace MetaMind.Engine.Components
         }
 
         #endregion Time Helper
+
+        #region IDisposable
+
+        protected override void Dispose(bool disposing)
+        {
+            this.listeners?.Clear();
+            this.listeners = null;
+
+            base.Dispose(disposing);
+        }
+
+        #endregion
     }
 }

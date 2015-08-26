@@ -10,7 +10,7 @@ namespace Microsoft.Xna.Framework.Graphics
         {
             if (font == null)
             {
-                throw new ArgumentNullException("font");
+                throw new ArgumentNullException(nameof(font));
             }
 
             return str.Where(t => font.Characters.Contains(t)).Aggregate(string.Empty, (current, t) => current + t);
@@ -20,7 +20,7 @@ namespace Microsoft.Xna.Framework.Graphics
         {
             if (spriteFont == null)
             {
-                throw new ArgumentNullException("spriteFont");
+                throw new ArgumentNullException(nameof(spriteFont));
             }
 
             var indexes = new List<int>();

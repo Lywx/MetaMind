@@ -108,5 +108,16 @@ namespace MetaMind.Engine
         public virtual void Draw(IGameGraphicsService graphics, GameTime time, byte alpha) { }
 
         #endregion
+
+        #region IDisposable
+
+        public override void Dispose()
+        {
+            base.Dispose();
+
+            this.GameGraphics = null;
+        }
+
+        #endregion
     }
 }

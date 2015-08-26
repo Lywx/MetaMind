@@ -10,7 +10,7 @@ namespace MetaMind.Engine.Components
     using System;
     using System.Collections.Generic;
 
-    using MetaMind.Engine.Components.Processes;
+    using Processes;
 
     using Microsoft.Xna.Framework;
 
@@ -18,7 +18,7 @@ namespace MetaMind.Engine.Components
     {
         #region Process Data
 
-        private readonly List<IProcess> processes;
+        private List<IProcess> processes;
 
         #endregion Process Data
 
@@ -29,7 +29,7 @@ namespace MetaMind.Engine.Components
         {
             if (engine == null)
             {
-                throw new ArgumentNullException("engine");
+                throw new ArgumentNullException(nameof(engine));
             }
 
             engine.Components.Add(this);
@@ -143,5 +143,16 @@ namespace MetaMind.Engine.Components
         }
 
         #endregion Operations
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this.processes?.Clear();
+                this.processes = null;
+            }
+
+            base.Dispose(disposing);
+        }
     }
 }

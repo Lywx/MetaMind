@@ -25,26 +25,11 @@
 
         #region Property Injection
 
-        public new IPointViewVerticalSelectionController ViewSelection
-        {
-            get
-            {
-                return (IPointViewVerticalSelectionController)base.ViewSelection;
-            }
-        }
+        public new IPointViewVerticalSelectionController ViewSelection => (IPointViewVerticalSelectionController)base.ViewSelection;
 
-        public new IPointViewVerticalScrollController ViewScroll
-        {
-            get
-            {
-                return (IPointViewVerticalScrollController)base.ViewScroll;
-            }
-        }
+        public new IPointViewVerticalScrollController ViewScroll => (IPointViewVerticalScrollController)base.ViewScroll;
 
-        public new IPointViewVerticalLayout ViewLayout
-        {
-            get { return (IPointViewVerticalLayout)base.ViewLayout; }
-        }
+        public new IPointViewVerticalLayout ViewLayout => (IPointViewVerticalLayout)base.ViewLayout;
 
         #endregion
 
@@ -100,34 +85,22 @@
 
         private void OnScrolledUp()
         {
-            if (this.ScrolledUp != null)
-            {
-                this.ScrolledUp(this, EventArgs.Empty);
-            }
+            this.ScrolledUp?.Invoke(this, EventArgs.Empty);
         }
 
         private void OnScrolledDown()
         {
-            if (this.ScrolledDown != null)
-            {
-                this.ScrolledDown(this, EventArgs.Empty);
-            }
+            this.ScrolledDown?.Invoke(this, EventArgs.Empty);
         }
 
         private void OnMovedUp()
         {
-            if (this.MovedUp != null)
-            {
-                this.MovedUp(this, EventArgs.Empty);
-            }
+            this.MovedUp?.Invoke(this, EventArgs.Empty);
         }
 
         private void OnMovedDown()
         {
-            if (this.MovedDown != null)
-            {
-                this.MovedDown(this, EventArgs.Empty);
-            }
+            this.MovedDown?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion

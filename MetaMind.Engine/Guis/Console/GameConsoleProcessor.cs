@@ -12,7 +12,7 @@
 
     using Keys = Microsoft.Xna.Framework.Input.Keys;
 
-    internal class GameConsoleProcessor
+    internal class GameConsoleProcessor : IDisposable
     {
         private const int Backspace = 8;
 
@@ -25,6 +25,8 @@
         private bool isActive;
 
         private bool isHandled;
+
+        private Form form;
 
         public GameConsoleProcessor(CommandProcesser commandProcesser)
         {
@@ -41,6 +43,11 @@
             this.Buffer = new OutputLine("", OutputLineType.Buffer);
 
             this.isActive = false;
+        }
+
+        ~GameConsoleProcessor()
+        {
+            this.Dispose();
         }
 
         #region Console Content
@@ -79,10 +86,10 @@
 
         public void HookApplicationForm()
         {
-            var form = this.ObtainApplicationForm();
+            this.form = this.ObtainApplicationForm();
 
-            form.KeyPress += this.FormKeyPress;
-            form.KeyDown += this.FormKeyDown;
+            this.form.KeyPress += this.FormKeyPress;
+            this.form.KeyDown += this.FormKeyDown;
         }
 
         /// <summary>
@@ -293,6 +300,21 @@
 
             var matchingCommands = GameConsoleSettings.Commands.Where(c => c.Name != null && c.Name.StartsWith(command));
             return matchingCommands.FirstOrDefault();
+        }
+
+        #endregion
+
+        #region IDisposable
+
+        public void Dispose()
+        {
+            if (this.form != null)
+            {
+                this.form.KeyDown -= this.FormKeyDown;
+                this.form.KeyPress -= this.FormKeyPress;
+
+                this.form = null;
+            }
         }
 
         #endregion

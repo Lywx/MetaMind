@@ -1,8 +1,7 @@
 namespace MetaMind.Engine.Components
 {
     using System;
-
-    using MetaMind.Engine.Guis.Console;
+    using Guis.Console;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
@@ -34,42 +33,42 @@ namespace MetaMind.Engine.Components
         {
             if (engine == null)
             {
-                throw new ArgumentNullException("engine");
+                throw new ArgumentNullException(nameof(engine));
             }
 
             if (game == null)
             {
-                throw new ArgumentNullException("game");
+                throw new ArgumentNullException(nameof(game));
             }
 
             if (audio == null)
             {
-                throw new ArgumentNullException("audio");
+                throw new ArgumentNullException(nameof(audio));
             }
 
             if (file == null)
             {
-                throw new ArgumentNullException("file");
+                throw new ArgumentNullException(nameof(file));
             }
 
             if (@event == null)
             {
-                throw new ArgumentNullException("@event");
+                throw new ArgumentNullException(nameof(@event));
             }
 
             if (process == null)
             {
-                throw new ArgumentNullException("process");
+                throw new ArgumentNullException(nameof(process));
             }
 
             if (screen == null)
             {
-                throw new ArgumentNullException("screen");
+                throw new ArgumentNullException(nameof(screen));
             }
 
             if (console == null)
             {
-                throw new ArgumentNullException("console");
+                throw new ArgumentNullException(nameof(console));
             }
 
             this.Engine = engine;
@@ -85,10 +84,7 @@ namespace MetaMind.Engine.Components
 
             this.Content = engine.Content;
         }
-    }
 
-    public partial class GameEngineInterop
-    {
         public override void Initialize()
         {
             // Initialize components that aren't initialized during GameComponents initialization
@@ -104,5 +100,46 @@ namespace MetaMind.Engine.Components
             this.Screen.OnExiting();
             this.Game  .OnExiting();
         }
+
+        #region IDisposable
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this.Audio?.Dispose();
+                this.Audio = null;
+
+                this.Console?.Dispose();
+                this.Console = null;
+
+                this.Content?.Dispose();
+                this.Content = null;
+
+                this.Engine = null;
+
+                this.File?.Dispose();
+                this.File = null;
+
+                this.Event?.Dispose();
+                this.Event = null;
+
+                this.Game?.Dispose();
+                this.Game = null;
+
+                this.Process?.Dispose();
+                this.Process = null;
+
+                this.Save?.Dispose();
+                this.Save = null;
+
+                this.Screen?.Dispose();
+                this.Screen = null;
+            }
+
+            base.Dispose(disposing);
+        }
+
+        #endregion
     }
 }

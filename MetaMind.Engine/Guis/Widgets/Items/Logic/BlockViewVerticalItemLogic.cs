@@ -18,12 +18,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Logic
         {
         }
 
-        public new IBlockViewVerticalItemLayout ItemLayout
-        {
-            get
-            {
-                return (IBlockViewVerticalItemLayout)base.ItemLayout;
-            } 
-        }
+        public new IBlockViewVerticalItemLayout ItemLayout => (IBlockViewVerticalItemLayout)base.ItemLayout;
     }
 }

@@ -230,13 +230,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         #region Configurations
 
-        public string ConfigurationFile
-        {
-            get
-            {
-                return "Control.txt";
-            }
-        }
+        public string ConfigurationFile => "Control.txt";
 
         public void LoadConfiguration()
         {
@@ -248,7 +242,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         #region Update
 
-        public void UpdateInput(GameTime gameTime)
+        public void UpdateInput(GameTime time)
         {
             this.previousState = this.currentState;
             this.currentState = Keyboard.GetState();

@@ -110,98 +110,62 @@ namespace MetaMind.Engine.Guis.Elements
 
         private void OnFrameMoved()
         {
-            if (this.FrameMoved != null)
-            {
-                this.FrameMoved(this, new FrameEventArgs(FrameEventType.Frame_Moved));
-            }
+            this.FrameMoved?.Invoke(this, new FrameEventArgs(FrameEventType.Frame_Moved));
         }
 
         private void OnFrameSized()
         {
-            if (this.FrameSized != null)
-            {
-                this.FrameSized(this, new FrameEventArgs(FrameEventType.Frame_Sized));
-            }
+            this.FrameSized?.Invoke(this, new FrameEventArgs(FrameEventType.Frame_Sized));
         }
 
         private void OnMouseLeftDoubleClicked()
         {
-            if (this.MouseLeftDoubleClicked != null)
-            {
-                this.MouseLeftDoubleClicked(this, new FrameEventArgs(FrameEventType.Mouse_Left_Double_Clicked));
-            }
+            this.MouseLeftDoubleClicked?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Left_Double_Clicked));
         }
 
         private void OnMouseLeftPressedOutside()
         {
-            if (this.MouseLeftPressedOutside != null)
-            {
-                this.MouseLeftPressedOutside(this, new FrameEventArgs(FrameEventType.Mouse_Left_Pressed_Outside));
-            }
+            this.MouseLeftPressedOutside?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Left_Pressed_Outside));
         }
 
         private void OnMouseLeftPressed()
         {
-            if (this.MouseLeftPressed != null)
-            {
-                this.MouseLeftPressed(this, new FrameEventArgs(FrameEventType.Mouse_Left_Pressed));
-            }
+            this.MouseLeftPressed?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Left_Pressed));
         }
 
         private void OnMouseLeftReleased()
         {
-            if (this.MouseLeftReleased != null)
-            {
-                this.MouseLeftReleased(this, new FrameEventArgs(FrameEventType.Mouse_Left_Released));
-            }
+            this.MouseLeftReleased?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Left_Released));
         }
 
         private void OnMouseLeave()
         {
-            if (this.MouseLeave != null)
-            {
-                this.MouseLeave(this, new FrameEventArgs(FrameEventType.Mouse_Leave));
-            }
+            this.MouseLeave?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Leave));
         }
 
         private void OnMouseEnter()
         {
-            if (this.MouseEnter != null)
-            {
-                this.MouseEnter(this, new FrameEventArgs(FrameEventType.Mouse_Enter));
-            }
+            this.MouseEnter?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Enter));
         }
 
         private void OnMouseRightDoubleClicked()
         {
-            if (this.MouseRightDoubleClicked != null)
-            {
-                this.MouseRightDoubleClicked(this, new FrameEventArgs(FrameEventType.Mouse_Right_Double_Clicked));
-            }
+            this.MouseRightDoubleClicked?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Right_Double_Clicked));
         }
 
         private void OnMouseRightPressed()
         {
-            if (this.MouseRightPressed != null)
-            {
-                this.MouseRightPressed(this, new FrameEventArgs(FrameEventType.Mouse_Right_Pressed));
-            }
+            this.MouseRightPressed?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Right_Pressed));
         }
 
         private void OnMouseRightPressedOutside()
         {
-            if (this.MouseRightPressedOutside != null)
-            {
-                this.MouseRightPressedOutside(this, new FrameEventArgs(FrameEventType.Mouse_Right_Pressed_Outside));
-            }
+            this.MouseRightPressedOutside?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Right_Pressed_Outside));
         }
 
         private void OnMouseRightReleased()
         {
-            if (this.MouseRightReleased != null)
-            {
-                this.MouseRightReleased(this, new FrameEventArgs(FrameEventType.Mouse_Right_Released));
-            }
+            this.MouseRightReleased?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Right_Released));
         }
 
         private void EventMouseDoubleClick(object sender, MouseEventArgs e)

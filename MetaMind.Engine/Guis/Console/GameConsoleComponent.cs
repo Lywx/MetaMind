@@ -105,6 +105,20 @@
             this.consoleRenderer.Update(gameTime);
             base                .Update(gameTime);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this.consoleRenderer?.Dispose();
+                this.consoleProcesser?.Dispose();
+
+                // Should not set to null, for it is a static member
+                GameConsoleSettings.Commands.Clear();
+            }
+
+            base.Dispose(disposing);
+        }
     }
 
     #endregion

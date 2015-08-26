@@ -11,61 +11,19 @@
 
         private ButtonHistory rbutton = new ButtonHistory();
 
-        public bool IsLButtonDoubleClicked
-        {
-            get
-            {
-                return this.IsButtonDoubleClicked(this.lbutton);
-            }
-        }
+        public bool IsLButtonDoubleClicked => this.IsButtonDoubleClicked(this.lbutton);
 
-        public bool IsLButtonPressed
-        {
-            get
-            {
-                return this.IsButtonPressed(this.lbutton);
-            }
-        }
+        public bool IsLButtonPressed => this.IsButtonPressed(this.lbutton);
 
-        public bool IsLButtonReleased
-        {
-            get
-            {
-                return this.IsButtonReleased(this.lbutton);
-            }
-        }
+        public bool IsLButtonReleased => this.IsButtonReleased(this.lbutton);
 
-        public bool IsMouseOver
-        {
-            get
-            {
-                return this.position.Count != 0 && this.position.Peek() is MouseOver;
-            }
-        }
+        public bool IsMouseOver => this.position.Count != 0 && this.position.Peek() is MouseOver;
 
-        public bool IsRButtonDoubleClicked
-        {
-            get
-            {
-                return this.IsButtonDoubleClicked(this.rbutton);
-            }
-        }
+        public bool IsRButtonDoubleClicked => this.IsButtonDoubleClicked(this.rbutton);
 
-        public bool IsRButtonPressed
-        {
-            get
-            {
-                return this.IsButtonPressed(this.rbutton);
-            }
-        }
+        public bool IsRButtonPressed => this.IsButtonPressed(this.rbutton);
 
-        public bool IsRButtonReleased
-        {
-            get
-            {
-                return this.IsButtonReleased(this.rbutton);
-            }
-        }
+        public bool IsRButtonReleased => this.IsButtonReleased(this.rbutton);
 
         public void Enter()
         {

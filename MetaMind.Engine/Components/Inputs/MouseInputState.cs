@@ -24,21 +24,9 @@ namespace MetaMind.Engine.Components.Inputs
 
         private MouseState previousState;
 
-        public MouseState CurrentState
-        {
-            get
-            {
-                return this.currentState;
-            }
-        }
+        public MouseState CurrentState => this.currentState;
 
-        public MouseState PreviousState
-        {
-            get
-            {
-                return this.previousState;
-            }
-        }
+        public MouseState PreviousState => this.previousState;
 
         #endregion Latch State
 
@@ -124,7 +112,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         #region Update
 
-        public void UpdateInput(GameTime gameTime)
+        public void UpdateInput(GameTime time)
         {
             this.previousState = this.currentState;
             this.currentState = Mouse.GetState();

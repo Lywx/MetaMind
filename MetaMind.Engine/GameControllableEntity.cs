@@ -23,13 +23,15 @@ namespace MetaMind.Engine
 
             set
             {
-                if (this.controllable != value)
+                if (this.controllable == value)
                 {
-                    this.controllable = value;
-                    this.ControllableChanged?.Invoke(this, EventArgs.Empty);
-
-                    this.OnControllableChanged(this, EventArgs.Empty);
+                    return;
                 }
+
+                this.controllable = value;
+                this.ControllableChanged?.Invoke(this, EventArgs.Empty);
+
+                this.OnControllableChanged(this, EventArgs.Empty);
             }
         }
 
@@ -96,6 +98,17 @@ namespace MetaMind.Engine
         private void SetupService()
         {
             this.GameInput = GameEngine.Service?.Input;
+        }
+
+        #endregion
+
+        #region IDisposable
+
+        public override void Dispose()
+        {
+            base.Dispose();
+
+            this.GameInput = null;
         }
 
         #endregion

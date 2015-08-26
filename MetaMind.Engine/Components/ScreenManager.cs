@@ -269,6 +269,27 @@ namespace MetaMind.Engine.Components
         }
 
         #endregion Update and Draw
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                foreach (var screen in this.screens)
+                {
+                    screen.Dispose();
+                }
+
+                this.screens.Clear();
+
+                this.blankTexture?.Dispose();
+                this.blankTexture = null;
+
+                // Note that sprite batch is not owned by this
+                this.SpriteBatch = null;
+            }
+
+            base.Dispose(disposing);
+        }
     }
 
     public partial class ScreenManager

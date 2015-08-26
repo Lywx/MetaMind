@@ -9,46 +9,48 @@
 namespace MetaMind.Engine.Guis.Widgets.Views.Logic
 {
     using System;
+
     using Components.Inputs;
     using Items;
     using Items.Data;
-    using MetaMind.Engine.Guis.Widgets.Items.Factories;
-    using MetaMind.Engine.Guis.Widgets.Views.Layouts;
-    using MetaMind.Engine.Guis.Widgets.Views.Scrolls;
-    using MetaMind.Engine.Guis.Widgets.Views.Selections;
-    using MetaMind.Engine.Guis.Widgets.Views.Swaps;
-    using Microsoft.Xna.Framework;
+    using Items.Factories;
+    using Layouts;
+    using Scrolls;
+    using Selections;
+    using Swaps;
     using Services;
+
+    using Microsoft.Xna.Framework;
 
     public abstract class ViewLogic : ViewComponent, IViewLogic
     {
         protected ViewLogic(
-            IView view,
-            IViewScrollController viewScroll,
+            IView                    view,
+            IViewScrollController    viewScroll,
             IViewSelectionController viewSelection,
-            IViewSwapController viewSwap,
-            IViewLayout viewLayout,
+            IViewSwapController      viewSwap,
+            IViewLayout              viewLayout,
             IViewItemFactory itemFactory)
             : this(view, itemFactory)
         {
             if (viewScroll == null)
             {
-                throw new ArgumentNullException("viewScroll");
+                throw new ArgumentNullException(nameof(viewScroll));
             }
 
             if (viewSelection == null)
             {
-                throw new ArgumentNullException("viewSelection");
+                throw new ArgumentNullException(nameof(viewSelection));
             }
 
             if (viewSwap == null)
             {
-                throw new ArgumentNullException("viewSwap");
+                throw new ArgumentNullException(nameof(viewSwap));
             }
 
             if (viewLayout == null)
             {
-                throw new ArgumentNullException("viewLayout");
+                throw new ArgumentNullException(nameof(viewLayout));
             }
 
             this.ViewScroll    = viewScroll;
@@ -62,7 +64,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Logic
         {
             if (itemFactory == null)
             {
-                throw new ArgumentNullException("itemFactory");
+                throw new ArgumentNullException(nameof(itemFactory));
             }
 
             this.ItemFactory = itemFactory;

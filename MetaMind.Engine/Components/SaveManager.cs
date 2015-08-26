@@ -15,7 +15,7 @@ namespace MetaMind.Engine.Components
         {
             if (engine == null)
             {
-                throw new ArgumentNullException("engine");
+                throw new ArgumentNullException(nameof(engine));
             }
 
             engine.Components.Add(this);

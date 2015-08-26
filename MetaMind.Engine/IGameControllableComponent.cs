@@ -7,9 +7,10 @@
 
 namespace MetaMind.Engine
 {
+    using System;
     using Microsoft.Xna.Framework;
 
-    public interface IGameControllableComponent : IGameComponent, IGameControllableComponentOperations 
+    public interface IGameControllableComponent : IGameComponent, IGameControllableComponentOperations, IDisposable
     {
         bool Controllable { get; }
     }

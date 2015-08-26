@@ -12,8 +12,7 @@ namespace MetaMind.Engine.Components.Inputs
 {
     using System;
     using System.Runtime.InteropServices;
-
-    using MetaMind.Engine.Guis.Elements.Inputs;
+    using Guis.Elements.Inputs;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
@@ -38,7 +37,7 @@ namespace MetaMind.Engine.Components.Inputs
         {
             if (engine == null)
             {
-                throw new ArgumentNullException("engine");
+                throw new ArgumentNullException(nameof(engine));
             }
 
             var window = engine.Window;
@@ -106,10 +105,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         private void OnCharEntered(TextInputEventArgs args)
         {
-            if (this.CharEntered != null)
-            {
-                this.CharEntered(null, new CharEnteredEventArgs(args.Character));
-            }
+            this.CharEntered?.Invoke(null, new CharEnteredEventArgs(args.Character));
         }
 
         private void OnMouseDoubleClick(MouseButton button, int wParam, int lParam)
@@ -234,18 +230,12 @@ namespace MetaMind.Engine.Components.Inputs
                     break;
 
                 case WM_KEYDOWN:
-                    if (this.KeyDown != null)
-                    {
-                        this.KeyDown(null, new KeyEventArgs((Keys)wParam));
-                    }
+                    this.KeyDown?.Invoke(null, new KeyEventArgs((Keys)wParam));
 
                     break;
 
                 case WM_KEYUP:
-                    if (this.KeyUp != null)
-                    {
-                        this.KeyUp(null, new KeyEventArgs((Keys)wParam));
-                    }
+                    this.KeyUp?.Invoke(null, new KeyEventArgs((Keys)wParam));
 
                     break;
 
@@ -395,6 +385,32 @@ namespace MetaMind.Engine.Components.Inputs
 
         public override void UpdateInput(GameTime gameTime)
         {
+        }
+
+        #endregion
+
+        #region IDisposable
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this.hIMC            = IntPtr.Zero;
+                this.hookProcHandler = null;
+                this.wndProc         = IntPtr.Zero;
+
+                this.CharEntered      = null;
+                this.KeyDown          = null;
+                this.KeyUp            = null;
+                this.MouseDoubleClick = null;
+                this.MouseDown        = null;
+                this.MouseHover       = null;
+                this.MouseMove        = null;
+                this.MouseUp          = null;
+                this.MouseWheel       = null;
+            }
+
+            base.Dispose(disposing);
         }
 
         #endregion

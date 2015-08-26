@@ -14,35 +14,38 @@ namespace MetaMind.Engine.Components
     using Microsoft.Xna.Framework.Audio;
 
     /// <summary>
-    /// Component that manages audio playback for all cues.
+    ///     Component that manages audio playback for all cues.
     /// </summary>
     /// <remarks>
-    /// Similar to a class found in the Net Rumble starter kit on the
-    /// XNA Creators Club Online website (http://creators.xna.com).
+    ///     Similar to a class found in the Net Rumble starter kit on the
+    ///     XNA Creators Club Online website (http://creators.xna.com).
+    ///
+    ///     It does not need a finalizer, for it does not directly own
+    ///     unmanaged resource.
     /// </remarks>
     public class AudioManager : GameComponent, IAudioManager
     {
-        public AudioManager(GameEngine engine, AudioEngine audioEngine, WaveBank waveBank, SoundBank soundBank) 
+        public AudioManager(GameEngine engine, AudioEngine audioEngine, WaveBank waveBank, SoundBank soundBank)
             : base(engine)
         {
             if (engine == null)
             {
-                throw new ArgumentNullException("engine");
+                throw new ArgumentNullException(nameof(engine));
             }
 
             if (audioEngine == null)
             {
-                throw new ArgumentNullException("audioEngine");
+                throw new ArgumentNullException(nameof(audioEngine));
             }
 
             if (waveBank == null)
             {
-                throw new ArgumentNullException("waveBank");
+                throw new ArgumentNullException(nameof(waveBank));
             }
 
             if (soundBank == null)
             {
-                throw new ArgumentNullException("soundBank");
+                throw new ArgumentNullException(nameof(soundBank));
             }
 
             this.AudioEngine = audioEngine;
@@ -153,10 +156,7 @@ namespace MetaMind.Engine.Components
                     }
 
                     this.musicCue = GetCue(cueName);
-                    if (this.musicCue != null)
-                    {
-                        this.musicCue.Play();
-                    }
+                    this.musicCue?.Play();
                 }
             }
         }
@@ -166,7 +166,7 @@ namespace MetaMind.Engine.Components
         /// </summary>
         public void PopMusic()
         {
-            // start the new music cue
+            // Start the new music cue
             if (this.AudioEngine != null && 
                 this.SoundBank != null && 
                 this.WaveBank != null)
@@ -193,10 +193,7 @@ namespace MetaMind.Engine.Components
                     if (!string.IsNullOrEmpty(cueName))
                     {
                         this.musicCue = GetCue(cueName);
-                        if (this.musicCue != null)
-                        {
-                            this.musicCue.Play();
-                        }
+                        this.musicCue?.Play();
                     }
                 }
             }
@@ -226,11 +223,8 @@ namespace MetaMind.Engine.Components
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            // update the audio engine
-            if (this.AudioEngine != null)
-            {
-                this.AudioEngine.Update();
-            }
+            // Update the audio engine
+            this.AudioEngine?.Update();
 
             if (this.musicCue != null && 
                 this.musicCue.IsStopped)
@@ -254,10 +248,16 @@ namespace MetaMind.Engine.Components
             {
                 if (disposing)
                 {
-                    StopMusic();
-                    this.SoundBank = null;
-                    this.WaveBank = null;
+                    // Dispose music cue
+                    this.StopMusic();
+
+                    this.AudioEngine?.Dispose();
+                    this.SoundBank?  .Dispose();
+                    this.WaveBank?   .Dispose();
+
                     this.AudioEngine = null;
+                    this.WaveBank    = null;
+                    this.SoundBank   = null;
                 }
             }
             finally

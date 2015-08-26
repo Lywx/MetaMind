@@ -18,9 +18,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Layers
         {
         }
 
-        public new IPointViewItemLayout ItemLayout
-        {
-            get { return (IPointViewItemLayout)base.ItemLayout; }
-        }
+        public new IPointViewItemLayout ItemLayout => (IPointViewItemLayout)base.ItemLayout;
     }
 }

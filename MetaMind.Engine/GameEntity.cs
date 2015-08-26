@@ -149,10 +149,7 @@ namespace MetaMind.Engine
                 if (this.updateOrder != value)
                 {
                     this.updateOrder = value;
-                    if (this.UpdateOrderChanged != null)
-                    {
-                        this.UpdateOrderChanged(this, EventArgs.Empty);
-                    }
+                    this.UpdateOrderChanged?.Invoke(this, EventArgs.Empty);
 
                     this.OnUpdateOrderChanged(this, null);
                 }
@@ -262,7 +259,11 @@ namespace MetaMind.Engine
 
         public virtual void Dispose()
         {
+            // Dispose listeners
             this.UnloadContent(this.GameInterop);
+
+            this.GameInterop   = null;
+            this.GameNumerical = null;
         }
 
         #endregion IDisposable

@@ -1,8 +1,9 @@
 namespace MetaMind.Engine.Components
 {
+    using System;
     using Microsoft.Xna.Framework;
 
-    public interface ISaveManager : IGameComponent
+    public interface ISaveManager : IGameComponent, IDisposable
     {
         void Save();
 
