@@ -31,7 +31,7 @@
         public override void LoadContent(IGameInteropService interop)
         {
             var testCompletionFont  = new Func<Font>(() => Font.UiStatistics);
-            var testCompletionColor = new Func<Color>(() =>  this.test.Evaluation.ResultAllPassedRate > 50.0f ? Palette.LightGreen : Palette.LightPink);
+            var testCompletionColor = new Func<Color>(() => this.test.Evaluation.ResultAllPassedRate > TestMonitor.TestWarningRate ? Palette.LightGreen : Palette.LightPink);
 
             var testRatePrefix = new Label
             {

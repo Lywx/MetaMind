@@ -186,6 +186,8 @@ namespace MetaMind.Engine
         {
             this.Interop.OnExiting();
             base        .OnExiting(sender, args);
+
+            this.Dispose();
         }
 
         #endregion

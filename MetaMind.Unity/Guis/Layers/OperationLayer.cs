@@ -7,7 +7,6 @@
     using Engine.Guis.Widgets.Visuals;
     using Engine.Screens;
     using Engine.Services;
-    using Engine.Settings.Colors;
     using Microsoft.Xna.Framework;
     using Modules;
 

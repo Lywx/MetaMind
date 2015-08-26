@@ -38,10 +38,10 @@
         {
             if (disposing)
             {
-                this.Event.Dispose();
+                this.Event?.Dispose();
                 this.Event = null;
 
-                this.State.Dispose();
+                this.State?.Dispose();
                 this.State = null;
             }
 
