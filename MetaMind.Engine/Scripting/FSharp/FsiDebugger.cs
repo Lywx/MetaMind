@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Unity.Scripting
+﻿namespace MetaMind.Engine.Scripting.FSharp
 {
     public class FsiDebugger
     {

@@ -1,14 +1,14 @@
-﻿namespace MetaMind.Unity.Scripting
+﻿namespace MetaMind.Engine.Scripting.FSharp
 {
     using System;
 
-    public class Script : IScript
+    public class FsScript : IFsScript
     {
-        public Script(string path)
+        public FsScript(string path)
         {
             if (path == null)
             {
-                throw new ArgumentNullException("path");
+                throw new ArgumentNullException(nameof(path));
             }
 
             this.Path = path;
@@ -18,7 +18,7 @@
 
         public void Run(FsiSession session)
         {
-            session.EvalScript(this.Path);
+            session.EvalScriptAsync(this.Path);
         }
     }
 }

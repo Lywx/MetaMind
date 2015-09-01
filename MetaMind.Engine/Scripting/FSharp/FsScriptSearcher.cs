@@ -1,16 +1,16 @@
-﻿namespace MetaMind.Unity.Scripting
+﻿namespace MetaMind.Engine.Scripting.FSharp
 {
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using Engine.Components;
-    using Engine.Settings.Loaders;
+    using Components;
+    using Settings.Loaders;
 
-    public class ScriptSearcher : IConfigurationLoader
+    public class FsScriptSearcher : IConfigurationLoader
     {
         private readonly string searchPattern = "*.fsx";
 
-        public ScriptSearcher()
+        public FsScriptSearcher()
         {
             this.LoadConfiguration();
         }
@@ -34,7 +34,7 @@
         public void LoadConfiguration()
         {
             var pairs         = ConfigurationLoader.LoadUniquePairs(this);
-            this.SearchFolder = FileManager.DataPath(pairs["ScriptSearcher.SearchFolder"]); ;
+            this.SearchFolder = FileManager.DataPath(pairs["FsScriptSearcher.SearchFolder"]); ;
         }
 
         #endregion

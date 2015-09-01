@@ -1,29 +1,28 @@
-﻿namespace MetaMind.Unity.Scripting
+﻿namespace MetaMind.Engine.Scripting.FSharp
 {
     using System;
     using System.Collections.Generic;
-    using Engine;
 
-    public class ScriptRunner : GameEntity
+    public class FsScriptRunner : GameEntity
     {
-        private readonly ScriptSearcher searcher;
+        private readonly FsScriptSearcher searcher;
 
         private List<string> searchResult;
 
         private readonly FsiSession fsiSession;
 
-        public ScriptRunner(ScriptSearcher searcher, FsiSession fsiSession)
+        public FsScriptRunner(FsScriptSearcher searcher, FsiSession fsiSession)
         {
             if (searcher == null)
             {
-                throw new ArgumentNullException("searcher");
+                throw new ArgumentNullException(nameof(searcher));
             }
 
             this.searcher = searcher;
 
             if (fsiSession == null)
             {
-                throw new ArgumentNullException("fsiSession");
+                throw new ArgumentNullException(nameof(fsiSession));
             }
 
             this.fsiSession = fsiSession;
@@ -40,7 +39,7 @@
             {
                 foreach (var path in this.searchResult)
                 {
-                    var script = new Script(path);
+                    var script = new FsScript(path);
                     script.Run(this.fsiSession);
                 }
             }
