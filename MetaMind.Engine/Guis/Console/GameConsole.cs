@@ -13,44 +13,54 @@ namespace MetaMind.Engine.Guis.Console
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
-    using Components.Fonts;
     using Commands;
-
+    using Components.Fonts;
     using Microsoft.Xna.Framework.Graphics;
 
     public class GameConsole : IDisposable
     {
+        private readonly GameEngine engine;
+
         private readonly GameConsoleComponent console;
 
-        public GameConsole(GameEngine engine, SpriteBatch spriteBatch, IStringDrawer stringDrawer)
-            : this(engine, spriteBatch, stringDrawer, new IConsoleCommand[0], new GameConsoleSettings())
-        {
-        }
+        #region Constructors and Destructor
 
-        public GameConsole(GameEngine engine, SpriteBatch spriteBatch, IStringDrawer stringDrawer, GameConsoleSettings settings)
-            : this(engine, spriteBatch, stringDrawer, new IConsoleCommand[0], settings)
+        public GameConsole(GameEngine engine, SpriteBatch spriteBatch, IStringDrawer stringDrawer)
+            : this(new GameConsoleSettings(), engine, new IConsoleCommand[0], new CommandProcessor(), spriteBatch, stringDrawer)
         {
         }
 
         public GameConsole(GameEngine engine, SpriteBatch spriteBatch, IStringDrawer stringDrawer, IEnumerable<IConsoleCommand> commands)
-            : this(engine, spriteBatch, stringDrawer, commands, new GameConsoleSettings())
+            : this(new GameConsoleSettings(), engine, commands, new CommandProcessor(), spriteBatch, stringDrawer)
         {
         }
 
-        public GameConsole(GameEngine engine, SpriteBatch spriteBatch, IStringDrawer stringDrawer, IEnumerable<IConsoleCommand> commands, GameConsoleSettings settings)
+        public GameConsole(GameConsoleSettings settings, GameEngine engine, SpriteBatch spriteBatch, IStringDrawer stringDrawer)
+            : this(settings, engine, new IConsoleCommand[0], new CommandProcessor(), spriteBatch, stringDrawer)
         {
+        }
+
+        public GameConsole(GameConsoleSettings settings, GameEngine engine, IEnumerable<IConsoleCommand> commands, CommandProcessor commandProcessor, SpriteBatch spriteBatch, IStringDrawer stringDrawer)
+        {
+            if (engine == null)
+            {
+                throw new ArgumentNullException(nameof(engine));
+            }
+
+            this.engine = engine;
+
             // Has to initialized before GameConsoleComponent
-            GameConsoleSettings.Settings  = settings;
+            GameConsoleSettings.Settings = settings;
             GameConsoleSettings.Commands = commands.ToList();
-            
-            this.console = new GameConsoleComponent(engine, this, spriteBatch, stringDrawer);
-            this.Enabled = true;
 
-            engine.Components.Add(this.console);
+            this.console = new GameConsoleComponent(engine, this, new GameConsoleProcessor(engine, commandProcessor), spriteBatch, stringDrawer);
+
+            this.engine.Components.Add(this.console);
+
+            this.Enabled = true;
         }
 
-        public List<IConsoleCommand> Commands => GameConsoleSettings.Commands;
+        #endregion
 
         public bool Enabled { get; set; }
 
@@ -58,6 +68,14 @@ namespace MetaMind.Engine.Guis.Console
         ///     Indicates whether the console is currently opened
         /// </summary>
         public bool Opened => this.console.IsOpen;
+
+        public List<IConsoleCommand> Commands => GameConsoleSettings.Commands;
+
+        public ICommandProcessor CommandProcessor
+        {
+            get { return this.console.Processer.CommandProcessor; }
+            set { this.console.Processer.CommandProcessor = value; }
+        }
 
         #region Operations
 
@@ -104,11 +122,11 @@ namespace MetaMind.Engine.Guis.Console
             }
             else if (string.Compare(channel, "DEBUG", StringComparison.OrdinalIgnoreCase) == 0)
             {
-                this.console.WriteLine(buffer, OutputLineType.Debug);
+                this.console.WriteLine(buffer, OutputType.Debug);
             }
             else if (string.Compare(channel, "ERROR", StringComparison.OrdinalIgnoreCase) == 0)
             {
-                this.console.WriteLine(buffer, OutputLineType.Error);
+                this.console.WriteLine(buffer, OutputType.Error);
             }
         }
 

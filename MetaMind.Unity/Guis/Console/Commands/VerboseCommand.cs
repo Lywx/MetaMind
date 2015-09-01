@@ -10,7 +10,7 @@
 
         public string Execute(string[] arguments)
         {
-            Unity.FsiSession.Verbose = !Unity.FsiSession.Verbose;
+            Unity.FsiSession.IsVerbose = !Unity.FsiSession.IsVerbose;
 
             return "";
         }

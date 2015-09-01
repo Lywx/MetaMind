@@ -30,7 +30,7 @@
 
         public string Execute(string[] arguments)
         {
-            this.processor.Out.Clear();
+            this.processor.CommandOutput.Clear();
             this.renderer.ResetCommandPosition();
 
             return "";

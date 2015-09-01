@@ -1,6 +1,6 @@
 namespace MetaMind.Engine.Guis.Console
 {
-    internal enum OutputLineType
+    internal enum OutputType
     {
         Buffer,
 

@@ -1,9 +1,8 @@
 ﻿namespace MetaMind.Engine.Guis.Console
 {
     using System;
-    using Components.Fonts;
     using Commands;
-
+    using Components.Fonts;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -15,16 +14,27 @@
 
         private readonly IStringDrawer stringDrawer;
 
-        private readonly GameConsoleProcessor consoleProcesser;
-
-        private GameConsoleRenderer consoleRenderer;
-
-        public GameConsoleComponent(GameEngine engine, GameConsole console, SpriteBatch spriteBatch, IStringDrawer stringDrawer)
+        public GameConsoleComponent(
+            GameEngine engine,
+            GameConsole console,
+            GameConsoleProcessor processor,
+            SpriteBatch spriteBatch,
+            IStringDrawer stringDrawer)
             : base(engine)
         {
             if (engine == null)
             {
                 throw new ArgumentNullException(nameof(engine));
+            }
+
+            if (console == null)
+            {
+                throw new ArgumentNullException(nameof(console));
+            }
+
+            if (processor == null)
+            {
+                throw new ArgumentNullException(nameof(processor));
             }
 
             if (spriteBatch == null)
@@ -37,14 +47,14 @@
                 throw new ArgumentNullException(nameof(stringDrawer));
             }
 
-            this.console = console;
+            this.console   = console;
+            this.Processer = processor;
+
+            this.Processer.Opened += (s, e) => this.Renderer.Open();
+            this.Processer.Closed += (s, e) => this.Renderer.Close();
 
             this.spriteBatch  = spriteBatch;
             this.stringDrawer = stringDrawer;
-
-            this.consoleProcesser = new GameConsoleProcessor(new CommandProcesser());
-            this.consoleProcesser.Opened += (s, e) => this.consoleRenderer.Open();
-            this.consoleProcesser.Closed += (s, e) => this.consoleRenderer.Close();
 
             var builtinCommands = new IConsoleCommand[]
             {
@@ -55,28 +65,38 @@
             GameConsoleSettings.Commands.AddRange(builtinCommands);
         }
 
-        public bool IsOpen => this.consoleRenderer.IsOpened;
+        public bool IsOpen => this.Renderer.IsOpened;
+
+        /// <remarks>
+        /// Won't be added to Game.Components
+        /// </remarks>
+        internal GameConsoleProcessor Processer { get; }
+
+        /// <remarks>
+        /// Won't be added to Game.Components
+        /// </remarks>
+        internal GameConsoleRenderer Renderer { get; private set; }
     }
 
     #region DrawableComponent
 
     internal partial class GameConsoleComponent
     {
-        protected override void LoadContent()
+        public override void Initialize()
         {
-            this.consoleRenderer = new GameConsoleRenderer((GameEngine)this.Game, this.spriteBatch, this.stringDrawer, this.consoleProcesser);
-            this.consoleProcesser.HookApplicationForm();
+            this.Processer.Initialize();
+            this.Renderer = new GameConsoleRenderer((GameEngine)this.Game, this.Processer, this.spriteBatch, this.stringDrawer);
 
             // Renderer is just constructed. Commands depend on renderer has to 
             // be added now.
             var builtinCommands = new IConsoleCommand[]
             {
-                new ClearCommand(this.consoleProcesser, this.consoleRenderer)
+                new ClearCommand(this.Processer, this.Renderer)
             };
 
             GameConsoleSettings.Commands.AddRange(builtinCommands);
 
-            base.LoadContent();
+            base.Initialize();
         }
 
         public override void Draw(GameTime gameTime)
@@ -88,30 +108,32 @@
 
             this.spriteBatch.Begin();
 
-            this.consoleRenderer.Draw(gameTime);
+            this.Renderer.Draw(gameTime);
 
             this.spriteBatch.End();
 
             base.Draw(gameTime);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
             if (!this.console.Enabled)
             {
                 return;
             }
 
-            this.consoleRenderer.Update(gameTime);
-            base                .Update(gameTime);
+            this.Processer.Update(time);
+            this.Renderer .Update(time);
+
+            base.Update(time);
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                this.consoleRenderer?.Dispose();
-                this.consoleProcesser?.Dispose();
+                this.Renderer ?.Dispose();
+                this.Processer?.Dispose();
 
                 // Should not set to null, for it is a static member
                 GameConsoleSettings.Commands.Clear();
@@ -127,14 +149,14 @@
 
     internal partial class GameConsoleComponent
     {
-        public void WriteLine(string buffer, OutputLineType bufferType = OutputLineType.Output)
+        public void WriteLine(string buffer, OutputType bufferType = OutputType.Output)
         {
             if (GameConsoleSettings.Settings.OpenOnWrite)
             {
-                this.consoleProcesser.OpenConsole();
+                this.Processer.OpenConsole();
             }
 
-            this.consoleProcesser.AddToOutput(buffer, bufferType);
+            this.Processer.AddToOutput(buffer, bufferType);
         }
     }
 

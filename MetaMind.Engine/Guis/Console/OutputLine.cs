@@ -4,9 +4,9 @@
     {
         public string Output { get; set; }
 
-        public OutputLineType Type { get; }
+        public OutputType Type { get; }
 
-        public OutputLine(string output, OutputLineType type)
+        public OutputLine(string output, OutputType type)
         {
             this.Output = output;
             this.Type   = type;
