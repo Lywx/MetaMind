@@ -7,26 +7,44 @@
 
 namespace MetaMind.Engine
 {
-    using MetaMind.Engine.Services;
+    using System;
+    using Services;
 
     using Microsoft.Xna.Framework;
 
     public class Game : DrawableGameComponent, IGame
     {
-        #region Engine Data
-
-        protected IGameInteropService Interop { get; set; }
-
-        #endregion
-
         #region Constructors
 
         protected Game(GameEngine engine)
             : base(engine)
         {
-            // Callled after construction of GameEngine
+            if (engine == null)
+            {
+                throw new ArgumentNullException(nameof(engine));
+            }
+
+            this.Engine  = engine;
             this.Interop = engine.Interop;
-            this.Interop.Game.Plug(this);
+        }
+
+        #endregion
+
+        #region Engine Data
+
+        protected GameEngine Engine { get; set; }
+
+        protected IGameInteropService Interop { get; set; }
+
+        #endregion
+
+        #region Initialization
+
+        public override void Initialize()
+        {
+            this.Interop.Game.Add(this);
+
+            base.Initialize();
         }
 
         #endregion
@@ -39,7 +57,7 @@ namespace MetaMind.Engine
 
         public void Run()
         {
-            this.Interop.Engine.Run();
+            this.Engine.Run();
         }
 
         #endregion
