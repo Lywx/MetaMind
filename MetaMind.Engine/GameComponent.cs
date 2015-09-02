@@ -1,29 +1,26 @@
 namespace MetaMind.Engine
 {
+    using System;
     using Services;
 
     public class GameComponent : Microsoft.Xna.Framework.GameComponent
     {
         protected GameComponent(GameEngine engine) : base(engine)
         {
-            this.SetupService();
+            if (engine == null)
+            {
+                throw new ArgumentNullException(nameof(engine));
+            }
+
+            this.Engine = engine;
         }
 
         protected GameEngine Engine { get; private set; }
 
-        protected IGameInteropService GameInterop { get; set; }
+        protected IGameInteropService GameInterop => GameEngine.Service.Interop;
 
-        protected IGameGraphicsService GameGraphics { get; set; }
+        protected IGameGraphicsService GameGraphics => GameEngine.Service.Graphics;
 
-        protected IGameNumericalService GameNumerical { get; set; }
-
-        private void SetupService()
-        {
-            this.Engine = ((GameEngine)this.Game);
-
-            this.GameInterop   = GameEngine.Service?.Interop;
-            this.GameGraphics  = GameEngine.Service?.Graphics;
-            this.GameNumerical = GameEngine.Service?.Numerical;
-        }
+        protected IGameNumericalService GameNumerical => GameEngine.Service.Numerical;
     }
 }

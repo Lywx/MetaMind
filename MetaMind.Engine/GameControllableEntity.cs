@@ -37,10 +37,18 @@ namespace MetaMind.Engine
 
         #endregion States
 
+        #region Constructors and Finalizer
+
         protected GameControllableEntity()
         {
-            this.SetupService();
         }
+
+        ~GameControllableEntity()
+        {
+            this.Dispose(true);
+        }
+
+        #endregion
 
         #region Events        
 
@@ -85,30 +93,39 @@ namespace MetaMind.Engine
 
         #endregion Input
 
-        #region Service
+        #region Dependency
 
-        protected IGameInputService GameInput { get; private set; }
-
-        [OnDeserialized]
-        private void SetupService(StreamingContext context)
-        {
-            this.SetupService();
-        }
-
-        private void SetupService()
-        {
-            this.GameInput = GameEngine.Service?.Input;
-        }
+        protected IGameInputService GameInput => GameEngine.Service.Input;
 
         #endregion
 
         #region IDisposable
 
-        public override void Dispose()
-        {
-            base.Dispose();
+        private bool IsDisposed { get; set; }
 
-            this.GameInput = null;
+        protected override void Dispose(bool disposing)
+        {
+            try
+            {
+                if (disposing)
+                {
+                    if (!this.IsDisposed)
+                    {
+                        this.ControllableChanged = null;
+                        this.InputOrderChanged   = null;
+                    }
+
+                    this.IsDisposed = true;
+                }
+            }
+            catch
+            {
+                // Ignored
+            }
+            finally
+            {
+                base.Dispose(disposing);
+            }
         }
 
         #endregion

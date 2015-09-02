@@ -4,13 +4,14 @@ namespace MetaMind.Engine
 
     public abstract class GameControllableComponent : DrawableGameComponent, IGameControllableComponent
     {
-        public GameControllableComponent(Microsoft.Xna.Framework.Game engine) : base(engine)
+        protected GameControllableComponent(GameEngine engine)
+            : base(engine)
         {
             this.Controllable = true;
         }
 
-        public abstract void UpdateInput(GameTime gameTime);
-
         public bool Controllable { get; private set; }
+
+        public virtual void UpdateInput(GameTime time) { }
     }
 }

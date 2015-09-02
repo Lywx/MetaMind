@@ -32,41 +32,23 @@ namespace MetaMind.Engine
 
         #region Dependency
         
-        protected IGameInteropService GameInterop { get; private set; }
+        protected IGameInteropService GameInterop => GameEngine.Service.Interop;
 
-        protected IGameNumericalService GameNumerical { get; private set; }
-
-        [OnDeserialized]
-        private void SetupService(StreamingContext context)
-        {
-            this.SetupService();
-        }
-
-        private void SetupService()
-        {
-            this.GameInterop   = GameEngine.Service?.Interop;
-            this.GameNumerical = GameEngine.Service?.Numerical;
-        }
+        protected IGameNumericalService GameNumerical => GameEngine.Service.Numerical; 
 
         #endregion 
 
-        #region Constructors
+        #region Constructors and Finalizer 
 
         protected internal GameEntity()
         {
-            this.SetupService();
-
             this.Guid      = Guid.NewGuid();
             this.Listeners = new List<IListener>();
         }
 
-        #endregion Constructors
-
-        #region Destructors
-
         ~GameEntity()
         {
-            this.Dispose();
+            this.Dispose(true);
         }
 
         #endregion Destructors
@@ -257,13 +239,30 @@ namespace MetaMind.Engine
 
         #region IDisposable
 
-        public virtual void Dispose()
+        private bool IsDisposed { get; set; }
+     
+        public void Dispose()
         {
-            // Dispose listeners
-            this.UnloadContent(this.GameInterop);
+            this.Dispose(true);
 
-            this.GameInterop   = null;
-            this.GameNumerical = null;
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (!this.IsDisposed)
+                {
+                    // Dispose listeners
+                    this.UnloadContent(this.GameInterop);
+
+                    this.UpdateOrderChanged = null;
+                    this.EnabledChanged     = null;
+
+                    this.IsDisposed = true;
+                }
+            }
         }
 
         #endregion IDisposable

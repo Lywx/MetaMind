@@ -42,9 +42,13 @@ namespace MetaMind.Engine
 
         #region Constructors
 
-        protected internal GameVisualEntity()
+        protected GameVisualEntity()
         {
-            this.SetupService();
+        }
+
+        ~GameVisualEntity()
+        {
+            this.Dispose(true);
         }
 
         #endregion
@@ -65,20 +69,9 @@ namespace MetaMind.Engine
 
         #endregion
 
-        #region Service
+        #region Dependency
 
-        protected IGameGraphicsService GameGraphics { get; private set; }
-
-        [OnDeserialized]
-        private void SetupService(StreamingContext context)
-        {
-            this.SetupService();
-        }
-
-        private void SetupService()
-        {
-            this.GameGraphics = GameEngine.Service?.Graphics;
-        }
+        protected IGameGraphicsService GameGraphics => GameEngine.Service.Graphics;
 
         #endregion
 
@@ -111,11 +104,31 @@ namespace MetaMind.Engine
 
         #region IDisposable
 
-        public override void Dispose()
-        {
-            base.Dispose();
+        private bool IsDisposed { get; set; }
 
-            this.GameGraphics = null;
+        protected override void Dispose(bool disposing)
+        {
+            try
+            {
+                if (disposing)
+                {
+                    if (!this.IsDisposed)
+                    {
+                        this.DrawOrderChanged = null;
+                        this.VisibleChanged   = null;
+                    }
+
+                    this.IsDisposed = true;
+                }
+            }
+            catch
+            {
+                // Ignored
+            }
+            finally
+            {
+                base.Dispose(disposing);
+            }
         }
 
         #endregion
