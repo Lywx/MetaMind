@@ -15,7 +15,7 @@ namespace MetaMind.Engine.Components.Fonts
     {
         #region Dependency
 
-        private SpriteBatch SpriteBatch { get; set; }
+        private SpriteBatch spriteBatch;
 
         #endregion
 
@@ -28,7 +28,7 @@ namespace MetaMind.Engine.Components.Fonts
                 throw new ArgumentNullException(nameof(spriteBatch));
             }
 
-            this.SpriteBatch = spriteBatch;
+            this.spriteBatch = spriteBatch;
         }
 
         #endregion
@@ -123,7 +123,7 @@ namespace MetaMind.Engine.Components.Fonts
                 return;
             }
 
-            SpriteBatch.DrawString(font.Sprite(), font.PrintableString(str), position, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0);
+            this.spriteBatch.DrawString(font.Sprite(), font.PrintableString(str), position, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0);
         }
 
         public void DrawString(Font font, string str, Vector2 position, Color color, float scale, StringHAlign HAlign, StringVAlign VAlign, int leading = 0)

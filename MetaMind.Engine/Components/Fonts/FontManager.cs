@@ -7,12 +7,10 @@
 
 namespace MetaMind.Engine.Components.Fonts
 {
-    using System;
     using System.Collections.Generic;
-    using Services;
-
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using Services;
 
     /// <summary>
     /// Static storage of SpriteFont objects and colors for use throughout the game.
@@ -21,7 +19,7 @@ namespace MetaMind.Engine.Components.Fonts
     {
         #region Font Data
 
-        public Dictionary<Font, FontInfo> Fonts { get; set; }
+        public Dictionary<Font, FontInfo> Fonts { get; set; } = new Dictionary<Font, FontInfo>(); 
 
         #endregion
 
@@ -36,19 +34,14 @@ namespace MetaMind.Engine.Components.Fonts
         public FontManager(GameEngine engine)
             : base(engine)
         {
-            if (engine == null)
-            {
-                throw new ArgumentNullException(nameof(engine));
-            }
-
-            engine.Components.Add(this);
         }
 
         #endregion
 
         public override void Initialize()
         {
-            // It has to register service before LoadContent.
+            // It has to register service before LoadContent. Because 
+            // this.LoadContent use GameEngine.Service.Interop to load fonts
             this.GameInterop = GameEngine.Service.Interop;
 
             base.Initialize();
@@ -75,11 +68,6 @@ namespace MetaMind.Engine.Components.Fonts
 
         private void LoadFont(Font font, int fontSize, string path)
         {
-            if (this.Fonts == null)
-            {
-                this.Fonts = new Dictionary<Font, FontInfo>();
-            }
-
             var spriteFont = this.GameInterop.Content.Load<SpriteFont>(path);
 
             this.Fonts[font] = new FontInfo(font, spriteFont, fontSize);
@@ -97,18 +85,33 @@ namespace MetaMind.Engine.Components.Fonts
 
         #region IDisposable
 
+        private bool IsDisposed { get; set; }
+
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            try
             {
-                // SpriteFont is not disposable
-                this.Fonts?.Clear();
-                this.Fonts = null;
+                if (disposing)
+                {
+                    if (!this.IsDisposed)
+                    {
+                        // SpriteFont is not disposable
+                        this.UnloadContent();
 
-                this.GameInterop = null;
+                        this.GameInterop = null;
+                    }
+
+                    this.IsDisposed = true;
+                }
             }
-
-            base.Dispose(disposing);
+            catch
+            {
+                // Ignored
+            }
+            finally
+            {
+                base.Dispose(disposing);
+            }
         }
 
         #endregion

@@ -101,7 +101,7 @@ namespace MetaMind.Engine.Components.Fonts
         {
             if (fontManager == null)
             {
-                throw new ArgumentNullException("fontManager");
+                throw new ArgumentNullException(nameof(fontManager));
             }
 
             FontExt.fontManager = fontManager;
