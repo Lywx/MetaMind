@@ -1,13 +1,15 @@
 namespace MetaMind.Engine.Components.Inputs
 {
     using System;
+    using System.Windows.Forms;
+    using Microsoft.Xna.Framework;
 
     public interface IInputEvent : IGameControllableComponent
     {
         /// <summary>
         /// Event raised when a character has been entered.
         /// </summary>
-        event EventHandler<CharEnteredEventArgs> CharEntered;
+        event EventHandler<TextInputEventArgs> CharEntered;
 
         /// <summary>
         /// Event raised when a key has been pressed down. May fire multiple times due to keyboard repeat.
@@ -18,6 +20,11 @@ namespace MetaMind.Engine.Components.Inputs
         /// Event raised when a key has been released.
         /// </summary>
         event EventHandler<KeyEventArgs> KeyUp;
+
+        /// <summary>
+        /// Event raised when a char key has been pressed.
+        /// </summary>
+        event EventHandler<KeyPressEventArgs> KeyPress;
 
         /// <summary>
         /// Event raised when a mouse button has been double clicked.
@@ -32,7 +39,7 @@ namespace MetaMind.Engine.Components.Inputs
         /// <summary>
         /// Event raised when the mouse has hovered in the same location for a short period of time.
         /// </summary>
-        event EventHandler<MouseEventArgs> MouseHover;
+        event EventHandler MouseHover;
 
         /// <summary>
         /// Event raised when the mouse changes location.

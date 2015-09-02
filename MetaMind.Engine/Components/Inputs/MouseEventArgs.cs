@@ -1,14 +1,11 @@
 namespace MetaMind.Engine.Components.Inputs
 {
     using System;
-
-    using MetaMind.Engine.Guis.Elements.Inputs;
-
     using Microsoft.Xna.Framework;
 
     public class MouseEventArgs : EventArgs
     {
-        private readonly MouseButton button;
+        private readonly MouseButtons button;
 
         private readonly int clicks;
 
@@ -18,7 +15,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         private readonly int y;
 
-        public MouseEventArgs(MouseButton button, int clicks, int x, int y, int delta)
+        public MouseEventArgs(MouseButtons button, int clicks, int x, int y, int delta)
         {
             this.button = button;
             this.clicks = clicks;
@@ -27,52 +24,16 @@ namespace MetaMind.Engine.Components.Inputs
             this.delta  = delta;
         }
 
-        public MouseButton Button
-        {
-            get
-            {
-                return this.button;
-            }
-        }
+        public MouseButtons Button => this.button;
 
-        public int Clicks
-        {
-            get
-            {
-                return this.clicks;
-            }
-        }
+        public int Clicks => this.clicks;
 
-        public int Delta
-        {
-            get
-            {
-                return this.delta;
-            }
-        }
+        public int Delta => this.delta;
 
-        public Point Location
-        {
-            get
-            {
-                return new Point(this.x, this.y);
-            }
-        }
+        public Point Location => new Point(this.x, this.y);
 
-        public int X
-        {
-            get
-            {
-                return this.x;
-            }
-        }
+        public int X => this.x;
 
-        public int Y
-        {
-            get
-            {
-                return this.y;
-            }
-        }
+        public int Y => this.y;
     }
 }

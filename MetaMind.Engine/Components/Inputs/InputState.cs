@@ -34,8 +34,6 @@ namespace MetaMind.Engine.Components.Inputs
                 throw new ArgumentNullException(nameof(engine));
             }
 
-            this.Game.Components.Add(this);
-            
             this.keyboard = new KeyboardInputState();
             this.mouse    = new MouseInputState();
         }

@@ -13,12 +13,6 @@
             this.keyCode = keyCode;
         }
 
-        public Keys KeyCode
-        {
-            get
-            {
-                return this.keyCode;
-            }
-        }
+        public Keys KeyCode => this.keyCode;
     }
 }

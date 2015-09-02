@@ -32,59 +32,15 @@ namespace MetaMind.Engine.Components.Inputs
 
         #region Input State
 
-        public bool IsButtonLeftClicked
-        {
-            get
-            {
-                if (this.currentState.LeftButton == ButtonState.Released && 
-                    this.previousState.LeftButton == ButtonState.Pressed)
-                {
-                    return true;
-                }
+        public bool IsButtonLeftClicked => this.currentState.LeftButton == ButtonState.Released && 
+                                           this.previousState.LeftButton == ButtonState.Pressed;
 
-                return false;
-            }
-        }
+        public bool IsButtonRightClicked => this.currentState.RightButton == ButtonState.Released && 
+                                            this.previousState.RightButton == ButtonState.Pressed;
 
-        public bool IsButtonRightClicked
-        {
-            get
-            {
-                if (this.currentState.RightButton == ButtonState.Released && 
-                    this.previousState.RightButton == ButtonState.Pressed)
-                {
-                    return true;
-                }
+        public bool IsWheelScrolledDown => this.currentState.ScrollWheelValue < this.previousState.ScrollWheelValue;
 
-                return false;
-            }
-        }
-
-        public bool IsWheelScrolledDown
-        {
-            get
-            {
-                if (this.currentState.ScrollWheelValue < this.previousState.ScrollWheelValue)
-                {
-                    return true;
-                }
-
-                return false;
-            }
-        }
-
-        public bool IsWheelScrolledUp
-        {
-            get
-            {
-                if (this.currentState.ScrollWheelValue > this.previousState.ScrollWheelValue)
-                {
-                    return true;
-                }
-
-                return false;
-            }
-        }
+        public bool IsWheelScrolledUp => this.currentState.ScrollWheelValue > this.previousState.ScrollWheelValue;
 
         public Point MouseLocation
         {
