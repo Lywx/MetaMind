@@ -2,8 +2,8 @@
 
 namespace MetaMind.Engine.Guis.Elements
 {
-    using MetaMind.Engine.Components.Inputs;
-    using MetaMind.Engine.Guis.Elements.Inputs;
+    using Components.Inputs;
+    using Inputs;
 
     using Microsoft.Xna.Framework;
     using Services;
@@ -14,6 +14,8 @@ namespace MetaMind.Engine.Guis.Elements
 
         private Rectangle rectangle;
 
+        #region Constructors and Finalizer
+
         public PickableFrame(Rectangle rectangle)
             : this()
         {
@@ -22,65 +24,38 @@ namespace MetaMind.Engine.Guis.Elements
 
         public PickableFrame()
         {
-            this.InputEvent.MouseMove        += this.EventMouseMove;
-            this.InputEvent.MouseUp          += this.EventMouseUp;
-            this.InputEvent.MouseDown        += this.EventMouseDown;
-            this.InputEvent.MouseDoubleClick += this.EventMouseDoubleClick;
-
-            this.FrameMoved                  += this.FrameFrameMoved;
-            this.FrameSized                  += this.FrameFrameMoved;
+            this.RegisterMouseInputHandlers();
+            this.RegisterFrameChangeHandlers();
 
             this.IsActive = true;
 
-            this[FrameState.Mouse_Is_Over]                   = () => this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Is_Over] = () => this.mouse.IsMouseOver;
 
-            this[FrameState.Mouse_Is_Left_Pressed]           = () => this.mouse.IsLButtonPressed && this.mouse.IsMouseOver;
-            this[FrameState.Mouse_Is_Left_Pressed_Outside]   = () => this.mouse.IsLButtonPressed && !this.mouse.IsMouseOver;
-            this[FrameState.Mouse_Is_Left_Released]          = () => this.mouse.IsLButtonReleased;
-            this[FrameState.Mouse_Is_Left_Double_Clicked]    = () => this.mouse.IsLButtonDoubleClicked && this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Is_Left_Pressed]          = () => this.mouse.IsLButtonPressed && this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Is_Left_Pressed_Outside]  = () => this.mouse.IsLButtonPressed && !this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Is_Left_Released]         = () => this.mouse.IsLButtonReleased;
+            this[FrameState.Mouse_Is_Left_Double_Clicked]   = () => this.mouse.IsLButtonDoubleClicked && this.mouse.IsMouseOver;
 
-            this[FrameState.Mouse_Is_Right_Pressed]          = () => this.mouse.IsRButtonPressed && this.mouse.IsMouseOver;
-            this[FrameState.Mouse_Is_Right_Pressed_Outside]  = () => this.mouse.IsRButtonPressed && !this.mouse.IsMouseOver;
-            this[FrameState.Mouse_Is_Right_Released]         = () => this.mouse.IsRButtonReleased;
-            this[FrameState.Mouse_Is_Right_Double_Clicked]   = () => this.mouse.IsRButtonDoubleClicked && this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Is_Right_Pressed]         = () => this.mouse.IsRButtonPressed && this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Is_Right_Pressed_Outside] = () => this.mouse.IsRButtonPressed && !this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Is_Right_Released]        = () => this.mouse.IsRButtonReleased;
+            this[FrameState.Mouse_Is_Right_Double_Clicked]  = () => this.mouse.IsRButtonDoubleClicked && this.mouse.IsMouseOver;
 
             this[FrameState.Frame_Is_Active] = () => this.IsActive;
         }
 
         ~PickableFrame()
         {
-            this.Dispose();
+            this.Dispose(true);
         }
 
-        #region IDisposable
+        #endregion
 
-        public override void Dispose()
-        {
-            // Clean events
-            this.MouseEnter               = null;
-            this.MouseLeave               = null;
-            this.MouseLeftPressed         = null;
-            this.MouseLeftPressedOutside  = null;
-            this.MouseLeftReleased        = null;
-            this.MouseLeftDoubleClicked   = null;
-            this.MouseRightPressed        = null;
-            this.MouseRightPressedOutside = null;
-            this.MouseRightReleased       = null;
-            this.MouseRightDoubleClicked  = null;
+        #region Dependency
 
-            this.FrameMoved               = null;
-            this.FrameSized               = null;
+        private IInputEvent InputEvent => this.GameInput.Event;
 
-            // Clean handlers
-            this.InputEvent.MouseMove        -= this.EventMouseMove;
-            this.InputEvent.MouseDown        -= this.EventMouseDown;
-            this.InputEvent.MouseUp          -= this.EventMouseUp;
-            this.InputEvent.MouseDoubleClick -= this.EventMouseDoubleClick;
-
-            base.Dispose();
-        }
-
-        #endregion IDisposable
+        #endregion
 
         #region Events
 
@@ -108,64 +83,10 @@ namespace MetaMind.Engine.Guis.Elements
 
         public event EventHandler<FrameEventArgs> MouseRightDoubleClicked = delegate {};
 
-        private void OnFrameMoved()
+        private void FrameFrameMoved(object sender, FrameEventArgs e)
         {
-            this.FrameMoved?.Invoke(this, new FrameEventArgs(FrameEventType.Frame_Moved));
-        }
-
-        private void OnFrameSized()
-        {
-            this.FrameSized?.Invoke(this, new FrameEventArgs(FrameEventType.Frame_Sized));
-        }
-
-        private void OnMouseLeftDoubleClicked()
-        {
-            this.MouseLeftDoubleClicked?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Left_Double_Clicked));
-        }
-
-        private void OnMouseLeftPressedOutside()
-        {
-            this.MouseLeftPressedOutside?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Left_Pressed_Outside));
-        }
-
-        private void OnMouseLeftPressed()
-        {
-            this.MouseLeftPressed?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Left_Pressed));
-        }
-
-        private void OnMouseLeftReleased()
-        {
-            this.MouseLeftReleased?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Left_Released));
-        }
-
-        private void OnMouseLeave()
-        {
-            this.MouseLeave?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Leave));
-        }
-
-        private void OnMouseEnter()
-        {
-            this.MouseEnter?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Enter));
-        }
-
-        private void OnMouseRightDoubleClicked()
-        {
-            this.MouseRightDoubleClicked?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Right_Double_Clicked));
-        }
-
-        private void OnMouseRightPressed()
-        {
-            this.MouseRightPressed?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Right_Pressed));
-        }
-
-        private void OnMouseRightPressedOutside()
-        {
-            this.MouseRightPressedOutside?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Right_Pressed_Outside));
-        }
-
-        private void OnMouseRightReleased()
-        {
-            this.MouseRightReleased?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Right_Released));
+            var location = this.GameInput.State.Mouse.CurrentState;
+            this.EventMouseMove(null, new MouseEventArgs(MouseButtons.None, 0, location.X, location.Y, 0));
         }
 
         private void EventMouseDoubleClick(object sender, MouseEventArgs e)
@@ -278,10 +199,78 @@ namespace MetaMind.Engine.Guis.Elements
             }
         }
 
-        private void FrameFrameMoved(object sender, FrameEventArgs e)
+        private void OnFrameMoved()
         {
-            var location = this.InputState.Mouse.CurrentState;
-            this.EventMouseMove(null, new MouseEventArgs(MouseButton.None, 0, location.X, location.Y, 0));
+            this.FrameMoved?.Invoke(this, new FrameEventArgs(FrameEventType.Frame_Moved));
+        }
+
+        private void OnFrameSized()
+        {
+            this.FrameSized?.Invoke(this, new FrameEventArgs(FrameEventType.Frame_Sized));
+        }
+
+        private void OnMouseLeftDoubleClicked()
+        {
+            this.MouseLeftDoubleClicked?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Left_Double_Clicked));
+        }
+
+        private void OnMouseLeftPressedOutside()
+        {
+            this.MouseLeftPressedOutside?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Left_Pressed_Outside));
+        }
+
+        private void OnMouseLeftPressed()
+        {
+            this.MouseLeftPressed?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Left_Pressed));
+        }
+
+        private void OnMouseLeftReleased()
+        {
+            this.MouseLeftReleased?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Left_Released));
+        }
+
+        private void OnMouseLeave()
+        {
+            this.MouseLeave?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Leave));
+        }
+
+        private void OnMouseEnter()
+        {
+            this.MouseEnter?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Enter));
+        }
+
+        private void OnMouseRightDoubleClicked()
+        {
+            this.MouseRightDoubleClicked?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Right_Double_Clicked));
+        }
+
+        private void OnMouseRightPressed()
+        {
+            this.MouseRightPressed?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Right_Pressed));
+        }
+
+        private void OnMouseRightPressedOutside()
+        {
+            this.MouseRightPressedOutside?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Right_Pressed_Outside));
+        }
+
+        private void OnMouseRightReleased()
+        {
+            this.MouseRightReleased?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Right_Released));
+        }
+
+        private void RegisterFrameChangeHandlers()
+        {
+            this.FrameMoved += this.FrameFrameMoved;
+            this.FrameSized += this.FrameFrameMoved;
+        }
+
+        private void RegisterMouseInputHandlers()
+        {
+            this.InputEvent.MouseMove        += this.EventMouseMove;
+            this.InputEvent.MouseUp          += this.EventMouseUp;
+            this.InputEvent.MouseDown        += this.EventMouseDown;
+            this.InputEvent.MouseDoubleClick += this.EventMouseDoubleClick;
         }
 
         #endregion
@@ -408,7 +397,7 @@ namespace MetaMind.Engine.Guis.Elements
 
         protected bool IsLButton(MouseEventArgs e)
         {
-            return e.Button == MouseButton.Left;
+            return e.Button == MouseButtons.Left;
         }
 
         protected bool IsMouseOver(Point location)
@@ -418,7 +407,7 @@ namespace MetaMind.Engine.Guis.Elements
 
         protected bool IsRButton(MouseEventArgs e)
         {
-            return e.Button == MouseButton.Right;
+            return e.Button == MouseButtons.Right;
         }
 
         #endregion
@@ -447,6 +436,74 @@ namespace MetaMind.Engine.Guis.Elements
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
             this.FlushAction(time);
+        }
+
+        #endregion
+
+        #region IDisposable
+
+        private bool IsDisposed { get; set; }
+
+        protected override void Dispose(bool disposing)
+        {
+            try
+            {
+                if (disposing)
+                {
+                    if (!this.IsDisposed)
+                    {
+                        this.DisposeEvents();
+
+                        // No need to dispose frame change handlers because the 
+                        // events are disposed in this.DisposeEvents
+                        this.DisposeMouseInputHandlers();
+                    }
+
+                    this.IsDisposed = true;
+                }
+            }
+            catch
+            {
+                // Ignored
+            }
+            finally
+            {
+                base.Dispose(disposing);
+            }
+        }
+
+        private void DisposeMouseInputHandlers()
+        {
+            this.GameInput.Event.MouseMove -= this.EventMouseMove;
+            this.GameInput.Event.MouseUp -= this.EventMouseUp;
+            this.GameInput.Event.MouseDown -= this.EventMouseDown;
+            this.GameInput.Event.MouseDoubleClick -= this.EventMouseDoubleClick;
+        }
+
+        private void DisposeEvents()
+        {
+            this.DisposeMouseInputEvents();
+            this.DisposeFrameChangeEvents();
+        }
+
+        private void DisposeFrameChangeEvents()
+        {
+            this.FrameMoved = null;
+            this.FrameSized = null;
+        }
+
+        private void DisposeMouseInputEvents()
+        {
+            this.MouseEnter               = null;
+            this.MouseLeave               = null;
+            this.MouseLeftPressed         = null;
+            this.MouseLeftPressedOutside  = null;
+            this.MouseLeftReleased        = null;
+            this.MouseLeftDoubleClicked   = null;
+            this.MouseRightPressed        = null;
+            this.MouseRightPressedOutside = null;
+            this.MouseRightReleased       = null;
+            this.MouseRightDoubleClicked  = null;
         }
 
         #endregion

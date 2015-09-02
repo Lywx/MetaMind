@@ -8,9 +8,7 @@
 namespace MetaMind.Engine.Guis.Elements
 {
     using System;
-
     using Microsoft.Xna.Framework;
-
     using Stateless;
 
     public class DraggableFrame : PickableFrame, IDraggableFrame
@@ -72,12 +70,7 @@ namespace MetaMind.Engine.Guis.Elements
                     this.DeferAction(this.OnMouseDropped);
                 });
 
-            // Events
-            this.MouseLeftPressed  += this.FrameMousePressed;
-            this.MouseLeftReleased += this.FrameMouseReleased;
-
-            this.MouseRightPressed  += this.FrameMousePressed;
-            this.MouseRightReleased += this.FrameMouseReleased;
+            this.RegisterHandlers();
 
             // States
             this[FrameState.Frame_Is_Holding] = () => this.Machine.IsInState(State.Holding);
@@ -86,28 +79,8 @@ namespace MetaMind.Engine.Guis.Elements
 
         ~DraggableFrame()
         {
-            this.Dispose();
+            this.Dispose(true);
         }
-
-        #region IDiposable
-
-        public override void Dispose()
-        {
-            // Clean events
-            this.MouseDragged = null;
-            this.MouseDropped = null;
-
-            // Clean handlers
-            this.MouseLeftPressed   -= this.FrameMousePressed;
-            this.MouseRightPressed  -= this.FrameMousePressed;
-            
-            this.MouseLeftReleased  -= this.FrameMouseReleased;
-            this.MouseRightReleased -= this.FrameMouseReleased;
-
-            base.Dispose();
-        }
-
-        #endregion
 
         #region State Machine
 
@@ -143,25 +116,9 @@ namespace MetaMind.Engine.Guis.Elements
 
         public event EventHandler<FrameEventArgs> MouseDropped;
 
-        private void OnMouseDropped()
-        {
-            if (this.MouseDropped != null)
-            {
-                this.MouseDropped(this, new FrameEventArgs(FrameEventType.Frame_Dropped));
-            }
-        }
-
-        private void OnMouseDragged()
-        {
-            if (this.MouseDragged != null)
-            {
-                this.MouseDragged(this, new FrameEventArgs(FrameEventType.Frame_Dragged));
-            }
-        }
-
         private void FrameMousePressed(object sender, FrameEventArgs e)
         {
-            var mouse = InputState.Mouse.CurrentState;
+            var mouse = this.GameInput.State.Mouse.CurrentState;
 
             // origin for deciding whether is dragging
             this.mousePressedPosition = new Point(mouse.X, mouse.Y);
@@ -176,6 +133,25 @@ namespace MetaMind.Engine.Guis.Elements
         private void FrameMouseReleased(object sender, EventArgs e)
         {
             this.Machine.Fire(Trigger.Released);
+        }
+
+        private void OnMouseDropped()
+        {
+            this.MouseDropped?.Invoke(this, new FrameEventArgs(FrameEventType.Frame_Dropped));
+        }
+
+        private void OnMouseDragged()
+        {
+            this.MouseDragged?.Invoke(this, new FrameEventArgs(FrameEventType.Frame_Dragged));
+        }
+
+        private void RegisterHandlers()
+        {
+            this.MouseLeftPressed += this.FrameMousePressed;
+            this.MouseLeftReleased += this.FrameMouseReleased;
+
+            this.MouseRightPressed += this.FrameMousePressed;
+            this.MouseRightReleased += this.FrameMouseReleased;
         }
 
         #endregion Events
@@ -205,5 +181,51 @@ namespace MetaMind.Engine.Guis.Elements
         }
 
         #endregion Update
+
+        #region IDisposable
+
+        private bool IsDisposed { get; set; }
+
+        protected override void Dispose(bool disposing)
+        {
+            try
+            {
+                if (disposing)
+                {
+                    if (!this.IsDisposed)
+                    {
+                        this.DisposeEvents();
+                        this.DisposeHandlers();
+                    }
+
+                    this.IsDisposed = true;
+                }
+            }
+            catch
+            {
+                // Ignored
+            }
+            finally
+            {
+                base.Dispose(disposing);
+            }
+        }
+
+        private void DisposeEvents()
+        {
+            this.MouseDragged = null;
+            this.MouseDropped = null;
+        }
+
+        private void DisposeHandlers()
+        {
+            this.MouseLeftPressed -= this.FrameMousePressed;
+            this.MouseRightPressed -= this.FrameMousePressed;
+
+            this.MouseLeftReleased -= this.FrameMouseReleased;
+            this.MouseRightReleased -= this.FrameMouseReleased;
+        }
+
+        #endregion
     }
 }

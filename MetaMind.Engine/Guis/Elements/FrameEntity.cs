@@ -10,25 +10,12 @@ namespace MetaMind.Engine.Guis.Elements
     using System;
     using System.Linq;
 
-    using Components.Inputs;
-
     public abstract class FrameEntity : GameControllableEntity, IFrameEntity
     {
-        #region Flyweight Dependency
-
-        protected IInputEvent InputEvent { get; private set; }
-
-        protected IInputState InputState { get; private set; }
-
-        #endregion Service
-
         #region Constructors and Destructors
 
         protected FrameEntity()
         {
-            this.InputEvent = this.GameInput.Event;
-            this.InputState = this.GameInput.State;
-
             for (var i = 0; i < (int)FrameState.StateNum; i++)
             {
                 this.states[i] = () => false;

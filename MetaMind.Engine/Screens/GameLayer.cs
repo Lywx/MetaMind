@@ -19,7 +19,7 @@
 
         ~GameLayer()
         {
-            this.Dispose();
+            this.Dispose(true);
         }
 
         public IGameScreen Screen { get; private set; }
@@ -151,15 +151,35 @@
 
         #region IDisposable
 
-        public override void Dispose()
-        {
-            this.FadedOut = null;
-            this.FadedIn  = null;
+        private bool IsDisposed { get; set; }
 
-            base.Dispose();
+        protected override void Dispose(bool disposing)
+        {
+            try
+            {
+                if (disposing)
+                {
+                    if (!this.IsDisposed)
+                    {
+                        this.FadedOut = null;
+                        this.FadedIn  = null;
+                    }
+
+                    this.IsDisposed = true;
+                }
+            }
+            catch
+            {
+                // Ignored
+            }
+            finally
+            {
+                base.Dispose(disposing);
+            }
         }
 
         #endregion
+
 
         #region Time Helpers
 

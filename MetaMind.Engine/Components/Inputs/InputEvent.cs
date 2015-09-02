@@ -135,35 +135,19 @@ namespace MetaMind.Engine.Components.Inputs
             this.MouseDoubleClick?.Invoke(sender, args.Convert());
         }
 
-        #endregion
-
-        #region Windows Forms
-
-        private void RegisterTextInput()
+        private void RegisterTextInputHandler()
         {
             this.window.TextInput += this.OnCharEntered;
         }
 
-        private void DisposeTextInput()
-        {
-            this.window.TextInput -= this.OnCharEntered;
-        }
-
-        private void RegisterKeyInput()
+        private void RegisterKeyInputHandlers()
         {
             this.windowForm.KeyUp    += this.OnKeyUp;
             this.windowForm.KeyDown  += this.OnKeyDown;
             this.windowForm.KeyPress += this.OnKeyPress;
         }
 
-        private void DisposeKeyInput()
-        {
-            this.windowForm.KeyUp    -= this.OnKeyUp;
-            this.windowForm.KeyDown  -= this.OnKeyDown;
-            this.windowForm.KeyPress -= this.OnKeyPress;
-        }
-
-        private void RegisterMouseInput()
+        private void RegisterMouseInputHandlers()
         {
             this.windowForm.MouseUp    += this.OnMouseUp;
             this.windowForm.MouseDown  += this.OnMouseDown;
@@ -175,17 +159,9 @@ namespace MetaMind.Engine.Components.Inputs
             this.windowForm.MouseDoubleClick += this.OnMouseDoubleClick;
         }
 
-        private void DisposeMouseInput()
-        {
-            this.windowForm.MouseUp    -= this.OnMouseUp;
-            this.windowForm.MouseDown  -= this.OnMouseDown;
+        #endregion
 
-            this.windowForm.MouseHover -= this.OnMouseHover;
-            this.windowForm.MouseMove  -= this.OnMouseMove;
-            this.windowForm.MouseWheel -= this.OnMouseWheel;
-
-            this.windowForm.MouseDoubleClick -= this.OnMouseDoubleClick;
-        }
+        #region Windows Forms
 
         /// <summary>
         /// Force application to find current app window controls with System.Windows.Forms (Windows)
@@ -207,9 +183,9 @@ namespace MetaMind.Engine.Components.Inputs
         {
             this.windowForm = this.GetWindowForm();
 
-            this.RegisterTextInput();
-            this.RegisterKeyInput();
-            this.RegisterMouseInput();
+            this.RegisterTextInputHandler();
+            this.RegisterKeyInputHandlers();
+            this.RegisterMouseInputHandlers();
 
             base.Initialize();
         }
@@ -255,19 +231,44 @@ namespace MetaMind.Engine.Components.Inputs
 
         private void DisposeHandlers()
         {
-            this.DisposeTextInput();
-            this.DisposeKeyInput();
-            this.DisposeMouseInput();
+            this.DisposeTextInputHandler();
+            this.DisposeKeyInputHandlers();
+            this.DisposeMouseInputHandlers();
+        }
+
+        private void DisposeTextInputHandler()
+        {
+            this.window.TextInput -= this.OnCharEntered;
+        }
+
+        private void DisposeKeyInputHandlers()
+        {
+            this.windowForm.KeyUp    -= this.OnKeyUp;
+            this.windowForm.KeyDown  -= this.OnKeyDown;
+            this.windowForm.KeyPress -= this.OnKeyPress;
+        }
+
+        private void DisposeMouseInputHandlers()
+        {
+            this.windowForm.MouseUp    -= this.OnMouseUp;
+            this.windowForm.MouseDown  -= this.OnMouseDown;
+
+            this.windowForm.MouseHover -= this.OnMouseHover;
+            this.windowForm.MouseMove  -= this.OnMouseMove;
+            this.windowForm.MouseWheel -= this.OnMouseWheel;
+
+            this.windowForm.MouseDoubleClick -= this.OnMouseDoubleClick;
         }
 
         private void DisposeEvents()
         {
-            this.CharEntered = null;
+            this.DisposeTextInputEvent();
+            this.DisposeKeyInputEvents();
+            this.DisposeMouseInputEvents();
+        }
 
-            this.KeyUp = null;
-            this.KeyPress = null;
-            this.KeyDown = null;
-
+        private void DisposeMouseInputEvents()
+        {
             this.MouseUp = null;
             this.MouseDown = null;
 
@@ -276,6 +277,18 @@ namespace MetaMind.Engine.Components.Inputs
             this.MouseHover = null;
             this.MouseMove = null;
             this.MouseWheel = null;
+        }
+
+        private void DisposeKeyInputEvents()
+        {
+            this.KeyUp = null;
+            this.KeyPress = null;
+            this.KeyDown = null;
+        }
+
+        private void DisposeTextInputEvent()
+        {
+            this.CharEntered = null;
         }
 
         #endregion

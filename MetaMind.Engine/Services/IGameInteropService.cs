@@ -1,7 +1,7 @@
 namespace MetaMind.Engine.Services
 {
-    using MetaMind.Engine.Components;
-    using MetaMind.Engine.Guis.Console;
+    using Components;
+    using Guis.Console;
 
     using Microsoft.Xna.Framework.Content;
 
