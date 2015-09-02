@@ -146,7 +146,6 @@ namespace MetaMind.Engine
 
             // Graphics has to initialized first
             this.Graphics .Initialize();
-
             this.Input    .Initialize();
             this.Interop  .Initialize();
             this.Numerical.Initialize();
@@ -187,24 +186,50 @@ namespace MetaMind.Engine
             this.Interop.OnExiting();
             base        .OnExiting(sender, args);
 
-            this.Dispose();
+            this.Dispose(true);
         }
 
         #endregion
 
+
+        #region IDisposable
+
+        private bool IsDisposed { get; set; }
+
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            try
             {
-                // Don't set to null, for there is null checking in property 
-                // injection
-                this.Input?   .Dispose();
-                this.Interop? .Dispose();
-                this.Graphics?.Dispose();
-            }
+                if (disposing)
+                {
+                    if (!this.IsDisposed)
+                    {
+                        // Don't set to null, for there is null checking in property 
+                        // injection
+                        this.Interop?.Dispose();
+                        this.interop = null;
 
-            base.Dispose(disposing);
+                        this.Input?.Dispose();
+                        this.input = null;
+
+                        this.Graphics?.Dispose();
+                        this.graphics = null;
+                    }
+
+                    this.IsDisposed = true;
+                }
+            }
+            catch
+            {
+                // Ignored
+            }
+            finally
+            {
+                base.Dispose(disposing);
+            }
         }
+
+        #endregion
     }
 
     public partial class GameEngine

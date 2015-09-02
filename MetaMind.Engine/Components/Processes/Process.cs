@@ -15,21 +15,9 @@ namespace MetaMind.Engine.Components.Processes
 
         private ProcessState state;
 
-        public IProcess Child
-        {
-            get
-            {
-                return this.child;
-            }
-        }
+        public IProcess Child => this.child;
 
-        public ProcessState State
-        {
-            get
-            {
-                return this.state;
-            }
-        }
+        public ProcessState State => this.state;
 
         #endregion
 
@@ -53,40 +41,16 @@ namespace MetaMind.Engine.Components.Processes
 
         #region Process States
 
-        public bool IsAlive
-        {
-            get
-            {
-                return this.state == ProcessState.Running || 
-                    this.state == ProcessState.Paused;
-            }
-        }
+        public bool IsAlive => this.state == ProcessState.Running || 
+                               this.state == ProcessState.Paused;
 
-        public bool IsDead
-        {
-            get
-            {
-                return this.state == ProcessState.Succeeded || 
-                    this.state == ProcessState.Failed || 
-                    this.state == ProcessState.Aborted;
-            }
-        }
+        public bool IsDead => this.state == ProcessState.Succeeded || 
+                              this.state == ProcessState.Failed || 
+                              this.state == ProcessState.Aborted;
 
-        public bool IsPaused
-        {
-            get
-            {
-                return this.state == ProcessState.Paused;
-            }
-        }
+        public bool IsPaused => this.state == ProcessState.Paused;
 
-        public bool IsRemoved
-        {
-            get
-            {
-                return this.state == ProcessState.Removed;
-            }
-        }
+        public bool IsRemoved => this.state == ProcessState.Removed;
 
         #endregion Process States
 
@@ -164,15 +128,35 @@ namespace MetaMind.Engine.Components.Processes
 
         #endregion Operations
 
-        public override void Dispose()
-        {
-            if (this.child != null)
-            {
-                // Aborted child if its child is not successfully separated out
-                this.child.OnAbort();
-            }
+        #region IDisposable
 
-            base.Dispose();
+        private bool IsDisposed { get; set; }
+
+        protected override void Dispose(bool disposing)
+        {
+            try
+            {
+                if (disposing)
+                {
+                    if (!this.IsDisposed)
+                    {
+                        // Aborted child if its child is not successfully separated out
+                        this.child?.OnAbort();
+                    }
+
+                    this.IsDisposed = true;
+                }
+            }
+            catch
+            {
+                // Ignored
+            }
+            finally
+            {
+                base.Dispose(disposing);
+            }
         }
+
+        #endregion
     }
 }

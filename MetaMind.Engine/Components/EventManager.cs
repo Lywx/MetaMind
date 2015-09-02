@@ -42,8 +42,6 @@ namespace MetaMind.Engine.Components
             {
                 throw new ArgumentNullException(nameof(engine));
             }
-
-            engine.Components.Add(this);
             
             this.knownEvents  = new List<int>();
             this.queuedEvents = new List<IEvent>();

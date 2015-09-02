@@ -30,3 +30,14 @@ namespace Microsoft.Xna.Framework
         }
     }
 }
+
+namespace System.Drawing
+{
+    public static class ExtPoint
+    {
+        public static Microsoft.Xna.Framework.Point Convert(this Point point)
+        {
+            return new Microsoft.Xna.Framework.Point(point.X, point.Y);
+        }
+    }
+}

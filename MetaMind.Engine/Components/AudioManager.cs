@@ -51,8 +51,6 @@ namespace MetaMind.Engine.Components
             this.AudioEngine = audioEngine;
             this.WaveBank    = waveBank;
             this.SoundBank   = soundBank;
-
-            engine.Components.Add(this);
         }
 
         #region Audio Data

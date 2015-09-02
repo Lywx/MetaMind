@@ -4,7 +4,9 @@ namespace MetaMind.Engine.Components
 
     public interface IGameManager : IDisposable
     {
-        void Plug(IGame game);
+        IGame Game { get; }
+
+        void Add(IGame game);
 
         void OnExiting();
     }

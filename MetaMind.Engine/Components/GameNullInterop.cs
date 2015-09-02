@@ -36,7 +36,7 @@ namespace MetaMind.Engine.Components
         {
         }
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void UpdateInput(GameTime time)
         {
         }
 

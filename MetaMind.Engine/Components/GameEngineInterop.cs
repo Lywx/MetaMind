@@ -73,26 +73,35 @@ namespace MetaMind.Engine.Components
 
             this.Engine = engine;
 
-            this.Audio   = audio;
-            this.File    = file;
-            this.Event   = @event;
-            this.Game    = game;
+            this.Audio = audio;
+            this.Engine.Components.Add(this.Audio);
+
+            this.File = file;
+
+            this.Event = @event;
+            this.Engine.Components.Add(this.Event);
+
+            this.Game = game;
+
             this.Process = process;
-            this.Screen  = screen;
+            this.Engine.Components.Add(this.Process);
+
+            this.Screen = screen;
+            this.Engine.Components.Add(this.Screen);
 
             this.Console = console;
+            this.Engine.Components.Add(this.Console);
 
             this.Content = engine.Content;
         }
 
         public override void Initialize()
         {
-            // Initialize components that aren't initialized during GameComponents initialization
         }
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void UpdateInput(GameTime time)
         {
-            this.Screen.UpdateInput(gameTime);
+            this.Screen.UpdateInput(time);
         }
 
         public void OnExiting()

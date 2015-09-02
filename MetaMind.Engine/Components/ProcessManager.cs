@@ -31,8 +31,6 @@ namespace MetaMind.Engine.Components
             {
                 throw new ArgumentNullException(nameof(engine));
             }
-
-            engine.Components.Add(this);
             
             this.processes = new List<IProcess>();
         }

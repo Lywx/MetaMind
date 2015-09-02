@@ -118,8 +118,6 @@ namespace MetaMind.Engine.Components
 
             this.SpriteBatch = spriteBatch;
             this.Settings    = settings;
-
-            engine.Components.Add(this);
         }
 
         #endregion Constructors
@@ -174,14 +172,14 @@ namespace MetaMind.Engine.Components
         /// <summary>
         /// Tells each screen to draw itself.
         /// </summary>
-        public override void Draw(GameTime gameTime)
+        public override void Draw(GameTime time)
         {
             if (this.Game.IsActive ||
                 this.Settings.IsAlwaysVisible)
             {
                 foreach (var screen in this.screens.Where(screen => screen.ScreenState != GameScreenState.Hidden))
                 {
-                    screen.Draw(this.GameGraphics, gameTime);
+                    screen.Draw(this.GameGraphics, time);
                 }
             }
         }
@@ -189,36 +187,36 @@ namespace MetaMind.Engine.Components
         /// <summary>
         /// Allows each screen to run logic.
         /// </summary>
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime time)
         {
             // Update the screen when users actually use it
             if (this.Game.IsActive || 
                 this.Settings.IsAlwaysActive)
             {
-                this.UpdateInternal(gameTime);
+                this.UpdateInternal(time);
 
                 // Don't need an engine access here for plain Update(GameTime)
-                this.UpdateAll<object>((screen, access, time) => screen.Update(gameTime), null, gameTime);
+                this.UpdateAll<object>((screen, access, time_) => screen.Update(time_), null, time);
             }
         }
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void UpdateInput(GameTime time)
         {
-            this.UpdateActive((screen, access, time) => screen.UpdateInput(access, gameTime), this.GameInput, gameTime);
+            this.UpdateActive((screen, access, time_) => screen.UpdateInput(access, time_), this.GameInput, time);
         }
 
-        private void UpdateActive<TAccess>(Action<IGameScreen, TAccess, GameTime> action, TAccess access, GameTime gameTime)
+        private void UpdateActive<TAccess>(Action<IGameScreen, TAccess, GameTime> action, TAccess access, GameTime time)
         {
             var screensActive = this.screens.FindAll(screen => screen.IsActive);
-            screensActive.ForEach(screen => action(screen, access, gameTime));
+            screensActive.ForEach(screen => action(screen, access, time));
         }
 
-        private void UpdateAll<TAccess>(Action<IGameScreen, TAccess, GameTime> action, TAccess access, GameTime gameTime)
+        private void UpdateAll<TAccess>(Action<IGameScreen, TAccess, GameTime> action, TAccess access, GameTime time)
         {
-            this.screens.ForEach(screen => action(screen, access, gameTime));
+            this.screens.ForEach(screen => action(screen, access, time));
         }
 
-        private void UpdateInternal(GameTime gameTime)
+        private void UpdateInternal(GameTime time)
         {
             // Make a copy of the master screen list, to avoid confusion if
             // the process of updating one screen adds or removes others.
@@ -240,7 +238,7 @@ namespace MetaMind.Engine.Components
                 this.screensToUpdate.RemoveAt(this.screensToUpdate.Count - 1);
 
                 // Update the screen transition
-                screen.UpdateScreen(this.GameInterop, gameTime, hasOtherScreenFocus, isCoveredByOtherScreen);
+                screen.UpdateScreen(this.GameInterop, time, hasOtherScreenFocus, isCoveredByOtherScreen);
 
                 if (screen.ScreenState == GameScreenState.TransitionOn ||
                     screen.ScreenState == GameScreenState.Active)

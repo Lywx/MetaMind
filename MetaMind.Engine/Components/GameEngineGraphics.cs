@@ -9,16 +9,6 @@ namespace MetaMind.Engine.Components
 
     public class GameEngineGraphics : DrawableGameComponent, IGameGraphics
     {
-        public GraphicsManager Manager { get; private set; }
-        
-        public GraphicsSettings Settings { get; private set; }
-
-        public SpriteBatch SpriteBatch { get; private set; }
-
-        public IStringDrawer StringDrawer { get; private set; }
-
-        public IFontManager FontManager { get; private set; }
-
         public GameEngineGraphics(GameEngine engine, GraphicsSettings settings, GraphicsManager manager)
             : base(engine)
         {
@@ -47,21 +37,37 @@ namespace MetaMind.Engine.Components
             // No dependency injection here, because string drawer is a class focus on string 
             // drawing. The functionality is never extended in the form of inheritance.
             this.StringDrawer = new StringDrawer(this.SpriteBatch);
+            this.Game.Components.Add(this.StringDrawer);
 
             // No dependency injection here, because font manager is a class focus on font 
             // loading. It may extend but in the form of more internal operations.
             // The functionality is never extended in the form of inheritance. 
             this.FontManager = new FontManager(engine);
+            this.Game.Components.Add(this.FontManager);
         }
+
+        public GraphicsManager Manager { get; private set; }
+        
+        public GraphicsSettings Settings { get; private set; }
+
+        public SpriteBatch SpriteBatch { get; private set; }
+
+        public IStringDrawer StringDrawer { get; private set; }
+
+        public IFontManager FontManager { get; private set; }
+
+        #region Initialization
 
         public override void Initialize()
         {
             this.Manager.Initialize();
         }
 
-        protected override void LoadContent()
-        {
-        }
+        #endregion
+
+        #region IDisposable
+
+        private bool IsDisposed { get; set; }
 
         protected override void Dispose(bool disposing)
         {
@@ -69,20 +75,31 @@ namespace MetaMind.Engine.Components
             {
                 if (disposing)
                 {
-                    this.Manager?.Dispose();
-                    this.Manager = null;
+                    if (!this.IsDisposed)
+                    {
+                        this.Manager?.Dispose();
+                        this.Manager = null;
 
-                    this.SpriteBatch?.Dispose();
-                    this.SpriteBatch = null;
+                        this.SpriteBatch?.Dispose();
+                        this.SpriteBatch = null;
 
-                    this.FontManager?.Dispose();
-                    this.FontManager = null;
+                        this.FontManager?.Dispose();
+                        this.FontManager = null;
+                    }
+
+                    this.IsDisposed = true;
                 }
+            }
+            catch
+            {
+                // Ignored
             }
             finally
             {
                 base.Dispose(disposing);
             }
         }
+
+        #endregion
     }
 }

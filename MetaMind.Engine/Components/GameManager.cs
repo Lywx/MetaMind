@@ -11,22 +11,28 @@ namespace MetaMind.Engine.Components
 
     using Microsoft.Xna.Framework;
 
-    public class GameManager : IGameManager
+    public class GameManager : GameComponent, IGameManager
     {
-        private GameComponentCollection Components { get; set; }
+        #region Constructors and Finalizer
 
-        private IGame Game { get; set; }
-
-        #region Constructors
-
-        public GameManager(GameEngine engine)
+        public GameManager(GameEngine engine) 
+            : base(engine)
         {
-            this.Components = engine.Components;
+            if (engine == null)
+            {
+                throw new ArgumentNullException(nameof(engine));
+            }
+
+            this.Engine = engine;
         }
 
         #endregion
 
-        public void Plug(IGame game)
+        public new IGame Game { get; private set; }
+
+        protected GameEngine Engine { get; set; }
+
+        public void Add(IGame game)
         {
             if (game == null)
             {
@@ -40,7 +46,7 @@ namespace MetaMind.Engine.Components
 
             this.Game = game;
 
-            this.Components.Add(game);
+            this.Engine.Components.Add(game);
         }
 
         public void OnExiting()
@@ -48,10 +54,35 @@ namespace MetaMind.Engine.Components
             this.Game?.OnExiting();
         }
 
-        public void Dispose()
+        #region IDisposable
+
+        private bool IsDisposed { get; set; }
+
+        protected override void Dispose(bool disposing)
         {
-            this.Game?.Dispose();
-            this.Game = null;
+            try
+            {
+                if (disposing)
+                {
+                    if (!this.IsDisposed)
+                    {
+                        this.Game?.Dispose();
+                        this.Game = null;
+                    }
+
+                    this.IsDisposed = true;
+                }
+            }
+            catch
+            {
+                // Ignored
+            }
+            finally
+            {
+                base.Dispose(disposing);
+            }
         }
+
+        #endregion
     }
 }

@@ -40,7 +40,6 @@ namespace MetaMind.Engine.Components.Graphics
             this.ApplyChanges();
         }
 
-
         public void Initialize()
         {
             this.ApplySettings();

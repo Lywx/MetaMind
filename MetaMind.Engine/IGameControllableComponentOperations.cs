@@ -4,6 +4,6 @@ namespace MetaMind.Engine
 
     public interface IGameControllableComponentOperations
     {
-        void UpdateInput(GameTime gameTime);
+        void UpdateInput(GameTime time);
     }
 }

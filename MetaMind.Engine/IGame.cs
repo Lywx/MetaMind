@@ -3,7 +3,7 @@ namespace MetaMind.Engine
     using System;
     using Microsoft.Xna.Framework;
 
-    public interface IGame : IGameComponent, Microsoft.Xna.Framework.IUpdateable, Microsoft.Xna.Framework.IDrawable, IDisposable
+    public interface IGame : IGameComponent, IUpdateable, Microsoft.Xna.Framework.IDrawable, IDisposable
     {
         void Run();
 
