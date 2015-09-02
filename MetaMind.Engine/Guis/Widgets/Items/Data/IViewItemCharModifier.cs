@@ -1,10 +1,9 @@
 namespace MetaMind.Engine.Guis.Widgets.Items.Data
 {
     using System;
+    using Events;
 
-    using MetaMind.Engine.Events;
-
-    public interface IViewItemCharModifier : IInputable, Engine.IDrawable, IDisposable
+    public interface IViewItemCharModifier : IInputable, IDrawable, IDisposable
     {
         event EventHandler<ViewItemDataEventArgs> ModificationEnded;
 
@@ -12,7 +11,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
 
         void Cancel();
 
-        void Initialize(string prevString, bool showCursor);
+        void Initialize(string originalString, bool showCursor);
 
         void Release();
     }

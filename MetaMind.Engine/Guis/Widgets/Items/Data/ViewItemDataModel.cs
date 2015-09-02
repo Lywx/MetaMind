@@ -9,13 +9,11 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
 {
     using System;
     using System.Reflection;
-
-    using MetaMind.Engine.Components.Fonts;
-    using MetaMind.Engine.Events;
-    using MetaMind.Engine.Guis.Widgets.Items.Layers;
-    using MetaMind.Engine.Guis.Widgets.Views;
-    using MetaMind.Engine.Services;
-
+    using Components.Fonts;
+    using Events;
+    using Layers;
+    using Views;
+    using Services;
     using Microsoft.Xna.Framework;
 
     public class ViewItemDataModel : ViewItemComponent, IViewItemDataModel
@@ -23,6 +21,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
         private dynamic itemData;
 
         private string itemDataName;
+
+        #region Constructors and Finalizer
 
         public ViewItemDataModel(IViewItem item)
             : base(item)
@@ -32,8 +32,10 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
 
         ~ViewItemDataModel()
         {
-            this.Dispose();
+            this.Dispose(true);
         }
+
+        #endregion
 
         #region Dependency
         
@@ -47,20 +49,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
         {
             var itemLayer = this.ItemGetLayer<ViewItemLayer>();
             this.itemData = itemLayer.ItemData;
-        }
-
-        #endregion
-
-        #region IDisposable
-
-        public override void Dispose()
-        {
-            if (this.CharModifier != null)
-            {
-                this.CharModifier.Dispose();
-            }
-
-            base.Dispose();
         }
 
         #endregion
@@ -131,16 +119,10 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
         private void RefreshValue(dynamic data, dynamic value)
         {
             FieldInfo field = data.GetType().GetField(this.itemDataName);
-            if (field != null)
-            {
-                field.SetValue(data, value);
-            }
+            field?.SetValue(data, value);
 
             PropertyInfo property = data.GetType().GetProperty(this.itemDataName);
-            if (property != null)
-            {
-                property.SetValue(data, value);
-            }
+            property?.SetValue(data, value);
         }
 
         #endregion
@@ -150,6 +132,37 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
             this.CharModifier.UpdateInput(input, time);
+        }
+
+        #endregion
+
+        #region IDisposable
+
+        private bool IsDisposed { get; set; }
+
+        protected override void Dispose(bool disposing)
+        {
+            try
+            {
+                if (disposing)
+                {
+                    if (!this.IsDisposed)
+                    {
+                        this.CharModifier?.Dispose();
+                        this.CharModifier = null;
+                    }
+
+                    this.IsDisposed = true;
+                }
+            }
+            catch
+            {
+                // Ignored
+            }
+            finally
+            {
+                base.Dispose(disposing);
+            }
         }
 
         #endregion

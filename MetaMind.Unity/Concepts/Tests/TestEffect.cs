@@ -2,6 +2,7 @@
 {
     using Engine;
     using System;
+    using Events;
 
     public class TestEffect : GameEntity
     {
@@ -24,25 +25,29 @@
             this.test.Failed    += this.EvaluationFailed;
         }
 
-        private void EvaluationFailed(object sender, TestEventArgs e)
+        private string FailingNotification => $"{this.test.Name} failed.";
+
+        private string SucceedingNotification => $"{this.test.Name} succeeded.";
+
+        private void EvaluationFailed(object sender, TestEvaluationEventArgs e)
         {
-            if (e.IsCause && Test.Session.IsNotificationEnabled)
+            if (e.IsSource && Test.Session.IsNotificationEnabled)
             {
                 var audio = this.GameInterop.Audio;
                 audio.PlayCue(this.failingCue);
 
-                Test.Speech.SpeakAsync($"{this.test.Name} failed.");
+                Test.Speech.SpeakAsync(this.FailingNotification);
             }
         }
 
-        private void EvaluationSucceeded(object sender, TestEventArgs e)
+        private void EvaluationSucceeded(object sender, TestEvaluationEventArgs e)
         {
-            if (e.IsCause && Test.Session.IsNotificationEnabled)
+            if (e.IsSource && Test.Session.IsNotificationEnabled)
             {
                 var audio = this.GameInterop.Audio;
                 audio.PlayCue(this.succeedingCue);
 
-                Test.Speech.SpeakAsync($"{this.test.Name} succeeded.");
+                Test.Speech.SpeakAsync(this.SucceedingNotification);
             }
         }
     }

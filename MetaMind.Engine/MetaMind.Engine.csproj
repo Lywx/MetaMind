@@ -61,6 +61,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <OutputPath>bin\Release\</OutputPath>
@@ -77,6 +78,13 @@
   <ItemGroup>
     <Compile Include="Collections\ObservableCollection.cs" />
     <Compile Include="Components\IFileManager.cs" />
+    <Compile Include="Components\Inputs\KeyEventArgs.cs" />
+    <Compile Include="Components\Inputs\MouseButtons.cs" />
+    <Compile Include="Components\Inputs\MouseEventArgs.cs" />
+    <Compile Include="Components\Inputs\MouseKeys.cs" />
+    <Compile Include="Extensions\ExtKeys.cs" />
+    <Compile Include="Extensions\ExtMouseButtons.cs" />
+    <Compile Include="Extensions\ExtMouseEventArgs.cs" />
     <Compile Include="Extensions\ExtVector3.cs" />
     <Compile Include="GameComponent.cs" />
     <Compile Include="GameControllableComponent.cs" />
@@ -88,7 +96,10 @@
     <Compile Include="Extensions\ExtT.cs" />
     <Compile Include="Extensions\ExtList.cs" />
     <Compile Include="GameEngineConfigurer.cs" />
-    <Compile Include="Guis\Console\OutputLineType.cs" />
+    <Compile Include="Guis\Console\GameConsoleBuffer.cs" />
+    <Compile Include="Guis\Console\IGameConsoleProcessor.cs" />
+    <Compile Include="Guis\Console\Processors\IronPythonProcessor.cs" />
+    <Compile Include="Guis\Console\CommandType.cs" />
     <Compile Include="Guis\Elements\Inputs\ButtonDoubleClick.cs" />
     <Compile Include="Guis\Elements\Inputs\ButtonHistory.cs" />
     <Compile Include="Guis\Elements\Inputs\ButtonPress.cs" />
@@ -119,15 +130,10 @@
     <Compile Include="Components\Inputs\IMouseInputState.cs" />
     <Compile Include="Components\Inputs\KeyboardActionMap.cs" />
     <Compile Include="Components\Inputs\KeyboardActions.cs" />
-    <Compile Include="Components\Inputs\CharEnteredEventArgs.cs" />
     <Compile Include="Components\EventManager.cs" />
     <Compile Include="Components\Events\Event.cs" />
     <Compile Include="Components\Events\Listener.cs" />
     <Compile Include="Components\Inputs\IKeyboardInputState.cs" />
-    <Compile Include="Components\Inputs\KeyEventArgs.cs" />
-    <Compile Include="Guis\Elements\Inputs\MouseButton.cs" />
-    <Compile Include="Components\Inputs\MouseEventArgs.cs" />
-    <Compile Include="Components\Inputs\MouseKeys.cs" />
     <Compile Include="Components\IProcessManager.cs" />
     <Compile Include="Components\ISaveManager.cs" />
     <Compile Include="Components\IScreenManager.cs" />
@@ -143,22 +149,30 @@
     <Compile Include="Components\GameEngineInterop.cs" />
     <Compile Include="Components\GameEngineNumerical.cs" />
     <Compile Include="Guis\Console\CommandHistory.cs" />
-    <Compile Include="Guis\Console\CommandProcesser.cs" />
+    <Compile Include="Guis\Console\Processors\CommandProcessor.cs" />
     <Compile Include="Guis\Console\Commands\ClearCommand.cs" />
-    <Compile Include="Guis\Console\Commands\CommandComparer.cs" />
+    <Compile Include="Guis\Console\CommandComparer.cs" />
     <Compile Include="Guis\Console\Commands\CustomCommand.cs" />
     <Compile Include="Guis\Console\Commands\ExitCommand.cs" />
     <Compile Include="Guis\Console\Commands\HelpCommand.cs" />
     <Compile Include="Guis\Console\Commands\ResetCommand.cs" />
     <Compile Include="Guis\Console\Commands\RestartCommand.cs" />
     <Compile Include="Guis\Console\GameConsole.cs" />
-    <Compile Include="Guis\Console\GameConsoleComponent.cs" />
+    <Compile Include="Guis\Console\GameConsoleModule.cs" />
     <Compile Include="Guis\Console\GameConsoleSettings.cs" />
     <Compile Include="Guis\Console\Commands\IConsoleCommand.cs" />
-    <Compile Include="Guis\Console\GameConsoleProcessor.cs" />
-    <Compile Include="Guis\Console\OutputLine.cs" />
-    <Compile Include="Guis\Console\GameConsoleRenderer.cs" />
-    <Compile Include="Guis\IModuleLogicControl.cs" />
+    <Compile Include="Guis\Console\GameConsoleLogic.cs" />
+    <Compile Include="Guis\Console\CommandLine.cs" />
+    <Compile Include="Guis\Console\GameConsoleVisual.cs" />
+    <Compile Include="GameModule.cs" />
+    <Compile Include="GameModuleComponent.cs" />
+    <Compile Include="GameModuleLogic.cs" />
+    <Compile Include="GameModuleVisual.cs" />
+    <Compile Include="IGameModule.cs" />
+    <Compile Include="IGameModuleComponent.cs" />
+    <Compile Include="IGameModuleLogic.cs" />
+    <Compile Include="IGameModuleVisual.cs" />
+    <Compile Include="IGameEntityModuleLogic.cs" />
     <Compile Include="Guis\Layers\CircularGameLayer.cs" />
     <Compile Include="Guis\Layers\ICircularLayerManager.cs" />
     <Compile Include="Guis\Layers\ICircularLayerOperations.cs" />
@@ -540,17 +554,26 @@
     <Compile Include="Screens\IGameLayer.cs" />
     <Compile Include="Screens\IGameLayerOperations.cs" />
     <Compile Include="Screens\IGameScreenOperations.cs" />
+    <Compile Include="Scripting\FSharp\FsiDebugger.cs" />
+    <Compile Include="Scripting\FSharp\FsiSession.cs" />
+    <Compile Include="Scripting\FSharp\FsScript.cs" />
+    <Compile Include="Scripting\FSharp\FsScriptRunner.cs" />
+    <Compile Include="Scripting\FSharp\FsScriptSearcher.cs" />
+    <Compile Include="Scripting\FSharp\IFsScript.cs" />
+    <Compile Include="Scripting\FSharp\IFsScriptOperations.cs" />
+    <Compile Include="Scripting\Diagnostics.cs" />
+    <Compile Include="Scripting\IronPython\IIpyScript.cs" />
+    <Compile Include="Scripting\IronPython\IIpyScriptOperations.cs" />
+    <Compile Include="Scripting\IronPython\IpySession.cs" />
+    <Compile Include="Scripting\QueueSession.cs" />
     <Compile Include="Services\GameEngineNumericalService.cs" />
     <Compile Include="GameVisualEntity.cs" />
     <Compile Include="Services\GameEngineGraphicsService.cs" />
     <Compile Include="Services\GameEngineInputService.cs" />
     <Compile Include="Services\GameEngineInteropService.cs" />
     <Compile Include="Guis\Elements\IFrameEntity.cs" />
-    <Compile Include="Guis\IGroup.cs" />
-    <Compile Include="Guis\IGroupLogic.cs" />
-    <Compile Include="Guis\IGroupVisual.cs" />
-    <Compile Include="Guis\IModule.cs" />
-    <Compile Include="Guis\IModuleVisualControl.cs" />
+    <Compile Include="IGameEntityModule.cs" />
+    <Compile Include="IGameEntityModuleVisual.cs" />
     <Compile Include="Guis\Particles\IParticle.cs" />
     <Compile Include="Guis\Particles\IRandomParticle.cs" />
     <Compile Include="Guis\Particles\IShapelessParticle.cs" />
@@ -623,14 +646,10 @@
     <Compile Include="Settings\Loaders\IParameter.cs" />
     <Compile Include="Settings\Loaders\IParameterLoader.cs" />
     <Compile Include="Events\ViewItemDataEventArgs.cs" />
-    <Compile Include="Guis\Group.cs" />
-    <Compile Include="Guis\GroupComponent.cs" />
-    <Compile Include="Guis\GroupLogic.cs" />
-    <Compile Include="Guis\GroupVisual.cs" />
-    <Compile Include="Guis\Module.cs" />
-    <Compile Include="Guis\ModuleComponent.cs" />
-    <Compile Include="Guis\ModuleLogic.cs" />
-    <Compile Include="Guis\ModuleVisual.cs" />
+    <Compile Include="GameEntityModule.cs" />
+    <Compile Include="GameEntityModuleComponent.cs" />
+    <Compile Include="GameEntityModuleLogic.cs" />
+    <Compile Include="GameEntityModuleVisual.cs" />
     <Compile Include="GameControllableEntity.cs" />
     <Compile Include="Parsers\Grammars\LineGrammar.cs" />
     <Compile Include="Parsers\Grammars\ConfigurationFileGrammar.cs" />
@@ -646,10 +665,51 @@
     <Compile Include="Testers\StateVisualTester.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="FSharp.Compiler.Service, Version=1.4.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FSharp.Compiler.Service.1.4.0.1\lib\net45\FSharp.Compiler.Service.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FSharp.Core, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FSharp.Core.4.0.0.1\lib\net40\FSharp.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IronPython, Version=2.7.5.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.5\lib\Net45\IronPython.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IronPython.Modules, Version=2.7.5.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.5\lib\Net45\IronPython.Modules.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IronPython.SQLite, Version=2.7.5.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.5\lib\Net45\IronPython.SQLite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IronPython.Wpf, Version=2.7.5.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.5\lib\Net45\IronPython.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Dynamic, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.5\lib\Net45\Microsoft.Dynamic.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Scripting, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.5\lib\Net45\Microsoft.Scripting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Scripting.AspNet, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.5\lib\Net45\Microsoft.Scripting.AspNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Scripting.Metadata, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.5\lib\Net45\Microsoft.Scripting.Metadata.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="Primtives2D, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ThirdParties\Primitives2D\bin\Debug\Primtives2D.dll</HintPath>
@@ -740,6 +800,7 @@
     <None Include="Content\Audio\Win\Wave Bank.xwb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />

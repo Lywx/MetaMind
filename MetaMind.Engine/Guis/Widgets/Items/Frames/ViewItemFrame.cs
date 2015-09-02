@@ -21,13 +21,18 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Frames
         {
             if (itemRootFrame == null)
             {
-                throw new ArgumentNullException("itemRootFrame");
+                throw new ArgumentNullException(nameof(itemRootFrame));
             }
 
             this.RootFrame = itemRootFrame;
 
             this.Item[ItemState.Item_Is_Mouse_Over] = this.RootFrame[FrameState.Mouse_Is_Over];
             this.Item[ItemState.Item_Is_Dragging]   = this.RootFrame[FrameState.Frame_Is_Dragging];
+        }
+
+        ~ViewItemFrame()
+        {
+            this.Dispose(true);
         }
 
         public override void SetupLayer()
@@ -70,14 +75,30 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Frames
 
         #region IDisposable
 
-        public override void Dispose()
-        {
-            if (this.RootFrame != null)
-            {
-                this.RootFrame.Dispose();
-            }
+        private bool IsDisposed { get; set; }
 
-            base.Dispose();
+        protected override void Dispose(bool disposing)
+        {
+            try
+            {
+                if (disposing)
+                {
+                    if (!this.IsDisposed)
+                    {
+                        this.RootFrame?.Dispose();
+                    }
+
+                    this.IsDisposed = true;
+                }
+            }
+            catch
+            {
+                // Ignored
+            }
+            finally
+            {
+                base.Dispose(disposing);
+            }
         }
 
         #endregion

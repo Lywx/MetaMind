@@ -1,10 +1,9 @@
 namespace MetaMind.Engine.Guis.Widgets.Items
 {
     using System;
-
-    using MetaMind.Engine.Guis.Widgets.Items.Layers;
-    using MetaMind.Engine.Guis.Widgets.Views;
-    using MetaMind.Engine.Guis.Widgets.Views.Layers;
+    using Layers;
+    using Views;
+    using Views.Layers;
 
     public class ViewItemComponent : GameControllableEntity, IViewItemComponent
     {
@@ -14,7 +13,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         {
             if (item == null)
             {
-                throw new ArgumentNullException("item");
+                throw new ArgumentNullException(nameof(item));
             }
 
             this.Item = item;
@@ -29,35 +28,17 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
         #region Direct Dependency
 
-        public IViewItem Item { get; private set; }
+        public IViewItem Item { get; }
 
         #endregion 
 
         #region Indirect Dependency
 
-        public IView View
-        {
-            get
-            {
-                return this.Item.View;
-            } 
-        }
+        public IView View => this.Item.View;
 
-        private IViewLayer ViewLayer
-        {
-            get
-            {
-                return this.View.ViewLayer;
-            }
-        }
+        private IViewLayer ViewLayer => this.View.ViewLayer;
 
-        private IViewItemLayer ItemLayer
-        {
-            get
-            {
-                return this.Item.ItemLayer;
-            }
-        }
+        private IViewItemLayer ItemLayer => this.Item.ItemLayer;
 
         #endregion
 

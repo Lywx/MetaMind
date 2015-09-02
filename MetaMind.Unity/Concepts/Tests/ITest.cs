@@ -2,13 +2,13 @@
 {
     using System;
     using Engine;
+    using Events;
 
     public interface ITest : 
         ITestOperations,
         ITestOrganization,
 
         IComparable<ITest>, 
-
         IInnerUpdatable
     {
         #region Properties
@@ -27,9 +27,9 @@
 
         #region Events
 
-        event EventHandler<TestEventArgs> Succeeded;
+        event EventHandler<TestEvaluationEventArgs> Succeeded;
 
-        event EventHandler<TestEventArgs> Failed;
+        event EventHandler<TestEvaluationEventArgs> Failed;
 
         #endregion
     }

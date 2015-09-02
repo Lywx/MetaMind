@@ -3,9 +3,10 @@
     using System;
     using System.Speech.Synthesis;
     using Concepts.Tests;
+    using Engine;
     using Engine.Guis;
 
-    public class TestModule : Module<TestModuleSettings>
+    public class TestModule : GameEntityModule<TestModuleSettings>
     {
         private readonly ITest test;
 

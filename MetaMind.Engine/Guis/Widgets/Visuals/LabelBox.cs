@@ -1,8 +1,8 @@
 namespace MetaMind.Engine.Guis.Widgets.Visuals
 {
     using Engine;
-    using Engine.Components.Fonts;
-    using Engine.Services;
+    using Components.Fonts;
+    using Services;
     using Microsoft.Xna.Framework;
 
     public class LabelBox : GameVisualEntity

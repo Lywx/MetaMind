@@ -3,6 +3,7 @@
     using Engine;
     using System;
     using System.Linq;
+    using Events;
 
     public class TestEvaluation : GameEntity, ITestEvaluation
     {
@@ -114,18 +115,18 @@
 
         #region Events
 
-        public event EventHandler<TestEventArgs> Failed = delegate {};
+        public event EventHandler<TestEvaluationEventArgs> Failed = delegate {};
 
-        public event EventHandler<TestEventArgs> Succeeded = delegate { };
+        public event EventHandler<TestEvaluationEventArgs> Succeeded = delegate { };
 
-        private void OnSucceed(bool isCause)
+        private void OnSucceed(bool isSource)
         {
-            this.Succeeded.Invoke(this, new TestEventArgs(isCause));
+            this.Succeeded.Invoke(this, new TestEvaluationEventArgs(isSource));
         }
 
-        private void OnFail(bool isCause)
+        private void OnFail(bool isSource)
         {
-            this.Failed(this, new TestEventArgs(isCause));
+            this.Failed(this, new TestEvaluationEventArgs(isSource));
         }
 
         private void OnResultChange(int change)
@@ -230,14 +231,17 @@
 
         #region IDisosable
 
-        public override void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            this.Succeeded = null;
-            this.Failed    = null;
+            if (disposing)
+            {
+                this.Succeeded = null;
+                this.Failed    = null;
 
-            this.testTimer?.Dispose();
+                this.testTimer?.Dispose();
+            }
 
-            base.Dispose();
+            base.Dispose(disposing);
         }
 
         #endregion

@@ -9,7 +9,7 @@
 
     using Microsoft.Xna.Framework;
 
-    public class PlayTest_Region : Module<object>
+    public class PlayTest_Region : GameEntityModule<object>
     {
         private GameControllableEntityCollection<GameControllableEntity> control;
         private GameVisualEntityCollection<GameVisualEntity> visual;

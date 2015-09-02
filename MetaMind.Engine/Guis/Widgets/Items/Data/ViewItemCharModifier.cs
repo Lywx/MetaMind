@@ -12,25 +12,23 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
     using System.Linq;
     using System.Text;
     using System.Threading;
-    using System.Windows.Forms;
-    using MetaMind.Engine.Components.Inputs;
-    using MetaMind.Engine.Events;
-    using MetaMind.Engine.Services;
-
+    using System.Windows;
+    using Components.Inputs;
+    using Events;
+    using Services;
     using Microsoft.Xna.Framework;
-    using KeyEventArgs = Components.Inputs.KeyEventArgs;
-    using Keys = Microsoft.Xna.Framework.Input.Keys;
+    using Microsoft.Xna.Framework.Input;
 
     public class ViewItemCharModifier : ViewItemComponent, IViewItemCharModifier, IViewItemCharProcessor
     {
         #region Input Settings
 
-        private readonly string cursorSymbol = "_";
-
         private readonly char[] invalidChars = Enumerable.Range(0, char.MaxValue + 1)
                                                          .Select(i => (char)i)
                                                          .Where(char.IsControl)
                                                          .ToArray();
+
+        private readonly string cursorSymbol = "_";
 
         private string cursorCharacter = string.Empty;
 
@@ -39,53 +37,28 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
         #region Input Data
 
         private StringBuilder currentString = new StringBuilder();
+
         private int           cursorIndex;
-        private string        previousString = string.Empty;
+
+        private string        originalString = string.Empty;
 
         #endregion Input Data
 
-        #region Constructors
+        #region Constructors and Finalizer 
 
         public ViewItemCharModifier(IViewItem item)
             : base(item)
         {
-            this.InputEvent = this.GameInput.Event;
-
-            this.InputEvent.CharEntered += this.DetectCharEntered;
-            this.InputEvent.KeyDown     += this.DetectEnterKeyDown;
+            this.GameInput.Event.CharEntered += this.InputEventCharEntered;
+            this.GameInput.Event.KeyDown     += this.InputEventEnterKeyDown;
         }
-
-        #endregion 
-
-        #region Destructors
 
         ~ViewItemCharModifier()
         {
-            this.Dispose();
+            this.Dispose(true);
         }
 
         #endregion
-
-        #region Dependency
-
-        protected IInputEvent InputEvent { get; private set; }
-
-        #endregion
-
-        #region IDisposable
-
-        public override void Dispose()
-        {
-            this.modificationEnded = null;
-            this.ValueModified     = null;
-
-            this.InputEvent.CharEntered -= this.DetectCharEntered;
-            this.InputEvent.KeyDown     -= this.DetectEnterKeyDown;
-
-            base.Dispose();
-        }
-
-        #endregion IDisposable
 
         #region Events
 
@@ -132,7 +105,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
 
         #region Event Handlers
 
-        private void DetectCharEntered(object sender, CharEnteredEventArgs e)
+        private void InputEventCharEntered(object sender, TextInputEventArgs e)
         {
             if (!this.Item[ItemState.Item_Is_Editing]())
             {
@@ -149,7 +122,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
             this.OnValueModified(this.currentString.ToString());
         }
 
-        private void DetectEnterKeyDown(object sender, KeyEventArgs e)
+        private void InputEventEnterKeyDown(object sender, KeyEventArgs e)
         {
             if (!this.Item[ItemState.Item_Is_Editing]())
             {
@@ -168,51 +141,45 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
 
         public void Cancel()
         {
-            this.OnValueModified(this.previousString);
-            this.OnModificationEnded(this.previousString);
+            this.OnValueModified(this.originalString);
+            this.OnModificationEnded(this.originalString);
 
             // only need to clear ValueModified, assuming ModificationEnded delegates
             // are not needing multiple time operations.
             this.ValueModified = null;
         }
 
-        public void Initialize(string prevString, bool showCursor)
+        public void Initialize(string original, bool showCursor)
         {
             this.cursorCharacter = showCursor ? this.cursorSymbol : string.Empty;
 
-            this.previousString = prevString;
+            this.originalString = original;
 
-            this.currentString = new StringBuilder(prevString);
+            this.currentString = new StringBuilder(original);
             this.cursorIndex = this.currentString.Length;
         }
 
         public void Release()
         {
-            // remove index character after editing
+            // Remove index character after editing
             this.RemoveCursor();
 
             this.OnValueModified(this.currentString.ToString());
             this.OnModificationEnded(this.currentString.ToString());
 
-            // only need to clear ValueModified, assuming ModificationEnded delegates
+            // Only need to clear ValueModified, assuming ModificationEnded delegates
             // are not needing multiple time operations.
             this.ValueModified = null;
         }
 
         private void OnModificationEnded(string str)
         {
-            if (this.modificationEnded != null)
-            {
-                this.modificationEnded(this, new ViewItemDataEventArgs(str));
-            }
+            this.modificationEnded?.Invoke(this, new ViewItemDataEventArgs(str));
         }
 
         private void OnValueModified(string str)
         {
-            if (this.ValueModified != null)
-            {
-                this.ValueModified(this, new ViewItemDataEventArgs(str));
-            }
+            this.ValueModified?.Invoke(this, new ViewItemDataEventArgs(str));
         }
 
         #endregion State Control
@@ -223,7 +190,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
         {
             if (dirty.Length > 0 &&
 
-                // make sure input characters contain cursor characters
+                // Make sure input characters contain cursor characters
                 this.cursorIndex + this.cursorCharacter.Length < dirty.Length + 1 &&
                 dirty.Substring(this.cursorIndex, this.cursorCharacter.Length).ToString(CultureInfo.InvariantCulture) == this.cursorCharacter)
             {
@@ -362,7 +329,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
             this.currentString.Clear();
         }
 
-        private void DeleteNextChar()
+        private void DeleteNext()
         {
             this.RemoveCursor();
             this.HandleDelete();
@@ -370,7 +337,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
             this.OnValueModified(this.currentString.ToString());
         }
 
-        private void PasteFromClipboard()
+        private void Paste()
         {
             // Single thread paste
             if (Thread.CurrentThread.GetApartmentState() == ApartmentState.STA)
@@ -388,7 +355,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
         {
             var keyboard = input.State.Keyboard;
 
-            // 
             if (keyboard.IsActionTriggered(KeyboardActions.Escape))
             {
                 if (this.Item[ItemState.Item_Is_Editing]())
@@ -402,10 +368,9 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
                 this.DeleteAll();
             }
 
-            // Clipboard paste
             if (keyboard.CtrlDown && keyboard.IsKeyTriggered(Keys.V))
             {
-                this.PasteFromClipboard();
+                this.Paste();
             }
 
             if (this.ComboTriggered(keyboard, Keys.Left))
@@ -420,7 +385,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
 
             if (this.ComboTriggered(keyboard, Keys.Delete))
             {
-                this.DeleteNextChar();
+                this.DeleteNext();
             }
         }
 
@@ -430,5 +395,39 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
         }
 
         #endregion Update and Draw
+
+        #region IDisposable
+
+        private bool IsDisposed { get; set; }
+
+        protected override void Dispose(bool disposing)
+        {
+            try
+            {
+                if (disposing)
+                {
+                    if (!this.IsDisposed)
+                    {
+                        this.modificationEnded = null;
+                        this.ValueModified = null;
+
+                        this.GameInput.Event.CharEntered -= this.InputEventCharEntered;
+                        this.GameInput.Event.KeyDown -= this.InputEventEnterKeyDown;
+                    }
+
+                    this.IsDisposed = true;
+                }
+            }
+            catch
+            {
+                // Ignored
+            }
+            finally
+            {
+                base.Dispose(disposing);
+            }
+        }
+
+        #endregion
     }
 }

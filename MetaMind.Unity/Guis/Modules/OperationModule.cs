@@ -12,7 +12,7 @@
     using Widgets.IndexViews;
     using Widgets.IndexViews.Operations;
 
-    public class OperationModule : Module<OperationModuleSettings>
+    public class OperationModule : GameEntityModule<OperationModuleSettings>
     {
         private readonly IOperationDescription operation;
 

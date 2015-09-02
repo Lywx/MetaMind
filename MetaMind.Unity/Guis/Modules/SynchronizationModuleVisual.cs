@@ -11,7 +11,7 @@ namespace MetaMind.Unity.Guis.Modules
     using Microsoft.Xna.Framework;
     using Synchronization;
 
-    public class SynchronizationModuleVisual : ModuleVisual<SynchronizationModule, SynchronizationSettings, SynchronizationModuleLogic>
+    public class SynchronizationModuleVisual : GameEntityModuleVisual<SynchronizationModule, SynchronizationSettings, SynchronizationModuleLogic>
     {
         private string StateInfoFalse = "Losing Synchronicity";
 

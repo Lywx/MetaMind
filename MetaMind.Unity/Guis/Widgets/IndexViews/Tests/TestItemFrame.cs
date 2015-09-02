@@ -124,40 +124,7 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 
         #endregion
 
-        public override void Dispose()
-        {
-            if (this.IdFrame != null)
-            {
-                this.IdFrame.Dispose();
-            }
-
-            if (this.PlusFrame != null)
-            {
-                this.PlusFrame.Dispose();
-            }
-
-            if (this.StatusFrame != null)
-            {
-                this.StatusFrame.Dispose();
-            }
-
-            if (this.StatisticsFrame != null)
-            {
-                this.StatisticsFrame.Dispose();
-            }
-
-            if (this.NameFrame != null)
-            {
-                this.NameFrame.Dispose();
-            }
-
-            if (this.DescriptionFrame != null)
-            {
-                this.DescriptionFrame.Dispose();
-            }
-
-            base.Dispose();
-        }
+        #region Update
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
@@ -181,20 +148,23 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
             this.PlusFrame.Location = this.PlusFrameLocation().ToPoint();
 
             this.StatusFrame.Location = this.StatusFrameLocation().ToPoint();
-            this.StatisticsFrame.Location = this.StatisticsFrameLocation().ToPoint();
+            this.StatisticsFrame.Location =
+                this.StatisticsFrameLocation().ToPoint();
 
-            this.NameFrame.Location  = this.NameFrameLocation().ToPoint();
-            this.DescriptionFrame.Location  = this.DescriptionFrameLocation().ToPoint();
+            this.NameFrame.Location = this.NameFrameLocation().ToPoint();
+            this.DescriptionFrame.Location =
+                this.DescriptionFrameLocation().ToPoint();
 
             this.RootFrame.Size = new Point(
                 this.RootFrame.Size.X,
-                this.itemLayout.BlockRow * this.descriptionFrameSettings.Size.Y); 
+                this.itemLayout.BlockRow * this.descriptionFrameSettings.Size.Y);
 
             this.DescriptionFrame.Size = new Point(
                 this.descriptionFrameSettings.Size.X,
 
                 // this.itemLayout.BlockRow - 1 for taken position of name frame 
-                (this.itemLayout.BlockRow - 1) * this.descriptionFrameSettings.Size.Y);
+                (this.itemLayout.BlockRow - 1)
+                * this.descriptionFrameSettings.Size.Y);
         }
 
         public override void Update(GameTime time)
@@ -213,5 +183,42 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
             this.UpdateFrameGeometry();
             this.UpdateFrameStates();
         }
+
+        #endregion
+
+        #region IDisposable
+
+        private bool IsDisposed { get; set; }
+
+        protected override void Dispose(bool disposing)
+        {
+            try
+            {
+                if (disposing)
+                {
+                    if (!this.IsDisposed)
+                    {
+                        this.IdFrame?.Dispose();
+                        this.PlusFrame?.Dispose();
+                        this.StatusFrame?.Dispose();
+                        this.StatisticsFrame?.Dispose();
+                        this.NameFrame?.Dispose();
+                        this.DescriptionFrame?.Dispose();
+                    }
+
+                    this.IsDisposed = true;
+                }
+            }
+            catch
+            {
+                // Ignored
+            }
+            finally
+            {
+                base.Dispose(disposing);
+            }
+        }
+
+        #endregion
     }
 }

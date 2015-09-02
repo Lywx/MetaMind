@@ -3,6 +3,7 @@ namespace MetaMind.Unity.Concepts.Tests
     using System;
 
     using Engine;
+    using Events;
 
     public interface ITestEvaluation : IInnerUpdatable, ITestOperations, IDisposable
     {
@@ -26,9 +27,9 @@ namespace MetaMind.Unity.Concepts.Tests
 
         #region Events
 
-        event EventHandler<TestEventArgs> Succeeded;
+        event EventHandler<TestEvaluationEventArgs> Succeeded;
 
-        event EventHandler<TestEventArgs> Failed;
+        event EventHandler<TestEvaluationEventArgs> Failed;
 
         void Succeed(bool isCause);
 

@@ -3,6 +3,7 @@ namespace MetaMind.Unity.Guis.Modules
     using System;
     using Concepts.Cognitions;
     using Concepts.Synchronizations;
+    using Engine;
     using Engine.Components.Events;
     using Engine.Components.Inputs;
     using Engine.Guis;
@@ -12,7 +13,7 @@ namespace MetaMind.Unity.Guis.Modules
     using Screens;
     using Sessions;
 
-    public class SynchronizationModuleLogic : ModuleLogic<SynchronizationModule, SynchronizationSettings, SynchronizationModuleLogic>
+    public class SynchronizationModuleLogic : GameEntityModuleLogic<SynchronizationModule, SynchronizationSettings, SynchronizationModuleLogic>
     {
         public SynchronizationModuleLogic(SynchronizationModule module, IConsciousness consciousness, ISynchronization synchronization)
             : base(module)

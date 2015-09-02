@@ -17,12 +17,12 @@
         {
             if (view == null)
             {
-                throw new ArgumentNullException("view");
+                throw new ArgumentNullException(nameof(view));
             }
 
             if (itemSettings == null)
             {
-                throw new ArgumentNullException("itemSettings");
+                throw new ArgumentNullException(nameof(itemSettings));
             }
 
             this.View         = view;
@@ -66,11 +66,8 @@
         {
             this[ItemState.Item_Is_Swaping] = () => true;
             this[ItemState.Item_Is_Swapped] = () => false;
-            
-            if (this.Swapping != null)
-            {
-                this.Swapping(this, EventArgs.Empty);
-            }
+
+            this.Swapping?.Invoke(this, EventArgs.Empty);
         }
 
         internal void OnSwapped()
@@ -78,38 +75,26 @@
             this[ItemState.Item_Is_Swaping] = () => false;
             this[ItemState.Item_Is_Swapped] = () => true;
 
-            if (this.Swapped != null)
-            {
-                this.Swapped(this, EventArgs.Empty);
-            }
+            this.Swapped?.Invoke(this, EventArgs.Empty);
         }
 
         internal void OnTransited()
         {
-            if (this.Transited != null)
-            {
-                this.Transited(this, EventArgs.Empty);
-            }
+            this.Transited?.Invoke(this, EventArgs.Empty);
         }
 
         internal void OnUnselected()
         {
             this[ItemState.Item_Is_Selected] = () => false;
 
-            if (this.Unselected != null)
-            {
-                this.Unselected(this, EventArgs.Empty);
-            }
+            this.Unselected?.Invoke(this, EventArgs.Empty);
         }
 
         internal void OnSelected()
         {
             this[ItemState.Item_Is_Selected] = () => true;
 
-            if (this.Selected != null)
-            {
-                this.Selected(this, EventArgs.Empty);
-            }
+            this.Selected?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion
@@ -118,10 +103,7 @@
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            if (this.ItemVisual != null)
-            {
-                this.ItemVisual.Draw(graphics, time, alpha);
-            }
+            this.ItemVisual?.Draw(graphics, time, alpha);
         }
 
         #endregion
@@ -130,53 +112,30 @@
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            if (this.ItemLogic != null)
-            {
-                this.ItemLogic.UpdateInput(input, time);
-            }
+            this.ItemLogic?.UpdateInput(input, time);
 
-            if (this.ItemVisual != null)
-            {
-                this.ItemVisual.UpdateInput(input, time);
-            }
+            this.ItemVisual?.UpdateInput(input, time);
         }
 
         public override void UpdateView(GameTime gameTime)
         {
-            if (this.ItemLogic != null)
-            {
-                this.ItemLogic.UpdateView(gameTime);
-            }
+            this.ItemLogic?.UpdateView(gameTime);
         }
 
         public override void Update(GameTime time)
         {
             base.Update(time);
 
-            if (this.ItemLogic != null)
-            {
-                this.ItemLogic.Update(time);
-            }
-
-            if (this.ItemVisual != null)
-            {
-                this.ItemVisual.Update(time);
-            }
+            this.ItemLogic ?.Update(time);
+            this.ItemVisual?.Update(time);
         }
 
         public override void UpdateBackwardBuffer()
         {
             base.UpdateBackwardBuffer();
 
-            if (this.ItemLogic != null)
-            {
-                this.ItemLogic.UpdateBackwardBuffer();
-            }
-
-            if (this.ItemVisual != null)
-            {
-                this.ItemVisual.UpdateBackwardBuffer();
-            }
+            this.ItemLogic ?.UpdateBackwardBuffer();
+            this.ItemVisual?.UpdateBackwardBuffer();
         }
 
         #endregion
@@ -196,32 +155,46 @@
 
         #endregion
 
+
         #region IDisposable
 
-        public override void Dispose()
+        private bool IsDisposed { get; set; }
+
+        protected override void Dispose(bool disposing)
         {
-            this.Selected   = null;
-            this.Unselected = null;
-            this.Swapped    = null;
-            this.Swapping   = null;
-            this.Transited  = null;
-
-            if (this.ItemLogic != null)
+            try
             {
-                this.ItemLogic.Dispose();
-            }
+                if (disposing)
+                {
+                    if (!this.IsDisposed)
+                    {
+                        this.Selected   = null;
+                        this.Unselected = null;
+                        this.Swapped    = null;
+                        this.Swapping   = null;
+                        this.Transited  = null;
 
-            if (this.ItemVisual != null)
+                        this.ItemLogic?.Dispose();
+                        this.ItemLogic = null;
+
+                        this.ItemVisual?.Dispose();
+                        this.ItemVisual = null;
+
+                        this.ItemLayer?.Dispose();
+                        this.ItemLayer = null;
+                    }
+
+                    this.IsDisposed = true;
+                }
+            }
+            catch
             {
-                this.ItemVisual.Dispose();
+                // Ignored
             }
-
-            if (this.ItemLayer != null)
+            finally
             {
-                this.ItemLayer.Dispose();
+                base.Dispose(disposing);
             }
-
-            base.Dispose();
         }
 
         #endregion

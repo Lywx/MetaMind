@@ -1,7 +1,7 @@
 namespace MetaMind.Engine.Guis.Widgets.Items.Frames
 {
-    using MetaMind.Engine.Guis.Elements;
-    using MetaMind.Engine.Guis.Widgets.Items.Logic;
+    using Elements;
+    using Logic;
 
     public class ViewItemDraggableFrame : DraggableFrame, IViewItemRootFrame
     {
@@ -26,24 +26,35 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Frames
 
         #region Indirect Dependency
 
-        private IViewItemLogic ItemLogic
-        {
-            get
-            {
-                return this.Item.ItemLogic;
-            }
-        }
+        private IViewItemLogic ItemLogic => this.Item.ItemLogic;
 
         #endregion
 
         #region IDisposable
 
-        public override void Dispose()
-        {
-            this.MouseLeftPressed        -= this.ViewSelect;
-            this.MouseLeftPressedOutside -= this.ViewUnselect;
+        private bool IsDisposed { get; set; }
 
-            base.Dispose();
+        protected override void Dispose(bool disposing)
+        {
+            try
+            {
+                if (disposing)
+                {
+                    if (!this.IsDisposed)
+                    {
+                        this.MouseLeftPressed        -= this.ViewSelect;
+                        this.MouseLeftPressedOutside -= this.ViewUnselect;
+                    }
+                }
+            }
+            catch
+            {
+                // Ignored
+            }
+            finally
+            {
+                base.Dispose(disposing);
+            }
         }
 
         #endregion

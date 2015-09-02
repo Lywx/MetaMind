@@ -5,10 +5,9 @@
     using Components.Graphics;
     using Guis.Console;
     using Guis.Console.Commands;
-
+    using Guis.Console.Processors;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Audio;
-    using Settings.Colors;
 
     public class GameEngineConfigurer : IGameEngineConfigurer
     {
@@ -19,7 +18,6 @@
             // ------------
             var graphicsSettings = new GraphicsSettings();
             var graphicsManager  = new GraphicsManager(engine, graphicsSettings);
-
             var graphics = new GameEngineGraphics(
                 engine,
                 graphicsSettings,
@@ -31,18 +29,7 @@
             var gameManager = new GameManager(engine);
 
             // Audio
-            var audioSettings     = @"Content\Audio\Win\Audio.xgs";
-            var waveBankSettings  = @"Content\Audio\Win\Wave Bank.xwb";
-            var soundBankSettings = @"Content\Audio\Win\Sound Bank.xsb";
-
-            var audioEngine = new AudioEngine(audioSettings);
-            var waveBank    = new WaveBank(audioEngine, waveBankSettings);
-            var soundBank   = new SoundBank(audioEngine, soundBankSettings);
-
-            var audio = new AudioManager(engine, audioEngine, waveBank, soundBank)
-            {
-                UpdateOrder = int.MaxValue
-            };
+            var audioManager = this.CreateAudioManager(engine);
 
             // Others
             var file    = new FileManager();
@@ -54,27 +41,24 @@
                 graphics.SpriteBatch) { UpdateOrder = 5 };
 
             // Console
-            var consoleOptions = new GameConsoleSettings
+            var consoleSettings = new GameConsoleSettings
             {
                 Font            = Font.UiConsole,
                 Height          = graphicsSettings.Height - 50,
                 BackgroundColor = new Color(0, 0, 0, 256 * 3 / 4), 
                 PastErrorColor  = Color.Red,
                 PastDebugColor  = Color.Yellow,
-
             };
-            var console = new GameConsole(
-                engine,
-                graphics.SpriteBatch,
-                graphics.StringDrawer,
-                consoleOptions);
+            var console = new GameConsole(consoleSettings, engine, graphics.SpriteBatch, graphics.StringDrawer);
+#if DEBUG
             console.AddCommand(new ResetCommand(engine, file));
+#endif
             console.AddCommand(new RestartCommand(engine));
 
             var interop = new GameEngineInterop(
                 engine,
                 gameManager,
-                audio,
+                audioManager,
                 file,
                 @event,
                 process,
@@ -96,6 +80,28 @@
             engine.Interop   = interop;
             engine.Input     = input;
             engine.Numerical = numerical;
+        }
+
+        private AudioManager CreateAudioManager(GameEngine engine)
+        {
+            var audioSettings     = @"Content\Audio\Win\Audio.xgs";
+            var waveBankSettings  = @"Content\Audio\Win\Wave Bank.xwb";
+            var soundBankSettings = @"Content\Audio\Win\Sound Bank.xsb";
+
+            var audioEngine = new AudioEngine(audioSettings);
+            var waveBank    = new WaveBank(audioEngine, waveBankSettings);
+            var soundBank   = new SoundBank(audioEngine, soundBankSettings);
+
+            var audioManager = new AudioManager(
+                engine,
+                audioEngine,
+                waveBank,
+                soundBank)
+            {
+                UpdateOrder = int.MaxValue
+            };
+
+            return audioManager;
         }
     }
 }

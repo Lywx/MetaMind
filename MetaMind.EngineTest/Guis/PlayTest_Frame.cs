@@ -9,7 +9,7 @@
     using Engine.Testers;
     using Microsoft.Xna.Framework;
 
-    public class PlayTest_Frame : Module<object>
+    public class PlayTest_Frame : GameEntityModule<object>
     {
         private GameControllableEntityCollection<GameControllableEntity> control;
         private GameVisualEntityCollection<GameVisualEntity> visual;

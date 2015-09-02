@@ -1,6 +1,7 @@
 ﻿namespace MetaMind.Unity.Guis.Screens
 {
     using System;
+    using Engine;
     using Engine.Guis;
     using Engine.Screens;
     using Engine.Services;
@@ -9,7 +10,7 @@
 
     public class SummaryScreen : GameScreen
     {
-        private IModule summary;
+        private IGameEntityModule summary;
 
         public SummaryScreen()
         {

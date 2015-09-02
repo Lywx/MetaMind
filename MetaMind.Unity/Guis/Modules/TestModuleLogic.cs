@@ -12,7 +12,7 @@
     using Widgets.IndexViews;
     using Widgets.IndexViews.Tests;
 
-    public class TestModuleLogic : ModuleLogic<TestModule, TestModuleSettings, TestModuleLogic>
+    public class TestModuleLogic : GameEntityModuleLogic<TestModule, TestModuleSettings, TestModuleLogic>
     {
         private readonly ITest test;
 

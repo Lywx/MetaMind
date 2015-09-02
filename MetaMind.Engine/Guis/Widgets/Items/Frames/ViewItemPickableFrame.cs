@@ -26,24 +26,37 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Frames
 
         #region Indirect Dependency
 
-        private IViewItemLogic ItemLogic
-        {
-            get
-            {
-                return this.Item.ItemLogic;
-            }
-        }
+        private IViewItemLogic ItemLogic => this.Item.ItemLogic;
 
         #endregion
 
         #region IDisposable
 
-        public override void Dispose()
-        {
-            this.MouseLeftPressed        -= this.ViewSelect;
-            this.MouseLeftPressedOutside -= this.ViewUnselect;
+        private bool IsDisposed { get; set; }
 
-            base.Dispose();
+        protected override void Dispose(bool disposing)
+        {
+            try
+            {
+                if (disposing)
+                {
+                    if (!this.IsDisposed)
+                    {
+                        this.MouseLeftPressed        -= this.ViewSelect;
+                        this.MouseLeftPressedOutside -= this.ViewUnselect;
+                    }
+
+                    this.IsDisposed = true;
+                }
+            }
+            catch
+            {
+                // Ignored
+            }
+            finally
+            {
+                base.Dispose(disposing);
+            }
         }
 
         #endregion

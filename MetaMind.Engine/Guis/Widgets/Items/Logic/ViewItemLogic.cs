@@ -61,31 +61,36 @@
 
         #endregion
 
+
         #region IDisposable
 
-        public override void Dispose()
+        private bool IsDisposed { get; set; }
+
+        protected override void Dispose(bool disposing)
         {
-            if (this.ItemFrame != null)
+            try
             {
-                this.ItemFrame.Dispose();
-            }
+                if (disposing)
+                {
+                    if (!this.IsDisposed)
+                    {
+                        this.ItemFrame      ?.Dispose();
+                        this.ItemInteraction?.Dispose();
+                        this.ItemModel      ?.Dispose();
+                        this.ItemLayout     ?.Dispose();
+                    }
 
-            if (this.ItemInteraction != null)
+                    this.IsDisposed = true;
+                }
+            }
+            catch
             {
-                this.ItemInteraction.Dispose();
+                // Ignored
             }
-
-            if (this.ItemModel != null)
+            finally
             {
-                this.ItemModel.Dispose();
+                base.Dispose(disposing);
             }
-
-            if (this.ItemLayout != null)
-            {
-               this.ItemLayout.Dispose();
-            }
-
-            base.Dispose();
         }
 
         #endregion

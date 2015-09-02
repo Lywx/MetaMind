@@ -1,8 +1,8 @@
 ﻿namespace MetaMind.UnityTest.Concepts.Tests
 {
     using System;
+    using Engine.Scripting.FSharp;
     using NUnit.Framework;
-    using Unity.Scripting;
 
     [TestFixture]
     public class TestScriptTest
@@ -25,7 +25,7 @@
         [Test]
         public void RunScript()
         {
-            var script = new Script(@"Resources\Test_Hello_World.fsx");
+            var script = new FsScript(@"Resources\Test_Hello_World.fsx");
             script.Run(this.session);
 
             Console.WriteLine(this.session.Out.ToString());

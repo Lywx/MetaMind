@@ -2,9 +2,10 @@ namespace MetaMind.Unity.Guis.Modules
 {
     using Concepts.Cognitions;
     using Concepts.Synchronizations;
+    using Engine;
     using Engine.Guis;
 
-    public class SummaryModule : Module<SummarySettings>
+    public class SummaryModule : GameEntityModule<SummarySettings>
     {
         public SummaryModule(IConsciousness consciousness, ISynchronization synchronization, SummarySettings settings)
             : base(settings)

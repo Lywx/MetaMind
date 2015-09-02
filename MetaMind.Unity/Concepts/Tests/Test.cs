@@ -9,11 +9,11 @@ namespace MetaMind.Unity.Concepts.Tests
 {
     using Engine.Guis.Widgets.Items.Data;
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Speech.Synthesis;
+    using Events;
 
-    #region Test Session
+    #region Test Static Members
 
     public partial class Test
     {
@@ -22,9 +22,9 @@ namespace MetaMind.Unity.Concepts.Tests
         public static SpeechSynthesizer Speech { get; set; }
     }
 
-    #endregion Test Session
+    #endregion 
 
-    #region Test
+    #region ITest
 
     public partial class Test : ITest
     {
@@ -101,12 +101,12 @@ namespace MetaMind.Unity.Concepts.Tests
             this.Evaluation.Failed += this.EvaluationFailed;
         }
 
-        private void EvaluationFailed(object e, TestEventArgs a)
+        private void EvaluationFailed(object e, TestEvaluationEventArgs a)
         {
             this.Failed(this, a);
         }
 
-        private void EvaluationSucceeded(object e, TestEventArgs a)
+        private void EvaluationSucceeded(object e, TestEvaluationEventArgs a)
         {
             this.Succeeded(this, a);
         }
@@ -117,9 +117,9 @@ namespace MetaMind.Unity.Concepts.Tests
 
         #region Events
 
-        public event EventHandler<TestEventArgs> Succeeded = delegate { };
+        public event EventHandler<TestEvaluationEventArgs> Succeeded = delegate { };
 
-        public event EventHandler<TestEventArgs> Failed = delegate { };
+        public event EventHandler<TestEvaluationEventArgs> Failed = delegate { };
 
         #endregion Events
 

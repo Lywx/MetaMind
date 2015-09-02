@@ -3,6 +3,7 @@
     using System;
     using Concepts.Cognitions;
     using Concepts.Synchronizations;
+    using Engine;
     using Engine.Components.Events;
     using Engine.Components.Inputs;
     using Engine.Guis;
@@ -11,7 +12,7 @@
     using Screens;
     using Sessions;
 
-    public class SummaryModuleLogic : ModuleLogic<SummaryModule, SummarySettings, SummaryModuleLogic>
+    public class SummaryModuleLogic : GameEntityModuleLogic<SummaryModule, SummarySettings, SummaryModuleLogic>
     {
         public SummaryModuleLogic(SummaryModule module, IConsciousness consciousness, ISynchronization synchronization)
             : base(module)

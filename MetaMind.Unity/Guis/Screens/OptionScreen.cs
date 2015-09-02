@@ -89,7 +89,7 @@
         {
             var graphicsSettings = this.GameGraphics.Settings;
 
-            var viewWidth = graphicsSettings.Width - (int)OperationModuleSettings.ViewMargin.X * 2;
+            var viewWidth = graphicsSettings.Width - OperationModuleSettings.ViewMargin.X * 2;
             
             // Screen label
             this.screenLabel = new Label
@@ -111,7 +111,7 @@
                     TextPosition   = () => OperationModuleSettings.ViewMargin.ToVector2(),
                     TextColor      = Color.White,
                     TextSize       = 0.8f,
-                    TextLeading    = (int)OperationModuleSettings.ItemMargin.Y,
+                    TextLeading    = OperationModuleSettings.ItemMargin.Y,
                     TextMonospaced = true
                 },
                 new Vector2(5, 12) * 0.8f, 
@@ -129,7 +129,7 @@
                     TextPosition   = () => new Vector2(OperationModuleSettings.ViewMargin.X, this.procedureNameLabelBox.Bottom),
                     TextColor      = Color.White,
                     TextSize       = 0.8f,
-                    TextLeading    = (int)OperationModuleSettings.ItemMargin.Y,
+                    TextLeading    = OperationModuleSettings.ItemMargin.Y,
                     TextMonospaced = true
                 },
                 new Vector2(5, 12) * 0.8f,
@@ -220,15 +220,13 @@
             this.Entities.UpdateForwardBuffer();
             this.Entities.Update(time);
             this.Entities.UpdateBackwardBuffer();
-
-            base.Update(time);
+            base         .Update(time);
         }
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
             this.Entities.UpdateInput(input, time);
-
-            base.UpdateInput(input, time);
+            base         .UpdateInput(input, time);
         }
     }
 }

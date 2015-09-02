@@ -92,6 +92,35 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
         {
             this.LoadParameter(this.GameGraphics.Settings);
 
+            this.rootFrame = new FrameSettings
+            {
+                Size   = new Point(this.viewportWidth - TestModuleSettings.ViewMargin.X * 2, 26),
+                Margin = new Point(2, 2)
+            };
+
+            this.nameFrame = new FrameSettings
+            {
+                Size   = new Point(this.viewportWidth - TestModuleSettings.ViewMargin.X * 2 - 24 - 128, 26),
+                Margin = new Point(2, 2),
+
+                RegularColor      = Palette.DimBlue,
+                MouseOverColor    = Palette.DimBlue,
+                PendingColor      = Palette.LightBlue,
+                ModificationColor = Palette.DimBlue,
+                SelectionColor    = Palette.LightBlue,
+            };
+
+            this.descriptionFrame = new FrameSettings
+            {
+                Size   = new Point(this.viewportWidth - TestModuleSettings.ViewMargin.X * 2 - 24 - 128, 26),
+                Margin = new Point(2, 2),
+
+                RegularColor      = Palette.Transparent,
+                MouseOverColor    = Palette.DimBlue,
+                PendingColor      = Palette.Transparent80,
+                ModificationColor = Palette.Transparent,
+                SelectionColor    = Palette.Transparent80,
+            };
             this.idFrame = new FrameSettings
             {
                 Size   = new Point(24, 26),
@@ -139,37 +168,6 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
                 ModificationColor = Palette.Transparent20,
                 SelectionColor    = Palette.Transparent20,
             };
-
-            this.nameFrame = new FrameSettings
-            {
-                Size   = new Point(viewportWidth - TestModuleSettings.ViewMargin.X * 2 - 24 - 128, 26),
-                Margin = new Point(2, 2),
-
-                RegularColor      = Palette.DimBlue,
-                MouseOverColor    = Palette.DimBlue,
-                PendingColor      = Palette.LightBlue,
-                ModificationColor = Palette.DimBlue,
-                SelectionColor    = Palette.LightBlue,
-            };
-
-            this.descriptionFrame = new FrameSettings
-            {
-                Size   = new Point(viewportWidth - TestModuleSettings.ViewMargin.X * 2 - 24 - 128, 26),
-                Margin = new Point(2, 2),
-
-                RegularColor      = Palette.Transparent,
-                MouseOverColor    = Palette.DimBlue,
-                PendingColor      = Palette.Transparent80,
-                ModificationColor = Palette.Transparent,
-                SelectionColor    = Palette.Transparent80,
-            };
-
-            this.rootFrame = new FrameSettings
-            {
-                Size   = new Point(this.viewportWidth - TestModuleSettings.ViewMargin.X * 2, 26),
-                Margin = new Point(2, 2)
-            };
-
 
             this.Add("RootFrame", this.rootFrame);
 

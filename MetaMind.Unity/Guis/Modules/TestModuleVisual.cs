@@ -10,7 +10,7 @@
     using Engine.Settings.Colors;
     using Microsoft.Xna.Framework;
 
-    public class TestModuleVisual : ModuleVisual<TestModule, TestModuleSettings, TestModuleLogic>
+    public class TestModuleVisual : GameEntityModuleVisual<TestModule, TestModuleSettings, TestModuleLogic>
     {
         private readonly ITest test;
 

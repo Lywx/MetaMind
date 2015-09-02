@@ -1,25 +1,25 @@
-namespace MetaMind.Engine.Guis
+namespace MetaMind.Engine
 {
-    using MetaMind.Engine.Services;
     using Microsoft.Xna.Framework;
+    using Services;
 
     /// <summary>
-    /// Module is the most outer shell of gui object that load and unload
+    /// GameEntityModule is the most outer shell of gui object that load and unload
     /// data from data source. The behavior is of maximum abstraction.
     /// </summary>
     /// <remarks>
     /// Compatible with previous GameControllableEntity implementation.
     /// </remarks>
-    public class Module<TModuleSettings> : GameControllableEntity, IModule
+    public class GameEntityModule<TModuleSettings> : GameControllableEntity, IGameEntityModule
     {
         #region Constructors
 
-        protected Module(TModuleSettings settings)
+        protected GameEntityModule(TModuleSettings settings)
         {
             this.Settings = settings;
         }
 
-        ~Module()
+        ~GameEntityModule()
         {
             this.Dispose();
         }
@@ -28,9 +28,9 @@ namespace MetaMind.Engine.Guis
 
         #region Components
 
-        public IModuleLogicControl Logic { get; protected set; }
+        public IGameEntityModuleLogic Logic { get; protected set; }
 
-        public IModuleVisualControl Visual { get; protected set; }
+        public IGameEntityModuleVisual Visual { get; protected set; }
 
         public TModuleSettings Settings { get; protected set; }
 

@@ -2,13 +2,14 @@ namespace MetaMind.Unity.Guis.Modules.Synchronization
 {
     using System;
     using Concepts.Synchronizations;
+    using Engine;
     using Engine.Guis;
     using Engine.Guis.Widgets.Visuals;
     using Engine.Services;
     using Engine.Settings.Colors;
     using Microsoft.Xna.Framework;
 
-    public class SynchronizationProgressBar : ModuleComponent<SynchronizationModule, SynchronizationSettings, SynchronizationModuleLogic>
+    public class SynchronizationProgressBar : GameEntityModuleComponent<SynchronizationModule, SynchronizationSettings, SynchronizationModuleLogic>
     {
         public SynchronizationProgressBar(SynchronizationModule module, ISynchronization synchronization)
             : base(module)

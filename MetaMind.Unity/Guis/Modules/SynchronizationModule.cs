@@ -3,13 +3,14 @@
     using System;
     using Concepts.Cognitions;
     using Concepts.Synchronizations;
+    using Engine;
     using Engine.Guis;
 
     /// <summary>
     /// This module control all the interaction with the Synchronization and Consciousness object, 
     /// since Synchronization is only a data class.
     /// </summary>
-    public class SynchronizationModule : Module<SynchronizationSettings>
+    public class SynchronizationModule : GameEntityModule<SynchronizationSettings>
     {
         private readonly IConsciousness consciousness;
 

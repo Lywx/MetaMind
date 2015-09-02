@@ -9,11 +9,11 @@
     using Engine.Guis.Layers;
     using Engine.Guis.Widgets.Buttons;
     using Engine.Screens;
+    using Engine.Scripting.FSharp;
     using Engine.Services;
     using Engine.Settings.Colors;
     using Layers;
     using Microsoft.Xna.Framework;
-    using Scripting;
 
     public class MainScreen : GameScreen
     {
@@ -27,9 +27,9 @@
 
         private OperationSession operationSession;
 
-        private ScriptSearcher scriptSearcher;
+        private FsScriptSearcher scriptSearcher;
 
-        private ScriptRunner scriptRunner;
+        private FsScriptRunner scriptRunner;
 
         public MainScreen()
         {
@@ -46,8 +46,8 @@
         public override void LoadContent(IGameInteropService interop)
         {
             // Script runner
-            this.scriptSearcher = new ScriptSearcher();
-            this.scriptRunner   = new ScriptRunner(this.scriptSearcher, Unity.FsiSession);
+            this.scriptSearcher = new FsScriptSearcher();
+            this.scriptRunner   = new FsScriptRunner(this.scriptSearcher, Unity.FsiSession);
             this.scriptRunner.Search();
 
             // Synchronization session

@@ -9,7 +9,7 @@
     using Microsoft.Xna.Framework;
     using Summary;
 
-    public class SummaryModuleVisual : ModuleVisual<SummaryModule, SummarySettings, SummaryModuleLogic>
+    public class SummaryModuleVisual : GameEntityModuleVisual<SummaryModule, SummarySettings, SummaryModuleLogic>
     {
         public SummaryModuleVisual(SummaryModule module, IConsciousness consciousness, ISynchronization synchronization)
             : base(module)
