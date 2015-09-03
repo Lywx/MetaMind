@@ -3,11 +3,12 @@
     using Microsoft.Xna.Framework;
     using Services;
 
-    public class GameModuleVisual<TModule, TModuleSettings, TModuleLogic> : GameModuleComponent<TModule, TModuleSettings, TModuleLogic>, IGameModuleVisual
-        where                     TModule                                 : GameModule<TModuleSettings>
-        where                     TModuleLogic                            : GameModuleLogic<TModule, TModuleSettings, TModuleLogic>
+    public class GameModuleVisual<TModule, TModuleSettings, TModuleLogic, TModuleVisual> : GameModuleComponent<TModule, TModuleSettings, TModuleLogic, TModuleVisual>, IGameModuleVisual<TModuleSettings>
+        where                     TModule                                 : IGameModule<TModuleSettings, TModuleLogic, TModuleVisual>
+        where                     TModuleLogic                            : IGameModuleLogic<TModuleSettings> 
+        where                     TModuleVisual                           : IGameModuleVisual<TModuleSettings>
     {
-        public GameModuleVisual(TModule module, GameEngine engine)
+        protected GameModuleVisual(TModule module, GameEngine engine)
             : base(module, engine)
         {
         }

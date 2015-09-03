@@ -16,7 +16,7 @@
             this.engine = engine;
         }
 
-        public string Name => "restart";
+        public string Name => "GameEngine.restart";
 
         public string Description => "Restarts the engine";
 

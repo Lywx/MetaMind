@@ -10,10 +10,6 @@
 
     public class GameConsoleSettings
     {
-        internal static GameConsoleSettings Settings { get; set; }
-
-        internal static List<IConsoleCommand> Commands { get; set; }
-
         #region Behavior
 
         public bool OpenOnWrite { get; set; } = true;
@@ -90,6 +86,12 @@
         public Font Font { get; set; }
 
         public Texture2D RoundedCorner { get; set; }
+
+        #endregion
+
+        #region Commands
+
+        public List<IConsoleCommand> Commands { get; set; } = new List<IConsoleCommand>();
 
         #endregion
 

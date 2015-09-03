@@ -4,11 +4,11 @@ namespace MetaMind.Engine.Guis.Console.Processors
     using Commands;
     using Scripting.IronPython;
 
-    public class IpyCommandProcessor : ICommandProcessor
+    public class IronPythonProcessor : ICommandProcessor
     {
         private readonly IpySession ipySession;
 
-        public IpyCommandProcessor(IpySession ipySession)
+        public IronPythonProcessor(IpySession ipySession)
         {
             if (ipySession == null)
             {

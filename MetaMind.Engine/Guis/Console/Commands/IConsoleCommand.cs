@@ -3,17 +3,17 @@
     public interface IConsoleCommand
     {
         /// <summary>
-        /// The name of the command; the command will be invoked through this name
+        ///     The name of the command; the command will be invoked through this name
         /// </summary>
         string Name { get; }
 
         /// <summary>
-        /// The description that is displayed with the 'help' command
+        ///     The description that is displayed with the 'help' command
         /// </summary>
         string Description { get; }
 
         /// <summary>
-        /// The action of the command.  The return string value is used as output in the console 
+        ///     The action of the command.  The return string value is used as output in the console
         /// </summary>
         /// <param name="arguments"></param>
         /// <returns></returns>
