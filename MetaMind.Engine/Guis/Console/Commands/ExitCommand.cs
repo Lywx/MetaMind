@@ -7,24 +7,22 @@
 
 namespace MetaMind.Engine.Guis.Console.Commands
 {
-    using Microsoft.Xna.Framework;
-
     internal class ExitCommand : IConsoleCommand
     {
-        private readonly Game game;
+        private readonly GameEngine engine;
 
-        public ExitCommand(Game game)
+        public ExitCommand(GameEngine engine)
         {
-            this.game = game;
+            this.engine = engine;
         }
 
-        public string Name => "exit";
+        public string Name => "GameEngine.exit";
 
         public string Description => "Exists the engine";
 
         public string Execute(string[] arguments)
         {
-            this.game.Exit();
+            this.engine.Exit();
             
             return "Exiting the engine";
         }

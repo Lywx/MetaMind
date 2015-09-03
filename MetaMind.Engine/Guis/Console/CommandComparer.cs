@@ -1,7 +1,8 @@
-﻿namespace MetaMind.Engine.Guis.Console.Commands
+﻿namespace MetaMind.Engine.Guis.Console
 {
     using System;
     using System.Collections.Generic;
+    using Commands;
 
     internal class CommandComparer : IComparer<IConsoleCommand>
     {

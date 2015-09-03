@@ -28,7 +28,7 @@
 
         public string Description => "Resets the save files";
 
-        public string Name => "reset";
+        public string Name => "GameEngine.reset";
 
         public string Execute(string[] arguments)
         {

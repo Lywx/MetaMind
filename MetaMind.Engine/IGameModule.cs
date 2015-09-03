@@ -2,13 +2,15 @@ namespace MetaMind.Engine
 {
     using System;
 
-    public interface IGameModule<out TGroupSettings>: IOuterUpdateableOperations, IDrawableOperations, IInputableOperations, IDisposable
+    public interface IGameModule<out TModuleSettings, out TModuleLogic, out TModuleVisual> : IOuterUpdateableOperations, IDrawableOperations, IInputableOperations
+        where TModuleLogic  : IGameModuleLogic<TModuleSettings> 
+        where TModuleVisual : IGameModuleVisual<TModuleSettings>
     {
-        TGroupSettings Settings { get; }
+        TModuleSettings Settings { get; }
 
-        IGameModuleLogic Logic { get; }
+        TModuleLogic Logic { get; }
 
-        IGameModuleVisual Visual { get; }
+        TModuleVisual Visual { get; }
 
         void Initialize();
     }

@@ -1,6 +1,6 @@
 ﻿namespace MetaMind.Engine
 {
-    public interface IGameModuleVisual : IOuterUpdateableOperations, IDrawableOperations
+    public interface IGameModuleVisual<out TModuleSettings> : IGameModuleComponent<TModuleSettings>, IOuterUpdateableOperations, IDrawableOperations
     {
     }
 }

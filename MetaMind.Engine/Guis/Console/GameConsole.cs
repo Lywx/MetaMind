@@ -1,80 +1,70 @@
-﻿#region File Description
-
-//-----------------------------------------------------------------------------
-// MonoGame Console https://github.com/romanov/MonoGameConsole
-// Forked from http://code.google.com/p/xnagameconsole/
-// GNU GPL v3
-//-----------------------------------------------------------------------------
-
-#endregion File Description
-
-namespace MetaMind.Engine.Guis.Console
+﻿namespace MetaMind.Engine.Guis.Console
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Commands;
     using Components.Fonts;
+    using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using Processors;
+    using Services;
 
-    public class GameConsole : IDisposable
+    public class GameConsole : DrawableGameComponent, IDisposable
     {
-        private readonly GameEngine engine;
+        #region Constructors and Finalizer
 
-        private readonly GameConsoleComponent console;
-
-        #region Constructors and Destructor
-
-        public GameConsole(GameEngine engine, SpriteBatch spriteBatch, IStringDrawer stringDrawer)
-            : this(new GameConsoleSettings(), engine, new IConsoleCommand[0], new CommandProcessor(), spriteBatch, stringDrawer)
+        public GameConsole(
+            GameConsoleSettings settings,
+            GameEngine engine,
+            SpriteBatch spriteBatch,
+            IStringDrawer stringDrawer) 
+            : base(engine)
         {
-        }
-
-        public GameConsole(GameEngine engine, SpriteBatch spriteBatch, IStringDrawer stringDrawer, IEnumerable<IConsoleCommand> commands)
-            : this(new GameConsoleSettings(), engine, commands, new CommandProcessor(), spriteBatch, stringDrawer)
-        {
-        }
-
-        public GameConsole(GameConsoleSettings settings, GameEngine engine, SpriteBatch spriteBatch, IStringDrawer stringDrawer)
-            : this(settings, engine, new IConsoleCommand[0], new CommandProcessor(), spriteBatch, stringDrawer)
-        {
-        }
-
-        public GameConsole(GameConsoleSettings settings, GameEngine engine, IEnumerable<IConsoleCommand> commands, CommandProcessor commandProcessor, SpriteBatch spriteBatch, IStringDrawer stringDrawer)
-        {
-            if (engine == null)
-            {
-                throw new ArgumentNullException(nameof(engine));
-            }
-
-            this.engine = engine;
-
-            // Has to initialized before GameConsoleComponent
-            GameConsoleSettings.Settings = settings;
-            GameConsoleSettings.Commands = commands.ToList();
-
-            this.console = new GameConsoleComponent(engine, this, new GameConsoleProcessor(engine, commandProcessor), spriteBatch, stringDrawer);
-
-            this.engine.Components.Add(this.console);
-
-            this.Enabled = true;
+            this.Module = new GameConsoleModule(this, settings, new CommandProcessor(this), engine, spriteBatch, stringDrawer);
         }
 
         #endregion
 
-        public bool Enabled { get; set; }
+        #region Dependency
+
+        private GameConsoleModule Module { get; set; }
+
+        protected IGameInputService GameInput => GameEngine.Service.Input;
+
+        protected IGameGraphicsService GameGraphics => GameEngine.Service.Graphics;
+
+        #endregion
+
+        public List<IConsoleCommand> Commands => this.Module.Settings.Commands;
 
         /// <summary>
         ///     Indicates whether the console is currently opened
         /// </summary>
-        public bool Opened => this.console.IsOpen;
+        public bool Opened => this.Module.IsOpen;
 
-        public List<IConsoleCommand> Commands => GameConsoleSettings.Commands;
-
-        public ICommandProcessor CommandProcessor
+        public ICommandProcessor Processor
         {
-            get { return this.console.Processer.CommandProcessor; }
-            set { this.console.Processer.CommandProcessor = value; }
+            get { return this.Module.Logic.Processor; }
+            set { this.Module.Logic.Processor = value; }
+        }
+
+        public override void Initialize()
+        {
+            this.Module.Initialize();
+            base       .Initialize();
+        }
+
+        public override void Update(GameTime time)
+        {
+            this.Module.UpdateInput(this.GameInput, time);
+            this.Module.Update(time);
+            base       .Update(time);
+        }
+
+        public override void Draw(GameTime time)
+        {
+            this.Module.Draw(this.GameGraphics, time, byte.MaxValue);
+            base       .Draw(time);
         }
 
         #region Operations
@@ -118,15 +108,15 @@ namespace MetaMind.Engine.Guis.Console
         {
             if (string.IsNullOrEmpty(channel))
             {
-                this.console.WriteLine(buffer);
+                this.Module.WriteLine(buffer);
             }
             else if (string.Compare(channel, "DEBUG", StringComparison.OrdinalIgnoreCase) == 0)
             {
-                this.console.WriteLine(buffer, OutputType.Debug);
+                this.Module.WriteLine(buffer, CommandType.Debug);
             }
             else if (string.Compare(channel, "ERROR", StringComparison.OrdinalIgnoreCase) == 0)
             {
-                this.console.WriteLine(buffer, OutputType.Error);
+                this.Module.WriteLine(buffer, CommandType.Error);
             }
         }
 
@@ -134,9 +124,19 @@ namespace MetaMind.Engine.Guis.Console
 
         #region IDisposable
 
-        public void Dispose()
+        private bool IsDisposed { get; set; }
+
+        protected override void Dispose(bool disposing)
         {
-            this.console.Dispose();
+            if (disposing)
+            {
+                if (!this.IsDisposed)
+                {
+                    this.Module.Dispose();
+                }
+
+                this.IsDisposed = true;
+            }
         }
 
         #endregion

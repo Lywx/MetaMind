@@ -7,36 +7,19 @@
     using Components.Graphics;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using Primtives2D;
+    using Services;
     using Settings.Loaders;
 
-    internal class GameConsoleRenderer : IParameterLoader<GraphicsSettings>, IDisposable
+    internal class GameConsoleVisual : GameModuleVisual<GameConsoleModule, GameConsoleSettings, GameConsoleLogic, GameConsoleVisual>, IParameterLoader<GraphicsSettings>, IDisposable
     {
-        #region States
-
-        private enum State
-        {
-            Opened,
-
-            Opening,
-
-            Closed,
-
-            Closing
-        }
-
-        private State currentState;
-
-        public bool IsOpened => this.currentState == State.Opened;
-
-        #endregion
+        #region Dependency
 
         private readonly SpriteBatch spriteBatch;
 
         private readonly IStringDrawer stringDrawer;
 
-        private readonly GameConsoleProcessor processor;
-
-        private Texture2D pixel;
+        #endregion
 
         #region Positional States
 
@@ -95,21 +78,33 @@
 
         #endregion
 
+        #region States
+
+        private enum State
+        {
+            Opened,
+
+            Opening,
+
+            Closed,
+
+            Closing
+        }
+
+        private State currentState;
+
+        public bool IsOpened => this.currentState == State.Opened;
+
+        #endregion
+
         #region Constructors and Finalizer
 
-        /// <remarks>
-        /// Renderer has to be constructed after the font is loaded.
-        /// </remarks>
-        public GameConsoleRenderer(GameEngine engine, GameConsoleProcessor processor, SpriteBatch spriteBatch, IStringDrawer stringDrawer)
+        public GameConsoleVisual(GameConsoleModule module, GameEngine engine, SpriteBatch spriteBatch, IStringDrawer stringDrawer)
+            : base(module, engine)
         {
             if (engine == null)
             {
                 throw new ArgumentNullException(nameof(engine));
-            }
-
-            if (processor == null)
-            {
-                throw new ArgumentNullException(nameof(processor));
             }
 
             if (spriteBatch == null)
@@ -122,25 +117,23 @@
                 throw new ArgumentNullException(nameof(stringDrawer));
             }
 
-            this.processor = processor;
-
             this.spriteBatch  = spriteBatch;
             this.stringDrawer = stringDrawer;
-
-            this.LoadParameter(engine.Graphics.Settings);
-            this.InitializeState();
-            this.InitializePosition();
-            this.InitializePixel(engine.GraphicsDevice);
-        }
-
-        ~GameConsoleRenderer()
-        {
-            this.Dispose();
         }
 
         #endregion
 
         #region Initialization
+
+        public override void Initialize()
+        {
+            this.LoadParameter(this.Engine.Graphics.Settings);
+
+            this.InitializeState();
+            this.InitializePosition();
+
+            base.Initialize();
+        }
 
         public void LoadParameter(GraphicsSettings parameter)
         {
@@ -152,38 +145,15 @@
             this.currentState = State.Closed;
         }
 
-        private void InitializePixel(GraphicsDevice graphicsDevice)
-        {
-            this.pixel = new Texture2D(graphicsDevice, 1, 1);
-            this.pixel.SetData(
-                new[]
-                {
-                    Color.White
-                });
-        }
-
         private void InitializePosition()
         {
-            this.currentPosition = this.closedPosition =
-                                   new Vector2(
-                                       this.Settings.Margin,
-                                       -this.Settings.Height);
+            this.currentPosition = this.closedPosition = new Vector2(this.Settings.Margin, -this.Settings.Height);
             this.openedPosition = new Vector2(this.Settings.Margin, 0);
 
-            this.oneCharacterWidth =
-                this.Settings.Font.MeasureMonospacedString("x", 1f).X;
-            this.maxCharactersPerLine =
-                (int)
-                ((this.Bounds.Width - this.Settings.Padding * 2)
-                 / this.oneCharacterWidth);
+            this.oneCharacterWidth = this.Settings.Font.MeasureMonospacedString("x", 1f).X;
+            this.maxCharactersPerLine = (int)((this.Bounds.Width - this.Settings.Padding * 2) / this.oneCharacterWidth);
         }
 
-
-        #endregion
-
-        #region Settings
-
-        private GameConsoleSettings Settings => GameConsoleSettings.Settings;
 
         #endregion
 
@@ -201,27 +171,33 @@
 
         #region Draw
 
-        public void Draw(GameTime time)
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
+            if (!this.Module.Enabled)
+            {
+                return;
+            }
+
             if (this.currentState == State.Closed)
             {
                 return;
             }
 
+            this.spriteBatch.Begin();
+
             this.DrawRectangle();
 
-            var promptPosition = this.DrawOutput();
+            var promptPosition = this.DrawPastOutput();
             var bufferPosition = this.DrawPrompt(promptPosition);
             var cursorPosition = this.DrawBuffer(bufferPosition); 
                                  this.DrawCursor(cursorPosition, time);
+
+            this.spriteBatch.End();
         }
 
         private void DrawRectangle()
         {
-            this.spriteBatch.Draw(
-                this.pixel,
-                this.Bounds,
-                this.Settings.BackgroundColor);
+            Primitives2D.FillRectangle(this.spriteBatch, this.Bounds, this.Settings.BackgroundColor);
         }
 
         private void DrawRoundedEdges()
@@ -243,8 +219,8 @@
                 null, this.Settings.BackgroundColor, 0, Vector2.Zero, 1, SpriteEffects.FlipHorizontally, 1);
 
             // Connecting bottom-rectangle
-            this.spriteBatch.Draw(
-                this.pixel,
+            Primitives2D.DrawRectangle(
+                this.spriteBatch,
                 new Rectangle(
                     this.Bounds.X + this.Settings.RoundedCorner.Width,
                     this.Bounds.Y + this.Settings.Height,
@@ -253,9 +229,9 @@
                 this.Settings.BackgroundColor);
         }
 
-        private Vector2 DrawBuffer(Vector2 bufferPosition)
+        private Vector2 DrawBuffer(Vector2 position)
         {
-            return this.DrawCommand(this.Settings.Font, this.processor.CommandBuffer.ToString(), bufferPosition, this.Settings.BufferColor, this.Settings);
+            return this.DrawCommand(this.Settings.Font, this.Logic.Input.ToString(), position, this.Settings.BufferColor);
         }
 
         private void DrawCursor(Vector2 position, GameTime time)
@@ -266,7 +242,7 @@
             }
 
             var split = StringUtils.BreakStringByCharacterToEnumerable(
-                    this.processor.CommandBuffer.ToString(),
+                    this.Logic.Input.ToString(),
                     this.maxCharactersPerLine).Last();
 
             var font = this.Settings.Font;
@@ -286,35 +262,32 @@
         /// <param name="font"></param>
         /// <param name="lines"></param>
         /// <param name="position">Position of the command to draw</param>
-        /// <param name="settings"></param>
-        /// <returns></returns>
-        private Vector2 DrawCommands(Font font, IEnumerable<OutputLine> lines, Vector2 position, GameConsoleSettings settings)
+        private Vector2 DrawCommands(Font font, IEnumerable<CommandLine> lines, Vector2 position)
         {
             var firstColumn = position.X;
 
-            foreach (var command in lines.ToArray())
+            foreach (var line in lines.ToArray())
             {
                 // Add prompt before a line of command
-                if (command.Type == OutputType.Buffer)
+                if (line.Type == CommandType.Input)
                 {
                     // Draw executed command prompt 
                     position = this.DrawPrompt(position);
                 }
 
-                var color = command.Type == OutputType.Buffer
-                                ? settings.PastBufferColor
-                                : command.Type == OutputType.Output
-                                      ? settings.PastOutputColor
-                                      : command.Type == OutputType.Debug
-                                            ? settings.PastDebugColor
-                                            : settings.PastErrorColor;
+                var color = line.Type == CommandType.Input
+                                ? this.Settings.PastBufferColor
+                                : line.Type == CommandType.Output
+                                      ? this.Settings.PastOutputColor
+                                      : line.Type == CommandType.Debug
+                                            ? this.Settings.PastDebugColor
+                                            : this.Settings.PastErrorColor;
 
                 var nextCommandPosition = this.DrawCommand(
                     font,
-                    command.ToString(), 
+                    line.ToString(), 
                     position,
-                    color,
-                    settings);
+                    color);
 
                 position.Y = nextCommandPosition.Y;
 
@@ -334,7 +307,7 @@
         /// <param name="color"></param>
         /// <param name="settings"></param>
         /// <returns></returns>
-        private Vector2 DrawCommand(Font font, string command, Vector2 position, Color color, GameConsoleSettings settings)
+        private Vector2 DrawCommand(Font font, string command, Vector2 position, Color color)
         {
             var commandLines = command.Length > this.maxCharactersPerLine
                                           ? StringUtils.BreakStringByCharacterToEnumerable(command, this.maxCharactersPerLine) : new[] { command };
@@ -355,9 +328,9 @@
             return position;
         }
 
-        private Vector2 DrawOutput()
+        private Vector2 DrawPastOutput()
         {
-            return this.DrawCommands(this.Settings.Font, this.processor.CommandOutput, this.FirstCommandPosition, this.Settings);
+            return this.DrawCommands(this.Settings.Font, this.Logic.Output, this.FirstCommandPosition);
         }
 
         /// <summary>
@@ -378,16 +351,22 @@
 
         #region Update
 
-        public void Update(GameTime time)
+        public override void Update(GameTime time)
         {
             switch (this.currentState)
             {
                 case State.Opening:
-                    this.UpdateState(this.openedPosition, State.Opened);
+                    {
+                        this.UpdateState(this.openedPosition, State.Opened);
+                    }
+
                     break;
 
                 case State.Closing:
-                    this.UpdateState(this.closedPosition, State.Closed);
+                    {
+                        this.UpdateState(this.closedPosition, State.Closed);
+                    }
+
                     break;
             }
         }
@@ -439,8 +418,6 @@
 
         public void Dispose()
         {
-            this.pixel?.Dispose();
-            this.pixel = null;
         }
 
         #endregion

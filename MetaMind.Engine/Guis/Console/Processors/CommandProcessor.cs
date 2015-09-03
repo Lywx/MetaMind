@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Engine.Guis.Console
+﻿namespace MetaMind.Engine.Guis.Console.Processors
 {
     using System;
     using System.Linq;
@@ -6,6 +6,18 @@
 
     public class CommandProcessor : ICommandProcessor
     {
+        private readonly GameConsole console;
+
+        public CommandProcessor(GameConsole console)
+        {
+            if (console == null)
+            {
+                throw new ArgumentNullException(nameof(console));
+            }
+
+            this.console = console;
+        }
+
         #region Auto Completion
 
         public IConsoleCommand Match(string incomplete)
@@ -15,11 +27,11 @@
                 return null;
             }
 
-            var matchingCommands = GameConsoleSettings.Commands
-                                                      .Where(
-                                                          c => c.Name != null &&
-                                                               c.Name.StartsWith
-                                                                   (incomplete));
+            var matchingCommands = this.console.Commands
+                                       .Where(
+                                           c => c.Name != null &&
+                                                c.Name.StartsWith(incomplete));
+
             return matchingCommands.FirstOrDefault();
         }
 
@@ -32,7 +44,7 @@
             var arguments   = this.GetArguments(buffer);
             var commandName = this.GetCommandName(buffer);
 
-            var command = GameConsoleSettings.Commands.FirstOrDefault(c => c.Name == commandName);
+            var command = this.console.Commands.FirstOrDefault(c => c.Name == commandName);
             if (command == null)
             {
                 return "ERROR: Command not found";

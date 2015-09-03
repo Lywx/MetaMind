@@ -2,13 +2,14 @@ namespace MetaMind.Engine
 {
     using System;
 
-    public class GameModuleComponent<TGroup, TGroupSettings, TGroupLogic> : IGameModuleComponent<TGroupSettings>
-        where                        TGroup                               : GameModule<TGroupSettings>
-        where                        TGroupLogic                          : GameModuleLogic<TGroup, TGroupSettings, TGroupLogic>
+    public class GameModuleComponent<TModule, TModuleSettings, TModuleLogic, TModuleVisual> : IGameModuleComponent<TModuleSettings>
+        where                        TModule                                                : IGameModule<TModuleSettings, TModuleLogic, TModuleVisual>
+        where                        TModuleLogic                                           : IGameModuleLogic<TModuleSettings> 
+        where                        TModuleVisual                                          : IGameModuleVisual<TModuleSettings>
     {
-        private readonly TGroup module;
+        private readonly TModule module;
 
-        protected GameModuleComponent(TGroup module, GameEngine engine)
+        protected GameModuleComponent(TModule module, GameEngine engine)
         {
             if (module == null)
             {
@@ -26,11 +27,11 @@ namespace MetaMind.Engine
 
         protected GameEngine Engine { get; private set; }
 
-        public TGroupSettings Settings => this.module.Settings;
+        public TModuleSettings Settings => this.module.Settings;
 
-        protected TGroupLogic Logic => (TGroupLogic)this.module.Logic;
+        protected TModuleLogic Logic => this.module.Logic;
 
-        protected TGroup Module => this.module;
+        protected TModule Module => this.module;
 
         public virtual void Initialize()
         {

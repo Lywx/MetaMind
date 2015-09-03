@@ -3,11 +3,12 @@ namespace MetaMind.Engine
     using Microsoft.Xna.Framework;
     using Services;
 
-    public class GameModuleLogic<TGroup, TGroupSettings, TGroupLogic> : GameModuleComponent<TGroup, TGroupSettings, TGroupLogic>, IGameModuleLogic
-        where                    TGroup                               : GameModule<TGroupSettings>
-        where                    TGroupLogic                          : GameModuleLogic<TGroup, TGroupSettings, TGroupLogic>
+    public class GameModuleLogic<TModule, TModuleSettings, TModuleLogic, TModuleVisual> : GameModuleComponent<TModule, TModuleSettings, TModuleLogic, TModuleVisual>, IGameModuleLogic<TModuleSettings>
+        where                    TModule                                 : IGameModule<TModuleSettings, TModuleLogic, TModuleVisual>
+        where                    TModuleLogic                            : IGameModuleLogic<TModuleSettings> 
+        where                    TModuleVisual                           : IGameModuleVisual<TModuleSettings>
     {
-        protected GameModuleLogic(TGroup module, GameEngine engine)
+        protected GameModuleLogic(TModule module, GameEngine engine)
             : base(module, engine)
         {
         }

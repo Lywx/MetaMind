@@ -7,9 +7,9 @@
 
 namespace MetaMind.Engine.Services
 {
-    using MetaMind.Engine.Components;
-    using MetaMind.Engine.Components.Fonts;
-    using MetaMind.Engine.Components.Graphics;
+    using Components;
+    using Components.Fonts;
+    using Components.Graphics;
 
     using Microsoft.Xna.Framework.Graphics;
 
@@ -22,36 +22,12 @@ namespace MetaMind.Engine.Services
             this.graphics = graphics;
         }
 
-        public GraphicsManager Manager
-        {
-            get
-            {
-                return this.graphics.Manager;
-            }
-        }
+        public GraphicsManager Manager => this.graphics.Manager;
 
-        public GraphicsSettings Settings
-        {
-            get
-            {
-                return this.graphics.Settings;
-            }
-        }
+        public GraphicsSettings Settings => this.graphics.Settings;
 
-        public SpriteBatch SpriteBatch
-        {
-            get
-            {
-                return this.graphics.SpriteBatch;
-            }
-        }
-        
-        public IStringDrawer StringDrawer
-        {
-            get
-            {
-                return this.graphics.StringDrawer;
-            }
-        }
+        public SpriteBatch SpriteBatch => this.graphics.SpriteBatch;
+
+        public IStringDrawer StringDrawer => this.graphics.StringDrawer;
     }
 }

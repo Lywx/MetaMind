@@ -4,11 +4,13 @@ namespace MetaMind.Engine
     using Microsoft.Xna.Framework;
     using Services;
 
-    public abstract class GameModule<TGroupSettings> : IGameModule<TGroupSettings>
+    public abstract class GameModule<TModuleSettings, TModuleLogic, TModuleVisual> : IGameModule<TModuleSettings, TModuleLogic, TModuleVisual>, IDisposable
+        where TModuleLogic                                                         : IGameModuleLogic<TModuleSettings>
+        where TModuleVisual                                                        : IGameModuleVisual<TModuleSettings>
     {
         #region Constructors
 
-        protected GameModule(TGroupSettings settings, GameEngine engine)
+        protected GameModule(TModuleSettings settings, GameEngine engine)
         {
             if (settings == null)
             {
@@ -31,11 +33,11 @@ namespace MetaMind.Engine
 
         #endregion
 
-        public TGroupSettings Settings { get; protected set; }
+        public TModuleSettings Settings { get; protected set; }
 
-        public IGameModuleLogic Logic { get; protected set; }
+        public TModuleLogic Logic { get; protected set; }
 
-        public IGameModuleVisual Visual { get; protected set; }
+        public TModuleVisual Visual { get; protected set; }
 
         protected GameEngine Engine { get; private set; }
 
