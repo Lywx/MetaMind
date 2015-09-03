@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Engine.Guis.Console
+﻿namespace MetaMind.Engine.Console
 {
     internal class CommandLine
     {

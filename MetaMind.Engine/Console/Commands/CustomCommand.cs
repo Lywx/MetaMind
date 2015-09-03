@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Engine.Guis.Console.Commands
+﻿namespace MetaMind.Engine.Console.Commands
 {
     using System;
 

@@ -1,15 +1,16 @@
 ﻿namespace MetaMind.Unity
 {
+    using Console.Commands;
     using Engine;
-    using Guis.Console.Commands;
 
-    class UnityEngineConfigurer : GameEngineConfigurer
+    public class UnityEngineConfigurer : GameEngineConfigurer
     {
         public override void Configure(GameEngine engine)
         {
             base.Configure(engine);
 
-            engine.Interop.Console.AddCommand(new VerboseCommand());
+            var console = engine.Interop.Console;
+            console.AddCommand(new ListCommand());
         }
     }
 }

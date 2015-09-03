@@ -1,7 +1,6 @@
-﻿namespace MetaMind.Engine.Guis.Console.Commands
+﻿namespace MetaMind.Engine.Console.Commands.Core
 {
     using System;
-
     using Components;
 
     internal class ResetCommand : IConsoleCommand
@@ -26,9 +25,9 @@
             this.engine = engine;
         }
 
-        public string Description => "Resets the save files";
+        public string Description => "Resets the engine save files";
 
-        public string Name => "GameEngine.reset";
+        public string Name => "engine-reset";
 
         public string Execute(string[] arguments)
         {

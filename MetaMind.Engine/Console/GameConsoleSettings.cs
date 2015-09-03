@@ -1,9 +1,8 @@
-﻿namespace MetaMind.Engine.Guis.Console
+﻿namespace MetaMind.Engine.Console
 {
     using System.Collections.Generic;
     using Commands;
     using Components.Fonts;
-
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;

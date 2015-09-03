@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Engine.Guis.Console
+﻿namespace MetaMind.Engine.Console
 {
     using System;
     using System.Collections.Generic;
@@ -74,6 +74,16 @@
         public void ResetCommandPosition()
         {
             this.firstCommandPositionOffset = Vector2.Zero;
+        }
+
+        public void ScrollUp()
+        {
+            this.firstCommandPositionOffset += new Vector2(0, 50);
+        }
+
+        public void ScrollDown()
+        {
+            this.firstCommandPositionOffset -= new Vector2(0, 50);
         }
 
         #endregion

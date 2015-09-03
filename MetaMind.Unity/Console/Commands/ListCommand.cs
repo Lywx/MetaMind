@@ -1,11 +1,11 @@
-﻿namespace MetaMind.Unity.Guis.Console.Commands
+﻿namespace MetaMind.Unity.Console.Commands
 {
     using System.Linq;
-    using Engine.Guis.Console.Commands;
+    using Engine.Console.Commands;
 
     internal class ListCommand : IConsoleCommand
     {
-        public string Name => "list";
+        public string Name => "unity-list";
 
         public string Description => "Lists tests, operations and representation";
 

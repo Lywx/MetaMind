@@ -1,6 +1,7 @@
 namespace MetaMind.Engine.Scripting
 {
     using System.Diagnostics;
+    using Services;
 
     public static class Diagnostics
     {
@@ -12,7 +13,7 @@ namespace MetaMind.Engine.Scripting
 
         public static void ConsoleWriteLine(string output, string error)
         {
-            var console = GameEngine.Service.Interop.Console;
+            var console = GameInterop.Console;
 
             if (!string.IsNullOrEmpty(output))
             {
@@ -24,5 +25,7 @@ namespace MetaMind.Engine.Scripting
                 console.WriteLine(error, "ERROR");
             }
         }
+
+        private static IGameInteropService GameInterop => GameEngine.Service.Interop;
     }
 }

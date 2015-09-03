@@ -96,10 +96,10 @@
     <Compile Include="Extensions\ExtT.cs" />
     <Compile Include="Extensions\ExtList.cs" />
     <Compile Include="GameEngineConfigurer.cs" />
-    <Compile Include="Guis\Console\GameConsoleBuffer.cs" />
-    <Compile Include="Guis\Console\IGameConsoleProcessor.cs" />
-    <Compile Include="Guis\Console\Processors\IronPythonProcessor.cs" />
-    <Compile Include="Guis\Console\CommandType.cs" />
+    <Compile Include="Console\GameConsoleBuffer.cs" />
+    <Compile Include="Console\Processors\ICommandProcessor.cs" />
+    <Compile Include="Console\Processors\IronPythonProcessor.cs" />
+    <Compile Include="Console\CommandType.cs" />
     <Compile Include="Guis\Elements\Inputs\ButtonDoubleClick.cs" />
     <Compile Include="Guis\Elements\Inputs\ButtonHistory.cs" />
     <Compile Include="Guis\Elements\Inputs\ButtonPress.cs" />
@@ -148,22 +148,22 @@
     <Compile Include="Components\GameEngineGraphics.cs" />
     <Compile Include="Components\GameEngineInterop.cs" />
     <Compile Include="Components\GameEngineNumerical.cs" />
-    <Compile Include="Guis\Console\CommandHistory.cs" />
-    <Compile Include="Guis\Console\Processors\CommandProcessor.cs" />
-    <Compile Include="Guis\Console\Commands\ClearCommand.cs" />
-    <Compile Include="Guis\Console\CommandComparer.cs" />
-    <Compile Include="Guis\Console\Commands\CustomCommand.cs" />
-    <Compile Include="Guis\Console\Commands\ExitCommand.cs" />
-    <Compile Include="Guis\Console\Commands\HelpCommand.cs" />
-    <Compile Include="Guis\Console\Commands\ResetCommand.cs" />
-    <Compile Include="Guis\Console\Commands\RestartCommand.cs" />
-    <Compile Include="Guis\Console\GameConsole.cs" />
-    <Compile Include="Guis\Console\GameConsoleModule.cs" />
-    <Compile Include="Guis\Console\GameConsoleSettings.cs" />
-    <Compile Include="Guis\Console\Commands\IConsoleCommand.cs" />
-    <Compile Include="Guis\Console\GameConsoleLogic.cs" />
-    <Compile Include="Guis\Console\CommandLine.cs" />
-    <Compile Include="Guis\Console\GameConsoleVisual.cs" />
+    <Compile Include="Console\CommandHistory.cs" />
+    <Compile Include="Console\Processors\CommandProcessor.cs" />
+    <Compile Include="Console\Commands\ClearCommand.cs" />
+    <Compile Include="Console\CommandComparer.cs" />
+    <Compile Include="Console\Commands\CustomCommand.cs" />
+    <Compile Include="Console\Commands\Core\ExitCommand.cs" />
+    <Compile Include="Console\Commands\HelpCommand.cs" />
+    <Compile Include="Console\Commands\Core\ResetCommand.cs" />
+    <Compile Include="Console\Commands\Core\RestartCommand.cs" />
+    <Compile Include="Console\GameConsole.cs" />
+    <Compile Include="Console\GameConsoleModule.cs" />
+    <Compile Include="Console\GameConsoleSettings.cs" />
+    <Compile Include="Console\Commands\IConsoleCommand.cs" />
+    <Compile Include="Console\GameConsoleLogic.cs" />
+    <Compile Include="Console\CommandLine.cs" />
+    <Compile Include="Console\GameConsoleVisual.cs" />
     <Compile Include="GameModule.cs" />
     <Compile Include="GameModuleComponent.cs" />
     <Compile Include="GameModuleLogic.cs" />
@@ -556,6 +556,7 @@
     <Compile Include="Screens\IGameScreenOperations.cs" />
     <Compile Include="Scripting\FSharp\FsiDebugger.cs" />
     <Compile Include="Scripting\FSharp\FsiSession.cs" />
+    <Compile Include="Console\Commands\Core\VerboseCommand.cs" />
     <Compile Include="Scripting\FSharp\FsScript.cs" />
     <Compile Include="Scripting\FSharp\FsScriptRunner.cs" />
     <Compile Include="Scripting\FSharp\FsScriptSearcher.cs" />
@@ -709,6 +710,10 @@
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.1.0\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="Primtives2D, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -799,6 +804,12 @@
     </None>
     <None Include="Content\Audio\Win\Wave Bank.xwb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

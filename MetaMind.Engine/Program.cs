@@ -4,8 +4,6 @@ namespace MetaMind.Engine
     using Components;
     using Components.Fonts;
     using Components.Graphics;
-    using Guis.Console;
-    using Guis.Console.Commands;
     using Microsoft.Xna.Framework.Audio;
 
 #if WINDOWS || LINUX

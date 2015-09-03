@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Engine.Guis.Console
+﻿namespace MetaMind.Engine.Console
 {
     using System;
     using System.Collections.Generic;
@@ -185,11 +185,12 @@
                 case Keys.Down:
                     this.Buffer.NextInput();
                     break;
-                //case Keys.PageUp:
-                //    this.
-                //    break;
-                //case Keys.PageDown:
-                //    break;
+                case Keys.PageUp:
+                    this.Visual.ScrollUp();
+                    break;
+                case Keys.PageDown:
+                    this.Visual.ScrollDown();
+                    break;
             }
         }
 

@@ -1,8 +1,7 @@
 namespace MetaMind.Engine.Services
 {
     using Components;
-    using Guis.Console;
-
+    using Console;
     using Microsoft.Xna.Framework.Content;
 
     public interface IGameInteropService

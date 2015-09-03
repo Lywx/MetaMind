@@ -1,8 +1,7 @@
 namespace MetaMind.Engine.Components
 {
     using System;
-    using Guis.Console;
-
+    using Console;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
 

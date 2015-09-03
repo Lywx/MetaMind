@@ -74,6 +74,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <OutputPath>bin\Release\</OutputPath>
@@ -100,6 +101,10 @@
     <Compile Include="Concepts\Cognitions\IConsciousness.cs" />
     <Compile Include="Concepts\Cognitions\IConsciousnessAsleep.cs" />
     <Compile Include="Concepts\Cognitions\IConsciousnessAwake.cs" />
+    <Compile Include="Concepts\Representations\IRepresentation.cs" />
+    <Compile Include="Concepts\Representations\IRepresentationOperation.cs" />
+    <Compile Include="Concepts\Representations\IRepresentationOrganization.cs" />
+    <Compile Include="Concepts\Representations\Representation.cs" />
     <Compile Include="Concepts\Operations\IOperation.cs" />
     <Compile Include="Concepts\Operations\IOperationComputation.cs" />
     <Compile Include="Concepts\Operations\IOperationDescription.cs" />
@@ -125,14 +130,14 @@
     <Compile Include="Concepts\Operations\OperationOrganizer.cs" />
     <Compile Include="Concepts\Tests\TestEffect.cs" />
     <Compile Include="Concepts\Tests\TestEvaluation.cs" />
-    <Compile Include="Concepts\Tests\TestEventArgs.cs" />
+    <Compile Include="Events\TestEvaluationEventArgs.cs" />
     <Compile Include="Concepts\Tests\TestOrganization.cs" />
     <Compile Include="Concepts\Tests\TestOrganizer.cs" />
     <Compile Include="Concepts\Tests\TestSession.cs" />
     <Compile Include="Extensions\ExtEnum.cs" />
     <Compile Include="Extensions\ExtHashSet.cs" />
     <Compile Include="Extensions\ExtObservableCollection.cs" />
-    <Compile Include="Guis\Console\Commands\VerboseCommand.cs" />
+    <Compile Include="Console\Commands\ListCommand.cs" />
     <Compile Include="Guis\Layers\OperationLayer.cs" />
     <Compile Include="Guis\Modules\OperationModule.cs" />
     <Compile Include="Guis\Modules\OperationModuleSettings.cs" />
@@ -162,12 +167,8 @@
     <Compile Include="Guis\Layers\TestLayer.cs" />
     <Compile Include="Guis\Screens\OptionScreen.cs" />
     <Compile Include="Guis\Layers\SynchronizationLayer.cs" />
-    <Compile Include="Scripting\FsiDebugger.cs" />
-    <Compile Include="Scripting\IScriptOperations.cs" />
-    <Compile Include="Scripting\IScript.cs" />
     <Compile Include="Concepts\Tests\ITest.cs" />
     <Compile Include="Concepts\Tests\ITestOrganization.cs" />
-    <Compile Include="Scripting\Script.cs" />
     <Compile Include="Concepts\Tests\Test.cs" />
     <Compile Include="Events\ConsciousnessSleepStartedEventArgs.cs" />
     <Compile Include="Events\ConsciousnessSleepStoppedEventArgs.cs" />
@@ -199,8 +200,6 @@
     <Compile Include="Guis\Modules\Synchronization\SynchronizationPoint.cs" />
     <Compile Include="Guis\Modules\Synchronization\SynchronizationPointSide.cs" />
     <Compile Include="Guis\Modules\Synchronization\SynchronizationProgressBar.cs" />
-    <Compile Include="Scripting\ScriptRunner.cs" />
-    <Compile Include="Scripting\ScriptSearcher.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Tests\TestViewBinding.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Tests\TestItemFrame.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Tests\TestItemLayer.cs" />
@@ -210,7 +209,6 @@
     <Compile Include="Guis\Widgets\IndexViews\Tests\TestItemSettings.cs" />
     <Compile Include="Guis\Widgets\IndexViews\StandardIndexViewSettings.cs" />
     <Compile Include="Guis\Widgets\Items\ViewItemSynchronizationController.cs" />
-    <Compile Include="Scripting\FsiSession.cs" />
     <Compile Include="Unity.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -231,10 +229,46 @@
       <HintPath>..\packages\FSharp.Core.4.0.0.1\lib\net40\FSharp.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="IronPython, Version=2.7.5.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.5\lib\Net45\IronPython.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IronPython.Modules, Version=2.7.5.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.5\lib\Net45\IronPython.Modules.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IronPython.SQLite, Version=2.7.5.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.5\lib\Net45\IronPython.SQLite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IronPython.Wpf, Version=2.7.5.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.5\lib\Net45\IronPython.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Dynamic, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.5\lib\Net45\Microsoft.Dynamic.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Scripting, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.5\lib\Net45\Microsoft.Scripting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Scripting.AspNet, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.5\lib\Net45\Microsoft.Scripting.AspNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Scripting.Metadata, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.5\lib\Net45\Microsoft.Scripting.Metadata.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MonoGame.Framework, Version=3.5.0.195, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.1.0\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Primtives2D, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -298,6 +332,12 @@
     </None>
     <None Include="Content\Texture\Backgrounds\Sea Of Mind.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
     </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>

@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Engine.Guis.Console.Commands
+﻿namespace MetaMind.Engine.Console.Commands.Core
 {
     using System;
 
@@ -16,7 +16,7 @@
             this.engine = engine;
         }
 
-        public string Name => "GameEngine.restart";
+        public string Name => "engine-restart";
 
         public string Description => "Restarts the engine";
 

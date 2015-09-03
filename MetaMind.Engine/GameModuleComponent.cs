@@ -27,11 +27,13 @@ namespace MetaMind.Engine
 
         protected GameEngine Engine { get; private set; }
 
-        public TModuleSettings Settings => this.module.Settings;
-
-        protected TModuleLogic Logic => this.module.Logic;
-
         protected TModule Module => this.module;
+
+        public TModuleSettings Settings => this.Module.Settings;
+
+        protected TModuleLogic Logic => this.Module.Logic;
+
+        protected TModuleVisual Visual => this.Module.Visual;
 
         public virtual void Initialize()
         {

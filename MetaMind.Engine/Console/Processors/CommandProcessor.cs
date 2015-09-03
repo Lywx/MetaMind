@@ -1,4 +1,4 @@
-﻿namespace MetaMind.Engine.Guis.Console.Processors
+﻿namespace MetaMind.Engine.Console.Processors
 {
     using System;
     using System.Linq;

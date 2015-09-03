@@ -3,9 +3,9 @@
     using Components;
     using Components.Fonts;
     using Components.Graphics;
-    using Guis.Console;
-    using Guis.Console.Commands;
-    using Guis.Console.Processors;
+    using Console;
+    using Console.Commands;
+    using Console.Commands.Core;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Audio;
 

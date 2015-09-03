@@ -5,7 +5,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Engine.Guis.Console.Commands
+namespace MetaMind.Engine.Console.Commands.Core
 {
     internal class ExitCommand : IConsoleCommand
     {
@@ -16,7 +16,7 @@ namespace MetaMind.Engine.Guis.Console.Commands
             this.engine = engine;
         }
 
-        public string Name => "GameEngine.exit";
+        public string Name => "engine-exit";
 
         public string Description => "Exists the engine";
 

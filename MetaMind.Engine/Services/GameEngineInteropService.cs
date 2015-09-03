@@ -7,9 +7,8 @@
 
 namespace MetaMind.Engine.Services
 {
+    using Console;
     using MetaMind.Engine.Components;
-    using MetaMind.Engine.Guis.Console;
-
     using Microsoft.Xna.Framework.Content;
 
     /// <remarks>

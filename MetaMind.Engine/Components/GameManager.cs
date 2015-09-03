@@ -10,9 +10,12 @@ namespace MetaMind.Engine.Components
     using System;
 
     using Microsoft.Xna.Framework;
+    using NLog;
 
     public class GameManager : GameComponent, IGameManager
     {
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+
         #region Constructors and Finalizer
 
         public GameManager(GameEngine engine) 
@@ -47,6 +50,10 @@ namespace MetaMind.Engine.Components
             this.Game = game;
 
             this.Engine.Components.Add(game);
+
+#if DEBUG
+            logger.Info($"Added {this} to GameEngine.Components.");
+#endif
         }
 
         public void OnExiting()
