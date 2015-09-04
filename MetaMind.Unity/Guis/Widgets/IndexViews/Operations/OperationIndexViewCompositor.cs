@@ -1,8 +1,8 @@
-﻿namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
+﻿namespace MetaMind.Unity.Guis.Widgets.IndexViews.Operations
 {
     using System;
     using System.Collections.Generic;
-    using Concepts.Tests;
+    using Concepts.Operations;
     using Engine;
     using Engine.Guis.Elements;
     using Engine.Guis.Widgets.Items;
@@ -11,6 +11,7 @@
     using Engine.Guis.Widgets.Items.Frames;
     using Engine.Guis.Widgets.Items.Interactions;
     using Engine.Guis.Widgets.Items.Layers;
+    using Engine.Guis.Widgets.Items.Settings;
     using Engine.Guis.Widgets.Regions;
     using Engine.Guis.Widgets.Views;
     using Engine.Guis.Widgets.Views.Layouts;
@@ -22,11 +23,12 @@
     using Engine.Guis.Widgets.Views.Visuals;
     using Microsoft.Xna.Framework;
     using Modules;
+    using Tests;
 
     /// <summary>
     /// Composers are not intended to be reused.
     /// </summary>
-    public class TestIndexViewComposer : GameVisualEntity, IIndexViewComposer
+    public class OperationIndexViewCompositor : GameVisualEntity, IIndexViewCompositor
     {
         private StandardIndexViewSettings viewSettings;
 
@@ -38,14 +40,14 @@
 
         private IViewVerticalScrollbar viewScrollbar;
 
-        public TestIndexViewComposer(TestSession testSeesion)
+        public OperationIndexViewCompositor(OperationSession operationSeesion)
         {
-            if (testSeesion == null)
+            if (operationSeesion == null)
             {
-                throw new ArgumentNullException(nameof(testSeesion));
+                throw new ArgumentNullException(nameof(operationSeesion));
             }
 
-            this.TestSession = testSeesion;
+            this.OperationSession = operationSeesion;
         }
 
         protected IView View { get; set; }
@@ -64,7 +66,7 @@
 
         protected dynamic ViewData { get; set; }
 
-        protected TestSession TestSession { get; set; }
+        protected OperationSession OperationSession { get; set; }
 
         public virtual void Compose(IView view, dynamic viewData)
         {
@@ -88,17 +90,17 @@
             this.SetupLogic();
         }
 
-        public IView Construct(IViewItem item)
+        public IView Clone(IViewItem item)
         {
-            var itemLayer  = item.GetLayer<BlockViewVerticalItemLayer>();
+            var itemLayer = item.GetLayer<BlockViewVerticalItemLayer>();
             var itemLayout = itemLayer.ItemLayout;
 
             var hostViewLayer = item.View.GetLayer<BlockViewVerticalLayer>();
             var hostViewSettings = hostViewLayer.ViewSettings;
-            var hostViewScroll   = hostViewLayer.ViewScroll;
+            var hostViewScroll = hostViewLayer.ViewScroll;
 
             var indexViewSettings = (StandardIndexViewSettings)item.View.ViewSettings.Clone();
-            var indexItemSettings = (TestItemSettings)item.View.ItemSettings.Clone();
+            var indexItemSettings = (ItemSettings)item.View.ItemSettings.Clone();
 
             indexViewSettings.ViewRowDisplay = hostViewSettings.ViewRowDisplay - itemLayout.Row - itemLayout.BlockRow;
             indexViewSettings.ViewPosition   = hostViewScroll.Position(itemLayout.Row + itemLayout.BlockRow);
@@ -108,7 +110,7 @@
 
         protected void AddView()
         {
-            var test = (Test)this.ViewData;
+            IOperationDescription operation = this.ViewData;
 
             this.viewSettings = (StandardIndexViewSettings)this.View.ViewSettings;
 
@@ -124,10 +126,10 @@
 
             // View logic
             this.viewLogic = this.AddViewLogic();
-            this.viewLogic.ViewBinding = new TestViewBinding(
+            this.viewLogic.ViewBinding = new OperationViewBinding(
                 this.viewLogic,
-                test.Children,
-                this.TestSession);
+                operation,
+                this.OperationSession);
 
             // View visual
             this.viewVisual = this.AddViewVisual();
@@ -168,7 +170,7 @@
                 regionBounds: () => new Rectangle(
                     location: this.viewSettings.ViewPosition.ToPoint(), 
                     size: new Point(
-                        x: graphicsSettings.Width - (int)TestModuleSettings.ViewMargin.X * 2,
+                        x: graphicsSettings.Width - (int)OperationModuleSettings.ViewMargin.X * 2,
                         y: (int)(this.viewSettings.ViewRowDisplay * this.viewSettings.ItemMargin.Y))),
                 regionSettings: viewRegionSettings);
 
@@ -193,11 +195,11 @@
         {
             this.ItemFactory = new ViewItemFactory(
 
-                item => new TestItemLayer(item),
+                item => new OperationItemLayer(item),
 
                 item =>
                 {
-                    var itemFrame = new TestItemFrame(item, new ViewItemPickableFrame(item));
+                    var itemFrame = new OperationItemFrame(item, new ViewItemPickableFrame(item));
 
                     var itemLayoutInteraction = new BlockViewVerticalItemLayoutInteraction(
                         item,
@@ -212,11 +214,11 @@
                         item,
                         itemLayout,
                         itemLayoutInteraction,
-                        new TestIndexedViewComposer(this.View, this.TestSession));
+                        new OperationIndexedViewCompositor(this.View, this.OperationSession));
 
                     var itemModel = new ViewItemDataModel(item);
 
-                    return new TestItemLogic(
+                    return new OperationItemLogic(
                         item,
                         itemFrame,
                         itemInteraction,
@@ -224,7 +226,7 @@
                         itemLayout);
                 },
 
-                item => new TestItemVisual(item));
+                item => new OperationItemVisual(item));
         }
 
         protected virtual void SetupLogic()

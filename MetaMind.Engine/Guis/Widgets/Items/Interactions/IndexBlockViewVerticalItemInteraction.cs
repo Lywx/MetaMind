@@ -14,29 +14,23 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
 
         private IView indexedView;
 
-        private readonly IIndexViewComposer indexedViewComposer;
+        private readonly IIndexViewCompositor indexedViewCompositor;
 
-        public bool IndexedViewOpened
-        {
-            get
-            {
-                return this.IndexedView != null && this.IndexedView[ViewState.View_Is_Active]();
-            }
-        }
+        public bool IndexedViewOpened => this.IndexedView != null && this.IndexedView[ViewState.View_Is_Active]();
 
         public IndexBlockViewVerticalItemInteraction(
             IViewItem item,
             IViewItemLayout itemLayout,
             IViewItemLayoutInteraction itemLayoutInteraction,
-            IIndexViewComposer viewComposer)
+            IIndexViewCompositor viewCompositor)
             : base(item, itemLayout, itemLayoutInteraction)
         {
-            if (viewComposer == null)
+            if (viewCompositor == null)
             {
-                throw new ArgumentNullException("viewComposer");
+                throw new ArgumentNullException(nameof(viewCompositor));
             }
 
-            this.indexedViewComposer = viewComposer;
+            this.indexedViewCompositor = viewCompositor;
         }
 
         public Func<Vector2> IndexedViewPosition { get; set; }
@@ -107,8 +101,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
         {
             if (this.IndexedView == null)
             {
-                this.indexedView = this.indexedViewComposer.Construct(this.Item);
-                this.indexedViewComposer.Compose(this.indexedView, this.Item.ItemData);
+                this.indexedView = this.indexedViewCompositor.Clone(this.Item);
+                this.indexedViewCompositor.Compose(this.indexedView, this.Item.ItemData);
 
                 this.indexedView.LoadContent(this.Interop);
             }

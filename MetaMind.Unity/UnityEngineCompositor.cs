@@ -3,7 +3,7 @@
     using Console.Commands;
     using Engine;
 
-    public class UnityEngineConfigurer : GameEngineConfigurer
+    public class UnityEngineCompositor : GameEngineCompositor
     {
         public override void Configure(GameEngine engine)
         {

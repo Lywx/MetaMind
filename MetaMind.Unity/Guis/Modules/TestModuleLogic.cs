@@ -63,8 +63,8 @@
             // View construction
             this.View = new View(viewSettings, itemSettings, new List<IViewItem>());
 
-            var viewComposer = new TestIndexViewComposer(this.testSession);
-            viewComposer.Compose(this.View, this.test);
+            var viewCompositor = new TestIndexViewCompositor(this.testSession);
+            viewCompositor.Compose(this.View, this.test);
 
             // Entities
             this.ControllableEntities.Add(this.View);

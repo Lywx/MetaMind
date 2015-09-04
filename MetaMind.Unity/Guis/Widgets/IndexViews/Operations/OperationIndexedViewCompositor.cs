@@ -1,7 +1,7 @@
-namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
+namespace MetaMind.Unity.Guis.Widgets.IndexViews.Operations
 {
     using System;
-    using Concepts.Tests;
+    using Concepts.Operations;
     using Engine.Guis.Widgets.Items.Data;
     using Engine.Guis.Widgets.Items.Factories;
     using Engine.Guis.Widgets.Items.Frames;
@@ -11,16 +11,17 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
     using Engine.Guis.Widgets.Views.Regions;
     using Engine.Guis.Widgets.Views.Selections;
     using Engine.Guis.Widgets.Views.Visuals;
+    using Tests;
 
     /// <summary>
     /// Composers are not intended to be reused.
     /// </summary>
-    public class TestIndexedViewComposer : TestIndexViewComposer
+    public class OperationIndexedViewCompositor : OperationIndexViewCompositor
     {
         private readonly IView viewHost;
 
-        public TestIndexedViewComposer(IView viewHost, TestSession testSeesion)
-            : base(testSeesion)
+        public OperationIndexedViewCompositor(IView viewHost, OperationSession operationSeesion)
+            : base(operationSeesion)
         {
             if (viewHost == null)
             {
@@ -76,11 +77,11 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
         {
             this.ItemFactory = new ViewItemFactory(
 
-                item => new TestItemLayer(item),
+                item => new OperationItemLayer(item),
 
                 item =>
                 {
-                    var itemFrame = new TestItemFrame(item, new ViewItemPickableFrame(item));
+                    var itemFrame = new OperationItemFrame(item, new ViewItemPickableFrame(item));
 
                     var itemLayoutInteraction = new BlockViewVerticalItemLayoutInteraction(
                         item,
@@ -105,11 +106,11 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
                         item,
                         itemLayout,
                         itemLayoutInteraction, 
-                        new TestIndexedViewComposer(this.View, this.TestSession));
+                        new OperationIndexedViewCompositor(this.View, this.OperationSession));
 
                     var itemModel = new ViewItemDataModel(item);
 
-                    return new TestItemLogic(
+                    return new OperationItemLogic(
                         item,
                         itemFrame,
                         itemInteraction,
@@ -117,7 +118,7 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
                         itemLayout);
                 },
 
-                item => new TestItemVisual(item));
+                item => new OperationItemVisual(item));
         }
 
         protected override void AddViewRegion()

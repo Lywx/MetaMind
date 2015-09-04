@@ -61,8 +61,8 @@
             // View construction
             this.View = new View(viewSettings, itemSettings, new List<IViewItem>());
 
-            var viewComposer = new OperationIndexViewComposer(this.operationSession);
-            viewComposer.Compose(this.View, this.operation);
+            var viewCompositor = new OperationIndexViewCompositor(this.operationSession);
+            viewCompositor.Compose(this.View, this.operation);
 
             // Entities
             this.Entities.Add(this.View);

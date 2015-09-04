@@ -1,6 +1,6 @@
 namespace MetaMind.Engine
 {
-    public interface IGameEngineConfigurer
+    public interface IGameEngineCompositor
     {
         void Configure(GameEngine engine);
     }

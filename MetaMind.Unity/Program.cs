@@ -25,7 +25,7 @@ namespace MetaMind.Unity
         {
             using (var engine = new GameEngine(@"Content"))
             {
-                var configurer = new UnityEngineConfigurer();
+                var configurer = new UnityEngineCompositor();
                 configurer.Configure(engine);
 
                 var testimony = new Unity(engine);

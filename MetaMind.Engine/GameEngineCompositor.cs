@@ -4,12 +4,11 @@
     using Components.Fonts;
     using Components.Graphics;
     using Console;
-    using Console.Commands;
     using Console.Commands.Core;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Audio;
 
-    public class GameEngineConfigurer : IGameEngineConfigurer
+    public class GameEngineCompositor : IGameEngineCompositor
     {
         public virtual void Configure(GameEngine engine)
         {
