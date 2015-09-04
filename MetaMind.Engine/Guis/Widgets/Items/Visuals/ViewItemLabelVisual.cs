@@ -1,9 +1,8 @@
 namespace MetaMind.Engine.Guis.Widgets.Items.Visuals
 {
-    using Widgets.Visuals;
-    using Services;
-
     using Microsoft.Xna.Framework;
+    using Services;
+    using Widgets.Visuals;
 
     public class ViewItemLabelVisual : ViewItemComponent, IViewItemVisual
     {

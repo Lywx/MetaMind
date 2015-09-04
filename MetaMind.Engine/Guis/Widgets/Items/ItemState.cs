@@ -35,7 +35,6 @@ namespace MetaMind.Engine.Guis.Widgets.Items
         // whether is dragging by mouse
         Item_Is_Dragging,
 
-        //------------------------------------------------------------------
         StateNum,
     }
 }

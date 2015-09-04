@@ -16,13 +16,13 @@ namespace MetaMind.Unity.Concepts.Synchronizations
 
         public void StartSynchronization()
         {
-            var @event = this.GameInterop.Event;
+            var @event = this.Interop.Event;
             @event.QueueEvent(new Event((int)SessionEventType.SyncStarted, new SynchronizationStartedEventArgs(this.SynchronizationData)));
         }
 
         public void StopSynchronization()
         {
-            var @event = this.GameInterop.Event;
+            var @event = this.Interop.Event;
             @event.QueueEvent(new Event((int)SessionEventType.SyncStopped, new SynchronizationStoppedEventArgs(this.SynchronizationData)));
         }
 

@@ -7,9 +7,8 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Processors;
-    using Services;
 
-    public class GameConsole : DrawableGameComponent, IDisposable
+    public partial class GameConsole : GameControllableComponent, IDisposable
     {
         #region Constructors and Finalizer
 
@@ -29,10 +28,6 @@
 
         private GameConsoleModule Module { get; set; }
 
-        protected IGameInputService GameInput => GameEngine.Service.Input;
-
-        protected IGameGraphicsService GameGraphics => GameEngine.Service.Graphics;
-
         #endregion
 
         public List<IConsoleCommand> Commands => this.Module.Settings.Commands;
@@ -48,24 +43,32 @@
             set { this.Module.Logic.Processor = value; }
         }
 
+        #region Initialization
+
         public override void Initialize()
         {
             this.Module.Initialize();
             base       .Initialize();
         }
 
+        #endregion
+
+        #region Draw and Update  
+
         public override void Update(GameTime time)
         {
-            this.Module.UpdateInput(this.GameInput, time);
+            this.Module.UpdateInput(this.Input, time);
             this.Module.Update(time);
             base       .Update(time);
         }
 
         public override void Draw(GameTime time)
         {
-            this.Module.Draw(this.GameGraphics, time, byte.MaxValue);
+            this.Module.Draw(this.Graphics, time, byte.MaxValue);
             base       .Draw(time);
         }
+
+        #endregion
 
         #region Operations
 

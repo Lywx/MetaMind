@@ -68,13 +68,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Scrolls
 
         #region Display
 
-        protected override bool CanMoveDown
-        {
-            get
-            {
-                return this.RowOffset < this.RowOffsetMax;
-            }
-        }
+        protected override bool CanMoveDown => this.RowOffset < this.RowOffsetMax;
 
         public override bool IsUpToDisplay(int id)
         {

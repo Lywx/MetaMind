@@ -1,8 +1,7 @@
 namespace MetaMind.Engine.Services
 {
-    using MetaMind.Engine.Components.Fonts;
-    using MetaMind.Engine.Components.Graphics;
-
+    using Components.Fonts;
+    using Components.Graphics;
     using Microsoft.Xna.Framework.Graphics;
 
     public interface IGameGraphicsService

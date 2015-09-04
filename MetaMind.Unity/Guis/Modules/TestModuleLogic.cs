@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using Concepts.Tests;
     using Engine;
-    using Engine.Guis;
     using Engine.Guis.Widgets.Items;
     using Engine.Guis.Widgets.Views;
     using Engine.Services;
@@ -34,7 +33,7 @@
             this.test        = test;
             this.testSession = testSession;
 
-            this.TestMonitor = new TestMonitor(this.GameInterop.Engine, this.test);
+            this.TestMonitor = new TestMonitor(this.Interop.Engine, this.test);
 
             this.ControllableEntities = new GameControllableEntityCollection<IGameControllableEntity>();
         }
@@ -49,7 +48,7 @@
                                                                                                            
         public override void LoadContent(IGameInteropService interop)
         {
-            var graphicsSettings = this.GameGraphics.Settings;
+            var graphicsSettings = this.EngineGraphics.Settings;
 
             // View settings
             var viewSettings = new StandardIndexViewSettings(

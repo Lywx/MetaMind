@@ -31,7 +31,7 @@ namespace MetaMind.Unity.Guis.Modules
             this.Consciousness   = consciousness;
             this.Synchronization = synchronization;
 
-            this.SynchronizationMonitor = new SynchronizationMonitor(this.GameInterop.Engine, this.Synchronization);
+            this.SynchronizationMonitor = new SynchronizationMonitor(this.Interop.Engine, this.Synchronization);
         }
 
         private SynchronizationMonitor SynchronizationMonitor { get; set; }
@@ -129,7 +129,7 @@ namespace MetaMind.Unity.Guis.Modules
                 // Quit monitoring 
                 this.synchronizationLogic.Exit();
 
-                var screenManager = this.GameInterop.Screen;
+                var screenManager = this.Interop.Screen;
 
                 // Remove screens on the background screen
                 screenManager.EraseScreenFrom(1); 

@@ -27,10 +27,10 @@
             var asleepSpan = consciousness.LastSleepEndTime - consciousness.LastSleepStartTime;
             consciousness.KnownAsleepSpan += asleepSpan;
 
-            var @event = this.GameInterop.Event;
+            var @event = this.Interop.Event;
             @event.TriggerEvent(new Event((int)SessionEventType.SleepStopped, new ConsciousnessSleepStoppedEventArgs(consciousness)));
 
-            var console = this.GameInterop.Console;
+            var console = this.Interop.Console;
             console.WriteLine($"MESSAGE: Asleep {asleepSpan.ToString("hh':'mm':'ss''")}");
 
             return new ConsciousnessAwake(consciousness);

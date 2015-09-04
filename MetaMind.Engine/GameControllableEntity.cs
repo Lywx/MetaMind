@@ -95,7 +95,7 @@ namespace MetaMind.Engine
 
         #region Dependency
 
-        protected IGameInputService GameInput => GameEngine.Service.Input;
+        protected IGameInputService Input => GameEngine.Service.Input;
 
         #endregion
 

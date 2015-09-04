@@ -5,9 +5,8 @@ namespace MetaMind.Unity.Components
     using Engine.Components.Profilings;
     using Engine.Settings.Loaders;
     using Microsoft.Xna.Framework;
-    using GameComponent = Engine.GameComponent;
 
-    public class ResourceMonitor : GameComponent, IConfigurationLoader
+    public class ResourceMonitor : GameControllableComponent, IConfigurationLoader
     {
         public ResourceMonitor(GameEngine engine) : base(engine)
         {

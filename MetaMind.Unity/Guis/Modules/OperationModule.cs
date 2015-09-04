@@ -46,7 +46,7 @@
                                                                                                            
         public override void LoadContent(IGameInteropService interop)
         {
-            var graphicsSettings = this.GameGraphics.Settings;
+            var graphicsSettings = this.EngineGraphics.Settings;
 
             // View settings
             var viewSettings = new StandardIndexViewSettings(

@@ -51,12 +51,6 @@ namespace MetaMind.Engine.Guis.Elements
 
         #endregion
 
-        #region Dependency
-
-        private IInputEvent InputEvent => this.GameInput.Event;
-
-        #endregion
-
         #region Events
 
         public event EventHandler<FrameEventArgs> FrameMoved = delegate {};
@@ -85,7 +79,7 @@ namespace MetaMind.Engine.Guis.Elements
 
         private void FrameFrameMoved(object sender, FrameEventArgs e)
         {
-            var location = this.GameInput.State.Mouse.CurrentState;
+            var location = this.Input.State.Mouse.CurrentState;
             this.EventMouseMove(null, new MouseEventArgs(MouseButtons.None, 0, location.X, location.Y, 0));
         }
 
@@ -267,10 +261,10 @@ namespace MetaMind.Engine.Guis.Elements
 
         private void RegisterMouseInputHandlers()
         {
-            this.InputEvent.MouseMove        += this.EventMouseMove;
-            this.InputEvent.MouseUp          += this.EventMouseUp;
-            this.InputEvent.MouseDown        += this.EventMouseDown;
-            this.InputEvent.MouseDoubleClick += this.EventMouseDoubleClick;
+            this.Input.Event.MouseMove        += this.EventMouseMove;
+            this.Input.Event.MouseUp          += this.EventMouseUp;
+            this.Input.Event.MouseDown        += this.EventMouseDown;
+            this.Input.Event.MouseDoubleClick += this.EventMouseDoubleClick;
         }
 
         #endregion
@@ -474,10 +468,10 @@ namespace MetaMind.Engine.Guis.Elements
 
         private void DisposeMouseInputHandlers()
         {
-            this.GameInput.Event.MouseMove -= this.EventMouseMove;
-            this.GameInput.Event.MouseUp -= this.EventMouseUp;
-            this.GameInput.Event.MouseDown -= this.EventMouseDown;
-            this.GameInput.Event.MouseDoubleClick -= this.EventMouseDoubleClick;
+            this.Input.Event.MouseMove -= this.EventMouseMove;
+            this.Input.Event.MouseUp -= this.EventMouseUp;
+            this.Input.Event.MouseDown -= this.EventMouseDown;
+            this.Input.Event.MouseDoubleClick -= this.EventMouseDoubleClick;
         }
 
         private void DisposeEvents()

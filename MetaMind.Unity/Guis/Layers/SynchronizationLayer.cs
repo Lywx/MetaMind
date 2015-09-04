@@ -19,13 +19,13 @@
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            base.Draw(graphics, time, alpha);
-
             graphics.SpriteBatch.Begin();
 
             this.Modules.Draw(graphics, time, alpha);
 
             graphics.SpriteBatch.End();
+
+            base.Draw(graphics, time, alpha);
         }
 
         public override void LoadContent(IGameInteropService interop)

@@ -26,18 +26,22 @@ namespace MetaMind.Engine
 
         private IGameInput input;
 
+        #region Constructors
+
         public GameEngine(string content)
         {
             this.Content.RootDirectory = content;
         }
 
-        #region Global Service Provider
+        #endregion
+
+        #region Component Service Provider
 
         public static IGameService Service { get; private set; }
 
         #endregion
 
-        #region Property Injection
+        #region Components
 
         public IGameGraphics Graphics
         {
@@ -132,7 +136,7 @@ namespace MetaMind.Engine
 
         #endregion
 
-        #region Game
+        #region Initializtion
 
         protected override void Initialize()
         {
@@ -153,6 +157,10 @@ namespace MetaMind.Engine
             base.Initialize();
         }
 
+        #endregion
+
+        #region Load and Unload
+
         protected override void LoadContent()
         {
 
@@ -161,6 +169,10 @@ namespace MetaMind.Engine
         protected override void UnloadContent()
         {
         }
+
+        #endregion
+
+        #region Draw and Update  
 
         protected override void Update(GameTime gameTime)
         {
@@ -176,7 +188,7 @@ namespace MetaMind.Engine
 
         protected override void Draw(GameTime gameTime)
         {
-            this.GraphicsDevice.Clear(Color.Black);
+            this.GraphicsDevice.Clear(Color.Transparent);
 
             base.Draw(gameTime);
         }
@@ -191,6 +203,23 @@ namespace MetaMind.Engine
 
         #endregion
 
+        #region Operations
+
+        public void Restart()
+        {
+            // Save immediately because the Exit is an asynchronous call, 
+            // which may not finished before Process.Start() is called
+            this.Interop.Save.Save();
+
+            this.Exit();
+
+            using (var p = Process.GetCurrentProcess())
+            {
+                Process.Start(Assembly.GetEntryAssembly().Location, p.StartInfo.Arguments);
+            }
+        }
+
+        #endregion
 
         #region IDisposable
 
@@ -226,27 +255,6 @@ namespace MetaMind.Engine
             finally
             {
                 base.Dispose(disposing);
-            }
-        }
-
-        #endregion
-    }
-
-    public partial class GameEngine
-    {
-        #region Operations
-
-        public void Restart()
-        {
-            // Save immediately because the Exit is an asynchronous call, 
-            // which may not finished before Process.Start() is called
-            this.Interop.Save.Save();
-
-            this.Exit();
-
-            using (var p = Process.GetCurrentProcess())
-            {
-                Process.Start(Assembly.GetEntryAssembly().Location, p.StartInfo.Arguments);
             }
         }
 

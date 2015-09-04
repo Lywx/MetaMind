@@ -33,7 +33,7 @@
         {
             if (e.IsSource && Test.Session.IsNotificationEnabled)
             {
-                var audio = this.GameInterop.Audio;
+                var audio = this.Interop.Audio;
                 audio.PlayCue(this.failingCue);
 
                 Test.Speech.SpeakAsync(this.FailingNotification);
@@ -44,7 +44,7 @@
         {
             if (e.IsSource && Test.Session.IsNotificationEnabled)
             {
-                var audio = this.GameInterop.Audio;
+                var audio = this.Interop.Audio;
                 audio.PlayCue(this.succeedingCue);
 
                 Test.Speech.SpeakAsync(this.SucceedingNotification);

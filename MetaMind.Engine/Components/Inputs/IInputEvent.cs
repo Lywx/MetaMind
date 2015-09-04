@@ -54,6 +54,6 @@ namespace MetaMind.Engine.Components.Inputs
         /// <summary>
         /// Event raised when the mouse wheel has been moved.
         /// </summary>
-        event EventHandler<MouseEventArgs> MouseWheel;
+        event EventHandler<MouseEventArgs> MouseScroll;
     }
 }

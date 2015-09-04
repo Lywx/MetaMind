@@ -24,6 +24,8 @@ namespace MetaMind.Engine.Guis.Elements
         /// </summary>
         private Point mouseRelativePosition;
 
+        #region Constructors and Finalizer
+
         public DraggableFrame(Rectangle rectangle)
             : this()
         {
@@ -82,6 +84,8 @@ namespace MetaMind.Engine.Guis.Elements
             this.Dispose(true);
         }
 
+        #endregion
+
         #region State Machine
 
         protected enum State
@@ -118,7 +122,7 @@ namespace MetaMind.Engine.Guis.Elements
 
         private void FrameMousePressed(object sender, FrameEventArgs e)
         {
-            var mouse = this.GameInput.State.Mouse.CurrentState;
+            var mouse = this.Input.State.Mouse.CurrentState;
 
             // origin for deciding whether is dragging
             this.mousePressedPosition = new Point(mouse.X, mouse.Y);
@@ -162,7 +166,7 @@ namespace MetaMind.Engine.Guis.Elements
         {
             base.Update(time);
 
-            var mouse = this.GameInput.State.Mouse.CurrentState;
+            var mouse = this.Input.State.Mouse.CurrentState;
             this.mouseLocation = new Point(mouse.X, mouse.Y);
 
             if (this.Machine.IsInState(State.Dragging))

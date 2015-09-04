@@ -64,7 +64,7 @@ namespace MetaMind.Unity.Guis.Layers
             this.ControllableEntities.LoadContent(interop);
 
             // Visuals
-            var graphicsSettings = this.GameGraphics.Settings;
+            var graphicsSettings = this.EngineGraphics.Settings;
 
             this.testLabel = new Label
             {

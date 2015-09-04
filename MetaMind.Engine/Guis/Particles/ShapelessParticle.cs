@@ -52,10 +52,10 @@ namespace MetaMind.Engine.Guis.Particles
         public ShapelessParticle()
         {
             // Parameters
-            this.LoadParameter(this.GameGraphics.Settings);
+            this.LoadParameter(this.EngineGraphics.Settings);
 
             // Dependency
-            this.Random = this.GameNumerical.Random;
+            this.Random = this.Numerical.Random;
         }
 
         public ShapelessParticle(Vector2 position, Vector2 a, Vector2 v, float angle, float angluarA, float angluarV, float life)

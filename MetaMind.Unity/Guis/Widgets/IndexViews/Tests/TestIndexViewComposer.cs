@@ -161,7 +161,7 @@
 
         protected virtual void AddViewRegion()
         {
-            var graphicsSettings = this.GameGraphics.Settings;
+            var graphicsSettings = this.EngineGraphics.Settings;
 
             var viewRegionSettings = new ViewRegionSettings();
             this.ViewRegion = new ViewRegion(

@@ -54,8 +54,8 @@ namespace MetaMind.Engine.Scripting.IronPython
 
         private void CreateVariables()
         {
-            this.SetVariable("GameEngine", this.GameInterop.Engine);
-            this.SetVariable("Game", this.GameInterop.Game.Game);
+            this.SetVariable("GameEngine", this.Interop.Engine);
+            this.SetVariable("Game", this.Interop.Game.Game);
             this.EvalExpressionAsync(
 @"import clr; clr.AddReference(""MetaMind.Unity""); from MetaMind.Unity import Unity");
 

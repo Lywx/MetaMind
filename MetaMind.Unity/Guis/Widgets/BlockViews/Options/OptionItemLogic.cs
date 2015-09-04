@@ -41,9 +41,9 @@
             option.Accept();
             option.Unlock();
 
-            this.ItemFrame.RootFrame.UpdateInput(this.GameInput, new GameTime());
+            this.ItemFrame.RootFrame.UpdateInput(this.Input, new GameTime());
 
-            this.GameInterop.Screen.Screens.First(screen => screen is OptionScreen).Exit();
+            this.Interop.Screen.Screens.First(screen => screen is OptionScreen).Exit();
         }
     }
 }

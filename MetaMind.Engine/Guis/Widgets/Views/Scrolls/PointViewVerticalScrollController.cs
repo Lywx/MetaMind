@@ -16,25 +16,13 @@
         {
         }
 
-        protected PointViewVerticalSettings ViewSettings
-        {
-            get { return this.viewSettings; }
-        }
+        protected PointViewVerticalSettings ViewSettings => this.viewSettings;
 
         #region Display 
 
-        protected virtual bool CanMoveUp
-        {
-            get { return this.RowOffset > this.RowOffsetMin; }
-        }
+        protected virtual bool CanMoveUp => this.RowOffset > this.RowOffsetMin;
 
-        protected virtual bool CanMoveDown
-        {
-            get
-            {
-                return this.RowOffset < this.RowOffsetMax;
-            }
-        }
+        protected virtual bool CanMoveDown => this.RowOffset < this.RowOffsetMax;
 
         public bool CanDisplay(int id)
         {
@@ -99,15 +87,9 @@
             }
         }
 
-        protected virtual int RowOffsetMax
-        {
-            get { return this.View.ItemsRead.Count - this.ViewSettings.ViewRowDisplay; }
-        }
+        protected virtual int RowOffsetMax => this.View.ItemsRead.Count - this.ViewSettings.ViewRowDisplay;
 
-        protected virtual int RowOffsetMin
-        {
-            get { return 0; }
-        }
+        protected virtual int RowOffsetMin => 0;
 
         #endregion
 

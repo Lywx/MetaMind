@@ -24,7 +24,7 @@
 
         public IGameScreen Screen { get; private set; }
 
-        private GameEngine Engine => this.GameInterop.Engine;
+        private GameEngine Engine => this.Interop.Engine;
 
         #region Layer Events
 

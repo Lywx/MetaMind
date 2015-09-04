@@ -7,9 +7,7 @@
 
     using Microsoft.Xna.Framework;
 
-    using GameComponent = Engine.GameComponent;
-
-    public class TestMonitor : GameComponent, IConfigurationLoader
+    public class TestMonitor : GameControllableComponent, IConfigurationLoader
     {
         public static float TestWarningRate = 10f;
 
@@ -35,7 +33,7 @@
         {
             if (this.test.Evaluation.ResultAllPassedRate < TestWarningRate)
             {
-                this.GameInterop.Audio.PlayMusic(this.testWarningCue);
+                this.Interop.Audio.PlayMusic(this.testWarningCue);
             }
 
             base.Update(gameTime);

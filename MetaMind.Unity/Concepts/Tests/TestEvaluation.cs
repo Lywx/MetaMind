@@ -153,7 +153,7 @@
             }
             catch (Exception e)
             {
-                var console = this.GameInterop.Console;
+                var console = this.Interop.Console;
                 console.WriteLine(e.ToString(), "ERROR");
 
                 this.ResultPassed = false;

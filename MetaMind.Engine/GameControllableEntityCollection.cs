@@ -1,6 +1,6 @@
 ﻿namespace MetaMind.Engine
 {
-    using MetaMind.Engine.Services;
+    using Services;
 
     using Microsoft.Xna.Framework;
 

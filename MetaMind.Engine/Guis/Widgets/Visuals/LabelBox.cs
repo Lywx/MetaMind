@@ -61,15 +61,9 @@ namespace MetaMind.Engine.Guis.Widgets.Visuals
             set { this.boxMargin = value; }
         }
 
-        public Vector2 Location
-        {
-            get { return this.Box.Bounds().Location.ToVector2(); }
-        }
+        public Vector2 Location => this.Box.Bounds().Location.ToVector2();
 
-        public int Bottom
-        {
-            get { return this.Box.Bounds().Bottom; }
-        }
+        public int Bottom => this.Box.Bounds().Bottom;
 
         public Box Box { get; set; }
 

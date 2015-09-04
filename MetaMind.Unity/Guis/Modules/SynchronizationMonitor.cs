@@ -7,12 +7,11 @@
     using Events;
     using Microsoft.Xna.Framework;
     using Sessions;
-    using GameComponent = Engine.GameComponent;
 
     /// <summary>
     /// An attention monitor during synchronization
     /// </summary>
-    public class SynchronizationMonitor : GameComponent
+    public class SynchronizationMonitor : GameControllableComponent
     {
         private readonly ISynchronization synchronization;
 
@@ -50,7 +49,7 @@
         {
             if (DateTime.Now - this.alertMoment > this.attentionSpan)
             {
-                var audio = this.GameInterop.Audio;
+                var audio = this.Interop.Audio;
 
                 if (this.synchronization.Enabled)
                 {
@@ -75,7 +74,7 @@
 
         private void Alert()
         {
-            var @event = this.GameInterop.Event;
+            var @event = this.Interop.Event;
             @event.QueueEvent(new Event((int)SessionEventType.SyncAlerted, new SynchronizationAlertedEventArgs()));
         }
 

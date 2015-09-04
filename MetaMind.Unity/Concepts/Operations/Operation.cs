@@ -114,11 +114,11 @@
         {
             if (Session.IsNotificationEnabled)
             {
-                var audio = this.GameInterop.Audio;
+                var audio = this.Interop.Audio;
                 audio.PlayCue(this.transitioningCue);
             }
 
-            var screenManager = this.GameInterop.Screen;
+            var screenManager = this.Interop.Screen;
             var mainScreen = (MainScreen)screenManager.Screens.First(s => s is MainScreen);
 
             screenManager.AddScreen(new OptionScreen(this.ProcedureName, this.ProcedureDescription, this.RequestOptions(), mainScreen.CircularLayers));

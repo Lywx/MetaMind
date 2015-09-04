@@ -49,8 +49,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
         public ViewItemCharModifier(IViewItem item)
             : base(item)
         {
-            this.GameInput.Event.CharEntered += this.InputEventCharEntered;
-            this.GameInput.Event.KeyDown     += this.InputEventEnterKeyDown;
+            this.Input.Event.CharEntered += this.InputEventCharEntered;
+            this.Input.Event.KeyDown     += this.InputEventEnterKeyDown;
         }
 
         ~ViewItemCharModifier()
@@ -411,8 +411,8 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Data
                         this.modificationEnded = null;
                         this.ValueModified = null;
 
-                        this.GameInput.Event.CharEntered -= this.InputEventCharEntered;
-                        this.GameInput.Event.KeyDown -= this.InputEventEnterKeyDown;
+                        this.Input.Event.CharEntered -= this.InputEventCharEntered;
+                        this.Input.Event.KeyDown -= this.InputEventEnterKeyDown;
                     }
 
                     this.IsDisposed = true;

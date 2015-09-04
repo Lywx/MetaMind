@@ -17,4 +17,12 @@
             return this.Command;
         }
     }
+
+    internal class VisualCommandLine : CommandLine
+    {
+        public VisualCommandLine(string command, CommandType type)
+            : base(command, type)
+        {
+        }
+    }
 }

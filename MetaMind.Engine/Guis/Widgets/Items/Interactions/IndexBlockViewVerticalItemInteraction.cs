@@ -110,7 +110,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Interactions
                 this.indexedView = this.indexedViewComposer.Construct(this.Item);
                 this.indexedViewComposer.Compose(this.indexedView, this.Item.ItemData);
 
-                this.indexedView.LoadContent(this.GameInterop);
+                this.indexedView.LoadContent(this.Interop);
             }
 
             this.IndexedView[ViewState.View_Is_Active] = () => true;

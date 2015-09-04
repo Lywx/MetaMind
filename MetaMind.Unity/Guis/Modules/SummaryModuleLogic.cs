@@ -67,7 +67,7 @@
 
             public override bool HandleEvent(IEvent @event)
             {
-                var screenManager = this.GameInterop.Screen;
+                var screenManager = this.Interop.Screen;
 
                 screenManager.EraseScreenFrom(1);
 

@@ -18,7 +18,6 @@ namespace MetaMind.Engine.Components.Inputs
     public class InputEvent : GameControllableComponent, IInputEvent
     {
         private Form       windowForm;
-
         private GameWindow window;
 
         #region Constructors
@@ -83,7 +82,7 @@ namespace MetaMind.Engine.Components.Inputs
         /// <summary>
         /// Event raised when the mouse wheel has been moved.
         /// </summary>
-        public event EventHandler<MouseEventArgs> MouseWheel = delegate { };
+        public event EventHandler<MouseEventArgs> MouseScroll = delegate { };
 
         private void OnCharEntered(object sender, TextInputEventArgs args)
         {
@@ -107,12 +106,12 @@ namespace MetaMind.Engine.Components.Inputs
 
         private void OnMouseWheel(object sender, System.Windows.Forms.MouseEventArgs args)
         {
-            this.MouseWheel?.Invoke(sender, args.Convert());
+            this.MouseScroll?.Invoke(sender, args.Convert());
         }
 
         private void OnMouseMove(object sender, System.Windows.Forms.MouseEventArgs args)
         {
-            this.MouseMove ?.Invoke(sender, args.Convert());
+            this.MouseMove?.Invoke(sender, args.Convert());
         }
 
         private void OnMouseHover(object sender, EventArgs args)
@@ -127,7 +126,7 @@ namespace MetaMind.Engine.Components.Inputs
 
         private void OnMouseUp(object sender, System.Windows.Forms.MouseEventArgs args)
         {
-            this.MouseUp  ?.Invoke(sender, args.Convert());
+            this.MouseUp?.Invoke(sender, args.Convert());
         }
 
         private void OnMouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs args)
@@ -276,7 +275,7 @@ namespace MetaMind.Engine.Components.Inputs
 
             this.MouseHover = null;
             this.MouseMove = null;
-            this.MouseWheel = null;
+            this.MouseScroll = null;
         }
 
         private void DisposeKeyInputEvents()

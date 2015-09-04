@@ -10,8 +10,8 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     using System;
     using System.Collections.Generic;
     using Items.Layers;
-    using MetaMind.Engine.Guis.Widgets.Items;
-    using MetaMind.Engine.Guis.Widgets.Views.Layers;
+    using Items;
+    using Layers;
 
     /// <summary>
     ///     ViewComponent hooks all neccesary external information to the View object,
@@ -26,7 +26,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
         {
             if (view == null)
             {
-                throw new ArgumentNullException("view");
+                throw new ArgumentNullException(nameof(view));
             }
 
             this.View = view;
@@ -62,13 +62,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         #region Layer
 
-        private IViewLayer ViewLayer
-        {
-            get
-            {
-                return this.View.ViewLayer;
-            }
-        }
+        private IViewLayer ViewLayer => this.View.ViewLayer;
 
         public T ViewGetLayer<T>() where T : class, IViewLayer
         {
@@ -86,10 +80,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         #region Component Tree
 
-        public Dictionary<string, object> ViewComponents
-        {
-            get { return this.View.ViewComponents; }
-        }
+        public Dictionary<string, object> ViewComponents => this.View.ViewComponents;
 
         public T GetComponent<T>(string id) where T : class
         {

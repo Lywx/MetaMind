@@ -82,11 +82,12 @@
     <Compile Include="Components\Inputs\MouseButtons.cs" />
     <Compile Include="Components\Inputs\MouseEventArgs.cs" />
     <Compile Include="Components\Inputs\MouseKeys.cs" />
+    <Compile Include="Console\GameConsoleScrollController.cs" />
+    <Compile Include="Console\GameConsoleState.cs" />
     <Compile Include="Extensions\ExtKeys.cs" />
     <Compile Include="Extensions\ExtMouseButtons.cs" />
     <Compile Include="Extensions\ExtMouseEventArgs.cs" />
     <Compile Include="Extensions\ExtVector3.cs" />
-    <Compile Include="GameComponent.cs" />
     <Compile Include="GameControllableComponent.cs" />
     <Compile Include="Components\IScreenManagerOperations.cs" />
     <Compile Include="Components\Processes\ProcessCounter.cs" />
@@ -96,7 +97,7 @@
     <Compile Include="Extensions\ExtT.cs" />
     <Compile Include="Extensions\ExtList.cs" />
     <Compile Include="GameEngineConfigurer.cs" />
-    <Compile Include="Console\GameConsoleBuffer.cs" />
+    <Compile Include="Console\GameConsoleBufferController.cs" />
     <Compile Include="Console\Processors\ICommandProcessor.cs" />
     <Compile Include="Console\Processors\IronPythonProcessor.cs" />
     <Compile Include="Console\CommandType.cs" />

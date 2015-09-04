@@ -32,9 +32,9 @@ namespace MetaMind.Engine
 
         #region Dependency
         
-        protected IGameInteropService GameInterop => GameEngine.Service.Interop;
+        protected IGameInteropService Interop => GameEngine.Service.Interop;
 
-        protected IGameNumericalService GameNumerical => GameEngine.Service.Numerical; 
+        protected IGameNumericalService Numerical => GameEngine.Service.Numerical; 
 
         #endregion 
 
@@ -255,7 +255,7 @@ namespace MetaMind.Engine
                 if (!this.IsDisposed)
                 {
                     // Dispose listeners
-                    this.UnloadContent(this.GameInterop);
+                    this.UnloadContent(this.Interop);
 
                     this.UpdateOrderChanged = null;
                     this.EnabledChanged     = null;

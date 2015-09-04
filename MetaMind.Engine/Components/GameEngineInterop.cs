@@ -7,34 +7,19 @@ namespace MetaMind.Engine.Components
 
     public partial class GameEngineInterop : GameControllableComponent, IGameInterop
     {
-        public IAudioManager Audio { get; private set; }
+        #region Constructors and Finalizer
 
-        public GameConsole Console { get; set; }
-
-        public ContentManager Content { get; private set; }
-
-        public IFileManager File { get; private set; }
-
-        public GameEngine Engine { get; private set; }
-
-        public IEventManager Event { get; private set; }
-
-        public new IGameManager Game { get; private set; }
-
-        public IProcessManager Process { get; private set; }
-
-        public IScreenManager Screen { get; private set; }
-
-        public ISaveManager Save { get; set; }
-
-        public GameEngineInterop(GameEngine engine, IGameManager game, IAudioManager audio, IFileManager file, IEventManager @event, IProcessManager process, IScreenManager screen, GameConsole console)
+        public GameEngineInterop(
+            GameEngine engine,
+            IGameManager game,
+            IAudioManager audio,
+            IFileManager file,
+            IEventManager @event,
+            IProcessManager process,
+            IScreenManager screen,
+            GameConsole console)
             : base(engine)
         {
-            if (engine == null)
-            {
-                throw new ArgumentNullException(nameof(engine));
-            }
-
             if (game == null)
             {
                 throw new ArgumentNullException(nameof(game));
@@ -70,8 +55,6 @@ namespace MetaMind.Engine.Components
                 throw new ArgumentNullException(nameof(console));
             }
 
-            this.Engine = engine;
-
             this.Audio = audio;
             this.Engine.Components.Add(this.Audio);
 
@@ -94,20 +77,52 @@ namespace MetaMind.Engine.Components
             this.Content = engine.Content;
         }
 
+        #endregion
+
+        public IAudioManager Audio { get; private set; }
+
+        public GameConsole Console { get; set; }
+
+        public ContentManager Content { get; private set; }
+
+        public IFileManager File { get; private set; }
+
+        public IEventManager Event { get; private set; }
+
+        public new IGameManager Game { get; private set; }
+
+        public IProcessManager Process { get; private set; }
+
+        public IScreenManager Screen { get; private set; }
+
+        public ISaveManager Save { get; set; }
+
+        #region Initializatoin
+
         public override void Initialize()
         {
         }
+
+        #endregion
+
+        #region Update
 
         public override void UpdateInput(GameTime time)
         {
             this.Screen.UpdateInput(time);
         }
 
+        #endregion
+
+        #region Exit
+
         public void OnExiting()
         {
             this.Screen.OnExiting();
             this.Game  .OnExiting();
         }
+
+        #endregion
 
         #region IDisposable
 

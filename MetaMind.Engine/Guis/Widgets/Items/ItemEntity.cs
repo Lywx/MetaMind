@@ -9,9 +9,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 {
     using System;
     using System.Linq;
-
     using Microsoft.Xna.Framework;
-    using Settings;
 
     public abstract class ItemEntity : GameControllableEntity, IItemEntity
     {

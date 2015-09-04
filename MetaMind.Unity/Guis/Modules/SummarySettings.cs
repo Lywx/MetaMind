@@ -45,7 +45,7 @@ namespace MetaMind.Unity.Guis.Modules
 
         public SummarySettings()
         {
-            this.LoadParameter(this.GameGraphics.Settings);
+            this.LoadParameter(this.EngineGraphics.Settings);
 
             this.TitleCenter = new Vector2(this.ViewportWidth / 2f, 100);
         }

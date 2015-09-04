@@ -133,7 +133,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Swaps
                !swappingItem[ItemState.Item_Is_Swapped]())
             {
                 var swappingItemInteraction = swappingItem.ItemLogic.ItemInteraction;
-                swappingItemInteraction.ViewSwap(this.GameInterop, draggingItem);
+                swappingItemInteraction.ViewSwap(this.Interop, draggingItem);
             }
         }
 

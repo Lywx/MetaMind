@@ -61,15 +61,9 @@ namespace MetaMind.Engine.Screens
         /// <summary>
         /// Checks whether this screen is active and can respond to user input.
         /// </summary>
-        public bool IsActive
-        {
-            get
-            {
-                return !this.HasOtherScreenFocus &&
-                       (this.screenState == GameScreenState.TransitionOn ||
-                        this.screenState == GameScreenState.Active);
-            }
-        }
+        public bool IsActive => !this.HasOtherScreenFocus &&
+                                (this.screenState == GameScreenState.TransitionOn ||
+                                 this.screenState == GameScreenState.Active);
 
         /// <summary>
         /// There are two possible reasons why a screen might be transitioning
