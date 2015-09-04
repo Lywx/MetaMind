@@ -87,7 +87,7 @@
 
         public override void LoadContent(IGameInteropService interop)
         {
-            var graphicsSettings = this.GameGraphics.Settings;
+            var graphicsSettings = this.Graphics.Settings;
 
             var viewWidth = graphicsSettings.Width - OperationModuleSettings.ViewMargin.X * 2;
             

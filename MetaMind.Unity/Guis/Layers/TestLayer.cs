@@ -23,7 +23,17 @@ namespace MetaMind.Unity.Guis.Layers
 
         private ITest test;
 
-        public TestLayer(TestSession testSession, SpeechSynthesizer testSynthesizer, IGameScreen screen, byte transitionAlpha = byte.MaxValue)
+        private GameVisualEntityCollection<IGameVisualEntity> drawEntities;
+
+        private GameControllableEntityCollection<IGameControllableEntity> inputEntities;
+
+        #region Constructors
+
+        public TestLayer(
+            TestSession testSession,
+            SpeechSynthesizer testSynthesizer,
+            IGameScreen screen,
+            byte transitionAlpha = byte.MaxValue)
             : base(screen, transitionAlpha)
         {
             if (testSession == null)
@@ -36,16 +46,14 @@ namespace MetaMind.Unity.Guis.Layers
                 throw new ArgumentNullException(nameof(testSynthesizer));
             }
 
-            this.testSession     = testSession;
+            this.testSession = testSession;
             this.testSynthesizer = testSynthesizer;
 
-            this.ControllableEntities = new GameControllableEntityCollection<IGameControllableEntity>();
-            this.VisuallEntities      = new GameVisualEntityCollection<IGameVisualEntity>();
+            this.inputEntities = new GameControllableEntityCollection<IGameControllableEntity>();
+            this.drawEntities = new GameVisualEntityCollection<IGameVisualEntity>();
         }
 
-        private GameVisualEntityCollection<IGameVisualEntity> VisuallEntities { get; set; }
-
-        private GameControllableEntityCollection<IGameControllableEntity> ControllableEntities { get; set; }
+        #endregion
 
         #region Load and Unload
 
@@ -60,11 +68,11 @@ namespace MetaMind.Unity.Guis.Layers
                 this.testSession,
                 this.testSynthesizer);
 
-            this.ControllableEntities.Add(testModule);
-            this.ControllableEntities.LoadContent(interop);
+            this.inputEntities.Add(testModule);
+            this.inputEntities.LoadContent(interop);
 
             // Visuals
-            var graphicsSettings = this.EngineGraphics.Settings;
+            var graphicsSettings = this.Graphics.Settings;
 
             this.testLabel = new Label
             {
@@ -77,17 +85,17 @@ namespace MetaMind.Unity.Guis.Layers
                 TextVAlign   = StringVAlign.Center,
             };
 
-            this.VisuallEntities.Add(this.testLabel);
-            this.VisuallEntities.LoadContent(interop);
+            this.drawEntities.Add(this.testLabel);
+            this.drawEntities.LoadContent(interop);
 
             base.LoadContent(interop);
         }
 
         public override void UnloadContent(IGameInteropService interop)
         {
-            this.ControllableEntities.UnloadContent(interop);
-            this.VisuallEntities     .UnloadContent(interop);
-            base                     .UnloadContent(interop);
+            this.inputEntities.UnloadContent(interop);
+            this.drawEntities .UnloadContent(interop);
+            base              .UnloadContent(interop);
         }
 
         #endregion
@@ -98,8 +106,8 @@ namespace MetaMind.Unity.Guis.Layers
         {
             graphics.SpriteBatch.Begin();
 
-            this.ControllableEntities.Draw(graphics, time, Math.Min(alpha, this.TransitionAlpha));
-            this.VisuallEntities     .Draw(graphics, time, Math.Min(alpha, this.TransitionAlpha)); 
+            this.inputEntities.Draw(graphics, time, Math.Min(alpha, this.TransitionAlpha));
+            this.drawEntities .Draw(graphics, time, Math.Min(alpha, this.TransitionAlpha)); 
 
             graphics.SpriteBatch.End();
 
@@ -112,8 +120,8 @@ namespace MetaMind.Unity.Guis.Layers
 
         public override void Update(GameTime time)
         {
-            this.ControllableEntities.Update(time);
-            this.VisuallEntities     .Update(time);
+            this.inputEntities.Update(time);
+            this.drawEntities     .Update(time);
             this                     .UpdateEffect(time);
             base                     .Update(time);
         }
@@ -143,7 +151,7 @@ namespace MetaMind.Unity.Guis.Layers
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            this.ControllableEntities.UpdateInput(input, time);
+            this.inputEntities.UpdateInput(input, time);
             base.                     UpdateInput(input, time);
         }
 

@@ -5,6 +5,7 @@ namespace MetaMind.Engine.Scripting.IronPython
     using System;
     using System.IO;
     using System.Text;
+    using Debugging;
     using Microsoft.Scripting;
     using Microsoft.Scripting.Hosting;
 
@@ -151,12 +152,12 @@ namespace MetaMind.Engine.Scripting.IronPython
         {
             if (this.IsVerbose)
             {
-                Diagnostics.ConsoleWriteLine(output, error);
+                Diagnostics.ConsoleFlush(output, error);
             }
 #if DEBUG
             else
             {
-                Diagnostics.DebugWriteLine(output, error);
+                Diagnostics.DebugFlush(output, error);
             }
 #endif
             this.ClearBuffer();

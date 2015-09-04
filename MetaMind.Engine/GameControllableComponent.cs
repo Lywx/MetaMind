@@ -6,6 +6,8 @@ namespace MetaMind.Engine
 
     public abstract class GameControllableComponent : DrawableGameComponent, IGameControllableComponent
     {
+        #region Constructors
+
         protected GameControllableComponent(GameEngine engine)
             : base(engine)
         {
@@ -15,13 +17,9 @@ namespace MetaMind.Engine
             }
 
             this.Engine = engine;
-
-            this.Controllable = true;
         }
 
-        public bool Controllable { get; private set; }
-
-        public virtual void UpdateInput(GameTime time) { }
+        #endregion
 
         #region Engine Data
 
@@ -36,5 +34,7 @@ namespace MetaMind.Engine
         public GameEngine Engine { get; protected set; }
 
         #endregion Engine Data
+
+        public virtual void UpdateInput(GameTime time) { }
     }
 }

@@ -71,7 +71,7 @@ namespace MetaMind.Engine
 
         #region Dependency
 
-        protected IGameGraphicsService EngineGraphics => GameEngine.Service.Graphics;
+        protected IGameGraphicsService Graphics => GameEngine.Service.Graphics;
 
         #endregion
 

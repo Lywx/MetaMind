@@ -32,7 +32,7 @@
 
         public SynchronizationSettings()
         {
-            this.LoadParameter(this.EngineGraphics.Settings);
+            this.LoadParameter(this.Graphics.Settings);
 
             this.BarFrameCenterPosition = new Vector2((float)this.viewportWidth / 2, 16);
         }

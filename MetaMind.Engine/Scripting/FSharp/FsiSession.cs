@@ -3,6 +3,7 @@ namespace MetaMind.Engine.Scripting.FSharp
     using System;
     using System.IO;
     using System.Text;
+    using Debugging;
     using Microsoft.FSharp.Compiler.Interactive;
     using Microsoft.FSharp.Core;
 
@@ -182,14 +183,13 @@ namespace MetaMind.Engine.Scripting.FSharp
         {
             if (this.IsVerbose)
             {
-                Diagnostics.ConsoleWriteLine(output, error);
+                Diagnostics.ConsoleFlush(output, error);
             }
-#if DEBUG
             else
             {
-                Diagnostics.DebugWriteLine(output, error);
+                Diagnostics.DebugFlush(output, error);
             }
-#endif
+
             this.ClearBuffer();
         }
 

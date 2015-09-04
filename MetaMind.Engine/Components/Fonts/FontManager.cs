@@ -8,24 +8,16 @@
 namespace MetaMind.Engine.Components.Fonts
 {
     using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Services;
 
     /// <summary>
     /// Static storage of SpriteFont objects and colors for use throughout the game.
     /// </summary>
-    public class FontManager : DrawableGameComponent, IFontManager
+    public class FontManager : GameControllableComponent, IFontManager
     {
         #region Font Data
 
         public Dictionary<Font, FontInfo> Fonts { get; set; } = new Dictionary<Font, FontInfo>(); 
-
-        #endregion
-
-        #region Dependency
-
-        private IGameInteropService GameInterop { get; set; }
 
         #endregion
 
@@ -40,10 +32,6 @@ namespace MetaMind.Engine.Components.Fonts
 
         public override void Initialize()
         {
-            // It has to register service before LoadContent. Because 
-            // this.LoadContent use GameEngine.Service.Interop to load fonts
-            this.GameInterop = GameEngine.Service.Interop;
-
             base.Initialize();
 
             FontExt.Initialize(this);
@@ -68,7 +56,7 @@ namespace MetaMind.Engine.Components.Fonts
 
         private void LoadFont(Font font, int fontSize, string path)
         {
-            var spriteFont = this.GameInterop.Content.Load<SpriteFont>(path);
+            var spriteFont = this.Interop.Content.Load<SpriteFont>(path);
 
             this.Fonts[font] = new FontInfo(font, spriteFont, fontSize);
         }
@@ -97,8 +85,6 @@ namespace MetaMind.Engine.Components.Fonts
                     {
                         // SpriteFont is not disposable
                         this.UnloadContent();
-
-                        this.GameInterop = null;
                     }
 
                     this.IsDisposed = true;

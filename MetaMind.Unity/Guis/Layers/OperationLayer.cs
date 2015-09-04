@@ -54,7 +54,7 @@
             this.ControllableEntities.Add(operationModule);
             this.ControllableEntities.LoadContent(interop);
 
-            var graphicsSettings = this.EngineGraphics.Settings;
+            var graphicsSettings = this.Graphics.Settings;
             var screenLabel = new Label
             {
                 TextFont     = () => Font.UiRegular,

@@ -59,7 +59,7 @@
             // Operation session
             this.operationSession = new OperationSession(Unity.FsiSession, Unity.SessionData.Cognition);
 
-            var graphicsSettings = this.GameGraphics.Settings;
+            var graphicsSettings = this.Graphics.Settings;
 
             // Buttons
             const int buttonWidth = 30;
@@ -163,8 +163,6 @@
             this.buttonNext    .Draw(graphics, time, Math.Min(this.TransitionAlpha, this.CircularLayers.TransitionAlpha));
 
             graphics.SpriteBatch.End();
-
-            base.Draw(graphics, time);
         }
     }
 }

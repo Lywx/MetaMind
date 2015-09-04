@@ -61,7 +61,7 @@
             base.LoadContent(interop);
         }
 
-        private Vector2 TestRateCenterPosition => new Vector2(this.EngineGraphics.Settings.Width / 2 - 160, 90);
+        private Vector2 TestRateCenterPosition => new Vector2(this.Graphics.Settings.Width / 2 - 160, 90);
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {

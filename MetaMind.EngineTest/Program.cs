@@ -12,7 +12,7 @@
         {
             using (var engine = new GameEngine(@"Content"))
             {
-                var configurer = new GameEngineConfigurer();
+                var configurer = new GameEngineCompositor();
                 configurer.Configure(engine);
 
                 var test = new GameEngineTest(engine);

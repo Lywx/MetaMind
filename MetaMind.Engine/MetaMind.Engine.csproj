@@ -96,7 +96,7 @@
     <Compile Include="Extensions\ExtFunc.cs" />
     <Compile Include="Extensions\ExtT.cs" />
     <Compile Include="Extensions\ExtList.cs" />
-    <Compile Include="GameEngineConfigurer.cs" />
+    <Compile Include="GameEngineCompositor.cs" />
     <Compile Include="Console\GameConsoleBufferController.cs" />
     <Compile Include="Console\Processors\ICommandProcessor.cs" />
     <Compile Include="Console\Processors\IronPythonProcessor.cs" />
@@ -338,7 +338,7 @@
     <Compile Include="Guis\Widgets\Views\Layers\IViewAndItemLayerOperations.cs" />
     <Compile Include="Guis\Widgets\IWidgetSettings.cs" />
     <Compile Include="Guis\Widgets\Views\IViewComponentOperations.cs" />
-    <Compile Include="Guis\Widgets\Views\IIndexViewComposer.cs" />
+    <Compile Include="Guis\Widgets\Views\IIndexViewCompositor.cs" />
     <Compile Include="Guis\Widgets\Views\IViewOperations.cs" />
     <Compile Include="Guis\Widgets\Views\Layers\IViewLayer.cs">
       <SubType>Code</SubType>
@@ -543,7 +543,7 @@
     <Compile Include="IDrawableOperations.cs" />
     <Compile Include="IGameControllableComponentOperations.cs" />
     <Compile Include="IGameControllableEntity.cs" />
-    <Compile Include="IGameEngineConfigurer.cs" />
+    <Compile Include="IGameEngineCompositor.cs" />
     <Compile Include="IGameEngineOperations.cs" />
     <Compile Include="IInnerUpdatable.cs" />
     <Compile Include="IInputableOperations.cs" />
@@ -563,7 +563,7 @@
     <Compile Include="Scripting\FSharp\FsScriptSearcher.cs" />
     <Compile Include="Scripting\FSharp\IFsScript.cs" />
     <Compile Include="Scripting\FSharp\IFsScriptOperations.cs" />
-    <Compile Include="Scripting\Diagnostics.cs" />
+    <Compile Include="Debugging\Diagnostics.cs" />
     <Compile Include="Scripting\IronPython\IIpyScript.cs" />
     <Compile Include="Scripting\IronPython\IIpyScriptOperations.cs" />
     <Compile Include="Scripting\IronPython\IpySession.cs" />

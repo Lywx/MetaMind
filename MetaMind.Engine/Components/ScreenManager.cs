@@ -11,12 +11,9 @@ namespace MetaMind.Engine.Components
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
-
-    using Screens;
-    using Services;
-
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using Screens;
 
     public partial class ScreenManager : GameControllableComponent, IScreenManager
     {
@@ -160,7 +157,11 @@ namespace MetaMind.Engine.Components
             if (this.Game.IsActive ||
                 this.Settings.IsAlwaysVisible)
             {
-                foreach (var screen in this.screens.Where(screen => screen.ScreenState != GameScreenState.Hidden))
+                foreach (
+                    var screen in
+                        this.screens.Where(
+                            screen =>
+                            screen.ScreenState != GameScreenState.Hidden))
                 {
                     screen.Draw(this.Graphics, time);
                 }
@@ -188,15 +189,15 @@ namespace MetaMind.Engine.Components
             this.UpdateActive((screen, access, time_) => screen.UpdateInput(access, time_), this.Input, time);
         }
 
+        private void UpdateAll<TAccess>(Action<IGameScreen, TAccess, GameTime> action, TAccess access, GameTime time)
+        {
+            this.screens.ForEach(screen => action(screen, access, time));
+        }
+
         private void UpdateActive<TAccess>(Action<IGameScreen, TAccess, GameTime> action, TAccess access, GameTime time)
         {
             var screensActive = this.screens.FindAll(screen => screen.IsActive);
             screensActive.ForEach(screen => action(screen, access, time));
-        }
-
-        private void UpdateAll<TAccess>(Action<IGameScreen, TAccess, GameTime> action, TAccess access, GameTime time)
-        {
-            this.screens.ForEach(screen => action(screen, access, time));
         }
 
         private void UpdateInternal(GameTime time)
