@@ -5,8 +5,6 @@ namespace MetaMind.Engine.Screens
 
     using Microsoft.Xna.Framework;
 
-    #region Screen Manager Operations
-
     public partial class GameScreen : IGameScreen
     {
         #region Screen Data
@@ -135,7 +133,72 @@ namespace MetaMind.Engine.Screens
 
         #endregion Screen Events
 
+        #region Layers
+
+        protected GameControllableEntityCollection<IGameLayer> Layers { get; private set; }
+
+        #endregion
+
+        #region Engine Data
+
+        protected IGameGraphicsService Graphics => GameEngine.Service.Graphics;
+
+        protected IGameInteropService Interop => GameEngine.Service.Interop;
+
+        #endregion
+
+        #region Constructors and Finalizer
+
+        protected GameScreen()
+        {
+            this.Layers = new GameControllableEntityCollection<IGameLayer>();
+        }
+
+        ~GameScreen()
+        {
+            this.Dispose();
+        }
+
+        #endregion
+
+        #region Load and Unload
+
+        public virtual void LoadContent(IGameInteropService interop)
+        {
+            this.Layers.LoadContent(interop);
+        }
+
+        public virtual void UnloadContent(IGameInteropService interop)
+        {
+            this.Layers.UnloadContent(interop);
+        }
+
+        #endregion
+
+        #region Draw
+
+        /// <summary>
+        /// This is called when the screen should draw itself.
+        /// </summary>
+        public virtual void Draw(IGameGraphicsService graphics, GameTime time)
+        {
+            this.Layers
+                .ForEach(layer => layer.Draw(graphics, time, Math.Min(layer.TransitionAlpha, this.TransitionAlpha)));
+        }
+
+        #endregion Draw
+
         #region Update
+
+        public virtual void Update(GameTime time)
+        {
+            this.Layers
+                .ForEach(layer => layer.UpdateTransition(time));
+
+            this.Layers
+                .FindAll(layer => layer.IsActive)
+                .ForEach(layer => layer.Update(time));
+        }
 
         public virtual void UpdateScreen(IGameInteropService interop, GameTime time, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
         {
@@ -182,6 +245,13 @@ namespace MetaMind.Engine.Screens
             }
         }
 
+        public virtual void UpdateInput(IGameInputService input, GameTime time)
+        {
+            this.Layers
+                .FindAll(layer => layer.IsActive)
+                .ForEach(layer => layer.UpdateInput(input, time));
+        }
+
         /// <summary>
         /// Helper for updating the screen transition position.
         /// </summary>
@@ -214,7 +284,7 @@ namespace MetaMind.Engine.Screens
             return true;
         }
 
-        #endregion Update
+        #endregion
 
         #region Operations
 
@@ -232,7 +302,7 @@ namespace MetaMind.Engine.Screens
             // This clause is an extreme case which usually won't be triggered.
             if (this.TransitionOffTime == TimeSpan.Zero)
             {
-                var screen = this.GameInterop.Screen;
+                var screen = this.Interop.Screen;
                 screen.RemoveScreen(this);
             }
         }
@@ -253,99 +323,8 @@ namespace MetaMind.Engine.Screens
                 this.Layers.Clear();
                 this.Layers = null;
             }
-
-            this.GameGraphics = null;
-            this.GameInterop  = null;
         }
 
         #endregion IDisposable
     }
-
-    #endregion
-
-    #region Game Service
-
-    public partial class GameScreen
-    {
-        protected GameScreen()
-        {
-            this.SetupService();
-
-            this.Layers = new GameControllableEntityCollection<IGameLayer>();
-        }
-
-        ~GameScreen()
-        {
-            this.Dispose();
-        }
-
-        protected IGameGraphicsService GameGraphics { get; private set; }
-
-        protected IGameInteropService GameInterop { get; set; }
-
-        private void SetupService()
-        {
-            this.GameInterop  = GameEngine.Service?.Interop;
-            this.GameGraphics = GameEngine.Service?.Graphics;
-        }
-    }
-
-    #endregion
-
-    #region Game Layer
-
-    public partial class GameScreen
-    {
-        protected GameControllableEntityCollection<IGameLayer> Layers { get; private set; }
-
-        #region Load and Unload
-
-        public virtual void LoadContent(IGameInteropService interop)
-        {
-            this.Layers.LoadContent(interop);
-        }
-
-        public virtual void UnloadContent(IGameInteropService interop)
-        {
-            this.Layers.UnloadContent(interop);
-        }
-
-        #endregion
-
-        #region Draw
-
-        /// <summary>
-        /// This is called when the screen should draw itself.
-        /// </summary>
-        public virtual void Draw(IGameGraphicsService graphics, GameTime time)
-        {
-            this.Layers
-                .ForEach(layer => layer.Draw(graphics, time, Math.Min(layer.TransitionAlpha, this.TransitionAlpha)));
-        }
-
-        #endregion Draw
-
-        #region Update
-
-        public virtual void Update(GameTime time)
-        {
-            this.Layers
-                .ForEach(layer => layer.UpdateTransition(time));
-
-            this.Layers
-                .FindAll(layer => layer.IsActive)
-                .ForEach(layer => layer.Update(time));
-        }
-
-        public virtual void UpdateInput(IGameInputService input, GameTime time)
-        {
-            this.Layers
-                .FindAll(layer => layer.IsActive)
-                .ForEach(layer => layer.UpdateInput(input, time));
-        }
-
-        #endregion
-    }
-
-    #endregion
 }
