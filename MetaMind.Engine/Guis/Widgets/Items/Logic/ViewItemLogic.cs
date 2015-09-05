@@ -26,22 +26,22 @@
         {
             if (itemFrame == null)
             {
-                throw new ArgumentNullException("itemFrame");
+                throw new ArgumentNullException(nameof(itemFrame));
             }
 
             if (itemInteraction == null)
             {
-                throw new ArgumentNullException("itemInteraction");
+                throw new ArgumentNullException(nameof(itemInteraction));
             }
 
             if (itemModel == null)
             {
-                throw new ArgumentNullException("itemModel");
+                throw new ArgumentNullException(nameof(itemModel));
             }
 
             if (itemLayout == null)
             {
-                throw new ArgumentNullException("itemLayout");
+                throw new ArgumentNullException(nameof(itemLayout));
             }
 
             this.ItemFrame       = itemFrame;

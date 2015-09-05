@@ -51,9 +51,19 @@ namespace MetaMind.Engine
 
         #region Draw
 
+        public void BeginDraw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        {
+            this.Visual?.BeginDraw(graphics, time, alpha);
+        }
+
         public void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
             this.Visual?.Draw(graphics, time, alpha);
+        }
+
+        public void EndDraw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        {
+            this.Visual?.EndDraw(graphics, time, alpha);
         }
 
         #endregion

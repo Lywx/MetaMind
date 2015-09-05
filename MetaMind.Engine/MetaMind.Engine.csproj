@@ -174,11 +174,11 @@
     <Compile Include="IGameModuleLogic.cs" />
     <Compile Include="IGameModuleVisual.cs" />
     <Compile Include="IGameEntityModuleLogic.cs" />
-    <Compile Include="Guis\Layers\CircularGameLayer.cs" />
-    <Compile Include="Guis\Layers\ICircularLayerManager.cs" />
-    <Compile Include="Guis\Layers\ICircularLayerOperations.cs" />
-    <Compile Include="Guis\Layers\ILayerManager.cs" />
-    <Compile Include="Guis\Layers\ILayerManagerOperations.cs" />
+    <Compile Include="Screens\CircularGameLayer.cs" />
+    <Compile Include="Screens\ICircularLayerManager.cs" />
+    <Compile Include="Screens\ICircularLayerOperations.cs" />
+    <Compile Include="Screens\ILayerManager.cs" />
+    <Compile Include="Screens\ILayerManagerOperations.cs" />
     <Compile Include="Guis\Widgets\Buttons\Button.cs" />
     <Compile Include="Guis\Widgets\Buttons\ButtonSettings.cs" />
     <Compile Include="Guis\Widgets\Items\Data\IViewBinding.cs" />

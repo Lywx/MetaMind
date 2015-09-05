@@ -42,21 +42,9 @@ namespace MetaMind.Engine.Guis.Widgets.Views
 
         #region Indirect Dependency
 
-        public List<IViewItem> ItemsRead
-        {
-            get
-            {
-                return this.View.ItemsRead;
-            }
-        }
+        public List<IViewItem> ItemsRead => this.View.ItemsRead;
 
-        public List<IViewItem> ItemsWrite
-        {
-            get
-            {
-                return this.View.ItemsWrite; 
-            }
-        }
+        public List<IViewItem> ItemsWrite => this.View.ItemsWrite;
 
         #endregion
 

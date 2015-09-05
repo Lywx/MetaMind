@@ -12,6 +12,5 @@ namespace MetaMind.Engine
 
     public interface IGameControllableComponent : IGameComponent, IGameControllableComponentOperations, IDisposable
     {
-        bool Controllable { get; }
     }
 }

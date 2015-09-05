@@ -11,76 +11,44 @@ namespace MetaMind.Engine.Services
 
     public class GameEngineService : IGameService
     {
-        private readonly IGameGraphicsService graphics;
-
-        private readonly IGameInputService input;
-
-        private readonly IGameInteropService interop;
-
-        private readonly IGameNumericalService numerical;
-
         public GameEngineService(
-            IGameGraphicsService  graphics,
-            IGameInputService     input,
-            IGameInteropService   interop,
+            IGameGraphicsService graphics,
+            IGameInputService input,
+            IGameInteropService interop,
             IGameNumericalService numerical)
         {
             if (graphics == null)
             {
-                throw new ArgumentNullException("graphics");
+                throw new ArgumentNullException(nameof(graphics));
             }
 
             if (input == null)
             {
-                throw new ArgumentNullException("input");
+                throw new ArgumentNullException(nameof(input));
             }
 
             if (interop == null)
             {
-                throw new ArgumentNullException("interop");
+                throw new ArgumentNullException(nameof(interop));
             }
 
             if (numerical == null)
             {
-                throw new ArgumentNullException("numerical");
+                throw new ArgumentNullException(nameof(numerical));
             }
 
-            this.graphics  = graphics;
-            this.input     = input;
-            this.interop   = interop;
-            this.numerical = numerical;
+            this.Graphics = graphics;
+            this.Input = input;
+            this.Interop = interop;
+            this.Numerical = numerical;
         }
 
-        public IGameGraphicsService Graphics
-        {
-            get
-            {
-                return this.graphics;
-            }
-        }
+        public IGameGraphicsService Graphics { get; }
 
-        public IGameInputService Input
-        {
-            get
-            {
-                return this.input;
-            }
-        }
+        public IGameInputService Input { get; }
 
-        public IGameInteropService Interop
-        {
-            get
-            {
-                return this.interop;
-            }
-        }
+        public IGameInteropService Interop { get; }
 
-        public IGameNumericalService Numerical
-        {
-            get
-            {
-                return this.numerical;
-            }
-        }
+        public IGameNumericalService Numerical { get; }
     }
 }

@@ -17,7 +17,15 @@
         {
         }
 
+        public virtual void BeginDraw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        {
+        }
+
         public virtual void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        {
+        }
+
+        public virtual void EndDraw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
         }
     }

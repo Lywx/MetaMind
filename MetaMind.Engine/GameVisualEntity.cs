@@ -98,7 +98,41 @@ namespace MetaMind.Engine
             }
         }
 
+        /// <summary>
+        /// Standard draw preparation. 
+        /// </summary>
+        /// <remarks>
+        /// You should set up to RenderTarget2D and RenderTarget3D class in this 
+        /// method.
+        /// </remarks>
+        /// <param name="graphics"></param>
+        /// <param name="time"></param>
+        /// <param name="alpha"></param>
+        public virtual void BeginDraw(IGameGraphicsService graphics, GameTime time, byte alpha) { }
+
+        /// <summary>
+        /// Standard draw routine.
+        /// </summary>
+        /// <remarks>
+        /// It is recommended not to call SpriteBatch.Begin and SpriteBatch.End 
+        /// in this method and its overriden version.
+        /// </remarks>>
+        /// <param name="graphics"></param>
+        /// <param name="time"></param>
+        /// <param name="alpha"></param>
         public virtual void Draw(IGameGraphicsService graphics, GameTime time, byte alpha) { }
+
+        /// <summary>
+        /// Standard draw termination.
+        /// </summary>
+        /// <remarks>
+        /// You should draw RenderTarget2D and RenderTarget3D to back buffer in 
+        /// this method and its overriden method.
+        /// </remarks>>
+        /// <param name="graphics"></param>
+        /// <param name="time"></param>
+        /// <param name="alpha"></param>
+        public virtual void EndDraw(IGameGraphicsService graphics, GameTime time, byte alpha) { }
 
         #endregion
 
