@@ -12,6 +12,10 @@ namespace MetaMind.Engine.Screens
         /// </summary>
         void Draw(IGameGraphicsService graphics, GameTime time);
 
+        void BeginDraw(IGameGraphicsService graphics, GameTime time);
+
+        void EndDraw(IGameGraphicsService graphics, GameTime time);
+
         #endregion
 
         #region Update

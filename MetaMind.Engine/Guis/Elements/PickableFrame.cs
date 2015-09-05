@@ -79,8 +79,8 @@ namespace MetaMind.Engine.Guis.Elements
 
         private void FrameFrameMoved(object sender, FrameEventArgs e)
         {
-            var location = this.Input.State.Mouse.CurrentState;
-            this.EventMouseMove(null, new MouseEventArgs(MouseButtons.None, 0, location.X, location.Y, 0));
+            var mosue = this.Input.State.Mouse.CurrentState;
+            this.EventMouseMove(null, new MouseEventArgs(MouseButtons.None, 0, mosue.X, mosue.Y, 0));
         }
 
         private void EventMouseDoubleClick(object sender, MouseEventArgs e)
@@ -488,16 +488,16 @@ namespace MetaMind.Engine.Guis.Elements
 
         private void DisposeMouseInputEvents()
         {
-            this.MouseEnter               = null;
-            this.MouseLeave               = null;
-            this.MouseLeftPressed         = null;
-            this.MouseLeftPressedOutside  = null;
-            this.MouseLeftReleased        = null;
-            this.MouseLeftDoubleClicked   = null;
-            this.MouseRightPressed        = null;
+            this.MouseEnter = null;
+            this.MouseLeave = null;
+            this.MouseLeftPressed = null;
+            this.MouseLeftPressedOutside = null;
+            this.MouseLeftReleased = null;
+            this.MouseLeftDoubleClicked = null;
+            this.MouseRightPressed = null;
             this.MouseRightPressedOutside = null;
-            this.MouseRightReleased       = null;
-            this.MouseRightDoubleClicked  = null;
+            this.MouseRightReleased = null;
+            this.MouseRightDoubleClicked = null;
         }
 
         #endregion

@@ -1,4 +1,4 @@
-namespace MetaMind.Engine.Guis.Layers
+namespace MetaMind.Engine.Screens
 {
     using System;
 

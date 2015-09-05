@@ -1,7 +1,5 @@
-namespace MetaMind.Engine.Guis.Layers
+namespace MetaMind.Engine.Screens
 {
-    using Engine.Screens;
-
     public interface ILayerManagerOperations
     {
         void Add(IGameLayer layer);

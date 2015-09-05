@@ -102,10 +102,7 @@ namespace MetaMind.Engine.Screens
         /// from 255 (fully active, no transition) to 0 (transitioned
         /// fully off to nothing).
         /// </summary>
-        public byte TransitionAlpha
-        {
-            get { return (byte)(255 - this.TransitionPosition * 255); }
-        }
+        public byte TransitionAlpha => (byte)(255 - this.TransitionPosition * 255);
 
         /// <summary>
         /// Gets the current position of the screen transition, ranging
@@ -136,6 +133,11 @@ namespace MetaMind.Engine.Screens
         #region Layers
 
         protected GameControllableEntityCollection<IGameLayer> Layers { get; private set; }
+
+        private byte LayerTransitionAlpha(IGameLayer layer)
+        {
+            return Math.Min(layer.TransitionAlpha, this.TransitionAlpha);
+        }
 
         #endregion
 
@@ -182,8 +184,17 @@ namespace MetaMind.Engine.Screens
         /// </summary>
         public virtual void Draw(IGameGraphicsService graphics, GameTime time)
         {
-            this.Layers
-                .ForEach(layer => layer.Draw(graphics, time, Math.Min(layer.TransitionAlpha, this.TransitionAlpha)));
+            this.LayersAll((layer, access, t) => layer.Draw(access, t, this.LayerTransitionAlpha(layer)), graphics, time);
+        }
+
+        public void BeginDraw(IGameGraphicsService graphics, GameTime time)
+        {
+            this.LayersAll((layer, access, t) => layer.BeginDraw(access, t, this.LayerTransitionAlpha(layer)), graphics, time);
+        }
+
+        public void EndDraw(IGameGraphicsService graphics, GameTime time)
+        {
+            this.LayersAll((layer, access, t) => layer.EndDraw(access, t, this.LayerTransitionAlpha(layer)), graphics, time);
         }
 
         #endregion Draw
@@ -192,12 +203,8 @@ namespace MetaMind.Engine.Screens
 
         public virtual void Update(GameTime time)
         {
-            this.Layers
-                .ForEach(layer => layer.UpdateTransition(time));
-
-            this.Layers
-                .FindAll(layer => layer.IsActive)
-                .ForEach(layer => layer.Update(time));
+            this.LayersAll   <object>((layer, access, t) => layer.UpdateTransition(t), null, time);
+            this.LayersActive<object>((layer, access, t) => layer.Update(t)          , null, time);
         }
 
         public virtual void UpdateScreen(IGameInteropService interop, GameTime time, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
@@ -308,6 +315,23 @@ namespace MetaMind.Engine.Screens
         }
 
         #endregion Operations
+
+        #region Helpers
+
+        private void LayersActive<TAccess>(Action<IGameLayer, TAccess, GameTime> action, TAccess access, GameTime time)
+        {
+            this.Layers
+                .FindAll(layer => layer.IsActive)
+                .ForEach(layer => action(layer, access, time));
+        }
+
+        private void LayersAll<TAccess>(Action<IGameLayer, TAccess, GameTime> action, TAccess access, GameTime time)
+        {
+            this.Layers
+                .ForEach(layer => action(layer, access, time));
+        }
+
+        #endregion
 
         #region IDisposable
 

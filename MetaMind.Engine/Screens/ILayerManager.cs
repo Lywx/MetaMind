@@ -1,8 +1,5 @@
-﻿namespace MetaMind.Engine.Guis.Layers
+﻿namespace MetaMind.Engine.Screens
 {
-    using System.Collections.Generic;
-    using Engine.Screens;
-
     public interface ILayerManager : ILayerManagerOperations
     {
         GameControllableEntityCollection<IGameLayer> GameLayers { get; }

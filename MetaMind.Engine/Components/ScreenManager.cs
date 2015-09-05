@@ -14,6 +14,7 @@ namespace MetaMind.Engine.Components
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Screens;
+    using Services;
 
     public partial class ScreenManager : GameControllableComponent, IScreenManager
     {
@@ -157,14 +158,9 @@ namespace MetaMind.Engine.Components
             if (this.Game.IsActive ||
                 this.Settings.IsAlwaysVisible)
             {
-                foreach (
-                    var screen in
-                        this.screens.Where(
-                            screen =>
-                            screen.ScreenState != GameScreenState.Hidden))
-                {
-                    screen.Draw(this.Graphics, time);
-                }
+                this.ScreensVisible((screen, graphics, t) => screen.BeginDraw(graphics, t), this.Graphics, time);
+                this.ScreensVisible((screen, graphics, t) => screen.Draw     (graphics, t), this.Graphics, time);
+                this.ScreensVisible((screen, graphics, t) => screen.EndDraw  (graphics, t), this.Graphics, time);
             }
         }
 
@@ -180,24 +176,13 @@ namespace MetaMind.Engine.Components
                 this.UpdateInternal(time);
 
                 // Don't need an engine access here for plain Update(GameTime)
-                this.UpdateAll<object>((screen, access, time_) => screen.Update(time_), null, time);
+                this.ScreensAll<object>((screen, access, t) => screen.Update(t), null, time);
             }
         }
 
         public override void UpdateInput(GameTime time)
         {
-            this.UpdateActive((screen, access, time_) => screen.UpdateInput(access, time_), this.Input, time);
-        }
-
-        private void UpdateAll<TAccess>(Action<IGameScreen, TAccess, GameTime> action, TAccess access, GameTime time)
-        {
-            this.screens.ForEach(screen => action(screen, access, time));
-        }
-
-        private void UpdateActive<TAccess>(Action<IGameScreen, TAccess, GameTime> action, TAccess access, GameTime time)
-        {
-            var screensActive = this.screens.FindAll(screen => screen.IsActive);
-            screensActive.ForEach(screen => action(screen, access, time));
+            this.ScreensActive((screen, access, t) => screen.UpdateInput(access, t), this.Input, time);
         }
 
         private void UpdateInternal(GameTime time)
@@ -315,7 +300,7 @@ namespace MetaMind.Engine.Components
         {
             var names = new List<string>();
 
-            foreach (var screen in this.screens)
+            foreach (var screen in this.screens.ToArray())
             {
                 names.Add(screen.GetType().Name);
             }
@@ -324,6 +309,39 @@ namespace MetaMind.Engine.Components
         }
 
         #endregion Operations
+
+        #region Helpers
+
+        private void ScreensAll<TAccess>(
+            Action<IGameScreen, TAccess, GameTime> action,
+            TAccess access,
+            GameTime time)
+        {
+            this.screens
+                .ForEach(screen => action(screen, access, time));
+        }
+
+        private void ScreensActive<TAccess>(
+            Action<IGameScreen, TAccess, GameTime> action,
+            TAccess access,
+            GameTime time)
+        {
+            this.screens
+                .FindAll(screen => screen.IsActive)
+                .ForEach(screen => action(screen, access, time));
+        }
+
+        private void ScreensVisible<TAccess>(
+            Action<IGameScreen, TAccess, GameTime> action,
+            TAccess access,
+            GameTime time)
+        {
+            this.screens
+                .FindAll(screen => screen.ScreenState != GameScreenState.Hidden)
+                .ForEach(screen => action(screen, access, time));
+        }
+
+        #endregion
 
         #region Events
 

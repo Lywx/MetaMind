@@ -1,10 +1,9 @@
-﻿namespace MetaMind.Engine.Guis.Layers
+﻿namespace MetaMind.Engine.Screens
 {
     using System;
     using Engine;
-    using Screens;
-    using Services;
     using Microsoft.Xna.Framework;
+    using Services;
 
     public class CircularGameLayer : GameLayer, ICircularLayerManager
     {
