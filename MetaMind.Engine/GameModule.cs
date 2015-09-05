@@ -4,13 +4,14 @@ namespace MetaMind.Engine
     using Microsoft.Xna.Framework;
     using Services;
 
-    public abstract class GameModule<TModuleSettings, TModuleLogic, TModuleVisual> : IGameModule<TModuleSettings, TModuleLogic, TModuleVisual>, IDisposable
+    public abstract class GameModule<TModuleSettings, TModuleLogic, TModuleVisual> : GameControllableComponent, IGameModule<TModuleSettings, TModuleLogic, TModuleVisual>
         where TModuleLogic                                                         : IGameModuleLogic<TModuleSettings>
         where TModuleVisual                                                        : IGameModuleVisual<TModuleSettings>
     {
         #region Constructors
 
         protected GameModule(TModuleSettings settings, GameEngine engine)
+            : base(engine)
         {
             if (settings == null)
             {
@@ -39,31 +40,24 @@ namespace MetaMind.Engine
 
         public TModuleVisual Visual { get; protected set; }
 
-        protected GameEngine Engine { get; private set; }
-
-        #region Initialization
-
-        public virtual void Initialize()
-        {
-        }
-
-        #endregion
-
         #region Draw
 
-        public void BeginDraw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void BeginDraw(GameTime time)
         {
-            this.Visual?.BeginDraw(graphics, time, alpha);
+            base        .BeginDraw(time);
+            this.Visual?.BeginDraw(time);
         }
 
-        public void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(GameTime time)
         {
-            this.Visual?.Draw(graphics, time, alpha);
+            base        .Draw(time);
+            this.Visual?.Draw(time);
         }
 
-        public void EndDraw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void EndDraw(GameTime time)
         {
-            this.Visual?.EndDraw(graphics, time, alpha);
+            base        .EndDraw(time);
+            this.Visual?.EndDraw(time);
         }
 
         #endregion
@@ -76,7 +70,7 @@ namespace MetaMind.Engine
             this.Visual?.Update(time);
         }
 
-        public void Update(GameTime time)
+        public override void Update(GameTime time)
         {
             this.Logic ?.Update(time);
             this.Visual?.Update(time);
@@ -84,17 +78,37 @@ namespace MetaMind.Engine
 
         #endregion
 
+
         #region IDisposable
 
-        protected virtual void Dispose(bool disposing)
-        {
-        }
+        private bool IsDisposed { get; set; }
 
-        public void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            this.Dispose(true);
+            try
+            {
+                if (disposing)
+                {
+                    if (!this.IsDisposed)
+                    {
+                        this.Logic?.Dispose();
+                        this.Logic = default(TModuleLogic);
 
-            GC.SuppressFinalize(this);
+                        this.Visual?.Dispose();
+                        this.Visual = default(TModuleVisual);
+                    }
+
+                    this.IsDisposed = true;
+                }
+            }
+            catch
+            {
+                // Ignored
+            }
+            finally
+            {
+                base.Dispose(disposing);
+            }
         }
 
         #endregion

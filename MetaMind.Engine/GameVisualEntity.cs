@@ -107,8 +107,7 @@ namespace MetaMind.Engine
         /// </remarks>
         /// <param name="graphics"></param>
         /// <param name="time"></param>
-        /// <param name="alpha"></param>
-        public virtual void BeginDraw(IGameGraphicsService graphics, GameTime time, byte alpha) { }
+        public virtual void BeginDraw(IGameGraphicsService graphics, GameTime time) { }
 
         /// <summary>
         /// Standard draw routine.
@@ -131,8 +130,7 @@ namespace MetaMind.Engine
         /// </remarks>>
         /// <param name="graphics"></param>
         /// <param name="time"></param>
-        /// <param name="alpha"></param>
-        public virtual void EndDraw(IGameGraphicsService graphics, GameTime time, byte alpha) { }
+        public virtual void EndDraw(IGameGraphicsService graphics, GameTime time) { }
 
         #endregion
 

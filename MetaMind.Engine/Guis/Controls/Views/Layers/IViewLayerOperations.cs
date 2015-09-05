@@ -1,0 +1,10 @@
+namespace MetaMind.Engine.Guis.Controls.Views.Layers
+{
+    using Items;
+    using Items.Layers;
+
+    public interface IViewLayerOperations : IViewAndItemLayerOperations 
+    {
+        T ItemGetLayer<T>(IViewItem item) where T : class, IViewItemLayer;
+    }
+}

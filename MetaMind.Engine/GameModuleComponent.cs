@@ -7,8 +7,6 @@ namespace MetaMind.Engine
         where                        TModuleLogic                                           : IGameModuleLogic<TModuleSettings> 
         where                        TModuleVisual                                          : IGameModuleVisual<TModuleSettings>
     {
-        private readonly TModule module;
-
         protected GameModuleComponent(TModule module, GameEngine engine)
         {
             if (module == null)
@@ -21,13 +19,13 @@ namespace MetaMind.Engine
                 throw new ArgumentNullException(nameof(engine));
             }
 
-            this.module = module;
+            this.Module = module;
             this.Engine = engine;
         }
 
         protected GameEngine Engine { get; private set; }
 
-        protected TModule Module => this.module;
+        protected TModule Module { get; }
 
         public TModuleSettings Settings => this.Module.Settings;
 

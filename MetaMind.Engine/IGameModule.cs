@@ -2,7 +2,7 @@ namespace MetaMind.Engine
 {
     using System;
 
-    public interface IGameModule<out TModuleSettings, out TModuleLogic, out TModuleVisual> : IOuterUpdateableOperations, IDrawableOperations, IInputableOperations
+    public interface IGameModule<out TModuleSettings, out TModuleLogic, out TModuleVisual> : IGameControllableComponent, IOuterUpdateableOperations, IDrawableComponentOperations, IInputableOperations, IDisposable
         where TModuleLogic  : IGameModuleLogic<TModuleSettings> 
         where TModuleVisual : IGameModuleVisual<TModuleSettings>
     {
@@ -11,7 +11,5 @@ namespace MetaMind.Engine
         TModuleLogic Logic { get; }
 
         TModuleVisual Visual { get; }
-
-        void Initialize();
     }
 }

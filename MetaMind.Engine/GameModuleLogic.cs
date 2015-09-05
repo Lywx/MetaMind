@@ -1,5 +1,6 @@
 namespace MetaMind.Engine
 {
+    using System;
     using Microsoft.Xna.Framework;
     using Services;
 
@@ -20,5 +21,20 @@ namespace MetaMind.Engine
         public virtual void UpdateInput(IGameInputService input, GameTime time)
         {
         }
+
+        #region IDisposable
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            
+            GC.SuppressFinalize(this);
+        }
+
+        private bool IsDisposed { get; set; }
+
+        protected virtual void Dispose(bool disposing) { }
+
+        #endregion
     }
 }

@@ -5,10 +5,10 @@ namespace MetaMind.Engine
 
     public interface IDrawableOperations
     {
-        void BeginDraw(IGameGraphicsService graphics, GameTime time, byte alpha);
+        void BeginDraw(IGameGraphicsService graphics, GameTime time);
 
         void Draw(IGameGraphicsService graphics, GameTime time, byte alpha);
 
-        void EndDraw(IGameGraphicsService graphics, GameTime time, byte alpha);
+        void EndDraw(IGameGraphicsService graphics, GameTime time);
     }
 }

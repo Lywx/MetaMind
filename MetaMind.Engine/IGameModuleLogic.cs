@@ -1,6 +1,8 @@
 namespace MetaMind.Engine
 {
-    public interface IGameModuleLogic<out TModuleSettings> : IGameModuleComponent<TModuleSettings>, IOuterUpdateableOperations, IInputableOperations
+    using System;
+
+    public interface IGameModuleLogic<out TModuleSettings> : IGameModuleComponent<TModuleSettings>, IOuterUpdateableOperations, IInputableOperations, IDisposable 
     {
     }
 }
