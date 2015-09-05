@@ -1,8 +1,7 @@
-namespace MetaMind.Engine.Guis.Particles
+namespace MetaMind.Engine.Guis.Modules.Particles
 {
     using Microsoft.Xna.Framework;
-
-    using IDrawable = MetaMind.Engine.IDrawable;
+    using IDrawable = Engine.IDrawable;
 
     public interface IParticle : IShapelessParticle, IUpdateable, IDrawable
     {

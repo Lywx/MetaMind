@@ -1,4 +1,4 @@
-namespace MetaMind.Engine.Guis.Particles
+namespace MetaMind.Engine.Guis.Modules.Particles
 {
     using Microsoft.Xna.Framework;
 

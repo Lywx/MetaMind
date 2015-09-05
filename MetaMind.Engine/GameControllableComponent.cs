@@ -21,7 +21,7 @@ namespace MetaMind.Engine
 
         #endregion
 
-        #region Engine Data
+        #region Engine Service Data
 
         protected IGameInputService Input => GameEngine.Service.Input;
 
@@ -33,8 +33,26 @@ namespace MetaMind.Engine
 
         public GameEngine Engine { get; protected set; }
 
-        #endregion Engine Data
+        #endregion
 
-        public virtual void UpdateInput(GameTime time) { }
+        #region Draw
+
+        public virtual void BeginDraw(GameTime time)
+        {
+        }
+
+        public virtual void EndDraw(GameTime time)
+        {
+        }
+
+        #endregion
+
+        #region Update
+
+        public virtual void UpdateInput(GameTime time)
+        {
+        }
+
+        #endregion
     }
 }

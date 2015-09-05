@@ -8,9 +8,8 @@
 namespace MetaMind.Engine
 {
     using System;
-    using Microsoft.Xna.Framework;
 
-    public interface IGameControllableComponent : IGameComponent, IGameControllableComponentOperations, IDisposable
+    public interface IGameControllableComponent : IDrawableGameComponent, IGameControllableComponentOperations, IDisposable
     {
     }
 }

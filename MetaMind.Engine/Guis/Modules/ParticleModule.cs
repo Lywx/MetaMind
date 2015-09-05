@@ -1,13 +1,12 @@
 namespace MetaMind.Engine.Guis.Modules
 {
     using System.Collections.Generic;
-
-    using MetaMind.Engine.Guis.Particles;
     using MetaMind.Engine.Services;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    
+    using Particles;
+
     /// <summary>
     /// Particle controller relies on implementation of FloatParticle.
     /// </summary>

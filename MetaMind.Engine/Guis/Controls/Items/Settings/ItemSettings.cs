@@ -5,7 +5,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items.Settings
     using Services;
 
     [DataContract]
-    public class ItemSettings : WidgetSettings, IItemSettings, ICloneable
+    public class ItemSettings : ControlSettings, IItemSettings, ICloneable
     {
         protected ItemSettings()
         {

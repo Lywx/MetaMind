@@ -7,7 +7,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
 
     public class ViewItemComponent : GameControllableEntity, IViewItemComponent
     {
-        #region Constructors and Destructors
+        #region Constructors and Finalizer
 
         protected ViewItemComponent(IViewItem item)
         {
@@ -24,7 +24,7 @@ namespace MetaMind.Engine.Guis.Widgets.Items
             this.Dispose();
         }
 
-        #endregion Constructors and Destructors
+        #endregion 
 
         #region Direct Dependency
 

@@ -5,15 +5,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Engine.Guis.Particles
+namespace MetaMind.Engine.Guis.Modules.Particles
 {
     using System;
-
-    using MetaMind.Engine.Services;
-
     using Microsoft.Xna.Framework;
-
     using Primtives2D;
+    using Services;
 
     public class FloatParticle : Particle, IRandomParticle
     {
@@ -80,8 +77,8 @@ namespace MetaMind.Engine.Guis.Particles
 
             // random water movements
             this.Acceleration = new Vector2(
-                Random.Next((int)-this.Pressure.X, (int)this.Pressure.X),
-                Random.Next((int)-this.Pressure.Y, (int)this.Pressure.Y));
+                this.Random.Next((int)-this.Pressure.X, (int)this.Pressure.X),
+                this.Random.Next((int)-this.Pressure.Y, (int)this.Pressure.Y));
 
             base.Update(time);
         }
@@ -96,7 +93,7 @@ namespace MetaMind.Engine.Guis.Particles
         public IRandomParticle Randomize()
         {
             // direction only could be left or right
-            var direction = (FloatDirection)Random.Next(2);
+            var direction = (FloatDirection)this.Random.Next(2);
 
             this.Deep = this.Random.Next(1, 10);
             this.Scale = this.Deep;

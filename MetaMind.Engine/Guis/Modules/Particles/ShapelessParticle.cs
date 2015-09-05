@@ -1,11 +1,9 @@
-namespace MetaMind.Engine.Guis.Particles
+namespace MetaMind.Engine.Guis.Modules.Particles
 {
     using System;
-
-    using MetaMind.Engine.Components.Graphics;
-    using MetaMind.Engine.Settings.Loaders;
-
+    using Components.Graphics;
     using Microsoft.Xna.Framework;
+    using Settings.Loaders;
 
     public class ShapelessParticle : GameVisualEntity, IShapelessParticle, IParameterLoader<GraphicsSettings>  
     {

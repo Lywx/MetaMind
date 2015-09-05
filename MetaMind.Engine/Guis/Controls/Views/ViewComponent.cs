@@ -14,7 +14,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views
     using Layers;
 
     /// <summary>
-    ///     ViewComponent hooks all neccesary external information to the View object,
+    ///     ViewComponent hooks all necessary external information to the View object,
     ///     which allows view-wise substitution of settings. The dynamic typing allows
     ///     customization
     /// </summary>

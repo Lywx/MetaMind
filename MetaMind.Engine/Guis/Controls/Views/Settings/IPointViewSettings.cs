@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Guis.Widgets.Views.Settings
 {
     using Microsoft.Xna.Framework;
 
-    public interface IPointViewSettings : IWidgetSettings 
+    public interface IPointViewSettings : IControlSettings 
     {
         Vector2 ItemMargin { get; }
 

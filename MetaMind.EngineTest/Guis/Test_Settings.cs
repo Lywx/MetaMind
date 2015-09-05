@@ -15,12 +15,12 @@ namespace MetaMind.EngineTest.Guis
     [TestFixture]
     public class Test_WidgetSettings
     {
-        private WidgetSettings settings;
+        private ControlSettings settings;
 
         [SetUp]
         public void Test_Creation()
         {
-            this.settings = new WidgetSettings { { "Size", new Point(5, 5) }, { "Color", Color.White } };
+            this.settings = new ControlSettings { { "Size", new Point(5, 5) }, { "Color", Color.White } };
         }
 
         [Test]

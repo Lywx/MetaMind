@@ -1,4 +1,4 @@
-namespace MetaMind.Engine.Guis.Particles
+namespace MetaMind.Engine.Guis.Modules.Particles
 {
     public class ParticleSpawner<TParticle> where TParticle : IRandomParticle
     {
