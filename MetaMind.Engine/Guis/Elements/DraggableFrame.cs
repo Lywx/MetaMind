@@ -29,7 +29,7 @@ namespace MetaMind.Engine.Guis.Elements
         public DraggableFrame(Rectangle rectangle)
             : this()
         {
-            this.Populate(rectangle);
+            this.Rectangle = rectangle;
         }
 
         protected DraggableFrame()

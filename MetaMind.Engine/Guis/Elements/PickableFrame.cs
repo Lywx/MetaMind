@@ -19,7 +19,7 @@ namespace MetaMind.Engine.Guis.Elements
         public PickableFrame(Rectangle rectangle)
             : this()
         {
-            this.Populate(rectangle);
+            this.Rectangle = rectangle;
         }
 
         public PickableFrame()
@@ -329,7 +329,7 @@ namespace MetaMind.Engine.Guis.Elements
             }
             set
             {
-                this.Populate(value, this.Size);
+                this.Rectangle = new Rectangle(value, this.Size);
             }
         }
 
@@ -355,7 +355,7 @@ namespace MetaMind.Engine.Guis.Elements
             }
             set
             {
-                this.Populate(new Rectangle(value.X, value.Y, this.Rectangle.Width, this.Rectangle.Height));
+                this.Rectangle = new Rectangle(value.X, value.Y, this.Rectangle.Width, this.Rectangle.Height);
             }
         }
 
@@ -396,7 +396,7 @@ namespace MetaMind.Engine.Guis.Elements
             }
             set
             {
-                this.Populate(this.Center, value);
+                this.Rectangle = new Rectangle(this.Center, value);
             }
         }
 
@@ -453,20 +453,6 @@ namespace MetaMind.Engine.Guis.Elements
         protected bool IsRButton(MouseEventArgs e)
         {
             return e.Button == MouseButtons.Right;
-        }
-
-        #endregion
-
-        #region Initialization
-
-        protected void Populate(Point center, Point size)
-        {
-            this.Populate(center.ToRectangleCenter(size));
-        }
-
-        protected void Populate(Rectangle rect)
-        {
-            this.Rectangle = rect;
         }
 
         #endregion
