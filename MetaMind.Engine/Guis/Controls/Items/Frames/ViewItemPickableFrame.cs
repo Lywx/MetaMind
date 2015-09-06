@@ -9,8 +9,8 @@ namespace MetaMind.Engine.Guis.Controls.Items.Frames
         {
             this.Item = item;
 
-            this.MouseLeftPressed        += this.ViewSelect;
-            this.MouseLeftPressedOutside += this.ViewUnselect;
+            this.MousePressLeft += this.ViewSelect;
+            this.MousePressOutLeft += this.ViewUnselect;
         }
 
         ~ViewItemPickableFrame()
@@ -42,8 +42,8 @@ namespace MetaMind.Engine.Guis.Controls.Items.Frames
                 {
                     if (!this.IsDisposed)
                     {
-                        this.MouseLeftPressed        -= this.ViewSelect;
-                        this.MouseLeftPressedOutside -= this.ViewUnselect;
+                        this.MousePressLeft -= this.ViewSelect;
+                        this.MousePressOutLeft -= this.ViewUnselect;
                     }
 
                     this.IsDisposed = true;

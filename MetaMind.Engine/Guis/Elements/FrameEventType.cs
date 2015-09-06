@@ -4,29 +4,35 @@
     {
         // Basic
         Mouse_Enter,
+
         Mouse_Leave,
 
         // Left
-        Mouse_Left_Pressed,
-        Mouse_Left_Pressed_Outside,
+        Mouse_Press_Left,
 
-        Mouse_Left_Released,
+        Mouse_Press_Out_Left,
 
-        Mouse_Left_Double_Clicked,
+        Mouse_Up_Left,
+
+        Mouse_Double_Click_Left,
 
         // Right
-        Mouse_Right_Pressed,
-        Mouse_Right_Pressed_Outside,
+        Mouse_Press_Right,
 
-        Mouse_Right_Released,
+        Mouse_Pressed_Out_Right,
 
-        Mouse_Right_Double_Clicked,
+        Mouse_Up_Right,
+
+        Mouse_Double_Click_Right,
 
         // Change
-        Frame_Moved,
-        Frame_Sized,
-        Frame_Dragged,
-        Frame_Dropped,
+        Frame_Move,
+
+        Frame_Size,
+
+        Frame_Drag,
+
+        Frame_Drop,
 
         EventNum
     }

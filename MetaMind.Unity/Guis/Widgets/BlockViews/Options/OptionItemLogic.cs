@@ -32,7 +32,7 @@
         {
             base.SetupLayer();
 
-            this.ItemFrame.RootFrame.MouseLeftReleased += (o, args) => this.AcceptOption();
+            this.ItemFrame.RootFrame.MouseUpLeft += (o, args) => this.AcceptOption();
         }
 
         private void AcceptOption()

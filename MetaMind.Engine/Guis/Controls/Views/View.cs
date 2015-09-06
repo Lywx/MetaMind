@@ -11,7 +11,7 @@ namespace MetaMind.Engine.Guis.Controls.Views
     using Settings;
     using Visuals;
 
-    public partial class View : ViewEntity, IView
+    public class View : ViewEntity, IView
     {
         private readonly List<IViewItem>[] items =
         {
@@ -70,10 +70,7 @@ namespace MetaMind.Engine.Guis.Controls.Views
         public ItemSettings ItemSettings { get; set; }
 
         #endregion
-    }
 
-    public partial class View 
-    {
         #region Layer
 
         public T GetLayer<T>() where T : class, IViewLayer
@@ -177,7 +174,7 @@ namespace MetaMind.Engine.Guis.Controls.Views
         {
             base.UpdateForwardBuffer();
 
-            // Update read buffer updated in lastest input / event / process loop to use in this loop
+            // Update read buffer updated in latest input / event / process loop to use in this loop
             this.UpdateItemsReadBuffer();
 
             this.ViewLogic? .UpdateForwardBuffer();
@@ -188,7 +185,7 @@ namespace MetaMind.Engine.Guis.Controls.Views
         {
             base.UpdateBackwardBuffer();
 
-            // Update read buffer updated in lastest update loop to use in this loop
+            // Update read buffer updated in latest update loop to use in this loop
             this.UpdateItemsReadBuffer();
 
             // Swap buffer

@@ -12,6 +12,7 @@ namespace MetaMind.Engine.Guis.Controls.Views.Settings
         }
 
         public int ViewRowDisplay { get; set; }
+
         public int ViewRowMax { get; set; }
     }
 }

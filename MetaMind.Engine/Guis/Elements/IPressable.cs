@@ -17,36 +17,36 @@ namespace MetaMind.Engine.Guis.Elements
 
         event EventHandler<FrameEventArgs> MouseLeave;
 
-        event EventHandler<FrameEventArgs> MousePressed;
+        event EventHandler<FrameEventArgs> MousePress;
 
-        event EventHandler<FrameEventArgs> MouseReleased;
+        event EventHandler<FrameEventArgs> MousePressOut;
 
-        event EventHandler<FrameEventArgs> MousePressedOutside;
+        event EventHandler<FrameEventArgs> MouseUp;
 
         #endregion
 
         #region Mouse Left Buttons
 
-        event EventHandler<FrameEventArgs> MouseLeftPressed;
+        event EventHandler<FrameEventArgs> MousePressLeft;
 
-        event EventHandler<FrameEventArgs> MouseLeftPressedOutside;
+        event EventHandler<FrameEventArgs> MousePressOutLeft;
 
-        event EventHandler<FrameEventArgs> MouseLeftReleased;
+        event EventHandler<FrameEventArgs> MouseUpLeft;
 
         #endregion
 
         #region Mouse Right Buttons
 
-        event EventHandler<FrameEventArgs> MouseRightPressed;
+        event EventHandler<FrameEventArgs> MousePressRight;
 
-        event EventHandler<FrameEventArgs> MouseRightPressedOutside;
+        event EventHandler<FrameEventArgs> MousePressOutRight;
 
-        event EventHandler<FrameEventArgs> MouseRightReleased;
+        event EventHandler<FrameEventArgs> MouseUpRight;
 
         #endregion
 
-        event EventHandler<FrameEventArgs> Moved;
+        event EventHandler<FrameEventArgs> Move;
 
-        event EventHandler<FrameEventArgs> Resized;
+        event EventHandler<FrameEventArgs> Resize;
     }
 }

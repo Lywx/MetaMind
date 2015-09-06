@@ -21,8 +21,8 @@
             // Frame events
             this.Frame = new PickableFrame(rectangle);
 
-            this.Frame.MouseLeftPressed        += this.FrameMouseLeftPressed;
-            this.Frame.MouseLeftPressedOutside += this.FrameMouseLeftPressedOutside;
+            this.Frame.MousePressLeft    += this.FrameMousePressLeft;
+            this.Frame.MousePressOutLeft += this.FrameMousePressOutLeft;
 
             // Region states
             this[RegionState.Mouse_Is_Over] = () => this.Frame[FrameState.Mouse_Is_Over]();
@@ -94,12 +94,12 @@
 
         #region Events
 
-        private void FrameMouseLeftPressed(object sender, FrameEventArgs e)
+        private void FrameMousePressLeft(object sender, FrameEventArgs e)
         {
             this.Machine.Fire(Trigger.PressedInside);
         }
 
-        private void FrameMouseLeftPressedOutside(object sender, FrameEventArgs e)
+        private void FrameMousePressOutLeft(object sender, FrameEventArgs e)
         {
             this.Machine.Fire(Trigger.PressedOutside);
         }

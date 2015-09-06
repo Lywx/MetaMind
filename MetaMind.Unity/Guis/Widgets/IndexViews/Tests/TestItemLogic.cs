@@ -27,9 +27,9 @@
         {
             base.SetupLayer();
 
-            this.ItemFrame.NameFrame       .MouseLeftPressed  += (o, args) => this.ToggleIndexView();
-            this.ItemFrame.DescriptionFrame.MouseLeftPressed  += (o, args) => this.ToggleIndexView();
-            this.ItemFrame.RootFrame       .MouseRightPressed += (o, args) => this.SelectPath();
+            this.ItemFrame.NameFrame       .MousePressLeft  += (o, args) => this.ToggleIndexView();
+            this.ItemFrame.DescriptionFrame.MousePressLeft  += (o, args) => this.ToggleIndexView();
+            this.ItemFrame.RootFrame       .MousePressRight += (o, args) => this.SelectPath();
         }
     }
 }

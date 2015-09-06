@@ -116,11 +116,11 @@ namespace MetaMind.Engine.Guis.Elements
 
         #region Events
 
-        public event EventHandler<FrameEventArgs> MouseDragged;
+        public event EventHandler<FrameEventArgs> MouseDrag;
 
-        public event EventHandler<FrameEventArgs> MouseDropped;
+        public event EventHandler<FrameEventArgs> MouseDrop;
 
-        private void FrameMousePressed(object sender, FrameEventArgs e)
+        private void FrameMousePress(object sender, FrameEventArgs e)
         {
             var mouse = this.Input.State.Mouse.CurrentState;
 
@@ -134,25 +134,25 @@ namespace MetaMind.Engine.Guis.Elements
             this.Machine.Fire(Trigger.Pressed);
         }
 
-        private void FrameMouseReleased(object sender, EventArgs e)
+        private void FrameMouseUp(object sender, EventArgs e)
         {
             this.Machine.Fire(Trigger.Released);
         }
 
         private void OnMouseDropped()
         {
-            this.MouseDropped?.Invoke(this, new FrameEventArgs(FrameEventType.Frame_Dropped));
+            this.MouseDrop?.Invoke(this, new FrameEventArgs(FrameEventType.Frame_Drop));
         }
 
         private void OnMouseDragged()
         {
-            this.MouseDragged?.Invoke(this, new FrameEventArgs(FrameEventType.Frame_Dragged));
+            this.MouseDrag?.Invoke(this, new FrameEventArgs(FrameEventType.Frame_Drag));
         }
 
         private void RegisterHandlers()
         {
-            this.MousePressed += this.FrameMousePressed;
-            this.MouseReleased += this.FrameMouseReleased;
+            this.MousePress += this.FrameMousePress;
+            this.MouseUp += this.FrameMouseUp;
         }
 
         #endregion Events
@@ -214,17 +214,17 @@ namespace MetaMind.Engine.Guis.Elements
 
         private void DisposeEvents()
         {
-            this.MouseDragged = null;
-            this.MouseDropped = null;
+            this.MouseDrag = null;
+            this.MouseDrop = null;
         }
 
         private void DisposeHandlers()
         {
-            this.MouseLeftPressed -= this.FrameMousePressed;
-            this.MouseRightPressed -= this.FrameMousePressed;
+            this.MousePressLeft -= this.FrameMousePress;
+            this.MousePressRight -= this.FrameMousePress;
 
-            this.MouseLeftReleased -= this.FrameMouseReleased;
-            this.MouseRightReleased -= this.FrameMouseReleased;
+            this.MouseUpLeft -= this.FrameMouseUp;
+            this.MouseUpRight -= this.FrameMouseUp;
         }
 
         #endregion

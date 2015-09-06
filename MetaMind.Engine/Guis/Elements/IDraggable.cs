@@ -11,8 +11,8 @@ namespace MetaMind.Engine.Guis.Elements
 
     public interface IDraggable
     {
-        event EventHandler<FrameEventArgs> MouseDragged;
+        event EventHandler<FrameEventArgs> MouseDrag;
 
-        event EventHandler<FrameEventArgs> MouseDropped;
+        event EventHandler<FrameEventArgs> MouseDrop;
     }
 }

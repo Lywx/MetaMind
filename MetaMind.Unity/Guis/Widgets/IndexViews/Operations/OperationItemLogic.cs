@@ -29,10 +29,10 @@
         {
             base.SetupLayer();
 
-            this.ItemFrame.NameFrame       .MouseLeftPressed  += (o, args) => this.ToggleIndexView();
-            this.ItemFrame.DescriptionFrame.MouseLeftPressed  += (o, args) => this.ToggleIndexView();
-            this.ItemFrame.StatusFrame     .MouseLeftPressed  += (o, args) => this.ToggleOperation();
-            this.ItemFrame.RootFrame       .MouseRightPressed += (o, args) => this.SelectPath();
+            this.ItemFrame.NameFrame       .MousePressLeft  += (o, args) => this.ToggleIndexView();
+            this.ItemFrame.DescriptionFrame.MousePressLeft  += (o, args) => this.ToggleIndexView();
+            this.ItemFrame.StatusFrame     .MousePressLeft  += (o, args) => this.ToggleOperation();
+            this.ItemFrame.RootFrame       .MousePressRight += (o, args) => this.SelectPath();
         }
 
         #region Operations

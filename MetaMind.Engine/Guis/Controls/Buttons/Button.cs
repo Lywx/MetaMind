@@ -62,10 +62,10 @@
             this.MouseRightPressedAction       = () => {};
             this.MouseRightDoubleClickedAction = () => {};
 
-            this.Frame.MouseLeftPressed        += (sender, args) => this.MouseLeftPressedAction();
-            this.Frame.MouseLeftDoubleClicked  += (sender, args) => this.MouseLeftDoubleClickedAction();
-            this.Frame.MouseRightPressed       += (sender, args) => this.MouseRightPressedAction();
-            this.Frame.MouseRightDoubleClicked += (sender, args) => this.MouseRightDoubleClickedAction();
+            this.Frame.MousePressLeft        += (sender, args) => this.MouseLeftPressedAction();
+            this.Frame.MouseDoubleClickLeft  += (sender, args) => this.MouseLeftDoubleClickedAction();
+            this.Frame.MousePressRight       += (sender, args) => this.MouseRightPressedAction();
+            this.Frame.MouseDoubleClickRight += (sender, args) => this.MouseRightDoubleClickedAction();
         }
 
         public Label Label { get; set; }

@@ -9,25 +9,13 @@ namespace MetaMind.Engine.Guis.Controls.Items.Settings
     {
         protected ItemSettings()
         {
-            this.SetupService();
         }
-
-        [OnDeserialized]
-        private void SetupService(StreamingContext context)
-        {
-            this.SetupService();
-        }
-
-        private void SetupService()
-        {
-            this.GameGraphics = GameEngine.Service?.Graphics;
-        }
-
-        protected IGameGraphicsService GameGraphics { get; set; }
 
         public int Width { get; private set; }
 
         public int Height { get; private set; }
+
+        protected IGameGraphicsService Graphics => GameEngine.Service.Graphics;
 
         public object Clone()
         {

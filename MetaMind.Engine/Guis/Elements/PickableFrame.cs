@@ -10,10 +10,6 @@ namespace MetaMind.Engine.Guis.Elements
 
     public class PickableFrame : FrameEntity, IPickableFrame
     {
-        private readonly MouseAutomata mouse = new MouseAutomata();
-
-        private Rectangle rectangle;
-
         #region Constructors and Finalizer
 
         public PickableFrame(Rectangle rectangle)
@@ -53,11 +49,11 @@ namespace MetaMind.Engine.Guis.Elements
 
         #region Events
 
-        public event EventHandler<FrameEventArgs> Moved = delegate
+        public event EventHandler<FrameEventArgs> Move = delegate
         {
         };
 
-        public event EventHandler<FrameEventArgs> Resized = delegate
+        public event EventHandler<FrameEventArgs> Resize = delegate
         {
         };
 
@@ -69,55 +65,59 @@ namespace MetaMind.Engine.Guis.Elements
         {
         };
 
-        public event EventHandler<FrameEventArgs> MousePressed = delegate
+        public event EventHandler<FrameEventArgs> MousePress = delegate
         {
         };
 
-        public event EventHandler<FrameEventArgs> MouseReleased = delegate
+        public event EventHandler<FrameEventArgs> MousePressLeft = delegate
         {
         };
 
-        public event EventHandler<FrameEventArgs> MousePressedOutside = delegate
+        public event EventHandler<FrameEventArgs> MousePressRight = delegate
         {
         };
 
-        public event EventHandler<FrameEventArgs> MouseLeftPressed = delegate
+        public event EventHandler<FrameEventArgs> MousePressOut = delegate
         {
         };
 
-        public event EventHandler<FrameEventArgs> MouseLeftPressedOutside =
+        public event EventHandler<FrameEventArgs> MousePressOutLeft =
             delegate
             {
             };
 
-        public event EventHandler<FrameEventArgs> MouseLeftDoubleClicked =
+        public event EventHandler<FrameEventArgs> MousePressOutRight =
             delegate
             {
             };
 
-        public event EventHandler<FrameEventArgs> MouseLeftReleased = delegate
+        public event EventHandler<FrameEventArgs> MouseUp = delegate
         {
         };
 
-        public event EventHandler<FrameEventArgs> MouseRightPressed = delegate
+        public event EventHandler<FrameEventArgs> MouseUpLeft = delegate
         {
         };
 
-        public event EventHandler<FrameEventArgs> MouseRightPressedOutside =
+        public event EventHandler<FrameEventArgs> MouseUpRight = delegate
+        {
+        };
+
+        public event EventHandler<FrameEventArgs> MouseDoubleClick;
+
+        public event EventHandler<FrameEventArgs> MouseDoubleClickLeft =
             delegate
             {
             };
 
-        public event EventHandler<FrameEventArgs> MouseRightReleased = delegate
-        {
-        };
-
-        public event EventHandler<FrameEventArgs> MouseRightDoubleClicked =
+        public event EventHandler<FrameEventArgs> MouseDoubleClickRight =
             delegate
             {
             };
 
-        public event EventHandler<FrameEventArgs> MouseDoubleClicked;
+        #endregion
+
+        #region Event Handlers
 
         private void EventFrameChanged(object sender, FrameEventArgs e)
         {
@@ -235,38 +235,60 @@ namespace MetaMind.Engine.Guis.Elements
             }
         }
 
-        private void OnFrameMoved()
+        #endregion
+
+        #region Event Registration
+
+        private void RegisterFrameChangeHandlers()
         {
-            this.Moved?.Invoke(this, new FrameEventArgs(FrameEventType.Frame_Moved));
+            this.Move += this.EventFrameChanged;
+            this.Resize += this.EventFrameChanged;
         }
 
-        private void OnFrameResized()
+        private void RegisterMouseInputHandlers()
         {
-            this.Resized?.Invoke(this, new FrameEventArgs(FrameEventType.Frame_Sized));
+            this.Input.Event.MouseMove        += this.EventMouseMove;
+            this.Input.Event.MouseUp          += this.EventMouseUp;
+            this.Input.Event.MouseDown        += this.EventMouseDown;
+            this.Input.Event.MouseDoubleClick += this.EventMouseDoubleClick;
+        }
+
+        #endregion
+
+        #region Event On Methods
+
+        private void OnFrameMove()
+        {
+            this.Move?.Invoke(this, new FrameEventArgs(FrameEventType.Frame_Move));
+        }
+
+        private void OnFrameResize()
+        {
+            this.Resize?.Invoke(this, new FrameEventArgs(FrameEventType.Frame_Size));
         }
 
         private void OnMouseLeftDoubleClicked()
         {
-            this.MouseDoubleClicked?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Left_Double_Clicked));
-            this.MouseLeftDoubleClicked?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Left_Double_Clicked));
+            this.MouseDoubleClick?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Double_Click_Left));
+            this.MouseDoubleClickLeft?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Double_Click_Left));
         }
 
         private void OnMouseLeftPressedOutside()
         {
-            this.MousePressedOutside?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Left_Pressed_Outside));
-            this.MouseLeftPressedOutside?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Left_Pressed_Outside));
+            this.MousePressOut?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Press_Out_Left));
+            this.MousePressOutLeft?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Press_Out_Left));
         }
 
         private void OnMouseLeftPressed()
         {
-            this.MousePressed?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Left_Pressed));
-            this.MouseLeftPressed?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Left_Pressed));
+            this.MousePress?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Press_Left));
+            this.MousePressLeft?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Press_Left));
         }
 
         private void OnMouseLeftReleased()
         {
-            this.MouseReleased?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Left_Released));
-            this.MouseLeftReleased?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Left_Released));
+            this.MouseUp?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Up_Left));
+            this.MouseUpLeft?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Up_Left));
         }
 
         private void OnMouseLeave()
@@ -281,45 +303,40 @@ namespace MetaMind.Engine.Guis.Elements
 
         private void OnMouseRightDoubleClicked()
         {
-            this.MouseDoubleClicked?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Right_Double_Clicked));
-            this.MouseRightDoubleClicked?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Right_Double_Clicked));
+            this.MouseDoubleClick?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Double_Click_Right));
+            this.MouseDoubleClickRight?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Double_Click_Right));
         }
 
         private void OnMouseRightPressed()
         {
-            this.MousePressed?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Right_Pressed));
-            this.MouseRightPressed?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Right_Pressed));
+            this.MousePress?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Press_Right));
+            this.MousePressRight?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Press_Right));
         }
 
         private void OnMouseRightPressedOutside()
         {
-            this.MousePressedOutside?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Right_Pressed_Outside));
-            this.MouseRightPressedOutside?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Right_Pressed_Outside));
+            this.MousePressOut?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Pressed_Out_Right));
+            this.MousePressOutRight?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Pressed_Out_Right));
         }
 
         private void OnMouseRightReleased()
         {
-            this.MouseReleased?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Right_Released));
-            this.MouseRightReleased?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Right_Released));
-        }
-
-        private void RegisterFrameChangeHandlers()
-        {
-            this.Moved += this.EventFrameChanged;
-            this.Resized += this.EventFrameChanged;
-        }
-
-        private void RegisterMouseInputHandlers()
-        {
-            this.Input.Event.MouseMove        += this.EventMouseMove;
-            this.Input.Event.MouseUp          += this.EventMouseUp;
-            this.Input.Event.MouseDown        += this.EventMouseDown;
-            this.Input.Event.MouseDoubleClick += this.EventMouseDoubleClick;
+            this.MouseUp?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Up_Right));
+            this.MouseUpRight?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Up_Right));
         }
 
         #endregion
 
-        #region Frame Data
+
+        #region Frame State
+
+        public bool IsActive { get; set; }
+
+        #endregion
+
+        #region Frame Geometry
+
+        private Rectangle rectangle;
 
         public Point Center
         {
@@ -344,8 +361,6 @@ namespace MetaMind.Engine.Guis.Elements
                 this.Rectangle = new Rectangle(this.Rectangle.X, this.Rectangle.Y, this.Rectangle.Width, value);
             }
         }
-
-        public bool IsActive { get; set; }
 
         public Point Location
         {
@@ -378,12 +393,12 @@ namespace MetaMind.Engine.Guis.Elements
 
                 if (hasMoved)
                 {
-                    this.DeferAction(this.OnFrameMoved);
+                    this.DeferAction(this.OnFrameMove);
                 }
 
                 if (hasResized)
                 {
-                    this.DeferAction(this.OnFrameResized);
+                    this.DeferAction(this.OnFrameResize);
                 }
             }
         }
@@ -438,7 +453,9 @@ namespace MetaMind.Engine.Guis.Elements
 
         #endregion
 
-        #region State
+        #region Mouse State Detection
+
+        private readonly MouseAutomata mouse = new MouseAutomata();
 
         protected bool IsLButton(MouseEventArgs e)
         {
@@ -519,22 +536,22 @@ namespace MetaMind.Engine.Guis.Elements
 
         private void DisposeFrameChangeEvents()
         {
-            this.Moved = null;
-            this.Resized = null;
+            this.Move = null;
+            this.Resize = null;
         }
 
         private void DisposeMouseInputEvents()
         {
             this.MouseEnter = null;
             this.MouseLeave = null;
-            this.MouseLeftPressed = null;
-            this.MouseLeftPressedOutside = null;
-            this.MouseLeftReleased = null;
-            this.MouseLeftDoubleClicked = null;
-            this.MouseRightPressed = null;
-            this.MouseRightPressedOutside = null;
-            this.MouseRightReleased = null;
-            this.MouseRightDoubleClicked = null;
+            this.MousePressLeft = null;
+            this.MousePressOutLeft = null;
+            this.MouseUpLeft = null;
+            this.MouseDoubleClickLeft = null;
+            this.MousePressRight = null;
+            this.MousePressOutRight = null;
+            this.MouseUpRight = null;
+            this.MouseDoubleClickRight = null;
         }
 
         #endregion

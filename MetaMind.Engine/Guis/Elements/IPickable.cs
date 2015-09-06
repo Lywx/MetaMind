@@ -16,19 +16,19 @@ namespace MetaMind.Engine.Guis.Elements
     {
         #region Mouse Left Buttons
 
-        event EventHandler<FrameEventArgs> MouseLeftDoubleClicked;
+        event EventHandler<FrameEventArgs> MouseDoubleClickLeft;
 
         #endregion
 
         #region Mouse Right Buttons
 
-        event EventHandler<FrameEventArgs> MouseRightDoubleClicked;
+        event EventHandler<FrameEventArgs> MouseDoubleClickRight;
 
         #endregion
 
         #region Mouse General
 
-        event EventHandler<FrameEventArgs> MouseDoubleClicked;
+        event EventHandler<FrameEventArgs> MouseDoubleClick;
 
         #endregion
     }
