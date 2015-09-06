@@ -8,13 +8,11 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Primtives2D;
-    using Services;
     using Settings.Loaders;
 
     public class GameConsoleVisual :
         GameModuleVisual<GameConsole, GameConsoleSettings, GameConsoleLogic, GameConsoleVisual>,
-        IParameterLoader<GraphicsSettings>,
-        IDisposable
+        IParameterLoader<GraphicsSettings>
     {
         #region Dependency
 
@@ -22,9 +20,11 @@
 
         private readonly IStringDrawer stringDrawer;
 
+        private ScrollController Scroll { get; set; } = new ScrollController();
+
         #endregion
 
-        #region Positional States
+        #region Positional Settings
 
         private int viewportWidth;
 
@@ -39,32 +39,44 @@
         /// </summary>
         private Vector2 closedPosition;
 
-        private Vector2 currentPosition;
-
         private float oneCharacterWidth;
 
         private int maxCharactersPerLine;
 
+        #endregion
+
+        #region Positional States
+
+        private Vector2 currentPosition;
+
         private Vector2 firstCommandPositionOffset = Vector2.Zero;
 
-        private Vector2 FirstCommandPosition => new Vector2(this.InnerBounds.X, this.InnerBounds.Y) + this.firstCommandPositionOffset + this.Scroll.ScrollOffset;
+        private Vector2 FirstCommandPosition => new Vector2(this.TextBounds.X, this.TextBounds.Y) + this.firstCommandPositionOffset + this.Scroll.ScrollOffset;
 
-        private Rectangle Bounds => new Rectangle(
+        private Rectangle BackgroundBounds => new Rectangle(
             (int)this.currentPosition.X,
             (int)this.currentPosition.Y,
             this.viewportWidth - this.Settings.Margin * 2,
             this.Settings.Height);
 
-        private Rectangle InnerBounds => new Rectangle(
-            this.Bounds.X + this.Settings.Padding,
-            this.Bounds.Y + this.Settings.Padding,
-            this.Bounds.Width - this.Settings.Padding * 2,
-            this.Bounds.Height - this.Settings.Padding * 2);
+        private Rectangle TextBounds => new Rectangle(
+            this.BackgroundBounds.X + this.Settings.Padding,
+            this.BackgroundBounds.Y + this.Settings.Padding,
+            this.BackgroundBounds.Width - this.Settings.Padding * 2,
+            this.BackgroundBounds.Height - this.Settings.Padding * 2);
+
+        #endregion
+
+        #region Positional Helpers
 
         private bool IsInsideBounds(Vector2 position)
         {
             return position.Y < this.openedPosition.Y + this.Settings.Height;
         }
+
+        #endregion
+
+        #region Positional Operations
 
         private void AmendCommandPosition(Vector2 position, float leading)
         {
@@ -79,11 +91,9 @@
             this.firstCommandPositionOffset = Vector2.Zero;
         }
 
-        protected GameConsoleScrollController Scroll { get; set; } = new GameConsoleScrollController();
-
         #endregion
 
-        #region States
+        #region Visual States
 
         private GameConsoleState currentState;
 
@@ -140,7 +150,7 @@
             this.openedPosition = new Vector2(this.Settings.Margin, 0);
 
             this.oneCharacterWidth = this.Settings.Font.MeasureMonospacedString("x", 1f).X;
-            this.maxCharactersPerLine = (int)((this.Bounds.Width - this.Settings.Padding * 2) / this.oneCharacterWidth);
+            this.maxCharactersPerLine = (int)((this.BackgroundBounds.Width - this.Settings.Padding * 2) / this.oneCharacterWidth);
         }
 
         public void LoadParameter(GraphicsSettings parameter)
@@ -192,7 +202,7 @@
 
         private void DrawBackground()
         {
-            Primitives2D.FillRectangle(this.spriteBatch, this.Bounds, this.Settings.BackgroundColor);
+            Primitives2D.FillRectangle(this.spriteBatch, this.BackgroundBounds, this.Settings.BackgroundColor);
         }
 
         private void DrawRoundedEdges()
@@ -209,7 +219,7 @@
             this.spriteBatch.Draw(
                 this.Settings.RoundedCorner,
                 new Vector2(
-                    this.currentPosition.X + this.Bounds.Width - this.Settings.RoundedCorner.Width,
+                    this.currentPosition.X + this.BackgroundBounds.Width - this.Settings.RoundedCorner.Width,
                     this.currentPosition.Y + this.Settings.Height),
                 null, this.Settings.BackgroundColor, 0, Vector2.Zero, 1, SpriteEffects.FlipHorizontally, 1);
 
@@ -217,9 +227,9 @@
             Primitives2D.DrawRectangle(
                 this.spriteBatch,
                 new Rectangle(
-                    this.Bounds.X + this.Settings.RoundedCorner.Width,
-                    this.Bounds.Y + this.Settings.Height,
-                    this.Bounds.Width - this.Settings.RoundedCorner.Width * 2,
+                    this.BackgroundBounds.X + this.Settings.RoundedCorner.Width,
+                    this.BackgroundBounds.Y + this.Settings.Height,
+                    this.BackgroundBounds.Width - this.Settings.RoundedCorner.Width * 2,
                     this.Settings.RoundedCorner.Height),
                 this.Settings.BackgroundColor);
         }
@@ -316,7 +326,7 @@
                 var leading = font.Mono().AsciiSize(1f).Y; 
                 position.Y += leading;
 
-                if (!this.Scroll.Enabled)
+                if (!this.Scroll.IsEnabled)
                 {
                     this.AmendCommandPosition(position + new Vector2(0, leading), leading);
                 }

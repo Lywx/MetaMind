@@ -7,11 +7,11 @@ namespace MetaMind.Engine.Console
     using Components.Fonts;
     using Processors;
 
-    internal class GameConsoleBufferController : GameModuleComponent<GameConsole, GameConsoleSettings, GameConsoleLogic, GameConsoleVisual>
+    internal class BufferController : GameModuleComponent<GameConsole, GameConsoleSettings, GameConsoleLogic, GameConsoleVisual>
     {
         #region Constructors
 
-        public GameConsoleBufferController(GameConsole module, GameEngine engine)
+        public BufferController(GameConsole module, GameEngine engine)
             : base(module, engine)
         {
             this.Input   = new CommandLine(string.Empty, CommandType.Input);

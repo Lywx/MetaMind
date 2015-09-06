@@ -10,7 +10,7 @@
 
     public class GameConsoleLogic : GameModuleLogic<GameConsole, GameConsoleSettings, GameConsoleLogic, GameConsoleVisual>
     {
-        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private bool isActive = false;
 
@@ -28,7 +28,7 @@
 
             this.Processor = processor;
 
-            this.Buffer = new GameConsoleBufferController(module, engine);
+            this.Buffer = new BufferController(module, engine);
         }
 
         ~GameConsoleLogic()
@@ -56,7 +56,7 @@
                 // Allow multiple time injection
                 this.processor = value;
 
-                logger.Info($"Processor set to {this.processor}");
+                Logger.Info($"Processor set to {this.processor}");
             }
         }
 
@@ -64,7 +64,7 @@
 
         internal CommandLine Input => this.Buffer.Input;
 
-        internal GameConsoleBufferController Buffer { get; set; }
+        internal BufferController Buffer { get; set; }
 
         #endregion
 

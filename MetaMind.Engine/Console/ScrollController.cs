@@ -4,15 +4,19 @@
     using Microsoft.Xna.Framework;
     using Settings.Loaders;
 
-    public class GameConsoleScrollController : IParameterLoader<GraphicsSettings>
+    public class ScrollController : IParameterLoader<GraphicsSettings>
     {
         private float pageUp;
 
         private float pageDown;
 
+        public ScrollController()
+        {
+        }
+
         public Vector2 ScrollOffset { get; private set; } = Vector2.Zero;
 
-        public bool Enabled { get; private set; }
+        public bool IsEnabled { get; private set; }
 
         public void LoadParameter(GraphicsSettings parameter)
         {
@@ -22,21 +26,21 @@
 
         public void PageUp()
         {
-            this.Enabled = true;
+            this.IsEnabled = true;
 
             this.ScrollOffset += new Vector2(0, this.pageUp);
         }
 
         public void PageDown()
         {
-            this.Enabled = true;
+            this.IsEnabled = true;
 
             this.ScrollOffset -= new Vector2(0, this.pageDown);
         }
 
         public void PageReset()
         {
-            this.Enabled = false;
+            this.IsEnabled = false;
 
             this.ScrollOffset = Vector2.Zero;
         }

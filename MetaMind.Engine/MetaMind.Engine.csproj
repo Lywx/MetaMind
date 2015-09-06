@@ -82,7 +82,7 @@
     <Compile Include="Components\Inputs\MouseButtons.cs" />
     <Compile Include="Components\Inputs\MouseEventArgs.cs" />
     <Compile Include="Components\Inputs\MouseKeys.cs" />
-    <Compile Include="Console\GameConsoleScrollController.cs" />
+    <Compile Include="Console\ScrollController.cs" />
     <Compile Include="Console\GameConsoleState.cs" />
     <Compile Include="Extensions\ExtKeys.cs" />
     <Compile Include="Extensions\ExtMouseButtons.cs" />
@@ -97,10 +97,10 @@
     <Compile Include="Extensions\ExtT.cs" />
     <Compile Include="Extensions\ExtList.cs" />
     <Compile Include="GameEngineCompositor.cs" />
-    <Compile Include="Console\GameConsoleBufferController.cs" />
+    <Compile Include="Console\BufferController.cs" />
     <Compile Include="Console\Processors\ICommandProcessor.cs" />
     <Compile Include="Console\Processors\IronPythonProcessor.cs" />
-    <Compile Include="Console\CommandType.cs" />
+    <Compile Include="Console\Commands\CommandType.cs" />
     <Compile Include="Guis\Controls\Buttons\Glyph.cs" />
     <Compile Include="Guis\Controls\Container.cs" />
     <Compile Include="Guis\Controls\IContainer.cs" />
@@ -153,10 +153,10 @@
     <Compile Include="Components\GameEngineGraphics.cs" />
     <Compile Include="Components\GameEngineInterop.cs" />
     <Compile Include="Components\GameEngineNumerical.cs" />
-    <Compile Include="Console\CommandHistory.cs" />
+    <Compile Include="Console\Commands\CommandHistory.cs" />
     <Compile Include="Console\Processors\CommandProcessor.cs" />
     <Compile Include="Console\Commands\ClearCommand.cs" />
-    <Compile Include="Console\CommandComparer.cs" />
+    <Compile Include="Console\Commands\CommandComparer.cs" />
     <Compile Include="Console\Commands\CustomCommand.cs" />
     <Compile Include="Console\Commands\Core\ExitCommand.cs" />
     <Compile Include="Console\Commands\HelpCommand.cs" />
@@ -166,7 +166,7 @@
     <Compile Include="Console\GameConsoleSettings.cs" />
     <Compile Include="Console\Commands\IConsoleCommand.cs" />
     <Compile Include="Console\GameConsoleLogic.cs" />
-    <Compile Include="Console\CommandLine.cs" />
+    <Compile Include="Console\Commands\CommandLine.cs" />
     <Compile Include="Console\GameConsoleVisual.cs" />
     <Compile Include="GameModule.cs" />
     <Compile Include="GameModuleComponent.cs" />

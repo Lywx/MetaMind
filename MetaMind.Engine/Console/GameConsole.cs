@@ -35,10 +35,16 @@
 
         #endregion
 
+        #region Console States
+
         /// <summary>
         ///     Indicates whether the console is currently opened
         /// </summary>
         public bool IsOpen => this.Visual.IsOpened;
+
+        #endregion
+
+        #region Console Customization
 
         public List<IConsoleCommand> Commands => this.Settings.Commands;
 
@@ -47,6 +53,8 @@
             get { return this.Logic.Processor; }
             set { this.Logic.Processor = value; }
         }
+
+        #endregion
 
         #region Initialization
 
@@ -84,7 +92,7 @@
 
         #endregion
 
-        #region Operations
+        #region Command Operations
 
         /// <summary>
         /// Adds a new command to the console
@@ -116,6 +124,16 @@
             this.Commands.Add(new CustomCommand(name, description, action));
         }
 
+        #endregion
+
+        #region Buffer Operations
+
+        public void ClearOutput()
+        {
+            this.Logic.OutputClear();
+            this.Visual.ResetCommandPosition();
+        }
+
         /// <summary>
         ///     Write directly to the output stream of the console
         /// </summary>
@@ -137,17 +155,9 @@
             }
         }
 
-        internal void WriteLine(string buffer, CommandType bufferType)
+        private void WriteLine(string buffer, CommandType bufferType)
         {
             this.Logic.WriteLine(buffer, bufferType);
-        }
-
-        public void ClearOutput()
-        {
-            this.Logic.OutputClear();
-
-            // TODO: Rename relative methods
-            this.Visual.ResetCommandPosition();
         }
 
         #endregion
