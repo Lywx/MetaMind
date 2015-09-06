@@ -2,9 +2,9 @@
 {
     internal class ClearCommand : IConsoleCommand
     {
-        private readonly GameConsoleModule module;
+        private readonly GameConsole module;
 
-        public ClearCommand(GameConsoleModule module)
+        public ClearCommand(GameConsole module)
         {
             this.module = module;
         }
@@ -15,7 +15,7 @@
 
         public string Execute(string[] arguments)
         {
-            this.module.Clear();
+            this.module.ClearOutput();
 
             return "";
         }

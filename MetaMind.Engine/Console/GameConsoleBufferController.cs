@@ -7,11 +7,11 @@ namespace MetaMind.Engine.Console
     using Components.Fonts;
     using Processors;
 
-    internal class GameConsoleBuffer : GameModuleComponent<GameConsoleModule, GameConsoleSettings, GameConsoleLogic, GameConsoleVisual>
+    internal class GameConsoleBufferController : GameModuleComponent<GameConsole, GameConsoleSettings, GameConsoleLogic, GameConsoleVisual>
     {
         #region Constructors
 
-        public GameConsoleBuffer(GameConsoleModule module, GameEngine engine)
+        public GameConsoleBufferController(GameConsole module, GameEngine engine)
             : base(module, engine)
         {
             this.Input   = new CommandLine(string.Empty, CommandType.Input);
@@ -29,7 +29,7 @@ namespace MetaMind.Engine.Console
 
         #region Input Operations
 
-        public void AddInput(string text, ICommandProcessor processor)
+        public void InputAdd(string text, ICommandProcessor processor)
         {
             var lines = text.Split('\n')
                             .Where(line => !string.IsNullOrEmpty(line))
@@ -39,14 +39,14 @@ namespace MetaMind.Engine.Console
             {
                 var line = lines[i];
                 this.Input.Command += line;
+
+                this.InputExecute(processor);
             }
 
             this.Input.Command += lines[i];
-
-            this.ExecuteInput(processor);
         }
 
-        public void AddInput(char c)
+        public void InputAdd(char c)
         {
             if (this.Settings.Font.IsPrintable(c))
             {
@@ -54,7 +54,7 @@ namespace MetaMind.Engine.Console
             }
         }
 
-        public void AutoCompleteInput(ICommandProcessor processor)
+        public void InputComplete(ICommandProcessor processor)
         {
             var commandToMatch = this.CommandToMatch(this.Input.Command.LastIndexOf(' '));
 
@@ -69,7 +69,7 @@ namespace MetaMind.Engine.Console
             this.Input.Command += restCommand + " ";
         }
 
-        public void BackspaceInput()
+        public void InputBackspace()
         {
             if (this.Input.Command.Length > 0)
             {
@@ -77,12 +77,7 @@ namespace MetaMind.Engine.Console
             }
         }
 
-        public void PrepareForInput()
-        {
-            this.History.Reset();
-        }
-
-        public void ExecuteInput(ICommandProcessor processor)
+        public void InputExecute(ICommandProcessor processor)
         {
             if (this.Input.Command.Length == 0)
             {
@@ -110,12 +105,12 @@ namespace MetaMind.Engine.Console
             this.Input.Command = "";
         }
 
-        public void PasteInput(ICommandProcessor processor)
+        public void InputPaste(ICommandProcessor processor)
         {
             // Thread apartment must be in Single-Threaded for the clipboard to work
             if (Thread.CurrentThread.GetApartmentState() == ApartmentState.STA)
             {
-                this.AddInput(Clipboard.GetText(), processor);
+                this.InputAdd(Clipboard.GetText(), processor);
             }
         }
 
@@ -123,21 +118,26 @@ namespace MetaMind.Engine.Console
 
         #region Input History Operations
 
-        public void PreviousInput()
+        public void HistoryPrevious()
         {
             this.Input.Command = this.History.Previous();
         }
 
-        public void NextInput()
+        public void HistoryNext()
         {
             this.Input.Command = this.History.Next();
+        }
+
+        public void HistoryReset()
+        {
+            this.History.Reset();
         }
 
         #endregion
 
         #region Output Operations
 
-        public void AddToOutput(string command, CommandType type)
+        public void OutputAdd(string command, CommandType type)
         {
             foreach (var line in command.Split('\n'))
             {
@@ -145,7 +145,7 @@ namespace MetaMind.Engine.Console
             }
         }
 
-        public void ClearOutput()
+        public void OutputClear()
         {
             this.Output.Clear();
         }

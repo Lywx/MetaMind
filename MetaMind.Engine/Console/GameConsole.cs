@@ -3,69 +3,83 @@
     using System;
     using System.Collections.Generic;
     using Commands;
+    using Commands.Core;
     using Components.Fonts;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Processors;
 
-    public partial class GameConsole : GameControllableComponent, IDisposable
+    public class GameConsole : GameModule<GameConsoleSettings, GameConsoleLogic, GameConsoleVisual>
     {
         #region Constructors and Finalizer
 
-        public GameConsole(
-            GameConsoleSettings settings,
-            GameEngine engine,
-            SpriteBatch spriteBatch,
-            IStringDrawer stringDrawer) 
-            : base(engine)
+        public GameConsole(GameConsoleSettings settings, GameEngine engine, SpriteBatch spriteBatch, IStringDrawer stringDrawer)
+            : base(settings, engine)
         {
-            this.Module = new GameConsoleModule(this, settings, new CommandProcessor(this), engine, spriteBatch, stringDrawer);
+            if (spriteBatch == null)
+            {
+                throw new ArgumentNullException(nameof(spriteBatch));
+            }
+
+            if (stringDrawer == null)
+            {
+                throw new ArgumentNullException(nameof(stringDrawer));
+            }
+
+            this.Logic = new GameConsoleLogic(this, engine, new CommandProcessor(this));
+            this.Logic.Opened += (s, e) => this.Visual.Open();
+            this.Logic.Closed += (s, e) => this.Visual.Close();
+
+            this.Visual = new GameConsoleVisual(this, engine, spriteBatch, stringDrawer);
         }
 
         #endregion
 
-        #region Dependency
-
-        private GameConsoleModule Module { get; set; }
-
-        #endregion
-
-        public List<IConsoleCommand> Commands => this.Module.Settings.Commands;
-
         /// <summary>
         ///     Indicates whether the console is currently opened
         /// </summary>
-        public bool Opened => this.Module.IsOpen;
+        public bool IsOpen => this.Visual.IsOpened;
+
+        public List<IConsoleCommand> Commands => this.Settings.Commands;
 
         public ICommandProcessor Processor
         {
-            get { return this.Module.Logic.Processor; }
-            set { this.Module.Logic.Processor = value; }
+            get { return this.Logic.Processor; }
+            set { this.Logic.Processor = value; }
         }
 
         #region Initialization
 
         public override void Initialize()
         {
-            this.Module.Initialize();
-            base       .Initialize();
+            this.Logic .Initialize();
+            this.Visual.Initialize();
+
+            this.InitializeCommands();
+            base.Initialize();
+        }
+
+        private void InitializeCommands()
+        {
+            var builtinCommands = new IConsoleCommand[]
+            {
+                new ExitCommand(this.Engine),
+
+                new ClearCommand(this),
+                new HelpCommand(this),
+            };
+
+            this.Commands.AddRange(builtinCommands);
         }
 
         #endregion
 
-        #region Draw and Update  
+        #region Update  
 
         public override void Update(GameTime time)
         {
-            this.Module.UpdateInput(this.Input, time);
-            this.Module.Update(time);
-            base       .Update(time);
-        }
-
-        public override void Draw(GameTime time)
-        {
-            this.Module.Draw(this.Graphics, time, byte.MaxValue);
-            base       .Draw(time);
+            this.UpdateInput(this.Input, time);
+            base.Update(time);
         }
 
         #endregion
@@ -111,35 +125,46 @@
         {
             if (string.IsNullOrEmpty(channel))
             {
-                this.Module.WriteLine(buffer);
+                this.WriteLine(buffer, CommandType.Output);
             }
             else if (string.Compare(channel, "DEBUG", StringComparison.OrdinalIgnoreCase) == 0)
             {
-                this.Module.WriteLine(buffer, CommandType.Debug);
+                this.WriteLine(buffer, CommandType.Debug);
             }
             else if (string.Compare(channel, "ERROR", StringComparison.OrdinalIgnoreCase) == 0)
             {
-                this.Module.WriteLine(buffer, CommandType.Error);
+                this.WriteLine(buffer, CommandType.Error);
             }
+        }
+
+        internal void WriteLine(string buffer, CommandType bufferType)
+        {
+            this.Logic.WriteLine(buffer, bufferType);
+        }
+
+        public void ClearOutput()
+        {
+            this.Logic.OutputClear();
+
+            // TODO: Rename relative methods
+            this.Visual.ResetCommandPosition();
         }
 
         #endregion
 
         #region IDisposable
 
-        private bool IsDisposed { get; set; }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                if (!this.IsDisposed)
-                {
-                    this.Module.Dispose();
-                }
+                this.Visual?.Dispose();
+                this.Logic ?.Dispose();
 
-                this.IsDisposed = true;
+                this.Commands.Clear();
             }
+
+            base.Dispose(disposing);
         }
 
         #endregion

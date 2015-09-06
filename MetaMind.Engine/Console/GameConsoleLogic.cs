@@ -3,13 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Windows.Forms;
-    using Components.Inputs;
     using NLog;
     using Processors;
     using KeyEventArgs = Components.Inputs.KeyEventArgs;
     using Keys = Microsoft.Xna.Framework.Input.Keys;
 
-    internal class GameConsoleLogic : GameModuleLogic<GameConsoleModule, GameConsoleSettings, GameConsoleLogic, GameConsoleVisual>, IDisposable
+    public class GameConsoleLogic : GameModuleLogic<GameConsole, GameConsoleSettings, GameConsoleLogic, GameConsoleVisual>
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -19,7 +18,7 @@
 
         #region Constructors and Finalizer
 
-        public GameConsoleLogic(GameConsoleModule module, GameEngine engine, ICommandProcessor processor) 
+        public GameConsoleLogic(GameConsole module, GameEngine engine, ICommandProcessor processor) 
             : base(module, engine)
         {
             if (processor == null)
@@ -29,7 +28,7 @@
 
             this.Processor = processor;
 
-            this.Buffer = new GameConsoleBuffer(module, engine);
+            this.Buffer = new GameConsoleBufferController(module, engine);
         }
 
         ~GameConsoleLogic()
@@ -42,10 +41,6 @@
         #region Dependency
 
         private ICommandProcessor processor;
-
-        public List<CommandLine> Output => this.Buffer.Output;
-
-        public CommandLine Input => this.Buffer.Input;
 
         protected internal ICommandProcessor Processor
         {
@@ -61,17 +56,15 @@
                 // Allow multiple time injection
                 this.processor = value;
 
-#if DEBUG
                 logger.Info($"Processor set to {this.processor}");
-#endif
             }
         }
 
-        protected GameConsoleBuffer Buffer { get; set; }
+        internal List<CommandLine> Output => this.Buffer.Output;
 
-        protected IInputState InputState => this.Engine.Input.State;
+        internal CommandLine Input => this.Buffer.Input;
 
-        protected IInputEvent InputEvent => this.Engine.Input.Event;
+        internal GameConsoleBufferController Buffer { get; set; }
 
         #endregion
 
@@ -79,8 +72,8 @@
 
         public override void Initialize()
         {
-            this.InputEvent.KeyDown  += this.InputEventKeyDown;
-            this.InputEvent.KeyPress += this.InputEventKeyPress;
+            this.Engine.Input.Event.KeyDown  += this.InputEventKeyDown;
+            this.Engine.Input.Event.KeyPress += this.InputEventKeyPress;
 
             base.Initialize();
         }
@@ -123,29 +116,29 @@
                 return; 
             }
 
-            this.Buffer.PrepareForInput();
+            this.InputReset();
 
-            var keyboard = this.InputState.Keyboard;
+            var keyboard = this.Engine.Input.State.Keyboard;
 
             switch (e.KeyChar)
             {
                 case (char)Keys.Back:
                 {
-                    this.Buffer.BackspaceInput();
+                    this.Buffer.InputBackspace();
 
                     break;
                 }
 
                 case (char)Keys.Enter:
                 {
-                    this.Buffer.ExecuteInput(this.Processor);
+                    this.Buffer.InputExecute(this.Processor);
 
                     break;
                 }
 
                 case (char)Keys.Tab:
                 {
-                    this.Buffer.AutoCompleteInput(this.Processor);
+                    this.Buffer.InputComplete(this.Processor);
 
                     break;
                 }
@@ -154,7 +147,7 @@
                 {
                     if (keyboard.CtrlDown)
                     {
-                        this.Buffer.PasteInput(this.Processor);
+                        this.Buffer.InputPaste(this.Processor);
                     }
 
                     goto default;
@@ -162,7 +155,7 @@
 
                 default:
                 {
-                    this.Buffer.AddInput(e.KeyChar);
+                    this.Buffer.InputAdd(e.KeyChar);
 
                     break;
                 }
@@ -180,16 +173,16 @@
             switch (e.KeyCode)
             {
                 case Keys.Up:
-                    this.Buffer.PreviousInput();
+                    this.Buffer.HistoryPrevious();
                     break;
                 case Keys.Down:
-                    this.Buffer.NextInput();
+                    this.Buffer.HistoryNext();
                     break;
                 case Keys.PageUp:
-                    this.Visual.ScrollUp();
+                    this.Visual.PageUp();
                     break;
                 case Keys.PageDown:
-                    this.Visual.ScrollDown();
+                    this.Visual.PageDown();
                     break;
             }
         }
@@ -224,19 +217,25 @@
 
         #region Buffer Operations
 
-        public void ClearOuput()
+        public void OutputClear()
         {
-            this.Buffer.ClearOutput();
+            this.Buffer.OutputClear();
         }
 
-        public void WriteLine(string buffer, CommandType bufferType = CommandType.Output)
+        private void InputReset()
+        {
+            this.Buffer.HistoryReset();
+            this.Visual.PageReset();
+        }
+
+        internal void WriteLine(string buffer, CommandType bufferType = CommandType.Output)
         {
             if (this.Settings.OpenOnWrite)
             {
                 this.OpenConsole();
             }
 
-            this.Buffer.AddToOutput(buffer, bufferType);
+            this.Buffer.OutputAdd(buffer, bufferType);
         }
 
         #endregion
@@ -245,21 +244,14 @@
 
         private bool IsDisposed { get; set; }
 
-        public void Dispose()
-        {
-            this.Dispose(true);
-
-            GC.SuppressFinalize(this);
-        }
-
-        protected void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
                 if (!this.IsDisposed)
                 {
-                    this.InputEvent.KeyDown -= this.InputEventKeyDown;
-                    this.InputEvent.KeyPress -= this.InputEventKeyPress;
+                    this.Engine.Input.Event.KeyDown -= this.InputEventKeyDown;
+                    this.Engine.Input.Event.KeyPress -= this.InputEventKeyPress;
                 }
 
                 this.IsDisposed = true;

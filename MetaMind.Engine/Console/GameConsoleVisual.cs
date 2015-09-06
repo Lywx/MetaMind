@@ -11,7 +11,10 @@
     using Services;
     using Settings.Loaders;
 
-    internal class GameConsoleVisual : GameModuleVisual<GameConsoleModule, GameConsoleSettings, GameConsoleLogic, GameConsoleVisual>, IParameterLoader<GraphicsSettings>, IDisposable
+    public class GameConsoleVisual :
+        GameModuleVisual<GameConsole, GameConsoleSettings, GameConsoleLogic, GameConsoleVisual>,
+        IParameterLoader<GraphicsSettings>,
+        IDisposable
     {
         #region Dependency
 
@@ -44,7 +47,7 @@
 
         private Vector2 firstCommandPositionOffset = Vector2.Zero;
 
-        private Vector2 FirstCommandPosition => new Vector2(this.InnerBounds.X, this.InnerBounds.Y) + this.firstCommandPositionOffset;
+        private Vector2 FirstCommandPosition => new Vector2(this.InnerBounds.X, this.InnerBounds.Y) + this.firstCommandPositionOffset + this.Scroll.ScrollOffset;
 
         private Rectangle Bounds => new Rectangle(
             (int)this.currentPosition.X,
@@ -63,9 +66,9 @@
             return position.Y < this.openedPosition.Y + this.Settings.Height;
         }
 
-        private void AmendCommandPosition(Vector2 nextCommandPosition, float leading)
+        private void AmendCommandPosition(Vector2 position, float leading)
         {
-            if (!this.IsInsideBounds(nextCommandPosition))
+            if (!this.IsInsideBounds(position))
             {
                 this.firstCommandPositionOffset.Y -= leading;
             }
@@ -76,40 +79,21 @@
             this.firstCommandPositionOffset = Vector2.Zero;
         }
 
-        public void ScrollUp()
-        {
-            this.firstCommandPositionOffset += new Vector2(0, 50);
-        }
-
-        public void ScrollDown()
-        {
-            this.firstCommandPositionOffset -= new Vector2(0, 50);
-        }
+        protected GameConsoleScrollController Scroll { get; set; } = new GameConsoleScrollController();
 
         #endregion
 
         #region States
 
-        private enum State
-        {
-            Opened,
+        private GameConsoleState currentState;
 
-            Opening,
-
-            Closed,
-
-            Closing
-        }
-
-        private State currentState;
-
-        public bool IsOpened => this.currentState == State.Opened;
+        public bool IsOpened => this.currentState == GameConsoleState.Opened;
 
         #endregion
 
         #region Constructors and Finalizer
 
-        public GameConsoleVisual(GameConsoleModule module, GameEngine engine, SpriteBatch spriteBatch, IStringDrawer stringDrawer)
+        public GameConsoleVisual(GameConsole module, GameEngine engine, SpriteBatch spriteBatch, IStringDrawer stringDrawer)
             : base(module, engine)
         {
             if (engine == null)
@@ -145,14 +129,9 @@
             base.Initialize();
         }
 
-        public void LoadParameter(GraphicsSettings parameter)
-        {
-            this.viewportWidth = parameter.Width;
-        }
-
         private void InitializeState()
         {
-            this.currentState = State.Closed;
+            this.currentState = GameConsoleState.Closed;
         }
 
         private void InitializePosition()
@@ -164,6 +143,12 @@
             this.maxCharactersPerLine = (int)((this.Bounds.Width - this.Settings.Padding * 2) / this.oneCharacterWidth);
         }
 
+        public void LoadParameter(GraphicsSettings parameter)
+        {
+            this.viewportWidth = parameter.Width;
+
+            this.Scroll.LoadParameter(parameter);
+        }
 
         #endregion
 
@@ -181,21 +166,21 @@
 
         #region Draw
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(GameTime time)
         {
             if (!this.Module.Enabled)
             {
                 return;
             }
 
-            if (this.currentState == State.Closed)
+            if (this.currentState == GameConsoleState.Closed)
             {
                 return;
             }
 
             this.spriteBatch.Begin();
 
-            this.DrawRectangle();
+            this.DrawBackground();
 
             var promptPosition = this.DrawPastOutput();
             var bufferPosition = this.DrawPrompt(promptPosition);
@@ -205,7 +190,7 @@
             this.spriteBatch.End();
         }
 
-        private void DrawRectangle()
+        private void DrawBackground()
         {
             Primitives2D.FillRectangle(this.spriteBatch, this.Bounds, this.Settings.BackgroundColor);
         }
@@ -315,7 +300,6 @@
         /// <param name="command"></param>
         /// <param name="position"></param>
         /// <param name="color"></param>
-        /// <param name="settings"></param>
         /// <returns></returns>
         private Vector2 DrawCommand(Font font, string command, Vector2 position, Color color)
         {
@@ -332,7 +316,10 @@
                 var leading = font.Mono().AsciiSize(1f).Y; 
                 position.Y += leading;
 
-                this.AmendCommandPosition(position + new Vector2(0, leading), leading);
+                if (!this.Scroll.Enabled)
+                {
+                    this.AmendCommandPosition(position + new Vector2(0, leading), leading);
+                }
             }
 
             return position;
@@ -365,23 +352,23 @@
         {
             switch (this.currentState)
             {
-                case State.Opening:
+                case GameConsoleState.Opening:
                     {
-                        this.UpdateState(this.openedPosition, State.Opened);
+                        this.UpdateState(this.openedPosition, GameConsoleState.Opened);
                     }
 
                     break;
 
-                case State.Closing:
+                case GameConsoleState.Closing:
                     {
-                        this.UpdateState(this.closedPosition, State.Closed);
+                        this.UpdateState(this.closedPosition, GameConsoleState.Closed);
                     }
 
                     break;
             }
         }
 
-        private void UpdateState(Vector2 targetPosition, State targetState)
+        private void UpdateState(Vector2 targetPosition, GameConsoleState targetState)
         {
             this.currentPosition.Y = MathHelper.SmoothStep(
                     this.currentPosition.Y,
@@ -400,34 +387,41 @@
 
         public void Open()
         {
-            if (this.currentState == State.Opening || 
-                this.currentState == State.Opened)
+            if (this.currentState == GameConsoleState.Opening || 
+                this.currentState == GameConsoleState.Opened)
             {
                 return;
             }
 
             this.stateTransitionMoment = DateTime.Now;
-            this.currentState = State.Opening;
+            this.currentState = GameConsoleState.Opening;
         }
 
         public void Close()
         {
-            if (this.currentState == State.Closing || 
-                this.currentState == State.Closed)
+            if (this.currentState == GameConsoleState.Closing || 
+                this.currentState == GameConsoleState.Closed)
             {
                 return;
             }
 
             this.stateTransitionMoment = DateTime.Now;
-            this.currentState = State.Closing;
+            this.currentState = GameConsoleState.Closing;
         }
 
-        #endregion
-
-        #region IDisposable
-
-        public void Dispose()
+        public void PageUp()
         {
+            this.Scroll.PageUp();
+        }
+
+        public void PageDown()
+        {
+            this.Scroll.PageDown();
+        }
+
+        public void PageReset()
+        {
+            this.Scroll.PageReset();
         }
 
         #endregion

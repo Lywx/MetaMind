@@ -68,7 +68,7 @@
         public string Prompt { get; set; } = "$";
 
         /// <summary>
-        /// Cusor symbol for the console.
+        /// Cursor symbol for the console.
         /// </summary>
         public char Cursor { get; set; } = '_';
 
