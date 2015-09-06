@@ -18,7 +18,7 @@ namespace MetaMind.Engine.Guis.Controls.Views
     ///     which allows view-wise substitution of settings. The dynamic typing allows
     ///     customization
     /// </summary>
-    public abstract class ViewComponent : GameControllableEntity, IViewComponent
+    public abstract class ViewComponent : Control, IViewComponent
     {
         #region Constructors
 

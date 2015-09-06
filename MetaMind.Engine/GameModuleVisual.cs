@@ -2,7 +2,6 @@
 {
     using System;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
 
     public class GameModuleVisual<TModule, TModuleSettings, TModuleLogic, TModuleVisual> : GameModuleComponent<TModule, TModuleSettings, TModuleLogic, TModuleVisual>, IGameModuleVisual<TModuleSettings>
         where                     TModule                                                : IGameModule<TModuleSettings, TModuleLogic, TModuleVisual>
