@@ -134,7 +134,7 @@ namespace MetaMind.Engine.Guis.Elements
                     this.mouse.LDoubleClick();
                     this.mouse.RClear();
 
-                    this.DeferAction(this.OnMouseLeftDoubleClicked);
+                    this.DeferAction(this.OnMouseDoubleClickLeft);
 
                     return;
                 }
@@ -143,7 +143,7 @@ namespace MetaMind.Engine.Guis.Elements
                     this.mouse.LClear();
                     this.mouse.RDoubleClick();
 
-                    this.DeferAction(this.OnMouseRightDoubleClicked);
+                    this.DeferAction(this.OnMouseDoubleClickRight);
 
                     return;
                 }
@@ -159,12 +159,12 @@ namespace MetaMind.Engine.Guis.Elements
 
                 if (this.mouse.IsMouseOver)
                 {
-                    this.DeferAction(this.OnMouseLeftPressed);
+                    this.DeferAction(this.OnMousePressLeft);
                 }
 
                 if (!this.mouse.IsMouseOver)
                 {
-                    this.DeferAction(this.OnMouseLeftPressedOutside);
+                    this.DeferAction(this.OnMousePressOutLeft);
                 }
 
                 return;
@@ -176,12 +176,12 @@ namespace MetaMind.Engine.Guis.Elements
 
                 if (this.mouse.IsMouseOver)
                 {
-                    this.DeferAction(this.OnMouseRightPressed);
+                    this.DeferAction(this.OnMousePressRight);
                 }
 
                 if (!this.mouse.IsMouseOver)
                 {
-                    this.DeferAction(this.OnMouseRightPressedOutside);
+                    this.DeferAction(this.OnMousePressOutRight);
                 }
 
                 return;
@@ -217,7 +217,7 @@ namespace MetaMind.Engine.Guis.Elements
 
                 if (this.mouse.IsMouseOver)
                 {
-                    this.DeferAction(this.OnMouseLeftReleased);
+                    this.DeferAction(this.OnMouseUpLeft);
                 }
 
                 return;
@@ -228,7 +228,7 @@ namespace MetaMind.Engine.Guis.Elements
 
                 if (this.mouse.IsMouseOver)
                 {
-                    this.DeferAction(this.OnMouseRightReleased);
+                    this.DeferAction(this.OnMouseUpRight);
                 }
 
                 return;
@@ -247,9 +247,9 @@ namespace MetaMind.Engine.Guis.Elements
 
         private void RegisterMouseInputHandlers()
         {
-            this.Input.Event.MouseMove        += this.EventMouseMove;
-            this.Input.Event.MouseUp          += this.EventMouseUp;
-            this.Input.Event.MouseDown        += this.EventMouseDown;
+            this.Input.Event.MouseMove += this.EventMouseMove;
+            this.Input.Event.MouseUp += this.EventMouseUp;
+            this.Input.Event.MouseDown += this.EventMouseDown;
             this.Input.Event.MouseDoubleClick += this.EventMouseDoubleClick;
         }
 
@@ -257,76 +257,75 @@ namespace MetaMind.Engine.Guis.Elements
 
         #region Event On Methods
 
-        private void OnFrameMove()
+        protected virtual void OnFrameMove()
         {
             this.Move?.Invoke(this, new FrameEventArgs(FrameEventType.Frame_Move));
         }
 
-        private void OnFrameResize()
+        protected virtual void OnFrameResize()
         {
             this.Resize?.Invoke(this, new FrameEventArgs(FrameEventType.Frame_Size));
         }
 
-        private void OnMouseLeftDoubleClicked()
+        protected virtual void OnMouseDoubleClickLeft()
         {
             this.MouseDoubleClick?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Double_Click_Left));
             this.MouseDoubleClickLeft?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Double_Click_Left));
         }
 
-        private void OnMouseLeftPressedOutside()
-        {
-            this.MousePressOut?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Press_Out_Left));
-            this.MousePressOutLeft?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Press_Out_Left));
-        }
-
-        private void OnMouseLeftPressed()
-        {
-            this.MousePress?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Press_Left));
-            this.MousePressLeft?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Press_Left));
-        }
-
-        private void OnMouseLeftReleased()
-        {
-            this.MouseUp?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Up_Left));
-            this.MouseUpLeft?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Up_Left));
-        }
-
-        private void OnMouseLeave()
-        {
-            this.MouseLeave?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Leave));
-        }
-
-        private void OnMouseEnter()
-        {
-            this.MouseEnter?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Enter));
-        }
-
-        private void OnMouseRightDoubleClicked()
+        protected virtual void OnMouseDoubleClickRight()
         {
             this.MouseDoubleClick?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Double_Click_Right));
             this.MouseDoubleClickRight?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Double_Click_Right));
         }
 
-        private void OnMouseRightPressed()
+        protected virtual  void OnMousePressOutLeft()
         {
-            this.MousePress?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Press_Right));
-            this.MousePressRight?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Press_Right));
+            this.MousePressOut?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Press_Out_Left));
+            this.MousePressOutLeft?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Press_Out_Left));
         }
 
-        private void OnMouseRightPressedOutside()
+        protected virtual void OnMousePressOutRight()
         {
             this.MousePressOut?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Pressed_Out_Right));
             this.MousePressOutRight?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Pressed_Out_Right));
         }
 
-        private void OnMouseRightReleased()
+        protected virtual void OnMousePressLeft()
+        {
+            this.MousePress?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Press_Left));
+            this.MousePressLeft?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Press_Left));
+        }
+
+        protected virtual void OnMousePressRight()
+        {
+            this.MousePress?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Press_Right));
+            this.MousePressRight?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Press_Right));
+        }
+
+        protected virtual void OnMouseUpLeft()
+        {
+            this.MouseUp?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Up_Left));
+            this.MouseUpLeft?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Up_Left));
+        }
+
+        protected virtual void OnMouseUpRight()
         {
             this.MouseUp?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Up_Right));
             this.MouseUpRight?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Up_Right));
         }
 
-        #endregion
+        protected virtual void OnMouseLeave()
+        {
+            this.MouseLeave?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Leave));
+        }
 
+        protected virtual void OnMouseEnter()
+        {
+            this.MouseEnter?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Enter));
+        }
+
+        #endregion
 
         #region Frame State
 

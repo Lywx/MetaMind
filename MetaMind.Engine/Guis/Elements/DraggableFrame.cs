@@ -120,6 +120,10 @@ namespace MetaMind.Engine.Guis.Elements
 
         public event EventHandler<FrameEventArgs> MouseDrop;
 
+        #endregion
+
+        #region Event Handlers
+
         private void FrameMousePress(object sender, FrameEventArgs e)
         {
             var mouse = this.Input.State.Mouse.CurrentState;
@@ -139,6 +143,10 @@ namespace MetaMind.Engine.Guis.Elements
             this.Machine.Fire(Trigger.Released);
         }
 
+        #endregion
+
+        #region Event On
+
         private void OnMouseDropped()
         {
             this.MouseDrop?.Invoke(this, new FrameEventArgs(FrameEventType.Frame_Drop));
@@ -149,13 +157,17 @@ namespace MetaMind.Engine.Guis.Elements
             this.MouseDrag?.Invoke(this, new FrameEventArgs(FrameEventType.Frame_Drag));
         }
 
+        #endregion
+
+        #region Event Registration
+
         private void RegisterHandlers()
         {
             this.MousePress += this.FrameMousePress;
             this.MouseUp += this.FrameMouseUp;
         }
 
-        #endregion Events
+        #endregion
 
         #region Update
 
