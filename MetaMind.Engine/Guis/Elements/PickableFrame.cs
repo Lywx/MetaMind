@@ -20,8 +20,7 @@ namespace MetaMind.Engine.Guis.Elements
 
         public PickableFrame()
         {
-            this.RegisterMouseInputHandlers();
-            this.RegisterFrameChangeHandlers();
+            this.RegisterHandlers();
 
             this.IsActive = true;
 
@@ -239,6 +238,12 @@ namespace MetaMind.Engine.Guis.Elements
 
         #region Event Registration
 
+        protected void RegisterHandlers()
+        {
+            this.RegisterMouseInputHandlers();
+            this.RegisterFrameChangeHandlers();
+        }
+
         private void RegisterFrameChangeHandlers()
         {
             this.Move += this.EventFrameChanged;
@@ -329,7 +334,28 @@ namespace MetaMind.Engine.Guis.Elements
 
         #region Frame State
 
-        public bool IsActive { get; set; }
+        private bool isActive;
+
+        public bool IsActive
+        {
+            get { return this.isActive; }
+            set
+            {
+                if (this.isActive != value)
+                {
+                    if (value)
+                    {
+                        this.RegisterHandlers();
+                    }
+                    else
+                    {
+                        this.DisposeHandlers();
+                    }
+                }
+
+                this.isActive = value;
+            }
+        }
 
         #endregion
 
@@ -503,7 +529,7 @@ namespace MetaMind.Engine.Guis.Elements
 
                         // No need to dispose frame change handlers because the 
                         // events are disposed in this.DisposeEvents
-                        this.DisposeMouseInputHandlers();
+                        this.DisposeHandlers();
                     }
 
                     this.IsDisposed = true;
@@ -517,6 +543,11 @@ namespace MetaMind.Engine.Guis.Elements
             {
                 base.Dispose(disposing);
             }
+        }
+
+        private void DisposeHandlers()
+        {
+            this.DisposeMouseInputHandlers();
         }
 
         private void DisposeMouseInputHandlers()
