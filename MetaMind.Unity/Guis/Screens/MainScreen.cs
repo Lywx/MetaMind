@@ -6,8 +6,7 @@
     using Concepts.Tests;
     using Engine.Components.Fonts;
     using Engine.Components.Inputs;
-    using Engine.Guis.Layers;
-    using Engine.Guis.Widgets.Buttons;
+    using Engine.Guis.Controls.Buttons;
     using Engine.Screens;
     using Engine.Scripting.FSharp;
     using Engine.Services;
@@ -156,6 +155,8 @@
 
         public override void Draw(IGameGraphicsService graphics, GameTime time)
         {
+            base.Draw(graphics, time);
+
             graphics.SpriteBatch.Begin();
 
             // Buttons have the same alpha value as circular layer

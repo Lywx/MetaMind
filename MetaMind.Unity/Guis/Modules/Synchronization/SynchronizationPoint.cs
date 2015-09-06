@@ -3,7 +3,7 @@ namespace MetaMind.Unity.Guis.Modules.Synchronization
     using System;
     using Engine;
     using Engine.Components.Fonts;
-    using Engine.Guis.Widgets.Visuals;
+    using Engine.Guis.Controls.Visuals;
     using Engine.Services;
     using Microsoft.Xna.Framework;
 

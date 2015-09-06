@@ -48,7 +48,7 @@ namespace MetaMind.Engine.Guis.Controls.Views.Visuals
         {
             foreach (var item in this.View.ItemsRead.ToArray())
             {
-                // TODO: Possible separation of active and inactive storage and looping to improve cpu performace
+                // TODO: Possible separation of active and inactive storage and looping to improve CPU performance
                 // TODO: Possible separate implementation for different views (1d or 2d views)
                 if (item[ItemState.Item_Is_Active]())
                 {

@@ -2,9 +2,8 @@
 {
     using Engine;
     using Engine.Guis;
+    using Engine.Guis.Controls.Visuals;
     using Engine.Guis.Elements;
-    using Engine.Guis.Widgets.Regions;
-    using Engine.Guis.Widgets.Visuals;
     using Engine.Services;
     using Engine.Testers;
     using Microsoft.Xna.Framework;

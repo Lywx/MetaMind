@@ -2,15 +2,15 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 {
     using System;
     using Concepts.Tests;
-    using Engine.Guis.Widgets.Items.Data;
-    using Engine.Guis.Widgets.Items.Factories;
-    using Engine.Guis.Widgets.Items.Frames;
-    using Engine.Guis.Widgets.Items.Interactions;
-    using Engine.Guis.Widgets.Views;
-    using Engine.Guis.Widgets.Views.Logic;
-    using Engine.Guis.Widgets.Views.Regions;
-    using Engine.Guis.Widgets.Views.Selections;
-    using Engine.Guis.Widgets.Views.Visuals;
+    using Engine.Guis.Controls.Items.Data;
+    using Engine.Guis.Controls.Items.Factories;
+    using Engine.Guis.Controls.Items.Frames;
+    using Engine.Guis.Controls.Items.Interactions;
+    using Engine.Guis.Controls.Views;
+    using Engine.Guis.Controls.Views.Logic;
+    using Engine.Guis.Controls.Views.Regions;
+    using Engine.Guis.Controls.Views.Selections;
+    using Engine.Guis.Controls.Views.Visuals;
 
     /// <summary>
     /// Composers are not intended to be reused.

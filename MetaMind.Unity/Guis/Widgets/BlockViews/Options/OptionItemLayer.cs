@@ -1,7 +1,7 @@
 namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
 {
-    using Engine.Guis.Widgets.Items;
-    using Engine.Guis.Widgets.Items.Layers;
+    using Engine.Guis.Controls.Items;
+    using Engine.Guis.Controls.Items.Layers;
 
     public class OptionItemLayer : BlockViewVerticalItemLayer
     {

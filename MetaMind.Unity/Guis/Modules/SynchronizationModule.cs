@@ -4,7 +4,6 @@
     using Concepts.Cognitions;
     using Concepts.Synchronizations;
     using Engine;
-    using Engine.Guis;
 
     /// <summary>
     /// This module control all the interaction with the Synchronization and Consciousness object, 

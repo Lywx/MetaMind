@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
     using Concepts.Tests;
-    using Engine.Guis.Widgets.Items;
-    using Engine.Guis.Widgets.Items.Data;
-    using Engine.Guis.Widgets.Views.Logic;
+    using Engine.Guis.Controls.Items;
+    using Engine.Guis.Controls.Items.Data;
+    using Engine.Guis.Controls.Views.Logic;
 
     public class TestViewBinding : IViewBinding
     {

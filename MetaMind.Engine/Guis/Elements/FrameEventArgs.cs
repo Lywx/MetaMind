@@ -11,9 +11,6 @@
             this.type = type;
         }
 
-        public FrameEventType Type
-        {
-            get { return this.type; }
-        }
+        public FrameEventType Type => this.type;
     }
 }

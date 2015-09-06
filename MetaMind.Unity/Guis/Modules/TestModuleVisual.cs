@@ -5,7 +5,7 @@
     using Engine;
     using Engine.Components.Fonts;
     using Engine.Guis;
-    using Engine.Guis.Widgets.Visuals;
+    using Engine.Guis.Controls.Visuals;
     using Engine.Services;
     using Engine.Settings.Colors;
     using Microsoft.Xna.Framework;

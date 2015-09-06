@@ -1,7 +1,7 @@
 ﻿namespace MetaMind.Unity.Guis.Widgets.IndexViews
 {
-    using Engine.Guis.Widgets.Views.Scrolls;
-    using Engine.Guis.Widgets.Views.Settings;
+    using Engine.Guis.Controls.Views.Scrolls;
+    using Engine.Guis.Controls.Views.Settings;
     using Microsoft.Xna.Framework;
 
     public class StandardIndexViewSettings : PointViewVerticalSettings

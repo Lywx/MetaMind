@@ -7,10 +7,10 @@
 
 namespace MetaMind.Unity.Concepts.Tests
 {
-    using Engine.Guis.Widgets.Items.Data;
     using System;
     using System.Collections.Generic;
     using System.Speech.Synthesis;
+    using Engine.Guis.Controls.Items.Data;
     using Events;
 
     #region Test Static Members

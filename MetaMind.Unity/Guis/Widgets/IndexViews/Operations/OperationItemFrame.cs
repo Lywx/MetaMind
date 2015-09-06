@@ -1,11 +1,11 @@
 namespace MetaMind.Unity.Guis.Widgets.IndexViews.Operations
 {
     using System;
+    using Engine.Guis.Controls.Items;
+    using Engine.Guis.Controls.Items.Frames;
+    using Engine.Guis.Controls.Items.Layouts;
+    using Engine.Guis.Controls.Items.Settings;
     using Engine.Guis.Elements;
-    using Engine.Guis.Widgets.Items;
-    using Engine.Guis.Widgets.Items.Frames;
-    using Engine.Guis.Widgets.Items.Layouts;
-    using Engine.Guis.Widgets.Items.Settings;
     using Engine.Services;
     using Microsoft.Xna.Framework;
 

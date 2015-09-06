@@ -9,11 +9,11 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 {
     using System;
     using Concepts.Tests;
-    using Engine.Guis.Widgets.Items;
-    using Engine.Guis.Widgets.Items.Frames;
-    using Engine.Guis.Widgets.Items.Interactions;
-    using Engine.Guis.Widgets.Items.Visuals;
-    using Engine.Guis.Widgets.Visuals;
+    using Engine.Guis.Controls.Items;
+    using Engine.Guis.Controls.Items.Frames;
+    using Engine.Guis.Controls.Items.Interactions;
+    using Engine.Guis.Controls.Items.Visuals;
+    using Engine.Guis.Controls.Visuals;
     using Engine.Services;
     using Engine.Settings.Colors;
     using Extensions;
@@ -153,12 +153,9 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
                         itemData.Evaluation.ResultChildrenPassed == itemData.Children.Count
                             ? Palette.LightGreen
                             : Palette.LightPink;
-                this.StatisticsLabel.Label.Text = () =>
-                    {
-                        return itemData.Evaluation.ResultChanged
-                                   ? string.Format("{0} ( {1} ) / {2}", itemData.Evaluation.ResultChildrenPassed, itemData.Evaluation.ResultChange.ToSummary(), itemData.Children.Count)
-                                   : string.Format("{0} / {1}", itemData.Evaluation.ResultChildrenPassed, itemData.Children.Count);
-                    };
+                this.StatisticsLabel.Label.Text = () => itemData.Evaluation.ResultChanged
+                                                            ? $"{itemData.Evaluation.ResultChildrenPassed} ( {itemData.Evaluation.ResultChange.ToSummary()} ) / {itemData.Children.Count}"
+                                                            : $"{itemData.Evaluation.ResultChildrenPassed} / {itemData.Children.Count}";
             }
 
             var nameFrameSettings = itemSettings.Get<FrameSettings>("NameFrame");

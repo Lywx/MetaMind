@@ -2,9 +2,9 @@
 {
     using Engine.Components.Fonts;
     using Engine.Components.Graphics;
-    using Engine.Guis.Widgets.Items.Frames;
-    using Engine.Guis.Widgets.Items.Settings;
-    using Engine.Guis.Widgets.Visuals;
+    using Engine.Guis.Controls.Items.Frames;
+    using Engine.Guis.Controls.Items.Settings;
+    using Engine.Guis.Controls.Visuals;
     using Engine.Settings.Colors;
     using Engine.Settings.Loaders;
     using Microsoft.Xna.Framework;
@@ -67,7 +67,7 @@
 
         public OptionItemSettings()
         {
-            this.LoadParameter(this.GameGraphics.Settings);
+            this.LoadParameter(this.Graphics.Settings);
 
             this.rootFrame = new FrameSettings
             {

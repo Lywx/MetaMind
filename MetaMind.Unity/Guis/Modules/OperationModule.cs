@@ -5,8 +5,8 @@
     using Concepts.Operations;
     using Engine;
     using Engine.Guis;
-    using Engine.Guis.Widgets.Items;
-    using Engine.Guis.Widgets.Views;
+    using Engine.Guis.Controls.Items;
+    using Engine.Guis.Controls.Views;
     using Engine.Services;
     using Microsoft.Xna.Framework;
     using Widgets.IndexViews;

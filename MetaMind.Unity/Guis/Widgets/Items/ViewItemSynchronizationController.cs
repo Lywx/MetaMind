@@ -9,7 +9,7 @@ namespace MetaMind.Unity.Guis.Widgets.Items
 {
     using Concepts.Synchronizations;
     using Engine.Components.Events;
-    using Engine.Guis.Widgets.Items;
+    using Engine.Guis.Controls.Items;
     using Events;
     using Sessions;
 

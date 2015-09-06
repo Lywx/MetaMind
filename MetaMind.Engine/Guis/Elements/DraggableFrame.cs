@@ -151,11 +151,8 @@ namespace MetaMind.Engine.Guis.Elements
 
         private void RegisterHandlers()
         {
-            this.MouseLeftPressed += this.FrameMousePressed;
-            this.MouseLeftReleased += this.FrameMouseReleased;
-
-            this.MouseRightPressed += this.FrameMousePressed;
-            this.MouseRightReleased += this.FrameMouseReleased;
+            this.MousePressed += this.FrameMousePressed;
+            this.MouseReleased += this.FrameMouseReleased;
         }
 
         #endregion Events

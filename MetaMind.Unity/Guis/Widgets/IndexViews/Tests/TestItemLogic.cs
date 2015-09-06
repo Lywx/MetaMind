@@ -1,10 +1,10 @@
 ﻿namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 {
-    using Engine.Guis.Widgets.Items;
-    using Engine.Guis.Widgets.Items.Data;
-    using Engine.Guis.Widgets.Items.Interactions;
-    using Engine.Guis.Widgets.Items.Layouts;
-    using Engine.Guis.Widgets.Items.Logic;
+    using Engine.Guis.Controls.Items;
+    using Engine.Guis.Controls.Items.Data;
+    using Engine.Guis.Controls.Items.Interactions;
+    using Engine.Guis.Controls.Items.Layouts;
+    using Engine.Guis.Controls.Items.Logic;
 
     public class TestItemLogic : IndexBlockViewVerticalItemLogic
     {

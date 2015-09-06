@@ -11,9 +11,21 @@ namespace MetaMind.Engine.Guis.Elements
 
     public interface IPressable
     {
+        #region Mouse General
+
         event EventHandler<FrameEventArgs> MouseEnter;
 
         event EventHandler<FrameEventArgs> MouseLeave;
+
+        event EventHandler<FrameEventArgs> MousePressed;
+
+        event EventHandler<FrameEventArgs> MouseReleased;
+
+        event EventHandler<FrameEventArgs> MousePressedOutside;
+
+        #endregion
+
+        #region Mouse Left Buttons
 
         event EventHandler<FrameEventArgs> MouseLeftPressed;
 
@@ -21,14 +33,20 @@ namespace MetaMind.Engine.Guis.Elements
 
         event EventHandler<FrameEventArgs> MouseLeftReleased;
 
+        #endregion
+
+        #region Mouse Right Buttons
+
         event EventHandler<FrameEventArgs> MouseRightPressed;
 
         event EventHandler<FrameEventArgs> MouseRightPressedOutside;
 
         event EventHandler<FrameEventArgs> MouseRightReleased;
 
-        event EventHandler<FrameEventArgs> FrameMoved;
+        #endregion
 
-        event EventHandler<FrameEventArgs> FrameSized;
+        event EventHandler<FrameEventArgs> Moved;
+
+        event EventHandler<FrameEventArgs> Resized;
     }
 }

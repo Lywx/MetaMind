@@ -19,7 +19,7 @@
         Mouse_Right_Pressed_Outside,
 
         Mouse_Right_Released,
-        
+
         Mouse_Right_Double_Clicked,
 
         // Change
@@ -28,6 +28,6 @@
         Frame_Dragged,
         Frame_Dropped,
 
-        EventNum,
+        EventNum
     }
 }

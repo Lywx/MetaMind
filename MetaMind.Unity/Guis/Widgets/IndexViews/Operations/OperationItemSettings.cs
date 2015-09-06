@@ -1,6 +1,6 @@
 namespace MetaMind.Unity.Guis.Widgets.IndexViews.Operations
 {
-    using Engine.Guis.Widgets.Items.Frames;
+    using Engine.Guis.Controls.Items.Frames;
     using Microsoft.Xna.Framework;
     using Tests;
 

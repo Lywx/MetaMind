@@ -14,8 +14,22 @@ namespace MetaMind.Engine.Guis.Elements
     /// </summary>
     public interface IPickable
     {
+        #region Mouse Left Buttons
+
         event EventHandler<FrameEventArgs> MouseLeftDoubleClicked;
 
+        #endregion
+
+        #region Mouse Right Buttons
+
         event EventHandler<FrameEventArgs> MouseRightDoubleClicked;
+
+        #endregion
+
+        #region Mouse General
+
+        event EventHandler<FrameEventArgs> MouseDoubleClicked;
+
+        #endregion
     }
 }

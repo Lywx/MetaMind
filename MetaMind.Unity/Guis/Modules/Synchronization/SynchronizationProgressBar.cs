@@ -4,7 +4,7 @@ namespace MetaMind.Unity.Guis.Modules.Synchronization
     using Concepts.Synchronizations;
     using Engine;
     using Engine.Guis;
-    using Engine.Guis.Widgets.Visuals;
+    using Engine.Guis.Controls.Visuals;
     using Engine.Services;
     using Engine.Settings.Colors;
     using Microsoft.Xna.Framework;

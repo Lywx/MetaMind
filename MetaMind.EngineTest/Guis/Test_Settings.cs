@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace MetaMind.EngineTest.Guis
 {
-    using MetaMind.Engine.Guis.Widgets;
-
+    using Engine.Guis.Controls;
     using Microsoft.Xna.Framework;
 
     using NUnit.Framework;

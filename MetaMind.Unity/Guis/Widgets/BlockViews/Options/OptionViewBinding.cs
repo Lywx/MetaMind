@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using Concepts.Operations;
-    using Engine.Guis.Widgets.Items;
-    using Engine.Guis.Widgets.Items.Data;
+    using Engine.Guis.Controls.Items;
+    using Engine.Guis.Controls.Items.Data;
 
     public class OptionViewBinding : IViewBinding
     {
