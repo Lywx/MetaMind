@@ -9,6 +9,6 @@ namespace MetaMind.Engine
 
         void Draw(IGameGraphicsService graphics, GameTime time, byte alpha);
 
-        void EndDraw(IGameGraphicsService graphics, GameTime time);
+        void EndDraw(IGameGraphicsService graphics, GameTime time, byte alpha);
     }
 }

@@ -15,19 +15,21 @@ namespace MetaMind.Engine.Services
 
     public sealed class GameEngineGraphicsService : IGameGraphicsService
     {
-        private readonly IGameGraphics graphics;
-
         public GameEngineGraphicsService(IGameGraphics graphics)
         {
-            this.graphics = graphics;
+            this.Graphics = graphics;
         }
 
-        public GraphicsManager Manager => this.graphics.Manager;
+        public IGameGraphics Graphics { get; }
 
-        public GraphicsSettings Settings => this.graphics.Settings;
+        public GraphicsManager Manager => this.Graphics.Manager;
 
-        public SpriteBatch SpriteBatch => this.graphics.SpriteBatch;
+        public GraphicsSettings Settings => this.Graphics.Settings;
 
-        public IStringDrawer StringDrawer => this.graphics.StringDrawer;
+        public SpriteBatch SpriteBatch => this.Graphics.SpriteBatch;
+
+        public IStringDrawer StringDrawer => this.Graphics.StringDrawer;
+
+        public GraphicsDevice GraphicsDevice => this.Manager.GraphicsDevice;
     }
 }

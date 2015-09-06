@@ -13,5 +13,7 @@ namespace MetaMind.Engine.Services
         SpriteBatch SpriteBatch { get; }
         
         IStringDrawer StringDrawer { get; }
+
+        GraphicsDevice GraphicsDevice { get; }
     }
 }

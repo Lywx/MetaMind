@@ -194,7 +194,7 @@ namespace MetaMind.Engine.Screens
 
         public void EndDraw(IGameGraphicsService graphics, GameTime time)
         {
-            this.LayersAll((layer, access, t) => layer.EndDraw(access, t), graphics, time);
+            this.LayersAll((layer, access, t) => layer.EndDraw(access, t, this.LayerTransitionAlpha(layer)), graphics, time);
         }
 
         #endregion Draw

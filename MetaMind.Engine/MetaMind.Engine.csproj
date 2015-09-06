@@ -84,6 +84,7 @@
     <Compile Include="Components\Inputs\MouseKeys.cs" />
     <Compile Include="Console\ScrollController.cs" />
     <Compile Include="Console\GameConsoleState.cs" />
+    <Compile Include="Guis\Controls\DrawEventArgs.cs" />
     <Compile Include="Extensions\ExtKeys.cs" />
     <Compile Include="Extensions\ExtMouseButtons.cs" />
     <Compile Include="Extensions\ExtMouseEventArgs.cs" />
@@ -101,7 +102,6 @@
     <Compile Include="Console\Processors\ICommandProcessor.cs" />
     <Compile Include="Console\Processors\IronPythonProcessor.cs" />
     <Compile Include="Console\Commands\CommandType.cs" />
-    <Compile Include="Guis\Controls\Buttons\Glyph.cs" />
     <Compile Include="Guis\Controls\Container.cs" />
     <Compile Include="Guis\Controls\IContainer.cs" />
     <Compile Include="Guis\Controls\IControl.cs" />
@@ -650,7 +650,7 @@
     <Compile Include="Guis\Modules\Particles\ShapelessParticle.cs" />
     <Compile Include="Settings\Loaders\IParameter.cs" />
     <Compile Include="Settings\Loaders\IParameterLoader.cs" />
-    <Compile Include="Events\ViewItemDataEventArgs.cs" />
+    <Compile Include="Guis\Controls\Items\Data\ViewItemDataEventArgs.cs" />
     <Compile Include="GameEntityModule.cs" />
     <Compile Include="GameEntityModuleComponent.cs" />
     <Compile Include="GameEntityModuleLogic.cs" />

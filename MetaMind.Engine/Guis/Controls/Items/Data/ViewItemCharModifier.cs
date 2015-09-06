@@ -14,7 +14,6 @@ namespace MetaMind.Engine.Guis.Controls.Items.Data
     using System.Threading;
     using System.Windows;
     using Components.Inputs;
-    using Events;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
     using Services;

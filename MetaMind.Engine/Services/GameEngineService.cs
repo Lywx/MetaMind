@@ -8,6 +8,7 @@
 namespace MetaMind.Engine.Services
 {
     using System;
+    using Microsoft.Xna.Framework.Graphics;
 
     public class GameEngineService : IGameService
     {

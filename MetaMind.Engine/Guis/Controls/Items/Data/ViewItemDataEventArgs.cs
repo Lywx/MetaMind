@@ -1,4 +1,4 @@
-namespace MetaMind.Engine.Events
+namespace MetaMind.Engine.Guis.Controls.Items.Data
 {
     using System;
 

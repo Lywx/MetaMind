@@ -2,27 +2,23 @@
 {
     using Fonts;
     using Graphics;
-
-    using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
     internal class GameNullGraphics : IGameGraphics
     {
-        public GraphicsManager Manager { get; private set; }
+        public GraphicsManager Manager { get; }
 
-        public IScreenManager Screen { get; private set; }
+        public IScreenManager Screen { get; }
 
-        public GraphicsSettings Settings { get; private set; }
+        public GraphicsSettings Settings { get; }
 
-        public SpriteBatch SpriteBatch { get; private set; }
+        public SpriteBatch SpriteBatch { get; }
 
-        public IStringDrawer StringDrawer { get; private set; }
+        public IStringDrawer StringDrawer { get; }
+
+        public GraphicsDevice GraphicsDevice { get; }
 
         public void Initialize()
-        {
-        }
-
-        public void UpdateInput(GameTime gameTime)
         {
         }
 

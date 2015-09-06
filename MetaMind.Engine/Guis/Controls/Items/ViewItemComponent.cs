@@ -5,7 +5,7 @@ namespace MetaMind.Engine.Guis.Controls.Items
     using Views;
     using Views.Layers;
 
-    public class ViewItemComponent : GameControllableEntity, IViewItemComponent
+    public class ViewItemComponent : Control, IViewItemComponent
     {
         #region Constructors and Finalizer
 

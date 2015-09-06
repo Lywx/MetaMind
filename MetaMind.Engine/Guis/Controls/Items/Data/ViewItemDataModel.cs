@@ -10,7 +10,6 @@ namespace MetaMind.Engine.Guis.Controls.Items.Data
     using System;
     using System.Reflection;
     using Components.Fonts;
-    using Events;
     using Layers;
     using Microsoft.Xna.Framework;
     using Services;
