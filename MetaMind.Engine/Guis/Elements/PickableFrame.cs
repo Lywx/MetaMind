@@ -27,15 +27,15 @@ namespace MetaMind.Engine.Guis.Elements
 
             this[FrameState.Mouse_Is_Over] = () => this.mouse.IsMouseOver;
 
-            this[FrameState.Mouse_Is_Left_Pressed]          = () => this.mouse.IsLButtonPressed && this.mouse.IsMouseOver;
-            this[FrameState.Mouse_Is_Left_Pressed_Outside]  = () => this.mouse.IsLButtonPressed && !this.mouse.IsMouseOver;
-            this[FrameState.Mouse_Is_Left_Released]         = () => this.mouse.IsLButtonReleased;
-            this[FrameState.Mouse_Is_Left_Double_Clicked]   = () => this.mouse.IsLButtonDoubleClicked && this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Is_Left_Pressed]        = () => this.mouse.IsLButtonPressed && this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Is_Left_Pressed_Out]    = () => this.mouse.IsLButtonPressed && !this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Is_Left_Released]       = () => this.mouse.IsLButtonReleased;
+            this[FrameState.Mouse_Is_Left_Double_Clicked] = () => this.mouse.IsLButtonDoubleClicked && this.mouse.IsMouseOver;
 
-            this[FrameState.Mouse_Is_Right_Pressed]         = () => this.mouse.IsRButtonPressed && this.mouse.IsMouseOver;
-            this[FrameState.Mouse_Is_Right_Pressed_Outside] = () => this.mouse.IsRButtonPressed && !this.mouse.IsMouseOver;
-            this[FrameState.Mouse_Is_Right_Released]        = () => this.mouse.IsRButtonReleased;
-            this[FrameState.Mouse_Is_Right_Double_Clicked]  = () => this.mouse.IsRButtonDoubleClicked && this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Is_Right_Pressed]        = () => this.mouse.IsRButtonPressed && this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Is_Right_Pressed_Out]    = () => this.mouse.IsRButtonPressed && !this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Is_Right_Released]       = () => this.mouse.IsRButtonReleased;
+            this[FrameState.Mouse_Is_Right_Double_Clicked] = () => this.mouse.IsRButtonDoubleClicked && this.mouse.IsMouseOver;
 
             this[FrameState.Frame_Is_Active] = () => this.IsActive;
         }

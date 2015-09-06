@@ -5,15 +5,13 @@ namespace MetaMind.Engine.Guis.Elements
         Mouse_Is_Over,
 
         Mouse_Is_Left_Pressed,
-        Mouse_Is_Left_Pressed_Outside,
+        Mouse_Is_Left_Pressed_Out,
         Mouse_Is_Left_Released,
-
         Mouse_Is_Left_Double_Clicked,
 
         Mouse_Is_Right_Pressed,
-        Mouse_Is_Right_Pressed_Outside,
+        Mouse_Is_Right_Pressed_Out,
         Mouse_Is_Right_Released,
-
         Mouse_Is_Right_Double_Clicked,
 
         Frame_Is_Active,

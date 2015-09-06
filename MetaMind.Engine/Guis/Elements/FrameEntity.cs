@@ -12,7 +12,7 @@ namespace MetaMind.Engine.Guis.Elements
 
     public abstract class FrameEntity : GameControllableEntity, IFrameEntity
     {
-        #region Constructors and Destructors
+        #region Constructors and Finalizer
 
         protected FrameEntity()
         {
