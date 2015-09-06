@@ -180,7 +180,8 @@ namespace MetaMind.Engine.Guis.Elements
 
             if (this.Machine.IsInState(State.Dragging))
             {
-                // Keep rectangle relative position to the mouse position from changing 
+                // Keep rectangle relative position to the mouse position from 
+                // changing 
                 this.Rectangle = new Rectangle(
                     this.mouseLocation.X - this.mouseRelativePosition.X, 
                     this.mouseLocation.Y - this.mouseRelativePosition.Y, 

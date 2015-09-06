@@ -238,7 +238,7 @@ namespace MetaMind.Engine.Guis.Elements
 
         #region Event Registration
 
-        protected void RegisterHandlers()
+        private void RegisterHandlers()
         {
             this.RegisterMouseInputHandlers();
             this.RegisterFrameChangeHandlers();
@@ -343,6 +343,8 @@ namespace MetaMind.Engine.Guis.Elements
             {
                 if (this.isActive != value)
                 {
+                    // This is used to deduce event performance overhead on 
+                    // an individual frame.
                     if (value)
                     {
                         this.RegisterHandlers();

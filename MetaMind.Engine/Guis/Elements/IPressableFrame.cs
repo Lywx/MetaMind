@@ -6,6 +6,14 @@ namespace MetaMind.Engine.Guis.Elements
 
     public interface IPressableFrame : IFrameEntity, IPressable, IDisposable
     {
+        #region States
+
+        bool IsActive { get; set; }
+
+        #endregion
+
+        #region Geometry
+
         Point Center { get; set; }
 
         Point Size { get; set; }
@@ -21,5 +29,7 @@ namespace MetaMind.Engine.Guis.Elements
         int Height { get; set; }
 
         Rectangle Rectangle { get; set; }
+
+        #endregion
     }
 }
