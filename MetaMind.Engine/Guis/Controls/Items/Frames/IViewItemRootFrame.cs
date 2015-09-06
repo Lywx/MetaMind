@@ -4,6 +4,5 @@ namespace MetaMind.Engine.Guis.Controls.Items.Frames
 
     public interface IViewItemRootFrame : IPickableFrame
     {
-        bool IsActive { get; set; }
     }
 }

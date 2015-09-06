@@ -154,16 +154,16 @@
     <Compile Include="Guis\Widgets\BlockViews\Options\OptionItemVisual.cs" />
     <Compile Include="Guis\Widgets\BlockViews\Options\OptionViewBinding.cs" />
     <Compile Include="Guis\Widgets\BlockViews\Options\OptionViewSettings.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationIndexedViewComposer.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationIndexViewComposer.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationIndexedViewCompositor.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationIndexViewCompositor.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemSettings.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemVisual.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationViewBinding.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Tests\TestIndexedViewComposer.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Tests\TestIndexedViewCompositor.cs" />
     <Compile Include="Concepts\Synchronizations\ISynchronizationController.cs" />
     <Compile Include="Concepts\Synchronizations\SynchronizationSession.cs" />
     <Compile Include="Guis\Widgets\BlockViews\Options\OptionItemLayer.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Tests\TestIndexViewComposer.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Tests\TestIndexViewCompositor.cs" />
     <Compile Include="Guis\Layers\TestLayer.cs" />
     <Compile Include="Guis\Screens\OptionScreen.cs" />
     <Compile Include="Guis\Layers\SynchronizationLayer.cs" />
@@ -218,7 +218,7 @@
     <Compile Include="Sessions\ISessionData.cs" />
     <Compile Include="Sessions\SessionData.cs" />
     <Compile Include="Sessions\SessionEventType.cs" />
-    <Compile Include="UnityEngineConfigurer.cs" />
+    <Compile Include="UnityEngineCompositor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Compiler.Service, Version=1.4.0.1, Culture=neutral, processorArchitecture=MSIL">

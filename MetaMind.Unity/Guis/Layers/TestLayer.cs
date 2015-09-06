@@ -5,7 +5,7 @@ namespace MetaMind.Unity.Guis.Layers
     using Concepts.Tests;
     using Engine;
     using Engine.Components.Fonts;
-    using Engine.Guis.Widgets.Visuals;
+    using Engine.Guis.Controls.Visuals;
     using Engine.Screens;
     using Engine.Services;
     using Engine.Settings.Colors;
@@ -121,9 +121,9 @@ namespace MetaMind.Unity.Guis.Layers
         public override void Update(GameTime time)
         {
             this.inputEntities.Update(time);
-            this.drawEntities     .Update(time);
-            this                     .UpdateEffect(time);
-            base                     .Update(time);
+            this.drawEntities .Update(time);
+            this              .UpdateEffect(time);
+            base              .Update(time);
         }
 
         private void UpdateEffect(GameTime time)

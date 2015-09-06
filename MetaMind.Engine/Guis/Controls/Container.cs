@@ -5,7 +5,7 @@ namespace MetaMind.Engine.Guis.Controls
 
     public class Container : GameControllableEntity, IContainer
     {
-        public Container(GraphicsDevice graphicsDevice)
+        public Container(GraphicsDevice graphicsDevice) 
         {
             if (graphicsDevice == null)
             {

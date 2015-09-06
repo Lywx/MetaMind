@@ -7,7 +7,7 @@
     using Services;
     using Visuals;
 
-    public class Button : GameControllableEntity
+    public class Button : Control
     {
         public Button(Rectangle buttonRectangle, ButtonSettings buttonSettings)
         {
