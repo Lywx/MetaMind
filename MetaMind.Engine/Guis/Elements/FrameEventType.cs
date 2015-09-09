@@ -14,6 +14,8 @@
 
         Mouse_Up_Left,
 
+        Mouse_Up_Out_Left,
+
         Mouse_Double_Click_Left,
 
         // Right
@@ -22,6 +24,8 @@
         Mouse_Pressed_Out_Right,
 
         Mouse_Up_Right,
+
+        Mouse_Up_Out_Right,
 
         Mouse_Double_Click_Right,
 
@@ -34,6 +38,6 @@
 
         Frame_Drop,
 
-        EventNum
+        EventNum,
     }
 }

@@ -20,23 +20,11 @@ namespace MetaMind.Engine.Guis.Elements
 
         public PickableFrame()
         {
-            this.RegisterHandlers();
-
             this.IsActive = true;
 
-            this[FrameState.Mouse_Is_Over] = () => this.mouse.IsMouseOver;
+            this.InitializeStates();
 
-            this[FrameState.Mouse_Is_Left_Pressed]        = () => this.mouse.IsLButtonPressed && this.mouse.IsMouseOver;
-            this[FrameState.Mouse_Is_Left_Pressed_Out]    = () => this.mouse.IsLButtonPressed && !this.mouse.IsMouseOver;
-            this[FrameState.Mouse_Is_Left_Released]       = () => this.mouse.IsLButtonReleased;
-            this[FrameState.Mouse_Is_Left_Double_Clicked] = () => this.mouse.IsLButtonDoubleClicked && this.mouse.IsMouseOver;
-
-            this[FrameState.Mouse_Is_Right_Pressed]        = () => this.mouse.IsRButtonPressed && this.mouse.IsMouseOver;
-            this[FrameState.Mouse_Is_Right_Pressed_Out]    = () => this.mouse.IsRButtonPressed && !this.mouse.IsMouseOver;
-            this[FrameState.Mouse_Is_Right_Released]       = () => this.mouse.IsRButtonReleased;
-            this[FrameState.Mouse_Is_Right_Double_Clicked] = () => this.mouse.IsRButtonDoubleClicked && this.mouse.IsMouseOver;
-
-            this[FrameState.Frame_Is_Active] = () => this.IsActive;
+            this.RegisterFrameHandlers();
         }
 
         ~PickableFrame()
@@ -48,71 +36,55 @@ namespace MetaMind.Engine.Guis.Elements
 
         #region Events
 
-        public event EventHandler<FrameEventArgs> Move = delegate
-        {
-        };
+        public event EventHandler<FrameEventArgs> Move = delegate { };
 
-        public event EventHandler<FrameEventArgs> Resize = delegate
-        {
-        };
+        public event EventHandler<FrameEventArgs> Resize = delegate { };
 
-        public event EventHandler<FrameEventArgs> MouseEnter = delegate
-        {
-        };
+        public event EventHandler<FrameEventArgs> MouseEnter = delegate { };
 
-        public event EventHandler<FrameEventArgs> MouseLeave = delegate
-        {
-        };
+        public event EventHandler<FrameEventArgs> MouseLeave = delegate { };
 
-        public event EventHandler<FrameEventArgs> MousePress = delegate
-        {
-        };
+        /// <summary>
+        /// When mouse is pressed inside frame.
+        /// </summary>
+        public event EventHandler<FrameEventArgs> MousePress = delegate { };
 
-        public event EventHandler<FrameEventArgs> MousePressLeft = delegate
-        {
-        };
+        public event EventHandler<FrameEventArgs> MousePressLeft = delegate { };
 
-        public event EventHandler<FrameEventArgs> MousePressRight = delegate
-        {
-        };
+        public event EventHandler<FrameEventArgs> MousePressRight = delegate { };
 
-        public event EventHandler<FrameEventArgs> MousePressOut = delegate
-        {
-        };
+        /// <summary>
+        /// When mouse is pressed outside frame.
+        /// </summary>
+        public event EventHandler<FrameEventArgs> MousePressOut = delegate { };
 
-        public event EventHandler<FrameEventArgs> MousePressOutLeft =
-            delegate
-            {
-            };
+        public event EventHandler<FrameEventArgs> MousePressOutLeft = delegate { };
 
-        public event EventHandler<FrameEventArgs> MousePressOutRight =
-            delegate
-            {
-            };
+        public event EventHandler<FrameEventArgs> MousePressOutRight = delegate { };
 
-        public event EventHandler<FrameEventArgs> MouseUp = delegate
-        {
-        };
+        /// <summary>
+        /// When mouse is released inside frame.
+        /// </summary>
+        public event EventHandler<FrameEventArgs> MouseUp = delegate { }; 
 
-        public event EventHandler<FrameEventArgs> MouseUpLeft = delegate
-        {
-        };
+        public event EventHandler<FrameEventArgs> MouseUpLeft = delegate { }; 
 
-        public event EventHandler<FrameEventArgs> MouseUpRight = delegate
-        {
-        };
+        public event EventHandler<FrameEventArgs> MouseUpRight = delegate { };
 
-        public event EventHandler<FrameEventArgs> MouseDoubleClick;
+        /// <summary>
+        /// When mouse is released outside frame.
+        /// </summary>
+        public event EventHandler<FrameEventArgs> MouseUpOut = delegate { };
 
-        public event EventHandler<FrameEventArgs> MouseDoubleClickLeft =
-            delegate
-            {
-            };
+        public event EventHandler<FrameEventArgs> MouseUpOutLeft = delegate { };
 
-        public event EventHandler<FrameEventArgs> MouseDoubleClickRight =
-            delegate
-            {
-            };
+        public event EventHandler<FrameEventArgs> MouseUpOutRight = delegate {};
+
+        public event EventHandler<FrameEventArgs> MouseDoubleClick = delegate { };
+
+        public event EventHandler<FrameEventArgs> MouseDoubleClickLeft = delegate { };
+
+        public event EventHandler<FrameEventArgs> MouseDoubleClickRight = delegate { }; 
 
         #endregion
 
@@ -218,6 +190,10 @@ namespace MetaMind.Engine.Guis.Elements
                 {
                     this.DeferAction(this.OnMouseUpLeft);
                 }
+                else
+                {
+                    this.DeferAction(this.OnMouseUpOutLeft);
+                }
 
                 return;
             }
@@ -229,6 +205,10 @@ namespace MetaMind.Engine.Guis.Elements
                 {
                     this.DeferAction(this.OnMouseUpRight);
                 }
+                else
+                {
+                    this.DeferAction(this.OnMouseUpOutRight);
+                }
 
                 return;
             }
@@ -238,7 +218,7 @@ namespace MetaMind.Engine.Guis.Elements
 
         #region Event Registration
 
-        private void RegisterHandlers()
+        private void RegisterFrameHandlers()
         {
             this.RegisterMouseInputHandlers();
             this.RegisterFrameChangeHandlers();
@@ -320,6 +300,18 @@ namespace MetaMind.Engine.Guis.Elements
             this.MouseUpRight?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Up_Right));
         }
 
+        private void OnMouseUpOutRight()
+        {
+            this.MouseUpOut?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Up_Out_Left));
+            this.MouseUpOutRight?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Up_Out_Left));
+        }
+
+        private void OnMouseUpOutLeft()
+        {
+            this.MouseUpOut?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Up_Out_Right));
+            this.MouseUpOutLeft?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Up_Out_Right));
+        }
+
         protected virtual void OnMouseLeave()
         {
             this.MouseLeave?.Invoke(this, new FrameEventArgs(FrameEventType.Mouse_Leave));
@@ -347,7 +339,7 @@ namespace MetaMind.Engine.Guis.Elements
                     // an individual frame.
                     if (value)
                     {
-                        this.RegisterHandlers();
+                        this.RegisterFrameHandlers();
                     }
                     else
                     {
@@ -359,11 +351,31 @@ namespace MetaMind.Engine.Guis.Elements
             }
         }
 
+        private void InitializeStates()
+        {
+            this[FrameState.Frame_Is_Active] = () => this.IsActive;
+
+            this[FrameState.Mouse_Is_Over] = () => this.mouse.IsMouseOver;
+
+            this[FrameState.Mouse_Is_Left_Pressed]        = () => this.mouse.IsLButtonPressed && this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Is_Left_Pressed_Out]    = () => this.mouse.IsLButtonPressed && !this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Is_Left_Released]       = () => this.mouse.IsLButtonReleased;
+            this[FrameState.Mouse_Is_Left_Double_Clicked] = () => this.mouse.IsLButtonDoubleClicked && this.mouse.IsMouseOver;
+
+            this[FrameState.Mouse_Is_Right_Pressed]        = () => this.mouse.IsRButtonPressed && this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Is_Right_Pressed_Out]    = () => this.mouse.IsRButtonPressed && !this.mouse.IsMouseOver;
+            this[FrameState.Mouse_Is_Right_Released]       = () => this.mouse.IsRButtonReleased;
+            this[FrameState.Mouse_Is_Right_Double_Clicked] = () => this.mouse.IsRButtonDoubleClicked && this.mouse.IsMouseOver;
+        }
+
         #endregion
 
         #region Frame Geometry
 
-        private Rectangle rectangle;
+        /// <remarks>
+        /// Initialized to have a size of a pixel. Location is outside the screen.
+        /// </remarks>>
+        private Rectangle rectangle = new Rectangle(int.MinValue, int.MinValue, 1, 1);
 
         public Point Center
         {

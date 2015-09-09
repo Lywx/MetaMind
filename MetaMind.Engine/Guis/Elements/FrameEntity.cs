@@ -16,39 +16,41 @@ namespace MetaMind.Engine.Guis.Elements
 
         protected FrameEntity()
         {
-            for (var i = 0; i < (int)FrameState.StateNum; i++)
-            {
-                this.states[i] = () => false;
-            }
+            this.InitializeStates();
         }
 
         #endregion Constructors and Destructors
 
         #region State Data
 
-        /// <remarks>
-        /// For debugging and easy usage
-        /// </remarks>
-        private readonly Func<bool>[] states = new Func<bool>[(int)FrameState.StateNum];
+        /// TODO(Wuxiang): Enable read-only setter by implementing a permission array.
+        /// <summary>
+        /// Frame states as Func<bool> to replace messy things like active, 
+        /// visible. In order to enable logic passing, I decided to make them 
+        /// Func<bool>.
+        /// </summary>
+        private readonly Func<bool>[] frameStates = new Func<bool>[(int)FrameState.StateNum];
 
-        public bool[] States
-        {
-            get
-            {
-                return this.states.Select(state => state()).ToArray();
-            }
-        }
+        internal bool[] FrameStates => this.frameStates.Select(state => state()).ToArray();
 
         public Func<bool> this[FrameState state]
         {
             get
             {
-                return this.states[(int)state];
+                return this.frameStates[(int)state];
             }
 
             protected set
             {
-                this.states[(int)state] = value;
+                this.frameStates[(int)state] = value;
+            }
+        }
+
+        private void InitializeStates()
+        {
+            for (var i = 0; i < (int)FrameState.StateNum; i++)
+            {
+                this.frameStates[i] = () => false;
             }
         }
 

@@ -72,10 +72,13 @@ namespace MetaMind.Engine.Guis.Elements
                     this.DeferAction(this.OnMouseDropped);
                 });
 
+            this.InitializeStates();
             this.RegisterHandlers();
+        }
 
-            // States
-            this[FrameState.Frame_Is_Holding] = () => this.Machine.IsInState(State.Holding);
+        private void InitializeStates()
+        {
+            this[FrameState.Frame_Is_Holding]  = () => this.Machine.IsInState(State.Holding);
             this[FrameState.Frame_Is_Dragging] = () => this.Machine.IsInState(State.Dragging);
         }
 
@@ -164,7 +167,10 @@ namespace MetaMind.Engine.Guis.Elements
         private void RegisterHandlers()
         {
             this.MousePress += this.FrameMousePress;
-            this.MouseUp += this.FrameMouseUp;
+
+            // Perform the same for inside or outside frame mouse up.
+            this.MouseUp    += this.FrameMouseUp;
+            this.MouseUpOut += this.FrameMouseUp;
         }
 
         #endregion
@@ -233,11 +239,10 @@ namespace MetaMind.Engine.Guis.Elements
 
         private void DisposeHandlers()
         {
-            this.MousePressLeft -= this.FrameMousePress;
-            this.MousePressRight -= this.FrameMousePress;
+            this.MousePress -= this.FrameMousePress;
 
-            this.MouseUpLeft -= this.FrameMouseUp;
-            this.MouseUpRight -= this.FrameMouseUp;
+            this.MouseUp -= this.FrameMouseUp;
+            this.MouseUpOut -= this.FrameMouseUp;
         }
 
         #endregion

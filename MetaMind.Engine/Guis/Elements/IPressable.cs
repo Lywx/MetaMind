@@ -23,6 +23,8 @@ namespace MetaMind.Engine.Guis.Elements
 
         event EventHandler<FrameEventArgs> MouseUp;
 
+        event EventHandler<FrameEventArgs> MouseUpOut;
+
         #endregion
 
         #region Mouse Left Buttons
@@ -33,6 +35,8 @@ namespace MetaMind.Engine.Guis.Elements
 
         event EventHandler<FrameEventArgs> MouseUpLeft;
 
+        event EventHandler<FrameEventArgs> MouseUpOutLeft;
+
         #endregion
 
         #region Mouse Right Buttons
@@ -42,6 +46,8 @@ namespace MetaMind.Engine.Guis.Elements
         event EventHandler<FrameEventArgs> MousePressOutRight;
 
         event EventHandler<FrameEventArgs> MouseUpRight;
+
+        event EventHandler<FrameEventArgs> MouseUpOutRight;
 
         #endregion
 
