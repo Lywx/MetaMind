@@ -183,11 +183,11 @@ namespace MetaMind.Engine.Scripting.FSharp
         {
             if (this.IsVerbose)
             {
-                Diagnostics.ConsoleFlush(output, error);
+                DebugSwitch.ConsoleFlush(output, error);
             }
             else
             {
-                Diagnostics.DebugFlush(output, error);
+                DebugSwitch.DebugFlush(output, error);
             }
 
             this.ClearBuffer();

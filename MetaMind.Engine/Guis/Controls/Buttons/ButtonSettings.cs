@@ -4,16 +4,16 @@ namespace MetaMind.Engine.Guis.Controls.Buttons
 
     public class ButtonSettings
     {
-        public Color RegularColor;
+        public Color FillRegularColor;
 
-        public Color MouseOverColor;
+        public Color FillMouseOverColor;
 
-        public Color MousePressedColor;
+        public Color FillMousePressColor;
 
         public Color BoundaryRegularColor;
 
         public Color BoundaryMouseOverColor;
 
-        public Color BoundaryMousePressedColor;
+        public Color BoundaryMousePressColor;
     }
 }

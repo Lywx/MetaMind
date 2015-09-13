@@ -4,6 +4,14 @@ namespace MetaMind.Engine.Screens
 
     public interface IGameScreen : IGameScreenOperations, IInteroperableOperations, IDisposable
     {
+        #region Render Data
+
+        int Width { get; }
+
+        int Height { get; }
+
+        #endregion
+
         #region Screen Option Data
 
         /// <summary>

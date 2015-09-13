@@ -62,7 +62,7 @@
         {
             public SleepStoppedListener()
             {
-                this.RegisteredEvents.Add((int)SessionEventType.SleepStopped);
+                this.RegisteredEvents.Add((int)SessionEvent.SleepStopped);
             }
 
             public override bool HandleEvent(IEvent @event)

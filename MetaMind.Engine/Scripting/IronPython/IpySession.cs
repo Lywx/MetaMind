@@ -152,12 +152,12 @@ namespace MetaMind.Engine.Scripting.IronPython
         {
             if (this.IsVerbose)
             {
-                Diagnostics.ConsoleFlush(output, error);
+                DebugSwitch.ConsoleFlush(output, error);
             }
 #if DEBUG
             else
             {
-                Diagnostics.DebugFlush(output, error);
+                DebugSwitch.DebugFlush(output, error);
             }
 #endif
             this.ClearBuffer();

@@ -1,6 +1,5 @@
 ﻿namespace MetaMind.Engine.Guis.Controls.Buttons
 {
-    using System;
     using Components.Fonts;
     using Elements;
     using Microsoft.Xna.Framework;
@@ -9,46 +8,50 @@
 
     public class Button : Control
     {
-        public Button(Rectangle buttonRectangle, ButtonSettings buttonSettings)
+        public Button(Rectangle rectangle)
         {
-            this.Frame = new PickableFrame(buttonRectangle);
+            this.Rectangle = rectangle;
+        }
+
+        public Button(Rectangle rectangle, ButtonSettings buttonSettings) : this(rectangle)
+        {
             this.Label = new Label
             {
-                TextPosition = () => this.Frame.Center.ToVector2(),
+                TextPosition = () => this.Center.ToVector2(),
                 TextHAlign   = StringHAlign.Center,
                 TextVAlign   = StringVAlign.Center
             };
 
-            this.BoxFilled = new Box(
-                () => this.Frame.Rectangle,
+            this.Fill = new Box(
+                () => this.Rectangle,
                 () =>
                 {
                     // Mouse is over when pressed
-                    if (this.Frame[FrameState.Mouse_Is_Left_Pressed]() ||
-                        this.Frame[FrameState.Mouse_Is_Right_Pressed]())
+                    if (this[FrameState.Mouse_Is_Left_Pressed]() ||
+                        this[FrameState.Mouse_Is_Right_Pressed]())
                     {
-                        return buttonSettings.MousePressedColor;
+                        return buttonSettings.FillMousePressColor;
                     }
-                    else if (this.Frame[FrameState.Mouse_Is_Over]())
+                    else if (this[FrameState.Mouse_Is_Over]())
                     {
-                        return buttonSettings.MouseOverColor;
+                        return buttonSettings.FillMouseOverColor;
                     }
 
-                    return buttonSettings.RegularColor;
+                    return buttonSettings.FillRegularColor;
                 },
                 () => true);
 
-            this.BoxBoundary = new Box(
-                () => this.Frame.Rectangle,
+            this.Boundary = new Box(
+                () => this.Rectangle,
                 () =>
                 {
                     // Mouse is over when pressed
-                    if (this.Frame[FrameState.Mouse_Is_Left_Pressed]() ||
-                        this.Frame[FrameState.Mouse_Is_Right_Pressed]())
+                    if (this[FrameState.Mouse_Is_Left_Pressed]() ||
+                        this[FrameState.Mouse_Is_Right_Pressed]())
                     {
-                        return buttonSettings.BoundaryMousePressedColor;
+                        return buttonSettings.BoundaryMousePressColor;
                     }
-                    else if (this.Frame[FrameState.Mouse_Is_Over]())
+                    else if (this[FrameState.Mouse_Is_Over]())
                     {
                         return buttonSettings.BoundaryMouseOverColor;
                     }
@@ -56,52 +59,35 @@
                     return buttonSettings.BoundaryRegularColor;
                 },
                 () => false);
-
-            this.MouseLeftPressedAction        = () => {};
-            this.MouseLeftDoubleClickedAction  = () => {};
-            this.MouseRightPressedAction       = () => {};
-            this.MouseRightDoubleClickedAction = () => {};
-
-            this.Frame.MousePressLeft        += (sender, args) => this.MouseLeftPressedAction();
-            this.Frame.MouseDoubleClickLeft  += (sender, args) => this.MouseLeftDoubleClickedAction();
-            this.Frame.MousePressRight       += (sender, args) => this.MouseRightPressedAction();
-            this.Frame.MouseDoubleClickRight += (sender, args) => this.MouseRightDoubleClickedAction();
         }
+
+        #region Dependency 
+
+        public Box Boundary { get; set; }
+
+        public Box Fill { get; set; }
 
         public Label Label { get; set; }
 
-        private Box BoxFilled { get; set; }
+        public Glyph Glyph { get; set; }
 
-        private Box BoxBoundary { get; set; }
+        #endregion
 
-        private PickableFrame Frame { get; set; }
+        #region Draw
 
-        public Action MouseLeftPressedAction { get; set; }
-
-        public Action MouseLeftDoubleClickedAction { get; set; }
-
-        public Action MouseRightPressedAction { get; set; }
-
-        public Action MouseRightDoubleClickedAction { get; set; }
-
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(
+            IGameGraphicsService graphics,
+            GameTime time,
+            byte alpha)
         {
-            this.BoxBoundary.Draw(graphics, time, alpha);
-            this.BoxFilled  .Draw(graphics, time, alpha);
-            this.Label      .Draw(graphics, time, alpha);
-            base            .Draw(graphics, time, alpha);
+            this.Boundary.Draw(graphics, time, alpha);
+            this.Fill    .Draw(graphics, time, alpha);
+
+            this.Label.Draw(graphics, time, alpha);
+
+            base.Draw(graphics, time, alpha);
         }
 
-        public override void Update(GameTime time)
-        {
-            this.Frame.Update(time);
-            base      .Update(time);
-        }
-
-        public override void UpdateInput(IGameInputService input, GameTime time)
-        {
-            this.Frame.UpdateInput(input, time);
-            base      .UpdateInput(input, time);
-        }
+        #endregion
     }
 }

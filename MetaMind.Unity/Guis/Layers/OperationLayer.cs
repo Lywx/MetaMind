@@ -14,8 +14,8 @@
     {
         private readonly OperationSession operationSession;
 
-        public OperationLayer(OperationSession operationSession, IGameScreen screen, byte transitionAlpha = byte.MaxValue)
-            : base(screen, transitionAlpha)
+        public OperationLayer(OperationSession operationSession, IGameScreen screen)
+            : base(screen)
         {
             if (operationSession == null)
             {
@@ -32,16 +32,32 @@
 
         private GameControllableEntityCollection<IGameControllableEntity> ControllableEntities { get; set; }
 
+        public override void BeginDraw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        {
+            base.BeginDraw(graphics, time, alpha);
+
+            this.ControllableEntities.BeginDraw(graphics, time, alpha);
+            this.VisuallEntities     .BeginDraw(graphics, time, alpha);
+        }
+
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
+            base.Draw(graphics, time, alpha);
+
             graphics.SpriteBatch.Begin();
 
             this.ControllableEntities.Draw(graphics, time, Math.Min(alpha, this.TransitionAlpha));
             this.VisuallEntities     .Draw(graphics, time, Math.Min(alpha, this.TransitionAlpha));
-
+            
             graphics.SpriteBatch.End();
+        }
 
-            base.Draw(graphics, time, alpha);
+        public override void EndDraw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        {
+            base.EndDraw(graphics, time, alpha);
+
+            this.ControllableEntities.EndDraw(graphics, time, Math.Min(alpha, this.TransitionAlpha));
+            this.VisuallEntities     .EndDraw(graphics, time, Math.Min(alpha, this.TransitionAlpha));
         }
 
         public override void LoadContent(IGameInteropService interop)

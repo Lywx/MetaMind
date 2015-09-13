@@ -8,7 +8,7 @@ namespace MetaMind.Engine.Guis.Elements
     {
         #region States
 
-        bool IsActive { get; set; }
+        bool Active { get; set; }
 
         #endregion
 

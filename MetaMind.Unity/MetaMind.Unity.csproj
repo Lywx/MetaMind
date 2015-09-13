@@ -101,10 +101,6 @@
     <Compile Include="Concepts\Cognitions\IConsciousness.cs" />
     <Compile Include="Concepts\Cognitions\IConsciousnessAsleep.cs" />
     <Compile Include="Concepts\Cognitions\IConsciousnessAwake.cs" />
-    <Compile Include="Concepts\Representations\IRepresentation.cs" />
-    <Compile Include="Concepts\Representations\IRepresentationOperation.cs" />
-    <Compile Include="Concepts\Representations\IRepresentationOrganization.cs" />
-    <Compile Include="Concepts\Representations\Representation.cs" />
     <Compile Include="Concepts\Operations\IOperation.cs" />
     <Compile Include="Concepts\Operations\IOperationComputation.cs" />
     <Compile Include="Concepts\Operations\IOperationDescription.cs" />
@@ -217,7 +213,7 @@
     <Compile Include="Guis\Screens\SummaryScreen.cs" />
     <Compile Include="Sessions\ISessionData.cs" />
     <Compile Include="Sessions\SessionData.cs" />
-    <Compile Include="Sessions\SessionEventType.cs" />
+    <Compile Include="Sessions\SessionEvent.cs" />
     <Compile Include="UnityEngineCompositor.cs" />
   </ItemGroup>
   <ItemGroup>

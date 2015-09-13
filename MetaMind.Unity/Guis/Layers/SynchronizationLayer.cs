@@ -1,7 +1,6 @@
 ﻿namespace MetaMind.Unity.Guis.Layers
 {
     using Engine;
-    using Engine.Guis;
     using Engine.Screens;
     using Engine.Services;
     using Microsoft.Xna.Framework;
@@ -9,8 +8,8 @@
 
     public class SynchronizationLayer : GameLayer
     {
-        public SynchronizationLayer(IGameScreen screen, byte transitionAlpha = byte.MaxValue)
-            : base(screen, transitionAlpha)
+        public SynchronizationLayer(IGameScreen screen)
+            : base(screen)
         {
             this.Modules = new GameControllableEntityCollection<IGameEntityModule>();
         }

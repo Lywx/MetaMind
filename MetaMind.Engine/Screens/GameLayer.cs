@@ -1,11 +1,15 @@
 ﻿namespace MetaMind.Engine.Screens
 {
     using System;
+    using Guis.Controls;
     using Microsoft.Xna.Framework;
+    using Services;
 
-    public class GameLayer : GameControllableEntity, IGameLayer
+    public class GameLayer : Control, IGameLayer
     {
-        protected GameLayer(IGameScreen screen, byte transitionAlpha = byte.MaxValue)
+        #region Constructors and Finalizer
+
+        public GameLayer(IGameScreen screen)
         {
             if (screen == null)
             {
@@ -14,13 +18,18 @@
 
             this.Screen = screen;
 
-            this.transitionAlpha = transitionAlpha;
+            this.Width  = this.Screen.Width;
+            this.Height = this.Screen.Height;
+
+            this.Location = new Point(0, 0);
         }
 
         ~GameLayer()
         {
             this.Dispose(true);
         }
+
+        #endregion
 
         public IGameScreen Screen { get; private set; }
 
@@ -38,8 +47,6 @@
 
         private bool isFading;
 
-        public bool IsActive { get; set; } = true;
-
         #endregion
 
         #region Layer Graphics
@@ -48,7 +55,7 @@
 
         private readonly int transitionAlphaMin = 0;
 
-        private float transitionAlpha;
+        private float transitionAlpha = 255;
 
         public byte TransitionAlpha
         {
@@ -58,7 +65,35 @@
 
         #endregion
 
+        #region Draw
+
+        public Action<IGameGraphicsService, GameTime, byte> DrawAction { get; set; } = delegate { };
+
+        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        {
+            base.Draw(graphics, time, alpha);
+            this.DrawAction?.Invoke(graphics, time, alpha);
+        }
+
+        #endregion
+
         #region Update
+
+        public Action<GameTime> UpdateAction { get; set; } = delegate { };
+
+        public Action<IGameInputService, GameTime> UpdateInputAction { get; set; } = delegate { };
+
+        public override void Update(GameTime time)
+        {
+            base.Update(time);
+            this.UpdateAction?.Invoke(time);
+        }
+
+        public override void UpdateInput(IGameInputService input, GameTime time)
+        {
+            base.UpdateInput(input, time);
+            this.UpdateInputAction?.Invoke(input, time);
+        }
 
         public virtual void UpdateTransition(GameTime time)
         {
@@ -79,18 +114,6 @@
             }
 
             this.DeferAction(this.FadeInNextFrame(this.TimeToFrame(time)));
-        }
-
-        public void FadeOut(TimeSpan time)
-        {
-            if (this.isFading)
-            {
-                this.DeferAction(() => this.FadeOut(time));
-
-                return;
-            }
-
-            this.DeferAction(this.FadeOutNextFrame(this.TimeToFrame(time)));
         }
 
         private Action FadeInNextFrame(int fadeInFrameNum)
@@ -114,10 +137,22 @@
                 {
                     this.FadedIn(this, EventArgs.Empty);
 
-                    this.IsActive = true;
+                    this.Active = true;
                     this.isFading = false;
                 }
             };
+        }
+
+        public void FadeOut(TimeSpan time)
+        {
+            if (this.isFading)
+            {
+                this.DeferAction(() => this.FadeOut(time));
+
+                return;
+            }
+
+            this.DeferAction(this.FadeOutNextFrame(this.TimeToFrame(time)));
         }
 
         private Action FadeOutNextFrame(int frames)
@@ -141,7 +176,7 @@
                 {
                     this.FadedOut(this, EventArgs.Empty);
 
-                    this.IsActive = false;
+                    this.Active = false;
                     this.isFading = false;
                 }
             };
@@ -183,13 +218,7 @@
 
         #region Time Helpers
 
-        private int TimeToFrame(TimeSpan time)
-        {
-            return
-                (int)
-                (time.TotalMilliseconds
-                 / this.Engine.TargetElapsedTime.Milliseconds) + 1;
-        }
+        private int TimeToFrame(TimeSpan time) => (int)(time.TotalMilliseconds / this.Engine.TargetElapsedTime.Milliseconds) + 1;
 
         #endregion
     }

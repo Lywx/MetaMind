@@ -68,14 +68,14 @@
             {
                 BoundaryRegularColor      = Palette.Transparent,
                 BoundaryMouseOverColor    = Palette.Transparent,
-                BoundaryMousePressedColor = Palette.Transparent,
-                MouseOverColor            = Palette.Transparent20,
-                MousePressedColor         = Palette.Transparent40
+                BoundaryMousePressColor = Palette.Transparent,
+                FillMouseOverColor            = Palette.Transparent20,
+                FillMousePressColor         = Palette.Transparent40
             };
+
             this.buttonPrevious = new Button(
                 new Rectangle(0, buttonY, buttonWidth, buttonHeight), buttonSettings)
             {
-                MouseLeftPressedAction = () => this.CircularLayers.Previous(),
                 Label =
                 {
                     TextFont   = () => Font.UiRegular,
@@ -84,11 +84,12 @@
                     TextSize   = () => 1f,
                 },
             };
+            this.buttonPrevious.MousePressLeft +=
+                (sender, args) => this.CircularLayers.Previous();
 
             this.buttonNext = new Button(
                 new Rectangle(graphicsSettings.Width - buttonWidth, buttonY, buttonWidth, buttonHeight), buttonSettings)
             {
-                MouseLeftPressedAction = () => this.CircularLayers.Next(),
                 Label =
                 {
                     TextFont   = () => Font.UiRegular,
@@ -97,14 +98,40 @@
                     TextSize   = () => 1f,
                 }
             };
+            this.buttonNext.MousePressLeft +=
+                (sender, args) => this.CircularLayers.Next();
 
             this.Layers.Add(new SynchronizationLayer(this));
+            this.Layers.Add(new GameLayer(this)
+            {
+                DrawAction = (graphics, time, alpha) =>
+                {
+                    // Buttons have the same alpha value as circular layer
+                    SpriteBatch.Begin();
+                    this.buttonPrevious.Draw(
+                        graphics,
+                        time,
+                        Math.Min(
+                            this.TransitionAlpha,
+                            this.CircularLayers.TransitionAlpha));
+
+                    this.buttonNext.Draw(
+                        graphics,
+                        time,
+                        Math.Min(
+                            this.TransitionAlpha,
+                            this.CircularLayers.TransitionAlpha));
+                    SpriteBatch.End();
+                }
+            });
 
             this.CircularLayers = new CircularGameLayer(this);
             this.CircularLayers.Add(new TestLayer(this.testSession, Unity.Speech, this));
-            this.CircularLayers.Add(new OperationLayer(this.operationSession, this, 0)
+            this.CircularLayers.Add(new OperationLayer(this.operationSession, this)
             {
-                IsActive = false
+                Active = false,
+                Visible = false,
+                TransitionAlpha = 0,
             });
 
             this.Layers.Add(this.CircularLayers);
@@ -151,19 +178,6 @@
             Unity.SessionData.Test     .Reset();
 
             this.scriptRunner.Rerun();
-        }
-
-        public override void Draw(IGameGraphicsService graphics, GameTime time)
-        {
-            base.Draw(graphics, time);
-
-            graphics.SpriteBatch.Begin();
-
-            // Buttons have the same alpha value as circular layer
-            this.buttonPrevious.Draw(graphics, time, Math.Min(this.TransitionAlpha, this.CircularLayers.TransitionAlpha));
-            this.buttonNext    .Draw(graphics, time, Math.Min(this.TransitionAlpha, this.CircularLayers.TransitionAlpha));
-
-            graphics.SpriteBatch.End();
         }
     }
 }

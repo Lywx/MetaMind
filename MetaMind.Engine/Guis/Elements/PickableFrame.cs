@@ -20,7 +20,7 @@ namespace MetaMind.Engine.Guis.Elements
 
         public PickableFrame()
         {
-            this.IsActive = true;
+            this.Active = true;
 
             this.InitializeStates();
 
@@ -326,14 +326,14 @@ namespace MetaMind.Engine.Guis.Elements
 
         #region Frame State
 
-        private bool isActive;
+        private bool active;
 
-        public bool IsActive
+        public bool Active
         {
-            get { return this.isActive; }
+            get { return this.active; }
             set
             {
-                if (this.isActive != value)
+                if (this.active != value)
                 {
                     // This is used to deduce event performance overhead on 
                     // an individual frame.
@@ -347,13 +347,13 @@ namespace MetaMind.Engine.Guis.Elements
                     }
                 }
 
-                this.isActive = value;
+                this.active = value;
             }
         }
 
         private void InitializeStates()
         {
-            this[FrameState.Frame_Is_Active] = () => this.IsActive;
+            this[FrameState.Frame_Is_Active] = () => this.Active;
 
             this[FrameState.Mouse_Is_Over] = () => this.mouse.IsMouseOver;
 
@@ -503,7 +503,7 @@ namespace MetaMind.Engine.Guis.Elements
 
         protected bool IsMouseOver(Point location)
         {
-            return this.IsActive && this.rectangle.Contains(location);
+            return this.Active && this.rectangle.Contains(location);
         }
 
         protected bool IsRButton(MouseEventArgs e)

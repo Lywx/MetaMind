@@ -1,7 +1,7 @@
 namespace MetaMind.Engine.Guis.Modules
 {
     using System.Collections.Generic;
-    using MetaMind.Engine.Services;
+    using Services;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;

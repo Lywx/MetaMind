@@ -107,7 +107,8 @@ namespace MetaMind.Engine
         /// </remarks>
         /// <param name="graphics"></param>
         /// <param name="time"></param>
-        public virtual void BeginDraw(IGameGraphicsService graphics, GameTime time) { }
+        /// <param name="alpha"></param>
+        public virtual void BeginDraw(IGameGraphicsService graphics, GameTime time, byte alpha) { }
 
         /// <summary>
         /// Standard draw routine.

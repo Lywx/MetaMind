@@ -4,6 +4,9 @@ namespace MetaMind.Engine
     using Microsoft.Xna.Framework;
     using Services;
 
+    /// <summary>
+    /// Controller of MVC pattern in game module.
+    /// </summary>
     public class GameModuleLogic<TModule, TModuleSettings, TModuleLogic, TModuleVisual> : GameModuleComponent<TModule, TModuleSettings, TModuleLogic, TModuleVisual>, IGameModuleLogic<TModuleSettings>
         where                    TModule                                 : IGameModule<TModuleSettings, TModuleLogic, TModuleVisual>
         where                    TModuleLogic                            : IGameModuleLogic<TModuleSettings> 

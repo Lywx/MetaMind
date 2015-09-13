@@ -59,15 +59,35 @@ namespace MetaMind.Engine
 
         public event EventHandler<EventArgs> UpdateOrderChanged;
 
+        public event EventHandler<EventArgs> ActionStopped;
+        
+        public event EventHandler<EventArgs> ActionStarted;
+
+        #endregion
+
+        #region Event On
+
         protected virtual void OnEnabledChanged(object sender, EventArgs args)
         {
+            this.EnabledChanged?.Invoke(this, EventArgs.Empty);
         }
 
         protected virtual void OnUpdateOrderChanged(object sender, EventArgs args)
         {
+            this.UpdateOrderChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        #endregion Events
+        private void OnActionStopped()
+        {
+            this.ActionStopped?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void OnActionStarted()
+        {
+            this.ActionStarted?.Invoke(this, EventArgs.Empty);
+        }
+
+        #endregion 
 
         #region States
 
@@ -85,7 +105,6 @@ namespace MetaMind.Engine
                 if (this.enabled != value)
                 {
                     this.enabled = value;
-                    this.EnabledChanged?.Invoke(this, EventArgs.Empty);
 
                     this.OnEnabledChanged(this, null);
                 }
@@ -131,7 +150,6 @@ namespace MetaMind.Engine
                 if (this.updateOrder != value)
                 {
                     this.updateOrder = value;
-                    this.UpdateOrderChanged?.Invoke(this, EventArgs.Empty);
 
                     this.OnUpdateOrderChanged(this, null);
                 }
@@ -143,6 +161,10 @@ namespace MetaMind.Engine
             this.ContinueAction(time);
         }
 
+        #endregion Update
+
+        #region Update Buffer
+
         public virtual void UpdateForwardBuffer()
         {
         }
@@ -151,22 +173,18 @@ namespace MetaMind.Engine
         {
         }
 
-        #endregion Update
+        #endregion
 
-        #region Update  Queue
+        #region Update Queue
 
         private Action updateAction;
 
         private readonly List<Action> updateActions = new List<Action>();
 
-        private void OnActionStopped()
-        {
-        }
-
-        private void OnActionStarted()
-        {
-        }
-
+        /// <summary>
+        /// Runs a single action cached.
+        /// </summary>
+        /// <param name="time"></param>
         protected void ContinueAction(GameTime time)
         {
             if (this.updateAction == null &&
@@ -177,11 +195,19 @@ namespace MetaMind.Engine
             }
         }
 
+        /// <summary>
+        /// Removes all actions cached.
+        /// </summary>
+        /// <param name="time"></param>
         protected void ClearAction(GameTime time)
         {
             this.updateActions.Clear();
         }
 
+        /// <summary>
+        /// Runs all of actions cached.
+        /// </summary>
+        /// <param name="time"></param>
         protected void FlushAction(GameTime time)
         {
             if (this.updateAction == null &&

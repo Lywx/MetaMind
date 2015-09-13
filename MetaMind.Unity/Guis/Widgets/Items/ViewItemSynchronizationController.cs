@@ -29,13 +29,13 @@ namespace MetaMind.Unity.Guis.Widgets.Items
         public void StartSynchronization()
         {
             var @event = this.Interop.Event;
-            @event.QueueEvent(new Event((int)SessionEventType.SyncStarted, new SynchronizationStartedEventArgs(this.Item.ItemData)));
+            @event.QueueEvent(new Event((int)SessionEvent.SyncStarted, new SynchronizationStartedEventArgs(this.Item.ItemData)));
         }
 
         public void StopSynchronization()
         {
             var @event = this.Interop.Event;
-            @event.QueueEvent(new Event((int)SessionEventType.SyncStopped, new SynchronizationStoppedEventArgs(this.Item.ItemData)));
+            @event.QueueEvent(new Event((int)SessionEvent.SyncStopped, new SynchronizationStoppedEventArgs(this.Item.ItemData)));
         }
 
         public void ToggleSynchronization()

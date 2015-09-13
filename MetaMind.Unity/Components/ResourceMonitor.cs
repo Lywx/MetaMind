@@ -15,11 +15,11 @@ namespace MetaMind.Unity.Components
             this.LoadConfiguration();
         }
 
-        private float WarningCPUUsagePercentage { get; set; }
+        private float WarningCpuUsagePercentage { get; set; }
 
         private DateTime WarningMoment { get; set; } = DateTime.Now;
 
-        private TimeSpan WarningCPUUsageInterval { get; set; }
+        private TimeSpan WarningCpuUsageInterval { get; set; }
 
         private ProcessorProfiler Processor { get; set; }
 
@@ -27,8 +27,8 @@ namespace MetaMind.Unity.Components
         {
             this.Processor.UpdateSample();
 
-            var shouldWarningRepeat = DateTime.Now - this.WarningMoment > this.WarningCPUUsageInterval;
-            var shouldWarn = this.Processor.CpuUsagePercentage > this.WarningCPUUsagePercentage;
+            var shouldWarningRepeat = DateTime.Now - this.WarningMoment > this.WarningCpuUsageInterval;
+            var shouldWarn = this.Processor.CpuUsagePercentage > this.WarningCpuUsagePercentage;
 
             if (shouldWarningRepeat && shouldWarn)
             {
@@ -48,8 +48,8 @@ namespace MetaMind.Unity.Components
         {
             var pairs = ConfigurationLoader.LoadUniquePairs(this);
 
-            this.WarningCPUUsageInterval = TimeSpan.FromMinutes(FileLoader.ExtractFloats(pairs, "ResourceMonitor.WarningCPUUsageInterval", 0, 5f));
-            this.WarningCPUUsagePercentage = FileLoader.ExtractFloats(pairs, "ResourceMonitor.WarningCPUUsagePercentage", 0, 10f);
+            this.WarningCpuUsageInterval = TimeSpan.FromMinutes(FileLoader.ExtractFloats(pairs, "ResourceMonitor.WarningCPUUsageInterval", 0, 5f));
+            this.WarningCpuUsagePercentage = FileLoader.ExtractFloats(pairs, "ResourceMonitor.WarningCPUUsagePercentage", 0, 10f);
         }
 
         #endregion

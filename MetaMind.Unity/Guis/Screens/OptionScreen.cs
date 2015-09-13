@@ -204,11 +204,11 @@
         {
             graphics.SpriteBatch.Begin();
 
-            this.procedureNameLabelBox       .Draw(graphics, time, this.TransitionAlpha);
+            this.procedureNameLabelBox.Draw(graphics, time, this.TransitionAlpha);
             this.procedureDescriptionLabelBox.Draw(graphics, time, this.TransitionAlpha);
 
             this.screenLabel.Draw(graphics, time, this.TransitionAlpha);
-            this.Entities   .Draw(graphics, time, this.TransitionAlpha);
+            this.Entities.Draw(graphics, time, this.TransitionAlpha);
 
             graphics.SpriteBatch.End();
 

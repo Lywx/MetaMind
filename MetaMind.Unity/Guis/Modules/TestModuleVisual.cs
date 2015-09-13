@@ -4,7 +4,6 @@
     using Concepts.Tests;
     using Engine;
     using Engine.Components.Fonts;
-    using Engine.Guis;
     using Engine.Guis.Controls.Visuals;
     using Engine.Services;
     using Engine.Settings.Colors;
@@ -63,20 +62,37 @@
 
         private Vector2 TestRateCenterPosition => new Vector2(this.Graphics.Settings.Width / 2 - 160, 90);
 
+        public override void BeginDraw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        {
+            base.BeginDraw(graphics, time, alpha);
+
+            this.Logic.ControllableEntities.BeginDraw(graphics, time, alpha);
+            this      .VisualEntities      .BeginDraw(graphics, time, alpha);
+        }
+
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
+            base.Draw(graphics, time, alpha);
+
             this.Logic.ControllableEntities.Draw(graphics, time, alpha);
             this      .VisualEntities      .Draw(graphics, time, alpha);
-            base                           .Draw(graphics, time, alpha);
+        }
+
+        public override void EndDraw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        {
+            base.EndDraw(graphics, time, alpha);
+
+            this      .VisualEntities      .EndDraw(graphics, time, alpha);
+            this.Logic.ControllableEntities.EndDraw(graphics, time, alpha);
         }
 
         public override void Update(GameTime time)
         {
+            base.Update(time);
+
             this.VisualEntities.UpdateForwardBuffer();
             this.VisualEntities.Update(time);
             this.VisualEntities.UpdateBackwardBuffer();
-
-            base.Update(time);
         }
     }
 }

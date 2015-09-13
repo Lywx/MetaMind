@@ -8,7 +8,7 @@
 
         #region State
 
-        bool IsActive { get; }
+        bool Active { get; }
 
         #endregion
 

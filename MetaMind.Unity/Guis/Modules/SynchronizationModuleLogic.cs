@@ -112,7 +112,7 @@ namespace MetaMind.Unity.Guis.Modules
                 this.synchronization        = synchronization;
                 this.synchronizationLogic = synchronizationLogic;
 
-                this.RegisteredEvents.Add((int)SessionEventType.SleepStarted);
+                this.RegisteredEvents.Add((int)SessionEvent.SleepStarted);
             }
 
             public override bool HandleEvent(IEvent @event)
@@ -147,7 +147,7 @@ namespace MetaMind.Unity.Guis.Modules
             {
                 this.synchronization = synchronization;
 
-                this.RegisteredEvents.Add((int)SessionEventType.SleepStopped);
+                this.RegisteredEvents.Add((int)SessionEvent.SleepStopped);
             }
 
             public override bool HandleEvent(IEvent e)
@@ -169,7 +169,7 @@ namespace MetaMind.Unity.Guis.Modules
 
                 this.Synchronization = synchronization;
 
-                this.RegisteredEvents.Add((int)SessionEventType.SyncStarted);
+                this.RegisteredEvents.Add((int)SessionEvent.SyncStarted);
             }
 
             private ISynchronization Synchronization { get; set; }
@@ -199,7 +199,7 @@ namespace MetaMind.Unity.Guis.Modules
                 this.synchronization      = synchronization;
                 this.synchronizationLogic = synchronizationLogic;
 
-                this.RegisteredEvents.Add((int)SessionEventType.SyncStopped);
+                this.RegisteredEvents.Add((int)SessionEvent.SyncStopped);
             }
 
             public override bool HandleEvent(IEvent @event)

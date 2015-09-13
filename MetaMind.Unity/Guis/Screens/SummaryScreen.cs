@@ -20,17 +20,6 @@
             this.TransitionOffTime = TimeSpan.FromSeconds(0.5);
         }
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time)
-        {
-            var spriteBatch = graphics.SpriteBatch;
-
-            spriteBatch.Begin();
-
-            this.summary.Draw(graphics, time, this.TransitionAlpha);
-
-            spriteBatch.End();
-        }
-
         public override void LoadContent(IGameInteropService interop)
         {
             var cognition = Unity.SessionData.Cognition;
@@ -40,17 +29,27 @@
                 cognition.Synchronization,
                 new SummarySettings());
             this.summary.LoadContent(interop);
+
+            this.Layers.Add(
+                new GameLayer(this)
+                {
+                    DrawAction = (graphics, time, alpha) =>
+                    {
+                        SpriteBatch.Begin();
+                        this.summary.Draw(graphics, time, alpha);
+                        SpriteBatch.End();
+                    },
+                    UpdateAction = time =>
+                    {
+                        this.summary.Update(time);
+                    }
+                });
         }
 
         public override void UnloadContent(IGameInteropService interop)
         {
             base        .UnloadContent(interop);
             this.summary.UnloadContent(interop);
-        }
-
-        public override void Update(GameTime time)
-        {
-            this.summary.Update(time);
         }
 
         public override void UpdateInput(IGameInputService input, GameTime time)

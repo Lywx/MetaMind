@@ -3,7 +3,7 @@ namespace MetaMind.Engine.Debugging
     using System.Diagnostics;
     using Services;
 
-    public static class Diagnostics
+    public static class DebugSwitch
     {
         private static IGameInteropService Interop => GameEngine.Service.Interop;
 

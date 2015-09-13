@@ -107,7 +107,6 @@ namespace MetaMind.Engine.Guis.Controls.Views
             if (this.ViewLogic != null)
             {
                 this.ViewLogic.SetupLayer();
-
                 this.ViewLogic.LoadBinding();
             }
 
@@ -119,18 +118,28 @@ namespace MetaMind.Engine.Guis.Controls.Views
         public override void UnloadContent(IGameInteropService interop)
         {
             this.ViewLogic?.UnloadBinding();
-
-            base.UnloadContent(interop);
+            base           .UnloadContent(interop);
         }
-
 
         #endregion
 
         #region Draw
 
+        public override void BeginDraw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        {
+            this.ViewVisual?.BeginDraw(graphics, time, alpha);
+            base            .BeginDraw(graphics, time, alpha);
+        }
+
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
             this.ViewVisual?.Draw(graphics, time, alpha);
+        }
+
+        public override void EndDraw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        {
+            this.ViewVisual?.EndDraw(graphics, time, alpha);
+            base            .EndDraw(graphics, time, alpha);
         }
 
         #endregion

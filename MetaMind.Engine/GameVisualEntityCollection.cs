@@ -6,11 +6,27 @@
     public class GameVisualEntityCollection<T> : GameEntityCollection<T>
         where T : IGameVisualEntity
     {
+        public void BeginDraw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        {
+            foreach (var entity in this)
+            {
+                entity.BeginDraw(graphics, time, alpha);
+            }
+        }
+
         public void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            foreach (var module in this)
+            foreach (var entity in this)
             {
-                module.Draw(graphics, time, alpha);
+                entity.Draw(graphics, time, alpha);
+            }
+        }
+
+        public void EndDraw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        {
+            foreach (var entity in this)
+            {
+                entity.EndDraw(graphics, time, alpha);
             }
         }
     }

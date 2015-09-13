@@ -1,13 +1,18 @@
 ﻿namespace MetaMind.EngineTest
 {
-    using MetaMind.Engine;
-    using MetaMind.EngineTest.Guis;
+    using Engine;
+    using Engine.Debugging;
+    using Engine.Screens;
+    using Guis;
 
     public class GameEngineTest : Game
     {
         public GameEngineTest(GameEngine engine)
             : base(engine)
         {
+            this.Engine.Graphics.Settings.FPS = 30;
+            
+            this.Engine.Components.Add(new FrameRateCounter(this.Engine));
         }
 
         public override void Initialize()

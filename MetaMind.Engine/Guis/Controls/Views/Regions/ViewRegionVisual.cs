@@ -11,7 +11,7 @@ namespace MetaMind.Engine.Guis.Controls.Views.Regions
         {
             if (region == null)
             {
-                throw new ArgumentNullException("region");
+                throw new ArgumentNullException(nameof(region));
             }
 
             this.Region = region;
@@ -19,10 +19,7 @@ namespace MetaMind.Engine.Guis.Controls.Views.Regions
 
         public ViewRegion Region { get; private set; }
 
-        public ViewRegionSettings RegionSettings
-        {
-            get { return this.Region.RegionSettings; }
-        }
+        public ViewRegionSettings RegionSettings => this.Region.RegionSettings;
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {

@@ -5,7 +5,7 @@ namespace MetaMind.Engine
 
     public interface IDrawableOperations
     {
-        void BeginDraw(IGameGraphicsService graphics, GameTime time);
+        void BeginDraw(IGameGraphicsService graphics, GameTime time, byte alpha);
 
         void Draw(IGameGraphicsService graphics, GameTime time, byte alpha);
 

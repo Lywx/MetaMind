@@ -10,7 +10,6 @@ namespace MetaMind.Engine.Services
     using Components;
     using Components.Fonts;
     using Components.Graphics;
-
     using Microsoft.Xna.Framework.Graphics;
 
     public sealed class GameEngineGraphicsService : IGameGraphicsService

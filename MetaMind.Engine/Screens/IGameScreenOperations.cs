@@ -7,11 +7,6 @@ namespace MetaMind.Engine.Screens
     {
         #region Draw
 
-        /// <summary>
-        /// This is called when the screen should draw itself.
-        /// </summary>
-        void Draw(IGameGraphicsService graphics, GameTime time);
-
         void BeginDraw(IGameGraphicsService graphics, GameTime time);
 
         void EndDraw(IGameGraphicsService graphics, GameTime time);

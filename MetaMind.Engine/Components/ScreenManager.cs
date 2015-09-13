@@ -14,9 +14,8 @@ namespace MetaMind.Engine.Components
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Screens;
-    using Services;
 
-    public partial class ScreenManager : GameControllableComponent, IScreenManager
+    public class ScreenManager : GameControllableComponent, IScreenManager
     {
         #region Dependency
 
@@ -155,11 +154,18 @@ namespace MetaMind.Engine.Components
         /// </summary>
         public override void Draw(GameTime time)
         {
-            if (this.Game.IsActive ||
+            if (
+                // Don't draw when the game window is inactive to save CPU resources
+                this.Game.IsActive ||
+
+                // Used to provide a way to constantly draw
                 this.Settings.IsAlwaysVisible)
             {
                 this.ScreensVisible((screen, graphics, t) => screen.BeginDraw(graphics, t), this.Graphics, time);
-                this.ScreensVisible((screen, graphics, t) => screen.Draw     (graphics, t), this.Graphics, time);
+
+                GraphicsDevice.SetRenderTarget(null);
+
+                // Render target into back buffer
                 this.ScreensVisible((screen, graphics, t) => screen.EndDraw  (graphics, t), this.Graphics, time);
             }
         }

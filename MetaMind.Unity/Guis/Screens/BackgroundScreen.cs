@@ -38,6 +38,24 @@
             this.particles = new ParticleModule(new ParticleSettings()) { SpawnRate = 1 };
 
             this.background = interop.Content.Load<Texture2D>(@"Texture\Backgrounds\Sea Of Mind");
+
+            this.Layers.Add(new GameLayer(this)
+            {
+                DrawAction = (graphics, time, alpha) =>
+                {
+                    var rectangle = this.RenderTargetRectangle;
+                    var color = (Color * ((float)this.TransitionAlpha / 2)).ToColor();
+
+                    SpriteBatch.Begin();
+                    SpriteBatch.Draw(this.background, rectangle, color.WithBrightness(Brightness));
+                    this.particles.Draw(graphics, time, this.TransitionAlpha);
+                    SpriteBatch.End();
+                },
+                UpdateAction = time =>
+                {
+                    this.particles.Update(time);
+                }
+            });
         }
 
         public override void UnloadContent(IGameInteropService interop)
@@ -47,32 +65,5 @@
         }
 
         #endregion Load and Unload
-
-        #region Update and Draw
-
-        public override void Draw(IGameGraphicsService graphics, GameTime time)
-        {
-            var spriteBatch = graphics.SpriteBatch;
-            var viewport    = graphics.Manager.GraphicsDevice.Viewport;
-            var fullscreen  = new Rectangle(0, 0, viewport.Width, viewport.Height);
-
-            spriteBatch.Begin();
-
-            spriteBatch   .Draw(this.background, fullscreen, (Color * ((float)this.TransitionAlpha / 2)).ToColor().WithBrightness(Brightness));
-            this.particles.Draw(graphics, time, this.TransitionAlpha);
-
-            spriteBatch.End();
-        }
-
-        public override void UpdateInput(IGameInputService input, GameTime time)
-        {
-            this.particles.UpdateInput(input, time);
-        }
-
-        public override void Update(GameTime time)
-        {
-            this.particles.Update(time);
-        }
-        #endregion Update and Draw
     }
 }

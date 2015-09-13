@@ -77,6 +77,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Collections\ObservableCollection.cs" />
+    <Compile Include="Components\Fonts\IStringDrawerOperations.cs" />
     <Compile Include="Components\IFileManager.cs" />
     <Compile Include="Components\Inputs\KeyEventArgs.cs" />
     <Compile Include="Components\Inputs\MouseButtons.cs" />
@@ -84,6 +85,9 @@
     <Compile Include="Components\Inputs\MouseKeys.cs" />
     <Compile Include="Console\ScrollController.cs" />
     <Compile Include="Console\GameConsoleState.cs" />
+    <Compile Include="Debugging\FrameRateCounter.cs" />
+    <Compile Include="Guis\Controls\Buttons\GlyphMode.cs" />
+    <Compile Include="Guis\Controls\ControlCollection.cs" />
     <Compile Include="Guis\Controls\DrawEventArgs.cs" />
     <Compile Include="Extensions\ExtKeys.cs" />
     <Compile Include="Extensions\ExtMouseButtons.cs" />
@@ -103,6 +107,7 @@
     <Compile Include="Console\Processors\IronPythonProcessor.cs" />
     <Compile Include="Console\Commands\CommandType.cs" />
     <Compile Include="Guis\Controls\Container.cs" />
+    <Compile Include="Guis\Controls\Buttons\Glyph.cs" />
     <Compile Include="Guis\Controls\IContainer.cs" />
     <Compile Include="Guis\Controls\IControl.cs" />
     <Compile Include="Guis\Elements\Inputs\ButtonDoubleClick.cs" />
@@ -558,6 +563,8 @@
     <Compile Include="Screens\IGameLayer.cs" />
     <Compile Include="Screens\IGameLayerOperations.cs" />
     <Compile Include="Screens\IGameScreenOperations.cs" />
+    <Compile Include="RenderTarget2DFactory.cs" />
+    <Compile Include="Debugging\Screens\CpuWhiteNoiseSreen.cs" />
     <Compile Include="Scripting\FSharp\FsiDebugger.cs" />
     <Compile Include="Scripting\FSharp\FsiSession.cs" />
     <Compile Include="Console\Commands\Core\VerboseCommand.cs" />
@@ -566,7 +573,7 @@
     <Compile Include="Scripting\FSharp\FsScriptSearcher.cs" />
     <Compile Include="Scripting\FSharp\IFsScript.cs" />
     <Compile Include="Scripting\FSharp\IFsScriptOperations.cs" />
-    <Compile Include="Debugging\Diagnostics.cs" />
+    <Compile Include="Debugging\DebugSwitch.cs" />
     <Compile Include="Scripting\IronPython\IIpyScript.cs" />
     <Compile Include="Scripting\IronPython\IIpyScriptOperations.cs" />
     <Compile Include="Scripting\IronPython\IpySession.cs" />
@@ -719,10 +726,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
-    <Reference Include="Primtives2D, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ThirdParties\Primitives2D\bin\Debug\Primtives2D.dll</HintPath>
-    </Reference>
     <Reference Include="Sprache, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ThirdParties\Sprache\bin\Sprache.dll</HintPath>
@@ -819,6 +822,12 @@
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ThirdParties\Primitives2D\Primitives2D.csproj">
+      <Project>{39AD1482-1881-4852-A05D-DC61B0D3446A}</Project>
+      <Name>Primitives2D</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -12,17 +12,19 @@
         {
         }
 
-        #region Engine Graphics
+        #region Render Data
 
-        protected internal readonly RenderTargetUsage TargetUsage = RenderTargetUsage.DiscardContents;
+        protected SpriteBatch SpriteBatch => this.Graphics.SpriteBatch;
 
-        public RenderTarget2D Target { get; protected set; }
+        protected GraphicsDevice GraphicsDevice => this.Graphics.GraphicsDevice;
 
-        protected int ViewportHeight => this.Graphics.Settings.Height;
+        protected int ViewportHeight => this.GraphicsDevice.Viewport.Height;
 
-        protected int ViewportWidth => this.Graphics.Settings.Width;
+        protected int ViewportWidth => this.GraphicsDevice.Viewport.Width;
 
-        protected virtual int TargetWidth
+        protected RenderTarget2D RenderTarget { get; set; }
+
+        protected virtual int RenderTargetWidth
         {
             get
             {
@@ -35,7 +37,7 @@
             }
         }
 
-        protected virtual int TargetHeight
+        protected virtual int RenderTargetHeight
         {
             get
             {
@@ -48,56 +50,66 @@
             }
         }
 
-        #endregion
+        private Rectangle RenderTargetRectangle => new Rectangle(0, 0, this.RenderTargetWidth, this.RenderTargetHeight);
 
-        private bool invalidated;
+        #endregion
 
         #region Events
 
-        public event EventHandler DrawTarget;
+        public event EventHandler DrawStarted = delegate { };
 
         #endregion
 
         #region Event On
 
-        private void OnBeginDraw(EventArgs e)
+        private void OnDrawStarted(EventArgs e)
         {
-            this.DrawTarget?.Invoke(this, e);
+            this.DrawStarted?.Invoke(this, e);
         }
 
         #endregion
+
+        private Control parent = null;
+
+        private Control root = null;
+
+        private ControlCollection Controls { get; set; } = new ControlCollection();
+
+        /// <summary>
+        /// Gets a value indicating whether this control is a child control.
+        /// </summary>
+        public virtual bool IsChild { get { return (parent != null); } }
+
+        /// <summary>
+        /// Gets a value indicating whether this control is a parent control.
+        /// </summary>
+        public virtual bool IsParent { get { return (this.Controls != null && this.Controls.Count > 0); } }
+
+        /// <summary>
+        /// Gets a value indicating whether this control is a root control.
+        /// </summary>
+        public virtual bool IsRoot { get { return (root == this); } }
 
         #region Initialization
 
         public bool Initialized { get; private set; }
 
+        private bool PositionInitialized => this.Location.X > int.MinValue / 2 &&
+                                            this.Location.Y > int.MinValue / 2;
+
         public virtual void Initialize()
         {
+            if (!this.PositionInitialized)
+            {
+                throw new InvalidOperationException();
+            }
+
             this.Initialized = true;
         }
 
         #endregion
 
         #region Target
-
-        private RenderTarget2D CreateRenderTarget(int width, int height)
-        {
-            if (width <= 0
-                || height <= 0)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            return new RenderTarget2D(
-                this.Graphics.GraphicsDevice,
-                width,
-                height,
-                false,
-                SurfaceFormat.Color,
-                DepthFormat.None,
-                this.Graphics.GraphicsDevice.PresentationParameters.MultiSampleCount,
-                this.TargetUsage);
-        }
 
         #endregion
 
@@ -106,57 +118,50 @@
         /// <summary>
         /// Draws the entire scene in the given render target.
         /// </summary>
-        public override void BeginDraw(IGameGraphicsService graphics, GameTime time)
+        public override void BeginDraw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            base.BeginDraw(graphics, time);
+            base.BeginDraw(graphics, time, alpha);
 
             if (this.Visible)
             {
-                if (this.invalidated)
+                this.OnDrawStarted(
+                    new DrawEventArgs(this.RenderTargetRectangle, time));
+
+                if (this.RenderTarget == null ||
+                    this.RenderTarget.Width != this.Width ||
+                    this.RenderTarget.Height != this.Height)
                 {
-                    this.OnBeginDraw(new DrawEventArgs(new Rectangle(0, 0, this.TargetWidth, this.TargetHeight), time));
-
-                    if (this.Target == null ||
-                        this.Target.Width < this.Width ||
-                        this.Target.Height < this.Height)
+                    if (this.RenderTarget != null)
                     {
-                        if (this.Target != null)
-                        {
-                            this.Target.Dispose();
-                            this.Target = null;
-                        }
-
-                        this.Target = this.CreateRenderTarget(this.TargetWidth, this.TargetHeight);
+                        this.RenderTarget.Dispose();
+                        this.RenderTarget = null;
                     }
 
-                    if (this.Target != null)
-                    {
-                        graphics.GraphicsDevice.SetRenderTarget(this.Target);
-                        graphics.GraphicsDevice.Clear(Color.Transparent);
-                    }
-
-                    this.invalidated = false;
+                    this.RenderTarget = RenderTarget2DFactory.Create(
+                        this.RenderTargetWidth,
+                        this.RenderTargetHeight);
                 }
             }
-        }
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
-        {
-            base.Draw(graphics, time, alpha);
+            this.GraphicsDevice.SetRenderTarget(this.RenderTarget);
+            this.GraphicsDevice.Clear(Color.Transparent);
+
+            this.Draw(graphics, time, alpha);
+
+            this.GraphicsDevice.SetRenderTarget(null);
         }
 
         public override void EndDraw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            if (this.Visible && this.Target != null)
+            if (this.Visible)
             {
-                graphics.SpriteBatch.Begin();
-                graphics.SpriteBatch.Draw(
-                    this.Target,
+                this.SpriteBatch.Begin();
+                this.SpriteBatch.Draw(
+                    this.RenderTarget,
                     this.Location.ToVector2(),
-                    new Rectangle(0, 0, this.Width, this.Height),
+                    this.RenderTargetRectangle,
                     Color.White.MakeTransparent(alpha));
-
-                graphics.SpriteBatch.End();
+                this.SpriteBatch.End();
             }
         }
 

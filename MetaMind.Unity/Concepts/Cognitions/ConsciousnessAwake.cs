@@ -41,7 +41,7 @@ namespace MetaMind.Unity.Concepts.Cognitions
             console.WriteLine($"MESSAGE: Awake {this.AwakeSpan.ToString("hh':'mm':'ss''")}");
 
             var @event = this.Interop.Event;
-            @event.TriggerEvent(new Event((int)SessionEventType.SleepStarted, new ConsciousnessSleepStartedEventArgs(consciousness)));
+            @event.TriggerEvent(new Event((int)SessionEvent.SleepStarted, new ConsciousnessSleepStartedEventArgs(consciousness)));
 
             return new ConsciousnessAsleep(consciousness);
         }

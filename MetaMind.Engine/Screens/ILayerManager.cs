@@ -2,6 +2,6 @@
 {
     public interface ILayerManager : ILayerManagerOperations
     {
-        GameControllableEntityCollection<IGameLayer> GameLayers { get; }
+        GameControllableEntityCollection<IGameLayer> Layers { get; }
     }
 }

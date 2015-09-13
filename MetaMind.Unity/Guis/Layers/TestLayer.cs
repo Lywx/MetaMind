@@ -32,9 +32,8 @@ namespace MetaMind.Unity.Guis.Layers
         public TestLayer(
             TestSession testSession,
             SpeechSynthesizer testSynthesizer,
-            IGameScreen screen,
-            byte transitionAlpha = byte.MaxValue)
-            : base(screen, transitionAlpha)
+            IGameScreen screen)
+            : base(screen)
         {
             if (testSession == null)
             {

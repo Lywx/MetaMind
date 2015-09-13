@@ -1,12 +1,35 @@
 namespace MetaMind.Engine.Screens
 {
     using System;
+    using System.Diagnostics;
     using Services;
 
     using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
 
-    public partial class GameScreen : IGameScreen
+    public class GameScreen : IGameScreen
     {
+        #region Render Data
+
+        public int Width => this.Viewport.Width;
+
+        public int Height => this.Viewport.Height;
+
+        protected GraphicsDevice GraphicsDevice => this.Graphics.GraphicsDevice;
+
+        protected SpriteBatch SpriteBatch => this.Graphics.SpriteBatch;
+
+        /// <summary>
+        /// Target of the screen. Screen is the closest layer to back buffer.
+        /// </summary>
+        protected virtual RenderTarget2D RenderTarget { get; set; }
+
+        protected Rectangle RenderTargetRectangle => this.Viewport.Bounds;
+
+        private Viewport Viewport => this.GraphicsDevice.Viewport;
+
+        #endregion
+
         #region Screen Data
 
         private bool isPopup = false;
@@ -147,11 +170,13 @@ namespace MetaMind.Engine.Screens
 
         protected IGameInteropService Interop => GameEngine.Service.Interop;
 
+        protected IGameNumericalService Numerical => GameEngine.Service.Numerical;
+
         #endregion
 
         #region Constructors and Finalizer
 
-        protected GameScreen()
+        public GameScreen()
         {
             this.Layers = new GameControllableEntityCollection<IGameLayer>();
         }
@@ -179,32 +204,87 @@ namespace MetaMind.Engine.Screens
 
         #region Draw
 
-        /// <summary>
-        /// This is called when the screen should draw itself.
-        /// </summary>
-        public virtual void Draw(IGameGraphicsService graphics, GameTime time)
-        {
-            this.LayersAll((layer, access, t) => layer.Draw(access, t, this.LayerTransitionAlpha(layer)), graphics, time);
-        }
-
         public void BeginDraw(IGameGraphicsService graphics, GameTime time)
         {
-            this.LayersAll((layer, access, t) => layer.BeginDraw(access, t), graphics, time);
+            if (this.RenderTarget == null)
+            {
+                this.RenderTarget = RenderTarget2DFactory.Create(
+                    this.Width,
+                    this.Height);
+
+            }
+
+            this.Draw(graphics, time);
+            this.DrawToScreen(graphics, time);
         }
 
-        public void EndDraw(IGameGraphicsService graphics, GameTime time)
+        protected void Draw(IGameGraphicsService graphics, GameTime time)
         {
-            this.LayersAll((layer, access, t) => layer.EndDraw(access, t, this.LayerTransitionAlpha(layer)), graphics, time);
+            if (this.Layers.Count != 0)
+            {
+                foreach (
+                    var layer in
+                        this.Layers.FindAll(
+                            layer => layer.Active && layer.Visible))
+                {
+                    layer.BeginDraw(graphics, time, this.LayerTransitionAlpha(layer));
+                }
+            }
+        }
+
+        public virtual void EndDraw(IGameGraphicsService graphics, GameTime time)
+        {
+            graphics.SpriteBatch.Begin();
+            graphics.SpriteBatch.Draw(
+                this.RenderTarget,
+                this.RenderTargetRectangle,
+                Color.White);
+            graphics.SpriteBatch.End();
+        }
+
+        private void DrawToScreen(IGameGraphicsService graphics, GameTime time)
+        {
+#if DEBUG
+            Debug.Assert(this.RenderTarget != null);
+#endif
+            this.GraphicsDevice.SetRenderTarget(this.RenderTarget);
+            this.GraphicsDevice.Clear(Color.Transparent);
+
+            if (this.Layers.Count != 0)
+            {
+                // Draw layers to screen's render target
+                foreach (
+                    var layer in
+                        this.Layers.FindAll(
+                            layer => layer.Active && layer.Visible))
+                {
+                    layer.EndDraw(
+                        graphics,
+                        time,
+                        this.LayerTransitionAlpha(layer));
+                }
+            }
+
+            this.GraphicsDevice.SetRenderTarget(null);
         }
 
         #endregion Draw
 
-        #region Update
+#region Update
 
-        public virtual void Update(GameTime time)
+        public void Update(GameTime time)
         {
-            this.LayersAll   <object>((layer, access, t) => layer.UpdateTransition(t), null, time);
-            this.LayersActive<object>((layer, access, t) => layer.Update(t)          , null, time);
+            // Layer transition inside screen.
+            foreach (var layer in this.Layers.FindAll(layer => layer.Active))
+            {
+                layer.UpdateTransition(time);
+            }
+
+            // GameLayer is subclass of GameEntity. It may cache actions, they are updated there.
+            foreach (var layer in this.Layers.FindAll(layer => layer.Active))
+            {
+                layer.Update(time);
+            }
         }
 
         public virtual void UpdateScreen(IGameInteropService interop, GameTime time, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
@@ -252,10 +332,10 @@ namespace MetaMind.Engine.Screens
             }
         }
 
-        public virtual void UpdateInput(IGameInputService input, GameTime time)
+        public void UpdateInput(IGameInputService input, GameTime time)
         {
             this.Layers
-                .FindAll(layer => layer.IsActive)
+                .FindAll(layer => layer.Active)
                 .ForEach(layer => layer.UpdateInput(input, time));
         }
 
@@ -291,9 +371,9 @@ namespace MetaMind.Engine.Screens
             return true;
         }
 
-        #endregion
+#endregion
 
-        #region Operations
+#region Operations
 
         /// <summary>
         /// Tells the screen to go away. Unlike Screens.RemoveScreen, which
@@ -314,41 +394,31 @@ namespace MetaMind.Engine.Screens
             }
         }
 
-        #endregion Operations
+#endregion Operations
 
-        #region Helpers
-
-        private void LayersActive<TAccess>(Action<IGameLayer, TAccess, GameTime> action, TAccess access, GameTime time)
-        {
-            this.Layers
-                .FindAll(layer => layer.IsActive)
-                .ForEach(layer => action(layer, access, time));
-        }
-
-        private void LayersAll<TAccess>(Action<IGameLayer, TAccess, GameTime> action, TAccess access, GameTime time)
-        {
-            this.Layers
-                .ForEach(layer => action(layer, access, time));
-        }
-
-        #endregion
-
-        #region IDisposable
+#region IDisposable
 
         public void Dispose()
         {
             if (this.Layers != null)
             {
-                foreach (var layer in this.Layers)
-                {
-                    layer.Dispose();
-                }
+                this.RenderTarget.Dispose();
 
-                this.Layers.Clear();
-                this.Layers = null;
+                this.DisposeLayers();
             }
         }
 
-        #endregion IDisposable
+        private void DisposeLayers()
+        {
+            foreach (var layer in this.Layers)
+            {
+                layer.Dispose();
+            }
+
+            this.Layers.Clear();
+            this.Layers = null;
+        }
+
+#endregion IDisposable
     }
 }

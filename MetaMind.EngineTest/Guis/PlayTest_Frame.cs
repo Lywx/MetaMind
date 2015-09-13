@@ -34,7 +34,7 @@
             this.control.Draw(graphics, time, alpha);
             this.visual .Draw(graphics, time, alpha);
 
-            StateVisualTester.Draw(graphics, typeof(FrameState), this.frame.States, this.frame.Location.ToVector2(), 10, 10);
+            StateVisualTester.Draw(graphics, typeof(FrameState), this.frame.FrameStates, this.frame.Location.ToVector2(), 10, 10);
         }
 
         public override void Update(GameTime time)

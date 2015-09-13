@@ -3,6 +3,9 @@
     using System;
     using Microsoft.Xna.Framework;
 
+    /// <summary>
+    /// View of MVC pattern in game module.
+    /// </summary>
     public class GameModuleVisual<TModule, TModuleSettings, TModuleLogic, TModuleVisual> : GameModuleComponent<TModule, TModuleSettings, TModuleLogic, TModuleVisual>, IGameModuleVisual<TModuleSettings>
         where                     TModule                                                : IGameModule<TModuleSettings, TModuleLogic, TModuleVisual>
         where                     TModuleLogic                                           : IGameModuleLogic<TModuleSettings> 

@@ -3,33 +3,43 @@ namespace MetaMind.Engine.Guis.Controls.Views
     using System;
     using System.Linq;
 
-    public abstract class ViewEntity : GameControllableEntity, IViewEntity
+    public abstract class ViewEntity : Control, IViewEntity
     {
         #region Constructors
 
         protected ViewEntity()
         {
-            for (var i = 0; i < (int)ViewState.StateNum; i++)
+            this.InitializeStates();
+        }
+
+        #endregion Constructors
+
+        #region Initialization
+        
+        private void InitializeStates()
+        {
+            for (var i = 0; i < (int)ViewState.StateNum; ++i)
             {
-                this.states[i] = () => false;
+                this.viewStates[i] = () => false;
             }
 
             this[ViewState.View_Is_Active] = () => true;
         }
 
-        #endregion Constructors
-
-        #region IViewEntity
+        #endregion 
 
         #region States
 
-        private readonly Func<bool>[] states = new Func<bool>[(int)ViewState.StateNum];
+        private readonly Func<bool>[] viewStates = new Func<bool>[(int)ViewState.StateNum];
 
-        public bool[] States
+        /// <summary>
+        /// View states.
+        /// </summary>
+        internal bool[] ViewStates
         {
             get
             {
-                return this.states.Select(state => state()).ToArray();
+                return this.viewStates.Select(state => state()).ToArray();
             }
         }
 
@@ -37,17 +47,15 @@ namespace MetaMind.Engine.Guis.Controls.Views
         {
             get
             {
-                return this.states[(int)state];
+                return this.viewStates[(int)state];
             }
 
             set
             {
-                this.states[(int)state] = value;
+                this.viewStates[(int)state] = value;
             }
         }
 
         #endregion
-
-        #endregion IViewEntity
     }
 }

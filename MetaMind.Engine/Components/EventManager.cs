@@ -184,12 +184,12 @@ namespace MetaMind.Engine.Components
                 var currentTime = DateTime.Now.Ticks;
                 var @event = this.activeEvents[counter];
 
-                @event.HandleAttempts++;
+                ++@event.HandleAttempts;
 
-                for (var x = this.listeners.Count - 1; x >= 0; x--)
+                for (var i = this.listeners.Count - 1; i >= 0; --i)
                 {
-                    if (this.listeners[x].RegisteredEvents.Contains(@event.EventType) && 
-                        this.listeners[x].HandleEvent(@event))
+                    if (this.listeners[i].RegisteredEvents.Contains(@event.EventType) && 
+                        this.listeners[i].HandleEvent(@event))
                     {
                         @event.Handled = true;
                     }
@@ -217,7 +217,7 @@ namespace MetaMind.Engine.Components
             }
             while (this.activeEvents.Count > 0);
 
-            // Add back any unhandled events
+            // Add back any not handled events
             if (this.activeEvents.Count > 0)
             {
                 this.queuedEvents.AddRange(this.activeEvents);

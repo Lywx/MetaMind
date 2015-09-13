@@ -13,8 +13,6 @@ namespace MetaMind.Engine.Guis.Controls.Views
     {
         #region States
 
-        bool[] States { get; }
-
         Func<bool> this[ViewState state] { get; set; }
 
         #endregion
