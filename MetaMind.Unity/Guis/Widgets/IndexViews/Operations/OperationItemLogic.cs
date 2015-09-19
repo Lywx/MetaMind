@@ -1,18 +1,18 @@
 ﻿namespace MetaMind.Unity.Guis.Widgets.IndexViews.Operations
 {
     using Concepts.Operations;
-    using Engine.Guis.Controls.Items;
-    using Engine.Guis.Controls.Items.Data;
-    using Engine.Guis.Controls.Items.Frames;
-    using Engine.Guis.Controls.Items.Interactions;
-    using Engine.Guis.Controls.Items.Layouts;
-    using Engine.Guis.Controls.Items.Logic;
+    using Engine.Gui.Control.Item;
+    using Engine.Gui.Control.Item.Data;
+    using Engine.Gui.Control.Item.Frames;
+    using Engine.Gui.Control.Item.Interactions;
+    using Engine.Gui.Control.Item.Layouts;
+    using Engine.Gui.Control.Item.Logic;
 
     public class OperationItemLogic : IndexBlockViewVerticalItemLogic 
     {
         public OperationItemLogic(
             IViewItem            item,
-            IViewItemFrame       itemFrame,
+            IViewItemFrameController       itemFrame,
             IViewItemInteraction itemInteraction,
             IViewItemDataModel   itemModel,
             IViewItemLayout      itemLayout)
@@ -20,19 +20,19 @@
         {
         }
 
-        public new OperationItemFrame ItemFrame
+        public new OperationItemFrameController ItemFrame
         {
-            get { return (OperationItemFrame)base.ItemFrame; }
+            get { return (OperationItemFrameController)base.ItemFrame; }
         }
 
-        public override void SetupLayer()
+        public override void Initialize()
         {
-            base.SetupLayer();
+            base.Initialize();
 
-            this.ItemFrame.NameFrame       .MousePressLeft  += (o, args) => this.ToggleIndexView();
-            this.ItemFrame.DescriptionFrame.MousePressLeft  += (o, args) => this.ToggleIndexView();
-            this.ItemFrame.StatusFrame     .MousePressLeft  += (o, args) => this.ToggleOperation();
-            this.ItemFrame.RootFrame       .MousePressRight += (o, args) => this.SelectPath();
+            this.ItemFrame.NameRectangle       .MousePressLeft  += (o, args) => this.ToggleIndexView();
+            this.ItemFrame.DescriptionRectangle.MousePressLeft  += (o, args) => this.ToggleIndexView();
+            this.ItemFrame.StatusRectangle     .MousePressLeft  += (o, args) => this.ToggleOperation();
+            this.ItemFrame.RootRectangle       .MousePressRight += (o, args) => this.SelectPath();
         }
 
         #region Operations

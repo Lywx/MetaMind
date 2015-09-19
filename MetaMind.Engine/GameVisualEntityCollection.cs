@@ -1,7 +1,9 @@
 ﻿namespace MetaMind.Engine
 {
-    using Services;
     using Microsoft.Xna.Framework;
+    using Service;
+
+    // TODO(Minor): I don't really need this. The design of collection is not very convenient on universal update/draw/... Maybe I should clean up with empty virtual method in collection?
 
     public class GameVisualEntityCollection<T> : GameEntityCollection<T>
         where T : IGameVisualEntity

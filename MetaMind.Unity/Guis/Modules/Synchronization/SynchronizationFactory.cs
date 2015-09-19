@@ -40,7 +40,7 @@ namespace MetaMind.Unity.Guis.Modules.Synchronization
         private Rectangle SynchronizationDotBounds(Vector2 center, int index, SynchronizationPointSide side)
         {
             return
-                ExtRectangle.RectangleByCenter(
+                RectangleExt.RectangleByCenter(
                     side == SynchronizationPointSide.Left
                         ? center + index * new Vector2(15, 0) + new Vector2(275, -1)
                         : center - index * new Vector2(15, 0) + new Vector2(-275, -1),

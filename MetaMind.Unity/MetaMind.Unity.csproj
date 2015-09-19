@@ -141,25 +141,26 @@
     <Compile Include="Guis\Modules\TestModuleLogic.cs" />
     <Compile Include="Guis\Modules\TestModuleVisual.cs" />
     <Compile Include="Guis\Modules\TestMonitor.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemFrame.cs" />
+    <Compile Include="Guis\Screens\ScreenEvent.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemFrameController.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemLayer.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemLogic.cs" />
-    <Compile Include="Guis\Widgets\BlockViews\Options\OptionItemFrame.cs" />
+    <Compile Include="Guis\Widgets\BlockViews\Options\OptionItemFrameController.cs" />
     <Compile Include="Guis\Widgets\BlockViews\Options\OptionItemLogic.cs" />
     <Compile Include="Guis\Widgets\BlockViews\Options\OptionItemSettings.cs" />
     <Compile Include="Guis\Widgets\BlockViews\Options\OptionItemVisual.cs" />
     <Compile Include="Guis\Widgets\BlockViews\Options\OptionViewBinding.cs" />
     <Compile Include="Guis\Widgets\BlockViews\Options\OptionViewSettings.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationIndexedViewCompositor.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationIndexViewCompositor.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationIndexedViewBuilder.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationIndexViewBuilder.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemSettings.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemVisual.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationViewBinding.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Tests\TestIndexedViewCompositor.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Tests\TestIndexedViewBuilder.cs" />
     <Compile Include="Concepts\Synchronizations\ISynchronizationController.cs" />
     <Compile Include="Concepts\Synchronizations\SynchronizationSession.cs" />
     <Compile Include="Guis\Widgets\BlockViews\Options\OptionItemLayer.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Tests\TestIndexViewCompositor.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Tests\TestIndexViewBuilder.cs" />
     <Compile Include="Guis\Layers\TestLayer.cs" />
     <Compile Include="Guis\Screens\OptionScreen.cs" />
     <Compile Include="Guis\Layers\SynchronizationLayer.cs" />
@@ -197,7 +198,7 @@
     <Compile Include="Guis\Modules\Synchronization\SynchronizationPointSide.cs" />
     <Compile Include="Guis\Modules\Synchronization\SynchronizationProgressBar.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Tests\TestViewBinding.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Tests\TestItemFrame.cs" />
+    <Compile Include="Guis\Widgets\IndexViews\Tests\TestItemFrameController.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Tests\TestItemLayer.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Tests\TestItemLayout.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Tests\TestItemLogic.cs" />
@@ -214,7 +215,7 @@
     <Compile Include="Sessions\ISessionData.cs" />
     <Compile Include="Sessions\SessionData.cs" />
     <Compile Include="Sessions\SessionEvent.cs" />
-    <Compile Include="UnityEngineCompositor.cs" />
+    <Compile Include="UnityEngineConfigurer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Compiler.Service, Version=1.4.0.1, Culture=neutral, processorArchitecture=MSIL">

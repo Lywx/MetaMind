@@ -1,9 +1,9 @@
 ﻿namespace MetaMind.Engine.Debugging.Screens
 {
     using System;
-    using Engine.Screens;
     using Microsoft.Xna.Framework;
-    using Services;
+    using Screen;
+    using Service;
 
     public class CpuWhiteNoiseSreen : GameScreen
     {

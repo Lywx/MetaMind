@@ -1,8 +1,8 @@
 namespace MetaMind.Unity.Guis.Modules.Summary
 {
     using System;
-    using Engine.Components.Fonts;
-    using Engine.Guis.Controls.Visuals;
+    using Engine.Component.Font;
+    using Engine.Gui.Control.Visuals;
     using Microsoft.Xna.Framework;
 
     public class SummaryTitle : Label
@@ -10,8 +10,8 @@ namespace MetaMind.Unity.Guis.Modules.Summary
         public SummaryTitle(Func<Font> font, Func<string> text, Func<Vector2> pos, Func<Color> color, Func<float> size)
             : base(font, text, pos, color, size)
         {
-            this.TextHAlign = StringHAlign.Center;
-            this.TextVAlign = StringVAlign.Center;
+            this.TextHAlignment = HoritonalAlignment.Center;
+            this.TextVAlignment = VerticalAlignment.Center;
         }
     }
 }

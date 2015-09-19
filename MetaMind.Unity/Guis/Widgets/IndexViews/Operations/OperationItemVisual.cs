@@ -2,36 +2,38 @@
 {
     using System;
     using Concepts.Operations;
-    using Engine.Guis.Controls.Items;
-    using Engine.Guis.Controls.Items.Frames;
-    using Engine.Guis.Controls.Items.Interactions;
-    using Engine.Guis.Controls.Items.Visuals;
-    using Engine.Guis.Controls.Visuals;
-    using Engine.Services;
-    using Engine.Settings.Colors;
+    using Engine.Gui.Control.Item;
+    using Engine.Gui.Control.Item.Frames;
+    using Engine.Gui.Control.Item.Interactions;
+    using Engine.Gui.Control.Item.Visuals;
+    using Engine.Gui.Control.Visuals;
+    using Engine.Service;
+    using Engine.Setting.Color;
     using Microsoft.Xna.Framework;
 
     public class OperationItemVisual : ViewItemVisual
     {
         public OperationItemVisual(IViewItem item) : base(item)
         {
+            // TODO: Load skins in visual
+            this.NameLabel.LoadSkin();
         }
 
-        protected OperationItemFrame ItemFrame { get; set; }
+        protected OperationItemFrameController ItemFrame { get; set; }
 
         protected IIndexBlockViewVerticalItemInteraction ItemInteraction { get; set; }
 
         #region Components
 
-        protected ViewItemLabelVisual IdLabel { get; set; }
+        protected ViewItemLabel IdLabel { get; set; }
 
-        protected ViewItemLabelVisual PlusLabel { get; set; }
+        protected ViewItemLabel PlusLabel { get; set; }
 
-        protected ViewItemLabelVisual StatusLabel { get; set; }
+        protected ViewItemLabel StatusLabel { get; set; }
 
-        protected ViewItemLabelVisual NameLabel { get; set; }
+        protected ViewItemLabel NameLabel { get; set; }
 
-        protected ViewItemLabelVisual DescriptionLabel { get; set; }
+        protected ViewItemLabel DescriptionLabel { get; set; }
 
         protected ViewItemFrameVisual IdFrame { get; set; }
 
@@ -61,10 +63,10 @@
 
         #endregion
 
-        public override void SetupLayer()
+        public override void Initialize()
         {
             // Layers
-            var itemLayer = this.ItemGetLayer<OperationItemLayer>();
+            var itemLayer = this.GetItemLayer<OperationItemLayer>();
 
             // Avoid the implicit closure warning in Resharper
             this.ItemFrame       = itemLayer.ItemFrame;
@@ -75,55 +77,52 @@
             IOperationDescription itemData = this.Item.ItemData;
 
             // Positions
-            this.ItemCenterPosition = () => this.ItemFrame.RootFrame.Center.ToVector2();
+            this.ItemCenterPosition = () => this.ItemFrame.RootRectangle.Center.ToVector2();
 
-            this.IdCenterPosition = () => this.ItemFrame.IdFrame.Center.ToVector2();
-            this.PlusCenterPosition = () => this.ItemFrame.PlusFrame.Center.ToVector2();
+            this.IdCenterPosition = () => this.ItemFrame.IdRectangle.Center.ToVector2();
+            this.PlusCenterPosition = () => this.ItemFrame.PlusRectangle.Center.ToVector2();
 
-            this.StatusCenterPosition = () => this.ItemFrame.StatusFrame.Center.ToVector2();
+            this.StatusCenterPosition = () => this.ItemFrame.StatusRectangle.Center.ToVector2();
 
             this.NamePosition = () => this.ItemFrame.NameFrameLocation() + itemSettings.Get<Vector2>("NameMargin");
             this.DescriptionPosition = () => this.ItemFrame.DescriptionFrameLocation() + itemSettings.Get<Vector2>("DescriptionMargin");
 
             // Components
             this.IdFrame = new ViewItemFrameVisual(this.Item,
-                this.ItemFrame.IdFrame,
+                this.ItemFrame.IdRectangle,
                 itemSettings.Get<FrameSettings>("IdFrame"));
             {
-                var labelSettings = itemSettings.Get<LabelSettings>("IdLabel");
+                var labelSettings = itemSettings.Get<LabelSettings>("OperationItem.IdLabel");
                 labelSettings.Text = () => itemLayout.Id.ToString();
-                labelSettings.TextPosition = this.IdCenterPosition;
+                labelSettings.AnchorLocation = this.IdCenterPosition;
 
-                this.IdLabel = new ViewItemLabelVisual(this.Item, labelSettings);
+                this.IdLabel = new ViewItemLabel(this.Item, labelSettings);
             }
 
             this.PlusFrame = new ViewItemFrameVisual(this.Item,
-                this.ItemFrame.PlusFrame,
+                this.ItemFrame.PlusRectangle,
                 itemSettings.Get<FrameSettings>("PlusFrame"));
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("PlusLabel");
                 labelSettings.Text = () => this.ItemInteraction.IndexedViewOpened ? "-" : "+";
-                labelSettings.TextPosition = this.PlusCenterPosition;
+                labelSettings.AnchorLocation = this.PlusCenterPosition;
 
-                this.PlusLabel = new ViewItemLabelVisual(this.Item, labelSettings);
+                this.PlusLabel = new ViewItemLabel(this.Item, labelSettings);
             }
 
             this.StatusFrame = new ViewItemFrameVisual(this.Item,
-                this.ItemFrame.StatusFrame,
+                this.ItemFrame.StatusRectangle,
                 itemSettings.Get<FrameSettings>("StatusFrame"));
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("StatusLabel");
                 labelSettings.Text = () =>
                     itemData.HasChildren
-                        ? string.Format(
-                            "{0} / {1}",
-                            itemData.ChildrenOperationActivated,
-                            itemData.Children.Count)
+                        ? $"{itemData.ChildrenOperationActivated} / {itemData.Children.Count}"
                         : itemData.OperationStatus;
-                labelSettings.TextPosition = this.StatusCenterPosition;
+                labelSettings.AnchorLocation = this.StatusCenterPosition;
 
-                this.StatusLabel = new ViewItemLabelVisual(this.Item, labelSettings);
-                this.StatusLabel.Label.TextColor = () =>
+                this.StatusLabel = new ViewItemLabel(this.Item, labelSettings);
+                this.StatusLabel.TextColor = () =>
                     itemData.HasChildren
                         ? Color.White
                         : itemData.IsOperationActivated
@@ -133,26 +132,26 @@
 
             var nameFrameSettings = itemSettings.Get<FrameSettings>("NameFrame");
             this.NameFrame = new ViewItemFrameVisual(this.Item,
-                this.ItemFrame.NameFrame,
+                this.ItemFrame.NameRectangle,
                 nameFrameSettings);
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("NameLabel");
                 labelSettings.Text = () => itemData.Name;
-                labelSettings.TextPosition = this.NamePosition;
+                labelSettings.AnchorLocation = this.NamePosition;
 
-                this.NameLabel = new ViewItemLabelVisual(this.Item, labelSettings);
+                this.NameLabel = new ViewItemLabel(this.Item, labelSettings);
             }
 
             var descriptionFrameSettings = itemSettings.Get<FrameSettings>("DescriptionFrame");
             this.DescriptionFrame = new ViewItemFrameVisual(this.Item,
-                this.ItemFrame.DescriptionFrame,
+                this.ItemFrame.DescriptionRectangle,
                 descriptionFrameSettings);
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("DescriptionLabel");
                 labelSettings.Text = () => itemLayer.ItemLayout.BlockStringWrapped;
-                labelSettings.TextPosition = this.DescriptionPosition;
+                labelSettings.AnchorLocation = this.DescriptionPosition;
 
-                this.DescriptionLabel = new ViewItemLabelVisual(this.Item, labelSettings);
+                this.DescriptionLabel = new ViewItemLabel(this.Item, labelSettings);
             }
         }
 

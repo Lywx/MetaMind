@@ -1,19 +1,17 @@
 ﻿namespace MetaMind.EngineTest.Guis
 {
-    using Engine.Guis.Controls.Regions;
-    using Engine.Guis.Controls.Visuals;
-    using Engine.Testers;
-    using MetaMind.Engine;
-    using MetaMind.Engine.Guis;
-    using MetaMind.Engine.Services;
-
+    using Engine.Gui.Control.Regions;
+    using Engine.Gui.Control.Visuals;
+    using Engine.Service;
+    using Engine.Test;
+    using Engine;
     using Microsoft.Xna.Framework;
 
     public class PlayTest_Region : GameEntityModule<object>
     {
         private GameControllableEntityCollection<GameControllableEntity> control;
         private GameVisualEntityCollection<GameVisualEntity> visual;
-        private Region region;
+        private RectangleRegion region;
 
         public PlayTest_Region(object settings)
             : base(settings)
@@ -22,7 +20,7 @@
             this.visual  = new GameVisualEntityCollection<GameVisualEntity>();
 
             // Region Control
-            this.region = new Region(new Rectangle(50, 50, 50, 50));
+            this.region = new RectangleRegion(new Rectangle(50, 50, 50, 50));
             this.control.Add(region);
 
             // Box Visual
@@ -35,7 +33,7 @@
             this.control.Draw(graphics, time, alpha);
             this.visual .Draw(graphics, time, alpha);
 
-            StateVisualTester.Draw(graphics, typeof(RegionState), this.region.States, this.region.Location.ToVector2(), 10, 10);
+            StateVisualTester.Draw(graphics, typeof(RegionState), this.region.RegionStates, this.region.Location.ToVector2(), 10, 10);
         }
 
         public override void Update(GameTime time)

@@ -1,8 +1,7 @@
 ﻿namespace MetaMind.Engine
 {
-    using Services;
-
     using Microsoft.Xna.Framework;
+    using Service;
 
     public class GameControllableEntityCollection<T> : GameVisualEntityCollection<T>
         where T : IGameControllableEntity

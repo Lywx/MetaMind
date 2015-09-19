@@ -5,7 +5,7 @@
     using System.Windows.Forms;
     using NLog;
     using Processors;
-    using KeyEventArgs = Components.Inputs.KeyEventArgs;
+    using KeyEventArgs = Component.Input.KeyEventArgs;
     using Keys = Microsoft.Xna.Framework.Input.Keys;
 
     public class GameConsoleLogic : GameModuleLogic<GameConsole, GameConsoleSettings, GameConsoleLogic, GameConsoleVisual>

@@ -10,25 +10,60 @@ namespace MetaMind.Unity.Concepts.Tests
     using System;
     using System.Collections.Generic;
     using System.Speech.Synthesis;
-    using Engine.Guis.Controls.Items.Data;
+    using Engine.Gui.Control.Item.Data;
     using Events;
 
-    #region Test Static Members
-
-    public partial class Test
+    /// <summary>
+    /// Test is a functional programming interface for F#. Test is following 
+    /// functional programming paradigm.
+    /// </summary>
+    public class Test : ITest, IBlockViewItemData 
     {
+        #region Static Dependency
+
         public static TestSession Session { get; set; }
 
         public static SpeechSynthesizer Speech { get; set; }
-    }
 
-    #endregion 
+        #endregion
 
-    #region ITest
+        #region Dependency
 
-    public partial class Test : ITest
-    {
         private ITestEvaluation evaluation;
+
+        public ITestEvaluation Evaluation
+        {
+            get
+            {
+                if (this.evaluation == null)
+                {
+                    this.evaluation = new TestEvaluation(this, DateTime.Now, TimeSpan.FromSeconds(1.0));
+                    this.RegisterEvaluationHandlers();
+                }
+
+                return this.evaluation;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
+                this.evaluation?.Dispose();
+
+                this.evaluation = value;
+                this.RegisterEvaluationHandlers();
+            }
+        }
+
+        public TestEffect Effect { get; private set; }
+
+        public ITestOrganization Organization { get; private set; }
+
+        #endregion
+
+        #region Constructors and Finalizer
 
         public Test(string name, string description, string path)
         {
@@ -52,44 +87,62 @@ namespace MetaMind.Unity.Concepts.Tests
             this.Reset();
         }
 
+        #endregion
+
         public string Name { get; private set; }
 
         public string Description { get; private set; }
 
         public string Path { get; private set; }
 
-        public ITestEvaluation Evaluation
+        #region Interface ITestOrganization
+
+        public List<ITest> Children => this.Organization.Children;
+
+        public Test Parent => this.Organization.Parent;
+
+        public bool HasParent => this.Organization.HasParent;
+
+        public bool HasChildren => this.Organization.HasChildren;
+
+        public IEnumerable<ITest> AllCollection => this.Organization.AllCollection;
+
+        public IEnumerable<ITest> ChildrenCollection => this.Organization.ChildrenCollection;
+
+        #endregion ITestOrganization
+
+        #region Interface IComparable
+
+        public int CompareTo(ITest other)
         {
-            get
-            {
-                if (this.evaluation == null)
-                {
-                    this.evaluation = new TestEvaluation(this, DateTime.Now, TimeSpan.FromSeconds(1.0));
-                    this.EvaluationSubscribe();
-                }
-
-                return this.evaluation;
-            }
-            set
-            {
-                if (value == null)
-                {
-                    throw new ArgumentNullException(nameof(value));
-                }
-
-                if (this.evaluation != null)
-                {
-                    this.evaluation.Dispose();
-                }
-
-                this.evaluation = value;
-                this.EvaluationSubscribe();
-            }
+            return string.Compare(this.Name, other.Name, StringComparison.Ordinal);
         }
 
-        private void EvaluationSubscribe()
+        #endregion 
+
+        #region Interface IBlockViewItemData
+
+        public string BlockStringRaw => this.Description;
+
+        public string BlockLabel => "DescriptionLabel";
+
+        public string BlockFrame => "DescriptionFrame";
+
+        #endregion 
+
+        #region Events
+
+        public event EventHandler<TestEvaluationEventArgs> Succeeded = delegate { };
+
+        public event EventHandler<TestEvaluationEventArgs> Failed = delegate { };
+
+        #endregion Events
+
+        #region Event Registration
+
+        private void RegisterEvaluationHandlers()
         {
-            // It safely adds the event handler without dulplication.
+            // It safely adds the event handler without duplication.
 
             // There wouldn't be thread safety problem because the 
             // evaluation is only succeeded or failed in Update method.
@@ -101,6 +154,10 @@ namespace MetaMind.Unity.Concepts.Tests
             this.Evaluation.Failed += this.EvaluationFailed;
         }
 
+        #endregion
+
+        #region Event Handlers
+
         private void EvaluationFailed(object e, TestEvaluationEventArgs a)
         {
             this.Failed(this, a);
@@ -111,17 +168,7 @@ namespace MetaMind.Unity.Concepts.Tests
             this.Succeeded(this, a);
         }
 
-        public ITestOrganization Organization { get; private set; }
-
-        public TestEffect Effect { get; private set; }
-
-        #region Events
-
-        public event EventHandler<TestEvaluationEventArgs> Succeeded = delegate { };
-
-        public event EventHandler<TestEvaluationEventArgs> Failed = delegate { };
-
-        #endregion Events
+        #endregion
 
         #region Operations
 
@@ -143,50 +190,4 @@ namespace MetaMind.Unity.Concepts.Tests
 
         #endregion Update
     }
-
-    #endregion Test
-
-    #region ITestOrganization
-
-    public partial class Test
-    {
-        public List<ITest> Children => this.Organization.Children;
-
-        public Test Parent => this.Organization.Parent;
-
-        public bool HasParent => this.Organization.HasParent;
-
-        public bool HasChildren => this.Organization.HasChildren;
-
-        public IEnumerable<ITest> AllCollection => this.Organization.AllCollection;
-
-        public IEnumerable<ITest> ChildrenCollection => this.Organization.ChildrenCollection;
-    }
-
-    #endregion ITestOrganization
-
-    #region IComparable
-
-    public partial class Test
-    {
-        public int CompareTo(ITest other)
-        {
-            return string.Compare(this.Name, other.Name, StringComparison.Ordinal);
-        }
-    }
-
-    #endregion IComparable
-
-    #region IBlockViewItemData
-
-    public partial class Test : IBlockViewItemData
-    {
-        public string BlockStringRaw => this.Description;
-
-        public string BlockLabel => "DescriptionLabel";
-
-        public string BlockFrame => "DescriptionFrame";
-    }
-
-    #endregion IBlockViewItemData
 }

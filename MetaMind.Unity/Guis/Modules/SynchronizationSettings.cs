@@ -2,10 +2,10 @@
 {
     using System;
     using Engine;
-    using Engine.Components.Fonts;
-    using Engine.Components.Graphics;
-    using Engine.Settings.Colors;
-    using Engine.Settings.Loaders;
+    using Engine.Component.Font;
+    using Engine.Component.Graphics;
+    using Engine.Setting.Color;
+    using Engine.Setting.Loader;
     using Microsoft.Xna.Framework;
 
     public class SynchronizationSettings : GameVisualEntity, IParameterLoader<GraphicsSettings>, ICloneable

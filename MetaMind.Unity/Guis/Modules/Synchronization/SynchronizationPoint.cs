@@ -2,9 +2,9 @@ namespace MetaMind.Unity.Guis.Modules.Synchronization
 {
     using System;
     using Engine;
-    using Engine.Components.Fonts;
-    using Engine.Guis.Controls.Visuals;
-    using Engine.Services;
+    using Engine.Component.Font;
+    using Engine.Gui.Control.Visuals;
+    using Engine.Service;
     using Microsoft.Xna.Framework;
 
     public class SynchronizationPoint : GameVisualEntity
@@ -17,7 +17,7 @@ namespace MetaMind.Unity.Guis.Modules.Synchronization
                 () => boxbounds().Center.ToVector2() + new Vector2(0, 16),
                 textColor,
                 () => 0.7f) {
-                                TextHAlign = StringHAlign.Center, TextVAlign = StringVAlign.Center 
+                                TextHAlignment = HoritonalAlignment.Center, TextVAlignment = VerticalAlignment.Center 
                             };
 
             this.Box = new Box(boxbounds, boxColor, () => true);

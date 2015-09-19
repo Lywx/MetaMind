@@ -4,10 +4,9 @@ namespace MetaMind.Unity.Guis.Modules
     using Concepts.Cognitions;
     using Concepts.Synchronizations;
     using Engine;
-    using Engine.Components.Events;
-    using Engine.Components.Inputs;
-    using Engine.Guis;
-    using Engine.Services;
+    using Engine.Component.Event;
+    using Engine.Component.Input;
+    using Engine.Service;
     using Events;
     using Microsoft.Xna.Framework;
     using Screens;

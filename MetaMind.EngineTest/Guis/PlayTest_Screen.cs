@@ -1,8 +1,8 @@
 ﻿namespace MetaMind.EngineTest.Guis
 {
     using Engine;
-    using Engine.Screens;
-    using Engine.Services;
+    using Engine.Screen;
+    using Engine.Service;
 
     public class PlayTest_Screen : GameScreen
     {

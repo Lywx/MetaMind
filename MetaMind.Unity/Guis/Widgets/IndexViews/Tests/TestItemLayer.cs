@@ -1,7 +1,7 @@
 namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 {
-    using Engine.Guis.Controls.Items;
-    using Engine.Guis.Controls.Items.Layers;
+    using Engine.Gui.Control.Item;
+    using Engine.Gui.Control.Item.Layers;
 
     public class TestItemLayer : IndexBlockViewVerticalItemLayer
     {
@@ -20,7 +20,7 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
             get { return (TestItemSettings)base.ItemSettings; }
         }
 
-        public TestItemFrame ItemFrame
+        public TestItemFrameController ItemFrame
         {
             get { return this.ItemLogic.ItemFrame; }
         }

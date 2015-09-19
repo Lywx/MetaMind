@@ -22,7 +22,7 @@
 
         private int resultChange;
 
-        public TestEvaluation(Test test, DateTime initial, TimeSpan period, Func<bool> resultSelector = null)
+        public TestEvaluation(Test test, DateTime initial, TimeSpan period) 
         {
             if (test == null)
             {
@@ -35,13 +35,18 @@
             this.testTimer = new TestTimer(initial, period);
             this.testTimer.Fired += (o, a) => this.UpdateResult();
 
-            // Reset to default before assignment
             this.Reset();
+        }
 
-            if (resultSelector != null)
+        public TestEvaluation(Test test, DateTime initial, TimeSpan period, Func<bool> resultSelector) 
+            : this(test, initial, period)
+        {
+            if (resultSelector == null)
             {
-                this.ResultSelector = resultSelector;
+                throw new ArgumentNullException(nameof(resultSelector));
             }
+
+            this.ResultSelector = resultSelector;
         }
 
         ~TestEvaluation()
@@ -119,6 +124,10 @@
 
         public event EventHandler<TestEvaluationEventArgs> Succeeded = delegate { };
 
+        #endregion
+
+        #region Event On
+
         private void OnSucceed(bool isSource)
         {
             this.Succeeded.Invoke(this, new TestEvaluationEventArgs(isSource));
@@ -135,7 +144,13 @@
             this.resultChangedMoment = DateTime.Now;
         }
 
-        #endregion Events
+        #endregion 
+
+        // TODO(Critical): Not implemented test action.
+
+        public Action<TestEvaluationEventArgs> FailedAction = delegate { };
+
+        public Action<TestEvaluationEventArgs> ScceddedAction = delegate { };
 
         #region Update
 

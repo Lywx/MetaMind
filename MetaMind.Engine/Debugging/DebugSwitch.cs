@@ -1,7 +1,7 @@
 namespace MetaMind.Engine.Debugging
 {
     using System.Diagnostics;
-    using Services;
+    using Service;
 
     public static class DebugSwitch
     {

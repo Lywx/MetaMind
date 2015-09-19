@@ -77,87 +77,116 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Collections\ObservableCollection.cs" />
-    <Compile Include="Components\Fonts\IStringDrawerOperations.cs" />
-    <Compile Include="Components\IFileManager.cs" />
-    <Compile Include="Components\Inputs\KeyEventArgs.cs" />
-    <Compile Include="Components\Inputs\MouseButtons.cs" />
-    <Compile Include="Components\Inputs\MouseEventArgs.cs" />
-    <Compile Include="Components\Inputs\MouseKeys.cs" />
+    <Compile Include="Component\Font\HoritonalAlignment.cs" />
+    <Compile Include="Component\Font\IStringDrawerOperations.cs" />
+    <Compile Include="Component\Font\VerticalAlignment.cs" />
+    <Compile Include="Component\File\IFileManager.cs" />
+    <Compile Include="Component\Input\KeyEventArgs.cs" />
+    <Compile Include="Component\Input\MouseButtons.cs" />
+    <Compile Include="Component\Input\MouseEventArgs.cs" />
+    <Compile Include="Component\Input\MouseKeys.cs" />
     <Compile Include="Console\ScrollController.cs" />
     <Compile Include="Console\GameConsoleState.cs" />
     <Compile Include="Debugging\FrameRateCounter.cs" />
-    <Compile Include="Guis\Controls\Buttons\GlyphMode.cs" />
-    <Compile Include="Guis\Controls\ControlCollection.cs" />
-    <Compile Include="Guis\Controls\DrawEventArgs.cs" />
-    <Compile Include="Extensions\ExtKeys.cs" />
-    <Compile Include="Extensions\ExtMouseButtons.cs" />
-    <Compile Include="Extensions\ExtMouseEventArgs.cs" />
-    <Compile Include="Extensions\ExtVector3.cs" />
+    <Compile Include="DrawEventArgs.cs" />
+    <Compile Include="Extensions\ColorUtils.cs" />
+    <Compile Include="Gui\Control\Button\GlyphMode.cs" />
+    <Compile Include="Gui\Control\ControlComponent.cs" />
+    <Compile Include="Gui\Control\ControlCollection.cs" />
+    <Compile Include="Extensions\KeysExt.cs" />
+    <Compile Include="Extensions\MouseButtonsExt.cs" />
+    <Compile Include="Extensions\MouseEventArgsExt.cs" />
+    <Compile Include="Extensions\Vector3Ext.cs" />
     <Compile Include="GameControllableComponent.cs" />
-    <Compile Include="Components\IScreenManagerOperations.cs" />
-    <Compile Include="Components\Processes\ProcessCounter.cs" />
-    <Compile Include="Components\Processes\StepProcess.cs" />
-    <Compile Include="Extensions\ExtExpression.cs" />
-    <Compile Include="Extensions\ExtFunc.cs" />
-    <Compile Include="Extensions\ExtT.cs" />
-    <Compile Include="Extensions\ExtList.cs" />
-    <Compile Include="GameEngineCompositor.cs" />
+    <Compile Include="Component\Graphics\IScreenManagerOperations.cs" />
+    <Compile Include="Component\Process\ProcessCounter.cs" />
+    <Compile Include="Component\Process\StepProcess.cs" />
+    <Compile Include="Extensions\ExpressionExt.cs" />
+    <Compile Include="Extensions\FuncExt.cs" />
+    <Compile Include="Extensions\TExt.cs" />
+    <Compile Include="Extensions\ListExt.cs" />
+    <Compile Include="GameEngineBuilder.cs" />
     <Compile Include="Console\BufferController.cs" />
     <Compile Include="Console\Processors\ICommandProcessor.cs" />
     <Compile Include="Console\Processors\IronPythonProcessor.cs" />
     <Compile Include="Console\Commands\CommandType.cs" />
-    <Compile Include="Guis\Controls\Container.cs" />
-    <Compile Include="Guis\Controls\Buttons\Glyph.cs" />
-    <Compile Include="Guis\Controls\IContainer.cs" />
-    <Compile Include="Guis\Controls\IControl.cs" />
-    <Compile Include="Guis\Elements\Inputs\ButtonDoubleClick.cs" />
-    <Compile Include="Guis\Elements\Inputs\ButtonHistory.cs" />
-    <Compile Include="Guis\Elements\Inputs\ButtonPress.cs" />
-    <Compile Include="Guis\Elements\Inputs\ButtonState.cs" />
-    <Compile Include="Guis\Elements\Inputs\MouseOver.cs" />
-    <Compile Include="Guis\Elements\Inputs\PositionHistory.cs" />
-    <Compile Include="Guis\Elements\Inputs\PositionState.cs" />
+    <Compile Include="Gui\Control\Button\Glyph.cs" />
+    <Compile Include="Gui\Control\IComponent.cs" />
+    <Compile Include="Gui\Control\IControl.cs" />
+    <Compile Include="Gui\Control\Item\Frames\BlcokViewVerticalItemFrameController.cs" />
+    <Compile Include="Gui\Control\Item\Frames\FrameSettings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Gui\Control\Item\Frames\IViewItemFrameController.cs" />
+    <Compile Include="Gui\Control\Item\Frames\PointViewItemFrameController.cs" />
+    <Compile Include="Gui\Control\Item\Frames\ViewItemRectangle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Gui\Control\Item\Frames\ViewItemFrameController.cs" />
+    <Compile Include="Gui\Control\Item\IViewItemEntity.cs" />
+    <Compile Include="Gui\Control\Item\ViewItemEntity.cs" />
+    <Compile Include="Gui\Control\Item\Visuals\ViewItemLabel.cs" />
+    <Compile Include="Gui\Control\ControlManager.cs" />
+    <Compile Include="Gui\Control\Skin\ArchiveManager.cs" />
+    <Compile Include="Gui\Control\Skin\Skin.cs" />
+    <Compile Include="Gui\Control\Skin\SkinElement.cs" />
+    <Compile Include="Gui\Control\Skin\SkinInformation.cs" />
+    <Compile Include="Gui\Control\Skin\SkinList.cs" />
+    <Compile Include="Gui\Control\Skin\SkinReader.cs" />
+    <Compile Include="Gui\Control\Skin\SkinXmlDocument.cs" />
+    <Compile Include="Gui\Control\Tooltip.cs" />
+    <Compile Include="Gui\Control\Views\Layers\IViewUniversalLayerOperations.cs" />
+    <Compile Include="Gui\Control\Visuals\Margin.cs" />
+    <Compile Include="Gui\Element\ElementEvent.cs" />
+    <Compile Include="Gui\Element\IElement.cs" />
+    <Compile Include="Gui\Element\Input\ButtonDoubleClick.cs" />
+    <Compile Include="Gui\Element\Input\ButtonHistory.cs" />
+    <Compile Include="Gui\Element\Input\ButtonPress.cs" />
+    <Compile Include="Gui\Element\Input\ButtonState.cs" />
+    <Compile Include="Gui\Element\Input\MouseOver.cs" />
+    <Compile Include="Gui\Element\Input\PositionHistory.cs" />
+    <Compile Include="Gui\Element\Input\PositionState.cs" />
     <Compile Include="GameControllableEntityCollection.cs" />
     <Compile Include="GameEntityCollection.cs" />
     <Compile Include="GameVisualEntityCollection.cs" />
-    <Compile Include="Guis\Elements\Inputs\MouseAutomata.cs" />
-    <Compile Include="Guis\Elements\Inputs\MouseState.cs" />
-    <Compile Include="Guis\Elements\PickableFrame.cs" />
-    <Compile Include="Components\AudioManager.cs" />
-    <Compile Include="Components\Events\IEvent.cs" />
-    <Compile Include="Components\Events\IListener.cs" />
-    <Compile Include="Components\Fonts\StringDrawer.cs" />
-    <Compile Include="Components\Fonts\FontInfo.cs" />
-    <Compile Include="Components\Fonts\MonoFont.cs" />
-    <Compile Include="Components\GameEngineInput.cs" />
-    <Compile Include="Components\IAudioManager.cs" />
-    <Compile Include="Components\IEventManager.cs" />
-    <Compile Include="Components\Fonts\IStringDrawer.cs" />
-    <Compile Include="Components\Fonts\IFontManager.cs" />
-    <Compile Include="Components\IGameManager.cs" />
-    <Compile Include="Components\Inputs\IInputEvent.cs" />
-    <Compile Include="Components\Inputs\IInputState.cs" />
-    <Compile Include="Components\Inputs\IMouseInputState.cs" />
-    <Compile Include="Components\Inputs\KeyboardActionMap.cs" />
-    <Compile Include="Components\Inputs\KeyboardActions.cs" />
-    <Compile Include="Components\EventManager.cs" />
-    <Compile Include="Components\Events\Event.cs" />
-    <Compile Include="Components\Events\Listener.cs" />
-    <Compile Include="Components\Inputs\IKeyboardInputState.cs" />
-    <Compile Include="Components\IProcessManager.cs" />
-    <Compile Include="Components\ISaveManager.cs" />
-    <Compile Include="Components\IScreenManager.cs" />
-    <Compile Include="Components\Fonts\FontExt.cs" />
-    <Compile Include="Components\Fonts\SpriteFontExt.cs" />
-    <Compile Include="Components\FileManager.cs" />
-    <Compile Include="Components\Fonts\FontManager.cs" />
-    <Compile Include="Components\Fonts\Font.cs" />
-    <Compile Include="Components\Fonts\StringUtils.cs" />
-    <Compile Include="Components\Graphics\GraphicsManager.cs" />
+    <Compile Include="Gui\Element\Input\MouseAutomata.cs" />
+    <Compile Include="Gui\Element\Input\MouseState.cs" />
+    <Compile Include="Gui\Element\Rectangles\PickableRectangle.cs" />
+    <Compile Include="Component\Audio\AudioManager.cs" />
+    <Compile Include="Component\Event\IEvent.cs" />
+    <Compile Include="Component\Event\IListener.cs" />
+    <Compile Include="Component\Font\StringDrawer.cs" />
+    <Compile Include="Component\Font\FontInfo.cs" />
+    <Compile Include="Component\Font\MonoFont.cs" />
+    <Compile Include="Component\GameEngineInput.cs" />
+    <Compile Include="Component\Audio\IAudioManager.cs" />
+    <Compile Include="Component\Event\IEventManager.cs" />
+    <Compile Include="Component\Font\IStringDrawer.cs" />
+    <Compile Include="Component\Font\IFontManager.cs" />
+    <Compile Include="Component\IGameManager.cs" />
+    <Compile Include="Component\Input\IInputEvent.cs" />
+    <Compile Include="Component\Input\IInputState.cs" />
+    <Compile Include="Component\Input\IMouseInputState.cs" />
+    <Compile Include="Component\Input\KeyboardActionMap.cs" />
+    <Compile Include="Component\Input\KeyboardActions.cs" />
+    <Compile Include="Component\Event\EventManager.cs" />
+    <Compile Include="Component\Event\Event.cs" />
+    <Compile Include="Component\Event\Listener.cs" />
+    <Compile Include="Component\Input\IKeyboardInputState.cs" />
+    <Compile Include="Component\Process\IProcessManager.cs" />
+    <Compile Include="Component\File\ISaveManager.cs" />
+    <Compile Include="Component\Graphics\IScreenManager.cs" />
+    <Compile Include="Component\Font\FontExt.cs" />
+    <Compile Include="Component\Font\SpriteFontExt.cs" />
+    <Compile Include="Component\File\FileManager.cs" />
+    <Compile Include="Component\Font\FontManager.cs" />
+    <Compile Include="Component\Font\Font.cs" />
+    <Compile Include="Extensions\StringUtils.cs" />
+    <Compile Include="Component\Graphics\GraphicsManager.cs" />
     <Compile Include="GameEngine.cs" />
-    <Compile Include="Components\GameEngineGraphics.cs" />
-    <Compile Include="Components\GameEngineInterop.cs" />
-    <Compile Include="Components\GameEngineNumerical.cs" />
+    <Compile Include="Component\GameEngineGraphics.cs" />
+    <Compile Include="Component\GameEngineInterop.cs" />
+    <Compile Include="Component\GameEngineNumerical.cs" />
     <Compile Include="Console\Commands\CommandHistory.cs" />
     <Compile Include="Console\Processors\CommandProcessor.cs" />
     <Compile Include="Console\Commands\ClearCommand.cs" />
@@ -177,393 +206,367 @@
     <Compile Include="GameModuleComponent.cs" />
     <Compile Include="GameModuleLogic.cs" />
     <Compile Include="GameModuleVisual.cs" />
-    <Compile Include="Guis\Controls\Control.cs" />
+    <Compile Include="Gui\Control\Control.cs" />
     <Compile Include="IDrawableComponentOperations.cs" />
     <Compile Include="IDrawableGameComponent.cs" />
+    <Compile Include="IGameEngineConfigurer.cs" />
     <Compile Include="IGameModule.cs" />
     <Compile Include="IGameModuleComponent.cs" />
     <Compile Include="IGameModuleLogic.cs" />
     <Compile Include="IGameModuleVisual.cs" />
     <Compile Include="IGameEntityModuleLogic.cs" />
-    <Compile Include="Screens\CircularGameLayer.cs" />
-    <Compile Include="Screens\ICircularLayerManager.cs" />
-    <Compile Include="Screens\ICircularLayerOperations.cs" />
-    <Compile Include="Screens\ILayerManager.cs" />
-    <Compile Include="Screens\ILayerManagerOperations.cs" />
-    <Compile Include="Guis\Controls\Buttons\Button.cs" />
-    <Compile Include="Guis\Controls\Buttons\ButtonSettings.cs" />
-    <Compile Include="Guis\Controls\Items\Data\IViewBinding.cs" />
-    <Compile Include="Guis\Controls\Items\Data\IViewItemCharModifier.cs">
+    <Compile Include="IRenderTarget.cs" />
+    <Compile Include="RenderTargetFactory.cs" />
+    <Compile Include="Screen\CircularGameLayer.cs" />
+    <Compile Include="Screen\ICircularLayerManager.cs" />
+    <Compile Include="Screen\ICircularLayerOperations.cs" />
+    <Compile Include="Screen\ILayerManager.cs" />
+    <Compile Include="Screen\ILayerManagerOperations.cs" />
+    <Compile Include="Gui\Control\Button\RectangleButton.cs" />
+    <Compile Include="Gui\Control\Button\ButtonSettings.cs" />
+    <Compile Include="Gui\Control\Item\Data\IViewBinding.cs" />
+    <Compile Include="Gui\Control\Item\Data\IViewItemCharModifier.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Items\Data\IViewItemCharProcessor.cs">
+    <Compile Include="Gui\Control\Item\Data\IViewItemCharProcessor.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Items\Data\IViewItemDataModel.cs" />
-    <Compile Include="Guis\Controls\Items\Data\ViewItemCharModifier.cs">
+    <Compile Include="Gui\Control\Item\Data\IViewItemDataModel.cs" />
+    <Compile Include="Gui\Control\Item\Data\ViewItemCharModifier.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Items\Data\ViewItemDataModel.cs">
+    <Compile Include="Gui\Control\Item\Data\ViewItemDataModel.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Items\Frames\BlcokViewVerticalItemFrame.cs" />
-    <Compile Include="Guis\Controls\Items\Frames\ViewItemPickableFrame.cs" />
-    <Compile Include="Guis\Controls\Items\Interactions\BlockViewVerticalItemInteraction.cs" />
-    <Compile Include="Guis\Controls\Items\Interactions\BlockViewVerticalItemLayoutInteraction.cs" />
-    <Compile Include="Guis\Controls\Items\Interactions\IIndexBlockViewVerticalItemInteraction.cs" />
-    <Compile Include="Guis\Controls\Items\Interactions\IndexBlockViewVerticalItemInteraction.cs" />
-    <Compile Include="Guis\Controls\Items\Interactions\IViewItemIndexViewProvider.cs" />
-    <Compile Include="Guis\Controls\Items\Interactions\IViewItemLayoutInteraction.cs" />
-    <Compile Include="Guis\Controls\Items\Interactions\PointViewItemLayoutInteraction.cs" />
-    <Compile Include="Guis\Controls\Items\IViewItemComponentOperations.cs" />
-    <Compile Include="Guis\Controls\Items\IViewItemOperations.cs" />
-    <Compile Include="Guis\Controls\Items\Layers\BlockViewVerticalItemLayer.cs" />
-    <Compile Include="Guis\Controls\Items\Layers\BlockViewVerticalLayer.cs" />
-    <Compile Include="Guis\Controls\Items\Layers\IndexBlockViewVerticalItemLayer.cs" />
-    <Compile Include="Guis\Controls\Items\Layers\IViewItemLayer.cs">
+    <Compile Include="Gui\Control\Item\Interactions\BlockViewVerticalItemInteraction.cs" />
+    <Compile Include="Gui\Control\Item\Interactions\BlockViewVerticalItemLayoutInteraction.cs" />
+    <Compile Include="Gui\Control\Item\Interactions\IIndexBlockViewVerticalItemInteraction.cs" />
+    <Compile Include="Gui\Control\Item\Interactions\IndexBlockViewVerticalItemInteraction.cs" />
+    <Compile Include="Gui\Control\Item\Interactions\IViewItemIndexViewProvider.cs" />
+    <Compile Include="Gui\Control\Item\Interactions\IViewItemLayoutInteraction.cs" />
+    <Compile Include="Gui\Control\Item\Interactions\PointViewItemLayoutInteraction.cs" />
+    <Compile Include="Gui\Control\Item\IViewItemComponentOperations.cs" />
+    <Compile Include="Gui\Control\Item\IViewItemOperations.cs" />
+    <Compile Include="Gui\Control\Item\Layers\BlockViewVerticalItemLayer.cs" />
+    <Compile Include="Gui\Control\Item\Layers\BlockViewVerticalLayer.cs" />
+    <Compile Include="Gui\Control\Item\Layers\IndexBlockViewVerticalItemLayer.cs" />
+    <Compile Include="Gui\Control\Item\Layers\IViewItemLayer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Items\Layers\IViewItemLayerOperations.cs" />
-    <Compile Include="Guis\Controls\Items\Layers\PointView2DItemLayer.cs">
+    <Compile Include="Gui\Control\Item\Layers\IViewItemLayerOperations.cs" />
+    <Compile Include="Gui\Control\Item\Layers\PointView2DItemLayer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Items\Layers\PointViewHorizontalItemLayer.cs">
+    <Compile Include="Gui\Control\Item\Layers\PointViewHorizontalItemLayer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Items\Layers\PointViewItemLayer.cs" />
-    <Compile Include="Guis\Controls\Items\Layers\PointViewVerticalItemLayer.cs" />
-    <Compile Include="Guis\Controls\Items\Layers\PointViewVerticalItemLogic.cs" />
-    <Compile Include="Guis\Controls\Items\Layers\ViewItemLayer.cs">
+    <Compile Include="Gui\Control\Item\Layers\PointViewItemLayer.cs" />
+    <Compile Include="Gui\Control\Item\Layers\PointViewVerticalItemLayer.cs" />
+    <Compile Include="Gui\Control\Item\Layers\PointViewVerticalItemLogic.cs" />
+    <Compile Include="Gui\Control\Item\Layers\ViewItemLayer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Items\Factories\IViewItemFactory.cs">
+    <Compile Include="Gui\Control\Item\Factories\IViewItemFactory.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Items\Factories\ViewItemFactory.cs">
+    <Compile Include="Gui\Control\Item\Factories\ViewItemFactory.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Items\Frames\FrameSettings.cs">
+    <Compile Include="Gui\Control\Item\Interactions\IViewItemInteraction.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Items\Frames\IViewItemRootFrame.cs">
+    <Compile Include="Gui\Control\Item\Interactions\IViewItemViewSelectionProvider.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Items\Frames\ViewItemDraggableFrame.cs">
+    <Compile Include="Gui\Control\Item\Interactions\IViewItemViewSwapProvider.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Items\Frames\IViewItemFrame.cs">
+    <Compile Include="Gui\Control\Item\Interactions\PointViewItemInteraction.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Items\Frames\PointViewItemFrame.cs">
+    <Compile Include="Gui\Control\Item\Interactions\ViewItemInteraction.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Items\Frames\ViewItemFrame.cs">
+    <Compile Include="Gui\Control\Item\ItemState.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Items\IItemEntity.cs">
+    <Compile Include="Gui\Control\Item\IViewItem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Items\Interactions\IViewItemInteraction.cs">
+    <Compile Include="Gui\Control\Item\IViewItemComponent.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Items\Interactions\IViewItemViewSelectionProvider.cs">
+    <Compile Include="Gui\Control\Item\Data\IBlockViewItemData.cs" />
+    <Compile Include="Gui\Control\Item\Layouts\IBlockViewVerticalItemLayout.cs" />
+    <Compile Include="Gui\Control\Item\Layouts\IIndexBlockViewVerticalItemLayout.cs" />
+    <Compile Include="Gui\Control\Item\Layouts\IndexBlockViewVerticalItemLayout.cs" />
+    <Compile Include="Gui\Control\Item\Layouts\IPointViewItemLayout.cs" />
+    <Compile Include="Gui\Control\Item\Layouts\IViewItemLayout.cs" />
+    <Compile Include="Gui\Control\Item\Layouts\PointView2DItemLayout.cs" />
+    <Compile Include="Gui\Control\Item\Layouts\PointViewHorizontalItemLayout.cs" />
+    <Compile Include="Gui\Control\Item\Layouts\PointViewVerticalItemLayout.cs" />
+    <Compile Include="Gui\Control\Item\Layouts\BlockViewVerticalItemLayout.cs" />
+    <Compile Include="Gui\Control\Item\Layouts\ViewItemLayout.cs" />
+    <Compile Include="Gui\Control\Item\Logic\BlockViewVerticalItemLogic.cs" />
+    <Compile Include="Gui\Control\Item\Logic\IBlockViewVerticalItemLogic.cs" />
+    <Compile Include="Gui\Control\Item\Logic\IIndexBlockViewVerticalItemLogic.cs" />
+    <Compile Include="Gui\Control\Item\Logic\IIndexBlockViewVerticalItemLogicOperations.cs" />
+    <Compile Include="Gui\Control\Item\Logic\IndexedBlockViewVerticalItemLogic.cs" />
+    <Compile Include="Gui\Control\Item\Logic\IPointView2DItemLogic.cs" />
+    <Compile Include="Gui\Control\Item\Logic\IPointViewHorizontalItemLogic.cs" />
+    <Compile Include="Gui\Control\Item\Logic\IPointViewItemLogic.cs" />
+    <Compile Include="Gui\Control\Item\Logic\IPointViewVerticalItemLogic.cs" />
+    <Compile Include="Gui\Control\Item\Logic\IViewItemLogic.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Items\Interactions\IViewItemViewSwapProvider.cs">
+    <Compile Include="Gui\Control\Item\Logic\IndexBlockViewVerticalItemLogic.cs" />
+    <Compile Include="Gui\Control\Item\Logic\PointView2DItemLogic.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Items\Interactions\PointViewItemInteraction.cs">
+    <Compile Include="Gui\Control\Item\Logic\PointViewHorizontalItemLogic.cs" />
+    <Compile Include="Gui\Control\Item\Logic\ViewItemLogic.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Items\Interactions\ViewItemInteraction.cs">
+    <Compile Include="Gui\Control\Item\Logic\ViewItemLogicExt.cs" />
+    <Compile Include="Gui\Control\Item\Settings\IItemSettings.cs" />
+    <Compile Include="Gui\Control\Item\Settings\ItemSettings.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Items\ItemEntity.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Guis\Controls\Items\ItemState.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Guis\Controls\Items\IViewItem.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Guis\Controls\Items\IViewItemComponent.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Guis\Controls\Items\Data\IBlockViewItemData.cs" />
-    <Compile Include="Guis\Controls\Items\Layouts\IBlockViewVerticalItemLayout.cs" />
-    <Compile Include="Guis\Controls\Items\Layouts\IIndexBlockViewVerticalItemLayout.cs" />
-    <Compile Include="Guis\Controls\Items\Layouts\IndexBlockViewVerticalItemLayout.cs" />
-    <Compile Include="Guis\Controls\Items\Layouts\IPointViewItemLayout.cs" />
-    <Compile Include="Guis\Controls\Items\Layouts\IViewItemLayout.cs" />
-    <Compile Include="Guis\Controls\Items\Layouts\PointView2DItemLayout.cs" />
-    <Compile Include="Guis\Controls\Items\Layouts\PointViewHorizontalItemLayout.cs" />
-    <Compile Include="Guis\Controls\Items\Layouts\PointViewVerticalItemLayout.cs" />
-    <Compile Include="Guis\Controls\Items\Layouts\BlockViewVerticalItemLayout.cs" />
-    <Compile Include="Guis\Controls\Items\Layouts\ViewItemLayout.cs" />
-    <Compile Include="Guis\Controls\Items\Logic\BlockViewVerticalItemLogic.cs" />
-    <Compile Include="Guis\Controls\Items\Logic\IBlockViewVerticalItemLogic.cs" />
-    <Compile Include="Guis\Controls\Items\Logic\IIndexBlockViewVerticalItemLogic.cs" />
-    <Compile Include="Guis\Controls\Items\Logic\IIndexBlockViewVerticalItemLogicOperations.cs" />
-    <Compile Include="Guis\Controls\Items\Logic\IndexedBlockViewVerticalItemLogic.cs" />
-    <Compile Include="Guis\Controls\Items\Logic\IPointView2DItemLogic.cs" />
-    <Compile Include="Guis\Controls\Items\Logic\IPointViewHorizontalItemLogic.cs" />
-    <Compile Include="Guis\Controls\Items\Logic\IPointViewItemLogic.cs" />
-    <Compile Include="Guis\Controls\Items\Logic\IPointViewVerticalItemLogic.cs" />
-    <Compile Include="Guis\Controls\Items\Logic\IViewItemLogic.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Guis\Controls\Items\Logic\IndexBlockViewVerticalItemLogic.cs" />
-    <Compile Include="Guis\Controls\Items\Logic\PointView2DItemLogic.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Guis\Controls\Items\Logic\PointViewHorizontalItemLogic.cs" />
-    <Compile Include="Guis\Controls\Items\Logic\ViewItemLogic.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Guis\Controls\Items\Logic\ViewItemLogicExt.cs" />
-    <Compile Include="Guis\Controls\Items\Settings\IItemSettings.cs" />
-    <Compile Include="Guis\Controls\Items\Settings\ItemSettings.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Guis\Controls\Items\Swaps\ViewItemSwapProcess.cs">
+    <Compile Include="Gui\Control\Item\Swaps\ViewItemSwapProcess.cs">
       <SubType>Code</SubType>
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Guis\Controls\Items\ViewItem.cs">
+    <Compile Include="Gui\Control\Item\ViewItem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Items\ViewItemComponent.cs">
+    <Compile Include="Gui\Control\Item\ViewItemComponent.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Items\Visuals\IViewItemVisual.cs">
+    <Compile Include="Gui\Control\Item\Visuals\IViewItemVisual.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Items\Visuals\ViewItemFrameVisual.cs">
+    <Compile Include="Gui\Control\Item\Visuals\ViewItemFrameVisual.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Items\Visuals\ViewItemLabelVisual.cs" />
-    <Compile Include="Guis\Controls\Items\Visuals\ViewItemVisual.cs">
+    <Compile Include="Gui\Control\Item\Visuals\ViewItemVisual.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Layers\IViewAndItemLayerOperations.cs" />
-    <Compile Include="Guis\Controls\IControlSettings.cs" />
-    <Compile Include="Guis\Controls\Views\IViewComponentOperations.cs" />
-    <Compile Include="Guis\Controls\Views\IIndexViewCompositor.cs" />
-    <Compile Include="Guis\Controls\Views\IViewOperations.cs" />
-    <Compile Include="Guis\Controls\Views\Layers\IViewLayer.cs">
+    <Compile Include="Gui\Control\IControlSettings.cs" />
+    <Compile Include="Gui\Control\Views\IViewComponentOperations.cs" />
+    <Compile Include="Gui\Control\Views\IIndexViewBuilder.cs" />
+    <Compile Include="Gui\Control\Views\IViewOperations.cs" />
+    <Compile Include="Gui\Control\Views\Layers\IViewLayer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Layers\IViewLayerOperations.cs" />
-    <Compile Include="Guis\Controls\Views\Layers\PointView2DLayer.cs">
+    <Compile Include="Gui\Control\Views\Layers\IViewLayerOperations.cs" />
+    <Compile Include="Gui\Control\Views\Layers\PointView2DLayer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Layers\PointViewHorizontalLayer.cs">
+    <Compile Include="Gui\Control\Views\Layers\PointViewHorizontalLayer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Layers\PointViewLayer.cs" />
-    <Compile Include="Guis\Controls\Views\Layers\PointViewVerticalLayer.cs" />
-    <Compile Include="Guis\Controls\Views\Layers\ViewLayer.cs">
+    <Compile Include="Gui\Control\Views\Layers\PointViewLayer.cs" />
+    <Compile Include="Gui\Control\Views\Layers\PointViewVerticalLayer.cs" />
+    <Compile Include="Gui\Control\Views\Layers\ViewLayer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\IView.cs">
+    <Compile Include="Gui\Control\Views\IView.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\IViewComponent.cs">
+    <Compile Include="Gui\Control\Views\IViewComponent.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\IViewEntity.cs">
+    <Compile Include="Gui\Control\Views\IViewEntity.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Layouts\BlockViewVerticalLayout.cs" />
-    <Compile Include="Guis\Controls\Views\Layouts\IndexBlockViewVerticalLayout.cs" />
-    <Compile Include="Guis\Controls\Views\Layouts\IPointView2DLayout.cs" />
-    <Compile Include="Guis\Controls\Views\Layouts\IPointViewHorizontalLayout.cs" />
-    <Compile Include="Guis\Controls\Views\Layouts\IPointViewVerticalLayout.cs" />
-    <Compile Include="Guis\Controls\Views\Layouts\IViewLayout.cs" />
-    <Compile Include="Guis\Controls\Views\Layouts\PointView2DLayout.cs" />
-    <Compile Include="Guis\Controls\Views\Layouts\PointViewVerticalLayout.cs" />
-    <Compile Include="Guis\Controls\Views\Layouts\ViewLayout.cs" />
-    <Compile Include="Guis\Controls\Views\Logic\BlockViewVerticalLogic.cs" />
-    <Compile Include="Guis\Controls\Views\Logic\IBlockViewVerticalLogic.cs" />
-    <Compile Include="Guis\Controls\Views\Logic\IndexBlockViewVerticalLogic.cs" />
-    <Compile Include="Guis\Controls\Views\Logic\IndexedBlockViewVerticalLogic.cs" />
-    <Compile Include="Guis\Controls\Views\Logic\IPointView2DLogic.cs">
+    <Compile Include="Gui\Control\Views\Layouts\BlockViewVerticalLayout.cs" />
+    <Compile Include="Gui\Control\Views\Layouts\IndexBlockViewVerticalLayout.cs" />
+    <Compile Include="Gui\Control\Views\Layouts\IPointView2DLayout.cs" />
+    <Compile Include="Gui\Control\Views\Layouts\IPointViewHorizontalLayout.cs" />
+    <Compile Include="Gui\Control\Views\Layouts\IPointViewVerticalLayout.cs" />
+    <Compile Include="Gui\Control\Views\Layouts\IViewLayout.cs" />
+    <Compile Include="Gui\Control\Views\Layouts\PointView2DLayout.cs" />
+    <Compile Include="Gui\Control\Views\Layouts\PointViewVerticalLayout.cs" />
+    <Compile Include="Gui\Control\Views\Layouts\ViewLayout.cs" />
+    <Compile Include="Gui\Control\Views\Logic\BlockViewVerticalLogic.cs" />
+    <Compile Include="Gui\Control\Views\Logic\IBlockViewVerticalLogic.cs" />
+    <Compile Include="Gui\Control\Views\Logic\IndexBlockViewVerticalLogic.cs" />
+    <Compile Include="Gui\Control\Views\Logic\IndexedBlockViewVerticalLogic.cs" />
+    <Compile Include="Gui\Control\Views\Logic\IPointView2DLogic.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Logic\IPointViewHorizontalLogic.cs">
+    <Compile Include="Gui\Control\Views\Logic\IPointViewHorizontalLogic.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Logic\IPointViewVerticalLogic.cs" />
-    <Compile Include="Guis\Controls\Views\Logic\IViewLogic.cs">
+    <Compile Include="Gui\Control\Views\Logic\IPointViewVerticalLogic.cs" />
+    <Compile Include="Gui\Control\Views\Logic\IViewLogic.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Logic\IViewLogicOperations.cs" />
-    <Compile Include="Guis\Controls\Views\Logic\PointView2DLogic.cs">
+    <Compile Include="Gui\Control\Views\Logic\IViewLogicOperations.cs" />
+    <Compile Include="Gui\Control\Views\Logic\PointView2DLogic.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Logic\PointViewHorizontalLogic.cs">
+    <Compile Include="Gui\Control\Views\Logic\PointViewHorizontalLogic.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Logic\PointViewVerticalLogic.cs" />
-    <Compile Include="Guis\Controls\Views\Logic\PointViewLogic.cs" />
-    <Compile Include="Guis\Controls\Views\Logic\ViewLogic.cs">
+    <Compile Include="Gui\Control\Views\Logic\PointViewVerticalLogic.cs" />
+    <Compile Include="Gui\Control\Views\Logic\PointViewLogic.cs" />
+    <Compile Include="Gui\Control\Views\Logic\ViewLogic.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Scrolls\BlockViewVerticalScrollController.cs" />
-    <Compile Include="Guis\Controls\Views\Scrolls\IBlockViewVerticalScrollController.cs" />
-    <Compile Include="Guis\Controls\Views\Scrolls\IndexBlockViewVerticalScrollController.cs" />
-    <Compile Include="Guis\Controls\Views\Scrolls\IViewScrollbar.cs" />
-    <Compile Include="Guis\Controls\Views\Scrolls\IViewVerticalScrollbar.cs" />
-    <Compile Include="Guis\Controls\Views\Scrolls\PointViewVerticalScrollController.cs" />
-    <Compile Include="Guis\Controls\Views\Scrolls\ViewVerticalScrollbarVisual.cs" />
-    <Compile Include="Guis\Controls\Views\Selections\BlockViewVerticalSelectionController.cs" />
-    <Compile Include="Guis\Controls\Views\Selections\IBlockViewVerticalSelectionController.cs" />
-    <Compile Include="Guis\Controls\Views\Selections\IndexBlockViewVerticalSelectionController.cs" />
-    <Compile Include="Guis\Controls\Views\Selections\IndexedBlockViewVerticalSelectionController.cs" />
-    <Compile Include="Guis\Controls\Views\Selections\IPointViewVerticalSelectionController.cs" />
-    <Compile Include="Guis\Controls\Views\Selections\PointViewVerticalSelectionController.cs" />
-    <Compile Include="Guis\Controls\Views\Settings\IPointViewHorizontalSettings.cs" />
-    <Compile Include="Guis\Controls\Views\Settings\IPointViewSettings.cs" />
-    <Compile Include="Guis\Controls\Views\Settings\IPointViewVerticalSettings.cs" />
-    <Compile Include="Guis\Controls\Views\Settings\PointViewSettings.cs" />
-    <Compile Include="Guis\Controls\Views\Settings\PointViewVerticalSettings.cs" />
-    <Compile Include="Guis\Controls\Views\Settings\ViewDirection.cs">
+    <Compile Include="Gui\Control\Views\Scrolls\BlockViewVerticalScrollController.cs" />
+    <Compile Include="Gui\Control\Views\Scrolls\IBlockViewVerticalScrollController.cs" />
+    <Compile Include="Gui\Control\Views\Scrolls\IndexBlockViewVerticalScrollController.cs" />
+    <Compile Include="Gui\Control\Views\Scrolls\IViewScrollbar.cs" />
+    <Compile Include="Gui\Control\Views\Scrolls\IViewVerticalScrollbar.cs" />
+    <Compile Include="Gui\Control\Views\Scrolls\PointViewVerticalScrollController.cs" />
+    <Compile Include="Gui\Control\Views\Scrolls\ViewVerticalScrollbarVisual.cs" />
+    <Compile Include="Gui\Control\Views\Selections\BlockViewVerticalSelectionController.cs" />
+    <Compile Include="Gui\Control\Views\Selections\IBlockViewVerticalSelectionController.cs" />
+    <Compile Include="Gui\Control\Views\Selections\IndexBlockViewVerticalSelectionController.cs" />
+    <Compile Include="Gui\Control\Views\Selections\IndexedBlockViewVerticalSelectionController.cs" />
+    <Compile Include="Gui\Control\Views\Selections\IPointViewVerticalSelectionController.cs" />
+    <Compile Include="Gui\Control\Views\Selections\PointViewVerticalSelectionController.cs" />
+    <Compile Include="Gui\Control\Views\Settings\IPointViewHorizontalSettings.cs" />
+    <Compile Include="Gui\Control\Views\Settings\IPointViewSettings.cs" />
+    <Compile Include="Gui\Control\Views\Settings\IPointViewVerticalSettings.cs" />
+    <Compile Include="Gui\Control\Views\Settings\PointViewSettings.cs" />
+    <Compile Include="Gui\Control\Views\Settings\PointViewVerticalSettings.cs" />
+    <Compile Include="Gui\Control\Views\Settings\ViewDirection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Scrolls\IPointView2DScrollController.cs">
+    <Compile Include="Gui\Control\Views\Scrolls\IPointView2DScrollController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Scrolls\IPointViewHorizontalScrollController.cs">
+    <Compile Include="Gui\Control\Views\Scrolls\IPointViewHorizontalScrollController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Scrolls\IPointViewScrollController.cs">
+    <Compile Include="Gui\Control\Views\Scrolls\IPointViewScrollController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Scrolls\IPointViewVerticalScrollController.cs">
+    <Compile Include="Gui\Control\Views\Scrolls\IPointViewVerticalScrollController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Scrolls\IViewScrollController.cs">
+    <Compile Include="Gui\Control\Views\Scrolls\IViewScrollController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Scrolls\PointView2DScrollController.cs">
+    <Compile Include="Gui\Control\Views\Scrolls\PointView2DScrollController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Scrolls\PointViewHorizontalScrollController.cs">
+    <Compile Include="Gui\Control\Views\Scrolls\PointViewHorizontalScrollController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Selections\IPointView2DSelectionController.cs">
+    <Compile Include="Gui\Control\Views\Selections\IPointView2DSelectionController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Selections\IPointViewHorizontalSelectionController.cs">
+    <Compile Include="Gui\Control\Views\Selections\IPointViewHorizontalSelectionController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Selections\IViewSelectionController.cs">
+    <Compile Include="Gui\Control\Views\Selections\IViewSelectionController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Selections\PointView2DSelectionController.cs">
+    <Compile Include="Gui\Control\Views\Selections\PointView2DSelectionController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Selections\PointViewHorizontalSelectionController.cs">
+    <Compile Include="Gui\Control\Views\Selections\PointViewHorizontalSelectionController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Settings\PointView2DSettings.cs">
+    <Compile Include="Gui\Control\Views\Settings\PointView2DSettings.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Settings\PointViewHorizontalSettings.cs">
+    <Compile Include="Gui\Control\Views\Settings\PointViewHorizontalSettings.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Settings\ViewSettings.cs">
+    <Compile Include="Gui\Control\Views\Settings\ViewSettings.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Swaps\IPointView2DSwapController.cs" />
-    <Compile Include="Guis\Controls\Views\Swaps\IViewSwapController.cs">
+    <Compile Include="Gui\Control\Views\Swaps\IPointView2DSwapController.cs" />
+    <Compile Include="Gui\Control\Views\Swaps\IViewSwapController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Swaps\ViewSwapController.cs">
+    <Compile Include="Gui\Control\Views\Swaps\ViewSwapController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\View.cs">
+    <Compile Include="Gui\Control\Views\View.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\ViewComponent.cs">
+    <Compile Include="Gui\Control\Views\ViewComponent.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\ViewEntity.cs">
+    <Compile Include="Gui\Control\Views\ViewEntity.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Regions\ViewRegion.cs">
+    <Compile Include="Gui\Control\Views\Regions\ViewRegion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Regions\ViewRegionSettings.cs" />
-    <Compile Include="Guis\Controls\Views\Regions\ViewRegionVisual.cs" />
-    <Compile Include="Guis\Controls\Views\ViewState.cs">
+    <Compile Include="Gui\Control\Views\Regions\ViewRegionSettings.cs" />
+    <Compile Include="Gui\Control\Views\Regions\ViewRegionVisual.cs" />
+    <Compile Include="Gui\Control\Views\ViewState.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Visuals\FadeViewVisual.cs" />
-    <Compile Include="Guis\Controls\Views\Visuals\GradientIndexedViewVisual.cs" />
-    <Compile Include="Guis\Controls\Views\Visuals\GradientIndexViewVisual.cs" />
-    <Compile Include="Guis\Controls\Views\Visuals\GradientViewVisual.cs" />
-    <Compile Include="Guis\Controls\Views\Visuals\IViewVisual.cs">
+    <Compile Include="Gui\Control\Views\Visuals\FadeViewVisual.cs" />
+    <Compile Include="Gui\Control\Views\Visuals\GradientIndexedViewVisual.cs" />
+    <Compile Include="Gui\Control\Views\Visuals\GradientIndexViewVisual.cs" />
+    <Compile Include="Gui\Control\Views\Visuals\GradientViewVisual.cs" />
+    <Compile Include="Gui\Control\Views\Visuals\IViewVisual.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Visuals\IViewVisualComponent.cs">
+    <Compile Include="Gui\Control\Views\Visuals\IViewVisualComponent.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Scrolls\ViewScrollbarSettings.cs">
+    <Compile Include="Gui\Control\Views\Scrolls\ViewScrollbarSettings.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Scrolls\ViewVerticalScrollBar.cs">
+    <Compile Include="Gui\Control\Views\Scrolls\ViewVerticalScrollBar.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Visuals\ViewVisual.cs">
+    <Compile Include="Gui\Control\Views\Visuals\ViewVisual.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Views\Visuals\ViewVisualComponent .cs">
+    <Compile Include="Gui\Control\Views\Visuals\ViewVisualComponent .cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Visuals\BoxSettings.cs" />
-    <Compile Include="Guis\Controls\Visuals\LabelBox.cs" />
-    <Compile Include="Guis\Controls\Visuals\LabelSettings.cs" />
-    <Compile Include="Guis\Controls\ControlSettings.cs" />
-    <Compile Include="Guis\Controls\Regions\IRegion.cs">
+    <Compile Include="Gui\Control\Visuals\BoxSettings.cs" />
+    <Compile Include="Gui\Control\Visuals\LabelBox.cs" />
+    <Compile Include="Gui\Control\Visuals\LabelSettings.cs" />
+    <Compile Include="Gui\Control\ControlSettings.cs" />
+    <Compile Include="Gui\Control\Regions\IRegion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Regions\IRegionEntity.cs">
+    <Compile Include="Gui\Control\Regions\IRegionElement.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Regions\Region.cs">
+    <Compile Include="Gui\Control\Regions\RectangleRegion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Regions\RegionEntity.cs">
+    <Compile Include="Gui\Control\Regions\RegionElement.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Regions\RegionState.cs">
+    <Compile Include="Gui\Control\Regions\RegionState.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Visuals\Box.cs">
+    <Compile Include="Gui\Control\Visuals\Box.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Guis\Controls\Visuals\Label.cs">
+    <Compile Include="Gui\Control\Visuals\Label.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="IBufferDoubleUpdateable.cs" />
     <Compile Include="IDrawableOperations.cs" />
     <Compile Include="IGameControllableComponentOperations.cs" />
     <Compile Include="IGameControllableEntity.cs" />
-    <Compile Include="IGameEngineCompositor.cs" />
+    <Compile Include="IGameEngineBuilder.cs" />
     <Compile Include="IGameEngineOperations.cs" />
     <Compile Include="IInnerUpdatable.cs" />
     <Compile Include="IInputableOperations.cs" />
     <Compile Include="IInteroperableOperations.cs" />
     <Compile Include="IOuterUpdateable.cs" />
     <Compile Include="IOuterUpdateableOperations.cs" />
-    <Compile Include="Components\Profilings\ProcessorProfiler.cs" />
-    <Compile Include="Screens\GameLayer.cs" />
-    <Compile Include="Screens\IGameLayer.cs" />
-    <Compile Include="Screens\IGameLayerOperations.cs" />
-    <Compile Include="Screens\IGameScreenOperations.cs" />
-    <Compile Include="RenderTarget2DFactory.cs" />
+    <Compile Include="Component\Profiler\ProcessorProfiler.cs" />
+    <Compile Include="Screen\GameLayer.cs" />
+    <Compile Include="Screen\IGameLayer.cs" />
+    <Compile Include="Screen\IGameLayerOperations.cs" />
+    <Compile Include="Screen\IGameScreenOperations.cs" />
     <Compile Include="Debugging\Screens\CpuWhiteNoiseSreen.cs" />
     <Compile Include="Scripting\FSharp\FsiDebugger.cs" />
     <Compile Include="Scripting\FSharp\FsiSession.cs" />
@@ -578,103 +581,101 @@
     <Compile Include="Scripting\IronPython\IIpyScriptOperations.cs" />
     <Compile Include="Scripting\IronPython\IpySession.cs" />
     <Compile Include="Scripting\QueueSession.cs" />
-    <Compile Include="Services\GameEngineNumericalService.cs" />
+    <Compile Include="Service\GameEngineNumericalService.cs" />
     <Compile Include="GameVisualEntity.cs" />
-    <Compile Include="Services\GameEngineGraphicsService.cs" />
-    <Compile Include="Services\GameEngineInputService.cs" />
-    <Compile Include="Services\GameEngineInteropService.cs" />
-    <Compile Include="Guis\Elements\IFrameEntity.cs" />
+    <Compile Include="Service\GameEngineGraphicsService.cs" />
+    <Compile Include="Service\GameEngineInputService.cs" />
+    <Compile Include="Service\GameEngineInteropService.cs" />
+    <Compile Include="Gui\Element\Rectangles\IRectangleElement.cs" />
     <Compile Include="IGameEntityModule.cs" />
     <Compile Include="IGameEntityModuleVisual.cs" />
-    <Compile Include="Guis\Modules\Particles\IParticle.cs" />
-    <Compile Include="Guis\Modules\Particles\IRandomParticle.cs" />
-    <Compile Include="Guis\Modules\Particles\IShapelessParticle.cs" />
-    <Compile Include="Services\GameEngineService.cs" />
-    <Compile Include="Guis\Modules\Particles\ParticleSpawner.cs" />
+    <Compile Include="Gui\Module\Particle\IParticle.cs" />
+    <Compile Include="Gui\Module\Particle\IRandomParticle.cs" />
+    <Compile Include="Gui\Module\Particle\IShapelessParticle.cs" />
+    <Compile Include="Service\GameEngineService.cs" />
+    <Compile Include="Gui\Module\Particle\ParticleSpawner.cs" />
     <Compile Include="IDrawable.cs" />
     <Compile Include="IGame.cs" />
     <Compile Include="IGameEngine.cs" />
     <Compile Include="IGameEntity.cs" />
-    <Compile Include="Components\IGameGraphics.cs" />
+    <Compile Include="Component\IGameGraphics.cs" />
     <Compile Include="IGameControllableComponent.cs" />
-    <Compile Include="Services\IGameNumerical.cs" />
-    <Compile Include="Services\IGameNumericalService.cs" />
-    <Compile Include="Services\IGameService.cs" />
+    <Compile Include="Service\IGameNumerical.cs" />
+    <Compile Include="Service\IGameNumericalService.cs" />
+    <Compile Include="Service\IGameService.cs" />
     <Compile Include="IGameVisualEntity.cs" />
     <Compile Include="IInputable.cs" />
     <Compile Include="GameEntity.cs" />
-    <Compile Include="Services\IGameGraphicsService.cs" />
-    <Compile Include="Services\IGameInputService.cs" />
-    <Compile Include="Services\IGameInteropService.cs" />
-    <Compile Include="Screens\IGameScreen.cs" />
-    <Compile Include="Components\IGameInput.cs" />
-    <Compile Include="Components\IGameInterop.cs" />
-    <Compile Include="Components\GameNullInput.cs" />
-    <Compile Include="Components\GameNullInterop.cs" />
-    <Compile Include="Components\GameNullGraphics.cs" />
-    <Compile Include="Sessions\ISession.cs" />
-    <Compile Include="Sessions\ISessionData.cs" />
-    <Compile Include="Sessions\Session.cs" />
-    <Compile Include="Settings\Loaders\ConfigurationLoader.cs" />
-    <Compile Include="Settings\Loaders\IConfigurationLoader.cs" />
-    <Compile Include="Components\Inputs\InputEvent.cs" />
-    <Compile Include="Components\Inputs\InputState.cs" />
-    <Compile Include="Components\Inputs\KeyboardInputState.cs" />
-    <Compile Include="Components\Inputs\MouseInputState.cs" />
-    <Compile Include="Components\Processes\IProcess.cs" />
-    <Compile Include="Components\Processes\Process.cs" />
-    <Compile Include="Components\Processes\ProcessState.cs" />
-    <Compile Include="Components\Processes\SoundProcess.cs" />
-    <Compile Include="Components\Processes\WaitProcess.cs" />
-    <Compile Include="Components\ProcessManager.cs" />
-    <Compile Include="Components\GameManager.cs" />
-    <Compile Include="Components\SaveManager.cs" />
-    <Compile Include="Components\ScreenManager.cs" />
-    <Compile Include="Components\ScreenSettings.cs" />
-    <Compile Include="Components\Fonts\StringExt.cs" />
-    <Compile Include="Extensions\ExtType.cs" />
+    <Compile Include="Service\IGameGraphicsService.cs" />
+    <Compile Include="Service\IGameInputService.cs" />
+    <Compile Include="Service\IGameInteropService.cs" />
+    <Compile Include="Screen\IGameScreen.cs" />
+    <Compile Include="Component\IGameInput.cs" />
+    <Compile Include="Component\IGameInterop.cs" />
+    <Compile Include="Component\GameNullInput.cs" />
+    <Compile Include="Component\GameNullInterop.cs" />
+    <Compile Include="Component\GameNullGraphics.cs" />
+    <Compile Include="Session\ISession.cs" />
+    <Compile Include="Session\ISessionData.cs" />
+    <Compile Include="Session\Session.cs" />
+    <Compile Include="Setting\Loader\ConfigurationLoader.cs" />
+    <Compile Include="Setting\Loader\IConfigurationLoader.cs" />
+    <Compile Include="Component\Input\InputEvent.cs" />
+    <Compile Include="Component\Input\InputState.cs" />
+    <Compile Include="Component\Input\KeyboardInputState.cs" />
+    <Compile Include="Component\Input\MouseInputState.cs" />
+    <Compile Include="Component\Process\IProcess.cs" />
+    <Compile Include="Component\Process\Process.cs" />
+    <Compile Include="Component\Process\ProcessState.cs" />
+    <Compile Include="Component\Process\SoundProcess.cs" />
+    <Compile Include="Component\Process\WaitProcess.cs" />
+    <Compile Include="Component\Process\ProcessManager.cs" />
+    <Compile Include="Component\GameManager.cs" />
+    <Compile Include="Component\File\SaveManager.cs" />
+    <Compile Include="Component\Graphics\ScreenManager.cs" />
+    <Compile Include="Component\Graphics\ScreenSettings.cs" />
+    <Compile Include="Component\Font\StringExt.cs" />
+    <Compile Include="Extensions\TypeExt.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="Extensions\ExtColor.cs" />
-    <Compile Include="Extensions\ExtGameTime.cs" />
-    <Compile Include="Extensions\ExtPoint.cs" />
-    <Compile Include="Extensions\ExtRectangle.cs" />
-    <Compile Include="Extensions\ExtVector2.cs" />
-    <Compile Include="Guis\Elements\IDraggable.cs" />
-    <Compile Include="Guis\Elements\IPickable.cs" />
-    <Compile Include="Guis\Elements\IPressable.cs" />
-    <Compile Include="Guis\Elements\DraggableFrame.cs" />
-    <Compile Include="Guis\Elements\FrameEventArgs.cs" />
-    <Compile Include="Guis\Elements\FrameEventType.cs" />
-    <Compile Include="Guis\Elements\FrameEntity.cs" />
-    <Compile Include="Guis\Elements\FrameState.cs" />
-    <Compile Include="Guis\Elements\IDraggableFrame.cs" />
-    <Compile Include="Guis\Elements\IPickableFrame.cs" />
-    <Compile Include="Guis\Elements\IPressableFrame.cs" />
-    <Compile Include="Guis\Modules\ParticleModule.cs" />
-    <Compile Include="Guis\Modules\ParticleSettings.cs" />
-    <Compile Include="Guis\Modules\Particles\FloatParticle.cs" />
-    <Compile Include="Guis\Modules\Particles\Particle.cs" />
-    <Compile Include="Guis\Modules\Particles\ShapelessParticle.cs" />
-    <Compile Include="Settings\Loaders\IParameter.cs" />
-    <Compile Include="Settings\Loaders\IParameterLoader.cs" />
-    <Compile Include="Guis\Controls\Items\Data\ViewItemDataEventArgs.cs" />
+    <Compile Include="Extensions\ColorExt.cs" />
+    <Compile Include="Extensions\GameTimeExt.cs" />
+    <Compile Include="Extensions\PointExt.cs" />
+    <Compile Include="Extensions\RectangleExt.cs" />
+    <Compile Include="Extensions\Vector2Ext.cs" />
+    <Compile Include="Gui\Element\IDraggable.cs" />
+    <Compile Include="Gui\Element\IPickable.cs" />
+    <Compile Include="Gui\Element\IPressable.cs" />
+    <Compile Include="Gui\Element\Rectangles\DraggableRectangle.cs" />
+    <Compile Include="Gui\Element\ElementEventArgs.cs" />
+    <Compile Include="Gui\Element\Rectangles\RectangleElement.cs" />
+    <Compile Include="Gui\Element\ElementState.cs" />
+    <Compile Include="Gui\Element\Rectangles\IDraggableRectangle.cs" />
+    <Compile Include="Gui\Element\Rectangles\IPickableRectangle.cs" />
+    <Compile Include="Gui\Element\Rectangles\IPressableRectangle.cs" />
+    <Compile Include="Gui\Module\ParticleModule.cs" />
+    <Compile Include="Gui\Module\ParticleSettings.cs" />
+    <Compile Include="Gui\Module\Particle\FloatParticle.cs" />
+    <Compile Include="Gui\Module\Particle\Particle.cs" />
+    <Compile Include="Gui\Module\Particle\ShapelessParticle.cs" />
+    <Compile Include="Setting\Loader\IParameter.cs" />
+    <Compile Include="Setting\Loader\IParameterLoader.cs" />
+    <Compile Include="Gui\Control\Item\Data\ViewItemDataEventArgs.cs" />
     <Compile Include="GameEntityModule.cs" />
     <Compile Include="GameEntityModuleComponent.cs" />
     <Compile Include="GameEntityModuleLogic.cs" />
     <Compile Include="GameEntityModuleVisual.cs" />
     <Compile Include="GameControllableEntity.cs" />
-    <Compile Include="Parsers\Grammars\LineGrammar.cs" />
-    <Compile Include="Parsers\Grammars\ConfigurationFileGrammar.cs" />
-    <Compile Include="Parsers\Elements\Sentence.cs" />
+    <Compile Include="Parser\Grammar\LineGrammar.cs" />
+    <Compile Include="Parser\Grammar\ConfigurationFileGrammar.cs" />
+    <Compile Include="Parser\Element\Sentence.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Screens\GameScreen.cs" />
-    <Compile Include="Screens\GameScreenState.cs" />
-    <Compile Include="Settings\Colors\Palette.cs" />
-    <Compile Include="Components\Graphics\GraphicsSettings.cs" />
-    <Compile Include="Settings\Loaders\FileLoader.cs" />
-    <Compile Include="Settings\Systems\Monitor.cs" />
-    <Compile Include="Testers\StateVisualTester.cs" />
+    <Compile Include="Screen\GameScreen.cs" />
+    <Compile Include="Screen\GameScreenState.cs" />
+    <Compile Include="Setting\Color\Palette.cs" />
+    <Compile Include="Component\Graphics\GraphicsSettings.cs" />
+    <Compile Include="Setting\Loader\FileLoader.cs" />
+    <Compile Include="Test\StateVisualTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Compiler.Service, Version=1.4.0.1, Culture=neutral, processorArchitecture=MSIL">
@@ -725,7 +726,6 @@
       <HintPath>..\packages\NLog.4.1.0\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PresentationCore" />
     <Reference Include="Sprache, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ThirdParties\Sprache\bin\Sprache.dll</HintPath>
@@ -741,7 +741,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Guis\Controls\Items\Transits\" />
+    <Folder Include="Gui\Control\Item\Transits\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Configurations\Graphics.txt">
@@ -800,9 +800,6 @@
     <Content Include="Content\Texture\Screens\Blank.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Class Diagrams\Components.cd" />
-    <None Include="Class Diagrams\Guis\View.cd" />
-    <None Include="Class Diagrams\Guis\View Visual.cd" />
     <None Include="Content\Audio\Win\Audio.xgs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -815,6 +812,7 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Diagrams\Components.cd" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

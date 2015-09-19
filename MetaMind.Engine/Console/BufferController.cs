@@ -4,7 +4,7 @@ namespace MetaMind.Engine.Console
     using System.Linq;
     using System.Threading;
     using System.Windows.Forms;
-    using Components.Fonts;
+    using Component.Font;
     using Processors;
 
     internal class BufferController : GameModuleComponent<GameConsole, GameConsoleSettings, GameConsoleLogic, GameConsoleVisual>

@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Commands;
     using Commands.Core;
-    using Components.Fonts;
+    using Component.Font;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Processors;

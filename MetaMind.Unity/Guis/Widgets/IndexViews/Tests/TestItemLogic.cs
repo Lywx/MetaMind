@@ -1,16 +1,16 @@
 ﻿namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 {
-    using Engine.Guis.Controls.Items;
-    using Engine.Guis.Controls.Items.Data;
-    using Engine.Guis.Controls.Items.Interactions;
-    using Engine.Guis.Controls.Items.Layouts;
-    using Engine.Guis.Controls.Items.Logic;
+    using Engine.Gui.Control.Item;
+    using Engine.Gui.Control.Item.Data;
+    using Engine.Gui.Control.Item.Interactions;
+    using Engine.Gui.Control.Item.Layouts;
+    using Engine.Gui.Control.Item.Logic;
 
     public class TestItemLogic : IndexBlockViewVerticalItemLogic
     {
         public TestItemLogic(
             IViewItem            item,
-            TestItemFrame    itemFrame,
+            TestItemFrameController    itemFrame,
             IViewItemInteraction itemInteraction,
             IViewItemDataModel   itemModel,
             IViewItemLayout      itemLayout)
@@ -18,18 +18,18 @@
         {
         }
 
-        public new TestItemFrame ItemFrame
+        public new TestItemFrameController ItemFrame
         {
-            get { return (TestItemFrame)base.ItemFrame; }
+            get { return (TestItemFrameController)base.ItemFrame; }
         }
 
-        public override void SetupLayer()
+        public override void Initialize()
         {
-            base.SetupLayer();
+            base.Initialize();
 
-            this.ItemFrame.NameFrame       .MousePressLeft  += (o, args) => this.ToggleIndexView();
-            this.ItemFrame.DescriptionFrame.MousePressLeft  += (o, args) => this.ToggleIndexView();
-            this.ItemFrame.RootFrame       .MousePressRight += (o, args) => this.SelectPath();
+            this.ItemFrame.NameRectangle       .MousePressLeft  += (o, args) => this.ToggleIndexView();
+            this.ItemFrame.DescriptionRectangle.MousePressLeft  += (o, args) => this.ToggleIndexView();
+            this.ItemFrame.RootRectangle       .MousePressRight += (o, args) => this.SelectPath();
         }
     }
 }

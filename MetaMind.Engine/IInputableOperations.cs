@@ -1,7 +1,7 @@
 namespace MetaMind.Engine
 {
     using Microsoft.Xna.Framework;
-    using Services;
+    using Service;
 
     public interface IInputableOperations
     {

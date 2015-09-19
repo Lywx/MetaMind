@@ -3,10 +3,10 @@
     using System;
     using Concepts.Operations;
     using Engine;
-    using Engine.Components.Fonts;
-    using Engine.Guis.Controls.Visuals;
-    using Engine.Screens;
-    using Engine.Services;
+    using Engine.Component.Font;
+    using Engine.Gui.Control.Visuals;
+    using Engine.Screen;
+    using Engine.Service;
     using Microsoft.Xna.Framework;
     using Modules;
 
@@ -32,32 +32,16 @@
 
         private GameControllableEntityCollection<IGameControllableEntity> ControllableEntities { get; set; }
 
-        public override void BeginDraw(IGameGraphicsService graphics, GameTime time, byte alpha)
-        {
-            base.BeginDraw(graphics, time, alpha);
-
-            this.ControllableEntities.BeginDraw(graphics, time, alpha);
-            this.VisuallEntities     .BeginDraw(graphics, time, alpha);
-        }
-
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
             base.Draw(graphics, time, alpha);
 
-            graphics.SpriteBatch.Begin();
+            this.SpriteBatch.Begin();
 
-            this.ControllableEntities.Draw(graphics, time, Math.Min(alpha, this.TransitionAlpha));
-            this.VisuallEntities     .Draw(graphics, time, Math.Min(alpha, this.TransitionAlpha));
+            this.ControllableEntities.Draw(graphics, time, Math.Min(alpha, this.Alpha));
+            this.VisuallEntities     .Draw(graphics, time, Math.Min(alpha, this.Alpha));
             
-            graphics.SpriteBatch.End();
-        }
-
-        public override void EndDraw(IGameGraphicsService graphics, GameTime time, byte alpha)
-        {
-            base.EndDraw(graphics, time, alpha);
-
-            this.ControllableEntities.EndDraw(graphics, time, Math.Min(alpha, this.TransitionAlpha));
-            this.VisuallEntities     .EndDraw(graphics, time, Math.Min(alpha, this.TransitionAlpha));
+            this.SpriteBatch.End();
         }
 
         public override void LoadContent(IGameInteropService interop)
@@ -75,11 +59,11 @@
             {
                 TextFont     = () => Font.UiRegular,
                 Text         = () => "OPERATIONS",
-                TextPosition = () => new Vector2((float)graphicsSettings.Width / 2, 80),
+                AnchorLocation = () => new Vector2((float)graphicsSettings.Width / 2, 80),
                 TextColor    = () => Color.White,
                 TextSize     = () => 1.0f,
-                TextHAlign   = StringHAlign.Center,
-                TextVAlign   = StringVAlign.Center,
+                TextHAlignment   = HoritonalAlignment.Center,
+                TextVAlignment   = VerticalAlignment.Center,
             };
 
             this.VisuallEntities.Add(screenLabel);

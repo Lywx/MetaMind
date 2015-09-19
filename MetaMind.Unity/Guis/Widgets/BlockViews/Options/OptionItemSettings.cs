@@ -1,12 +1,12 @@
 ﻿namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
 {
-    using Engine.Components.Fonts;
-    using Engine.Components.Graphics;
-    using Engine.Guis.Controls.Items.Frames;
-    using Engine.Guis.Controls.Items.Settings;
-    using Engine.Guis.Controls.Visuals;
-    using Engine.Settings.Colors;
-    using Engine.Settings.Loaders;
+    using Engine.Component.Font;
+    using Engine.Component.Graphics;
+    using Engine.Gui.Control.Item.Frames;
+    using Engine.Gui.Control.Item.Settings;
+    using Engine.Gui.Control.Visuals;
+    using Engine.Setting.Color;
+    using Engine.Setting.Loader;
     using Microsoft.Xna.Framework;
     using Modules;
 
@@ -31,8 +31,8 @@
             TextSize   = 0.7f,
             TextColor  = Color.White,
             TextFont   = Font.UiStatistics,
-            TextHAlign = StringHAlign.Center,
-            TextVAlign = StringVAlign.Center,
+            TextHAlignment = HoritonalAlignment.Center,
+            TextVAlignment = VerticalAlignment.Center,
         };
 
         private readonly FrameSettings nameFrame;
@@ -42,8 +42,8 @@
             TextSize       = 0.8f,
             TextColor      = Color.White,
             TextFont       = Font.ContentRegular,
-            TextHAlign     = StringHAlign.Right,
-            TextVAlign     = StringVAlign.Center,
+            TextHAlignment     = HoritonalAlignment.Right,
+            TextVAlignment     = VerticalAlignment.Center,
             TextLeading    = 26,
 
             TextMonospaced = true,
@@ -56,8 +56,8 @@
             TextSize       = 0.8f,
             TextColor      = Color.White,
             TextFont       = Font.ContentBold,
-            TextHAlign     = StringHAlign.Right,
-            TextVAlign     = StringVAlign.Center,
+            TextHAlignment     = HoritonalAlignment.Right,
+            TextVAlignment     = VerticalAlignment.Center,
             TextLeading    = 26,
 
             TextMonospaced = true,

@@ -11,32 +11,24 @@ namespace MetaMind.Engine
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.Serialization;
-    using Components.Events;
-    using Services;
+    using Component.Event;
     using Microsoft.Xna.Framework;
+    using Service;
 
     [DataContract]
     public class GameEntity : IGameEntity
     {
-        #region Entity Data
-
-        public Guid Guid { get; private set; }
-
-        #endregion
-
-        #region Event Data
-
-        protected List<IListener> Listeners { get; set; }
-
-        #endregion Event Data
-
         #region Dependency
-        
+
+        protected IGameGraphicsService Graphics => GameEngine.Service.Graphics;
+
         protected IGameInteropService Interop => GameEngine.Service.Interop;
 
-        protected IGameNumericalService Numerical => GameEngine.Service.Numerical; 
+        protected IGameInputService Input => GameEngine.Service.Input;
 
-        #endregion 
+        protected IGameNumericalService Numerical => GameEngine.Service.Numerical;
+
+        #endregion
 
         #region Constructors and Finalizer 
 
@@ -87,7 +79,19 @@ namespace MetaMind.Engine
             this.ActionStarted?.Invoke(this, EventArgs.Empty);
         }
 
-        #endregion 
+        #endregion
+
+        #region Event Data
+
+        protected List<IListener> Listeners { get; set; }
+
+        #endregion Event Data
+
+        #region Entity Data
+
+        public Guid Guid { get; private set; }
+
+        #endregion
 
         #region States
 
@@ -122,12 +126,6 @@ namespace MetaMind.Engine
 
         public virtual void UnloadContent(IGameInteropService interop)
         {
-            // Maybe disposed already
-            if (this.Listeners == null)
-            {
-                return;
-            }
-
             this.Listeners.ForEach(l => interop.Event.RemoveListener(l));
             this.Listeners.Clear();
         }

@@ -2,16 +2,16 @@ namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
 {
     using System;
     using Concepts.Operations;
-    using Engine.Guis.Controls.Items;
-    using Engine.Guis.Controls.Items.Frames;
-    using Engine.Guis.Controls.Items.Visuals;
-    using Engine.Guis.Controls.Visuals;
-    using Engine.Services;
+    using Engine.Gui.Control.Item;
+    using Engine.Gui.Control.Item.Frames;
+    using Engine.Gui.Control.Item.Visuals;
+    using Engine.Gui.Control.Visuals;
+    using Engine.Service;
     using Microsoft.Xna.Framework;
 
     public class OptionItemVisual : ViewItemVisual
     {
-        private OptionItemFrame itemFrame;
+        private OptionItemFrameController itemFrame;
 
         public OptionItemVisual(IViewItem item)
             : base(item)
@@ -20,11 +20,11 @@ namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
 
         #region Components
 
-        protected ViewItemLabelVisual IdLabel { get; set; }
+        protected ViewItemLabel IdLabel { get; set; }
 
-        protected ViewItemLabelVisual NameLabel { get; set; }
+        protected ViewItemLabel NameLabel { get; set; }
 
-        protected ViewItemLabelVisual DescriptionLabel { get; set; }
+        protected ViewItemLabel DescriptionLabel { get; set; }
 
         protected ViewItemFrameVisual IdFrame { get; set; }
 
@@ -48,59 +48,69 @@ namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
 
         #region Layering
 
-        public override void SetupLayer()
+        public override void Initialize()
         {
             // Layers
-            var itemLayer = this.ItemGetLayer<OptionItemLayer>();
+            var itemLayer = this.GetItemLayer<OptionItemLayer>();
 
             // Avoid the implicit closure warning in Resharper
-            this.itemFrame       = itemLayer.ItemFrame;
-            var itemSettings     = itemLayer.ItemSettings;
-            var itemLayout       = itemLayer.ItemLayout;
+            this.itemFrame   = itemLayer.ItemFrame;
+            var itemSettings = itemLayer.ItemSettings;
+            var itemLayout   = itemLayer.ItemLayout;
 
             IOption itemData = this.Item.ItemData;
-            // Positions
-            this.ItemCenterPosition = () => this.itemFrame.RootFrame.Center.ToVector2();
 
-            this.IdCenterPosition = () => this.itemFrame.IdFrame.Center.ToVector2();
+            // Positions
+            this.ItemCenterPosition = () => this.itemFrame.RootRectangle.Center.ToVector2();
+
+            this.IdCenterPosition = () => this.itemFrame.IdRectangle.Center.ToVector2();
             this.NamePosition = () => this.itemFrame.NameFrameLocation() + itemSettings.Get<Vector2>("NameMargin");
             this.DescriptionPosition = () => this.itemFrame.DescriptionFrameLocation() + itemSettings.Get<Vector2>("DescriptionMargin");
 
             // Components
             this.IdFrame = new ViewItemFrameVisual(this.Item,
-                this.itemFrame.IdFrame,
+                this.itemFrame.IdRectangle,
                 itemSettings.Get<FrameSettings>("IdFrame"));
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("IdLabel");
-                labelSettings.Text = () => itemLayout.Id.ToString();
-                labelSettings.TextPosition = this.IdCenterPosition;
-
-                this.IdLabel = new ViewItemLabelVisual(this.Item, labelSettings);
+                this.IdLabel = new ViewItemLabel(this.Item, labelSettings)
+                {
+                    AnchorLocation = this.IdCenterPosition,
+                    Text = () => itemLayout.Id.ToString(),
+                };
             }
 
             var nameFrameSettings = itemSettings.Get<FrameSettings>("NameFrame");
             this.NameFrame = new ViewItemFrameVisual(this.Item,
-                this.itemFrame.NameFrame,
+                this.itemFrame.NameRectangle,
                 nameFrameSettings);
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("NameLabel");
-                labelSettings.Text = () => itemData.Name;
-                labelSettings.TextPosition = this.NamePosition;
 
-                this.NameLabel = new ViewItemLabelVisual(this.Item, labelSettings);
+                this.NameLabel = new ViewItemLabel(this.Item, labelSettings)
+                {
+                    AnchorLocation = this.NamePosition,
+                    Text = () => itemData.Name,
+                };
             }
 
             var descriptionFrameSettings = itemSettings.Get<FrameSettings>("DescriptionFrame");
             this.DescriptionFrame = new ViewItemFrameVisual(this.Item,
-                this.itemFrame.DescriptionFrame,
+                this.itemFrame.DescriptionRectangle,
                 descriptionFrameSettings);
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("DescriptionLabel");
-                labelSettings.Text = () => itemLayer.ItemLayout.BlockStringWrapped;
-                labelSettings.TextPosition = this.DescriptionPosition;
 
-                this.DescriptionLabel = new ViewItemLabelVisual(this.Item, labelSettings);
+                this.DescriptionLabel = new ViewItemLabel(this.Item, labelSettings)
+                {
+                    AnchorLocation = this.DescriptionPosition,
+                    Text = () => itemLayer.ItemLayout.BlockStringWrapped
+                };
             }
+
+            this.itemFrame.RootRectangle.Add(this.IdLabel);
+            this.itemFrame.RootRectangle.Add(this.NameLabel);
+            this.itemFrame.RootRectangle.Add(this.DescriptionLabel);
         }
 
         #endregion

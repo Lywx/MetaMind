@@ -23,11 +23,11 @@ namespace MetaMind.Unity
         [STAThread]
         private static void Main(string[] args)
         {
-            using (var engine = new GameEngine(@"Content"))
-            {
-                var configurer = new UnityEngineCompositor();
-                configurer.Configure(engine);
+            var configurer = new UnityEngineConfigurer();
+            var builder    = new GameEngineBuilder(configurer);
 
+            using (var engine = builder.Create(@"Content"))
+            {
                 var testimony = new Unity(engine);
                 testimony.Run();
             }

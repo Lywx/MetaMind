@@ -4,10 +4,9 @@
     using System.Collections.Generic;
     using Concepts.Operations;
     using Engine;
-    using Engine.Guis;
-    using Engine.Guis.Controls.Items;
-    using Engine.Guis.Controls.Views;
-    using Engine.Services;
+    using Engine.Gui.Control.Item;
+    using Engine.Gui.Control.Views;
+    using Engine.Service;
     using Microsoft.Xna.Framework;
     using Widgets.IndexViews;
     using Widgets.IndexViews.Operations;
@@ -61,7 +60,7 @@
             // View construction
             this.View = new View(viewSettings, itemSettings, new List<IViewItem>());
 
-            var viewCompositor = new OperationIndexViewCompositor(this.operationSession);
+            var viewCompositor = new OperationIndexViewBuilder(this.operationSession);
             viewCompositor.Compose(this.View, this.operation);
 
             // Entities

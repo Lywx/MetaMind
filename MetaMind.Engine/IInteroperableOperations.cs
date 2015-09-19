@@ -1,6 +1,6 @@
 namespace MetaMind.Engine
 {
-    using Services;
+    using Service;
 
     public interface IInteroperableOperations
     {

@@ -1,7 +1,7 @@
 namespace MetaMind.Unity.Guis.Widgets.IndexViews.Operations
 {
-    using Engine.Guis.Controls.Items;
-    using Engine.Guis.Controls.Items.Layers;
+    using Engine.Gui.Control.Item;
+    using Engine.Gui.Control.Item.Layers;
 
     public class OperationItemLayer : IndexBlockViewVerticalItemLayer
     {
@@ -15,7 +15,7 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Operations
             get { return (OperationItemLogic)base.ItemLogic; }
         }
 
-        public OperationItemFrame ItemFrame
+        public OperationItemFrameController ItemFrame
         {
             get { return this.ItemLogic.ItemFrame; }
         }

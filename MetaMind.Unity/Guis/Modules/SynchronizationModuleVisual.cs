@@ -4,10 +4,9 @@ namespace MetaMind.Unity.Guis.Modules
     using Concepts.Cognitions;
     using Concepts.Synchronizations;
     using Engine;
-    using Engine.Components.Fonts;
-    using Engine.Guis;
-    using Engine.Guis.Controls.Visuals;
-    using Engine.Services;
+    using Engine.Component.Font;
+    using Engine.Gui.Control.Visuals;
+    using Engine.Service;
     using Microsoft.Xna.Framework;
     using Synchronization;
 
@@ -53,8 +52,8 @@ namespace MetaMind.Unity.Guis.Modules
                 () => this.StateInfoCenterPosition,
                 () => Color.White,
                 () => 1.1f,
-                StringHAlign.Center,
-                StringVAlign.Center);
+                HoritonalAlignment.Center,
+                VerticalAlignment.Center);
 
             var statusInfo = new Label(
                 () => Font.UiStatistics,
@@ -62,8 +61,8 @@ namespace MetaMind.Unity.Guis.Modules
                 () => this.StatusInfoCenterPosition,
                 () => Color.White,
                 () => 0.7f,
-                StringHAlign.Center,
-                StringVAlign.Center);
+                HoritonalAlignment.Center,
+                VerticalAlignment.Center);
 
             var accumulationInfo = new Label(
                 () => Font.UiStatistics,
@@ -71,8 +70,8 @@ namespace MetaMind.Unity.Guis.Modules
                 () => this.AccumulationInfoPosition,
                 () => Color.White,
                 () => 0.7f,
-                StringHAlign.Right,
-                StringVAlign.Center);
+                HoritonalAlignment.Right,
+                VerticalAlignment.Center);
 
             var dailyRatePrefix = new Label(
                 () => this.Settings.SynchronizationRateFont,
@@ -82,8 +81,8 @@ namespace MetaMind.Unity.Guis.Modules
                 () => this.DailyRateCenterPosition,
                 () => Color.White,
                 () => 2.0f,
-                StringHAlign.Left,
-                StringVAlign.Center);
+                HoritonalAlignment.Left,
+                VerticalAlignment.Center);
 
             var dailyRateSubfix = new Label(
                 () => this.Settings.SynchronizationRateFont,
@@ -91,8 +90,8 @@ namespace MetaMind.Unity.Guis.Modules
                 () => this.DailyRateCenterPosition,
                 () => Color.White,
                 () => 1f,
-                StringHAlign.Right,
-                StringVAlign.Center);
+                HoritonalAlignment.Right,
+                VerticalAlignment.Center);
 
             var accelerationInfoPrefix = new Label(
                 () => Font.UiStatistics,
@@ -100,8 +99,8 @@ namespace MetaMind.Unity.Guis.Modules
                 () => this.AccelerationInfoCenterPosition,
                 () => Color.White,
                 () => 1f,
-                StringHAlign.Left,
-                StringVAlign.Center);
+                HoritonalAlignment.Left,
+                VerticalAlignment.Center);
 
             var accelerationInfoSubfix = new Label(
                 () => Font.UiStatistics,
@@ -109,8 +108,8 @@ namespace MetaMind.Unity.Guis.Modules
                 () => this.AccelerationInfoCenterPosition,
                 () => Color.White,
                 () => 2.0f,
-                StringHAlign.Right,
-                StringVAlign.Center);
+                HoritonalAlignment.Right,
+                VerticalAlignment.Center);
 
             this.Entities = new GameVisualEntityCollection<IGameVisualEntity>
                                 {

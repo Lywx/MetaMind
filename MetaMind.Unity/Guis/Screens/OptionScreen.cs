@@ -4,24 +4,24 @@
     using System.Collections.Generic;
     using Concepts.Operations;
     using Engine;
-    using Engine.Components.Fonts;
-    using Engine.Guis.Controls.Items;
-    using Engine.Guis.Controls.Items.Data;
-    using Engine.Guis.Controls.Items.Factories;
-    using Engine.Guis.Controls.Items.Frames;
-    using Engine.Guis.Controls.Items.Interactions;
-    using Engine.Guis.Controls.Items.Layers;
-    using Engine.Guis.Controls.Views;
-    using Engine.Guis.Controls.Views.Layouts;
-    using Engine.Guis.Controls.Views.Logic;
-    using Engine.Guis.Controls.Views.Scrolls;
-    using Engine.Guis.Controls.Views.Selections;
-    using Engine.Guis.Controls.Views.Swaps;
-    using Engine.Guis.Controls.Views.Visuals;
-    using Engine.Guis.Controls.Visuals;
-    using Engine.Screens;
-    using Engine.Services;
-    using Engine.Settings.Colors;
+    using Engine.Component.Font;
+    using Engine.Gui.Control.Item;
+    using Engine.Gui.Control.Item.Data;
+    using Engine.Gui.Control.Item.Factories;
+    using Engine.Gui.Control.Item.Frames;
+    using Engine.Gui.Control.Item.Interactions;
+    using Engine.Gui.Control.Item.Layers;
+    using Engine.Gui.Control.Views;
+    using Engine.Gui.Control.Views.Layouts;
+    using Engine.Gui.Control.Views.Logic;
+    using Engine.Gui.Control.Views.Scrolls;
+    using Engine.Gui.Control.Views.Selections;
+    using Engine.Gui.Control.Views.Swaps;
+    using Engine.Gui.Control.Views.Visuals;
+    using Engine.Gui.Control.Visuals;
+    using Engine.Screen;
+    using Engine.Service;
+    using Engine.Setting.Color;
     using Microsoft.Xna.Framework;
     using Modules;
     using Widgets.BlockViews.Options;
@@ -96,11 +96,11 @@
             {
                 TextFont     = () => Font.UiRegular,
                 Text         = () => "OPTIONS",
-                TextPosition = () => new Vector2(graphicsSettings.Width / 2.0f, 80),
+                AnchorLocation = () => new Vector2(graphicsSettings.Width / 2.0f, 80),
                 TextColor    = () => Color.White,
                 TextSize     = () => 1f,
-                TextHAlign   = StringHAlign.Center,
-                TextVAlign   = StringVAlign.Center,
+                TextHAlignment   = HoritonalAlignment.Center,
+                TextVAlignment   = VerticalAlignment.Center,
             };
 
             this.procedureNameLabelBox = new LabelBox(
@@ -108,7 +108,7 @@
                 {
                     TextFont       = Font.ContentRegular,
                     Text           = () => this.procedureName,
-                    TextPosition   = () => OperationModuleSettings.ViewMargin.ToVector2(),
+                    AnchorLocation   = () => OperationModuleSettings.ViewMargin.ToVector2(),
                     TextColor      = Color.White,
                     TextSize       = 0.8f,
                     TextLeading    = OperationModuleSettings.ItemMargin.Y,
@@ -126,7 +126,7 @@
                 {
                     TextFont       = Font.ContentRegular,
                     Text           = () => this.procedureDescription,
-                    TextPosition   = () => new Vector2(OperationModuleSettings.ViewMargin.X, this.procedureNameLabelBox.Bottom),
+                    AnchorLocation   = () => new Vector2(OperationModuleSettings.ViewMargin.X, this.procedureNameLabelBox.Bottom),
                     TextColor      = Color.White,
                     TextSize       = 0.8f,
                     TextLeading    = OperationModuleSettings.ItemMargin.Y,
@@ -164,7 +164,7 @@
 
                     item =>
                     {
-                        var itemFrame             = new OptionItemFrame(item, new ViewItemPickableFrame(item));
+                        var itemFrame             = new OptionItemFrameController(item, new ViewItemRectangle(item));
                         var itemLayoutInteraction = new BlockViewVerticalItemLayoutInteraction(item, viewSelection, viewScroll);
                         var itemLayout            = new TestItemLayout(item, itemLayoutInteraction);
                         var itemInteraction       = new BlockViewVerticalItemInteraction(item, itemLayout, itemLayoutInteraction);
@@ -202,7 +202,7 @@
 
         public override void Draw(IGameGraphicsService graphics, GameTime time)
         {
-            graphics.SpriteBatch.Begin();
+            SpriteBatch.Begin();
 
             this.procedureNameLabelBox.Draw(graphics, time, this.TransitionAlpha);
             this.procedureDescriptionLabelBox.Draw(graphics, time, this.TransitionAlpha);
@@ -210,7 +210,7 @@
             this.screenLabel.Draw(graphics, time, this.TransitionAlpha);
             this.Entities.Draw(graphics, time, this.TransitionAlpha);
 
-            graphics.SpriteBatch.End();
+            SpriteBatch.End();
 
             base.Draw(graphics, time);
         }
@@ -220,13 +220,13 @@
             this.Entities.UpdateForwardBuffer();
             this.Entities.Update(time);
             this.Entities.UpdateBackwardBuffer();
-            base         .Update(time);
+            base.Update(time);
         }
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
             this.Entities.UpdateInput(input, time);
-            base         .UpdateInput(input, time);
+            base.UpdateInput(input, time);
         }
     }
 }

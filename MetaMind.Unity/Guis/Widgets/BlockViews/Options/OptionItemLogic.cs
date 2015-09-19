@@ -2,12 +2,12 @@
 {
     using System.Linq;
     using Concepts.Operations;
-    using Engine.Guis.Controls.Items;
-    using Engine.Guis.Controls.Items.Data;
-    using Engine.Guis.Controls.Items.Frames;
-    using Engine.Guis.Controls.Items.Interactions;
-    using Engine.Guis.Controls.Items.Layouts;
-    using Engine.Guis.Controls.Items.Logic;
+    using Engine.Gui.Control.Item;
+    using Engine.Gui.Control.Item.Data;
+    using Engine.Gui.Control.Item.Frames;
+    using Engine.Gui.Control.Item.Interactions;
+    using Engine.Gui.Control.Item.Layouts;
+    using Engine.Gui.Control.Item.Logic;
     using Microsoft.Xna.Framework;
     using Screens;
 
@@ -15,7 +15,7 @@
     {
         public OptionItemLogic(
             IViewItem            item,
-            IViewItemFrame       itemFrame,
+            IViewItemFrameController       itemFrame,
             IViewItemInteraction itemInteraction,
             IViewItemDataModel   itemModel,
             IViewItemLayout      itemLayout)
@@ -23,16 +23,16 @@
         {
         }
 
-        public new OptionItemFrame ItemFrame
+        public new OptionItemFrameController ItemFrame
         {
-            get { return (OptionItemFrame)base.ItemFrame; }
+            get { return (OptionItemFrameController)base.ItemFrame; }
         }
 
-        public override void SetupLayer()
+        public override void Initialize()
         {
-            base.SetupLayer();
+            base.Initialize();
 
-            this.ItemFrame.RootFrame.MouseUpLeft += (o, args) => this.AcceptOption();
+            this.ItemFrame.RootRectangle.MouseUpLeft += (o, args) => this.AcceptOption();
         }
 
         private void AcceptOption()
@@ -41,7 +41,7 @@
             option.Accept();
             option.Unlock();
 
-            this.ItemFrame.RootFrame.UpdateInput(this.Input, new GameTime());
+            this.ItemFrame.RootRectangle.UpdateInput(this.Input, new GameTime());
 
             this.Interop.Screen.Screens.First(screen => screen is OptionScreen).Exit();
         }

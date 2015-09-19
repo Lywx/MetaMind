@@ -2,9 +2,9 @@ namespace MetaMind.Unity.Guis.Modules.Summary
 {
     using System;
     using Engine;
-    using Engine.Components.Fonts;
-    using Engine.Guis.Controls.Visuals;
-    using Engine.Services;
+    using Engine.Component.Font;
+    using Engine.Gui.Control.Visuals;
+    using Engine.Service;
     using Microsoft.Xna.Framework;
 
     public class SummaryEntry : GameVisualEntity
@@ -14,7 +14,7 @@ namespace MetaMind.Unity.Guis.Modules.Summary
             this.Caption    = new Label(font, caption   , captionPos   , color, size);
             this.Statistics = new Label(font, statistics, statisticsPos, color, size)
                                   {
-                                      TextHAlign = StringHAlign.Left
+                                      TextHAlignment = HoritonalAlignment.Left
                                   };
         }
 

@@ -1,9 +1,9 @@
 ﻿namespace MetaMind.Unity.Guis.Screens
 {
     using System;
-    using Engine.Guis.Modules;
-    using Engine.Screens;
-    using Engine.Services;
+    using Engine.Gui.Module;
+    using Engine.Screen;
+    using Engine.Service;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -43,11 +43,11 @@
             {
                 DrawAction = (graphics, time, alpha) =>
                 {
-                    var rectangle = this.RenderTargetRectangle;
+                    var rectangle = this.DestinationRectangle;
                     var color = (Color * ((float)this.TransitionAlpha / 2)).ToColor();
 
                     SpriteBatch.Begin();
-                    SpriteBatch.Draw(this.background, rectangle, color.WithBrightness(Brightness));
+                    SpriteBatch.Draw(this.background, rectangle, color.MakeDark(Brightness));
                     this.particles.Draw(graphics, time, this.TransitionAlpha);
                     SpriteBatch.End();
                 },

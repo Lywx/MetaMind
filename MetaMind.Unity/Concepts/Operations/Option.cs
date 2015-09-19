@@ -1,7 +1,7 @@
 namespace MetaMind.Unity.Concepts.Operations
 {
     using System;
-    using Engine.Guis.Controls.Items.Data;
+    using Engine.Gui.Control.Item.Data;
 
     #region Option
 

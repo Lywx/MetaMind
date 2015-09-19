@@ -3,10 +3,9 @@ namespace MetaMind.Unity.Guis.Modules.Synchronization
     using System;
     using Concepts.Synchronizations;
     using Engine;
-    using Engine.Guis;
-    using Engine.Guis.Controls.Visuals;
-    using Engine.Services;
-    using Engine.Settings.Colors;
+    using Engine.Gui.Control.Visuals;
+    using Engine.Service;
+    using Engine.Setting.Color;
     using Microsoft.Xna.Framework;
 
     public class SynchronizationProgressBar : GameEntityModuleComponent<SynchronizationModule, SynchronizationSettings, SynchronizationModuleLogic>
@@ -22,14 +21,14 @@ namespace MetaMind.Unity.Guis.Modules.Synchronization
             this.Synchronization = synchronization;
 
             this.Frame = new Box(
-                () => ExtRectangle.RectangleByCenter(
+                () => RectangleExt.RectangleByCenter(
                     this.Settings.BarFrameCenterPosition,
                     this.Settings.BarFrameSize),
                 () => this.Settings.BarFrameColor,
                 () => true);
 
             this.Progress = new Box(
-                () => ExtRectangle.RectangleByCenter(
+                () => RectangleExt.RectangleByCenter(
                     this.Settings.BarFrameCenterPosition,
                     this.Settings.BarFrameSize * new Vector2(this.Synchronization.Progress, 1)),
                 () => this.Synchronization.Enabled ? Palette.LightBlue : Palette.LightPink,

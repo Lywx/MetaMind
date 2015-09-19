@@ -4,21 +4,20 @@
     using Concepts.Operations;
     using Concepts.Synchronizations;
     using Concepts.Tests;
-    using Engine.Components.Fonts;
-    using Engine.Components.Inputs;
-    using Engine.Guis.Controls.Buttons;
-    using Engine.Screens;
+    using Engine.Component.Font;
+    using Engine.Gui.Control.Button;
+    using Engine.Screen;
     using Engine.Scripting.FSharp;
-    using Engine.Services;
-    using Engine.Settings.Colors;
+    using Engine.Service;
+    using Engine.Setting.Color;
     using Layers;
     using Microsoft.Xna.Framework;
 
     public class MainScreen : GameScreen
     {
-        private Button buttonPrevious;
+        private RectangleButton buttonPrevious;
 
-        private Button buttonNext;
+        private RectangleButton buttonNext;
 
         private SynchronizationSession synchronizationSession;
 
@@ -73,7 +72,7 @@
                 FillMousePressColor         = Palette.Transparent40
             };
 
-            this.buttonPrevious = new Button(
+            this.buttonPrevious = new RectangleButton(
                 new Rectangle(0, buttonY, buttonWidth, buttonHeight), buttonSettings)
             {
                 Label =
@@ -87,7 +86,7 @@
             this.buttonPrevious.MousePressLeft +=
                 (sender, args) => this.CircularLayers.Previous();
 
-            this.buttonNext = new Button(
+            this.buttonNext = new RectangleButton(
                 new Rectangle(graphicsSettings.Width - buttonWidth, buttonY, buttonWidth, buttonHeight), buttonSettings)
             {
                 Label =
@@ -113,14 +112,13 @@
                         time,
                         Math.Min(
                             this.TransitionAlpha,
-                            this.CircularLayers.TransitionAlpha));
-
+                            this.CircularLayers.Alpha));
                     this.buttonNext.Draw(
                         graphics,
                         time,
                         Math.Min(
                             this.TransitionAlpha,
-                            this.CircularLayers.TransitionAlpha));
+                            this.CircularLayers.Alpha));
                     SpriteBatch.End();
                 }
             });
@@ -131,7 +129,7 @@
             {
                 Active = false,
                 Visible = false,
-                TransitionAlpha = 0,
+                Alpha = 0,
             });
 
             this.Layers.Add(this.CircularLayers);
@@ -144,33 +142,33 @@
 
         #endregion
 
-        public override void Update(GameTime time)
-        {
-            this.buttonPrevious.Update(time);
-            this.buttonNext    .Update(time);
+        //public override void Update(GameTime time)
+        //{
+        //    this.buttonPrevious.Update(time);
+        //    this.buttonNext.Update(time);
 
-            base.Update(time);
-        }
+        //    base.Update(time);
+        //}
 
-        public override void UpdateInput(IGameInputService input, GameTime time)
-        {
-            var keyboard = input.State.Keyboard;
+        //public override void UpdateInput(IGameInputService input, GameTime time)
+        //{
+        //    var keyboard = input.State.Keyboard;
 
-            if (keyboard.IsActionTriggered(KeyboardActions.SessionRerun))
-            {
-                this.RunScripts();
-            }
+        //    if (keyboard.IsActionTriggered(KeyboardActions.SessionRerun))
+        //    {
+        //        this.RunScripts();
+        //    }
 
-            if (keyboard.IsActionTriggered(KeyboardActions.SynchronizationPause))
-            {
-                this.synchronizationSession.ToggleSynchronization();
-            }
+        //    if (keyboard.IsActionTriggered(KeyboardActions.SynchronizationPause))
+        //    {
+        //        this.synchronizationSession.ToggleSynchronization();
+        //    }
 
-            this.buttonPrevious.UpdateInput(input, time);
-            this.buttonNext    .UpdateInput(input, time);
+        //    this.buttonPrevious.UpdateInput(input, time);
+        //    this.buttonNext.UpdateInput(input, time);
 
-            base.UpdateInput(input, time);
-        }
+        //    base.UpdateInput(input, time);
+        //}
 
         private void RunScripts()
         {

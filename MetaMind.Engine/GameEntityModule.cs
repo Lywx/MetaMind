@@ -1,7 +1,7 @@
 namespace MetaMind.Engine
 {
     using Microsoft.Xna.Framework;
-    using Services;
+    using Service;
 
     /// <summary>
     /// GameEntityModule is the most outer shell of gui object that load and unload

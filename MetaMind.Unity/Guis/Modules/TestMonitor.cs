@@ -3,8 +3,7 @@
     using System;
     using Concepts.Tests;
     using Engine;
-    using Engine.Settings.Loaders;
-
+    using Engine.Setting.Loader;
     using Microsoft.Xna.Framework;
 
     public class TestMonitor : GameControllableComponent, IConfigurationLoader
@@ -47,7 +46,7 @@
         {
             var pairs = ConfigurationLoader.LoadUniquePairs(this);
 
-            TestWarningRate = FileLoader.ExtractFloats(pairs, "TestMonitor.TestWarningRate", 0, 10f);
+            TestWarningRate = FileLoader.ReadFloats(pairs, "TestMonitor.TestWarningRate", 0, 10f);
         }
 
         #endregion

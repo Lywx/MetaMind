@@ -3,11 +3,12 @@
     using System;
     using Concepts.Tests;
     using Engine;
-    using Engine.Components.Fonts;
-    using Engine.Guis.Controls.Visuals;
-    using Engine.Services;
-    using Engine.Settings.Colors;
+    using Engine.Component.Font;
+    using Engine.Gui.Control.Visuals;
+    using Engine.Service;
+    using Engine.Setting.Color;
     using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
 
     public class TestModuleVisual : GameEntityModuleVisual<TestModule, TestModuleSettings, TestModuleLogic>
     {
@@ -36,21 +37,21 @@
             {
                 TextFont     = testCompletionFont,
                 Text         = () => $"{this.test.Evaluation.ResultAllPassedRate.ToString("F0")}",
-                TextPosition = () => this.TestRateCenterPosition,
+                AnchorLocation = () => this.TestRateCenterPosition,
                 TextColor    = testCompletionColor,
                 TextSize     = () => 2.0f,
-                TextHAlign   = StringHAlign.Left,
-                TextVAlign   = StringVAlign.Center,
+                TextHAlignment   = HoritonalAlignment.Left,
+                TextVAlignment   = VerticalAlignment.Center,
             };
 
             var testRateSubfix = new Label { 
                 TextFont       = testCompletionFont,
                 Text           = () => " %",
-                TextPosition   = () => this.TestRateCenterPosition,
+                AnchorLocation   = () => this.TestRateCenterPosition,
                 TextColor      = testCompletionColor,
                 TextSize       = () => 1f,
-                TextHAlign     = StringHAlign.Right,
-                TextVAlign     = StringVAlign.Center};
+                TextHAlignment     = HoritonalAlignment.Right,
+                TextVAlignment     = VerticalAlignment.Center};
 
             this.VisualEntities.Add(testRatePrefix);
             this.VisualEntities.Add(testRateSubfix);

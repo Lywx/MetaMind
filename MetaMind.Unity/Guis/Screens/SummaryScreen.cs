@@ -2,8 +2,8 @@
 {
     using System;
     using Engine;
-    using Engine.Screens;
-    using Engine.Services;
+    using Engine.Screen;
+    using Engine.Service;
     using Microsoft.Xna.Framework;
     using Modules;
 
@@ -42,6 +42,10 @@
                     UpdateAction = time =>
                     {
                         this.summary.Update(time);
+                    },
+                    UpdateInputAction = (input, time) =>
+                    {
+                        this.summary.UpdateInput(input, time);
                     }
                 });
         }
@@ -50,11 +54,6 @@
         {
             base        .UnloadContent(interop);
             this.summary.UnloadContent(interop);
-        }
-
-        public override void UpdateInput(IGameInputService input, GameTime time)
-        {
-            this.summary.UpdateInput(input, time);
         }
     }
 }

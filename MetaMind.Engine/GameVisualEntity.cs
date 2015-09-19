@@ -10,7 +10,7 @@ namespace MetaMind.Engine
     using System;
     using System.Runtime.Serialization;
     using Microsoft.Xna.Framework;
-    using Services;
+    using Service;
 
     [DataContract]
     public class GameVisualEntity : GameEntity, IGameVisualEntity
@@ -19,7 +19,7 @@ namespace MetaMind.Engine
 
         private bool visible = true;
 
-        public bool Visible
+        public virtual bool Visible
         {
             get
             {
@@ -69,12 +69,6 @@ namespace MetaMind.Engine
 
         #endregion
 
-        #region Dependency
-
-        protected IGameGraphicsService Graphics => GameEngine.Service.Graphics;
-
-        #endregion
-
         #region Draw
 
         private int drawOrder;
@@ -115,7 +109,7 @@ namespace MetaMind.Engine
         /// </summary>
         /// <remarks>
         /// It is recommended not to call SpriteBatch.Begin and SpriteBatch.End 
-        /// in this method and its overriden version.
+        /// in this method and its override version.
         /// </remarks>>
         /// <param name="graphics"></param>
         /// <param name="time"></param>
@@ -127,7 +121,7 @@ namespace MetaMind.Engine
         /// </summary>
         /// <remarks>
         /// You should draw RenderTarget2D and RenderTarget3D to back buffer in 
-        /// this method and its overriden method.
+        /// this method and its override method.
         /// </remarks>>
         /// <param name="graphics"></param>
         /// <param name="time"></param>

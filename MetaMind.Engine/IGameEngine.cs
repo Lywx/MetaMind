@@ -1,7 +1,7 @@
 ﻿namespace MetaMind.Engine
 {
     using System;
-    using Components;
+    using Component;
 
     public interface IGameEngine : IDisposable, IGameEngineOperations
     {

@@ -1,8 +1,8 @@
 ﻿namespace MetaMind.Engine.Console
 {
-    using Components.Graphics;
+    using Component.Graphics;
     using Microsoft.Xna.Framework;
-    using Settings.Loaders;
+    using Setting.Loader;
 
     public class ScrollController : IParameterLoader<GraphicsSettings>
     {

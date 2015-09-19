@@ -1,9 +1,9 @@
 namespace MetaMind.Unity.Guis.Modules
 {
     using Engine;
-    using Engine.Components.Fonts;
-    using Engine.Components.Graphics;
-    using Engine.Settings.Loaders;
+    using Engine.Component.Font;
+    using Engine.Component.Graphics;
+    using Engine.Setting.Loader;
     using Microsoft.Xna.Framework;
 
     public class SummarySettings : GameVisualEntity, IParameterLoader<GraphicsSettings>

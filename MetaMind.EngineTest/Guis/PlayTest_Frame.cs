@@ -1,18 +1,18 @@
 ﻿namespace MetaMind.EngineTest.Guis
 {
     using Engine;
-    using Engine.Guis;
-    using Engine.Guis.Controls.Visuals;
-    using Engine.Guis.Elements;
-    using Engine.Services;
-    using Engine.Testers;
+    using Engine.Gui.Control.Visuals;
+    using Engine.Gui.Element;
+    using Engine.Gui.Element.Rectangles;
+    using Engine.Service;
+    using Engine.Test;
     using Microsoft.Xna.Framework;
 
     public class PlayTest_Frame : GameEntityModule<object>
     {
         private GameControllableEntityCollection<GameControllableEntity> control;
         private GameVisualEntityCollection<GameVisualEntity> visual;
-        private DraggableFrame frame;
+        private DraggableRectangle rectangle;
 
         public PlayTest_Frame(object settings)
             : base(settings)
@@ -21,11 +21,11 @@
             this.visual  = new GameVisualEntityCollection<GameVisualEntity>();
 
             // Region Control
-            this.frame = new DraggableFrame(new Rectangle(50, 50, 50, 50));
-            this.control.Add(this.frame);
+            this.rectangle = new DraggableRectangle(new Rectangle(50, 50, 50, 50)) {Movable = false};
+            this.control.Add(this.rectangle);
 
             // Box Visual
-            var box = new Box(() => this.frame.Rectangle, () => Color.CornflowerBlue, () => true);
+            var box = new Box(() => this.rectangle.Bounds, () => Color.CornflowerBlue, () => true);
             this.visual.Add(box);
         }
 
@@ -34,7 +34,7 @@
             this.control.Draw(graphics, time, alpha);
             this.visual .Draw(graphics, time, alpha);
 
-            StateVisualTester.Draw(graphics, typeof(FrameState), this.frame.FrameStates, this.frame.Location.ToVector2(), 10, 10);
+            StateVisualTester.Draw(graphics, typeof(ElementState), this.rectangle.FrameStates, this.rectangle.Location.ToVector2(), 10, 10);
         }
 
         public override void Update(GameTime time)

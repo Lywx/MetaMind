@@ -4,7 +4,7 @@
     using Concepts.Operations;
     using Concepts.Tests;
 
-    public interface ISessionData : Engine.Sessions.ISessionData
+    public interface ISessionData : Engine.Session.ISessionData
     {
         ICognition Cognition { get; }
 

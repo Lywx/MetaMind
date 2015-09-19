@@ -1,7 +1,7 @@
 namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
 {
-    using Engine.Guis.Controls.Items;
-    using Engine.Guis.Controls.Items.Layers;
+    using Engine.Gui.Control.Item;
+    using Engine.Gui.Control.Item.Layers;
 
     public class OptionItemLayer : BlockViewVerticalItemLayer
     {
@@ -20,7 +20,7 @@ namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
             get { return (OptionItemLogic)base.ItemLogic; }
         }
 
-        public OptionItemFrame ItemFrame
+        public OptionItemFrameController ItemFrame
         {
             get { return this.ItemLogic.ItemFrame; }
         }

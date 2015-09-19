@@ -10,13 +10,11 @@ namespace MetaMind.Engine
     using System;
     using System.Diagnostics;
     using System.Reflection;
-
-    using Components;
-    using Services;
-
+    using Component;
     using Microsoft.Xna.Framework;
+    using Service;
 
-    public partial class GameEngine : Microsoft.Xna.Framework.Game, IGameEngine
+    public class GameEngine : Microsoft.Xna.Framework.Game, IGameEngine
     {
         private IGameGraphics graphics;
 

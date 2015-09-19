@@ -9,7 +9,7 @@ namespace MetaMind.Engine
 {
     using System;
     using Microsoft.Xna.Framework;
-    using Services;
+    using Service;
 
     public class Game : DrawableGameComponent, IGame
     {

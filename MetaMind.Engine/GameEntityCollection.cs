@@ -1,8 +1,8 @@
 ﻿namespace MetaMind.Engine
 {
     using System.Collections.Generic;
-    using Services;
     using Microsoft.Xna.Framework;
+    using Service;
 
     public class GameEntityCollection<T> : List<T>
         where T : IGameEntity

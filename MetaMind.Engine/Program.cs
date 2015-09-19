@@ -1,10 +1,6 @@
 namespace MetaMind.Engine
 {
     using System;
-    using Components;
-    using Components.Fonts;
-    using Components.Graphics;
-    using Microsoft.Xna.Framework.Audio;
 
 #if WINDOWS || LINUX
 
@@ -13,11 +9,10 @@ namespace MetaMind.Engine
         [STAThread]
         private static void Main(string[] args)
         {
-            using (var engine = new GameEngine(@"Content"))
-            {
-                var configurer = new GameEngineCompositor();
-                configurer.Configure(engine);
+            var builder = new GameEngineBuilder();
 
+            using (var engine = builder.Create(@"Content"))
+            {
                 engine.Run();
             }
         }

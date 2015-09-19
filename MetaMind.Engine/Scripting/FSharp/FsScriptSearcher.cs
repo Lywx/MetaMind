@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using Components;
-    using Settings.Loaders;
+    using Component.File;
+    using Setting.Loader;
 
     public class FsScriptSearcher : IConfigurationLoader
     {

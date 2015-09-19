@@ -1,7 +1,7 @@
 ﻿namespace MetaMind.Engine.Console.Commands.Core
 {
     using System;
-    using Components;
+    using Component.File;
 
     internal class ResetCommand : IConsoleCommand
     {

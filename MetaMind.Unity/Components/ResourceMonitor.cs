@@ -2,8 +2,8 @@ namespace MetaMind.Unity.Components
 {
     using System;
     using Engine;
-    using Engine.Components.Profilings;
-    using Engine.Settings.Loaders;
+    using Engine.Component.Profiler;
+    using Engine.Setting.Loader;
     using Microsoft.Xna.Framework;
 
     public class ResourceMonitor : GameControllableComponent, IConfigurationLoader
@@ -48,8 +48,8 @@ namespace MetaMind.Unity.Components
         {
             var pairs = ConfigurationLoader.LoadUniquePairs(this);
 
-            this.WarningCpuUsageInterval = TimeSpan.FromMinutes(FileLoader.ExtractFloats(pairs, "ResourceMonitor.WarningCPUUsageInterval", 0, 5f));
-            this.WarningCpuUsagePercentage = FileLoader.ExtractFloats(pairs, "ResourceMonitor.WarningCPUUsagePercentage", 0, 10f);
+            this.WarningCpuUsageInterval = TimeSpan.FromMinutes(FileLoader.ReadFloats(pairs, "ResourceMonitor.WarningCPUUsageInterval", 0, 5f));
+            this.WarningCpuUsagePercentage = FileLoader.ReadFloats(pairs, "ResourceMonitor.WarningCPUUsagePercentage", 0, 10f);
         }
 
         #endregion

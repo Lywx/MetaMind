@@ -3,12 +3,13 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Components.Fonts;
-    using Components.Graphics;
+    using Component.Font;
+    using Component.Graphics;
+    using Extensions;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Primtives2D;
-    using Settings.Loaders;
+    using Setting.Loader;
 
     public class GameConsoleVisual :
         GameModuleVisual<GameConsole, GameConsoleSettings, GameConsoleLogic, GameConsoleVisual>,

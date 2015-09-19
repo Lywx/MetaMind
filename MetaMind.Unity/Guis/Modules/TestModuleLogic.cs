@@ -4,9 +4,9 @@
     using System.Collections.Generic;
     using Concepts.Tests;
     using Engine;
-    using Engine.Guis.Controls.Items;
-    using Engine.Guis.Controls.Views;
-    using Engine.Services;
+    using Engine.Gui.Control.Item;
+    using Engine.Gui.Control.Views;
+    using Engine.Service;
     using Microsoft.Xna.Framework;
     using Widgets.IndexViews;
     using Widgets.IndexViews.Tests;
@@ -63,7 +63,7 @@
             // View construction
             this.View = new View(viewSettings, itemSettings, new List<IViewItem>());
 
-            var viewCompositor = new TestIndexViewCompositor(this.testSession);
+            var viewCompositor = new TestIndexViewBuilder(this.testSession);
             viewCompositor.Compose(this.View, this.test);
 
             // Entities

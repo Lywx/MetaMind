@@ -1,8 +1,8 @@
 ﻿namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 {
-    using Engine.Guis.Controls.Items;
-    using Engine.Guis.Controls.Items.Interactions;
-    using Engine.Guis.Controls.Items.Layouts;
+    using Engine.Gui.Control.Item;
+    using Engine.Gui.Control.Item.Interactions;
+    using Engine.Gui.Control.Item.Layouts;
 
     public class TestItemLayout : IndexBlockViewVerticalItemLayout
     {

@@ -1,9 +1,9 @@
 ﻿namespace MetaMind.Engine.Debugging
 {
     using System;
-    using Components.Fonts;
+    using Component.Font;
     using Microsoft.Xna.Framework;
-    using Services;
+    using Service;
 
     public class FrameRateCounter : DrawableGameComponent
     {

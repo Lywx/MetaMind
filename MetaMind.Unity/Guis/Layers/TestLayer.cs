@@ -4,11 +4,11 @@ namespace MetaMind.Unity.Guis.Layers
     using System.Speech.Synthesis;
     using Concepts.Tests;
     using Engine;
-    using Engine.Components.Fonts;
-    using Engine.Guis.Controls.Visuals;
-    using Engine.Screens;
-    using Engine.Services;
-    using Engine.Settings.Colors;
+    using Engine.Component.Font;
+    using Engine.Gui.Control.Visuals;
+    using Engine.Screen;
+    using Engine.Service;
+    using Engine.Setting.Color;
     using Microsoft.Xna.Framework;
     using Modules;
     using Screens;
@@ -77,11 +77,11 @@ namespace MetaMind.Unity.Guis.Layers
             {
                 TextFont     = () => Font.UiRegular,
                 Text         = () => "TESTS",
-                TextPosition = () => new Vector2((float)graphicsSettings.Width / 2, 80),
+                AnchorLocation = () => new Vector2((float)graphicsSettings.Width / 2, 80),
                 TextColor    = () => Color.White,
                 TextSize     = () => 1.0f,
-                TextHAlign   = StringHAlign.Center,
-                TextVAlign   = StringVAlign.Center,
+                TextHAlignment   = HoritonalAlignment.Center,
+                TextVAlignment   = VerticalAlignment.Center,
             };
 
             this.drawEntities.Add(this.testLabel);
@@ -105,8 +105,8 @@ namespace MetaMind.Unity.Guis.Layers
         {
             graphics.SpriteBatch.Begin();
 
-            this.inputEntities.Draw(graphics, time, Math.Min(alpha, this.TransitionAlpha));
-            this.drawEntities .Draw(graphics, time, Math.Min(alpha, this.TransitionAlpha)); 
+            this.inputEntities.Draw(graphics, time, Math.Min(alpha, this.Alpha));
+            this.drawEntities .Draw(graphics, time, Math.Min(alpha, this.Alpha)); 
 
             graphics.SpriteBatch.End();
 

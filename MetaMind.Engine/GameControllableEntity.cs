@@ -2,10 +2,8 @@ namespace MetaMind.Engine
 {
     using System;
     using System.Runtime.Serialization;
-
-    using Services;
-
     using Microsoft.Xna.Framework;
+    using Service;
 
     [DataContract]
     public class GameControllableEntity : GameVisualEntity, IGameControllableEntity
@@ -92,12 +90,6 @@ namespace MetaMind.Engine
         public virtual void UpdateInput(IGameInputService input, GameTime time) { }
 
         #endregion Input
-
-        #region Dependency
-
-        protected IGameInputService Input => GameEngine.Service.Input;
-
-        #endregion
 
         #region IDisposable
 
