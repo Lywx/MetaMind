@@ -1,7 +1,7 @@
 ﻿namespace MetaMind.Engine.Component
 {
-    using Component.Font;
     using Graphics;
+    using Interop;
     using Microsoft.Xna.Framework.Graphics;
 
     internal class GameNullGraphics : IGameGraphics
@@ -14,7 +14,7 @@
 
         public SpriteBatch SpriteBatch { get; }
 
-        public IStringDrawer StringDrawer { get; }
+        public IRenderer Renderer { get; }
 
         public GraphicsDevice GraphicsDevice { get; }
 

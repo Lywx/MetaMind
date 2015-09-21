@@ -7,8 +7,6 @@
 
     public class CircularGameLayer : GameLayer, ICircularLayerManager
     {
-        private readonly GameControllableEntityCollection<IGameLayer> layers = new GameControllableEntityCollection<IGameLayer>();
-
         private int layerDisplayedIndex;
 
         public CircularGameLayer(IGameScreen screen)
@@ -16,7 +14,7 @@
         {
         }
 
-        public GameControllableEntityCollection<IGameLayer> Layers => this.layers;
+        public GameEntityCollection<IGameLayer> Layers { get; protected set; } = new GameEntityCollection<IGameLayer>();
 
         public IGameLayer LayerDisplayed => this.Layers[this.layerDisplayedIndex];
 
@@ -24,13 +22,13 @@
 
         public override void LoadContent(IGameInteropService interop)
         {
-            this.layers.LoadContent(interop);
+            this.Layers.LoadContent(interop);
             base       .LoadContent(interop);
         }
 
         public override void UnloadContent(IGameInteropService interop)
         {
-            this.layers.UnloadContent(interop);
+            this.Layers.UnloadContent(interop);
             base       .UnloadContent(interop);
         }
 

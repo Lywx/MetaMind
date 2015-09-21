@@ -15,7 +15,7 @@ namespace MetaMind.Engine.Session
         public const string XmlFilename = "Session.xml";
 
         [DataMember]
-        public const string XmlPath = FileManager.SaveFolderPath + XmlFilename;
+        public const string XmlPath = FileManager.SaveDirectory + XmlFilename;
 
         #endregion 
 

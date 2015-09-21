@@ -5,6 +5,10 @@
     using Microsoft.Xna.Framework.Graphics;
     using Service;
 
+    /// <summary>
+    /// Control is the basic unit of GUI rendering. It has the basic geometrical 
+    /// property. But it doesn't have input related methods. It is 
+    /// </summary>
     public abstract class Control : ControlComponent, IControl
     {
         public Control()
@@ -312,10 +316,7 @@
 
             this.CreateRenderTarget();
 
-            foreach (var control in this.Controls)
-            {
-                control.BeginDraw(graphics, time, alpha);
-            }
+            this.Controls.BeginDraw(graphics, time, alpha);
 
             this.OnBeginDrawStarted(
                 new DrawEventArgs(this.RenderTarget, this.DestinationRectangle, time));
@@ -340,10 +341,7 @@
                 return;
             }
 
-            foreach (var control in this.Controls)
-            {
-                control.EndDraw(graphics, time, alpha);
-            }
+            this.Controls.EndDraw(graphics, time, alpha);
 
             this.OnEndDrawStarted(
                 new DrawEventArgs(this.RenderTarget, this.DestinationRectangle, time));
@@ -375,10 +373,7 @@
                 return;
             }
 
-            foreach (var control in this.Controls)
-            {
-                control.Update(time);
-            }
+            this.Controls.Update(time);
         }
 
         public override void UpdateInput(IGameInputService input, GameTime time)
@@ -390,10 +385,7 @@
                 return;
             }
 
-            foreach (var control in this.Controls)
-            {
-                control.UpdateInput(input, time);
-            }
+            this.Controls.UpdateInput(input, time);
         }
 
         #endregion
@@ -409,10 +401,7 @@
                 return;
             }
 
-            foreach (var control in this.Controls)
-            {
-                control.UpdateForwardBuffer();
-            }
+            this.Controls.UpdateForwardBuffer();
         }
 
         public override void UpdateBackwardBuffer()
@@ -424,10 +413,7 @@
                 return;
             }
 
-            foreach (var control in this.Controls)
-            {
-                control.UpdateBackwardBuffer();
-            }
+            this.Controls.UpdateBackwardBuffer();
         }
 
         #endregion

@@ -9,7 +9,6 @@ namespace MetaMind.Engine.Gui.Control.Item.Data
 {
     using System;
     using System.Reflection;
-    using Component.Font;
     using Layers;
     using Microsoft.Xna.Framework;
     using Service;
@@ -105,14 +104,14 @@ namespace MetaMind.Engine.Gui.Control.Item.Data
         private void RefreshInt(object sender, ViewItemDataEventArgs e)
         {
             int result;
-            var succeeded = int.TryParse(Font.ContentRegular.PrintableString(e.NewValue), out result);
+            var succeeded = int.TryParse(Font.ContentRegular.AvailableString(e.NewValue), out result);
 
             this.RefreshValue(this.itemData, succeeded ? result : 0);
         }
 
         private void RefreshString(object sender, ViewItemDataEventArgs e)
         {
-            this.RefreshValue(this.itemData, Font.ContentRegular.PrintableString(e.NewValue));
+            this.RefreshValue(this.itemData, Font.ContentRegular.AvailableString(e.NewValue));
         }
 
         private void RefreshValue(dynamic data, dynamic value)

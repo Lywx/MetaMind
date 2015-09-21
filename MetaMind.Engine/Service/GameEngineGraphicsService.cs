@@ -8,7 +8,6 @@
 namespace MetaMind.Engine.Service
 {
     using Component;
-    using Component.Font;
     using Component.Graphics;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -27,7 +26,7 @@ namespace MetaMind.Engine.Service
 
         public SpriteBatch SpriteBatch => this.Graphics.SpriteBatch;
 
-        public IStringDrawer StringDrawer => this.Graphics.StringDrawer;
+        public IRenderer Renderer => this.Graphics.Renderer;
 
         public GraphicsDevice GraphicsDevice => this.Manager.GraphicsDevice;
     }

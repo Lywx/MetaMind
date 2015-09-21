@@ -154,7 +154,7 @@ namespace MetaMind.Engine.Screen
 
         #region Layers
 
-        protected GameControllableEntityCollection<IGameLayer> Layers { get; private set; }
+        protected GameEntityCollection<IGameLayer> Layers { get; private set; } = new GameEntityCollection<IGameLayer>();
 
         #endregion
 
@@ -172,7 +172,6 @@ namespace MetaMind.Engine.Screen
 
         public GameScreen()
         {
-            this.Layers = new GameControllableEntityCollection<IGameLayer>();
         }
 
         ~GameScreen()

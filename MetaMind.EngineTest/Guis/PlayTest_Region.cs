@@ -9,15 +9,15 @@
 
     public class PlayTest_Region : GameEntityModule<object>
     {
-        private GameControllableEntityCollection<GameControllableEntity> control;
-        private GameVisualEntityCollection<GameVisualEntity> visual;
+        private GameEntityCollection<GameControllableEntity> control;
+        private GameEntityCollection<GameVisualEntity> visual;
         private RectangleRegion region;
 
         public PlayTest_Region(object settings)
             : base(settings)
         {
-            this.control = new GameControllableEntityCollection<GameControllableEntity>();
-            this.visual  = new GameVisualEntityCollection<GameVisualEntity>();
+            this.control = new GameEntityCollection<GameControllableEntity>();
+            this.visual  = new GameEntityCollection<GameVisualEntity>();
 
             // Region Control
             this.region = new RectangleRegion(new Rectangle(50, 50, 50, 50));

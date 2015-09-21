@@ -4,7 +4,6 @@ namespace MetaMind.Engine.Console
     using System.Linq;
     using System.Threading;
     using System.Windows.Forms;
-    using Component.Font;
     using Processors;
 
     internal class BufferController : GameModuleComponent<GameConsole, GameConsoleSettings, GameConsoleLogic, GameConsoleVisual>
@@ -48,7 +47,7 @@ namespace MetaMind.Engine.Console
 
         public void InputAdd(char c)
         {
-            if (this.Settings.Font.IsPrintable(c))
+            if (this.Settings.Font.Available(c))
             {
                 this.Input.Command += c;
             }

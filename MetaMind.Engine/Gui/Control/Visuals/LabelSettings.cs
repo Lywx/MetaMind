@@ -1,27 +1,56 @@
 namespace MetaMind.Engine.Gui.Control.Visuals
 {
     using System;
-    using Component.Font;
+    using Component.Graphics.Font;
     using Microsoft.Xna.Framework;
 
     /// <summary>
     /// The restorable part of label configuration.
     /// </summary>
-    public class LabelSettings : ICloneable
+    public struct LabelSettings : ICloneable
     {
-        public Color TextColor;
+        #region Alignment
 
-        public Font TextFont;
+        public HoritonalAlignment HAlignment;
 
-        public HoritonalAlignment TextHAlignment = HoritonalAlignment.Right;
+        public VerticalAlignment VAlignment;
 
-        public VerticalAlignment TextVAlignment = VerticalAlignment.Center;
+        #endregion
 
-        public bool TextMonospaced = false;
+        #region Layout
 
-        public float TextSize;
+        public float Size;
 
-        public int TextLeading;
+        public int Leading;
+
+        #endregion
+
+        public Color Color;
+
+        public Font Font;
+
+        public bool Monospaced;
+
+        public LabelSettings(
+            Font font,
+            Color color,
+            float size,
+            int leading,
+            HoritonalAlignment halignment,
+            VerticalAlignment valignment,
+            bool monospaced)
+        {
+            this.Font  = font;
+            this.Color = color;
+
+            this.Size    = size;
+            this.Leading = leading;
+
+            this.HAlignment = halignment;
+            this.VAlignment = valignment;
+
+            this.Monospaced = monospaced;
+        }
 
         public object Clone()
         {

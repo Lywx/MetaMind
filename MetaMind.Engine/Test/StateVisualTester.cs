@@ -9,7 +9,6 @@ namespace MetaMind.Engine.Test
 {
     using System;
     using System.Linq;
-    using Component.Font;
     using Microsoft.Xna.Framework;
     using Service;
 
@@ -24,7 +23,7 @@ namespace MetaMind.Engine.Test
                     var text = Enum.GetName(state, i);
                     var position = start + new Vector2(dx, dy * i);
 
-                    graphics.StringDrawer.DrawString(Font.UiStatistics, text, position, Color.White, 1f);
+                    graphics.Renderer.DrawString(Font.UiStatistics, text, position, Color.White, 1f);
                 }
             }
         }

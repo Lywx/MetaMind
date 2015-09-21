@@ -3,10 +3,9 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using Component.File;
     using Setting.Loader;
 
-    public class FsScriptSearcher : IConfigurationLoader
+    public class FsScriptSearcher : GameEntity, IConfigurationLoader
     {
         private readonly string searchPattern = "*.fsx";
 
@@ -34,7 +33,7 @@
         public void LoadConfiguration()
         {
             var pairs         = ConfigurationLoader.LoadUniquePairs(this);
-            this.SearchFolder = FileManager.DataPath(pairs["FsScriptSearcher.SearchFolder"]); ;
+            this.SearchFolder = this.Interop.File.DataPath(pairs["FsScriptSearcher.SearchFolder"]); ;
         }
 
         #endregion

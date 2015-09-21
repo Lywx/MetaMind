@@ -1,7 +1,7 @@
 
 #----------------------------- Global Properties ----------------------------#
 
-/outputDir:.\
+/outputDir:bin
 /intermediateDir:obj
 /platform:Windows
 /config:
@@ -14,47 +14,47 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Fonts/SpriteFonts/NSimSunBoldFont.spritefont
+#begin Fonts/NSimSunBoldFont.spritefont
 /importer:FontDescriptionImporter
 /processor:ChineseSpriteFontProcessor
-/processorParam:CharacterSet=Fonts\CharacterSets\Chinese5931.txt
+/processorParam:CharacterSet=Fonts\Characters\Chinese5931.txt
 /processorParam:TextureFormat=Compressed
-/build:Fonts/SpriteFonts/NSimSunBoldFont.spritefont
+/build:Fonts/NSimSunBoldFont.spritefont
 
-#begin Fonts/SpriteFonts/NSimSunBoldItalicFont.spritefont
+#begin Fonts/NSimSunBoldItalicFont.spritefont
 /importer:FontDescriptionImporter
 /processor:ChineseSpriteFontProcessor
-/processorParam:CharacterSet=Fonts\CharacterSets\Chinese5931.txt
+/processorParam:CharacterSet=Fonts\Characters\Chinese5931.txt
 /processorParam:TextureFormat=Compressed
-/build:Fonts/SpriteFonts/NSimSunBoldItalicFont.spritefont
+/build:Fonts/NSimSunBoldItalicFont.spritefont
 
-#begin Fonts/SpriteFonts/NSimSunItalicFont.spritefont
+#begin Fonts/NSimSunItalicFont.spritefont
 /importer:FontDescriptionImporter
 /processor:ChineseSpriteFontProcessor
-/processorParam:CharacterSet=Fonts\CharacterSets\Chinese5931.txt
+/processorParam:CharacterSet=Fonts\Characters\Chinese5931.txt
 /processorParam:TextureFormat=Compressed
-/build:Fonts/SpriteFonts/NSimSunItalicFont.spritefont
+/build:Fonts/NSimSunItalicFont.spritefont
 
-#begin Fonts/SpriteFonts/NSimSunRegularFont.spritefont
+#begin Fonts/NSimSunRegularFont.spritefont
 /importer:FontDescriptionImporter
 /processor:ChineseSpriteFontProcessor
-/processorParam:CharacterSet=Fonts\CharacterSets\Chinese5931.txt
+/processorParam:CharacterSet=Fonts\Characters\Chinese5931.txt
 /processorParam:TextureFormat=Compressed
-/build:Fonts/SpriteFonts/NSimSunRegularFont.spritefont
+/build:Fonts/NSimSunRegularFont.spritefont
 
-#begin Fonts\BitmapFonts\UiRegularFont.bmp
+#begin Fonts/UiRegularFont.bmp
 /importer:TextureImporter
 /processor:FontTextureProcessor
 /processorParam:FirstCharacter= 
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Color
-/build:Fonts\BitmapFonts\UiRegularFont.bmp
+/build:Fonts/UiRegularFont.bmp
 
-#begin Fonts\BitmapFonts\UiStatisticsFont.bmp
+#begin Fonts/UiStatisticsFont.bmp
 /importer:TextureImporter
 /processor:FontTextureProcessor
 /processorParam:FirstCharacter= 
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Color
-/build:Fonts\BitmapFonts\UiStatisticsFont.bmp
+/build:Fonts/UiStatisticsFont.bmp
 

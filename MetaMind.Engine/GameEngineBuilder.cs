@@ -3,11 +3,11 @@
     using System;
     using Component;
     using Component.Audio;
-    using Component.Event;
     using Component.File;
-    using Component.Font;
     using Component.Graphics;
-    using Component.Process;
+    using Component.Interop;
+    using Component.Interop.Event;
+    using Component.Interop.Process;
     using Console;
     using Console.Commands.Core;
     using Microsoft.Xna.Framework;
@@ -80,7 +80,7 @@
                 PastErrorColor  = Color.Red,
                 PastDebugColor  = Color.Yellow,
             };
-            var console = new GameConsole(consoleSettings, engine, graphics.SpriteBatch, graphics.StringDrawer);
+            var console = new GameConsole(consoleSettings, engine, graphics.SpriteBatch, graphics.Renderer);
 #if DEBUG
             console.AddCommand(new ResetCommand(engine, file));
 #endif

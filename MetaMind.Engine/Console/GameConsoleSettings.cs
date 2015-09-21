@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using Commands;
-    using Component.Font;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;

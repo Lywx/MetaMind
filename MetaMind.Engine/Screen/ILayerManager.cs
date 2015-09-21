@@ -1,7 +1,9 @@
 ﻿namespace MetaMind.Engine.Screen
 {
+    using System.Collections.Generic;
+
     public interface ILayerManager : ILayerManagerOperations
     {
-        GameControllableEntityCollection<IGameLayer> Layers { get; }
+        GameEntityCollection<IGameLayer> Layers { get; }
     }
 }

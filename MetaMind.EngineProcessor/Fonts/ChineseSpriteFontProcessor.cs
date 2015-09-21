@@ -36,11 +36,6 @@ namespace MetaMind.EngineProcessor.Fonts
         [DefaultValue("Chinese5931.txt")]
         [DisplayName("Chinese Character Set File")]
         [Description("The characters in this file will be automatically added to the font.")]
-        public string CharacterSet
-        {
-            get { return characterSet; }
-        }
-
-        private string characterSet = @"Fonts\CharacterSets\Chinese5931.txt";
+        public string CharacterSet { get; } = @"Fonts\Characters\Chinese5931.txt";
     }
 }

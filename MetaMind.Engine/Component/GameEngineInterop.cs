@@ -3,12 +3,13 @@ namespace MetaMind.Engine.Component
     using System;
     using Audio;
     using Console;
-    using Event;
     using File;
     using Graphics;
+    using Interop;
+    using Interop.Event;
+    using Interop.Process;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
-    using Process;
 
     public partial class GameEngineInterop : GameControllableComponent, IGameInterop
     {

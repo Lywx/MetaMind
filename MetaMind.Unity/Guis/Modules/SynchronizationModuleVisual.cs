@@ -4,7 +4,7 @@ namespace MetaMind.Unity.Guis.Modules
     using Concepts.Cognitions;
     using Concepts.Synchronizations;
     using Engine;
-    using Engine.Component.Font;
+    using Engine.Component.Graphics.Font;
     using Engine.Gui.Control.Visuals;
     using Engine.Service;
     using Microsoft.Xna.Framework;
@@ -111,7 +111,7 @@ namespace MetaMind.Unity.Guis.Modules
                 HoritonalAlignment.Right,
                 VerticalAlignment.Center);
 
-            this.Entities = new GameVisualEntityCollection<IGameVisualEntity>
+            this.Entities = new GameEntityCollection<IGameVisualEntity>
                                 {
                                     progressBar,
 
@@ -153,7 +153,7 @@ namespace MetaMind.Unity.Guis.Modules
 
         #region Dependency
 
-        private GameVisualEntityCollection<IGameVisualEntity> Entities { get; set; }
+        private GameEntityCollection<IGameVisualEntity> Entities { get; set; }
 
         #endregion
 

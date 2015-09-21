@@ -6,11 +6,11 @@
 
     public class PlayTest_Screen : GameScreen
     {
-        private GameControllableEntityCollection<GameControllableEntity> tests;
+        private GameEntityCollection<GameControllableEntity> tests;
 
         public override void LoadContent(IGameInteropService interop)
         {
-            this.tests = new GameControllableEntityCollection<GameControllableEntity>();
+            this.tests = new GameEntityCollection<GameControllableEntity>();
 
             var region = new PlayTest_Region(null);
             var frame  = new PlayTest_Frame(null);

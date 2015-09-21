@@ -1,7 +1,7 @@
 namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 {
-    using Engine.Component.Font;
     using Engine.Component.Graphics;
+    using Engine.Component.Graphics.Font;
     using Engine.Gui.Control.Item.Frames;
     using Engine.Gui.Control.Item.Settings;
     using Engine.Gui.Control.Visuals;
@@ -18,72 +18,72 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 
         private readonly LabelSettings idLabel = new LabelSettings
         {
-            TextSize   = 0.7f,
-            TextColor  = Color.White,
-            TextFont   = Font.UiStatistics,
-            TextHAlignment = HoritonalAlignment.Center,
-            TextVAlignment = VerticalAlignment.Center,
+            Size   = 0.7f,
+            Color  = Color.White,
+            Font   = Font.UiStatistics,
+            HAlignment = HoritonalAlignment.Center,
+            VAlignment = VerticalAlignment.Center,
         };
 
         private readonly FrameSettings plusFrame;
 
         private readonly LabelSettings plusLabel = new LabelSettings
         {
-            TextSize   = 1.0f,
-            TextColor  = Color.White,
-            TextFont   = Font.UiStatistics,
-            TextHAlignment = HoritonalAlignment.Center,
-            TextVAlignment = VerticalAlignment.Center,
+            Size   = 1.0f,
+            Color  = Color.White,
+            Font   = Font.UiStatistics,
+            HAlignment = HoritonalAlignment.Center,
+            VAlignment = VerticalAlignment.Center,
         };
 
         private readonly FrameSettings statusFrame;
 
         private readonly LabelSettings statusLabel = new LabelSettings{
-            TextSize       = 0.7f,
-            TextColor      = Color.White,
-            TextFont       = Font.UiStatistics,
-            TextHAlignment     = HoritonalAlignment.Center,
-            TextVAlignment     = VerticalAlignment.Center,
-            TextMonospaced = false,
+            Size       = 0.7f,
+            Color      = Color.White,
+            Font       = Font.UiStatistics,
+            HAlignment     = HoritonalAlignment.Center,
+            VAlignment     = VerticalAlignment.Center,
+            Monospaced = false,
         };
 
         private readonly FrameSettings statisticsFrame;
 
         private readonly LabelSettings statisticsLabel = new LabelSettings{
-            TextSize       = 0.7f,
-            TextColor      = Color.White,
-            TextFont       = Font.UiStatistics,
-            TextHAlignment     = HoritonalAlignment.Center,
-            TextVAlignment     = VerticalAlignment.Center,
-            TextMonospaced = false,
+            Size       = 0.7f,
+            Color      = Color.White,
+            Font       = Font.UiStatistics,
+            HAlignment     = HoritonalAlignment.Center,
+            VAlignment     = VerticalAlignment.Center,
+            Monospaced = false,
         };
 
         private readonly FrameSettings nameFrame;
 
         private readonly LabelSettings nameLabel = new LabelSettings
         {
-            TextSize       = 0.8f,
-            TextColor      = Color.White,
-            TextFont       = Font.ContentRegular,
-            TextHAlignment     = HoritonalAlignment.Right,
-            TextVAlignment     = VerticalAlignment.Center,
-            TextLeading    = 26,
+            Size       = 0.8f,
+            Color      = Color.White,
+            Font       = Font.ContentRegular,
+            HAlignment     = HoritonalAlignment.Right,
+            VAlignment     = VerticalAlignment.Center,
+            Leading    = 26,
 
-            TextMonospaced = true,
+            Monospaced = true,
         };
 
         private readonly FrameSettings descriptionFrame;
 
         private readonly LabelSettings descriptionLabel = new LabelSettings
         {
-            TextSize       = 0.8f,
-            TextColor      = Color.White,
-            TextFont       = Font.ContentBold,
-            TextHAlignment     = HoritonalAlignment.Right,
-            TextVAlignment     = VerticalAlignment.Center,
-            TextLeading    = 26,
+            Size       = 0.8f,
+            Color      = Color.White,
+            Font       = Font.ContentBold,
+            HAlignment     = HoritonalAlignment.Right,
+            VAlignment     = VerticalAlignment.Center,
+            Leading    = 26,
 
-            TextMonospaced = true,
+            Monospaced = true,
         };
 
         private int viewportWidth;
@@ -179,11 +179,11 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 
             this.Add("NameFrame", this.nameFrame);
             this.Add("NameLabel", this.nameLabel);
-            this.Add("NameMargin", new Vector2(5, 12) * this.nameLabel.TextSize);
+            this.Add("NameMargin", new Vector2(5, 12) * this.nameLabel.Size);
 
             this.Add("DescriptionFrame", this.descriptionFrame);
             this.Add("DescriptionLabel", this.descriptionLabel);
-            this.Add("DescriptionMargin", new Vector2(5, 12) * this.descriptionLabel.TextSize);
+            this.Add("DescriptionMargin", new Vector2(5, 12) * this.descriptionLabel.Size);
 
             this.Add("StatusFrame", this.statusFrame);
             this.Add("StatusLabel", this.statusLabel);

@@ -10,15 +10,17 @@
 
     public class PlayTest_Frame : GameEntityModule<object>
     {
-        private GameControllableEntityCollection<GameControllableEntity> control;
-        private GameVisualEntityCollection<GameVisualEntity> visual;
+        private GameEntityCollection<GameControllableEntity> control;
+
+        private GameEntityCollection<GameVisualEntity> visual;
+
         private DraggableRectangle rectangle;
 
         public PlayTest_Frame(object settings)
             : base(settings)
         {
-            this.control = new GameControllableEntityCollection<GameControllableEntity>();
-            this.visual  = new GameVisualEntityCollection<GameVisualEntity>();
+            this.control = new GameEntityCollection<GameControllableEntity>();
+            this.visual  = new GameEntityCollection<GameVisualEntity>();
 
             // Region Control
             this.rectangle = new DraggableRectangle(new Rectangle(50, 50, 50, 50)) {Movable = false};

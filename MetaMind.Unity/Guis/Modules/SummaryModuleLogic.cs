@@ -4,8 +4,8 @@
     using Concepts.Cognitions;
     using Concepts.Synchronizations;
     using Engine;
-    using Engine.Component.Event;
     using Engine.Component.Input;
+    using Engine.Component.Interop.Event;
     using Engine.Service;
     using Microsoft.Xna.Framework;
     using Screens;

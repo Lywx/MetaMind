@@ -16,12 +16,12 @@
             this.Consciousness   = consciousness;
             this.Synchronization = synchronization;
 
-            this.Entities = new GameVisualEntityCollection<IGameVisualEntity>();
+            this.Entities = new GameEntityCollection<IGameVisualEntity>();
         }
 
         private IConsciousness Consciousness { get; set; }
 
-        private GameVisualEntityCollection<IGameVisualEntity> Entities { get; set; }
+        private GameEntityCollection<IGameVisualEntity> Entities { get; set; }
 
         private ISynchronization Synchronization { get; set; }
 

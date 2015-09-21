@@ -4,6 +4,11 @@ namespace Microsoft.Xna.Framework
 
     public static class ColorUtils
     {
+        public static string ToString(Color c)
+        {
+            return $"{c.R}, {c.G}, {c.B}, {c.A}";
+        }
+
         public static Color Parse(string str)
         {
             var value = str.Split(',');

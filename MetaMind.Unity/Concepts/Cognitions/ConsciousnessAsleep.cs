@@ -2,7 +2,7 @@
 {
     using System;
     using System.Runtime.Serialization;
-    using Engine.Component.Event;
+    using Engine.Component.Interop.Event;
     using Events;
     using Sessions;
 

@@ -34,10 +34,10 @@
             this.operationSession = operationSession;
             Operation.Session     = operationSession;
 
-            this.Entities = new GameControllableEntityCollection<IView>();
+            this.Entities = new GameEntityCollection<IView>();
         }
 
-        private GameControllableEntityCollection<IView> Entities { get; set; }
+        private GameEntityCollection<IView> Entities { get; set; }
 
         private IView View { get; set; }
 

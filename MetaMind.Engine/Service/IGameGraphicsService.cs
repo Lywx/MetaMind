@@ -1,6 +1,5 @@
 namespace MetaMind.Engine.Service
 {
-    using Component.Font;
     using Component.Graphics;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -12,7 +11,7 @@ namespace MetaMind.Engine.Service
 
         SpriteBatch SpriteBatch { get; }
         
-        IStringDrawer StringDrawer { get; }
+        IRenderer Renderer { get; }
 
         GraphicsDevice GraphicsDevice { get; }
     }

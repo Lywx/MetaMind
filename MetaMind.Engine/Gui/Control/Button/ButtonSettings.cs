@@ -1,20 +1,15 @@
 namespace MetaMind.Engine.Gui.Control.Button
 {
     using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+    using Visuals;
 
     public class ButtonSettings
     {
-        // TODO: Need to add texture and more polished elements
-        public Color FillRegularColor;
+        public ButtonState<Texture2D> Texture;
 
-        public Color FillMouseOverColor;
+        public ButtonState<Color> Colors;
 
-        public Color FillMousePressColor;
-
-        public Color BoundaryRegularColor;
-
-        public Color BoundaryMouseOverColor;
-
-        public Color BoundaryMousePressColor;
+        public LabelSettings Font;
     }
 }

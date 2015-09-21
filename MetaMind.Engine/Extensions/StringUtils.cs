@@ -3,7 +3,6 @@ namespace MetaMind.Engine.Extensions
     using System;
     using System.Collections.Generic;
     using System.Text;
-    using Component.Font;
 
     public static class StringUtils
     {
@@ -18,7 +17,7 @@ namespace MetaMind.Engine.Extensions
         public static string CropMonospacedStringByAsciiCount(string str, int count)
         {
             // FIXME: May not use standard font here
-            return CropMonospacedString(str, 1.0f, (int)(count * Font.ContentRegular.Mono().AsciiSize(1.0f).X));
+            return CropMonospacedString(str, 1.0f, (int)(count * Font.ContentRegular.GetMono().AsciiSize(1.0f).X));
         }
 
         public static string CropString(Font font, string str, float scale, int maxLength, bool monospaced = false)
@@ -28,7 +27,7 @@ namespace MetaMind.Engine.Extensions
                 throw new ArgumentOutOfRangeException(nameof(maxLength));
             }
 
-            var stringCropped = font.PrintableString(str);
+            var stringCropped = font.AvailableString(str);
             var stringSize    = font.MeasureString(stringCropped, scale, monospaced);
 
             var isCropped = false;

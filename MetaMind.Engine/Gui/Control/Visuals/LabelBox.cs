@@ -1,6 +1,5 @@
 namespace MetaMind.Engine.Gui.Control.Visuals
 {
-    using Component.Font;
     using Extensions;
     using Microsoft.Xna.Framework;
     using Service;
@@ -23,23 +22,23 @@ namespace MetaMind.Engine.Gui.Control.Visuals
 
             this.Label = new Label
             {
-                TextFont       = () => this.labelSettings.TextFont,
+                TextFont       = () => this.labelSettings.Font,
                 Text           = () => this.TextWrapped(),
                 AnchorLocation = () => this.labelSettings.AnchorLocation() + this.labelMargin,
-                TextColor      = () => this.labelSettings.TextColor,
-                TextSize       = () => this.labelSettings.TextSize,
+                TextColor      = () => this.labelSettings.Color,
+                TextSize       = () => this.labelSettings.Size,
 
-                TextLeading    = this.labelSettings.TextLeading,
-                TextMonospaced = this.labelSettings.TextMonospaced,
-                TextHAlignment     = this.labelSettings.TextHAlignment,
-                TextVAlignment     = this.labelSettings.TextVAlignment,
+                TextLeading    = this.labelSettings.Leading,
+                TextMonospaced = this.labelSettings.Monospaced,
+                TextHAlignment     = this.labelSettings.HAlignment,
+                TextVAlignment     = this.labelSettings.VAlignment,
             };
 
             this.Box = new Box(
                 () =>
                 {
                     var rectangle = this.boxSettings.Bounds();
-                    return new Rectangle(rectangle.Location, new Point(rectangle.Width, (this.TextWrapped().Split('\n').Length - 1) * this.labelSettings.TextLeading)).Crop(this.boxMargin);
+                    return new Rectangle(rectangle.Location, new Point(rectangle.Width, (this.TextWrapped().Split('\n').Length - 1) * this.labelSettings.Leading)).Crop(this.boxMargin);
                 },
                 () => this.boxSettings.Color(),
                 () => this.boxSettings.ColorFilled());
@@ -48,11 +47,11 @@ namespace MetaMind.Engine.Gui.Control.Visuals
         private string TextWrapped()
         {
             return StringUtils.BreakStringByWord(
-                this.labelSettings.TextFont,
+                this.labelSettings.Font,
                 this.labelSettings.Text(),
-                this.labelSettings.TextSize,
+                this.labelSettings.Size,
                 this.boxSettings.Bounds().Width,
-                this.labelSettings.TextMonospaced);
+                this.labelSettings.Monospaced);
         }
 
         public Point BoxMargin

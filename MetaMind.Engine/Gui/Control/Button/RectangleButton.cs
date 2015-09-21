@@ -1,25 +1,30 @@
 ﻿namespace MetaMind.Engine.Gui.Control.Button
 {
-    using Component.Font;
+    using Component.Graphics.Font;
     using Element;
+    using Element.Rectangles;
     using Microsoft.Xna.Framework;
     using Service;
     using Visuals;
 
     public class RectangleButton : Control
     {
+        // TODO(Button): How to initialize from constructor?
         public RectangleButton(Rectangle rectangle)
+            : this(rectangle, new ButtonSettings())
         {
-            this.Rectangle = rectangle;
         }
 
-        public RectangleButton(Rectangle rectangle, ButtonSettings buttonSettings) : this(rectangle)
+        public RectangleButton(Rectangle rectangle, ButtonSettings buttonSettings) 
         {
+            this.Rectangle = new DraggableRectangle(rectangle);
+
+            // Default Behavior
             this.Label = new Label
             {
-                AnchorLocation = () => this.Center.ToVector2(),
-                TextHAlignment   = HoritonalAlignment.Center,
-                TextVAlignment   = VerticalAlignment.Center
+                AnchorLocation = () => this.Rectangle.Center.ToVector2(),
+                TextHAlignment = HoritonalAlignment.Center,
+                TextVAlignment = VerticalAlignment.Center
             };
 
             this.Fill = new Box(
@@ -27,7 +32,7 @@
                 () =>
                 {
                     // Mouse is over when pressed
-                    if (this[ElementState.Mouse_Is_Left_Pressed]() ||
+                    if (this.Rectangle[ElementState.Mouse_Is_Left_Pressed]() ||
                         this[ElementState.Mouse_Is_Right_Pressed]())
                     {
                         return buttonSettings.FillMousePressColor;
@@ -62,6 +67,8 @@
         }
 
         #region Dependency 
+
+        public DraggableRectangle Rectangle { get; set; }
 
         public Box Boundary { get; set; }
 

@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Concepts.Operations;
     using Engine;
-    using Engine.Component.Font;
+    using Engine.Component.Graphics.Font;
     using Engine.Gui.Control.Item;
     using Engine.Gui.Control.Item.Data;
     using Engine.Gui.Control.Item.Factories;
@@ -80,10 +80,10 @@
             this.TransitionOnTime  = TimeSpan.FromSeconds(0.5);
             this.TransitionOffTime = TimeSpan.FromSeconds(0.5);
 
-            this.Entities = new GameControllableEntityCollection<IGameControllableEntity>();
+            this.Entities = new GameEntityCollection<IGameControllableEntity>();
         }
 
-        private GameControllableEntityCollection<IGameControllableEntity> Entities { get; set; }
+        private GameEntityCollection<IGameControllableEntity> Entities { get; set; }
 
         public override void LoadContent(IGameInteropService interop)
         {
@@ -106,13 +106,13 @@
             this.procedureNameLabelBox = new LabelBox(
                 new LabelSettings
                 {
-                    TextFont       = Font.ContentRegular,
+                    Font       = Font.ContentRegular,
                     Text           = () => this.procedureName,
                     AnchorLocation   = () => OperationModuleSettings.ViewMargin.ToVector2(),
-                    TextColor      = Color.White,
-                    TextSize       = 0.8f,
-                    TextLeading    = OperationModuleSettings.ItemMargin.Y,
-                    TextMonospaced = true
+                    Color      = Color.White,
+                    Size       = 0.8f,
+                    Leading    = OperationModuleSettings.ItemMargin.Y,
+                    Monospaced = true
                 },
                 new Vector2(5, 12) * 0.8f, 
                 new BoxSettings(() => new Rectangle(OperationModuleSettings.ViewMargin, new Point(viewWidth, 0)))
@@ -124,13 +124,13 @@
             this.procedureDescriptionLabelBox = new LabelBox(
                 new LabelSettings
                 {
-                    TextFont       = Font.ContentRegular,
+                    Font       = Font.ContentRegular,
                     Text           = () => this.procedureDescription,
                     AnchorLocation   = () => new Vector2(OperationModuleSettings.ViewMargin.X, this.procedureNameLabelBox.Bottom),
-                    TextColor      = Color.White,
-                    TextSize       = 0.8f,
-                    TextLeading    = OperationModuleSettings.ItemMargin.Y,
-                    TextMonospaced = true
+                    Color      = Color.White,
+                    Size       = 0.8f,
+                    Leading    = OperationModuleSettings.ItemMargin.Y,
+                    Monospaced = true
                 },
                 new Vector2(5, 12) * 0.8f,
                 new BoxSettings(() => new Rectangle((int)OperationModuleSettings.ViewMargin.X, this.procedureNameLabelBox.Bottom, viewWidth, 0))
@@ -202,7 +202,7 @@
 
         public override void Draw(IGameGraphicsService graphics, GameTime time)
         {
-            SpriteBatch.Begin();
+            this.SpriteBatch.Begin();
 
             this.procedureNameLabelBox.Draw(graphics, time, this.TransitionAlpha);
             this.procedureDescriptionLabelBox.Draw(graphics, time, this.TransitionAlpha);
@@ -210,7 +210,7 @@
             this.screenLabel.Draw(graphics, time, this.TransitionAlpha);
             this.Entities.Draw(graphics, time, this.TransitionAlpha);
 
-            SpriteBatch.End();
+            this.SpriteBatch.End();
 
             base.Draw(graphics, time);
         }

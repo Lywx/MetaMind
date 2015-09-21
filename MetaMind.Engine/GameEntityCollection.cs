@@ -1,10 +1,10 @@
 ﻿namespace MetaMind.Engine
 {
-    using System.Collections.Generic;
+    using Collections;
     using Microsoft.Xna.Framework;
     using Service;
 
-    public class GameEntityCollection<T> : List<T>
+    public class GameEntityCollection<T> : ObservableCollection<T>
         where T : IGameEntity
     {
         #region Buffer
@@ -47,6 +47,37 @@
 
         #endregion
 
+        #region Draw
+
+        public void BeginDraw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        {
+            foreach (var entity in this)
+            {
+                var drawable = entity as IDrawableOperations;
+                drawable?.BeginDraw(graphics, time, alpha);
+            }
+        }
+
+        public void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        {
+            foreach (var entity in this)
+            {
+                var drawable = entity as IDrawableOperations;
+                drawable?.Draw(graphics, time, alpha);
+            }
+        }
+
+        public void EndDraw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        {
+            foreach (var entity in this)
+            {
+                var drawable = entity as IDrawableOperations;
+                drawable?.EndDraw(graphics, time, alpha);
+            }
+        }
+
+        #endregion
+
         #region Update
 
         public void Update(GameTime time)
@@ -54,6 +85,15 @@
             foreach (var entity in this)
             {
                 entity.Update(time);
+            }
+        }
+
+        public void UpdateInput(IGameInputService input, GameTime time)
+        {
+            foreach (var entity in this)
+            {
+                var inputable = entity as IInputableOperations;
+                inputable?.UpdateInput(input, time);
             }
         }
 

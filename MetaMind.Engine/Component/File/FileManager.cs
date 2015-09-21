@@ -7,6 +7,7 @@
 
 namespace MetaMind.Engine.Component.File
 {
+    using System;
     using System.IO;
     using Setting.Loader;
 
@@ -14,11 +15,13 @@ namespace MetaMind.Engine.Component.File
     {
         #region Directory Settings
 
-        public const string DataFolderPath          = @".\Data\";
+        public readonly string ConfigurationDirectory = @".\Configurations\";
 
-        public const string SaveFolderPath          = @".\Save\";
+        public readonly string ContentDirectory       = @".\Content\";
 
-        public const string ConfigurationFolderPath = @".\Configurations\";
+        public readonly string DataDirectory          = @".\Data\";
+
+        public readonly string SaveDirectory          = @".\Save\";
 
         #endregion Directory Settings
 
@@ -31,53 +34,68 @@ namespace MetaMind.Engine.Component.File
 
         #endregion Constructors
 
+        #region Path
+
+        public string ContentPath(string relativePath) => Path.Combine(ContentDirectory, relativePath);
+
         /// <summary>
         /// Get path of file data folder.
         /// </summary>
         /// <param name="relativePath">Path related to DataFolder</param>
         /// <returns></returns>
-        public static string DataPath(string relativePath)
-        {
-            return Path.Combine(DataFolderPath, relativePath);
-        }
+        public string DataPath(string relativePath) => Path.Combine(DataDirectory, relativePath);
 
-        public static string DataRelativePath(string path)
+        public string DataRelativePath(string path)
         {
-            var dataFullPath = Path.GetFullPath(DataFolderPath);
+            var dataFullPath = Path.GetFullPath(DataDirectory);
             var fullPath     = Path.GetFullPath(path);
 
             return fullPath.Substring(dataFullPath.Length);
         }
 
-        public static string ConfigurationPath(IConfigurationLoader loader)
-        {
-            return Path.Combine(ConfigurationFolderPath, loader.ConfigurationFile);
-        }
+        public string ConfigurationPath(IConfigurationLoader loader) => Path.Combine(ConfigurationDirectory, loader.ConfigurationFile);
+
+        #endregion
+
+        #region Directory
 
         private void CreateDirectory()
         {
-            if (!Directory.Exists(SaveFolderPath))
+            if (!Directory.Exists(SaveDirectory))
             {
                 // If it doesn't exist, create
-                Directory.CreateDirectory(SaveFolderPath);
+                Directory.CreateDirectory(SaveDirectory);
             }
 
-            if (!Directory.Exists(DataFolderPath))
+            if (!Directory.Exists(DataDirectory))
             {
-                Directory.CreateDirectory(DataFolderPath);
+                Directory.CreateDirectory(DataDirectory);
             }
         }
 
         public void DeleteSaveDirectory()
         {
-            if (Directory.Exists(SaveFolderPath))
+            if (Directory.Exists(SaveDirectory))
             {
-                Directory.Delete(SaveFolderPath, true);
+                Directory.Delete(SaveDirectory, true);
             }
         }
 
+        #endregion
+
+        #region IDisposable
+
         public void Dispose()
         {
+            this.Dispose(true);
+
+            GC.SuppressFinalize(this);
         }
+
+        private bool IsDisposed { get; set; }
+
+        protected virtual void Dispose(bool disposing) { }
+
+        #endregion
     }
 }

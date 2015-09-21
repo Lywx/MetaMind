@@ -4,7 +4,7 @@ namespace MetaMind.Unity.Guis.Layers
     using System.Speech.Synthesis;
     using Concepts.Tests;
     using Engine;
-    using Engine.Component.Font;
+    using Engine.Component.Graphics.Font;
     using Engine.Gui.Control.Visuals;
     using Engine.Screen;
     using Engine.Service;
@@ -23,9 +23,9 @@ namespace MetaMind.Unity.Guis.Layers
 
         private ITest test;
 
-        private GameVisualEntityCollection<IGameVisualEntity> drawEntities;
+        private GameEntityCollection<IGameVisualEntity> drawEntities;
 
-        private GameControllableEntityCollection<IGameControllableEntity> inputEntities;
+        private GameEntityCollection<IGameControllableEntity> inputEntities;
 
         #region Constructors
 
@@ -48,8 +48,8 @@ namespace MetaMind.Unity.Guis.Layers
             this.testSession = testSession;
             this.testSynthesizer = testSynthesizer;
 
-            this.inputEntities = new GameControllableEntityCollection<IGameControllableEntity>();
-            this.drawEntities = new GameVisualEntityCollection<IGameVisualEntity>();
+            this.inputEntities = new GameEntityCollection<IGameControllableEntity>();
+            this.drawEntities = new GameEntityCollection<IGameVisualEntity>();
         }
 
         #endregion

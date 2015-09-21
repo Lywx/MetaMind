@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Commands;
     using Commands.Core;
-    using Component.Font;
+    using Component.Graphics;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Processors;
@@ -13,7 +13,7 @@
     {
         #region Constructors and Finalizer
 
-        public GameConsole(GameConsoleSettings settings, GameEngine engine, SpriteBatch spriteBatch, IStringDrawer stringDrawer)
+        public GameConsole(GameConsoleSettings settings, GameEngine engine, SpriteBatch spriteBatch, IRenderer renderer)
             : base(settings, engine)
         {
             if (spriteBatch == null)
@@ -21,16 +21,16 @@
                 throw new ArgumentNullException(nameof(spriteBatch));
             }
 
-            if (stringDrawer == null)
+            if (renderer == null)
             {
-                throw new ArgumentNullException(nameof(stringDrawer));
+                throw new ArgumentNullException(nameof(renderer));
             }
 
             this.Logic = new GameConsoleLogic(this, engine, new CommandProcessor(this));
             this.Logic.Opened += (s, e) => this.Visual.Open();
             this.Logic.Closed += (s, e) => this.Visual.Close();
 
-            this.Visual = new GameConsoleVisual(this, engine, spriteBatch, stringDrawer);
+            this.Visual = new GameConsoleVisual(this, engine, spriteBatch, renderer);
         }
 
         #endregion

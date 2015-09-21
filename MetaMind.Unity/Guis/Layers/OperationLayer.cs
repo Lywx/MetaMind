@@ -3,13 +3,14 @@
     using System;
     using Concepts.Operations;
     using Engine;
-    using Engine.Component.Font;
+    using Engine.Component.Graphics.Font;
     using Engine.Gui.Control.Visuals;
     using Engine.Screen;
     using Engine.Service;
     using Microsoft.Xna.Framework;
     using Modules;
 
+    // TODO(Critical): I need to change this. I don't need this anymore
     public class OperationLayer : GameLayer
     {
         private readonly OperationSession operationSession;
@@ -24,13 +25,13 @@
 
             this.operationSession = operationSession;
 
-            this.ControllableEntities = new GameControllableEntityCollection<IGameControllableEntity>();
-            this.VisuallEntities      = new GameVisualEntityCollection<IGameVisualEntity>();
+            this.ControllableEntities = new GameEntityCollection<IGameControllableEntity>();
+            this.VisuallEntities      = new GameEntityCollection<IGameVisualEntity>();
         }
 
-        private GameVisualEntityCollection<IGameVisualEntity> VisuallEntities { get; set; }
+        private GameEntityCollection<IGameVisualEntity> VisuallEntities { get; set; }
 
-        private GameControllableEntityCollection<IGameControllableEntity> ControllableEntities { get; set; }
+        private GameEntityCollection<IGameControllableEntity> ControllableEntities { get; set; }
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {

@@ -3,7 +3,7 @@
     using System;
     using Concepts.Synchronizations;
     using Engine;
-    using Engine.Component.Event;
+    using Engine.Component.Interop.Event;
     using Events;
     using Microsoft.Xna.Framework;
     using Sessions;

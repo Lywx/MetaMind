@@ -1,7 +1,7 @@
 ﻿namespace MetaMind.Engine.Gui.Control.Visuals
 {
     using System;
-    using Component.Font;
+    using Component.Graphics.Font;
     using Microsoft.Xna.Framework;
     using Service;
 
@@ -71,8 +71,8 @@
 
             this.DrawActionSelector = () => this.TextMonospaced
                 ? (Action<Font, string, Vector2, Color, float, HoritonalAlignment, VerticalAlignment, int>)
-                  ((font, str, position, color, scale, HAlign, VAlign, leading) => this.Graphics.StringDrawer.DrawMonospacedString(font, str, position, color, scale, HAlign, VAlign, leading))
-                : ((font, str, position, color, scale, HAlign, VAlign, leading) => this.Graphics.StringDrawer.DrawString          (font, str, position, color, scale, HAlign, VAlign, leading));
+                  ((font, str, position, color, scale, HAlign, VAlign, leading) => this.Graphics.Renderer.DrawMonospacedString(font, str, position, color, scale, HAlign, VAlign, leading))
+                : ((font, str, position, color, scale, HAlign, VAlign, leading) => this.Graphics.Renderer.DrawString          (font, str, position, color, scale, HAlign, VAlign, leading));
         }
 
         #region Text Data

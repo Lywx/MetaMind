@@ -8,7 +8,7 @@
 namespace MetaMind.Engine.Gui.Control.Item.Swaps
 {
     using System;
-    using Component.Process;
+    using Component.Interop.Process;
     using Extensions;
     using Logic;
     using Microsoft.Xna.Framework;

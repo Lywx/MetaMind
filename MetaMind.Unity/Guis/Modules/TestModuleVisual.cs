@@ -3,7 +3,7 @@
     using System;
     using Concepts.Tests;
     using Engine;
-    using Engine.Component.Font;
+    using Engine.Component.Graphics.Font;
     using Engine.Gui.Control.Visuals;
     using Engine.Service;
     using Engine.Setting.Color;
@@ -23,10 +23,10 @@
 
             this.test = test;
 
-            this.VisualEntities = new GameVisualEntityCollection<IGameVisualEntity>();
+            this.VisualEntities = new GameEntityCollection<IGameVisualEntity>();
         }
 
-        private GameVisualEntityCollection<IGameVisualEntity> VisualEntities { get; set; }
+        private GameEntityCollection<IGameVisualEntity> VisualEntities { get; set; }
 
         public override void LoadContent(IGameInteropService interop)
         {

@@ -16,13 +16,13 @@ namespace MetaMind.Engine.Gui.Control.Item.Visuals
 
             this.Item = item;
 
-            this.TextFont       = () => settings.TextFont;
-            this.TextColor      = () => settings.TextColor;
-            this.TextSize       = () => settings.TextSize;
-            this.TextHAlignment = settings.TextHAlignment;
-            this.TextVAlignment = settings.TextVAlignment;
-            this.TextLeading    = settings.TextLeading;
-            this.TextMonospaced = settings.TextMonospaced;
+            this.TextFont       = () => settings.Font;
+            this.TextColor      = () => settings.Color;
+            this.TextSize       = () => settings.Size;
+            this.TextHAlignment = settings.HAlignment;
+            this.TextVAlignment = settings.VAlignment;
+            this.TextLeading    = settings.Leading;
+            this.TextMonospaced = settings.Monospaced;
         }
 
         public IViewItem Item { get; }

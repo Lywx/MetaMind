@@ -1,6 +1,5 @@
 namespace MetaMind.Engine.Gui.Control.Item.Layouts
 {
-    using Component.Font;
     using Data;
     using Extensions;
     using Frames;
@@ -53,9 +52,9 @@ namespace MetaMind.Engine.Gui.Control.Item.Layouts
             var frame = this.itemSettings.Get<FrameSettings>(this.BlockData.BlockFrame);
 
             this.BlockStringWrapped = StringUtils.BreakStringByWord(
-                label.TextFont,
+                label.Font,
                 this.BlockData.BlockStringRaw,
-                label.TextSize,
+                label.Size,
                 frame.Size.X,
                 true);
         }

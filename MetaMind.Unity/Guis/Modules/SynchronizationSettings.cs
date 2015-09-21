@@ -2,7 +2,6 @@
 {
     using System;
     using Engine;
-    using Engine.Component.Font;
     using Engine.Component.Graphics;
     using Engine.Setting.Color;
     using Engine.Setting.Loader;

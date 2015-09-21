@@ -4,7 +4,6 @@
     using Concepts.Operations;
     using Concepts.Synchronizations;
     using Concepts.Tests;
-    using Engine.Component.Font;
     using Engine.Gui.Control.Button;
     using Engine.Screen;
     using Engine.Scripting.FSharp;

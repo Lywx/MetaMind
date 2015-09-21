@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Component.Font;
     using Component.Graphics;
     using Extensions;
     using Microsoft.Xna.Framework;
@@ -19,7 +18,7 @@
 
         private readonly SpriteBatch spriteBatch;
 
-        private readonly IStringDrawer stringDrawer;
+        private readonly IRenderer renderer;
 
         private ScrollController Scroll { get; set; } = new ScrollController();
 
@@ -104,7 +103,7 @@
 
         #region Constructors and Finalizer
 
-        public GameConsoleVisual(GameConsole module, GameEngine engine, SpriteBatch spriteBatch, IStringDrawer stringDrawer)
+        public GameConsoleVisual(GameConsole module, GameEngine engine, SpriteBatch spriteBatch, IRenderer renderer)
             : base(module, engine)
         {
             if (engine == null)
@@ -117,13 +116,13 @@
                 throw new ArgumentNullException(nameof(spriteBatch));
             }
 
-            if (stringDrawer == null)
+            if (renderer == null)
             {
-                throw new ArgumentNullException(nameof(stringDrawer));
+                throw new ArgumentNullException(nameof(renderer));
             }
 
             this.spriteBatch  = spriteBatch;
-            this.stringDrawer = stringDrawer;
+            this.renderer = renderer;
         }
 
         #endregion
@@ -254,11 +253,11 @@
             var font = this.Settings.Font;
 
             position.X += font.MeasureMonospacedString(split, 1f).X;
-            position.Y -= font.Sprite().LineSpacing;
+            position.Y -= font.GetSprite().LineSpacing;
 
             var cursor = (int)(time.TotalGameTime.TotalSeconds / this.Settings.CursorBlinkSpeed) % 2 == 0 ? this.Settings.Cursor.ToString() : "";
 
-            this.stringDrawer.DrawMonospacedString(font, cursor, position, this.Settings.CursorColor, 1f);
+            this.renderer.DrawMonospacedString(font, cursor, position, this.Settings.CursorColor, 1f);
         }
 
         /// <summary>
@@ -321,10 +320,10 @@
             {
                 if (this.IsInsideBounds(position))
                 {
-                    this.stringDrawer.DrawMonospacedString(font, line, position, color, 1f);
+                    this.renderer.DrawMonospacedString(font, line, position, color, 1f);
                 }
 
-                var leading = font.Mono().AsciiSize(1f).Y; 
+                var leading = font.GetMono().AsciiSize(1f).Y; 
                 position.Y += leading;
 
                 if (!this.Scroll.IsEnabled)
@@ -348,7 +347,7 @@
         /// <returns></returns>
         private Vector2 DrawPrompt(Vector2 position)
         {
-            this.stringDrawer.DrawMonospacedString(this.Settings.Font, this.Settings.Prompt, position, this.Settings.PromptColor, 1f);
+            this.renderer.DrawMonospacedString(this.Settings.Font, this.Settings.Prompt, position, this.Settings.PromptColor, 1f);
 
             // Add space after prompt (1 stands for the empty space)
             position.X += this.oneCharacterWidth * (1 + this.Settings.Prompt.Length);

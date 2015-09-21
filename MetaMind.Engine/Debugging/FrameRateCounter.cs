@@ -1,7 +1,6 @@
 ﻿namespace MetaMind.Engine.Debugging
 {
     using System;
-    using Component.Font;
     using Microsoft.Xna.Framework;
     using Service;
 
@@ -51,8 +50,8 @@
 
             this.Graphics.SpriteBatch.Begin();
 
-            this.Graphics.StringDrawer.DrawMonospacedString(Font.UiConsole, fps, new Vector2(33, 33), Color.Black, 1f);
-            this.Graphics.StringDrawer.DrawMonospacedString(Font.UiConsole, fps, new Vector2(32, 32), Color.Yellow, 1f);
+            this.Graphics.Renderer.DrawMonospacedString(Font.UiConsole, fps, new Vector2(33, 33), Color.Black, 1f);
+            this.Graphics.Renderer.DrawMonospacedString(Font.UiConsole, fps, new Vector2(32, 32), Color.Yellow, 1f);
 
             this.Graphics.SpriteBatch.End();
         }
