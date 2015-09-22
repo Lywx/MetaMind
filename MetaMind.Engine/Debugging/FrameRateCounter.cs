@@ -1,14 +1,16 @@
 ﻿namespace MetaMind.Engine.Debugging
 {
     using System;
+    using Component.Content.Fonts;
     using Microsoft.Xna.Framework;
-    using Service;
 
-    public class FrameRateCounter : DrawableGameComponent
+    public class FrameRateCounter : GameControllableComponent
     {
         private int frameRate;
 
         private int frameCounter;
+
+        private Font frameFont;
 
         private TimeSpan elapsedTime = TimeSpan.Zero;
 
@@ -17,17 +19,14 @@
         {
         }
 
-        private IGameGraphicsService Graphics => GameEngine.Service.Graphics;
-
         protected override void LoadContent()
         {
+            this.frameFont = this.Interop.Asset.Fonts["Lucida Console"];
         }
-
 
         protected override void UnloadContent()
         {
         }
-
 
         public override void Update(GameTime gameTime)
         {
@@ -50,8 +49,8 @@
 
             this.Graphics.SpriteBatch.Begin();
 
-            this.Graphics.Renderer.DrawMonospacedString(Font.UiConsole, fps, new Vector2(33, 33), Color.Black, 1f);
-            this.Graphics.Renderer.DrawMonospacedString(Font.UiConsole, fps, new Vector2(32, 32), Color.Yellow, 1f);
+            this.Graphics.Renderer.DrawMonospacedString(this.frameFont, fps, new Vector2(33, 33), Color.Black, 1f);
+            this.Graphics.Renderer.DrawMonospacedString(this.frameFont, fps, new Vector2(32, 32), Color.Yellow, 1f);
 
             this.Graphics.SpriteBatch.End();
         }

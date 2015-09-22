@@ -1,10 +1,10 @@
 ﻿namespace MetaMind.Engine
 {
-    using Collections;
+    using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Service;
 
-    public class GameEntityCollection<T> : ObservableCollection<T>
+    public class GameEntityCollection<T> : List<T>
         where T : IGameEntity
     {
         #region Buffer

@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Component.Content
         public static void LoadAsync<T>(this ContentManager content, string assetName, Action<T> assetAction)
         {
             ThreadPool.QueueUserWorkItem(
-                s =>
+                callback =>
                 {
                     var asset = content.Load<T>(assetName);
 

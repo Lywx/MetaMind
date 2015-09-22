@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Component.Content.Fonts;
     using Component.Graphics;
     using Extensions;
     using Microsoft.Xna.Framework;
@@ -10,6 +11,7 @@
     using Primtives2D;
     using Setting.Loader;
 
+    // TODO(Minor, Console): This is still not good enough
     public class GameConsoleVisual :
         GameModuleVisual<GameConsole, GameConsoleSettings, GameConsoleLogic, GameConsoleVisual>,
         IParameterLoader<GraphicsSettings>
@@ -253,7 +255,7 @@
             var font = this.Settings.Font;
 
             position.X += font.MeasureMonospacedString(split, 1f).X;
-            position.Y -= font.GetSprite().LineSpacing;
+            position.Y -= font.SpriteData.LineSpacing;
 
             var cursor = (int)(time.TotalGameTime.TotalSeconds / this.Settings.CursorBlinkSpeed) % 2 == 0 ? this.Settings.Cursor.ToString() : "";
 
@@ -323,7 +325,7 @@
                     this.renderer.DrawMonospacedString(font, line, position, color, 1f);
                 }
 
-                var leading = font.GetMono().AsciiSize(1f).Y; 
+                var leading = font.MonoData.AsciiSize(1f).Y; 
                 position.Y += leading;
 
                 if (!this.Scroll.IsEnabled)

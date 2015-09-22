@@ -4,7 +4,7 @@ namespace MetaMind.Unity.Guis.Modules
     using Concepts.Cognitions;
     using Concepts.Synchronizations;
     using Engine;
-    using Engine.Component.Graphics.Font;
+    using Engine.Component.Graphics.Fonts;
     using Engine.Gui.Control.Visuals;
     using Engine.Service;
     using Microsoft.Xna.Framework;

@@ -4,7 +4,7 @@ namespace MetaMind.Unity.Guis.Layers
     using System.Speech.Synthesis;
     using Concepts.Tests;
     using Engine;
-    using Engine.Component.Graphics.Font;
+    using Engine.Component.Graphics.Fonts;
     using Engine.Gui.Control.Visuals;
     using Engine.Screen;
     using Engine.Service;
@@ -103,12 +103,12 @@ namespace MetaMind.Unity.Guis.Layers
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            graphics.SpriteBatch.Begin();
+            this.SpriteBatch.Begin();
 
             this.inputEntities.Draw(graphics, time, Math.Min(alpha, this.Alpha));
             this.drawEntities .Draw(graphics, time, Math.Min(alpha, this.Alpha)); 
 
-            graphics.SpriteBatch.End();
+            this.SpriteBatch.End();
 
             base.Draw(graphics, time, alpha);
         }

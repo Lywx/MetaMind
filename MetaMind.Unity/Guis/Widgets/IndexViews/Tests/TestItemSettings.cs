@@ -1,7 +1,7 @@
 namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 {
     using Engine.Component.Graphics;
-    using Engine.Component.Graphics.Font;
+    using Engine.Component.Graphics.Fonts;
     using Engine.Gui.Control.Item.Frames;
     using Engine.Gui.Control.Item.Settings;
     using Engine.Gui.Control.Visuals;

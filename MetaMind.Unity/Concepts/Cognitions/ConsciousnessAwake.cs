@@ -25,7 +25,7 @@ namespace MetaMind.Unity.Concepts.Cognitions
         {
             get
             {
-                return this.Consciousness.HasEverSlept
+                return this.Consciousness.HasSlept
                            ? DateTime.Now - this.Consciousness.LastSleepEndTime
                            : DateTime.Now - this.Consciousness.KnownOriginTime;
             }

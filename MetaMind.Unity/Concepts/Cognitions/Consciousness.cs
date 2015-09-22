@@ -33,33 +33,15 @@
 
         #region Consciousness Control
 
-        internal bool HasEverSlept
-        {
-            get
-            {
-                return this.LastSleepEndTime.Ticks != 0;
-            }
-        }
+        internal bool HasSlept => this.LastSleepEndTime.Ticks != 0;
 
-        public bool IsAwake
-        {
-            get
-            {
-                return this.State is ConsciousnessAwake;
-            }
-        }
+        public bool IsAwake => this.State is ConsciousnessAwake;
 
-        public bool IsAsleep
-        {
-            get
-            {
-                return this.State is ConsciousnessAsleep;
-            }
-        }
+        public bool IsAsleep => this.State is ConsciousnessAsleep;
 
         #endregion
 
-        #region Constructors and Destructors 
+        #region Constructors and Finalizer 
 
         public Consciousness()
         {
@@ -73,7 +55,6 @@
         }
 
         #endregion 
-
 
         #region Update
 

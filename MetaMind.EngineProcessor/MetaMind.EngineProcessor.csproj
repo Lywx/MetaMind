@@ -50,6 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fonts\ChineseSpriteFontProcessor.cs" />
+    <Compile Include="PackageImporter.cs" />
+    <Compile Include="PackageWriter.cs" />
+    <Compile Include="PackageXmlDocument.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

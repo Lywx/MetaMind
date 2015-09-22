@@ -1,9 +1,25 @@
 namespace MetaMind.Engine.Component.Content.Asset
 {
-    using Font;
+    using Fonts;
+    using Microsoft.Xna.Framework;
+    using Texture;
 
-    public interface IAssetManager
+    public interface IAssetManager : IGameComponent
     {
-        AssetList<FontAsset> Fonts { get; }
+        #region Content
+
+        IFontManager Fonts { get; }
+
+        ITextureManager Texture { get; }
+
+        #endregion
+
+        #region Operations
+
+        void LoadPackage(string packageName, bool async = false);
+
+        void UnloadPackage(string packageName);
+
+        #endregion
     }
 }

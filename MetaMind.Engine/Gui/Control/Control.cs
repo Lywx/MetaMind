@@ -3,6 +3,7 @@
     using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using MonoGame.Extended.ViewportAdapters;
     using Service;
 
     /// <summary>
@@ -169,6 +170,8 @@
         protected GraphicsDevice GraphicsDevice => this.Graphics.GraphicsDevice;
 
         protected Viewport Viewport => this.GraphicsDevice.Viewport;
+
+        protected ViewportAdapter ViewportAdapter { get; set; } = new BoxingViewportAdapter(this.GraphicsDevice, );
 
         #endregion
 

@@ -3,7 +3,7 @@
     using System;
     using Concepts.Operations;
     using Engine;
-    using Engine.Component.Graphics.Font;
+    using Engine.Component.Graphics.Fonts;
     using Engine.Gui.Control.Visuals;
     using Engine.Screen;
     using Engine.Service;

@@ -13,7 +13,13 @@ namespace MetaMind.Engine.Component
 
     public class GameManager : GameComponent, IGameManager
     {
+#if DEBUG
+        #region Logger
+
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+
+        #endregion
+#endif
 
         #region Constructors and Finalizer
 
@@ -49,7 +55,6 @@ namespace MetaMind.Engine.Component
             this.Game = game;
 
             this.Engine.Components.Add(game);
-
 #if DEBUG
             logger.Info($"Added {this} to GameEngine.Components.");
 #endif

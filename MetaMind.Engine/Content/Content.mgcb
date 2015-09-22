@@ -1,7 +1,7 @@
 
 #----------------------------- Global Properties ----------------------------#
 
-/outputDir:.\
+/outputDir:bin
 /intermediateDir:obj
 /platform:Windows
 /config:
@@ -10,6 +10,7 @@
 
 #-------------------------------- References --------------------------------#
 
+/reference:..\..\MetaMind.EngineProcessor\bin\Debug\MetaMind.EngineProcessor.dll
 
 #---------------------------------- Content ---------------------------------#
 
@@ -23,4 +24,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
 /build:Texture/Screens/Blank.png
+
+#begin Persistent.xml
+/importer:PackageImporter
+/processor:PassThroughProcessor
+/build:Persistent.xml
 

@@ -3,7 +3,9 @@ namespace MetaMind.Engine.Component.Graphics
     using System;
     using System.Collections.Generic;
     using System.Globalization;
-    using Font;
+    using Content.Fonts;
+    using Extensions;
+    using Fonts;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -39,14 +41,13 @@ namespace MetaMind.Engine.Component.Graphics
 
         #region Draw
 
-        public void DrawMonospacedString(string fontName, string str, Vector2 position, Color color, float scale)
+        public void DrawMonospacedString(Font font, string str, Vector2 position, Color color, float scale)
         {
             if (string.IsNullOrEmpty(str))
             {
                 return;
             }
 
-            var font = fontName.ToFont();
             var displayable = font.AvailableString(str);
 
             var CJKCharIndexes = displayable.CJKUniqueCharIndexes();
@@ -59,19 +60,24 @@ namespace MetaMind.Engine.Component.Graphics
                 var charPosition = isCJKCharExisting ? CJKCharAmendedPosition[i] : i;
                 var amendedPosition = position + new Vector2(charPosition * font.MonoData.AsciiSize(scale).X, 0);
 
-                this.DrawMonospacedChar(fontName, displayable[i], amendedPosition, color, scale);
+                this.DrawMonospacedChar(font, displayable[i], amendedPosition, color, scale);
             }
         }
 
+        /// <param name="font"></param>
+        /// <param name="str"></param>
+        /// <param name="position"></param>
+        /// <param name="color"></param>
+        /// <param name="scale"></param>
+        /// <param name="HAlignment"></param>
+        /// <param name="VAlignment"></param>
         /// <param name="leading">Vertical distance from line to line</param>
-        public void DrawMonospacedString(string fontName, string str, Vector2 position, Color color, float scale, HoritonalAlignment HAlignment, VerticalAlignment VAlignment, int leading = 0)
+        public void DrawMonospacedString(Font font, string str, Vector2 position, Color color, float scale, HoritonalAlignment HAlignment, VerticalAlignment VAlignment, int leading = 0)
         {
             if (string.IsNullOrEmpty(str))
             {
                 return;
             }
-
-            var font = fontName.ToFont();
 
             if (leading == 0)
             {
@@ -111,40 +117,35 @@ namespace MetaMind.Engine.Component.Graphics
                     linePosition -= new Vector2(lineSize.X, 0);
                 }
 
-                this.DrawMonospacedString(fontName, lineString, linePosition, color, scale);
+                this.DrawMonospacedString(font, lineString, linePosition, color, scale);
             }
         }
 
-        private void DrawMonospacedChar(string fontName, char c, Vector2 position, Color color, float scale)
+        private void DrawMonospacedChar(Font font, char c, Vector2 position, Color color, float scale)
         {
-            var font = fontName.ToFont();
             var str = c.ToString(CultureInfo.InvariantCulture);
 
             position += font.MonoData.Offset + new Vector2(-font.MeasureString(str, scale).X / 2, 0);
 
-            this.DrawString(fontName, str, position, color, scale);
+            this.DrawString(font, str, position, color, scale);
         }
 
-        public void DrawString(string fontName, string str, Vector2 position, Color color, float scale)
+        public void DrawString(Font font, string str, Vector2 position, Color color, float scale)
         {
             if (string.IsNullOrEmpty(str))
             {
                 return;
             }
-
-            var font = fontName.ToFont();
 
             this.spriteBatch.DrawString(font.SpriteData, font.AvailableString(str), position, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0);
         }
 
-        public void DrawString(string fontName, string str, Vector2 position, Color color, float scale, HoritonalAlignment HAlignment, VerticalAlignment VAlignment, int leading = 0)
+        public void DrawString(Font font, string str, Vector2 position, Color color, float scale, HoritonalAlignment HAlignment, VerticalAlignment VAlignment, int leading = 0)
         {
             if (string.IsNullOrEmpty(str))
             {
                 return;
             }
-
-            var font = fontName.ToFont();
 
             if (leading == 0)
             {
@@ -184,7 +185,7 @@ namespace MetaMind.Engine.Component.Graphics
                     linePosition -= new Vector2(lineSize.X, 0);
                 }
 
-                this.DrawString(fontName, lineString, linePosition, color, scale);
+                this.DrawString(font, lineString, linePosition, color, scale);
             }
         }
 

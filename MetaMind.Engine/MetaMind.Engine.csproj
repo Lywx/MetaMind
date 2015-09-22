@@ -77,13 +77,20 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Collections\ObservableCollection.cs" />
+    <Compile Include="Component\Audio\AudioManagerFactory.cs" />
+    <Compile Include="Component\Content\Asset\PackageAsset.cs" />
+    <Compile Include="Component\Content\Asset\AssetDictionary.cs" />
     <Compile Include="Component\Content\ContentManagerExt.cs" />
     <Compile Include="Component\Content\Asset\IAssetManager.cs" />
-    <Compile Include="Component\Content\Image\ImageAsset.cs" />
-    <Compile Include="Component\Content\Font\FontStringExt.cs" />
-    <Compile Include="Component\Graphics\Font\HoritonalAlignment.cs" />
+    <Compile Include="Component\Content\Fonts\Font.cs" />
+    <Compile Include="Component\Content\Fonts\FontExt.cs" />
+    <Compile Include="Component\Content\Texture\ITextureManager.cs" />
+    <Compile Include="Component\Content\Texture\TextureManager.cs" />
+    <Compile Include="Component\Content\Texture\ImageAsset.cs" />
+    <Compile Include="Extensions\StringExt.cs" />
+    <Compile Include="Component\Graphics\Fonts\HoritonalAlignment.cs" />
     <Compile Include="Component\Graphics\IRendererStringOperations.cs" />
-    <Compile Include="Component\Graphics\Font\VerticalAlignment.cs" />
+    <Compile Include="Component\Graphics\Fonts\VerticalAlignment.cs" />
     <Compile Include="Component\File\IFileManager.cs" />
     <Compile Include="Component\Input\KeyEventArgs.cs" />
     <Compile Include="Component\Input\MouseButtons.cs" />
@@ -135,9 +142,8 @@
     <Compile Include="Gui\Control\ControlManager.cs" />
     <Compile Include="Component\Content\Asset\AssetManager.cs" />
     <Compile Include="Component\Content\Asset\Asset.cs" />
-    <Compile Include="Component\Content\Asset\AssetList.cs" />
-    <Compile Include="Component\Content\Asset\AssetReader.cs" />
-    <Compile Include="Component\Content\Asset\AssetXmlDocument.cs" />
+    <Compile Include="Component\Content\Asset\PackageReader.cs" />
+    <Compile Include="Component\Content\Asset\PackageXmlDocument.cs" />
     <Compile Include="Gui\Control\Tooltip.cs" />
     <Compile Include="Gui\Control\Views\Layers\IViewUniversalLayerOperations.cs" />
     <Compile Include="Gui\Control\Visuals\Margin.cs" />
@@ -157,13 +163,13 @@
     <Compile Include="Component\Interop\Event\IEvent.cs" />
     <Compile Include="Component\Interop\Event\IListener.cs" />
     <Compile Include="Component\Graphics\Renderer.cs" />
-    <Compile Include="Component\Content\Font\FontAsset.cs" />
-    <Compile Include="Component\Content\Font\MonoFont.cs" />
+    <Compile Include="Component\Content\Fonts\FontAsset.cs" />
+    <Compile Include="Component\Content\Fonts\MonoFont.cs" />
     <Compile Include="Component\GameEngineInput.cs" />
     <Compile Include="Component\Audio\IAudioManager.cs" />
     <Compile Include="Component\Interop\Event\IEventManager.cs" />
     <Compile Include="Component\Graphics\IRenderer.cs" />
-    <Compile Include="Component\Content\Font\IFontManager.cs" />
+    <Compile Include="Component\Content\Fonts\IFontManager.cs" />
     <Compile Include="Component\IGameManager.cs" />
     <Compile Include="Component\Input\IInputEvent.cs" />
     <Compile Include="Component\Input\IInputState.cs" />
@@ -177,10 +183,9 @@
     <Compile Include="Component\Interop\Process\IProcessManager.cs" />
     <Compile Include="Component\File\ISaveManager.cs" />
     <Compile Include="Component\Interop\IScreenManager.cs" />
-    <Compile Include="Component\Content\Font\FontAssetExt.cs" />
-    <Compile Include="Component\Content\Font\SpriteFontExt.cs" />
+    <Compile Include="Component\Content\Fonts\SpriteFontExt.cs" />
     <Compile Include="Component\File\FileManager.cs" />
-    <Compile Include="Component\Content\Font\FontManager.cs" />
+    <Compile Include="Component\Content\Fonts\FontManager.cs" />
     <Compile Include="Extensions\StringUtils.cs" />
     <Compile Include="Component\Graphics\GraphicsManager.cs" />
     <Compile Include="GameEngine.cs" />
@@ -189,13 +194,13 @@
     <Compile Include="Component\GameEngineNumerical.cs" />
     <Compile Include="Console\Commands\CommandHistory.cs" />
     <Compile Include="Console\Processors\CommandProcessor.cs" />
-    <Compile Include="Console\Commands\ClearCommand.cs" />
+    <Compile Include="Console\Commands\Coreutils\ClearCommand.cs" />
     <Compile Include="Console\Commands\CommandComparer.cs" />
     <Compile Include="Console\Commands\CustomCommand.cs" />
-    <Compile Include="Console\Commands\Core\ExitCommand.cs" />
-    <Compile Include="Console\Commands\HelpCommand.cs" />
-    <Compile Include="Console\Commands\Core\ResetCommand.cs" />
-    <Compile Include="Console\Commands\Core\RestartCommand.cs" />
+    <Compile Include="Console\Commands\Coreutils\ExitCommand.cs" />
+    <Compile Include="Console\Commands\Coreutils\HelpCommand.cs" />
+    <Compile Include="Console\Commands\Coreutils\ResetCommand.cs" />
+    <Compile Include="Console\Commands\Coreutils\RestartCommand.cs" />
     <Compile Include="Console\GameConsole.cs" />
     <Compile Include="Console\GameConsoleSettings.cs" />
     <Compile Include="Console\Commands\IConsoleCommand.cs" />
@@ -570,7 +575,7 @@
     <Compile Include="Debugging\Screens\CpuWhiteNoiseSreen.cs" />
     <Compile Include="Scripting\FSharp\FsiDebugger.cs" />
     <Compile Include="Scripting\FSharp\FsiSession.cs" />
-    <Compile Include="Console\Commands\Core\VerboseCommand.cs" />
+    <Compile Include="Console\Commands\Coreutils\VerboseCommand.cs" />
     <Compile Include="Scripting\FSharp\FsScript.cs" />
     <Compile Include="Scripting\FSharp\FsScriptRunner.cs" />
     <Compile Include="Scripting\FSharp\FsScriptSearcher.cs" />
@@ -634,7 +639,6 @@
     <Compile Include="Component\File\SaveManager.cs" />
     <Compile Include="Component\Interop\ScreenManager.cs" />
     <Compile Include="Component\Interop\ScreenSettings.cs" />
-    <Compile Include="Component\Content\Font\FontName.cs" />
     <Compile Include="Extensions\TypeExt.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Extensions\ColorExt.cs" />
@@ -719,12 +723,18 @@
       <HintPath>..\packages\IronPython.2.7.5\lib\Net45\Microsoft.Scripting.Metadata.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MonoGame.Extended">
+      <HintPath>..\ThirdParties\MonoGameExtended\Source\MonoGame.Extended\bin\Debug\MonoGame.Extended.dll</HintPath>
+    </Reference>
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=4.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.1.0\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="SharpFont">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\MSBuild\MonoGame\v3.0\Tools\SharpFont.dll</HintPath>
     </Reference>
     <Reference Include="Sprache, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -750,6 +760,7 @@
     <Content Include="Configurations\Control.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Raw Content\Engine.Persistent.xml" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -776,27 +787,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <Content Include="Content\Fonts\NSimSunBoldFont.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Fonts\NSimSunBoldItalicFont.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Fonts\NSimSunItalicFont.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Fonts\NSimSunRegularFont.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Fonts\UiConsoleFont.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Fonts\UiRegularFont.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Fonts\UiStatisticsFont.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\Texture\Screens\Blank.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -812,6 +802,24 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Content\Fonts\Lucida Console Regular.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Fonts\NSimSun Bold Italic.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Fonts\NSimSun Bold.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Fonts\NSimSun Italic.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Fonts\NSimSun Regular.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Raw Content\Package.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Diagrams\Components.cd" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>

@@ -1,11 +1,19 @@
 namespace MetaMind.Engine.Component.Content.Asset
 {
+    using System;
+
     public abstract class Asset
     {
         #region Constructors 
 
-        protected Asset()
+        protected Asset(string name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            this.Name = name;
         }
 
         #endregion
@@ -13,6 +21,5 @@ namespace MetaMind.Engine.Component.Content.Asset
         public string Name { get; set; }
 
         public bool Archive { get; protected set; } = false;
-
     }
 }

@@ -3,42 +3,24 @@ namespace MetaMind.Engine.Component
     using System;
     using Audio;
     using Console;
+    using Content.Asset;
     using File;
-    using Graphics;
     using Interop;
     using Interop.Event;
     using Interop.Process;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
 
-    public partial class GameEngineInterop : GameControllableComponent, IGameInterop
+    public class GameEngineInterop : GameControllableComponent, IGameInterop
     {
         #region Constructors and Finalizer
 
-        public GameEngineInterop(
-            GameEngine engine,
-            IGameManager game,
-            IAudioManager audio,
-            IFileManager file,
-            IEventManager @event,
-            IProcessManager process,
-            IScreenManager screen,
-            GameConsole console)
+        public GameEngineInterop(GameEngine engine, IGameManager game, IEventManager @event, IProcessManager process, IScreenManager screen, GameConsole console)
             : base(engine)
         {
             if (game == null)
             {
                 throw new ArgumentNullException(nameof(game));
-            }
-
-            if (audio == null)
-            {
-                throw new ArgumentNullException(nameof(audio));
-            }
-
-            if (file == null)
-            {
-                throw new ArgumentNullException(nameof(file));
             }
 
             if (@event == null)
@@ -61,10 +43,13 @@ namespace MetaMind.Engine.Component
                 throw new ArgumentNullException(nameof(console));
             }
 
-            this.Audio = audio;
+            this.Audio = AudioManagerFactory.Create(engine);
             this.Engine.Components.Add(this.Audio);
 
-            this.File = file;
+            this.Asset = new AssetManager(engine);
+            this.Engine.Components.Add(this.Asset);
+
+            this.File = new FileManager();
 
             this.Event = @event;
             this.Engine.Components.Add(this.Event);
@@ -85,6 +70,8 @@ namespace MetaMind.Engine.Component
 
         #endregion
 
+        public IAssetManager Asset { get; private set; }
+
         public IAudioManager Audio { get; private set; }
 
         public GameConsole Console { get; set; }
@@ -103,7 +90,7 @@ namespace MetaMind.Engine.Component
 
         public ISaveManager Save { get; set; }
 
-        #region Initializatoin
+        #region Initialization
 
         public override void Initialize()
         {

@@ -3,7 +3,7 @@
     using System;
     using Concepts.Tests;
     using Engine;
-    using Engine.Component.Graphics.Font;
+    using Engine.Component.Graphics.Fonts;
     using Engine.Gui.Control.Visuals;
     using Engine.Service;
     using Engine.Setting.Color;

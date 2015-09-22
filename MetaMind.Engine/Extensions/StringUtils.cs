@@ -3,21 +3,27 @@ namespace MetaMind.Engine.Extensions
     using System;
     using System.Collections.Generic;
     using System.Text;
+    using Component.Content.Fonts;
 
     public static class StringUtils
     {
         #region String Cropping
+
+        /// <remarks>
+        /// I chose this font because it is a Chinese font that contains English 
+        /// characters. It is the most large font for my current use.
+        /// </remarks>
+        private static Font NSimSunRegularFont { get; set; }
         
         public static string CropMonospacedString(string str, float scale, int maxLength)
         {
-            // FIXME: May not use standard font here
-            return CropString(Font.ContentRegular, str, scale, maxLength, true);
+            return CropString(NSimSunRegularFont, str, scale, maxLength, true);
         }
 
         public static string CropMonospacedStringByAsciiCount(string str, int count)
         {
-            // FIXME: May not use standard font here
-            return CropMonospacedString(str, 1.0f, (int)(count * Font.ContentRegular.GetMono().AsciiSize(1.0f).X));
+            // Don't need to consider size when crop by character count
+            return CropMonospacedString(str, 1.0f, (int)(count * NSimSunRegularFont.MonoData.AsciiSize(1.0f).X));
         }
 
         public static string CropString(Font font, string str, float scale, int maxLength, bool monospaced = false)
@@ -122,6 +128,20 @@ namespace MetaMind.Engine.Extensions
         public static IEnumerable<string> BreakStringByWordToEnumerable(Font font, string str, float scale, float maxLineWidth, bool monospaced)
         {
             return BreakStringByWord(font, str, scale, maxLineWidth, monospaced).Split('\n');
+        }
+
+        #endregion
+
+        #region Initialization
+
+        public static void Initialize(IFontManager fonts)
+        {
+            if (fonts == null)
+            {
+                throw new ArgumentNullException(nameof(fonts));
+            }
+
+            NSimSunRegularFont = fonts["NSimSun Regular"];
         }
 
         #endregion

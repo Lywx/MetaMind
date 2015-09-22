@@ -1,7 +1,6 @@
 namespace MetaMind.Engine.Component
 {
     using System;
-    using Content.Font;
     using Graphics;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -33,15 +32,9 @@ namespace MetaMind.Engine.Component
             // as this is a MonoGame application.
             this.SpriteBatch = new SpriteBatch(this.Manager.GraphicsDevice);
 
-            // No dependency injection here, because font manager is a class focus on font 
-            // loading. It may extend but in the form of more internal operations.
-            // The functionality is never extended in the form of inheritance. 
-            this.FontManager = new FontManager(engine);
-            this.Game.Components.Add(this.FontManager);
-
             // No dependency injection here, because string drawer is a class focus on string 
             // drawing. The functionality is never extended in the form of inheritance.
-            this.Renderer = new Renderer(this.SpriteBatch, this.FontManager);
+            this.Renderer = new Renderer(this.SpriteBatch);
             this.Game.Components.Add(this.Renderer);
         }
 
@@ -52,8 +45,6 @@ namespace MetaMind.Engine.Component
         public SpriteBatch SpriteBatch { get; private set; }
 
         public IRenderer Renderer { get; private set; }
-
-        public IFontManager FontManager { get; private set; }
 
         #region Initialization
 
@@ -81,9 +72,6 @@ namespace MetaMind.Engine.Component
 
                         this.SpriteBatch?.Dispose();
                         this.SpriteBatch = null;
-
-                        this.FontManager?.Dispose();
-                        this.FontManager = null;
                     }
 
                     this.IsDisposed = true;

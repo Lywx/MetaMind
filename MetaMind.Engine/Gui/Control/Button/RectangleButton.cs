@@ -1,6 +1,6 @@
 ﻿namespace MetaMind.Engine.Gui.Control.Button
 {
-    using Component.Graphics.Font;
+    using Component.Graphics.Fonts;
     using Element;
     using Element.Rectangles;
     using Microsoft.Xna.Framework;

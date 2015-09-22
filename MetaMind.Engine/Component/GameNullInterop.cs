@@ -2,8 +2,8 @@ namespace MetaMind.Engine.Component
 {
     using Audio;
     using Console;
+    using Content.Asset;
     using File;
-    using Graphics;
     using Interop;
     using Interop.Event;
     using Interop.Process;
@@ -15,23 +15,25 @@ namespace MetaMind.Engine.Component
         public GameNullInterop(GameEngine engine) 
             : base(engine)
         {
-        }        
-        
-        public IAudioManager Audio { get; private set; }
+        }
 
-        public ContentManager Content { get; private set; }
+        public IAssetManager Asset { get; }
+
+        public IAudioManager Audio { get; }
+
+        public ContentManager Content { get; }
 
         public GameConsole Console { get; set; }
 
-        public IFileManager File { get; private set; }
+        public IFileManager File { get; }
 
-        public IEventManager Event { get; private set; }
+        public IEventManager Event { get; }
 
-        public new IGameManager Game { get; private set; }
+        public new IGameManager Game { get; }
 
-        public IProcessManager Process { get; private set; }
+        public IProcessManager Process { get; }
 
-        public IScreenManager Screen { get; private set; }
+        public IScreenManager Screen { get; }
 
         public ISaveManager Save { get; set; }
 

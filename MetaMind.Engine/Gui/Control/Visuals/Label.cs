@@ -1,7 +1,7 @@
 ﻿namespace MetaMind.Engine.Gui.Control.Visuals
 {
     using System;
-    using Component.Graphics.Font;
+    using Component.Graphics.Fonts;
     using Microsoft.Xna.Framework;
     using Service;
 

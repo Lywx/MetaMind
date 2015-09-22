@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Commands;
-    using Commands.Core;
+    using Commands.Coreutils;
     using Component.Graphics;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -71,10 +71,16 @@
         {
             var builtinCommands = new IConsoleCommand[]
             {
-                new ExitCommand(this.Engine),
-
+                // Console operations
                 new ClearCommand(this),
                 new HelpCommand(this),
+
+                // Engine operations
+                new ExitCommand(),
+                new RestartCommand(),
+#if DEBUG
+                new ResetCommand(),
+#endif
             };
 
             this.Commands.AddRange(builtinCommands);
