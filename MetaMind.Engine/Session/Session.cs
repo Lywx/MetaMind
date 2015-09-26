@@ -3,7 +3,7 @@ namespace MetaMind.Engine.Session
     using System.IO;
     using System.Runtime.Serialization;
     using System.Xml;
-    using Component.File;
+    using Components.File;
 
     [DataContract]
     public sealed class Session<TData> : ISession<TData>
@@ -12,10 +12,9 @@ namespace MetaMind.Engine.Session
         #region File Data
 
         [DataMember]
-        public const string XmlFilename = "Session.xml";
+        public static readonly string XmlFilename = "Session.xml";
 
-        [DataMember]
-        public const string XmlPath = FileManager.SaveDirectory + XmlFilename;
+        public static string XmlPath => FileManager.SavePath(XmlFilename);
 
         #endregion 
 

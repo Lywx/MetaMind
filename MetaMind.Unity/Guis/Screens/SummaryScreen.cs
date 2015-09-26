@@ -2,6 +2,7 @@
 {
     using System;
     using Engine;
+    using Engine.Gui.Modules;
     using Engine.Screen;
     using Engine.Service;
     using Microsoft.Xna.Framework;

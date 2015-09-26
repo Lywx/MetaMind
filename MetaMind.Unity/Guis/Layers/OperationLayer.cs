@@ -3,8 +3,8 @@
     using System;
     using Concepts.Operations;
     using Engine;
-    using Engine.Component.Graphics.Fonts;
-    using Engine.Gui.Control.Visuals;
+    using Engine.Components.Graphics.Fonts;
+    using Engine.Gui.Controls.Labels;
     using Engine.Screen;
     using Engine.Service;
     using Microsoft.Xna.Framework;

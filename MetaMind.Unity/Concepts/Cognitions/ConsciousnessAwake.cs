@@ -9,7 +9,7 @@ namespace MetaMind.Unity.Concepts.Cognitions
 {
     using System;
     using System.Runtime.Serialization;
-    using Engine.Component.Interop.Event;
+    using Engine.Components.Interop.Event;
     using Events;
     using Sessions;
 

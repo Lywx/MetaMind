@@ -23,6 +23,8 @@ namespace MetaMind.Engine
 
         #region Engine Service Data
 
+        public GameEngine Engine { get; protected set; }
+
         protected IGameInputService Input => GameEngine.Service.Input;
 
         protected IGameInteropService Interop => GameEngine.Service.Interop;
@@ -30,8 +32,6 @@ namespace MetaMind.Engine
         protected IGameGraphicsService Graphics => GameEngine.Service.Graphics;
 
         protected IGameNumericalService Numerical => GameEngine.Service.Numerical;
-
-        public GameEngine Engine { get; protected set; }
 
         #endregion
 

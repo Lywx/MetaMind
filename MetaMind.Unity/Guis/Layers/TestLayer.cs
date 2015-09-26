@@ -4,8 +4,8 @@ namespace MetaMind.Unity.Guis.Layers
     using System.Speech.Synthesis;
     using Concepts.Tests;
     using Engine;
-    using Engine.Component.Graphics.Fonts;
-    using Engine.Gui.Control.Visuals;
+    using Engine.Components.Graphics.Fonts;
+    using Engine.Gui.Controls.Labels;
     using Engine.Screen;
     using Engine.Service;
     using Engine.Setting.Color;

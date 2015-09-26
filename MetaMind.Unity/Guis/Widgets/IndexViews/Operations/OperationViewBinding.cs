@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
     using Concepts.Operations;
-    using Engine.Gui.Control.Item;
-    using Engine.Gui.Control.Item.Data;
-    using Engine.Gui.Control.Views.Logic;
+    using Engine.Gui.Controls.Item;
+    using Engine.Gui.Controls.Item.Data;
+    using Engine.Gui.Controls.Views.Logic;
 
     public class OperationViewBinding : IViewBinding
     {

@@ -1,10 +1,11 @@
 ﻿namespace MetaMind.EngineTest.Guis
 {
-    using Engine.Gui.Control.Regions;
-    using Engine.Gui.Control.Visuals;
     using Engine.Service;
     using Engine.Test;
     using Engine;
+    using Engine.Gui.Controls.Images;
+    using Engine.Gui.Controls.Regions;
+    using Engine.Gui.Modules;
     using Microsoft.Xna.Framework;
 
     public class PlayTest_Region : GameEntityModule<object>
@@ -24,7 +25,7 @@
             this.control.Add(region);
 
             // Box Visual
-            var box = new Box(() => region.Rectangle, () => Color.CornflowerBlue, () => true);
+            var box = new ImageBox(() => region.Rectangle, () => Color.CornflowerBlue, () => true);
             this.visual.Add(box);
         }
 

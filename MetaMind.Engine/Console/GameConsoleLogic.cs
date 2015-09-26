@@ -5,10 +5,10 @@
     using System.Windows.Forms;
     using NLog;
     using Processors;
-    using KeyEventArgs = Component.Input.KeyEventArgs;
+    using KeyEventArgs = Components.Input.KeyEventArgs;
     using Keys = Microsoft.Xna.Framework.Input.Keys;
 
-    public class GameConsoleLogic : GameModuleLogic<GameConsole, GameConsoleSettings, GameConsoleLogic, GameConsoleVisual>
+    public class GameConsoleLogic : GameComponentLogic<GameConsole, GameConsoleSettings, GameConsoleLogic, GameConsoleVisual>
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 

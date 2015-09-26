@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using Commands;
-    using Component.Content.Fonts;
+    using Components.Content.Fonts;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
@@ -17,7 +17,7 @@
 
         #region Colors
 
-        public Color BackgroundColor { get; set; } = new Color(0, 0, 0, 125);
+        public Color BackgroundColor { get; set; } = Color.Multiply(new Color(0, 0, 0, 256), 0.5f);
 
         public Color FontColor
         {

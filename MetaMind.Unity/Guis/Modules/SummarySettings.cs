@@ -1,7 +1,7 @@
 namespace MetaMind.Unity.Guis.Modules
 {
     using Engine;
-    using Engine.Component.Graphics;
+    using Engine.Components.Graphics;
     using Engine.Setting.Loader;
     using Microsoft.Xna.Framework;
 

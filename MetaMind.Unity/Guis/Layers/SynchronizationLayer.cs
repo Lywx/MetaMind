@@ -1,6 +1,7 @@
 ﻿namespace MetaMind.Unity.Guis.Layers
 {
     using Engine;
+    using Engine.Gui.Modules;
     using Engine.Screen;
     using Engine.Service;
     using Microsoft.Xna.Framework;

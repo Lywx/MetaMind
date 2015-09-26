@@ -11,7 +11,7 @@ namespace MetaMind.Engine
         {
             var builder = new GameEngineBuilder();
 
-            using (var engine = builder.Create(@"Content"))
+            using (var engine = builder.Create())
             {
                 engine.Run();
             }

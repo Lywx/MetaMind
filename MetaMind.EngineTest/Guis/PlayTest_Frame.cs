@@ -1,9 +1,10 @@
 ﻿namespace MetaMind.EngineTest.Guis
 {
     using Engine;
-    using Engine.Gui.Control.Visuals;
-    using Engine.Gui.Element;
-    using Engine.Gui.Element.Rectangles;
+    using Engine.Gui.Controls.Images;
+    using Engine.Gui.Elements;
+    using Engine.Gui.Elements.Rectangles;
+    using Engine.Gui.Modules;
     using Engine.Service;
     using Engine.Test;
     using Microsoft.Xna.Framework;
@@ -27,7 +28,7 @@
             this.control.Add(this.rectangle);
 
             // Box Visual
-            var box = new Box(() => this.rectangle.Bounds, () => Color.CornflowerBlue, () => true);
+            var box = new ImageBox(() => this.rectangle.Bounds, () => Color.CornflowerBlue, () => true);
             this.visual.Add(box);
         }
 

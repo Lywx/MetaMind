@@ -4,8 +4,9 @@ namespace MetaMind.Unity.Guis.Modules
     using Concepts.Cognitions;
     using Concepts.Synchronizations;
     using Engine;
-    using Engine.Component.Input;
-    using Engine.Component.Interop.Event;
+    using Engine.Components.Input;
+    using Engine.Components.Interop.Event;
+    using Engine.Gui.Modules;
     using Engine.Service;
     using Events;
     using Microsoft.Xna.Framework;

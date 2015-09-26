@@ -1,18 +1,19 @@
 ﻿namespace MetaMind.EngineTest.Guis
 {
-    using Engine.Gui.Control;
+    using Engine;
+    using Engine.Gui.Controls;
     using Microsoft.Xna.Framework;
     using NUnit.Framework;
 
     [TestFixture]
     public class Test_ControlSettings
     {
-        private ControlSettings settings;
+        private GameSettings settings;
 
         [SetUp]
         public void Test_Creation()
         {
-            this.settings = new ControlSettings { { "Size", new Point(5, 5) }, { "Color", Color.White } };
+            this.settings = new GameSettings { { "Size", new Point(5, 5) }, { "Color", Color.White } };
         }
 
         [Test]

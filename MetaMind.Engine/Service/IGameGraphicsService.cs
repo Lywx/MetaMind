@@ -1,6 +1,6 @@
 namespace MetaMind.Engine.Service
 {
-    using Component.Graphics;
+    using Components.Graphics;
     using Microsoft.Xna.Framework.Graphics;
 
     public interface IGameGraphicsService

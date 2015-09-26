@@ -1,17 +1,16 @@
 ﻿namespace MetaMind.Engine
 {
     using System;
-    using Component;
-    using Component.File;
-    using Component.Graphics;
-    using Component.Interop;
-    using Component.Interop.Event;
-    using Component.Interop.Process;
+    using Components;
+    using Components.Graphics;
+    using Components.Interop;
     using Console;
     using Microsoft.Xna.Framework;
 
     public class GameEngineBuilder : IGameEngineBuilder
     {
+        #region Constructor and Finalizer
+
         public GameEngineBuilder()
         {
 
@@ -27,64 +26,70 @@
             this.Configurer = configurer;
         }
 
+        #endregion
+
+        private GameEngine Engine { get; set; }
+
+        private IGameGraphics Graphics => this.Engine.Graphics;
+
         private IGameEngineConfigurer Configurer { get; }
 
-        public GameEngine Create(string content)
+        #region Operations
+
+        public GameEngine Create()
         {
-            var engine = new GameEngine(content);
+            this.Engine = new GameEngine();
 
-            this.Configure(engine);
-            this.Configurer?.Configure(engine);
+            this.BeginSetup();
+            this.Setup();
+            this.EndSetup();
 
-            return engine;
+            return this.Engine;
         }
 
-        private void Configure(GameEngine engine)
+        /// <summary>
+        /// Prepare necessary setup information.
+        /// </summary>
+        private void BeginSetup()
         {
-            // Game graphics
-            var graphicsSettings = new GraphicsSettings();
-            var graphicsManager = new GraphicsManager(engine, graphicsSettings);
-            var graphics = new GameEngineGraphics(
-                engine,
-                graphicsSettings,
-                graphicsManager);
+        }
 
-            // Game engine property injection
-            engine.Graphics = graphics;
-            engine.Interop = new GameEngineInterop(
-                engine,
-                new GameManager(engine),
-                new EventManager(engine)
-                {
-                    UpdateOrder = 3
-                },
-                new ProcessManager(engine)
-                {
-                    UpdateOrder = 4
-                },
-                new ScreenManager(
-                    engine,
-                    new ScreenSettings(),
-                    graphics.SpriteBatch)
+        /// <summary>
+        /// Setup. After this method, the engine is ready to work.
+        /// </summary>
+        private void Setup()
+        {
+            this.Engine.Graphics = new GameEngineGraphics(this.Engine, new GraphicsSettings());
+            this.Engine.Interop = new GameEngineInterop(this.Engine,
+                new ScreenManager(this.Engine, new ScreenSettings(), this.Graphics.SpriteBatch)
                 {
                     UpdateOrder = 5
                 },
                 new GameConsole(
                     new GameConsoleSettings
                     {
-                        // TODO: UI should register font name
-                        Font = Font.UiConsole,
-                        Height = graphicsSettings.Height - 50,
-                        BackgroundColor = new Color(0, 0, 0, 256 * 3 / 4),
+                        // TODO(Critical): Font is not loaded
+                        Height = this.Graphics.Settings.Height - 50,
+                        BackgroundColor = Color.Multiply(new Color(0, 0, 0, 256), 0.25f),
                         PastErrorColor = Color.Red,
                         PastDebugColor = Color.Yellow,
                     },
-                    engine,
-                    graphics.SpriteBatch,
-                    graphics.Renderer));
+                    this.Engine,
+                    this.Graphics.SpriteBatch,
+                    this.Graphics.Renderer));
 
-            engine.Input     = new GameEngineInput(engine);
-            engine.Numerical = new GameEngineNumerical();
+            this.Engine.Input     = new GameEngineInput(this.Engine);
+            this.Engine.Numerical = new GameEngineNumerical();
         }
+
+        /// <summary>
+        /// Do extra work to tune engine.
+        /// </summary>
+        private void EndSetup()
+        {
+            this.Configurer?.Configure(this.Engine);
+        }
+
+        #endregion
     }
 }

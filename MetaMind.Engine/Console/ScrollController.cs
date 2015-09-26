@@ -1,6 +1,6 @@
 ﻿namespace MetaMind.Engine.Console
 {
-    using Component.Graphics;
+    using Components.Graphics;
     using Microsoft.Xna.Framework;
     using Setting.Loader;
 

@@ -1,11 +1,11 @@
 ﻿namespace MetaMind.Engine.Screen
 {
     using System;
-    using Gui.Control;
+    using Gui.Components;
     using Microsoft.Xna.Framework;
     using Service;
 
-    public class GameLayer : Control, IGameLayer
+    public class GameLayer : RenderComponent, IGameLayer
     {
         #region Constructors and Finalizer
 

@@ -3,7 +3,7 @@ namespace MetaMind.Engine.Extensions
     using System;
     using System.Collections.Generic;
     using System.Text;
-    using Component.Content.Fonts;
+    using Components.Content.Fonts;
 
     public static class StringUtils
     {

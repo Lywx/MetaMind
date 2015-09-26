@@ -1,7 +1,7 @@
 namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
 {
-    using Engine.Gui.Control.Views.Scrolls;
-    using Engine.Gui.Control.Views.Settings;
+    using Engine.Gui.Controls.Views.Scrolls;
+    using Engine.Gui.Controls.Views.Settings;
     using Microsoft.Xna.Framework;
 
     public class OptionViewSettings : PointViewVerticalSettings

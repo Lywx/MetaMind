@@ -4,6 +4,7 @@
     using System.Speech.Synthesis;
     using Concepts.Tests;
     using Engine;
+    using Engine.Gui.Modules;
 
     public class TestModule : GameEntityModule<TestModuleSettings>
     {

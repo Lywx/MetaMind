@@ -4,21 +4,23 @@
     using System.Collections.Generic;
     using Concepts.Operations;
     using Engine;
-    using Engine.Component.Graphics.Fonts;
-    using Engine.Gui.Control.Item;
-    using Engine.Gui.Control.Item.Data;
-    using Engine.Gui.Control.Item.Factories;
-    using Engine.Gui.Control.Item.Frames;
-    using Engine.Gui.Control.Item.Interactions;
-    using Engine.Gui.Control.Item.Layers;
-    using Engine.Gui.Control.Views;
-    using Engine.Gui.Control.Views.Layouts;
-    using Engine.Gui.Control.Views.Logic;
-    using Engine.Gui.Control.Views.Scrolls;
-    using Engine.Gui.Control.Views.Selections;
-    using Engine.Gui.Control.Views.Swaps;
-    using Engine.Gui.Control.Views.Visuals;
-    using Engine.Gui.Control.Visuals;
+    using Engine.Components.Content.Fonts;
+    using Engine.Components.Graphics.Fonts;
+    using Engine.Gui.Controls.Images;
+    using Engine.Gui.Controls.Item;
+    using Engine.Gui.Controls.Item.Data;
+    using Engine.Gui.Controls.Item.Factories;
+    using Engine.Gui.Controls.Item.Frames;
+    using Engine.Gui.Controls.Item.Interactions;
+    using Engine.Gui.Controls.Item.Layers;
+    using Engine.Gui.Controls.Labels;
+    using Engine.Gui.Controls.Views;
+    using Engine.Gui.Controls.Views.Layouts;
+    using Engine.Gui.Controls.Views.Logic;
+    using Engine.Gui.Controls.Views.Scrolls;
+    using Engine.Gui.Controls.Views.Selections;
+    using Engine.Gui.Controls.Views.Swaps;
+    using Engine.Gui.Controls.Views.Visuals;
     using Engine.Screen;
     using Engine.Service;
     using Engine.Setting.Color;
@@ -115,7 +117,7 @@
                     Monospaced = true
                 },
                 new Vector2(5, 12) * 0.8f, 
-                new BoxSettings(() => new Rectangle(OperationModuleSettings.ViewMargin, new Point(viewWidth, 0)))
+                new ColorBoxSettings(() => new Rectangle(OperationModuleSettings.ViewMargin, new Point(viewWidth, 0)))
                 {
                     Color = () => Palette.DimBlue,
                     ColorFilled = () => true,
@@ -133,7 +135,7 @@
                     Monospaced = true
                 },
                 new Vector2(5, 12) * 0.8f,
-                new BoxSettings(() => new Rectangle((int)OperationModuleSettings.ViewMargin.X, this.procedureNameLabelBox.Bottom, viewWidth, 0))
+                new ColorBoxSettings(() => new Rectangle((int)OperationModuleSettings.ViewMargin.X, this.procedureNameLabelBox.Bottom, viewWidth, 0))
                 {
                     Color       = () => Palette.Transparent20,
                     ColorFilled = () => true,

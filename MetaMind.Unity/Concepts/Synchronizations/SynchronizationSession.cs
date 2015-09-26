@@ -1,7 +1,7 @@
 namespace MetaMind.Unity.Concepts.Synchronizations
 {
     using Engine;
-    using Engine.Component.Interop.Event;
+    using Engine.Components.Interop.Event;
     using Events;
     using Sessions;
 

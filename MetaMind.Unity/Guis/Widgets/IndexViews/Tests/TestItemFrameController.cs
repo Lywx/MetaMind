@@ -1,11 +1,11 @@
 namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 {
     using System;
-    using Engine.Gui.Control.Item;
-    using Engine.Gui.Control.Item.Frames;
-    using Engine.Gui.Control.Item.Layouts;
-    using Engine.Gui.Control.Item.Settings;
-    using Engine.Gui.Element.Rectangles;
+    using Engine.Gui.Controls.Item;
+    using Engine.Gui.Controls.Item.Frames;
+    using Engine.Gui.Controls.Item.Layouts;
+    using Engine.Gui.Controls.Item.Settings;
+    using Engine.Gui.Elements.Rectangles;
     using Engine.Service;
     using Microsoft.Xna.Framework;
 

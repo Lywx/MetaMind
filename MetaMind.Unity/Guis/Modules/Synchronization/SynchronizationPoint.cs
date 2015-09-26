@@ -2,8 +2,10 @@ namespace MetaMind.Unity.Guis.Modules.Synchronization
 {
     using System;
     using Engine;
-    using Engine.Component.Graphics.Fonts;
-    using Engine.Gui.Control.Visuals;
+    using Engine.Components.Content.Fonts;
+    using Engine.Components.Graphics.Fonts;
+    using Engine.Gui.Controls.Images;
+    using Engine.Gui.Controls.Labels;
     using Engine.Service;
     using Microsoft.Xna.Framework;
 
@@ -20,10 +22,10 @@ namespace MetaMind.Unity.Guis.Modules.Synchronization
                                 TextHAlignment = HoritonalAlignment.Center, TextVAlignment = VerticalAlignment.Center 
                             };
 
-            this.Box = new Box(boxbounds, boxColor, () => true);
+            this.Box = new ImageBox(boxbounds, boxColor, () => true);
         }
 
-        public Box Box { get; set; }
+        public ImageBox Box { get; set; }
 
         public Label Digit { get; set; }
 

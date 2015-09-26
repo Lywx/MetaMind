@@ -2,7 +2,7 @@
 {
     using System;
     using Engine;
-    using Engine.Component.Graphics;
+    using Engine.Components.Graphics;
     using Engine.Setting.Color;
     using Engine.Setting.Loader;
     using Microsoft.Xna.Framework;

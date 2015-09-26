@@ -10,7 +10,7 @@ namespace MetaMind.Engine
     using System;
     using System.Diagnostics;
     using System.Reflection;
-    using Component;
+    using Components;
     using Microsoft.Xna.Framework;
     using Service;
 
@@ -26,9 +26,12 @@ namespace MetaMind.Engine
 
         #region Constructors
 
-        public GameEngine(string content)
+        public GameEngine()
         {
-            this.Content.RootDirectory = content;
+            this.Content.RootDirectory = "Content";
+
+            // TODO(Minor, Mouse): Remove this to custom cursor
+            this.IsMouseVisible = true;
         }
 
         #endregion
@@ -134,7 +137,7 @@ namespace MetaMind.Engine
 
         #endregion
 
-        #region Initializtion
+        #region Initialization
 
         protected override void Initialize()
         {

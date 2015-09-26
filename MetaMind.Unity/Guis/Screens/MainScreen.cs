@@ -4,7 +4,7 @@
     using Concepts.Operations;
     using Concepts.Synchronizations;
     using Concepts.Tests;
-    using Engine.Gui.Control.Button;
+    using Engine.Gui.Controls.Buttons;
     using Engine.Screen;
     using Engine.Scripting.FSharp;
     using Engine.Service;
@@ -62,7 +62,7 @@
             const int buttonWidth = 30;
             const int buttonHeight = 300;
             var buttonY = (graphicsSettings.Height - buttonHeight) / 2;
-            var buttonSettings = new ButtonSettings
+            var buttonSettings = new RectangleButtonSettings
             {
                 BoundaryRegularColor      = Palette.Transparent,
                 BoundaryMouseOverColor    = Palette.Transparent,

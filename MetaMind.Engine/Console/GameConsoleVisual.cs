@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Component.Content.Fonts;
-    using Component.Graphics;
+    using Components.Content.Fonts;
+    using Components.Graphics;
     using Extensions;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -13,7 +13,7 @@
 
     // TODO(Minor, Console): This is still not good enough
     public class GameConsoleVisual :
-        GameModuleVisual<GameConsole, GameConsoleSettings, GameConsoleLogic, GameConsoleVisual>,
+        GameComponentVisual<GameConsole, GameConsoleSettings, GameConsoleLogic, GameConsoleVisual>,
         IParameterLoader<GraphicsSettings>
     {
         #region Dependency
@@ -123,7 +123,7 @@
                 throw new ArgumentNullException(nameof(renderer));
             }
 
-            this.spriteBatch  = spriteBatch;
+            this.spriteBatch = spriteBatch;
             this.renderer = renderer;
         }
 

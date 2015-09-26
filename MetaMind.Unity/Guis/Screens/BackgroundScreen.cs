@@ -1,7 +1,7 @@
 ﻿namespace MetaMind.Unity.Guis.Screens
 {
     using System;
-    using Engine.Gui.Module;
+    using Engine.Gui.Modules;
     using Engine.Screen;
     using Engine.Service;
     using Microsoft.Xna.Framework;

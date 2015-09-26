@@ -7,13 +7,13 @@
 
 namespace MetaMind.Engine.Service
 {
-    using Component;
-    using Component.Audio;
-    using Component.File;
-    using Component.Graphics;
-    using Component.Interop;
-    using Component.Interop.Event;
-    using Component.Interop.Process;
+    using Components;
+    using Components.Audio;
+    using Components.Content.Asset;
+    using Components.File;
+    using Components.Interop;
+    using Components.Interop.Event;
+    using Components.Interop.Process;
     using Console;
     using Microsoft.Xna.Framework.Content;
 
@@ -29,21 +29,11 @@ namespace MetaMind.Engine.Service
             this.interop = interop;
         }
 
-        public IAudioManager Audio
-        {
-            get
-            {
-                return this.interop.Audio;
-            }
-        }
+        public IAssetManager Asset => this.interop.Asset;
 
-        public ContentManager Content
-        {
-            get
-            {
-                return this.interop.Content;
-            }
-        }
+        public IAudioManager Audio => this.interop.Audio;
+
+        public ContentManager Content => this.interop.Content;
 
         public GameConsole Console
         {
@@ -57,53 +47,17 @@ namespace MetaMind.Engine.Service
             }
         }
 
-        public IFileManager File
-        {
-            get
-            {
-                return this.interop.File;
-            }
-        }
+        public IFileManager File => this.interop.File;
 
-        public GameEngine Engine
-        {
-            get
-            {
-                return this.interop.Engine;
-            }
-        }
+        public GameEngine Engine => this.interop.Engine;
 
-        public IEventManager Event
-        {
-            get
-            {
-                return this.interop.Event;
-            }
-        }
+        public IEventManager Event => this.interop.Event;
 
-        public IGameManager Game
-        {
-            get
-            {
-                return this.interop.Game;
-            }
-        }
+        public IGameManager Game => this.interop.Game;
 
-        public IProcessManager Process
-        {
-            get
-            {
-                return this.interop.Process;
-            }
-        }
+        public IProcessManager Process => this.interop.Process;
 
-        public IScreenManager Screen
-        {
-            get
-            {
-                return this.interop.Screen;
-            }
-        }
+        public IScreenManager Screen => this.interop.Screen;
 
         public ISaveManager Save
         {

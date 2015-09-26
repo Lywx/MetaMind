@@ -2,11 +2,11 @@
 {
     using System;
     using Concepts.Operations;
-    using Engine.Gui.Control.Item;
-    using Engine.Gui.Control.Item.Frames;
-    using Engine.Gui.Control.Item.Interactions;
-    using Engine.Gui.Control.Item.Visuals;
-    using Engine.Gui.Control.Visuals;
+    using Engine.Gui.Controls.Item;
+    using Engine.Gui.Controls.Item.Frames;
+    using Engine.Gui.Controls.Item.Interactions;
+    using Engine.Gui.Controls.Item.Visuals;
+    using Engine.Gui.Controls.Labels;
     using Engine.Service;
     using Engine.Setting.Color;
     using Microsoft.Xna.Framework;

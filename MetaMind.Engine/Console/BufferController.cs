@@ -4,10 +4,11 @@ namespace MetaMind.Engine.Console
     using System.Linq;
     using System.Threading;
     using System.Windows.Forms;
-    using Component.Content.Fonts;
+    using Components.Content.Fonts;
     using Processors;
 
-    internal class BufferController : GameModuleComponent<GameConsole, GameConsoleSettings, GameConsoleLogic, GameConsoleVisual>
+    // TODO: Maybe I should reorganize this
+    internal class BufferController : GameComponentComponent<GameConsole, GameConsoleSettings, GameConsoleLogic, GameConsoleVisual>
     {
         #region Constructors
 

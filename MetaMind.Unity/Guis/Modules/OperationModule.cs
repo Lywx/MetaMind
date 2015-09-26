@@ -4,8 +4,9 @@
     using System.Collections.Generic;
     using Concepts.Operations;
     using Engine;
-    using Engine.Gui.Control.Item;
-    using Engine.Gui.Control.Views;
+    using Engine.Gui.Controls.Item;
+    using Engine.Gui.Controls.Views;
+    using Engine.Gui.Modules;
     using Engine.Service;
     using Microsoft.Xna.Framework;
     using Widgets.IndexViews;

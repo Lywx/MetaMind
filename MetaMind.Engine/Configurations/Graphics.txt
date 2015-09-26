@@ -1,9 +1,10 @@
-" Screen Settings
+" Resolution
 
+Resolution Aspect = 16 9 " Currently supported resolution aspect is 16:9
 Resolution = 1280 720
-FPS        = 30
 
-IsFullscreen = true
+" Performance
+FPS = 30
 
-" Mouse Settings
-IsMouseVisible = true
+Full Screen = false " Toggle full screen when full screen is true. This will turn off window mode.
+Window Mode = true " Show border when window mode is true.

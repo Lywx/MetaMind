@@ -10,7 +10,7 @@ namespace MetaMind.Unity.Concepts.Tests
     using System;
     using System.Collections.Generic;
     using System.Speech.Synthesis;
-    using Engine.Gui.Control.Item.Data;
+    using Engine.Gui.Controls.Item.Data;
     using Events;
 
     /// <summary>

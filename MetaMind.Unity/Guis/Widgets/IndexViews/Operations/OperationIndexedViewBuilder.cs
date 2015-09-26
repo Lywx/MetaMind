@@ -2,15 +2,15 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Operations
 {
     using System;
     using Concepts.Operations;
-    using Engine.Gui.Control.Item.Data;
-    using Engine.Gui.Control.Item.Factories;
-    using Engine.Gui.Control.Item.Frames;
-    using Engine.Gui.Control.Item.Interactions;
-    using Engine.Gui.Control.Views;
-    using Engine.Gui.Control.Views.Logic;
-    using Engine.Gui.Control.Views.Regions;
-    using Engine.Gui.Control.Views.Selections;
-    using Engine.Gui.Control.Views.Visuals;
+    using Engine.Gui.Controls.Item.Data;
+    using Engine.Gui.Controls.Item.Factories;
+    using Engine.Gui.Controls.Item.Frames;
+    using Engine.Gui.Controls.Item.Interactions;
+    using Engine.Gui.Controls.Views;
+    using Engine.Gui.Controls.Views.Logic;
+    using Engine.Gui.Controls.Views.Regions;
+    using Engine.Gui.Controls.Views.Selections;
+    using Engine.Gui.Controls.Views.Visuals;
     using Tests;
 
     /// <summary>

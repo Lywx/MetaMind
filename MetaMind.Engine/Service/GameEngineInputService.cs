@@ -8,8 +8,8 @@
 namespace MetaMind.Engine.Service
 {
     using System;
-    using Component;
-    using Component.Input;
+    using Components;
+    using Components.Input;
 
     public sealed class GameEngineInputService : IGameInputService
     {

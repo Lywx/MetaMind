@@ -2,10 +2,10 @@ namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
 {
     using System;
     using Concepts.Operations;
-    using Engine.Gui.Control.Item;
-    using Engine.Gui.Control.Item.Frames;
-    using Engine.Gui.Control.Item.Visuals;
-    using Engine.Gui.Control.Visuals;
+    using Engine.Gui.Controls.Item;
+    using Engine.Gui.Controls.Item.Frames;
+    using Engine.Gui.Controls.Item.Visuals;
+    using Engine.Gui.Controls.Labels;
     using Engine.Service;
     using Microsoft.Xna.Framework;
 

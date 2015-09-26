@@ -1,12 +1,12 @@
 namespace MetaMind.Engine.Service
 {
-    using Component;
-    using Component.Audio;
-    using Component.Content.Asset;
-    using Component.File;
-    using Component.Interop;
-    using Component.Interop.Event;
-    using Component.Interop.Process;
+    using Components;
+    using Components.Audio;
+    using Components.Content.Asset;
+    using Components.File;
+    using Components.Interop;
+    using Components.Interop.Event;
+    using Components.Interop.Process;
     using Console;
     using Microsoft.Xna.Framework.Content;
 

@@ -4,12 +4,12 @@
     using System.Collections.Generic;
     using Commands;
     using Commands.Coreutils;
-    using Component.Graphics;
+    using Components.Graphics;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Processors;
 
-    public class GameConsole : GameModule<GameConsoleSettings, GameConsoleLogic, GameConsoleVisual>
+    public class GameConsole : GameComponentModule<GameConsoleSettings, GameConsoleLogic, GameConsoleVisual>
     {
         #region Constructors and Finalizer
 
@@ -87,6 +87,13 @@
         }
 
         #endregion
+
+        protected override void LoadContent()
+        {
+            base.LoadContent();
+
+            this.Settings.Font = this.Interop.Asset.Fonts["Lucida Console Regular"];
+        }
 
         #region Update  
 

@@ -11,7 +11,7 @@ namespace MetaMind.Engine
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.Serialization;
-    using Component.Interop.Event;
+    using Components.Interop.Event;
     using Microsoft.Xna.Framework;
     using Service;
 

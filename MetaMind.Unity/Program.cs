@@ -26,7 +26,7 @@ namespace MetaMind.Unity
             var configurer = new UnityEngineConfigurer();
             var builder    = new GameEngineBuilder(configurer);
 
-            using (var engine = builder.Create(@"Content"))
+            using (var engine = builder.Create())
             {
                 var testimony = new Unity(engine);
                 testimony.Run();

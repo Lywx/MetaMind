@@ -4,9 +4,9 @@
 
     public static class MouseButtonsExt
     {
-        public static Component.Input.MouseButtons Convert(this MouseButtons mouseButtons)
+        public static Components.Input.MouseButtons Migrate(this MouseButtons mouseButtons)
         {
-            return (Component.Input.MouseButtons)mouseButtons;
+            return (Components.Input.MouseButtons)mouseButtons;
         }
     }
 }

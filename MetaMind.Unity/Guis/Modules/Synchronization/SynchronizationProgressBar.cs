@@ -3,7 +3,8 @@ namespace MetaMind.Unity.Guis.Modules.Synchronization
     using System;
     using Concepts.Synchronizations;
     using Engine;
-    using Engine.Gui.Control.Visuals;
+    using Engine.Gui.Controls.Images;
+    using Engine.Gui.Modules;
     using Engine.Service;
     using Engine.Setting.Color;
     using Microsoft.Xna.Framework;
@@ -20,24 +21,24 @@ namespace MetaMind.Unity.Guis.Modules.Synchronization
 
             this.Synchronization = synchronization;
 
-            this.Frame = new Box(
-                () => RectangleExt.RectangleByCenter(
+            this.Frame = new ImageBox(
+                () => RectangleExtension.RectangleByCenter(
                     this.Settings.BarFrameCenterPosition,
                     this.Settings.BarFrameSize),
                 () => this.Settings.BarFrameColor,
                 () => true);
 
-            this.Progress = new Box(
-                () => RectangleExt.RectangleByCenter(
+            this.Progress = new ImageBox(
+                () => RectangleExtension.RectangleByCenter(
                     this.Settings.BarFrameCenterPosition,
                     this.Settings.BarFrameSize * new Vector2(this.Synchronization.Progress, 1)),
                 () => this.Synchronization.Enabled ? Palette.LightBlue : Palette.LightPink,
                 () => true);
         }
 
-        public Box Progress { get; set; }
+        public ImageBox Progress { get; set; }
 
-        public Box Frame { get; set; }
+        public ImageBox Frame { get; set; }
 
         private ISynchronization Synchronization { get; set; }
 

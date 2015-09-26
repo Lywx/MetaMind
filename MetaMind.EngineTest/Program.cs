@@ -12,7 +12,7 @@
         {
             var builder = new GameEngineBuilder();
 
-            using (var engine = builder.Create(@"Content"))
+            using (var engine = builder.Create())
             {
                 var test = new GameEngineTest(engine);
                 test.Run();

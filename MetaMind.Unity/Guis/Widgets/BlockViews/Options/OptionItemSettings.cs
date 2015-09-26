@@ -1,10 +1,10 @@
 ﻿namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
 {
-    using Engine.Component.Graphics;
-    using Engine.Component.Graphics.Fonts;
-    using Engine.Gui.Control.Item.Frames;
-    using Engine.Gui.Control.Item.Settings;
-    using Engine.Gui.Control.Visuals;
+    using Engine.Components.Graphics;
+    using Engine.Components.Graphics.Fonts;
+    using Engine.Gui.Controls.Item.Frames;
+    using Engine.Gui.Controls.Item.Settings;
+    using Engine.Gui.Controls.Labels;
     using Engine.Setting.Color;
     using Engine.Setting.Loader;
     using Microsoft.Xna.Framework;

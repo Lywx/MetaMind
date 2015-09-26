@@ -130,9 +130,9 @@
     <Compile Include="Concepts\Tests\TestOrganization.cs" />
     <Compile Include="Concepts\Tests\TestOrganizer.cs" />
     <Compile Include="Concepts\Tests\TestSession.cs" />
-    <Compile Include="Extensions\EnumExt.cs" />
-    <Compile Include="Extensions\HashSetExt.cs" />
-    <Compile Include="Extensions\ObservableCollectionExt.cs" />
+    <Compile Include="Extensions\EnumExtension.cs" />
+    <Compile Include="Extensions\HashSetExtension.cs" />
+    <Compile Include="Extensions\ObservableCollectionExtension.cs" />
     <Compile Include="Console\Uniutils\ListCommand.cs" />
     <Compile Include="Guis\Layers\OperationLayer.cs" />
     <Compile Include="Guis\Modules\OperationModule.cs" />
@@ -176,7 +176,7 @@
     <Compile Include="Concepts\Synchronizations\SynchronizationStartedEventArgs.cs" />
     <Compile Include="Concepts\Synchronizations\SynchronizationStoppedEventArgs.cs" />
     <Compile Include="Concepts\Synchronizations\SynchronizationTimer.cs" />
-    <Compile Include="Extensions\Int32Ext.cs" />
+    <Compile Include="Extensions\Int32Extension.cs" />
     <Compile Include="Concepts\Synchronizations\SynchronizationAlertedEventArgs.cs" />
     <Compile Include="Guis\Modules\TestModule.cs" />
     <Compile Include="Guis\Modules\TestModuleSettings.cs" />

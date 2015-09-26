@@ -4,7 +4,7 @@ namespace MetaMind.Unity.Components
     using Engine.Session;
     using Sessions;
 
-    public class SaveManager : Engine.Component.File.SaveManager
+    public class SaveManager : Engine.Components.File.SaveManager
     {
         public SaveManager(GameEngine engine)
             : base(engine)

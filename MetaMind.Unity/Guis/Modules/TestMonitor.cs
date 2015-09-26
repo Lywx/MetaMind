@@ -46,7 +46,7 @@
         {
             var pairs = ConfigurationLoader.LoadUniquePairs(this);
 
-            TestWarningRate = FileLoader.ReadFloats(pairs, "TestMonitor.TestWarningRate", 0, 10f);
+            TestWarningRate = FileLoader.ReadValueFloats(pairs, "TestMonitor.TestWarningRate", 0, 10f);
         }
 
         #endregion

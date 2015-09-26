@@ -2,7 +2,7 @@ namespace MetaMind.Unity.Components
 {
     using System;
     using Engine;
-    using Engine.Component.Profiler;
+    using Engine.Components.Profiler;
     using Engine.Setting.Loader;
     using Microsoft.Xna.Framework;
 
@@ -48,8 +48,8 @@ namespace MetaMind.Unity.Components
         {
             var pairs = ConfigurationLoader.LoadUniquePairs(this);
 
-            this.WarningCpuUsageInterval = TimeSpan.FromMinutes(FileLoader.ReadFloats(pairs, "ResourceMonitor.WarningCPUUsageInterval", 0, 5f));
-            this.WarningCpuUsagePercentage = FileLoader.ReadFloats(pairs, "ResourceMonitor.WarningCPUUsagePercentage", 0, 10f);
+            this.WarningCpuUsageInterval = TimeSpan.FromMinutes(FileLoader.ReadValueFloats(pairs, "ResourceMonitor.WarningCPUUsageInterval", 0, 5f));
+            this.WarningCpuUsagePercentage = FileLoader.ReadValueFloats(pairs, "ResourceMonitor.WarningCPUUsagePercentage", 0, 10f);
         }
 
         #endregion

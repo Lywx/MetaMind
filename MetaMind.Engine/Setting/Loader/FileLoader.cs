@@ -67,7 +67,7 @@
 
         #region Configuration Extraction
 
-        public static bool ReadBool(Dictionary<string, string> dict, string key, bool @default = false)
+        public static bool ReadValueBool(Dictionary<string, string> dict, string key, bool @default = false)
         {
             bool value;
             var success = bool.TryParse(dict[key], out value);
@@ -82,10 +82,10 @@
         /// <summary>
         /// Get integer value from multiple int string separated by single white space.
         /// </summary>
-        public static int ReadInts(Dictionary<string, string> dict, string key, int index, int @default = 0)
+        public static int ReadValueInts(Dictionary<string, string> dict, string key, int index, int @default = 0)
         {
             int value;
-            var success = int.TryParse(ValueAt(dict, key, index), out value);
+            var success = int.TryParse(dict.ValueAt(key, index), out value);
             if (!success)
             {
                 value = @default;
@@ -94,10 +94,10 @@
             return value;
         }
 
-        public static float ReadFloats(Dictionary<string, string> dict, string key, int index, float @default = 0f)
+        public static float ReadValueFloats(Dictionary<string, string> dict, string key, int index, float @default = 0f)
         {
             float value;
-            var success = float.TryParse(ValueAt(dict, key, index), out value);
+            var success = float.TryParse(dict.ValueAt(key, index), out value);
             if (!success)
             {
                 value = @default;
@@ -106,7 +106,7 @@
             return value;
         }
 
-        private static string ValueAt(Dictionary<string, string> dict, string key, int index)
+        private static string ValueAt(this Dictionary<string, string> dict, string key, int index)
         {
             return dict[key].Split(' ')[index];
         }
