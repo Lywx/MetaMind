@@ -58,10 +58,6 @@ namespace MetaMind.Engine.Gui.Controls.Views
             return this.ViewLayer.Get<T>();
         }
 
-        public virtual void Initialize()
-        {
-        }
-
         public T GetItemLayer<T>(IViewItem item) where T : class, IViewItemLayer
         {
             return item.GetLayer<T>();

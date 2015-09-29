@@ -13,6 +13,8 @@
 
     public class SessionController : GameObject, ISessionController<SessionData>
     {
+        private BackgroundScreenSettings background;
+
         #region Constructors and Finalizer
 
         public SessionController()
@@ -28,6 +30,9 @@
 
         #region Session Data
 
+        /// <summary>
+        /// It is injected from setter.
+        /// </summary>
         public SessionData Data { get; set; }
 
         #endregion
@@ -78,11 +83,14 @@
 
         private void InitializeScreen()
         {
-            this.Interop.Screen.AddScreen(new BackgroundScreen());
-            this.Interop.Event.QueueEvent(
-                new Event((int)SessionEvent.GameStarted, null, 3, 1));
+            this.background = new BackgroundScreenSettings();
 
-            var consciousness = SessionData.Cognition.Consciousness;
+            this.Interop.Screen.AddScreen(new StartScreen());
+
+            this.Interop.Screen.AddScreen(new BackgroundScreen(this.background));
+            this.Interop.Event.QueueEvent(new Event((int)SessionEvent.GameStarted, null, 3, 1));
+
+            var consciousness = Data.Cognition.Consciousness;
             if (consciousness.IsAwake)
             {
                 this.Interop.Screen.AddScreen(new MainScreen());

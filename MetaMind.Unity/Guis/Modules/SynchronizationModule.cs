@@ -3,7 +3,6 @@
     using System;
     using Concepts.Cognitions;
     using Concepts.Synchronizations;
-    using Engine;
     using Engine.Gui.Modules;
 
     /// <summary>
@@ -27,8 +26,8 @@
             this.consciousness   = cognition.Consciousness;
             this.synchronization = cognition.Synchronization;
 
-            this.Logic  = new SynchronizationModuleLogic(this, this.consciousness, this.synchronization);
-            this.Visual = new SynchronizationModuleVisual(this, cognition, this.consciousness, this.synchronization);
+            this.Logic  = new SynchronizationLogic(this, this.consciousness, this.synchronization);
+            this.Visual = new SynchronizationVisual(this, cognition, this.consciousness, this.synchronization);
         }
     }
 }

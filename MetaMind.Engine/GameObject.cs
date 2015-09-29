@@ -6,12 +6,14 @@
 namespace MetaMind.Engine
 {
     using System.Runtime.Serialization;
+    using Microsoft.Xna.Framework.Graphics;
     using Service;
+    using Components.Graphics.Adapters;
 
     [DataContract]
     public class GameObject
     {
-        #region Dependency
+        #region Service
 
         protected GameEngine Engine => this.Interop.Engine;
 
@@ -22,6 +24,18 @@ namespace MetaMind.Engine
         protected IGameInputService Input => GameEngine.Service.Input;
 
         protected IGameNumericalService Numerical => GameEngine.Service.Numerical;
+
+        #endregion
+
+        #region Graphics
+
+        protected GraphicsDevice GraphicsDevice => this.Graphics.GraphicsDevice;
+
+        protected SpriteBatch SpriteBatch => this.Graphics.SpriteBatch;
+
+        protected Viewport Viewport => this.GraphicsDevice.Viewport;
+
+        protected ViewportAdapter ViewportAdapter { get; set; }
 
         #endregion
     }

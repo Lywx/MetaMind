@@ -239,12 +239,6 @@
 
         #region Engine Data
 
-        protected GraphicsDevice GraphicsDevice => this.Graphics.GraphicsDevice;
-
-        protected SpriteBatch SpriteBatch => this.Graphics.SpriteBatch;
-
-        protected Viewport Viewport => this.GraphicsDevice.Viewport;
-
         protected ViewportAdapter ViewportAdapter { get; set; }
 
         #endregion
@@ -486,6 +480,36 @@
 
             base         .UpdateBackwardBuffer();
             this.Children.UpdateBackwardBuffer();
+        }
+
+        #endregion
+
+        #region IDisposable
+
+        private bool IsDisposed { get; set; }
+
+        protected override void Dispose(bool disposing)
+        {
+            try
+            {
+                if (disposing)
+                {
+                    if (!this.IsDisposed)
+                    {
+                        this.RenderTarget.Dispose();
+                    }
+
+                    this.IsDisposed = true;
+                }
+            }
+            catch
+            {
+                // Ignored
+            }
+            finally
+            {
+                base.Dispose(disposing);
+            }
         }
 
         #endregion

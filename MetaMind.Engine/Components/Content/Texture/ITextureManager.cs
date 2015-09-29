@@ -1,11 +1,10 @@
 namespace MetaMind.Engine.Components.Content.Texture
 {
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
 
     public interface ITextureManager : IGameComponent
     {
-        Texture2D this[string index] { get; }
+        Image this[string index] { get; }
 
         void Add(ImageAsset imageAsset);
 

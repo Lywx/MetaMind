@@ -2,30 +2,29 @@ namespace MetaMind.Engine.Screen
 {
     using System;
     using System.Diagnostics;
+    using Components.Graphics.Adapters;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Service;
 
     public class GameScreen : GameObject, IGameScreen
     {
-        #region Render Data
+        #region Geometry Data
 
         public int Width => this.Viewport.Width;
 
         public int Height => this.Viewport.Height;
 
-        protected GraphicsDevice GraphicsDevice => this.Graphics.GraphicsDevice;
+        #endregion
 
-        protected SpriteBatch SpriteBatch => this.Graphics.SpriteBatch;
+        #region Render Data
 
         /// <summary>
         /// Target of the screen. Screen is the closest layer to back buffer.
         /// </summary>
         public RenderTarget2D RenderTarget { get; set; }
 
-        protected Rectangle DestinationRectangle => this.Viewport.Bounds;
-
-        private Viewport Viewport => this.GraphicsDevice.Viewport;
+        protected Rectangle RenderTargetDestinationRectangle => this.Viewport.Bounds;
 
         #endregion
 
@@ -162,6 +161,7 @@ namespace MetaMind.Engine.Screen
 
         public GameScreen()
         {
+            this.ViewportAdapter = new ScalingViewportAdapter(this.GraphicsDevice, this.Width, this.Height);
         }
 
         ~GameScreen()
@@ -255,7 +255,7 @@ namespace MetaMind.Engine.Screen
             this.SpriteBatch.Begin();
             this.SpriteBatch.Draw(
                 this.RenderTarget,
-                this.DestinationRectangle,
+                this.RenderTargetDestinationRectangle,
                 Color.White);
             this.SpriteBatch.End();
         }

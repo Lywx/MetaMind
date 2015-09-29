@@ -141,7 +141,9 @@
     <Compile Include="Guis\Modules\TestModuleLogic.cs" />
     <Compile Include="Guis\Modules\TestModuleVisual.cs" />
     <Compile Include="Guis\Modules\TestMonitor.cs" />
+    <Compile Include="Guis\Screens\BackgroundScreenSettings.cs" />
     <Compile Include="Guis\Screens\ScreenEvent.cs" />
+    <Compile Include="Guis\Screens\StartScreen.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemFrameController.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemLayer.cs" />
     <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemLogic.cs" />
@@ -186,8 +188,8 @@
     <Compile Include="Guis\Modules\Summary\SummaryFactory.cs" />
     <Compile Include="Guis\Modules\Summary\SummarySplit.cs" />
     <Compile Include="Guis\Modules\Summary\SummaryTitle.cs" />
-    <Compile Include="Guis\Modules\SynchronizationModuleLogic.cs" />
-    <Compile Include="Guis\Modules\SynchronizationModuleVisual.cs" />
+    <Compile Include="Guis\Modules\SynchronizationLogic.cs" />
+    <Compile Include="Guis\Modules\SynchronizationVisual.cs" />
     <Compile Include="Guis\Modules\SummaryModule.cs" />
     <Compile Include="Guis\Modules\SummarySettings.cs" />
     <Compile Include="Guis\Modules\SynchronizationModule.cs" />

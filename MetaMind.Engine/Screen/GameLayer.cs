@@ -30,8 +30,6 @@
 
         #endregion
 
-        private GameEngine Engine => this.Interop.Engine;
-
         #region Render Data
 
         public IGameScreen Screen { get; private set; }

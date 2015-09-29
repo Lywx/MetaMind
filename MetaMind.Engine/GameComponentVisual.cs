@@ -30,12 +30,6 @@
 
         #endregion
         
-        #region Engine Data
-
-        protected GraphicsDevice GraphicsDevice => this.Graphics.GraphicsDevice;
-
-        #endregion 
-
         #region Draw
 
         public virtual void BeginDraw(GameTime time)

@@ -80,9 +80,11 @@
     <Compile Include="Components\Audio\AudioManagerFactory.cs" />
     <Compile Include="Components\Content\Asset\PackageAsset.cs" />
     <Compile Include="Components\Content\Asset\AssetDictionary.cs" />
-    <Compile Include="Components\Content\ContentManagerExt.cs" />
+    <Compile Include="Components\Content\ContentManagerExtension.cs" />
     <Compile Include="Components\Content\Asset\IAssetManager.cs" />
     <Compile Include="Components\Content\Skins\ControlSkinAsset.cs" />
+    <Compile Include="Components\Content\Designer.cs" />
+    <Compile Include="Components\Content\Texture\Image.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="GameSettingDictionary.cs" />
     <Compile Include="Gui\Components\IRenderComponentOperations.cs" />

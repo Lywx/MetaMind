@@ -1,15 +1,14 @@
 namespace MetaMind.Engine.Components.Content.Texture
 {
     using System.Collections.Generic;
-    using Microsoft.Xna.Framework.Graphics;
 
     public class TextureManager : GameInputableComponent, ITextureManager
     {
         #region Font 
 
-        public Texture2D this[string index] => this.Image[index];
+        public Image this[string index] => this.Image[index];
 
-        private Dictionary<string, Texture2D> Image { get; set; } = new Dictionary<string, Texture2D>();
+        private Dictionary<string, Image> Image { get; set; } = new Dictionary<string, Image>();
 
         #endregion
 
@@ -41,7 +40,7 @@ namespace MetaMind.Engine.Components.Content.Texture
         {
             if (!this.Image.ContainsKey(imageAsset.Name))
             {
-                this.Image.Add(imageAsset.Name, imageAsset.Resource);
+                this.Image.Add(imageAsset.Name, imageAsset.ToImage());
             }
         }
 

@@ -13,9 +13,9 @@ namespace MetaMind.Unity.Guis.Modules
     using Screens;
     using Sessions;
 
-    public class SynchronizationModuleLogic : GameEntityModuleLogic<SynchronizationModule, SynchronizationSettings, SynchronizationModuleLogic>
+    public class SynchronizationLogic : GameEntityModuleLogic<SynchronizationModule, SynchronizationSettings, SynchronizationLogic>
     {
-        public SynchronizationModuleLogic(SynchronizationModule module, IConsciousness consciousness, ISynchronization synchronization)
+        public SynchronizationLogic(SynchronizationModule module, IConsciousness consciousness, ISynchronization synchronization)
             : base(module)
         {
             if (consciousness == null)
@@ -105,9 +105,9 @@ namespace MetaMind.Unity.Guis.Modules
         {
             private readonly ISynchronization synchronization;
 
-            private readonly SynchronizationModuleLogic synchronizationLogic;
+            private readonly SynchronizationLogic synchronizationLogic;
 
-            public SleepStartedListener(ISynchronization synchronization, SynchronizationModuleLogic synchronizationLogic)
+            public SleepStartedListener(ISynchronization synchronization, SynchronizationLogic synchronizationLogic)
             {
                 this.synchronization        = synchronization;
                 this.synchronizationLogic = synchronizationLogic;
@@ -192,9 +192,9 @@ namespace MetaMind.Unity.Guis.Modules
         {
             private readonly ISynchronization synchronization;
 
-            private readonly SynchronizationModuleLogic synchronizationLogic;
+            private readonly SynchronizationLogic synchronizationLogic;
 
-            public SynchronizationStoppedListener(ISynchronization synchronization, SynchronizationModuleLogic synchronizationLogic)
+            public SynchronizationStoppedListener(ISynchronization synchronization, SynchronizationLogic synchronizationLogic)
             {
                 this.synchronization      = synchronization;
                 this.synchronizationLogic = synchronizationLogic;

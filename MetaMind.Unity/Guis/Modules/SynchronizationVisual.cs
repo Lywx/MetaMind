@@ -12,7 +12,7 @@ namespace MetaMind.Unity.Guis.Modules
     using Microsoft.Xna.Framework;
     using Synchronization;
 
-    public class SynchronizationModuleVisual : GameEntityModuleVisual<SynchronizationModule, SynchronizationSettings, SynchronizationModuleLogic>
+    public class SynchronizationVisual : GameEntityModuleVisual<SynchronizationModule, SynchronizationSettings, SynchronizationLogic>
     {
         private string StateInfoFalse = "Losing Synchronicity";
 
@@ -24,7 +24,7 @@ namespace MetaMind.Unity.Guis.Modules
 
         private readonly ISynchronization synchronization;
 
-        public SynchronizationModuleVisual(SynchronizationModule module, ICognition cognition, IConsciousness consciousness, ISynchronization synchronization)
+        public SynchronizationVisual(SynchronizationModule module, ICognition cognition, IConsciousness consciousness, ISynchronization synchronization)
             : base(module)
         {
             if (cognition == null)
