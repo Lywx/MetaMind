@@ -9,6 +9,7 @@ namespace MetaMind.Engine.Gui.Controls.Views
 {
     using System;
     using System.Collections.Generic;
+    using Components;
     using Item;
     using Item.Layers;
     using Layers;
@@ -18,7 +19,7 @@ namespace MetaMind.Engine.Gui.Controls.Views
     ///     which allows view-wise substitution of settings. The dynamic typing allows
     ///     customization
     /// </summary>
-    public abstract class ViewComponent : GameControllableEntity, IViewComponent
+    public abstract class ViewComponent : Component, IViewComponent
     {
         #region Constructors
 

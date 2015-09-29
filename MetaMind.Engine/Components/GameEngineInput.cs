@@ -3,7 +3,7 @@
     using Input;
     using Microsoft.Xna.Framework;
 
-    public class GameEngineInput : GameControllableComponent, IGameInput
+    public class GameEngineInput : GameInputableComponent, IGameInput
     {
         public GameEngineInput(GameEngine engine) 
             : base(engine)

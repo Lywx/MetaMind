@@ -1,11 +1,12 @@
 namespace MetaMind.Engine.Gui.Controls.Item
 {
     using System;
+    using Components;
     using Layers;
     using Views;
     using Views.Layers;
 
-    public class ViewItemComponent : GameControllableEntity, IViewItemComponent
+    public class ViewItemComponent : Component, IViewItemComponent
     {
         #region Constructors and Finalizer
 
@@ -39,15 +40,6 @@ namespace MetaMind.Engine.Gui.Controls.Item
         private IViewLayer ViewLayer => this.View.ViewLayer;
 
         private IViewItemLayer ItemLayer => this.Item.ItemLayer;
-
-        #endregion
-
-        #region Initialization
-
-        public virtual void Initialize()
-        {
-            
-        }
 
         #endregion
 

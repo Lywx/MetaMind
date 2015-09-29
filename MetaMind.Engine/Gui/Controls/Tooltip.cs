@@ -1,6 +1,7 @@
-﻿/*
-namespace MetaMind.Engine.Gui.Control
+﻿namespace MetaMind.Engine.Gui.Control
 {
+    using Controls;
+    using Engine.Components.Graphics;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
@@ -51,5 +52,3 @@ namespace MetaMind.Engine.Gui.Control
         }
     }
 }
-
-*/

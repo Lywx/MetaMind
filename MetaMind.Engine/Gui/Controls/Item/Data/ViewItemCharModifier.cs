@@ -112,7 +112,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Data
 
         private void InputEventCharEntered(object sender, TextInputEventArgs e)
         {
-            if (!this.Item[ItemState.Item_Is_Editing]())
+            if (!this.Item[ViewItemState.Item_Is_Editing]())
             {
                 return;
             }
@@ -129,7 +129,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Data
 
         private void InputEventEnterKeyDown(object sender, KeyEventArgs e)
         {
-            if (!this.Item[ItemState.Item_Is_Editing]())
+            if (!this.Item[ViewItemState.Item_Is_Editing]())
             {
                 return;
             }
@@ -362,7 +362,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Data
 
             if (keyboard.IsActionTriggered(KeyboardActions.Escape))
             {
-                if (this.Item[ItemState.Item_Is_Editing]())
+                if (this.Item[ViewItemState.Item_Is_Editing]())
                 {
                     this.Cancel();
                 }

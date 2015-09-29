@@ -4,6 +4,7 @@
     using Concepts.Operations;
     using Concepts.Synchronizations;
     using Concepts.Tests;
+    using Engine.Components.Content.Fonts;
     using Engine.Gui.Controls.Buttons;
     using Engine.Screen;
     using Engine.Scripting.FSharp;
@@ -141,33 +142,33 @@
 
         #endregion
 
-        //public override void Update(GameTime time)
-        //{
-        //    this.buttonPrevious.Update(time);
-        //    this.buttonNext.Update(time);
+        public override void Update(GameTime time)
+        {
+            this.buttonPrevious.Update(time);
+            this.buttonNext.Update(time);
 
-        //    base.Update(time);
-        //}
+            base.Update(time);
+        }
 
-        //public override void UpdateInput(IGameInputService input, GameTime time)
-        //{
-        //    var keyboard = input.State.Keyboard;
+        public override void UpdateInput(IGameInputService input, GameTime time)
+        {
+            var keyboard = input.State.Keyboard;
 
-        //    if (keyboard.IsActionTriggered(KeyboardActions.SessionRerun))
-        //    {
-        //        this.RunScripts();
-        //    }
+            if (keyboard.IsActionTriggered(KeyboardActions.SessionRerun))
+            {
+                this.RunScripts();
+            }
 
-        //    if (keyboard.IsActionTriggered(KeyboardActions.SynchronizationPause))
-        //    {
-        //        this.synchronizationSession.ToggleSynchronization();
-        //    }
+            if (keyboard.IsActionTriggered(KeyboardActions.SynchronizationPause))
+            {
+                this.synchronizationSession.ToggleSynchronization();
+            }
 
-        //    this.buttonPrevious.UpdateInput(input, time);
-        //    this.buttonNext.UpdateInput(input, time);
+            this.buttonPrevious.UpdateInput(input, time);
+            this.buttonNext.UpdateInput(input, time);
 
-        //    base.UpdateInput(input, time);
-        //}
+            base.UpdateInput(input, time);
+        }
 
         private void RunScripts()
         {

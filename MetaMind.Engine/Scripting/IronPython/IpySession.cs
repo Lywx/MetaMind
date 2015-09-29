@@ -5,6 +5,7 @@ namespace MetaMind.Engine.Scripting.IronPython
     using System;
     using System.IO;
     using System.Text;
+    using Console.Commands.Coreutils;
     using Debugging;
     using Microsoft.Scripting;
     using Microsoft.Scripting.Hosting;
@@ -58,9 +59,14 @@ namespace MetaMind.Engine.Scripting.IronPython
             this.SetVariable("GameEngine", this.Interop.Engine);
             this.SetVariable("Game", this.Interop.Game.Game);
             this.EvalExpressionAsync(
-@"import clr; clr.AddReference(""MetaMind.Unity""); from MetaMind.Unity import Unity");
+@"
+import clr; 
+clr.AddReference(""MetaMind.Unity""); 
+from MetaMind.Unity import Unity"
+);
 
-            //this.SetVariable("s", new Action<string[]>(new ClearCommand().Execute(new[] {""})));
+            // TODO(IronPython): Provide more built-in commands
+            this.SetVariable("clear", new Action(() => new ClearCommand(this.Interop.Console).Execute(new[] { "" })));
         }
 
         public void SetVariable(string name, object value)

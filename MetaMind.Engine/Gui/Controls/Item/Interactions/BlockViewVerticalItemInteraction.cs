@@ -41,7 +41,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Interactions
 
         public override void ViewDoSwap(IGameInteropService interop, IViewItem draggingItem)
         {
-            if (this.Item[ItemState.Item_Is_Swaping]())
+            if (this.Item[ViewItemState.Item_Is_Swaping]())
             {
                 return;
             }

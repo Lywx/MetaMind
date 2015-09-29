@@ -3,6 +3,7 @@
     using System;
     using Concepts.Operations;
     using Engine;
+    using Engine.Components.Content.Fonts;
     using Engine.Components.Graphics.Fonts;
     using Engine.Gui.Controls.Labels;
     using Engine.Screen;
@@ -25,13 +26,13 @@
 
             this.operationSession = operationSession;
 
-            this.ControllableEntities = new GameEntityCollection<IGameControllableEntity>();
+            this.ControllableEntities = new GameEntityCollection<IGameInputableEntity>();
             this.VisuallEntities      = new GameEntityCollection<IGameVisualEntity>();
         }
 
         private GameEntityCollection<IGameVisualEntity> VisuallEntities { get; set; }
 
-        private GameEntityCollection<IGameControllableEntity> ControllableEntities { get; set; }
+        private GameEntityCollection<IGameInputableEntity> ControllableEntities { get; set; }
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {

@@ -2,13 +2,13 @@ namespace MetaMind.Engine.Gui.Controls.Item
 {
     using System;
 
-    public interface IViewItemEntity : IGameControllableEntity
+    public interface IViewItemEntity : IGameInputableEntity
     {
         #region States
 
         bool[] ItemStates { get; }
 
-        Func<bool> this[ItemState state] { get; set; }
+        Func<bool> this[ViewItemState state] { get; set; }
 
         #endregion
     }

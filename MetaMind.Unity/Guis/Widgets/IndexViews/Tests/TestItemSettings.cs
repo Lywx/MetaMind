@@ -2,6 +2,7 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 {
     using Engine.Components.Graphics;
     using Engine.Components.Graphics.Fonts;
+    using Engine.Gui.Controls.Item;
     using Engine.Gui.Controls.Item.Frames;
     using Engine.Gui.Controls.Item.Settings;
     using Engine.Gui.Controls.Labels;
@@ -12,9 +13,9 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 
     public class TestItemSettings : ItemSettings, IParameterLoader<GraphicsSettings>
     {
-        private readonly FrameSettings rootFrame;
+        private readonly ViewItemVisualSettings rootFrame;
 
-        private readonly FrameSettings idFrame;
+        private readonly ViewItemVisualSettings idFrame;
 
         private readonly LabelSettings idLabel = new LabelSettings
         {
@@ -25,7 +26,7 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
             VAlignment = VerticalAlignment.Center,
         };
 
-        private readonly FrameSettings plusFrame;
+        private readonly ViewItemVisualSettings plusFrame;
 
         private readonly LabelSettings plusLabel = new LabelSettings
         {
@@ -36,7 +37,7 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
             VAlignment = VerticalAlignment.Center,
         };
 
-        private readonly FrameSettings statusFrame;
+        private readonly ViewItemVisualSettings statusFrame;
 
         private readonly LabelSettings statusLabel = new LabelSettings{
             Size       = 0.7f,
@@ -47,7 +48,7 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
             Monospaced = false,
         };
 
-        private readonly FrameSettings statisticsFrame;
+        private readonly ViewItemVisualSettings statisticsFrame;
 
         private readonly LabelSettings statisticsLabel = new LabelSettings{
             Size       = 0.7f,
@@ -58,7 +59,7 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
             Monospaced = false,
         };
 
-        private readonly FrameSettings nameFrame;
+        private readonly ViewItemVisualSettings nameFrame;
 
         private readonly LabelSettings nameLabel = new LabelSettings
         {
@@ -72,7 +73,7 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
             Monospaced = true,
         };
 
-        private readonly FrameSettings descriptionFrame;
+        private readonly ViewItemVisualSettings descriptionFrame;
 
         private readonly LabelSettings descriptionLabel = new LabelSettings
         {
@@ -92,13 +93,13 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
         {
             this.LoadParameter(this.Graphics.Settings);
 
-            this.rootFrame = new FrameSettings
+            this.rootFrame = new ViewItemVisualSettings
             {
                 Size   = new Point(this.viewportWidth - TestModuleSettings.ViewMargin.X * 2, 26),
                 Margin = new Point(2, 2)
             };
 
-            this.nameFrame = new FrameSettings
+            this.nameFrame = new ViewItemVisualSettings
             {
                 Size   = new Point(this.viewportWidth - TestModuleSettings.ViewMargin.X * 2 - 24 - 128, 26),
                 Margin = new Point(2, 2),
@@ -110,7 +111,7 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
                 SelectionColor    = Palette.LightBlue,
             };
 
-            this.descriptionFrame = new FrameSettings
+            this.descriptionFrame = new ViewItemVisualSettings
             {
                 Size   = new Point(this.viewportWidth - TestModuleSettings.ViewMargin.X * 2 - 24 - 128, 26),
                 Margin = new Point(2, 2),
@@ -121,7 +122,7 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
                 ModificationColor = Palette.Transparent,
                 SelectionColor    = Palette.Transparent80,
             };
-            this.idFrame = new FrameSettings
+            this.idFrame = new ViewItemVisualSettings
             {
                 Size   = new Point(24, 26),
                 Margin = new Point(2, 2),
@@ -133,7 +134,7 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
                 SelectionColor    = Palette.DarkRed,
             };
 
-            this.plusFrame = new FrameSettings
+            this.plusFrame = new ViewItemVisualSettings
             {
                 Size   = new Point(24, 26),
                 Margin = new Point(2, 2),
@@ -145,7 +146,7 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
                 SelectionColor    = Palette.Transparent20,
             };
 
-            this.statusFrame = new FrameSettings
+            this.statusFrame = new ViewItemVisualSettings
             {
                 Size   = new Point(128, 26),
                 Margin = new Point(2, 2),
@@ -157,7 +158,7 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
                 SelectionColor    = Palette.Transparent20,
             };
 
-            this.statisticsFrame = new FrameSettings
+            this.statisticsFrame = new ViewItemVisualSettings
             {
                 Size   = new Point(128, 26),
                 Margin = new Point(2, 2),

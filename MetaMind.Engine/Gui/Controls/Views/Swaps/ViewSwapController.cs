@@ -113,8 +113,8 @@ namespace MetaMind.Engine.Gui.Controls.Views.Swaps
         /// </summary>
         private void WatchFrom(IViewItem draggingItem, IView touchedView)
         {
-            Predicate<IViewItem> isActive  = t => t[ItemState.Item_Is_Active]();
-            Predicate<IViewItem> isTouched = t => t[ItemState.Item_Is_Mouse_Over]();
+            Predicate<IViewItem> isActive  = t => t[ViewItemState.Item_Is_Active]();
+            Predicate<IViewItem> isTouched = t => t[ViewItemState.Item_Is_Mouse_Over]();
             Predicate<IViewItem> isAnother = t => !ReferenceEquals(t, draggingItem);
 
             var swappingItem = touchedView.ItemsRead.
@@ -125,10 +125,10 @@ namespace MetaMind.Engine.Gui.Controls.Views.Swaps
             if (swappingItem != null && 
 
                // Avoid repetitive swapping when swapping has not finished
-               !swappingItem[ItemState.Item_Is_Swaping]() && 
+               !swappingItem[ViewItemState.Item_Is_Swaping]() && 
                
                // Avoid repetitive swapping when swapping is just finished
-               !swappingItem[ItemState.Item_Is_Swapped]())
+               !swappingItem[ViewItemState.Item_Is_Swapped]())
             {
                 var swappingItemInteraction = swappingItem.ItemLogic.ItemInteraction;
                 swappingItemInteraction.ViewSwap(this.Interop, draggingItem);

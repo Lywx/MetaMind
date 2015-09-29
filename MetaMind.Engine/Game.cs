@@ -7,34 +7,15 @@
 
 namespace MetaMind.Engine
 {
-    using System;
-    using Microsoft.Xna.Framework;
-    using Service;
-
-    public class Game : DrawableGameComponent, IGame
+    public class Game : GameInputableComponent, IGame
     {
         #region Constructors
 
         protected Game(GameEngine engine)
             : base(engine)
         {
-            if (engine == null)
-            {
-                throw new ArgumentNullException(nameof(engine));
-            }
-
-            this.Engine  = engine;
-            this.Interop = engine.Interop;
             this.Interop.Game.Add(this);
         }
-
-        #endregion
-
-        #region Engine Data
-
-        protected GameEngine Engine { get; set; }
-
-        protected IGameInteropService Interop { get; set; }
 
         #endregion
 

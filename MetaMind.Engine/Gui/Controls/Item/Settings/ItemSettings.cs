@@ -3,6 +3,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Settings
     using System;
     using System.Runtime.Serialization;
 
+    // TODO(Critical): Should I remove all the gui settings?
     [DataContract]
     public class ItemSettings : GameSettings, IItemSettings, ICloneable
     {

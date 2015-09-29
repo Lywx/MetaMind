@@ -7,7 +7,9 @@ namespace MetaMind.Engine.Gui.Controls.Item.Visuals
 
     public class ViewItemLabel : Label
     {
-        public ViewItemLabel(IViewItem item, LabelSettings settings)
+        #region Constructors
+
+        public ViewItemLabel(IViewItem item) 
         {
             if (item == null)
             {
@@ -15,27 +17,60 @@ namespace MetaMind.Engine.Gui.Controls.Item.Visuals
             }
 
             this.Item = item;
-
-            this.TextFont       = () => settings.Font;
-            this.TextColor      = () => settings.Color;
-            this.TextSize       = () => settings.Size;
-            this.TextHAlignment = settings.HAlignment;
-            this.TextVAlignment = settings.VAlignment;
-            this.TextLeading    = settings.Leading;
-            this.TextMonospaced = settings.Monospaced;
         }
 
-        public IViewItem Item { get; }
+        #endregion
+
+        #region Dependency
+
+        public IViewItem Item { get; private set; }
+
+        #endregion
+
+        #region Draw
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            if (!this.Item[ItemState.Item_Is_Active]() &&
-                !this.Item[ItemState.Item_Is_Dragging]())
+            if (ViewItemState.Item_Is_Active.Match(this.Item))
             {
                 return;
             }
 
             base.Draw(graphics, time, alpha);
         }
+
+        #endregion
+
+
+        #region IDisposable
+
+        private bool IsDisposed { get; set; }
+
+        protected override void Dispose(bool disposing)
+        {
+            try
+            {
+                if (disposing)
+                {
+                    if (!this.IsDisposed)
+                    {
+                        this.Item = null;
+                    }
+
+                    this.IsDisposed = true;
+                }
+            }
+            catch
+            {
+                // Ignored
+            }
+            finally
+            {
+                base.Dispose(disposing);
+            }
+        }
+
+        #endregion
+
     }
 }

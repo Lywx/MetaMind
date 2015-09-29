@@ -82,10 +82,10 @@
             this.TransitionOnTime  = TimeSpan.FromSeconds(0.5);
             this.TransitionOffTime = TimeSpan.FromSeconds(0.5);
 
-            this.Entities = new GameEntityCollection<IGameControllableEntity>();
+            this.Entities = new GameEntityCollection<IGameInputableEntity>();
         }
 
-        private GameEntityCollection<IGameControllableEntity> Entities { get; set; }
+        private GameEntityCollection<IGameInputableEntity> Entities { get; set; }
 
         public override void LoadContent(IGameInteropService interop)
         {

@@ -1,15 +1,17 @@
 namespace Microsoft.Xna.Framework
 {
+    using MetaMind.Engine.Gui;
+
     public static class RectangleExtension
     {
-        public static Rectangle Extend(this Rectangle rectangle, Point margin)
+        public static Rectangle Extend(this Rectangle rectangle, Margin margin)
         {
-            return new Rectangle(rectangle.X - margin.X, rectangle.Y - margin.Y, rectangle.Width + margin.X * 2, rectangle.Height + margin.Y * 2);
+            return new Rectangle(rectangle.Left - margin.Left, rectangle.Top - margin.Top, rectangle.Width + margin.Horizontal, rectangle.Height + margin.Vertical);
         }
 
-        public static Rectangle Crop(this Rectangle rectangle, Point margin)
+        public static Rectangle Crop(this Rectangle rectangle, Margin margin)
         {
-            return new Rectangle(rectangle.X + margin.X, rectangle.Y + margin.Y, rectangle.Width - margin.X * 2, rectangle.Height - margin.Y * 2);
+            return new Rectangle(rectangle.Left + margin.Left, rectangle.Top + margin.Top, rectangle.Width - margin.Horizontal, rectangle.Height - margin.Vertical);
         }
 
         public static Rectangle RectangleByCenter(int centerOfX, int centerOfY, int width, int height)

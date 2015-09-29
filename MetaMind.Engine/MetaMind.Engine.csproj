@@ -82,11 +82,25 @@
     <Compile Include="Components\Content\Asset\AssetDictionary.cs" />
     <Compile Include="Components\Content\ContentManagerExt.cs" />
     <Compile Include="Components\Content\Asset\IAssetManager.cs" />
+    <Compile Include="Components\Content\Skins\ControlSkinAsset.cs" />
+    <Compile Include="GameObject.cs" />
+    <Compile Include="GameSettingDictionary.cs" />
+    <Compile Include="Gui\Components\IRenderComponentOperations.cs" />
+    <Compile Include="Gui\Components\IRenderComponentOrganization.cs" />
+    <Compile Include="Gui\Components\RenderComponentCollection.cs" />
+    <Compile Include="Gui\Controls\IControlOperations.cs" />
+    <Compile Include="Gui\Controls\IControlOrganization.cs" />
+    <Compile Include="Gui\Controls\Item\ViewItemExtension.cs" />
+    <Compile Include="Gui\Controls\Item\ViewItemStateExtension.cs" />
+    <Compile Include="Gui\Controls\Item\ViewItemVisualState.cs" />
+    <Compile Include="Gui\Cursor.cs" />
+    <Compile Include="Components\Content\Skins\CursorSkinAsset.cs" />
     <Compile Include="Components\Content\Fonts\Font.cs" />
     <Compile Include="Components\Content\Fonts\FontExt.cs" />
     <Compile Include="Components\Content\Texture\ITextureManager.cs" />
     <Compile Include="Components\Content\Texture\TextureManager.cs" />
     <Compile Include="Components\Content\Texture\ImageAsset.cs" />
+    <Compile Include="Components\File\IFileManager.cs" />
     <Compile Include="Components\Graphics\Adapters\DefaultViewportAdapter.cs" />
     <Compile Include="Components\Graphics\Adapters\ScalingViewportAdapter.cs" />
     <Compile Include="Components\Graphics\Adapters\ViewportAdapter.cs" />
@@ -107,7 +121,7 @@
     <Compile Include="Extensions\ColorUtils.cs" />
     <Compile Include="GameEntityCollection.cs" />
     <Compile Include="Gui\Controls\Images\ColorBox.cs" />
-    <Compile Include="Gui\Controls\Buttons\ButtonState.cs" />
+    <Compile Include="Gui\Controls\Buttons\ButtonVisualState.cs" />
     <Compile Include="Gui\Components\Component.cs" />
     <Compile Include="Gui\Controls\Control.cs" />
     <Compile Include="Gui\Controls\ControlCollection.cs" />
@@ -116,7 +130,7 @@
     <Compile Include="Extensions\MouseButtonsExt.cs" />
     <Compile Include="Extensions\MouseEventArgsExt.cs" />
     <Compile Include="Extensions\Vector3Extension.cs" />
-    <Compile Include="GameControllableComponent.cs" />
+    <Compile Include="GameInputableComponent.cs" />
     <Compile Include="Components\Interop\IScreenManagerOperations.cs" />
     <Compile Include="Components\Interop\Process\ProcessCounter.cs" />
     <Compile Include="Components\Interop\Process\StepProcess.cs" />
@@ -134,7 +148,7 @@
     <Compile Include="Gui\Controls\IControl.cs" />
     <Compile Include="Gui\Controls\Images\ImageMode.cs" />
     <Compile Include="Gui\Controls\Item\Frames\BlcokViewVerticalItemFrameController.cs" />
-    <Compile Include="Gui\Controls\Item\Frames\FrameSettings.cs">
+    <Compile Include="Gui\Controls\Item\ViewItemVisualSettings.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Gui\Controls\Item\Frames\IViewItemFrameController.cs" />
@@ -144,7 +158,7 @@
     </Compile>
     <Compile Include="Gui\Controls\Item\Frames\ViewItemFrameController.cs" />
     <Compile Include="Gui\Controls\Item\IViewItemEntity.cs" />
-    <Compile Include="Gui\Controls\Item\ViewItemEntity.cs" />
+    <Compile Include="Gui\Controls\Item\ViewItemStateControl.cs" />
     <Compile Include="Gui\Controls\Item\Visuals\ViewItemLabel.cs" />
     <Compile Include="Gui\Controls\ControlManager.cs" />
     <Compile Include="Components\Content\Asset\AssetManager.cs" />
@@ -153,7 +167,10 @@
     <Compile Include="Components\Content\Asset\PackageXmlDocument.cs" />
     <Compile Include="Gui\Controls\Tooltip.cs" />
     <Compile Include="Gui\Controls\Views\Layers\IViewUniversalLayerOperations.cs" />
-    <Compile Include="Gui\Controls\Images\Margin.cs" />
+    <Compile Include="Gui\Elements\IInputableElement.cs" />
+    <Compile Include="Gui\Elements\IInputableRectangle.cs" />
+    <Compile Include="Gui\Elements\IInputableElementExtension.cs" />
+    <Compile Include="Gui\Margin.cs" />
     <Compile Include="Gui\Elements\ElementEvent.cs" />
     <Compile Include="Gui\Elements\IElement.cs" />
     <Compile Include="Gui\Elements\Input\ButtonDoubleClick.cs" />
@@ -188,7 +205,7 @@
     <Compile Include="Components\Interop\Event\Listener.cs" />
     <Compile Include="Components\Input\IKeyboardInputState.cs" />
     <Compile Include="Components\Interop\Process\IProcessManager.cs" />
-    <Compile Include="Components\File\ISaveManager.cs" />
+    <Compile Include="Components\Interop\ISaveManager.cs" />
     <Compile Include="Components\Interop\IScreenManager.cs" />
     <Compile Include="Components\Content\Fonts\SpriteFontExt.cs" />
     <Compile Include="Components\File\FileManager.cs" />
@@ -219,6 +236,7 @@
     <Compile Include="GameComponentLogic.cs" />
     <Compile Include="GameComponentVisual.cs" />
     <Compile Include="Gui\Components\RenderComponent.cs" />
+    <Compile Include="Gui\Size.cs" />
     <Compile Include="IDrawableComponentOperations.cs" />
     <Compile Include="IDrawableGameComponent.cs" />
     <Compile Include="IGameEngineConfigurer.cs" />
@@ -299,7 +317,7 @@
     <Compile Include="Gui\Controls\Item\Interactions\ViewItemInteraction.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\ItemState.cs">
+    <Compile Include="Gui\Controls\Item\ViewItemState.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Gui\Controls\Item\IViewItem.cs">
@@ -357,7 +375,7 @@
     <Compile Include="Gui\Controls\Item\Visuals\IViewItemVisual.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\Visuals\ViewItemFrameVisual.cs">
+    <Compile Include="Gui\Controls\Item\Visuals\ViewItemRectangleVisual.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Gui\Controls\Item\Visuals\ViewItemVisual.cs">
@@ -539,7 +557,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Gui\Controls\Labels\LabelBox.cs" />
-    <Compile Include="Gui\Controls\Labels\LabelSettings.cs" />
     <Compile Include="GameSettings.cs" />
     <Compile Include="Gui\Controls\Regions\IRegion.cs">
       <SubType>Code</SubType>
@@ -564,8 +581,8 @@
     </Compile>
     <Compile Include="IBufferDoubleUpdateable.cs" />
     <Compile Include="IDrawableOperations.cs" />
-    <Compile Include="IGameControllableComponentOperations.cs" />
-    <Compile Include="IGameControllableEntity.cs" />
+    <Compile Include="IGameInputableComponentOperations.cs" />
+    <Compile Include="IGameInputableEntity.cs" />
     <Compile Include="IGameEngineBuilder.cs" />
     <Compile Include="IGameEngineOperations.cs" />
     <Compile Include="IInnerUpdatable.cs" />
@@ -597,7 +614,7 @@
     <Compile Include="Service\GameEngineGraphicsService.cs" />
     <Compile Include="Service\GameEngineInputService.cs" />
     <Compile Include="Service\GameEngineInteropService.cs" />
-    <Compile Include="Gui\Elements\Rectangles\IRectangleElement.cs" />
+    <Compile Include="Gui\Elements\IRectangleElement.cs" />
     <Compile Include="Gui\Modules\IGameEntityModule.cs" />
     <Compile Include="Gui\Modules\IGameEntityModuleVisual.cs" />
     <Compile Include="Gui\Modules\Particle\IParticle.cs" />
@@ -610,7 +627,7 @@
     <Compile Include="IGameEngine.cs" />
     <Compile Include="IGameEntity.cs" />
     <Compile Include="Components\IGameGraphics.cs" />
-    <Compile Include="IGameControllableComponent.cs" />
+    <Compile Include="IGameInputableComponent.cs" />
     <Compile Include="Service\IGameNumerical.cs" />
     <Compile Include="Service\IGameNumericalService.cs" />
     <Compile Include="Service\IGameService.cs" />
@@ -627,6 +644,7 @@
     <Compile Include="Components\GameNullInterop.cs" />
     <Compile Include="Components\GameNullGraphics.cs" />
     <Compile Include="Session\ISession.cs" />
+    <Compile Include="Session\ISessionController.cs" />
     <Compile Include="Session\ISessionData.cs" />
     <Compile Include="Session\Session.cs" />
     <Compile Include="Setting\Loader\ConfigurationLoader.cs" />
@@ -642,7 +660,7 @@
     <Compile Include="Components\Interop\Process\WaitProcess.cs" />
     <Compile Include="Components\Interop\Process\ProcessManager.cs" />
     <Compile Include="Components\GameManager.cs" />
-    <Compile Include="Components\File\SaveManager.cs" />
+    <Compile Include="Components\Interop\SaveManager.cs" />
     <Compile Include="Components\Interop\ScreenManager.cs" />
     <Compile Include="Components\Interop\ScreenSettings.cs" />
     <Compile Include="Extensions\TypeExtension.cs" />
@@ -657,7 +675,7 @@
     <Compile Include="Gui\Elements\IPressable.cs" />
     <Compile Include="Gui\Elements\Rectangles\DraggableRectangle.cs" />
     <Compile Include="Gui\Elements\ElementEventArgs.cs" />
-    <Compile Include="Gui\Elements\Rectangles\RectangleElement.cs" />
+    <Compile Include="Gui\Elements\RectangleElement.cs" />
     <Compile Include="Gui\Elements\ElementState.cs" />
     <Compile Include="Gui\Elements\Rectangles\IDraggableRectangle.cs" />
     <Compile Include="Gui\Elements\Rectangles\IPickableRectangle.cs" />
@@ -674,7 +692,7 @@
     <Compile Include="Gui\Modules\GameEntityModuleComponent.cs" />
     <Compile Include="Gui\Modules\GameEntityModuleLogic.cs" />
     <Compile Include="Gui\Modules\GameEntityModuleVisual.cs" />
-    <Compile Include="GameControllableEntity.cs" />
+    <Compile Include="GameInputableEntity.cs" />
     <Compile Include="Parser\Grammar\LineGrammar.cs" />
     <Compile Include="Parser\Grammar\ConfigurationFileGrammar.cs" />
     <Compile Include="Parser\Element\Sentence.cs" />
@@ -749,10 +767,9 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Gui\Controls\Item\Transits\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Configurations\Graphics.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

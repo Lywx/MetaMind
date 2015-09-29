@@ -15,9 +15,9 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 
         private IBlockViewVerticalItemLayout itemLayout;
 
-        private FrameSettings nameFrameSettings;
+        private ViewItemVisualSettings nameFrameSettings;
 
-        private FrameSettings descriptionFrameSettings;
+        private ViewItemVisualSettings descriptionFrameSettings;
 
         public TestItemFrameController(IViewItem item, ViewItemRectangle itemRootRectangle)
             : base(item, itemRootRectangle)
@@ -47,13 +47,13 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
             this.itemSettings = itemLayer.ItemSettings;
             this.itemLayout = itemLayer.ItemLogic.ItemLayout;
 
-            var idFrameSettings = this.itemSettings.Get<FrameSettings>("IdFrame");
-            var statusFrameSettings = this.itemSettings.Get<FrameSettings>("StatusFrame");
-            var statisticsFrameSettings = this.itemSettings.Get<FrameSettings>("StatisticsFrame");
-            var plusFrameSettings = this.itemSettings.Get<FrameSettings>("PlusFrame");
+            var idFrameSettings = this.itemSettings.Get<ViewItemVisualSettings>("IdFrame");
+            var statusFrameSettings = this.itemSettings.Get<ViewItemVisualSettings>("StatusFrame");
+            var statisticsFrameSettings = this.itemSettings.Get<ViewItemVisualSettings>("StatisticsFrame");
+            var plusFrameSettings = this.itemSettings.Get<ViewItemVisualSettings>("PlusFrame");
 
-            this.nameFrameSettings = this.itemSettings.Get<FrameSettings>("NameFrame");
-            this.descriptionFrameSettings = this.itemSettings.Get<FrameSettings>("DescriptionFrame");
+            this.nameFrameSettings = this.itemSettings.Get<ViewItemVisualSettings>("NameFrame");
+            this.descriptionFrameSettings = this.itemSettings.Get<ViewItemVisualSettings>("DescriptionFrame");
 
             // +----------+------------------+-------------------+
             // | id frame | status frame     | name frame        |

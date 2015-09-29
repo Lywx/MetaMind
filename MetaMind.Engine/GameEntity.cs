@@ -16,20 +16,8 @@ namespace MetaMind.Engine
     using Service;
 
     [DataContract]
-    public class GameEntity : IGameEntity
+    public class GameEntity : GameObject, IGameEntity
     {
-        #region Dependency
-
-        protected IGameGraphicsService Graphics => GameEngine.Service.Graphics;
-
-        protected IGameInteropService Interop => GameEngine.Service.Interop;
-
-        protected IGameInputService Input => GameEngine.Service.Input;
-
-        protected IGameNumericalService Numerical => GameEngine.Service.Numerical;
-
-        #endregion
-
         #region Constructors and Finalizer 
 
         protected internal GameEntity()

@@ -4,9 +4,9 @@ namespace MetaMind.Engine
 
     public interface IOuterUpdateable : IOuterUpdateableOperations
     {
-        bool Enabled { get; }
+        bool Enabled { get; set; }
 
-        int UpdateOrder { get; }
+        int UpdateOrder { get; set; }
 
         event EventHandler<EventArgs> EnabledChanged;
 

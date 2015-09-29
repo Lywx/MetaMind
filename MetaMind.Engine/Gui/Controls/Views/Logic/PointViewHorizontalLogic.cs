@@ -8,6 +8,7 @@
 namespace MetaMind.Engine.Gui.Controls.Views.Logic
 {
     using System;
+    using Engine.Components.Input;
     using Extensions;
     using Item.Factories;
     using Layers;

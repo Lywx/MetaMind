@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Screen
     using Microsoft.Xna.Framework.Graphics;
     using Service;
 
-    public class GameScreen : IGameScreen
+    public class GameScreen : GameObject, IGameScreen
     {
         #region Render Data
 
@@ -152,19 +152,9 @@ namespace MetaMind.Engine.Screen
 
         #endregion Screen Events
 
-        #region Layers
+        #region Layer Data
 
         protected GameEntityCollection<IGameLayer> Layers { get; private set; } = new GameEntityCollection<IGameLayer>();
-
-        #endregion
-
-        #region Engine Data
-
-        protected IGameGraphicsService Graphics => GameEngine.Service.Graphics;
-
-        protected IGameInteropService Interop => GameEngine.Service.Interop;
-
-        protected IGameNumericalService Numerical => GameEngine.Service.Numerical;
 
         #endregion
 
@@ -192,38 +182,34 @@ namespace MetaMind.Engine.Screen
         {
             this.Layers.UnloadContent(interop);
         }
-
+        
         #endregion
 
         #region Draw
 
-        private void PrepareRenderTarget()
-        {
-            if (this.RenderTarget == null)
-            {
-                this.RenderTarget = RenderTargetFactory.Create(
-                    this.Width,
-                    this.Height);
-            }
-        }
-
+        /// <summary>
+        /// Start drawing in screen.
+        /// </summary>
         public void BeginDraw(IGameGraphicsService graphics, GameTime time)
         {
-            this.PrepareRenderTarget();
+            this.CreateRenderTarget();
 
             this.Draw(graphics, time);
         }
 
+        /// <summary>
+        /// Draw subroutine.
+        /// </summary>
         protected void Draw(IGameGraphicsService graphics, GameTime time)
         {
-            this.DrawToTarget(graphics, time);
+            this.DrawToComponents(graphics, time);
             this.DrawToScreen(graphics, time);
         }
 
         /// <summary>
-        /// Draw controls to each individual render target.
+        /// Draw to each individual render component's render target.
         /// </summary>
-        private void DrawToTarget(IGameGraphicsService graphics, GameTime time)
+        private void DrawToComponents(IGameGraphicsService graphics, GameTime time)
         {
             if (this.Layers.Count != 0)
             {
@@ -238,7 +224,7 @@ namespace MetaMind.Engine.Screen
         }
 
         /// <summary>
-        /// Draw layers to screen's render target.
+        /// Draw children layers to screen's render target.
         /// </summary>
         private void DrawToScreen(IGameGraphicsService graphics, GameTime time)
         {
@@ -377,9 +363,23 @@ namespace MetaMind.Engine.Screen
             return true;
         }
 
-#endregion
+        #endregion
 
-#region Operations
+        #region Render Operations
+
+        private void CreateRenderTarget()
+        {
+            if (this.RenderTarget == null)
+            {
+                this.RenderTarget = RenderTargetFactory.Create(
+                    this.Width,
+                    this.Height);
+            }
+        }
+
+        #endregion
+
+        #region Operations
 
         /// <summary>
         /// Tells the screen to go away. Unlike Screens.RemoveScreen, which
@@ -400,9 +400,9 @@ namespace MetaMind.Engine.Screen
             }
         }
 
-#endregion Operations
+        #endregion Operations
 
-#region IDisposable
+        #region IDisposable
 
         public void Dispose()
         {
@@ -425,6 +425,6 @@ namespace MetaMind.Engine.Screen
             this.Layers = null;
         }
 
-#endregion IDisposable
+        #endregion IDisposable
     }
 }

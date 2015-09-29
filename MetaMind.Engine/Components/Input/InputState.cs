@@ -13,7 +13,7 @@ namespace MetaMind.Engine.Components.Input
     /// <summary>
     /// This is a game component that implements IOuterUpdateable.
     /// </summary>
-    public class InputState : GameControllableComponent, IInputState
+    public class InputState : GameInputableComponent, IInputState
     {
         private readonly KeyboardInputState keyboard;
 

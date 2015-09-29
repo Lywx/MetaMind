@@ -25,13 +25,13 @@ namespace MetaMind.Engine.Gui.Controls.Item.Frames
 
             this.RootFrameLocation = () =>
             {
-                if (!this.Item[ItemState.Item_Is_Dragging]() &&
-                    !this.Item[ItemState.Item_Is_Swaping]())
+                if (!this.Item[ViewItemState.Item_Is_Dragging]() &&
+                    !this.Item[ViewItemState.Item_Is_Swaping]())
                 {
                     return viewScroll.Position(itemLayout.Id);
                 }
 
-                if (this.Item[ItemState.Item_Is_Swaping]())
+                if (this.Item[ViewItemState.Item_Is_Swaping]())
                 {
                     return viewSwap.Position;
                 }

@@ -1,17 +1,31 @@
 namespace MetaMind.Engine.Gui.Components
 {
-    public interface IRenderComponent : IRenderTarget, IComponent
+    using System;
+    using Elements;
+
+    public interface IRenderComponent : IRenderComponentOperations, IRenderComponentOrganization, IRenderTarget, IComponent, IElement
     {
-        #region 
+        #region State
 
-        int Width { get; set; }
-
-        int Height { get; set; }
-
-        int X { get; set; }
-
-        int Y { get; set; }
+        new bool Active { get; set; }
 
         #endregion
+
+        #region Lookup
+
+        string Name { get; }
+
+        #endregion
+
+        #region Events
+
+        event EventHandler<RenderComponentDrawEventArgs> BeginDrawStarted;
+
+        event EventHandler<RenderComponentDrawEventArgs> EndDrawStarted;
+
+        event EventHandler ParentChanged;
+
+        #endregion
+
     }
 }

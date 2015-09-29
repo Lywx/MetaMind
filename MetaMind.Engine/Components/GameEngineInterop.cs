@@ -11,7 +11,7 @@ namespace MetaMind.Engine.Components
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
 
-    public class GameEngineInterop : GameControllableComponent, IGameInterop
+    public class GameEngineInterop : GameInputableComponent, IGameInterop
     {
         #region Constructors and Finalizer
 

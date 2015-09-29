@@ -35,15 +35,15 @@
 
         protected ViewItemLabel DescriptionLabel { get; set; }
 
-        protected ViewItemFrameVisual IdFrame { get; set; }
+        protected ViewItemRectangleVisual IdRectangle { get; set; }
 
-        protected ViewItemFrameVisual PlusFrame { get; set; }
+        protected ViewItemRectangleVisual PlusRectangle { get; set; }
 
-        protected ViewItemFrameVisual StatusFrame { get; set; }
+        protected ViewItemRectangleVisual StatusRectangle { get; set; }
 
-        protected ViewItemFrameVisual NameFrame { get; set; }
+        protected ViewItemRectangleVisual NameRectangle { get; set; }
 
-        protected ViewItemFrameVisual DescriptionFrame { get; set; }
+        protected ViewItemRectangleVisual DescriptionRectangle { get; set; }
 
         #endregion
 
@@ -88,9 +88,9 @@
             this.DescriptionPosition = () => this.ItemFrame.DescriptionFrameLocation() + itemSettings.Get<Vector2>("DescriptionMargin");
 
             // Components
-            this.IdFrame = new ViewItemFrameVisual(this.Item,
+            this.IdRectangle = new ViewItemRectangleVisual(this.Item,
                 this.ItemFrame.IdRectangle,
-                itemSettings.Get<FrameSettings>("IdFrame"));
+                itemSettings.Get<ViewItemVisualSettings>("IdFrame"));
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("OperationItem.IdLabel");
                 labelSettings.Text = () => itemLayout.Id.ToString();
@@ -99,9 +99,9 @@
                 this.IdLabel = new ViewItemLabel(this.Item, labelSettings);
             }
 
-            this.PlusFrame = new ViewItemFrameVisual(this.Item,
+            this.PlusRectangle = new ViewItemRectangleVisual(this.Item,
                 this.ItemFrame.PlusRectangle,
-                itemSettings.Get<FrameSettings>("PlusFrame"));
+                itemSettings.Get<ViewItemVisualSettings>("PlusFrame"));
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("PlusLabel");
                 labelSettings.Text = () => this.ItemInteraction.IndexedViewOpened ? "-" : "+";
@@ -110,9 +110,9 @@
                 this.PlusLabel = new ViewItemLabel(this.Item, labelSettings);
             }
 
-            this.StatusFrame = new ViewItemFrameVisual(this.Item,
+            this.StatusRectangle = new ViewItemRectangleVisual(this.Item,
                 this.ItemFrame.StatusRectangle,
-                itemSettings.Get<FrameSettings>("StatusFrame"));
+                itemSettings.Get<ViewItemVisualSettings>("StatusFrame"));
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("StatusLabel");
                 labelSettings.Text = () =>
@@ -130,8 +130,8 @@
                             : Palette.LightPink;
             }
 
-            var nameFrameSettings = itemSettings.Get<FrameSettings>("NameFrame");
-            this.NameFrame = new ViewItemFrameVisual(this.Item,
+            var nameFrameSettings = itemSettings.Get<ViewItemVisualSettings>("NameFrame");
+            this.NameRectangle = new ViewItemRectangleVisual(this.Item,
                 this.ItemFrame.NameRectangle,
                 nameFrameSettings);
             {
@@ -142,8 +142,8 @@
                 this.NameLabel = new ViewItemLabel(this.Item, labelSettings);
             }
 
-            var descriptionFrameSettings = itemSettings.Get<FrameSettings>("DescriptionFrame");
-            this.DescriptionFrame = new ViewItemFrameVisual(this.Item,
+            var descriptionFrameSettings = itemSettings.Get<ViewItemVisualSettings>("DescriptionFrame");
+            this.DescriptionRectangle = new ViewItemRectangleVisual(this.Item,
                 this.ItemFrame.DescriptionRectangle,
                 descriptionFrameSettings);
             {
@@ -159,8 +159,8 @@
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            if (!this.Item[ItemState.Item_Is_Active]() && 
-                !this.Item[ItemState.Item_Is_Dragging]())
+            if (!this.Item[ViewItemState.Item_Is_Active]() && 
+                !this.Item[ViewItemState.Item_Is_Dragging]())
             {
                 if (this.ItemInteraction.IndexedViewOpened)
                 {
@@ -171,16 +171,16 @@
             }
 
             // Frames
-            this.IdFrame.Draw(graphics, time, alpha);
+            this.IdRectangle.Draw(graphics, time, alpha);
             if (this.Item.ItemData.HasChildren)
             {
-                this.PlusFrame.Draw(graphics, time, alpha);
+                this.PlusRectangle.Draw(graphics, time, alpha);
             }
 
-            this.StatusFrame.Draw(graphics, time, alpha);
+            this.StatusRectangle.Draw(graphics, time, alpha);
 
-            this.NameFrame.Draw(graphics, time, alpha);
-            this.DescriptionFrame.Draw(graphics, time, alpha);
+            this.NameRectangle.Draw(graphics, time, alpha);
+            this.DescriptionRectangle.Draw(graphics, time, alpha);
 
             // Labels
             this.IdLabel.Draw(graphics, time, alpha);

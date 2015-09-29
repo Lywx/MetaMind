@@ -1,16 +1,20 @@
 ﻿namespace MetaMind.Engine.Gui.Controls.Labels
 {
     using System;
+    using Components;
     using Engine.Components.Content.Fonts;
     using Engine.Components.Graphics.Fonts;
     using Microsoft.Xna.Framework;
     using Service;
 
-    public class Label : Control, ICloneable
+    public class Label : RenderComponent, ICloneable
     {
         #region Constructors and Finalizer
 
-        public Label(ControlManager manager,
+        /// <summary>
+        /// Label is the main text display control.
+        /// </summary>
+        public Label(
             Func<Font> textFont,
             Func<string> text,
             Func<Vector2> anchorLocation,
@@ -20,7 +24,7 @@
             VerticalAlignment textVAlignment,
             int textLeading = 0,
             bool textMonospaced = false)
-            : this(manager, textFont, text, anchorLocation, textColor, textSize)
+            : this(textFont, text, anchorLocation, textColor, textSize)
         {
             this.TextHAlignment = textHAlignment;
             this.TextVAlignment = textVAlignment;
@@ -28,13 +32,13 @@
             this.TextMonospaced = textMonospaced;
         }
 
-        public Label(ControlManager manager,
+        public Label(
             Func<Font> textFont,
             Func<string> text,
             Func<Vector2> anchorLocation,
             Func<Color> textColor,
             Func<float> textSize)
-            : this(manager)
+            : this()
         {
             if (text == null)
             {
@@ -56,14 +60,14 @@
                 throw new ArgumentNullException(nameof(textFont));
             }
 
-            this.Text = text;
+            this.Text           = text;
+            this.TextSize       = textSize;
+            this.TextColor      = textColor;
+            this.TextFont       = textFont;
             this.AnchorLocation = anchorLocation;
-            this.TextSize = textSize;
-            this.TextColor = textColor;
-            this.TextFont = textFont;
         }
 
-        public Label(ControlManager manager) : base(manager)
+        public Label()
         {
             this.Name = "Label";
 
@@ -176,6 +180,15 @@
 
         #endregion
 
+        #region Initialization
+
+        public override void Initialize()
+        {
+            base.Initialize();
+        }
+
+        #endregion
+
         #region Draw
 
         protected Action<Font, string, Vector2, Color, float, HoritonalAlignment, VerticalAlignment, int> DrawAction => this.DrawActionSelector();
@@ -188,20 +201,11 @@
                 this.TextFont(),
                 this.Text(),
                 this.AnchorLocation(),
-                this.TextColor().MakeTransparent(Math.Min(alpha, this.Alpha)),
+                this.TextColor().MakeTransparent(this.MixedMinAlpha(alpha)),
                 this.TextSize(),
                 this.TextHAlignment,
                 this.TextVAlignment,
                 this.TextLeading);
-        }
-
-        #endregion
-
-        #region Initialization
-
-        public override void Initialize()
-        {
-            base.Initialize();
         }
 
         #endregion

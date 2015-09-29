@@ -2,6 +2,7 @@
 {
     using Engine.Components.Graphics;
     using Engine.Components.Graphics.Fonts;
+    using Engine.Gui.Controls.Item;
     using Engine.Gui.Controls.Item.Frames;
     using Engine.Gui.Controls.Item.Settings;
     using Engine.Gui.Controls.Labels;
@@ -12,9 +13,9 @@
 
     public class OptionItemSettings : ItemSettings, IParameterLoader<GraphicsSettings>
     {
-        private readonly FrameSettings rootFrame;
+        private readonly ViewItemVisualSettings rootFrame;
 
-        private readonly FrameSettings idFrame = new FrameSettings
+        private readonly ViewItemVisualSettings idFrame = new ViewItemVisualSettings
         {
             Size   = new Point(24, 26),
             Margin = new Point(2, 2),
@@ -35,7 +36,7 @@
             VAlignment = VerticalAlignment.Center,
         };
 
-        private readonly FrameSettings nameFrame;
+        private readonly ViewItemVisualSettings nameFrame;
 
         private readonly LabelSettings nameLabel = new LabelSettings
         {
@@ -49,7 +50,7 @@
             Monospaced = true,
         };
 
-        private readonly FrameSettings descriptionFrame;
+        private readonly ViewItemVisualSettings descriptionFrame;
 
         private readonly LabelSettings descriptionLabel = new LabelSettings
         {
@@ -69,13 +70,13 @@
         {
             this.LoadParameter(this.Graphics.Settings);
 
-            this.rootFrame = new FrameSettings
+            this.rootFrame = new ViewItemVisualSettings
             {
                 Size   = new Point(this.viewportWidth - OperationModuleSettings.ViewMargin.X * 2, 26),
                 Margin = new Point(2, 2)
             };
 
-            this.nameFrame = new FrameSettings
+            this.nameFrame = new ViewItemVisualSettings
             {
                 Size   = new Point(this.viewportWidth - OperationModuleSettings.ViewMargin.X * 2 - 24, 26),
                 Margin = new Point(2, 2),
@@ -87,7 +88,7 @@
                 SelectionColor    = Palette.LightBlue,
             };
 
-            this.descriptionFrame = new FrameSettings
+            this.descriptionFrame = new ViewItemVisualSettings
             {
                 Size   = new Point(this.viewportWidth - OperationModuleSettings.ViewMargin.X * 2, 26),
                 Margin = new Point(2, 2),

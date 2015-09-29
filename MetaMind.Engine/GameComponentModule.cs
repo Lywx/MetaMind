@@ -4,7 +4,7 @@ namespace MetaMind.Engine
     using Microsoft.Xna.Framework;
     using Service;
 
-    public abstract class GameComponentModule<TModuleSettings, TModuleLogic, TModuleVisual> : GameControllableComponent, IGameComponentModule<TModuleSettings, TModuleLogic, TModuleVisual>
+    public abstract class GameComponentModule<TModuleSettings, TModuleLogic, TModuleVisual> : GameInputableComponent, IGameComponentModule<TModuleSettings, TModuleLogic, TModuleVisual>
         where                                 TModuleLogic                                  : IGameComponentLogic<TModuleSettings>
         where                                 TModuleVisual                                 : IGameComponentVisual<TModuleSettings>
     {

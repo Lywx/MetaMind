@@ -45,7 +45,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Interactions
             this.UpdateViewSelection(time);
 
             // For better performance
-            if (this.Item[ItemState.Item_Is_Inputting]())
+            if (this.Item[ViewItemState.Item_Is_Inputing]())
             {
                 this.UpdateViewSwap(time);
             }

@@ -3,7 +3,7 @@
     using Input;
     using Microsoft.Xna.Framework;
 
-    internal class GameNullInput : GameControllableComponent, IGameInput
+    internal class GameNullInput : GameInputableComponent, IGameInput
     {
         public IInputEvent Event { get; private set; }
 

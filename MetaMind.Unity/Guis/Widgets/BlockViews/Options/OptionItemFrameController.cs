@@ -15,7 +15,7 @@ namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
 
         private IBlockViewVerticalItemLayout itemLayout;
 
-        private FrameSettings descriptionFrameSettings;
+        private ViewItemVisualSettings descriptionFrameSettings;
 
         public OptionItemFrameController(IViewItem item, ViewItemRectangle itemRootRectangle)
             : base(item, itemRootRectangle)
@@ -42,9 +42,9 @@ namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
             this.itemSettings = itemLayer.ItemSettings;
             this.itemLayout = itemLayer.ItemLogic.ItemLayout;
 
-            var idFrameSettings = this.itemSettings.Get<FrameSettings>("IdFrame");
-            var nameFrameSettings = this.itemSettings.Get<FrameSettings>("NameFrame");
-            this.descriptionFrameSettings = this.itemSettings.Get<FrameSettings>("DescriptionFrame");
+            var idFrameSettings = this.itemSettings.Get<ViewItemVisualSettings>("IdFrame");
+            var nameFrameSettings = this.itemSettings.Get<ViewItemVisualSettings>("NameFrame");
+            this.descriptionFrameSettings = this.itemSettings.Get<ViewItemVisualSettings>("DescriptionFrame");
 
             // +----------+--------------------------------------+  
             // | id frame | name frame                           |

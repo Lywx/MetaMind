@@ -78,13 +78,13 @@ namespace MetaMind.Engine.Gui.Controls.Item.Swaps
                 this.SwappingItem.View,
                 this.DraggingItem.View);
 
-            this.swappingItemIsMouseOver = this.SwappingItem[ItemState.Item_Is_Mouse_Over];
+            this.swappingItemIsMouseOver = this.SwappingItem[ViewItemState.Item_Is_Mouse_Over];
             this.swappingViewHasFocus    = this.SwappingItem.View[ViewState.View_Has_Focus];
             this.draggingViewHasFocus    = this.DraggingItem.View[ViewState.View_Has_Focus];
 
             // Temporarily disable the mouse over state (without affecting the inner working of the underlying frames)
             // during swapping to avoid possible re-swapping behavior.
-            this.SwappingItem[ItemState.Item_Is_Mouse_Over] = () => false;
+            this.SwappingItem[ViewItemState.Item_Is_Mouse_Over] = () => false;
         }
 
         #endregion
@@ -209,11 +209,11 @@ namespace MetaMind.Engine.Gui.Controls.Item.Swaps
         private void SwapFinalize()
         {
             // Restore original states
-            this.SwappingItem[ItemState.Item_Is_Mouse_Over] = this.swappingItemIsMouseOver;
+            this.SwappingItem[ViewItemState.Item_Is_Mouse_Over] = this.swappingItemIsMouseOver;
             this.SwappingItem.View[ViewState.View_Has_Focus] = this.swappingViewHasFocus;
             this.DraggingItem.View[ViewState.View_Has_Focus] = this.draggingViewHasFocus;
 
-            this.SwappingItem[ItemState.Item_Is_Swapped] = () => false;
+            this.SwappingItem[ViewItemState.Item_Is_Swapped] = () => false;
         }
 
         #endregion

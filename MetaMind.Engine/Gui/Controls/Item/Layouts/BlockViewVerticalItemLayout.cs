@@ -49,7 +49,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Layouts
         protected virtual void UpdateBlockString()
         {
             var label = this.itemSettings.Get<LabelSettings>(this.BlockData.BlockLabel);
-            var frame = this.itemSettings.Get<FrameSettings>(this.BlockData.BlockFrame);
+            var frame = this.itemSettings.Get<ViewItemVisualSettings>(this.BlockData.BlockFrame);
 
             this.BlockStringWrapped = StringUtils.BreakStringByWord(
                 label.Font,

@@ -206,6 +206,7 @@
     <Compile Include="Guis\Widgets\IndexViews\Tests\TestItemSettings.cs" />
     <Compile Include="Guis\Widgets\IndexViews\StandardIndexViewSettings.cs" />
     <Compile Include="Guis\Widgets\Items\ViewItemSynchronizationController.cs" />
+    <Compile Include="Sessions\SessionController.cs" />
     <Compile Include="Unity.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

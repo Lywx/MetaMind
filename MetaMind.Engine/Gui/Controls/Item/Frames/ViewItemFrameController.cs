@@ -40,14 +40,14 @@ namespace MetaMind.Engine.Gui.Controls.Item.Frames
             var itemLayer = this.GetItemLayer<ViewItemLayer>();
             var itemSettings = itemLayer.ItemSettings;
 
-            var rootFrameSettings = itemSettings.Get<FrameSettings>("RootFrame");
+            var rootFrameSettings = itemSettings.Get<ViewItemVisualSettings>("RootFrame");
             this.RootRectangle.Size = rootFrameSettings.Size;
         }
 
         private void RegisterStates()
         {
-            this.Item[ItemState.Item_Is_Mouse_Over] = this.RootRectangle[ElementState.Mouse_Is_Over];
-            this.Item[ItemState.Item_Is_Dragging] = this.RootRectangle[ElementState.Element_Is_Dragging];
+            this.Item[ViewItemState.Item_Is_Mouse_Over] = this.RootRectangle[ElementState.Mouse_Is_Over];
+            this.Item[ViewItemState.Item_Is_Dragging] = this.RootRectangle[ElementState.Element_Is_Dragging];
         }
 
         #endregion

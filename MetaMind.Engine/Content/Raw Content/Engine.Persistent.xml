@@ -8,6 +8,44 @@
     <Font Name="NSimSun Bold Italic" Asset="NSimSun Bold Italic" Size="18"/>
   </Fonts>
   <Texture>
-    <Image Name="Screen.Blank" Asset="Blank"/>
+    <Image Name="Screen.Blank" Asset="Screen.Blank"/>
+    <Image Name=""/>
   </Texture>
+   <Controls>    
+    <Control Name="Control">
+      <DefaultSize Width="64" Height="64"/>
+      <MinimumSize Width="0" Height="0"/>
+      <OriginMargins Left="0" Top="0" Right="0" Bottom="0"/>
+      <ClientMargins Left="0" Top="0" Right="0" Bottom="0"/>      
+      <ResizerSize Value="4"/>
+      <Layers>
+        <Layer Name="Control" Image="Control" Width="1" Height="1" Alignment="MiddleLeft" OffsetX="0" OffsetY="0" >
+          <SizingMargins Left="0" Top="0" Right="0" Bottom="0"/>
+          <ContentMatgins Left="0" Top="0" Right="0" Bottom="0"/>
+          <States>
+            <Enabled Index="0" Color="255;255;255;255" Overlay="false"/>
+            <Hovered Index="0" Color="255;255;255;255" Overlay="false"/>
+            <Pressed Index="0" Color="255;255;255;255" Overlay="false"/>
+            <Focused Index="0" Color="255;255;255;255" Overlay="false"/>
+            <Disabled Index="0" Color="255;255;255;255" Overlay="false"/>
+          </States>
+          <Overlays>
+            <Enabled Index="0" Color="255;255;255;255"/>
+            <Hovered Index="0" Color="255;255;255;255"/>
+            <Pressed Index="0" Color="255;255;255;255"/>
+            <Focused Index="0" Color="255;255;255;255"/>
+            <Disabled Index="0" Color="255;255;255;255"/>
+          </Overlays>
+          <Text Font="Default" Alignment="MiddleLeft" OffsetX="0" OffsetY="0">
+            <Colors>
+              <Enabled Color="0;0;0;255"/>
+              <Focused Color="0;0;0;255"/>
+              <Pressed Color="0;0;0;255"/>
+              <Hovered Color="0;0;0;255"/>
+              <Disabled Color="0;0;0;255"/>
+            </Colors>
+          </Text>
+        </Layer>       
+      </Layers>
+    </Control>
 </Package>

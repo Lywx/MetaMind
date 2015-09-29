@@ -3,7 +3,7 @@ namespace MetaMind.Engine.Components.Content.Texture
     using System.Collections.Generic;
     using Microsoft.Xna.Framework.Graphics;
 
-    public class TextureManager : GameControllableComponent, ITextureManager
+    public class TextureManager : GameInputableComponent, ITextureManager
     {
         #region Font 
 

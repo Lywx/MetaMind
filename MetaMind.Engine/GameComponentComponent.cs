@@ -1,9 +1,8 @@
 namespace MetaMind.Engine
 {
     using System;
-    using Service;
 
-    public class GameComponentComponent<TModule, TModuleSettings, TModuleLogic, TModuleVisual> : IGameComponentModuleComponent<TModuleSettings>
+    public class GameComponentComponent<TModule, TModuleSettings, TModuleLogic, TModuleVisual> : GameObject, IGameComponentModuleComponent<TModuleSettings>
         where                           TModule                                                : IGameComponentModule<TModuleSettings, TModuleLogic, TModuleVisual>
         where                           TModuleLogic                                           : IGameComponentLogic<TModuleSettings> 
         where                           TModuleVisual                                          : IGameComponentVisual<TModuleSettings>
@@ -15,26 +14,10 @@ namespace MetaMind.Engine
                 throw new ArgumentNullException(nameof(module));
             }
 
-            if (engine == null)
-            {
-                throw new ArgumentNullException(nameof(engine));
-            }
-
             this.Module = module;
-            this.Engine = engine;
         }
 
         #region Engine Data
-
-        protected GameEngine Engine { get; private set; }
-
-        protected IGameInputService Input => GameEngine.Service.Input;
-
-        protected IGameInteropService Interop => GameEngine.Service.Interop;
-
-        protected IGameGraphicsService Graphics => GameEngine.Service.Graphics;
-
-        protected IGameNumericalService Numerical => GameEngine.Service.Numerical;
 
         #endregion
 

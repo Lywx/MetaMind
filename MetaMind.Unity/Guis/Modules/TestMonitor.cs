@@ -6,7 +6,7 @@
     using Engine.Setting.Loader;
     using Microsoft.Xna.Framework;
 
-    public class TestMonitor : GameControllableComponent, IConfigurationLoader
+    public class TestMonitor : GameInputableComponent, IConfigurationLoader
     {
         public static float TestWarningRate = 10f;
 

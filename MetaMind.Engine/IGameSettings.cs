@@ -1,6 +1,9 @@
 namespace MetaMind.Engine
 {
-    public interface IGameSettings
+    using System.Collections.Generic;
+    using Gui.Components;
+
+    public interface IGameSettings : IComponent, IDictionary<string, object>
     {
         T Get<T>(string id);
     }

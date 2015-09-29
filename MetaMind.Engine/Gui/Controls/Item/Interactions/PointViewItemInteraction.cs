@@ -48,7 +48,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Interactions
 
         public virtual void ViewDoSwap(IGameInteropService interop, IViewItem draggingItem)
         {
-            if (this.Item[ItemState.Item_Is_Swaping]())
+            if (this.Item[ViewItemState.Item_Is_Swaping]())
             {
                 return;
             }
@@ -69,7 +69,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Interactions
 
         public void ViewUpdateSwap()
         {
-            if (this.Item[ItemState.Item_Is_Dragging]())
+            if (this.Item[ViewItemState.Item_Is_Dragging]())
             {
                 this.viewSwap.WatchProcess(this.Item);
             }
@@ -80,7 +80,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Interactions
             if (this.viewSelection.IsSelected(this.ItemLayout.Id))
             {
                 // Unify mouse and keyboard selection
-                if (!this.Item[ItemState.Item_Is_Selected]())
+                if (!this.Item[ViewItemState.Item_Is_Selected]())
                 {
                     this.ItemSelect();
                 }
@@ -88,7 +88,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Interactions
             else
             {
                 // Unify mouse and keyboard selection
-                if (this.Item[ItemState.Item_Is_Selected]())
+                if (this.Item[ViewItemState.Item_Is_Selected]())
                 {
                     this.ItemUnselect();
                 }

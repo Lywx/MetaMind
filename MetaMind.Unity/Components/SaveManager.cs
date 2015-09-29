@@ -4,7 +4,7 @@ namespace MetaMind.Unity.Components
     using Engine.Session;
     using Sessions;
 
-    public class SaveManager : Engine.Components.File.SaveManager
+    public class SaveManager : Engine.Components.Interop.SaveManager
     {
         public SaveManager(GameEngine engine)
             : base(engine)
@@ -20,8 +20,7 @@ namespace MetaMind.Unity.Components
 
         public override void Load()
         {
-            Unity.Session     = Session<SessionData>.Load();
-            Unity.SessionData = Unity.Session.Data;
+            Unity.Session = Session<SessionData, SessionController>.Load();
         }
 
         #endregion Operations

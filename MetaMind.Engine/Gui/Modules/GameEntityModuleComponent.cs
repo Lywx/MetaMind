@@ -1,7 +1,7 @@
 
 namespace MetaMind.Engine.Gui.Modules
 {
-    public abstract class GameEntityModuleComponent<TModule, TModuleSettings, TModuleLogic> : GameControllableEntity, IInputable, IDrawable
+    public abstract class GameEntityModuleComponent<TModule, TModuleSettings, TModuleLogic> : GameInputableEntity, IInputable, IDrawable
         where                                       TModule                                 : GameEntityModule<TModuleSettings>
         where                                       TModuleLogic                            : GameEntityModuleLogic<TModule, TModuleSettings, TModuleLogic>
     {

@@ -9,9 +9,12 @@
     using Views;
     using Visuals;
 
-    public class ViewItem : ViewItemEntity, IViewItem
+    public class ViewItem : ViewItemStateControl, IViewItem
     {
-        public ViewItem(IView view, ItemSettings itemSettings)
+        public ViewItem(
+            ControlManager manager,
+            IView view,
+            ItemSettings itemSettings) : base(manager)
         {
             if (view == null)
             {
@@ -63,16 +66,16 @@
 
         internal void OnSwapping()
         {
-            this[ItemState.Item_Is_Swaping] = () => true;
-            this[ItemState.Item_Is_Swapped] = () => false;
+            this[ViewItemState.Item_Is_Swaping] = () => true;
+            this[ViewItemState.Item_Is_Swapped] = () => false;
 
             this.Swapping?.Invoke(this, EventArgs.Empty);
         }
 
         internal void OnSwapped()
         {
-            this[ItemState.Item_Is_Swaping] = () => false;
-            this[ItemState.Item_Is_Swapped] = () => true;
+            this[ViewItemState.Item_Is_Swaping] = () => false;
+            this[ViewItemState.Item_Is_Swapped] = () => true;
 
             this.Swapped?.Invoke(this, EventArgs.Empty);
         }
@@ -84,14 +87,14 @@
 
         internal void OnUnselected()
         {
-            this[ItemState.Item_Is_Selected] = () => false;
+            this[ViewItemState.Item_Is_Selected] = () => false;
 
             this.Unselected?.Invoke(this, EventArgs.Empty);
         }
 
         internal void OnSelected()
         {
-            this[ItemState.Item_Is_Selected] = () => true;
+            this[ViewItemState.Item_Is_Selected] = () => true;
 
             this.Selected?.Invoke(this, EventArgs.Empty);
         }
@@ -145,7 +148,7 @@
             this.ItemLogic? .Initialize();
             this.ItemVisual?.Initialize();
 
-            // TODO: Hook the root frame?
+            // TODO(Critical): Hook the root frame?
             base.Initialize();
         }
 

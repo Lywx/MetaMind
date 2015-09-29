@@ -1,15 +1,20 @@
 namespace MetaMind.Engine.Gui.Controls.Buttons
 {
-    using Labels;
+    using Elements.Rectangles;
+    using Engine.Components.Content.Fonts;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    public class RectangleButtonSettings
+    /// <summary>
+    /// Rectangle button settings that could be consumed and injected into a 
+    /// rectangle button.
+    /// </summary>
+    public class RectangleButtonSettings : GameSettings
     {
-        public ButtonState<Texture2D> Image;
+        public ButtonVisualState<Texture2D> Image;
 
-        public ButtonState<Color> Color;
+        public ButtonVisualState<Color> Color;
 
-        public LabelSettings Font;
+        public Font Font;
     }
 }

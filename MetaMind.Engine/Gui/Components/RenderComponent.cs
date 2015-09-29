@@ -1,6 +1,7 @@
 ﻿namespace MetaMind.Engine.Gui.Components
 {
     using System;
+    using Elements;
     using Engine.Components.Graphics.Adapters;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -13,7 +14,6 @@
     /// </summary>
     public abstract class RenderComponent : Component, IRenderComponent
     {
-
         #region Constructors and Finalizer
 
         protected RenderComponent()
@@ -23,8 +23,25 @@
 
         private void Constructor()
         {
+            // Root will be reset by Add/Remove.
+            this.Root = this;
+
             this.ViewportAdapter = new DefaultViewportAdapter(this.GraphicsDevice);
+
+            // Re-broadcast events from Rectangle.
+            this.Rectangle.Move += (sender, args) => this.Move?.Invoke(sender, args);
+            this.Rectangle.Resize += (sender, args) => this.Resize?.Invoke(sender, args);
         }
+
+        #endregion
+
+        #region Dependency
+
+        /// <summary>
+        /// Delegates all the geometry related functionalities and events. 
+        /// Properties of element data are provided by this.
+        /// </summary>
+        private RectangleElement Rectangle { get; } = new RectangleElement();
 
         #endregion
 
@@ -53,52 +70,61 @@
             }
         }
 
-        protected byte MixedAlpha(byte alpha)
+        protected byte MixedMinAlpha(byte alpha)
         {
             return Math.Min(this.Alpha, alpha);
+        }
+
+        protected byte MixedMaxAlpha(byte alpha)
+        {
+            return Math.Max(this.Alpha, alpha);
         }
 
         #endregion
 
         #region Structural Data
 
-        public string Name { get; protected set; } = "Render Component";
+        public string Name { get; protected set; } = "Component";
+
+        public RenderComponentCollection Children { get; protected set; } = new RenderComponentCollection();
 
         public RenderComponent Parent { get; protected set; } = null;
 
         public RenderComponent Root { get; protected set; } = null;
 
-        public GameEntityCollection<RenderComponent> Children { get; protected set; } = new GameEntityCollection<RenderComponent>();
-
         /// <summary>
         /// Gets a value indicating whether this control is a child control.
         /// </summary>
-        public virtual bool IsChild => (this.Parent != null);
+        public virtual bool IsChild => this.Parent != null;
 
         /// <summary>
         /// Gets a value indicating whether this control is a parent control.
         /// </summary>
-        public virtual bool IsParent => (this.Children != null && this.Children.Count > 0);
+        public virtual bool IsParent => this.Children != null && this.Children.Count > 0;
 
         /// <summary>
         /// Gets a value indicating whether this control is a root control.
         /// </summary>
-        public virtual bool IsRoot => (this.Root == this);
+        public virtual bool IsRoot => this.Root == this;
 
-        public virtual void Add(RenderComponent control)
+        public virtual void Add(RenderComponent component)
         {
-            if (control != null)
+            if (component != null)
             {
-                if (!this.Children.Contains(control))
+                if (!this.Children.Contains(component))
                 {
-                    control.Parent?.Remove(control);
+                    // Restore parent relationship before adding
+                    component.Parent?.Remove(component);
 
-                    control.Parent = this;
-                    control.Root = this.Root;
-                    control.Enabled = (this.Enabled ? control.Enabled : this.Enabled);
-                    this.Children.Add(control);
+                    // Configure parenthood
+                    component.Enabled = (this.Enabled ? component.Enabled : this.Enabled);
+                    component.Parent = this;
+                    component.Root = this.Root;
 
-                    this.Resize += control.OnParentResize;
+                    // Add to children list
+                    this.Children.Add(component);
+
+                    this.Resize += component.OnParentResize;
 
                     if (this.Active)
                     {
@@ -108,12 +134,18 @@
             }
         }
 
+        /// <summary>
+        /// Remove existing parenthood to original state.
+        /// </summary>
+        /// <param name="component"></param>
         public virtual void Remove(RenderComponent component)
         {
             if (component != null)
             {
+                // Remove from children list
                 this.Children.Remove(component);
 
+                // Reconfigure parenthood to original state
                 component.Parent = null;
                 component.Root = component;
 
@@ -126,18 +158,18 @@
             }
         }
 
-        public virtual bool Contains(RenderComponent control, bool recursively)
+        public virtual bool Contains(RenderComponent component, bool recursive)
         {
             if (this.Children != null)
             {
                 foreach (var c in this.Children)
                 {
-                    if (c == control)
+                    if (c == component)
                     {
                         return true;
                     }
 
-                    if (recursively && c.Contains(control, true))
+                    if (recursive && c.Contains(component, true))
                     {
                         return true;
                     }
@@ -145,6 +177,62 @@
             }
 
             return false;
+        }
+
+        #endregion
+
+        #region Element Data
+
+        public event EventHandler<ElementEventArgs> Move = delegate {};
+
+        public event EventHandler<ElementEventArgs> Resize = delegate {};
+
+        public virtual Point Size
+        {
+            get { return this.Rectangle.Size; }
+            set { this.Rectangle.Size = value; }
+        }
+
+        public virtual int Width
+        {
+            get { return this.Rectangle.Width; }
+            set { this.Rectangle.Width = value; }
+        }
+
+        public virtual int Height
+        {
+            get { return this.Rectangle.Height; }
+            set { this.Rectangle.Height = value; }
+        }
+
+        public virtual Rectangle Bounds
+        {
+            get { return this.Rectangle.Bounds; }
+            set { this.Rectangle.Bounds = value; }
+        }
+
+        public virtual Point Center
+        {
+            get { return this.Rectangle.Center; }
+            set { this.Rectangle.Center = value; }
+        }
+
+        public virtual Point Location
+        {
+            get { return this.Rectangle.Location; }
+            set { this.Rectangle.Location = value; }
+        }
+
+        public virtual int X
+        {
+            get { return this.Rectangle.X; }
+            set { this.Rectangle.X = value; }
+        }
+
+        public virtual int Y
+        {
+            get { return this.Rectangle.Y; }
+            set { this.Rectangle.Y = value; }
         }
 
         #endregion
@@ -197,7 +285,7 @@
 
         protected Point RenderTargetSize => new Point(this.RenderTargetWidth, this.RenderTargetHeight);
 
-        protected Rectangle RenderTargetDestinationRectangle => new Rectangle(this.Location, this.RenderTargetSize);
+        protected Rectangle RenderTargetDestinationRectangle => new Rectangle(this.Rectangle.Location, this.RenderTargetSize);
 
         protected Rectangle RenderTargetSourceRectangle => new Rectangle(Point.Zero, this.RenderTargetSize);
 
@@ -241,6 +329,7 @@
 
         private void OnAlphaChanged(EventArgs e)
         {
+            // TODO(Further)
         }
 
         private void OnBeginDrawStarted(RenderComponentDrawEventArgs e)
@@ -255,7 +344,7 @@
 
         private void OnParentResize(object sender, EventArgs e)
         {
-            // TODO(Further)
+            // TODO(Further): Broadcast event from parent
         }
 
         private void OnParentChanged()
@@ -267,8 +356,8 @@
 
         #region Initialization
 
-        private bool PositionInitialized => this.Location.X > int.MinValue / 2 &&
-                                            this.Location.Y > int.MinValue / 2;
+        private bool PositionInitialized => this.Rectangle.Location.X > int.MinValue / 2 &&
+                                            this.Rectangle.Location.Y > int.MinValue / 2;
 
         public override void Initialize()
         {
@@ -311,7 +400,7 @@
             this.GraphicsDevice.SetRenderTarget(this.RenderTarget);
             this.GraphicsDevice.Clear(Color.Transparent);
 
-            this.Draw(graphics, time, this.MixedAlpha(alpha));
+            this.Draw(graphics, time, this.MixedMinAlpha(alpha));
 
             this.GraphicsDevice.SetRenderTarget(null);
         }
@@ -343,7 +432,7 @@
                 this.RenderTarget,
                 this.RenderTargetDestinationRectangle,
                 this.RenderTargetSourceRectangle,
-                Color.White.MakeTransparent(this.MixedAlpha(alpha)));
+                Color.White.MakeTransparent(this.MixedMinAlpha(alpha)));
             this.SpriteBatch.End();
         }
 
@@ -353,25 +442,23 @@
 
         public override void Update(GameTime time)
         {
-            base.Update(time);
-
             if (!this.Enabled)
             {
                 return;
             }
 
+            base         .Update(time);
             this.Children.Update(time);
         }
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            base.UpdateInput(input, time);
-
             if (!this.Enabled)
             {
                 return;
             }
 
+            base         .UpdateInput(input, time);
             this.Children.UpdateInput(input, time);
         }
 
@@ -381,25 +468,23 @@
 
         public override void UpdateForwardBuffer()
         {
-            base.UpdateForwardBuffer();
-
             if (!this.Enabled)
             {
                 return;
             }
 
+            base         .UpdateForwardBuffer();
             this.Children.UpdateForwardBuffer();
         }
 
         public override void UpdateBackwardBuffer()
         {
-            base.UpdateBackwardBuffer();
-
             if (!this.Enabled)
             {
                 return;
             }
 
+            base         .UpdateBackwardBuffer();
             this.Children.UpdateBackwardBuffer();
         }
 

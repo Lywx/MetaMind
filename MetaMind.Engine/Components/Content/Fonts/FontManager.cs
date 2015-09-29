@@ -13,7 +13,7 @@ namespace MetaMind.Engine.Components.Content.Fonts
     /// <summary>
     /// Static storage of SpriteFont objects and colors for use throughout the game.
     /// </summary>
-    public class FontManager : GameControllableComponent, IFontManager
+    public class FontManager : GameInputableComponent, IFontManager
     {
         #region Font 
 

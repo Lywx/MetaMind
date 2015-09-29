@@ -1,7 +1,6 @@
 namespace MetaMind.Engine.Session
 {
-    public interface ISessionData 
+    public interface ISessionData : IInnerUpdatable
     {
-        void Update();
     }
 }

@@ -43,7 +43,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Layouts
             set
             {
                 this.itemIsActive = value;
-                this.Item[ItemState.Item_Is_Active] = value;
+                this.Item[ViewItemState.Item_Is_Active] = value;
             }
         }
 

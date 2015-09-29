@@ -15,7 +15,7 @@ namespace MetaMind.Engine.Components.Input
     using Extensions;
     using Microsoft.Xna.Framework;
 
-    public class InputEvent : GameControllableComponent, IInputEvent
+    public class InputEvent : GameInputableComponent, IInputEvent
     {
         private Form       windowForm;
 

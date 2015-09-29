@@ -11,7 +11,7 @@
     /// <summary>
     /// An attention monitor during synchronization
     /// </summary>
-    public class SynchronizationMonitor : GameControllableComponent
+    public class SynchronizationMonitor : GameInputableComponent
     {
         private readonly ISynchronization synchronization;
 

@@ -10,14 +10,14 @@
 
     public class PlayTest_Region : GameEntityModule<object>
     {
-        private GameEntityCollection<GameControllableEntity> control;
+        private GameEntityCollection<GameInputableEntity> control;
         private GameEntityCollection<GameVisualEntity> visual;
         private RectangleRegion region;
 
         public PlayTest_Region(object settings)
             : base(settings)
         {
-            this.control = new GameEntityCollection<GameControllableEntity>();
+            this.control = new GameEntityCollection<GameInputableEntity>();
             this.visual  = new GameEntityCollection<GameVisualEntity>();
 
             // Region Control

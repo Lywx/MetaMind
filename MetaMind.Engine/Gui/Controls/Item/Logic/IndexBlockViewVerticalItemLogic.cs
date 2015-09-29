@@ -46,7 +46,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Logic
 
             if (this.View.ViewSettings.KeyboardEnabled)
             {
-                if (!this.Item[ItemState.Item_Is_Locking]())
+                if (!this.Item[ViewItemState.Item_Is_Locking]())
                 {
                     // Extra components
                     this.itemInteraction.UpdateInput(input, time);
@@ -59,7 +59,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Logic
             this.ItemFrame.Update(time);
 
             // For better performance
-            if (this.Item[ItemState.Item_Is_Active]())
+            if (this.Item[ViewItemState.Item_Is_Active]())
             {
                 this.ItemModel.Update(time);
             }

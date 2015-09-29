@@ -11,7 +11,7 @@
 
         public string Execute(string[] arguments)
         {
-            var listing = (from test in Unity.SessionData.Test.AllCollection where !test.Evaluation.ResultPassed select test.Name).ToList();
+            var listing = (from test in Unity.Session.Data.Test.AllCollection where !test.Evaluation.ResultPassed select test.Name).ToList();
 
             return string.Join("\n", listing);
         }

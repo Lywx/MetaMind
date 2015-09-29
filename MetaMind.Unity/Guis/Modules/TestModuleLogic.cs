@@ -36,10 +36,10 @@
 
             this.TestMonitor = new TestMonitor(this.Interop.Engine, this.test);
 
-            this.ControllableEntities = new GameEntityCollection<IGameControllableEntity>();
+            this.ControllableEntities = new GameEntityCollection<IGameInputableEntity>();
         }
 
-        public GameEntityCollection<IGameControllableEntity> ControllableEntities { get; set; }
+        public GameEntityCollection<IGameInputableEntity> ControllableEntities { get; set; }
 
         public TestMonitor TestMonitor { get; set; }
 

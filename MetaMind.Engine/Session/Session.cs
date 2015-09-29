@@ -6,15 +6,16 @@ namespace MetaMind.Engine.Session
     using Components.File;
 
     [DataContract]
-    public sealed class Session<TData> : ISession<TData>
+    public sealed class Session<TData, TController> : ISession<TData, TController>
         where TData : ISessionData, new()
+        where TController : ISessionController<TData>, new()
     {
         #region File Data
 
         [DataMember]
-        public static readonly string XmlFilename = "Session.xml";
+        public static readonly string SaveFilename = "Session.xml";
 
-        public static string XmlPath => FileManager.SavePath(XmlFilename);
+        public static string SaveFilePath => FileManager.SavePath(SaveFilename);
 
         #endregion 
 
@@ -23,11 +24,17 @@ namespace MetaMind.Engine.Session
         [DataMember]
         public TData Data { get; set; }
 
+        /// <summary>
+        /// Controller is more like a not saved data container for session-wide 
+        /// storage.
+        /// </summary>
+        public TController Controller { get; set; }
+
         #endregion
 
         #region Singleton
 
-        private static Session<TData> Singleton { get; set; }
+        private static Session<TData, TController> Singleton { get; set; }
 
         #endregion Singleton
 
@@ -40,38 +47,39 @@ namespace MetaMind.Engine.Session
 
         #endregion Constructors
 
-        #region Save and Load
+        #region Session Creation
 
-        public static Session<TData> Load()
+        private static void CreateSession()
         {
-            if (File.Exists(XmlPath))
+            Singleton = new Session<TData, TController>
             {
-                // Auto-backup the old file
-                File.Copy(XmlPath, XmlPath + ".bak", true);
-
-                // Load from save
-                Load(XmlPath);
-            }
-            else if (File.Exists(XmlPath + ".bak"))
-            {
-                // Load from the backup
-                Load(XmlPath + ".bak");
-            }
-            else
-            {
-                // Create a new singleton
-                Singleton = new Session<TData>();
-            }
-
-            return Singleton;
+                Controller = CreateController()
+            };
         }
+
+        private static TController CreateController()
+        {
+            return new TController
+            {
+                Data = Singleton.Data
+            };
+        }
+
+        private static Session<TData, TController> GetSessionFromDerializer(DataContractSerializer deserializer, XmlDictionaryReader reader)
+        {
+            return (Session<TData, TController>) deserializer.ReadObject(reader, true);
+        }
+
+        #endregion
+
+        #region Session Save and Load
 
         public void Save()
         {
-            var serializer = new DataContractSerializer(typeof(Session<TData>), null, int.MaxValue, false, true, null);
+            var serializer = new DataContractSerializer(typeof(Session<TData, TController>), null, int.MaxValue, false, true, null);
             try
             {
-                using (var file = File.Create(XmlPath))
+                using (var file = File.Create(SaveFilePath))
                 {
                     serializer.WriteObject(file, Singleton);
                 }
@@ -82,36 +90,61 @@ namespace MetaMind.Engine.Session
             }
         }
 
+        public static Session<TData, TController> Load()
+        {
+            if (File.Exists(SaveFilePath))
+            {
+                // Auto-backup the old file
+                File.Copy(SaveFilePath, SaveFilePath + ".bak", true);
+
+                // Load from save
+                Load(SaveFilePath);
+            }
+            else if (File.Exists(SaveFilePath + ".bak"))
+            {
+                // Load from the backup
+                Load(SaveFilePath + ".bak");
+            }
+            else
+            {
+                CreateSession();
+            }
+
+            return Singleton;
+        }
+
         private static void Load(string path)
         {
             using (var file = File.OpenRead(path))
             {
                 try
                 {
-                    var deserializer = new DataContractSerializer(typeof(Session<TData>));
+                    var deserializer = new DataContractSerializer(typeof(Session<TData, TController>));
                     using (var reader = XmlDictionaryReader.CreateTextReader(file, new XmlDictionaryReaderQuotas()))
                     {
-                        Singleton = (Session<TData>)deserializer.ReadObject(reader, true);
+                        Singleton = GetSessionFromDerializer(deserializer, reader);
+                        Singleton.Controller = CreateController();
                     }
                 }
                 catch (SerializationException)
                 {
-                    Singleton = new Session<TData>();
+                    CreateSession();
                 }
                 catch (XmlException)
                 {
-                    Singleton = new Session<TData>();
+                    CreateSession();
                 }
             }
         }
 
         #endregion 
 
-        #region Update
+        #region Session Update
 
         public void Update()
         {
-            this.Data.Update();
+            this.Controller.Update();
+            this.Data      .Update();
         }
 
         #endregion Update

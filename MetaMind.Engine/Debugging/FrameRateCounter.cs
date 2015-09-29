@@ -4,7 +4,7 @@
     using Components.Content.Fonts;
     using Microsoft.Xna.Framework;
 
-    public class FrameRateCounter : GameControllableComponent
+    public class FrameRateCounter : GameInputableComponent
     {
         private int frameRate;
 

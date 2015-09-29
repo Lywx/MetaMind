@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Components.Interop
 {
     using Screen;
 
-    public interface IScreenManager : IScreenManagerOperations, IGameControllableComponent
+    public interface IScreenManager : IScreenManagerOperations, IGameInputableComponent
     {
         #region Screen Data
 

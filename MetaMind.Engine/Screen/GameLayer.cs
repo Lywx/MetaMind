@@ -101,7 +101,7 @@
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            alpha = this.MixedAlpha(alpha);
+            alpha = this.MixedMinAlpha(alpha);
 
             base.Draw              (graphics, time, alpha);
             this.DrawAction?.Invoke(graphics, time, alpha);

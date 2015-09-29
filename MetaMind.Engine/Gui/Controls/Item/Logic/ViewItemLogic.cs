@@ -129,16 +129,16 @@
             if (this.ItemIsInputting == null)
             {
                 this.ItemIsInputting = 
-                    () => this.Item[ItemState.Item_Is_Active]() &&
-                          this.Item[ItemState.Item_Is_Selected]() &&
-                         !this.Item[ItemState.Item_Is_Editing]();
+                    () => this.Item[ViewItemState.Item_Is_Active]() &&
+                          this.Item[ViewItemState.Item_Is_Selected]() &&
+                         !this.Item[ViewItemState.Item_Is_Editing]();
             }
 
             if (this.ItemIsLocking == null)
             {
                 this.ItemIsLocking = () =>
-                    this.Item[ItemState.Item_Is_Editing]() || 
-                    this.Item[ItemState.Item_Is_Pending]();
+                    this.Item[ViewItemState.Item_Is_Editing]() || 
+                    this.Item[ViewItemState.Item_Is_Pending]();
             }
         }
 
@@ -151,7 +151,7 @@
             set
             {
                 this.itemIsInputting = value;
-                this.Item[ItemState.Item_Is_Inputting] = value;
+                this.Item[ViewItemState.Item_Is_Inputing] = value;
             }
         }
 
@@ -161,7 +161,7 @@
             set
             {
                 this.itemIsLocking = value;
-                this.Item[ItemState.Item_Is_Locking] = value;
+                this.Item[ViewItemState.Item_Is_Locking] = value;
             }
         }
 
@@ -188,7 +188,7 @@
 
         public override void UpdateInput(IGameInputService input, GameTime time)
         {
-            if (!this.Item[ItemState.Item_Is_Active]())
+            if (!this.Item[ViewItemState.Item_Is_Active]())
             {
                 return;
             }
@@ -210,12 +210,12 @@
             {
                 var keyboard = input.State.Keyboard;
 
-                if (this.Item[ItemState.Item_Is_Inputting]())
+                if (this.Item[ViewItemState.Item_Is_Inputing]())
                 {
                     if (keyboard.IsActionTriggered(KeyboardActions.CommonEditItem))
                     {
                         this.View[ViewState.View_Is_Editing] = () => true;
-                        this.Item[ItemState.Item_Is_Pending] = () => true;
+                        this.Item[ViewItemState.Item_Is_Pending] = () => true;
                     }
 
                     if (keyboard.IsActionTriggered(KeyboardActions.CommonDeleteItem))
@@ -224,17 +224,17 @@
                     }
 
                     // Pending status
-                    if (this.Item[ItemState.Item_Is_Pending]())
+                    if (this.Item[ViewItemState.Item_Is_Pending]())
                     {
                         if (keyboard.IsActionTriggered(KeyboardActions.Escape))
                         {
                             this.View[ViewState.View_Is_Editing] = () => false;
-                            this.Item[ItemState.Item_Is_Pending] = () => false;
+                            this.Item[ViewItemState.Item_Is_Pending] = () => false;
                         }
                     }
                 }
 
-                if (!this.Item[ItemState.Item_Is_Locking]())
+                if (!this.Item[ViewItemState.Item_Is_Locking]())
                 {
                     // Extra components
                 }
@@ -254,7 +254,7 @@
         protected virtual void UpdateWhenUsual(GameTime time)
         {
             // For better performance
-            if (this.Item[ItemState.Item_Is_Active]())
+            if (this.Item[ViewItemState.Item_Is_Active]())
             {
                 this.ItemFrame.Update(time);
                 this.ItemModel.Update(time);

@@ -26,11 +26,11 @@ namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
 
         protected ViewItemLabel DescriptionLabel { get; set; }
 
-        protected ViewItemFrameVisual IdFrame { get; set; }
+        protected ViewItemRectangleVisual IdRectangle { get; set; }
 
-        protected ViewItemFrameVisual NameFrame { get; set; }
+        protected ViewItemRectangleVisual NameRectangle { get; set; }
 
-        protected ViewItemFrameVisual DescriptionFrame { get; set; }
+        protected ViewItemRectangleVisual DescriptionRectangle { get; set; }
 
         #endregion
 
@@ -68,9 +68,9 @@ namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
             this.DescriptionPosition = () => this.itemFrame.DescriptionFrameLocation() + itemSettings.Get<Vector2>("DescriptionMargin");
 
             // Components
-            this.IdFrame = new ViewItemFrameVisual(this.Item,
+            this.IdRectangle = new ViewItemRectangleVisual(this.Item,
                 this.itemFrame.IdRectangle,
-                itemSettings.Get<FrameSettings>("IdFrame"));
+                itemSettings.Get<ViewItemVisualSettings>("IdFrame"));
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("IdLabel");
                 this.IdLabel = new ViewItemLabel(this.Item, labelSettings)
@@ -80,8 +80,8 @@ namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
                 };
             }
 
-            var nameFrameSettings = itemSettings.Get<FrameSettings>("NameFrame");
-            this.NameFrame = new ViewItemFrameVisual(this.Item,
+            var nameFrameSettings = itemSettings.Get<ViewItemVisualSettings>("NameFrame");
+            this.NameRectangle = new ViewItemRectangleVisual(this.Item,
                 this.itemFrame.NameRectangle,
                 nameFrameSettings);
             {
@@ -94,8 +94,8 @@ namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
                 };
             }
 
-            var descriptionFrameSettings = itemSettings.Get<FrameSettings>("DescriptionFrame");
-            this.DescriptionFrame = new ViewItemFrameVisual(this.Item,
+            var descriptionFrameSettings = itemSettings.Get<ViewItemVisualSettings>("DescriptionFrame");
+            this.DescriptionRectangle = new ViewItemRectangleVisual(this.Item,
                 this.itemFrame.DescriptionRectangle,
                 descriptionFrameSettings);
             {
@@ -119,15 +119,15 @@ namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {
-            if (!this.Item[ItemState.Item_Is_Active]() && 
-                !this.Item[ItemState.Item_Is_Dragging]())
+            if (!this.Item[ViewItemState.Item_Is_Active]() && 
+                !this.Item[ViewItemState.Item_Is_Dragging]())
             {
             }
 
             // Frames
-            this.IdFrame.Draw(graphics, time, alpha);
-            this.NameFrame.Draw(graphics, time, alpha);
-            this.DescriptionFrame.Draw(graphics, time, alpha);
+            this.IdRectangle.Draw(graphics, time, alpha);
+            this.NameRectangle.Draw(graphics, time, alpha);
+            this.DescriptionRectangle.Draw(graphics, time, alpha);
 
             // Labels
             this.IdLabel.Draw(graphics, time, alpha);

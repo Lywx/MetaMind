@@ -10,7 +10,7 @@ namespace MetaMind.Engine.Gui.Modules
     /// <remarks>
     /// Compatible with previous GameControllableEntity implementation.
     /// </remarks>
-    public class GameEntityModule<TModuleSettings> : GameControllableEntity, IGameEntityModule
+    public class GameEntityModule<TModuleSettings> : GameInputableEntity, IGameEntityModule
     {
         #region Constructors and Finalizer
 

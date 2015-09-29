@@ -11,10 +11,12 @@ namespace MetaMind.Engine
 
     public interface IInputable : IOuterUpdateable, IInputableOperations
     {
-        event EventHandler<EventArgs> ControllableChanged;
-
-        event EventHandler<EventArgs> InputOrderChanged;
+        bool Inputable { get; }
 
         int InputOrder { get; }
+
+        event EventHandler<EventArgs> InputableChanged;
+
+        event EventHandler<EventArgs> InputOrderChanged;
     }
 }

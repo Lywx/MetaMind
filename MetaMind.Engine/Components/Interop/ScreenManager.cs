@@ -15,7 +15,7 @@ namespace MetaMind.Engine.Components.Interop
     using Microsoft.Xna.Framework.Graphics;
     using Screen;
 
-    public class ScreenManager : GameControllableComponent, IScreenManager
+    public class ScreenManager : GameInputableComponent, IScreenManager
     {
         #region Dependency
 

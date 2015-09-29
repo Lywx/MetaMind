@@ -2,7 +2,7 @@
 {
     using System;
 
-    public interface IGameLayer : IGameControllableEntity, IGameLayerOperations 
+    public interface IGameLayer : IGameInputableEntity, IGameLayerOperations 
     {
         IGameScreen Screen { get; }
 

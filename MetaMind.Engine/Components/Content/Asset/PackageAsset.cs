@@ -4,6 +4,14 @@
     using Fonts;
     using Texture;
 
+    /// <summary>
+    /// This is the package that serves as a collection of xml configuration. It 
+    /// loaded a unit of gameplay session into asset manager to provide support 
+    /// for asset lookup and finding.
+    /// </summary>
+    /// <example>
+    /// The 
+    /// </example>
     public class PackageAsset : Asset
     {
         public PackageAsset(string name) : base(name)
@@ -15,6 +23,9 @@
 
         public Dictionary<string, ImageAsset> Texture { get; private set; } =
             new Dictionary<string, ImageAsset>();
+
+        public Dictionary<string, ControlAsset> Controls { get; private set; } =
+            new Dictionary<string, ControlAsset>();
 
         public void Add(FontAsset font)
         {

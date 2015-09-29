@@ -25,43 +25,33 @@
                 throw new ArgumentNullException(nameof(settings));
             }
 
+            this.Settings = settings;
+
             this.InitializeInput(rectangle);
-            this.InitializeVisual(manager, settings);
+            this.InitializeVisual();
         }
+
+        #endregion
+
+        #region Dependency
+
+        public RectangleButtonSettings Settings { get; set; }
 
         #endregion
 
         #region Initialization
 
-        private void InitializeVisual(ControlManager manager, RectangleButtonSettings settings)
+        private void InitializeVisual()
         {
             this.Image = new ImageBox(
-                manager,
-                () =>
-                {
-                    if (this.Rectangle[ElementState.Mouse_Is_Left_Pressed]() ||
-                        this.Rectangle[ElementState.Mouse_Is_Right_Pressed]())
-                    {
-                        return settings.Image.MousePressed;
-                    }
-                    else if (this.Rectangle[ElementState.Mouse_Is_Left_Released]() ||
-                             this.Rectangle[ElementState.Mouse_Is_Left_Released]())
-                    {
-                        return settings.Image.MouseReleased;
-                    }
-                    else if (this.Rectangle[ElementState.Mouse_Is_Over]())
-                    {
-                        return settings.Image.MouseOver;
-                    }
-
-                    return settings.Image.MouseOut;
-                },
+                ,
                 () => this.Rectangle.Bounds,
                 () => Color.White);
 
-            this.Label = new Label(manager)
+            this.Label = new Label
             {
                 AnchorLocation = () => this.Rectangle.Center.ToVector2(),
+
                 TextHAlignment = HoritonalAlignment.Center,
                 TextVAlignment = VerticalAlignment.Center
             };
@@ -70,6 +60,7 @@
         private void InitializeInput(Rectangle rectangle)
         {
             this.Rectangle = new DraggableRectangle(rectangle);
+            this.Children.Add(this.Rectangle);
         }
 
         #endregion
@@ -77,7 +68,7 @@
         #region Dependency 
 
         /// <summary>
-        /// The rectangle handles related input>
+        /// The rectangle handles related input.
         /// </summary>
         public DraggableRectangle Rectangle { get; set; }
 
@@ -89,6 +80,11 @@
         public Label Label { get; set; }
 
         #endregion
+
+        public override void Update(GameTime time)
+        {
+            base.Update(time);
+        }
 
         #region Draw
 

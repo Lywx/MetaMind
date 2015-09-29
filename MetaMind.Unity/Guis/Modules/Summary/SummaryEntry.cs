@@ -2,6 +2,7 @@ namespace MetaMind.Unity.Guis.Modules.Summary
 {
     using System;
     using Engine;
+    using Engine.Components.Content.Fonts;
     using Engine.Components.Graphics.Fonts;
     using Engine.Gui.Controls.Labels;
     using Engine.Service;

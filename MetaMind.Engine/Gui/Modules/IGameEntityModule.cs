@@ -1,6 +1,6 @@
 namespace MetaMind.Engine.Gui.Modules
 {
-    public interface IGameEntityModule : IGameControllableEntity
+    public interface IGameEntityModule : IGameInputableEntity
     {
         IGameEntityModuleLogic Logic { get; }
 

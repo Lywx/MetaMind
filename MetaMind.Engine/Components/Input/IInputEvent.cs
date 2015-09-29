@@ -4,7 +4,7 @@ namespace MetaMind.Engine.Components.Input
     using System.Windows.Forms;
     using Microsoft.Xna.Framework;
 
-    public interface IInputEvent : IGameControllableComponent
+    public interface IInputEvent : IGameInputableComponent
     {
         /// <summary>
         /// Event raised when a character has been entered.

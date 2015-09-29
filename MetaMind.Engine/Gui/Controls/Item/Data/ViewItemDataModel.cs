@@ -90,8 +90,8 @@ namespace MetaMind.Engine.Gui.Controls.Item.Data
         {
             this.itemDataName = targetName;
 
-            this.Item[ItemState.Item_Is_Pending] = () => false;
-            this.Item[ItemState.Item_Is_Editing] = () => true;
+            this.Item[ViewItemState.Item_Is_Pending] = () => false;
+            this.Item[ViewItemState.Item_Is_Editing] = () => true;
             this.View[ViewState.View_Is_Editing] = () => true;
  
             FieldInfo field = this.itemData.GetType().GetField(targetName);
@@ -109,7 +109,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Data
 
         private void EditTerminate(object sender, EventArgs e)
         {
-            this.Item[ItemState.Item_Is_Editing] = () => false;
+            this.Item[ViewItemState.Item_Is_Editing] = () => false;
             this.View[ViewState.View_Is_Editing] = () => false;
         }
 

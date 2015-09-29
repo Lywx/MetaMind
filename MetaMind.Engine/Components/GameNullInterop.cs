@@ -10,7 +10,7 @@ namespace MetaMind.Engine.Components
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
 
-    internal class GameNullInterop : GameControllableComponent, IGameInterop
+    internal class GameNullInterop : GameInputableComponent, IGameInterop
     {
         public GameNullInterop(GameEngine engine) 
             : base(engine)
