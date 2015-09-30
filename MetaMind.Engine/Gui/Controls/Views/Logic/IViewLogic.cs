@@ -14,7 +14,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Logic
     using Selections;
     using Swaps;
 
-    public interface IViewLogic : IViewLogicOperations, IViewComponent, IInputable
+    public interface IViewLogic : IViewLogicOperations, IViewComponent, IMMInputable
     {
         IViewSelectionController ViewSelection { get; }
 

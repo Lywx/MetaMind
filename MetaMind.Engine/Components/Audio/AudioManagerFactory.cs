@@ -5,7 +5,7 @@ namespace MetaMind.Engine.Components.Audio
 
     public static class AudioManagerFactory
     { 
-        public static AudioManager Create(GameEngine engine)
+        public static AudioManager Create(MMEngine engine)
         {
             var content = engine.Content.RootDirectory;
 

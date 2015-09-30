@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Components.Content.Texture
 {
     using System.Collections.Generic;
 
-    public class TextureManager : GameInputableComponent, ITextureManager
+    public class TextureManager : MMInputableComponent, ITextureManager
     {
         #region Font 
 
@@ -14,7 +14,7 @@ namespace MetaMind.Engine.Components.Content.Texture
 
         #region Constructors
 
-        public TextureManager(GameEngine engine)
+        public TextureManager(MMEngine engine)
             : base(engine)
         {
         }

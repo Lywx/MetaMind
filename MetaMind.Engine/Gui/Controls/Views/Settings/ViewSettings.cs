@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Settings
 {
     using System;
 
-    public class ViewSettings : GameSettings, ICloneable
+    public class ViewSettings : MMSettings, ICloneable
     {
         #region Control
 

@@ -10,7 +10,7 @@ namespace MetaMind.Engine.Components.Interop.Event
     public class Event : IEvent
     {
         /// <summary>
-        /// Base class for Game Events
+        /// Base class for MMGame Events
         /// </summary>
         /// <param name="eventType">The type of event being sent</param>
         /// <param name="eventData">Any type of data that needs to go with the event.  Can be an object, a value, null, etc</param>

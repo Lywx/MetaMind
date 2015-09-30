@@ -4,7 +4,7 @@
     using Engine.Components.Content.Fonts;
     using Microsoft.Xna.Framework;
 
-    public class FrameRateCounter : GameInputableComponent
+    public class FrameRateCounter : MMInputableComponent
     {
         private int frameRate;
 
@@ -14,7 +14,7 @@
 
         private TimeSpan elapsedTime = TimeSpan.Zero;
 
-        public FrameRateCounter(GameEngine engine)
+        public FrameRateCounter(MMEngine engine)
             : base(engine)
         {
         }

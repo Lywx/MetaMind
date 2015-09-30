@@ -5,7 +5,7 @@ namespace MetaMind.Unity.Concepts.Synchronizations
     using Events;
     using Sessions;
 
-    public class SynchronizationSession : GameEntity, ISynchronizationController
+    public class SynchronizationSession : MMEntity, ISynchronizationController
     {
         public SynchronizationSession()
         {

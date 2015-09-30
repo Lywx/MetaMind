@@ -6,7 +6,7 @@
     using Engine.Service.Loader;
     using Microsoft.Xna.Framework;
 
-    public class TestMonitor : GameInputableComponent, IConfigurationLoader
+    public class TestMonitor : MMInputableComponent, IConfigurationLoader
     {
         public static float TestWarningRate = 10f;
 
@@ -14,7 +14,7 @@
 
         private readonly ITest test;
 
-        public TestMonitor(GameEngine engine, ITest test) : base(engine)
+        public TestMonitor(MMEngine engine, ITest test) : base(engine)
         {
             if (test == null)
             {

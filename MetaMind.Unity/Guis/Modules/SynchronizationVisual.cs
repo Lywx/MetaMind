@@ -12,7 +12,7 @@ namespace MetaMind.Unity.Guis.Modules
     using Microsoft.Xna.Framework;
     using Synchronization;
 
-    public class SynchronizationVisual : GameMvcEntityVisual<SynchronizationModule, SynchronizationSettings, SynchronizationLogic>
+    public class SynchronizationVisual : MMMvcEntityVisual<SynchronizationModule, SynchronizationSettings, SynchronizationLogic>
     {
         private string StateInfoFalse = "Losing Synchronicity";
 
@@ -113,7 +113,7 @@ namespace MetaMind.Unity.Guis.Modules
                 HoritonalAlignment.Right,
                 VerticalAlignment.Center);
 
-            this.Entities = new GameEntityCollection<IGameVisualEntity>
+            this.Entities = new MMEntityCollection<IMMVisualEntity>
                                 {
                                     progressBar,
 
@@ -155,7 +155,7 @@ namespace MetaMind.Unity.Guis.Modules
 
         #region Dependency
 
-        private GameEntityCollection<IGameVisualEntity> Entities { get; set; }
+        private MMEntityCollection<IMMVisualEntity> Entities { get; set; }
 
         #endregion
 
@@ -173,7 +173,7 @@ namespace MetaMind.Unity.Guis.Modules
 
         #endregion
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             this.Entities.Draw(graphics, time, alpha);
         }

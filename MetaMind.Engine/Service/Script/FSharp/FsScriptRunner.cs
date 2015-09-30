@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    public class FsScriptRunner : GameEntity
+    public class FsScriptRunner : MMEntity
     {
         private readonly FsScriptSearcher searcher;
 

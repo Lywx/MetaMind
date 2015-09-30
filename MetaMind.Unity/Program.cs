@@ -24,7 +24,7 @@ namespace MetaMind.Unity
         private static void Main(string[] args)
         {
             var configurer = new UnityEngineConfigurer();
-            var builder    = new GameEngineBuilder(configurer);
+            var builder    = new MMEngineBuilder(configurer);
 
             using (var engine = builder.Create())
             {

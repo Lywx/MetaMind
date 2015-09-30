@@ -6,7 +6,7 @@
     using Components.File;
     using Loader;
 
-    public class FsScriptSearcher : GameEntity, IConfigurationLoader
+    public class FsScriptSearcher : MMEntity, IConfigurationLoader
     {
         private readonly string searchPattern = "*.fsx";
 

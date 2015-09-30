@@ -3,7 +3,7 @@
     using Engine;
     using Microsoft.Xna.Framework;
 
-    public class BackgroundScreenSettings : GameSettings
+    public class BackgroundScreenSettings : MMSettings
     {
         public Color Color { get; set; } = Color.Black;
 

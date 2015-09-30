@@ -132,7 +132,7 @@
         /// <summary>
         /// The collection that contains 
         /// </summary>
-        public GameEntityCollection<IGameEntity> Minions { get; } = new GameEntityCollection<IGameEntity>();
+        public MMEntityCollection<IMMEntity> Minions { get; } = new MMEntityCollection<IMMEntity>();
 
         #endregion
 
@@ -208,7 +208,7 @@
             this.Minions .Update(time);
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime time)
+        public override void UpdateInput(IMMEngineInputService input, GameTime time)
         {
             if (!this.Enabled)
             {

@@ -59,7 +59,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Interactions
 
         #region Update
 
-        public override void UpdateInput(IGameInputService input, GameTime time)
+        public override void UpdateInput(IMMEngineInputService input, GameTime time)
         {
             if (this.IndexedViewOpened)
             {

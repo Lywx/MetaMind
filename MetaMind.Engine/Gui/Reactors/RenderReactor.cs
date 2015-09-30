@@ -11,7 +11,7 @@
     /// It is the basic unit of Gui rendering. It has the basic geometrical 
     /// property. But it doesn't have input related methods.
     /// </summary>
-    public abstract class RenderReactor : GameReactor, IRenderReactor
+    public abstract class RenderReactor : MMReactor, IRenderReactor
     {
         #region Constructors and Finalizer
 
@@ -374,7 +374,7 @@
         /// overriding this.Draw method, in which case, all elements are drawn 
         /// to parent control's render target.
         /// </remarks>
-        public sealed override void BeginDraw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public sealed override void BeginDraw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             base.BeginDraw(graphics, time, alpha);
 
@@ -401,7 +401,7 @@
         /// <summary>
         /// Re-draw its own render target into parent's render target or back buffer.
         /// </summary>
-        public sealed override void EndDraw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public sealed override void EndDraw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             base.EndDraw(graphics, time, alpha);
 
@@ -444,7 +444,7 @@
             this.Children.Update(time);
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime time)
+        public override void UpdateInput(IMMEngineInputService input, GameTime time)
         {
             if (!this.Enabled)
             {

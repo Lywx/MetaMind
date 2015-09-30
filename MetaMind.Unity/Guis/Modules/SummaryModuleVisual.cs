@@ -9,7 +9,7 @@
     using Microsoft.Xna.Framework;
     using Summary;
 
-    public class SummaryModuleVisual : GameMvcEntityVisual<SummaryModule, SummarySettings, SummaryModuleLogic>
+    public class SummaryModuleVisual : MMMvcEntityVisual<SummaryModule, SummarySettings, SummaryModuleLogic>
     {
         public SummaryModuleVisual(SummaryModule module, IConsciousness consciousness, ISynchronization synchronization)
             : base(module)
@@ -17,16 +17,16 @@
             this.Consciousness   = consciousness;
             this.Synchronization = synchronization;
 
-            this.Entities = new GameEntityCollection<IGameVisualEntity>();
+            this.Entities = new MMEntityCollection<IMMVisualEntity>();
         }
 
         private IConsciousness Consciousness { get; set; }
 
-        private GameEntityCollection<IGameVisualEntity> Entities { get; set; }
+        private MMEntityCollection<IMMVisualEntity> Entities { get; set; }
 
         private ISynchronization Synchronization { get; set; }
 
-        public override void LoadContent(IGameInteropService interop)
+        public override void LoadContent(IMMEngineInteropService interop)
         {
             var factory = new SummaryFactory(this.Settings);
 
@@ -97,7 +97,7 @@
             base.LoadContent(interop);
         }
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             this.Entities.Draw(graphics, time, alpha);
         }

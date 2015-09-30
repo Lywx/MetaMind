@@ -113,7 +113,7 @@ namespace MetaMind.Engine.Gui.Controls.Views
 
         #region Load and Unload
 
-        public override void LoadContent(IGameInteropService interop)
+        public override void LoadContent(IMMEngineInteropService interop)
         {
             if (this.ViewLogic != null)
             {
@@ -126,7 +126,7 @@ namespace MetaMind.Engine.Gui.Controls.Views
             base.LoadContent(interop);
         }
 
-        public override void UnloadContent(IGameInteropService interop)
+        public override void UnloadContent(IMMEngineInteropService interop)
         {
             this.ViewLogic?.UnloadBinding();
             base           .UnloadContent(interop);
@@ -136,7 +136,7 @@ namespace MetaMind.Engine.Gui.Controls.Views
 
         #region Draw
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             this.ViewVisual?.Draw(graphics, time, alpha);
         }
@@ -156,19 +156,19 @@ namespace MetaMind.Engine.Gui.Controls.Views
             foreach (var pair in this.ViewComponents)
             {
                 var component  = pair.Value;
-                var updateable = component as IOuterUpdateable;
+                var updateable = component as IMMUpdateable;
                 updateable?.Update(time);
             }
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime time)
+        public override void UpdateInput(IMMEngineInputService input, GameTime time)
         {
              this.ViewLogic?.UpdateInput(input, time);
 
             foreach (var pair in this.ViewComponents)
             {
                 var component  = pair.Value;
-                var updateable = component as IInputable;
+                var updateable = component as IMMInputable;
                 updateable?.UpdateInput(input, time);
             }
         }

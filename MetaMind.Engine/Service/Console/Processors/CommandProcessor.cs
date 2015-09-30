@@ -6,9 +6,9 @@
 
     public class CommandProcessor : ICommandProcessor
     {
-        private readonly GameConsole console;
+        private readonly MMConsole console;
 
-        public CommandProcessor(GameConsole console)
+        public CommandProcessor(MMConsole console)
         {
             if (console == null)
             {

@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Visuals
         {
         }
 
-        protected override void DrawComponents(IGameGraphicsService graphics, GameTime time, byte alpha)
+        protected override void DrawComponents(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
         }
     }

@@ -3,13 +3,13 @@ namespace MetaMind.Engine.Screen
     using Microsoft.Xna.Framework;
     using Service;
 
-    public interface IGameScreenOperations : IInputableOperations, IOuterUpdateableOperations
+    public interface IGameScreenOperations : IMMInputableOperations, IMMUpdateableOperations
     {
         #region Draw
 
-        void BeginDraw(IGameGraphicsService graphics, GameTime time);
+        void BeginDraw(IMMEngineGraphicsService graphics, GameTime time);
 
-        void EndDraw(IGameGraphicsService graphics, GameTime time);
+        void EndDraw(IMMEngineGraphicsService graphics, GameTime time);
 
         #endregion
 
@@ -20,7 +20,7 @@ namespace MetaMind.Engine.Screen
         /// Unlike other update method, this method is called regardless of whether the screen
         /// is active, hidden, or in the middle of a transition.
         /// </summary>
-        void UpdateScreen(IGameInteropService interop, GameTime time, bool hasOtherScreenFocus, bool isCoveredByOtherScreen);
+        void UpdateScreen(IMMEngineInteropService interop, GameTime time, bool hasOtherScreenFocus, bool isCoveredByOtherScreen);
 
         #endregion Update
 

@@ -4,13 +4,13 @@
     using Engine.Screen;
     using Engine.Service;
 
-    public class PlayTest_Screen : GameScreen
+    public class PlayTest_Screen : MMScreen
     {
-        private GameEntityCollection<GameInputableEntity> tests;
+        private MMEntityCollection<MMInputableEntity> tests;
 
-        public override void LoadContent(IGameInteropService interop)
+        public override void LoadContent(IMMEngineInteropService interop)
         {
-            this.tests = new GameEntityCollection<GameInputableEntity>();
+            this.tests = new MMEntityCollection<MMInputableEntity>();
 
             var region = new PlayTest_Region(null);
             var frame  = new PlayTest_Frame(null);
@@ -19,7 +19,7 @@
             tests.Add(frame);
 
             this.Layers.Add(
-                new GameLayer(this)
+                new MMLayer(this)
                 {
                     DrawAction = (graphics, time, alpha) =>
                     {

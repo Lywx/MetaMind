@@ -3,9 +3,9 @@
     using Console.Uniutils;
     using Engine;
 
-    public class UnityEngineConfigurer : IGameEngineConfigurer
+    public class UnityEngineConfigurer : IMMEngineConfigurer
     {
-        public void Configure(GameEngine engine)
+        public void Configure(MMEngine engine)
         {
             // Console
             var console = engine.Interop.Console;

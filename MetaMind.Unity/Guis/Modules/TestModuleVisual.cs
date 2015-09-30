@@ -11,7 +11,7 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    public class TesTMvcVisual : GameMvcEntityVisual<TestModule, TesTMvcSettings, TesTMvcLogic>
+    public class TesTMvcVisual : MMMvcEntityVisual<TestModule, TesTMvcSettings, TesTMvcLogic>
     {
         private readonly ITest test;
 
@@ -24,12 +24,12 @@
 
             this.test = test;
 
-            this.VisualEntities = new GameEntityCollection<IGameVisualEntity>();
+            this.VisualEntities = new MMEntityCollection<IMMVisualEntity>();
         }
 
-        private GameEntityCollection<IGameVisualEntity> VisualEntities { get; set; }
+        private MMEntityCollection<IMMVisualEntity> VisualEntities { get; set; }
 
-        public override void LoadContent(IGameInteropService interop)
+        public override void LoadContent(IMMEngineInteropService interop)
         {
             var testCompletionFont  = new Func<Font>(() => Font.UiStatistics);
             var testCompletionColor = new Func<Color>(() => this.test.Evaluation.ResultAllPassedRate > TestMonitor.TestWarningRate ? Palette.LightGreen : Palette.LightPink);
@@ -64,7 +64,7 @@
 
         private Vector2 TestRateCenterPosition => new Vector2(this.Graphics.Settings.Width / 2 - 160, 90);
 
-        public override void BeginDraw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void BeginDraw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             base.BeginDraw(graphics, time, alpha);
 
@@ -72,7 +72,7 @@
             this      .VisualEntities      .BeginDraw(graphics, time, alpha);
         }
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             base.Draw(graphics, time, alpha);
 
@@ -80,7 +80,7 @@
             this      .VisualEntities      .Draw(graphics, time, alpha);
         }
 
-        public override void EndDraw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void EndDraw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             base.EndDraw(graphics, time, alpha);
 

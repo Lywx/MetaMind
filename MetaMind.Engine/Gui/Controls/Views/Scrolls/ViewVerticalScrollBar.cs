@@ -124,7 +124,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Scrolls
 
         #region Draw
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             base.Draw(graphics, time, alpha);
 

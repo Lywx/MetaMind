@@ -4,6 +4,6 @@
 
     public interface ILayerManager : ILayerManagerOperations
     {
-        GameEntityCollection<IGameLayer> Layers { get; }
+        MMEntityCollection<IMMLayer> Layers { get; }
     }
 }

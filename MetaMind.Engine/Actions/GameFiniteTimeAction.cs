@@ -3,13 +3,13 @@
 //   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
-namespace MetaMind.Engine.Action
+namespace MetaMind.Engine.Actions
 {
     using System;
 
     public class GameFiniteTimeActionState : GameActionState
     {
-        public GameFiniteTimeActionState(GameFiniteTimeAction action, GameActor target)
+        public GameFiniteTimeActionState(GameFiniteTimeAction action, MMActor target)
             : base(action, target)
         {
             this.Duration  = action.Duration;
@@ -94,7 +94,7 @@ namespace MetaMind.Engine.Action
 
         public abstract GameFiniteTimeAction Reverse();
 
-        protected internal override GameActionState StartAction(GameActor target)
+        protected internal override GameActionState StartAction(MMActor target)
         {
             return new GameFiniteTimeActionState(this, target);
         }

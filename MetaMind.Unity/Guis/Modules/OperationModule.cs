@@ -12,7 +12,7 @@
     using Widgets.IndexViews;
     using Widgets.IndexViews.Operations;
 
-    public class OperationModule : GameMvcEntity<OperationModuleSettings>
+    public class OperationModule : MMMvcEntity<OperationModuleSettings>
     {
         private readonly IOperationDescription operation;
 
@@ -35,16 +35,16 @@
             this.operationSession = operationSession;
             Operation.Session     = operationSession;
 
-            this.Entities = new GameEntityCollection<IView>();
+            this.Entities = new MMEntityCollection<IView>();
         }
 
-        private GameEntityCollection<IView> Entities { get; set; }
+        private MMEntityCollection<IView> Entities { get; set; }
 
         private IView View { get; set; }
 
         #region Load and Unload
                                                                                                            
-        public override void LoadContent(IGameInteropService interop)
+        public override void LoadContent(IMMEngineInteropService interop)
         {
             var graphicsSettings = this.Graphics.Settings;
 
@@ -75,7 +75,7 @@
 
         #region Draw
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             this.Entities.Draw(graphics, time, alpha);
             base         .Draw(graphics, time, alpha);
@@ -85,7 +85,7 @@
 
         #region Update
 
-        public override void UpdateInput(IGameInputService input, GameTime time)
+        public override void UpdateInput(IMMEngineInputService input, GameTime time)
         {
             this.Entities.UpdateInput(input, time);
             base         .UpdateInput(input, time);

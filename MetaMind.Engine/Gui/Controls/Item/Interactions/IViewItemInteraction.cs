@@ -29,6 +29,6 @@ namespace MetaMind.Engine.Gui.Controls.Item.Interactions
         /// </summary>
         void ViewUnselect();
 
-        void ViewSwap(IGameInteropService interop, IViewItem draggingItem);
+        void ViewSwap(IMMEngineInteropService interop, IViewItem draggingItem);
     }
 }

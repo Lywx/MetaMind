@@ -4,7 +4,7 @@
     using System;
     using Events;
 
-    public class TestEffect : GameEntity
+    public class TestEffect : MMEntity
     {
         private readonly string failingCue = "Test Failure";
 

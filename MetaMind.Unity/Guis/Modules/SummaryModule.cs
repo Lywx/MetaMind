@@ -5,7 +5,7 @@ namespace MetaMind.Unity.Guis.Modules
     using Engine;
     using Engine.Gui.Modules;
 
-    public class SummaryModule : GameMvcEntity<SummarySettings>
+    public class SummaryModule : MMMvcEntity<SummarySettings>
     {
         public SummaryModule(IConsciousness consciousness, ISynchronization synchronization, SummarySettings settings)
             : base(settings)

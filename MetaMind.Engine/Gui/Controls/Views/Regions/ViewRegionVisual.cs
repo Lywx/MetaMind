@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Regions
     using Service;
 
     // TODO: Make region contrl
-    public class ViewRegionVisual : GameVisualEntity
+    public class ViewRegionVisual : MMVisualEntity
     {
         public ViewRegionVisual(ViewRegion region)
         {
@@ -22,7 +22,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Regions
 
         public ViewRegionSettings RegionSettings => this.Region.RegionSettings;
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             Primitives2D.DrawRectangle(
                 graphics.SpriteBatch,

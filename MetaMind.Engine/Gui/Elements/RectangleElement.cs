@@ -10,7 +10,7 @@ namespace MetaMind.Engine.Gui.Elements
     using System;
     using Microsoft.Xna.Framework;
 
-    public class RectangleElement : GameInputableEntity, IRectangleElement
+    public class RectangleElement : MMInputableEntity, IRectangleElement
     {
         #region Constructors and Finalizer
 

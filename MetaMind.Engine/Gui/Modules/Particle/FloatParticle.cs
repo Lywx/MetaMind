@@ -60,7 +60,7 @@ namespace MetaMind.Engine.Gui.Modules.Particle
             return new FloatParticle(Vector2.Zero, Vector2.Zero, Vector2.Zero, 0f, Color.Transparent, 0, 0f);
         }
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             graphics.SpriteBatch.FillRectangle(this.Position, this.Size, this.Color, this.Angle);
         }

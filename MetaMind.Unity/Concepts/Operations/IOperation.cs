@@ -6,7 +6,7 @@
         IOperationOperations,
         IOperationComputation, 
 
-        IInnerUpdatable
+        IMMFreeUpdatable
     {
     }
 }

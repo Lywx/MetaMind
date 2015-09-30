@@ -15,7 +15,7 @@ namespace MetaMind.Engine.Components.Interop
     using Microsoft.Xna.Framework.Graphics;
     using Screen;
 
-    public class ScreenManager : GameInputableComponent, IScreenManager
+    public class ScreenManager : MMInputableComponent, IScreenManager
     {
         #region Dependency
 
@@ -85,7 +85,7 @@ namespace MetaMind.Engine.Components.Interop
         /// <summary>
         /// Constructs a new screen manager component.
         /// </summary>
-        public ScreenManager(GameEngine engine, ScreenSettings settings, SpriteBatch spriteBatch)
+        public ScreenManager(MMEngine engine, ScreenSettings settings, SpriteBatch spriteBatch)
             : base(engine)
         {
             if (engine == null)
@@ -248,7 +248,7 @@ namespace MetaMind.Engine.Components.Interop
         /// </summary>
         public void AddScreen(IGameScreen screen)
         {
-            ((GameScreen)screen).IsExiting = false;
+            ((MMScreen)screen).IsExiting = false;
 
             // If we have a graphics device, tell the screen to load content.
             if (this.isInitialized)
@@ -350,7 +350,7 @@ namespace MetaMind.Engine.Components.Interop
         #region Events
 
         /// <summary>
-        /// Called when the Game Engine is closed by Exit / Restart operations.
+        /// Called when the MMGame Engine is closed by Exit / Restart operations.
         /// </summary>
         public void OnExiting()
         {

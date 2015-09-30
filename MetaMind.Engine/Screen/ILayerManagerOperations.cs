@@ -2,8 +2,8 @@ namespace MetaMind.Engine.Screen
 {
     public interface ILayerManagerOperations
     {
-        void Add(IGameLayer layer);
+        void Add(IMMLayer layer);
 
-        void Remove(IGameLayer layer);
+        void Remove(IMMLayer layer);
     }
 }

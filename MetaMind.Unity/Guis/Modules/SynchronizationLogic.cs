@@ -13,7 +13,7 @@ namespace MetaMind.Unity.Guis.Modules
     using Screens;
     using Sessions;
 
-    public class SynchronizationLogic : GameMvcEntityLogic<SynchronizationModule, SynchronizationSettings, SynchronizationLogic>
+    public class SynchronizationLogic : MMMvcEntityLogic<SynchronizationModule, SynchronizationSettings, SynchronizationLogic>
     {
         public SynchronizationLogic(SynchronizationModule module, IConsciousness consciousness, ISynchronization synchronization)
             : base(module)
@@ -40,7 +40,7 @@ namespace MetaMind.Unity.Guis.Modules
 
         private ISynchronization Synchronization { get; set; }
 
-        public override void LoadContent(IGameInteropService interop)
+        public override void LoadContent(IMMEngineInteropService interop)
         {
             this.Listeners.Add(new SleepStartedListener(this.Synchronization, this));
             this.Listeners.Add(new SleepStoppedListener(this.Synchronization));
@@ -51,7 +51,7 @@ namespace MetaMind.Unity.Guis.Modules
             base.LoadContent(interop);
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime time)
+        public override void UpdateInput(IMMEngineInputService input, GameTime time)
         {
             var keyboard = input.State.Keyboard;
 

@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Gui.Controls.Buttons
     /// Rectangle button settings that could be consumed and injected into a 
     /// rectangle button.
     /// </summary>
-    public class RectangleButtonSettings : GameSettings
+    public class RectangleButtonSettings : MMSettings
     {
         public ButtonVisualState<Texture2D> Image;
 

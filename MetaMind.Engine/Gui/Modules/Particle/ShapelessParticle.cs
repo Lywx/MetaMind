@@ -5,7 +5,7 @@ namespace MetaMind.Engine.Gui.Modules.Particle
     using Microsoft.Xna.Framework;
     using Service.Loader;
 
-    public class ShapelessParticle : GameVisualEntity, IShapelessParticle, IParameterLoader<GraphicsSettings>  
+    public class ShapelessParticle : MMVisualEntity, IShapelessParticle, IParameterLoader<GraphicsSettings>  
     {
         #region Particle Movements
 

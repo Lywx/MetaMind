@@ -9,7 +9,7 @@
         ITestOrganization,
 
         IComparable<ITest>, 
-        IInnerUpdatable
+        IMMFreeUpdatable
     {
         #region Properties
 

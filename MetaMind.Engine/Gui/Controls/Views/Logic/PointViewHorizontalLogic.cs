@@ -171,7 +171,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Logic
 
         #region Update Input
 
-        protected override void UpdateInputOfKeyboard(IGameInputService input, GameTime time)
+        protected override void UpdateInputOfKeyboard(IMMEngineInputService input, GameTime time)
         {
             base.UpdateInputOfKeyboard(input, time);
 
@@ -203,7 +203,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Logic
             }
         }
 
-        protected override void UpdateInputOfMouse(IGameInputService input, GameTime time)
+        protected override void UpdateInputOfMouse(IMMEngineInputService input, GameTime time)
         {
             if (this.View[ViewState.View_Is_Inputting]())
             {

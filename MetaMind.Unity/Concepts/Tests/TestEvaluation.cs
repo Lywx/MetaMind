@@ -5,7 +5,7 @@
     using System.Linq;
     using Events;
 
-    public class TestEvaluation : GameEntity, ITestEvaluation
+    public class TestEvaluation : MMEntity, ITestEvaluation
     {
         private readonly Test test;
 

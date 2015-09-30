@@ -40,7 +40,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Logic
 
         #region Update
 
-        public override void UpdateInput(IGameInputService input, GameTime time)
+        public override void UpdateInput(IMMEngineInputService input, GameTime time)
         {
             base.UpdateInput(input, time);
 

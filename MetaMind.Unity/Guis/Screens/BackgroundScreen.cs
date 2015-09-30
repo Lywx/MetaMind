@@ -5,7 +5,7 @@
     using Engine.Service;
     using Primtives2D;
 
-    public class BackgroundScreen : GameScreen
+    public class BackgroundScreen : MMScreen
     {
         #region Constructors
 
@@ -32,9 +32,9 @@
 
         #region Load and Unload
 
-        public override void LoadContent(IGameInteropService interop)
+        public override void LoadContent(IMMEngineInteropService interop)
         {
-            this.Layers.Add(new GameLayer(this)
+            this.Layers.Add(new MMLayer(this)
             {
                 DrawAction = (graphics, time, alpha) =>
                 {
@@ -48,7 +48,7 @@
             });
         }
 
-        public override void UnloadContent(IGameInteropService interop)
+        public override void UnloadContent(IMMEngineInteropService interop)
         {
         }
 

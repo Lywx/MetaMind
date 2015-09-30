@@ -11,7 +11,7 @@
     /// <summary>
     /// An attention monitor during synchronization
     /// </summary>
-    public class SynchronizationMonitor : GameInputableComponent
+    public class SynchronizationMonitor : MMInputableComponent
     {
         private readonly ISynchronization synchronization;
 
@@ -25,7 +25,7 @@
 
         private TimeSpan attentionSpan = TimeSpan.FromSeconds(5);
 
-        public SynchronizationMonitor(GameEngine engine, ISynchronization synchronization)
+        public SynchronizationMonitor(MMEngine engine, ISynchronization synchronization)
             : base(engine)
         {
             if (engine == null)

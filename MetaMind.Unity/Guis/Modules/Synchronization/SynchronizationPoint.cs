@@ -9,7 +9,7 @@ namespace MetaMind.Unity.Guis.Modules.Synchronization
     using Engine.Service;
     using Microsoft.Xna.Framework;
 
-    public class SynchronizationPoint : GameVisualEntity
+    public class SynchronizationPoint : MMVisualEntity
     {
         public SynchronizationPoint(string text, Func<Color> textColor, Func<Color> boxColor, Func<Rectangle> boxbounds)
         {
@@ -29,7 +29,7 @@ namespace MetaMind.Unity.Guis.Modules.Synchronization
 
         public Label Digit { get; set; }
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             this.Box  .Draw(graphics, time, alpha);
             this.Digit.Draw(graphics, time, alpha);

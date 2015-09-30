@@ -6,7 +6,7 @@ namespace MetaMind.Unity.Guis.Screens
     using Engine.Service;
     using Primtives2D;
 
-    public class StartScreen : GameScreen
+    public class StartScreen : MMScreen
     {
         private Image imageLogo;
 
@@ -24,13 +24,13 @@ namespace MetaMind.Unity.Guis.Screens
 
         #region Load and Unload
 
-        public override void LoadContent(IGameInteropService interop)
+        public override void LoadContent(IMMEngineInteropService interop)
         {
             this.imageLogo           = interop.Asset.Texture["StartScreen.Meta Mind"];
             this.imagePressAnyButton = interop.Asset.Texture["StartScreen.Press Any Button"];
             var s = new CCSprite(new CCTexture2D(this.imageLogo.Resource));
 
-            this.Layers.Add(new GameLayer(this)
+            this.Layers.Add(new MMLayer(this)
             {
                 DrawAction = (graphics, time, alpha) =>
                 {
@@ -46,7 +46,7 @@ namespace MetaMind.Unity.Guis.Screens
             });
         }
 
-        public override void UnloadContent(IGameInteropService interop)
+        public override void UnloadContent(IMMEngineInteropService interop)
         {
         }
 

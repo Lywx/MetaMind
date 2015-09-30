@@ -6,7 +6,7 @@ namespace MetaMind.Unity.Guis.Modules.Summary
     using Microsoft.Xna.Framework;
     using Primtives2D;
 
-    public class SummarySplit : GameVisualEntity
+    public class SummarySplit : MMVisualEntity
     {
         public SummarySplit(Func<Vector2> start, Func<Vector2> end, Func<Color> color, Func<float> size)
         {
@@ -24,7 +24,7 @@ namespace MetaMind.Unity.Guis.Modules.Summary
 
         public Func<float> Size { get; set; }
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             var spriteBatch = graphics.SpriteBatch;
             spriteBatch.DrawLine(this.Start(), this.End(), this.Color().MakeTransparent(alpha), this.Size());

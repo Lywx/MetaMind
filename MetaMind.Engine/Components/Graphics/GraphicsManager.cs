@@ -10,11 +10,11 @@ namespace MetaMind.Engine.Components.Graphics
 
         private GraphicsSettings Settings { get; set; }
 
-        private GameEngine Engine { get; set; }
+        private MMEngine Engine { get; set; }
 
         #endregion
 
-        public GraphicsManager(GameEngine engine, GraphicsSettings settings)
+        public GraphicsManager(MMEngine engine, GraphicsSettings settings)
             : base(engine)
         {
             if (engine == null)
@@ -53,7 +53,7 @@ namespace MetaMind.Engine.Components.Graphics
 
         /// <param name="settings"></param>
         /// <remarks>
-        /// Can be only called after GameEngine is constructed.
+        /// Can be only called after MMEngine is constructed.
         /// </remarks>>
         private void CentralizeWindow(GraphicsSettings settings)
         {

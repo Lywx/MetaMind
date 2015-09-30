@@ -4,7 +4,7 @@ namespace MetaMind.Engine.Gui.Controls.Item
     using Reactors;
     using Views;
 
-    public interface IViewItemComponent : IViewItemComponentOperations, IGameReactor, IGameInputableEntity, IDisposable
+    public interface IViewItemComponent : IViewItemComponentOperations, IGameReactor, IMMInputableEntity, IDisposable
     {
         IView View { get; }
 

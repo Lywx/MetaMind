@@ -9,7 +9,7 @@
     /// This module control all the interaction with the Synchronization and Consciousness object, 
     /// since Synchronization is only a data class.
     /// </summary>
-    public class SynchronizationModule : GameMvcEntity<SynchronizationSettings>
+    public class SynchronizationModule : MMMvcEntity<SynchronizationSettings>
     {
         private readonly IConsciousness consciousness;
 

@@ -12,7 +12,7 @@
     using Widgets.IndexViews;
     using Widgets.IndexViews.Tests;
 
-    public class TesTMvcLogic : GameMvcEntityLogic<TestModule, TesTMvcSettings, TesTMvcLogic>
+    public class TesTMvcLogic : MMMvcEntityLogic<TestModule, TesTMvcSettings, TesTMvcLogic>
     {
         private readonly ITest test;
 
@@ -36,10 +36,10 @@
 
             this.TestMonitor = new TestMonitor(this.Interop.Engine, this.test);
 
-            this.ControllableEntities = new GameEntityCollection<IGameInputableEntity>();
+            this.ControllableEntities = new MMEntityCollection<IMMInputableEntity>();
         }
 
-        public GameEntityCollection<IGameInputableEntity> ControllableEntities { get; set; }
+        public MMEntityCollection<IMMInputableEntity> ControllableEntities { get; set; }
 
         public TestMonitor TestMonitor { get; set; }
 
@@ -47,7 +47,7 @@
 
         #region Load and Unload
                                                                                                            
-        public override void LoadContent(IGameInteropService interop)
+        public override void LoadContent(IMMEngineInteropService interop)
         {
             var graphicsSettings = this.Graphics.Settings;
 
@@ -75,7 +75,7 @@
 
         #endregion
 
-        public override void UpdateInput(IGameInputService input, GameTime time)
+        public override void UpdateInput(IMMEngineInputService input, GameTime time)
         {
             this.ControllableEntities.UpdateInput(input, time);
             base                     .UpdateInput(input, time);

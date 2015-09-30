@@ -6,7 +6,7 @@ namespace MetaMind.Unity.Components
 
     public class SaveManager : Engine.Components.Interop.SaveManager
     {
-        public SaveManager(GameEngine engine)
+        public SaveManager(MMEngine engine)
             : base(engine)
         {
         }

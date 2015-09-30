@@ -1,6 +1,6 @@
 namespace MetaMind.Engine.Gui.Modules
 {
-    public interface IGameMvcEntityLogic : IInputable, IInteroperableOperations
+    public interface IGameMvcEntityLogic : IMMInputable, IMMInteroperableOperations
     {
     }
 }

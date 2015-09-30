@@ -9,7 +9,7 @@
     }
 
     [DataContract]
-    internal abstract class ConsciousnessState : GameEntity, IConsciousnessState
+    internal abstract class ConsciousnessState : MMEntity, IConsciousnessState
     {
         protected ConsciousnessState(Consciousness consciousness)
         {

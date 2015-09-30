@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Components.Content.Asset
 {
     using System;
 
-    public abstract class Asset : GameObject
+    public abstract class Asset : MMObject
     {
         #region Constructors 
 

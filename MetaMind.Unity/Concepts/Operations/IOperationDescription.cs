@@ -10,7 +10,7 @@
 
         IComparable<IOperationDescription>,
 
-        IInnerUpdatable
+        IMMFreeUpdatable
     {
         string Name { get; }
 

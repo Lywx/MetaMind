@@ -6,9 +6,9 @@ namespace MetaMind.Unity.Components
     using Engine.Service.Loader;
     using Microsoft.Xna.Framework;
 
-    public class ResourceMonitor : GameInputableComponent, IConfigurationLoader
+    public class ResourceMonitor : MMInputableComponent, IConfigurationLoader
     {
-        public ResourceMonitor(GameEngine engine) : base(engine)
+        public ResourceMonitor(MMEngine engine) : base(engine)
         {
             this.Processor = new ProcessorProfiler();
 

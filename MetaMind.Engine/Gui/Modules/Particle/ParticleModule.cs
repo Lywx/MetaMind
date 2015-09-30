@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Gui.Modules
     /// <summary>
     /// Particle controller relies on implementation of FloatParticle.
     /// </summary>
-    public class ParticleModule : GameMvcEntity<ParticleSettings>
+    public class ParticleModule : MMMvcEntity<ParticleSettings>
     {
         #region Particle Data
 
@@ -34,7 +34,7 @@ namespace MetaMind.Engine.Gui.Modules
             this.Particles = new List<FloatParticle>();
         }
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             for (var i = 0; i < this.Particles.Count; ++i)
             {
@@ -51,11 +51,11 @@ namespace MetaMind.Engine.Gui.Modules
             }
         }
 
-        public override void LoadContent(IGameInteropService interop)
+        public override void LoadContent(IMMEngineInteropService interop)
         {
         }
 
-        public override void UnloadContent(IGameInteropService interop)
+        public override void UnloadContent(IMMEngineInteropService interop)
         {
         }
 

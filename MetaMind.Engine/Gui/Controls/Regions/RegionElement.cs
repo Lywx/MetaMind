@@ -4,7 +4,7 @@ namespace MetaMind.Engine.Gui.Controls.Regions
     using System.Linq;
     using Stateless;
 
-    public abstract class RegionElement : GameInputableEntity, IRegionElement
+    public abstract class RegionElement : MMInputableEntity, IRegionElement
     {
         protected RegionElement()
         {

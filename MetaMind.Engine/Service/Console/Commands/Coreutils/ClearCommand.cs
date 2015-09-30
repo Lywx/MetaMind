@@ -2,9 +2,9 @@
 {
     internal class ClearCommand : IConsoleCommand
     {
-        private readonly GameConsole module;
+        private readonly MMConsole module;
 
-        public ClearCommand(GameConsole module)
+        public ClearCommand(MMConsole module)
         {
             this.module = module;
         }

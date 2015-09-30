@@ -7,7 +7,7 @@
 
 namespace MetaMind.Engine.Components.Interop.Process
 {
-    public abstract class Process : GameEntity, IProcess
+    public abstract class Process : MMEntity, IProcess
     {
         #region Process Data
 

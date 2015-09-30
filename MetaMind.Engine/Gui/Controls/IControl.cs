@@ -29,9 +29,9 @@
         #region Input Data 
 
         /// <summary>
-        /// Similar design to Game.Component in MonoGame.
+        /// Similar design to MMGame.Component in MonoGame.
         /// </summary>
-        GameEntityCollection<IGameEntity> Minions { get; }
+        MMEntityCollection<IMMEntity> Minions { get; }
 
         #endregion
     }

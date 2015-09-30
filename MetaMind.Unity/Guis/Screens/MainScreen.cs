@@ -13,7 +13,7 @@
     using Layers;
     using Microsoft.Xna.Framework;
 
-    public class MainScreen : GameScreen
+    public class MainScreen : MMScreen
     {
         private RectangleButton buttonPrevious;
 
@@ -37,11 +37,11 @@
             this.IsPopup = true;
         }
 
-        public CircularGameLayer CircularLayers { get; private set; }
+        public MMCircularLayer CircularLayers { get; private set; }
 
         #region Load and Unload
 
-        public override void LoadContent(IGameInteropService interop)
+        public override void LoadContent(IMMEngineInteropService interop)
         {
             // Script runner
             this.scriptSearcher = new FsScriptSearcher();
@@ -101,7 +101,7 @@
                 (sender, args) => this.CircularLayers.Next();
 
             this.Layers.Add(new SynchronizationLayer(this));
-            this.Layers.Add(new GameLayer(this)
+            this.Layers.Add(new MMLayer(this)
             {
                 DrawAction = (graphics, time, alpha) =>
                 {
@@ -123,7 +123,7 @@
                 }
             });
 
-            this.CircularLayers = new CircularGameLayer(this);
+            this.CircularLayers = new MMCircularLayer(this);
             this.CircularLayers.Add(new TestLayer(this.testSession, Unity.Speech, this));
             this.CircularLayers.Add(new OperationLayer(this.operationSession, this)
             {
@@ -150,7 +150,7 @@
             base.Update(time);
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime time)
+        public override void UpdateInput(IMMEngineInputService input, GameTime time)
         {
             var keyboard = input.State.Keyboard;
 

@@ -24,7 +24,7 @@ namespace MetaMind.Engine.Components.Audio
     /// </remarks>
     public class AudioManager : GameComponent, IAudioManager
     {
-        public AudioManager(GameEngine engine, AudioEngine audioEngine, WaveBank waveBank, SoundBank soundBank)
+        public AudioManager(MMEngine engine, AudioEngine audioEngine, WaveBank waveBank, SoundBank soundBank)
             : base(engine)
         {
             if (engine == null)

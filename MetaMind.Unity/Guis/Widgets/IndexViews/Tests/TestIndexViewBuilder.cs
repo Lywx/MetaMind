@@ -26,7 +26,7 @@
     /// <summary>
     /// Composers are not intended to be reused.
     /// </summary>
-    public class TestIndexViewBuilder : GameVisualEntity, IIndexViewBuilder
+    public class TestIndexViewBuilder : MMVisualEntity, IIndexViewBuilder
     {
         private StandardIndexViewSettings viewSettings;
 

@@ -117,7 +117,7 @@ namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
 
         #region Update and Draw
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             if (!this.Item[ViewItemState.Item_Is_Active]() && 
                 !this.Item[ViewItemState.Item_Is_Dragging]())

@@ -9,7 +9,7 @@ namespace MetaMind.Engine
         [STAThread]
         private static void Main(string[] args)
         {
-            var builder = new GameEngineBuilder();
+            var builder = new MMEngineBuilder();
 
             using (var engine = builder.Create())
             {

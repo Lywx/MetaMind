@@ -8,7 +8,7 @@
     using Guis.Screens;
     using Stateless;
 
-    public class Operation : GameEntity
+    public class Operation : MMEntity
     {
         public static OperationSession Session { get; set; }
     }

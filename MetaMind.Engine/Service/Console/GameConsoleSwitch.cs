@@ -5,7 +5,7 @@ namespace MetaMind.Engine.Service.Console
 
     public static class GameConsoleSwitch
     {
-        private static IGameInteropService Interop => GameEngine.Service.Interop;
+        private static IMMEngineInteropService Interop => MMEngine.Service.Interop;
 
         public static void DebugFlush(string output, string error)
         {

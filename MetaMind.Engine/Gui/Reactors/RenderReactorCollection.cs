@@ -5,7 +5,7 @@
 // </copyright>
 namespace MetaMind.Engine.Gui.Reactors
 {
-    public class RenderReactorCollection : GameEntityCollection<RenderReactor>
+    public class RenderReactorCollection : MMEntityCollection<RenderReactor>
     {
         
     }

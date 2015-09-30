@@ -11,9 +11,9 @@ namespace MetaMind.Engine.Components.Input
     using Microsoft.Xna.Framework;
 
     /// <summary>
-    /// This is a game component that implements IOuterUpdateable.
+    /// This is a game component that implements IMMUpdateable.
     /// </summary>
-    public class InputState : GameInputableComponent, IInputState
+    public class InputState : MMInputableComponent, IInputState
     {
         private readonly KeyboardInputState keyboard;
 
@@ -25,7 +25,7 @@ namespace MetaMind.Engine.Components.Input
 
         #region Constructors
 
-        public InputState(GameEngine engine)
+        public InputState(MMEngine engine)
             : base(engine)
         {
             if (engine == null)

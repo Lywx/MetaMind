@@ -9,11 +9,11 @@ namespace MetaMind.Engine.Service.Console
     using Processors;
 
     // TODO: Maybe I should reorganize this
-    internal class BufferController : GameMvcComponentComponent<GameConsole, GameConsoleSettings, GameConsoleLogic, GameConsoleVisual>
+    internal class BufferController : MMMvcComponentComponent<MMConsole, GameConsoleSettings, MMConsoleLogic, MMConsoleVisual>
     {
         #region Constructors
 
-        public BufferController(GameConsole module, GameEngine engine)
+        public BufferController(MMConsole module, MMEngine engine)
             : base(module)
         {
             this.Input   = new CommandLine(string.Empty, CommandType.Input);

@@ -7,7 +7,7 @@
 
 namespace MetaMind.Engine.Gui.Controls.Views.Visuals
 {
-    public interface IViewVisualComponent : IViewComponent, IDrawable
+    public interface IViewVisualComponent : IViewComponent, IMMDrawable
     {
     }
 }

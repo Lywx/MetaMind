@@ -5,7 +5,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Settings
 
     // TODO(Critical): Should I remove all the gui settings?
     [DataContract]
-    public class ItemSettings : GameSettings, IItemSettings, ICloneable
+    public class ItemSettings : MMSettings, IItemSettings, ICloneable
     {
         protected ItemSettings()
         {

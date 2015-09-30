@@ -39,7 +39,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Interactions
             this.viewBinding = viewLayer.ViewBinding;
         }
 
-        public override void ViewDoSwap(IGameInteropService interop, IViewItem draggingItem)
+        public override void ViewDoSwap(IMMEngineInteropService interop, IViewItem draggingItem)
         {
             if (this.Item[ViewItemState.Item_Is_Swaping]())
             {

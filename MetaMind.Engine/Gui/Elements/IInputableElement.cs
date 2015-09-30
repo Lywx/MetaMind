@@ -7,7 +7,7 @@ namespace MetaMind.Engine.Gui.Elements
 {
     using System;
 
-    public interface IInputableElement : IElement, IInputable
+    public interface IInputableElement : IElement, IMMInputable
     {
         Func<bool> this[ElementState state] { get; }
     }

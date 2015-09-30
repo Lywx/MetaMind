@@ -5,7 +5,7 @@
 // </copyright>
 namespace MetaMind.Engine.Gui.Elements
 {
-    public interface IInputableRectangle : IInputableElement, IInputable
+    public interface IInputableRectangle : IInputableElement, IMMInputable
     {
     }
 }

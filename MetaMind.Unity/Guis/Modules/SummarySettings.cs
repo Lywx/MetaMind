@@ -6,7 +6,7 @@ namespace MetaMind.Unity.Guis.Modules
     using Engine.Service.Loader;
     using Microsoft.Xna.Framework;
 
-    public class SummarySettings : GameVisualEntity, IParameterLoader<GraphicsSettings>
+    public class SummarySettings : MMVisualEntity, IParameterLoader<GraphicsSettings>
     {
         #region Parameters
 

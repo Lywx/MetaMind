@@ -5,7 +5,7 @@ namespace MetaMind.Engine.Service.Scripting
     using System.Linq;
     using System.Threading;
 
-    public class QueueSession : GameEntity, IInnerUpdatable
+    public class QueueSession : MMEntity, IMMFreeUpdatable
     {
         private readonly List<Thread> threadsQueued = new List<Thread>();
 

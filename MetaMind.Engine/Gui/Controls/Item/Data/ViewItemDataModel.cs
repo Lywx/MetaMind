@@ -54,7 +54,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Data
             this.LoadContent(this.Interop);
         }
 
-        public override void LoadContent(IGameInteropService interop)
+        public override void LoadContent(IMMEngineInteropService interop)
         {
             base.LoadContent(interop);
 
@@ -139,7 +139,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Data
 
         #region Update
 
-        public override void UpdateInput(IGameInputService input, GameTime time)
+        public override void UpdateInput(IMMEngineInputService input, GameTime time)
         {
             this.CharModifier.UpdateInput(input, time);
         }

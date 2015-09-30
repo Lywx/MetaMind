@@ -4,7 +4,7 @@
     using System.Collections;
     using System.Collections.Generic;
 
-    public interface ITestOrganization : IInnerUpdatable, ITestOperations
+    public interface ITestOrganization : IMMFreeUpdatable, ITestOperations
     {
         List<ITest> Children { get; }
 

@@ -4,7 +4,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Interactions
 
     public interface IViewItemViewSwapProvider
     {
-        void ViewDoSwap(IGameInteropService interop, IViewItem draggingItem);
+        void ViewDoSwap(IMMEngineInteropService interop, IViewItem draggingItem);
 
         void ViewUpdateSwap();
     }

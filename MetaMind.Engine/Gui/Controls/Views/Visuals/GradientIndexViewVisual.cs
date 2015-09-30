@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Visuals
         {
         }
 
-        protected override void DrawItems(IGameGraphicsService graphics, GameTime time, byte alpha)
+        protected override void DrawItems(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             foreach (var item in this.View.ItemsRead.ToArray())
             {

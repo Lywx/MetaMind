@@ -7,7 +7,7 @@
     [DataContract]
     [KnownType(typeof(ConsciousnessAsleep))]
     [KnownType(typeof(ConsciousnessAwake))]
-    public class Consciousness : GameEntity, IConsciousness
+    public class Consciousness : MMEntity, IConsciousness
     {
         #region Consciousness Data
 

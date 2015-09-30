@@ -1,9 +1,8 @@
 namespace MetaMind.Engine.Gui.Modules.Particle
 {
     using Microsoft.Xna.Framework;
-    using IDrawable = Engine.IDrawable;
 
-    public interface IParticle : IShapelessParticle, IUpdateable, IDrawable
+    public interface IParticle : IShapelessParticle, IUpdateable, IMMDrawable
     {
         Color Color { get; set; }
 

@@ -5,7 +5,7 @@ namespace MetaMind.Unity.Guis.Modules.Summary
     using Engine.Components.Content.Fonts;
     using Microsoft.Xna.Framework;
 
-    public class SummaryFactory : GameVisualEntity
+    public class SummaryFactory : MMVisualEntity
     {
         public SummaryFactory(SummarySettings settings)
         {

@@ -11,7 +11,7 @@
     using Engine.Session;
     using Guis.Screens;
 
-    public class SessionController : GameObject, ISessionController<SessionData>
+    public class SessionController : MMObject, ISessionController<SessionData>
     {
         private BackgroundScreenSettings background;
 
@@ -105,14 +105,14 @@
 
         #region Load and Unload
 
-        public void LoadContent(IGameInteropService interop)
+        public void LoadContent(IMMEngineInteropService interop)
         {
             interop.Asset.LoadPackage("Unity.Persistent");
 
             this.Manager = new ControlManager();
         }
 
-        public void UnloadContent(IGameInteropService interop)
+        public void UnloadContent(IMMEngineInteropService interop)
         {
         }
 

@@ -3,17 +3,14 @@
 //   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MetaMind.Engine.Action
+namespace MetaMind.Engine.Actions
 {
+    using System;
+
     public class GameActionState
     {
-        public GameActor Target { get; protected set; }
+        public MMActor Target { get; protected set; }
 
         public GameAction Action { get; protected set; }
 
@@ -23,7 +20,7 @@ namespace MetaMind.Engine.Action
         /// <value><c>true</c> if this instance is done; otherwise, <c>false</c>.</value>
         public virtual bool IsDone => true;
 
-        public GameActionState(GameAction action, GameActor target)
+        public GameActionState(GameAction action, MMActor target)
         {
             if (action == null)
             {
@@ -88,7 +85,7 @@ namespace MetaMind.Engine.Action
 
     public class GameAction
     {
-        protected internal virtual GameActionState StartAction(GameActor target)
+        protected internal virtual GameActionState StartAction(MMActor target)
         {
             return null;
         }

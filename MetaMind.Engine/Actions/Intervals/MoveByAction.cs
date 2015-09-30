@@ -11,8 +11,6 @@ using System.Threading.Tasks;
 
 namespace MetaMind.Engine.Actions.Intervals
 {
-    using Action;
-
     public class MoveByAction : GameFiniteTimeAction
     {
         #region Constructors
@@ -26,7 +24,7 @@ namespace MetaMind.Engine.Actions.Intervals
 
         public GamePoint PositionDelta { get; private set; }
 
-        protected internal override GameActionState StartAction(GameActor target)
+        protected internal override GameActionState StartAction(MMActor target)
         {
             return new MoveByActionState(this, target);
         }
@@ -44,7 +42,7 @@ namespace MetaMind.Engine.Actions.Intervals
         protected GamePoint StartPosition;
         protected GamePoint PreviousPosition;
 
-        public MoveByActionState(MoveByAction action, GameActor target)
+        public MoveByActionState(MoveByAction action, MMActor target)
             : base(action, target)
         {
             PositionDelta = action.PositionDelta;

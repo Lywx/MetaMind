@@ -103,7 +103,7 @@
 
         #region Draw
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             this.ItemVisual?.Draw(graphics, time, alpha);
         }
@@ -112,7 +112,7 @@
 
         #region Update
 
-        public override void UpdateInput(IGameInputService input, GameTime time)
+        public override void UpdateInput(IMMEngineInputService input, GameTime time)
         {
             this.ItemLogic? .UpdateInput(input, time);
             this.ItemVisual?.UpdateInput(input, time);

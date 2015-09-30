@@ -8,12 +8,12 @@
     [TestFixture]
     public class Test_ControlSettings
     {
-        private GameSettings settings;
+        private MMSettings settings;
 
         [SetUp]
         public void Test_Creation()
         {
-            this.settings = new GameSettings { { "Size", new Point(5, 5) }, { "Color", Color.White } };
+            this.settings = new MMSettings { { "Size", new Point(5, 5) }, { "Color", Color.White } };
         }
 
         [Test]

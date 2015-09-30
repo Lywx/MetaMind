@@ -442,7 +442,7 @@
             this.ClearAction(time);
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime time)
+        public override void UpdateInput(IMMEngineInputService input, GameTime time)
         {
             if (!this.Enabled)
             {

@@ -124,7 +124,7 @@ namespace MetaMind.Engine.Gui.Controls.Images
 
         #region Draw
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             switch (this.ImageMode)
             {

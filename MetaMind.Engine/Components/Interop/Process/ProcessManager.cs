@@ -21,7 +21,7 @@ namespace MetaMind.Engine.Components.Interop.Process
 
         #region Constructors
 
-        public ProcessManager(GameEngine engine)
+        public ProcessManager(MMEngine engine)
             : base(engine)
         {
             if (engine == null)

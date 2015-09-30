@@ -6,9 +6,9 @@
 
     internal class HelpCommand : IConsoleCommand
     {
-        private readonly GameConsole console;
+        private readonly MMConsole console;
 
-        public HelpCommand(GameConsole console)
+        public HelpCommand(MMConsole console)
         {
             if (console == null)
             {

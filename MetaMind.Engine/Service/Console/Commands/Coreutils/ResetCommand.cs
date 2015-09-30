@@ -1,6 +1,6 @@
 ﻿namespace MetaMind.Engine.Service.Console.Commands.Coreutils
 {
-    internal class ResetCommand : GameEntity, IConsoleCommand
+    internal class ResetCommand : MMEntity, IConsoleCommand
     {
         public ResetCommand()
         {

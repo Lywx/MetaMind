@@ -195,7 +195,7 @@
 
         protected Func<Action<Font, string, Vector2, Color, float, HoritonalAlignment, VerticalAlignment, int>> DrawActionSelector { get; }
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             this.DrawAction?.Invoke(
                 this.TextFont(),

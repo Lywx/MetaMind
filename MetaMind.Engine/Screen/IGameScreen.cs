@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Screen
 {
     using System;
 
-    public interface IGameScreen : IRenderTarget, IGameScreenOperations, IInteroperableOperations, IDisposable
+    public interface IGameScreen : IRenderTarget, IGameScreenOperations, IMMInteroperableOperations, IDisposable
     {
         #region Render Data
 

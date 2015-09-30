@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Components.Interop.Process
 {
     using Microsoft.Xna.Framework;
 
-    public class ProcessCounter : GameEntity
+    public class ProcessCounter : MMEntity
     {
         public ProcessCounter(int totalFrame)
         {

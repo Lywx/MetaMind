@@ -29,7 +29,7 @@
     using Widgets.BlockViews.Options;
     using Widgets.IndexViews.Tests;
 
-    public class OptionScreen : GameScreen
+    public class OptionScreen : MMScreen
     {
         private readonly List<IOption> options;
 
@@ -43,11 +43,11 @@
 
         private LabelBox procedureNameLabelBox;
 
-        private readonly IGameLayer screenBackground;
+        private readonly IMMLayer screenBackground;
 
         private Label screenLabel;
 
-        public OptionScreen(string procedureName, string procedureDescription, List<IOption> options, IGameLayer screenBackground)
+        public OptionScreen(string procedureName, string procedureDescription, List<IOption> options, IMMLayer screenBackground)
         {
             if (procedureName == null)
             {
@@ -82,12 +82,12 @@
             this.TransitionOnTime  = TimeSpan.FromSeconds(0.5);
             this.TransitionOffTime = TimeSpan.FromSeconds(0.5);
 
-            this.Entities = new GameEntityCollection<IGameInputableEntity>();
+            this.Entities = new MMEntityCollection<IMMInputableEntity>();
         }
 
-        private GameEntityCollection<IGameInputableEntity> Entities { get; set; }
+        private MMEntityCollection<IMMInputableEntity> Entities { get; set; }
 
-        public override void LoadContent(IGameInteropService interop)
+        public override void LoadContent(IMMEngineInteropService interop)
         {
             var graphicsSettings = this.Graphics.Settings;
 
@@ -195,14 +195,14 @@
             this.screenBackground.FadeOut(TimeSpan.FromSeconds(0.5));
         }
 
-        public override void UnloadContent(IGameInteropService interop)
+        public override void UnloadContent(IMMEngineInteropService interop)
         {
             base.UnloadContent(interop);
 
             this.screenBackground.FadeIn(TimeSpan.FromSeconds(0.5));
         }
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
         {
             this.SpriteBatch.Begin();
 
@@ -225,7 +225,7 @@
             base.Update(time);
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime time)
+        public override void UpdateInput(IMMEngineInputService input, GameTime time)
         {
             this.Entities.UpdateInput(input, time);
             base.UpdateInput(input, time);

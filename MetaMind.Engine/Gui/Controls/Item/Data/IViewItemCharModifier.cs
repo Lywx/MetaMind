@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Data
 {
     using System;
 
-    public interface IViewItemCharModifier : IInputable, IDrawable, IDisposable
+    public interface IViewItemCharModifier : IMMInputable, IMMDrawable, IDisposable
     {
         event EventHandler<ViewItemDataEventArgs> ModificationEnded;
 

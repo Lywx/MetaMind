@@ -6,7 +6,7 @@
     using Engine;
     using Engine.Gui.Modules;
 
-    public class TestModule : GameMvcEntity<TesTMvcSettings>
+    public class TestModule : MMMvcEntity<TesTMvcSettings>
     {
         private readonly ITest test;
 

@@ -8,7 +8,7 @@ namespace MetaMind.Unity.Guis.Modules.Summary
     using Engine.Service;
     using Microsoft.Xna.Framework;
 
-    public class SummaryEntry : GameVisualEntity
+    public class SummaryEntry : MMVisualEntity
     {
         public SummaryEntry(Func<Font> font, Func<string> caption, Func<Vector2> captionPos, Func<string> statistics, Func<Vector2> statisticsPos, Func<Color> color, Func<float> size)
         {
@@ -23,7 +23,7 @@ namespace MetaMind.Unity.Guis.Modules.Summary
 
         public Label Statistics { get; set; }
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             this.Caption   .Draw(graphics, time, alpha);
             this.Statistics.Draw(graphics, time, alpha);

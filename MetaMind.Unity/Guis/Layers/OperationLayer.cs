@@ -12,7 +12,7 @@
     using Modules;
 
     // TODO(Critical): I need to change this. I don't need this anymore
-    public class OperationLayer : GameLayer
+    public class OperationLayer : MMLayer
     {
         private readonly OperationSession operationSession;
 
@@ -26,15 +26,15 @@
 
             this.operationSession = operationSession;
 
-            this.ControllableEntities = new GameEntityCollection<IGameInputableEntity>();
-            this.VisuallEntities      = new GameEntityCollection<IGameVisualEntity>();
+            this.ControllableEntities = new MMEntityCollection<IMMInputableEntity>();
+            this.VisuallEntities      = new MMEntityCollection<IMMVisualEntity>();
         }
 
-        private GameEntityCollection<IGameVisualEntity> VisuallEntities { get; set; }
+        private MMEntityCollection<IMMVisualEntity> VisuallEntities { get; set; }
 
-        private GameEntityCollection<IGameInputableEntity> ControllableEntities { get; set; }
+        private MMEntityCollection<IMMInputableEntity> ControllableEntities { get; set; }
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             base.Draw(graphics, time, alpha);
 
@@ -46,7 +46,7 @@
             this.SpriteBatch.End();
         }
 
-        public override void LoadContent(IGameInteropService interop)
+        public override void LoadContent(IMMEngineInteropService interop)
         {
             var operation = Unity.SessionData.Operation;
 
@@ -74,7 +74,7 @@
             base.LoadContent(interop);
         }
 
-        public override void UnloadContent(IGameInteropService interop)
+        public override void UnloadContent(IMMEngineInteropService interop)
         {
             this.ControllableEntities.UnloadContent(interop);
             this.VisuallEntities     .UnloadContent(interop);
@@ -88,7 +88,7 @@
             base                     .Update(time);
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime time)
+        public override void UpdateInput(IMMEngineInputService input, GameTime time)
         {
             this.ControllableEntities.UpdateInput(input, time);
             base.                     UpdateInput(input, time);

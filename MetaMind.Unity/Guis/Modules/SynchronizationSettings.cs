@@ -7,7 +7,7 @@
     using Engine.Setting.Color;
     using Microsoft.Xna.Framework;
 
-    public class SynchronizationSettings : GameVisualEntity, IParameterLoader<GraphicsSettings>, ICloneable
+    public class SynchronizationSettings : MMVisualEntity, IParameterLoader<GraphicsSettings>, ICloneable
     {
         public Vector2 BarFrameCenterPosition;
 

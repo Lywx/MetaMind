@@ -14,7 +14,7 @@ namespace MetaMind.Engine.Components.Content.Asset
 
     // TODO(Critical): Message / Dialog system
     // TODO(Critical): Test query system
-    public class AssetManager : GameInputableComponent, IAssetManager
+    public class AssetManager : MMInputableComponent, IAssetManager
     {
         #region Logger
 
@@ -42,7 +42,7 @@ namespace MetaMind.Engine.Components.Content.Asset
 
         #region Constructors
 
-        public AssetManager(GameEngine engine) : base(engine)
+        public AssetManager(MMEngine engine) : base(engine)
         {
             this.Fonts   = new FontManager(engine);
             this.Texture = new TextureManager(engine);

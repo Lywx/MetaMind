@@ -127,7 +127,7 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 
         #region Update
 
-        public override void UpdateInput(IGameInputService input, GameTime time)
+        public override void UpdateInput(IMMEngineInputService input, GameTime time)
         {
             base.UpdateInput(input, time);
 

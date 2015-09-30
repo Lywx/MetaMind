@@ -8,19 +8,19 @@
     using Engine.Service;
     using Microsoft.Xna.Framework;
 
-    public class PlayTest_Frame : GameMvcEntity<object>
+    public class PlayTest_Frame : MMMvcEntity<object>
     {
-        private GameEntityCollection<GameInputableEntity> control;
+        private MMEntityCollection<MMInputableEntity> control;
 
-        private GameEntityCollection<GameVisualEntity> visual;
+        private MMEntityCollection<MMVisualEntity> visual;
 
         private DraggableRectangle rectangle;
 
         public PlayTest_Frame(object settings)
             : base(settings)
         {
-            this.control = new GameEntityCollection<GameInputableEntity>();
-            this.visual  = new GameEntityCollection<GameVisualEntity>();
+            this.control = new MMEntityCollection<MMInputableEntity>();
+            this.visual  = new MMEntityCollection<MMVisualEntity>();
 
             // Region Control
             this.rectangle = new DraggableRectangle(new Rectangle(50, 50, 50, 50)) {Movable = false};
@@ -31,7 +31,7 @@
             this.visual.Add(box);
         }
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             this.control.Draw(graphics, time, alpha);
             this.visual .Draw(graphics, time, alpha);
@@ -45,7 +45,7 @@
             this.control.Update(time);
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime time)
+        public override void UpdateInput(IMMEngineInputService input, GameTime time)
         {
             this.control.UpdateInput(input, time);
         }

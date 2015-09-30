@@ -32,7 +32,7 @@ namespace MetaMind.Engine.Components.Interop.Event
 
         #region Constructors
 
-        public EventManager(GameEngine engine)
+        public EventManager(MMEngine engine)
             : base(engine)
         {
             if (engine == null)

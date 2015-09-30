@@ -3,7 +3,6 @@ namespace MetaMind.Engine.Gui.Controls.Views.Visuals
     using Item;
     using Microsoft.Xna.Framework;
     using Service;
-    using IDrawable = Engine.IDrawable;
 
     public class ViewVisual : ViewVisualComponent, IViewVisual
     {
@@ -12,21 +11,21 @@ namespace MetaMind.Engine.Gui.Controls.Views.Visuals
         {
         }
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             this.DrawComponents(graphics, time, alpha);
             this.DrawItems(graphics, time, alpha);
         }
 
-        protected virtual void DrawComponents(IGameGraphicsService graphics, GameTime time, byte alpha)
+        protected virtual void DrawComponents(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             foreach (var component in this.ViewComponents)
             {
-                ((IDrawable)component.Value).Draw(graphics, time, alpha);
+                ((IMMDrawable)component.Value).Draw(graphics, time, alpha);
             }
         }
 
-        protected virtual void DrawItems(IGameGraphicsService graphics, GameTime time, byte alpha)
+        protected virtual void DrawItems(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             foreach (var item in this.View.ItemsRead.ToArray())
             {

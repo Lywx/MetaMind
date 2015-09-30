@@ -9,7 +9,7 @@ namespace MetaMind.Engine
     {
         private static readonly RenderTargetUsage RenderTargetUsage = RenderTargetUsage.DiscardContents;
 
-        private static IGameGraphicsService Graphics => GameEngine.Service.Graphics;
+        private static IMMEngineGraphicsService Graphics => MMEngine.Service.Graphics;
 
         private static GraphicsDevice GraphicsDevice => Graphics.GraphicsDevice;
 

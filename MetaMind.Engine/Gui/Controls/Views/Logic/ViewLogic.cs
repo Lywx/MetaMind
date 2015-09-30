@@ -184,14 +184,14 @@ namespace MetaMind.Engine.Gui.Controls.Views.Logic
             }
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime time)
+        public override void UpdateInput(IMMEngineInputService input, GameTime time)
         {
             this.UpdateInputOfMouse(input, time);
             this.UpdateInputOfKeyboard(input, time);
             this.UpdateInputOfItems(input, time);
         }
 
-        protected void UpdateInputOfItems(IGameInputService input, GameTime time)
+        protected void UpdateInputOfItems(IMMEngineInputService input, GameTime time)
         {
             foreach (var item in this.View.ItemsRead.ToArray())
             {
@@ -199,7 +199,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Logic
             }
         }
 
-        protected virtual void UpdateInputOfKeyboard(IGameInputService input, GameTime time)
+        protected virtual void UpdateInputOfKeyboard(IMMEngineInputService input, GameTime time)
         {
             if (this.View[ViewState.View_Is_Inputting]())
             {
@@ -219,7 +219,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Logic
             }
         }
 
-        protected virtual void UpdateInputOfMouse(IGameInputService input, GameTime time)
+        protected virtual void UpdateInputOfMouse(IMMEngineInputService input, GameTime time)
         {
         }
 

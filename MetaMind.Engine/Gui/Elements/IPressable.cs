@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Gui.Elements
 {
     using System;
 
-    public interface IPressable : IInputable
+    public interface IPressable : IMMInputable
     {
         #region Mouse General
 

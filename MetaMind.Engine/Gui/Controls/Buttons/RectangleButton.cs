@@ -89,7 +89,7 @@
         #region Draw
 
         public override void Draw(
-            IGameGraphicsService graphics,
+            IMMEngineGraphicsService graphics,
             GameTime time,
             byte alpha)
         {

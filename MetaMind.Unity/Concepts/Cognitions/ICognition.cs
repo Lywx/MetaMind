@@ -4,7 +4,7 @@
     using Engine;
     using Synchronizations;
 
-    public interface ICognition: IInnerUpdatable, ICognitionProperties
+    public interface ICognition: IMMFreeUpdatable, ICognitionProperties
     {
         [DataMember]
         IConsciousness Consciousness { get; set; }

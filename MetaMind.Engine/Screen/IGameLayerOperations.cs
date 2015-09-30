@@ -3,7 +3,7 @@
     using System;
     using Microsoft.Xna.Framework;
 
-    public interface IGameLayerOperations : IInputableOperations, IOuterUpdateableOperations, IInteroperableOperations 
+    public interface IGameLayerOperations : IMMInputableOperations, IMMUpdateableOperations, IMMInteroperableOperations 
     {
         void FadeIn(TimeSpan time);
 

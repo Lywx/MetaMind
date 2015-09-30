@@ -14,7 +14,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Visuals
 
         protected int FocusAlpha { get; set; }
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             this.DrawItems(graphics, time, alpha);
             this.DrawComponents(graphics, time, Math.Max((byte)this.FocusAlpha, alpha));

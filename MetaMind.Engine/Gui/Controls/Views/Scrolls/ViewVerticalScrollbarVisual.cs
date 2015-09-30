@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Scrolls
     using Microsoft.Xna.Framework;
     using Service;
 
-    public class ViewVerticalScrollbarVisual : GameVisualEntity
+    public class ViewVerticalScrollbarVisual : MMVisualEntity
     {
         private readonly ViewVerticalScrollbar scrollbar;
 
@@ -66,7 +66,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Scrolls
 
         #region Draw
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             this.scrollbarShape.Draw(graphics, time, Math.Min(alpha, (byte)this.scrollbarBrightness));
         }

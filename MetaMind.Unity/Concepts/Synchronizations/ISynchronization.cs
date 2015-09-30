@@ -3,7 +3,7 @@ namespace MetaMind.Unity.Concepts.Synchronizations
     using System;
     using Engine;
 
-    public interface ISynchronization : IInnerUpdatable, ISynchronizationOperations
+    public interface ISynchronization : IMMFreeUpdatable, ISynchronizationOperations
     {
         #region State Data
 

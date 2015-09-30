@@ -7,17 +7,17 @@
     using Engine.Gui.Modules;
     using Microsoft.Xna.Framework;
 
-    public class PlayTest_Region : GameMvcEntity<object>
+    public class PlayTest_Region : MMMvcEntity<object>
     {
-        private GameEntityCollection<GameInputableEntity> control;
-        private GameEntityCollection<GameVisualEntity> visual;
+        private MMEntityCollection<MMInputableEntity> control;
+        private MMEntityCollection<MMVisualEntity> visual;
         private RectangleRegion region;
 
         public PlayTest_Region(object settings)
             : base(settings)
         {
-            this.control = new GameEntityCollection<GameInputableEntity>();
-            this.visual  = new GameEntityCollection<GameVisualEntity>();
+            this.control = new MMEntityCollection<MMInputableEntity>();
+            this.visual  = new MMEntityCollection<MMVisualEntity>();
 
             // Region Control
             this.region = new RectangleRegion(new Rectangle(50, 50, 50, 50));
@@ -28,7 +28,7 @@
             this.visual.Add(box);
         }
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             this.control.Draw(graphics, time, alpha);
             this.visual .Draw(graphics, time, alpha);
@@ -42,7 +42,7 @@
             this.control.Update(time);
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime time)
+        public override void UpdateInput(IMMEngineInputService input, GameTime time)
         {
             this.control.UpdateInput(input, time);
         }

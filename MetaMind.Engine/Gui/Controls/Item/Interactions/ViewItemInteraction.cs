@@ -100,7 +100,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Interactions
             }
         }
 
-        public void ViewSwap(IGameInteropService interop, IViewItem draggingItem)
+        public void ViewSwap(IMMEngineInteropService interop, IViewItem draggingItem)
         {
             var provider = this as IViewItemViewSwapProvider;
             if (provider != null)

@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Components.Interop
 
         #region Constructors
 
-        protected SaveManager(GameEngine engine)
+        protected SaveManager(MMEngine engine)
             : base(engine)
         {
             if (engine == null)

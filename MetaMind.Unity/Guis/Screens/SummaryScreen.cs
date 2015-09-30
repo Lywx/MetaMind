@@ -8,9 +8,9 @@
     using Microsoft.Xna.Framework;
     using Modules;
 
-    public class SummaryScreen : GameScreen
+    public class SummaryScreen : MMScreen
     {
-        private IGameMvcEntity summary;
+        private IMMMvcEntity summary;
 
         public SummaryScreen()
         {
@@ -21,7 +21,7 @@
             this.TransitionOffTime = TimeSpan.FromSeconds(0.5);
         }
 
-        public override void LoadContent(IGameInteropService interop)
+        public override void LoadContent(IMMEngineInteropService interop)
         {
             var cognition = Unity.SessionData.Cognition;
 
@@ -32,7 +32,7 @@
             this.summary.LoadContent(interop);
 
             this.Layers.Add(
-                new GameLayer(this)
+                new MMLayer(this)
                 {
                     DrawAction = (graphics, time, alpha) =>
                     {
@@ -51,7 +51,7 @@
                 });
         }
 
-        public override void UnloadContent(IGameInteropService interop)
+        public override void UnloadContent(IMMEngineInteropService interop)
         {
             base        .UnloadContent(interop);
             this.summary.UnloadContent(interop);

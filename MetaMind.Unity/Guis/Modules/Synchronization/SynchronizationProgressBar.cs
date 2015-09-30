@@ -9,7 +9,7 @@ namespace MetaMind.Unity.Guis.Modules.Synchronization
     using Engine.Setting.Color;
     using Microsoft.Xna.Framework;
 
-    public class SynchronizationProgressBar : GameMvcEntityComponent<SynchronizationModule, SynchronizationSettings, SynchronizationLogic>
+    public class SynchronizationProgressBar : MMMvcEntityComponent<SynchronizationModule, SynchronizationSettings, SynchronizationLogic>
     {
         public SynchronizationProgressBar(SynchronizationModule module, ISynchronization synchronization)
             : base(module)
@@ -42,7 +42,7 @@ namespace MetaMind.Unity.Guis.Modules.Synchronization
 
         private ISynchronization Synchronization { get; set; }
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             this.Frame   .Draw(graphics, time, alpha);
             this.Progress.Draw(graphics, time, alpha);

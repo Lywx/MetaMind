@@ -5,7 +5,7 @@ namespace MetaMind.Unity.Concepts.Tests
     using Engine;
     using Events;
 
-    public interface ITestEvaluation : IInnerUpdatable, ITestOperations, IDisposable
+    public interface ITestEvaluation : IMMFreeUpdatable, ITestOperations, IDisposable
     {
         string ResultStatus { get; }
 

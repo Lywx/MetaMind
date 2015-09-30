@@ -10,11 +10,11 @@
         [STAThread]
         static void Main()
         {
-            var builder = new GameEngineBuilder();
+            var builder = new MMEngineBuilder();
 
             using (var engine = builder.Create())
             {
-                var test = new GameEngineTest(engine);
+                var test = new MMEngineTest(engine);
                 test.Run();
             }
         }

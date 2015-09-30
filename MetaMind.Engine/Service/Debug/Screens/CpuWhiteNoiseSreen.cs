@@ -5,13 +5,13 @@
     using Screen;
     using Service;
 
-    public class CpuWhiteNoiseSreen : GameScreen
+    public class CpuWhiteNoiseSreen : MMScreen
     {
         private Color[] randomData;
 
         private Random Random => this.Numerical.Random;
 
-        public override void EndDraw(IGameGraphicsService graphics, GameTime time)
+        public override void EndDraw(IMMEngineGraphicsService graphics, GameTime time)
         {
             this.randomData = new Color[this.Width * this.Height];
 

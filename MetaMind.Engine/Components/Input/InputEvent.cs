@@ -15,7 +15,7 @@ namespace MetaMind.Engine.Components.Input
     using Extensions;
     using Microsoft.Xna.Framework;
 
-    public class InputEvent : GameInputableComponent, IInputEvent
+    public class InputEvent : MMInputableComponent, IInputEvent
     {
         private Form       windowForm;
 
@@ -23,7 +23,7 @@ namespace MetaMind.Engine.Components.Input
 
         #region Constructors
 
-        public InputEvent(GameEngine engine) 
+        public InputEvent(MMEngine engine) 
             : base(engine)
         {
             if (engine == null)

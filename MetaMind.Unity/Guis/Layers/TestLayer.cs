@@ -14,7 +14,7 @@ namespace MetaMind.Unity.Guis.Layers
     using Modules;
     using Screens;
 
-    public class TestLayer : GameLayer
+    public class TestLayer : MMLayer
     {
         private readonly TestSession testSession;
 
@@ -24,9 +24,9 @@ namespace MetaMind.Unity.Guis.Layers
 
         private ITest test;
 
-        private GameEntityCollection<IGameVisualEntity> drawEntities;
+        private MMEntityCollection<IMMVisualEntity> drawEntities;
 
-        private GameEntityCollection<IGameInputableEntity> inputEntities;
+        private MMEntityCollection<IMMInputableEntity> inputEntities;
 
         #region Constructors
 
@@ -49,15 +49,15 @@ namespace MetaMind.Unity.Guis.Layers
             this.testSession = testSession;
             this.testSynthesizer = testSynthesizer;
 
-            this.inputEntities = new GameEntityCollection<IGameInputableEntity>();
-            this.drawEntities = new GameEntityCollection<IGameVisualEntity>();
+            this.inputEntities = new MMEntityCollection<IMMInputableEntity>();
+            this.drawEntities = new MMEntityCollection<IMMVisualEntity>();
         }
 
         #endregion
 
         #region Load and Unload
 
-        public override void LoadContent(IGameInteropService interop)
+        public override void LoadContent(IMMEngineInteropService interop)
         {
             this.test = Unity.SessionData.Test;
 
@@ -91,7 +91,7 @@ namespace MetaMind.Unity.Guis.Layers
             base.LoadContent(interop);
         }
 
-        public override void UnloadContent(IGameInteropService interop)
+        public override void UnloadContent(IMMEngineInteropService interop)
         {
             this.inputEntities.UnloadContent(interop);
             this.drawEntities .UnloadContent(interop);
@@ -102,7 +102,7 @@ namespace MetaMind.Unity.Guis.Layers
 
         #region Draw
 
-        public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             this.SpriteBatch.Begin();
 
@@ -149,7 +149,7 @@ namespace MetaMind.Unity.Guis.Layers
             }
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime time)
+        public override void UpdateInput(IMMEngineInputService input, GameTime time)
         {
             this.inputEntities.UpdateInput(input, time);
             base.                     UpdateInput(input, time);

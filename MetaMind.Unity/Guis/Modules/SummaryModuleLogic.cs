@@ -12,7 +12,7 @@
     using Screens;
     using Sessions;
 
-    public class SummaryModuleLogic : GameMvcEntityLogic<SummaryModule, SummarySettings, SummaryModuleLogic>
+    public class SummaryModuleLogic : MMMvcEntityLogic<SummaryModule, SummarySettings, SummaryModuleLogic>
     {
         public SummaryModuleLogic(SummaryModule module, IConsciousness consciousness, ISynchronization synchronization)
             : base(module)
@@ -36,14 +36,14 @@
         private ISynchronization Synchronization { get; set; }
 
 
-        public override void LoadContent(IGameInteropService interop)
+        public override void LoadContent(IMMEngineInteropService interop)
         {
             this.Listeners.Add(new SleepStoppedListener());
 
             base.LoadContent(interop);
         }
 
-        public override void UpdateInput(IGameInputService input, GameTime time)
+        public override void UpdateInput(IMMEngineInputService input, GameTime time)
         {
             var keyboard = input.State.Keyboard;
 

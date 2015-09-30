@@ -32,7 +32,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Swaps
 
         #region Process
 
-        void StartProcess(IGameInteropService interop, IViewItem touchedItem, Vector2 touchedStart, IViewItem draggingItem, IView draggingView, Vector2 draggingEnd);
+        void StartProcess(IMMEngineInteropService interop, IViewItem touchedItem, Vector2 touchedStart, IViewItem draggingItem, IView draggingView, Vector2 draggingEnd);
 
         void WatchProcess(IViewItem item);
 
