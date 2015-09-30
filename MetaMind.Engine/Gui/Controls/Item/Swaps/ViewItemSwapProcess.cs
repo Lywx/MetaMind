@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ViewItemSwapProcess.cs" company="UESTC">
+// <copyright file="ViewItemSwapProcess.cs">
 //   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>

@@ -1,14 +1,13 @@
 ﻿namespace MetaMind.EngineTest.Guis
 {
     using Engine.Service;
-    using Engine.Test;
     using Engine;
     using Engine.Gui.Controls.Images;
     using Engine.Gui.Controls.Regions;
     using Engine.Gui.Modules;
     using Microsoft.Xna.Framework;
 
-    public class PlayTest_Region : GameEntityModule<object>
+    public class PlayTest_Region : GameMvcEntity<object>
     {
         private GameEntityCollection<GameInputableEntity> control;
         private GameEntityCollection<GameVisualEntity> visual;

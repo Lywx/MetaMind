@@ -4,10 +4,9 @@ namespace MetaMind.Engine
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.Serialization;
-    using Gui.Components;
 
     [DataContract]
-    public class GameSettings : Component, IGameSettings
+    public class GameSettings : GameObject, IGameSettings
     {
         #region Dependency
 

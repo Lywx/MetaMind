@@ -11,11 +11,11 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    public class TestModuleVisual : GameEntityModuleVisual<TestModule, TestModuleSettings, TestModuleLogic>
+    public class TesTMvcVisual : GameMvcEntityVisual<TestModule, TesTMvcSettings, TesTMvcLogic>
     {
         private readonly ITest test;
 
-        public TestModuleVisual(TestModule module, ITest test) : base(module)
+        public TesTMvcVisual(TestModule module, ITest test) : base(module)
         {
             if (test == null)
             {

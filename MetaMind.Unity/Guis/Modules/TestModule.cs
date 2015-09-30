@@ -6,13 +6,13 @@
     using Engine;
     using Engine.Gui.Modules;
 
-    public class TestModule : GameEntityModule<TestModuleSettings>
+    public class TestModule : GameMvcEntity<TesTMvcSettings>
     {
         private readonly ITest test;
 
         private readonly TestSession testSession;
 
-        public TestModule(TestModuleSettings settings, ITest test, TestSession testSession, SpeechSynthesizer testSynthesizer)
+        public TestModule(TesTMvcSettings settings, ITest test, TestSession testSession, SpeechSynthesizer testSynthesizer)
             : base(settings)
         {
             if (test == null)
@@ -35,8 +35,8 @@
             Test.Session = this.testSession;
             Test.Speech  = testSynthesizer;
 
-            this.Logic  = new TestModuleLogic(this, this.test, this.testSession);
-            this.Visual = new TestModuleVisual(this, this.test);
+            this.Logic  = new TesTMvcLogic(this, this.test, this.testSession);
+            this.Visual = new TesTMvcVisual(this, this.test);
         }
     }
 }

@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IPointViewHorizontalLogic.cs" company="UESTC">
+// <copyright file="IPointViewHorizontalLogic.cs">
 //   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>

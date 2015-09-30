@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Event.cs" company="UESTC">
+// <copyright file="Event.cs">
 //   Copyright (c) 2014 Wuxiang Lin  
 //   All Rights Reserved.
 // </copyright>

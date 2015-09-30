@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="File.cs" company="UESTC">
+// <copyright file="File.cs">
 //   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Components.File
 {
     using System;
     using System.IO;
-    using Setting.Loader;
+    using Service.Loader;
 
     public class FileManager : IFileManager
     {

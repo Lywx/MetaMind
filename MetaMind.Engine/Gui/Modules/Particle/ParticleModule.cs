@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Gui.Modules
     /// <summary>
     /// Particle controller relies on implementation of FloatParticle.
     /// </summary>
-    public class ParticleModule : GameEntityModule<ParticleSettings>
+    public class ParticleModule : GameMvcEntity<ParticleSettings>
     {
         #region Particle Data
 

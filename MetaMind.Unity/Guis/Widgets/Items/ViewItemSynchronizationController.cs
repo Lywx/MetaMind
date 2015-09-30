@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ViewItemSynchronizationController.cs" company="UESTC">
+// <copyright file="ViewItemSynchronizationController.cs">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>

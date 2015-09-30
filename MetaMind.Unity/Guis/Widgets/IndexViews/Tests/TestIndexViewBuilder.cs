@@ -168,7 +168,7 @@
                 regionBounds: () => new Rectangle(
                     location: this.viewSettings.ViewPosition.ToPoint(), 
                     size: new Point(
-                        x: graphicsSettings.Width - (int)TestModuleSettings.ViewMargin.X * 2,
+                        x: graphicsSettings.Width - (int)TesTMvcSettings.ViewMargin.X * 2,
                         y: (int)(this.viewSettings.ViewRowDisplay * this.viewSettings.ItemMargin.Y))),
                 regionSettings: viewRegionSettings);
 

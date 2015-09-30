@@ -1,13 +1,13 @@
 namespace MetaMind.Engine.Gui.Controls.Images
 {
     using System;
-    using Components;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Primtives2D;
+    using Reactors;
     using Service;
 
-    public class ColorBox : RenderComponent
+    public class ColorBox : RenderReactor
     {
         public ColorBox(
             Func<Rectangle> boundsSelector,

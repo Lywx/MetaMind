@@ -12,7 +12,7 @@
     using Screens;
     using Sessions;
 
-    public class SummaryModuleLogic : GameEntityModuleLogic<SummaryModule, SummarySettings, SummaryModuleLogic>
+    public class SummaryModuleLogic : GameMvcEntityLogic<SummaryModule, SummarySettings, SummaryModuleLogic>
     {
         public SummaryModuleLogic(SummaryModule module, IConsciousness consciousness, ISynchronization synchronization)
             : base(module)

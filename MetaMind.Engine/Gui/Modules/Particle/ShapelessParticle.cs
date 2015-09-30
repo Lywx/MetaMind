@@ -3,7 +3,7 @@ namespace MetaMind.Engine.Gui.Modules.Particle
     using System;
     using Engine.Components.Graphics;
     using Microsoft.Xna.Framework;
-    using Setting.Loader;
+    using Service.Loader;
 
     public class ShapelessParticle : GameVisualEntity, IShapelessParticle, IParameterLoader<GraphicsSettings>  
     {

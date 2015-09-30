@@ -4,8 +4,8 @@ namespace MetaMind.Unity.Guis.Modules
 
     public class OperationModuleSettings
     {
-        public static Point ViewMargin => TestModuleSettings.ViewMargin;
+        public static Point ViewMargin => TesTMvcSettings.ViewMargin;
 
-        public static Point ItemMargin => TestModuleSettings.ItemMargin;
+        public static Point ItemMargin => TesTMvcSettings.ItemMargin;
     }
 }

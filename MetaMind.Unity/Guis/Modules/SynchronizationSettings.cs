@@ -3,8 +3,8 @@
     using System;
     using Engine;
     using Engine.Components.Graphics;
+    using Engine.Service.Loader;
     using Engine.Setting.Color;
-    using Engine.Setting.Loader;
     using Microsoft.Xna.Framework;
 
     public class SynchronizationSettings : GameVisualEntity, IParameterLoader<GraphicsSettings>, ICloneable

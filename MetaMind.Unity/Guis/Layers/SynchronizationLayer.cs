@@ -12,10 +12,10 @@
         public SynchronizationLayer(IGameScreen screen)
             : base(screen)
         {
-            this.Modules = new GameEntityCollection<IGameEntityModule>();
+            this.Modules = new GameEntityCollection<IGameMvcEntity>();
         }
 
-        private GameEntityCollection<IGameEntityModule> Modules { get; set; }
+        private GameEntityCollection<IGameMvcEntity> Modules { get; set; }
 
         public override void Draw(IGameGraphicsService graphics, GameTime time, byte alpha)
         {

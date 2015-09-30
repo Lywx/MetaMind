@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="KeyboardInputState.cs" company="UESTC">
+// <copyright file="KeyboardInputState.cs">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -12,9 +12,9 @@ namespace MetaMind.Engine.Components.Input
     using System.Linq;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
-    using Parser.Element;
-    using Parser.Grammar;
-    using Setting.Loader;
+    using Service.Loader;
+    using Service.Parser.Elements;
+    using Service.Parser.Grammar;
     using Sprache;
 
     public class KeyboardInputState : IConfigurationLoader, IKeyboardInputState

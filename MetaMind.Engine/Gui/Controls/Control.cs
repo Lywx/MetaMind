@@ -1,11 +1,11 @@
 ﻿namespace MetaMind.Engine.Gui.Controls
 {
     using System;
-    using Components;
     using Microsoft.Xna.Framework;
+    using Reactors;
     using Service;
 
-    public class Control : ControlComponent, IControl
+    public class Control : ControlReactor, IControl
     {
         public Control(ControlManager manager)
         {
@@ -29,19 +29,19 @@
 
         public bool IsRenderParent => base.IsParent;
 
-        public RenderComponent RenderRoot
+        public RenderReactor RenderRoot
         {
             get { return base.Root; }
             protected set { base.Root = value; }
         }
 
-        public RenderComponent RenderParent
+        public RenderReactor RenderParent
         {
             get { return base.Parent; }
             protected set { base.Parent = value; }
         }
 
-        public RenderComponentCollection RenderChildren
+        public RenderReactorCollection RenderChildren
         {
             get { return base.Children; }
             protected set { base.Children = value; }

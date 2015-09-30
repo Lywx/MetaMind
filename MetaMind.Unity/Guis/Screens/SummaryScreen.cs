@@ -10,7 +10,7 @@
 
     public class SummaryScreen : GameScreen
     {
-        private IGameEntityModule summary;
+        private IGameMvcEntity summary;
 
         public SummaryScreen()
         {

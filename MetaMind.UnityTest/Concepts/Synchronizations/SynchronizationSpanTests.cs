@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SynchronizationSpanTests.cs" company="UESTC">
+// <copyright file="SynchronizationSpanTests.cs">
 //   Copyright (c) 2014 Lin Wuxiang
 //   All Rights Reserved.
 // </copyright>

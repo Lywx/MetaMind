@@ -3,7 +3,7 @@ namespace MetaMind.Unity.Components
     using System;
     using Engine;
     using Engine.Components.Profiler;
-    using Engine.Setting.Loader;
+    using Engine.Service.Loader;
     using Microsoft.Xna.Framework;
 
     public class ResourceMonitor : GameInputableComponent, IConfigurationLoader

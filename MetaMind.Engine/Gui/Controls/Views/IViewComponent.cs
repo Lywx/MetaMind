@@ -1,9 +1,9 @@
 namespace MetaMind.Engine.Gui.Controls.Views
 {
-    using Components;
     using Layers;
+    using Reactors;
 
-    public interface IViewComponent : IComponent, IGameInputableEntity, IViewComponentOperations, IViewLayerOperations
+    public interface IViewComponent : IGameReactor, IGameInputableEntity, IViewComponentOperations, IViewLayerOperations
     {
         IView View { get; }
     }

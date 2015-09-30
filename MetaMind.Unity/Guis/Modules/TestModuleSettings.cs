@@ -2,7 +2,7 @@
 {
     using Microsoft.Xna.Framework;
 
-    public class TestModuleSettings
+    public class TesTMvcSettings
     {
         public static readonly Point ViewMargin = new Point(40, 120);
 

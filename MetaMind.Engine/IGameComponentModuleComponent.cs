@@ -1,8 +1,8 @@
 ﻿namespace MetaMind.Engine
 {
-    public interface IGameComponentModuleComponent<out TModuleSettings>
+    public interface IGameComponentModuleComponent<out TMvcSettings>
     {
-        TModuleSettings Settings { get; }
+        TMvcSettings Settings { get; }
 
         void Initialize();
     }

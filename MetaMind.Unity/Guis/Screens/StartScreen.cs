@@ -8,9 +8,9 @@ namespace MetaMind.Unity.Guis.Screens
 
     public class StartScreen : GameScreen
     {
-        private Image textureLogo;
+        private Image imageLogo;
 
-        private Image texturePressAnyButton;
+        private Image imagePressAnyButton;
 
         #region Constructors
 
@@ -26,15 +26,16 @@ namespace MetaMind.Unity.Guis.Screens
 
         public override void LoadContent(IGameInteropService interop)
         {
-            this.textureLogo           = interop.Asset.Texture["StartScreen.Meta Mind"];
-            this.texturePressAnyButton = interop.Asset.Texture["StartScreen.Press Any Button"];
+            this.imageLogo           = interop.Asset.Texture["StartScreen.Meta Mind"];
+            this.imagePressAnyButton = interop.Asset.Texture["StartScreen.Press Any Button"];
+            var s = new CCSprite(new CCTexture2D(this.imageLogo.Resource));
 
             this.Layers.Add(new GameLayer(this)
             {
                 DrawAction = (graphics, time, alpha) =>
                 {
                     this.SpriteBatch.Begin(transformMatrix: this.ViewportAdapter.GetScaleMatrix());
-                    this.SpriteBatch.Draw(this.textureLogo, );
+                    this.SpriteBatch.Draw(this.imageLogo, );
                     this.SpriteBatch.End();
 
                     Primitives2D.FillRectangle(this.SpriteBatch, this.RenderTargetDestinationRectangle, this.Settings.GetColor());

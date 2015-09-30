@@ -1,12 +1,12 @@
 namespace MetaMind.Engine.Gui.Controls.Images
 {
     using System;
-    using Components;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using Reactors;
     using Service;
 
-    public class ImageBox : RenderComponent
+    public class ImageBox : RenderReactor
     {
         #region Constructors and Finalizer
 

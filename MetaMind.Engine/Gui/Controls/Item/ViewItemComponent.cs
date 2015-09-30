@@ -1,12 +1,12 @@
 namespace MetaMind.Engine.Gui.Controls.Item
 {
     using System;
-    using Components;
     using Layers;
+    using Reactors;
     using Views;
     using Views.Layers;
 
-    public class ViewItemComponent : Component, IViewItemComponent
+    public class ViewItemComponent : GameReactor, IViewItemComponent
     {
         #region Constructors and Finalizer
 

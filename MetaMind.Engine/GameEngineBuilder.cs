@@ -4,8 +4,8 @@
     using Components;
     using Components.Graphics;
     using Components.Interop;
-    using Console;
     using Microsoft.Xna.Framework;
+    using Service.Console;
 
     public class GameEngineBuilder : IGameEngineBuilder
     {

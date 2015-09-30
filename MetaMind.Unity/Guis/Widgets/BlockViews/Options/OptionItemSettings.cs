@@ -6,8 +6,8 @@
     using Engine.Gui.Controls.Item.Frames;
     using Engine.Gui.Controls.Item.Settings;
     using Engine.Gui.Controls.Labels;
+    using Engine.Service.Loader;
     using Engine.Setting.Color;
-    using Engine.Setting.Loader;
     using Microsoft.Xna.Framework;
     using Modules;
 

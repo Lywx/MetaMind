@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ViewVerticalScrollbar.cs" company="UESTC">
+// <copyright file="ViewVerticalScrollbar.cs">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -8,14 +8,14 @@
 namespace MetaMind.Engine.Gui.Controls.Views.Scrolls
 {
     using System;
-    using Components;
     using Controls.Regions;
     using Layouts;
     using Microsoft.Xna.Framework;
+    using Reactors;
     using Service;
     using Settings;
 
-    public class ViewVerticalScrollbar : RenderComponent, IViewVerticalScrollbar
+    public class ViewVerticalScrollbar : RenderReactor, IViewVerticalScrollbar
     {
         private readonly IPointViewVerticalScrollController viewScroll;
 

@@ -63,7 +63,7 @@ namespace MetaMind.Unity.Guis.Layers
 
             // Controllables
             var testModule = new TestModule(
-                new TestModuleSettings(),
+                new TesTMvcSettings(),
                 this.test,
                 this.testSession,
                 this.testSynthesizer);

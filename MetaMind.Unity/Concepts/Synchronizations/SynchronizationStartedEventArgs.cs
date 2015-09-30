@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SynchronizationStartedEventArgs.cs" company="UESTC">
+// <copyright file="SynchronizationStartedEventArgs.cs">
 //   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>

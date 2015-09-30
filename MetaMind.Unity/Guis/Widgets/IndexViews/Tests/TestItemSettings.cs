@@ -6,8 +6,8 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
     using Engine.Gui.Controls.Item.Frames;
     using Engine.Gui.Controls.Item.Settings;
     using Engine.Gui.Controls.Labels;
+    using Engine.Service.Loader;
     using Engine.Setting.Color;
-    using Engine.Setting.Loader;
     using Microsoft.Xna.Framework;
     using Modules;
 
@@ -95,13 +95,13 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 
             this.rootFrame = new ViewItemVisualSettings
             {
-                Size   = new Point(this.viewportWidth - TestModuleSettings.ViewMargin.X * 2, 26),
+                Size   = new Point(this.viewportWidth - TesTMvcSettings.ViewMargin.X * 2, 26),
                 Margin = new Point(2, 2)
             };
 
             this.nameFrame = new ViewItemVisualSettings
             {
-                Size   = new Point(this.viewportWidth - TestModuleSettings.ViewMargin.X * 2 - 24 - 128, 26),
+                Size   = new Point(this.viewportWidth - TesTMvcSettings.ViewMargin.X * 2 - 24 - 128, 26),
                 Margin = new Point(2, 2),
 
                 RegularColor      = Palette.DimBlue,
@@ -113,7 +113,7 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 
             this.descriptionFrame = new ViewItemVisualSettings
             {
-                Size   = new Point(this.viewportWidth - TestModuleSettings.ViewMargin.X * 2 - 24 - 128, 26),
+                Size   = new Point(this.viewportWidth - TesTMvcSettings.ViewMargin.X * 2 - 24 - 128, 26),
                 Margin = new Point(2, 2),
 
                 RegularColor      = Palette.Transparent,

@@ -1,7 +1,5 @@
-// ReSharper disable once CheckNamespace
-namespace MonoGame.Extended.ViewportAdapters
+namespace MetaMind.Engine.Components.Graphics.Adapters
 {
-    using MetaMind.Engine.Components.Graphics.Adapters;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 

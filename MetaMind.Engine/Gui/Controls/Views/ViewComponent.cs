@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ViewComponent.cs" company="UESTC">
+// <copyright file="ViewComponent.cs">
 //   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -9,17 +9,17 @@ namespace MetaMind.Engine.Gui.Controls.Views
 {
     using System;
     using System.Collections.Generic;
-    using Components;
     using Item;
     using Item.Layers;
     using Layers;
+    using Reactors;
 
     /// <summary>
     ///     ViewComponent hooks all necessary external information to the View object,
     ///     which allows view-wise substitution of settings. The dynamic typing allows
     ///     customization
     /// </summary>
-    public abstract class ViewComponent : Component, IViewComponent
+    public abstract class ViewComponent : GameReactor, IViewComponent
     {
         #region Constructors
 

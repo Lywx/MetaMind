@@ -6,10 +6,9 @@
     using Engine.Gui.Elements.Rectangles;
     using Engine.Gui.Modules;
     using Engine.Service;
-    using Engine.Test;
     using Microsoft.Xna.Framework;
 
-    public class PlayTest_Frame : GameEntityModule<object>
+    public class PlayTest_Frame : GameMvcEntity<object>
     {
         private GameEntityCollection<GameInputableEntity> control;
 

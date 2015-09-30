@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ConsciousnessSleepStartedEventArgs.cs" company="UESTC">
+// <copyright file="ConsciousnessSleepStartedEventArgs.cs">
 //   Copyright (c) 2014 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>

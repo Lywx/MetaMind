@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Settings.cs" company="UESTC">
+// <copyright file="Settings.cs">
 //   Copyright (c) 2015 Wuxiang Lin
 //   All Rights Reserved.
 // </copyright>
@@ -14,7 +14,7 @@ namespace MetaMind.Engine.Components.Graphics
     using System.Windows.Forms;
     using Extensions;
     using NLog;
-    using Setting.Loader;
+    using Service.Loader;
 
     /// <summary>
     /// Graphics settings data. 

@@ -1,7 +1,6 @@
 namespace MetaMind.Engine.Components
 {
     using Audio;
-    using Console;
     using Content.Asset;
     using File;
     using Interop;
@@ -9,6 +8,7 @@ namespace MetaMind.Engine.Components
     using Interop.Process;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
+    using Service.Console;
 
     internal class GameNullInterop : GameInputableComponent, IGameInterop
     {

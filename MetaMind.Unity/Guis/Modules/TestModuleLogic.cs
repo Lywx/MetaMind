@@ -12,13 +12,13 @@
     using Widgets.IndexViews;
     using Widgets.IndexViews.Tests;
 
-    public class TestModuleLogic : GameEntityModuleLogic<TestModule, TestModuleSettings, TestModuleLogic>
+    public class TesTMvcLogic : GameMvcEntityLogic<TestModule, TesTMvcSettings, TesTMvcLogic>
     {
         private readonly ITest test;
 
         private readonly TestSession testSession;
 
-        public TestModuleLogic(TestModule module, ITest test, TestSession testSession) 
+        public TesTMvcLogic(TestModule module, ITest test, TestSession testSession) 
             : base(module)
         {
             if (test == null)
@@ -53,9 +53,9 @@
 
             // View settings
             var viewSettings = new StandardIndexViewSettings(
-                itemMargin    : new Vector2(graphicsSettings.Width - TestModuleSettings.ViewMargin.X * 2, TestModuleSettings.ItemMargin.Y),
-                viewPosition  : TestModuleSettings.ViewMargin.ToVector2(),
-                viewRowDisplay: (graphicsSettings.Height - TestModuleSettings.ViewMargin.Y) / TestModuleSettings.ItemMargin.Y - 1,
+                itemMargin    : new Vector2(graphicsSettings.Width - TesTMvcSettings.ViewMargin.X * 2, TesTMvcSettings.ItemMargin.Y),
+                viewPosition  : TesTMvcSettings.ViewMargin.ToVector2(),
+                viewRowDisplay: (graphicsSettings.Height - TesTMvcSettings.ViewMargin.Y) / TesTMvcSettings.ItemMargin.Y - 1,
                 viewRowMax    : int.MaxValue);
 
             // Item settings

@@ -3,7 +3,7 @@
     using System;
     using Concepts.Tests;
     using Engine;
-    using Engine.Setting.Loader;
+    using Engine.Service.Loader;
     using Microsoft.Xna.Framework;
 
     public class TestMonitor : GameInputableComponent, IConfigurationLoader

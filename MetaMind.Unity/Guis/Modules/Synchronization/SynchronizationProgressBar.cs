@@ -9,7 +9,7 @@ namespace MetaMind.Unity.Guis.Modules.Synchronization
     using Engine.Setting.Color;
     using Microsoft.Xna.Framework;
 
-    public class SynchronizationProgressBar : GameEntityModuleComponent<SynchronizationModule, SynchronizationSettings, SynchronizationLogic>
+    public class SynchronizationProgressBar : GameMvcEntityComponent<SynchronizationModule, SynchronizationSettings, SynchronizationLogic>
     {
         public SynchronizationProgressBar(SynchronizationModule module, ISynchronization synchronization)
             : base(module)

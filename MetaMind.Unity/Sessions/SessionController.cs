@@ -5,9 +5,9 @@
     using Engine;
     using Engine.Components.Interop.Event;
     using Engine.Gui.Controls;
-    using Engine.Scripting.FSharp;
-    using Engine.Scripting.IronPython;
     using Engine.Service;
+    using Engine.Service.Scripting.FSharp;
+    using Engine.Service.Scripting.IronPython;
     using Engine.Session;
     using Guis.Screens;
 

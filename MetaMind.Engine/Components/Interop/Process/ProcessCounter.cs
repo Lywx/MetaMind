@@ -18,10 +18,7 @@ namespace MetaMind.Engine.Components.Interop.Process
 
         public int CurrentFrame { get; set; }
 
-        public float Progress
-        {
-            get { return (float)this.CurrentFrame / this.TotalFrame; }
-        }
+        public float Progress => (float)this.CurrentFrame / this.TotalFrame;
 
         public override void Update(GameTime time)
         {

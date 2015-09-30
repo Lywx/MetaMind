@@ -13,7 +13,7 @@ namespace MetaMind.Unity.Guis.Modules
     using Screens;
     using Sessions;
 
-    public class SynchronizationLogic : GameEntityModuleLogic<SynchronizationModule, SynchronizationSettings, SynchronizationLogic>
+    public class SynchronizationLogic : GameMvcEntityLogic<SynchronizationModule, SynchronizationSettings, SynchronizationLogic>
     {
         public SynchronizationLogic(SynchronizationModule module, IConsciousness consciousness, ISynchronization synchronization)
             : base(module)

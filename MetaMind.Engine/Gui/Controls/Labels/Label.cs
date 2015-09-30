@@ -1,13 +1,13 @@
 ﻿namespace MetaMind.Engine.Gui.Controls.Labels
 {
     using System;
-    using Components;
     using Engine.Components.Content.Fonts;
     using Engine.Components.Graphics.Fonts;
     using Microsoft.Xna.Framework;
+    using Reactors;
     using Service;
 
-    public class Label : RenderComponent, ICloneable
+    public class Label : RenderReactor, ICloneable
     {
         #region Constructors and Finalizer
 

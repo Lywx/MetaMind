@@ -1,8 +1,9 @@
 ﻿namespace MetaMind.Engine.Gui.Controls
 {
     using Microsoft.Xna.Framework;
+    using Reactors;
 
-    public class ControlManager : ControlComponent
+    public class ControlManager : ControlReactor
     {
         #region Constructors
 

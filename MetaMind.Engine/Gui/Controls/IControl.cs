@@ -1,8 +1,8 @@
 ﻿namespace MetaMind.Engine.Gui.Controls
 {
-    using Components;
+    using Reactors;
 
-    public interface IControl : IControlOrganization, IControlOperations, IRenderComponent
+    public interface IControl : IControlOrganization, IControlOperations, IRenderReactor
     {
         #region Control Data
 
