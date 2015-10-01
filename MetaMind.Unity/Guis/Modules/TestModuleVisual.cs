@@ -4,10 +4,11 @@
     using Concepts.Tests;
     using Engine;
     using Engine.Components.Graphics.Fonts;
+    using Engine.Entities;
     using Engine.Gui.Controls.Labels;
     using Engine.Gui.Modules;
     using Engine.Service;
-    using Engine.Setting.Color;
+    using Engine.Settings.Color;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 

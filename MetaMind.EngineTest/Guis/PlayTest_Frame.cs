@@ -1,6 +1,7 @@
 ﻿namespace MetaMind.EngineTest.Guis
 {
     using Engine;
+    using Engine.Entities;
     using Engine.Gui.Controls.Images;
     using Engine.Gui.Elements;
     using Engine.Gui.Elements.Rectangles;

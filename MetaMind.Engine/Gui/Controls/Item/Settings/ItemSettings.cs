@@ -2,6 +2,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Settings
 {
     using System;
     using System.Runtime.Serialization;
+    using Engine.Settings;
 
     // TODO(Critical): Should I remove all the gui settings?
     [DataContract]

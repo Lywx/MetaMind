@@ -57,9 +57,9 @@ namespace MetaMind.Engine.Service
 
         public IProcessManager Process => this.interop.Process;
 
-        public IScreenManager Screen => this.interop.Screen;
+        public IMMScreenDirector Screen => this.interop.Screen;
 
-        public ISaveManager Save
+        public IMMSaveManager Save
         {
             get
             {

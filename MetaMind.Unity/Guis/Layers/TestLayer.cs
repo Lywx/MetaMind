@@ -6,10 +6,11 @@ namespace MetaMind.Unity.Guis.Layers
     using Engine;
     using Engine.Components.Content.Fonts;
     using Engine.Components.Graphics.Fonts;
+    using Engine.Entities;
     using Engine.Gui.Controls.Labels;
     using Engine.Screen;
     using Engine.Service;
-    using Engine.Setting.Color;
+    using Engine.Settings.Color;
     using Microsoft.Xna.Framework;
     using Modules;
     using Screens;
@@ -33,7 +34,7 @@ namespace MetaMind.Unity.Guis.Layers
         public TestLayer(
             TestSession testSession,
             SpeechSynthesizer testSynthesizer,
-            IGameScreen screen)
+            IMMScreen screen)
             : base(screen)
         {
             if (testSession == null)
@@ -106,8 +107,8 @@ namespace MetaMind.Unity.Guis.Layers
         {
             this.SpriteBatch.Begin();
 
-            this.inputEntities.Draw(graphics, time, Math.Min(alpha, this.Alpha));
-            this.drawEntities .Draw(graphics, time, Math.Min(alpha, this.Alpha)); 
+            this.inputEntities.Draw(graphics, time, Math.Min(alpha, this.Opacity));
+            this.drawEntities .Draw(graphics, time, Math.Min(alpha, this.Opacity)); 
 
             this.SpriteBatch.End();
 

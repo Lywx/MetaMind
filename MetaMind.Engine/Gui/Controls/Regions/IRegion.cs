@@ -7,6 +7,7 @@
 
 namespace MetaMind.Engine.Gui.Controls.Regions
 {
+    using Entities;
     using Microsoft.Xna.Framework;
 
     public interface IRegion : IRegionElement, IUpdateable, IMMDrawable, IMMInputable

@@ -5,6 +5,7 @@ namespace MetaMind.Engine.Service.Console
     using System.Threading;
     using System.Windows.Forms;
     using Commands;
+    using Components;
     using Components.Content.Fonts;
     using Processors;
 

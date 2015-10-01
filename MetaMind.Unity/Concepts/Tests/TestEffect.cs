@@ -2,6 +2,7 @@
 {
     using Engine;
     using System;
+    using Engine.Entities;
     using Events;
 
     public class TestEffect : MMEntity

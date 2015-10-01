@@ -3,6 +3,7 @@
     using System;
     using Concepts.Cognitions;
     using Concepts.Synchronizations;
+    using Engine.Entities;
     using Engine.Gui.Modules;
 
     /// <summary>

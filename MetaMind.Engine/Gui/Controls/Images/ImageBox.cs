@@ -135,7 +135,7 @@ namespace MetaMind.Engine.Gui.Controls.Images
                         this.X,
                         this.Y,
                         this.SourceRectangle,
-                        this.Color(this.MixedMinAlpha(alpha)),
+                        this.Color(this.MixedMinOpacity(alpha)),
                         0f);
 
                     break;
@@ -147,7 +147,7 @@ namespace MetaMind.Engine.Gui.Controls.Images
                         this.Image,
                         this.Bounds,
                         this.SourceRectangle,
-                        this.Color(this.MixedMinAlpha(alpha)),
+                        this.Color(this.MixedMinOpacity(alpha)),
                         0f);
 
                     break;

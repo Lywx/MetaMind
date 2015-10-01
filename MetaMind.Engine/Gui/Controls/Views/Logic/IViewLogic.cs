@@ -7,6 +7,7 @@
 
 namespace MetaMind.Engine.Gui.Controls.Views.Logic
 {
+    using Entities;
     using Item.Data;
     using Item.Factories;
     using Layouts;

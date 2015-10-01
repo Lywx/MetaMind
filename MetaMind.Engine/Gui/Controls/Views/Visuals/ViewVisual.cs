@@ -1,5 +1,6 @@
 namespace MetaMind.Engine.Gui.Controls.Views.Visuals
 {
+    using Entities;
     using Item;
     using Microsoft.Xna.Framework;
     using Service;

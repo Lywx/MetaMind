@@ -4,6 +4,7 @@
     using System.IO;
     using System.Linq;
     using Components.File;
+    using Entities;
     using Loader;
 
     public class FsScriptSearcher : MMEntity, IConfigurationLoader

@@ -6,12 +6,13 @@
 namespace MetaMind.Engine.Session
 {
     using System;
+    using Entities;
 
     /// <summary>
     /// Session controller is the main control for session management. It should 
     /// handle the communication with game engine and more advanced operations.
     /// </summary>
-    public interface ISessionController<TData> : IMMFreeUpdatable, IMMInteroperableOperations, IDisposable
+    public interface ISessionController<TData> : IMMFreeUpdatable, IMMInteropOperations, IDisposable
     {
         TData Data { get; set; }
     }

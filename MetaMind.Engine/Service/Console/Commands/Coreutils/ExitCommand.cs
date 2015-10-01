@@ -7,6 +7,8 @@
 
 namespace MetaMind.Engine.Service.Console.Commands.Coreutils
 {
+    using Entities;
+
     internal class ExitCommand : MMEntity, IConsoleCommand
     {
         public ExitCommand()

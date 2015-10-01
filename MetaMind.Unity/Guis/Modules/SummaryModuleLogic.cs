@@ -6,6 +6,7 @@
     using Engine;
     using Engine.Components.Input;
     using Engine.Components.Interop.Event;
+    using Engine.Entities;
     using Engine.Gui.Modules;
     using Engine.Service;
     using Microsoft.Xna.Framework;
@@ -69,7 +70,7 @@
             {
                 var screenManager = this.Interop.Screen;
 
-                screenManager.EraseScreenFrom(1);
+                screenManager.ExitScreenFrom(1);
 
                 // Remove screens on the background screen
                 screenManager.AddScreen(new MainScreen());

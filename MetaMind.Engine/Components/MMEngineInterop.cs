@@ -15,7 +15,7 @@ namespace MetaMind.Engine.Components
     {
         #region Constructors and Finalizer
 
-        public MMEngineInterop(MMEngine engine, IScreenManager screen, MMConsole console)
+        public MMEngineInterop(MMEngine engine, IMMScreenDirector screen, MMConsole console)
             : base(engine)
         {
             if (screen == null)
@@ -77,9 +77,9 @@ namespace MetaMind.Engine.Components
 
         public IProcessManager Process { get; private set; }
 
-        public IScreenManager Screen { get; private set; }
+        public IMMScreenDirector Screen { get; private set; }
 
-        public ISaveManager Save { get; set; }
+        public IMMSaveManager Save { get; set; }
 
         #region Initialization
 

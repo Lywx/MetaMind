@@ -12,12 +12,12 @@ namespace MetaMind.Engine.Gui.Controls.Views.Visuals
 
         private readonly int fadeSpeed = 255 * 10;
 
-        protected int FocusAlpha { get; set; }
+        protected int FocusOpacity { get; set; }
 
         public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
             this.DrawItems(graphics, time, alpha);
-            this.DrawComponents(graphics, time, Math.Max((byte)this.FocusAlpha, alpha));
+            this.DrawComponents(graphics, time, Math.Max((byte)this.FocusOpacity, alpha));
         }
 
         public override void Update(GameTime time)
@@ -26,18 +26,18 @@ namespace MetaMind.Engine.Gui.Controls.Views.Visuals
 
             if (this.View[ViewState.View_Has_Focus]())
             {
-                this.FocusAlpha += (int)(this.fadeSpeed * time.ElapsedGameTime.TotalSeconds);
-                if (this.FocusAlpha > 255)
+                this.FocusOpacity += (int)(this.fadeSpeed * time.ElapsedGameTime.TotalSeconds);
+                if (this.FocusOpacity > 255)
                 {
-                    this.FocusAlpha = 255;
+                    this.FocusOpacity = 255;
                 }
             }
             else
             {
-                this.FocusAlpha -= (int)(this.fadeSpeed * time.ElapsedGameTime.TotalSeconds);
-                if (this.FocusAlpha < 0)
+                this.FocusOpacity -= (int)(this.fadeSpeed * time.ElapsedGameTime.TotalSeconds);
+                if (this.FocusOpacity < 0)
                 {
-                    this.FocusAlpha = 0;
+                    this.FocusOpacity = 0;
                 }
             }
         }

@@ -90,7 +90,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Components\ResourceMonitor.cs" />
-    <Compile Include="Components\SaveManager.cs" />
+    <Compile Include="Components\MMSaveManager.cs" />
     <Compile Include="Concepts\Cognitions\Cognition.cs" />
     <Compile Include="Concepts\Cognitions\Consciousness.cs" />
     <Compile Include="Concepts\Cognitions\ConsciousnessAwake.cs" />

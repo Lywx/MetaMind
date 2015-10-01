@@ -2,6 +2,7 @@ namespace MetaMind.Engine.Gui.Controls.Views
 {
     using System;
     using System.Collections.Generic;
+    using Entities;
     using Item;
     using Item.Settings;
     using Layers;

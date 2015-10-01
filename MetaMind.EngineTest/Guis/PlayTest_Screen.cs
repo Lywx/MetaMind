@@ -1,6 +1,7 @@
 ﻿namespace MetaMind.EngineTest.Guis
 {
     using Engine;
+    using Engine.Entities;
     using Engine.Screen;
     using Engine.Service;
 

@@ -12,8 +12,8 @@ namespace MetaMind.Engine.Gui.Controls.Views.Visuals
 
         public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
-            this.DrawItems(graphics, time, Math.Min((byte)this.FocusAlpha, alpha));
-            this.DrawComponents(graphics, time, Math.Min((byte)this.FocusAlpha, alpha));
+            this.DrawItems(graphics, time, Math.Min((byte)this.FocusOpacity, alpha));
+            this.DrawComponents(graphics, time, Math.Min((byte)this.FocusOpacity, alpha));
         }
     }
 }

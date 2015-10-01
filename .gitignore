@@ -20,6 +20,7 @@ ThirdParties/FileSearcher/obj/
 
 MetaMind.Engine/Content/obj/
 MetaMind.Engine/Content/Audio/
+MetaMind.Engine/Documentation/
 MetaMind.Engine/obj/
 MetaMind.Engine/bin/
 
@@ -31,6 +32,7 @@ MetaMind.EngineTest/bin/
 MetaMind.EngineTest/obj/
 
 MetaMind.Unity/bin/
+MetaMind.Unity/Documentation/
 MetaMind.Unity/obj/
 MetaMind.Unity/Content/obj/
 MetaMind.Unity/Content/Audio/

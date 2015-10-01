@@ -1,6 +1,7 @@
 ﻿namespace MetaMind.Engine.Service.Debugging.Components
 {
     using System;
+    using Engine.Components;
     using Engine.Components.Content.Fonts;
     using Microsoft.Xna.Framework;
 

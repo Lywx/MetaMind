@@ -2,6 +2,7 @@
 {
     using System.Runtime.Serialization;
     using Engine;
+    using Engine.Entities;
 
     public interface IConsciousnessState
     {

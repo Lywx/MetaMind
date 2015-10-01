@@ -2,6 +2,7 @@ namespace MetaMind.Engine.Gui.Modules.Particle
 {
     using System;
     using Engine.Components.Graphics;
+    using Entities;
     using Microsoft.Xna.Framework;
     using Service.Loader;
 

@@ -7,7 +7,7 @@
     using Engine.Gui.Controls.Item.Settings;
     using Engine.Gui.Controls.Labels;
     using Engine.Service.Loader;
-    using Engine.Setting.Color;
+    using Engine.Settings.Color;
     using Microsoft.Xna.Framework;
     using Modules;
 

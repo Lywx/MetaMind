@@ -2,6 +2,7 @@
 {
     using System;
     using Engine;
+    using Engine.Entities;
     using Engine.Gui.Modules;
     using Engine.Screen;
     using Engine.Service;

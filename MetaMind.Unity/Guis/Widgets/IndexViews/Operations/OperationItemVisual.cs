@@ -8,7 +8,7 @@
     using Engine.Gui.Controls.Item.Visuals;
     using Engine.Gui.Controls.Labels;
     using Engine.Service;
-    using Engine.Setting.Color;
+    using Engine.Settings.Color;
     using Microsoft.Xna.Framework;
 
     public class OperationItemVisual : ViewItemVisual

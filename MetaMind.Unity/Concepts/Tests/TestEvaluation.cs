@@ -3,6 +3,7 @@
     using Engine;
     using System;
     using System.Linq;
+    using Engine.Entities;
     using Events;
 
     public class TestEvaluation : MMEntity, ITestEvaluation

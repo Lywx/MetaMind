@@ -7,6 +7,8 @@
 
 namespace MetaMind.Engine.Gui.Controls.Views.Visuals
 {
+    using Entities;
+
     public interface IViewVisualComponent : IViewComponent, IMMDrawable
     {
     }

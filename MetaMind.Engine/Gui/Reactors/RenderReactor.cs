@@ -11,7 +11,7 @@
     /// It is the basic unit of Gui rendering. It has the basic geometrical 
     /// property. But it doesn't have input related methods.
     /// </summary>
-    public abstract class RenderReactor : MMReactor, IRenderReactor
+    public abstract class RenderReactor : MMReactor, IMMRenderReactor
     {
         #region Constructors and Finalizer
 
@@ -46,37 +46,37 @@
 
         #region Visual Data
 
-        private byte alpha = byte.MaxValue;
+        private byte opacity = byte.MaxValue;
 
-        public Func<byte> AlphaSelector { get; set; }
+        public Func<byte> OpacitySelector { get; set; }
 
-        public virtual byte Alpha
+        public virtual byte Opacity
         {
-            get { return this.AlphaSelector?.Invoke() ?? this.alpha; }
+            get { return this.OpacitySelector?.Invoke() ?? this.opacity; }
             set
             {
-                var changed = this.alpha != value;
+                var changed = this.opacity != value;
 
-                this.alpha = value;
+                this.opacity = value;
                 
                 if (changed)
                 {
                     if (this.Active)
                     {
-                        this.OnAlphaChanged(EventArgs.Empty);
+                        this.OnOpacityChanged(EventArgs.Empty);
                     }
                 }
             }
         }
 
-        protected byte MixedMinAlpha(byte alpha)
+        protected byte MixedMinOpacity(byte alpha)
         {
-            return Math.Min(this.Alpha, alpha);
+            return Math.Min(this.Opacity, alpha);
         }
 
-        protected byte MixedMaxAlpha(byte alpha)
+        protected byte MixedMaxOpacity(byte alpha)
         {
-            return Math.Max(this.Alpha, alpha);
+            return Math.Max(this.Opacity, alpha);
         }
 
         #endregion
@@ -295,7 +295,7 @@
                 }
 
                 this.RenderTarget =
-                    RenderTargetFactory.Create(this.RenderTargetSize);
+                    MMRenderTargetFactory.Create(this.RenderTargetSize);
             }
         }
 
@@ -320,7 +320,7 @@
 
         #region Event On
 
-        private void OnAlphaChanged(EventArgs e)
+        private void OnOpacityChanged(EventArgs e)
         {
             // TODO(Further)
         }
@@ -393,7 +393,7 @@
             this.GraphicsDevice.SetRenderTarget(this.RenderTarget);
             this.GraphicsDevice.Clear(Color.Transparent);
 
-            this.Draw(graphics, time, this.MixedMinAlpha(alpha));
+            this.Draw(graphics, time, this.MixedMinOpacity(alpha));
 
             this.GraphicsDevice.SetRenderTarget(null);
         }
@@ -425,7 +425,7 @@
                 this.RenderTarget,
                 this.RenderTargetDestinationRectangle,
                 this.RenderTargetSourceRectangle,
-                Color.White.MakeTransparent(this.MixedMinAlpha(alpha)));
+                Color.White.MakeTransparent(this.MixedMinOpacity(alpha)));
             this.SpriteBatch.End();
         }
 

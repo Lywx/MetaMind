@@ -7,6 +7,8 @@
 
 namespace MetaMind.Engine
 {
+    using Components;
+
     public class MMGame : MMInputableComponent, IMMGame
     {
         #region Constructors

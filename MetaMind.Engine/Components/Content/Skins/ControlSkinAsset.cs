@@ -6,7 +6,6 @@
 namespace MetaMind.Engine.Components.Content.Skins
 {
     using Asset;
-    using Gui;
 
     public class ControlSkinAsset : Asset
     {
@@ -41,7 +40,7 @@ namespace MetaMind.Engine.Components.Content.Skins
 
         #region Geometry Data
 
-        public Size DefaultSize { get; set; }
+        public MMSize DefaultSize { get; set; }
 
         #endregion
 

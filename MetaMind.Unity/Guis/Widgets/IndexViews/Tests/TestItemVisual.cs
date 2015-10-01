@@ -15,7 +15,7 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
     using Engine.Gui.Controls.Item.Visuals;
     using Engine.Gui.Controls.Labels;
     using Engine.Service;
-    using Engine.Setting.Color;
+    using Engine.Settings.Color;
     using Extensions;
     using Microsoft.Xna.Framework;
 

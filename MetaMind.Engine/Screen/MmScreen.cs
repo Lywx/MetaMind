@@ -3,11 +3,13 @@ namespace MetaMind.Engine.Screen
     using System;
     using System.Diagnostics;
     using Components.Graphics.Adapters;
+    using Entities;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using Node;
     using Service;
 
-    public class MMScreen : MMObject, IGameScreen
+    public class MMScreen : MMNode, IMMScreen
     {
         #region Geometry Data
 
@@ -73,7 +75,7 @@ namespace MetaMind.Engine.Screen
 
         private bool isExiting = false;
 
-        private GameScreenState screenState = GameScreenState.TransitionOn;
+        private MMScreenState screenState = MMScreenState.TransitionOn;
 
         private float transitionPosition = 1;
 
@@ -81,8 +83,8 @@ namespace MetaMind.Engine.Screen
         /// Checks whether this screen is active and can respond to user input.
         /// </summary>
         public bool IsActive => !this.HasOtherScreenFocus &&
-                                (this.screenState == GameScreenState.TransitionOn ||
-                                 this.screenState == GameScreenState.Active);
+                                (this.screenState == MMScreenState.TransitionOn ||
+                                 this.screenState == MMScreenState.Active);
 
         /// <summary>
         /// There are two possible reasons why a screen might be transitioning
@@ -112,7 +114,7 @@ namespace MetaMind.Engine.Screen
         /// <summary>
         /// Gets the current screen transition state.
         /// </summary>
-        public GameScreenState ScreenState
+        public MMScreenState ScreenState
         {
             get { return this.screenState; }
             protected set { this.screenState = value; }
@@ -123,7 +125,7 @@ namespace MetaMind.Engine.Screen
         /// from 255 (fully active, no transition) to 0 (transitioned
         /// fully off to nothing).
         /// </summary>
-        public byte TransitionAlpha => (byte)(255 - this.TransitionPosition * 255);
+        public byte TransitionOpacity => (byte)(255 - this.TransitionPosition * 255);
 
         /// <summary>
         /// Gets the current position of the screen transition, ranging
@@ -218,7 +220,7 @@ namespace MetaMind.Engine.Screen
                         this.Layers.FindAll(
                             layer => layer.Active && layer.Visible))
                 {
-                    layer.BeginDraw(graphics, time, this.TransitionAlpha);
+                    layer.BeginDraw(graphics, time, this.TransitionOpacity);
                 }
             }
         }
@@ -241,7 +243,7 @@ namespace MetaMind.Engine.Screen
                         this.Layers.FindAll(
                             layer => layer.Active && layer.Visible))
                 {
-                    layer.EndDraw(graphics, time, this.TransitionAlpha);
+                    layer.EndDraw(graphics, time, this.TransitionOpacity);
                 }
             }
 
@@ -286,7 +288,7 @@ namespace MetaMind.Engine.Screen
             if (this.IsExiting)
             {
                 // If the screen is going away to die, it should transition off.
-                this.screenState = GameScreenState.TransitionOff;
+                this.screenState = MMScreenState.TransitionOff;
 
                 if (!this.UpdateTransition(time, this.transitionOffTime, 1))
                 {
@@ -300,12 +302,12 @@ namespace MetaMind.Engine.Screen
                 if (this.UpdateTransition(time, this.transitionOffTime, 1))
                 {
                     // Still busy transitioning.
-                    this.screenState = GameScreenState.TransitionOff;
+                    this.screenState = MMScreenState.TransitionOff;
                 }
                 else
                 {
                     // Transition finished!
-                    this.screenState = GameScreenState.Hidden;
+                    this.screenState = MMScreenState.Hidden;
                 }
             }
             else
@@ -314,12 +316,12 @@ namespace MetaMind.Engine.Screen
                 if (this.UpdateTransition(time, this.transitionOnTime, -1))
                 {
                     // Still busy transitioning.
-                    this.screenState = GameScreenState.TransitionOn;
+                    this.screenState = MMScreenState.TransitionOn;
                 }
                 else
                 {
                     // Transition finished!
-                    this.screenState = GameScreenState.Active;
+                    this.screenState = MMScreenState.Active;
                 }
             }
         }
@@ -371,7 +373,7 @@ namespace MetaMind.Engine.Screen
         {
             if (this.RenderTarget == null)
             {
-                this.RenderTarget = RenderTargetFactory.Create(
+                this.RenderTarget = MMRenderTargetFactory.Create(
                     this.Width,
                     this.Height);
             }

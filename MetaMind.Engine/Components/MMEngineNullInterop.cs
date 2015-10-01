@@ -33,9 +33,9 @@ namespace MetaMind.Engine.Components
 
         public IProcessManager Process { get; }
 
-        public IScreenManager Screen { get; }
+        public IMMScreenDirector Screen { get; }
 
-        public ISaveManager Save { get; set; }
+        public IMMSaveManager Save { get; set; }
 
         public override void Initialize()
         {

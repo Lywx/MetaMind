@@ -1,6 +1,7 @@
 ﻿namespace MetaMind.Unity.Guis.Screens
 {
     using Engine;
+    using Engine.Settings;
     using Microsoft.Xna.Framework;
 
     public class BackgroundScreenSettings : MMSettings

@@ -3,6 +3,7 @@
     using System;
     using Concepts.Synchronizations;
     using Engine;
+    using Engine.Components;
     using Engine.Components.Interop.Event;
     using Events;
     using Microsoft.Xna.Framework;

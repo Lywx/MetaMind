@@ -3,6 +3,7 @@ namespace MetaMind.Unity.Guis.Modules.Summary
     using System;
     using Engine;
     using Engine.Components.Content.Fonts;
+    using Engine.Entities;
     using Microsoft.Xna.Framework;
 
     public class SummaryFactory : MMVisualEntity

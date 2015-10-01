@@ -3,8 +3,9 @@
     using System;
     using Engine;
     using Engine.Components.Graphics;
+    using Engine.Entities;
     using Engine.Service.Loader;
-    using Engine.Setting.Color;
+    using Engine.Settings.Color;
     using Microsoft.Xna.Framework;
 
     public class SynchronizationSettings : MMVisualEntity, IParameterLoader<GraphicsSettings>, ICloneable

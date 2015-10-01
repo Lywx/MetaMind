@@ -2,6 +2,7 @@ namespace MetaMind.Engine.Gui.Controls.Regions
 {
     using System;
     using System.Linq;
+    using Entities;
     using Stateless;
 
     public abstract class RegionElement : MMInputableEntity, IRegionElement

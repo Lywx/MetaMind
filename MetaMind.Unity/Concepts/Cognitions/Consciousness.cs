@@ -3,6 +3,7 @@
     using System;
     using System.Runtime.Serialization;
     using Engine;
+    using Engine.Entities;
 
     [DataContract]
     [KnownType(typeof(ConsciousnessAsleep))]

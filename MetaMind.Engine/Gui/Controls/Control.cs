@@ -1,6 +1,7 @@
 ﻿namespace MetaMind.Engine.Gui.Controls
 {
     using System;
+    using Entities;
     using Microsoft.Xna.Framework;
     using Reactors;
     using Service;

@@ -6,6 +6,7 @@ namespace MetaMind.Unity.Guis.Modules
     using Engine;
     using Engine.Components.Input;
     using Engine.Components.Interop.Event;
+    using Engine.Entities;
     using Engine.Gui.Modules;
     using Engine.Service;
     using Events;
@@ -132,7 +133,7 @@ namespace MetaMind.Unity.Guis.Modules
                 var screenManager = this.Interop.Screen;
 
                 // Remove screens on the background screen
-                screenManager.EraseScreenFrom(1); 
+                screenManager.ExitScreenFrom(1); 
                 screenManager.AddScreen(new SummaryScreen());
 
                 return true;

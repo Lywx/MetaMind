@@ -1,6 +1,7 @@
 ﻿namespace MetaMind.Unity.Guis.Layers
 {
     using Engine;
+    using Engine.Entities;
     using Engine.Gui.Modules;
     using Engine.Screen;
     using Engine.Service;
@@ -9,7 +10,7 @@
 
     public class SynchronizationLayer : MMLayer
     {
-        public SynchronizationLayer(IGameScreen screen)
+        public SynchronizationLayer(IMMScreen screen)
             : base(screen)
         {
             this.Modules = new MMEntityCollection<IMMMvcEntity>();

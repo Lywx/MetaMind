@@ -1,5 +1,6 @@
 namespace MetaMind.Engine.Gui.Modules.Particle
 {
+    using Entities;
     using Microsoft.Xna.Framework;
 
     public interface IParticle : IShapelessParticle, IUpdateable, IMMDrawable

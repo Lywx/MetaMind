@@ -9,7 +9,7 @@
     {
         #region Constructors and Finalizer
 
-        public MMLayer(IGameScreen screen)
+        public MMLayer(IMMScreen screen)
         {
             if (screen == null)
             {
@@ -32,7 +32,7 @@
 
         #region Render Data
 
-        public IGameScreen Screen { get; private set; }
+        public IMMScreen Screen { get; private set; }
 
         protected override void SetBackRenderTarget()
         {
@@ -85,7 +85,7 @@
 
         private float alpha = 255;
 
-        public override byte Alpha
+        public override byte Opacity
         {
             get { return (byte)this.alpha; }
             set { this.alpha = value; }
@@ -99,7 +99,7 @@
 
         public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {
-            alpha = this.MixedMinAlpha(alpha);
+            alpha = this.MixedMinOpacity(alpha);
 
             base.Draw              (graphics, time, alpha);
             this.DrawAction?.Invoke(graphics, time, alpha);
@@ -150,7 +150,7 @@
         {
             return () =>
             {
-                if (this.Alpha < this.alphaMax)
+                if (this.Opacity < this.alphaMax)
                 {
                     this.alpha += (float)this.alphaMax / fadeInFrameNum;
 
@@ -189,7 +189,7 @@
         {
             return () =>
             {
-                if (this.Alpha > this.alphaMin)
+                if (this.Opacity > this.alphaMin)
                 {
                     this.alpha -= (float)this.alphaMax / frames;
 

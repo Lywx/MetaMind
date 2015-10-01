@@ -4,6 +4,7 @@
     using System.Speech.Synthesis;
     using Concepts.Tests;
     using Engine;
+    using Engine.Entities;
     using Engine.Gui.Modules;
 
     public class TestModule : MMMvcEntity<TesTMvcSettings>

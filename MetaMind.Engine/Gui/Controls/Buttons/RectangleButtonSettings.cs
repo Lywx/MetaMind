@@ -4,6 +4,7 @@ namespace MetaMind.Engine.Gui.Controls.Buttons
     using Engine.Components.Content.Fonts;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using Settings;
 
     /// <summary>
     /// Rectangle button settings that could be consumed and injected into a 

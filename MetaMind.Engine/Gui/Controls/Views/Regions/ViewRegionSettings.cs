@@ -1,8 +1,8 @@
 namespace MetaMind.Engine.Gui.Controls.Views.Regions
 {
     using System;
+    using Engine.Settings.Color;
     using Microsoft.Xna.Framework;
-    using Setting.Color;
 
     public class ViewRegionSettings : ICloneable
     {

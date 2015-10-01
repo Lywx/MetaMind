@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MetaMind.Engine.Node.MMNode" Collapsed="true">
+    <Position X="1" Y="1.5" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="MetaMind.Engine.Node.MMNode.LazyAction" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Node\MMNode.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Struct Name="MetaMind.Engine.Node.MMNode.LazySchedule" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Node\MMNode.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>wiwi5To4IDbktIRhyAvk7t2vfHpVRzNcJJaTDlirggM=</HashCode>
+      <FileName>Node\MMNode.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MetaMind.Engine.Screen.MMScreen">
+    <Position X="0.5" Y="2.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>gAyAEAAABCwAggAFMAARAEAQTQIAAg4EIAAGAAQIBAQ=</HashCode>
+      <FileName>Screen\MMScreen.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,5 +1,6 @@
 namespace MetaMind.Engine.Gui.Controls.Views.Settings
 {
+    using Engine.Settings;
     using Microsoft.Xna.Framework;
 
     public interface IPointViewSettings : IMMSettings 

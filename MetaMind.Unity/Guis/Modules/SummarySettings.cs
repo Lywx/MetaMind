@@ -3,6 +3,7 @@ namespace MetaMind.Unity.Guis.Modules
     using Engine;
     using Engine.Components.Content.Fonts;
     using Engine.Components.Graphics;
+    using Engine.Entities;
     using Engine.Service.Loader;
     using Microsoft.Xna.Framework;
 

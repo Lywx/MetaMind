@@ -8,6 +8,7 @@
 namespace MetaMind.Engine.Gui.Elements
 {
     using System;
+    using Entities;
 
     public interface IPressable : IMMInputable
     {

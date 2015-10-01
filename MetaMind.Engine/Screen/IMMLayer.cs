@@ -1,10 +1,11 @@
 ﻿namespace MetaMind.Engine.Screen
 {
     using System;
+    using Entities;
 
-    public interface IMMLayer : IMMInputableEntity, IGameLayerOperations 
+    public interface IMMLayer : IMMInputableEntity, IMMLayerOperations 
     {
-        IGameScreen Screen { get; }
+        IMMScreen Screen { get; }
 
         #region State
 
@@ -22,7 +23,7 @@
 
         #region Graphics
 
-        byte Alpha { get; }
+        byte Opacity { get; }
 
         #endregion
     }

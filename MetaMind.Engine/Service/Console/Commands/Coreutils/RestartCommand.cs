@@ -1,5 +1,7 @@
 ﻿namespace MetaMind.Engine.Service.Console.Commands.Coreutils
 {
+    using Entities;
+
     internal class RestartCommand : MMEntity, IConsoleCommand
     {
         public RestartCommand()

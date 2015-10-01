@@ -76,10 +76,39 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Actions\GameAction.cs" />
-    <Compile Include="Actions\MMActor.cs" />
-    <Compile Include="Actions\GameFiniteTimeAction.cs" />
-    <Compile Include="Actions\Intervals\MoveByAction.cs" />
+    <Compile Include="Node\Actions\Intervals\MMExtraAction.cs" />
+    <Compile Include="Node\Actions\Intervals\MMRotateBy.cs" />
+    <Compile Include="Node\Actions\Intervals\MMRotateTo.cs" />
+    <Compile Include="Node\Actions\Intervals\MMScaleBy.cs" />
+    <Compile Include="Node\Actions\Intervals\MMScaleTo.cs" />
+    <Compile Include="Node\Actions\Intervals\MMSequence.cs" />
+    <Compile Include="Node\Actions\Intervals\MMMoveByState.cs" />
+    <Compile Include="Node\Actions\Intervals\MMMoveToState.cs" />
+    <Compile Include="Node\Actions\Intervals\MMRotateByState.cs" />
+    <Compile Include="Node\Actions\Intervals\MMRotateToState.cs" />
+    <Compile Include="Node\Actions\Intervals\MMScaleByState.cs" />
+    <Compile Include="Node\Actions\Intervals\MMScaleToState.cs" />
+    <Compile Include="Node\Actions\Intervals\MMSequenceState.cs" />
+    <Compile Include="Node\Actions\MMActionState.cs" />
+    <Compile Include="Node\Actions\MMActionTag.cs" />
+    <Compile Include="Node\Actions\MMFiniteTimeActionState.cs" />
+    <Compile Include="Node\MMNodeColor.cs" />
+    <Compile Include="Node\MMNodeGraphics.cs" />
+    <Compile Include="Node\MMNodeOpacity.cs" />
+    <Compile Include="Node\MMNodeTag.cs" />
+    <Compile Include="Geometry\Converters\CCPointConverter.cs" />
+    <Compile Include="Geometry\Converters\CCRectConverter.cs" />
+    <Compile Include="Geometry\Converters\CCSizeConverter.cs" />
+    <Compile Include="Node\Actions\Intervals\MMMoveTo.cs" />
+    <Compile Include="Node\CCScheduler.cs" />
+    <Compile Include="Node\CCTimer.cs" />
+    <Compile Include="Node\ICCFocusable.cs" />
+    <Compile Include="Node\ICCUpdatable.cs" />
+    <Compile Include="Node\Actions\MMAction.cs" />
+    <Compile Include="Node\Actions\MMActionManager.cs" />
+    <Compile Include="Node\MMNode.cs" />
+    <Compile Include="Node\Actions\MMFiniteTimeAction.cs" />
+    <Compile Include="Node\Actions\Intervals\MMMoveBy.cs" />
     <Compile Include="Collections\ObservableCollection.cs" />
     <Compile Include="Components\Audio\AudioManagerFactory.cs" />
     <Compile Include="Components\Content\Asset\PackageAsset.cs" />
@@ -90,7 +119,9 @@
     <Compile Include="Components\Content\Designer.cs" />
     <Compile Include="Components\Content\Texture\Image.cs" />
     <Compile Include="MMObject.cs" />
-    <Compile Include="MMSettingDictionary.cs" />
+    <Compile Include="Geometry\MMPoint.cs" />
+    <Compile Include="Geometry\MMSize.cs" />
+    <Compile Include="Settings\MMSettingDictionary.cs" />
     <Compile Include="Gui\Reactors\IRenderReactorOperations.cs" />
     <Compile Include="Gui\Reactors\IRenderReactorOrganization.cs" />
     <Compile Include="Gui\Reactors\RenderReactorCollection.cs" />
@@ -125,10 +156,10 @@
     <Compile Include="Service\Debug\Components\FrameRateCounter.cs" />
     <Compile Include="Gui\Reactors\RenderReactorDrawEventArgs.cs" />
     <Compile Include="Extensions\ColorUtils.cs" />
-    <Compile Include="MMEntityCollection.cs" />
+    <Compile Include="Entities\MMEntityCollection.cs" />
     <Compile Include="Gui\Controls\Images\ColorBox.cs" />
     <Compile Include="Gui\Controls\Buttons\ButtonVisualState.cs" />
-    <Compile Include="Gui\Reactors\MmReactor.cs" />
+    <Compile Include="Gui\Reactors\MMReactor.cs" />
     <Compile Include="Gui\Controls\Control.cs" />
     <Compile Include="Gui\Controls\ControlCollection.cs" />
     <Compile Include="Gui\Reactors\ControlReactor.cs" />
@@ -136,8 +167,8 @@
     <Compile Include="Extensions\MouseButtonsExt.cs" />
     <Compile Include="Extensions\MouseEventArgsExt.cs" />
     <Compile Include="Extensions\Vector3Extension.cs" />
-    <Compile Include="MMInputableComponent.cs" />
-    <Compile Include="Components\Interop\IScreenManagerOperations.cs" />
+    <Compile Include="Components\MMInputableComponent.cs" />
+    <Compile Include="Components\Interop\IMMScreenDirectorOperations.cs" />
     <Compile Include="Components\Interop\Process\ProcessCounter.cs" />
     <Compile Include="Components\Interop\Process\StepProcess.cs" />
     <Compile Include="Extensions\ExpressionExtension.cs" />
@@ -149,8 +180,8 @@
     <Compile Include="Service\Console\Processors\ICommandProcessor.cs" />
     <Compile Include="Service\Console\Processors\IronPythonProcessor.cs" />
     <Compile Include="Service\Console\Commands\CommandType.cs" />
-    <Compile Include="Gui\Reactors\IGameReactor.cs" />
-    <Compile Include="Gui\Reactors\IRenderReactor.cs" />
+    <Compile Include="Gui\Reactors\IMMReactor.cs" />
+    <Compile Include="Gui\Reactors\IMMRenderReactor.cs" />
     <Compile Include="Gui\Controls\IControl.cs" />
     <Compile Include="Gui\Controls\Images\ImageMode.cs" />
     <Compile Include="Gui\Controls\Item\Frames\BlcokViewVerticalItemFrameController.cs" />
@@ -211,8 +242,8 @@
     <Compile Include="Components\Interop\Event\Listener.cs" />
     <Compile Include="Components\Input\IKeyboardInputState.cs" />
     <Compile Include="Components\Interop\Process\IProcessManager.cs" />
-    <Compile Include="Components\Interop\ISaveManager.cs" />
-    <Compile Include="Components\Interop\IScreenManager.cs" />
+    <Compile Include="Components\Interop\IMMSaveManager.cs" />
+    <Compile Include="Components\Interop\IMMScreenDirector.cs" />
     <Compile Include="Components\Content\Fonts\SpriteFontExt.cs" />
     <Compile Include="Components\File\FileManager.cs" />
     <Compile Include="Components\Content\Fonts\FontManager.cs" />
@@ -237,22 +268,21 @@
     <Compile Include="Service\Console\MMConsoleLogic.cs" />
     <Compile Include="Service\Console\Commands\CommandLine.cs" />
     <Compile Include="Service\Console\MMConsoleVisual.cs" />
-    <Compile Include="MMMvcComponent.cs" />
-    <Compile Include="MMMvcComponentComponent.cs" />
-    <Compile Include="MMMvcComponentLogic.cs" />
-    <Compile Include="MMMvcComponentVisual.cs" />
+    <Compile Include="Components\MMMvcComponent.cs" />
+    <Compile Include="Components\MMMvcComponentComponent.cs" />
+    <Compile Include="Components\MMMvcComponentLogic.cs" />
+    <Compile Include="Components\MMMvcComponentVisual.cs" />
     <Compile Include="Gui\Reactors\RenderReactor.cs" />
-    <Compile Include="Gui\Size.cs" />
-    <Compile Include="IMMDrawableComponentOperations.cs" />
-    <Compile Include="IMMDrawableComponent.cs" />
+    <Compile Include="Components\IMMDrawableComponentOperations.cs" />
+    <Compile Include="Components\IMMDrawableComponent.cs" />
     <Compile Include="IMMEngineConfigurer.cs" />
-    <Compile Include="IMMMvcComponent.cs" />
-    <Compile Include="IMMMvcComponentComponent.cs" />
-    <Compile Include="IMMMvcComponentLogic.cs" />
-    <Compile Include="IMMMvcComponentVisual.cs" />
-    <Compile Include="Gui\Modules\IGameMvcEntityLogic.cs" />
-    <Compile Include="IRenderTarget.cs" />
-    <Compile Include="RenderTargetFactory.cs" />
+    <Compile Include="Components\IMMMvcComponent.cs" />
+    <Compile Include="Components\IMMMvcComponentComponent.cs" />
+    <Compile Include="Components\IMMMvcComponentLogic.cs" />
+    <Compile Include="Components\IMMMvcComponentVisual.cs" />
+    <Compile Include="Entities\IMMMvcEntityLogic.cs" />
+    <Compile Include="Entities\IMMRenderEntity.cs" />
+    <Compile Include="MMRenderTargetFactory.cs" />
     <Compile Include="Screen\MMCircularLayer.cs" />
     <Compile Include="Screen\ICircularLayerManager.cs" />
     <Compile Include="Screen\ICircularLayerOperations.cs" />
@@ -387,7 +417,7 @@
     <Compile Include="Gui\Controls\Item\Visuals\ViewItemVisual.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="IMMSettings.cs" />
+    <Compile Include="Settings\IMMSettings.cs" />
     <Compile Include="Gui\Controls\Views\IViewComponentOperations.cs" />
     <Compile Include="Gui\Controls\Views\IIndexViewBuilder.cs" />
     <Compile Include="Gui\Controls\Views\IViewOperations.cs" />
@@ -563,7 +593,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Gui\Controls\Labels\LabelBox.cs" />
-    <Compile Include="MMSettings.cs" />
+    <Compile Include="Settings\MMSettings.cs" />
     <Compile Include="Gui\Controls\Regions\IRegion.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -586,21 +616,21 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="IMMBufferUpdateable.cs" />
-    <Compile Include="IMMDrawableOperations.cs" />
-    <Compile Include="IMMInputableComponentOperations.cs" />
-    <Compile Include="IMMInputableEntity.cs" />
+    <Compile Include="Entities\IMMDrawOperations.cs" />
+    <Compile Include="Components\IMMInputableComponentOperations.cs" />
+    <Compile Include="Entities\IMMInputableEntity.cs" />
     <Compile Include="IMMEngineBuilder.cs" />
     <Compile Include="IMMEngineOperations.cs" />
     <Compile Include="IMMFreeUpdatable.cs" />
-    <Compile Include="IMMInputableOperations.cs" />
-    <Compile Include="IMMInteroperableOperations.cs" />
-    <Compile Include="IMMUpdateable.cs" />
-    <Compile Include="IMMUpdateableOperations.cs" />
+    <Compile Include="Entities\IMMInputOperations.cs" />
+    <Compile Include="Entities\IMMInteropOperations.cs" />
+    <Compile Include="Entities\IMMUpdateable.cs" />
+    <Compile Include="Entities\IMMUpdateableOperations.cs" />
     <Compile Include="Components\Profiler\ProcessorProfiler.cs" />
     <Compile Include="Screen\MMLayer.cs" />
     <Compile Include="Screen\IMMLayer.cs" />
-    <Compile Include="Screen\IGameLayerOperations.cs" />
-    <Compile Include="Screen\IGameScreenOperations.cs" />
+    <Compile Include="Screen\IMMLayerOperations.cs" />
+    <Compile Include="Screen\IMMScreenOperations.cs" />
     <Compile Include="Extensions\BooleanArrayExtension.cs" />
     <Compile Include="Service\Debug\Screens\CpuWhiteNoiseSreen.cs" />
     <Compile Include="Service\Script\FSharp\FsiDebugger.cs" />
@@ -617,34 +647,34 @@
     <Compile Include="Service\Script\IronPython\IpySession.cs" />
     <Compile Include="Service\Script\QueueSession.cs" />
     <Compile Include="Service\MMEngineNumericalService.cs" />
-    <Compile Include="MMVisualEntity.cs" />
+    <Compile Include="Entities\MMVisualEntity.cs" />
     <Compile Include="Service\MMEngineGraphicsService.cs" />
     <Compile Include="Service\MMEngineInputService.cs" />
     <Compile Include="Service\MMEngineInteropService.cs" />
     <Compile Include="Gui\Elements\IRectangleElement.cs" />
-    <Compile Include="Gui\Modules\IMMMvcEntity.cs" />
-    <Compile Include="Gui\Modules\IMMMvcEntityVisual.cs" />
+    <Compile Include="Entities\IMMMvcEntity.cs" />
+    <Compile Include="Entities\IMMMvcEntityVisual.cs" />
     <Compile Include="Gui\Modules\Particle\IParticle.cs" />
     <Compile Include="Gui\Modules\Particle\IRandomParticle.cs" />
     <Compile Include="Gui\Modules\Particle\IShapelessParticle.cs" />
     <Compile Include="Service\MMEngineService.cs" />
     <Compile Include="Gui\Modules\Particle\ParticleSpawner.cs" />
-    <Compile Include="IMMDrawable.cs" />
+    <Compile Include="Entities\IMMDrawable.cs" />
     <Compile Include="IMMGame.cs" />
     <Compile Include="IMMEngine.cs" />
-    <Compile Include="IMMEntity.cs" />
+    <Compile Include="Entities\IMMEntity.cs" />
     <Compile Include="Components\IMMEngineGraphics.cs" />
-    <Compile Include="IMMInputableComponent.cs" />
+    <Compile Include="Components\IMMInputableComponent.cs" />
     <Compile Include="Service\IMMEngineNumerical.cs" />
     <Compile Include="Service\IMMEngineNumericalService.cs" />
     <Compile Include="Service\IMMEngineService.cs" />
-    <Compile Include="IMMVisualEntity.cs" />
-    <Compile Include="IMMInputable.cs" />
-    <Compile Include="MMEntity.cs" />
+    <Compile Include="Entities\IMMVisualEntity.cs" />
+    <Compile Include="Entities\IMMInputable.cs" />
+    <Compile Include="Entities\MMEntity.cs" />
     <Compile Include="Service\IMMEngineGraphicsService.cs" />
     <Compile Include="Service\IMMEngineInputService.cs" />
     <Compile Include="Service\IMMEngineInteropService.cs" />
-    <Compile Include="Screen\IGameScreen.cs" />
+    <Compile Include="Screen\IMMScreen.cs" />
     <Compile Include="Components\IMMEngineInput.cs" />
     <Compile Include="Components\IMMEngineInterop.cs" />
     <Compile Include="Components\MMEngineNullInput.cs" />
@@ -667,9 +697,9 @@
     <Compile Include="Components\Interop\Process\WaitProcess.cs" />
     <Compile Include="Components\Interop\Process\ProcessManager.cs" />
     <Compile Include="Components\MMGameManager.cs" />
-    <Compile Include="Components\Interop\SaveManager.cs" />
-    <Compile Include="Components\Interop\ScreenManager.cs" />
-    <Compile Include="Components\Interop\ScreenSettings.cs" />
+    <Compile Include="Components\Interop\MMSaveManager.cs" />
+    <Compile Include="Components\Interop\MMScreenDirector.cs" />
+    <Compile Include="Components\Interop\MMScreenSettings.cs" />
     <Compile Include="Extensions\TypeExtension.cs" />
     <Compile Include="MMGame.cs" />
     <Compile Include="Extensions\ColorExtension.cs" />
@@ -695,19 +725,19 @@
     <Compile Include="Service\Loader\IParameter.cs" />
     <Compile Include="Service\Loader\IParameterLoader.cs" />
     <Compile Include="Gui\Controls\Item\Data\ViewItemDataEventArgs.cs" />
-    <Compile Include="Gui\Modules\MmMvcEntity.cs" />
-    <Compile Include="Gui\Modules\MmMvcEntityComponent.cs" />
-    <Compile Include="Gui\Modules\MmMvcEntityLogic.cs" />
-    <Compile Include="Gui\Modules\MmMvcEntityVisual.cs" />
-    <Compile Include="MMInputableEntity.cs" />
+    <Compile Include="Entities\MMMvcEntity.cs" />
+    <Compile Include="Entities\MMMvcEntityComponent.cs" />
+    <Compile Include="Entities\MMMvcEntityLogic.cs" />
+    <Compile Include="Entities\MMMvcEntityVisual.cs" />
+    <Compile Include="Entities\MMInputableEntity.cs" />
     <Compile Include="Service\Parser\Grammar\LineGrammar.cs" />
     <Compile Include="Service\Parser\Grammar\ConfigurationFileGrammar.cs" />
     <Compile Include="Service\Parser\Elements\Sentence.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Screen\MmScreen.cs" />
-    <Compile Include="Screen\GameScreenState.cs" />
-    <Compile Include="Setting\Color\Palette.cs" />
+    <Compile Include="Screen\MMScreen.cs" />
+    <Compile Include="Screen\MMScreenState.cs" />
+    <Compile Include="Settings\Color\Palette.cs" />
     <Compile Include="Components\Graphics\GraphicsSettings.cs" />
     <Compile Include="Service\Loader\FileLoader.cs" />
   </ItemGroup>
@@ -843,7 +873,8 @@
     <None Include="Content\Raw Content\Package.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Diagrams\Components.cd" />
+    <None Include="Diagrams\Component Level.cd" />
+    <None Include="Diagrams\Node Level.cd" />
     <None Include="MetaMind.Engine.licenseheader" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>

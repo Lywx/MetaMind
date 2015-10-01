@@ -8,6 +8,7 @@
 namespace MetaMind.Engine.Gui.Elements
 {
     using System;
+    using Entities;
     using Microsoft.Xna.Framework;
 
     public class RectangleElement : MMInputableEntity, IRectangleElement

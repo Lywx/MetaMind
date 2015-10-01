@@ -2,6 +2,7 @@
 {
     using Engine;
     using Engine.Gui.Controls;
+    using Engine.Settings;
     using Microsoft.Xna.Framework;
     using NUnit.Framework;
 

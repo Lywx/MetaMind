@@ -2,6 +2,7 @@ namespace MetaMind.Unity.Guis.Modules.Summary
 {
     using System;
     using Engine;
+    using Engine.Entities;
     using Engine.Service;
     using Microsoft.Xna.Framework;
     using Primtives2D;

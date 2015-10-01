@@ -3,6 +3,7 @@
     using Concepts.Cognitions;
     using Concepts.Synchronizations;
     using Engine;
+    using Engine.Entities;
     using Engine.Gui.Modules;
     using Engine.Service;
     using Extensions;

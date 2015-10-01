@@ -30,11 +30,11 @@ namespace MetaMind.Engine.Service
 
         IProcessManager Process { get; }
 
-        IScreenManager Screen { get; }
+        IMMScreenDirector Screen { get; }
 
         /// <remarks>
         /// Save that is replaceable in specific game 
         /// </remarks>
-        ISaveManager Save { get; set; }
+        IMMSaveManager Save { get; set; }
     }
 }

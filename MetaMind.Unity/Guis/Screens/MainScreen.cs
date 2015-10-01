@@ -9,7 +9,7 @@
     using Engine.Screen;
     using Engine.Service;
     using Engine.Service.Scripting.FSharp;
-    using Engine.Setting.Color;
+    using Engine.Settings.Color;
     using Layers;
     using Microsoft.Xna.Framework;
 
@@ -111,14 +111,14 @@
                         graphics,
                         time,
                         Math.Min(
-                            this.TransitionAlpha,
-                            this.CircularLayers.Alpha));
+                            this.TransitionOpacity,
+                            this.CircularLayers.Opacity));
                     this.buttonNext.Draw(
                         graphics,
                         time,
                         Math.Min(
-                            this.TransitionAlpha,
-                            this.CircularLayers.Alpha));
+                            this.TransitionOpacity,
+                            this.CircularLayers.Opacity));
                     SpriteBatch.End();
                 }
             });
@@ -129,7 +129,7 @@
             {
                 Active = false,
                 Visible = false,
-                Alpha = 0,
+                Opacity = 0,
             });
 
             this.Layers.Add(this.CircularLayers);

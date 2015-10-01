@@ -2,6 +2,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Scrolls
 {
     using System;
     using Elements;
+    using Entities;
     using Images;
     using Microsoft.Xna.Framework;
     using Service;

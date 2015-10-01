@@ -201,7 +201,7 @@
                 this.TextFont(),
                 this.Text(),
                 this.AnchorLocation(),
-                this.TextColor().MakeTransparent(this.MixedMinAlpha(alpha)),
+                this.TextColor().MakeTransparent(this.MixedMinOpacity(alpha)),
                 this.TextSize(),
                 this.TextHAlignment,
                 this.TextVAlignment,

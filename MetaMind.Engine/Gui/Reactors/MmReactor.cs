@@ -1,8 +1,9 @@
 namespace MetaMind.Engine.Gui.Reactors
 {
     using System;
+    using Entities;
 
-    public abstract class MMReactor : MMInputableEntity, IGameReactor
+    public abstract class MMReactor : MMInputableEntity, IMMReactor
     {
         #region State
 

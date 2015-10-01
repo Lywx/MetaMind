@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using Concepts.Operations;
     using Engine;
+    using Engine.Entities;
     using Engine.Gui.Controls.Item;
     using Engine.Gui.Controls.Item.Data;
     using Engine.Gui.Controls.Item.Factories;

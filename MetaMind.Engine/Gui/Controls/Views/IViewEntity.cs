@@ -8,6 +8,7 @@
 namespace MetaMind.Engine.Gui.Controls.Views
 {
     using System;
+    using Entities;
 
     public interface IViewEntity : IMMInputableEntity
     {

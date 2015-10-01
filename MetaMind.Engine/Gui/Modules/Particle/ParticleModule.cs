@@ -1,6 +1,7 @@
 namespace MetaMind.Engine.Gui.Modules
 {
     using System.Collections.Generic;
+    using Entities;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Particle;

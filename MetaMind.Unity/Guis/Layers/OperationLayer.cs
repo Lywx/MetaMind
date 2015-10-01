@@ -5,6 +5,7 @@
     using Engine;
     using Engine.Components.Content.Fonts;
     using Engine.Components.Graphics.Fonts;
+    using Engine.Entities;
     using Engine.Gui.Controls.Labels;
     using Engine.Screen;
     using Engine.Service;
@@ -16,7 +17,7 @@
     {
         private readonly OperationSession operationSession;
 
-        public OperationLayer(OperationSession operationSession, IGameScreen screen)
+        public OperationLayer(OperationSession operationSession, IMMScreen screen)
             : base(screen)
         {
             if (operationSession == null)
@@ -40,8 +41,8 @@
 
             this.SpriteBatch.Begin();
 
-            this.ControllableEntities.Draw(graphics, time, Math.Min(alpha, this.Alpha));
-            this.VisuallEntities     .Draw(graphics, time, Math.Min(alpha, this.Alpha));
+            this.ControllableEntities.Draw(graphics, time, Math.Min(alpha, this.Opacity));
+            this.VisuallEntities     .Draw(graphics, time, Math.Min(alpha, this.Opacity));
             
             this.SpriteBatch.End();
         }

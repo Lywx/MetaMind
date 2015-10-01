@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Engine;
+    using Engine.Entities;
     using Extensions;
     using Guis.Screens;
     using Stateless;

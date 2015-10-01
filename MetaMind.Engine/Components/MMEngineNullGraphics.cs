@@ -8,7 +8,7 @@
     {
         public GraphicsManager Manager { get; }
 
-        public IScreenManager Screen { get; }
+        public IMMScreenDirector Screen { get; }
 
         public GraphicsSettings Settings { get; }
 

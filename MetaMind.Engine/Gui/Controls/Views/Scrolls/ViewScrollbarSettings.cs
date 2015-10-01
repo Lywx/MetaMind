@@ -7,8 +7,8 @@
 
 namespace MetaMind.Engine.Gui.Controls.Views.Scrolls
 {
+    using Engine.Settings.Color;
     using Microsoft.Xna.Framework;
-    using Setting.Color;
 
     public class ViewScrollbarSettings 
     {

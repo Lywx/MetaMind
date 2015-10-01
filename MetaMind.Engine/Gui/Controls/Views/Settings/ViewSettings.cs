@@ -1,6 +1,7 @@
 namespace MetaMind.Engine.Gui.Controls.Views.Settings
 {
     using System;
+    using Engine.Settings;
 
     public class ViewSettings : MMSettings, ICloneable
     {

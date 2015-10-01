@@ -6,6 +6,7 @@
     using Engine;
     using Engine.Components.Content.Fonts;
     using Engine.Components.Graphics.Fonts;
+    using Engine.Entities;
     using Engine.Gui.Controls.Images;
     using Engine.Gui.Controls.Item;
     using Engine.Gui.Controls.Item.Data;
@@ -23,7 +24,7 @@
     using Engine.Gui.Controls.Views.Visuals;
     using Engine.Screen;
     using Engine.Service;
-    using Engine.Setting.Color;
+    using Engine.Settings.Color;
     using Microsoft.Xna.Framework;
     using Modules;
     using Widgets.BlockViews.Options;
@@ -206,11 +207,11 @@
         {
             this.SpriteBatch.Begin();
 
-            this.procedureNameLabelBox.Draw(graphics, time, this.TransitionAlpha);
-            this.procedureDescriptionLabelBox.Draw(graphics, time, this.TransitionAlpha);
+            this.procedureNameLabelBox.Draw(graphics, time, this.TransitionOpacity);
+            this.procedureDescriptionLabelBox.Draw(graphics, time, this.TransitionOpacity);
 
-            this.screenLabel.Draw(graphics, time, this.TransitionAlpha);
-            this.Entities.Draw(graphics, time, this.TransitionAlpha);
+            this.screenLabel.Draw(graphics, time, this.TransitionOpacity);
+            this.Entities.Draw(graphics, time, this.TransitionOpacity);
 
             this.SpriteBatch.End();
 

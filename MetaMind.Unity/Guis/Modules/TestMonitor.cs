@@ -3,6 +3,7 @@
     using System;
     using Concepts.Tests;
     using Engine;
+    using Engine.Components;
     using Engine.Service.Loader;
     using Microsoft.Xna.Framework;
 

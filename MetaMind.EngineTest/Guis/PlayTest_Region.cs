@@ -2,6 +2,7 @@
 {
     using Engine.Service;
     using Engine;
+    using Engine.Entities;
     using Engine.Gui.Controls.Images;
     using Engine.Gui.Controls.Regions;
     using Engine.Gui.Modules;

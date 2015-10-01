@@ -3,6 +3,7 @@ namespace MetaMind.Unity.Guis.Modules
     using Concepts.Cognitions;
     using Concepts.Synchronizations;
     using Engine;
+    using Engine.Entities;
     using Engine.Gui.Modules;
 
     public class SummaryModule : MMMvcEntity<SummarySettings>

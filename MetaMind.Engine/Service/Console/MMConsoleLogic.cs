@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Windows.Forms;
     using Commands;
+    using Components;
     using NLog;
     using Processors;
     using KeyEventArgs = Components.Input.KeyEventArgs;

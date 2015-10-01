@@ -2,6 +2,7 @@
 {
     using System;
     using Engine;
+    using Entities;
     using Microsoft.Xna.Framework;
     using Service;
 
@@ -9,7 +10,7 @@
     {
         private int layerDisplayedIndex;
 
-        public MMCircularLayer(IGameScreen screen)
+        public MMCircularLayer(IMMScreen screen)
             : base(screen)
         {
         }

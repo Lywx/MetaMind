@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Commands;
+    using Components;
     using Components.Content.Fonts;
     using Components.Graphics;
     using Extensions;

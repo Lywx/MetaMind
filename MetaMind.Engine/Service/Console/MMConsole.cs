@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using Commands;
     using Commands.Coreutils;
+    using Components;
     using Components.Graphics;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;

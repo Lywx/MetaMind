@@ -1,6 +1,7 @@
 namespace MetaMind.Engine.Gui.Controls.Views.Regions
 {
     using System;
+    using Entities;
     using Microsoft.Xna.Framework;
     using Primtives2D;
     using Service;

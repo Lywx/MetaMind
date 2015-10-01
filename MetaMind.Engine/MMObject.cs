@@ -10,6 +10,9 @@ namespace MetaMind.Engine
     using Service;
     using Components.Graphics.Adapters;
 
+    /// <summary>
+    /// Common object for engine service access.
+    /// </summary>
     [DataContract]
     public class MMObject
     {

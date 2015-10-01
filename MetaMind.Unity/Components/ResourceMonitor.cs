@@ -2,6 +2,7 @@ namespace MetaMind.Unity.Components
 {
     using System;
     using Engine;
+    using Engine.Components;
     using Engine.Components.Profiler;
     using Engine.Service.Loader;
     using Microsoft.Xna.Framework;
