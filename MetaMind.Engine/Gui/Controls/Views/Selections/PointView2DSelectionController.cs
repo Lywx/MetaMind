@@ -20,7 +20,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Selections
 
         private int? previousId;
 
-        public PointView2DSelectionController(IView view)
+        public PointView2DSelectionController(IMMViewNode view)
             : base(view)
         {
             this.viewLayer = this.GetViewLayer<PointView2DLayer>();

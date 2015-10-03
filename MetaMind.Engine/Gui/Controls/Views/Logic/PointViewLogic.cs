@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Logic
     public class PointViewLogic : ViewLogic
     {
         protected PointViewLogic(
-            IView view,
+            IMMViewNode view,
             IViewScrollController viewScroll,
             IViewSelectionController viewSelection,
             IViewSwapController viewSwap,

@@ -4,9 +4,9 @@
     using Concepts.Operations;
     using Engine;
     using Engine.Components.Content.Fonts;
-    using Engine.Components.Graphics.Fonts;
     using Engine.Entities;
     using Engine.Gui.Controls.Labels;
+    using Engine.Gui.Graphics.Fonts;
     using Engine.Screen;
     using Engine.Service;
     using Microsoft.Xna.Framework;
@@ -27,13 +27,13 @@
 
             this.operationSession = operationSession;
 
-            this.ControllableEntities = new MMEntityCollection<IMMInputableEntity>();
+            this.ControllableEntities = new MMEntityCollection<IMMInputEntity>();
             this.VisuallEntities      = new MMEntityCollection<IMMVisualEntity>();
         }
 
         private MMEntityCollection<IMMVisualEntity> VisuallEntities { get; set; }
 
-        private MMEntityCollection<IMMInputableEntity> ControllableEntities { get; set; }
+        private MMEntityCollection<IMMInputEntity> ControllableEntities { get; set; }
 
         public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {

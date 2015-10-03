@@ -13,45 +13,24 @@ namespace MetaMind.Engine.Gui.Controls.Views.Layers
     /// </summary>
     public class ViewLayer : ViewComponent, IViewLayer
     {
-        protected ViewLayer(IView view)
+        protected ViewLayer(IMMViewNode view)
             : base(view)
         {
         }
 
-        #region Indirect Depedency
+        #region Indirect Dependency
 
-        public IViewLogic ViewLogic
-        {
-            get
-            {
-                return this.View.ViewLogic;
-            }
-        }
+        public IViewLogic ViewLogic => this.View.ViewLogic;
 
-        public ViewSettings ViewSettings
-        {
-            get { return this.View.ViewSettings; }
-        }
+        public ViewSettings ViewSettings => this.View.ViewSettings;
 
-        public IViewSelectionController ViewSelection
-        {
-            get { return this.ViewLogic.ViewSelection; }
-        }
+        public IViewSelectionController ViewSelection => this.ViewLogic.ViewSelection;
 
-        public IViewScrollController ViewScroll
-        {
-            get { return this.ViewLogic.ViewScroll; }
-        }
+        public IViewScrollController ViewScroll => this.ViewLogic.ViewScroll;
 
-        public IViewSwapController ViewSwap
-        {
-            get { return this.ViewLogic.ViewSwap; }
-        }
+        public IViewSwapController ViewSwap => this.ViewLogic.ViewSwap;
 
-        public IViewBinding ViewBinding
-        {
-            get { return this.ViewLogic.ViewBinding; }
-        }
+        public IViewBinding ViewBinding => this.ViewLogic.ViewBinding;
 
         #endregion
 
@@ -64,7 +43,8 @@ namespace MetaMind.Engine.Gui.Controls.Views.Layers
                 return this as T;
             }
 
-            throw new InvalidOperationException(string.Format("This is not a {0}.", typeof(T).Name));
+            throw new InvalidOperationException(
+                $"This is not a {typeof(T).Name}.");
         }
     }
 }

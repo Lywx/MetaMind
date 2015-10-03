@@ -1,17 +1,17 @@
 namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 {
     using Engine.Components.Graphics;
-    using Engine.Components.Graphics.Fonts;
     using Engine.Gui.Controls.Item;
     using Engine.Gui.Controls.Item.Frames;
     using Engine.Gui.Controls.Item.Settings;
     using Engine.Gui.Controls.Labels;
+    using Engine.Gui.Graphics.Fonts;
     using Engine.Service.Loader;
     using Engine.Settings.Color;
     using Microsoft.Xna.Framework;
     using Modules;
 
-    public class TestItemSettings : ItemSettings, IParameterLoader<GraphicsSettings>
+    public class TestItemSettings : ItemSettings, IParameterLoader<MMGraphicsSettings>
     {
         private readonly ViewItemVisualSettings rootFrame;
 
@@ -193,7 +193,7 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
             this.Add("StatisticsLabel", this.statisticsLabel);
         }
 
-        public void LoadParameter(GraphicsSettings parameter)
+        public void LoadParameter(MMGraphicsSettings parameter)
         {
             this.viewportWidth = parameter.Width;
         }

@@ -15,15 +15,15 @@ namespace MetaMind.Engine.Gui.Controls.Item.Frames
 
     public abstract class ViewItemFrameController : ViewItemComponent, IViewItemFrameController
     {
-        public ViewItemFrameController(IViewItem item, ViewItemRectangle itemRootRectangle)
+        public ViewItemFrameController(IViewItem item, ViewItemImmRectangle itemImmRootRectangle)
             : base(item)
         {
-            if (itemRootRectangle == null)
+            if (itemImmRootRectangle == null)
             {
-                throw new ArgumentNullException(nameof(itemRootRectangle));
+                throw new ArgumentNullException(nameof(itemImmRootRectangle));
             }
 
-            this.RootRectangle = itemRootRectangle;
+            this.RootImmRectangle = itemImmRootRectangle;
 
             this.RegisterStates();
         }
@@ -41,20 +41,20 @@ namespace MetaMind.Engine.Gui.Controls.Item.Frames
             var itemSettings = itemLayer.ItemSettings;
 
             var rootFrameSettings = itemSettings.Get<ViewItemVisualSettings>("RootFrame");
-            this.RootRectangle.Size = rootFrameSettings.Size;
+            this.RootImmRectangle.Size = rootFrameSettings.Size;
         }
 
         private void RegisterStates()
         {
-            this.Item[ViewItemState.Item_Is_Mouse_Over] = this.RootRectangle[ElementState.Mouse_Is_Over];
-            this.Item[ViewItemState.Item_Is_Dragging] = this.RootRectangle[ElementState.Element_Is_Dragging];
+            this.Item[ViewItemState.Item_Is_Mouse_Over] = this.RootImmRectangle[MMElementState.Mouse_Is_Over];
+            this.Item[ViewItemState.Item_Is_Dragging] = this.RootImmRectangle[MMElementState.Element_Is_Dragging];
         }
 
         #endregion
 
         #region Dependency
 
-        public ViewItemRectangle RootRectangle { get; private set; }
+        public ViewItemImmRectangle RootImmRectangle { get; private set; }
 
         #endregion
 
@@ -62,14 +62,14 @@ namespace MetaMind.Engine.Gui.Controls.Item.Frames
 
         public override void UpdateInput(IMMEngineInputService input, GameTime time)
         {
-            this.RootRectangle.UpdateInput(input, time);
+            this.RootImmRectangle.UpdateInput(input, time);
         }
 
         public override void Update(GameTime time)
         {
             base.Update(time);
 
-            this.RootRectangle.Update(time);
+            this.RootImmRectangle.Update(time);
 
             this.UpdateFrameGeometry();
             this.UpdateFrameStates();
@@ -93,7 +93,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Frames
                 {
                     if (!this.IsDisposed)
                     {
-                        this.RootRectangle?.Dispose();
+                        this.RootImmRectangle?.Dispose();
                     }
 
                     this.IsDisposed = true;

@@ -14,7 +14,7 @@
     {
         #region Constructors and Finalizer
 
-        public MMConsole(GameConsoleSettings settings, MMEngine engine, SpriteBatch spriteBatch, IRenderer renderer)
+        public MMConsole(GameConsoleSettings settings, MMEngine engine, SpriteBatch spriteBatch, IMMRenderer renderer)
             : base(settings, engine)
         {
             if (spriteBatch == null)

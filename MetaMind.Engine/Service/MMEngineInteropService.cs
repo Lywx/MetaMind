@@ -51,7 +51,7 @@ namespace MetaMind.Engine.Service
 
         public MMEngine Engine => this.interop.Engine;
 
-        public IEventManager Event => this.interop.Event;
+        public IMMEventManager Event => this.interop.Event;
 
         public IMMGameManager Game => this.interop.Game;
 

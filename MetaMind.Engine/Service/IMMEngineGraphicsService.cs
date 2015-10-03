@@ -5,13 +5,13 @@ namespace MetaMind.Engine.Service
 
     public interface IMMEngineGraphicsService
     {
-        GraphicsManager Manager { get; }
+        MMGraphicsManager Manager { get; }
 
-        GraphicsSettings Settings { get; }
+        MMGraphicsSettings Settings { get; }
 
         SpriteBatch SpriteBatch { get; }
         
-        IRenderer Renderer { get; }
+        IMMRenderer MMRenderer { get; }
 
         GraphicsDevice GraphicsDevice { get; }
     }

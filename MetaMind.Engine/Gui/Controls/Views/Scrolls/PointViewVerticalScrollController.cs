@@ -10,7 +10,7 @@
 
         private PointViewVerticalSettings viewSettings;
 
-        public PointViewVerticalScrollController(IView view)
+        public PointViewVerticalScrollController(IMMViewNode view)
             : base(view)
         {
         }

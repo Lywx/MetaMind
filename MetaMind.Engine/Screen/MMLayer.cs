@@ -1,11 +1,11 @@
 ﻿namespace MetaMind.Engine.Screen
 {
     using System;
-    using Gui.Reactors;
+    using Gui.Renders;
     using Microsoft.Xna.Framework;
     using Service;
 
-    public class MMLayer : RenderReactor, IMMLayer
+    public class MMLayer : MMRenderComponent, IMMLayer
     {
         #region Constructors and Finalizer
 

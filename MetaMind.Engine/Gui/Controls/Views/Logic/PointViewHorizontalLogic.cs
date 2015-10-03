@@ -24,7 +24,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Logic
     {
         private PointViewHorizontalSettings viewSettings;
 
-        protected PointViewHorizontalLogic(IView view, IViewScrollController viewScroll, IViewSelectionController viewSelection, IViewSwapController viewSwap, IViewLayout viewLayout, IViewItemFactory itemFactory)
+        protected PointViewHorizontalLogic(IMMViewNode view, IViewScrollController viewScroll, IViewSelectionController viewSelection, IViewSwapController viewSwap, IViewLayout viewLayout, IViewItemFactory itemFactory)
             : base(view, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory)
         {
         }

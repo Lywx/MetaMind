@@ -8,7 +8,7 @@
     {
         private readonly PointViewHorizontalSettings viewSettings;
 
-        public PointViewHorizontalScrollController(IView view)
+        public PointViewHorizontalScrollController(IMMViewNode view)
             : base(view)
         {
             this.viewSettings = this.GetViewLayer<PointViewHorizontalLayer>().ViewSettings;

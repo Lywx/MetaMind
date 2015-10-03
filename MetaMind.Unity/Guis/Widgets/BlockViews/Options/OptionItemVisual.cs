@@ -61,15 +61,15 @@ namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
             IOption itemData = this.Item.ItemData;
 
             // Positions
-            this.ItemCenterPosition = () => this.itemFrame.RootRectangle.Center.ToVector2();
+            this.ItemCenterPosition = () => this.itemFrame.RootImmRectangle.Center.ToVector2();
 
-            this.IdCenterPosition = () => this.itemFrame.IdRectangle.Center.ToVector2();
+            this.IdCenterPosition = () => this.itemFrame.IdImmRectangle.Center.ToVector2();
             this.NamePosition = () => this.itemFrame.NameFrameLocation() + itemSettings.Get<Vector2>("NameMargin");
             this.DescriptionPosition = () => this.itemFrame.DescriptionFrameLocation() + itemSettings.Get<Vector2>("DescriptionMargin");
 
             // Components
             this.IdRectangle = new ViewItemRectangleVisual(this.Item,
-                this.itemFrame.IdRectangle,
+                this.itemFrame.IdImmRectangle,
                 itemSettings.Get<ViewItemVisualSettings>("IdFrame"));
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("IdLabel");
@@ -82,7 +82,7 @@ namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
 
             var nameFrameSettings = itemSettings.Get<ViewItemVisualSettings>("NameFrame");
             this.NameRectangle = new ViewItemRectangleVisual(this.Item,
-                this.itemFrame.NameRectangle,
+                this.itemFrame.NameImmRectangle,
                 nameFrameSettings);
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("NameLabel");
@@ -96,7 +96,7 @@ namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
 
             var descriptionFrameSettings = itemSettings.Get<ViewItemVisualSettings>("DescriptionFrame");
             this.DescriptionRectangle = new ViewItemRectangleVisual(this.Item,
-                this.itemFrame.DescriptionRectangle,
+                this.itemFrame.DescriptionImmRectangle,
                 descriptionFrameSettings);
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("DescriptionLabel");
@@ -108,9 +108,9 @@ namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
                 };
             }
 
-            this.itemFrame.RootRectangle.Add(this.IdLabel);
-            this.itemFrame.RootRectangle.Add(this.NameLabel);
-            this.itemFrame.RootRectangle.Add(this.DescriptionLabel);
+            this.itemFrame.RootImmRectangle.Add(this.IdLabel);
+            this.itemFrame.RootImmRectangle.Add(this.NameLabel);
+            this.itemFrame.RootImmRectangle.Add(this.DescriptionLabel);
         }
 
         #endregion

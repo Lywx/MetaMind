@@ -9,9 +9,13 @@ namespace MetaMind.Engine
     {
         private static readonly RenderTargetUsage RenderTargetUsage = RenderTargetUsage.DiscardContents;
 
+        #region Engine Graphics
+
         private static IMMEngineGraphicsService Graphics => MMEngine.Service.Graphics;
 
         private static GraphicsDevice GraphicsDevice => Graphics.GraphicsDevice;
+
+        #endregion
 
         public static RenderTarget2D Create(Point size)
         {

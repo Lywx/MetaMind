@@ -17,7 +17,7 @@
 
         private PointView2DSettings viewSettings;
 
-        public PointView2DScrollController(IView view)
+        public PointView2DScrollController(IMMViewNode view)
             : base(view)
         {
         }

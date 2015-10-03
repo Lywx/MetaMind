@@ -6,6 +6,7 @@
 namespace MetaMind.Engine.Node.Actions.Intervals
 {
     using Geometry;
+    using Microsoft.Xna.Framework;
 
     public class MMMoveByState : MMFiniteTimeActionState
     {
@@ -16,13 +17,13 @@ namespace MetaMind.Engine.Node.Actions.Intervals
             this.PreviousLocation = this.StartLocation = target.Location;
         }
 
-        protected MMPoint PreviousLocation { get; set; }
+        protected Point PreviousLocation { get; set; }
 
-        protected MMPoint DeltaLocation { get; set; }
+        protected Point DeltaLocation { get; set; }
 
-        protected MMPoint StartLocation { get; set; }
+        protected Point StartLocation { get; set; }
 
-        protected MMPoint EndLocation{ get; set; }
+        protected Point EndLocation{ get; set; }
 
         public override void Update(float time)
         {

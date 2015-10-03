@@ -5,7 +5,7 @@ namespace MetaMind.Engine.Gui.Controls.Regions
     using Entities;
     using Stateless;
 
-    public abstract class RegionElement : MMInputableEntity, IRegionElement
+    public abstract class RegionElement : MMInputEntity, IRegionElement
     {
         protected RegionElement()
         {

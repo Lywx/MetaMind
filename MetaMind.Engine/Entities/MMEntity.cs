@@ -23,7 +23,7 @@ namespace MetaMind.Engine.Entities
         protected internal MMEntity()
         {
             this.Guid      = Guid.NewGuid();
-            this.Listeners = new List<IListener>();
+            this.Listeners = new List<IMMEventListener>();
         }
 
         ~MMEntity()
@@ -71,7 +71,7 @@ namespace MetaMind.Engine.Entities
 
         #region Event Data
 
-        protected List<IListener> Listeners { get; set; }
+        protected List<IMMEventListener> Listeners { get; set; }
 
         #endregion Event Data
 
@@ -148,18 +148,6 @@ namespace MetaMind.Engine.Entities
         }
 
         #endregion Update
-
-        #region Update Buffer
-
-        public virtual void UpdateForwardBuffer()
-        {
-        }
-
-        public virtual void UpdateBackwardBuffer()
-        {
-        }
-
-        #endregion
 
         #region Update Queue
 

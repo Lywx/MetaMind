@@ -8,7 +8,7 @@
     using Engine.Settings.Color;
     using Microsoft.Xna.Framework;
 
-    public class SynchronizationSettings : MMVisualEntity, IParameterLoader<GraphicsSettings>, ICloneable
+    public class SynchronizationSettings : MMVisualEntity, IParameterLoader<MMGraphicsSettings>, ICloneable
     {
         public Vector2 BarFrameCenterPosition;
 
@@ -39,7 +39,7 @@
 
         #region Parameters
 
-        public void LoadParameter(GraphicsSettings parameter)
+        public void LoadParameter(MMGraphicsSettings parameter)
         {
             this.viewportWidth  = parameter.Width;
             this.viewportHeight = parameter.Height;

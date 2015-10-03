@@ -5,7 +5,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Interactions
 
     public interface IViewItemIndexViewProvider
     {
-        IView IndexedView { get; }
+        IMMViewNode IndexedView { get; }
 
         bool IndexedViewOpened { get; }
 

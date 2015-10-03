@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Visuals
 {
     public abstract class ViewVisualComponent : ViewComponent, IViewVisualComponent
     {
-        protected ViewVisualComponent(IView view)
+        protected ViewVisualComponent(IMMViewNode view)
             : base(view)
         {
         }

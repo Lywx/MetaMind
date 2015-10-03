@@ -22,7 +22,7 @@ namespace MetaMind.Engine.Service
 
         IFileManager File { get; }
 
-        IEventManager Event { get; }
+        IMMEventManager Event { get; }
 
         IMMGameManager Game { get; }
 

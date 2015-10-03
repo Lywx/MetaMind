@@ -8,23 +8,14 @@ namespace MetaMind.Engine.Gui.Controls.Item.Layers
 
     public class BlockViewVerticalLayer : PointViewVerticalLayer
     {
-        public BlockViewVerticalLayer(IView view) : base(view)
+        public BlockViewVerticalLayer(IMMViewNode view) : base(view)
         {
         }
 
-        public new IBlockViewVerticalLogic ViewLogic
-        {
-            get { return (IBlockViewVerticalLogic)base.ViewLogic; }
-        }
+        public new IBlockViewVerticalLogic ViewLogic => (IBlockViewVerticalLogic)base.ViewLogic;
 
-        public new IBlockViewVerticalSelectionController ViewSelection
-        {
-            get { return this.ViewLogic.ViewSelection; }
-        }
+        public new IBlockViewVerticalSelectionController ViewSelection => this.ViewLogic.ViewSelection;
 
-        public new IBlockViewVerticalScrollController ViewScroll
-        {
-            get { return this.ViewLogic.ViewScroll; }
-        }
+        public new IBlockViewVerticalScrollController ViewScroll => this.ViewLogic.ViewScroll;
     }
 }

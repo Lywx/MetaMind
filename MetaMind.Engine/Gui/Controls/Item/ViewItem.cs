@@ -12,8 +12,8 @@
     public class ViewItem : ViewItemStateControl, IViewItem
     {
         public ViewItem(
-            ControlManager manager,
-            IView view,
+            MMControlManager manager,
+            IMMViewNode view,
             ItemSettings itemSettings) : base(manager)
         {
             if (view == null)
@@ -38,7 +38,7 @@
 
         #region Direct Dependency
 
-        public IView View { get; protected set; }
+        public IMMViewNode View { get; protected set; }
 
         public ItemSettings ItemSettings { get; set; }
 

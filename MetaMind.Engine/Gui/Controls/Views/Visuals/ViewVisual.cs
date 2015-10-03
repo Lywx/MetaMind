@@ -7,7 +7,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Visuals
 
     public class ViewVisual : ViewVisualComponent, IViewVisual
     {
-        public ViewVisual(IView view)
+        public ViewVisual(IMMViewNode view)
             : base(view)
         {
         }

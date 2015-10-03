@@ -9,7 +9,7 @@
     public class BlockViewVerticalLogic : PointViewVerticalLogic, IBlockViewVerticalLogic
     {
         public BlockViewVerticalLogic(
-            IView view,
+            IMMViewNode view,
             IViewScrollController viewScroll,
             IViewSelectionController viewSelection,
             IViewSwapController viewSwap,

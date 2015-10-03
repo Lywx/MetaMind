@@ -7,11 +7,11 @@
 
     public class PlayTest_Screen : MMScreen
     {
-        private MMEntityCollection<MMInputableEntity> tests;
+        private MMEntityCollection<MMInputEntity> tests;
 
         public override void LoadContent(IMMEngineInteropService interop)
         {
-            this.tests = new MMEntityCollection<MMInputableEntity>();
+            this.tests = new MMEntityCollection<MMInputEntity>();
 
             var region = new PlayTest_Region(null);
             var frame  = new PlayTest_Frame(null);

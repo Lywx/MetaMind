@@ -12,7 +12,6 @@ namespace MetaMind.Engine.Gui.Controls.Views
     using Item;
     using Item.Layers;
     using Layers;
-    using Reactors;
 
     /// <summary>
     ///     ViewComponent hooks all necessary external information to the View object,
@@ -23,7 +22,7 @@ namespace MetaMind.Engine.Gui.Controls.Views
     {
         #region Constructors
 
-        protected ViewComponent(IView view)
+        protected ViewComponent(IMMViewNode view)
         {
             if (view == null)
             {
@@ -37,7 +36,7 @@ namespace MetaMind.Engine.Gui.Controls.Views
 
         #region Direct Dependency
 
-        public IView View { get; private set; }
+        public IMMViewNode View { get; private set; }
 
         #endregion
 

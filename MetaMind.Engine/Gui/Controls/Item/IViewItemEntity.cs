@@ -3,7 +3,7 @@ namespace MetaMind.Engine.Gui.Controls.Item
     using System;
     using Entities;
 
-    public interface IViewItemEntity : IMMInputableEntity
+    public interface IViewItemEntity : IMMInputEntity
     {
         #region States
 

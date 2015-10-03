@@ -1,7 +1,7 @@
 ﻿namespace MetaMind.Engine.Components
 {
     using System;
-    using Components.Graphics.Adapters;
+    using Gui.Graphics.Adapters;
     using Microsoft.Xna.Framework;
 
     /// <summary>

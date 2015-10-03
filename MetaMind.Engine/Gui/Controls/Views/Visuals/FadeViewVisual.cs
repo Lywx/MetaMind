@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Visuals
 
     public class FadeViewVisual : GradientViewVisual
     {
-        public FadeViewVisual(IView view) : base(view)
+        public FadeViewVisual(IMMViewNode view) : base(view)
         {
         }
 

@@ -17,13 +17,13 @@ namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
 
         private ViewItemVisualSettings descriptionFrameSettings;
 
-        public OptionItemFrameController(IViewItem item, ViewItemRectangle itemRootRectangle)
-            : base(item, itemRootRectangle)
+        public OptionItemFrameController(IViewItem item, ViewItemImmRectangle itemImmRootRectangle)
+            : base(item, itemImmRootRectangle)
         {
-            this.IdRectangle = new PickableRectangle();
-            this.NameRectangle = new PickableRectangle();
+            this.IdImmRectangle = new MMPickableRectangleElement();
+            this.NameImmRectangle = new MMPickableRectangleElement();
 
-            this.DescriptionRectangle = new PickableRectangle();
+            this.DescriptionImmRectangle = new MMPickableRectangleElement();
         }
 
         ~OptionItemFrameController()
@@ -52,17 +52,17 @@ namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
             // | description frame                               |
             // +-------------------------------------------------+  
             {
-                this.IdRectangle.Size = idFrameSettings.Size;
+                this.IdImmRectangle.Size = idFrameSettings.Size;
                 this.IdFrameLocation = this.RootFrameLocation;
             }
 
             {
-                this.NameRectangle.Size = nameFrameSettings.Size;
+                this.NameImmRectangle.Size = nameFrameSettings.Size;
                 this.NameFrameLocation = () => this.IdFrameLocation() + new Vector2(idFrameSettings.Size.X, 0);
             }
 
             {
-                this.DescriptionRectangle.Size = this.descriptionFrameSettings.Size;
+                this.DescriptionImmRectangle.Size = this.descriptionFrameSettings.Size;
                 this.DescriptionFrameLocation = () => this.IdFrameLocation() + new Vector2(0, idFrameSettings.Size.Y);
             }
         }
@@ -71,11 +71,11 @@ namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
 
         #region Frames
 
-        public PickableRectangle IdRectangle { get; private set; }
+        public MMPickableRectangleElement IdImmRectangle { get; private set; }
 
-        public PickableRectangle NameRectangle { get; private set; }
+        public MMPickableRectangleElement NameImmRectangle { get; private set; }
 
-        public PickableRectangle DescriptionRectangle { get; private set; }
+        public MMPickableRectangleElement DescriptionImmRectangle { get; private set; }
 
         #endregion
 
@@ -95,25 +95,25 @@ namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
         {
             base.UpdateInput(input, time);
 
-            this.IdRectangle.UpdateInput(input, time);
-            this.NameRectangle.UpdateInput(input, time);
-            this.DescriptionRectangle.UpdateInput(input, time);
+            this.IdImmRectangle.UpdateInput(input, time);
+            this.NameImmRectangle.UpdateInput(input, time);
+            this.DescriptionImmRectangle.UpdateInput(input, time);
         }
 
         protected override void UpdateFrameGeometry()
         {
-            this.RootRectangle.Location = this.RootFrameLocation().ToPoint();
+            this.RootImmRectangle.Location = this.RootFrameLocation().ToPoint();
 
-            this.IdRectangle.Location = this.IdFrameLocation().ToPoint();
-            this.NameRectangle.Location = this.NameFrameLocation().ToPoint();
-            this.DescriptionRectangle.Location =
+            this.IdImmRectangle.Location = this.IdFrameLocation().ToPoint();
+            this.NameImmRectangle.Location = this.NameFrameLocation().ToPoint();
+            this.DescriptionImmRectangle.Location =
                 this.DescriptionFrameLocation().ToPoint();
 
-            this.RootRectangle.Size = new Point(
-                this.RootRectangle.Size.X,
+            this.RootImmRectangle.Size = new Point(
+                this.RootImmRectangle.Size.X,
                 this.itemLayout.BlockRow * this.descriptionFrameSettings.Size.Y);
 
-            this.DescriptionRectangle.Size = new Point(
+            this.DescriptionImmRectangle.Size = new Point(
                 this.descriptionFrameSettings.Size.X,
 
                 // this.itemLayout.BlockRow - 1 for taken position of name frame 
@@ -123,12 +123,12 @@ namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
 
         public override void Update(GameTime time)
         {
-            this.RootRectangle.Update(time);
+            this.RootImmRectangle.Update(time);
 
-            this.IdRectangle.Update(time);
+            this.IdImmRectangle.Update(time);
 
-            this.NameRectangle.Update(time);
-            this.DescriptionRectangle.Update(time);
+            this.NameImmRectangle.Update(time);
+            this.DescriptionImmRectangle.Update(time);
 
             this.UpdateFrameGeometry();
             this.UpdateFrameStates();
@@ -148,9 +148,9 @@ namespace MetaMind.Unity.Guis.Widgets.BlockViews.Options
                 {
                     if (!this.IsDisposed)
                     {
-                        this.IdRectangle         ?.Dispose();
-                        this.NameRectangle       ?.Dispose();
-                        this.DescriptionRectangle?.Dispose();
+                        this.IdImmRectangle         ?.Dispose();
+                        this.NameImmRectangle       ?.Dispose();
+                        this.DescriptionImmRectangle?.Dispose();
                     }
 
                     this.IsDisposed = true;

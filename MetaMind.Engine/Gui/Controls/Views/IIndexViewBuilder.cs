@@ -4,8 +4,8 @@ namespace MetaMind.Engine.Gui.Controls.Views
 
     public interface IIndexViewBuilder
     {
-        IView Clone(IViewItem item);
+        IMMViewNode Clone(IViewItem item);
 
-        void Compose(IView view, dynamic viewData);
+        void Compose(IMMViewNode view, dynamic viewData);
     }
 }

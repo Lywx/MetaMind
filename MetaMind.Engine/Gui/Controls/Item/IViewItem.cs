@@ -49,7 +49,7 @@ namespace MetaMind.Engine.Gui.Controls.Item
 
         #region View Data
 
-        IView View { get; }
+        IMMViewNode View { get; }
 
         #endregion
     }

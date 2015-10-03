@@ -32,7 +32,7 @@
         {
             base.Initialize();
 
-            this.ItemFrame.RootRectangle.MouseUpLeft += (o, args) => this.AcceptOption();
+            this.ItemFrame.RootImmRectangle.MouseUpLeft += (o, args) => this.AcceptOption();
         }
 
         private void AcceptOption()
@@ -41,7 +41,7 @@
             option.Accept();
             option.Unlock();
 
-            this.ItemFrame.RootRectangle.UpdateInput(this.Input, new GameTime());
+            this.ItemFrame.RootImmRectangle.UpdateInput(this.Input, new GameTime());
 
             this.Interop.Screen.Screens.First(screen => screen is OptionScreen).Exit();
         }

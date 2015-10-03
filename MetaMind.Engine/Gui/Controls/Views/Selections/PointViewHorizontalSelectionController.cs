@@ -20,7 +20,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Selections
 
         #region Constructors
 
-        public PointViewHorizontalSelectionController(IView view)
+        public PointViewHorizontalSelectionController(IMMViewNode view)
             : base(view)
         {
         }

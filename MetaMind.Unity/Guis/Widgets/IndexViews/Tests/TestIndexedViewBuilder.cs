@@ -17,9 +17,9 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
     /// </summary>
     public class TestIndexedViewBuilder : TestIndexViewBuilder
     {
-        private readonly IView viewHost;
+        private readonly IMMViewNode viewHost;
 
-        public TestIndexedViewBuilder(IView viewHost, TestSession testSeesion)
+        public TestIndexedViewBuilder(IMMViewNode viewHost, TestSession testSeesion)
             : base(testSeesion)
         {
             if (viewHost == null)
@@ -30,7 +30,7 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
             this.viewHost = viewHost;
         }
 
-        public override void Compose(IView view, dynamic viewData)
+        public override void Compose(IMMViewNode view, dynamic viewData)
         {
             if (view == null)
             {
@@ -80,7 +80,7 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 
                 item =>
                 {
-                    var itemFrame = new TestItemFrameController(item, new ViewItemRectangle(item));
+                    var itemFrame = new TestItemFrameController(item, new ViewItemImmRectangle(item));
 
                     var itemLayoutInteraction = new BlockViewVerticalItemLayoutInteraction(
                         item,
@@ -97,7 +97,7 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 
                             return 
                                 this.View[ViewState.View_Is_Active]() &&
-                                hostViewRegion.RegionBounds().Contains(itemFrame.NameRectangle.Center);
+                                hostViewRegion.RegionBounds().Contains(itemFrame.NameImmRectangle.Center);
                         }
                     };
 

@@ -38,16 +38,10 @@ namespace MetaMind.Engine.Gui.Modules.Particle
             Left, Right, Up, Down
         }
 
-        public bool IsOutsideScreen
-        {
-            get
-            {
-                return this.Position.X + this.Size.X < 0 ||
-                       this.Position.Y + this.Size.Y < 0 ||
-                       this.Position.X > this.ViewportWidth ||
-                       this.Position.Y > this.ViewportHeight;
-            }
-        }
+        public bool IsOutsideScreen => this.Position.X + this.Size.X < 0 ||
+                                       this.Position.Y + this.Size.Y < 0 ||
+                                       this.Position.X > this.ViewportWidth ||
+                                       this.Position.Y > this.ViewportHeight;
 
         private int Deep { get; set; }
 

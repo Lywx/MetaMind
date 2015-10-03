@@ -36,7 +36,7 @@ namespace MetaMind.Engine.Components
 
             this.File = new FileManager();
 
-            this.Event = new EventManager(engine)
+            this.Event = new MMEventManager(engine)
             {
                 UpdateOrder = 3
             };
@@ -71,7 +71,7 @@ namespace MetaMind.Engine.Components
 
         public IFileManager File { get; private set; }
 
-        public IEventManager Event { get; private set; }
+        public IMMEventManager Event { get; private set; }
 
         public new IMMGameManager Game { get; private set; }
 

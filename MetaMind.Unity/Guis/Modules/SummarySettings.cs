@@ -7,11 +7,11 @@ namespace MetaMind.Unity.Guis.Modules
     using Engine.Service.Loader;
     using Microsoft.Xna.Framework;
 
-    public class SummarySettings : MMVisualEntity, IParameterLoader<GraphicsSettings>
+    public class SummarySettings : MMVisualEntity, IParameterLoader<MMGraphicsSettings>
     {
         #region Parameters
 
-        public void LoadParameter(GraphicsSettings parameter)
+        public void LoadParameter(MMGraphicsSettings parameter)
         {
             this.ViewportWidth = parameter.Width;
         }

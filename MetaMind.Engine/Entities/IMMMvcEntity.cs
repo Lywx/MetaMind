@@ -1,6 +1,6 @@
 namespace MetaMind.Engine.Entities
 {
-    public interface IMMMvcEntity : IMMInputableEntity
+    public interface IMMMvcEntity : IMMInputEntity
     {
         IMMMvcEntityLogic Logic { get; }
 

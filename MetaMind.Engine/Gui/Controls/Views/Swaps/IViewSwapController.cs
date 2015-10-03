@@ -16,9 +16,9 @@ namespace MetaMind.Engine.Gui.Controls.Views.Swaps
     {
         #region Observers 
 
-        void AddObserver(IView view);
+        void AddObserver(IMMViewNode view);
 
-        void RemoveObserver(IView view);
+        void RemoveObserver(IMMViewNode view);
 
         #endregion
 
@@ -32,7 +32,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Swaps
 
         #region Process
 
-        void StartProcess(IMMEngineInteropService interop, IViewItem touchedItem, Vector2 touchedStart, IViewItem draggingItem, IView draggingView, Vector2 draggingEnd);
+        void StartProcess(IMMEngineInteropService interop, IViewItem touchedItem, Vector2 touchedStart, IViewItem draggingItem, IMMViewNode draggingView, Vector2 draggingEnd);
 
         void WatchProcess(IViewItem item);
 

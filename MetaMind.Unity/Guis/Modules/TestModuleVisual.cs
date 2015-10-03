@@ -3,9 +3,9 @@
     using System;
     using Concepts.Tests;
     using Engine;
-    using Engine.Components.Graphics.Fonts;
     using Engine.Entities;
     using Engine.Gui.Controls.Labels;
+    using Engine.Gui.Graphics.Fonts;
     using Engine.Gui.Modules;
     using Engine.Service;
     using Engine.Settings.Color;

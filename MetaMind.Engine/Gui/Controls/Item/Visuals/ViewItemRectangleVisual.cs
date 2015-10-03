@@ -12,7 +12,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Visuals
 
     public class ViewItemRectangleVisual : ViewItemComponent, IViewItemVisual
     {
-        public ViewItemRectangleVisual(IViewItem item, IPressableRectangle rectangle, ViewItemVisualSettings settings)
+        public ViewItemRectangleVisual(IViewItem item, IMMPressableRectangleElement rectangle, ViewItemVisualSettings settings)
             : base(item)
         {
             this.Rectangle = rectangle;
@@ -41,7 +41,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Visuals
 
         public ImageBox Filling { get; }
 
-        public IPressableRectangle Rectangle { get; }
+        public IMMPressableRectangleElement Rectangle { get; }
 
         public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
         {

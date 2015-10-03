@@ -25,7 +25,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Logic
         private PointView2DSettings viewSettings;
 
         public PointView2DLogic(
-            IView view,
+            IMMViewNode view,
             IViewScrollController viewScroll,
             IViewSelectionController viewSelection,
             IViewSwapController viewSwap,

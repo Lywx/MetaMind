@@ -59,14 +59,14 @@
             }
         }
 
-        private class SleepStoppedListener : Listener
+        private class SleepStoppedListener : MMEventListener
         {
             public SleepStoppedListener()
             {
                 this.RegisteredEvents.Add((int)SessionEvent.SleepStopped);
             }
 
-            public override bool HandleEvent(IEvent @event)
+            public override bool HandleEvent(IMMEvent @event)
             {
                 var screenManager = this.Interop.Screen;
 

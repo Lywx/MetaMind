@@ -102,7 +102,7 @@ namespace MetaMind.Unity.Guis.Modules
 
         #endregion
 
-        private class SleepStartedListener : Listener
+        private class SleepStartedListener : MMEventListener
         {
             private readonly ISynchronization synchronization;
 
@@ -116,7 +116,7 @@ namespace MetaMind.Unity.Guis.Modules
                 this.RegisteredEvents.Add((int)SessionEvent.SleepStarted);
             }
 
-            public override bool HandleEvent(IEvent @event)
+            public override bool HandleEvent(IMMEvent @event)
             {
                 // Stop synchronization
                 if (this.synchronization.Enabled)
@@ -140,7 +140,7 @@ namespace MetaMind.Unity.Guis.Modules
             }
         }
 
-        private class SleepStoppedListener : Listener
+        private class SleepStoppedListener : MMEventListener
         {
             private readonly ISynchronization synchronization;
 
@@ -151,7 +151,7 @@ namespace MetaMind.Unity.Guis.Modules
                 this.RegisteredEvents.Add((int)SessionEvent.SleepStopped);
             }
 
-            public override bool HandleEvent(IEvent e)
+            public override bool HandleEvent(IMMEvent e)
             {
                 this.synchronization.ResetToday();
 
@@ -159,7 +159,7 @@ namespace MetaMind.Unity.Guis.Modules
             }
         }
 
-        private class SynchronizationStartedListener : Listener
+        private class SynchronizationStartedListener : MMEventListener
         {
             public SynchronizationStartedListener(ISynchronization synchronization)
             {
@@ -175,9 +175,9 @@ namespace MetaMind.Unity.Guis.Modules
 
             private ISynchronization Synchronization { get; set; }
 
-            public override bool HandleEvent(IEvent e)
+            public override bool HandleEvent(IMMEvent e)
             {
-                var synchronizationStartedEventArgs = (SynchronizationStartedEventArgs)e.EventData;
+                var synchronizationStartedEventArgs = (SynchronizationStartedEventArgs)e.Data;
                 var data = synchronizationStartedEventArgs.Data;
 
                 // uncomment this to enforce fixed entry start/stop
@@ -189,7 +189,7 @@ namespace MetaMind.Unity.Guis.Modules
             }
         }
 
-        private class SynchronizationStoppedListener : Listener
+        private class SynchronizationStoppedListener : MMEventListener
         {
             private readonly ISynchronization synchronization;
 
@@ -203,7 +203,7 @@ namespace MetaMind.Unity.Guis.Modules
                 this.RegisteredEvents.Add((int)SessionEvent.SyncStopped);
             }
 
-            public override bool HandleEvent(IEvent @event)
+            public override bool HandleEvent(IMMEvent @event)
             {
                 if (!this.synchronization.Enabled)
                 {

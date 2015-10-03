@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Layouts
 
     public class IndexBlockViewVerticalLayout : BlockViewVerticalLayout
     {
-        public IndexBlockViewVerticalLayout(IView view) : base(view)
+        public IndexBlockViewVerticalLayout(IMMViewNode view) : base(view)
         {
         }
 

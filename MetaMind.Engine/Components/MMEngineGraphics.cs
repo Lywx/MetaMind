@@ -7,7 +7,7 @@ namespace MetaMind.Engine.Components
 
     public class MMEngineGraphics : DrawableGameComponent, IMMEngineGraphics
     {
-        public MMEngineGraphics(MMEngine engine, GraphicsSettings settings)
+        public MMEngineGraphics(MMEngine engine, MMGraphicsSettings settings)
             : base(engine)
         {
             if (engine == null)
@@ -21,7 +21,7 @@ namespace MetaMind.Engine.Components
             }
 
             this.Settings = settings;
-            this.Manager  = new GraphicsManager(engine, settings);
+            this.Manager  = new MMGraphicsManager(engine, settings);
 
             // No dependency injection here, because sprite batch is never replaced as long 
             // as this is a MonoGame application.
@@ -29,17 +29,17 @@ namespace MetaMind.Engine.Components
 
             // No dependency injection here, because string drawer is a class focus on string 
             // drawing. The functionality is never extended in the form of inheritance.
-            this.Renderer = new Renderer(this.SpriteBatch);
-            this.Game.Components.Add(this.Renderer);
+            this.MMRenderer = new MMRenderer(this.SpriteBatch);
+            this.Game.Components.Add(this.MMRenderer);
         }
 
-        public GraphicsManager Manager { get; private set; }
+        public MMGraphicsManager Manager { get; private set; }
         
-        public GraphicsSettings Settings { get; private set; }
+        public MMGraphicsSettings Settings { get; private set; }
 
         public SpriteBatch SpriteBatch { get; private set; }
 
-        public IRenderer Renderer { get; private set; }
+        public IMMRenderer MMRenderer { get; private set; }
 
         #region Initialization
 

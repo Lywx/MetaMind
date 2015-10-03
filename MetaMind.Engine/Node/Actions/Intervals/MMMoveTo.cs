@@ -7,19 +7,20 @@
 namespace MetaMind.Engine.Node.Actions.Intervals
 {
     using Geometry;
+    using Microsoft.Xna.Framework;
 
     public class MMMoveTo : MMMoveBy
     {
         #region Constructors
 
-        public MMMoveTo(float duration, MMPoint location) : base(duration, location)
+        public MMMoveTo(float duration, Point location) : base(duration, location)
         {
             this.EndLocation = location;
         }
 
         #endregion Constructors
 
-        public MMPoint EndLocation { get; private set; }
+        public Point EndLocation { get; private set; }
 
         #region Operations
 

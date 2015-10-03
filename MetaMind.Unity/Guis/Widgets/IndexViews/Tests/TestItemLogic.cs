@@ -27,9 +27,9 @@
         {
             base.Initialize();
 
-            this.ItemFrame.NameRectangle       .MousePressLeft  += (o, args) => this.ToggleIndexView();
-            this.ItemFrame.DescriptionRectangle.MousePressLeft  += (o, args) => this.ToggleIndexView();
-            this.ItemFrame.RootRectangle       .MousePressRight += (o, args) => this.SelectPath();
+            this.ItemFrame.NameImmRectangle       .MousePressLeft  += (o, args) => this.ToggleIndexView();
+            this.ItemFrame.DescriptionImmRectangle.MousePressLeft  += (o, args) => this.ToggleIndexView();
+            this.ItemFrame.RootImmRectangle       .MousePressRight += (o, args) => this.SelectPath();
         }
     }
 }

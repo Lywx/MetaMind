@@ -19,16 +19,16 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 
         private ViewItemVisualSettings descriptionFrameSettings;
 
-        public TestItemFrameController(IViewItem item, ViewItemRectangle itemRootRectangle)
-            : base(item, itemRootRectangle)
+        public TestItemFrameController(IViewItem item, ViewItemImmRectangle itemImmRootRectangle)
+            : base(item, itemImmRootRectangle)
         {
-            this.IdRectangle = new PickableRectangle();
-            this.StatusRectangle = new PickableRectangle();
-            this.StatisticsRectangle = new PickableRectangle();
-            this.PlusRectangle = new PickableRectangle();
+            this.IdImmRectangle = new MMPickableRectangleElement();
+            this.StatusImmRectangle = new MMPickableRectangleElement();
+            this.StatisticsImmRectangle = new MMPickableRectangleElement();
+            this.PlusImmRectangle = new MMPickableRectangleElement();
 
-            this.NameRectangle = new PickableRectangle();
-            this.DescriptionRectangle = new PickableRectangle();
+            this.NameImmRectangle = new MMPickableRectangleElement();
+            this.DescriptionImmRectangle = new MMPickableRectangleElement();
         }
 
         ~TestItemFrameController()
@@ -61,32 +61,32 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
             // |          | statistics frame | description frame |
             // +----------+------------------+-------------------+  
             {
-                this.IdRectangle.Size = idFrameSettings.Size;
+                this.IdImmRectangle.Size = idFrameSettings.Size;
                 this.IdFrameLocation = this.RootFrameLocation;
             }
 
             {
-                this.StatusRectangle.Size = statusFrameSettings.Size;
+                this.StatusImmRectangle.Size = statusFrameSettings.Size;
                 this.StatusFrameLocation = () => this.IdFrameLocation() + new Vector2(idFrameSettings.Size.X, 0);
             }
 
             {
-                this.StatisticsRectangle.Size = statisticsFrameSettings.Size;
+                this.StatisticsImmRectangle.Size = statisticsFrameSettings.Size;
                 this.StatisticsFrameLocation = () => this.StatusFrameLocation() + new Vector2(0, statusFrameSettings.Size.Y);
             }
 
             {
-                this.PlusRectangle.Size = plusFrameSettings.Size;
+                this.PlusImmRectangle.Size = plusFrameSettings.Size;
                 this.PlusFrameLocation = () => this.IdFrameLocation() + new Vector2(0, idFrameSettings.Size.Y);
             }
 
             {
-                this.NameRectangle.Size = this.nameFrameSettings.Size;
+                this.NameImmRectangle.Size = this.nameFrameSettings.Size;
                 this.NameFrameLocation = () => this.StatusFrameLocation() + new Vector2(statusFrameSettings.Size.X, 0);
             }
 
             {
-                this.DescriptionRectangle.Size = this.descriptionFrameSettings.Size;
+                this.DescriptionImmRectangle.Size = this.descriptionFrameSettings.Size;
                 this.DescriptionFrameLocation = () => this.NameFrameLocation() + new Vector2(0, this.nameFrameSettings.Size.Y);
             }
         }
@@ -95,17 +95,17 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 
         #region Frames
 
-        public PickableRectangle IdRectangle { get; private set; }
+        public MMPickableRectangleElement IdImmRectangle { get; private set; }
 
-        public PickableRectangle PlusRectangle { get; set; }
+        public MMPickableRectangleElement PlusImmRectangle { get; set; }
 
-        public PickableRectangle NameRectangle { get; private set; }
+        public MMPickableRectangleElement NameImmRectangle { get; private set; }
 
-        public PickableRectangle DescriptionRectangle { get; private set; }
+        public MMPickableRectangleElement DescriptionImmRectangle { get; private set; }
 
-        public PickableRectangle StatusRectangle { get; private set; }
+        public MMPickableRectangleElement StatusImmRectangle { get; private set; }
 
-        public PickableRectangle StatisticsRectangle { get; set; }
+        public MMPickableRectangleElement StatisticsImmRectangle { get; set; }
 
         #endregion
 
@@ -131,36 +131,36 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
         {
             base.UpdateInput(input, time);
 
-            this.IdRectangle.UpdateInput(input, time);
-            this.PlusRectangle.UpdateInput(input, time);
+            this.IdImmRectangle.UpdateInput(input, time);
+            this.PlusImmRectangle.UpdateInput(input, time);
 
-            this.StatusRectangle.UpdateInput(input, time);
-            this.StatisticsRectangle.UpdateInput(input, time);
+            this.StatusImmRectangle.UpdateInput(input, time);
+            this.StatisticsImmRectangle.UpdateInput(input, time);
 
-            this.NameRectangle.UpdateInput(input, time);
-            this.DescriptionRectangle.UpdateInput(input, time);
+            this.NameImmRectangle.UpdateInput(input, time);
+            this.DescriptionImmRectangle.UpdateInput(input, time);
         }
 
         protected override void UpdateFrameGeometry()
         {
-            this.RootRectangle.Location = this.RootFrameLocation().ToPoint();
+            this.RootImmRectangle.Location = this.RootFrameLocation().ToPoint();
 
-            this.IdRectangle.Location = this.IdFrameLocation().ToPoint();
-            this.PlusRectangle.Location = this.PlusFrameLocation().ToPoint();
+            this.IdImmRectangle.Location = this.IdFrameLocation().ToPoint();
+            this.PlusImmRectangle.Location = this.PlusFrameLocation().ToPoint();
 
-            this.StatusRectangle.Location = this.StatusFrameLocation().ToPoint();
-            this.StatisticsRectangle.Location =
+            this.StatusImmRectangle.Location = this.StatusFrameLocation().ToPoint();
+            this.StatisticsImmRectangle.Location =
                 this.StatisticsFrameLocation().ToPoint();
 
-            this.NameRectangle.Location = this.NameFrameLocation().ToPoint();
-            this.DescriptionRectangle.Location =
+            this.NameImmRectangle.Location = this.NameFrameLocation().ToPoint();
+            this.DescriptionImmRectangle.Location =
                 this.DescriptionFrameLocation().ToPoint();
 
-            this.RootRectangle.Size = new Point(
-                this.RootRectangle.Size.X,
+            this.RootImmRectangle.Size = new Point(
+                this.RootImmRectangle.Size.X,
                 this.itemLayout.BlockRow * this.descriptionFrameSettings.Size.Y);
 
-            this.DescriptionRectangle.Size = new Point(
+            this.DescriptionImmRectangle.Size = new Point(
                 this.descriptionFrameSettings.Size.X,
 
                 // this.itemLayout.BlockRow - 1 for taken position of name frame 
@@ -170,16 +170,16 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
 
         public override void Update(GameTime time)
         {
-            this.RootRectangle.Update(time);
+            this.RootImmRectangle.Update(time);
 
-            this.IdRectangle.Update(time);
-            this.PlusRectangle.Update(time);
+            this.IdImmRectangle.Update(time);
+            this.PlusImmRectangle.Update(time);
 
-            this.StatusRectangle.Update(time);
-            this.StatisticsRectangle.Update(time);
+            this.StatusImmRectangle.Update(time);
+            this.StatisticsImmRectangle.Update(time);
 
-            this.NameRectangle.Update(time);
-            this.DescriptionRectangle.Update(time);
+            this.NameImmRectangle.Update(time);
+            this.DescriptionImmRectangle.Update(time);
 
             this.UpdateFrameGeometry();
             this.UpdateFrameStates();
@@ -199,12 +199,12 @@ namespace MetaMind.Unity.Guis.Widgets.IndexViews.Tests
                 {
                     if (!this.IsDisposed)
                     {
-                        this.IdRectangle?.Dispose();
-                        this.PlusRectangle?.Dispose();
-                        this.StatusRectangle?.Dispose();
-                        this.StatisticsRectangle?.Dispose();
-                        this.NameRectangle?.Dispose();
-                        this.DescriptionRectangle?.Dispose();
+                        this.IdImmRectangle?.Dispose();
+                        this.PlusImmRectangle?.Dispose();
+                        this.StatusImmRectangle?.Dispose();
+                        this.StatisticsImmRectangle?.Dispose();
+                        this.NameImmRectangle?.Dispose();
+                        this.DescriptionImmRectangle?.Dispose();
                     }
 
                     this.IsDisposed = true;

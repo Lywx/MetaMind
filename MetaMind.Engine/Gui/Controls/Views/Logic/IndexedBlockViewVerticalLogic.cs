@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Logic
     public class IndexedBlockViewVerticalLogic : IndexBlockViewVerticalLogic
     {
         public IndexedBlockViewVerticalLogic(
-            IView view,
+            IMMViewNode view,
             IViewScrollController viewScroll,
             IViewSelectionController viewSelection,
             IViewSwapController viewSwap,

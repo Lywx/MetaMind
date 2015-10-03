@@ -76,7 +76,7 @@
         private void Alert()
         {
             var @event = this.Interop.Event;
-            @event.QueueEvent(new Event((int)SessionEvent.SyncAlerted, new SynchronizationAlertedEventArgs()));
+            @event.QueueEvent(new MMEvent((int)SessionEvent.SyncAlerted, new SynchronizationAlertedEventArgs()));
         }
 
         private void Confirm()

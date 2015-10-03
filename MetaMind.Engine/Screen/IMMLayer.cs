@@ -3,7 +3,7 @@
     using System;
     using Entities;
 
-    public interface IMMLayer : IMMInputableEntity, IMMLayerOperations 
+    public interface IMMLayer : IMMInputEntity, IMMLayerOperations 
     {
         IMMScreen Screen { get; }
 

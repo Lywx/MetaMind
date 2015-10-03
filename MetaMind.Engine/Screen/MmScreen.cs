@@ -2,8 +2,8 @@ namespace MetaMind.Engine.Screen
 {
     using System;
     using System.Diagnostics;
-    using Components.Graphics.Adapters;
     using Entities;
+    using Gui.Graphics.Adapters;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Node;

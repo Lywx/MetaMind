@@ -7,7 +7,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Layouts
     {
         private PointView2DSettings viewSettings;
 
-        public PointView2DLayout(IView view)
+        public PointView2DLayout(IMMViewNode view)
             : base(view)
         {
         }

@@ -4,7 +4,7 @@
     using Loader;
     using Microsoft.Xna.Framework;
 
-    public class ScrollController : IParameterLoader<GraphicsSettings>
+    public class ScrollController : IParameterLoader<MMGraphicsSettings>
     {
         private float pageUp;
 
@@ -18,7 +18,7 @@
 
         public bool IsEnabled { get; private set; }
 
-        public void LoadParameter(GraphicsSettings parameter)
+        public void LoadParameter(MMGraphicsSettings parameter)
         {
             this.pageUp   = parameter.Height / 2.0f;
             this.pageDown = parameter.Height / 2.0f;

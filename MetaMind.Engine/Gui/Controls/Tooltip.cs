@@ -5,7 +5,7 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
-    public class Tooltip : Control
+    public class Tooltip : MMControlComponent
     {
         #region Constructors 
 
@@ -45,7 +45,7 @@
             Passive = true;
         }
 
-        protected override void DrawControl(Renderer renderer, Rectangle rect, GameTime gameTime)
+        protected override void DrawControl(MMRenderer renderer, Rectangle rect, GameTime gameTime)
         {
             renderer.DrawLayer(this, Skin.Layers[0], rect);
             renderer.DrawString(this, Skin.Layers[0], this.Text, rect, true);

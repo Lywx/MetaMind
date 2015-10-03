@@ -5,7 +5,6 @@
     using Concepts.Operations;
     using Engine;
     using Engine.Components.Content.Fonts;
-    using Engine.Components.Graphics.Fonts;
     using Engine.Entities;
     using Engine.Gui.Controls.Images;
     using Engine.Gui.Controls.Item;
@@ -22,6 +21,7 @@
     using Engine.Gui.Controls.Views.Selections;
     using Engine.Gui.Controls.Views.Swaps;
     using Engine.Gui.Controls.Views.Visuals;
+    using Engine.Gui.Graphics.Fonts;
     using Engine.Screen;
     using Engine.Service;
     using Engine.Settings.Color;
@@ -34,7 +34,7 @@
     {
         private readonly List<IOption> options;
 
-        private IView optionView;
+        private IMMViewNode optionView;
 
         private readonly string procedureName;
 
@@ -83,10 +83,10 @@
             this.TransitionOnTime  = TimeSpan.FromSeconds(0.5);
             this.TransitionOffTime = TimeSpan.FromSeconds(0.5);
 
-            this.Entities = new MMEntityCollection<IMMInputableEntity>();
+            this.Entities = new MMEntityCollection<IMMInputEntity>();
         }
 
-        private MMEntityCollection<IMMInputableEntity> Entities { get; set; }
+        private MMEntityCollection<IMMInputEntity> Entities { get; set; }
 
         public override void LoadContent(IMMEngineInteropService interop)
         {
@@ -153,7 +153,7 @@
             var itemSettings = new OptionItemSettings();
 
             // View composition
-            this.optionView = new View(viewSettings, itemSettings, new List<IViewItem>());
+            this.optionView = new MMViewNode(viewSettings, itemSettings, new List<IViewItem>());
 
             var viewScroll    = new BlockViewVerticalScrollController(this.optionView);
             var viewSelection = new BlockViewVerticalSelectionController(this.optionView);
@@ -167,7 +167,7 @@
 
                     item =>
                     {
-                        var itemFrame             = new OptionItemFrameController(item, new ViewItemRectangle(item));
+                        var itemFrame             = new OptionItemFrameController(item, new ViewItemImmRectangle(item));
                         var itemLayoutInteraction = new BlockViewVerticalItemLayoutInteraction(item, viewSelection, viewScroll);
                         var itemLayout            = new TestItemLayout(item, itemLayoutInteraction);
                         var itemInteraction       = new BlockViewVerticalItemInteraction(item, itemLayout, itemLayoutInteraction);

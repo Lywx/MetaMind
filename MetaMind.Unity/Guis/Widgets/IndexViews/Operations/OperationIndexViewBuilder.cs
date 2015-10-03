@@ -25,6 +25,7 @@
     using Microsoft.Xna.Framework;
     using Modules;
     using Tests;
+    using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
     /// <summary>
     /// Composers are not intended to be reused.
@@ -51,7 +52,7 @@
             this.OperationSession = operationSeesion;
         }
 
-        protected IView View { get; set; }
+        protected IMMViewNode View { get; set; }
 
         protected BlockViewVerticalScrollController ViewScroll { get; set; }
 
@@ -69,7 +70,7 @@
 
         protected OperationSession OperationSession { get; set; }
 
-        public virtual void Compose(IView view, dynamic viewData)
+        public virtual void Compose(IMMViewNode view, dynamic viewData)
         {
             if (view == null)
             {
@@ -91,7 +92,7 @@
             this.SetupLogic();
         }
 
-        public IView Clone(IViewItem item)
+        public IMMViewNode Clone(IViewItem item)
         {
             var itemLayer = item.GetLayer<BlockViewVerticalItemLayer>();
             var itemLayout = itemLayer.ItemLayout;
@@ -106,7 +107,7 @@
             indexViewSettings.ViewRowDisplay = hostViewSettings.ViewRowDisplay - itemLayout.Row - itemLayout.BlockRow;
             indexViewSettings.ViewPosition   = hostViewScroll.Position(itemLayout.Row + itemLayout.BlockRow);
 
-            return new View(indexViewSettings, indexItemSettings, new List<IViewItem>());
+            return new MMViewNode(indexViewSettings, indexItemSettings, new List<IViewItem>());
         }
 
         protected void AddView()
@@ -200,7 +201,7 @@
 
                 item =>
                 {
-                    var itemFrame = new OperationItemFrameController(item, new ViewItemRectangle(item));
+                    var itemFrame = new OperationItemFrameController(item, new ViewItemImmRectangle(item));
 
                     var itemLayoutInteraction = new BlockViewVerticalItemLayoutInteraction(
                         item,
@@ -235,7 +236,7 @@
             this.View[ViewState.View_Has_Focus] =
                 () => this.View[ViewState.View_Has_Selection]() ||
                       this.ViewRegion[RegionState.Region_Has_Focus]() ||
-                      this.viewScrollbar[ElementState.Element_Is_Dragging]();
+                      this.viewScrollbar[MMElementState.Element_Is_Dragging]();
         }
     }
 }

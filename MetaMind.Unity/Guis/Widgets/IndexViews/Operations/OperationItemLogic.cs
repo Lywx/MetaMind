@@ -29,10 +29,10 @@
         {
             base.Initialize();
 
-            this.ItemFrame.NameRectangle       .MousePressLeft  += (o, args) => this.ToggleIndexView();
-            this.ItemFrame.DescriptionRectangle.MousePressLeft  += (o, args) => this.ToggleIndexView();
-            this.ItemFrame.StatusRectangle     .MousePressLeft  += (o, args) => this.ToggleOperation();
-            this.ItemFrame.RootRectangle       .MousePressRight += (o, args) => this.SelectPath();
+            this.ItemFrame.NameImmRectangle       .MousePressLeft  += (o, args) => this.ToggleIndexView();
+            this.ItemFrame.DescriptionImmRectangle.MousePressLeft  += (o, args) => this.ToggleIndexView();
+            this.ItemFrame.StatusImmRectangle     .MousePressLeft  += (o, args) => this.ToggleOperation();
+            this.ItemFrame.RootImmRectangle       .MousePressRight += (o, args) => this.SelectPath();
         }
 
         #region Operations

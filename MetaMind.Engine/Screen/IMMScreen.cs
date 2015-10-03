@@ -5,14 +5,6 @@ namespace MetaMind.Engine.Screen
 
     public interface IMMScreen : IMMNode, IMMRenderEntity, IMMScreenOperations, IMMInteropOperations, IDisposable
     {
-        #region Render Data
-
-        int Width { get; }
-
-        int Height { get; }
-
-        #endregion
-
         #region Screen Option Data
 
         /// <summary>

@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Gui.Controls.Labels
     using Service;
 
     // TODO: Duplicate to button
-    public class LabelBox : Control
+    public class LabelBox : MMControlComponent
     {
         private readonly LabelSettings labelSettings;
 

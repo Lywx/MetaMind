@@ -2,7 +2,6 @@ namespace MetaMind.Engine.Gui.Controls.Item
 {
     using System;
     using Layers;
-    using Reactors;
     using Views;
     using Views.Layers;
 
@@ -35,7 +34,7 @@ namespace MetaMind.Engine.Gui.Controls.Item
 
         #region Indirect Dependency
 
-        public IView View => this.Item.View;
+        public IMMViewNode View => this.Item.View;
 
         private IViewLayer ViewLayer => this.View.ViewLayer;
 

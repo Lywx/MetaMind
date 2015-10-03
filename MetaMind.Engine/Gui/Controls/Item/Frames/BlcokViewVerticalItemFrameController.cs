@@ -7,8 +7,8 @@ namespace MetaMind.Engine.Gui.Controls.Item.Frames
     {
         public BlcokViewVerticalItemFrameController(
             IViewItem item,
-            ViewItemRectangle itemRootRectangle) 
-            : base(item, itemRootRectangle)
+            ViewItemImmRectangle itemImmRootRectangle) 
+            : base(item, itemImmRootRectangle)
         {
         }
 
@@ -36,7 +36,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Frames
                     return viewSwap.Position;
                 }
 
-                return this.RootRectangle.Location.ToVector2();
+                return this.RootImmRectangle.Location.ToVector2();
             };
         }
     }

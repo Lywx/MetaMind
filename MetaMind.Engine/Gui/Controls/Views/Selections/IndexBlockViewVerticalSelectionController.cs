@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Selections
 {
     public class IndexBlockViewVerticalSelectionController : BlockViewVerticalSelectionController
     {
-        public IndexBlockViewVerticalSelectionController(IView view) : base(view)
+        public IndexBlockViewVerticalSelectionController(IMMViewNode view) : base(view)
         {
         }
 

@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Visuals
 
     public class GradientViewVisual : ViewVisual
     {
-        public GradientViewVisual(IView view) : base(view)
+        public GradientViewVisual(IMMViewNode view) : base(view)
         {
         }
 

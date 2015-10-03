@@ -77,19 +77,19 @@
             IOperationDescription itemData = this.Item.ItemData;
 
             // Positions
-            this.ItemCenterPosition = () => this.ItemFrame.RootRectangle.Center.ToVector2();
+            this.ItemCenterPosition = () => this.ItemFrame.RootImmRectangle.Center.ToVector2();
 
-            this.IdCenterPosition = () => this.ItemFrame.IdRectangle.Center.ToVector2();
-            this.PlusCenterPosition = () => this.ItemFrame.PlusRectangle.Center.ToVector2();
+            this.IdCenterPosition = () => this.ItemFrame.IdImmRectangle.Center.ToVector2();
+            this.PlusCenterPosition = () => this.ItemFrame.PlusImmRectangle.Center.ToVector2();
 
-            this.StatusCenterPosition = () => this.ItemFrame.StatusRectangle.Center.ToVector2();
+            this.StatusCenterPosition = () => this.ItemFrame.StatusImmRectangle.Center.ToVector2();
 
             this.NamePosition = () => this.ItemFrame.NameFrameLocation() + itemSettings.Get<Vector2>("NameMargin");
             this.DescriptionPosition = () => this.ItemFrame.DescriptionFrameLocation() + itemSettings.Get<Vector2>("DescriptionMargin");
 
             // Components
             this.IdRectangle = new ViewItemRectangleVisual(this.Item,
-                this.ItemFrame.IdRectangle,
+                this.ItemFrame.IdImmRectangle,
                 itemSettings.Get<ViewItemVisualSettings>("IdFrame"));
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("OperationItem.IdLabel");
@@ -100,7 +100,7 @@
             }
 
             this.PlusRectangle = new ViewItemRectangleVisual(this.Item,
-                this.ItemFrame.PlusRectangle,
+                this.ItemFrame.PlusImmRectangle,
                 itemSettings.Get<ViewItemVisualSettings>("PlusFrame"));
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("PlusLabel");
@@ -111,7 +111,7 @@
             }
 
             this.StatusRectangle = new ViewItemRectangleVisual(this.Item,
-                this.ItemFrame.StatusRectangle,
+                this.ItemFrame.StatusImmRectangle,
                 itemSettings.Get<ViewItemVisualSettings>("StatusFrame"));
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("StatusLabel");
@@ -132,7 +132,7 @@
 
             var nameFrameSettings = itemSettings.Get<ViewItemVisualSettings>("NameFrame");
             this.NameRectangle = new ViewItemRectangleVisual(this.Item,
-                this.ItemFrame.NameRectangle,
+                this.ItemFrame.NameImmRectangle,
                 nameFrameSettings);
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("NameLabel");
@@ -144,7 +144,7 @@
 
             var descriptionFrameSettings = itemSettings.Get<ViewItemVisualSettings>("DescriptionFrame");
             this.DescriptionRectangle = new ViewItemRectangleVisual(this.Item,
-                this.ItemFrame.DescriptionRectangle,
+                this.ItemFrame.DescriptionImmRectangle,
                 descriptionFrameSettings);
             {
                 var labelSettings = itemSettings.Get<LabelSettings>("DescriptionLabel");

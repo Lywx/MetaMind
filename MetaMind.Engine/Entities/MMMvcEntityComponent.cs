@@ -1,7 +1,7 @@
 
 namespace MetaMind.Engine.Entities
 {
-    public abstract class MMMvcEntityComponent<TMvcComponent, TMvcSettings, TMvcLogic> : MMInputableEntity, IMMInputable, IMMDrawable
+    public abstract class MMMvcEntityComponent<TMvcComponent, TMvcSettings, TMvcLogic> : MMInputEntity, IMMInputable, IMMDrawable
         where                                  TMvcComponent                           : MMMvcEntity<TMvcSettings>
         where                                  TMvcLogic                               : MMMvcEntityLogic<TMvcComponent, TMvcSettings, TMvcLogic>
     {

@@ -13,7 +13,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Layouts
 
     public class ViewLayout : ViewComponent, IViewLayout
     {
-        public ViewLayout(IView view) : base(view)
+        public ViewLayout(IMMViewNode view) : base(view)
         {
         }
 

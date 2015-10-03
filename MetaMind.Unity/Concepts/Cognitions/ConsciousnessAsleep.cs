@@ -28,7 +28,7 @@
             consciousness.KnownAsleepSpan += asleepSpan;
 
             var @event = this.Interop.Event;
-            @event.TriggerEvent(new Event((int)SessionEvent.SleepStopped, new ConsciousnessSleepStoppedEventArgs(consciousness)));
+            @event.TriggerEvent(new MMEvent((int)SessionEvent.SleepStopped, new ConsciousnessSleepStoppedEventArgs(consciousness)));
 
             var console = this.Interop.Console;
             console.WriteLine($"MESSAGE: Asleep {asleepSpan.ToString("hh':'mm':'ss''")}");

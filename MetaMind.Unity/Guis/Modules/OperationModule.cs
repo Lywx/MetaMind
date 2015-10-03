@@ -36,12 +36,12 @@
             this.operationSession = operationSession;
             Operation.Session     = operationSession;
 
-            this.Entities = new MMEntityCollection<IView>();
+            this.Entities = new MMEntityCollection<IMMViewNode>();
         }
 
-        private MMEntityCollection<IView> Entities { get; set; }
+        private MMEntityCollection<IMMViewNode> Entities { get; set; }
 
-        private IView View { get; set; }
+        private IMMViewNode View { get; set; }
 
         #region Load and Unload
                                                                                                            
@@ -60,7 +60,7 @@
             var itemSettings = new OperationItemSettings();
 
             // View construction
-            this.View = new View(viewSettings, itemSettings, new List<IViewItem>());
+            this.View = new MMViewNode(viewSettings, itemSettings, new List<IViewItem>());
 
             var viewCompositor = new OperationIndexViewBuilder(this.operationSession);
             viewCompositor.Compose(this.View, this.operation);

@@ -8,27 +8,28 @@
     using Engine.Gui.Modules;
     using Engine.Service;
     using Microsoft.Xna.Framework;
+    using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
     public class PlayTest_Frame : MMMvcEntity<object>
     {
-        private MMEntityCollection<MMInputableEntity> control;
+        private MMEntityCollection<MMInputEntity> control;
 
         private MMEntityCollection<MMVisualEntity> visual;
 
-        private DraggableRectangle rectangle;
+        private MMDraggableRectangleElement immRectangle;
 
         public PlayTest_Frame(object settings)
             : base(settings)
         {
-            this.control = new MMEntityCollection<MMInputableEntity>();
+            this.control = new MMEntityCollection<MMInputEntity>();
             this.visual  = new MMEntityCollection<MMVisualEntity>();
 
             // Region Control
-            this.rectangle = new DraggableRectangle(new Rectangle(50, 50, 50, 50)) {Movable = false};
-            this.control.Add(this.rectangle);
+            this.immRectangle = new MMDraggableRectangleElement(new Rectangle(50, 50, 50, 50)) {Movable = false};
+            this.control.Add(this.immRectangle);
 
             // Box Visual
-            var box = new ImageBox(() => this.rectangle.Bounds, () => Color.CornflowerBlue, () => true);
+            var box = new ImageBox(() => this.immRectangle.Bounds, () => Color.CornflowerBlue, () => true);
             this.visual.Add(box);
         }
 
@@ -37,7 +38,7 @@
             this.control.Draw(graphics, time, alpha);
             this.visual .Draw(graphics, time, alpha);
 
-            StateVisualTester.Draw(graphics, typeof(ElementState), this.rectangle.FrameStates, this.rectangle.Location.ToVector2(), 10, 10);
+            StateVisualTester.Draw(graphics, typeof(MMElementState), this.immRectangle.FrameStates, this.immRectangle.Location.ToVector2(), 10, 10);
         }
 
         public override void Update(GameTime time)

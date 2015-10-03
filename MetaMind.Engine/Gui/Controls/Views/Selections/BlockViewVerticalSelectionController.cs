@@ -8,7 +8,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Selections
     {
         private IBlockViewVerticalScrollController viewScroll;
 
-        public BlockViewVerticalSelectionController(IView view) : base(view)
+        public BlockViewVerticalSelectionController(IMMViewNode view) : base(view)
         {
         }
 

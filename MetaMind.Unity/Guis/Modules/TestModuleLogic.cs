@@ -37,14 +37,14 @@
 
             this.TestMonitor = new TestMonitor(this.Interop.Engine, this.test);
 
-            this.ControllableEntities = new MMEntityCollection<IMMInputableEntity>();
+            this.ControllableEntities = new MMEntityCollection<IMMInputEntity>();
         }
 
-        public MMEntityCollection<IMMInputableEntity> ControllableEntities { get; set; }
+        public MMEntityCollection<IMMInputEntity> ControllableEntities { get; set; }
 
         public TestMonitor TestMonitor { get; set; }
 
-        public IView View { get; set; }
+        public IMMViewNode View { get; set; }
 
         #region Load and Unload
                                                                                                            
@@ -63,7 +63,7 @@
             var itemSettings = new TestItemSettings();
 
             // View construction
-            this.View = new View(viewSettings, itemSettings, new List<IViewItem>());
+            this.View = new MMViewNode(viewSettings, itemSettings, new List<IViewItem>());
 
             var viewCompositor = new TestIndexViewBuilder(this.testSession);
             viewCompositor.Compose(this.View, this.test);

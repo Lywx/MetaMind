@@ -12,9 +12,9 @@ namespace MetaMind.Engine.Gui.Controls.Buttons
     /// </summary>
     public class RectangleButtonSettings : MMSettings
     {
-        public ButtonVisualState<Texture2D> Image;
+        public MMButtonVisualState<Texture2D> Image;
 
-        public ButtonVisualState<Color> Color;
+        public MMButtonVisualState<Color> Color;
 
         public Font Font;
     }

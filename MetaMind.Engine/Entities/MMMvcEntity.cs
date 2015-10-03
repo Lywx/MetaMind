@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Entities
     /// <remarks>
     /// Compatible with previous GameControllableEntity implementation.
     /// </remarks>
-    public class MMMvcEntity<TMvcSettings> : MMInputableEntity, IMMMvcEntity
+    public class MMMvcEntity<TMvcSettings> : MMInputEntity, IMMMvcEntity
     {
         #region Constructors and Finalizer
 

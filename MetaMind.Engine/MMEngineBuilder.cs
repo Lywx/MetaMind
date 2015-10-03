@@ -59,7 +59,7 @@
         /// </summary>
         private void Setup()
         {
-            this.Engine.Graphics = new MMEngineGraphics(this.Engine, new GraphicsSettings());
+            this.Engine.Graphics = new MMEngineGraphics(this.Engine, new MMGraphicsSettings());
             this.Engine.Interop = new MMEngineInterop(this.Engine,
                 new MMScreenDirector(this.Engine, new MMScreenSettings(), this.Graphics.SpriteBatch)
                 {
@@ -76,7 +76,7 @@
                     },
                     this.Engine,
                     this.Graphics.SpriteBatch,
-                    this.Graphics.Renderer));
+                    this.Graphics.MMRenderer));
 
             this.Engine.Input     = new MMEngineInput(this.Engine);
             this.Engine.Numerical = new MMEngineNumerical();

@@ -8,7 +8,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Layers
 
     public class PointViewHorizontalLayer : PointViewLayer
     {
-        public PointViewHorizontalLayer(IView view)
+        public PointViewHorizontalLayer(IMMViewNode view)
             : base(view)
         {
         }

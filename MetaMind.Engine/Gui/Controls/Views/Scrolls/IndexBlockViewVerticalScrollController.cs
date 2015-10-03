@@ -7,7 +7,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Scrolls
 
     public class IndexBlockViewVerticalScrollController : BlockViewVerticalScrollController
     {
-        public IndexBlockViewVerticalScrollController(IView view) : base(view)
+        public IndexBlockViewVerticalScrollController(IMMViewNode view) : base(view)
         {
         }
 

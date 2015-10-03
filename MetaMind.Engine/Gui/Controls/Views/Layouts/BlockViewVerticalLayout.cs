@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Layouts
 
     public class BlockViewVerticalLayout : PointViewVerticalLayout
     {
-        public BlockViewVerticalLayout(IView view)
+        public BlockViewVerticalLayout(IMMViewNode view)
             : base(view)
         {
         }

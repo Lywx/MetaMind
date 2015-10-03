@@ -47,7 +47,7 @@
 
         #endregion Components
 
-        public ControlManager Manager { get; set; }
+        public MMControlManager Manager { get; set; }
 
         #region Initialization
 
@@ -88,7 +88,7 @@
             this.Interop.Screen.AddScreen(new StartScreen());
 
             this.Interop.Screen.AddScreen(new BackgroundScreen(this.background));
-            this.Interop.Event.QueueEvent(new Event((int)SessionEvent.GameStarted, null, 3, 1));
+            this.Interop.Event.QueueEvent(new MMEvent((int)SessionEvent.GameStarted, null, 3, 1));
 
             var consciousness = Data.Cognition.Consciousness;
             if (consciousness.IsAwake)
@@ -109,7 +109,7 @@
         {
             interop.Asset.LoadPackage("Unity.Persistent");
 
-            this.Manager = new ControlManager();
+            this.Manager = new MMControlManager();
         }
 
         public void UnloadContent(IMMEngineInteropService interop)

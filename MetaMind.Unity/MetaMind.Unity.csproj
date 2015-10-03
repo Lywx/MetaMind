@@ -122,7 +122,6 @@
     <Compile Include="Concepts\Synchronizations\SynchronizationSpan.cs" />
     <Compile Include="Concepts\Tests\TestTimer.cs" />
     <Compile Include="Concepts\Tests\ITestEvaluation.cs" />
-    <Compile Include="Concepts\Tests\ITestOperations.cs" />
     <Compile Include="Concepts\Operations\OperationOrganizer.cs" />
     <Compile Include="Concepts\Tests\TestEffect.cs" />
     <Compile Include="Concepts\Tests\TestEvaluation.cs" />
@@ -167,7 +166,6 @@
     <Compile Include="Guis\Screens\OptionScreen.cs" />
     <Compile Include="Guis\Layers\SynchronizationLayer.cs" />
     <Compile Include="Concepts\Tests\ITest.cs" />
-    <Compile Include="Concepts\Tests\ITestOrganization.cs" />
     <Compile Include="Concepts\Tests\Test.cs" />
     <Compile Include="Concepts\Cognitions\ConsciousnessSleepStartedEventArgs.cs" />
     <Compile Include="Concepts\Cognitions\ConsciousnessSleepStoppedEventArgs.cs" />

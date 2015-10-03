@@ -9,38 +9,20 @@ namespace MetaMind.Engine.Gui.Controls.Views.Layers
 
     public class PointViewVerticalLayer : PointViewLayer
     {
-        public PointViewVerticalLayer(IView view) : base(view)
+        public PointViewVerticalLayer(IMMViewNode view) : base(view)
         {
         }
 
-        public new PointViewVerticalSettings ViewSettings
-        {
-            get { return (PointViewVerticalSettings) base.ViewSettings; }
-        }
+        public new PointViewVerticalSettings ViewSettings => (PointViewVerticalSettings) base.ViewSettings;
 
-        public new IPointViewVerticalLogic ViewLogic
-        {
-            get { return (IPointViewVerticalLogic) base.ViewLogic; }
-        }
+        public new IPointViewVerticalLogic ViewLogic => (IPointViewVerticalLogic) base.ViewLogic;
 
-        public new IPointViewVerticalSelectionController ViewSelection
-        {
-            get { return this.ViewLogic.ViewSelection; }
-        }
+        public new IPointViewVerticalSelectionController ViewSelection => this.ViewLogic.ViewSelection;
 
-        public new IViewSwapController ViewSwap
-        {
-            get { return this.ViewLogic.ViewSwap; }
-        }
+        public new IViewSwapController ViewSwap => this.ViewLogic.ViewSwap;
 
-        public new IPointViewVerticalScrollController ViewScroll
-        {
-            get { return this.ViewLogic.ViewScroll; }
-        }
+        public new IPointViewVerticalScrollController ViewScroll => this.ViewLogic.ViewScroll;
 
-        public IPointViewVerticalLayout ViewLayout
-        {
-            get { return this.ViewLogic.ViewLayout; }
-        }
+        public IPointViewVerticalLayout ViewLayout => this.ViewLogic.ViewLayout;
     }
 }

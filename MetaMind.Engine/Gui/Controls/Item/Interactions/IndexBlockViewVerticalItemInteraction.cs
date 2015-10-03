@@ -12,7 +12,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Interactions
     {
         private IBlockViewVerticalScrollController viewScroll;
 
-        private IView indexedView;
+        private IMMViewNode indexedView;
 
         private readonly IIndexViewBuilder indexedViewBuilder;
 
@@ -35,7 +35,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Interactions
 
         public Func<Vector2> IndexedViewPosition { get; set; }
 
-        public IView IndexedView
+        public IMMViewNode IndexedView
         {
             get { return this.indexedView; }
         }

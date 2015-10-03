@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Layouts
 {
     public class PointViewVerticalLayout : ViewLayout, IPointViewVerticalLayout
     {
-        public PointViewVerticalLayout(IView view)
+        public PointViewVerticalLayout(IMMViewNode view)
             : base(view)
         {
         }

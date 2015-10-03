@@ -6,9 +6,9 @@
 namespace MetaMind.Engine
 {
     using System.Runtime.Serialization;
+    using Gui.Graphics.Adapters;
     using Microsoft.Xna.Framework.Graphics;
     using Service;
-    using Components.Graphics.Adapters;
 
     /// <summary>
     /// Common object for engine service access.

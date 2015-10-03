@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Gui.Modules.Particle
     using Microsoft.Xna.Framework;
     using Service.Loader;
 
-    public class ShapelessParticle : MMVisualEntity, IShapelessParticle, IParameterLoader<GraphicsSettings>  
+    public class ShapelessParticle : MMVisualEntity, IShapelessParticle, IParameterLoader<MMGraphicsSettings>  
     {
         #region Particle Movements
 
@@ -34,7 +34,7 @@ namespace MetaMind.Engine.Gui.Modules.Particle
 
         #region Parameters
 
-        public void LoadParameter(GraphicsSettings parameter)
+        public void LoadParameter(MMGraphicsSettings parameter)
         {
             this.ViewportWidth  = parameter.Width;
             this.ViewportHeight = parameter.Height;

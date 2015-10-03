@@ -153,6 +153,7 @@ namespace MetaMind.Engine.Node
                         Debug.Assert(element.Paused == paused, "CCScheduler.Schedule: All are paused");
                     }
                 }
+
                 if (element != null)
                 {
                     if (element.Timers == null)

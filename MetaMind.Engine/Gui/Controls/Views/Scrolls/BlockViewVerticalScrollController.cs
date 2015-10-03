@@ -11,7 +11,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Scrolls
 
         private int rowOffset;
 
-        public BlockViewVerticalScrollController(IView view) : base(view)
+        public BlockViewVerticalScrollController(IMMViewNode view) : base(view)
         {
         }
 

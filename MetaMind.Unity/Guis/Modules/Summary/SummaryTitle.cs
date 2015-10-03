@@ -2,8 +2,8 @@ namespace MetaMind.Unity.Guis.Modules.Summary
 {
     using System;
     using Engine.Components.Content.Fonts;
-    using Engine.Components.Graphics.Fonts;
     using Engine.Gui.Controls.Labels;
+    using Engine.Gui.Graphics.Fonts;
     using Microsoft.Xna.Framework;
 
     public class SummaryTitle : Label

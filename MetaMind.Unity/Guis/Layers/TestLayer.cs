@@ -5,9 +5,9 @@ namespace MetaMind.Unity.Guis.Layers
     using Concepts.Tests;
     using Engine;
     using Engine.Components.Content.Fonts;
-    using Engine.Components.Graphics.Fonts;
     using Engine.Entities;
     using Engine.Gui.Controls.Labels;
+    using Engine.Gui.Graphics.Fonts;
     using Engine.Screen;
     using Engine.Service;
     using Engine.Settings.Color;
@@ -27,7 +27,7 @@ namespace MetaMind.Unity.Guis.Layers
 
         private MMEntityCollection<IMMVisualEntity> drawEntities;
 
-        private MMEntityCollection<IMMInputableEntity> inputEntities;
+        private MMEntityCollection<IMMInputEntity> inputEntities;
 
         #region Constructors
 
@@ -50,7 +50,7 @@ namespace MetaMind.Unity.Guis.Layers
             this.testSession = testSession;
             this.testSynthesizer = testSynthesizer;
 
-            this.inputEntities = new MMEntityCollection<IMMInputableEntity>();
+            this.inputEntities = new MMEntityCollection<IMMInputEntity>();
             this.drawEntities = new MMEntityCollection<IMMVisualEntity>();
         }
 

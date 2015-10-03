@@ -3,10 +3,10 @@ namespace MetaMind.Engine.Gui.Controls.Images
     using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Reactors;
+    using Renders;
     using Service;
 
-    public class ImageBox : RenderReactor
+    public class ImageBox : MMRenderComponent
     {
         #region Constructors and Finalizer
 
@@ -35,7 +35,7 @@ namespace MetaMind.Engine.Gui.Controls.Images
             this.colorSelector = colorSelector;
         }
 
-        public ImageBox(ControlManager manager, Texture2D image, Rectangle bound, Color color) 
+        public ImageBox(MMControlManager manager, Texture2D image, Rectangle bound, Color color) 
         {
             if (image == null)
             {
@@ -130,7 +130,7 @@ namespace MetaMind.Engine.Gui.Controls.Images
             {
                 case ImageMode.Normal:
                 {
-                    graphics.Renderer.Draw(
+                    graphics.MMRenderer.Draw(
                         this.Image,
                         this.X,
                         this.Y,
@@ -143,7 +143,7 @@ namespace MetaMind.Engine.Gui.Controls.Images
 
                 case ImageMode.Stretched:
                 {
-                    graphics.Renderer.Draw(
+                    graphics.MMRenderer.Draw(
                         this.Image,
                         this.Bounds,
                         this.SourceRectangle,

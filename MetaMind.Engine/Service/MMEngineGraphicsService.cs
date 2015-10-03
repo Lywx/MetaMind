@@ -20,13 +20,13 @@ namespace MetaMind.Engine.Service
 
         public IMMEngineGraphics Graphics { get; }
 
-        public GraphicsManager Manager => this.Graphics.Manager;
+        public MMGraphicsManager Manager => this.Graphics.Manager;
 
-        public GraphicsSettings Settings => this.Graphics.Settings;
+        public MMGraphicsSettings Settings => this.Graphics.Settings;
 
         public SpriteBatch SpriteBatch => this.Graphics.SpriteBatch;
 
-        public IRenderer Renderer => this.Graphics.Renderer;
+        public IMMRenderer MMRenderer => this.Graphics.MMRenderer;
 
         public GraphicsDevice GraphicsDevice => this.Manager.GraphicsDevice;
     }

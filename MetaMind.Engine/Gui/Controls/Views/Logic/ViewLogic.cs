@@ -23,7 +23,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Logic
     public abstract class ViewLogic : ViewComponent, IViewLogic
     {
         protected ViewLogic(
-            IView                    view,
+            IMMViewNode                    view,
             IViewScrollController    viewScroll,
             IViewSelectionController viewSelection,
             IViewSwapController      viewSwap,
@@ -57,7 +57,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Logic
             this.ViewLayout    = viewLayout;
         }
 
-        private ViewLogic(IView view, IViewItemFactory itemFactory)
+        private ViewLogic(IMMViewNode view, IViewItemFactory itemFactory)
             : base(view)
         {
             if (itemFactory == null)

@@ -10,14 +10,14 @@
 
     public class PlayTest_Region : MMMvcEntity<object>
     {
-        private MMEntityCollection<MMInputableEntity> control;
+        private MMEntityCollection<MMInputEntity> control;
         private MMEntityCollection<MMVisualEntity> visual;
         private RectangleRegion region;
 
         public PlayTest_Region(object settings)
             : base(settings)
         {
-            this.control = new MMEntityCollection<MMInputableEntity>();
+            this.control = new MMEntityCollection<MMInputEntity>();
             this.visual  = new MMEntityCollection<MMVisualEntity>();
 
             // Region Control
@@ -25,7 +25,7 @@
             this.control.Add(region);
 
             // Box Visual
-            var box = new ImageBox(() => region.Rectangle, () => Color.CornflowerBlue, () => true);
+            var box = new ImageBox(() => region.ImmRectangle, () => Color.CornflowerBlue, () => true);
             this.visual.Add(box);
         }
 

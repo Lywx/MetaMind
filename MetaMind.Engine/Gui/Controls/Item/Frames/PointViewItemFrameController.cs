@@ -7,8 +7,8 @@ namespace MetaMind.Engine.Gui.Controls.Item.Frames
 
     public class PointViewItemFrameController : ViewItemFrameController
     {
-        public PointViewItemFrameController(IViewItem item, ViewItemRectangle itemRootRectangle)
-            : base(item, itemRootRectangle)
+        public PointViewItemFrameController(IViewItem item, ViewItemImmRectangle itemImmRootRectangle)
+            : base(item, itemImmRootRectangle)
         {
         }
 
@@ -36,7 +36,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Frames
                     return viewSwap.Position;
                 }
 
-                return this.RootRectangle.Location.ToVector2();
+                return this.RootImmRectangle.Location.ToVector2();
             };
         }
 
@@ -44,7 +44,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Frames
 
         protected override void UpdateFrameGeometry()
         {
-            this.RootRectangle.Location = this.RootFrameLocation().ToPoint();
+            this.RootImmRectangle.Location = this.RootFrameLocation().ToPoint();
         }
     }
 }

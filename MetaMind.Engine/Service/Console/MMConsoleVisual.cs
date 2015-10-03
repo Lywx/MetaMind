@@ -16,13 +16,13 @@
     // TODO(Minor, Console): This is still not good enough
     public class MMConsoleVisual :
         MMMvcComponentVisual<MMConsole, GameConsoleSettings, MMConsoleLogic, MMConsoleVisual>,
-        IParameterLoader<GraphicsSettings>
+        IParameterLoader<MMGraphicsSettings>
     {
         #region Dependency
 
         private readonly SpriteBatch spriteBatch;
 
-        private readonly IRenderer renderer;
+        private readonly IMMRenderer renderer;
 
         private ScrollController Scroll { get; set; } = new ScrollController();
 
@@ -107,7 +107,7 @@
 
         #region Constructors and Finalizer
 
-        public MMConsoleVisual(MMConsole module, MMEngine engine, SpriteBatch spriteBatch, IRenderer renderer)
+        public MMConsoleVisual(MMConsole module, MMEngine engine, SpriteBatch spriteBatch, IMMRenderer renderer)
             : base(module)
         {
             if (engine == null)
@@ -157,7 +157,7 @@
             this.maxCharactersPerLine = (int)((this.BackgroundBounds.Width - this.Settings.Padding * 2) / this.oneCharacterWidth);
         }
 
-        public void LoadParameter(GraphicsSettings parameter)
+        public void LoadParameter(MMGraphicsSettings parameter)
         {
             this.viewportWidth = parameter.Width;
 

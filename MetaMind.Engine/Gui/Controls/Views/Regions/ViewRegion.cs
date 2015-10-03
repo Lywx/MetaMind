@@ -43,7 +43,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Regions
 
         public override void Update(GameTime time)
         {
-            this.Rectangle.Bounds = this.RegionBounds();
+            this.ImmRectangle.Bounds = this.RegionBounds();
         }
 
         #endregion

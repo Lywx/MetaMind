@@ -27,7 +27,7 @@ namespace MetaMind.Engine.Components
 
         public IFileManager File { get; }
 
-        public IEventManager Event { get; }
+        public IMMEventManager Event { get; }
 
         public new IMMGameManager Game { get; }
 

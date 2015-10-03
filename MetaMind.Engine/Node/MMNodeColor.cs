@@ -1,124 +1,140 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="">
-//   Copyright (c) 2015 Wuxiang Lin
-//   All Rights Reserved.
-// </copyright>
-namespace MetaMind.Engine.Node
+﻿namespace MetaMind.Engine.Node
 {
+    using System;
     using Microsoft.Xna.Framework;
 
-    public class MMNodeColor
+    public class MMNodeColor : IMMNodeColor, IMMNodeColorInternal
     {
+        #region Constructors and Finalizer
+
+        public MMNodeColor(IMMNode target)
+        {
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
+
+            this.Target = target;
+        }
+
+        #endregion
+
+        #region Events
+
+        public event Action UpdateDisplayedInItselfStarted;
+
+        public event Action UpdateDisplayedInItselfEnded;
+
+        #endregion
+
+        #region Target Data
+
+        public IMMNode Target { get; private set; }
+
+        #endregion
+
         #region Color Data
 
-        public virtual Color Color
+        private Color displayed = Color.White;
+
+        public Color Displayed
         {
-            get { return this.RealColor; }
+            get { return this.displayed; }
+            set { this.displayed = value; }
+        }
+
+        public Color Real { get; set; } = Color.White;
+
+        public virtual Color Standalone
+        {
+            get { return this.Real; }
             set
             {
-                this.displayedColor = this.RealColor = value;
+                this.Displayed = this.Real = value;
 
-                this.UpdateCascadeColor();
+                this.UpdateCascade(this.Target.Parent.Color);
             }
         }
 
-        private Color displayedColor;
+        private bool isCascaded;
 
-        public Color DisplayedColor
+        /// <summary>
+        /// Whether or not parent color would cascade into displayed color in 
+        /// this color's children.
+        /// </summary>
+        /// <remarks>
+        /// Default value is false. This property will not influence whether or 
+        /// not this displayed color will be influenced by its parent.
+        /// </remarks>
+        public bool IsCascaded
         {
-            get { return this.displayedColor; }
-            protected set
-            {
-                this.displayedColor = value;
-            }
-        }
-
-        protected Color RealColor { get; set; }
-
-        private bool isColorCascaded;
-
-        public virtual bool IsColorCascaded
-        {
-            get { return this.isColorCascaded; }
+            get { return this.isCascaded; }
             set
             {
-                if (this.isColorCascaded == value)
+                var changed = this.isCascaded != value;
+                if (changed)
                 {
-                    return;
-                }
+                    this.isCascaded = value;
 
-                this.isColorCascaded = value;
-
-                if (this.isColorCascaded)
-                {
-                    this.UpdateCascadeColor();
-                }
-                else
-                {
-                    this.DisableCascadeColor();
+                    if (this.isCascaded)
+                    {
+                        this.UpdateCascade(this.Target.Parent.Color);
+                    }
+                    else
+                    {
+                        this.DisableCascade();
+                    }
                 }
             }
         }
 
         #endregion
 
-        public MMNodeColor()
-        {
-            this.IsColorCascaded = false;
+        #region Display Operations 
 
-            this.displayedColor  = Color.White;
-            this.RealColor       = Color.White;
+        public virtual void UpdateDisplayed(IMMNodeColor parent)
+        {
+            this.UpdateDisplayedInItselfStarted?.Invoke();
+            this.UpdateDisplayedInItself(parent);
+            this.UpdateDisplayedInItselfEnded?.Invoke();
+
+            this.UpdateDisplayedInChildren();
         }
 
-        #region Operations 
-
-        public virtual void UpdateColor()
+        private void UpdateDisplayedInChildren()
         {
-            // Override the update of color here
-        }
-
-        public virtual void UpdateDisplayedColor(Color parentColor)
-        {
-            this.displayedColor.R = (byte)(this.RealColor.R * parentColor.R / 255.0f);
-            this.displayedColor.G = (byte)(this.RealColor.G * parentColor.G / 255.0f);
-            this.displayedColor.B = (byte)(this.RealColor.B * parentColor.B / 255.0f);
-
-            this.UpdateColor();
-
-            if (this.IsColorCascaded)
+            if (this.IsCascaded)
             {
-                if (IsOpacityCascaded && Children != null)
+                foreach (var child in this.Target.Children)
                 {
-                    foreach (MMNode node in Children)
-                    {
-                        if (node != null)
-                        {
-                            node.UpdateDisplayedColor(this.DisplayedColor);
-                        }
-                    }
+                    ((IMMNodeColorInternal)child.Color).UpdateDisplayed(this);
                 }
             }
         }
 
-        protected internal void UpdateCascadeColor(MMNodeColor parent)
+        private void UpdateDisplayedInItself(IMMNodeColor parent)
         {
-            var parentColor = Color.White;
-            if (parent != null && parent.IsColorCascaded)
-            {
-                parentColor = parent.DisplayedColor;
-            }
+            var baseColor = parent?.Displayed ?? Color.White;
 
-            this.UpdateDisplayedColor(parentColor);
+            this.displayed.R = (byte)(this.Real.R * baseColor.R / 255.0f);
+            this.displayed.G = (byte)(this.Real.G * baseColor.G / 255.0f);
+            this.displayed.B = (byte)(this.Real.B * baseColor.B / 255.0f);
         }
 
-        protected internal void DisableCascadeColor()
-        {
-            if (Children == null)
-                return;
+        #endregion
 
-            foreach (var child in Children)
+        #region Cascade Operations
+
+        public void UpdateCascade(IMMNodeColor parent)
+        {
+            this.UpdateDisplayed(parent);
+        }
+
+        public void DisableCascade()
+        {
+            foreach (var child in this.Target.Children)
             {
-                child.UpdateDisplayedColor(Color.White);
+                ((IMMNodeColorInternal)child.Color).UpdateDisplayed(null);
             }
         }
 

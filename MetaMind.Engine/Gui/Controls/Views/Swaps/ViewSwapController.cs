@@ -17,26 +17,26 @@ namespace MetaMind.Engine.Gui.Controls.Views.Swaps
 
     public class ViewSwapController : ViewComponent, IViewSwapController
     {
-        private readonly List<IView> viewObservers;
+        private readonly List<IMMViewNode> viewObservers;
 
         #region Constructors
 
-        public ViewSwapController(IView view)
+        public ViewSwapController(IMMViewNode view)
             : base(view)
         {
-            this.viewObservers = new List<IView>();
+            this.viewObservers = new List<IMMViewNode>();
         }
 
         #endregion
 
         #region Cross View 
 
-        public void AddObserver(IView view)
+        public void AddObserver(IMMViewNode view)
         {
             this.viewObservers.Add(view);
         }
 
-        public void RemoveObserver(IView view)
+        public void RemoveObserver(IMMViewNode view)
         {
             this.viewObservers.Remove(view);
         }
@@ -70,7 +70,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Swaps
 
         #endregion
 
-        public virtual void StartProcess(IMMEngineInteropService interop, IViewItem touchedItem, Vector2 touchedStart, IViewItem draggingItem, IView draggingView, Vector2 draggingEnd)
+        public virtual void StartProcess(IMMEngineInteropService interop, IViewItem touchedItem, Vector2 touchedStart, IViewItem draggingItem, IMMViewNode draggingView, Vector2 draggingEnd)
         {
             this.HasStarted = true;
             this.Progress   = 0f;
@@ -111,7 +111,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Swaps
         /// <summary>
         /// Watching possible dragging item swapping in target view.
         /// </summary>
-        private void WatchFrom(IViewItem draggingItem, IView touchedView)
+        private void WatchFrom(IViewItem draggingItem, IMMViewNode touchedView)
         {
             Predicate<IViewItem> isActive  = t => t[ViewItemState.Item_Is_Active]();
             Predicate<IViewItem> isTouched = t => t[ViewItemState.Item_Is_Mouse_Over]();

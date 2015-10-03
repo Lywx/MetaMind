@@ -3,9 +3,9 @@ namespace MetaMind.Unity.Guis.Modules.Summary
     using System;
     using Engine;
     using Engine.Components.Content.Fonts;
-    using Engine.Components.Graphics.Fonts;
     using Engine.Entities;
     using Engine.Gui.Controls.Labels;
+    using Engine.Gui.Graphics.Fonts;
     using Engine.Service;
     using Microsoft.Xna.Framework;
 

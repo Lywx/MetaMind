@@ -14,7 +14,7 @@
 
         #region Dependency
 
-        public DraggableRectangle Rectangle { get; protected set; }
+        public MMDraggableRectangleElement ImmRectangle { get; protected set; }
 
         #endregion
 
@@ -22,7 +22,7 @@
 
         private void InitializeStates()
         {
-            this[RegionState.Mouse_Is_Over] = () => this.Rectangle[ElementState.Mouse_Is_Over]();
+            this[RegionState.Mouse_Is_Over] = () => this.ImmRectangle[MMElementState.Mouse_Is_Over]();
 
             this[RegionState.Region_Has_Focus]  = () => this.RegionMachine.IsInState(RegionMachienState.HasFocus);
             this[RegionState.Region_Lost_Focus] = () => this.RegionMachine.IsInState(RegionMachienState.LostFocus);
@@ -30,19 +30,19 @@
 
         private void InitializeElement()
         {
-            this.Rectangle = new DraggableRectangle();
+            this.ImmRectangle = new MMDraggableRectangleElement();
         }
 
         #endregion
 
         #region Events
 
-        private void RectangleMousePressLeft(object sender, ElementEventArgs e)
+        private void RectangleMousePressLeft(object sender, MMElementEventArgs e)
         {
             this.RegionMachine.Fire(RegionMachineTrigger.FocusInside);
         }
 
-        private void RectangleMousePressOutLeft(object sender, ElementEventArgs e)
+        private void RectangleMousePressOutLeft(object sender, MMElementEventArgs e)
         {
             this.RegionMachine.Fire(RegionMachineTrigger.FocusOutside);
         }
@@ -53,8 +53,8 @@
 
         private void RegisterHandlers()
         {
-            this.Rectangle.MousePressLeft    += this.RectangleMousePressLeft;
-            this.Rectangle.MousePressOutLeft += this.RectangleMousePressOutLeft;
+            this.ImmRectangle.MousePressLeft    += this.RectangleMousePressLeft;
+            this.ImmRectangle.MousePressOutLeft += this.RectangleMousePressOutLeft;
         }
 
         #endregion

@@ -2,12 +2,12 @@
 {
     using System;
     using Engine.Components.Content.Fonts;
-    using Engine.Components.Graphics.Fonts;
+    using Graphics.Fonts;
     using Microsoft.Xna.Framework;
-    using Reactors;
+    using Renders;
     using Service;
 
-    public class Label : RenderReactor, ICloneable
+    public class Label : MMRenderComponent, ICloneable
     {
         #region Constructors and Finalizer
 
@@ -78,8 +78,8 @@
 
             this.DrawActionSelector = () => this.TextMonospaced
                 ? (Action<Font, string, Vector2, Color, float, HoritonalAlignment, VerticalAlignment, int>)
-                  ((font, str, position, color, scale, halignment, valignment, leading) => this.Graphics.Renderer.DrawMonospacedString(font, str, position, color, scale, halignment, valignment, leading))
-                : ((font, str, position, color, scale, halignment, valignment, leading) => this.Graphics.Renderer.DrawString          (font, str, position, color, scale, halignment, valignment, leading));
+                  ((font, str, position, color, scale, halignment, valignment, leading) => this.Graphics.MMRenderer.DrawMonospacedString(font, str, position, color, scale, halignment, valignment, leading))
+                : ((font, str, position, color, scale, halignment, valignment, leading) => this.Graphics.MMRenderer.DrawString          (font, str, position, color, scale, halignment, valignment, leading));
         }
 
         #endregion

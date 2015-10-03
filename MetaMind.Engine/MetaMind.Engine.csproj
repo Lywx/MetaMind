@@ -76,7 +76,20 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Gui\Controls\IMMControlComponent.cs" />
+    <Compile Include="Gui\Controls\IMMControlManager.cs" />
+    <Compile Include="Gui\Controls\IMMControlManagerOperations.cs" />
+    <Compile Include="IMMFocusable.cs" />
+    <Compile Include="Node\Actions\Intervals\CCBlink.cs" />
+    <Compile Include="Node\Actions\Intervals\CCFadeIn.cs" />
+    <Compile Include="Node\Actions\Intervals\CCFadeOut.cs" />
+    <Compile Include="Node\Actions\Intervals\CCFadeTo.cs" />
+    <Compile Include="Node\Actions\Intervals\CCRepeat.cs" />
+    <Compile Include="Node\Actions\Intervals\CCTintBy.cs" />
+    <Compile Include="Node\Actions\Intervals\CCTintTo.cs" />
+    <Compile Include="Node\Actions\Intervals\MMBlinkState.cs" />
     <Compile Include="Node\Actions\Intervals\MMExtraAction.cs" />
+    <Compile Include="Node\Actions\Intervals\MMFadeOutState.cs" />
     <Compile Include="Node\Actions\Intervals\MMRotateBy.cs" />
     <Compile Include="Node\Actions\Intervals\MMRotateTo.cs" />
     <Compile Include="Node\Actions\Intervals\MMScaleBy.cs" />
@@ -92,9 +105,14 @@
     <Compile Include="Node\Actions\MMActionState.cs" />
     <Compile Include="Node\Actions\MMActionTag.cs" />
     <Compile Include="Node\Actions\MMFiniteTimeActionState.cs" />
+    <Compile Include="Node\IMMNode.cs" />
+    <Compile Include="Node\IMMNodeColor.cs" />
+    <Compile Include="Node\IMMNodeVisual.cs" />
+    <Compile Include="Node\IMMRenderOpacity.cs" />
+    <Compile Include="Node\MMNodeCollection.cs" />
     <Compile Include="Node\MMNodeColor.cs" />
-    <Compile Include="Node\MMNodeGraphics.cs" />
-    <Compile Include="Node\MMNodeOpacity.cs" />
+    <Compile Include="Node\MMNodeVisual.cs" />
+    <Compile Include="Node\MMRenderOpacity.cs" />
     <Compile Include="Node\MMNodeTag.cs" />
     <Compile Include="Geometry\Converters\CCPointConverter.cs" />
     <Compile Include="Geometry\Converters\CCRectConverter.cs" />
@@ -102,7 +120,6 @@
     <Compile Include="Node\Actions\Intervals\MMMoveTo.cs" />
     <Compile Include="Node\CCScheduler.cs" />
     <Compile Include="Node\CCTimer.cs" />
-    <Compile Include="Node\ICCFocusable.cs" />
     <Compile Include="Node\ICCUpdatable.cs" />
     <Compile Include="Node\Actions\MMAction.cs" />
     <Compile Include="Node\Actions\MMActionManager.cs" />
@@ -119,14 +136,13 @@
     <Compile Include="Components\Content\Designer.cs" />
     <Compile Include="Components\Content\Texture\Image.cs" />
     <Compile Include="MMObject.cs" />
-    <Compile Include="Geometry\MMPoint.cs" />
     <Compile Include="Geometry\MMSize.cs" />
     <Compile Include="Settings\MMSettingDictionary.cs" />
-    <Compile Include="Gui\Reactors\IRenderReactorOperations.cs" />
-    <Compile Include="Gui\Reactors\IRenderReactorOrganization.cs" />
-    <Compile Include="Gui\Reactors\RenderReactorCollection.cs" />
-    <Compile Include="Gui\Controls\IControlOperations.cs" />
-    <Compile Include="Gui\Controls\IControlOrganization.cs" />
+    <Compile Include="Gui\Renders\IMMRenderComponentOperations.cs" />
+    <Compile Include="Gui\Renders\IMMRenderComponenetOrganization.cs" />
+    <Compile Include="Gui\Renders\MMRenderComponenetCollection.cs" />
+    <Compile Include="Gui\Controls\IMMControlComponentOperations.cs" />
+    <Compile Include="Gui\Controls\IMMControlComponentOrganization.cs" />
     <Compile Include="Gui\Controls\Item\ViewItemExtension.cs" />
     <Compile Include="Gui\Controls\Item\ViewItemStateExtension.cs" />
     <Compile Include="Gui\Controls\Item\ViewItemVisualState.cs" />
@@ -138,15 +154,15 @@
     <Compile Include="Components\Content\Texture\TextureManager.cs" />
     <Compile Include="Components\Content\Texture\ImageAsset.cs" />
     <Compile Include="Components\File\IFileManager.cs" />
-    <Compile Include="Components\Graphics\Adapters\DefaultViewportAdapter.cs" />
-    <Compile Include="Components\Graphics\Adapters\ScalingViewportAdapter.cs" />
-    <Compile Include="Components\Graphics\Adapters\ViewportAdapter.cs" />
-    <Compile Include="Components\Graphics\IRenderTextureOperaions.cs" />
+    <Compile Include="Gui\Graphics\Adapters\DefaultViewportAdapter.cs" />
+    <Compile Include="Gui\Graphics\Adapters\ScalingViewportAdapter.cs" />
+    <Compile Include="Gui\Graphics\Adapters\ViewportAdapter.cs" />
+    <Compile Include="Components\Graphics\IMMRenderTextureOperaions.cs" />
     <Compile Include="Extensions\DoubleExtension.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
-    <Compile Include="Components\Graphics\Fonts\HoritonalAlignment.cs" />
-    <Compile Include="Components\Graphics\IRendererStringOperations.cs" />
-    <Compile Include="Components\Graphics\Fonts\VerticalAlignment.cs" />
+    <Compile Include="Gui\Graphics\Fonts\HoritonalAlignment.cs" />
+    <Compile Include="Components\Graphics\IMMRendererStringOperations.cs" />
+    <Compile Include="Gui\Graphics\Fonts\VerticalAlignment.cs" />
     <Compile Include="Components\Input\KeyEventArgs.cs" />
     <Compile Include="Components\Input\MouseButtons.cs" />
     <Compile Include="Components\Input\MouseEventArgs.cs" />
@@ -154,15 +170,13 @@
     <Compile Include="Service\Console\ScrollController.cs" />
     <Compile Include="Service\Console\GameConsoleState.cs" />
     <Compile Include="Service\Debug\Components\FrameRateCounter.cs" />
-    <Compile Include="Gui\Reactors\RenderReactorDrawEventArgs.cs" />
+    <Compile Include="Gui\Renders\MMRenderComponentDrawEventArgs.cs" />
     <Compile Include="Extensions\ColorUtils.cs" />
     <Compile Include="Entities\MMEntityCollection.cs" />
     <Compile Include="Gui\Controls\Images\ColorBox.cs" />
-    <Compile Include="Gui\Controls\Buttons\ButtonVisualState.cs" />
-    <Compile Include="Gui\Reactors\MMReactor.cs" />
-    <Compile Include="Gui\Controls\Control.cs" />
-    <Compile Include="Gui\Controls\ControlCollection.cs" />
-    <Compile Include="Gui\Reactors\ControlReactor.cs" />
+    <Compile Include="Gui\Controls\Buttons\MMButtonVisualState.cs" />
+    <Compile Include="Gui\Controls\MMControlComponent.cs" />
+    <Compile Include="Gui\Controls\MMControlCollection.cs" />
     <Compile Include="Extensions\KeysExtension.cs" />
     <Compile Include="Extensions\MouseButtonsExt.cs" />
     <Compile Include="Extensions\MouseEventArgsExt.cs" />
@@ -180,9 +194,8 @@
     <Compile Include="Service\Console\Processors\ICommandProcessor.cs" />
     <Compile Include="Service\Console\Processors\IronPythonProcessor.cs" />
     <Compile Include="Service\Console\Commands\CommandType.cs" />
-    <Compile Include="Gui\Reactors\IMMReactor.cs" />
-    <Compile Include="Gui\Reactors\IMMRenderReactor.cs" />
-    <Compile Include="Gui\Controls\IControl.cs" />
+    <Compile Include="Gui\IMMReactor.cs" />
+    <Compile Include="Gui\Renders\IMMRenderComponent.cs" />
     <Compile Include="Gui\Controls\Images\ImageMode.cs" />
     <Compile Include="Gui\Controls\Item\Frames\BlcokViewVerticalItemFrameController.cs" />
     <Compile Include="Gui\Controls\Item\ViewItemVisualSettings.cs">
@@ -190,46 +203,46 @@
     </Compile>
     <Compile Include="Gui\Controls\Item\Frames\IViewItemFrameController.cs" />
     <Compile Include="Gui\Controls\Item\Frames\PointViewItemFrameController.cs" />
-    <Compile Include="Gui\Controls\Item\Frames\ViewItemRectangle.cs">
+    <Compile Include="Gui\Controls\Item\Frames\ViewItemImmRectangle.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Gui\Controls\Item\Frames\ViewItemFrameController.cs" />
     <Compile Include="Gui\Controls\Item\IViewItemEntity.cs" />
     <Compile Include="Gui\Controls\Item\ViewItemStateControl.cs" />
     <Compile Include="Gui\Controls\Item\Visuals\ViewItemLabel.cs" />
-    <Compile Include="Gui\Controls\ControlManager.cs" />
+    <Compile Include="Gui\Controls\MMControlManager.cs" />
     <Compile Include="Components\Content\Asset\AssetManager.cs" />
     <Compile Include="Components\Content\Asset\Asset.cs" />
     <Compile Include="Components\Content\Asset\PackageReader.cs" />
     <Compile Include="Components\Content\Asset\PackageXmlDocument.cs" />
     <Compile Include="Gui\Controls\Tooltip.cs" />
     <Compile Include="Gui\Controls\Views\Layers\IViewUniversalLayerOperations.cs" />
-    <Compile Include="Gui\Elements\IInputableElement.cs" />
-    <Compile Include="Gui\Elements\IInputableRectangle.cs" />
-    <Compile Include="Gui\Elements\IInputableElementExtension.cs" />
+    <Compile Include="Gui\Elements\IMMElement.cs" />
+    <Compile Include="Gui\Elements\IMMRectangleElement.cs" />
+    <Compile Include="Gui\Elements\IMMElementExtension.cs" />
     <Compile Include="Gui\Margin.cs" />
-    <Compile Include="Gui\Elements\ElementEvent.cs" />
-    <Compile Include="Gui\Elements\IElement.cs" />
-    <Compile Include="Gui\Elements\Input\ButtonDoubleClick.cs" />
-    <Compile Include="Gui\Elements\Input\ButtonHistory.cs" />
-    <Compile Include="Gui\Elements\Input\ButtonPress.cs" />
-    <Compile Include="Gui\Elements\Input\ButtonState.cs" />
-    <Compile Include="Gui\Elements\Input\MouseOver.cs" />
-    <Compile Include="Gui\Elements\Input\PositionHistory.cs" />
-    <Compile Include="Gui\Elements\Input\PositionState.cs" />
-    <Compile Include="Gui\Elements\Input\MouseAutomata.cs" />
-    <Compile Include="Gui\Elements\Input\MouseState.cs" />
-    <Compile Include="Gui\Elements\Rectangles\PickableRectangle.cs" />
+    <Compile Include="Gui\Elements\MMElementEvent.cs" />
+    <Compile Include="Gui\Shapes\IMMShape.cs" />
+    <Compile Include="Gui\Input\MouseButtonDoubleClick.cs" />
+    <Compile Include="Gui\Input\MouseButtonHistory.cs" />
+    <Compile Include="Gui\Input\MouseButtonPress.cs" />
+    <Compile Include="Gui\Input\MouseButtonState.cs" />
+    <Compile Include="Gui\Input\MouseOver.cs" />
+    <Compile Include="Gui\Input\MousePositionHistory.cs" />
+    <Compile Include="Gui\Input\MousePositionState.cs" />
+    <Compile Include="Gui\Input\MouseAutomata.cs" />
+    <Compile Include="Gui\Input\MouseState.cs" />
+    <Compile Include="Gui\Elements\Rectangles\MMPickableRectangleElement.cs" />
     <Compile Include="Components\Audio\AudioManager.cs" />
-    <Compile Include="Components\Interop\Event\IEvent.cs" />
-    <Compile Include="Components\Interop\Event\IListener.cs" />
-    <Compile Include="Components\Graphics\Renderer.cs" />
+    <Compile Include="Components\Interop\Event\IMMEvent.cs" />
+    <Compile Include="Components\Interop\Event\IMMEventListener.cs" />
+    <Compile Include="Components\Graphics\MMRenderer.cs" />
     <Compile Include="Components\Content\Fonts\FontAsset.cs" />
     <Compile Include="Components\Content\Fonts\MonoFont.cs" />
     <Compile Include="Components\MMEngineInput.cs" />
     <Compile Include="Components\Audio\IAudioManager.cs" />
-    <Compile Include="Components\Interop\Event\IEventManager.cs" />
-    <Compile Include="Components\Graphics\IRenderer.cs" />
+    <Compile Include="Components\Interop\Event\IMMEventManager.cs" />
+    <Compile Include="Components\Graphics\IMMRenderer.cs" />
     <Compile Include="Components\Content\Fonts\IFontManager.cs" />
     <Compile Include="Components\IMMGameManager.cs" />
     <Compile Include="Components\Input\IInputEvent.cs" />
@@ -237,9 +250,9 @@
     <Compile Include="Components\Input\IMouseInputState.cs" />
     <Compile Include="Components\Input\KeyboardActionMap.cs" />
     <Compile Include="Components\Input\KeyboardActions.cs" />
-    <Compile Include="Components\Interop\Event\EventManager.cs" />
-    <Compile Include="Components\Interop\Event\Event.cs" />
-    <Compile Include="Components\Interop\Event\Listener.cs" />
+    <Compile Include="Components\Interop\Event\MMEventManager.cs" />
+    <Compile Include="Components\Interop\Event\MMEvent.cs" />
+    <Compile Include="Components\Interop\Event\MMEventListener.cs" />
     <Compile Include="Components\Input\IKeyboardInputState.cs" />
     <Compile Include="Components\Interop\Process\IProcessManager.cs" />
     <Compile Include="Components\Interop\IMMSaveManager.cs" />
@@ -248,7 +261,7 @@
     <Compile Include="Components\File\FileManager.cs" />
     <Compile Include="Components\Content\Fonts\FontManager.cs" />
     <Compile Include="Extensions\StringUtils.cs" />
-    <Compile Include="Components\Graphics\GraphicsManager.cs" />
+    <Compile Include="Components\Graphics\MMGraphicsManager.cs" />
     <Compile Include="MMEngine.cs" />
     <Compile Include="Components\MMEngineGraphics.cs" />
     <Compile Include="Components\MMEngineInterop.cs" />
@@ -272,7 +285,7 @@
     <Compile Include="Components\MMMvcComponentComponent.cs" />
     <Compile Include="Components\MMMvcComponentLogic.cs" />
     <Compile Include="Components\MMMvcComponentVisual.cs" />
-    <Compile Include="Gui\Reactors\RenderReactor.cs" />
+    <Compile Include="Gui\Renders\MMRenderComponent.cs" />
     <Compile Include="Components\IMMDrawableComponentOperations.cs" />
     <Compile Include="Components\IMMDrawableComponent.cs" />
     <Compile Include="IMMEngineConfigurer.cs" />
@@ -420,7 +433,6 @@
     <Compile Include="Settings\IMMSettings.cs" />
     <Compile Include="Gui\Controls\Views\IViewComponentOperations.cs" />
     <Compile Include="Gui\Controls\Views\IIndexViewBuilder.cs" />
-    <Compile Include="Gui\Controls\Views\IViewOperations.cs" />
     <Compile Include="Gui\Controls\Views\Layers\IViewLayer.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -436,13 +448,10 @@
     <Compile Include="Gui\Controls\Views\Layers\ViewLayer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\IView.cs">
+    <Compile Include="Gui\Controls\Views\IMMViewNode.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Gui\Controls\Views\IViewComponent.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Gui\Controls\Views\IViewEntity.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Gui\Controls\Views\Layouts\BlockViewVerticalLayout.cs" />
@@ -546,20 +555,19 @@
     <Compile Include="Gui\Controls\Views\Settings\ViewSettings.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Swaps\IPointView2DSwapController.cs" />
     <Compile Include="Gui\Controls\Views\Swaps\IViewSwapController.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Gui\Controls\Views\Swaps\ViewSwapController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\View.cs">
+    <Compile Include="Gui\Controls\Views\MMViewNode.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Gui\Controls\Views\ViewComponent.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\ViewStateControl.cs">
+    <Compile Include="Gui\Controls\Views\MMViewNodeState.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Gui\Controls\Views\Regions\ViewRegion.cs">
@@ -618,7 +626,7 @@
     <Compile Include="IMMBufferUpdateable.cs" />
     <Compile Include="Entities\IMMDrawOperations.cs" />
     <Compile Include="Components\IMMInputableComponentOperations.cs" />
-    <Compile Include="Entities\IMMInputableEntity.cs" />
+    <Compile Include="Entities\IMMInputEntity.cs" />
     <Compile Include="IMMEngineBuilder.cs" />
     <Compile Include="IMMEngineOperations.cs" />
     <Compile Include="IMMFreeUpdatable.cs" />
@@ -651,7 +659,7 @@
     <Compile Include="Service\MMEngineGraphicsService.cs" />
     <Compile Include="Service\MMEngineInputService.cs" />
     <Compile Include="Service\MMEngineInteropService.cs" />
-    <Compile Include="Gui\Elements\IRectangleElement.cs" />
+    <Compile Include="Gui\Shapes\IMMRectangle.cs" />
     <Compile Include="Entities\IMMMvcEntity.cs" />
     <Compile Include="Entities\IMMMvcEntityVisual.cs" />
     <Compile Include="Gui\Modules\Particle\IParticle.cs" />
@@ -707,16 +715,16 @@
     <Compile Include="Extensions\PointExtension.cs" />
     <Compile Include="Extensions\RectangleExtension.cs" />
     <Compile Include="Extensions\Vector2Extension.cs" />
-    <Compile Include="Gui\Elements\IDraggable.cs" />
-    <Compile Include="Gui\Elements\IPickable.cs" />
-    <Compile Include="Gui\Elements\IPressable.cs" />
-    <Compile Include="Gui\Elements\Rectangles\DraggableRectangle.cs" />
-    <Compile Include="Gui\Elements\ElementEventArgs.cs" />
-    <Compile Include="Gui\Elements\RectangleElement.cs" />
-    <Compile Include="Gui\Elements\ElementState.cs" />
-    <Compile Include="Gui\Elements\Rectangles\IDraggableRectangle.cs" />
-    <Compile Include="Gui\Elements\Rectangles\IPickableRectangle.cs" />
-    <Compile Include="Gui\Elements\Rectangles\IPressableRectangle.cs" />
+    <Compile Include="Gui\Elements\IMMDraggable.cs" />
+    <Compile Include="Gui\Elements\IMMPickable.cs" />
+    <Compile Include="Gui\Elements\IMMPressable.cs" />
+    <Compile Include="Gui\Elements\Rectangles\MMDraggableRectangleElement.cs" />
+    <Compile Include="Gui\Elements\MMElementEventArgs.cs" />
+    <Compile Include="Gui\Shapes\MMRectangle.cs" />
+    <Compile Include="Gui\Elements\MMElementState.cs" />
+    <Compile Include="Gui\Elements\Rectangles\IMMDraggableRectangleElement.cs" />
+    <Compile Include="Gui\Elements\Rectangles\IMMPickableRectangleElement.cs" />
+    <Compile Include="Gui\Elements\Rectangles\IMMPressableRectangleElement.cs" />
     <Compile Include="Gui\Modules\Particle\ParticleModule.cs" />
     <Compile Include="Gui\Modules\Particle\ParticleSettings.cs" />
     <Compile Include="Gui\Modules\Particle\FloatParticle.cs" />
@@ -729,7 +737,7 @@
     <Compile Include="Entities\MMMvcEntityComponent.cs" />
     <Compile Include="Entities\MMMvcEntityLogic.cs" />
     <Compile Include="Entities\MMMvcEntityVisual.cs" />
-    <Compile Include="Entities\MMInputableEntity.cs" />
+    <Compile Include="Entities\MMInputEntity.cs" />
     <Compile Include="Service\Parser\Grammar\LineGrammar.cs" />
     <Compile Include="Service\Parser\Grammar\ConfigurationFileGrammar.cs" />
     <Compile Include="Service\Parser\Elements\Sentence.cs" />
@@ -738,7 +746,7 @@
     <Compile Include="Screen\MMScreen.cs" />
     <Compile Include="Screen\MMScreenState.cs" />
     <Compile Include="Settings\Color\Palette.cs" />
-    <Compile Include="Components\Graphics\GraphicsSettings.cs" />
+    <Compile Include="Components\Graphics\MMGraphicsSettings.cs" />
     <Compile Include="Service\Loader\FileLoader.cs" />
   </ItemGroup>
   <ItemGroup>

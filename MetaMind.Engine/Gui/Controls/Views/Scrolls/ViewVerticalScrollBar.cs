@@ -11,11 +11,11 @@ namespace MetaMind.Engine.Gui.Controls.Views.Scrolls
     using Controls.Regions;
     using Layouts;
     using Microsoft.Xna.Framework;
-    using Reactors;
+    using Renders;
     using Service;
     using Settings;
 
-    public class ViewVerticalScrollbar : RenderReactor, IViewVerticalScrollbar
+    public class ViewVerticalScrollbar : MMRenderComponent, IViewVerticalScrollbar
     {
         private readonly IPointViewVerticalScrollController viewScroll;
 

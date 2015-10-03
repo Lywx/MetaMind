@@ -1,24 +1,23 @@
 ﻿namespace MetaMind.Engine.Gui.Controls.Buttons
 {
     using System;
-    using Elements;
     using Elements.Rectangles;
-    using Engine.Components.Graphics.Fonts;
+    using Graphics.Fonts;
     using Images;
     using Labels;
     using Microsoft.Xna.Framework;
     using Service;
 
-    public class RectangleButton : Control
+    public class RectangleButton : MMControlComponent
     {
         #region Constructors
 
-        public RectangleButton(ControlManager manager, Rectangle rectangle)
+        public RectangleButton(MMControlManager manager, Rectangle rectangle)
             : this(manager, new RectangleButtonSettings(), rectangle)
         {
         }
 
-        public RectangleButton(ControlManager manager, RectangleButtonSettings settings, Rectangle rectangle) : base(manager)
+        public RectangleButton(MMControlManager manager, RectangleButtonSettings settings, Rectangle rectangle) : base(manager)
         {
             if (settings == null)
             {
@@ -45,12 +44,12 @@
         {
             this.Image = new ImageBox(
                 ,
-                () => this.Rectangle.Bounds,
+                () => this.ImmRectangle.Bounds,
                 () => Color.White);
 
             this.Label = new Label
             {
-                AnchorLocation = () => this.Rectangle.Center.ToVector2(),
+                AnchorLocation = () => this.ImmRectangle.Center.ToVector2(),
 
                 TextHAlignment = HoritonalAlignment.Center,
                 TextVAlignment = VerticalAlignment.Center
@@ -59,8 +58,8 @@
 
         private void InitializeInput(Rectangle rectangle)
         {
-            this.Rectangle = new DraggableRectangle(rectangle);
-            this.Children.Add(this.Rectangle);
+            this.ImmRectangle = new MMDraggableRectangleElement(rectangle);
+            this.Children.Add(this.ImmRectangle);
         }
 
         #endregion
@@ -70,7 +69,7 @@
         /// <summary>
         /// The rectangle handles related input.
         /// </summary>
-        public DraggableRectangle Rectangle { get; set; }
+        public MMDraggableRectangleElement ImmRectangle { get; set; }
 
         /// <summary>
         /// Button image.

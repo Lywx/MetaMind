@@ -26,6 +26,30 @@
             return LucidaConsoleRegularFont.UnavailableCharIndexes(str);
         }
 
+        public static List<float> CJKUniqueCharAmendedPosition(this string str, List<int> CJKUniqueCharIndexes)
+        {
+            var position = 0f;
+            var indexes = new List<float>();
+
+            for (var i = 0; i < str.Length; i++)
+            {
+                if (CJKUniqueCharIndexes.Contains(i))
+                {
+                    position += 0.5f;
+                }
+
+                if (i > 0 && CJKUniqueCharIndexes.Contains(i - 1))
+                {
+                    position += 0.5f;
+                }
+
+                indexes.Add(position);
+                position += 1f;
+            }
+
+            return indexes;
+        }
+
         public static string CJKAvailableString(this string str)
         {
             return NSimSunRegularFont.AvailableString(str);

@@ -6,15 +6,15 @@
 
     internal class MMEngineNullGraphics : IMMEngineGraphics
     {
-        public GraphicsManager Manager { get; }
+        public MMGraphicsManager Manager { get; }
 
         public IMMScreenDirector Screen { get; }
 
-        public GraphicsSettings Settings { get; }
+        public MMGraphicsSettings Settings { get; }
 
         public SpriteBatch SpriteBatch { get; }
 
-        public IRenderer Renderer { get; }
+        public IMMRenderer MMRenderer { get; }
 
         public GraphicsDevice GraphicsDevice { get; }
 

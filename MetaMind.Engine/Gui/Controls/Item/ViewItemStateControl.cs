@@ -11,9 +11,9 @@ namespace MetaMind.Engine.Gui.Controls.Item
     using System.Linq;
     using Microsoft.Xna.Framework;
 
-    public abstract class ViewItemStateControl : Control, IViewItemEntity
+    public abstract class ViewItemStateControl : MMControlComponent, IViewItemEntity
     {
-        protected ViewItemStateControl(ControlManager manager) : base(manager)
+        protected ViewItemStateControl(MMControlManager manager) : base(manager)
         {
             for (var i = 0; i < (int)ViewItemState.StateNum; i++)
             {
