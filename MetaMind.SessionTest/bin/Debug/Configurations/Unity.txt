@@ -1,0 +1,9 @@
+﻿" Scripts
+FsScriptSearcher.SearchFolder = .
+
+" Tests
+TestMonitor.TestWarningRate = 30
+
+" Profilers
+ResourceMonitor.WarningCPUUsagePercentage = 10 " Percents
+ResourceMonitor.WarningCPUUsageInterval   = 5 " Minutes

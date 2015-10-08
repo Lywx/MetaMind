@@ -5,7 +5,7 @@ namespace MetaMind.Engine.Gui.Modules
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Particle;
-    using Service;
+    using Services;
 
     /// <summary>
     /// Particle controller relies on implementation of FloatParticle.
@@ -35,7 +35,7 @@ namespace MetaMind.Engine.Gui.Modules
             this.Particles = new List<FloatParticle>();
         }
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
         {
             for (var i = 0; i < this.Particles.Count; ++i)
             {
@@ -48,7 +48,7 @@ namespace MetaMind.Engine.Gui.Modules
                     spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.Additive);
                 }
 
-                this.Particles[i].Draw(graphics, time, alpha);
+                this.Particles[i].Draw(graphics, time);
             }
         }
 

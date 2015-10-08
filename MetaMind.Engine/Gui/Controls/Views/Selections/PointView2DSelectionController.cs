@@ -12,7 +12,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Selections
     using Logic;
     using Scrolls;
 
-    public class PointView2DSelectionController : ViewComponent, IPointView2DSelectionController
+    public class PointView2DSelectionController : MMViewControlComponent, IPointView2DSelectionController
     {
         private readonly PointView2DLayer viewLayer;
 
@@ -30,7 +30,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Selections
 
         protected IPointView2DLayout ViewLayout
         {
-            get { return this.ViewLogic.ViewLayout; }
+            get { return this.ViewController.ViewLayout; }
         }
 
         protected IPointView2DScrollController ViewScroll
@@ -38,9 +38,9 @@ namespace MetaMind.Engine.Gui.Controls.Views.Selections
             get { return this.viewLayer.ViewScroll; }
         }
 
-        protected IPointView2DLogic ViewLogic
+        protected IMMPointView2DController ViewController
         {
-            get { return this.viewLayer.ViewLogic; }
+            get { return this.viewLayer.ViewController; }
         }
 
 
@@ -71,7 +71,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Selections
             this.previousId = this.currentId;
             this.currentId = null;
 
-            this.View[ViewState.View_Has_Selection] = () => false;
+            this.View[MMViewState.View_Has_Selection] = () => false;
         }
 
         public bool IsSelected(int id)

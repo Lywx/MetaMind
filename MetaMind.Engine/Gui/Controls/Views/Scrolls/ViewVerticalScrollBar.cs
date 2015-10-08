@@ -12,7 +12,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Scrolls
     using Layouts;
     using Microsoft.Xna.Framework;
     using Renders;
-    using Service;
+    using Services;
     using Settings;
 
     public class ViewVerticalScrollbar : MMRenderComponent, IViewVerticalScrollbar
@@ -124,13 +124,13 @@ namespace MetaMind.Engine.Gui.Controls.Views.Scrolls
 
         #region Draw
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
         {
-            base.Draw(graphics, time, alpha);
+            base.Draw(graphics, time);
 
             if (this.CanDisplay())
             {
-                this.scrollbarVisual.Draw(graphics, time, alpha);
+                this.scrollbarVisual.Draw(graphics, time);
             }
         }
 

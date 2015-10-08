@@ -8,7 +8,7 @@
 namespace MetaMind.Engine.Components
 {
     using System;
-    using Service;
+    using Services;
 
     public class MMEngineNumerical : IMMEngineNumerical
     {

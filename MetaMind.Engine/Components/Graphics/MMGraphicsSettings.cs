@@ -14,7 +14,7 @@ namespace MetaMind.Engine.Components.Graphics
     using System.Windows.Forms;
     using Extensions;
     using NLog;
-    using Service.Loader;
+    using Services.Loader;
 
     /// <summary>
     /// Graphics settings data. 

@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Visuals
 {
     using System;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
 
     public class FadeViewVisual : GradientViewVisual
     {
@@ -10,7 +10,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Visuals
         {
         }
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
         {
             this.DrawItems(graphics, time, Math.Min((byte)this.FocusOpacity, alpha));
             this.DrawComponents(graphics, time, Math.Min((byte)this.FocusOpacity, alpha));

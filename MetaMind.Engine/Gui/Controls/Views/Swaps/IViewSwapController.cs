@@ -10,7 +10,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Swaps
     using System;
     using Item;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
 
     public interface IViewSwapController : IViewComponent, IDisposable
     {

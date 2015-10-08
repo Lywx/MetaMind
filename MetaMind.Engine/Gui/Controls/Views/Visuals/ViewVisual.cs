@@ -3,16 +3,16 @@ namespace MetaMind.Engine.Gui.Controls.Views.Visuals
     using Entities;
     using Item;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
 
-    public class ViewVisual : ViewVisualComponent, IViewVisual
+    public class ViewVisual : ViewVisualComponent, IMMViewNodeVisual
     {
         public ViewVisual(IMMViewNode view)
             : base(view)
         {
         }
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
         {
             this.DrawComponents(graphics, time, alpha);
             this.DrawItems(graphics, time, alpha);
@@ -22,7 +22,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Visuals
         {
             foreach (var component in this.ViewComponents)
             {
-                ((IMMDrawable)component.Value).Draw(graphics, time, alpha);
+                ((IMMDrawable)component.Value).Draw(graphics, time);
             }
         }
 

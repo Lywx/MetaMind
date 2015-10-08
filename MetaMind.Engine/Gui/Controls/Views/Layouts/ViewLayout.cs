@@ -11,7 +11,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Layouts
     using System.Linq;
     using Item;
 
-    public class ViewLayout : ViewComponent, IViewLayout
+    public class ViewLayout : MMViewControlComponent, IViewLayout
     {
         public ViewLayout(IMMViewNode view) : base(view)
         {

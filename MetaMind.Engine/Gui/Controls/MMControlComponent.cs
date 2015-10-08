@@ -3,7 +3,7 @@
     using System;
     using Entities;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
 
     public class MMControlComponent : MMInputEntity, IMMControlComponent, IMMControlComponentInternal
     {
@@ -85,6 +85,8 @@
 
         public bool IsRoot => this.Root == this;
 
+        public void Add(IMMControlComponent component) => this.Add(component as IMMControlComponentInternal);
+
         public virtual void Add(IMMControlComponentInternal component)
         {
             if (component != null)
@@ -92,7 +94,7 @@
                 if (!this.Children.Contains(component as IMMControlComponent))
                 {
                     // Restore parent relationship before adding
-                    component.Parent?.Remove(component);
+                    component.Parent?.Remove(component as IMMControlComponent);
 
                     // Configure parenthood
                     component.Enabled = (this.Enabled ? component.Enabled : this.Enabled);
@@ -104,6 +106,8 @@
                 }
             }
         }
+
+        public void Remove(IMMControlComponent component) => this.Remove(component as IMMControlComponentInternal);
 
         /// <summary>
         /// Remove existing parenthood to original state.
@@ -121,6 +125,12 @@
             }
         }
 
+        public bool Contains(IMMControlComponent component, bool recursive)
+            =>
+                this.Contains(
+                    component as IMMControlComponentInternal,
+                    recursive);
+
         public virtual bool Contains(IMMControlComponentInternal component, bool recursive)
         {
             if (this.Children != null)
@@ -132,7 +142,7 @@
                         return true;
                     }
 
-                    if (recursive && c.Contains(component, true))
+                    if (recursive && c.Contains(component as IMMControlComponent, true))
                     {
                         return true;
                     }

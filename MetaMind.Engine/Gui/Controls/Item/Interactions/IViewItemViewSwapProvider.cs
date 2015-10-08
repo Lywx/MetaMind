@@ -1,6 +1,6 @@
 namespace MetaMind.Engine.Gui.Controls.Item.Interactions
 {
-    using Service;
+    using Services;
 
     public interface IViewItemViewSwapProvider
     {

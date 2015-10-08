@@ -6,8 +6,8 @@
     using Graphics.Adapters;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Node;
-    using Service;
+    using Nodes;
+    using Services;
     using Shapes;
 
     public abstract class MMRenderComponent : MMVisualEntity, IMMRenderComponent, IMMRenderComponentInternal
@@ -21,11 +21,17 @@
 
         private void Constructor()
         {
-            // Root will be reset by Add / Remove.
-            this.Root = this;
-
+            // Engine data
             this.ViewportAdapter = new DefaultViewportAdapter(this.GraphicsDevice);
 
+            // Visual data
+            this.Opacity = new MMRenderOpacity(this);
+
+            // Structural data
+            this.Root = this;
+
+            // Element data
+            
             // Re-broadcast events from Rectangle.
             this.Rectangle.Move += (sender, args) =>
             {
@@ -40,49 +46,39 @@
 
         #endregion
 
-        #region Dependency
+        #region Engine Data
 
-        /// <summary>
-        /// Delegates all the geometry related functionalities and events. 
-        /// Properties of element data are provided by this.
-        /// </summary>
-        private MMRectangle Rectangle { get; } = new MMRectangle();
+        protected GraphicsDevice GraphicsDevice => this.Graphics.GraphicsDevice;
+
+        protected SpriteBatch SpriteBatch => this.Graphics.SpriteBatch;
+
+        public ViewportAdapter ViewportAdapter { get; set; }
+
+        protected Viewport Viewport => this.GraphicsDevice.Viewport;
 
         #endregion
 
         #region Visual Data
 
-        private byte opacity = byte.MaxValue;
+        public IMMRenderOpacity Opacity { get; protected set; }
 
-        public Func<byte> OpacitySelector { get; set; }
+        private int zorder;
 
-        public virtual byte Opacity
+        public int ZOrder
         {
-            get { return this.OpacitySelector?.Invoke() ?? this.opacity; }
+            get { return this.zorder; }
             set
             {
-                var changed = this.opacity != value;
-
-                this.opacity = value;
-                
-                if (changed)
+                if (this.zorder != value)
                 {
-                    if (this.Active)
+                    if (this.Parent != null)
                     {
-                        this.OnOpacityChanged(this, EventArgs.Empty);
+                        this.Parent.ReorderChild(this, value);
                     }
+
+                    this.zorder = value;
                 }
             }
-        }
-
-        protected byte MixedMinOpacity(byte alpha)
-        {
-            return Math.Min(this.Opacity, alpha);
-        }
-
-        protected byte MixedMaxOpacity(byte alpha)
-        {
-            return Math.Max(this.Opacity, alpha);
         }
 
         #endregion
@@ -110,30 +106,28 @@
         /// </summary>
         public virtual bool IsRoot => this.Root == this;
 
-        public virtual void Add(IMMRenderComponent component)
+        public virtual void Add(IMMRenderComponentInternal component)
         {
             if (component != null)
             {
-                if (!this.Children.Contains(component))
+                if (!this.Children.Contains(component as IMMRenderComponent))
                 {
-                    var componentInternal = ((IMMRenderComponentInternal)component);
-
                     // Restore parent relationship before adding
-                    componentInternal.Parent?.Remove(component);
+                    component.Parent?.Remove(component);
 
                     // Configure parenthood
-                    component.Enabled = (this.Enabled ? component.Enabled : this.Enabled);
-                    componentInternal.Parent = this;
-                    componentInternal.Root = this.Root;
+                    component.Enabled = this.Enabled ? component.Enabled : this.Enabled;
+                    component.Parent = this;
+                    component.Root = this.Root;
 
                     // Add to children list
-                    this.Children.Add(component);
+                    this.Children.Add(component as IMMRenderComponent);
 
-                    this.Resize += componentInternal.OnParentResize;
+                    this.Resize += component.OnParentResize;
 
-                    if (this.Active)
+                    if (this.Enabled)
                     {
-                        this.OnParentChanged();
+                        this.OnParentChanged(this, EventArgs.Empty);
                     }
                 }
             }
@@ -143,24 +137,22 @@
         /// Remove existing parenthood to original state.
         /// </summary>
         /// <param name="component"></param>
-        public virtual void Remove(IMMRenderComponent component)
+        public virtual void Remove(IMMRenderComponentInternal component)
         {
             if (component != null)
             {
-                var componentInternal = ((IMMRenderComponentInternal)component);
-
                 // Remove from children list
-                this.Children.Remove(component);
+                this.Children.Remove(component as IMMRenderComponent);
 
                 // Reconfigure parenthood to original state
-                componentInternal.Parent = null;
-                componentInternal.Root = component;
+                component.Parent = null;
+                component.Root = component as IMMRenderComponent;
 
-                this.Resize -= componentInternal.OnParentResize;
+                this.Resize -= component.OnParentResize;
 
-                if (this.Active)
+                if (this.Enabled)
                 {
-                    this.OnParentChanged();
+                    this.OnParentChanged(this, EventArgs.Empty);
                 }
             }
         }
@@ -190,15 +182,21 @@
 
         #region State Data
 
-        public bool Active
+        public override bool Enabled
         {
-            get { return this.Rectangle.Active; }
-            set { this.Rectangle.Active = value; }
+            get { return this.Rectangle.Enabled; }
+            set { this.Rectangle.Enabled = value; }
         }
 
         #endregion
 
         #region Element Data
+
+        /// <summary>
+        /// Delegates all the geometry related functionalities and events. 
+        /// Properties of element data are provided by this.
+        /// </summary>
+        private MMRectangle Rectangle { get; } = new MMRectangle();
 
         public event EventHandler<MMElementEventArgs> Move = delegate {};
 
@@ -325,8 +323,6 @@
 
         #region Events
 
-        IMMRenderOpacity IMMRenderComponent.Opacity { get; set; }
-
         public event EventHandler<MMRenderComponentDrawEventArgs> BeginDrawStarted = delegate { };
 
         public event EventHandler<MMRenderComponentDrawEventArgs> EndDrawStarted = delegate { };
@@ -339,7 +335,7 @@
 
         public void OnOpacityChanged(object sender, EventArgs e)
         {
-            // TODO(Further)
+            // TODO(Further): 
         }
 
         public void OnParentResize(object sender, MMElementEventArgs e)
@@ -347,9 +343,9 @@
             // TODO(Further): Broadcast event from parent
         }
 
-        public void OnParentChanged()
+        public void OnParentChanged(object sender, EventArgs e)
         {
-            this.ParentChanged?.Invoke(this, EventArgs.Empty);
+            this.ParentChanged?.Invoke(this, e);
         }
 
         public void OnBeginDrawStarted(object sender, MMRenderComponentDrawEventArgs e)
@@ -360,6 +356,15 @@
         public void OnEndDrawStarted(object sender, MMRenderComponentDrawEventArgs e)
         {
             this.EndDrawStarted?.Invoke(sender, e);
+        }
+
+        #endregion
+
+        #region Comparison
+
+        public int CompareTo(IMMRenderComponent other)
+        {
+            return other.ZOrder.CompareTo(other.ZOrder);
         }
 
         #endregion
@@ -393,9 +398,9 @@
         /// overriding this.Draw method, in which case, all elements are drawn 
         /// to parent control's render target.
         /// </remarks>
-        public sealed override void BeginDraw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
+        public sealed override void BeginDraw(IMMEngineGraphicsService graphics, GameTime time)
         {
-            base.BeginDraw(graphics, time, alpha);
+            base.BeginDraw(graphics, time);
 
             if (!this.Visible)
             {
@@ -404,7 +409,7 @@
 
             this.CreateRenderTarget();
 
-            this.Children.BeginDraw(graphics, time, alpha);
+            this.Children.BeginDraw(graphics, time);
 
             this.OnBeginDrawStarted(
                 this,
@@ -416,7 +421,7 @@
             this.GraphicsDevice.SetRenderTarget(this.RenderTarget);
             this.GraphicsDevice.Clear(Color.Transparent);
 
-            this.Draw(graphics, time, this.MixedMinOpacity(alpha));
+            this.Draw(graphics, time);
 
             this.GraphicsDevice.SetRenderTarget(null);
         }
@@ -424,16 +429,16 @@
         /// <summary>
         /// Re-draw its own render target into parent's render target or back buffer.
         /// </summary>
-        public sealed override void EndDraw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
+        public sealed override void EndDraw(IMMEngineGraphicsService graphics, GameTime time)
         {
-            base.EndDraw(graphics, time, alpha);
+            base.EndDraw(graphics, time);
 
             if (!this.Visible)
             {
                 return;
             }
 
-            this.Children.EndDraw(graphics, time, alpha);
+            this.Children.EndDraw(graphics, time);
 
             this.OnEndDrawStarted(
                 this,
@@ -451,8 +456,8 @@
             this.SpriteBatch.Draw(
                 this.RenderTarget,
                 this.RenderTargetDestinationRectangle,
-                this.RenderTargetSourceRectangle,
-                Color.White.MakeTransparent(this.MixedMinOpacity(alpha)));
+                this.RenderTargetSourceRectangle, 
+                Color.White);
             this.SpriteBatch.End();
         }
 
@@ -467,7 +472,6 @@
                 return;
             }
 
-            base         .Update(time);
             this.Children.Update(time);
         }
 
@@ -475,25 +479,23 @@
 
         #region Buffer
 
-        public override void UpdateForwardBuffer()
+        public void UpdateForwardBuffer()
         {
             if (!this.Enabled)
             {
                 return;
             }
 
-            base         .UpdateForwardBuffer();
             this.Children.UpdateForwardBuffer();
         }
 
-        public override void UpdateBackwardBuffer()
+        public void UpdateBackwardBuffer()
         {
             if (!this.Enabled)
             {
                 return;
             }
 
-            base         .UpdateBackwardBuffer();
             this.Children.UpdateBackwardBuffer();
         }
 
@@ -511,10 +513,8 @@
                 {
                     if (!this.IsDisposed)
                     {
-                        this.RenderTarget.Dispose();
-
-                        this.Children.ForEach(c => c.Dispose());
-                        this.Children.Clear();
+                        this.DisposeRenderTarget();
+                        this.DisposeChildren();
                     }
 
                     this.IsDisposed = true;
@@ -528,6 +528,21 @@
             {
                 base.Dispose(disposing);
             }
+        }
+
+        private void DisposeRenderTarget()
+        {
+            this.RenderTarget?.Dispose();
+        }
+
+        private void DisposeChildren()
+        {
+            foreach (var component in this.Children)
+            {
+                component.Dispose();
+            }
+
+            this.Children.Clear();
         }
 
         #endregion

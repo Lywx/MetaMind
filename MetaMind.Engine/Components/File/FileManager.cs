@@ -9,7 +9,7 @@ namespace MetaMind.Engine.Components.File
 {
     using System;
     using System.IO;
-    using Service.Loader;
+    using Services.Loader;
 
     public class FileManager : IFileManager
     {

@@ -4,7 +4,7 @@
     using Microsoft.Xna.Framework;
     using Settings;
 
-    public class PointViewVerticalScrollController : ViewComponent, IPointViewVerticalScrollController
+    public class PointViewVerticalScrollController : MMViewControlComponent, IPointViewVerticalScrollController
     {
         private int rowOffset;
 

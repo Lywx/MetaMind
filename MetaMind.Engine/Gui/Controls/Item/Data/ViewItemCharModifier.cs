@@ -15,7 +15,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Data
     using System.Windows.Forms;
     using Engine.Components.Input;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
     using KeyEventArgs = Engine.Components.Input.KeyEventArgs;
     using Keys = Microsoft.Xna.Framework.Input.Keys;
 

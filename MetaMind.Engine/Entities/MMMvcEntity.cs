@@ -1,7 +1,7 @@
 namespace MetaMind.Engine.Entities
 {
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
 
     /// <summary>
     /// MVC Abstraction for MMEntity.
@@ -37,9 +37,9 @@ namespace MetaMind.Engine.Entities
 
         #region Draw
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
         {
-            this.Visual?.Draw(graphics, time, alpha);
+            this.Visual?.Draw(graphics, time);
         }
 
         #endregion

@@ -8,7 +8,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Visuals
     using Elements.Rectangles;
     using Images;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
 
     public class ViewItemRectangleVisual : ViewItemComponent, IViewItemVisual
     {
@@ -43,15 +43,15 @@ namespace MetaMind.Engine.Gui.Controls.Item.Visuals
 
         public IMMPressableRectangleElement Rectangle { get; }
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
         {
             if (!ViewItemState.Item_Is_Active.Match(this.Item))
             {
                 return;
             }
 
-            this.Boundary.Draw(graphics, time, alpha);
-            this.Filling .Draw(graphics, time, alpha);
+            this.Boundary.Draw(graphics, time);
+            this.Filling .Draw(graphics, time);
         }
     }
 }

@@ -5,7 +5,7 @@
     using Graphics.Fonts;
     using Microsoft.Xna.Framework;
     using Renders;
-    using Service;
+    using Services;
 
     public class Label : MMRenderComponent, ICloneable
     {
@@ -78,8 +78,8 @@
 
             this.DrawActionSelector = () => this.TextMonospaced
                 ? (Action<Font, string, Vector2, Color, float, HoritonalAlignment, VerticalAlignment, int>)
-                  ((font, str, position, color, scale, halignment, valignment, leading) => this.Graphics.MMRenderer.DrawMonospacedString(font, str, position, color, scale, halignment, valignment, leading))
-                : ((font, str, position, color, scale, halignment, valignment, leading) => this.Graphics.MMRenderer.DrawString          (font, str, position, color, scale, halignment, valignment, leading));
+                  ((font, str, position, color, scale, halignment, valignment, leading) => this.Graphics.Renderer.DrawMonospacedString(font, str, position, color, scale, halignment, valignment, leading))
+                : ((font, str, position, color, scale, halignment, valignment, leading) => this.Graphics.Renderer.DrawString          (font, str, position, color, scale, halignment, valignment, leading));
         }
 
         #endregion
@@ -195,7 +195,7 @@
 
         protected Func<Action<Font, string, Vector2, Color, float, HoritonalAlignment, VerticalAlignment, int>> DrawActionSelector { get; }
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
         {
             this.DrawAction?.Invoke(
                 this.TextFont(),

@@ -47,7 +47,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Frames
 
         #endregion
 
-        #region Events
+        #region Event Handlers
 
         private void ViewSelect(object sender, MMElementEventArgs e)
         {

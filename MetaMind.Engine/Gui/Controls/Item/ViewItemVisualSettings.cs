@@ -15,7 +15,7 @@ namespace MetaMind.Engine.Gui.Controls.Item
     {
         #region Geometry
 
-        public ViewItemVisualState<Margin> Margin;
+        public ViewItemVisualState<MMMargin> Margin;
 
         public ViewItemVisualState<Point> Size;
 

@@ -8,7 +8,7 @@ namespace MetaMind.Engine.Gui.Controls.Views
     using Layers;
     using Logic;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
     using Settings;
     using Visuals;
 
@@ -16,7 +16,7 @@ namespace MetaMind.Engine.Gui.Controls.Views
     /// Abstract view object. View is a container of logic and visual element. 
     /// The design try to enforce component reuse and replacement.
     /// </summary>
-    public class MMViewNode : MMViewNodeState, IMMViewNode
+    public class MMViewNode : MMViewNodeState, IMMViewNode, IMMViewNodeInternal 
     {
         private readonly List<IViewItem>[] items =
         {
@@ -59,9 +59,9 @@ namespace MetaMind.Engine.Gui.Controls.Views
 
         public ViewSettings ViewSettings { get; set; }
 
-        public IViewLogic ViewLogic { get; set; }
+        public IMMViewController ViewController { get; set; }
 
-        public IViewVisual ViewVisual { get; set; }
+        public IMMViewNodeVisual ViewVisual { get; set; }
 
         public List<IViewItem> ItemsRead
         {
@@ -74,6 +74,8 @@ namespace MetaMind.Engine.Gui.Controls.Views
             get { return this.items[this.NextBuffer()]; }
             set { this.items[this.NextBuffer()] = value; }
         }
+
+        public List<IViewItem> Items => this.ItemsRead;
 
         public ItemSettings ItemSettings { get; set; }
 
@@ -112,10 +114,10 @@ namespace MetaMind.Engine.Gui.Controls.Views
 
         public override void LoadContent(IMMEngineInteropService interop)
         {
-            if (this.ViewLogic != null)
+            if (this.ViewController != null)
             {
-                this.ViewLogic.Initialize();
-                this.ViewLogic.LoadBinding();
+                this.ViewController.Initialize();
+                this.ViewController.LoadBinding();
             }
 
             this.ViewVisual?.Initialize();
@@ -125,7 +127,7 @@ namespace MetaMind.Engine.Gui.Controls.Views
 
         public override void UnloadContent(IMMEngineInteropService interop)
         {
-            this.ViewLogic?.UnloadBinding();
+            this.ViewController?.UnloadBinding();
             base           .UnloadContent(interop);
         }
 
@@ -133,9 +135,9 @@ namespace MetaMind.Engine.Gui.Controls.Views
 
         #region Draw
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
         {
-            this.ViewVisual?.Draw(graphics, time, alpha);
+            this.ViewVisual?.Draw(graphics, time);
         }
 
         #endregion
@@ -147,7 +149,7 @@ namespace MetaMind.Engine.Gui.Controls.Views
             base.Update(time);
 
             // TODO(Critical): May change update mechanism in view
-            this.ViewLogic? .Update(time);
+            this.ViewController? .Update(time);
             this.ViewVisual?.Update(time);
 
             foreach (var pair in this.ViewComponents)
@@ -160,7 +162,7 @@ namespace MetaMind.Engine.Gui.Controls.Views
 
         public override void UpdateInput(IMMEngineInputService input, GameTime time)
         {
-             this.ViewLogic?.UpdateInput(input, time);
+             this.ViewController?.UpdateInput(input, time);
 
             foreach (var pair in this.ViewComponents)
             {
@@ -176,28 +178,24 @@ namespace MetaMind.Engine.Gui.Controls.Views
 
         private int currentBuffer;
 
-        public override void UpdateForwardBuffer()
+        public void UpdateForwardBuffer()
         {
-            base.UpdateForwardBuffer();
-
             // Update read buffer updated in latest input / event / process loop to use in this loop
             this.UpdateItemsReadBuffer();
 
-            this.ViewLogic? .UpdateForwardBuffer();
+            this.ViewController? .UpdateForwardBuffer();
             this.ViewVisual?.UpdateForwardBuffer();
         }
 
-        public override void UpdateBackwardBuffer()
+        public void UpdateBackwardBuffer()
         {
-            base.UpdateBackwardBuffer();
-
             // Update read buffer updated in latest update loop to use in this loop
             this.UpdateItemsReadBuffer();
 
             // Swap buffer
             this.currentBuffer = this.NextBuffer();
 
-            this.ViewLogic? .UpdateBackwardBuffer();
+            this.ViewController? .UpdateBackwardBuffer();
             this.ViewVisual?.UpdateBackwardBuffer();
         }
 

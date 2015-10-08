@@ -3,7 +3,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Selections
     using Layers;
     using Scrolls;
 
-    public class PointViewVerticalSelectionController : ViewComponent, IPointViewVerticalSelectionController
+    public class PointViewVerticalSelectionController : MMViewControlComponent, IPointViewVerticalSelectionController
     {
         private IPointViewVerticalScrollController viewScroll;
 
@@ -57,7 +57,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Selections
             this.previousId = this.currentId;
             this.currentId = null;
 
-            this.View[ViewState.View_Has_Selection] = () => false;
+            this.View[MMViewState.View_Has_Selection] = () => false;
         }
 
         public bool IsSelected(int id)

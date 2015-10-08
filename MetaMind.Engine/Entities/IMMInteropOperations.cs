@@ -1,6 +1,6 @@
 namespace MetaMind.Engine.Entities
 {
-    using Service;
+    using Services;
 
     public interface IMMInteropOperations
     {

@@ -12,9 +12,9 @@ namespace MetaMind.Engine.Components.Input
     using System.Linq;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
-    using Service.Loader;
-    using Service.Parser.Elements;
-    using Service.Parser.Grammar;
+    using Services.Loader;
+    using Services.Parser.Elements;
+    using Services.Parser.Grammar;
     using Sprache;
 
     public class KeyboardInputState : IConfigurationLoader, IKeyboardInputState

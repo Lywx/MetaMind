@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Visuals
 {
     using System;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
 
     public class GradientViewVisual : ViewVisual
     {
@@ -14,7 +14,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Visuals
 
         protected int FocusOpacity { get; set; }
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
         {
             this.DrawItems(graphics, time, alpha);
             this.DrawComponents(graphics, time, Math.Max((byte)this.FocusOpacity, alpha));
@@ -24,7 +24,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Visuals
         {
             base.Update(time);
 
-            if (this.View[ViewState.View_Has_Focus]())
+            if (this.View[MMViewState.View_Has_Focus]())
             {
                 this.FocusOpacity += (int)(this.fadeSpeed * time.ElapsedGameTime.TotalSeconds);
                 if (this.FocusOpacity > 255)

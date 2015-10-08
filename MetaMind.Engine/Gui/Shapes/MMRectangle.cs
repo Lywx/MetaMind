@@ -38,12 +38,6 @@ namespace MetaMind.Engine.Gui.Shapes
 
         #endregion
 
-        #region Element State Data
-
-        public virtual bool Active { get; set; } = true;
-
-        #endregion
-
         #region Element Geometry Data
 
         /// <remarks>

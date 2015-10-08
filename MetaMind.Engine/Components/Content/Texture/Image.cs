@@ -10,24 +10,18 @@ namespace MetaMind.Engine.Components.Content.Texture
 
     public class Image
     {
-        public Image(Designer designer, Texture2D resource)
+        public Image(ImageDesign design, Texture2D resource)
         {
-            if (designer == null)
-            {
-                throw new ArgumentNullException(nameof(designer));
-            }
-
-
             if (resource == null)
             {
                 throw new ArgumentNullException(nameof(resource));
             }
 
-            this.Designer = designer;
+            this.Design = design;
             this.Resource = resource;
         }
 
-        public Designer Designer { get; private set; }
+        public ImageDesign Design { get; private set; }
 
         public Texture2D Resource { get; private set; }
     }

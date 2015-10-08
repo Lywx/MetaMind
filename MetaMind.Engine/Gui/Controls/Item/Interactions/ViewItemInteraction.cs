@@ -10,7 +10,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Interactions
     using System;
     using Layouts;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
 
     public class ViewItemInteraction : ViewItemComponent, IViewItemInteraction
     {

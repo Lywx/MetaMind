@@ -5,7 +5,7 @@ namespace MetaMind.Engine.Gui.Controls.Images
     using Microsoft.Xna.Framework.Graphics;
     using Primtives2D;
     using Renders;
-    using Service;
+    using Services;
 
     public class ColorBox : MMRenderComponent
     {
@@ -33,7 +33,7 @@ namespace MetaMind.Engine.Gui.Controls.Images
 
         public bool ColorFilled { get; set; } = true;
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
         {
             var draw = this.ColorFilled
                            ? Primitives2D.FillRectangle

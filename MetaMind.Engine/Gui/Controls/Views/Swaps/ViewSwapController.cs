@@ -13,9 +13,9 @@ namespace MetaMind.Engine.Gui.Controls.Views.Swaps
     using Item;
     using Item.Swaps;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
 
-    public class ViewSwapController : ViewComponent, IViewSwapController
+    public class ViewSwapController : MMViewControlComponent, IViewSwapController
     {
         private readonly List<IMMViewNode> viewObservers;
 
@@ -83,10 +83,10 @@ namespace MetaMind.Engine.Gui.Controls.Views.Swaps
             interop.Process.AttachProcess(new ViewItemSwapProcess(
                 draggingItem,
                 draggingItem.ItemLogic,
-                draggingView.ViewLogic,
+                draggingView.ViewController,
                 touchedItem,
                 touchedItem.ItemLogic,
-                this.View.ViewLogic));
+                this.View.ViewController));
         }
 
         public void WatchProcess(IViewItem item)

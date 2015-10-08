@@ -29,6 +29,6 @@ namespace MetaMind.Engine.Components.Content.Skins
 
         public string Asset { get; set;}
 
-        public Cursor Resource { get; set; }= null;
+        public MMCursor Resource { get; set; }= null;
     }
 }

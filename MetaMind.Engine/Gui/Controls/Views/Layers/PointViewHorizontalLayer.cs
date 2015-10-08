@@ -13,44 +13,14 @@ namespace MetaMind.Engine.Gui.Controls.Views.Layers
         {
         }
 
-        public new PointViewHorizontalSettings ViewSettings
-        {
-            get
-            {
-                return (PointViewHorizontalSettings)base.ViewSettings;
-            }
-        }
+        public new PointViewHorizontalSettings ViewSettings => (PointViewHorizontalSettings)base.ViewSettings;
 
-        public new IPointViewHorizontalLogic ViewLogic
-        {
-            get
-            {
-                return (IPointViewHorizontalLogic)base.ViewLogic;
-            }
-        }
+        public new IMMPointViewHorizontalController ViewController => (IMMPointViewHorizontalController)base.ViewController;
 
-        public new IPointViewHorizontalSelectionController ViewSelection
-        {
-            get
-            {
-                return this.ViewLogic.ViewSelection;
-            }
-        }
+        public new IPointViewHorizontalSelectionController ViewSelection => this.ViewController.ViewSelection;
 
-        public new IViewSwapController ViewSwap
-        {
-            get
-            {
-                return this.ViewLogic.ViewSwap;
-            }
-        }
+        public new IViewSwapController ViewSwap => this.ViewController.ViewSwap;
 
-        public new IPointViewHorizontalScrollController ViewScroll
-        {
-            get
-            {
-                return this.ViewLogic.ViewScroll;
-            }
-        }
+        public new IPointViewHorizontalScrollController ViewScroll => this.ViewController.ViewScroll;
     }
 }

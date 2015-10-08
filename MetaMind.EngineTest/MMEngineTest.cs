@@ -1,7 +1,7 @@
 ﻿namespace MetaMind.EngineTest
 {
     using Engine;
-    using Engine.Service.Debugging.Components;
+    using Engine.Services.Debug.Components;
     using Guis;
 
     public class MMEngineTest : MMGame

@@ -4,12 +4,12 @@ namespace Microsoft.Xna.Framework
 
     public static class RectangleExtension
     {
-        public static Rectangle Extend(this Rectangle rectangle, Margin margin)
+        public static Rectangle Extend(this Rectangle rectangle, MMMargin margin)
         {
             return new Rectangle(rectangle.Left - margin.Left, rectangle.Top - margin.Top, rectangle.Width + margin.Horizontal, rectangle.Height + margin.Vertical);
         }
 
-        public static Rectangle Crop(this Rectangle rectangle, Margin margin)
+        public static Rectangle Crop(this Rectangle rectangle, MMMargin margin)
         {
             return new Rectangle(rectangle.Left + margin.Left, rectangle.Top + margin.Top, rectangle.Width - margin.Horizontal, rectangle.Height - margin.Vertical);
         }

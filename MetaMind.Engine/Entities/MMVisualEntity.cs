@@ -3,7 +3,7 @@ namespace MetaMind.Engine.Entities
     using System;
     using System.Runtime.Serialization;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
 
     [DataContract]
     public class MMVisualEntity : MMEntity, IMMVisualEntity
@@ -42,6 +42,21 @@ namespace MetaMind.Engine.Entities
         ~MMVisualEntity()
         {
             this.Dispose(true);
+        }
+
+        #endregion
+
+        #region Comparison
+
+        public int Compare(IMMDrawable x, IMMDrawable y)
+        {
+            return x.CompareTo(y);
+        }
+
+        public int CompareTo(IMMDrawable other)
+        {
+            // TODO(Now): I am still thinking about how to merge this with ZOrder in MMNode
+            return this.DrawOrder.CompareTo(other.DrawOrder);
         }
 
         #endregion
@@ -94,8 +109,7 @@ namespace MetaMind.Engine.Entities
         /// </remarks>
         /// <param name="graphics"></param>
         /// <param name="time"></param>
-        /// <param name="alpha"></param>
-        public virtual void BeginDraw(IMMEngineGraphicsService graphics, GameTime time, byte alpha) { }
+        public virtual void BeginDraw(IMMEngineGraphicsService graphics, GameTime time) { }
 
         /// <summary>
         /// Standard draw routine.
@@ -106,8 +120,7 @@ namespace MetaMind.Engine.Entities
         /// </remarks>>
         /// <param name="graphics"></param>
         /// <param name="time"></param>
-        /// <param name="alpha"></param>
-        public virtual void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha) { }
+        public virtual void Draw(IMMEngineGraphicsService graphics, GameTime time) { }
 
         /// <summary>
         /// Standard draw termination.
@@ -118,8 +131,7 @@ namespace MetaMind.Engine.Entities
         /// </remarks>>
         /// <param name="graphics"></param>
         /// <param name="time"></param>
-        /// <param name="alpha"></param>
-        public virtual void EndDraw(IMMEngineGraphicsService graphics, GameTime time, byte alpha) { }
+        public virtual void EndDraw(IMMEngineGraphicsService graphics, GameTime time) { }
 
         #endregion
 

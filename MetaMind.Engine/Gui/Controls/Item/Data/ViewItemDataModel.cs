@@ -12,7 +12,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Data
     using Engine.Components.Content.Fonts;
     using Layers;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
     using Views;
 
     public class ViewItemDataModel : ViewItemComponent, IViewItemDataModel
@@ -92,7 +92,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Data
 
             this.Item[ViewItemState.Item_Is_Pending] = () => false;
             this.Item[ViewItemState.Item_Is_Editing] = () => true;
-            this.View[ViewState.View_Is_Editing] = () => true;
+            this.View[MMViewState.View_Is_Editing] = () => true;
  
             FieldInfo field = this.itemData.GetType().GetField(targetName);
             if (field != null)
@@ -110,7 +110,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Data
         private void EditTerminate(object sender, EventArgs e)
         {
             this.Item[ViewItemState.Item_Is_Editing] = () => false;
-            this.View[ViewState.View_Is_Editing] = () => false;
+            this.View[MMViewState.View_Is_Editing] = () => false;
         }
 
         private void RefreshInt(object sender, ViewItemDataEventArgs e)
