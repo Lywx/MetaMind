@@ -54,7 +54,7 @@ namespace MetaMind.Engine.Nodes.Actions.Intervals
 
         public override MMFiniteTimeAction Reverse()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         protected internal override MMActionState StartAction(IMMNode target)

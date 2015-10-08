@@ -4,9 +4,9 @@
     {
         MMControlCollection Children { get; set; }
 
-        IMMControlComponent Parent { get; set; }
+        IMMControlComponentInternal Parent { get; set; }
 
-        IMMControlComponent Root { get; set;}
+        IMMControlComponentInternal Root { get; set;}
     }
 
     public interface IMMControlComponentOrganization

@@ -6,22 +6,22 @@ namespace MetaMind.Engine.Nodes.Actions.Intervals
 
         public MMTintBy(
             float duration,
-            short deltaRed,
-            short deltaGreen,
-            short deltaBlue) : base(duration)
+            short RDelta,
+            short GDelta,
+            short BDelta) : base(duration)
         {
-            this.DeltaR = deltaRed;
-            this.DeltaG = deltaGreen;
-            this.DeltaB = deltaBlue;
+            this.RDelta = RDelta;
+            this.GDelta = GDelta;
+            this.BDelta = BDelta;
         }
 
         #endregion Constructors
 
-        public short DeltaB { get; }
+        public short BDelta { get; }
 
-        public short DeltaG { get; }
+        public short GDelta { get; }
 
-        public short DeltaR { get; }
+        public short RDelta { get; }
 
         protected internal override MMActionState StartAction(IMMNode target)
         {
@@ -32,9 +32,9 @@ namespace MetaMind.Engine.Nodes.Actions.Intervals
         {
             return new MMTintBy(
                 this.Duration,
-                (short)-this.DeltaR,
-                (short)-this.DeltaG,
-                (short)-this.DeltaB);
+                (short)-this.RDelta,
+                (short)-this.GDelta,
+                (short)-this.BDelta);
         }
     }
 }

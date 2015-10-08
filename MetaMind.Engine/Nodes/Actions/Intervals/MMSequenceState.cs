@@ -8,25 +8,13 @@ namespace MetaMind.Engine.Nodes.Actions.Intervals
 
         private readonly MMFiniteTimeActionState[] actionStates = new MMFiniteTimeActionState[2];
 
-        protected int actionPreviousIndex;
-
-        private int actionCurrentIndex;
+        private int actionIndexPrevious = -1;
 
         /// <summary>
-        /// Update parameter for action[0]
+        /// Update parameter split for the first action and second action.
+        /// Because MMSequence is a combination of two actions.
         /// </summary>
-        private float timeAction1;
-
-        /// <summary>
-        /// Update parameter split for the first action. Because MMSequence is a
-        /// combination of two actions.
-        /// </summary>
-        protected float timeAction1Completion;
-
-        /// <summary>
-        /// Update parameter for action[1]
-        /// </summary>
-        private float timeAction2;
+        private float actionTimeSplit;
 
         #region Constructors
 
@@ -35,18 +23,10 @@ namespace MetaMind.Engine.Nodes.Actions.Intervals
         {
             this.actions = action.Actions;
 
-            this.timeAction1Completion = this.actions[0].Duration / this.Duration;
-            this.actionPreviousIndex = -1;
+            this.actionTimeSplit = this.actions[0].Duration / this.Duration;
         }
 
         #endregion Constructors
-
-        protected bool HasActionRepeatForever
-            => (this.actions[0] is MMRepeatForever)
-               || (this.actions[1] is MMRepeatForever);
-
-        protected bool PreviousActionRepeatForever
-            => this.actions[this.actionPreviousIndex] is MMRepeatForever;
 
         public override bool IsDone
         {
@@ -62,12 +42,26 @@ namespace MetaMind.Engine.Nodes.Actions.Intervals
             }
         }
 
+        private bool HasActionEverRan => this.actionIndexPrevious != -1;
+
+        protected bool HasActionRepeatForever
+            => (this.actions[0] is MMRepeatForever)
+               || (this.actions[1] is MMRepeatForever);
+
+        protected bool PreviousActionRepeatForever
+            => this.PreviousAction is MMRepeatForever;
+
+        private MMFiniteTimeActionState PreviousActionState => this.actionStates[this.actionIndexPrevious];
+
+        private MMFiniteTimeAction PreviousAction => this.actions[this.actionIndexPrevious];
+
+        #region Operations
+
         protected internal override void Stop()
         {
-            // Issue #1305
-            if (this.actionPreviousIndex != -1)
+            if (this.HasActionEverRan)
             {
-                this.actionStates[this.actionPreviousIndex].Stop();
+                this.PreviousActionState.Stop();
             }
 
             base.Stop();
@@ -75,10 +69,12 @@ namespace MetaMind.Engine.Nodes.Actions.Intervals
 
         protected internal override void Step(float dt)
         {
-            if (this.actionPreviousIndex > -1
+            if (this.HasActionEverRan
+
+                // When action in last frame will persist forever
                 && this.PreviousActionRepeatForever)
             {
-                this.actionStates[this.actionPreviousIndex].Step(dt);
+                this.PreviousActionState.Step(dt);
             }
             else
             {
@@ -86,104 +82,149 @@ namespace MetaMind.Engine.Nodes.Actions.Intervals
             }
         }
 
+        #endregion
+
+        #region Update
+
         public override void Update(float time)
         {
-            this.UpdateActionTime(time);
+            int   actionIndex;
+            float actionTime;
 
-            // When according to the time, action[0] is finished
-            if (this.actionCurrentIndex == 1)
+            this.UpdateActionIndex(time, out actionIndex);
+            this.UpdateActionTime(time, actionIndex, out actionTime);
+            this.UpdateAction(actionIndex);
+            this.UpdateActionChange(actionIndex, actionTime);
+        }
+
+        private void UpdateActionIndex(float time, out int actionIndex)
+        {
+            actionIndex = time < this.actionTimeSplit ? 0 : 1;
+        }
+
+        /// <summary>
+        /// Update time parameter for updated action in this frame.
+        /// </summary>
+        /// <param name="time">
+        /// </param>
+        /// <param name="actionIndex">
+        /// Updated action in this frame 
+        /// </param>
+        /// <param name="actionTime">
+        /// Update parameter for updated action in this frame
+        /// </param>
+        private void UpdateActionTime(float time, int actionIndex, out float actionTime)
+        {
+            if (actionIndex == 0)
             {
-                // However action[0] was skipped because the Update is not called
-                if (this.actionPreviousIndex == -1)
+                // Update progress for action[0], time = progress / completion 
+                var action1TimeProcess = time;
+
+                if (Math.Abs(this.actionTimeSplit) > float.Epsilon)
                 {
-                    // Do extra work to execute skipped action[0]
-                    this.actionStates[0] = (MMFiniteTimeActionState)this.actions[0].StartAction(this.Target);
+                    actionTime = action1TimeProcess / this.actionTimeSplit;
+                }
+                else
+                {
+                    actionTime = 1;
+                }
+            }
+            else
+            {
+                // ReSharper disable once CompareOfFloatsByEqualityOperator
+
+                // When action[0]'s duration cover entire sequence
+                if (this.actionTimeSplit == 1)
+                {
+                    // At a result, action[1] should be finished too
+                    actionTime = 1;
+                }
+                else
+                {
+                    var action2TimeProgress = time - this.actionTimeSplit;
+                    var action2TimeCompletion = 1 - this.actionTimeSplit;
+                    actionTime = action2TimeProgress / action2TimeCompletion;
+                }
+            }
+        }
+
+        private void UpdateAction(int actionIndex)
+        {
+            if (actionIndex == 0)
+            {
+                // First time update
+                if (this.actionIndexPrevious == -1)
+                {
+                    // Ignore
+                }
+
+                // When action[0] hasn't reached completion time and it is found
+                // that time is reduced rather then increasing (reverse stepping)
+                else if (this.actionIndexPrevious == 1)
+                {
+                    // "Reverse update" (reverse to 0f and stop)
+                    this.actionStates[1].Update(0);
+                    this.actionStates[1].Stop();
+                }
+                else
+                {
+#if DEBUG
+                    throw new InvalidOperationException();
+#endif
+                }
+            }
+
+            // When according to the time, action[0] should be finished
+            else if (actionIndex == 1)
+            {
+                // However action[0] was skipped because the Update is not
+                // called for duration being too short, do extra work to execute
+                // skipped action[0]
+                if (this.actionIndexPrevious == -1)
+                {
+                    this.actionStates[0] =
+                        (MMFiniteTimeActionState)
+                        this.actions[0].StartAction(this.Target);
                     this.actionStates[0].Update(1.0f);
                     this.actionStates[0].Stop();
                 }
 
-                // When action[0] ran but incomplete
-                else if (this.actionPreviousIndex == 0)
+                // When action[0] ran but fully update (1f) yet, do extra work
+                // to fully update action[0]
+                else if (this.actionIndexPrevious == 0)
                 {
-                    // Do extra work to finish action[0]
                     this.actionStates[0].Update(1.0f);
                     this.actionStates[0].Stop();
                 }
+                else
+                {
+#if DEBUG
+                    throw new InvalidOperationException();
+#endif
+                }
             }
+        }
 
-            // When action[0] hasn't finished and
-            else if (this.actionCurrentIndex == 0
-                     && this.actionPreviousIndex == 1)
-            {
-                // Reverse mode ?
-                // XXX: BUG this case doesn't contemplate when _last==-1, found=0 and in "reverse mode"
-                // since it will require a hack to know if an action is on reverse mode or not.
-                // "step" should be overriden, and the "reverseMode" value propagated to inner Sequences.
-                this.actionStates[1].Update(0);
-                this.actionStates[1].Stop();
-            }
-
-            // Last action found and it is done.
-            if (this.actionCurrentIndex == this.actionPreviousIndex
-                && this.actionStates[this.actionCurrentIndex].IsDone)
+        private void UpdateActionChange(int actionIndex, float actionTime)
+        {
+            // When action index not changed and it is done, do nothing
+            if (this.actionIndexPrevious == actionIndex 
+                && this.actionStates[actionIndex].IsDone)
             {
                 return;
             }
 
-            // Last action found and it is done
-            if (this.actionCurrentIndex != this.actionPreviousIndex)
+            // When action index changed, start next action.
+            if (this.actionIndexPrevious != actionIndex)
             {
-                this.actionStates[this.actionCurrentIndex] = (MMFiniteTimeActionState)this.actions[this.actionCurrentIndex].StartAction(this.Target);
+                this.actionStates[actionIndex] = (MMFiniteTimeActionState)this.actions[actionIndex].StartAction(this.Target);
             }
 
-            this.UpdateAction();
+            this.actionStates[actionIndex].Update(actionTime);
+
+            this.actionIndexPrevious = actionIndex;
         }
 
-        private void UpdateAction()
-        {
-            this.actionStates[this.actionCurrentIndex].Update(time1);
-
-            this.actionPreviousIndex = this.actionCurrentIndex;
-        }
-
-        private void UpdateActionTime(float time)
-        {
-            // Update progress for action[0], time = progress / completion 
-            var timeAction1Progress = time;
-
-            // When action[0] hasn't completed
-            if (timeAction1Progress < this.timeAction1Completion)
-            {
-                this.actionCurrentIndex = 0;
-
-                if (Math.Abs(this.timeAction1Completion) > float.Epsilon)
-                {
-                    this.timeAction1 = time / this.timeAction1Completion;
-                }
-                else
-                {
-                    this.timeAction1 = 1;
-                }
-            }
-
-            // When action[0] is completed
-            else
-            {
-                this.actionCurrentIndex = 1;
-
-                // When action[0]'s duration cover entire sequence
-                if (this.timeAction1Completion == 1)
-                {
-                    // At a result, action[1] should be finished too
-                    this.timeAction2 = 1;
-                }
-                else
-                {
-                    var timeAction2Progress = time - this.timeAction1Completion;
-                    var timeAction2Completion = 1 - this.timeAction1Completion;
-                    this.timeAction2 = timeAction2Progress / timeAction2Completion;
-                }
-            }
-        }
+        #endregion
     }
 }

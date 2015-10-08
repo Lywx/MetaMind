@@ -15,9 +15,9 @@ namespace MetaMind.Engine.Nodes.Actions.Intervals
 
             this.TargetColor = targetColor;
 
-            this.BDelta = action.DeltaB;
-            this.GDelta = action.DeltaG;
-            this.RDelta = action.DeltaR;
+            this.BDelta = action.BDelta;
+            this.GDelta = action.GDelta;
+            this.RDelta = action.RDelta;
 
             this.RFrom = targetColor.Standalone.R;
             this.GFrom = targetColor.Standalone.G;

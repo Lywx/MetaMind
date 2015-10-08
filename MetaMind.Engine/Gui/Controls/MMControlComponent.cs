@@ -75,9 +75,13 @@
 
         public MMControlCollection Children { get; set; } = new MMControlCollection();
 
-        public IMMControlComponent Parent { get; set; }
+        public IMMControlComponentInternal Parent { get; set; }
 
-        public IMMControlComponent Root { get; set; }
+        IMMControlComponent IMMControlComponentOrganization.Parent => (IMMControlComponent)this.Parent;
+
+        public IMMControlComponentInternal Root { get; set; }
+
+        IMMControlComponent IMMControlComponentOrganization.Root => (IMMControlComponent)this.Root;
 
         public bool IsChild => this.Parent != null;
 
@@ -94,7 +98,7 @@
                 if (!this.Children.Contains(component as IMMControlComponent))
                 {
                     // Restore parent relationship before adding
-                    component.Parent?.Remove(component as IMMControlComponent);
+                    component.Parent?.Remove(component);
 
                     // Configure parenthood
                     component.Enabled = (this.Enabled ? component.Enabled : this.Enabled);
@@ -121,7 +125,7 @@
 
                 // Reconfigure parenthood to original state
                 component.Parent = null;
-                component.Root = component as IMMControlComponent;
+                component.Root = component;
             }
         }
 
@@ -215,25 +219,23 @@
 
         #region Buffer
 
-        public override void UpdateForwardBuffer()
+        public void UpdateForwardBuffer()
         {
             if (!this.Enabled)
             {
                 return;
             }
 
-            base         .UpdateForwardBuffer();
             this.Children.UpdateForwardBuffer();
         }
 
-        public override void UpdateBackwardBuffer()
+        public void UpdateBackwardBuffer()
         {
             if (!this.Enabled)
             {
                 return;
             }
 
-            base         .UpdateBackwardBuffer();
             this.Children.UpdateBackwardBuffer();
         }
 
