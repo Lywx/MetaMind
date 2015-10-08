@@ -4,7 +4,7 @@
     using Microsoft.Xna.Framework;
     using Settings;
 
-    public class PointViewHorizontalScrollController : ViewComponent, IPointViewHorizontalScrollController
+    public class PointViewHorizontalScrollController : MMViewControlComponent, IPointViewHorizontalScrollController
     {
         private readonly PointViewHorizontalSettings viewSettings;
 

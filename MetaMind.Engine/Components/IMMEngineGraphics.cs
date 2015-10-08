@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Components
 {
     using System;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
 
     public interface IMMEngineGraphics : IGameComponent, IMMEngineGraphicsService, IDisposable 
     {

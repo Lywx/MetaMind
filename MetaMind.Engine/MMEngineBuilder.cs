@@ -5,7 +5,7 @@
     using Components.Graphics;
     using Components.Interop;
     using Microsoft.Xna.Framework;
-    using Service.Console;
+    using Services.Console;
 
     public class MMEngineBuilder : IMMEngineBuilder
     {
@@ -76,7 +76,7 @@
                     },
                     this.Engine,
                     this.Graphics.SpriteBatch,
-                    this.Graphics.MMRenderer));
+                    this.Graphics.Renderer));
 
             this.Engine.Input     = new MMEngineInput(this.Engine);
             this.Engine.Numerical = new MMEngineNumerical();

@@ -8,7 +8,7 @@ namespace MetaMind.Engine.Components
     using Interop.Process;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
-    using Service.Console;
+    using Services.Console;
 
     internal class MMEngineNullInterop : MMInputableComponent, IMMEngineInterop
     {

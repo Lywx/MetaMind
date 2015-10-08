@@ -11,7 +11,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Frames
     using Elements;
     using Layers;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
 
     public abstract class ViewItemFrameController : ViewItemComponent, IViewItemFrameController
     {

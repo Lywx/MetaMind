@@ -2,9 +2,9 @@ namespace MetaMind.Engine.Gui.Renders
 {
     public interface IMMRenderComponentOperations
     {
-        void Add(IMMRenderComponent component);
+        void Add(IMMRenderComponentInternal component);
 
-        void Remove(IMMRenderComponent component);
+        void Remove(IMMRenderComponentInternal component);
 
         bool Contains(IMMRenderComponent component, bool recursive);
     }

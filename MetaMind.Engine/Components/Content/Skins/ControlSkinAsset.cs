@@ -6,6 +6,7 @@
 namespace MetaMind.Engine.Components.Content.Skins
 {
     using Asset;
+    using Geometry;
 
     public class ControlSkinAsset : Asset
     {

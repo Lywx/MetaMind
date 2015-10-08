@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Components
 {
     using System;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
 
     /// <summary>
     /// Controller of MVC pattern in GameComponent.

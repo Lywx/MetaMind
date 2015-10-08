@@ -6,12 +6,6 @@ namespace MetaMind.Engine.Gui.Shapes
 
     public interface IMMShape
     {
-        #region States
-
-        bool Active { get; set; }
-
-        #endregion
-
         #region Position
 
         Point Center { get; set; }

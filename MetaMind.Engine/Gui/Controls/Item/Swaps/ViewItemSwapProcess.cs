@@ -30,10 +30,10 @@ namespace MetaMind.Engine.Gui.Controls.Item.Swaps
         public ViewItemSwapProcess(
             IViewItem      draggingItem, 
             IViewItemLogic draggingItemLogic, 
-            IViewLogic     draggingViewLogic, 
+            IMMViewController     draggingViewController, 
             IViewItem      swappingItem, 
             IViewItemLogic swappingItemLogic, 
-            IViewLogic     swappingViewLogic)
+            IMMViewController     swappingViewController)
             : base(10)
         {
             if (draggingItem == null)
@@ -46,9 +46,9 @@ namespace MetaMind.Engine.Gui.Controls.Item.Swaps
                 throw new ArgumentNullException("draggingItemLogic");
             }
 
-            if (draggingViewLogic == null)
+            if (draggingViewController == null)
             {
-                throw new ArgumentNullException("draggingViewLogic");
+                throw new ArgumentNullException("draggingViewController");
             }
 
             if (swappingItem == null)
@@ -61,26 +61,26 @@ namespace MetaMind.Engine.Gui.Controls.Item.Swaps
                 throw new ArgumentNullException("swappingItemLogic");
             }
 
-            if (swappingViewLogic == null)
+            if (swappingViewController == null)
             {
-                throw new ArgumentNullException("swappingViewLogic");
+                throw new ArgumentNullException("swappingViewController");
             }
 
             this.DraggingItem      = draggingItem;
             this.DraggingItemLogic = draggingItemLogic;
-            this.DraggingViewLogic = draggingViewLogic;
+            this.DraggingViewController = draggingViewController;
 
             this.SwappingItem      = swappingItem;
             this.SwappingItemLogic = swappingItemLogic;
-            this.SwappingViewLogic = swappingViewLogic;
+            this.SwappingViewController = swappingViewController;
 
             this.inSameView = ReferenceEquals(
                 this.SwappingItem.View,
                 this.DraggingItem.View);
 
             this.swappingItemIsMouseOver = this.SwappingItem[ViewItemState.Item_Is_Mouse_Over];
-            this.swappingViewHasFocus    = this.SwappingItem.View[ViewState.View_Has_Focus];
-            this.draggingViewHasFocus    = this.DraggingItem.View[ViewState.View_Has_Focus];
+            this.swappingViewHasFocus    = this.SwappingItem.View[MMViewState.View_Has_Focus];
+            this.draggingViewHasFocus    = this.DraggingItem.View[MMViewState.View_Has_Focus];
 
             // Temporarily disable the mouse over state (without affecting the inner working of the underlying frames)
             // during swapping to avoid possible re-swapping behavior.
@@ -95,13 +95,13 @@ namespace MetaMind.Engine.Gui.Controls.Item.Swaps
 
         protected IViewItemLogic SwappingItemLogic { get; set; }
 
-        protected IViewLogic DraggingViewLogic { get; set; }
+        protected IMMViewController DraggingViewController { get; set; }
 
         protected IViewItem DraggingItem { get; private set; }
 
         protected IViewItemLogic DraggingItemLogic { get; set; }
 
-        protected IViewLogic SwappingViewLogic { get; set; }
+        protected IMMViewController SwappingViewController { get; set; }
 
         #endregion
 
@@ -142,7 +142,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Swaps
 
         protected void UpdateVisual(GameTime time)
         {
-            this.SwappingViewLogic.ViewSwap.Progress = (float)Math.Pow(this.Progress, 2);
+            this.SwappingViewController.ViewSwap.Progress = (float)Math.Pow(this.Progress, 2);
         }
 
         #endregion
@@ -164,10 +164,10 @@ namespace MetaMind.Engine.Gui.Controls.Item.Swaps
         protected virtual void SwapAroundView()
         {
             // Temporarily take control of view focus state
-            this.DraggingViewLogic.ViewSelection.Cancel();
-            this.DraggingItem.View[ViewState.View_Has_Focus] = () => false;
-            this.SwappingViewLogic.ViewSelection.Select(0);
-            this.SwappingItem.View[ViewState.View_Has_Focus] = () => true;
+            this.DraggingViewController.ViewSelection.Cancel();
+            this.DraggingItem.View[MMViewState.View_Has_Focus] = () => false;
+            this.SwappingViewController.ViewSelection.Select(0);
+            this.SwappingItem.View[MMViewState.View_Has_Focus] = () => true;
 
             this.SwapItemAroundList();
         }
@@ -210,8 +210,8 @@ namespace MetaMind.Engine.Gui.Controls.Item.Swaps
         {
             // Restore original states
             this.SwappingItem[ViewItemState.Item_Is_Mouse_Over] = this.swappingItemIsMouseOver;
-            this.SwappingItem.View[ViewState.View_Has_Focus] = this.swappingViewHasFocus;
-            this.DraggingItem.View[ViewState.View_Has_Focus] = this.draggingViewHasFocus;
+            this.SwappingItem.View[MMViewState.View_Has_Focus] = this.swappingViewHasFocus;
+            this.DraggingItem.View[MMViewState.View_Has_Focus] = this.draggingViewHasFocus;
 
             this.SwappingItem[ViewItemState.Item_Is_Swapped] = () => false;
         }

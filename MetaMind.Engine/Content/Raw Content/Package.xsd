@@ -21,6 +21,14 @@
             <xs:sequence>
               <xs:element maxOccurs="unbounded" name="Image">
                 <xs:complexType>
+                  <xs:sequence minOccurs="1">
+                    <xs:element name="Design">
+                      <xs:complexType>
+                        <xs:attribute name="ScreenWidth" type="xs:unsignedShort" use="required" />
+                        <xs:attribute name="ScreenHeight" type="xs:unsignedShort" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
                   <xs:attribute name="Name" type="xs:string" use="required" />
                   <xs:attribute name="Asset" type="xs:string" use="required" />
                 </xs:complexType>

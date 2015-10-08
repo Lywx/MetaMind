@@ -3,7 +3,7 @@
     using Engine;
     using Engine.Entities;
     using Engine.Screen;
-    using Engine.Service;
+    using Engine.Services;
 
     public class PlayTest_Screen : MMScreen
     {
@@ -25,7 +25,7 @@
                     DrawAction = (graphics, time, alpha) =>
                     {
                         graphics.SpriteBatch.Begin();
-                        this.tests.Draw(graphics, time, alpha);
+                        this.tests.Draw(graphics, time);
                         graphics.SpriteBatch.End();
                     },
                     UpdateAction = time =>

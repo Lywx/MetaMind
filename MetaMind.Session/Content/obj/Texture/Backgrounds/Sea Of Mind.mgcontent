@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>C:/Users/Wuxiang/Documents/Visual Studio 2015/Projects/MonoGame MetaMind/MetaMind.Unity/Content/Texture/Backgrounds/Sea Of Mind.png</SourceFile>
+  <SourceTime>2015-05-15T12:33:18.3865419+08:00</SourceTime>
+  <DestFile>C:/Users/Wuxiang/Documents/Visual Studio 2015/Projects/MonoGame MetaMind/MetaMind.Unity/Content/Texture/Backgrounds/Sea Of Mind.xnb</DestFile>
+  <DestTime>2015-08-11T17:48:06.0057721+08:00</DestTime>
+  <Importer>TextureImporter</Importer>
+  <ImporterTime>2015-04-30T01:14:44+08:00</ImporterTime>
+  <Processor>TextureProcessor</Processor>
+  <ProcessorTime>2015-04-30T01:14:44+08:00</ProcessorTime>
+  <Parameters>
+    <Key>ColorKeyColor</Key>
+    <Value>255,0,255,255</Value>
+  </Parameters>
+  <Parameters>
+    <Key>ColorKeyEnabled</Key>
+    <Value>True</Value>
+  </Parameters>
+  <Parameters>
+    <Key>GenerateMipmaps</Key>
+    <Value>False</Value>
+  </Parameters>
+  <Parameters>
+    <Key>PremultiplyAlpha</Key>
+    <Value>True</Value>
+  </Parameters>
+  <Parameters>
+    <Key>ResizeToPowerOfTwo</Key>
+    <Value>False</Value>
+  </Parameters>
+  <Parameters>
+    <Key>TextureFormat</Key>
+    <Value>Color</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>

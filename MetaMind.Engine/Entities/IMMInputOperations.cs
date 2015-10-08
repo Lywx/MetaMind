@@ -1,7 +1,7 @@
 namespace MetaMind.Engine.Entities
 {
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
 
     public interface IMMInputOperations
     {

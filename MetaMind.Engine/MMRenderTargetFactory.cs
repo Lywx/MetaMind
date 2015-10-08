@@ -3,7 +3,7 @@ namespace MetaMind.Engine
     using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Service;
+    using Services;
 
     public static class MMRenderTargetFactory
     {

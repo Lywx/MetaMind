@@ -14,7 +14,7 @@
 
         public SpriteBatch SpriteBatch { get; }
 
-        public IMMRenderer MMRenderer { get; }
+        public IMMRenderer Renderer { get; }
 
         public GraphicsDevice GraphicsDevice { get; }
 

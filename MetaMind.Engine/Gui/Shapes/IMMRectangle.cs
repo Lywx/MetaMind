@@ -1,7 +1,5 @@
-namespace MetaMind.Engine.Gui.Elements
+namespace MetaMind.Engine.Gui.Shapes
 {
-    using Shapes;
-
     public interface IMMRectangle : IMMShape
     {
     }

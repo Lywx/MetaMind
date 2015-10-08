@@ -16,7 +16,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Regions
         /// </summary>
         public float RegionThick = 2f;
 
-        public Color RegionColor = Palette.Transparent20;
+        public Color RegionColor = MMPalette.Transparent20;
 
         public object Clone()
         {

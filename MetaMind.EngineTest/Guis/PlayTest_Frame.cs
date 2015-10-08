@@ -6,7 +6,7 @@
     using Engine.Gui.Elements;
     using Engine.Gui.Elements.Rectangles;
     using Engine.Gui.Modules;
-    using Engine.Service;
+    using Engine.Services;
     using Microsoft.Xna.Framework;
     using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
@@ -33,10 +33,10 @@
             this.visual.Add(box);
         }
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
         {
-            this.control.Draw(graphics, time, alpha);
-            this.visual .Draw(graphics, time, alpha);
+            this.control.Draw(graphics, time);
+            this.visual .Draw(graphics, time);
 
             StateVisualTester.Draw(graphics, typeof(MMElementState), this.immRectangle.FrameStates, this.immRectangle.Location.ToVector2(), 10, 10);
         }

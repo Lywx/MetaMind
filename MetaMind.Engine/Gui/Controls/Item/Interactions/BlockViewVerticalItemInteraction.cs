@@ -3,7 +3,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Interactions
     using Data;
     using Layers;
     using Layouts;
-    using Service;
+    using Services;
     using Views.Layers;
     using Views.Scrolls;
     using Views.Swaps;

@@ -6,7 +6,9 @@
 
 namespace MetaMind.Engine.Geometry
 {
+    using System;
     using Converters;
+    using Microsoft.Xna.Framework;
 
     public struct MMSize
     {
@@ -28,20 +30,12 @@ namespace MetaMind.Engine.Geometry
 
         #endregion Constructors
 
-        #region Properties
-
-        public MMPoint Center => new MMPoint(this.Width / 2f, this.Height / 2f);
-
-        public MMSize Inverted => new MMSize(this.Height, this.Width);
-
-        #endregion Properties
-
         #region Conversion
 
         /// <summary>
         /// Allow cast MMPoint to MMSize.
         /// </summary> 
-        public static explicit operator MMSize(MMPoint point)
+        public static explicit operator MMSize(Point point)
         {
             MMSize size;
             size.Width = point.X;
@@ -66,7 +60,7 @@ namespace MetaMind.Engine.Geometry
         /// </summary>
         public bool Equals(MMSize size)
         {
-            return this.Width == size.Width && this.Height == size.Height;
+            return Math.Abs(this.Width - size.Width) < float.Epsilon && Math.Abs(this.Height - size.Height) < float.Epsilon;
         }
 
         public override bool Equals(object obj)

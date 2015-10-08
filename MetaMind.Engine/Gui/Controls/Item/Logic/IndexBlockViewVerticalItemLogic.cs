@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Logic
     using Layers;
     using Layouts;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
 
     public class IndexBlockViewVerticalItemLogic : BlockViewVerticalItemLogic, IIndexBlockViewVerticalItemLogic
     {

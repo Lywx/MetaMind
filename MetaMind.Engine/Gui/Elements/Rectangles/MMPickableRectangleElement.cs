@@ -2,10 +2,11 @@
 {
     using System;
     using System.Linq;
-    using Engine.Components.Input;
+    using Components.Input;
+    using Entities;
     using Input;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
     using Shapes;
 
     public class MMPickableRectangleElement : MMRectangle, IMMPickableRectangleElement
@@ -20,8 +21,6 @@
 
         public MMPickableRectangleElement()
         {
-            this.Active = true;
-
             this.InitializeStates();
             this.RegisterHandlers();
         }
@@ -311,17 +310,16 @@
 
         #region Element State Data
 
-        private bool active;
-
         /// <summary>
         /// Gets or sets a value indicating whether this should receive or send any events.
         /// </summary>
-        public sealed override bool Active
+        public override bool Enabled
         {
-            get { return this.active; }
+            get { return base.Enabled; }
             set
             {
-                if (this.active != value)
+                var changed = this.Enabled != value;
+                if (changed)
                 {
                     // This is used to deduce event performance overhead on 
                     // an individual frame.
@@ -335,7 +333,7 @@
                     }
                 }
 
-                this.active = value;
+                base.Enabled = value;
             }
         }
 
@@ -393,7 +391,7 @@
 
         private void InitializePickableStates()
         {
-            this[MMElementState.Element_Is_Active] = () => this.Active;
+            this[MMElementState.Element_Is_Active] = () => this.Enabled;
 
             this[MMElementState.Mouse_Is_Over] = () => this.mouse.IsMouseOver;
 
@@ -421,7 +419,7 @@
 
         protected bool IsMouseOver(Point location)
         {
-            return this.Active && this.Bounds.Contains(location);
+            return this.Enabled && this.Bounds.Contains(location);
         }
 
         protected bool IsRButton(MouseEventArgs e)
@@ -435,7 +433,7 @@
 
         public override void Update(GameTime time)
         {
-            if (!this.Enabled)
+            if (!((MMEntity)this).Enabled)
             {
                 return;
             }
@@ -445,7 +443,7 @@
 
         public override void UpdateInput(IMMEngineInputService input, GameTime time)
         {
-            if (!this.Enabled)
+            if (!((MMEntity)this).Enabled)
             {
                 return;
             }

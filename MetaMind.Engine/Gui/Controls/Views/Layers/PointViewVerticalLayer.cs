@@ -15,14 +15,14 @@ namespace MetaMind.Engine.Gui.Controls.Views.Layers
 
         public new PointViewVerticalSettings ViewSettings => (PointViewVerticalSettings) base.ViewSettings;
 
-        public new IPointViewVerticalLogic ViewLogic => (IPointViewVerticalLogic) base.ViewLogic;
+        public new IMMPointViewVerticalController ViewController => (IMMPointViewVerticalController) base.ViewController;
 
-        public new IPointViewVerticalSelectionController ViewSelection => this.ViewLogic.ViewSelection;
+        public new IPointViewVerticalSelectionController ViewSelection => this.ViewController.ViewSelection;
 
-        public new IViewSwapController ViewSwap => this.ViewLogic.ViewSwap;
+        public new IViewSwapController ViewSwap => this.ViewController.ViewSwap;
 
-        public new IPointViewVerticalScrollController ViewScroll => this.ViewLogic.ViewScroll;
+        public new IPointViewVerticalScrollController ViewScroll => this.ViewController.ViewScroll;
 
-        public IPointViewVerticalLayout ViewLayout => this.ViewLogic.ViewLayout;
+        public IPointViewVerticalLayout ViewLayout => this.ViewController.ViewLayout;
     }
 }

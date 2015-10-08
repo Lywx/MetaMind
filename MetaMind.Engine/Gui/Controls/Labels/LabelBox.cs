@@ -3,7 +3,7 @@ namespace MetaMind.Engine.Gui.Controls.Labels
     using Extensions;
     using Images;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
 
     // TODO: Duplicate to button
     public class LabelBox : MMControlComponent
@@ -67,12 +67,12 @@ namespace MetaMind.Engine.Gui.Controls.Labels
 
         public Label Label { get; set; }
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
         {
-            base.Draw(graphics, time, alpha);
+            base.Draw(graphics, time);
 
-            this.Box  .Draw(graphics, time, alpha);
-            this.Label.Draw(graphics, time, alpha);
+            this.Box  .Draw(graphics, time);
+            this.Label.Draw(graphics, time);
         }
 
         public override void Update(GameTime time)

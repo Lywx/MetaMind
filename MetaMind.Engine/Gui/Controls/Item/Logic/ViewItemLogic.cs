@@ -7,7 +7,7 @@
     using Interactions;
     using Layouts;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
     using Views;
 
     public class ViewItemLogic : ViewItemComponent, IViewItemLogic
@@ -214,7 +214,7 @@
                 {
                     if (keyboard.IsActionTriggered(KeyboardActions.CommonEditItem))
                     {
-                        this.View[ViewState.View_Is_Editing] = () => true;
+                        this.View[MMViewState.View_Is_Editing] = () => true;
                         this.Item[ViewItemState.Item_Is_Pending] = () => true;
                     }
 
@@ -228,7 +228,7 @@
                     {
                         if (keyboard.IsActionTriggered(KeyboardActions.Escape))
                         {
-                            this.View[ViewState.View_Is_Editing] = () => false;
+                            this.View[MMViewState.View_Is_Editing] = () => false;
                             this.Item[ViewItemState.Item_Is_Pending] = () => false;
                         }
                     }
@@ -295,7 +295,7 @@
         {
             this.View.ItemsWrite.Remove(this.Item);
 
-            this.View.ViewLogic.ViewBinding.RemoveData(this.Item);
+            this.View.ViewController.ViewBinding.RemoveData(this.Item);
 
             this.Item.Dispose();
         }

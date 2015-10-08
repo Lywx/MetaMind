@@ -3,7 +3,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Regions
     using System;
     using Controls.Regions;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
 
     public class ViewRegion : RectangleRegion
     {
@@ -32,9 +32,9 @@ namespace MetaMind.Engine.Gui.Controls.Views.Regions
 
         #region Draw
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
         {
-            this.RegionVisual?.Draw(graphics, time, alpha);
+            this.RegionVisual?.Draw(graphics, time);
         }
 
         #endregion

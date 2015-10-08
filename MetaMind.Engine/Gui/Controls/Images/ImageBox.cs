@@ -4,7 +4,7 @@ namespace MetaMind.Engine.Gui.Controls.Images
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Renders;
-    using Service;
+    using Services;
 
     public class ImageBox : MMRenderComponent
     {
@@ -124,13 +124,13 @@ namespace MetaMind.Engine.Gui.Controls.Images
 
         #region Draw
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
         {
             switch (this.ImageMode)
             {
                 case ImageMode.Normal:
                 {
-                    graphics.MMRenderer.Draw(
+                    graphics.Renderer.Draw(
                         this.Image,
                         this.X,
                         this.Y,
@@ -143,7 +143,7 @@ namespace MetaMind.Engine.Gui.Controls.Images
 
                 case ImageMode.Stretched:
                 {
-                    graphics.MMRenderer.Draw(
+                    graphics.Renderer.Draw(
                         this.Image,
                         this.Bounds,
                         this.SourceRectangle,

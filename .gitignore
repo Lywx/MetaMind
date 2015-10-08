@@ -31,12 +31,12 @@ MetaMind.EngineProcessor/bin/
 MetaMind.EngineTest/bin/
 MetaMind.EngineTest/obj/
 
-MetaMind.Unity/bin/
-MetaMind.Unity/Documentation/
-MetaMind.Unity/obj/
-MetaMind.Unity/Content/obj/
-MetaMind.Unity/Content/Audio/
-MetaMind.UnityTest/obj/
-MetaMind.UnityTest/bin/
+MetaMind.Session/bin/
+MetaMind.Session/Documentation/
+MetaMind.Session/obj/
+MetaMind.Session/Content/obj/
+MetaMind.Session/Content/Audio/
+MetaMind.SessionTest/obj/
+MetaMind.SessionTest/bin/
 
 MetaMind.v12.suo

@@ -12,7 +12,7 @@ namespace MetaMind.Engine.Gui.Controls
         event EventHandler FocusLost;
     }
 
-    public interface IMMControlComponentInternal : IMMControlComponentOrganizationInternal, IMMFocusable, IMMEntity
+    public interface IMMControlComponentInternal : IMMControlComponentOrganizationInternal, IMMControlComponentOperationsInternal, IMMFocusable, IMMEntity
     {
         IMMControlManagerInternal Manager { get; set; }
     }

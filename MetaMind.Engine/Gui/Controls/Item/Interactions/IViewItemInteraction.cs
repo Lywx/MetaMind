@@ -7,7 +7,7 @@
 
 namespace MetaMind.Engine.Gui.Controls.Item.Interactions
 {
-    using Service;
+    using Services;
 
     /// <summary>
     ///     Item interaction with view, other items.

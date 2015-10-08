@@ -52,7 +52,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Layouts
             if (this.ItemIsActive == null)
             {
                 this.ItemIsActive =
-                    () => this.View[ViewState.View_Is_Active]() &&
+                    () => this.View[MMViewState.View_Is_Active]() &&
                           this.itemLayoutInteraction.ViewCanDisplay(this);
             }
         }

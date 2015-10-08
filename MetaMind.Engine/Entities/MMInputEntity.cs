@@ -3,7 +3,7 @@ namespace MetaMind.Engine.Entities
     using System;
     using System.Runtime.Serialization;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
 
     [DataContract]
     public class MMInputEntity : MMVisualEntity, IMMInputEntity

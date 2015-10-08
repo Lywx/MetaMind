@@ -1,11 +1,11 @@
 ﻿namespace MetaMind.EngineTest.Guis
 {
-    using Engine.Service;
     using Engine;
     using Engine.Entities;
     using Engine.Gui.Controls.Images;
     using Engine.Gui.Controls.Regions;
     using Engine.Gui.Modules;
+    using Engine.Services;
     using Microsoft.Xna.Framework;
 
     public class PlayTest_Region : MMMvcEntity<object>
@@ -29,10 +29,10 @@
             this.visual.Add(box);
         }
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
         {
-            this.control.Draw(graphics, time, alpha);
-            this.visual .Draw(graphics, time, alpha);
+            this.control.Draw(graphics, time);
+            this.visual .Draw(graphics, time);
 
             StateVisualTester.Draw(graphics, typeof(RegionState), this.region.RegionStates, this.region.Location.ToVector2(), 10, 10);
         }

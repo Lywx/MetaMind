@@ -11,7 +11,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Layers
     /// <summary>
     /// A extension layer for extended and customized implementation of specific view components.
     /// </summary>
-    public class ViewLayer : ViewComponent, IViewLayer
+    public class ViewLayer : MMViewControlComponent, IViewLayer
     {
         protected ViewLayer(IMMViewNode view)
             : base(view)
@@ -20,17 +20,17 @@ namespace MetaMind.Engine.Gui.Controls.Views.Layers
 
         #region Indirect Dependency
 
-        public IViewLogic ViewLogic => this.View.ViewLogic;
+        public IMMViewController ViewController => this.View.ViewController;
 
         public ViewSettings ViewSettings => this.View.ViewSettings;
 
-        public IViewSelectionController ViewSelection => this.ViewLogic.ViewSelection;
+        public IViewSelectionController ViewSelection => this.ViewController.ViewSelection;
 
-        public IViewScrollController ViewScroll => this.ViewLogic.ViewScroll;
+        public IViewScrollController ViewScroll => this.ViewController.ViewScroll;
 
-        public IViewSwapController ViewSwap => this.ViewLogic.ViewSwap;
+        public IViewSwapController ViewSwap => this.ViewController.ViewSwap;
 
-        public IViewBinding ViewBinding => this.ViewLogic.ViewBinding;
+        public IViewBinding ViewBinding => this.ViewController.ViewBinding;
 
         #endregion
 

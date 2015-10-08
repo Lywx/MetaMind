@@ -3,7 +3,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Visuals
     using System;
     using Labels;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
 
     public class ViewItemLabel : Label
     {
@@ -29,14 +29,14 @@ namespace MetaMind.Engine.Gui.Controls.Item.Visuals
 
         #region Draw
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
         {
             if (ViewItemState.Item_Is_Active.Match(this.Item))
             {
                 return;
             }
 
-            base.Draw(graphics, time, alpha);
+            base.Draw(graphics, time);
         }
 
         #endregion

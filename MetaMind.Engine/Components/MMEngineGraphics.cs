@@ -29,8 +29,8 @@ namespace MetaMind.Engine.Components
 
             // No dependency injection here, because string drawer is a class focus on string 
             // drawing. The functionality is never extended in the form of inheritance.
-            this.MMRenderer = new MMRenderer(this.SpriteBatch);
-            this.Game.Components.Add(this.MMRenderer);
+            this.Renderer = new MMRenderer(this.SpriteBatch);
+            this.Game.Components.Add(this.Renderer);
         }
 
         public MMGraphicsManager Manager { get; private set; }
@@ -39,7 +39,7 @@ namespace MetaMind.Engine.Components
 
         public SpriteBatch SpriteBatch { get; private set; }
 
-        public IMMRenderer MMRenderer { get; private set; }
+        public IMMRenderer Renderer { get; private set; }
 
         #region Initialization
 

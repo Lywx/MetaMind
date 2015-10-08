@@ -1,14 +1,14 @@
 namespace MetaMind.Engine.Entities
 {
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
 
     public interface IMMDrawOperations
     {
-        void BeginDraw(IMMEngineGraphicsService graphics, GameTime time, byte alpha);
+        void BeginDraw(IMMEngineGraphicsService graphics, GameTime time);
 
-        void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha);
+        void Draw(IMMEngineGraphicsService graphics, GameTime time);
 
-        void EndDraw(IMMEngineGraphicsService graphics, GameTime time, byte alpha);
+        void EndDraw(IMMEngineGraphicsService graphics, GameTime time);
     }
 }

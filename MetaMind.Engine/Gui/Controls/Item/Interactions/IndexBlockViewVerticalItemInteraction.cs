@@ -4,7 +4,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Interactions
     using Layers;
     using Layouts;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
     using Views;
     using Views.Scrolls;
 
@@ -16,7 +16,7 @@ namespace MetaMind.Engine.Gui.Controls.Item.Interactions
 
         private readonly IIndexViewBuilder indexedViewBuilder;
 
-        public bool IndexedViewOpened => this.IndexedView != null && this.IndexedView[ViewState.View_Is_Active]();
+        public bool IndexedViewOpened => this.IndexedView != null && this.IndexedView[MMViewState.View_Is_Active]();
 
         public IndexBlockViewVerticalItemInteraction(
             IViewItem item,
@@ -107,12 +107,12 @@ namespace MetaMind.Engine.Gui.Controls.Item.Interactions
                 this.indexedView.LoadContent(this.Interop);
             }
 
-            this.IndexedView[ViewState.View_Is_Active] = () => true;
+            this.IndexedView[MMViewState.View_Is_Active] = () => true;
         }
 
         public void CloseIndexedView()
         {
-            this.IndexedView[ViewState.View_Is_Active] = () => false;
+            this.IndexedView[MMViewState.View_Is_Active] = () => false;
         }
 
         #endregion

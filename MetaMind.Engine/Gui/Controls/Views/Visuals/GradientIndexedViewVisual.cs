@@ -1,7 +1,7 @@
 namespace MetaMind.Engine.Gui.Controls.Views.Visuals
 {
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
 
     public class GradientIndexedViewVisual : GradientIndexViewVisual
     {

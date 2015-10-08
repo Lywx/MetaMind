@@ -9,11 +9,11 @@
     /// <summary>
     /// Dependent on PointView2DSettings IPointView2DLogic
     /// </summary>
-    public class PointView2DScrollController : ViewComponent, IPointView2DScrollController
+    public class PointView2DScrollController : MMViewControlComponent, IPointView2DScrollController
     {
         private IPointView2DLayout viewLayout;
 
-        private IPointView2DLogic viewLogic;
+        private IMMPointView2DController viewController;
 
         private PointView2DSettings viewSettings;
 
@@ -30,9 +30,9 @@
 
             var viewLayer = this.GetViewLayer<PointView2DLayer>();
 
-            this.viewLogic = viewLayer.ViewLogic;
+            this.viewController = viewLayer.ViewController;
             this.viewSettings = viewLayer.ViewSettings;
-            this.viewLayout = this.viewLogic.ViewLayout;
+            this.viewLayout = this.viewController.ViewLayout;
         }
 
         #endregion

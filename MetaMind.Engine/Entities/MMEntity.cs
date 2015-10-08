@@ -1,10 +1,3 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GameEntity.cs">
-//   Copyright (c) 2015 Wuxiang Lin
-//   All Rights Reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
 namespace MetaMind.Engine.Entities
 {
     using System;
@@ -13,14 +6,14 @@ namespace MetaMind.Engine.Entities
     using System.Runtime.Serialization;
     using Components.Interop.Event;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
 
     [DataContract]
     public class MMEntity : MMObject, IMMEntity
     {
         #region Constructors and Finalizer 
 
-        protected internal MMEntity()
+        protected MMEntity()
         {
             this.Guid      = Guid.NewGuid();
             this.Listeners = new List<IMMEventListener>();
@@ -45,7 +38,7 @@ namespace MetaMind.Engine.Entities
 
         #endregion
 
-        #region Event On
+        #region Event Ons
 
         protected virtual void OnEnabledChanged(object sender, EventArgs args)
         {
@@ -85,7 +78,7 @@ namespace MetaMind.Engine.Entities
 
         private bool enabled = true;
 
-        public bool Enabled
+        public virtual bool Enabled
         {
             get
             {
@@ -94,7 +87,8 @@ namespace MetaMind.Engine.Entities
 
             set
             {
-                if (this.enabled != value)
+                var changed = this.enabled != value;
+                if (changed)
                 {
                     this.enabled = value;
 
@@ -158,11 +152,10 @@ namespace MetaMind.Engine.Entities
         /// <summary>
         /// Runs a single action cached.
         /// </summary>
-        /// <param name="time"></param>
         protected void ContinueAction(GameTime time)
         {
-            if (this.updateAction == null &&
-                this.updateActions.Count != 0)
+            if (this.updateAction == null
+                && this.updateActions.Count != 0)
             {
                 this.updateAction = this.updateActions.First();
                 this.updateAction();
@@ -184,8 +177,8 @@ namespace MetaMind.Engine.Entities
         /// <param name="time"></param>
         protected void FlushAction(GameTime time)
         {
-            if (this.updateAction == null &&
-                this.updateActions.Count != 0)
+            if (this.updateAction == null
+                && this.updateActions.Count != 0)
             {
                 foreach (var action in this.updateActions.ToArray())
                 {

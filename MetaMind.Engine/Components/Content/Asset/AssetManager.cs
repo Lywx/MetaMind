@@ -36,7 +36,7 @@ namespace MetaMind.Engine.Components.Content.Asset
 
         private AssetDictionary Assets { get; set; } = new AssetDictionary();
 
-        private Controls
+        //private Controls
 
         #endregion
 
@@ -66,40 +66,30 @@ namespace MetaMind.Engine.Components.Content.Asset
             this.Fonts  .Initialize();
             this.Texture.Initialize();
 
-            for (var i = 0; i < this.Controls.Count; i++)
-            {
-                for (var j = 0; j < this.Controls[i].Layers.Count; j++)
-                {
-                    if (this.Controls[i].Layers[j].Image.Name != null)
-                    {
-                        this.Controls[i].Layers[j].Image = this.TextureAssets[this.Controls[i].Layers[j].Image.Name];
-                    }
-                    else
-                    {
-                        this.Controls[i].Layers[j].Image = this.TextureAssets[0];
-                    }
+            // TODO: I need to fixed this after action system is finished                             
+            //for (var i = 0; i < this.Controls.Count; i++)
+            //{
+            //    for (var j = 0; j < this.Controls[i].Layers.Count; j++)
+            //    {
+            //        if (this.Controls[i].Layers[j].Image.Name != null)
+            //        {
+            //            this.Controls[i].Layers[j].Image = this.TextureAssets[this.Controls[i].Layers[j].Image.Name];
+            //        }
+            //        else
+            //        {
+            //            this.Controls[i].Layers[j].Image = this.TextureAssets[0];
+            //        }
 
-                    if (this.Controls[i].Layers[j].Text.Name != null)
-                    {
-                        this.Controls[i].Layers[j].Text.Font = this.Fonts[this.Controls[i].Layers[j].Text.Name];
-                    }
-                    else
-                    {
-                        this.Controls[i].Layers[j].Text.Font = this.Fonts[0];
-                    }
-                }
-            }
-        }
-
-        #endregion
-
-        #region Load and Unload
-
-        protected override void LoadContent()
-        {
-            this.LoadPackage("Engine.Persistent");
-
-            base.LoadContent();
+            //        if (this.Controls[i].Layers[j].Text.Name != null)
+            //        {
+            //            this.Controls[i].Layers[j].Text.Font = this.Fonts[this.Controls[i].Layers[j].Text.Name];
+            //        }
+            //        else
+            //        {
+            //            this.Controls[i].Layers[j].Text.Font = this.Fonts[0];
+            //        }
+            //    }
+            //}
         }
 
         #endregion
@@ -193,171 +183,171 @@ namespace MetaMind.Engine.Components.Content.Asset
 
         #endregion
 
-        #region Load and Unload Controls
+        //#region Load and Unload Controls
 
-        private void LoadControlAttributes(SkinControl sc, XmlNodeList l)
-        {
-            foreach (XmlElement e in l)
-            {
-                string name = this.ReadAttribute(e, "Name", null, true);
-                SkinAttribute sa = sc.Attributes[name];
-                bool inh = true;
+        //private void LoadControlAttributes(SkinControl sc, XmlNodeList l)
+        //{
+        //    foreach (XmlElement e in l)
+        //    {
+        //        var name = this.ReadAttribute(e, "Name", null, true);
+        //        SkinAttribute sa = sc.Attributes[name];
+        //        bool inh = true;
 
-                if (sa == null)
-                {
-                    sa = new SkinAttribute();
-                    inh = false;
-                }
+        //        if (sa == null)
+        //        {
+        //            sa = new SkinAttribute();
+        //            inh = false;
+        //        }
 
-                sa.Name = name;
-                ReadAttribute(ref sa.Value, inh, e, "Value", null, true);
+        //        sa.Name = name;
+        //        this.ReadAttribute(ref sa.Value, inh, e, "Value", null, true);
 
-                if (!inh) sc.Attributes.Add(sa);
-            }
-        }
+        //        if (!inh) sc.Attributes.Add(sa);
+        //    }
+        //}
 
-        private void LoadLayerAttributes(SkinLayer sl, XmlNodeList l)
-        {
-            foreach (XmlElement e in l)
-            {
-                string name = this.ReadAttribute(e, "Name", null, true);
-                SkinAttribute sa = sl.Attributes[name];
-                bool inh = true;
+        //private void LoadLayerAttributes(SkinLayer sl, XmlNodeList l)
+        //{
+        //    foreach (XmlElement e in l)
+        //    {
+        //        var name = this.ReadAttribute(e, "Name", null, true);
+        //        SkinAttribute sa = sl.Attributes[name];
+        //        bool inh = true;
 
-                if (sa == null)
-                {
-                    sa = new SkinAttribute();
-                    inh = false;
-                }
+        //        if (sa == null)
+        //        {
+        //            sa = new SkinAttribute();
+        //            inh = false;
+        //        }
 
-                sa.Name = name;
-                ReadAttribute(ref sa.Value, inh, e, "Value", null, true);
+        //        sa.Name = name;
+        //        ReadAttribute(ref sa.Value, inh, e, "Value", null, true);
 
-                if (!inh) sl.Attributes.Add(sa);
-            }
-        }
+        //        if (!inh) sl.Attributes.Add(sa);
+        //    }
+        //}
 
-        private void LoadLayers(SkinControl sc, XmlNodeList l)
-        {
-            foreach (XmlElement e in l)
-            {
-                string name = this.ReadAttribute(e, "Name", null, true);
-                bool over = this.ReadAttributeBool(e, "Override", false, false);
-                SkinLayer sl = sc.Layers[name];
-                bool inh = true;
+        //private void LoadLayers(SkinControl sc, XmlNodeList l)
+        //{
+        //    foreach (XmlElement e in l)
+        //    {
+        //        string name = this.ReadAttribute(e, "Name", null, true);
+        //        bool over = this.ReadAttributeBool(e, "Override", false, false);
+        //        SkinLayer sl = sc.Layers[name];
+        //        bool inh = true;
 
-                if (sl == null)
-                {
-                    sl = new SkinLayer();
-                    inh = false;
-                }
+        //        if (sl == null)
+        //        {
+        //            sl = new SkinLayer();
+        //            inh = false;
+        //        }
 
-                if (inh && over)
-                {
-                    sl = new SkinLayer();
-                    sc.Layers[name] = sl;
-                }
+        //        if (inh && over)
+        //        {
+        //            sl = new SkinLayer();
+        //            sc.Layers[name] = sl;
+        //        }
 
-                ReadAttribute(ref sl.Name, inh, e, "Name", null, true);
-                ReadAttribute(ref sl.Image.Name, inh, e, "Image", "Control", false);
-                ReadAttributeInt(ref sl.Width, inh, e, "Width", 0, false);
-                ReadAttributeInt(ref sl.Height, inh, e, "Height", 0, false);
+        //        ReadAttribute(ref sl.Name, inh, e, "Name", null, true);
+        //        ReadAttribute(ref sl.Image.Name, inh, e, "Image", "Control", false);
+        //        ReadAttributeInt(ref sl.Width, inh, e, "Width", 0, false);
+        //        ReadAttributeInt(ref sl.Height, inh, e, "Height", 0, false);
 
-                string temp = sl.Alignment.ToString();
-                this.ReadAttribute(ref temp, inh, e, "Alignment", "MiddleCenter", false);
-                sl.Alignment = (Alignment)Enum.Parse(typeof(Alignment), temp, true);
+        //        string temp = sl.Alignment.ToString();
+        //        this.ReadAttribute(ref temp, inh, e, "Alignment", "MiddleCenter", false);
+        //        sl.Alignment = (Alignment)Enum.Parse(typeof(Alignment), temp, true);
 
-                ReadAttributeInt(ref sl.OffsetX, inh, e, "OffsetX", 0, false);
-                ReadAttributeInt(ref sl.OffsetY, inh, e, "OffsetY", 0, false);
+        //        ReadAttributeInt(ref sl.OffsetX, inh, e, "OffsetX", 0, false);
+        //        ReadAttributeInt(ref sl.OffsetY, inh, e, "OffsetY", 0, false);
 
-                ReadAttributeInt(ref sl.SizingMargins.Left, inh, e["SizingMargins"], "Left", 0, false);
-                ReadAttributeInt(ref sl.SizingMargins.Top, inh, e["SizingMargins"], "Top", 0, false);
-                ReadAttributeInt(ref sl.SizingMargins.Right, inh, e["SizingMargins"], "Right", 0, false);
-                ReadAttributeInt(ref sl.SizingMargins.Bottom, inh, e["SizingMargins"], "Bottom", 0, false);
+        //        ReadAttributeInt(ref sl.SizingMargins.Left, inh, e["SizingMargins"], "Left", 0, false);
+        //        ReadAttributeInt(ref sl.SizingMargins.Top, inh, e["SizingMargins"], "Top", 0, false);
+        //        ReadAttributeInt(ref sl.SizingMargins.Right, inh, e["SizingMargins"], "Right", 0, false);
+        //        ReadAttributeInt(ref sl.SizingMargins.Bottom, inh, e["SizingMargins"], "Bottom", 0, false);
 
-                ReadAttributeInt(ref sl.ContentMargins.Left, inh, e["ContentMargins"], "Left", 0, false);
-                ReadAttributeInt(ref sl.ContentMargins.Top, inh, e["ContentMargins"], "Top", 0, false);
-                ReadAttributeInt(ref sl.ContentMargins.Right, inh, e["ContentMargins"], "Right", 0, false);
-                ReadAttributeInt(ref sl.ContentMargins.Bottom, inh, e["ContentMargins"], "Bottom", 0, false);
+        //        ReadAttributeInt(ref sl.ContentMargins.Left, inh, e["ContentMargins"], "Left", 0, false);
+        //        ReadAttributeInt(ref sl.ContentMargins.Top, inh, e["ContentMargins"], "Top", 0, false);
+        //        ReadAttributeInt(ref sl.ContentMargins.Right, inh, e["ContentMargins"], "Right", 0, false);
+        //        ReadAttributeInt(ref sl.ContentMargins.Bottom, inh, e["ContentMargins"], "Bottom", 0, false);
 
-                if (e["States"] != null)
-                {
-                    ReadAttributeInt(ref sl.States.Enabled.Index, inh, e["States"]["Enabled"], "Index", 0, false);
-                    int di = sl.States.Enabled.Index;
-                    ReadAttributeInt(ref sl.States.Hovered.Index, inh, e["States"]["Hovered"], "Index", di, false);
-                    ReadAttributeInt(ref sl.States.Pressed.Index, inh, e["States"]["Pressed"], "Index", di, false);
-                    ReadAttributeInt(ref sl.States.Focused.Index, inh, e["States"]["Focused"], "Index", di, false);
-                    ReadAttributeInt(ref sl.States.Disabled.Index, inh, e["States"]["Disabled"], "Index", di, false);
+        //        if (e["States"] != null)
+        //        {
+        //            ReadAttributeInt(ref sl.States.Enabled.Index, inh, e["States"]["Enabled"], "Index", 0, false);
+        //            int di = sl.States.Enabled.Index;
+        //            ReadAttributeInt(ref sl.States.Hovered.Index, inh, e["States"]["Hovered"], "Index", di, false);
+        //            ReadAttributeInt(ref sl.States.Pressed.Index, inh, e["States"]["Pressed"], "Index", di, false);
+        //            ReadAttributeInt(ref sl.States.Focused.Index, inh, e["States"]["Focused"], "Index", di, false);
+        //            ReadAttributeInt(ref sl.States.Disabled.Index, inh, e["States"]["Disabled"], "Index", di, false);
 
-                    ReadAttributeColor(ref sl.States.Enabled.Color, inh, e["States"]["Enabled"], "Color", Color.White, false);
-                    Color dc = sl.States.Enabled.Color;
-                    ReadAttributeColor(ref sl.States.Hovered.Color, inh, e["States"]["Hovered"], "Color", dc, false);
-                    ReadAttributeColor(ref sl.States.Pressed.Color, inh, e["States"]["Pressed"], "Color", dc, false);
-                    ReadAttributeColor(ref sl.States.Focused.Color, inh, e["States"]["Focused"], "Color", dc, false);
-                    ReadAttributeColor(ref sl.States.Disabled.Color, inh, e["States"]["Disabled"], "Color", dc, false);
+        //            ReadAttributeColor(ref sl.States.Enabled.Color, inh, e["States"]["Enabled"], "Color", Color.White, false);
+        //            Color dc = sl.States.Enabled.Color;
+        //            ReadAttributeColor(ref sl.States.Hovered.Color, inh, e["States"]["Hovered"], "Color", dc, false);
+        //            ReadAttributeColor(ref sl.States.Pressed.Color, inh, e["States"]["Pressed"], "Color", dc, false);
+        //            ReadAttributeColor(ref sl.States.Focused.Color, inh, e["States"]["Focused"], "Color", dc, false);
+        //            ReadAttributeColor(ref sl.States.Disabled.Color, inh, e["States"]["Disabled"], "Color", dc, false);
 
-                    ReadAttributeBool(ref sl.States.Enabled.Overlay, inh, e["States"]["Enabled"], "Overlay", false, false);
-                    bool dv = sl.States.Enabled.Overlay;
-                    ReadAttributeBool(ref sl.States.Hovered.Overlay, inh, e["States"]["Hovered"], "Overlay", dv, false);
-                    ReadAttributeBool(ref sl.States.Pressed.Overlay, inh, e["States"]["Pressed"], "Overlay", dv, false);
-                    ReadAttributeBool(ref sl.States.Focused.Overlay, inh, e["States"]["Focused"], "Overlay", dv, false);
-                    ReadAttributeBool(ref sl.States.Disabled.Overlay, inh, e["States"]["Disabled"], "Overlay", dv, false);
-                }
+        //            ReadAttributeBool(ref sl.States.Enabled.Overlay, inh, e["States"]["Enabled"], "Overlay", false, false);
+        //            bool dv = sl.States.Enabled.Overlay;
+        //            ReadAttributeBool(ref sl.States.Hovered.Overlay, inh, e["States"]["Hovered"], "Overlay", dv, false);
+        //            ReadAttributeBool(ref sl.States.Pressed.Overlay, inh, e["States"]["Pressed"], "Overlay", dv, false);
+        //            ReadAttributeBool(ref sl.States.Focused.Overlay, inh, e["States"]["Focused"], "Overlay", dv, false);
+        //            ReadAttributeBool(ref sl.States.Disabled.Overlay, inh, e["States"]["Disabled"], "Overlay", dv, false);
+        //        }
 
-                if (e["Overlays"] != null)
-                {
-                    ReadAttributeInt(ref sl.Overlays.Enabled.Index, inh, e["Overlays"]["Enabled"], "Index", 0, false);
-                    int di = sl.Overlays.Enabled.Index;
-                    ReadAttributeInt(ref sl.Overlays.Hovered.Index, inh, e["Overlays"]["Hovered"], "Index", di, false);
-                    ReadAttributeInt(ref sl.Overlays.Pressed.Index, inh, e["Overlays"]["Pressed"], "Index", di, false);
-                    ReadAttributeInt(ref sl.Overlays.Focused.Index, inh, e["Overlays"]["Focused"], "Index", di, false);
-                    ReadAttributeInt(ref sl.Overlays.Disabled.Index, inh, e["Overlays"]["Disabled"], "Index", di, false);
+        //        if (e["Overlays"] != null)
+        //        {
+        //            ReadAttributeInt(ref sl.Overlays.Enabled.Index, inh, e["Overlays"]["Enabled"], "Index", 0, false);
+        //            int di = sl.Overlays.Enabled.Index;
+        //            ReadAttributeInt(ref sl.Overlays.Hovered.Index, inh, e["Overlays"]["Hovered"], "Index", di, false);
+        //            ReadAttributeInt(ref sl.Overlays.Pressed.Index, inh, e["Overlays"]["Pressed"], "Index", di, false);
+        //            ReadAttributeInt(ref sl.Overlays.Focused.Index, inh, e["Overlays"]["Focused"], "Index", di, false);
+        //            ReadAttributeInt(ref sl.Overlays.Disabled.Index, inh, e["Overlays"]["Disabled"], "Index", di, false);
 
-                    ReadAttributeColor(ref sl.Overlays.Enabled.Color, inh, e["Overlays"]["Enabled"], "Color", Color.White, false);
-                    Color dc = sl.Overlays.Enabled.Color;
-                    ReadAttributeColor(ref sl.Overlays.Hovered.Color, inh, e["Overlays"]["Hovered"], "Color", dc, false);
-                    ReadAttributeColor(ref sl.Overlays.Pressed.Color, inh, e["Overlays"]["Pressed"], "Color", dc, false);
-                    ReadAttributeColor(ref sl.Overlays.Focused.Color, inh, e["Overlays"]["Focused"], "Color", dc, false);
-                    ReadAttributeColor(ref sl.Overlays.Disabled.Color, inh, e["Overlays"]["Disabled"], "Color", dc, false);
-                }
+        //            ReadAttributeColor(ref sl.Overlays.Enabled.Color, inh, e["Overlays"]["Enabled"], "Color", Color.White, false);
+        //            Color dc = sl.Overlays.Enabled.Color;
+        //            ReadAttributeColor(ref sl.Overlays.Hovered.Color, inh, e["Overlays"]["Hovered"], "Color", dc, false);
+        //            ReadAttributeColor(ref sl.Overlays.Pressed.Color, inh, e["Overlays"]["Pressed"], "Color", dc, false);
+        //            ReadAttributeColor(ref sl.Overlays.Focused.Color, inh, e["Overlays"]["Focused"], "Color", dc, false);
+        //            ReadAttributeColor(ref sl.Overlays.Disabled.Color, inh, e["Overlays"]["Disabled"], "Color", dc, false);
+        //        }
 
-                if (e["Text"] != null)
-                {
-                    ReadAttribute(ref sl.Text.Name, inh, e["Text"], "Font", null, true);
-                    ReadAttributeInt(ref sl.Text.OffsetX, inh, e["Text"], "OffsetX", 0, false);
-                    ReadAttributeInt(ref sl.Text.OffsetY, inh, e["Text"], "OffsetY", 0, false);
+        //        if (e["Text"] != null)
+        //        {
+        //            ReadAttribute(ref sl.Text.Name, inh, e["Text"], "Font", null, true);
+        //            ReadAttributeInt(ref sl.Text.OffsetX, inh, e["Text"], "OffsetX", 0, false);
+        //            ReadAttributeInt(ref sl.Text.OffsetY, inh, e["Text"], "OffsetY", 0, false);
 
-                    temp = sl.Text.Alignment.ToString();
-                    this.ReadAttribute(ref temp, inh, e["Text"], "Alignment", "MiddleCenter", false);
-                    sl.Text.Alignment = (Alignment)Enum.Parse(typeof(Alignment), temp, true);
+        //            temp = sl.Text.Alignment.ToString();
+        //            this.ReadAttribute(ref temp, inh, e["Text"], "Alignment", "MiddleCenter", false);
+        //            sl.Text.Alignment = (Alignment)Enum.Parse(typeof(Alignment), temp, true);
 
-                    LoadColors(inh, e["Text"], ref sl.Text.Colors);
-                }
-                if (e["Attributes"] != null)
-                {
-                    XmlNodeList l2 = e["Attributes"].GetElementsByTagName("Attribute");
-                    if (l2 != null && l2.Count > 0)
-                    {
-                        this.LoadLayerAttributes(sl, l2);
-                    }
-                }
-                if (!inh) sc.Layers.Add(sl);
-            }
-        }
+        //            LoadColors(inh, e["Text"], ref sl.Text.Colors);
+        //        }
+        //        if (e["Attributes"] != null)
+        //        {
+        //            XmlNodeList l2 = e["Attributes"].GetElementsByTagName("Attribute");
+        //            if (l2 != null && l2.Count > 0)
+        //            {
+        //                this.LoadLayerAttributes(sl, l2);
+        //            }
+        //        }
+        //        if (!inh) sc.Layers.Add(sl);
+        //    }
+        //}
 
-        private void LoadColors(bool inherited, XmlElement e, ref SkinStates<Color> colors)
-        {
-            if (e != null)
-            {
-                ReadAttributeColor(ref colors.Enabled, inherited, e["Colors"]["Enabled"], "Color", Color.White, false);
-                ReadAttributeColor(ref colors.Hovered, inherited, e["Colors"]["Hovered"], "Color", colors.Enabled, false);
-                ReadAttributeColor(ref colors.Pressed, inherited, e["Colors"]["Pressed"], "Color", colors.Enabled, false);
-                ReadAttributeColor(ref colors.Focused, inherited, e["Colors"]["Focused"], "Color", colors.Enabled, false);
-                ReadAttributeColor(ref colors.Disabled, inherited, e["Colors"]["Disabled"], "Color", colors.Enabled, false);
-            }
-        }
+        //private void LoadColors(bool inherited, XmlElement e, ref SkinStates<Color> colors)
+        //{
+        //    if (e != null)
+        //    {
+        //        ReadAttributeColor(ref colors.Enabled, inherited, e["Colors"]["Enabled"], "Color", Color.White, false);
+        //        ReadAttributeColor(ref colors.Hovered, inherited, e["Colors"]["Hovered"], "Color", colors.Enabled, false);
+        //        ReadAttributeColor(ref colors.Pressed, inherited, e["Colors"]["Pressed"], "Color", colors.Enabled, false);
+        //        ReadAttributeColor(ref colors.Focused, inherited, e["Colors"]["Focused"], "Color", colors.Enabled, false);
+        //        ReadAttributeColor(ref colors.Disabled, inherited, e["Colors"]["Disabled"], "Color", colors.Enabled, false);
+        //    }
+        //}
 
-        #endregion
+        //#endregion
 
         #region XML Package Operations
 
@@ -420,10 +410,11 @@ namespace MetaMind.Engine.Components.Content.Asset
             {
                 foreach (XmlElement imageElement in imageList)
                 {
-                    var imageName = this.ReadAttribute(imageElement, "Name", null, true);
-                    var imageAsset = this.ReadAttribute(imageElement, "Asset", null, true);
+                    var imageName   = this.ReadAttribute(imageElement, "Name", null, true);
+                    var imageAsset  = this.ReadAttribute(imageElement, "Asset", null, true);
+                    var imageDesign = this.ReadImageDesign(imageElement); 
 
-                    var image = new ImageAsset(imageName, imageAsset);
+                    var image = new ImageAsset(imageName, imageAsset, imageDesign);
 
                     if (!package.Texture.ContainsKey(image.Name))
                     {
@@ -433,75 +424,86 @@ namespace MetaMind.Engine.Components.Content.Asset
             }
         }
 
-        private void ReadControls(PackageAsset package, XmlElement packageElement)
+        private ImageDesign ReadImageDesign(XmlElement imageElement)
         {
-            var controlList = this.ReadAssetList(packageElement, "Controls", "Control");
-            if (controlList?.Count > 0)
-            {
-                foreach (XmlElement controlElement in controlList)
-                {
-                    ControlSkinAsset controlSkin;
+            var designElement = imageElement["Design"];
 
-                    var controlName = this.ReadAttribute(controlElement, "Name", null, true);
-                    var parentName = this.ReadAttribute(controlElement, "Inherits", null, false);
+            var screenWidth  = this.ReadAttributeInt(designElement, "ScreenWidth", 0, true);
+            var screenHeight = this.ReadAttributeInt(designElement, "ScreenHeight", 0, true);
 
-                    var inherited = false;
-
-                    if (parentName != null)
-                    {
-                        controlSkin =
-                            new ControlSkinAsset(this.Controls[parentName])
-                            {
-                                Inherits = parentName
-                            };
-
-                        inherited = true;
-                    }
-                    else
-                    {
-                        controlSkin = new ControlSkinAsset(controlName);
-                    }
-
-                    this.ReadAttributeInt(ref controlSkin.DefaultSize.Width, inherited, controlElement["DefaultSize"], "Width", 0, false);
-                    this.ReadAttributeInt(ref controlSkin.DefaultSize.Height, inherited, controlElement["DefaultSize"], "Height", 0, false);
-
-                    this.ReadAttributeInt(ref controlSkin.MinimumSize.Width, inherited, controlElement["MinimumSize"], "Width", 0, false);
-                    this.ReadAttributeInt(ref controlSkin.MinimumSize.Height, inherited, controlElement["MinimumSize"], "Height", 0, false);
-
-                    this.ReadAttributeInt(ref controlSkin.OriginMargins.Left, inherited, controlElement["OriginMargins"], "Left", 0, false);
-                    this.ReadAttributeInt(ref controlSkin.OriginMargins.Top, inherited, controlElement["OriginMargins"], "Top", 0, false);
-                    this.ReadAttributeInt(ref controlSkin.OriginMargins.Right, inherited, controlElement["OriginMargins"], "Right", 0, false);
-                    this.ReadAttributeInt(ref controlSkin.OriginMargins.Bottom, inherited, controlElement["OriginMargins"], "Bottom", 0, false);
-
-                    this.ReadAttributeInt(ref controlSkin.ClientMargins.Left, inherited, controlElement["ClientMargins"], "Left", 0, false);
-                    this.ReadAttributeInt(ref controlSkin.ClientMargins.Top, inherited, controlElement["ClientMargins"], "Top", 0, false);
-                    this.ReadAttributeInt(ref controlSkin.ClientMargins.Right, inherited, controlElement["ClientMargins"], "Right", 0, false);
-                    this.ReadAttributeInt(ref controlSkin.ClientMargins.Bottom, inherited, controlElement["ClientMargins"], "Bottom", 0, false);
-
-                    this.ReadAttributeInt(ref controlSkin.ResizerSize, inherited, controlElement["ResizerSize"], "Value", 0, false);
-
-                    if (controlElement["Layers"] != null)
-                    {
-                        XmlNodeList l2 = controlElement["Layers"].GetElementsByTagName("Layer");
-                        if (l2 != null && l2.Count > 0)
-                        {
-                            this.LoadLayers(controlSkin, l2);
-                        }
-                    }
-
-                    if (controlElement["Attributes"] != null)
-                    {
-                        XmlNodeList l3 = controlElement["Attributes"].GetElementsByTagName("Attribute");
-                        if (l3 != null && l3.Count > 0)
-                        {
-                            this.LoadControlAttributes(controlSkin, l3);
-                        }
-                    }
-
-                    this.Controls.Add(controlSkin);
-                }
-            }
+            return new ImageDesign(screenWidth, screenHeight);
         }
+
+        // TODO: Fixed this
+        //private void ReadControls(PackageAsset package, XmlElement packageElement)
+        //{
+        //    var controlList = this.ReadAssetList(packageElement, "Controls", "Control");
+        //    if (controlList?.Count > 0)
+        //    {
+        //        foreach (XmlElement controlElement in controlList)
+        //        {
+        //            ControlSkinAsset controlSkin;
+
+        //            var controlName = this.ReadAttribute(controlElement, "Name", null, true);
+        //            var parentName = this.ReadAttribute(controlElement, "Inherits", null, false);
+
+        //            var inherited = false;
+
+        //            if (parentName != null)
+        //            {
+        //                controlSkin =
+        //                    new ControlSkinAsset(this.Controls[parentName])
+        //                    {
+        //                        Inherits = parentName
+        //                    };
+
+        //                inherited = true;
+        //            }
+        //            else
+        //            {
+        //                controlSkin = new ControlSkinAsset(controlName);
+        //            }
+
+        //            this.ReadAttributeInt(ref controlSkin.DefaultSize.Width, inherited, controlElement["DefaultSize"], "Width", 0, false);
+        //            this.ReadAttributeInt(ref controlSkin.DefaultSize.Height, inherited, controlElement["DefaultSize"], "Height", 0, false);
+
+        //            this.ReadAttributeInt(ref controlSkin.MinimumSize.Width, inherited, controlElement["MinimumSize"], "Width", 0, false);
+        //            this.ReadAttributeInt(ref controlSkin.MinimumSize.Height, inherited, controlElement["MinimumSize"], "Height", 0, false);
+
+        //            this.ReadAttributeInt(ref controlSkin.OriginMargins.Left, inherited, controlElement["OriginMargins"], "Left", 0, false);
+        //            this.ReadAttributeInt(ref controlSkin.OriginMargins.Top, inherited, controlElement["OriginMargins"], "Top", 0, false);
+        //            this.ReadAttributeInt(ref controlSkin.OriginMargins.Right, inherited, controlElement["OriginMargins"], "Right", 0, false);
+        //            this.ReadAttributeInt(ref controlSkin.OriginMargins.Bottom, inherited, controlElement["OriginMargins"], "Bottom", 0, false);
+
+        //            this.ReadAttributeInt(ref controlSkin.ClientMargins.Left, inherited, controlElement["ClientMargins"], "Left", 0, false);
+        //            this.ReadAttributeInt(ref controlSkin.ClientMargins.Top, inherited, controlElement["ClientMargins"], "Top", 0, false);
+        //            this.ReadAttributeInt(ref controlSkin.ClientMargins.Right, inherited, controlElement["ClientMargins"], "Right", 0, false);
+        //            this.ReadAttributeInt(ref controlSkin.ClientMargins.Bottom, inherited, controlElement["ClientMargins"], "Bottom", 0, false);
+
+        //            this.ReadAttributeInt(ref controlSkin.ResizerSize, inherited, controlElement["ResizerSize"], "Value", 0, false);
+
+        //            if (controlElement["Layers"] != null)
+        //            {
+        //                XmlNodeList l2 = controlElement["Layers"].GetElementsByTagName("Layer");
+        //                if (l2 != null && l2.Count > 0)
+        //                {
+        //                    this.LoadLayers(controlSkin, l2);
+        //                }
+        //            }
+
+        //            if (controlElement["Attributes"] != null)
+        //            {
+        //                XmlNodeList l3 = controlElement["Attributes"].GetElementsByTagName("Attribute");
+        //                if (l3 != null && l3.Count > 0)
+        //                {
+        //                    this.LoadControlAttributes(controlSkin, l3);
+        //                }
+        //            }
+
+        //            this.Controls.Add(controlSkin);
+        //        }
+        //    }
+        //}
 
         private XmlNodeList ReadAssetList(XmlElement contentElement, string catalogName, string itemName)
         {
@@ -535,6 +537,10 @@ namespace MetaMind.Engine.Components.Content.Asset
             return defaultValue;
         }
        
+        /// <remarks>
+        /// The primary difference from the overloaded version is that it allow
+        /// inherited from parent value when return value already has parent's value.
+        /// </remarks>
         private void ReadAttribute(ref string returnValue, bool inherited, XmlElement element, string attribute, string defaultValue, bool needed)
         {
             if (element != null && element.HasAttribute(attribute))

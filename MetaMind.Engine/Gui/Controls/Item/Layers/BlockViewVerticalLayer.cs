@@ -12,10 +12,10 @@ namespace MetaMind.Engine.Gui.Controls.Item.Layers
         {
         }
 
-        public new IBlockViewVerticalLogic ViewLogic => (IBlockViewVerticalLogic)base.ViewLogic;
+        public new IMMBlockViewVerticalController ViewController => (IMMBlockViewVerticalController)base.ViewController;
 
-        public new IBlockViewVerticalSelectionController ViewSelection => this.ViewLogic.ViewSelection;
+        public new IBlockViewVerticalSelectionController ViewSelection => this.ViewController.ViewSelection;
 
-        public new IBlockViewVerticalScrollController ViewScroll => this.ViewLogic.ViewScroll;
+        public new IBlockViewVerticalScrollController ViewScroll => this.ViewController.ViewScroll;
     }
 }

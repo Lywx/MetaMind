@@ -13,44 +13,14 @@ namespace MetaMind.Engine.Gui.Controls.Views.Layers
         {
         }
 
-        public IPointView2DLayout ViewLayout
-        {
-            get
-            {
-                return this.ViewLogic.ViewLayout;
-            }
-        }
+        public IPointView2DLayout ViewLayout => this.ViewController.ViewLayout;
 
-        public new IPointView2DScrollController ViewScroll
-        {
-            get
-            {
-                return this.ViewLogic.ViewScroll;
-            }
-        }
+        public new IPointView2DScrollController ViewScroll => this.ViewController.ViewScroll;
 
-        public new IPointView2DSelectionController ViewSelection
-        {
-            get
-            {
-                return this.ViewLogic.ViewSelection;
-            }
-        }
+        public new IPointView2DSelectionController ViewSelection => this.ViewController.ViewSelection;
 
-        public new IPointView2DLogic ViewLogic
-        {
-            get
-            {
-                return (IPointView2DLogic)base.ViewLogic;
-            }
-        }
+        public new IMMPointView2DController ViewController => (IMMPointView2DController)base.ViewController;
 
-        public new PointView2DSettings ViewSettings
-        {
-            get
-            {
-                return (PointView2DSettings)base.ViewSettings;
-            }
-        }
+        public new PointView2DSettings ViewSettings => (PointView2DSettings)base.ViewSettings;
     }
 }

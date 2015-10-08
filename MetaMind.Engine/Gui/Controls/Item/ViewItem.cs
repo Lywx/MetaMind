@@ -4,7 +4,7 @@
     using Layers;
     using Logic;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
     using Settings;
     using Views;
     using Visuals;
@@ -103,9 +103,9 @@
 
         #region Draw
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time, byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
         {
-            this.ItemVisual?.Draw(graphics, time, alpha);
+            this.ItemVisual?.Draw(graphics, time);
         }
 
         #endregion

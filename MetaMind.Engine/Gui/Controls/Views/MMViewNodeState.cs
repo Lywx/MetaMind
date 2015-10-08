@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Gui.Controls.Views
 {
     using System;
     using System.Linq;
-    using Node;
+    using Nodes;
 
     public abstract class MMViewNodeState : MMNode
     {
@@ -19,19 +19,19 @@ namespace MetaMind.Engine.Gui.Controls.Views
         
         private void InitializeStates()
         {
-            for (var i = 0; i < (int)ViewState.StateNum; ++i)
+            for (var i = 0; i < (int)MMViewState.StateNum; ++i)
             {
                 this.viewStates[i] = () => false;
             }
 
-            this[ViewState.View_Is_Active] = () => true;
+            this[MMViewState.View_Is_Active] = () => true;
         }
 
         #endregion 
 
         #region States
 
-        private readonly Func<bool>[] viewStates = new Func<bool>[(int)ViewState.StateNum];
+        private readonly Func<bool>[] viewStates = new Func<bool>[(int)MMViewState.StateNum];
 
         /// <summary>
         /// View states.
@@ -44,7 +44,7 @@ namespace MetaMind.Engine.Gui.Controls.Views
             }
         }
 
-        public Func<bool> this[ViewState state]
+        public Func<bool> this[MMViewState state]
         {
             get
             {

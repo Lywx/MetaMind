@@ -3,8 +3,19 @@ namespace MetaMind.Engine.Gui.Renders
     using System;
     using Elements;
     using Entities;
-    using Node;
+    using Nodes;
     using Shapes;
+
+    public interface IMMRenderComponentBase : 
+        IMMEntity,
+        IMMBufferable,
+        IMMReactor,
+        IMMRenderEntity,
+        IMMShape,
+        IComparable<IMMRenderComponent>
+    {
+        
+    }
 
     /// <summary>
     /// Render reactor is used for classes that enable the advanced rendering 
@@ -15,9 +26,11 @@ namespace MetaMind.Engine.Gui.Renders
     /// <remarks>
     /// Render reactor can be used to achieve texture clipping in Gui.
     /// </remarks>
-    public interface IMMRenderComponent : IMMRenderComponentOperations, IMMRenderComponenetOrganization, IMMRenderEntity, IMMReactor, IMMShape, IMMEntity
+    public interface IMMRenderComponent : IMMRenderComponentOperations, IMMRenderComponenetOrganization, IMMRenderComponentBase 
     {
-        IMMRenderOpacity Opacity { get; set; }
+        IMMRenderOpacity Opacity { get; }
+
+        int ZOrder { get; set; }
 
         #region Events
 
@@ -30,7 +43,7 @@ namespace MetaMind.Engine.Gui.Renders
         #endregion
     }
 
-    internal interface IMMRenderComponentInternal : IMMRenderComponenetOrganizationInternal 
+    public interface IMMRenderComponentInternal : IMMRenderComponenetOrganizationInternal, IMMRenderComponentBase
     {
         #region Event Ons
 

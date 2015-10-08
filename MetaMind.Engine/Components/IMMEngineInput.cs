@@ -7,7 +7,7 @@
 
 namespace MetaMind.Engine.Components
 {
-    using Service;
+    using Services;
 
     public interface IMMEngineInput : IMMInputableComponent, IMMEngineInputService
     {

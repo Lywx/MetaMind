@@ -6,7 +6,7 @@
     using Images;
     using Labels;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
 
     public class RectangleButton : MMControlComponent
     {
@@ -87,15 +87,12 @@
 
         #region Draw
 
-        public override void Draw(
-            IMMEngineGraphicsService graphics,
-            GameTime time,
-            byte alpha)
+        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
         {
-            base.Draw(graphics, time, alpha);
+            base.Draw(graphics, time);
 
-            this.Image.Draw(graphics, time, alpha);
-            this.Label.Draw(graphics, time, alpha);
+            this.Image.Draw(graphics, time);
+            this.Label.Draw(graphics, time);
         }
 
         #endregion

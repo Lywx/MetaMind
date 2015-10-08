@@ -12,7 +12,7 @@ namespace MetaMind.Engine
     using System.Reflection;
     using Components;
     using Microsoft.Xna.Framework;
-    using Service;
+    using Services;
 
     public class MMEngine : Game, IMMEngine
     {
@@ -164,7 +164,10 @@ namespace MetaMind.Engine
 
         protected override void LoadContent()
         {
+            // Load engine persistent asset
+            this.Interop.Asset.LoadPackage("Engine.Persistent");
 
+            base.LoadContent();
         }
 
         protected override void UnloadContent()
