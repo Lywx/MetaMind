@@ -13,6 +13,6 @@
         /// <remarks>
         /// Forced reimplementation.
         /// </remarks>>
-        public abstract override void Draw(IMMEngineGraphicsService graphics, GameTime time);
+        public abstract override void Draw(GameTime time);
     }
 }

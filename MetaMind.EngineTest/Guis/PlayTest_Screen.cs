@@ -25,7 +25,7 @@
                     DrawAction = (graphics, time, alpha) =>
                     {
                         graphics.SpriteBatch.Begin();
-                        this.tests.Draw(graphics, time);
+                        this.tests.Draw(time);
                         graphics.SpriteBatch.End();
                     },
                     UpdateAction = time =>

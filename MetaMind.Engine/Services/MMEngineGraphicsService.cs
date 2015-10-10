@@ -18,16 +18,25 @@ namespace MetaMind.Engine.Services
             this.Graphics = graphics;
         }
 
-        public IMMEngineGraphics Graphics { get; }
+        private IMMEngineGraphics Graphics { get; }
+
+
+        #region Manager and Settings
 
         public MMGraphicsManager Manager => this.Graphics.Manager;
 
         public MMGraphicsSettings Settings => this.Graphics.Settings;
 
+        #endregion
+
+        #region Renderer
+
+        public GraphicsDevice Device => this.Manager.GraphicsDevice;
+
         public SpriteBatch SpriteBatch => this.Graphics.SpriteBatch;
 
         public IMMRenderer Renderer => this.Graphics.Renderer;
 
-        public GraphicsDevice GraphicsDevice => this.Manager.GraphicsDevice;
+        #endregion
     }
 }

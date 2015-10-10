@@ -14,7 +14,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Visuals
 
         protected int FocusOpacity { get; set; }
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void Draw(GameTime time)
         {
             this.DrawItems(graphics, time, alpha);
             this.DrawComponents(graphics, time, Math.Max((byte)this.FocusOpacity, alpha));

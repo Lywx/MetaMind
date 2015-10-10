@@ -62,28 +62,28 @@
 
         private Vector2 TestRateCenterPosition => new Vector2(this.Graphics.Settings.Width / 2 - 160, 90);
 
-        public override void BeginDraw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void BeginDraw(GameTime time)
         {
-            base.BeginDraw(graphics, time);
+            base.BeginDraw(time);
 
-            this.Logic.ControllableEntities.BeginDraw(graphics, time);
-            this      .VisualEntities      .BeginDraw(graphics, time);
+            this.Logic.ControllableEntities.BeginDraw(time);
+            this      .VisualEntities      .BeginDraw(time);
         }
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void Draw(GameTime time)
         {
-            base.Draw(graphics, time);
+            base.Draw(time);
 
-            this.Logic.ControllableEntities.Draw(graphics, time);
-            this      .VisualEntities      .Draw(graphics, time);
+            this.Logic.ControllableEntities.Draw(time);
+            this      .VisualEntities      .Draw(time);
         }
 
-        public override void EndDraw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void EndDraw(GameTime time)
         {
-            base.EndDraw(graphics, time);
+            base.EndDraw(time);
 
-            this      .VisualEntities      .EndDraw(graphics, time);
-            this.Logic.ControllableEntities.EndDraw(graphics, time);
+            this      .VisualEntities      .EndDraw(time);
+            this.Logic.ControllableEntities.EndDraw(time);
         }
 
         public override void Update(GameTime time)

@@ -115,7 +115,7 @@ namespace MetaMind.Session.Guis.Widgets.BlockViews.Options
 
         #region Update and Draw
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void Draw(GameTime time)
         {
             if (!this.Item[ViewItemState.Item_Is_Active]() && 
                 !this.Item[ViewItemState.Item_Is_Dragging]())
@@ -123,14 +123,14 @@ namespace MetaMind.Session.Guis.Widgets.BlockViews.Options
             }
 
             // Frames
-            this.IdRectangle.Draw(graphics, time);
-            this.NameRectangle.Draw(graphics, time);
-            this.DescriptionRectangle.Draw(graphics, time);
+            this.IdRectangle.Draw(time);
+            this.NameRectangle.Draw(time);
+            this.DescriptionRectangle.Draw(time);
 
             // Labels
-            this.IdLabel.Draw(graphics, time);
-            this.NameLabel.Draw(graphics, time);
-            this.DescriptionLabel.Draw(graphics, time);
+            this.IdLabel.Draw(time);
+            this.NameLabel.Draw(time);
+            this.DescriptionLabel.Draw(time);
         }
 
         #endregion

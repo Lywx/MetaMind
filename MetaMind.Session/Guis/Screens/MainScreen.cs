@@ -107,12 +107,8 @@
                 {
                     // Buttons have the same alpha value as circular layer
                     this.SpriteBatch.Begin();
-                    this.buttonPrevious.Draw(
-                        graphics,
-                        time);
-                    this.buttonNext.Draw(
-                        graphics,
-                        time);
+                    this.buttonPrevious.Draw(time);
+                    this.buttonNext.Draw(time);
                     this.SpriteBatch.End();
                 }
             });

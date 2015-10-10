@@ -24,7 +24,7 @@ namespace MetaMind.Session.Guis.Modules.Summary
 
         public Func<float> Size { get; set; }
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void Draw(GameTime time)
         {
             var spriteBatch = graphics.SpriteBatch;
             spriteBatch.DrawLine(this.Start(), this.End(), this.Color().MakeTransparent(alpha), this.Size());

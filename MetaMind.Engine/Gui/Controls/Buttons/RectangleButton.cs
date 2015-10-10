@@ -87,12 +87,12 @@
 
         #region Draw
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void Draw(GameTime time)
         {
-            base.Draw(graphics, time);
+            base.Draw(time);
 
-            this.Image.Draw(graphics, time);
-            this.Label.Draw(graphics, time);
+            this.Image.Draw(time);
+            this.Label.Draw(time);
         }
 
         #endregion

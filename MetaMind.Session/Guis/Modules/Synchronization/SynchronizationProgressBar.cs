@@ -41,10 +41,10 @@ namespace MetaMind.Session.Guis.Modules.Synchronization
 
         private ISynchronization Synchronization { get; set; }
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void Draw(GameTime time)
         {
-            this.Frame   .Draw(graphics, time);
-            this.Progress.Draw(graphics, time);
+            this.Frame   .Draw(time);
+            this.Progress.Draw(time);
         }
     }
 }

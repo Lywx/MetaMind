@@ -3,6 +3,7 @@ namespace MetaMind.Engine.Screen
     using System;
     using System.Diagnostics;
     using Entities;
+    using Gui.Controls;
     using Gui.Graphics.Adapters;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -163,6 +164,7 @@ namespace MetaMind.Engine.Screen
 
         public MMScreen()
         {
+            this.Controller = new MMControlComponent();
             this.ViewportAdapter = new ScalingViewportAdapter(this.GraphicsDevice, this.Width, this.Height);
         }
 
@@ -188,84 +190,6 @@ namespace MetaMind.Engine.Screen
         }
         
         #endregion
-
-        #region Draw
-
-        /// <summary>
-        /// Start drawing in screen.
-        /// </summary>
-        public void BeginDraw(IMMEngineGraphicsService graphics, GameTime time)
-        {
-            this.CreateRenderTarget();
-
-            this.Draw(graphics, time);
-        }
-
-        /// <summary>
-        /// Draw subroutine.
-        /// </summary>
-        protected void Draw(IMMEngineGraphicsService graphics, GameTime time)
-        {
-            this.DrawToComponents(graphics, time);
-            this.DrawToScreen(graphics, time);
-        }
-
-        /// <summary>
-        /// Draw to each individual render component's render target.
-        /// </summary>
-        private void DrawToComponents(IMMEngineGraphicsService graphics, GameTime time)
-        {
-            if (this.Layers.Count != 0)
-            {
-                foreach (
-                    var layer in
-                        this.Layers.FindAll(
-                            layer => layer.Active && layer.Visible))
-                {
-                    layer.BeginDraw(graphics, time, this.TransitionOpacity);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Draw children layers to screen's render target.
-        /// </summary>
-        private void DrawToScreen(IMMEngineGraphicsService graphics, GameTime time)
-        {
-#if DEBUG
-            Debug.Assert(this.RenderTarget != null);
-#endif
-            this.GraphicsDevice.SetRenderTarget(this.RenderTarget);
-            this.GraphicsDevice.Clear(Color.Transparent);
-
-            if (this.Layers.Count != 0)
-            {
-                foreach (
-                    var layer in
-                        this.Layers.FindAll(
-                            layer => layer.EN && layer.Visible))
-                {
-                    layer.EndDraw(graphics, time, this.TransitionOpacity);
-                }
-            }
-
-            this.GraphicsDevice.SetRenderTarget(null);
-        }
-
-        public virtual void EndDraw(IMMEngineGraphicsService graphics, GameTime time)
-        {
-            this.GraphicsDevice.SetRenderTarget(null);
-
-            this.SpriteBatch.Begin();
-            this.SpriteBatch.Draw(
-                this.RenderTarget,
-                this.RenderTargetDestinationRectangle,
-                Color.White);
-            this.SpriteBatch.End();
-        }
-
-        #endregion Draw
-
         #region Update
 
         public void Update(GameTime time)

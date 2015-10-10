@@ -33,10 +33,10 @@
             this.visual.Add(box);
         }
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void Draw(GameTime time)
         {
-            this.control.Draw(graphics, time);
-            this.visual .Draw(graphics, time);
+            this.control.Draw(time);
+            this.visual .Draw(time);
 
             StateVisualTester.Draw(graphics, typeof(MMElementState), this.immRectangle.FrameStates, this.immRectangle.Location.ToVector2(), 10, 10);
         }

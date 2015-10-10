@@ -76,6 +76,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Components\Graphics\MMRendererManager.cs" />
     <Compile Include="Gui\Controls\IMMControlComponent.cs" />
     <Compile Include="Gui\Controls\IMMControlManager.cs" />
     <Compile Include="Gui\Controls\IMMControlManagerOperations.cs" />
@@ -137,8 +138,6 @@
     <Compile Include="MMObject.cs" />
     <Compile Include="Geometry\MMSize.cs" />
     <Compile Include="Settings\MMSettingDictionary.cs" />
-    <Compile Include="Gui\Renders\IMMRenderComponentOperations.cs" />
-    <Compile Include="Gui\Renders\IMMRenderComponenetOrganization.cs" />
     <Compile Include="Gui\Renders\MMRenderComponenetCollection.cs" />
     <Compile Include="Gui\Controls\IMMControlComponentOperations.cs" />
     <Compile Include="Gui\Controls\IMMControlComponentOrganization.cs" />
@@ -152,7 +151,7 @@
     <Compile Include="Components\Content\Texture\ITextureManager.cs" />
     <Compile Include="Components\Content\Texture\TextureManager.cs" />
     <Compile Include="Components\Content\Texture\ImageAsset.cs" />
-    <Compile Include="Components\File\IFileManager.cs" />
+    <Compile Include="Components\IO\IFileManager.cs" />
     <Compile Include="Gui\Graphics\Adapters\DefaultViewportAdapter.cs" />
     <Compile Include="Gui\Graphics\Adapters\ScalingViewportAdapter.cs" />
     <Compile Include="Gui\Graphics\Adapters\ViewportAdapter.cs" />
@@ -257,7 +256,7 @@
     <Compile Include="Components\Interop\IMMSaveManager.cs" />
     <Compile Include="Components\Interop\IMMScreenDirector.cs" />
     <Compile Include="Components\Content\Fonts\SpriteFontExt.cs" />
-    <Compile Include="Components\File\FileManager.cs" />
+    <Compile Include="Components\IO\FileManager.cs" />
     <Compile Include="Components\Content\Fonts\FontManager.cs" />
     <Compile Include="Extensions\StringUtils.cs" />
     <Compile Include="Components\Graphics\MMGraphicsManager.cs" />

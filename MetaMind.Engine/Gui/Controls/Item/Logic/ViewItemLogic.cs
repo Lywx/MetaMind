@@ -18,7 +18,7 @@
 
         private Func<bool> itemIsLocking;
 
-        #region Constructors
+        #region Constructors and Finalizer
 
         public ViewItemLogic(IViewItem item, IViewItemFrameController itemFrame, IViewItemInteraction itemInteraction, IViewItemDataModel itemModel, IViewItemLayout itemLayout)
             : base(item)
@@ -48,10 +48,6 @@
             this.ItemModel       = itemModel;
             this.ItemLayout      = itemLayout;
         }
-
-        #endregion
-
-        #region Destructors
 
         ~ViewItemLogic()
         {

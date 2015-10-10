@@ -3,6 +3,7 @@
     using System;
     using Gui.Renders;
     using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
     using Services;
 
     public class MMLayer : MMRenderComponent, IMMLayer
@@ -34,9 +35,9 @@
 
         public IMMScreen Screen { get; private set; }
 
-        protected override void SetBackRenderTarget()
+        protected override void SetParentRenderTarget()
         {
-            this.GraphicsDevice.SetRenderTarget(this.Screen.RenderTarget);
+            this.Graphics.Device.SetRenderTarget(this.Screen.RenderTarget);
         }
 
         #endregion
@@ -97,11 +98,11 @@
 
         public Action<IMMEngineGraphicsService, GameTime, byte> DrawAction { get; set; } = delegate { };
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void Draw(GameTime time)
         {
             alpha = this.MixedMinOpacity(alpha);
 
-            base.Draw              (graphics, time);
+            base.Draw              (time);
             this.DrawAction?.Invoke(graphics, time, alpha);
         }
 

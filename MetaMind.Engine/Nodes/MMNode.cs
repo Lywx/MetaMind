@@ -3,6 +3,8 @@
     using System;
     using Entities;
     using Actions;
+    using Microsoft.Xna.Framework;
+    using Services;
 
     public abstract class MMNode : MMInputEntity, IMMNode, IMMNodeInternal
     {
@@ -31,7 +33,6 @@
         public IMMRenderOpacity Opacity
         {
             get { return this.Renderer.Opacity; }
-            set { this.Renderer.Opacity = value; }
         }
 
         public IMMNodeColor Color
@@ -146,14 +147,37 @@
 
         #endregion
 
+        #region Draw
+
+        public override void Draw(GameTime time)
+        {
+            (graphics1, time1) => this.Renderer.Draw(time1)
+        }
+
+        public override void BeginDraw(GameTime time)
+        {
+            base.BeginDraw(time);
+        }
+
+        public override void EndDraw(GameTime time)
+        {
+            base.EndDraw(time);
+        }
+
+        #endregion
+
         #region Update
+
+        public override void Update(GameTime time)
+        {
+            base.Update(time);
+        }
 
         public void Update(float dt)
         {
         }
 
         #endregion
-
 
         #region IDisposable
 

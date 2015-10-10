@@ -5,7 +5,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace MetaMind.Engine.Components.File
+namespace MetaMind.Engine.Components.IO
 {
     using System;
     using System.IO;

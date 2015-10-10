@@ -22,7 +22,7 @@
         private void Constructor()
         {
             // Engine data
-            this.ViewportAdapter = new DefaultViewportAdapter(this.GraphicsDevice);
+            this.ViewportAdapter = new DefaultViewportAdapter(this.Graphics.Device);
 
             // Visual data
             this.Opacity = new MMRenderOpacity(this);
@@ -48,17 +48,17 @@
 
         #region Engine Data
 
-        protected GraphicsDevice GraphicsDevice => this.Graphics.GraphicsDevice;
-
         protected SpriteBatch SpriteBatch => this.Graphics.SpriteBatch;
 
         public ViewportAdapter ViewportAdapter { get; set; }
 
-        protected Viewport Viewport => this.GraphicsDevice.Viewport;
+        protected Viewport Viewport => this.Graphics.Device.Viewport;
 
         #endregion
 
         #region Visual Data
+
+        public bool CascadedEnabled { get; set; } = false;
 
         public IMMRenderOpacity Opacity { get; protected set; }
 
@@ -106,24 +106,26 @@
         /// </summary>
         public virtual bool IsRoot => this.Root == this;
 
-        public virtual void Add(IMMRenderComponentInternal component)
+        public virtual void Add(IMMRenderComponent component)
         {
             if (component != null)
             {
-                if (!this.Children.Contains(component as IMMRenderComponent))
+                if (!this.Children.Contains(component))
                 {
                     // Restore parent relationship before adding
                     component.Parent?.Remove(component);
 
                     // Configure parenthood
                     component.Enabled = this.Enabled ? component.Enabled : this.Enabled;
-                    component.Parent = this;
-                    component.Root = this.Root;
+
+                    var componentInternal = (IMMRenderComponentInternal)component;
+                    componentInternal.Parent = this;
+                    componentInternal.Root = this.Root;
 
                     // Add to children list
-                    this.Children.Add(component as IMMRenderComponent);
+                    this.Children.Add(component);
 
-                    this.Resize += component.OnParentResize;
+                    this.Resize += componentInternal.OnParentResize;
 
                     if (this.Enabled)
                     {
@@ -137,18 +139,19 @@
         /// Remove existing parenthood to original state.
         /// </summary>
         /// <param name="component"></param>
-        public virtual void Remove(IMMRenderComponentInternal component)
+        public virtual void Remove(IMMRenderComponent component)
         {
             if (component != null)
             {
                 // Remove from children list
-                this.Children.Remove(component as IMMRenderComponent);
+                this.Children.Remove(component);
 
                 // Reconfigure parenthood to original state
-                component.Parent = null;
-                component.Root = component as IMMRenderComponent;
+                var componentInternal = (IMMRenderComponentInternal)component;
+                componentInternal.Parent = null;
+                componentInternal.Root = component;
 
-                this.Resize -= component.OnParentResize;
+                this.Resize -= componentInternal.OnParentResize;
 
                 if (this.Enabled)
                 {
@@ -192,15 +195,15 @@
 
         #region Element Data
 
+        public event EventHandler<MMElementEventArgs> Move = delegate {};
+
+        public event EventHandler<MMElementEventArgs> Resize = delegate {};
+
         /// <summary>
         /// Delegates all the geometry related functionalities and events. 
         /// Properties of element data are provided by this.
         /// </summary>
         private MMRectangle Rectangle { get; } = new MMRectangle();
-
-        public event EventHandler<MMElementEventArgs> Move = delegate {};
-
-        public event EventHandler<MMElementEventArgs> Resize = delegate {};
 
         public virtual Point Size
         {
@@ -292,7 +295,7 @@
 
         protected Rectangle RenderTargetSourceRectangle => new Rectangle(Point.Zero, this.RenderTargetSize);
 
-        private void CreateRenderTarget()
+        protected void CreateRenderTarget()
         {
             if (this.RenderTarget == null ||
                 this.RenderTarget.Width != this.RenderTargetWidth ||
@@ -309,23 +312,18 @@
             }
         }
 
-        protected virtual void SetBackRenderTarget()
+        protected virtual void SetParentRenderTarget()
         {
-            // Set to parent's render target when it has parent.
-            this.GraphicsDevice.SetRenderTarget(
-                this.Parent.RenderTarget);
-
-            this.GraphicsDevice.
-            this.GraphicsDevice.RestoreRenderTarget();
+            this.Graphics.Device.SetRenderTarget(this.Parent.RenderTarget);
         }
 
         #endregion
 
         #region Events
 
-        public event EventHandler<MMRenderComponentDrawEventArgs> BeginDrawStarted = delegate { };
+        public event EventHandler<MMRenderComponentDrawEventArgs> CascadedBeginDrawStarted = delegate { };
 
-        public event EventHandler<MMRenderComponentDrawEventArgs> EndDrawStarted = delegate { };
+        public event EventHandler<MMRenderComponentDrawEventArgs> CascadedEndDrawStarted = delegate { };
 
         public event EventHandler ParentChanged = delegate { };
 
@@ -348,14 +346,14 @@
             this.ParentChanged?.Invoke(this, e);
         }
 
-        public void OnBeginDrawStarted(object sender, MMRenderComponentDrawEventArgs e)
+        public void OnCascadedBeginDrawStarted(object sender, MMRenderComponentDrawEventArgs e)
         {
-            this.BeginDrawStarted?.Invoke(sender, e);
+            this.CascadedBeginDrawStarted?.Invoke(sender, e);
         }
 
-        public void OnEndDrawStarted(object sender, MMRenderComponentDrawEventArgs e)
+        public void OnCascadedEndDrawStarted(object sender, MMRenderComponentDrawEventArgs e)
         {
-            this.EndDrawStarted?.Invoke(sender, e);
+            this.CascadedEndDrawStarted?.Invoke(sender, e);
         }
 
         #endregion
@@ -391,56 +389,72 @@
         #region Draw
 
         /// <summary>
-        /// Configure drawing in its own render target. 
+        /// Begin drawing in its own render target. 
         /// </summary>
         /// <remarks>
+        /// GraphicsDevice's RenderTarget will be changed inside BeginDraw.
+        /// However, it will be restore to original state after the method.
+        /// 
         /// This is capable to process non-controls children elements by
-        /// overriding this.Draw method, in which case, all elements are drawn 
+        /// overriding this.Draw method, in which case, all elements are drawn
         /// to parent control's render target.
         /// </remarks>
-        public sealed override void BeginDraw(IMMEngineGraphicsService graphics, GameTime time)
+        public sealed override void BeginDraw(GameTime time)
         {
-            base.BeginDraw(graphics, time);
-
             if (!this.Visible)
             {
                 return;
             }
 
-            this.CreateRenderTarget();
+            if (!this.CascadedEnabled)
+            {
+                // Draw to back buffer directly
+                this.Draw(time);
+            }
 
-            this.Children.BeginDraw(graphics, time);
+            // When cascaded
+            else
+            {
+                this.CreateRenderTarget();
 
-            this.OnBeginDrawStarted(
-                this,
-                new MMRenderComponentDrawEventArgs(
-                    this.RenderTarget,
-                    this.RenderTargetDestinationRectangle,
-                    time));
+                this.Children.BeginDraw(time);
 
-            this.GraphicsDevice.SetRenderTarget(this.RenderTarget);
-            this.GraphicsDevice.Clear(Color.Transparent);
+                this.OnCascadedBeginDrawStarted(
+                    this,
+                    new MMRenderComponentDrawEventArgs(
+                        this.RenderTarget,
+                        this.RenderTargetDestinationRectangle,
+                        time));
 
-            this.Draw(graphics, time);
+                this.Graphics.Device.SetRenderTarget(this.RenderTarget);
+                this.Graphics.Device.Clear(Color.Transparent);
 
-            this.GraphicsDevice.SetRenderTarget(null);
+                this.Draw(time);
+
+                this.Graphics.RendererManager.RestoreRenderTarget();
+            }
         }
 
         /// <summary>
-        /// Re-draw its own render target into parent's render target or back buffer.
+        /// Signal the end of all the drawing work. It will re-draw its own
+        /// render target into parent's render target or back buffer.
         /// </summary>
-        public sealed override void EndDraw(IMMEngineGraphicsService graphics, GameTime time)
+        public sealed override void EndDraw(GameTime time)
         {
-            base.EndDraw(graphics, time);
-
             if (!this.Visible)
             {
                 return;
             }
 
-            this.Children.EndDraw(graphics, time);
+            // Only redraw when cascaded.
+            if (!this.CascadedEnabled)
+            {
+                return;
+            }
 
-            this.OnEndDrawStarted(
+            this.Children.EndDraw(time);
+
+            this.OnCascadedEndDrawStarted(
                 this,
                 new MMRenderComponentDrawEventArgs(
                     this.RenderTarget,
@@ -449,7 +463,7 @@
 
             if (this.IsChild)
             {
-                this.SetBackRenderTarget();
+                this.SetParentRenderTarget();
             }
 
             this.SpriteBatch.Begin();

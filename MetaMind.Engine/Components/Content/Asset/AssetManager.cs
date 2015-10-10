@@ -3,8 +3,8 @@ namespace MetaMind.Engine.Components.Content.Asset
     using System;
     using System.IO;
     using System.Xml;
-    using File;
     using Fonts;
+    using IO;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;

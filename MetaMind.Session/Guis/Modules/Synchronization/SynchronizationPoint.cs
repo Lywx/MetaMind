@@ -29,10 +29,10 @@ namespace MetaMind.Session.Guis.Modules.Synchronization
 
         public Label Digit { get; set; }
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void Draw(GameTime time)
         {
-            this.Box  .Draw(graphics, time);
-            this.Digit.Draw(graphics, time);
+            this.Box  .Draw(time);
+            this.Digit.Draw(time);
         }
     }
 }

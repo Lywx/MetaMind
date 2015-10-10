@@ -74,10 +74,10 @@
 
         #region Draw
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void Draw(GameTime time)
         {
-            this.Entities.Draw(graphics, time);
-            base         .Draw(graphics, time);
+            this.Entities.Draw(time);
+            base         .Draw(time);
         }
 
         #endregion

@@ -13,7 +13,7 @@ namespace MetaMind.Engine
 
         private static IMMEngineGraphicsService Graphics => MMEngine.Service.Graphics;
 
-        private static GraphicsDevice GraphicsDevice => Graphics.GraphicsDevice;
+        private static GraphicsDevice GraphicsDevice => Graphics.Device;
 
         #endregion
 

@@ -37,10 +37,10 @@
 
         #region Update and Draw 
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void Draw(GameTime time)
         {
-            this.Layers.Draw(graphics, time);
-            base       .Draw(graphics, time);
+            this.Layers.Draw(time);
+            base       .Draw(time);
         }
 
         public override void UpdateTransition(GameTime time)

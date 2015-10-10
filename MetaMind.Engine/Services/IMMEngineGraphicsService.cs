@@ -5,14 +5,24 @@ namespace MetaMind.Engine.Services
 
     public interface IMMEngineGraphicsService
     {
+        #region Manager and Settings
+
         MMGraphicsManager Manager { get; }
 
         MMGraphicsSettings Settings { get; }
 
-        SpriteBatch SpriteBatch { get; }
-        
+        #endregion
+
+        #region Renderer
+
+        MMRendererManager RendererManager { get; }
+
         IMMRenderer Renderer { get; }
 
-        GraphicsDevice GraphicsDevice { get; }
+        GraphicsDevice Device { get; }
+
+        SpriteBatch SpriteBatch { get; }
+
+        #endregion
     }
 }

@@ -3,7 +3,6 @@ namespace MetaMind.Engine.Entities
     using System;
     using System.Runtime.Serialization;
     using Microsoft.Xna.Framework;
-    using Services;
 
     [DataContract]
     public class MMVisualEntity : MMEntity, IMMVisualEntity
@@ -107,9 +106,8 @@ namespace MetaMind.Engine.Entities
         /// You should set up to RenderTarget2D and RenderTarget3D class in this 
         /// method.
         /// </remarks>
-        /// <param name="graphics"></param>
         /// <param name="time"></param>
-        public virtual void BeginDraw(IMMEngineGraphicsService graphics, GameTime time) { }
+        public virtual void BeginDraw(GameTime time) { }
 
         /// <summary>
         /// Standard draw routine.
@@ -118,9 +116,8 @@ namespace MetaMind.Engine.Entities
         /// It is recommended not to call SpriteBatch.Begin and SpriteBatch.End 
         /// in this method and its override version.
         /// </remarks>>
-        /// <param name="graphics"></param>
         /// <param name="time"></param>
-        public virtual void Draw(IMMEngineGraphicsService graphics, GameTime time) { }
+        public virtual void Draw(GameTime time) { }
 
         /// <summary>
         /// Standard draw termination.
@@ -129,9 +126,8 @@ namespace MetaMind.Engine.Entities
         /// You should draw RenderTarget2D and RenderTarget3D to back buffer in 
         /// this method and its override method.
         /// </remarks>>
-        /// <param name="graphics"></param>
         /// <param name="time"></param>
-        public virtual void EndDraw(IMMEngineGraphicsService graphics, GameTime time) { }
+        public virtual void EndDraw(GameTime time) { }
 
         #endregion
 

@@ -16,15 +16,15 @@
 
         private MMEntityCollection<IMMMvcEntity> Modules { get; set; }
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void Draw(GameTime time)
         {
             graphics.SpriteBatch.Begin();
 
-            this.Modules.Draw(graphics, time);
+            this.Modules.Draw(time);
 
             graphics.SpriteBatch.End();
 
-            base.Draw(graphics, time);
+            base.Draw(time);
         }
 
         public override void LoadContent(IMMEngineInteropService interop)

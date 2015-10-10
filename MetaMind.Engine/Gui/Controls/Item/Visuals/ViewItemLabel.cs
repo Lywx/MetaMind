@@ -29,14 +29,14 @@ namespace MetaMind.Engine.Gui.Controls.Item.Visuals
 
         #region Draw
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void Draw(GameTime time)
         {
             if (ViewItemState.Item_Is_Active.Match(this.Item))
             {
                 return;
             }
 
-            base.Draw(graphics, time);
+            base.Draw(time);
         }
 
         #endregion

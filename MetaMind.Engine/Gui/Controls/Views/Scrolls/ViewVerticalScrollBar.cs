@@ -124,13 +124,13 @@ namespace MetaMind.Engine.Gui.Controls.Views.Scrolls
 
         #region Draw
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void Draw(GameTime time)
         {
-            base.Draw(graphics, time);
+            base.Draw(time);
 
             if (this.CanDisplay())
             {
-                this.scrollbarVisual.Draw(graphics, time);
+                this.scrollbarVisual.Draw(time);
             }
         }
 

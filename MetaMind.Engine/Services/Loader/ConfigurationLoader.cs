@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Services.Loader
 {
     using System.Collections.Generic;
     using System.IO;
-    using Components.File;
+    using Components.IO;
 
     public static class ConfigurationLoader
     {

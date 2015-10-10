@@ -10,7 +10,7 @@
 
         private Random Random => this.Numerical.Random;
 
-        public override void EndDraw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void EndDraw(GameTime time)
         {
             this.randomData = new Color[this.Width * this.Height];
 
@@ -23,7 +23,7 @@
 
             this.RenderTarget.SetData(this.randomData);
 
-            base.EndDraw(graphics, time);
+            base.EndDraw(time);
         }
     }
 }

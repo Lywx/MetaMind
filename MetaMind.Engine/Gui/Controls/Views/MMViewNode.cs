@@ -135,9 +135,9 @@ namespace MetaMind.Engine.Gui.Controls.Views
 
         #region Draw
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void Draw(GameTime time)
         {
-            this.ViewVisual?.Draw(graphics, time);
+            this.ViewVisual?.Draw(time);
         }
 
         #endregion

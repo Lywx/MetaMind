@@ -102,16 +102,16 @@ namespace MetaMind.Session.Guis.Layers
 
         #region Draw
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void Draw(GameTime time)
         {
             this.SpriteBatch.Begin();
 
-            this.inputEntities.Draw(graphics, time);
-            this.drawEntities .Draw(graphics, time); 
+            this.inputEntities.Draw(time);
+            this.drawEntities .Draw(time); 
 
             this.SpriteBatch.End();
 
-            base.Draw(graphics, time);
+            base.Draw(time);
         }
 
         #endregion

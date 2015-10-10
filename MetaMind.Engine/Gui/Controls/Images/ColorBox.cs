@@ -33,7 +33,7 @@ namespace MetaMind.Engine.Gui.Controls.Images
 
         public bool ColorFilled { get; set; } = true;
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void Draw(GameTime time)
         {
             var draw = this.ColorFilled
                            ? Primitives2D.FillRectangle

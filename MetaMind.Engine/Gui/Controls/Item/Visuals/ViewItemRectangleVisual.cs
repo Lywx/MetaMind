@@ -43,15 +43,15 @@ namespace MetaMind.Engine.Gui.Controls.Item.Visuals
 
         public IMMPressableRectangleElement Rectangle { get; }
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void Draw(GameTime time)
         {
             if (!ViewItemState.Item_Is_Active.Match(this.Item))
             {
                 return;
             }
 
-            this.Boundary.Draw(graphics, time);
-            this.Filling .Draw(graphics, time);
+            this.Boundary.Draw(time);
+            this.Filling .Draw(time);
         }
     }
 }

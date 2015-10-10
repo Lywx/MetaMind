@@ -16,7 +16,7 @@
 
         public IMMRenderer Renderer { get; }
 
-        public GraphicsDevice GraphicsDevice { get; }
+        public GraphicsDevice Device { get; }
 
         public void Initialize()
         {

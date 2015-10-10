@@ -23,10 +23,10 @@ namespace MetaMind.Session.Guis.Modules.Summary
 
         public Label Statistics { get; set; }
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void Draw(GameTime time)
         {
-            this.Caption   .Draw(graphics, time);
-            this.Statistics.Draw(graphics, time);
+            this.Caption   .Draw(time);
+            this.Statistics.Draw(time);
         }
     }
 }

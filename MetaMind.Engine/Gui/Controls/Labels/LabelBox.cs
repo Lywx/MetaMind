@@ -67,12 +67,12 @@ namespace MetaMind.Engine.Gui.Controls.Labels
 
         public Label Label { get; set; }
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void Draw(GameTime time)
         {
-            base.Draw(graphics, time);
+            base.Draw(time);
 
-            this.Box  .Draw(graphics, time);
-            this.Label.Draw(graphics, time);
+            this.Box  .Draw(time);
+            this.Label.Draw(time);
         }
 
         public override void Update(GameTime time)

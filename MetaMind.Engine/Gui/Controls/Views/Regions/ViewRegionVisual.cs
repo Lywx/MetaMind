@@ -23,7 +23,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Regions
 
         public ViewRegionSettings RegionSettings => this.Region.RegionSettings;
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void Draw(GameTime time)
         {
             Primitives2D.DrawRectangle(
                 graphics.SpriteBatch,

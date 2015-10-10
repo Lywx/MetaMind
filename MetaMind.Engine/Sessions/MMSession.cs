@@ -3,7 +3,7 @@ namespace MetaMind.Engine.Sessions
     using System.IO;
     using System.Runtime.Serialization;
     using System.Xml;
-    using Components.File;
+    using Components.IO;
 
     [DataContract]
     public sealed class MMSession<TData, TController> : IMMSession<TData, TController>

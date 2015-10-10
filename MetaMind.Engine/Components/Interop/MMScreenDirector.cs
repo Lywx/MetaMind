@@ -156,10 +156,10 @@ namespace MetaMind.Engine.Components.Interop
                 var visible = new Predicate<IMMScreen>(screen => screen.ScreenState != MMScreenState.Hidden);
 
                 // Draw texture into render target
-                this.FindScreens(visible).ForEach(screen => screen.BeginDraw(this.Graphics, time));
+                this.FindScreens(visible).ForEach(screen => screen.BeginDraw(time));
 
                 // Draw render target into back buffer
-                this.FindScreens(visible).ForEach(screen => screen.EndDraw(this.Graphics, time));
+                this.FindScreens(visible).ForEach(screen => screen.EndDraw(time));
             }
         }
 

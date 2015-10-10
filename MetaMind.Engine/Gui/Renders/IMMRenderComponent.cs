@@ -8,13 +8,49 @@ namespace MetaMind.Engine.Gui.Renders
 
     public interface IMMRenderComponentBase : 
         IMMEntity,
-        IMMBufferable,
+
+        // Need initialization
         IMMReactor,
         IMMRenderEntity,
+
+        // Support common shape operations
         IMMShape,
+
+        // Support double buffer
+        IMMBufferable,
+
         IComparable<IMMRenderComponent>
     {
         
+    }
+
+    public interface IMMRenderComponentOperations : IMMDrawOperations
+    {
+        void Add(IMMRenderComponent component);
+
+        void Remove(IMMRenderComponent component);
+
+        bool Contains(IMMRenderComponent component, bool recursive);
+    }
+
+    public interface IMMRenderComponentOrganization
+    {
+        IMMRenderComponent Parent { get; }
+
+        IMMRenderComponent Root { get; }
+
+        MMRenderComponenetCollection Children { get; }
+
+        bool IsChild { get; }
+
+        bool IsParent { get; }
+    }
+
+    public interface IMMRenderComponentOrganizationInternal
+    {
+        IMMRenderComponent Parent { get; set; }
+
+        IMMRenderComponent Root { get; set; }
     }
 
     /// <summary>
@@ -26,7 +62,7 @@ namespace MetaMind.Engine.Gui.Renders
     /// <remarks>
     /// Render reactor can be used to achieve texture clipping in Gui.
     /// </remarks>
-    public interface IMMRenderComponent : IMMRenderComponentOperations, IMMRenderComponenetOrganization, IMMRenderComponentBase 
+    public interface IMMRenderComponent : IMMRenderComponentOperations, IMMRenderComponentOrganization, IMMRenderComponentBase 
     {
         IMMRenderOpacity Opacity { get; }
 
@@ -34,16 +70,16 @@ namespace MetaMind.Engine.Gui.Renders
 
         #region Events
 
-        event EventHandler<MMRenderComponentDrawEventArgs> BeginDrawStarted;
+        event EventHandler<MMRenderComponentDrawEventArgs> CascadedBeginDrawStarted;
 
-        event EventHandler<MMRenderComponentDrawEventArgs> EndDrawStarted;
+        event EventHandler<MMRenderComponentDrawEventArgs> CascadedEndDrawStarted;
 
         event EventHandler ParentChanged;
 
         #endregion
     }
 
-    public interface IMMRenderComponentInternal : IMMRenderComponenetOrganizationInternal, IMMRenderComponentBase
+    public interface IMMRenderComponentInternal : IMMRenderComponentOrganizationInternal, IMMRenderComponentBase
     {
         #region Event Ons
 
@@ -53,9 +89,9 @@ namespace MetaMind.Engine.Gui.Renders
 
         void OnParentChanged(object sender, EventArgs e);
 
-        void OnBeginDrawStarted(object sender, MMRenderComponentDrawEventArgs e);
+        void OnCascadedBeginDrawStarted(object sender, MMRenderComponentDrawEventArgs e);
 
-        void OnEndDrawStarted(object sender, MMRenderComponentDrawEventArgs e);
+        void OnCascadedEndDrawStarted(object sender, MMRenderComponentDrawEventArgs e);
 
         #endregion
     }

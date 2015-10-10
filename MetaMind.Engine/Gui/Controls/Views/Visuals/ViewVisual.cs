@@ -12,7 +12,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Visuals
         {
         }
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void Draw(GameTime time)
         {
             this.DrawComponents(graphics, time, alpha);
             this.DrawItems(graphics, time, alpha);
@@ -22,7 +22,7 @@ namespace MetaMind.Engine.Gui.Controls.Views.Visuals
         {
             foreach (var component in this.ViewComponents)
             {
-                ((IMMDrawable)component.Value).Draw(graphics, time);
+                ((IMMDrawable)component.Value).Draw(time);
             }
         }
 

@@ -1,7 +1,6 @@
 namespace MetaMind.Engine.Components.Graphics
 {
     using System;
-    using System.Collections.Generic;
     using System.Globalization;
     using Content.Fonts;
     using Extensions;

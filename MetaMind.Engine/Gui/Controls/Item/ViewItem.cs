@@ -103,9 +103,9 @@
 
         #region Draw
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void Draw(GameTime time)
         {
-            this.ItemVisual?.Draw(graphics, time);
+            this.ItemVisual?.Draw(time);
         }
 
         #endregion

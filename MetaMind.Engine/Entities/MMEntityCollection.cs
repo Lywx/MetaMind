@@ -94,27 +94,27 @@
 
         #region Draw
 
-        public void BeginDraw(IMMEngineGraphicsService graphics, GameTime time)
+        public void BeginDraw(GameTime time)
         {
             foreach (var entity in this.drawCollection)
             {
-                entity.BeginDraw(graphics, time);
+                entity.BeginDraw(time);
             }
         }
 
-        public void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public void Draw(GameTime time)
         {
             foreach (var entity in this.drawCollection.Where(entity => entity.Visible))
             {
-                entity.Draw(graphics, time);
+                entity.Draw(time);
             }
         }
 
-        public void EndDraw(IMMEngineGraphicsService graphics, GameTime time)
+        public void EndDraw(GameTime time)
         {
             foreach (var entity in this.drawCollection.Where(entity => entity.Visible))
             {
-                entity.EndDraw(graphics, time);
+                entity.EndDraw(time);
             }
         }
 

@@ -34,14 +34,14 @@
 
         private MMEntityCollection<IMMInputEntity> ControllableEntities { get; set; }
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void Draw(GameTime time)
         {
-            base.Draw(graphics, time);
+            base.Draw(time);
 
             this.SpriteBatch.Begin();
 
-            this.ControllableEntities.Draw(graphics, time);
-            this.VisuallEntities     .Draw(graphics, time);
+            this.ControllableEntities.Draw(time);
+            this.VisuallEntities     .Draw(time);
             
             this.SpriteBatch.End();
         }

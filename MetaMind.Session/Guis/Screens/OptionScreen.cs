@@ -201,19 +201,19 @@
             this.screenBackground.FadeIn(TimeSpan.FromSeconds(0.5));
         }
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void Draw(GameTime time)
         {
             this.SpriteBatch.Begin();
 
-            this.procedureNameLabelBox.Draw(graphics, time);
-            this.procedureDescriptionLabelBox.Draw(graphics, time);
+            this.procedureNameLabelBox.Draw(time);
+            this.procedureDescriptionLabelBox.Draw(time);
 
-            this.screenLabel.Draw(graphics, time);
-            this.Entities.Draw(graphics, time);
+            this.screenLabel.Draw(time);
+            this.Entities.Draw(time);
 
             this.SpriteBatch.End();
 
-            base.Draw(graphics, time);
+            base.Draw(time);
         }
 
         public override void Update(GameTime time)

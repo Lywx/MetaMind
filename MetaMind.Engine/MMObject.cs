@@ -1,13 +1,6 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MMObject.cs">
-//   Copyright (c) 2015 Wuxiang Lin
-//   All Rights Reserved.
-// </copyright>
 namespace MetaMind.Engine
 {
     using System.Runtime.Serialization;
-    using Gui.Graphics.Adapters;
-    using Microsoft.Xna.Framework.Graphics;
     using Services;
 
     /// <summary>

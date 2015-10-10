@@ -35,7 +35,7 @@ namespace MetaMind.Engine.Gui.Modules
             this.Particles = new List<FloatParticle>();
         }
 
-        public override void Draw(IMMEngineGraphicsService graphics, GameTime time)
+        public override void Draw(GameTime time)
         {
             for (var i = 0; i < this.Particles.Count; ++i)
             {
@@ -48,7 +48,7 @@ namespace MetaMind.Engine.Gui.Modules
                     spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.Additive);
                 }
 
-                this.Particles[i].Draw(graphics, time);
+                this.Particles[i].Draw(time);
             }
         }
 
