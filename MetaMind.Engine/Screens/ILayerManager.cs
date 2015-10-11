@@ -1,6 +1,5 @@
-﻿namespace MetaMind.Engine.Screen
+﻿namespace MetaMind.Engine.Screens
 {
-    using System.Collections.Generic;
     using Entities;
 
     public interface ILayerManager : ILayerManagerOperations

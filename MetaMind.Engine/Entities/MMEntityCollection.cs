@@ -6,9 +6,8 @@
     using Collections;
     using Extensions;
     using Microsoft.Xna.Framework;
-    using Services;
 
-    public class MMEntityCollection<T> : ICollection<T>, IMMDrawOperations, IMMUpdateableOperations, IMMBufferOperations
+    public class MMEntityCollection<T> : ICollection<T>, IMMDrawOperations, IMMUpdateableOperations, IMMBufferOperations, IMMInteropOperations
         where T : IMMEntity
     {
         private ObservableCollection<IMMBufferable> bufferCollection = new ObservableCollection<IMMBufferable>();
@@ -43,6 +42,7 @@
 
         private void DrawCollection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
+            // TODO: Wrong
             this.drawCollection.Sort((a, b) => -a.CompareTo(b));
         }
 
@@ -74,19 +74,19 @@
 
         #region Load and Unload
 
-        public void LoadContent(IMMEngineInteropService interop)
+        public void LoadContent()
         {
             foreach (var entity in this)
             {
-                entity.LoadContent(interop);
+                entity.LoadContent();
             }
         }
 
-        public void UnloadContent(IMMEngineInteropService interop)
+        public void UnloadContent()
         {
             foreach (var entity in this)
             {
-                entity.UnloadContent(interop);
+                entity.UnloadContent();
             }
         }
 
@@ -130,11 +130,13 @@
             }
         }
 
-        public void UpdateInput(IMMEngineInputService input, GameTime time)
+        public void UpdateInput(GameTime time)
         {
-            foreach (var entity in this.inputCollection.Where(entity => entity.Inputable))
+            foreach (var entity in this.inputCollection.Where(
+                entity => entity.Enabled &&
+                          entity.Inputable))
             {
-                entity.UpdateInput(input, time);
+                entity.UpdateInput(time);
             }
         }
 

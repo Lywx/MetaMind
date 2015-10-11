@@ -2,13 +2,12 @@
 {
     using Engine;
     using Engine.Entities;
-    using Engine.Gui.Controls.Images;
-    using Engine.Gui.Controls.Regions;
-    using Engine.Gui.Modules;
+    using Engine.Entities.Controls.Images;
+    using Engine.Entities.Controls.Regions;
     using Engine.Services;
     using Microsoft.Xna.Framework;
 
-    public class PlayTest_Region : MMMvcEntity<object>
+    public class PlayTest_Region : MMMVCEntity<object>
     {
         private MMEntityCollection<MMInputEntity> control;
         private MMEntityCollection<MMVisualEntity> visual;
@@ -43,9 +42,9 @@
             this.control.Update(time);
         }
 
-        public override void UpdateInput(IMMEngineInputService input, GameTime time)
+        public override void UpdateInput(GameTime time)
         {
-            this.control.UpdateInput(input, time);
+            this.control.UpdateInput(time);
         }
     }
 }

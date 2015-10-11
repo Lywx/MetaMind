@@ -3,8 +3,8 @@ namespace MetaMind.Session.Guis.Modules.Summary
     using System;
     using Engine.Components.Content.Fonts;
     using Engine.Entities;
-    using Engine.Gui.Controls.Labels;
-    using Engine.Gui.Graphics.Fonts;
+    using Engine.Entities.Controls.Labels;
+    using Engine.Entities.Graphics.Fonts;
     using Engine.Services;
     using Microsoft.Xna.Framework;
 

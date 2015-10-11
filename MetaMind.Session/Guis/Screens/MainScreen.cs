@@ -5,11 +5,11 @@
     using Concepts.Synchronizations;
     using Concepts.Tests;
     using Engine.Components.Content.Fonts;
-    using Engine.Gui.Controls.Buttons;
-    using Engine.Screen;
+    using Engine.Entities.Controls.Buttons;
+    using Engine.Screens;
     using Engine.Services;
     using Engine.Services.Script.FSharp;
-    using Engine.Settings.Color;
+    using Engine.Settings;
     using Layers;
     using Microsoft.Xna.Framework;
 
@@ -41,7 +41,7 @@
 
         #region Load and Unload
 
-        public override void LoadContent(IMMEngineInteropService interop)
+        public override void LoadContent()
         {
             // Script runner
             this.scriptSearcher = new FsScriptSearcher();
@@ -127,7 +127,7 @@
             // First run of fsi session
             this.RunScripts();
 
-            base.LoadContent(interop);
+            base.LoadContent();
         }
 
         #endregion
@@ -140,7 +140,7 @@
             base.Update(time);
         }
 
-        public override void UpdateInput(IMMEngineInputService input, GameTime time)
+        public override void UpdateInput(GameTime time)
         {
             var keyboard = input.State.Keyboard;
 
@@ -154,10 +154,10 @@
                 this.synchronizationSession.ToggleSynchronization();
             }
 
-            this.buttonPrevious.UpdateInput(input, time);
-            this.buttonNext.UpdateInput(input, time);
+            this.buttonPrevious.UpdateInput(time);
+            this.buttonNext.UpdateInput(time);
 
-            base.UpdateInput(input, time);
+            base.UpdateInput(time);
         }
 
         private void RunScripts()

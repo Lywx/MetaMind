@@ -2,14 +2,14 @@
 {
     using Engine;
     using Engine.Entities;
-    using Engine.Screen;
+    using Engine.Screens;
     using Engine.Services;
 
     public class PlayTest_Screen : MMScreen
     {
         private MMEntityCollection<MMInputEntity> tests;
 
-        public override void LoadContent(IMMEngineInteropService interop)
+        public override void LoadContent()
         {
             this.tests = new MMEntityCollection<MMInputEntity>();
 
@@ -34,11 +34,11 @@
                     },
                     UpdateInputAction = (input, time) =>
                     {
-                        this.tests.UpdateInput(input, time);
+                        this.tests.UpdateInput(time);
                     }
                 });
 
-            base.LoadContent(interop);
+            base.LoadContent();
         }
     }
 }

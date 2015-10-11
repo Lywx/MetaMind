@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using Concepts.Operations;
-    using Engine.Gui.Controls.Item;
-    using Engine.Gui.Controls.Item.Data;
+    using Engine.Entities.Controls.Item;
+    using Engine.Entities.Controls.Item.Data;
 
     public class OptionViewBinding : IViewBinding
     {
@@ -20,12 +20,12 @@
             this.options = options;
         }
 
-        public dynamic AddData(IViewItem item)
+        public dynamic AddData(IMMViewItem item)
         {
             return null;
         }
 
-        public dynamic RemoveData(IViewItem item)
+        public dynamic RemoveData(IMMViewItem item)
         {
             return null;
         }

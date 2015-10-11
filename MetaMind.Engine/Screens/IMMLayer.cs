@@ -1,6 +1,11 @@
-﻿namespace MetaMind.Engine.Screen
+﻿namespace MetaMind.Engine.Screens
 {
-    using Nodes;
+    using Entities;
+    using Entities.Nodes;
+
+    public interface IMMLayerOperations : IMMInputOperations, IMMUpdateableOperations, IMMInteropOperations 
+    {
+    }
 
     public interface IMMLayer : IMMNode, IMMLayerOperations 
     {

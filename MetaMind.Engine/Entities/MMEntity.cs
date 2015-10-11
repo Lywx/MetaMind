@@ -101,14 +101,14 @@ namespace MetaMind.Engine.Entities
 
         #region Load and Unload
 
-        public virtual void LoadContent(IMMEngineInteropService interop)
+        public virtual void LoadContent()
         {
-            this.Listeners.ForEach(l => interop.Event.AddListener(l));
+            this.Listeners.ForEach(l => this.Interop.Event.AddListener(l));
         }
 
-        public virtual void UnloadContent(IMMEngineInteropService interop)
+        public virtual void UnloadContent()
         {
-            this.Listeners.ForEach(l => interop.Event.RemoveListener(l));
+            this.Listeners.ForEach(l => this.Interop.Event.RemoveListener(l));
             this.Listeners.Clear();
         }
 
@@ -138,91 +138,89 @@ namespace MetaMind.Engine.Entities
 
         public virtual void Update(GameTime time)
         {
-            this.ContinueAction(time);
+            this.ContinueAction();
         }
 
         #endregion Update
 
         #region Update Queue
 
-        private Action updateAction;
+        private List<Action> cachedActions = new List<Action>();
 
-        private readonly List<Action> updateActions = new List<Action>();
+        private Action currentAction;
 
-        /// <summary>
-        /// Runs a single action cached.
-        /// </summary>
-        protected void ContinueAction(GameTime time)
+        protected void CacheAction(Action action)
         {
-            if (this.updateAction == null
-                && this.updateActions.Count != 0)
-            {
-                this.updateAction = this.updateActions.First();
-                this.updateAction();
-            }
+            this.cachedActions.Add((() => this.TriggerAction(action)));
         }
 
         /// <summary>
         /// Removes all actions cached.
         /// </summary>
-        /// <param name="time"></param>
-        protected void ClearAction(GameTime time)
+        protected void ClearAction()
         {
-            this.updateActions.Clear();
+            this.cachedActions.Clear();
+        }
+
+        /// <summary>
+        /// Runs a single action cached.
+        /// </summary>
+        protected void ContinueAction()
+        {
+            if (this.currentAction == null
+                && this.cachedActions.Count != 0)
+            {
+                this.currentAction = this.cachedActions.First();
+                this.currentAction();
+            }
         }
 
         /// <summary>
         /// Runs all of actions cached.
         /// </summary>
-        /// <param name="time"></param>
-        protected void FlushAction(GameTime time)
+        protected void FlushAction()
         {
-            if (this.updateAction == null
-                && this.updateActions.Count != 0)
+            if (this.currentAction == null
+                && this.cachedActions.Count != 0)
             {
-                foreach (var action in this.updateActions.ToArray())
+                foreach (var action in this.cachedActions.ToArray())
                 {
-                    this.updateAction = action;
-                    this.updateAction();
+                    this.currentAction = action;
+                    this.currentAction();
                 }
             }
         }
 
-        protected void DeferAction(Action action)
+        protected void QueueAction(Action action)
         {
-            this.updateActions.Add((() => this.ProcessAction(action)));
-        }
-
-        protected void StartAction(Action action)
-        {
-            if (this.updateAction == null)
+            if (this.currentAction == null)
             {
-                this.updateAction = () => this.ProcessAction(action);
-                this.updateAction();
+                this.currentAction = () => this.TriggerAction(action);
+                this.currentAction();
             }
             else
             {
-                this.DeferAction(action);
+                this.CacheAction(action);
             }
         }
 
-        private void ProcessAction(Action action)
+        private void TriggerAction(Action action)
         {
-            if (this.updateActions.Count == 0)
+            if (this.cachedActions.Count == 0)
             {
                 this.OnActionStarted();
             }
 
             action();
 
-            if (this.updateActions.Contains(this.updateAction))
+            if (this.cachedActions.Contains(this.currentAction))
             {
-                this.updateActions.Remove(this.updateAction);
+                this.cachedActions.Remove(this.currentAction);
             }
 
-            this.updateAction = null;
+            this.currentAction = null;
 
-            if (this.updateActions.Count == 0)
+            if (this.cachedActions.Count == 0)
             {
                 this.OnActionStopped();
             }
@@ -248,7 +246,7 @@ namespace MetaMind.Engine.Entities
                 if (!this.IsDisposed)
                 {
                     // Dispose listeners
-                    this.UnloadContent(this.Interop);
+                    this.UnloadContent();
 
                     this.UpdateOrderChanged = null;
                     this.EnabledChanged     = null;

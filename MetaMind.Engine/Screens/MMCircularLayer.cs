@@ -1,10 +1,8 @@
-﻿namespace MetaMind.Engine.Screen
+﻿namespace MetaMind.Engine.Screens
 {
     using System;
-    using Engine;
     using Entities;
     using Microsoft.Xna.Framework;
-    using Services;
 
     public class MMCircularLayer : MMLayer, ICircularLayerManager
     {
@@ -21,16 +19,16 @@
 
         #region Load and Unload
 
-        public override void LoadContent(IMMEngineInteropService interop)
+        public override void LoadContent()
         {
-            this.Layers.LoadContent(interop);
-            base       .LoadContent(interop);
+            this.Layers.LoadContent();
+            base       .LoadContent();
         }
 
-        public override void UnloadContent(IMMEngineInteropService interop)
+        public override void UnloadContent()
         {
-            this.Layers.UnloadContent(interop);
-            base       .UnloadContent(interop);
+            this.Layers.UnloadContent();
+            base       .UnloadContent();
         }
 
         #endregion
@@ -43,22 +41,16 @@
             base       .Draw(time);
         }
 
-        public override void UpdateTransition(GameTime time)
-        {
-            this.Layers.ForEach(layer => layer.UpdateTransition(time));
-            base                              .UpdateTransition(time);
-        }
-
         public override void Update(GameTime time)
         {
             this.Layers.ForEach(layer => layer.Update(time));
             base                              .Update(time);
         }
 
-        public override void UpdateInput(IMMEngineInputService input, GameTime time)
+        public override void UpdateInput(GameTime time)
         {
-            this.LayerDisplayed.UpdateInput(input, time);
-            base               .UpdateInput(input, time);
+            this.LayerDisplayed.UpdateInput(time);
+            base               .UpdateInput(time);
         }
 
         public override void UpdateBackwardBuffer()

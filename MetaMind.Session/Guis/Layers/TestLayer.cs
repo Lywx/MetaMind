@@ -5,11 +5,11 @@ namespace MetaMind.Session.Guis.Layers
     using Concepts.Tests;
     using Engine.Components.Content.Fonts;
     using Engine.Entities;
-    using Engine.Gui.Controls.Labels;
-    using Engine.Gui.Graphics.Fonts;
-    using Engine.Screen;
+    using Engine.Entities.Controls.Labels;
+    using Engine.Entities.Graphics.Fonts;
+    using Engine.Screens;
     using Engine.Services;
-    using Engine.Settings.Color;
+    using Engine.Settings;
     using Microsoft.Xna.Framework;
     using Modules;
     using Screens;
@@ -57,19 +57,19 @@ namespace MetaMind.Session.Guis.Layers
 
         #region Load and Unload
 
-        public override void LoadContent(IMMEngineInteropService interop)
+        public override void LoadContent()
         {
             this.test = SessionGame.SessionData.Test;
 
             // Controllables
             var testModule = new TestModule(
-                new TesTMvcSettings(),
+                new TesTMVCSettings(),
                 this.test,
                 this.testSession,
                 this.testSynthesizer);
 
             this.inputEntities.Add(testModule);
-            this.inputEntities.LoadContent(interop);
+            this.inputEntities.LoadContent();
 
             // Visuals
             var graphicsSettings = this.Graphics.Settings;
@@ -86,16 +86,16 @@ namespace MetaMind.Session.Guis.Layers
             };
 
             this.drawEntities.Add(this.testLabel);
-            this.drawEntities.LoadContent(interop);
+            this.drawEntities.LoadContent();
 
-            base.LoadContent(interop);
+            base.LoadContent();
         }
 
-        public override void UnloadContent(IMMEngineInteropService interop)
+        public override void UnloadContent()
         {
-            this.inputEntities.UnloadContent(interop);
-            this.drawEntities .UnloadContent(interop);
-            base              .UnloadContent(interop);
+            this.inputEntities.UnloadContent();
+            this.drawEntities .UnloadContent();
+            base              .UnloadContent();
         }
 
         #endregion
@@ -149,10 +149,10 @@ namespace MetaMind.Session.Guis.Layers
             }
         }
 
-        public override void UpdateInput(IMMEngineInputService input, GameTime time)
+        public override void UpdateInput(GameTime time)
         {
-            this.inputEntities.UpdateInput(input, time);
-            base.                     UpdateInput(input, time);
+            this.inputEntities.UpdateInput(time);
+            base.                     UpdateInput(time);
         }
 
         #endregion

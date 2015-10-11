@@ -3,8 +3,8 @@ namespace MetaMind.Engine.Components.Graphics
     using System;
     using System.Globalization;
     using Content.Fonts;
+    using Entities.Graphics.Fonts;
     using Extensions;
-    using Gui.Graphics.Fonts;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 

@@ -4,23 +4,23 @@
     using System.Collections.Generic;
     using Concepts.Operations;
     using Engine.Entities;
-    using Engine.Gui.Controls.Item;
-    using Engine.Gui.Controls.Item.Data;
-    using Engine.Gui.Controls.Item.Factories;
-    using Engine.Gui.Controls.Item.Frames;
-    using Engine.Gui.Controls.Item.Interactions;
-    using Engine.Gui.Controls.Item.Layers;
-    using Engine.Gui.Controls.Item.Settings;
-    using Engine.Gui.Controls.Regions;
-    using Engine.Gui.Controls.Views;
-    using Engine.Gui.Controls.Views.Layouts;
-    using Engine.Gui.Controls.Views.Logic;
-    using Engine.Gui.Controls.Views.Regions;
-    using Engine.Gui.Controls.Views.Scrolls;
-    using Engine.Gui.Controls.Views.Selections;
-    using Engine.Gui.Controls.Views.Swaps;
-    using Engine.Gui.Controls.Views.Visuals;
-    using Engine.Gui.Elements;
+    using Engine.Entities.Controls.Item;
+    using Engine.Entities.Controls.Item.Data;
+    using Engine.Entities.Controls.Item.Factories;
+    using Engine.Entities.Controls.Item.Frames;
+    using Engine.Entities.Controls.Item.Interactions;
+    using Engine.Entities.Controls.Item.Layers;
+    using Engine.Entities.Controls.Item.Settings;
+    using Engine.Entities.Controls.Regions;
+    using Engine.Entities.Controls.Views;
+    using Engine.Entities.Controls.Views.Layouts;
+    using Engine.Entities.Controls.Views.Logic;
+    using Engine.Entities.Controls.Views.Regions;
+    using Engine.Entities.Controls.Views.Scrolls;
+    using Engine.Entities.Controls.Views.Selections;
+    using Engine.Entities.Controls.Views.Swaps;
+    using Engine.Entities.Controls.Views.Visuals;
+    using Engine.Entities.Elements;
     using Microsoft.Xna.Framework;
     using Modules;
     using Tests;
@@ -35,9 +35,9 @@
 
         private IMMViewController viewController;
 
-        private IMMViewNodeVisual viewVisual;
+        private IMMViewRenderer viewVisual;
 
-        private BlockViewVerticalLayer viewLayer;
+        private MMBlockViewVerticalLayer viewLayer;
 
         private IViewVerticalScrollbar viewScrollbar;
 
@@ -51,15 +51,15 @@
             this.OperationSession = operationSeesion;
         }
 
-        protected IMMViewNode View { get; set; }
+        protected IMMView View { get; set; }
 
-        protected BlockViewVerticalScrollController ViewScroll { get; set; }
+        protected MMBlockViewVerticalScrollController ViewScroll { get; set; }
 
-        protected BlockViewVerticalSelectionController ViewSelection { get; set; }
+        protected MMBlockViewVerticalSelectionController ViewSelection { get; set; }
 
-        protected IndexBlockViewVerticalLayout ViewLayout { get; set; }
+        protected MMIndexBlockViewVerticalLayout ViewLayout { get; set; }
 
-        protected ViewSwapController ViewSwap { get; set; }
+        protected MMViewSwapController ViewSwap { get; set; }
 
         protected ViewRegion ViewRegion { get; set; }
 
@@ -69,7 +69,7 @@
 
         protected OperationSession OperationSession { get; set; }
 
-        public virtual void Compose(IMMViewNode view, dynamic viewData)
+        public virtual void Compose(IMMView view, dynamic viewData)
         {
             if (view == null)
             {
@@ -91,12 +91,12 @@
             this.SetupLogic();
         }
 
-        public IMMViewNode Clone(IViewItem item)
+        public IMMView Clone(IMMViewItem item)
         {
-            var itemLayer = item.GetLayer<BlockViewVerticalItemLayer>();
+            var itemLayer = item.GetLayer<MMBlockViewVerticalItemLayer>();
             var itemLayout = itemLayer.ItemLayout;
 
-            var hostViewLayer = item.View.GetLayer<BlockViewVerticalLayer>();
+            var hostViewLayer = item.View.GetLayer<MMBlockViewVerticalLayer>();
             var hostViewSettings = hostViewLayer.ViewSettings;
             var hostViewScroll = hostViewLayer.ViewScroll;
 
@@ -106,7 +106,7 @@
             indexViewSettings.ViewRowDisplay = hostViewSettings.ViewRowDisplay - itemLayout.Row - itemLayout.BlockRow;
             indexViewSettings.ViewPosition   = hostViewScroll.Position(itemLayout.Row + itemLayout.BlockRow);
 
-            return new MMViewNode(indexViewSettings, indexItemSettings, new List<IViewItem>());
+            return new MMView(indexViewSettings, indexItemSettings, new List<IMMViewItem>());
         }
 
         protected void AddView()
@@ -117,10 +117,10 @@
 
             // View composition
             this.ViewSelection = this.AddViewSelection();
-            this.ViewScroll    = new IndexBlockViewVerticalScrollController(this.View);
-            this.ViewSwap      = new ViewSwapController(this.View);
-            this.ViewLayout    = new IndexBlockViewVerticalLayout(this.View);
-            this.viewLayer     = new BlockViewVerticalLayer(this.View);
+            this.ViewScroll    = new MMIndexBlockViewVerticalScrollController(this.View);
+            this.ViewSwap      = new MMViewSwapController(this.View);
+            this.ViewLayout    = new MMIndexBlockViewVerticalLayout(this.View);
+            this.viewLayer     = new MMBlockViewVerticalLayer(this.View);
 
             // Item composition
             this.AddItemFactory();
@@ -138,12 +138,12 @@
             // View setup
             this.View.ViewLayer = this.viewLayer;
             this.View.ViewController = this.viewController;
-            this.View.ViewVisual = this.viewVisual;
+            this.View.Renderer = this.viewVisual;
         }
 
-        protected virtual BlockViewVerticalSelectionController AddViewSelection()
+        protected virtual MMBlockViewVerticalSelectionController AddViewSelection()
         {
-            return new IndexBlockViewVerticalSelectionController(this.View);
+            return new MMIndexBlockViewVerticalSelectionController(this.View);
         }
 
         protected virtual IMMViewController AddViewLogic()
@@ -202,7 +202,7 @@
                 {
                     var itemFrame = new OperationItemFrameController(item, new ViewItemImmRectangle(item));
 
-                    var itemLayoutInteraction = new BlockViewVerticalItemLayoutInteraction(
+                    var itemLayoutInteraction = new MMBlockViewVerticalItemLayoutInteraction(
                         item,
                         this.ViewSelection,
                         this.ViewScroll);
@@ -211,13 +211,13 @@
                         item,
                         itemLayoutInteraction);
 
-                    var itemInteraction = new IndexBlockViewVerticalItemInteraction(
+                    var itemInteraction = new MMIndexBlockViewVerticalItemInteraction(
                         item,
                         itemLayout,
                         itemLayoutInteraction,
                         new OperationIndexedViewBuilder(this.View, this.OperationSession));
 
-                    var itemModel = new ViewItemDataModel(item);
+                    var itemModel = new MMViewItemDataModel(item);
 
                     return new OperationItemLogic(
                         item,
@@ -227,7 +227,7 @@
                         itemLayout);
                 },
 
-                item => new OperationItemVisual(item));
+                item => new OperationItemRenderer(item));
         }
 
         protected virtual void SetupLogic()

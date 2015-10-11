@@ -1,19 +1,19 @@
 namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
 {
     using Engine.Components.Graphics;
-    using Engine.Gui.Controls.Item;
-    using Engine.Gui.Controls.Item.Settings;
-    using Engine.Gui.Graphics.Fonts;
+    using Engine.Entities.Controls.Item;
+    using Engine.Entities.Controls.Item.Settings;
+    using Engine.Entities.Graphics.Fonts;
     using Engine.Services.Loader;
-    using Engine.Settings.Color;
+    using Engine.Settings;
     using Microsoft.Xna.Framework;
     using Modules;
 
     public class TestItemSettings : ItemSettings, IParameterLoader<MMGraphicsSettings>
     {
-        private readonly ViewItemVisualSettings rootFrame;
+        private readonly MMViewItemRenderSettings rootFrame;
 
-        private readonly ViewItemVisualSettings idFrame;
+        private readonly MMViewItemRenderSettings idFrame;
 
         private readonly LabelSettings idLabel = new LabelSettings
         {
@@ -24,7 +24,7 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
             VAlignment = VerticalAlignment.Center,
         };
 
-        private readonly ViewItemVisualSettings plusFrame;
+        private readonly MMViewItemRenderSettings plusFrame;
 
         private readonly LabelSettings plusLabel = new LabelSettings
         {
@@ -35,7 +35,7 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
             VAlignment = VerticalAlignment.Center,
         };
 
-        private readonly ViewItemVisualSettings statusFrame;
+        private readonly MMViewItemRenderSettings statusFrame;
 
         private readonly LabelSettings statusLabel = new LabelSettings{
             Size       = 0.7f,
@@ -46,7 +46,7 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
             Monospaced = false,
         };
 
-        private readonly ViewItemVisualSettings statisticsFrame;
+        private readonly MMViewItemRenderSettings statisticsFrame;
 
         private readonly LabelSettings statisticsLabel = new LabelSettings{
             Size       = 0.7f,
@@ -57,7 +57,7 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
             Monospaced = false,
         };
 
-        private readonly ViewItemVisualSettings nameFrame;
+        private readonly MMViewItemRenderSettings nameFrame;
 
         private readonly LabelSettings nameLabel = new LabelSettings
         {
@@ -71,7 +71,7 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
             Monospaced = true,
         };
 
-        private readonly ViewItemVisualSettings descriptionFrame;
+        private readonly MMViewItemRenderSettings descriptionFrame;
 
         private readonly LabelSettings descriptionLabel = new LabelSettings
         {
@@ -91,15 +91,15 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
         {
             this.LoadParameter(this.Graphics.Settings);
 
-            this.rootFrame = new ViewItemVisualSettings
+            this.rootFrame = new MMViewItemRenderSettings
             {
-                Size   = new Point(this.viewportWidth - TesTMvcSettings.ViewMargin.X * 2, 26),
+                Size   = new Point(this.viewportWidth - TesTMVCSettings.ViewMargin.X * 2, 26),
                 Margin = new Point(2, 2)
             };
 
-            this.nameFrame = new ViewItemVisualSettings
+            this.nameFrame = new MMViewItemRenderSettings
             {
-                Size   = new Point(this.viewportWidth - TesTMvcSettings.ViewMargin.X * 2 - 24 - 128, 26),
+                Size   = new Point(this.viewportWidth - TesTMVCSettings.ViewMargin.X * 2 - 24 - 128, 26),
                 Margin = new Point(2, 2),
 
                 RegularColor      = MMPalette.DimBlue,
@@ -109,9 +109,9 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
                 SelectionColor    = MMPalette.LightBlue,
             };
 
-            this.descriptionFrame = new ViewItemVisualSettings
+            this.descriptionFrame = new MMViewItemRenderSettings
             {
-                Size   = new Point(this.viewportWidth - TesTMvcSettings.ViewMargin.X * 2 - 24 - 128, 26),
+                Size   = new Point(this.viewportWidth - TesTMVCSettings.ViewMargin.X * 2 - 24 - 128, 26),
                 Margin = new Point(2, 2),
 
                 RegularColor      = MMPalette.Transparent,
@@ -120,7 +120,7 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
                 ModificationColor = MMPalette.Transparent,
                 SelectionColor    = MMPalette.Transparent80,
             };
-            this.idFrame = new ViewItemVisualSettings
+            this.idFrame = new MMViewItemRenderSettings
             {
                 Size   = new Point(24, 26),
                 Margin = new Point(2, 2),
@@ -132,7 +132,7 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
                 SelectionColor    = MMPalette.DarkRed,
             };
 
-            this.plusFrame = new ViewItemVisualSettings
+            this.plusFrame = new MMViewItemRenderSettings
             {
                 Size   = new Point(24, 26),
                 Margin = new Point(2, 2),
@@ -144,7 +144,7 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
                 SelectionColor    = MMPalette.Transparent20,
             };
 
-            this.statusFrame = new ViewItemVisualSettings
+            this.statusFrame = new MMViewItemRenderSettings
             {
                 Size   = new Point(128, 26),
                 Margin = new Point(2, 2),
@@ -156,7 +156,7 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
                 SelectionColor    = MMPalette.Transparent20,
             };
 
-            this.statisticsFrame = new ViewItemVisualSettings
+            this.statisticsFrame = new MMViewItemRenderSettings
             {
                 Size   = new Point(128, 26),
                 Margin = new Point(2, 2),

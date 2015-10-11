@@ -1,9 +1,9 @@
 namespace MetaMind.Engine.Entities
 {
-    public interface IMMMvcEntity : IMMInputEntity
+    public interface IMMMVCEntity : IMMInputEntity
     {
-        IMMMvcEntityLogic Logic { get; }
+        IMMMVCEntityController Controller { get; }
 
-        IMMMvcEntityVisual Visual { get; }
+        IMMMVCEntityRenderer Renderer { get; }
     }
 }

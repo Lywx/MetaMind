@@ -1,13 +1,13 @@
 ﻿namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
 {
-    using Engine.Gui.Controls.Item;
-    using Engine.Gui.Controls.Item.Interactions;
-    using Engine.Gui.Controls.Item.Layouts;
+    using Engine.Entities.Controls.Item;
+    using Engine.Entities.Controls.Item.Interactions;
+    using Engine.Entities.Controls.Item.Layouts;
 
-    public class TestItemLayout : IndexBlockViewVerticalItemLayout
+    public class TestItemLayout : MMIndexBlockViewVerticalItemLayout
     {
         public TestItemLayout(
-            IViewItem item,
+            IMMViewItem item,
             IViewItemLayoutInteraction itemLayoutInteraction)
             : base(item, itemLayoutInteraction)
         {

@@ -87,7 +87,7 @@ namespace MetaMind.Engine.Entities
             }
         }
 
-        public virtual void UpdateInput(IMMEngineInputService input, GameTime time) { }
+        public virtual void UpdateInput(GameTime time) { }
 
         #endregion Input
 

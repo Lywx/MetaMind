@@ -10,7 +10,7 @@
     using Microsoft.Xna.Framework.Graphics;
     using Processors;
 
-    public class MMConsole : MMMvcComponent<GameConsoleSettings, MMConsoleLogic, MMConsoleVisual>
+    public class MMConsole : MMMVCComponent<GameConsoleSettings, MMConsoleController, MMConsoleRenderer>
     {
         #region Constructors and Finalizer
 
@@ -27,11 +27,11 @@
                 throw new ArgumentNullException(nameof(renderer));
             }
 
-            this.Logic = new MMConsoleLogic(this, engine, new CommandProcessor(this));
-            this.Logic.Opened += (s, e) => this.Visual.Open();
-            this.Logic.Closed += (s, e) => this.Visual.Close();
+            this.Controller = new MMConsoleController(this, engine, new CommandProcessor(this));
+            this.Controller.Opened += (s, e) => this.Renderer.Open();
+            this.Controller.Closed += (s, e) => this.Renderer.Close();
 
-            this.Visual = new MMConsoleVisual(this, engine, spriteBatch, renderer);
+            this.Renderer = new MMConsoleRenderer(this, engine, spriteBatch, renderer);
         }
 
         #endregion
@@ -41,7 +41,7 @@
         /// <summary>
         ///     Indicates whether the console is currently opened
         /// </summary>
-        public bool IsOpen => this.Visual.IsOpened;
+        public bool IsOpen => this.Renderer.IsOpened;
 
         #endregion
 
@@ -51,8 +51,8 @@
 
         public ICommandProcessor Processor
         {
-            get { return this.Logic.Processor; }
-            set { this.Logic.Processor = value; }
+            get { return this.Controller.Processor; }
+            set { this.Controller.Processor = value; }
         }
 
         #endregion
@@ -61,8 +61,8 @@
 
         public override void Initialize()
         {
-            this.Logic .Initialize();
-            this.Visual.Initialize();
+            this.Controller .Initialize();
+            this.Renderer.Initialize();
 
             this.InitializeCommands();
             base.Initialize();
@@ -100,7 +100,7 @@
 
         public override void Update(GameTime time)
         {
-            this.UpdateInput(this.Input, time);
+            this.UpdateInput(time);
             base.Update(time);
         }
 
@@ -144,8 +144,8 @@
 
         public void ClearOutput()
         {
-            this.Logic.OutputClear();
-            this.Visual.ResetCommandPosition();
+            this.Controller.OutputClear();
+            this.Renderer.ResetCommandPosition();
         }
 
         /// <summary>
@@ -171,7 +171,7 @@
 
         private void WriteLine(string buffer, CommandType bufferType)
         {
-            this.Logic.WriteLine(buffer, bufferType);
+            this.Controller.WriteLine(buffer, bufferType);
         }
 
         #endregion
@@ -182,8 +182,8 @@
         {
             if (disposing)
             {
-                this.Visual?.Dispose();
-                this.Logic ?.Dispose();
+                this.Renderer?.Dispose();
+                this.Controller ?.Dispose();
 
                 this.Commands.Clear();
             }

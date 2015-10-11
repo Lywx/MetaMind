@@ -1,10 +1,9 @@
-namespace MetaMind.Engine.Screen
+namespace MetaMind.Engine.Screens
 {
     using System;
-    using Entities;
-    using Nodes;
+    using Entities.Nodes;
 
-    public interface IMMScreen : IMMNode, IMMRenderEntity, IMMScreenOperations, IMMInteropOperations, IDisposable
+    public interface IMMScreen : IMMNode, IMMScreenOperations
     {
         #region Screen Option Data
 

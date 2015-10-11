@@ -3,17 +3,17 @@
     using System;
     using Concepts.Tests;
     using Engine.Entities;
-    using Engine.Gui.Controls.Labels;
-    using Engine.Gui.Graphics.Fonts;
+    using Engine.Entities.Controls.Labels;
+    using Engine.Entities.Graphics.Fonts;
     using Engine.Services;
-    using Engine.Settings.Color;
+    using Engine.Settings;
     using Microsoft.Xna.Framework;
 
-    public class TesTMvcVisual : MMMvcEntityVisual<TestModule, TesTMvcSettings, TesTMvcLogic>
+    public class TesTMVCRenderer : MMMVCEntityRenderer<TestModule, TesTMVCSettings, TesTMVCController>
     {
         private readonly ITest test;
 
-        public TesTMvcVisual(TestModule module, ITest test) : base(module)
+        public TesTMVCRenderer(TestModule module, ITest test) : base(module)
         {
             if (test == null)
             {
@@ -27,7 +27,7 @@
 
         private MMEntityCollection<IMMVisualEntity> VisualEntities { get; set; }
 
-        public override void LoadContent(IMMEngineInteropService interop)
+        public override void LoadContent()
         {
             var testCompletionFont  = new Func<Font>(() => Font.UiStatistics);
             var testCompletionColor = new Func<Color>(() => this.test.Evaluation.ResultAllPassedRate > TestMonitor.TestWarningRate ? MMPalette.LightGreen : MMPalette.LightPink);
@@ -54,10 +54,10 @@
 
             this.VisualEntities.Add(testRatePrefix);
             this.VisualEntities.Add(testRateSubfix);
-            this.VisualEntities.LoadContent(interop);
+            this.VisualEntities.LoadContent();
 
 
-            base.LoadContent(interop);
+            base.LoadContent();
         }
 
         private Vector2 TestRateCenterPosition => new Vector2(this.Graphics.Settings.Width / 2 - 160, 90);
@@ -66,7 +66,7 @@
         {
             base.BeginDraw(time);
 
-            this.Logic.ControllableEntities.BeginDraw(time);
+            this.Controller.ControllableEntities.BeginDraw(time);
             this      .VisualEntities      .BeginDraw(time);
         }
 
@@ -74,7 +74,7 @@
         {
             base.Draw(time);
 
-            this.Logic.ControllableEntities.Draw(time);
+            this.Controller.ControllableEntities.Draw(time);
             this      .VisualEntities      .Draw(time);
         }
 
@@ -83,7 +83,7 @@
             base.EndDraw(time);
 
             this      .VisualEntities      .EndDraw(time);
-            this.Logic.ControllableEntities.EndDraw(time);
+            this.Controller.ControllableEntities.EndDraw(time);
         }
 
         public override void Update(GameTime time)

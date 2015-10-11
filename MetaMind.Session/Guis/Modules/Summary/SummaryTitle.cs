@@ -2,8 +2,8 @@ namespace MetaMind.Session.Guis.Modules.Summary
 {
     using System;
     using Engine.Components.Content.Fonts;
-    using Engine.Gui.Controls.Labels;
-    using Engine.Gui.Graphics.Fonts;
+    using Engine.Entities.Controls.Labels;
+    using Engine.Entities.Graphics.Fonts;
     using Microsoft.Xna.Framework;
 
     public class SummaryTitle : Label

@@ -5,13 +5,13 @@
     using Concepts.Tests;
     using Engine.Entities;
 
-    public class TestModule : MMMvcEntity<TesTMvcSettings>
+    public class TestModule : MMMVCEntity<TesTMVCSettings>
     {
         private readonly ITest test;
 
         private readonly TestSession testSession;
 
-        public TestModule(TesTMvcSettings settings, ITest test, TestSession testSession, SpeechSynthesizer testSynthesizer)
+        public TestModule(TesTMVCSettings settings, ITest test, TestSession testSession, SpeechSynthesizer testSynthesizer)
             : base(settings)
         {
             if (test == null)
@@ -34,8 +34,8 @@
             Test.Session = this.testSession;
             Test.Speech  = testSynthesizer;
 
-            this.Logic  = new TesTMvcLogic(this, this.test, this.testSession);
-            this.Visual = new TesTMvcVisual(this, this.test);
+            this.Controller  = new TesTMVCController(this, this.test, this.testSession);
+            this.Renderer = new TesTMVCRenderer(this, this.test);
         }
     }
 }

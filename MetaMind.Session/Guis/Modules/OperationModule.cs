@@ -4,14 +4,14 @@
     using System.Collections.Generic;
     using Concepts.Operations;
     using Engine.Entities;
-    using Engine.Gui.Controls.Item;
-    using Engine.Gui.Controls.Views;
+    using Engine.Entities.Controls.Item;
+    using Engine.Entities.Controls.Views;
     using Engine.Services;
     using Microsoft.Xna.Framework;
     using Widgets.IndexViews;
     using Widgets.IndexViews.Operations;
 
-    public class OperationModule : MMMvcEntity<OperationModuleSettings>
+    public class OperationModule : MMMVCEntity<OperationModuleSettings>
     {
         private readonly IOperationDescription operation;
 
@@ -34,16 +34,16 @@
             this.operationSession = operationSession;
             Operation.Session     = operationSession;
 
-            this.Entities = new MMEntityCollection<IMMViewNode>();
+            this.Entities = new MMEntityCollection<IMMView>();
         }
 
-        private MMEntityCollection<IMMViewNode> Entities { get; set; }
+        private MMEntityCollection<IMMView> Entities { get; set; }
 
-        private IMMViewNode View { get; set; }
+        private IMMView View { get; set; }
 
         #region Load and Unload
                                                                                                            
-        public override void LoadContent(IMMEngineInteropService interop)
+        public override void LoadContent()
         {
             var graphicsSettings = this.Graphics.Settings;
 
@@ -58,16 +58,16 @@
             var itemSettings = new OperationItemSettings();
 
             // View construction
-            this.View = new MMViewNode(viewSettings, itemSettings, new List<IViewItem>());
+            this.View = new MMView(viewSettings, itemSettings, new List<IMMViewItem>());
 
             var viewCompositor = new OperationIndexViewBuilder(this.operationSession);
             viewCompositor.Compose(this.View, this.operation);
 
             // Entities
             this.Entities.Add(this.View);
-            this.Entities.LoadContent(interop);
+            this.Entities.LoadContent();
 
-            base.LoadContent(interop);
+            base.LoadContent();
         }
 
         #endregion
@@ -84,10 +84,10 @@
 
         #region Update
 
-        public override void UpdateInput(IMMEngineInputService input, GameTime time)
+        public override void UpdateInput(GameTime time)
         {
-            this.Entities.UpdateInput(input, time);
-            base         .UpdateInput(input, time);
+            this.Entities.UpdateInput(time);
+            base         .UpdateInput(time);
         }
 
         public override void Update(GameTime time)

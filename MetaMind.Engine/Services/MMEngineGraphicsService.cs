@@ -1,10 +1,3 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MMngineGraphicsService.cs">
-//   Copyright (c) 2015 Wuxiang Lin
-//   All Rights Reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
 namespace MetaMind.Engine.Services
 {
     using Components;
@@ -36,6 +29,8 @@ namespace MetaMind.Engine.Services
         public SpriteBatch SpriteBatch => this.Graphics.SpriteBatch;
 
         public IMMRenderer Renderer => this.Graphics.Renderer;
+
+        public MMRendererManager RendererManager => this.Graphics.RendererManager;
 
         #endregion
     }

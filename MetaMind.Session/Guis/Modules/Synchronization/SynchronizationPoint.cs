@@ -3,9 +3,9 @@ namespace MetaMind.Session.Guis.Modules.Synchronization
     using System;
     using Engine.Components.Content.Fonts;
     using Engine.Entities;
-    using Engine.Gui.Controls.Images;
-    using Engine.Gui.Controls.Labels;
-    using Engine.Gui.Graphics.Fonts;
+    using Engine.Entities.Controls.Images;
+    using Engine.Entities.Controls.Labels;
+    using Engine.Entities.Graphics.Fonts;
     using Engine.Services;
     using Microsoft.Xna.Framework;
 

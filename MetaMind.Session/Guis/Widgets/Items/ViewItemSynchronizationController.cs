@@ -9,12 +9,12 @@ namespace MetaMind.Session.Guis.Widgets.Items
 {
     using Concepts.Synchronizations;
     using Engine.Components.Interop.Event;
-    using Engine.Gui.Controls.Item;
+    using Engine.Entities.Controls.Item;
     using Session.Sessions;
 
-    public class ViewItemSynchronizationController : ViewItemComponent, ISynchronizationController 
+    public class MMViewItemSynchronizationController : MMViewItemControllerComponent, ISynchronizationController 
     {
-        public ViewItemSynchronizationController(IViewItem item)
+        public MMViewItemSynchronizationController(IMMViewItem item)
             : base(item)
         {
             this.Synchronizable      = (ISynchronizable)this.Item.ItemData;

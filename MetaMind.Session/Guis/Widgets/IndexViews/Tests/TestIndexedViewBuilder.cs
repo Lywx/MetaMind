@@ -2,24 +2,24 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
 {
     using System;
     using Concepts.Tests;
-    using Engine.Gui.Controls.Item.Data;
-    using Engine.Gui.Controls.Item.Factories;
-    using Engine.Gui.Controls.Item.Frames;
-    using Engine.Gui.Controls.Item.Interactions;
-    using Engine.Gui.Controls.Views;
-    using Engine.Gui.Controls.Views.Logic;
-    using Engine.Gui.Controls.Views.Regions;
-    using Engine.Gui.Controls.Views.Selections;
-    using Engine.Gui.Controls.Views.Visuals;
+    using Engine.Entities.Controls.Item.Data;
+    using Engine.Entities.Controls.Item.Factories;
+    using Engine.Entities.Controls.Item.Frames;
+    using Engine.Entities.Controls.Item.Interactions;
+    using Engine.Entities.Controls.Views;
+    using Engine.Entities.Controls.Views.Logic;
+    using Engine.Entities.Controls.Views.Regions;
+    using Engine.Entities.Controls.Views.Selections;
+    using Engine.Entities.Controls.Views.Visuals;
 
     /// <summary>
     /// Composers are not intended to be reused.
     /// </summary>
     public class TestIndexedViewBuilder : TestIndexViewBuilder
     {
-        private readonly IMMViewNode viewHost;
+        private readonly IMMView viewHost;
 
-        public TestIndexedViewBuilder(IMMViewNode viewHost, TestSession testSeesion)
+        public TestIndexedViewBuilder(IMMView viewHost, TestSession testSeesion)
             : base(testSeesion)
         {
             if (viewHost == null)
@@ -30,7 +30,7 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
             this.viewHost = viewHost;
         }
 
-        public override void Compose(IMMViewNode view, dynamic viewData)
+        public override void Compose(IMMView view, dynamic viewData)
         {
             if (view == null)
             {
@@ -51,9 +51,9 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
             this.SetupLogic();
         }
 
-        protected override BlockViewVerticalSelectionController AddViewSelection()
+        protected override MMBlockViewVerticalSelectionController AddViewSelection()
         {
-            return new IndexedBlockViewVerticalSelectionController(this.View);
+            return new MMIndexedBlockViewVerticalSelectionController(this.View);
         }
 
         protected override IMMViewController AddViewLogic()
@@ -82,7 +82,7 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
                 {
                     var itemFrame = new TestItemFrameController(item, new ViewItemImmRectangle(item));
 
-                    var itemLayoutInteraction = new BlockViewVerticalItemLayoutInteraction(
+                    var itemLayoutInteraction = new MMBlockViewVerticalItemLayoutInteraction(
                         item,
                         this.ViewSelection,
                         this.ViewScroll);
@@ -101,13 +101,13 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
                         }
                     };
 
-                    var itemInteraction = new IndexBlockViewVerticalItemInteraction(
+                    var itemInteraction = new MMIndexBlockViewVerticalItemInteraction(
                         item,
                         itemLayout,
                         itemLayoutInteraction, 
                         new TestIndexedViewBuilder(this.View, this.TestSession));
 
-                    var itemModel = new ViewItemDataModel(item);
+                    var itemModel = new MMViewItemDataModel(item);
 
                     return new TestItemLogic(
                         item,
@@ -117,7 +117,7 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
                         itemLayout);
                 },
 
-                item => new TestItemVisual(item));
+                item => new TestItemRenderer(item));
         }
 
         protected override void AddViewRegion()

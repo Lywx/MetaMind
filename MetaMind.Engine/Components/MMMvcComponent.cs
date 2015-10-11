@@ -2,15 +2,14 @@ namespace MetaMind.Engine.Components
 {
     using System;
     using Microsoft.Xna.Framework;
-    using Services;
 
-    public abstract class MMMvcComponent<TMvcSettings, TMvcLogic, TMvcVisual> : MMInputableComponent, IMMMvcComponent<TMvcSettings, TMvcLogic, TMvcVisual>
-        where                            TMvcLogic                            : IMMMvcComponentLogic<TMvcSettings>
-        where                            TMvcVisual                           : IMMMvcComponentVisual<TMvcSettings>
+    public abstract class MMMVCComponent<TMVCSettings, TMVCController, TMVCRenderer> : MMInputableComponent, IMMMVCComponent<TMVCSettings, TMVCController, TMVCRenderer>
+        where                            TMVCController                              : IMMMVCComponentController<TMVCSettings>
+        where                            TMVCRenderer                                : IMMMVCComponentRenderer<TMVCSettings>
     {
         #region Constructors
 
-        protected MMMvcComponent(TMvcSettings settings, MMEngine engine)
+        protected MMMVCComponent(TMVCSettings settings, MMEngine engine)
             : base(engine)
         {
             if (settings == null)
@@ -27,53 +26,55 @@ namespace MetaMind.Engine.Components
             this.Engine   = engine;
         }
 
-        ~MMMvcComponent()
+        ~MMMVCComponent()
         {
             this.Dispose(true);
         }
 
         #endregion
 
-        public TMvcSettings Settings { get; protected set; }
+        public TMVCSettings Settings { get; protected set; }
 
-        public TMvcLogic Logic { get; protected set; }
+        public TMVCController Controller { get; protected set; }
 
-        public TMvcVisual Visual { get; protected set; }
+        public TMVCRenderer Renderer { get; protected set; }
 
         #region Draw
 
         public override void BeginDraw(GameTime time)
         {
-            base        .BeginDraw(time);
-            this.Visual?.BeginDraw(time);
+            base          .BeginDraw(time);
+            this.Renderer?.BeginDraw(time);
         }
 
         public override void Draw(GameTime time)
         {
-            base        .Draw(time);
-            this.Visual?.Draw(time);
+            base          .Draw(time);
+            this.Renderer?.Draw(time);
         }
 
         public override void EndDraw(GameTime time)
         {
-            base        .EndDraw(time);
-            this.Visual?.EndDraw(time);
+            base          .EndDraw(time);
+            this.Renderer?.EndDraw(time);
         }
 
         #endregion
 
         #region Update
 
-        public void UpdateInput(IMMEngineInputService input, GameTime time)
+        public override void UpdateInput(GameTime time)
         {
-            this.Logic ?.Update(time);
-            this.Visual?.Update(time);
+            base.UpdateInput(time);
+
+            this.Controller?.Update(time);
+            this.Renderer?  .Update(time);
         }
 
         public override void Update(GameTime time)
         {
-            this.Logic ?.Update(time);
-            this.Visual?.Update(time);
+            this.Controller?.Update(time);
+            this.Renderer?  .Update(time);
         }
 
         #endregion
@@ -91,11 +92,11 @@ namespace MetaMind.Engine.Components
                 {
                     if (!this.IsDisposed)
                     {
-                        this.Logic?.Dispose();
-                        this.Logic = default(TMvcLogic);
+                        this.Controller?.Dispose();
+                        this.Controller = default(TMVCController);
 
-                        this.Visual?.Dispose();
-                        this.Visual = default(TMvcVisual);
+                        this.Renderer?.Dispose();
+                        this.Renderer = default(TMVCRenderer);
                     }
 
                     this.IsDisposed = true;

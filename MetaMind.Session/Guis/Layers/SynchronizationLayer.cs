@@ -1,7 +1,7 @@
 ﻿namespace MetaMind.Session.Guis.Layers
 {
     using Engine.Entities;
-    using Engine.Screen;
+    using Engine.Screens;
     using Engine.Services;
     using Microsoft.Xna.Framework;
     using Modules;
@@ -11,10 +11,10 @@
         public SynchronizationLayer(IMMScreen screen)
             : base(screen)
         {
-            this.Modules = new MMEntityCollection<IMMMvcEntity>();
+            this.Modules = new MMEntityCollection<IMMMVCEntity>();
         }
 
-        private MMEntityCollection<IMMMvcEntity> Modules { get; set; }
+        private MMEntityCollection<IMMMVCEntity> Modules { get; set; }
 
         public override void Draw(GameTime time)
         {
@@ -27,17 +27,17 @@
             base.Draw(time);
         }
 
-        public override void LoadContent(IMMEngineInteropService interop)
+        public override void LoadContent()
         {
             var synchronizationModule = new SynchronizationModule(SessionGame.SessionData.Cognition, new SynchronizationSettings());
             this.Modules.Add(synchronizationModule);
 
-            this.Modules.LoadContent(interop);
+            this.Modules.LoadContent();
         }
 
-        public override void UnloadContent(IMMEngineInteropService interop)
+        public override void UnloadContent()
         {
-            this.Modules.UnloadContent(interop);
+            this.Modules.UnloadContent();
         }
 
         public override void Update(GameTime time)
@@ -45,9 +45,9 @@
             this.Modules.Update(time);
         }
 
-        public override void UpdateInput(IMMEngineInputService input, GameTime time)
+        public override void UpdateInput(GameTime time)
         {
-            this.Modules.UpdateInput(input, time);
+            this.Modules.UpdateInput(time);
         }
     }
 }

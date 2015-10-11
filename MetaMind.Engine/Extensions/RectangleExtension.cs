@@ -1,6 +1,6 @@
 namespace Microsoft.Xna.Framework
 {
-    using MetaMind.Engine.Gui;
+    using MetaMind.Engine.Entities.Controls;
 
     public static class RectangleExtension
     {

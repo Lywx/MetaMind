@@ -4,7 +4,7 @@
     using System.Speech.Synthesis;
     using Engine;
     using Engine.Components.Interop.Event;
-    using Engine.Gui.Controls;
+    using Engine.Entities.Controls;
     using Engine.Services;
     using Engine.Services.Script.FSharp;
     using Engine.Services.Script.IronPython;
@@ -56,7 +56,7 @@
             this.InitializeScriptEngine();
             this.InitializeSynthesizer();
 
-            this.LoadContent(this.Interop);
+            this.LoadContent();
 
             // Has to be last, adding screen involves loading all kind of things
             this.InitializeScreen();
@@ -105,14 +105,14 @@
 
         #region Load and Unload
 
-        public void LoadContent(IMMEngineInteropService interop)
+        public void LoadContent()
         {
             interop.Asset.LoadPackage("Unity.Persistent");
 
             this.Manager = new MMControlManager();
         }
 
-        public void UnloadContent(IMMEngineInteropService interop)
+        public void UnloadContent()
         {
         }
 

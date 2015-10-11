@@ -3,14 +3,14 @@ namespace MetaMind.Engine.Components
     using System;
     using Entities;
 
-    public interface IMMMvcComponent<out TMvcSettings, out TMvcLogic, out TMvcVisual> : IMMInputableComponent, IMMUpdateableOperations, IMMDrawableComponentOperations, IMMInputOperations, IDisposable
-        where                              TMvcLogic                                    : IMMMvcComponentLogic<TMvcSettings> 
-        where                              TMvcVisual                                   : IMMMvcComponentVisual<TMvcSettings>
+    public interface IMMMVCComponent<out TMVCSettings, out TMVCController, out TMVCRenderer> : IMMInputableComponent, IMMUpdateableOperations, IMMDrawableComponentOperations, IMMInputOperations, IDisposable
+        where                            TMVCController                                      : IMMMVCComponentController<TMVCSettings> 
+        where                            TMVCRenderer                                        : IMMMVCComponentRenderer<TMVCSettings>
     {
-        TMvcSettings Settings { get; }
+        TMVCSettings Settings { get; }
 
-        TMvcLogic Logic { get; }
+        TMVCController Controller { get; }
 
-        TMvcVisual Visual { get; }
+        TMVCRenderer Renderer { get; }
     }
 }

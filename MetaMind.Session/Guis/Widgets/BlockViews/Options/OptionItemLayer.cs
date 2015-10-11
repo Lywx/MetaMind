@@ -1,11 +1,11 @@
 namespace MetaMind.Session.Guis.Widgets.BlockViews.Options
 {
-    using Engine.Gui.Controls.Item;
-    using Engine.Gui.Controls.Item.Layers;
+    using Engine.Entities.Controls.Item;
+    using Engine.Entities.Controls.Item.Layers;
 
-    public class OptionItemLayer : BlockViewVerticalItemLayer
+    public class OptionItemLayer : MMBlockViewVerticalItemLayer
     {
-        public OptionItemLayer(IViewItem item) 
+        public OptionItemLayer(IMMViewItem item) 
             : base(item)
         {
         }

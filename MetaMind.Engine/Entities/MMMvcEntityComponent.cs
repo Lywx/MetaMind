@@ -1,21 +1,21 @@
 
 namespace MetaMind.Engine.Entities
 {
-    public abstract class MMMvcEntityComponent<TMvcComponent, TMvcSettings, TMvcLogic> : MMInputEntity, IMMInputable, IMMDrawable
-        where                                  TMvcComponent                           : MMMvcEntity<TMvcSettings>
-        where                                  TMvcLogic                               : MMMvcEntityLogic<TMvcComponent, TMvcSettings, TMvcLogic>
+    public abstract class MMMVCEntityComponent<TMVCComponent, TMVCSettings, TMVCController> : MMInputEntity, IMMInputable, IMMDrawable
+        where                                  TMVCComponent                                : MMMVCEntity<TMVCSettings>
+        where                                  TMVCController                               : MMMVCEntityController<TMVCComponent, TMVCSettings, TMVCController>
     {
-        private readonly TMvcComponent module;
+        private readonly TMVCComponent module;
 
-        protected MMMvcEntityComponent(TMvcComponent module)
+        protected MMMVCEntityComponent(TMVCComponent module)
         {
             this.module = module;
         }
 
-        protected TMvcLogic Logic => (TMvcLogic)this.module.Logic;
+        protected TMVCController Controller => (TMVCController)this.module.Controller;
 
-        protected TMvcComponent Module => this.module;
+        protected TMVCComponent Module => this.module;
 
-        protected TMvcSettings Settings => this.module.Settings;
+        protected TMVCSettings Settings => this.module.Settings;
     }
 }

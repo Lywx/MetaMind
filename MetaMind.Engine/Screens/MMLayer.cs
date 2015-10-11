@@ -1,12 +1,10 @@
-﻿namespace MetaMind.Engine.Screen
+﻿namespace MetaMind.Engine.Screens
 {
     using System;
-    using Gui.Renders;
+    using Entities.Nodes;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using Services;
 
-    public class MMLayer : MMRenderComponent, IMMLayer
+    public class MMLayer : MMNode, IMMLayer
     {
         #region Constructors and Finalizer
 
@@ -35,184 +33,6 @@
 
         public IMMScreen Screen { get; private set; }
 
-        protected override void SetParentRenderTarget()
-        {
-            this.Graphics.Device.SetRenderTarget(this.Screen.RenderTarget);
-        }
-
-        #endregion
-
-        #region Control Data
-
-        public override sealed Point Location
-        {
-            get { return base.Location; }
-            set { base.Location = value; }
-        }
-
-        public override sealed int Width
-        {
-            get { return base.Width; }
-            set { base.Width = value; }
-        }
-
-        public override sealed int Height
-        {
-            get { return base.Height; }
-            set { base.Height = value; }
-        }
-
-        #endregion
-
-        #region Layer Events
-
-        public event EventHandler FadedIn = delegate { };
-
-        public event EventHandler FadedOut = delegate { };
-
-        #endregion
-
-        #region Layer States
-
-        private bool isFading;
-
-        #endregion
-
-        #region Layer Graphics
-
-        private readonly int alphaMax = 255;
-
-        private readonly int alphaMin = 0;
-
-        private float alpha = 255;
-
-        public override byte Opacity
-        {
-            get { return (byte)this.alpha; }
-            set { this.alpha = value; }
-        }
-
-        #endregion
-
-        #region Draw
-
-        public Action<IMMEngineGraphicsService, GameTime, byte> DrawAction { get; set; } = delegate { };
-
-        public override void Draw(GameTime time)
-        {
-            alpha = this.MixedMinOpacity(alpha);
-
-            base.Draw              (time);
-            this.DrawAction?.Invoke(graphics, time, alpha);
-        }
-
-        #endregion
-
-        #region Update
-
-        public Action<GameTime> UpdateAction { get; set; } = delegate { };
-
-        public Action<IMMEngineInputService, GameTime> UpdateInputAction { get; set; } = delegate { };
-
-        public override void Update(GameTime time)
-        {
-            base.Update(time);
-            this.UpdateAction?.Invoke(time);
-        }
-
-        public override void UpdateInput(IMMEngineInputService input, GameTime time)
-        {
-            base.UpdateInput(input, time);
-            this.UpdateInputAction?.Invoke(input, time);
-        }
-
-        public virtual void UpdateTransition(GameTime time)
-        {
-            this.ContinueAction(time);
-        }
-
-        #endregion
-
-        #region Operations 
-
-        public void FadeIn(TimeSpan time)
-        {
-            if (this.isFading)
-            {
-                this.DeferAction(() => this.FadeIn(time));
-
-                return;
-            }
-
-            this.DeferAction(this.FadeInNextFrame(this.TimeToFrame(time)));
-        }
-
-        private Action FadeInNextFrame(int fadeInFrameNum)
-        {
-            return () =>
-            {
-                if (this.Opacity < this.alphaMax)
-                {
-                    this.alpha += (float)this.alphaMax / fadeInFrameNum;
-
-                    if (this.alpha > this.alphaMax - 0.1f)
-                    {
-                        this.alpha = this.alphaMax;
-                    }
-
-                    this.DeferAction(this.FadeInNextFrame(fadeInFrameNum));
-
-                    this.isFading = true;
-                }
-                else
-                {
-                    this.FadedIn(this, EventArgs.Empty);
-
-                    this.Enabled = true;
-                    this.isFading = false;
-                }
-            };
-        }
-
-        public void FadeOut(TimeSpan time)
-        {
-            if (this.isFading)
-            {
-                this.DeferAction(() => this.FadeOut(time));
-
-                return;
-            }
-
-            this.DeferAction(this.FadeOutNextFrame(this.TimeToFrame(time)));
-        }
-
-        private Action FadeOutNextFrame(int frames)
-        {
-            return () =>
-            {
-                if (this.Opacity > this.alphaMin)
-                {
-                    this.alpha -= (float)this.alphaMax / frames;
-
-                    if (this.alpha < this.alphaMin + 0.1f)
-                    {
-                        this.alpha = this.alphaMin;
-                    }
-
-                    this.DeferAction(this.FadeOutNextFrame(frames));
-
-                    this.isFading = true;
-                }
-                else
-                {
-                    this.FadedOut(this, EventArgs.Empty);
-
-                    this.Enabled = false;
-                    this.isFading = false;
-                }
-            };
-        }
-
         #endregion
 
         #region IDisposable
@@ -227,8 +47,6 @@
                 {
                     if (!this.IsDisposed)
                     {
-                        this.FadedOut = null;
-                        this.FadedIn  = null;
                     }
 
                     this.IsDisposed = true;
@@ -243,12 +61,6 @@
                 base.Dispose(disposing);
             }
         }
-
-        #endregion
-
-        #region Time Helpers
-
-        private int TimeToFrame(TimeSpan time) => (int)(time.TotalMilliseconds / this.Engine.TargetElapsedTime.Milliseconds) + 1;
 
         #endregion
     }

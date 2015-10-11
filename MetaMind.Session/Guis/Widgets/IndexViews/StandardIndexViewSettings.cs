@@ -1,7 +1,7 @@
 ﻿namespace MetaMind.Session.Guis.Widgets.IndexViews
 {
-    using Engine.Gui.Controls.Views.Scrolls;
-    using Engine.Gui.Controls.Views.Settings;
+    using Engine.Entities.Controls.Views.Scrolls;
+    using Engine.Entities.Controls.Views.Settings;
     using Microsoft.Xna.Framework;
 
     public class StandardIndexViewSettings : PointViewVerticalSettings

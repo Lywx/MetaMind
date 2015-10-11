@@ -2,12 +2,12 @@ namespace MetaMind.Engine.Components
 {
     using System;
 
-    public class MMMvcComponentComponent<TMvcComponent, TMvcSettings, TMvcLogic, TMvcVisual> : MMObject, IMMMvcComponentComponent<TMvcSettings>
-        where                            TMvcComponent                                       : IMMMvcComponent<TMvcSettings, TMvcLogic, TMvcVisual>
-        where                            TMvcLogic                                     : IMMMvcComponentLogic<TMvcSettings> 
-        where                            TMvcVisual                                    : IMMMvcComponentVisual<TMvcSettings>
+    public class MMMVCComponentComponent<TMVCComponent, TMVCSettings, TMVCController, TMVCRenderer> : MMObject, IMMMvcComponentComponent<TMVCSettings>
+        where                            TMVCComponent                                              : IMMMVCComponent<TMVCSettings, TMVCController, TMVCRenderer>
+        where                            TMVCController                                             : IMMMVCComponentController<TMVCSettings> 
+        where                            TMVCRenderer                                               : IMMMVCComponentRenderer<TMVCSettings>
     {
-        protected MMMvcComponentComponent(TMvcComponent module)
+        protected MMMVCComponentComponent(TMVCComponent module)
         {
             if (module == null)
             {
@@ -23,13 +23,13 @@ namespace MetaMind.Engine.Components
 
         #region Module Data
 
-        public TMvcSettings Settings => this.Module.Settings;
+        public TMVCSettings Settings => this.Module.Settings;
 
-        protected TMvcComponent Module { get; }
+        protected TMVCComponent Module { get; }
 
-        protected TMvcLogic Logic => this.Module.Logic;
+        protected TMVCController Logic => this.Module.Controller;
 
-        protected TMvcVisual Visual => this.Module.Visual;
+        protected TMVCRenderer Visual => this.Module.Renderer;
 
         #endregion
 

@@ -1,8 +1,8 @@
 ﻿namespace MetaMind.Engine.Components
 {
-    public interface IMMMvcComponentComponent<out TMvcSettings>
+    public interface IMMMvcComponentComponent<out TMVCSettings>
     {
-        TMvcSettings Settings { get; }
+        TMVCSettings Settings { get; }
 
         void Initialize();
     }

@@ -2,7 +2,7 @@ namespace MetaMind.Session.Guis.Screens
 {
     using System;
     using Engine.Components.Content.Texture;
-    using Engine.Screen;
+    using Engine.Screens;
     using Engine.Services;
     using Primtives2D;
 
@@ -24,7 +24,7 @@ namespace MetaMind.Session.Guis.Screens
 
         #region Load and Unload
 
-        public override void LoadContent(IMMEngineInteropService interop)
+        public override void LoadContent()
         {
             this.imageLogo           = interop.Asset.Texture["StartScreen.Meta Mind"];
             this.imagePressAnyButton = interop.Asset.Texture["StartScreen.Press Any Button"];
@@ -46,7 +46,7 @@ namespace MetaMind.Session.Guis.Screens
             });
         }
 
-        public override void UnloadContent(IMMEngineInteropService interop)
+        public override void UnloadContent()
         {
         }
 

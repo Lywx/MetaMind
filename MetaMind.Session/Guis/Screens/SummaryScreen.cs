@@ -2,13 +2,13 @@
 {
     using System;
     using Engine.Entities;
-    using Engine.Screen;
+    using Engine.Screens;
     using Engine.Services;
     using Modules;
 
     public class SummaryScreen : MMScreen
     {
-        private IMMMvcEntity summary;
+        private IMMMVCEntity summary;
 
         public SummaryScreen()
         {
@@ -19,7 +19,7 @@
             this.TransitionOffTime = TimeSpan.FromSeconds(0.5);
         }
 
-        public override void LoadContent(IMMEngineInteropService interop)
+        public override void LoadContent()
         {
             var cognition = SessionGame.SessionData.Cognition;
 
@@ -27,7 +27,7 @@
                 cognition.Consciousness,
                 cognition.Synchronization,
                 new SummarySettings());
-            this.summary.LoadContent(interop);
+            this.summary.LoadContent();
 
             this.Layers.Add(
                 new MMLayer(this)
@@ -44,15 +44,15 @@
                     },
                     UpdateInputAction = (input, time) =>
                     {
-                        this.summary.UpdateInput(input, time);
+                        this.summary.UpdateInput(time);
                     }
                 });
         }
 
-        public override void UnloadContent(IMMEngineInteropService interop)
+        public override void UnloadContent()
         {
-            base        .UnloadContent(interop);
-            this.summary.UnloadContent(interop);
+            base        .UnloadContent();
+            this.summary.UnloadContent();
         }
     }
 }

@@ -1,21 +1,21 @@
 ﻿namespace MetaMind.Session.Guis.Widgets.IndexViews.Operations
 {
     using Concepts.Operations;
-    using Engine.Gui.Controls.Item;
-    using Engine.Gui.Controls.Item.Data;
-    using Engine.Gui.Controls.Item.Frames;
-    using Engine.Gui.Controls.Item.Interactions;
-    using Engine.Gui.Controls.Item.Layouts;
-    using Engine.Gui.Controls.Item.Logic;
+    using Engine.Entities.Controls.Item;
+    using Engine.Entities.Controls.Item.Data;
+    using Engine.Entities.Controls.Item.Frames;
+    using Engine.Entities.Controls.Item.Interactions;
+    using Engine.Entities.Controls.Item.Layouts;
+    using Engine.Entities.Controls.Item.Logic;
 
-    public class OperationItemLogic : IndexBlockViewVerticalItemLogic 
+    public class OperationItemLogic : MMIndexBlockViewVerticalItemLogic 
     {
         public OperationItemLogic(
-            IViewItem            item,
-            IViewItemFrameController       itemFrame,
-            IViewItemInteraction itemInteraction,
-            IViewItemDataModel   itemModel,
-            IViewItemLayout      itemLayout)
+            IMMViewItem            item,
+            IMMViewItemFrameController       itemFrame,
+            IMMViewItemInteraction itemInteraction,
+            IMMViewItemDataModel   itemModel,
+            IMMViewItemLayout      itemLayout)
             : base(item, itemFrame, itemInteraction, itemModel, itemLayout)
         {
         }

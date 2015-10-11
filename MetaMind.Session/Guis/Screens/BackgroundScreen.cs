@@ -1,7 +1,7 @@
 ﻿namespace MetaMind.Session.Guis.Screens
 {
     using System;
-    using Engine.Screen;
+    using Engine.Screens;
     using Engine.Services;
     using Primtives2D;
 
@@ -32,7 +32,7 @@
 
         #region Load and Unload
 
-        public override void LoadContent(IMMEngineInteropService interop)
+        public override void LoadContent()
         {
             this.Layers.Add(new MMLayer(this)
             {
@@ -48,7 +48,7 @@
             });
         }
 
-        public override void UnloadContent(IMMEngineInteropService interop)
+        public override void UnloadContent()
         {
         }
 

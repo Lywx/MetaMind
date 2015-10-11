@@ -1,11 +1,11 @@
 namespace MetaMind.Session.Guis.Widgets.IndexViews.Operations
 {
-    using Engine.Gui.Controls.Item;
-    using Engine.Gui.Controls.Item.Layers;
+    using Engine.Entities.Controls.Item;
+    using Engine.Entities.Controls.Item.Layers;
 
-    public class OperationItemLayer : IndexBlockViewVerticalItemLayer
+    public class OperationItemLayer : MMIndexBlockViewVerticalItemLayer
     {
-        public OperationItemLayer(IViewItem item) 
+        public OperationItemLayer(IMMViewItem item) 
             : base(item)
         {
         }

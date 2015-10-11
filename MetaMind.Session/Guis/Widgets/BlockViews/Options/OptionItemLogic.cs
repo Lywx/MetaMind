@@ -1,23 +1,23 @@
 ﻿namespace MetaMind.Session.Guis.Widgets.BlockViews.Options
 {
     using Concepts.Operations;
-    using Engine.Gui.Controls.Item;
-    using Engine.Gui.Controls.Item.Data;
-    using Engine.Gui.Controls.Item.Frames;
-    using Engine.Gui.Controls.Item.Interactions;
-    using Engine.Gui.Controls.Item.Layouts;
-    using Engine.Gui.Controls.Item.Logic;
+    using Engine.Entities.Controls.Item;
+    using Engine.Entities.Controls.Item.Data;
+    using Engine.Entities.Controls.Item.Frames;
+    using Engine.Entities.Controls.Item.Interactions;
+    using Engine.Entities.Controls.Item.Layouts;
+    using Engine.Entities.Controls.Item.Logic;
     using Microsoft.Xna.Framework;
     using Screens;
 
-    public class OptionItemLogic : BlockViewVerticalItemLogic
+    public class OptionItemLogic : MMBlockViewVerticalItemController
     {
         public OptionItemLogic(
-            IViewItem            item,
-            IViewItemFrameController       itemFrame,
-            IViewItemInteraction itemInteraction,
-            IViewItemDataModel   itemModel,
-            IViewItemLayout      itemLayout)
+            IMMViewItem            item,
+            IMMViewItemFrameController       itemFrame,
+            IMMViewItemInteraction itemInteraction,
+            IMMViewItemDataModel   itemModel,
+            IMMViewItemLayout      itemLayout)
             : base(item, itemFrame, itemInteraction, itemModel, itemLayout)
         {
         }
@@ -40,7 +40,7 @@
             option.Accept();
             option.Unlock();
 
-            this.ItemFrame.RootImmRectangle.UpdateInput(this.Input, new GameTime());
+            this.ItemFrame.RootImmRectangle.UpdateInput(new GameTime());
 
             this.Interop.Screen.Screens.First(screen => screen is OptionScreen).Exit();
         }

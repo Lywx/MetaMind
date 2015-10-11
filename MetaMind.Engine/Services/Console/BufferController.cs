@@ -10,7 +10,7 @@ namespace MetaMind.Engine.Services.Console
     using Processors;
 
     // TODO: Maybe I should reorganize this
-    internal class BufferController : MMMvcComponentComponent<MMConsole, GameConsoleSettings, MMConsoleLogic, MMConsoleVisual>
+    internal class BufferController : MMMVCComponentComponent<MMConsole, GameConsoleSettings, MMConsoleController, MMConsoleRenderer>
     {
         #region Constructors
 

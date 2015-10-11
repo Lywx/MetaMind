@@ -1,35 +1,20 @@
-namespace MetaMind.Engine.Screen
+namespace MetaMind.Engine.Screens
 {
     using System;
-    using System.Diagnostics;
-    using Entities;
-    using Gui.Controls;
-    using Gui.Graphics.Adapters;
+    using System.Linq;
+    using Entities.Nodes;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using Nodes;
     using Services;
 
     public class MMScreen : MMNode, IMMScreen
     {
-        #region Geometry Data
+        public static IMMScreen Create(IMMNodeController control)
+        {
+            var screen   = new MMScreen();
+            var renderer = new MMNodeRenderer(screen);
 
-        public int Width => this.Viewport.Width;
-
-        public int Height => this.Viewport.Height;
-
-        #endregion
-
-        #region Render Data
-
-        /// <summary>
-        /// Target of the screen. Screen is the closest layer to back buffer.
-        /// </summary>
-        public RenderTarget2D RenderTarget { get; set; }
-
-        protected Rectangle RenderTargetDestinationRectangle => this.Viewport.Bounds;
-
-        #endregion
+            return new MMScreen(control, renderer);
+        }
 
         #region Screen Data
 
@@ -154,58 +139,40 @@ namespace MetaMind.Engine.Screen
 
         #endregion Screen Events
 
-        #region Layer Data
-
-        protected MMEntityCollection<IMMLayer> Layers { get; private set; } = new MMEntityCollection<IMMLayer>();
-
-        #endregion
-
         #region Constructors and Finalizer
 
-        public MMScreen()
+        internal MMScreen()
         {
-            this.Controller = new MMControlComponent();
-            this.ViewportAdapter = new ScalingViewportAdapter(this.GraphicsDevice, this.Width, this.Height);
+            
+        }
+
+        public MMScreen(IMMNodeController controller, IMMNodeRenderer renderer)
+        {
+            if (controller == null)
+            {
+                throw new ArgumentNullException(nameof(controller));
+            }
+
+            if (renderer == null)
+            {
+                throw new ArgumentNullException(nameof(renderer));
+            }
+
+            this.Controller = controller;
+            this.Renderer   = renderer;
+
+            // Match viewport size to renderer size
+            this.Renderer.Bounds = this.Graphics.Device.Viewport.Bounds;
         }
 
         ~MMScreen()
         {
-            this.Dispose();
+            this.Dispose(true);
         }
 
         #endregion
 
-        #region Load and Unload
-
-        public override void LoadContent(IMMEngineInteropService interop)
-        {
-            base       .LoadContent(interop);
-            this.Layers.LoadContent(interop);
-        }
-
-        public override void UnloadContent(IMMEngineInteropService interop)
-        {
-            this.Layers.UnloadContent(interop);
-            base       .UnloadContent(interop);
-        }
-        
-        #endregion
         #region Update
-
-        public void Update(GameTime time)
-        {
-            // Layer transition inside screen.
-            foreach (var layer in this.Layers.FindAll(layer => layer.Active))
-            {
-                layer.UpdateTransition(time);
-            }
-
-            // MMLayer is subclass of MMEntity. It may cache actions, they are updated there.
-            foreach (var layer in this.Layers.FindAll(layer => layer.Active))
-            {
-                layer.Update(time);
-            }
-        }
 
         public virtual void UpdateScreen(IMMEngineInteropService interop, GameTime time, bool hasOtherScreenFocus, bool isCoveredByOtherScreen)
         {
@@ -252,13 +219,6 @@ namespace MetaMind.Engine.Screen
             }
         }
 
-        public void UpdateInput(IMMEngineInputService input, GameTime time)
-        {
-            this.Layers
-                .FindAll(layer => layer.Active)
-                .ForEach(layer => layer.UpdateInput(input, time));
-        }
-
         /// <summary>
         /// Helper for updating the screen transition position.
         /// </summary>
@@ -293,20 +253,6 @@ namespace MetaMind.Engine.Screen
 
         #endregion
 
-        #region Render Operations
-
-        private void CreateRenderTarget()
-        {
-            if (this.RenderTarget == null)
-            {
-                this.RenderTarget = MMRenderTargetFactory.Create(
-                    this.Width,
-                    this.Height);
-            }
-        }
-
-        #endregion
-
         #region Operations
 
         /// <summary>
@@ -330,27 +276,34 @@ namespace MetaMind.Engine.Screen
 
         #endregion Operations
 
+
         #region IDisposable
 
-        public void Dispose()
+        private bool IsDisposed { get; set; }
+
+        protected override void Dispose(bool disposing)
         {
-            if (this.Layers != null)
+            try
             {
-                this.RenderTarget.Dispose();
+                if (disposing)
+                {
+                    if (!this.IsDisposed)
+                    {
+                        this.Controller?.Dispose();
+                        this.Renderer?.Dispose();
+                    }
 
-                this.DisposeLayers();
+                    this.IsDisposed = true;
+                }
             }
-        }
-
-        private void DisposeLayers()
-        {
-            foreach (var layer in this.Layers)
+            catch
             {
-                layer.Dispose();
+                // Ignored
             }
-
-            this.Layers.Clear();
-            this.Layers = null;
+            finally
+            {
+                base.Dispose(disposing);
+            }
         }
 
         #endregion IDisposable

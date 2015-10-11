@@ -1,25 +1,25 @@
 namespace MetaMind.Session.Guis.Widgets.IndexViews.Operations
 {
     using System;
-    using Engine.Gui.Controls.Item;
-    using Engine.Gui.Controls.Item.Frames;
-    using Engine.Gui.Controls.Item.Layouts;
-    using Engine.Gui.Controls.Item.Settings;
-    using Engine.Gui.Elements.Rectangles;
+    using Engine.Entities.Controls.Item;
+    using Engine.Entities.Controls.Item.Frames;
+    using Engine.Entities.Controls.Item.Layouts;
+    using Engine.Entities.Controls.Item.Settings;
+    using Engine.Entities.Elements.Rectangles;
     using Engine.Services;
     using Microsoft.Xna.Framework;
 
-    public class OperationItemFrameController : BlcokViewVerticalItemFrameController
+    public class OperationItemFrameController : MMBlockViewVerticalItemFrameController
     {
         private ItemSettings itemSettings;
 
-        private IBlockViewVerticalItemLayout itemLayout;
+        private IMMBlockViewVerticalItemLayout itemLayout;
 
-        private ViewItemVisualSettings nameFrameSettings;
+        private MMViewItemRenderSettings nameFrameSettings;
 
-        private ViewItemVisualSettings descriptionFrameSettings;
+        private MMViewItemRenderSettings descriptionFrameSettings;
 
-        public OperationItemFrameController(IViewItem item, ViewItemImmRectangle itemImmRootRectangle)
+        public OperationItemFrameController(IMMViewItem item, ViewItemImmRectangle itemImmRootRectangle)
             : base(item, itemImmRootRectangle)
         {
             this.IdImmRectangle     = new MMPickableRectangleElement();
@@ -46,12 +46,12 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Operations
             this.itemSettings = itemLayer.ItemSettings;
             this.itemLayout = itemLayer.ItemLogic.ItemLayout;
 
-            var idFrameSettings = this.itemSettings.Get<ViewItemVisualSettings>("IdFrame");
-            var statusFrameSettings = this.itemSettings.Get<ViewItemVisualSettings>("StatusFrame");
-            var plusFrameSettings = this.itemSettings.Get<ViewItemVisualSettings>("PlusFrame");
+            var idFrameSettings = this.itemSettings.Get<MMViewItemRenderSettings>("IdFrame");
+            var statusFrameSettings = this.itemSettings.Get<MMViewItemRenderSettings>("StatusFrame");
+            var plusFrameSettings = this.itemSettings.Get<MMViewItemRenderSettings>("PlusFrame");
 
-            this.nameFrameSettings = this.itemSettings.Get<ViewItemVisualSettings>("NameFrame");
-            this.descriptionFrameSettings = this.itemSettings.Get<ViewItemVisualSettings>("DescriptionFrame");
+            this.nameFrameSettings = this.itemSettings.Get<MMViewItemRenderSettings>("NameFrame");
+            this.descriptionFrameSettings = this.itemSettings.Get<MMViewItemRenderSettings>("DescriptionFrame");
 
             // +------------+--------------+-----------------------+  
             // | id frame   |              | name frame            |
@@ -116,17 +116,17 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Operations
 
         #region Update
 
-        public override void UpdateInput(IMMEngineInputService input, GameTime time)
+        public override void UpdateInput(GameTime time)
         {
-            base.UpdateInput(input, time);
+            base.UpdateInput(time);
 
-            this.IdImmRectangle.UpdateInput(input, time);
-            this.PlusImmRectangle.UpdateInput(input, time);
+            this.IdImmRectangle.UpdateInput(time);
+            this.PlusImmRectangle.UpdateInput(time);
 
-            this.StatusImmRectangle.UpdateInput(input, time);
+            this.StatusImmRectangle.UpdateInput(time);
 
-            this.NameImmRectangle.UpdateInput(input, time);
-            this.DescriptionImmRectangle.UpdateInput(input, time);
+            this.NameImmRectangle.UpdateInput(time);
+            this.DescriptionImmRectangle.UpdateInput(time);
         }
 
         protected override void UpdateFrameGeometry()

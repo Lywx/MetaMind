@@ -31,11 +31,17 @@ namespace MetaMind.Engine.Components
             // drawing. The functionality is never extended in the form of inheritance.
             this.Renderer = new MMRenderer(this.SpriteBatch);
             this.Game.Components.Add(this.Renderer);
+
+            this.RendererManager = new MMRendererManager(engine);
         }
 
         public MMGraphicsManager Manager { get; private set; }
         
         public MMGraphicsSettings Settings { get; private set; }
+
+        public MMRendererManager RendererManager { get; private set; }
+
+        public GraphicsDevice Device => this.Manager.GraphicsDevice;
 
         public SpriteBatch SpriteBatch { get; private set; }
 

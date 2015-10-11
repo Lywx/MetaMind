@@ -3,11 +3,12 @@ namespace MetaMind.Engine.Entities
     using System;
     using System.Runtime.Serialization;
     using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
 
     [DataContract]
     public class MMVisualEntity : MMEntity, IMMVisualEntity
     {
-        #region States
+        #region State Data
 
         private bool visible = true;
 
@@ -29,6 +30,12 @@ namespace MetaMind.Engine.Entities
                 }
             }
         }
+
+        #endregion
+
+        #region Engine Data
+
+        protected SpriteBatch SpriteBatch => this.Graphics.SpriteBatch;
 
         #endregion
 
@@ -56,22 +63,6 @@ namespace MetaMind.Engine.Entities
         {
             // TODO(Now): I am still thinking about how to merge this with ZOrder in MMNode
             return this.DrawOrder.CompareTo(other.DrawOrder);
-        }
-
-        #endregion
-
-        #region Events
-
-        public event EventHandler<EventArgs> DrawOrderChanged;
-
-        public event EventHandler<EventArgs> VisibleChanged;
-
-        protected virtual void OnDrawOrderChanged(object sender, EventArgs args)
-        {
-        }
-
-        protected virtual void OnVisibleChanged(object sender, EventArgs args)
-        {
         }
 
         #endregion
@@ -128,6 +119,26 @@ namespace MetaMind.Engine.Entities
         /// </remarks>>
         /// <param name="time"></param>
         public virtual void EndDraw(GameTime time) { }
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler<EventArgs> DrawOrderChanged;
+
+        public event EventHandler<EventArgs> VisibleChanged;
+
+        #endregion
+
+        #region Event Ons
+
+        protected virtual void OnDrawOrderChanged(object sender, EventArgs args)
+        {
+        }
+
+        protected virtual void OnVisibleChanged(object sender, EventArgs args)
+        {
+        }
 
         #endregion
 

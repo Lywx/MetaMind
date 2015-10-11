@@ -1,4 +1,4 @@
-namespace MetaMind.Engine.Screen
+namespace MetaMind.Engine.Screens
 {
     /// <summary>
     /// Enum describes the screen transition state.

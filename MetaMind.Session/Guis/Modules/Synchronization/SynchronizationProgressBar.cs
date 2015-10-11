@@ -3,12 +3,12 @@ namespace MetaMind.Session.Guis.Modules.Synchronization
     using System;
     using Concepts.Synchronizations;
     using Engine.Entities;
-    using Engine.Gui.Controls.Images;
+    using Engine.Entities.Controls.Images;
     using Engine.Services;
-    using Engine.Settings.Color;
+    using Engine.Settings;
     using Microsoft.Xna.Framework;
 
-    public class SynchronizationProgressBar : MMMvcEntityComponent<SynchronizationModule, SynchronizationSettings, SynchronizationLogic>
+    public class SynchronizationProgressBar : MMMVCEntityComponent<SynchronizationModule, SynchronizationSettings, SynchronizationController>
     {
         public SynchronizationProgressBar(SynchronizationModule module, ISynchronization synchronization)
             : base(module)

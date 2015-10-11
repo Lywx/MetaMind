@@ -3,7 +3,7 @@ namespace MetaMind.Session.Concepts.Operations
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Engine.Gui.Controls.Item.Data;
+    using Engine.Entities.Controls.Item.Data;
 
     #region Operation Description
 

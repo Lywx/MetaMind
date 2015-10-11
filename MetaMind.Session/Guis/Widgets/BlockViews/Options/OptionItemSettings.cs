@@ -1,19 +1,19 @@
 ﻿namespace MetaMind.Session.Guis.Widgets.BlockViews.Options
 {
     using Engine.Components.Graphics;
-    using Engine.Gui.Controls.Item;
-    using Engine.Gui.Controls.Item.Settings;
-    using Engine.Gui.Graphics.Fonts;
+    using Engine.Entities.Controls.Item;
+    using Engine.Entities.Controls.Item.Settings;
+    using Engine.Entities.Graphics.Fonts;
     using Engine.Services.Loader;
-    using Engine.Settings.Color;
+    using Engine.Settings;
     using Microsoft.Xna.Framework;
     using Modules;
 
     public class OptionItemSettings : ItemSettings, IParameterLoader<MMGraphicsSettings>
     {
-        private readonly ViewItemVisualSettings rootFrame;
+        private readonly MMViewItemRenderSettings rootFrame;
 
-        private readonly ViewItemVisualSettings idFrame = new ViewItemVisualSettings
+        private readonly MMViewItemRenderSettings idFrame = new MMViewItemRenderSettings
         {
             Size   = new Point(24, 26),
             Margin = new Point(2, 2),
@@ -34,7 +34,7 @@
             VAlignment = VerticalAlignment.Center,
         };
 
-        private readonly ViewItemVisualSettings nameFrame;
+        private readonly MMViewItemRenderSettings nameFrame;
 
         private readonly LabelSettings nameLabel = new LabelSettings
         {
@@ -48,7 +48,7 @@
             Monospaced = true,
         };
 
-        private readonly ViewItemVisualSettings descriptionFrame;
+        private readonly MMViewItemRenderSettings descriptionFrame;
 
         private readonly LabelSettings descriptionLabel = new LabelSettings
         {
@@ -68,13 +68,13 @@
         {
             this.LoadParameter(this.Graphics.Settings);
 
-            this.rootFrame = new ViewItemVisualSettings
+            this.rootFrame = new MMViewItemRenderSettings
             {
                 Size   = new Point(this.viewportWidth - OperationModuleSettings.ViewMargin.X * 2, 26),
                 Margin = new Point(2, 2)
             };
 
-            this.nameFrame = new ViewItemVisualSettings
+            this.nameFrame = new MMViewItemRenderSettings
             {
                 Size   = new Point(this.viewportWidth - OperationModuleSettings.ViewMargin.X * 2 - 24, 26),
                 Margin = new Point(2, 2),
@@ -86,7 +86,7 @@
                 SelectionColor    = MMPalette.LightBlue,
             };
 
-            this.descriptionFrame = new ViewItemVisualSettings
+            this.descriptionFrame = new MMViewItemRenderSettings
             {
                 Size   = new Point(this.viewportWidth - OperationModuleSettings.ViewMargin.X * 2, 26),
                 Margin = new Point(2, 2),

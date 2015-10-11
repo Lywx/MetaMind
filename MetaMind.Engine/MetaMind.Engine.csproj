@@ -77,55 +77,58 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Components\Graphics\MMRendererManager.cs" />
-    <Compile Include="Gui\Controls\IMMControlComponent.cs" />
-    <Compile Include="Gui\Controls\IMMControlManager.cs" />
-    <Compile Include="Gui\Controls\IMMControlManagerOperations.cs" />
+    <Compile Include="Entities\Controls\IMMControlComponent.cs" />
+    <Compile Include="Entities\Controls\IMMControlManager.cs" />
+    <Compile Include="Entities\Controls\IMMControlManagerOperations.cs" />
+    <Compile Include="Entities\Controls\Item\IMMViewItemControllerComponent.cs" />
+    <Compile Include="Entities\Controls\Item\IMMViewItemRendererComponent.cs" />
+    <Compile Include="Entities\Controls\Views\Visuals\MMViewRenderComponent.cs" />
     <Compile Include="IMMBufferOperations.cs" />
     <Compile Include="IMMFocusable.cs" />
-    <Compile Include="Nodes\Actions\Instants\CCActionInstant.cs" />
-    <Compile Include="Nodes\Actions\Intervals\MMActionTween.cs" />
-    <Compile Include="Nodes\Actions\Intervals\MMRepeatForever.cs" />
-    <Compile Include="Nodes\Actions\Intervals\MMBlink.cs" />
-    <Compile Include="Nodes\Actions\Intervals\MMFadeIn.cs" />
-    <Compile Include="Nodes\Actions\Intervals\MMFadeOut.cs" />
-    <Compile Include="Nodes\Actions\Intervals\MMFadeTo.cs" />
-    <Compile Include="Nodes\Actions\Intervals\MMRepeat.cs" />
-    <Compile Include="Nodes\Actions\Intervals\MMTintBy.cs" />
-    <Compile Include="Nodes\Actions\Intervals\MMTintTo.cs" />
-    <Compile Include="Nodes\Actions\Intervals\MMExtraAction.cs" />
-    <Compile Include="Nodes\Actions\Intervals\MMRepeatState.cs" />
-    <Compile Include="Nodes\Actions\Intervals\MMRotateBy.cs" />
-    <Compile Include="Nodes\Actions\Intervals\MMRotateTo.cs" />
-    <Compile Include="Nodes\Actions\Intervals\MMScaleBy.cs" />
-    <Compile Include="Nodes\Actions\Intervals\MMScaleTo.cs" />
-    <Compile Include="Nodes\Actions\Intervals\MMSequence.cs" />
-    <Compile Include="Nodes\Actions\Intervals\MMSequenceState.cs" />
-    <Compile Include="Nodes\Actions\Intervals\MMTintByState.cs" />
-    <Compile Include="Nodes\Actions\MMActionState.cs" />
-    <Compile Include="Nodes\Actions\MMActionTag.cs" />
-    <Compile Include="Nodes\Actions\MMFiniteTimeActionState.cs" />
-    <Compile Include="Nodes\IMMNode.cs" />
-    <Compile Include="Nodes\IMMNodeColor.cs" />
-    <Compile Include="Nodes\IMMNodeController.cs" />
-    <Compile Include="Nodes\IMMNodeOrganization.cs" />
-    <Compile Include="Nodes\IMMNodeRenderer.cs" />
-    <Compile Include="Nodes\IMMRenderOpacity.cs" />
-    <Compile Include="Nodes\IMMRenderOpacityOperations.cs" />
-    <Compile Include="Nodes\MMNodeCollection.cs" />
-    <Compile Include="Nodes\MMNodeColor.cs" />
-    <Compile Include="Nodes\MMNodeRenderer.cs" />
-    <Compile Include="Nodes\MMRenderOpacity.cs" />
-    <Compile Include="Nodes\MMNodeTag.cs" />
+    <Compile Include="Entities\Nodes\Actions\Instants\MMActionInstant.cs" />
+    <Compile Include="Entities\Nodes\Actions\Intervals\MMActionTween.cs" />
+    <Compile Include="Entities\Nodes\Actions\Intervals\MMRepeatForever.cs" />
+    <Compile Include="Entities\Nodes\Actions\Intervals\MMBlink.cs" />
+    <Compile Include="Entities\Nodes\Actions\Intervals\MMFadeIn.cs" />
+    <Compile Include="Entities\Nodes\Actions\Intervals\MMFadeOut.cs" />
+    <Compile Include="Entities\Nodes\Actions\Intervals\MMFadeTo.cs" />
+    <Compile Include="Entities\Nodes\Actions\Intervals\MMRepeat.cs" />
+    <Compile Include="Entities\Nodes\Actions\Intervals\MMTintBy.cs" />
+    <Compile Include="Entities\Nodes\Actions\Intervals\MMTintTo.cs" />
+    <Compile Include="Entities\Nodes\Actions\Intervals\MMExtraAction.cs" />
+    <Compile Include="Entities\Nodes\Actions\Intervals\MMRepeatState.cs" />
+    <Compile Include="Entities\Nodes\Actions\Intervals\MMRotateBy.cs" />
+    <Compile Include="Entities\Nodes\Actions\Intervals\MMRotateTo.cs" />
+    <Compile Include="Entities\Nodes\Actions\Intervals\MMScaleBy.cs" />
+    <Compile Include="Entities\Nodes\Actions\Intervals\MMScaleTo.cs" />
+    <Compile Include="Entities\Nodes\Actions\Intervals\MMSequence.cs" />
+    <Compile Include="Entities\Nodes\Actions\Intervals\MMSequenceState.cs" />
+    <Compile Include="Entities\Nodes\Actions\Intervals\MMTintByState.cs" />
+    <Compile Include="Entities\Nodes\Actions\MMActionState.cs" />
+    <Compile Include="Entities\Nodes\Actions\MMActionTag.cs" />
+    <Compile Include="Entities\Nodes\Actions\MMFiniteTimeActionState.cs" />
+    <Compile Include="Entities\Nodes\IMMNode.cs" />
+    <Compile Include="Entities\Nodes\IMMNodeColor.cs" />
+    <Compile Include="Entities\Nodes\IMMNodeController.cs" />
+    <Compile Include="Entities\Nodes\IMMNodeOrganization.cs" />
+    <Compile Include="Entities\Nodes\IMMNodeRenderer.cs" />
+    <Compile Include="Entities\Graphics\IMMRenderOpacity.cs" />
+    <Compile Include="Entities\Graphics\IMMRenderOpacityOperations.cs" />
+    <Compile Include="Entities\Nodes\MMNodeCollection.cs" />
+    <Compile Include="Entities\Nodes\MMNodeColor.cs" />
+    <Compile Include="Entities\Nodes\MMNodeRenderer.cs" />
+    <Compile Include="Entities\Nodes\MMRenderOpacity.cs" />
+    <Compile Include="Entities\Nodes\MMNodeTag.cs" />
     <Compile Include="Geometry\Converters\CCSizeConverter.cs" />
-    <Compile Include="Nodes\Actions\Intervals\MMMoveTo.cs" />
-    <Compile Include="Nodes\CCScheduler.cs" />
-    <Compile Include="Nodes\CCTimer.cs" />
-    <Compile Include="Nodes\ICCUpdatable.cs" />
-    <Compile Include="Nodes\Actions\MMAction.cs" />
-    <Compile Include="Nodes\Actions\MMActionManager.cs" />
-    <Compile Include="Nodes\MMNode.cs" />
-    <Compile Include="Nodes\Actions\MMFiniteTimeAction.cs" />
-    <Compile Include="Nodes\Actions\Intervals\MMMoveBy.cs" />
+    <Compile Include="Entities\Nodes\Actions\Intervals\MMMoveTo.cs" />
+    <Compile Include="Entities\Nodes\CCScheduler.cs" />
+    <Compile Include="Entities\Nodes\CCTimer.cs" />
+    <Compile Include="Entities\Nodes\ICCUpdatable.cs" />
+    <Compile Include="Entities\Nodes\Actions\MMAction.cs" />
+    <Compile Include="Entities\Nodes\Actions\MMActionManager.cs" />
+    <Compile Include="Entities\Nodes\MMNode.cs" />
+    <Compile Include="Entities\Nodes\Actions\MMFiniteTimeAction.cs" />
+    <Compile Include="Entities\Nodes\Actions\Intervals\MMMoveBy.cs" />
     <Compile Include="Collections\ObservableCollection.cs" />
     <Compile Include="Components\Audio\AudioManagerFactory.cs" />
     <Compile Include="Components\Content\Asset\PackageAsset.cs" />
@@ -138,13 +141,11 @@
     <Compile Include="MMObject.cs" />
     <Compile Include="Geometry\MMSize.cs" />
     <Compile Include="Settings\MMSettingDictionary.cs" />
-    <Compile Include="Gui\Renders\MMRenderComponenetCollection.cs" />
-    <Compile Include="Gui\Controls\IMMControlComponentOperations.cs" />
-    <Compile Include="Gui\Controls\IMMControlComponentOrganization.cs" />
-    <Compile Include="Gui\Controls\Item\ViewItemExtension.cs" />
-    <Compile Include="Gui\Controls\Item\ViewItemStateExtension.cs" />
-    <Compile Include="Gui\Controls\Item\ViewItemVisualState.cs" />
-    <Compile Include="Gui\MMCursor.cs" />
+    <Compile Include="Entities\Graphics\MMRenderComponenetCollection.cs" />
+    <Compile Include="Entities\Controls\Item\MMViewItemExtension.cs" />
+    <Compile Include="Entities\Controls\Item\MMViewItemStateExtension.cs" />
+    <Compile Include="Entities\Controls\Item\MMViewItemRenderState.cs" />
+    <Compile Include="Entities\Controls\MMCursor.cs" />
     <Compile Include="Components\Content\Skins\CursorSkinAsset.cs" />
     <Compile Include="Components\Content\Fonts\Font.cs" />
     <Compile Include="Components\Content\Fonts\FontExt.cs" />
@@ -152,15 +153,15 @@
     <Compile Include="Components\Content\Texture\TextureManager.cs" />
     <Compile Include="Components\Content\Texture\ImageAsset.cs" />
     <Compile Include="Components\IO\IFileManager.cs" />
-    <Compile Include="Gui\Graphics\Adapters\DefaultViewportAdapter.cs" />
-    <Compile Include="Gui\Graphics\Adapters\ScalingViewportAdapter.cs" />
-    <Compile Include="Gui\Graphics\Adapters\ViewportAdapter.cs" />
+    <Compile Include="Entities\Graphics\Adapters\DefaultViewportAdapter.cs" />
+    <Compile Include="Entities\Graphics\Adapters\ScalingViewportAdapter.cs" />
+    <Compile Include="Entities\Graphics\Adapters\ViewportAdapter.cs" />
     <Compile Include="Components\Graphics\IMMRenderTextureOperaions.cs" />
     <Compile Include="Extensions\DoubleExtension.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
-    <Compile Include="Gui\Graphics\Fonts\HoritonalAlignment.cs" />
+    <Compile Include="Entities\Graphics\Fonts\HoritonalAlignment.cs" />
     <Compile Include="Components\Graphics\IMMRendererStringOperations.cs" />
-    <Compile Include="Gui\Graphics\Fonts\VerticalAlignment.cs" />
+    <Compile Include="Entities\Graphics\Fonts\VerticalAlignment.cs" />
     <Compile Include="Components\Input\KeyEventArgs.cs" />
     <Compile Include="Components\Input\MouseButtons.cs" />
     <Compile Include="Components\Input\MouseEventArgs.cs" />
@@ -168,13 +169,13 @@
     <Compile Include="Services\Console\ScrollController.cs" />
     <Compile Include="Services\Console\GameConsoleState.cs" />
     <Compile Include="Services\Debug\Components\FrameRateCounter.cs" />
-    <Compile Include="Gui\Renders\MMRenderComponentDrawEventArgs.cs" />
+    <Compile Include="Entities\Graphics\MMRenderComponentDrawEventArgs.cs" />
     <Compile Include="Extensions\ColorUtils.cs" />
     <Compile Include="Entities\MMEntityCollection.cs" />
-    <Compile Include="Gui\Controls\Images\ColorBox.cs" />
-    <Compile Include="Gui\Controls\Buttons\MMButtonVisualState.cs" />
-    <Compile Include="Gui\Controls\MMControlComponent.cs" />
-    <Compile Include="Gui\Controls\MMControlCollection.cs" />
+    <Compile Include="Entities\Controls\Images\ColorBox.cs" />
+    <Compile Include="Entities\Controls\Buttons\MMButtonVisualState.cs" />
+    <Compile Include="Entities\Controls\MMControlComponent.cs" />
+    <Compile Include="Entities\Controls\MMControlCollection.cs" />
     <Compile Include="Extensions\KeysExtension.cs" />
     <Compile Include="Extensions\MouseButtonsExt.cs" />
     <Compile Include="Extensions\MouseEventArgsExt.cs" />
@@ -192,45 +193,44 @@
     <Compile Include="Services\Console\Processors\ICommandProcessor.cs" />
     <Compile Include="Services\Console\Processors\IronPythonProcessor.cs" />
     <Compile Include="Services\Console\Commands\CommandType.cs" />
-    <Compile Include="Gui\IMMReactor.cs" />
-    <Compile Include="Gui\Renders\IMMRenderComponent.cs" />
-    <Compile Include="Gui\Controls\Images\ImageMode.cs" />
-    <Compile Include="Gui\Controls\Item\Frames\BlcokViewVerticalItemFrameController.cs" />
-    <Compile Include="Gui\Controls\Item\ViewItemVisualSettings.cs">
+    <Compile Include="Entities\IMMReactor.cs" />
+    <Compile Include="Entities\Graphics\IMMRenderComponent.cs" />
+    <Compile Include="Entities\Controls\Images\ImageMode.cs" />
+    <Compile Include="Entities\Controls\Item\Frames\BlcokViewVerticalItemFrameController.cs" />
+    <Compile Include="Entities\Controls\Item\MMViewItemRenderSettings.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\Frames\IViewItemFrameController.cs" />
-    <Compile Include="Gui\Controls\Item\Frames\PointViewItemFrameController.cs" />
-    <Compile Include="Gui\Controls\Item\Frames\ViewItemImmRectangle.cs">
+    <Compile Include="Entities\Controls\Item\Frames\IViewItemFrameController.cs" />
+    <Compile Include="Entities\Controls\Item\Frames\PointViewItemFrameController.cs" />
+    <Compile Include="Entities\Controls\Item\Frames\ViewItemImmRectangle.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\Frames\ViewItemFrameController.cs" />
-    <Compile Include="Gui\Controls\Item\IViewItemEntity.cs" />
-    <Compile Include="Gui\Controls\Item\ViewItemStateControl.cs" />
-    <Compile Include="Gui\Controls\Item\Visuals\ViewItemLabel.cs" />
-    <Compile Include="Gui\Controls\MMControlManager.cs" />
+    <Compile Include="Entities\Controls\Item\Frames\ViewItemFrameController.cs" />
+    <Compile Include="Entities\Controls\Item\MMViewItemStateHolder.cs" />
+    <Compile Include="Entities\Controls\Item\Visuals\ViewItemLabel.cs" />
+    <Compile Include="Entities\Controls\MMControlManager.cs" />
     <Compile Include="Components\Content\Asset\AssetManager.cs" />
     <Compile Include="Components\Content\Asset\Asset.cs" />
     <Compile Include="Components\Content\Asset\PackageReader.cs" />
     <Compile Include="Components\Content\Asset\PackageXmlDocument.cs" />
-    <Compile Include="Gui\Controls\Tooltip.cs" />
-    <Compile Include="Gui\Controls\Views\Layers\IViewUniversalLayerOperations.cs" />
-    <Compile Include="Gui\Elements\IMMElement.cs" />
-    <Compile Include="Gui\Elements\IMMRectangleElement.cs" />
-    <Compile Include="Gui\Elements\IMMElementExtension.cs" />
-    <Compile Include="Gui\MMMargin.cs" />
-    <Compile Include="Gui\Elements\MMElementEvent.cs" />
-    <Compile Include="Gui\Shapes\IMMShape.cs" />
-    <Compile Include="Gui\Input\MouseButtonDoubleClick.cs" />
-    <Compile Include="Gui\Input\MouseButtonHistory.cs" />
-    <Compile Include="Gui\Input\MouseButtonPress.cs" />
-    <Compile Include="Gui\Input\MouseButtonState.cs" />
-    <Compile Include="Gui\Input\MouseOver.cs" />
-    <Compile Include="Gui\Input\MousePositionHistory.cs" />
-    <Compile Include="Gui\Input\MousePositionState.cs" />
-    <Compile Include="Gui\Input\MouseAutomata.cs" />
-    <Compile Include="Gui\Input\MouseState.cs" />
-    <Compile Include="Gui\Elements\Rectangles\MMPickableRectangleElement.cs" />
+    <Compile Include="Entities\Controls\Tooltip.cs" />
+    <Compile Include="Entities\Controls\Views\Layers\IMMViewUniversalLayerOperations.cs" />
+    <Compile Include="Entities\Elements\IMMElement.cs" />
+    <Compile Include="Entities\Elements\IMMRectangleElement.cs" />
+    <Compile Include="Entities\Elements\IMMElementExtension.cs" />
+    <Compile Include="Entities\Controls\MMMargin.cs" />
+    <Compile Include="Entities\Elements\MMElementEvent.cs" />
+    <Compile Include="Entities\Shapes\IMMShape.cs" />
+    <Compile Include="Entities\Input\MouseButtonDoubleClick.cs" />
+    <Compile Include="Entities\Input\MouseButtonHistory.cs" />
+    <Compile Include="Entities\Input\MouseButtonPress.cs" />
+    <Compile Include="Entities\Input\MouseButtonState.cs" />
+    <Compile Include="Entities\Input\MouseOver.cs" />
+    <Compile Include="Entities\Input\MousePositionHistory.cs" />
+    <Compile Include="Entities\Input\MousePositionState.cs" />
+    <Compile Include="Entities\Input\MouseAutomata.cs" />
+    <Compile Include="Entities\Input\MouseState.cs" />
+    <Compile Include="Entities\Elements\Rectangles\MMPickableRectangleElement.cs" />
     <Compile Include="Components\Audio\AudioManager.cs" />
     <Compile Include="Components\Interop\Event\IMMEvent.cs" />
     <Compile Include="Components\Interop\Event\IMMEventListener.cs" />
@@ -276,22 +276,22 @@
     <Compile Include="Services\Console\MMConsole.cs" />
     <Compile Include="Services\Console\GameConsoleSettings.cs" />
     <Compile Include="Services\Console\Commands\IConsoleCommand.cs" />
-    <Compile Include="Services\Console\MMConsoleLogic.cs" />
+    <Compile Include="Services\Console\MmConsoleController.cs" />
     <Compile Include="Services\Console\Commands\CommandLine.cs" />
-    <Compile Include="Services\Console\MMConsoleVisual.cs" />
-    <Compile Include="Components\MMMvcComponent.cs" />
-    <Compile Include="Components\MMMvcComponentComponent.cs" />
-    <Compile Include="Components\MMMvcComponentLogic.cs" />
-    <Compile Include="Components\MMMvcComponentVisual.cs" />
-    <Compile Include="Gui\Renders\MMRenderComponent.cs" />
+    <Compile Include="Services\Console\MMConsoleRenderer.cs" />
+    <Compile Include="Components\MMMVCComponent.cs" />
+    <Compile Include="Components\MMMVCComponentComponent.cs" />
+    <Compile Include="Components\MMMVCComponentController.cs" />
+    <Compile Include="Components\MMMVCComponentRenderer.cs" />
+    <Compile Include="Entities\Graphics\MMRenderComponent.cs" />
     <Compile Include="Components\IMMDrawableComponentOperations.cs" />
     <Compile Include="Components\IMMDrawableComponent.cs" />
     <Compile Include="IMMEngineConfigurer.cs" />
-    <Compile Include="Components\IMMMvcComponent.cs" />
-    <Compile Include="Components\IMMMvcComponentComponent.cs" />
-    <Compile Include="Components\IMMMvcComponentLogic.cs" />
-    <Compile Include="Components\IMMMvcComponentVisual.cs" />
-    <Compile Include="Entities\IMMMvcEntityLogic.cs" />
+    <Compile Include="Components\IMMMVCComponent.cs" />
+    <Compile Include="Components\IMMMVCComponentComponent.cs" />
+    <Compile Include="Components\IMMMVCComponentController.cs" />
+    <Compile Include="Components\IMMMVCComponentRenderer.cs" />
+    <Compile Include="Entities\IMMMVCEntityController.cs" />
     <Compile Include="Entities\IMMRenderEntity.cs" />
     <Compile Include="MMRenderTargetFactory.cs" />
     <Compile Include="Screens\MMCircularLayer.cs" />
@@ -299,326 +299,316 @@
     <Compile Include="Screens\ICircularLayerOperations.cs" />
     <Compile Include="Screens\ILayerManager.cs" />
     <Compile Include="Screens\ILayerManagerOperations.cs" />
-    <Compile Include="Gui\Controls\Buttons\RectangleButton.cs" />
-    <Compile Include="Gui\Controls\Buttons\RectangleButtonSettings.cs" />
-    <Compile Include="Gui\Controls\Item\Data\IViewBinding.cs" />
-    <Compile Include="Gui\Controls\Item\Data\IViewItemCharModifier.cs">
+    <Compile Include="Entities\Controls\Buttons\RectangleButton.cs" />
+    <Compile Include="Entities\Controls\Buttons\RectangleButtonSettings.cs" />
+    <Compile Include="Entities\Controls\Item\Data\IViewBinding.cs" />
+    <Compile Include="Entities\Controls\Item\Data\IViewItemCharModifier.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\Data\IViewItemCharProcessor.cs">
+    <Compile Include="Entities\Controls\Item\Data\IViewItemCharProcessor.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\Data\IViewItemDataModel.cs" />
-    <Compile Include="Gui\Controls\Item\Data\ViewItemCharModifier.cs">
+    <Compile Include="Entities\Controls\Item\Data\IViewItemDataModel.cs" />
+    <Compile Include="Entities\Controls\Item\Data\ViewItemCharModifier.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\Data\ViewItemDataModel.cs">
+    <Compile Include="Entities\Controls\Item\Data\ViewItemDataModel.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\Interactions\BlockViewVerticalItemInteraction.cs" />
-    <Compile Include="Gui\Controls\Item\Interactions\BlockViewVerticalItemLayoutInteraction.cs" />
-    <Compile Include="Gui\Controls\Item\Interactions\IIndexBlockViewVerticalItemInteraction.cs" />
-    <Compile Include="Gui\Controls\Item\Interactions\IndexBlockViewVerticalItemInteraction.cs" />
-    <Compile Include="Gui\Controls\Item\Interactions\IViewItemIndexViewProvider.cs" />
-    <Compile Include="Gui\Controls\Item\Interactions\IViewItemLayoutInteraction.cs" />
-    <Compile Include="Gui\Controls\Item\Interactions\PointViewItemLayoutInteraction.cs" />
-    <Compile Include="Gui\Controls\Item\IViewItemComponentOperations.cs" />
-    <Compile Include="Gui\Controls\Item\IViewItemOperations.cs" />
-    <Compile Include="Gui\Controls\Item\Layers\BlockViewVerticalItemLayer.cs" />
-    <Compile Include="Gui\Controls\Item\Layers\BlockViewVerticalLayer.cs" />
-    <Compile Include="Gui\Controls\Item\Layers\IndexBlockViewVerticalItemLayer.cs" />
-    <Compile Include="Gui\Controls\Item\Layers\IViewItemLayer.cs">
+    <Compile Include="Entities\Controls\Item\Interactions\BlockViewVerticalItemInteraction.cs" />
+    <Compile Include="Entities\Controls\Item\Interactions\BlockViewVerticalItemLayoutInteraction.cs" />
+    <Compile Include="Entities\Controls\Item\Interactions\IIndexBlockViewVerticalItemInteraction.cs" />
+    <Compile Include="Entities\Controls\Item\Interactions\IndexBlockViewVerticalItemInteraction.cs" />
+    <Compile Include="Entities\Controls\Item\Interactions\IViewItemIndexViewProvider.cs" />
+    <Compile Include="Entities\Controls\Item\Interactions\IViewItemLayoutInteraction.cs" />
+    <Compile Include="Entities\Controls\Item\Interactions\PointViewItemLayoutInteraction.cs" />
+    <Compile Include="Entities\Controls\Item\IMMViewItemComponentOperations.cs" />
+    <Compile Include="Entities\Controls\Item\Layers\BlockViewVerticalItemLayer.cs" />
+    <Compile Include="Entities\Controls\Item\Layers\MMBlockViewVerticalLayer.cs" />
+    <Compile Include="Entities\Controls\Item\Layers\IndexBlockViewVerticalItemLayer.cs" />
+    <Compile Include="Entities\Controls\Item\Layers\IMMViewItemLayer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\Layers\IViewItemLayerOperations.cs" />
-    <Compile Include="Gui\Controls\Item\Layers\PointView2DItemLayer.cs">
+    <Compile Include="Entities\Controls\Item\Layers\IMMViewItemLayerOperations.cs" />
+    <Compile Include="Entities\Controls\Item\Layers\PointView2DItemLayer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\Layers\PointViewHorizontalItemLayer.cs">
+    <Compile Include="Entities\Controls\Item\Layers\PointViewHorizontalItemLayer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\Layers\PointViewItemLayer.cs" />
-    <Compile Include="Gui\Controls\Item\Layers\PointViewVerticalItemLayer.cs" />
-    <Compile Include="Gui\Controls\Item\Layers\PointViewVerticalItemLogic.cs" />
-    <Compile Include="Gui\Controls\Item\Layers\ViewItemLayer.cs">
+    <Compile Include="Entities\Controls\Item\Layers\PointViewItemLayer.cs" />
+    <Compile Include="Entities\Controls\Item\Layers\PointViewVerticalItemLayer.cs" />
+    <Compile Include="Entities\Controls\Item\Layers\PointViewVerticalItemLogic.cs" />
+    <Compile Include="Entities\Controls\Item\Layers\ViewItemLayer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\Factories\IViewItemFactory.cs">
+    <Compile Include="Entities\Controls\Item\Factories\IViewItemFactory.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\Factories\ViewItemFactory.cs">
+    <Compile Include="Entities\Controls\Item\Factories\ViewItemFactory.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\Interactions\IViewItemInteraction.cs">
+    <Compile Include="Entities\Controls\Item\Interactions\IViewItemInteraction.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\Interactions\IViewItemViewSelectionProvider.cs">
+    <Compile Include="Entities\Controls\Item\Interactions\IViewItemViewSelectionProvider.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\Interactions\IViewItemViewSwapProvider.cs">
+    <Compile Include="Entities\Controls\Item\Interactions\IViewItemViewSwapProvider.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\Interactions\PointViewItemInteraction.cs">
+    <Compile Include="Entities\Controls\Item\Interactions\PointViewItemInteraction.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\Interactions\ViewItemInteraction.cs">
+    <Compile Include="Entities\Controls\Item\Interactions\ViewItemInteraction.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\ViewItemState.cs">
+    <Compile Include="Entities\Controls\Item\MMViewItemState.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\IViewItem.cs">
+    <Compile Include="Entities\Controls\Item\IMMViewItem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\IViewItemComponent.cs">
+    <Compile Include="Entities\Controls\Item\IMMViewItemController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\Data\IBlockViewItemData.cs" />
-    <Compile Include="Gui\Controls\Item\Layouts\IBlockViewVerticalItemLayout.cs" />
-    <Compile Include="Gui\Controls\Item\Layouts\IIndexBlockViewVerticalItemLayout.cs" />
-    <Compile Include="Gui\Controls\Item\Layouts\IndexBlockViewVerticalItemLayout.cs" />
-    <Compile Include="Gui\Controls\Item\Layouts\IPointViewItemLayout.cs" />
-    <Compile Include="Gui\Controls\Item\Layouts\IViewItemLayout.cs" />
-    <Compile Include="Gui\Controls\Item\Layouts\PointView2DItemLayout.cs" />
-    <Compile Include="Gui\Controls\Item\Layouts\PointViewHorizontalItemLayout.cs" />
-    <Compile Include="Gui\Controls\Item\Layouts\PointViewVerticalItemLayout.cs" />
-    <Compile Include="Gui\Controls\Item\Layouts\BlockViewVerticalItemLayout.cs" />
-    <Compile Include="Gui\Controls\Item\Layouts\ViewItemLayout.cs" />
-    <Compile Include="Gui\Controls\Item\Logic\BlockViewVerticalItemLogic.cs" />
-    <Compile Include="Gui\Controls\Item\Logic\IBlockViewVerticalItemLogic.cs" />
-    <Compile Include="Gui\Controls\Item\Logic\IIndexBlockViewVerticalItemLogic.cs" />
-    <Compile Include="Gui\Controls\Item\Logic\IIndexBlockViewVerticalItemLogicOperations.cs" />
-    <Compile Include="Gui\Controls\Item\Logic\IndexedBlockViewVerticalItemLogic.cs" />
-    <Compile Include="Gui\Controls\Item\Logic\IPointView2DItemLogic.cs" />
-    <Compile Include="Gui\Controls\Item\Logic\IPointViewHorizontalItemLogic.cs" />
-    <Compile Include="Gui\Controls\Item\Logic\IPointViewItemLogic.cs" />
-    <Compile Include="Gui\Controls\Item\Logic\IPointViewVerticalItemLogic.cs" />
-    <Compile Include="Gui\Controls\Item\Logic\IViewItemLogic.cs">
+    <Compile Include="Entities\Controls\Item\Data\IBlockViewItemData.cs" />
+    <Compile Include="Entities\Controls\Item\Layouts\IBlockViewVerticalItemLayout.cs" />
+    <Compile Include="Entities\Controls\Item\Layouts\IIndexBlockViewVerticalItemLayout.cs" />
+    <Compile Include="Entities\Controls\Item\Layouts\IndexBlockViewVerticalItemLayout.cs" />
+    <Compile Include="Entities\Controls\Item\Layouts\IPointViewItemLayout.cs" />
+    <Compile Include="Entities\Controls\Item\Layouts\IViewItemLayout.cs" />
+    <Compile Include="Entities\Controls\Item\Layouts\PointView2DItemLayout.cs" />
+    <Compile Include="Entities\Controls\Item\Layouts\PointViewHorizontalItemLayout.cs" />
+    <Compile Include="Entities\Controls\Item\Layouts\PointViewVerticalItemLayout.cs" />
+    <Compile Include="Entities\Controls\Item\Layouts\BlockViewVerticalItemLayout.cs" />
+    <Compile Include="Entities\Controls\Item\Layouts\ViewItemLayout.cs" />
+    <Compile Include="Entities\Controls\Item\Logic\BlockViewVerticalItemLogic.cs" />
+    <Compile Include="Entities\Controls\Item\Logic\IBlockViewVerticalItemLogic.cs" />
+    <Compile Include="Entities\Controls\Item\Logic\IIndexBlockViewVerticalItemLogic.cs" />
+    <Compile Include="Entities\Controls\Item\Logic\IIndexBlockViewVerticalItemLogicOperations.cs" />
+    <Compile Include="Entities\Controls\Item\Logic\IndexedBlockViewVerticalItemLogic.cs" />
+    <Compile Include="Entities\Controls\Item\Logic\IPointView2DItemLogic.cs" />
+    <Compile Include="Entities\Controls\Item\Logic\IPointViewHorizontalItemLogic.cs" />
+    <Compile Include="Entities\Controls\Item\Logic\IPointViewItemLogic.cs" />
+    <Compile Include="Entities\Controls\Item\Logic\IPointViewVerticalItemLogic.cs" />
+    <Compile Include="Entities\Controls\Item\Logic\IndexBlockViewVerticalItemLogic.cs" />
+    <Compile Include="Entities\Controls\Item\Logic\PointView2DItemLogic.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\Logic\IndexBlockViewVerticalItemLogic.cs" />
-    <Compile Include="Gui\Controls\Item\Logic\PointView2DItemLogic.cs">
+    <Compile Include="Entities\Controls\Item\Logic\PointViewHorizontalItemLogic.cs" />
+    <Compile Include="Entities\Controls\Item\Logic\ViewItemLogic.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\Logic\PointViewHorizontalItemLogic.cs" />
-    <Compile Include="Gui\Controls\Item\Logic\ViewItemLogic.cs">
+    <Compile Include="Entities\Controls\Item\Logic\ViewItemLogicExt.cs" />
+    <Compile Include="Entities\Controls\Item\Settings\IItemSettings.cs" />
+    <Compile Include="Entities\Controls\Item\Settings\ItemSettings.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\Logic\ViewItemLogicExt.cs" />
-    <Compile Include="Gui\Controls\Item\Settings\IItemSettings.cs" />
-    <Compile Include="Gui\Controls\Item\Settings\ItemSettings.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Gui\Controls\Item\Swaps\ViewItemSwapProcess.cs">
+    <Compile Include="Entities\Controls\Item\Swaps\ViewItemSwapProcess.cs">
       <SubType>Code</SubType>
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Gui\Controls\Item\ViewItem.cs">
+    <Compile Include="Entities\Controls\Item\MMViewItem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\ViewItemComponent.cs">
+    <Compile Include="Entities\Controls\Item\MMViewItemControllerComponent.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\Visuals\IViewItemVisual.cs">
+    <Compile Include="Entities\Controls\Item\Visuals\ViewItemRectangleVisual.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Item\Visuals\ViewItemRectangleVisual.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Gui\Controls\Item\Visuals\ViewItemVisual.cs">
+    <Compile Include="Entities\Controls\Item\Visuals\MMViewItemRendererComponent.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Settings\IMMSettings.cs" />
-    <Compile Include="Gui\Controls\Views\IMMViewComponentOperations.cs" />
-    <Compile Include="Gui\Controls\Views\IIndexViewBuilder.cs" />
-    <Compile Include="Gui\Controls\Views\Layers\IViewLayer.cs">
+    <Compile Include="Entities\Controls\Views\IMMViewComponentOperations.cs" />
+    <Compile Include="Entities\Controls\Views\IIndexViewBuilder.cs" />
+    <Compile Include="Entities\Controls\Views\Layers\IMMViewLayer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Layers\IViewLayerOperations.cs" />
-    <Compile Include="Gui\Controls\Views\Layers\PointView2DLayer.cs">
+    <Compile Include="Entities\Controls\Views\Layers\IMMViewLayerOperations.cs" />
+    <Compile Include="Entities\Controls\Views\Layers\MMPointView2DLayer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Layers\PointViewHorizontalLayer.cs">
+    <Compile Include="Entities\Controls\Views\Layers\MMPointViewHorizontalLayer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Layers\PointViewLayer.cs" />
-    <Compile Include="Gui\Controls\Views\Layers\PointViewVerticalLayer.cs" />
-    <Compile Include="Gui\Controls\Views\Layers\ViewLayer.cs">
+    <Compile Include="Entities\Controls\Views\Layers\MMPointViewLayer.cs" />
+    <Compile Include="Entities\Controls\Views\Layers\MMPointViewVerticalLayer.cs" />
+    <Compile Include="Entities\Controls\Views\Layers\ViewLayer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\IMMViewNode.cs">
+    <Compile Include="Entities\Controls\Views\IMMView.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\IViewComponent.cs">
+    <Compile Include="Entities\Controls\Views\IMMViewComponent.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Layouts\BlockViewVerticalLayout.cs" />
-    <Compile Include="Gui\Controls\Views\Layouts\IndexBlockViewVerticalLayout.cs" />
-    <Compile Include="Gui\Controls\Views\Layouts\IPointView2DLayout.cs" />
-    <Compile Include="Gui\Controls\Views\Layouts\IPointViewHorizontalLayout.cs" />
-    <Compile Include="Gui\Controls\Views\Layouts\IPointViewVerticalLayout.cs" />
-    <Compile Include="Gui\Controls\Views\Layouts\IViewLayout.cs" />
-    <Compile Include="Gui\Controls\Views\Layouts\PointView2DLayout.cs" />
-    <Compile Include="Gui\Controls\Views\Layouts\PointViewVerticalLayout.cs" />
-    <Compile Include="Gui\Controls\Views\Layouts\ViewLayout.cs" />
-    <Compile Include="Gui\Controls\Views\Logic\MMBlockViewVerticalController.cs" />
-    <Compile Include="Gui\Controls\Views\Logic\IMMBlockViewVerticalController.cs" />
-    <Compile Include="Gui\Controls\Views\Logic\MMIndexBlockViewVerticalController.cs" />
-    <Compile Include="Gui\Controls\Views\Logic\MMIndexedBlockViewVerticalController.cs" />
-    <Compile Include="Gui\Controls\Views\Logic\IMMPointView2DController.cs">
+    <Compile Include="Entities\Controls\Views\Layouts\MMBlockViewVerticalLayout.cs" />
+    <Compile Include="Entities\Controls\Views\Layouts\MMIndexBlockViewVerticalLayout.cs" />
+    <Compile Include="Entities\Controls\Views\Layouts\IMMPointView2DLayout.cs" />
+    <Compile Include="Entities\Controls\Views\Layouts\IMMPointViewHorizontalLayout.cs" />
+    <Compile Include="Entities\Controls\Views\Layouts\IMMPointViewVerticalLayout.cs" />
+    <Compile Include="Entities\Controls\Views\Layouts\IMMViewLayout.cs" />
+    <Compile Include="Entities\Controls\Views\Layouts\MMPointView2DLayout.cs" />
+    <Compile Include="Entities\Controls\Views\Layouts\MMPointViewVerticalLayout.cs" />
+    <Compile Include="Entities\Controls\Views\Layouts\ViewLayout.cs" />
+    <Compile Include="Entities\Controls\Views\Logic\MMBlockViewVerticalController.cs" />
+    <Compile Include="Entities\Controls\Views\Logic\IMMBlockViewVerticalController.cs" />
+    <Compile Include="Entities\Controls\Views\Logic\MMIndexBlockViewVerticalController.cs" />
+    <Compile Include="Entities\Controls\Views\Logic\MMIndexedBlockViewVerticalController.cs" />
+    <Compile Include="Entities\Controls\Views\Logic\IMMPointView2DController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Logic\IMMPointViewHorizontalController.cs">
+    <Compile Include="Entities\Controls\Views\Logic\IMMPointViewHorizontalController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Logic\IMMPointViewVerticalController.cs" />
-    <Compile Include="Gui\Controls\Views\Logic\IMMViewController.cs">
+    <Compile Include="Entities\Controls\Views\Logic\IMMPointViewVerticalController.cs" />
+    <Compile Include="Entities\Controls\Views\Logic\IMMViewController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Logic\IViewLogicOperations.cs" />
-    <Compile Include="Gui\Controls\Views\Logic\MMPointView2DController.cs">
+    <Compile Include="Entities\Controls\Views\Logic\IViewLogicOperations.cs" />
+    <Compile Include="Entities\Controls\Views\Logic\MMPointView2DController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Logic\MMPointViewHorizontalController.cs">
+    <Compile Include="Entities\Controls\Views\Logic\MMPointViewHorizontalController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Logic\MMPointViewVerticalController.cs" />
-    <Compile Include="Gui\Controls\Views\Logic\MMPointViewController.cs" />
-    <Compile Include="Gui\Controls\Views\Logic\ViewController.cs">
+    <Compile Include="Entities\Controls\Views\Logic\MMPointViewVerticalController.cs" />
+    <Compile Include="Entities\Controls\Views\Logic\MMPointViewController.cs" />
+    <Compile Include="Entities\Controls\Views\Logic\ViewController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Scrolls\BlockViewVerticalScrollController.cs" />
-    <Compile Include="Gui\Controls\Views\Scrolls\IBlockViewVerticalScrollController.cs" />
-    <Compile Include="Gui\Controls\Views\Scrolls\IndexBlockViewVerticalScrollController.cs" />
-    <Compile Include="Gui\Controls\Views\Scrolls\IViewScrollbar.cs" />
-    <Compile Include="Gui\Controls\Views\Scrolls\IViewVerticalScrollbar.cs" />
-    <Compile Include="Gui\Controls\Views\Scrolls\PointViewVerticalScrollController.cs" />
-    <Compile Include="Gui\Controls\Views\Scrolls\ViewVerticalScrollbarVisual.cs" />
-    <Compile Include="Gui\Controls\Views\Selections\BlockViewVerticalSelectionController.cs" />
-    <Compile Include="Gui\Controls\Views\Selections\IBlockViewVerticalSelectionController.cs" />
-    <Compile Include="Gui\Controls\Views\Selections\IndexBlockViewVerticalSelectionController.cs" />
-    <Compile Include="Gui\Controls\Views\Selections\IndexedBlockViewVerticalSelectionController.cs" />
-    <Compile Include="Gui\Controls\Views\Selections\IPointViewVerticalSelectionController.cs" />
-    <Compile Include="Gui\Controls\Views\Selections\PointViewVerticalSelectionController.cs" />
-    <Compile Include="Gui\Controls\Views\Settings\IPointViewHorizontalSettings.cs" />
-    <Compile Include="Gui\Controls\Views\Settings\IPointViewSettings.cs" />
-    <Compile Include="Gui\Controls\Views\Settings\IPointViewVerticalSettings.cs" />
-    <Compile Include="Gui\Controls\Views\Settings\PointViewSettings.cs" />
-    <Compile Include="Gui\Controls\Views\Settings\PointViewVerticalSettings.cs" />
-    <Compile Include="Gui\Controls\Views\Settings\ViewDirection.cs">
+    <Compile Include="Entities\Controls\Views\Scrolls\MMBlockViewVerticalScrollController.cs" />
+    <Compile Include="Entities\Controls\Views\Scrolls\IMMBlockViewVerticalScrollController.cs" />
+    <Compile Include="Entities\Controls\Views\Scrolls\MMIndexBlockViewVerticalScrollController.cs" />
+    <Compile Include="Entities\Controls\Views\Scrolls\IViewScrollbar.cs" />
+    <Compile Include="Entities\Controls\Views\Scrolls\IViewVerticalScrollbar.cs" />
+    <Compile Include="Entities\Controls\Views\Scrolls\MMPointViewVerticalScrollController.cs" />
+    <Compile Include="Entities\Controls\Views\Scrolls\ViewVerticalScrollbarVisual.cs" />
+    <Compile Include="Entities\Controls\Views\Selections\MMBlockViewVerticalSelectionController.cs" />
+    <Compile Include="Entities\Controls\Views\Selections\IMMBlockViewVerticalSelectionController.cs" />
+    <Compile Include="Entities\Controls\Views\Selections\MMIndexBlockViewVerticalSelectionController.cs" />
+    <Compile Include="Entities\Controls\Views\Selections\MMIndexedBlockViewVerticalSelectionController.cs" />
+    <Compile Include="Entities\Controls\Views\Selections\IMMPointViewVerticalSelectionController.cs" />
+    <Compile Include="Entities\Controls\Views\Selections\MMPointViewVerticalSelectionController.cs" />
+    <Compile Include="Entities\Controls\Views\Settings\IPointViewHorizontalSettings.cs" />
+    <Compile Include="Entities\Controls\Views\Settings\IPointViewSettings.cs" />
+    <Compile Include="Entities\Controls\Views\Settings\IPointViewVerticalSettings.cs" />
+    <Compile Include="Entities\Controls\Views\Settings\PointViewSettings.cs" />
+    <Compile Include="Entities\Controls\Views\Settings\PointViewVerticalSettings.cs" />
+    <Compile Include="Entities\Controls\Views\Settings\ViewDirection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Scrolls\IPointView2DScrollController.cs">
+    <Compile Include="Entities\Controls\Views\Scrolls\IMMPointView2DScrollController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Scrolls\IPointViewHorizontalScrollController.cs">
+    <Compile Include="Entities\Controls\Views\Scrolls\IMMPointViewHorizontalScrollController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Scrolls\IPointViewScrollController.cs">
+    <Compile Include="Entities\Controls\Views\Scrolls\IMMPointViewScrollController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Scrolls\IPointViewVerticalScrollController.cs">
+    <Compile Include="Entities\Controls\Views\Scrolls\IMMPointViewVerticalScrollController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Scrolls\IViewScrollController.cs">
+    <Compile Include="Entities\Controls\Views\Scrolls\IMMViewScrollController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Scrolls\PointView2DScrollController.cs">
+    <Compile Include="Entities\Controls\Views\Scrolls\MMPointView2DScrollController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Scrolls\PointViewHorizontalScrollController.cs">
+    <Compile Include="Entities\Controls\Views\Scrolls\MMPointViewHorizontalScrollController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Selections\IPointView2DSelectionController.cs">
+    <Compile Include="Entities\Controls\Views\Selections\IMMPointView2DSelectionController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Selections\IPointViewHorizontalSelectionController.cs">
+    <Compile Include="Entities\Controls\Views\Selections\IMMPointViewHorizontalSelectionController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Selections\IViewSelectionController.cs">
+    <Compile Include="Entities\Controls\Views\Selections\IMMViewSelectionController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Selections\PointView2DSelectionController.cs">
+    <Compile Include="Entities\Controls\Views\Selections\MMPointView2DSelectionController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Selections\PointViewHorizontalSelectionController.cs">
+    <Compile Include="Entities\Controls\Views\Selections\MMPointViewHorizontalSelectionController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Settings\PointView2DSettings.cs">
+    <Compile Include="Entities\Controls\Views\Settings\PointView2DSettings.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Settings\PointViewHorizontalSettings.cs">
+    <Compile Include="Entities\Controls\Views\Settings\PointViewHorizontalSettings.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Settings\ViewSettings.cs">
+    <Compile Include="Entities\Controls\Views\Settings\ViewSettings.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Swaps\IViewSwapController.cs">
+    <Compile Include="Entities\Controls\Views\Swaps\IMMViewSwapController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Swaps\ViewSwapController.cs">
+    <Compile Include="Entities\Controls\Views\Swaps\MMViewSwapController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\MMViewNode.cs">
+    <Compile Include="Entities\Controls\Views\MMView.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\MMViewControlComponent.cs">
+    <Compile Include="Entities\Controls\Views\MMViewControlComponent.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\MMViewNodeState.cs">
+    <Compile Include="Entities\Controls\Views\MMViewStateHolder.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Regions\ViewRegion.cs">
+    <Compile Include="Entities\Controls\Views\Regions\ViewRegion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Regions\ViewRegionSettings.cs" />
-    <Compile Include="Gui\Controls\Views\Regions\ViewRegionVisual.cs" />
-    <Compile Include="Gui\Controls\Views\MMViewState.cs">
+    <Compile Include="Entities\Controls\Views\Regions\ViewRegionSettings.cs" />
+    <Compile Include="Entities\Controls\Views\Regions\ViewRegionVisual.cs" />
+    <Compile Include="Entities\Controls\Views\MMViewState.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Visuals\FadeViewVisual.cs" />
-    <Compile Include="Gui\Controls\Views\Visuals\GradientIndexedViewVisual.cs" />
-    <Compile Include="Gui\Controls\Views\Visuals\GradientIndexViewVisual.cs" />
-    <Compile Include="Gui\Controls\Views\Visuals\GradientViewVisual.cs" />
-    <Compile Include="Gui\Controls\Views\Visuals\IMMViewNodeVisual.cs">
+    <Compile Include="Entities\Controls\Views\Visuals\FadeViewVisual.cs" />
+    <Compile Include="Entities\Controls\Views\Visuals\GradientIndexedViewVisual.cs" />
+    <Compile Include="Entities\Controls\Views\Visuals\GradientIndexViewVisual.cs" />
+    <Compile Include="Entities\Controls\Views\Visuals\GradientViewVisual.cs" />
+    <Compile Include="Entities\Controls\Views\Visuals\IMMViewRenderer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Visuals\IViewVisualComponent.cs">
+    <Compile Include="Entities\Controls\Views\Visuals\IMMViewRenderComponent.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Scrolls\ViewScrollbarSettings.cs">
+    <Compile Include="Entities\Controls\Views\Scrolls\ViewScrollbarSettings.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Scrolls\ViewVerticalScrollBar.cs">
+    <Compile Include="Entities\Controls\Views\Scrolls\ViewVerticalScrollBar.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Visuals\ViewVisual.cs">
+    <Compile Include="Entities\Controls\Views\Visuals\MMViewRenderer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Views\Visuals\ViewVisualComponent .cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Gui\Controls\Labels\LabelBox.cs" />
+    <Compile Include="Entities\Controls\Labels\LabelBox.cs" />
     <Compile Include="Settings\MMSettings.cs" />
-    <Compile Include="Gui\Controls\Regions\IRegion.cs">
+    <Compile Include="Entities\Controls\Regions\IRegion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Regions\IRegionElement.cs">
+    <Compile Include="Entities\Controls\Regions\IRegionElement.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Regions\RectangleRegion.cs">
+    <Compile Include="Entities\Controls\Regions\RectangleRegion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Regions\RegionElement.cs">
+    <Compile Include="Entities\Controls\Regions\RegionElement.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Regions\RegionState.cs">
+    <Compile Include="Entities\Controls\Regions\RegionState.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Images\ImageBox.cs">
+    <Compile Include="Entities\Controls\Images\ImageBox.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\Labels\Label.cs">
+    <Compile Include="Entities\Controls\Labels\Label.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="IMMBufferable.cs" />
@@ -635,7 +625,6 @@
     <Compile Include="Components\Profiler\ProcessorProfiler.cs" />
     <Compile Include="Screens\MMLayer.cs" />
     <Compile Include="Screens\IMMLayer.cs" />
-    <Compile Include="Screens\IMMLayerOperations.cs" />
     <Compile Include="Screens\IMMScreenOperations.cs" />
     <Compile Include="Extensions\BooleanArrayExtension.cs" />
     <Compile Include="Services\Debug\Screens\CpuWhiteNoiseSreen.cs" />
@@ -657,14 +646,14 @@
     <Compile Include="Services\MMEngineGraphicsService.cs" />
     <Compile Include="Services\MMEngineInputService.cs" />
     <Compile Include="Services\MMEngineInteropService.cs" />
-    <Compile Include="Gui\Shapes\IMMRectangle.cs" />
-    <Compile Include="Entities\IMMMvcEntity.cs" />
-    <Compile Include="Entities\IMMMvcEntityVisual.cs" />
-    <Compile Include="Gui\Modules\Particle\IParticle.cs" />
-    <Compile Include="Gui\Modules\Particle\IRandomParticle.cs" />
-    <Compile Include="Gui\Modules\Particle\IShapelessParticle.cs" />
+    <Compile Include="Entities\Shapes\IMMRectangle.cs" />
+    <Compile Include="Entities\IMMMVCEntity.cs" />
+    <Compile Include="Entities\IMMMVCEntityRenderer.cs" />
+    <Compile Include="Entities\Particles\IMMVisualParticle.cs" />
+    <Compile Include="Entities\Particles\IMMRandomParticle.cs" />
+    <Compile Include="Entities\Particles\IMMParticle.cs" />
     <Compile Include="Services\MMEngineService.cs" />
-    <Compile Include="Gui\Modules\Particle\ParticleSpawner.cs" />
+    <Compile Include="Entities\Particles\MMParticleSpawner.cs" />
     <Compile Include="Entities\IMMDrawable.cs" />
     <Compile Include="IMMGame.cs" />
     <Compile Include="IMMEngine.cs" />
@@ -713,28 +702,28 @@
     <Compile Include="Extensions\PointExtension.cs" />
     <Compile Include="Extensions\RectangleExtension.cs" />
     <Compile Include="Extensions\Vector2Extension.cs" />
-    <Compile Include="Gui\Elements\IMMDraggable.cs" />
-    <Compile Include="Gui\Elements\IMMPickable.cs" />
-    <Compile Include="Gui\Elements\IMMPressable.cs" />
-    <Compile Include="Gui\Elements\Rectangles\MMDraggableRectangleElement.cs" />
-    <Compile Include="Gui\Elements\MMElementEventArgs.cs" />
-    <Compile Include="Gui\Shapes\MMRectangle.cs" />
-    <Compile Include="Gui\Elements\MMElementState.cs" />
-    <Compile Include="Gui\Elements\Rectangles\IMMDraggableRectangleElement.cs" />
-    <Compile Include="Gui\Elements\Rectangles\IMMPickableRectangleElement.cs" />
-    <Compile Include="Gui\Elements\Rectangles\IMMPressableRectangleElement.cs" />
-    <Compile Include="Gui\Modules\Particle\ParticleModule.cs" />
-    <Compile Include="Gui\Modules\Particle\ParticleSettings.cs" />
-    <Compile Include="Gui\Modules\Particle\FloatParticle.cs" />
-    <Compile Include="Gui\Modules\Particle\Particle.cs" />
-    <Compile Include="Gui\Modules\Particle\ShapelessParticle.cs" />
+    <Compile Include="Entities\Elements\IMMDraggable.cs" />
+    <Compile Include="Entities\Elements\IMMPickable.cs" />
+    <Compile Include="Entities\Elements\IMMPressable.cs" />
+    <Compile Include="Entities\Elements\Rectangles\MMDraggableRectangleElement.cs" />
+    <Compile Include="Entities\Elements\MMElementEventArgs.cs" />
+    <Compile Include="Entities\Shapes\MMRectangle.cs" />
+    <Compile Include="Entities\Elements\MMElementState.cs" />
+    <Compile Include="Entities\Elements\Rectangles\IMMDraggableRectangleElement.cs" />
+    <Compile Include="Entities\Elements\Rectangles\IMMPickableRectangleElement.cs" />
+    <Compile Include="Entities\Elements\Rectangles\IMMPressableRectangleElement.cs" />
+    <Compile Include="Entities\Particles\MMParticleModule.cs" />
+    <Compile Include="Entities\Particles\MMParticleSettings.cs" />
+    <Compile Include="Entities\Particles\MMFloatParticle.cs" />
+    <Compile Include="Entities\Particles\MMVisualParticle.cs" />
+    <Compile Include="Entities\Particles\MMParticle.cs" />
     <Compile Include="Services\Loader\IParameter.cs" />
     <Compile Include="Services\Loader\IParameterLoader.cs" />
-    <Compile Include="Gui\Controls\Item\Data\ViewItemDataEventArgs.cs" />
-    <Compile Include="Entities\MMMvcEntity.cs" />
-    <Compile Include="Entities\MMMvcEntityComponent.cs" />
-    <Compile Include="Entities\MMMvcEntityLogic.cs" />
-    <Compile Include="Entities\MMMvcEntityVisual.cs" />
+    <Compile Include="Entities\Controls\Item\Data\ViewItemDataEventArgs.cs" />
+    <Compile Include="Entities\MMMVCEntity.cs" />
+    <Compile Include="Entities\MMMVCEntityComponent.cs" />
+    <Compile Include="Entities\MMMVCEntityController.cs" />
+    <Compile Include="Entities\MMMVCEntityRenderer.cs" />
     <Compile Include="Entities\MMInputEntity.cs" />
     <Compile Include="Services\Parser\Grammar\LineGrammar.cs" />
     <Compile Include="Services\Parser\Grammar\ConfigurationFileGrammar.cs" />
@@ -743,7 +732,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screens\MMScreen.cs" />
     <Compile Include="Screens\MMScreenState.cs" />
-    <Compile Include="Settings\Color\MMPalette.cs" />
+    <Compile Include="Settings\MMPalette.cs" />
     <Compile Include="Components\Graphics\MMGraphicsSettings.cs" />
     <Compile Include="Services\Loader\FileLoader.cs" />
   </ItemGroup>

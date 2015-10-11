@@ -1,6 +1,6 @@
 namespace MetaMind.Engine.Components.Interop
 {
-    using Screen;
+    using Screens;
 
     public interface IMMScreenDirectorOperations
     {

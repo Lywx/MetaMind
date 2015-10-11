@@ -1,6 +1,6 @@
 namespace MetaMind.Session.Guis.Widgets.IndexViews.Operations
 {
-    using Engine.Gui.Controls.Item;
+    using Engine.Entities.Controls.Item;
     using Microsoft.Xna.Framework;
     using Tests;
 
@@ -8,7 +8,7 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Operations
     {
         public OperationItemSettings()
         {
-            var statusFrameSettings = this.Get<ViewItemVisualSettings>("StatusFrame");
+            var statusFrameSettings = this.Get<MMViewItemRenderSettings>("StatusFrame");
             statusFrameSettings.Size = new Point(128, 52);
         }
     }

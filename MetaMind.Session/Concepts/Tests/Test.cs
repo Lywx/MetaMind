@@ -10,7 +10,7 @@ namespace MetaMind.Session.Concepts.Tests
     using System;
     using System.Collections.Generic;
     using System.Speech.Synthesis;
-    using Engine.Gui.Controls.Item.Data;
+    using Engine.Entities.Controls.Item.Data;
 
     /// <summary>
     /// Test is a functional programming interface for F#. Test is following 

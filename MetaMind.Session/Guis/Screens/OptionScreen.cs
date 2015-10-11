@@ -5,24 +5,24 @@
     using Concepts.Operations;
     using Engine.Components.Content.Fonts;
     using Engine.Entities;
-    using Engine.Gui.Controls.Item;
-    using Engine.Gui.Controls.Item.Data;
-    using Engine.Gui.Controls.Item.Factories;
-    using Engine.Gui.Controls.Item.Frames;
-    using Engine.Gui.Controls.Item.Interactions;
-    using Engine.Gui.Controls.Item.Layers;
-    using Engine.Gui.Controls.Labels;
-    using Engine.Gui.Controls.Views;
-    using Engine.Gui.Controls.Views.Layouts;
-    using Engine.Gui.Controls.Views.Logic;
-    using Engine.Gui.Controls.Views.Scrolls;
-    using Engine.Gui.Controls.Views.Selections;
-    using Engine.Gui.Controls.Views.Swaps;
-    using Engine.Gui.Controls.Views.Visuals;
-    using Engine.Gui.Graphics.Fonts;
-    using Engine.Screen;
+    using Engine.Entities.Controls.Item;
+    using Engine.Entities.Controls.Item.Data;
+    using Engine.Entities.Controls.Item.Factories;
+    using Engine.Entities.Controls.Item.Frames;
+    using Engine.Entities.Controls.Item.Interactions;
+    using Engine.Entities.Controls.Item.Layers;
+    using Engine.Entities.Controls.Labels;
+    using Engine.Entities.Controls.Views;
+    using Engine.Entities.Controls.Views.Layouts;
+    using Engine.Entities.Controls.Views.Logic;
+    using Engine.Entities.Controls.Views.Scrolls;
+    using Engine.Entities.Controls.Views.Selections;
+    using Engine.Entities.Controls.Views.Swaps;
+    using Engine.Entities.Controls.Views.Visuals;
+    using Engine.Entities.Graphics.Fonts;
+    using Engine.Screens;
     using Engine.Services;
-    using Engine.Settings.Color;
+    using Engine.Settings;
     using Microsoft.Xna.Framework;
     using Modules;
     using Widgets.BlockViews.Options;
@@ -32,7 +32,7 @@
     {
         private readonly List<IOption> options;
 
-        private IMMViewNode optionView;
+        private IMMView optionView;
 
         private readonly string procedureName;
 
@@ -86,7 +86,7 @@
 
         private MMEntityCollection<IMMInputEntity> Entities { get; set; }
 
-        public override void LoadContent(IMMEngineInteropService interop)
+        public override void LoadContent()
         {
             var graphicsSettings = this.Graphics.Settings;
 
@@ -151,12 +151,12 @@
             var itemSettings = new OptionItemSettings();
 
             // View composition
-            this.optionView = new MMViewNode(viewSettings, itemSettings, new List<IViewItem>());
+            this.optionView = new MMView(viewSettings, itemSettings, new List<IMMViewItem>());
 
-            var viewScroll    = new BlockViewVerticalScrollController(this.optionView);
-            var viewSelection = new BlockViewVerticalSelectionController(this.optionView);
-            var viewLayout    = new BlockViewVerticalLayout(this.optionView);
-            var viewSwap      = new ViewSwapController(this.optionView);
+            var viewScroll    = new MMBlockViewVerticalScrollController(this.optionView);
+            var viewSelection = new MMBlockViewVerticalSelectionController(this.optionView);
+            var viewLayout    = new MMBlockViewVerticalLayout(this.optionView);
+            var viewSwap      = new MMViewSwapController(this.optionView);
 
             var itemFactory =
                 new ViewItemFactory(
@@ -166,37 +166,37 @@
                     item =>
                     {
                         var itemFrame             = new OptionItemFrameController(item, new ViewItemImmRectangle(item));
-                        var itemLayoutInteraction = new BlockViewVerticalItemLayoutInteraction(item, viewSelection, viewScroll);
+                        var itemLayoutInteraction = new MMBlockViewVerticalItemLayoutInteraction(item, viewSelection, viewScroll);
                         var itemLayout            = new TestItemLayout(item, itemLayoutInteraction);
-                        var itemInteraction       = new BlockViewVerticalItemInteraction(item, itemLayout, itemLayoutInteraction);
-                        var itemModel             = new ViewItemDataModel(item);
+                        var itemInteraction       = new MMBlockViewVerticalItemInteraction(item, itemLayout, itemLayoutInteraction);
+                        var itemModel             = new MMViewItemDataModel(item);
 
                         return new OptionItemLogic(item, itemFrame, itemInteraction, itemModel, itemLayout);
                     },
 
-                    item => new OptionItemVisual(item));
+                    item => new OptionItemRenderer(item));
 
             var viewLogic = new MMBlockViewVerticalController(this.optionView, viewScroll, viewSelection, viewSwap, viewLayout, itemFactory)
             {
                 ViewBinding = new OptionViewBinding(this.options)
             };
             var viewVisual = new GradientViewVisual(this.optionView);
-            var viewLayer  = new BlockViewVerticalLayer(this.optionView);
+            var viewLayer  = new MMBlockViewVerticalLayer(this.optionView);
             this.optionView.ViewLayer  = viewLayer;
             this.optionView.ViewController  = viewLogic;
-            this.optionView.ViewVisual = viewVisual;
+            this.optionView.Renderer = viewVisual;
 
             this.Entities.Add(this.optionView);
 
-            this.Entities.LoadContent(interop);
-            base.LoadContent(interop);
+            this.Entities.LoadContent();
+            base.LoadContent();
 
             this.screenBackground.FadeOut(TimeSpan.FromSeconds(0.5));
         }
 
-        public override void UnloadContent(IMMEngineInteropService interop)
+        public override void UnloadContent()
         {
-            base.UnloadContent(interop);
+            base.UnloadContent();
 
             this.screenBackground.FadeIn(TimeSpan.FromSeconds(0.5));
         }
@@ -224,10 +224,10 @@
             base.Update(time);
         }
 
-        public override void UpdateInput(IMMEngineInputService input, GameTime time)
+        public override void UpdateInput(GameTime time)
         {
-            this.Entities.UpdateInput(input, time);
-            base.UpdateInput(input, time);
+            this.Entities.UpdateInput(time);
+            base.UpdateInput(time);
         }
     }
 }

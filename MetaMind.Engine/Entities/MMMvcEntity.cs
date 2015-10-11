@@ -1,7 +1,6 @@
 namespace MetaMind.Engine.Entities
 {
     using Microsoft.Xna.Framework;
-    using Services;
 
     /// <summary>
     /// MVC Abstraction for MMEntity.
@@ -9,16 +8,16 @@ namespace MetaMind.Engine.Entities
     /// <remarks>
     /// Compatible with previous GameControllableEntity implementation.
     /// </remarks>
-    public class MMMvcEntity<TMvcSettings> : MMInputEntity, IMMMvcEntity
+    public class MMMVCEntity<TMVCSettings> : MMInputEntity, IMMMVCEntity
     {
         #region Constructors and Finalizer
 
-        protected MMMvcEntity(TMvcSettings settings)
+        protected MMMVCEntity(TMVCSettings settings)
         {
             this.Settings = settings;
         }
 
-        ~MMMvcEntity()
+        ~MMMVCEntity()
         {
             this.Dispose();
         }
@@ -27,11 +26,11 @@ namespace MetaMind.Engine.Entities
 
         #region Components
 
-        public IMMMvcEntityLogic Logic { get; protected set; }
+        public IMMMVCEntityController Controller { get; protected set; }
 
-        public IMMMvcEntityVisual Visual { get; protected set; }
+        public IMMMVCEntityRenderer Renderer { get; protected set; }
 
-        public TMvcSettings Settings { get; protected set; }
+        public TMVCSettings Settings { get; protected set; }
 
         #endregion
 
@@ -39,44 +38,44 @@ namespace MetaMind.Engine.Entities
 
         public override void Draw(GameTime time)
         {
-            this.Visual?.Draw(time);
+            this.Renderer?.Draw(time);
         }
 
         #endregion
         
         #region Load and Unload
 
-        public override void LoadContent(IMMEngineInteropService interop)
+        public override void LoadContent()
         {
-            this.Logic? .LoadContent(interop);
-            this.Visual?.LoadContent(interop);
+            this.Controller? .LoadContent();
+            this.Renderer?.LoadContent();
 
-            base.LoadContent(interop);
+            base.LoadContent();
         }
 
-        public override void UnloadContent(IMMEngineInteropService interop)
+        public override void UnloadContent()
         {
-            this.Logic?.UnloadContent(interop);
+            this.Controller?.UnloadContent();
 
-            base.UnloadContent(interop);
+            base.UnloadContent();
         }
 
         #endregion
         
         #region Update
 
-        public override void UpdateInput(IMMEngineInputService input, GameTime time)
+        public override void UpdateInput(GameTime time)
         {
-            this.Logic? .UpdateInput(input, time);
-            this.Visual?.UpdateInput(input, time);
+            this.Controller? .UpdateInput(time);
+            this.Renderer?.UpdateInput(time);
         }
 
         public override void Update(GameTime time)
         {
             base.Update(time);
 
-            this.Logic? .Update(time);
-            this.Visual?.Update(time);
+            this.Controller? .Update(time);
+            this.Renderer?.Update(time);
         }
 
         #endregion

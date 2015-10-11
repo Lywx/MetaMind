@@ -4,9 +4,9 @@
     using Concepts.Operations;
     using Engine.Components.Content.Fonts;
     using Engine.Entities;
-    using Engine.Gui.Controls.Labels;
-    using Engine.Gui.Graphics.Fonts;
-    using Engine.Screen;
+    using Engine.Entities.Controls.Labels;
+    using Engine.Entities.Graphics.Fonts;
+    using Engine.Screens;
     using Engine.Services;
     using Microsoft.Xna.Framework;
     using Modules;
@@ -46,7 +46,7 @@
             this.SpriteBatch.End();
         }
 
-        public override void LoadContent(IMMEngineInteropService interop)
+        public override void LoadContent()
         {
             var operation = SessionGame.SessionData.Operation;
 
@@ -54,7 +54,7 @@
                 operation, this.operationSession);
 
             this.ControllableEntities.Add(operationModule);
-            this.ControllableEntities.LoadContent(interop);
+            this.ControllableEntities.LoadContent();
 
             var graphicsSettings = this.Graphics.Settings;
             var screenLabel = new Label
@@ -69,16 +69,16 @@
             };
 
             this.VisuallEntities.Add(screenLabel);
-            this.VisuallEntities.LoadContent(interop);
+            this.VisuallEntities.LoadContent();
 
-            base.LoadContent(interop);
+            base.LoadContent();
         }
 
-        public override void UnloadContent(IMMEngineInteropService interop)
+        public override void UnloadContent()
         {
-            this.ControllableEntities.UnloadContent(interop);
-            this.VisuallEntities     .UnloadContent(interop);
-            base                     .UnloadContent(interop);
+            this.ControllableEntities.UnloadContent();
+            this.VisuallEntities     .UnloadContent();
+            base                     .UnloadContent();
         }
 
         public override void Update(GameTime time)
@@ -88,10 +88,10 @@
             base                     .Update(time);
         }
 
-        public override void UpdateInput(IMMEngineInputService input, GameTime time)
+        public override void UpdateInput(GameTime time)
         {
-            this.ControllableEntities.UpdateInput(input, time);
-            base.                     UpdateInput(input, time);
+            this.ControllableEntities.UpdateInput(time);
+            base.                     UpdateInput(time);
         }
     }
 }

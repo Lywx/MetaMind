@@ -1,7 +1,7 @@
 namespace MetaMind.Session.Concepts.Operations
 {
     using System;
-    using Engine.Gui.Controls.Item.Data;
+    using Engine.Entities.Controls.Item.Data;
 
     #region Option
 

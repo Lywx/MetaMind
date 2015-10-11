@@ -1,4 +1,4 @@
-namespace MetaMind.Engine.Screen
+namespace MetaMind.Engine.Screens
 {
     using System;
 

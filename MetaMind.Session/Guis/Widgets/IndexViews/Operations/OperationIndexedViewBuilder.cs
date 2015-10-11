@@ -2,15 +2,15 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Operations
 {
     using System;
     using Concepts.Operations;
-    using Engine.Gui.Controls.Item.Data;
-    using Engine.Gui.Controls.Item.Factories;
-    using Engine.Gui.Controls.Item.Frames;
-    using Engine.Gui.Controls.Item.Interactions;
-    using Engine.Gui.Controls.Views;
-    using Engine.Gui.Controls.Views.Logic;
-    using Engine.Gui.Controls.Views.Regions;
-    using Engine.Gui.Controls.Views.Selections;
-    using Engine.Gui.Controls.Views.Visuals;
+    using Engine.Entities.Controls.Item.Data;
+    using Engine.Entities.Controls.Item.Factories;
+    using Engine.Entities.Controls.Item.Frames;
+    using Engine.Entities.Controls.Item.Interactions;
+    using Engine.Entities.Controls.Views;
+    using Engine.Entities.Controls.Views.Logic;
+    using Engine.Entities.Controls.Views.Regions;
+    using Engine.Entities.Controls.Views.Selections;
+    using Engine.Entities.Controls.Views.Visuals;
     using Tests;
 
     /// <summary>
@@ -18,9 +18,9 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Operations
     /// </summary>
     public class OperationIndexedViewBuilder : OperationIndexViewBuilder
     {
-        private readonly IMMViewNode viewHost;
+        private readonly IMMView viewHost;
 
-        public OperationIndexedViewBuilder(IMMViewNode viewHost, OperationSession operationSeesion)
+        public OperationIndexedViewBuilder(IMMView viewHost, OperationSession operationSeesion)
             : base(operationSeesion)
         {
             if (viewHost == null)
@@ -31,7 +31,7 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Operations
             this.viewHost = viewHost;
         }
 
-        public override void Compose(IMMViewNode view, dynamic viewData)
+        public override void Compose(IMMView view, dynamic viewData)
         {
             if (view == null)
             {
@@ -52,9 +52,9 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Operations
             this.SetupLogic();
         }
 
-        protected override BlockViewVerticalSelectionController AddViewSelection()
+        protected override MMBlockViewVerticalSelectionController AddViewSelection()
         {
-            return new IndexedBlockViewVerticalSelectionController(this.View);
+            return new MMIndexedBlockViewVerticalSelectionController(this.View);
         }
 
         protected override IMMViewController AddViewLogic()
@@ -83,7 +83,7 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Operations
                 {
                     var itemFrame = new OperationItemFrameController(item, new ViewItemImmRectangle(item));
 
-                    var itemLayoutInteraction = new BlockViewVerticalItemLayoutInteraction(
+                    var itemLayoutInteraction = new MMBlockViewVerticalItemLayoutInteraction(
                         item,
                         this.ViewSelection,
                         this.ViewScroll);
@@ -102,13 +102,13 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Operations
                         }
                     };
 
-                    var itemInteraction = new IndexBlockViewVerticalItemInteraction(
+                    var itemInteraction = new MMIndexBlockViewVerticalItemInteraction(
                         item,
                         itemLayout,
                         itemLayoutInteraction, 
                         new OperationIndexedViewBuilder(this.View, this.OperationSession));
 
-                    var itemModel = new ViewItemDataModel(item);
+                    var itemModel = new MMViewItemDataModel(item);
 
                     return new OperationItemLogic(
                         item,
@@ -118,7 +118,7 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Operations
                         itemLayout);
                 },
 
-                item => new OperationItemVisual(item));
+                item => new OperationItemRenderer(item));
         }
 
         protected override void AddViewRegion()

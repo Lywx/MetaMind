@@ -1,7 +1,7 @@
 namespace MetaMind.Engine.Components.Graphics
 {
     using Content.Fonts;
-    using Gui.Graphics.Fonts;
+    using Entities.Graphics.Fonts;
     using Microsoft.Xna.Framework;
 
     public interface IMMRendererStringOperations

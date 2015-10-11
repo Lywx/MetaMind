@@ -2,15 +2,14 @@
 {
     using Engine;
     using Engine.Entities;
-    using Engine.Gui.Controls.Images;
-    using Engine.Gui.Elements;
-    using Engine.Gui.Elements.Rectangles;
-    using Engine.Gui.Modules;
+    using Engine.Entities.Controls.Images;
+    using Engine.Entities.Elements;
+    using Engine.Entities.Elements.Rectangles;
     using Engine.Services;
     using Microsoft.Xna.Framework;
     using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
-    public class PlayTest_Frame : MMMvcEntity<object>
+    public class PlayTest_Frame : MMMVCEntity<object>
     {
         private MMEntityCollection<MMInputEntity> control;
 
@@ -47,9 +46,9 @@
             this.control.Update(time);
         }
 
-        public override void UpdateInput(IMMEngineInputService input, GameTime time)
+        public override void UpdateInput(GameTime time)
         {
-            this.control.UpdateInput(input, time);
+            this.control.UpdateInput(time);
         }
     }
 }

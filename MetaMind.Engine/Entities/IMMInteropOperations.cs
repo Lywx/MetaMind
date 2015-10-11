@@ -1,11 +1,9 @@
 namespace MetaMind.Engine.Entities
 {
-    using Services;
-
     public interface IMMInteropOperations
     {
-        void LoadContent(IMMEngineInteropService interop);
+        void LoadContent();
         
-        void UnloadContent(IMMEngineInteropService interop);
+        void UnloadContent();
     }
 }

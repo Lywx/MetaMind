@@ -13,7 +13,7 @@ namespace MetaMind.Engine.Components.Interop
     using System.Linq;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Screen;
+    using Screens;
 
     public class MMScreenDirector : MMInputableComponent, IMMScreenDirector
     {
@@ -124,7 +124,7 @@ namespace MetaMind.Engine.Components.Interop
             // Tell each of the screens to load their content.
             foreach (var screen in this.screens)
             {
-                screen.LoadContent(this.Interop);
+                screen.LoadContent();
             }
         }
 
@@ -133,7 +133,7 @@ namespace MetaMind.Engine.Components.Interop
             // Tell each of the screens to unload their content.
             foreach (var screen in this.screens)
             {
-                screen.UnloadContent(this.Interop);
+                screen.UnloadContent();
             }
         }
 
@@ -242,7 +242,7 @@ namespace MetaMind.Engine.Components.Interop
         public override void UpdateInput(GameTime time)
         {
             this.FindScreens(screen => screen.IsActive)
-                .ForEach(screen => screen.UpdateInput(this.Input, time));
+                .ForEach(screen => screen.UpdateInput(time));
         }
 
         #endregion Update and Draw
@@ -256,7 +256,7 @@ namespace MetaMind.Engine.Components.Interop
             // If we have a graphics device, tell the screen to load content.
             if (this.initialized)
             {
-                screen.LoadContent(this.Interop);
+                screen.LoadContent();
             }
 
             this.screens.Add(screen);
@@ -282,7 +282,7 @@ namespace MetaMind.Engine.Components.Interop
             // If we have a graphics device, tell the screen to unload content.
             if (this.initialized)
             {
-                screen.UnloadContent(this.Interop);
+                screen.UnloadContent();
             }
 
             this.screens.Remove(screen);

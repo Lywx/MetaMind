@@ -9,7 +9,7 @@
     /// This module control all the interaction with the Synchronization and Consciousness object, 
     /// since Synchronization is only a data class.
     /// </summary>
-    public class SynchronizationModule : MMMvcEntity<SynchronizationSettings>
+    public class SynchronizationModule : MMMVCEntity<SynchronizationSettings>
     {
         private readonly IConsciousness consciousness;
 
@@ -26,8 +26,8 @@
             this.consciousness   = cognition.Consciousness;
             this.synchronization = cognition.Synchronization;
 
-            this.Logic  = new SynchronizationLogic(this, this.consciousness, this.synchronization);
-            this.Visual = new SynchronizationVisual(this, cognition, this.consciousness, this.synchronization);
+            this.Controller  = new SynchronizationController(this, this.consciousness, this.synchronization);
+            this.Renderer = new SynchronizationRenderer(this, cognition, this.consciousness, this.synchronization);
         }
     }
 }

@@ -1,0 +1,18 @@
+﻿namespace MetaMind.Engine.Entities.Controls.Views
+{
+    public enum MMViewState
+    {
+        View_Is_Active,
+
+        View_Is_Inputting,
+
+        View_Is_Editing,
+
+        // TODO(Critical): Do something to focus detection
+        View_Has_Focus,
+
+        View_Has_Selection,
+
+        StateNum,
+    }
+}
