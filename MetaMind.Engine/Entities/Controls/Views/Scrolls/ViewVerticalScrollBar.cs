@@ -14,7 +14,7 @@ namespace MetaMind.Engine.Entities.Controls.Views.Scrolls
     using Microsoft.Xna.Framework;
     using Settings;
 
-    public class ViewVerticalScrollbar : MMRenderComponent, IViewVerticalScrollbar
+    public class ViewVerticalScrollbar : MMRendererComponent, IViewVerticalScrollbar
     {
         private readonly IMMPointViewVerticalScrollController viewScroll;
 

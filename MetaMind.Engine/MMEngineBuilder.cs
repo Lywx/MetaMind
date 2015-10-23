@@ -61,7 +61,7 @@
         {
             this.Engine.Graphics = new MMEngineGraphics(this.Engine, new MMGraphicsSettings());
             this.Engine.Interop = new MMEngineInterop(this.Engine,
-                new MMScreenDirector(this.Engine, new MMScreenSettings(), this.Graphics.SpriteBatch)
+                new MMScreenDirector(this.Engine, new MMScreenSettings())
                 {
                     UpdateOrder = 5
                 },

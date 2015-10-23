@@ -292,7 +292,7 @@
     <Content Include="Configurations\Session.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Raw Content\Unity.Persistent.xml" />
+    <Content Include="Content\Raw Content\Session.Persistent.xml" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -329,9 +329,6 @@
     <None Include="Content\Audio\Win\Wave Bank.xwb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

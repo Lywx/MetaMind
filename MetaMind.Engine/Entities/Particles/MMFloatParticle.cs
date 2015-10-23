@@ -1,6 +1,7 @@
 namespace MetaMind.Engine.Entities.Particles
 {
     using System;
+    using Components.Graphics;
     using Microsoft.Xna.Framework;
     using Primtives2D;
 
@@ -48,7 +49,7 @@ namespace MetaMind.Engine.Entities.Particles
 
         public override void Draw(GameTime time)
         {
-            this.SpriteBatch.FillRectangle(this.Position, this.Size, this.Color, this.Angle);
+            this.Graphics.Renderer.FillRectangle(this.Position, this.Size, this.Color, this.Angle);
         }
 
         public override void Update(GameTime time)

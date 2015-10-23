@@ -5,6 +5,8 @@
     using Concepts.Synchronizations;
     using Concepts.Tests;
     using Engine.Components.Content.Fonts;
+    using Engine.Components.Graphics;
+    using Engine.Entities;
     using Engine.Entities.Controls.Buttons;
     using Engine.Screens;
     using Engine.Services;
@@ -106,10 +108,10 @@
                 DrawAction = (graphics, time, alpha) =>
                 {
                     // Buttons have the same alpha value as circular layer
-                    this.SpriteBatch.Begin();
+                    ((MMVisualEntity)this).Graphics.Renderer.Begin();
                     this.buttonPrevious.Draw(time);
                     this.buttonNext.Draw(time);
-                    this.SpriteBatch.End();
+                    ((MMVisualEntity)this).Graphics.Renderer.End();
                 }
             });
 

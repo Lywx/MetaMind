@@ -3,11 +3,23 @@ namespace MetaMind.Engine.Entities
     using System;
     using System.Runtime.Serialization;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
 
     [DataContract]
     public class MMVisualEntity : MMEntity, IMMVisualEntity
     {
+        #region Constructors
+
+        protected MMVisualEntity()
+        {
+        }
+
+        ~MMVisualEntity()
+        {
+            this.Dispose(true);
+        }
+
+        #endregion
+
         #region State Data
 
         private bool visible = true;
@@ -33,25 +45,6 @@ namespace MetaMind.Engine.Entities
 
         #endregion
 
-        #region Engine Data
-
-        protected SpriteBatch SpriteBatch => this.Graphics.SpriteBatch;
-
-        #endregion
-
-        #region Constructors
-
-        protected MMVisualEntity()
-        {
-        }
-
-        ~MMVisualEntity()
-        {
-            this.Dispose(true);
-        }
-
-        #endregion
-
         #region Comparison
 
         public int Compare(IMMDrawable x, IMMDrawable y)
@@ -61,7 +54,6 @@ namespace MetaMind.Engine.Entities
 
         public int CompareTo(IMMDrawable other)
         {
-            // TODO(Now): I am still thinking about how to merge this with ZOrder in MMNode
             return this.DrawOrder.CompareTo(other.DrawOrder);
         }
 
@@ -80,7 +72,8 @@ namespace MetaMind.Engine.Entities
 
             set
             {
-                if (this.drawOrder != value)
+                var changed = this.drawOrder != value;
+                if (changed)
                 {
                     this.drawOrder = value;
                     this.DrawOrderChanged?.Invoke(this, null);

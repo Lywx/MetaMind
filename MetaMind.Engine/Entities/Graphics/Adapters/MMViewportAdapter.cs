@@ -2,11 +2,17 @@ namespace MetaMind.Engine.Entities.Graphics.Adapters
 {
     using Microsoft.Xna.Framework;
 
-    public abstract class ViewportAdapter
+    public abstract class MMViewportAdapter : MMObject
     {
-        protected ViewportAdapter()
+        #region Constructors and Finalizer
+
+        protected MMViewportAdapter()
         {
         }
+
+        #endregion
+
+        #region Adapter Data
 
         public abstract int VirtualWidth { get; }
 
@@ -16,7 +22,9 @@ namespace MetaMind.Engine.Entities.Graphics.Adapters
 
         public abstract int ViewportHeight { get; }
 
-        public abstract void OnClientSizeChanged();
+        #endregion
+
+        #region Adapter Operations
 
         public abstract Matrix GetScaleMatrix();
 
@@ -31,5 +39,13 @@ namespace MetaMind.Engine.Entities.Graphics.Adapters
             var invertedMatrix = Matrix.Invert(scaleMatrix);
             return Vector2.Transform(new Vector2(x, y), invertedMatrix).ToPoint();
         }
+
+        #endregion
+
+        #region Event Ons
+
+        public abstract void OnClientSizeChanged();
+
+        #endregion
     }
 }

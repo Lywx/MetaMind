@@ -1,6 +1,7 @@
 ﻿namespace MetaMind.Session.Guis.Screens
 {
     using System;
+    using Engine.Components.Graphics;
     using Engine.Entities;
     using Engine.Screens;
     using Engine.Services;
@@ -34,9 +35,9 @@
                 {
                     DrawAction = (graphics, time, alpha) =>
                     {
-                        this.SpriteBatch.Begin();
+                        ((MMVisualEntity)this).Graphics.Renderer.Begin();
                         this.summary.Draw(time);
-                        this.SpriteBatch.End();
+                        ((MMVisualEntity)this).Graphics.Renderer.End();
                     },
                     UpdateAction = time =>
                     {

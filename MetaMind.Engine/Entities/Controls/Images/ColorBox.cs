@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Entities.Controls.Images
     using Microsoft.Xna.Framework.Graphics;
     using Primtives2D;
 
-    public class ColorBox : MMRenderComponent
+    public class ColorBox : MMRendererComponent
     {
         public ColorBox(
             Func<Rectangle> boundsSelector,

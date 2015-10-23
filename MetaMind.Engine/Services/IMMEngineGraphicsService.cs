@@ -21,8 +21,6 @@ namespace MetaMind.Engine.Services
 
         GraphicsDevice Device { get; }
 
-        SpriteBatch SpriteBatch { get; }
-
         #endregion
     }
 }

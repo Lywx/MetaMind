@@ -1,15 +1,13 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IMMInputable.cs">
-//   Copyright (c) 2015 Wuxiang Lin
-//   All Rights Reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
 namespace MetaMind.Engine.Entities
 {
     using System;
+    using System.Collections.Generic;
 
-    public interface IMMInputable : IMMUpdateable, IMMInputOperations
+    public interface IMMInputableBase : IMMUpdateable,
+        IComparer<IMMInputable>,
+        IComparable<IMMInputable> {}
+
+    public interface IMMInputable : IMMInputableBase, IMMInputOperations
     {
         bool Inputable { get; }
 

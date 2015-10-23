@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using Concepts.Operations;
     using Engine.Components.Content.Fonts;
+    using Engine.Components.Graphics;
     using Engine.Entities;
     using Engine.Entities.Controls.Item;
     using Engine.Entities.Controls.Item.Data;
@@ -203,7 +204,7 @@
 
         public override void Draw(GameTime time)
         {
-            this.SpriteBatch.Begin();
+            ((MMVisualEntity)this).Graphics.Renderer.Begin();
 
             this.procedureNameLabelBox.Draw(time);
             this.procedureDescriptionLabelBox.Draw(time);
@@ -211,7 +212,7 @@
             this.screenLabel.Draw(time);
             this.Entities.Draw(time);
 
-            this.SpriteBatch.End();
+            ((MMVisualEntity)this).Graphics.Renderer.End();
 
             base.Draw(time);
         }

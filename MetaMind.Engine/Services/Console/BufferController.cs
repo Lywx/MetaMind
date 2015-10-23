@@ -14,7 +14,7 @@ namespace MetaMind.Engine.Services.Console
     {
         #region Constructors
 
-        public BufferController(MMConsole module, MMEngine engine)
+        public BufferController(MMConsole module)
             : base(module)
         {
             this.Input   = new CommandLine(string.Empty, CommandType.Input);

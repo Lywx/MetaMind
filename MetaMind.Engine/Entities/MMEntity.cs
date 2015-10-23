@@ -6,7 +6,6 @@ namespace MetaMind.Engine.Entities
     using System.Runtime.Serialization;
     using Components.Interop.Event;
     using Microsoft.Xna.Framework;
-    using Services;
 
     [DataContract]
     public class MMEntity : MMObject, IMMEntity

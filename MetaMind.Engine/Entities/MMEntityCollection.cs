@@ -7,7 +7,20 @@
     using Extensions;
     using Microsoft.Xna.Framework;
 
-    public class MMEntityCollection<T> : ICollection<T>, IMMDrawOperations, IMMUpdateableOperations, IMMBufferOperations, IMMInteropOperations
+    public interface IMMEntityCollectionBase<T> : ICollection<T>, IMMDrawOperations, IMMUpdateableOperations, IMMBufferOperations, IMMInteropOperations 
+    {
+        
+    }
+
+    public interface IMMEntityCollection<T> : IMMEntityCollectionBase<T>
+    {
+        
+    }
+
+    /// <summary>
+    /// Provide sorting, filtering for MetaMind specific operations.
+    /// </summary>
+    public class MMEntityCollection<T> : IMMEntityCollection<T>
         where T : IMMEntity
     {
         private ObservableCollection<IMMBufferable> bufferCollection = new ObservableCollection<IMMBufferable>();
@@ -16,12 +29,37 @@
 
         private ObservableCollection<IMMInputable> inputCollection = new ObservableCollection<IMMInputable>();
 
+        /// <summary>
+        /// Provides enumerators.
+        /// </summary>
         private List<T> list = new List<T>();
+
+        #region Constructors and Finalizer
 
         public MMEntityCollection()
         {
-            this.InitializeHandlers();
+            this.Setup();
         }
+
+        #endregion
+
+        #region Event Handlers
+
+        private void InputCollection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            this.inputCollection.Sort((a, b) => a.CompareTo(b));
+        }
+
+        private void DrawCollection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            this.drawCollection.Sort((a, b) => a.CompareTo(b));
+        }
+
+        private void BufferCollection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+        }
+
+        #endregion
 
         #region Initialization
 
@@ -32,27 +70,14 @@
             this.inputCollection .CollectionChanged += this.InputCollection_CollectionChanged;
         }
 
-        #endregion
-
-        #region Event Handlers
-
-        private void InputCollection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void Setup()
         {
-        }
-
-        private void DrawCollection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            // TODO: Wrong
-            this.drawCollection.Sort((a, b) => -a.CompareTo(b));
-        }
-
-        private void BufferCollection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
+            this.InitializeHandlers();
         }
 
         #endregion
 
-        #region Buffer
+        #region MM Buffer
 
         public void UpdateBackwardBuffer()
         {
@@ -72,7 +97,7 @@
 
         #endregion
 
-        #region Load and Unload
+        #region MM Load and Unload
 
         public void LoadContent()
         {
@@ -92,7 +117,7 @@
 
         #endregion
 
-        #region Draw
+        #region MM Draw
 
         public void BeginDraw(GameTime time)
         {
@@ -120,7 +145,7 @@
 
         #endregion
 
-        #region Update
+        #region MM Update
 
         public void Update(GameTime time)
         {
@@ -142,7 +167,7 @@
 
         #endregion
 
-        #region ICollection
+        #region Collection Enumeration
 
         public IEnumerator<T> GetEnumerator()
         {
@@ -153,6 +178,10 @@
         {
             return ((IEnumerable)this.list).GetEnumerator();
         }
+
+        #endregion
+
+        #region Collection Modification
 
         public void Add(T item)
         {
@@ -176,8 +205,36 @@
 
         public void Clear()
         {
+            this.bufferCollection.Clear();
+            this.drawCollection  .Clear();
+            this.inputCollection .Clear();
+
             this.list.Clear();
         }
+
+        public bool Remove(T item)
+        {
+            if (item is IMMBufferable)
+            {
+                this.bufferCollection.Remove(item as IMMBufferable);
+            }
+
+            if (item is IMMDrawable)
+            {
+                this.drawCollection.Remove(item as IMMDrawable);
+            }
+
+            if (item is IMMInputable)
+            {
+                this.inputCollection.Remove(item as IMMInputable);
+            }
+
+            return this.list.Remove(item);
+        }
+
+        #endregion
+
+        #region Collection Mischievous
 
         public bool Contains(T item)
         {
@@ -187,11 +244,6 @@
         public void CopyTo(T[] array, int arrayIndex)
         {
             this.list.CopyTo(array, arrayIndex);
-        }
-
-        public bool Remove(T item)
-        {
-            return this.list.Remove(item);
         }
 
         public int Count => this.list.Count;

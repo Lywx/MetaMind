@@ -1,2 +1,0 @@
-D:\Users\Projects\MonoGame MetaMind\MetaMind.Session\bin\Debug\MetaMind.Session.exe.config
-D:\Users\Projects\MonoGame MetaMind\MetaMind.Session\obj\Debug\MetaMind.Session.csprojResolveAssemblyReference.cache

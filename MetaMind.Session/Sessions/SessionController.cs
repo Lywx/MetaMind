@@ -47,8 +47,6 @@
 
         #endregion Components
 
-        public MMControlManager Manager { get; set; }
-
         #region Initialization
 
         public void Initialize()
@@ -107,9 +105,7 @@
 
         public void LoadContent()
         {
-            interop.Asset.LoadPackage("Unity.Persistent");
-
-            this.Manager = new MMControlManager();
+            this.Interop.Asset.LoadPackage("Session.Persistent");
         }
 
         public void UnloadContent()

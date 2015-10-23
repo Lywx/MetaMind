@@ -4,6 +4,7 @@ namespace MetaMind.Session.Guis.Layers
     using System.Speech.Synthesis;
     using Concepts.Tests;
     using Engine.Components.Content.Fonts;
+    using Engine.Components.Graphics;
     using Engine.Entities;
     using Engine.Entities.Controls.Labels;
     using Engine.Entities.Graphics.Fonts;
@@ -104,12 +105,12 @@ namespace MetaMind.Session.Guis.Layers
 
         public override void Draw(GameTime time)
         {
-            this.SpriteBatch.Begin();
+            ((MMVisualEntity)this).Graphics.Renderer.Begin();
 
             this.inputEntities.Draw(time);
             this.drawEntities .Draw(time); 
 
-            this.SpriteBatch.End();
+            ((MMVisualEntity)this).Graphics.Renderer.End();
 
             base.Draw(time);
         }

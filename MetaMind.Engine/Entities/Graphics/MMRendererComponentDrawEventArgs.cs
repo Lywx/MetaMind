@@ -4,11 +4,11 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    public class MMRenderComponentDrawEventArgs : EventArgs
+    public class MMRendererComponentDrawEventArgs : EventArgs
     {
         #region Constructors
 
-        public MMRenderComponentDrawEventArgs(RenderTarget2D renderTarget, Rectangle destinationRectangle, GameTime time)
+        public MMRendererComponentDrawEventArgs(RenderTarget2D renderTarget, Rectangle destinationRectangle, GameTime time)
         {
             if (renderTarget == null)
             {

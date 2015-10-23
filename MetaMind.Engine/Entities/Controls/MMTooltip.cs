@@ -4,11 +4,11 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
-    public class Tooltip : MMControlComponent
+    public class MMTooltip : MMControlComponent
     {
         #region Constructors 
 
-        public Tooltip()
+        public MMTooltip()
         {
         }
 

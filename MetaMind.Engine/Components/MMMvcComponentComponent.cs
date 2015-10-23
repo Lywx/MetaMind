@@ -27,9 +27,9 @@ namespace MetaMind.Engine.Components
 
         protected TMVCComponent Module { get; }
 
-        protected TMVCController Logic => this.Module.Controller;
+        protected TMVCController Controller => this.Module.Controller;
 
-        protected TMVCRenderer Visual => this.Module.Renderer;
+        protected TMVCRenderer Renderer => this.Module.Renderer;
 
         #endregion
 

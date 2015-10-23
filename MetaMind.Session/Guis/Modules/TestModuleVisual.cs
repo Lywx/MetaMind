@@ -2,10 +2,10 @@
 {
     using System;
     using Concepts.Tests;
+    using Engine.Components.Content.Fonts;
     using Engine.Entities;
     using Engine.Entities.Controls.Labels;
     using Engine.Entities.Graphics.Fonts;
-    using Engine.Services;
     using Engine.Settings;
     using Microsoft.Xna.Framework;
 

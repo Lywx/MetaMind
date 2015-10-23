@@ -3,13 +3,22 @@ namespace MetaMind.Engine.Entities
     using Microsoft.Xna.Framework;
 
     /// <summary>
-    /// MVC Abstraction for MMEntity.
+    ///     MVC Abstraction for MMEntity.
     /// </summary>
     /// <remarks>
-    /// Compatible with previous GameControllableEntity implementation.
+    ///     Compatible with previous GameControllableEntity implementation.
     /// </remarks>
     public class MMMVCEntity<TMVCSettings> : MMInputEntity, IMMMVCEntity
     {
+        #region Draw
+
+        public override void Draw(GameTime time)
+        {
+            this.Renderer?.Draw(time);
+        }
+
+        #endregion
+
         #region Constructors and Finalizer
 
         protected MMMVCEntity(TMVCSettings settings)
@@ -19,7 +28,7 @@ namespace MetaMind.Engine.Entities
 
         ~MMMVCEntity()
         {
-            this.Dispose();
+            this.Dispose(true);
         }
 
         #endregion
@@ -34,20 +43,11 @@ namespace MetaMind.Engine.Entities
 
         #endregion
 
-        #region Draw
-
-        public override void Draw(GameTime time)
-        {
-            this.Renderer?.Draw(time);
-        }
-
-        #endregion
-        
         #region Load and Unload
 
         public override void LoadContent()
         {
-            this.Controller? .LoadContent();
+            this.Controller?.LoadContent();
             this.Renderer?.LoadContent();
 
             base.LoadContent();
@@ -61,12 +61,12 @@ namespace MetaMind.Engine.Entities
         }
 
         #endregion
-        
+
         #region Update
 
         public override void UpdateInput(GameTime time)
         {
-            this.Controller? .UpdateInput(time);
+            this.Controller?.UpdateInput(time);
             this.Renderer?.UpdateInput(time);
         }
 
@@ -74,7 +74,7 @@ namespace MetaMind.Engine.Entities
         {
             base.Update(time);
 
-            this.Controller? .Update(time);
+            this.Controller?.Update(time);
             this.Renderer?.Update(time);
         }
 

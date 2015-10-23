@@ -1,6 +1,7 @@
 namespace MetaMind.Engine.Components
 {
     using System;
+    using Graphics;
     using Microsoft.Xna.Framework;
     using Services;
 
@@ -21,7 +22,7 @@ namespace MetaMind.Engine.Components
 
         #endregion
 
-        #region Engine Service Data
+        #region Service Data
 
         public MMEngine Engine { get; protected set; }
 
@@ -30,6 +31,8 @@ namespace MetaMind.Engine.Components
         protected IMMEngineInteropService Interop => MMEngine.Service.Interop;
 
         protected IMMEngineGraphicsService Graphics => MMEngine.Service.Graphics;
+
+        protected IMMRenderer GraphicsRenderer => this.Graphics.Renderer;
 
         protected IMMEngineNumericalService Numerical => MMEngine.Service.Numerical;
 

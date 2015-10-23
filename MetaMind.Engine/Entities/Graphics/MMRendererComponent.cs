@@ -2,6 +2,7 @@
 {
     using System;
     using Adapters;
+    using Components.Graphics;
     using Elements;
     using Entities;
     using Microsoft.Xna.Framework;
@@ -9,45 +10,22 @@
     using Nodes;
     using Shapes;
 
-    public abstract class MMRenderComponent : MMVisualEntity, IMMRenderComponent, IMMRenderComponentInternal
+    public abstract class MMRendererComponent : MMVisualEntity, IMMRendererComponent, IMMRendererComponentInternal
     {
         #region Constructors and Finalizer
 
-        protected MMRenderComponent()
+        protected MMRendererComponent()
         {
             this.Setup();
-        }
-
-        private void Setup()
-        {
-            // Engine data
-            this.ViewportAdapter = new DefaultViewportAdapter(this.Graphics.Device);
-
-            // Visual data
-            this.Opacity = new MMRenderOpacity(this);
-
-            // Structural data
-            this.Root = this;
-
-            // Element data
-            this.Rectangle.Move += (sender, args) =>
-            {
-                this.Move?.Invoke(sender, args);
-            };
-
-            this.Rectangle.Resize += (sender, args) =>
-            {
-                this.Resize?.Invoke(sender, args);
-            };
         }
 
         #endregion
 
         #region Engine Data
 
-        protected ViewportAdapter ViewportAdapter { get; set; }
+        protected MMViewportAdapter ViewportAdapter { get; set; }
 
-        protected Viewport Viewport => this.Graphics.Device.Viewport;
+        protected Viewport Viewport => this.GraphicsDevice.Viewport;
 
         #endregion
 
@@ -55,36 +33,26 @@
 
         public bool CascadedEnabled { get; set; } = false;
 
-        public IMMRenderOpacity Opacity { get; protected set; }
+        // TODO: Haven't been added
+        public CCClipMode ClipMode { get; set; } = CCClipMode.None;
 
-        private int zorder;
+        public IMMRendererOpacity Opacity { get; protected set; }
 
         public int ZOrder
         {
-            get { return this.zorder; }
-            set
-            {
-                if (this.zorder != value)
-                {
-                    if (this.Parent != null)
-                    {
-                        this.Parent.ReorderChild(this, value);
-                    }
-
-                    this.zorder = value;
-                }
-            }
+            get { return this.DrawOrder; }
+            set { this.DrawOrder = value; }
         }
 
         #endregion
 
         #region Structural Data
 
-        public MMRenderComponenetCollection Children { get; protected set; } = new MMRenderComponenetCollection();
+        public MMRendererComponenetCollection Children { get; protected set; } = new MMRendererComponenetCollection();
 
-        public IMMRenderComponent Parent { get; set; } = null;
+        public IMMRendererComponent Parent { get; set; } = null;
 
-        public IMMRenderComponent Root { get; set; } = null;
+        public IMMRendererComponent Root { get; set; } = null;
 
         /// <summary>
         /// Gets a value indicating whether this control is a child control.
@@ -101,7 +69,7 @@
         /// </summary>
         public virtual bool IsRoot => this.Root == this;
 
-        public virtual void Add(IMMRenderComponent component)
+        public virtual void Add(IMMRendererComponent component)
         {
             if (component != null)
             {
@@ -113,7 +81,7 @@
                     // Configure parenthood
                     component.Enabled = this.Enabled ? component.Enabled : this.Enabled;
 
-                    var componentInternal = (IMMRenderComponentInternal)component;
+                    var componentInternal = (IMMRendererComponentInternal)component;
                     componentInternal.Parent = this;
                     componentInternal.Root = this.Root;
 
@@ -134,7 +102,7 @@
         /// Remove existing parenthood to original state.
         /// </summary>
         /// <param name="component"></param>
-        public virtual void Remove(IMMRenderComponent component)
+        public virtual void Remove(IMMRendererComponent component)
         {
             if (component != null)
             {
@@ -142,7 +110,7 @@
                 this.Children.Remove(component);
 
                 // Reconfigure parenthood to original state
-                var componentInternal = (IMMRenderComponentInternal)component;
+                var componentInternal = (IMMRendererComponentInternal)component;
                 componentInternal.Parent = null;
                 componentInternal.Root = component;
 
@@ -155,7 +123,7 @@
             }
         }
 
-        public virtual bool Contains(IMMRenderComponent component, bool recursive)
+        public virtual bool Contains(IMMRendererComponent component, bool recursive)
         {
             if (this.Children != null)
             {
@@ -309,16 +277,16 @@
 
         protected virtual void SetParentRenderTarget()
         {
-            this.Graphics.Device.SetRenderTarget(this.Parent.RenderTarget);
+            this.GraphicsDevice.SetRenderTarget(this.Parent.RenderTarget);
         }
 
         #endregion
 
         #region Events
 
-        public event EventHandler<MMRenderComponentDrawEventArgs> CascadedBeginDrawStarted = delegate { };
+        public event EventHandler<MMRendererComponentDrawEventArgs> CascadedBeginDrawStarted = delegate { };
 
-        public event EventHandler<MMRenderComponentDrawEventArgs> CascadedEndDrawStarted = delegate { };
+        public event EventHandler<MMRendererComponentDrawEventArgs> CascadedEndDrawStarted = delegate { };
 
         public event EventHandler ParentChanged = delegate { };
 
@@ -341,12 +309,12 @@
             this.ParentChanged?.Invoke(this, e);
         }
 
-        public void OnCascadedBeginDrawStarted(object sender, MMRenderComponentDrawEventArgs e)
+        public void OnCascadedBeginDrawStarted(object sender, MMRendererComponentDrawEventArgs e)
         {
             this.CascadedBeginDrawStarted?.Invoke(sender, e);
         }
 
-        public void OnCascadedEndDrawStarted(object sender, MMRenderComponentDrawEventArgs e)
+        public void OnCascadedEndDrawStarted(object sender, MMRendererComponentDrawEventArgs e)
         {
             this.CascadedEndDrawStarted?.Invoke(sender, e);
         }
@@ -355,7 +323,7 @@
 
         #region Comparison
 
-        public int CompareTo(IMMRenderComponent other)
+        public int CompareTo(IMMRendererComponent other)
         {
             return other.ZOrder.CompareTo(other.ZOrder);
         }
@@ -377,6 +345,29 @@
             }
 
             this.Initialized = true;
+        }
+
+        private void Setup()
+        {
+            // Engine data
+            this.ViewportAdapter = new MMDefaultViewportAdapter(this.GraphicsDevice);
+
+            // Visual data
+            this.Opacity = new MMRendererOpacity(this);
+
+            // Structural data
+            this.Root = this;
+
+            // Element data
+            this.Rectangle.Move += (sender, args) =>
+            {
+                this.Move?.Invoke(sender, args);
+            };
+
+            this.Rectangle.Resize += (sender, args) =>
+            {
+                this.Resize?.Invoke(sender, args);
+            };
         }
 
         #endregion
@@ -401,6 +392,11 @@
                 return;
             }
 
+            switch (this.)
+            {
+                    
+            }
+
             if (!this.CascadedEnabled)
             {
                 // Draw to back buffer directly
@@ -416,13 +412,13 @@
 
                 this.OnCascadedBeginDrawStarted(
                     this,
-                    new MMRenderComponentDrawEventArgs(
+                    new MMRendererComponentDrawEventArgs(
                         this.RenderTarget,
                         this.RenderTargetDestinationRectangle,
                         time));
 
-                this.Graphics.Device.SetRenderTarget(this.RenderTarget);
-                this.Graphics.Device.Clear(Color.Transparent);
+                this.GraphicsDevice.SetRenderTarget(this.RenderTarget);
+                this.GraphicsDevice.Clear(Color.Transparent);
 
                 this.Draw(time);
 
@@ -451,7 +447,7 @@
 
             this.OnCascadedEndDrawStarted(
                 this,
-                new MMRenderComponentDrawEventArgs(
+                new MMRendererComponentDrawEventArgs(
                     this.RenderTarget,
                     this.RenderTargetDestinationRectangle,
                     time));
@@ -461,13 +457,13 @@
                 this.SetParentRenderTarget();
             }
 
-            this.SpriteBatch.Begin();
-            this.SpriteBatch.Draw(
+            this.GraphicsRenderer.Begin();
+            this.GraphicsRenderer.Draw(
                 this.RenderTarget,
                 this.RenderTargetDestinationRectangle,
                 this.RenderTargetSourceRectangle, 
                 Color.White);
-            this.SpriteBatch.End();
+            this.GraphicsRenderer.End();
         }
 
         #endregion

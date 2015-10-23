@@ -35,4 +35,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("2015.10.6.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
-[assembly: InternalsVisibleTo("MetaMind.UnityTest")]
+[assembly: InternalsVisibleTo("MetaMind.SessionTest")]

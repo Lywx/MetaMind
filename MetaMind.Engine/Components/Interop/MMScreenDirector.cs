@@ -1,10 +1,3 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Screens.cs">
-//   Copyright (c) 2014 Wuxiang Lin
-//   All Rights Reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
 namespace MetaMind.Engine.Components.Interop
 {
     using System;
@@ -20,12 +13,6 @@ namespace MetaMind.Engine.Components.Interop
         #region Dependency
 
         public MMScreenSettings Settings { get; set; }
-
-        /// <summary>
-        /// A default SpriteBatch shared by all the screens. This saves
-        /// each screen having to bother creating their own local instance.
-        /// </summary>
-        private SpriteBatch SpriteBatch { get; set; }
 
         #endregion
 
@@ -79,7 +66,7 @@ namespace MetaMind.Engine.Components.Interop
         /// <summary>
         /// Constructs a new screen manager component.
         /// </summary>
-        public MMScreenDirector(MMEngine engine, MMScreenSettings settings, SpriteBatch spriteBatch)
+        public MMScreenDirector(MMEngine engine, MMScreenSettings settings)
             : base(engine)
         {
             if (engine == null)
@@ -92,13 +79,7 @@ namespace MetaMind.Engine.Components.Interop
                 throw new ArgumentNullException(nameof(settings));
             }
 
-            if (spriteBatch == null)
-            {
-                throw new ArgumentNullException(nameof(spriteBatch));
-            }
-
-            this.SpriteBatch = spriteBatch;
-            this.Settings    = settings;
+            this.Settings = settings;
         }
 
         #endregion Constructors
@@ -213,8 +194,8 @@ namespace MetaMind.Engine.Components.Interop
                 // Update the screen transition
                 screen.UpdateScreen(this.Interop, time, hasOtherScreenFocus, isCoveredByOtherScreen);
 
-                if (screen.ScreenState == MMScreenState.TransitionOn ||
-                    screen.ScreenState == MMScreenState.Active)
+                if (screen.ScreenState == MMScreenState.TransitionOn
+                    || screen.ScreenState == MMScreenState.Active)
                 {
                     // If this is the first active screen we came across,
                     // give it a chance to handle input.
@@ -340,9 +321,6 @@ namespace MetaMind.Engine.Components.Interop
                 }
 
                 this.screens.Clear();
-
-                // Note that sprite batch is not owned by this
-                this.SpriteBatch = null;
             }
 
             base.Dispose(disposing);

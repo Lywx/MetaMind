@@ -5,12 +5,12 @@ namespace MetaMind.Engine.Entities.Graphics
     using Entities;
     using Shapes;
 
-    public interface IMMRenderComponentBase : 
+    public interface IMMRendererComponentBase : 
         IMMEntity,
 
         // Need initialization
         IMMReactor,
-        IMMRenderEntity,
+        IMMRendererEntity,
 
         // Support common shape operations
         IMMShape,
@@ -18,27 +18,27 @@ namespace MetaMind.Engine.Entities.Graphics
         // Support double buffer
         IMMBufferable,
 
-        IComparable<IMMRenderComponent>
+        IComparable<IMMRendererComponent>
     {
         
     }
 
     public interface IMMRenderComponentOperations : IMMDrawOperations
     {
-        void Add(IMMRenderComponent component);
+        void Add(IMMRendererComponent component);
 
-        void Remove(IMMRenderComponent component);
+        void Remove(IMMRendererComponent component);
 
-        bool Contains(IMMRenderComponent component, bool recursive);
+        bool Contains(IMMRendererComponent component, bool recursive);
     }
 
     public interface IMMRenderComponentOrganization
     {
-        IMMRenderComponent Parent { get; }
+        IMMRendererComponent Parent { get; }
 
-        IMMRenderComponent Root { get; }
+        IMMRendererComponent Root { get; }
 
-        MMRenderComponenetCollection Children { get; }
+        MMRendererComponenetCollection Children { get; }
 
         bool IsChild { get; }
 
@@ -47,9 +47,9 @@ namespace MetaMind.Engine.Entities.Graphics
 
     public interface IMMRenderComponentOrganizationInternal
     {
-        IMMRenderComponent Parent { get; set; }
+        IMMRendererComponent Parent { get; set; }
 
-        IMMRenderComponent Root { get; set; }
+        IMMRendererComponent Root { get; set; }
     }
 
     /// <summary>
@@ -61,24 +61,24 @@ namespace MetaMind.Engine.Entities.Graphics
     /// <remarks>
     /// Render reactor can be used to achieve texture clipping in Gui.
     /// </remarks>
-    public interface IMMRenderComponent : IMMRenderComponentBase, IMMRenderComponentOperations, IMMRenderComponentOrganization 
+    public interface IMMRendererComponent : IMMRendererComponentBase, IMMRenderComponentOperations, IMMRenderComponentOrganization 
     {
-        IMMRenderOpacity Opacity { get; }
+        IMMRendererOpacity Opacity { get; }
 
         int ZOrder { get; set; }
 
         #region Events
 
-        event EventHandler<MMRenderComponentDrawEventArgs> CascadedBeginDrawStarted;
+        event EventHandler<MMRendererComponentDrawEventArgs> CascadedBeginDrawStarted;
 
-        event EventHandler<MMRenderComponentDrawEventArgs> CascadedEndDrawStarted;
+        event EventHandler<MMRendererComponentDrawEventArgs> CascadedEndDrawStarted;
 
         event EventHandler ParentChanged;
 
         #endregion
     }
 
-    public interface IMMRenderComponentInternal : IMMRenderComponentBase, IMMRenderComponentOrganizationInternal
+    public interface IMMRendererComponentInternal : IMMRendererComponentBase, IMMRenderComponentOrganizationInternal
     {
         #region Event Ons
 
@@ -88,9 +88,9 @@ namespace MetaMind.Engine.Entities.Graphics
 
         void OnParentChanged(object sender, EventArgs e);
 
-        void OnCascadedBeginDrawStarted(object sender, MMRenderComponentDrawEventArgs e);
+        void OnCascadedBeginDrawStarted(object sender, MMRendererComponentDrawEventArgs e);
 
-        void OnCascadedEndDrawStarted(object sender, MMRenderComponentDrawEventArgs e);
+        void OnCascadedEndDrawStarted(object sender, MMRendererComponentDrawEventArgs e);
 
         #endregion
     }

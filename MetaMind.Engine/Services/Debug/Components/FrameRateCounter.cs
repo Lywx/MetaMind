@@ -48,12 +48,12 @@
 
             var fps = $"FPS: {this.frameRate}";
 
-            this.Graphics.SpriteBatch.Begin();
+            this.GraphicsRenderer.Begin();
 
-            this.Graphics.Renderer.DrawMonospacedString(this.frameFont, fps, new Vector2(33, 33), Color.Black, 1f);
-            this.Graphics.Renderer.DrawMonospacedString(this.frameFont, fps, new Vector2(32, 32), Color.Yellow, 1f);
+            this.GraphicsRenderer.DrawMonospacedString(this.frameFont, fps, new Vector2(33, 33), Color.Black, 1f);
+            this.GraphicsRenderer.DrawMonospacedString(this.frameFont, fps, new Vector2(32, 32), Color.Yellow, 1f);
 
-            this.Graphics.SpriteBatch.End();
+            this.GraphicsRenderer.End();
         }
     }
 }

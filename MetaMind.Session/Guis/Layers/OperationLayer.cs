@@ -3,6 +3,7 @@
     using System;
     using Concepts.Operations;
     using Engine.Components.Content.Fonts;
+    using Engine.Components.Graphics;
     using Engine.Entities;
     using Engine.Entities.Controls.Labels;
     using Engine.Entities.Graphics.Fonts;
@@ -38,12 +39,12 @@
         {
             base.Draw(time);
 
-            this.SpriteBatch.Begin();
+            ((MMVisualEntity)this).Graphics.Renderer.Begin();
 
             this.ControllableEntities.Draw(time);
             this.VisuallEntities     .Draw(time);
             
-            this.SpriteBatch.End();
+            ((MMVisualEntity)this).Graphics.Renderer.End();
         }
 
         public override void LoadContent()

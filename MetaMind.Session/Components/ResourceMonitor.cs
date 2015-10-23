@@ -35,7 +35,7 @@ namespace MetaMind.Session.Components
             {
                 this.WarningMoment = DateTime.Now;
 
-                SessionGame.Speech.SpeakAsync($"CPU usage percentage reached {this.Processor.CpuUsagePercentage.ToString("F1")}");
+                SessionGame.Session.Controller.Speech.SpeakAsync($"CPU usage percentage reached {this.Processor.CpuUsagePercentage.ToString("F1")}");
             }
 
             base.Update(gameTime);

@@ -25,27 +25,31 @@ namespace MetaMind.Engine.Components
 
             // No dependency injection here, because sprite batch is never replaced as long 
             // as this is a MonoGame application.
-            this.SpriteBatch = new SpriteBatch(this.Manager.GraphicsDevice);
+            this.RendererManager = new MMRendererManager(engine);
+            this.Game.Components.Add(this.RendererManager);
 
             // No dependency injection here, because string drawer is a class focus on string 
             // drawing. The functionality is never extended in the form of inheritance.
-            this.Renderer = new MMRenderer(this.SpriteBatch);
-            this.Game.Components.Add(this.Renderer);
-
-            this.RendererManager = new MMRendererManager(engine);
+            this.Renderer = new MMRenderer(this.RendererManager);
         }
+
+        public GraphicsDevice Device => this.Manager.GraphicsDevice;
+
+        #region Setting Data
 
         public MMGraphicsManager Manager { get; private set; }
         
         public MMGraphicsSettings Settings { get; private set; }
 
+        #endregion
+
+        #region Render Data
+
         public MMRendererManager RendererManager { get; private set; }
 
-        public GraphicsDevice Device => this.Manager.GraphicsDevice;
-
-        public SpriteBatch SpriteBatch { get; private set; }
-
         public IMMRenderer Renderer { get; private set; }
+
+        #endregion
 
         #region Initialization
 
@@ -71,8 +75,8 @@ namespace MetaMind.Engine.Components
                         this.Manager?.Dispose();
                         this.Manager = null;
 
-                        this.SpriteBatch?.Dispose();
-                        this.SpriteBatch = null;
+                        this.RendererManager?.Dispose();
+                        this.RendererManager = null;
                     }
 
                     this.IsDisposed = true;

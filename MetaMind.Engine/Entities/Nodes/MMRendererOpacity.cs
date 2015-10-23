@@ -3,9 +3,9 @@
     using System;
     using Entities.Graphics;
 
-    public class MMRenderOpacity : IMMRenderOpacity, IMMRenderOpacityInternal 
+    public class MMRendererOpacity : IMMRendererOpacity, IMMRenderOpacityInternal 
     {
-        public MMRenderOpacity(IMMRenderComponent target)
+        public MMRendererOpacity(IMMRendererComponent target)
         {
             if (target == null)
             {
@@ -27,7 +27,7 @@
 
         #region Target Data
 
-        public IMMRenderComponent Target { get; private set; }
+        public IMMRendererComponent Target { get; private set; }
 
         #endregion
 
@@ -86,7 +86,7 @@
 
         #region Display Operations
 
-        public virtual void UpdateDisplayed(IMMRenderOpacity parent)
+        public virtual void UpdateDisplayed(IMMRendererOpacity parent)
         {
             this.UpdateDisplayedInItselfStarted?.Invoke();
             this.UpdateDisplayedInItself(parent);
@@ -107,7 +107,7 @@
             }
         }
 
-        private void UpdateDisplayedInItself(IMMRenderOpacity parent)
+        private void UpdateDisplayedInItself(IMMRendererOpacity parent)
         {
             var baseOpacity = (parent?.Displayed ?? 255);
 
@@ -129,7 +129,7 @@
             }
         }
 
-        public virtual void UpdateCascade(IMMRenderOpacity parent)
+        public virtual void UpdateCascade(IMMRendererOpacity parent)
         {
             this.UpdateDisplayed(parent);
         }

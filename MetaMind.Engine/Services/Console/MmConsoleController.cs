@@ -30,7 +30,7 @@
 
             this.Processor = processor;
 
-            this.Buffer = new BufferController(module, engine);
+            this.Buffer = new BufferController(module);
         }
 
         ~MMConsoleController()
@@ -181,10 +181,10 @@
                     this.Buffer.HistoryNext();
                     break;
                 case Keys.PageUp:
-                    this.Visual.PageUp();
+                    this.Renderer.PageUp();
                     break;
                 case Keys.PageDown:
-                    this.Visual.PageDown();
+                    this.Renderer.PageDown();
                     break;
             }
         }
@@ -227,7 +227,7 @@
         private void InputReset()
         {
             this.Buffer.HistoryReset();
-            this.Visual.PageReset();
+            this.Renderer.PageReset();
         }
 
         internal void WriteLine(string buffer, CommandType bufferType = CommandType.Output)

@@ -1,15 +1,19 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IMMInputableComponent.cs">
-//   Copyright (c) 2015 Wuxiang Lin
-//   All Rights Reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
 namespace MetaMind.Engine.Components
 {
     using System;
+    using Entities;
 
-    public interface IMMInputableComponent : IMMDrawableComponent, IMMInputableComponentOperations, IDisposable
+    public interface IMMInputableComponentBase : IMMDrawableComponent, IDisposable
     {
+        
+    }
+
+    public interface IMMInputableComponentOperations : IMMInputOperations
+    {
+    }
+
+    public interface IMMInputableComponent : IMMInputableComponentBase, IMMInputableComponentOperations
+    {
+        
     }
 }

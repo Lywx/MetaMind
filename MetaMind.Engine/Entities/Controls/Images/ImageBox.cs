@@ -5,7 +5,7 @@ namespace MetaMind.Engine.Entities.Controls.Images
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    public class ImageBox : MMRenderComponent
+    public class ImageBox : MMRendererComponent
     {
         #region Constructors and Finalizer
 

@@ -1,9 +1,9 @@
 ﻿namespace MetaMind.Engine.Entities.Nodes
 {
     using System;
-    using Entities.Graphics;
+    using Graphics;
 
-    public class MMNodeRenderer : MMRenderComponent, IMMNodeRenderer
+    public class MMNodeRenderer : MMRendererComponent, IMMNodeRenderer
     {
         public MMNodeRenderer(IMMNode target)
         {

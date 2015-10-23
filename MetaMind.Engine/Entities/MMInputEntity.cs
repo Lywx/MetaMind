@@ -3,7 +3,6 @@ namespace MetaMind.Engine.Entities
     using System;
     using System.Runtime.Serialization;
     using Microsoft.Xna.Framework;
-    using Services;
 
     [DataContract]
     public class MMInputEntity : MMVisualEntity, IMMInputEntity
@@ -48,11 +47,31 @@ namespace MetaMind.Engine.Entities
 
         #endregion
 
+        #region Comparison
+
+        public int Compare(IMMInputable x, IMMInputable y)
+        {
+            return x.CompareTo(y);
+        }
+
+        public int CompareTo(IMMInputable other)
+        {
+            // Negate the result for the smaller the input order, the sooner the
+            // input gets updated.
+            return -this.InputOrder.CompareTo(other.InputOrder);
+        }
+
+        #endregion
+
         #region Events        
 
         public event EventHandler<EventArgs> InputableChanged = delegate { };
 
         public event EventHandler<EventArgs> InputOrderChanged = delegate { };
+
+        #endregion Events
+
+        #region Event Ons
 
         protected virtual void OnInputableChanged(object sender, EventArgs args)
         {
@@ -62,7 +81,7 @@ namespace MetaMind.Engine.Entities
         {
         }
 
-        #endregion Events
+        #endregion
 
         #region Input
 
@@ -103,8 +122,7 @@ namespace MetaMind.Engine.Entities
                 {
                     if (!this.IsDisposed)
                     {
-                        this.InputableChanged = null;
-                        this.InputOrderChanged   = null;
+                        this.DisposeEvents();
                     }
 
                     this.IsDisposed = true;
@@ -118,6 +136,12 @@ namespace MetaMind.Engine.Entities
             {
                 base.Dispose(disposing);
             }
+        }
+
+        private void DisposeEvents()
+        {
+            this.InputableChanged = null;
+            this.InputOrderChanged = null;
         }
 
         #endregion

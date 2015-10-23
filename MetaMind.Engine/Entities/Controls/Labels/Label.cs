@@ -6,7 +6,7 @@
     using Graphics.Fonts;
     using Microsoft.Xna.Framework;
 
-    public class Label : MMRenderComponent, ICloneable
+    public class Label : MMRendererComponent, ICloneable
     {
         #region Constructors and Finalizer
 

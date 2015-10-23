@@ -26,8 +26,6 @@ namespace MetaMind.Engine.Services
 
         public GraphicsDevice Device => this.Manager.GraphicsDevice;
 
-        public SpriteBatch SpriteBatch => this.Graphics.SpriteBatch;
-
         public IMMRenderer Renderer => this.Graphics.Renderer;
 
         public MMRendererManager RendererManager => this.Graphics.RendererManager;

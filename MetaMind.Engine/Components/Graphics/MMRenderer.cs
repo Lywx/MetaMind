@@ -1,51 +1,86 @@
 namespace MetaMind.Engine.Components.Graphics
 {
-    using System;
-    using System.Globalization;
     using Content.Fonts;
     using Entities.Graphics.Fonts;
     using Extensions;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using System;
+    using System.Globalization;
 
-    public class MMRenderer : IMMRenderer
+    public class MMRenderer : MMObject, IMMRenderer
     {
         #region Constructors
 
-        public MMRenderer(SpriteBatch spriteBatch)
+        public MMRenderer(MMRendererManager manager)
         {
-            if (spriteBatch == null)
+            if (manager == null)
             {
-                throw new ArgumentNullException(nameof(spriteBatch));
+                throw new ArgumentNullException(nameof(manager));
             }
 
-            this.SpriteBatch = spriteBatch;
+            this.Manager = manager;
         }
 
         #endregion
 
-        #region Dependency
+        #region Render Data
 
-        public SpriteBatch SpriteBatch { get; }
+        private MMRendererManager Manager { get; }
+
+        private SpriteBatch SpriteBatch => this.Manager.SpriteBatch;
 
         #endregion
 
-        #region Initialization
+        #region
 
         public void Initialize()
         {
+            this.InitializeTextureDrawing();
+        }
+
+        private void InitializeTextureDrawing()
+        {
+            // Up direction is consistent with sprite batch and the XNA 3D coordinate 
+            this.textureQuad       = new Quad(Vector3.Zero, Vector3.Left, Vector3.Up, Vector3.Backward);
+            this.textureQuadEffect = new BasicEffect(this.GraphicsDevice)
+            {
+                TextureEnabled = true,
+
+                World      = Matrix.Identity,
+                View       = Matrix.Identity,
+
+                Projection =
+                    Matrix.CreateOrthographicOffCenter(0, this.GraphicsDevice.Viewport.Width,
+
+                        // Notice the Y coordinate goes from bottom of the screen to the
+                        // top of the screen. The Y coordinate is inverted. But the Y
+                        // axis relative position for the screen is consistent with the
+                        // sprite batch.
+                        this.GraphicsDevice.Viewport.Height, 0, 0,
+
+                        // Z coordinate goes from 0 to 1.
+                        1f)
+            };
+
         }
 
         #endregion
 
-        #region Sprite Batch
+        #region Batch Operations
 
-        public void Begin(BlendState blendState = null,
-            SamplerState samplerState           = null,
+        public void Begin()
+        {
+            this.SpriteBatch.Begin();
+        }
+
+        public void Begin(
+            BlendState blendState,
+            SamplerState samplerState = null,
             DepthStencilState depthStencilState = null,
-            RasterizerState rasterizerState     = null,
-            Effect effect                       = null,
-            Matrix? transformMatrix             = null)
+            RasterizerState rasterizerState = null,
+            Effect effect = null,
+            Matrix? transformMatrix = null)
         {
             this.SpriteBatch.Begin(SpriteSortMode.Immediate, blendState, samplerState, depthStencilState, rasterizerState, effect, transformMatrix);
         }
@@ -205,15 +240,46 @@ namespace MetaMind.Engine.Components.Graphics
 
                 this.DrawString(font, lineString, linePosition, color, scale);
             }
-        }
+       }
 
         #endregion
 
         #region Draw Texture
 
+        private Quad textureQuad;
+
+        private BasicEffect textureQuadEffect;
+
+        public void Draw(Texture2D texture, Rectangle destination, Color color, float depth, Matrix transformation)
+        {
+            // Set quad size to texture size
+            this.textureQuad.SetSize(texture.Width, texture.Height);
+
+            // Set quad effect
+            this.textureQuadEffect.World = transformation;
+
+            // The camera move in the opposite direction compared with the
+            // texture. However, the Y coordinate is inverted.
+            var cameraDestination = new Vector2(-destination.X, destination.Y);
+
+            // Camera Look From the backward to forward. The camera is inverted.
+            this.textureQuadEffect.View = Matrix.CreateLookAt(new Vector3(cameraDestination, 0) + Vector3.Backward, new Vector3(cameraDestination, 0), Vector3.Down);
+            this.textureQuadEffect.Texture =en
+
+            this.Manager.VertexColorEnabled = true;
+            this.Manager.SetTexture(texture);
+
+            this.Manager.PushEffect(this.textureQuadEffect);
+
+            this.Manager.DrawIndexedPrimitives(PrimitiveType.TriangleList, quad.Vertices, 0, 4, quad.Indexes, 0, 2);
+
+            this.Manager.PopEffect();
+            this.Manager.SetTexture(null);
+        }
+
         public void Draw(Texture2D texture, Rectangle destination, Color color, float depth)
         {
-            if (destination.Width > 0 && 
+            if (destination.Width > 0 &&
                 destination.Height > 0)
             {
                 this.SpriteBatch.Draw(texture, destination, null, color, 0.0f, Vector2.Zero, SpriteEffects.None, depth);
@@ -222,9 +288,9 @@ namespace MetaMind.Engine.Components.Graphics
 
         public void Draw(Texture2D texture, Rectangle destination, Rectangle source, Color color, float depth)
         {
-            if (source.Width > 0 && 
-                source.Height > 0 && 
-                destination.Width > 0 && 
+            if (source.Width > 0 &&
+                source.Height > 0 &&
+                destination.Width > 0 &&
                 destination.Height > 0)
             {
                 this.SpriteBatch.Draw(texture, destination, source, color, 0.0f, Vector2.Zero, SpriteEffects.None, depth);
@@ -238,7 +304,7 @@ namespace MetaMind.Engine.Components.Graphics
 
         public void Draw(Texture2D texture, int x, int y, Rectangle source, Color color, float depth)
         {
-            if (source.Width > 0 && 
+            if (source.Width > 0 &&
                 source.Height > 0)
             {
                 this.SpriteBatch.Draw(texture, new Vector2(x, y), source, color, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, depth);

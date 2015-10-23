@@ -2,7 +2,6 @@
 {
     using System;
     using Entities.Nodes;
-    using Microsoft.Xna.Framework;
 
     public class MMLayer : MMNode, IMMLayer
     {
@@ -16,10 +15,6 @@
             }
 
             this.Screen = screen;
-
-            this.Location = Point.Zero;
-            this.Width    = this.Screen.Width;
-            this.Height   = this.Screen.Height;
         }
 
         ~MMLayer()

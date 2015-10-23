@@ -1,6 +1,8 @@
 ﻿namespace MetaMind.Session.Guis.Screens
 {
     using System;
+    using Engine.Components.Graphics;
+    using Engine.Entities;
     using Engine.Screens;
     using Engine.Services;
     using Primtives2D;
@@ -38,9 +40,9 @@
             {
                 DrawAction = (graphics, time, alpha) =>
                 {
-                    this.SpriteBatch.Begin();
-                    Primitives2D.FillRectangle(this.SpriteBatch, this.RenderTargetDestinationRectangle, this.Settings.GetColor());
-                    this.SpriteBatch.End();
+                    ((MMVisualEntity)this).Graphics.Renderer.Begin();
+                    Primitives2D.FillRectangle(((MMVisualEntity)this).Graphics.Renderer, this.RenderTargetDestinationRectangle, this.Settings.GetColor());
+                    ((MMVisualEntity)this).Graphics.Renderer.End();
                 },
                 UpdateAction = time =>
                 {

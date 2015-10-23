@@ -240,7 +240,7 @@
 
         private Vector2 DrawBuffer(Vector2 position)
         {
-            return this.DrawCommand(this.Settings.Font, this.Logic.Input.ToString(), position, this.Settings.BufferColor);
+            return this.DrawCommand(this.Settings.Font, this.Controller.Input.ToString(), position, this.Settings.BufferColor);
         }
 
         private void DrawCursor(Vector2 position, GameTime time)
@@ -251,7 +251,7 @@
             }
 
             var split = StringUtils.BreakStringByCharacterToEnumerable(
-                    this.Logic.Input.ToString(),
+                    this.Controller.Input.ToString(),
                     this.maxCharactersPerLine).Last();
 
             var font = this.Settings.Font;
@@ -341,7 +341,7 @@
 
         private Vector2 DrawPastOutput()
         {
-            return this.DrawCommands(this.Settings.Font, this.Logic.Output, this.FirstCommandPosition);
+            return this.DrawCommands(this.Settings.Font, this.Controller.Output, this.FirstCommandPosition);
         }
 
         /// <summary>

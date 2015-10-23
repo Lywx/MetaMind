@@ -1,6 +1,7 @@
 namespace MetaMind.Engine.Entities.Particles
 {
     using System.Collections.Generic;
+    using Components.Graphics;
     using Entities;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -40,8 +41,8 @@ namespace MetaMind.Engine.Entities.Particles
                 if (i == this.Particles.Count / 2)
                 {
                     // Half additive and half solid
-                    this.SpriteBatch.End();
-                    this.SpriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.Additive);
+                    ((MMVisualEntity)this).Graphics.Renderer.End();
+                    ((MMVisualEntity)this).Graphics.Renderer.Begin(BlendState.Additive);
                 }
 
                 this.Particles[i].Draw(time);

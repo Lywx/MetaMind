@@ -2,7 +2,7 @@
 {
     using System;
     using Actions;
-    using Entities.Graphics;
+    using Graphics;
     using Microsoft.Xna.Framework;
 
     public abstract class MMNode : MMInputEntity, IMMNode, IMMNodeInternal
@@ -29,13 +29,17 @@
 
         #endregion
 
-        public IMMRenderOpacity Opacity => this.Renderer.Opacity;
+        public IMMRendererOpacity Opacity => this.Renderer.Opacity;
 
         public IMMNodeColor Color => this.Renderer.Color;
 
+        #region 
+
         public IMMNodeRenderer Renderer { get; protected set; }
 
-        public IMMNodeController Controller { get; protected set;}
+        public IMMNodeController Controller { get; protected set; }
+
+        #endregion
 
         public bool CanFocus => this.Controller.CanFocus;
 
@@ -116,29 +120,6 @@
 
         #endregion
 
-        #region Children Sorting and Comparison
-
-        public int Compare(MMNode x, MMNode y)
-        {
-            return x.CompareTo(y);
-        }
-
-        public int CompareTo(MMNode other)
-        {
-            int compare = ZOrder.CompareTo(other.ZOrder);
-
-            // In the case where zOrders are equivalent, resort to ordering
-            // based on when children were added to parent
-            if (compare == 0)
-            {
-                compare = arrivalIndex.CompareTo(other.arrivalIndex);
-            }
-
-            return compare;
-        }
-
-        #endregion
-
         #region Load and Unload
 
         public override void LoadContent()
@@ -187,17 +168,17 @@
 
         public override void Update(GameTime time)
         {
+            this.Children.Update(time);
+
             base.Update(time);
 
             // Update cocos interface
             this.Update((float)time.ElapsedGameTime.TotalSeconds);
 
-            this.Children.Update(time);
+            this.Controller.Update(time);
+            this.Renderer  .Update(time);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         /// <remarks>
         /// You should call Update(float) inside Update(GameTime) and never call
         /// Update(float) from anywhere else.

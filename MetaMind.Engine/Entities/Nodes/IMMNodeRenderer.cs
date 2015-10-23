@@ -2,7 +2,7 @@
 {
     using Entities.Graphics;
 
-    public interface IMMNodeRenderer : IMMRenderComponent
+    public interface IMMNodeRenderer : IMMRendererComponent
     {
         IMMNodeColor Color { get; set; }
     }

@@ -1,12 +1,10 @@
 ﻿namespace MetaMind.Engine.Entities.Nodes
 {
-    using System;
-    using System.Collections.Generic;
-    using Entities.Graphics;
+    using Graphics;
 
-    public interface IMMNode : IMMNodeOrganization, IMMInputEntity, ICCUpdatable, IMMFocusable, IComparer<MMNode>, IComparable<MMNode>
+    public interface IMMNode : IMMNodeOrganization, IMMInputEntity, ICCUpdatable, IMMFocusable
     {
-        IMMRenderOpacity Opacity { get; }
+        IMMRendererOpacity Opacity { get; }
 
         IMMNodeColor Color { get; }
     }

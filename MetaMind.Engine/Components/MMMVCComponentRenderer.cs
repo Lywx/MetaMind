@@ -17,14 +17,14 @@
         protected MMMVCComponentRenderer(TMVCComponent module)
             : base(module)
         {
-            this.ViewportAdapter = new DefaultViewportAdapter(this.Graphics.Device); 
+            this.ViewportAdapter = new MMDefaultViewportAdapter(); 
         }
 
         #endregion
 
         #region Graphics Data
 
-        protected ViewportAdapter ViewportAdapter { get; set; }
+        protected MMViewportAdapter ViewportAdapter { get; set; }
 
         #endregion
         
