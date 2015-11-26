@@ -17,9 +17,9 @@
 
     public class MainScreen : MMScreen
     {
-        private RectangleButton buttonPrevious;
+        private MMRectangleButton buttonPrevious;
 
-        private RectangleButton buttonNext;
+        private MMRectangleButton buttonNext;
 
         private SynchronizationSession synchronizationSession;
 
@@ -65,7 +65,7 @@
             const int buttonWidth = 30;
             const int buttonHeight = 300;
             var buttonY = (graphicsSettings.Height - buttonHeight) / 2;
-            var buttonSettings = new RectangleButtonSettings
+            var buttonSettings = new MMRectangleButtonSettings
             {
                 BoundaryRegularColor      = MMPalette.Transparent,
                 BoundaryMouseOverColor    = MMPalette.Transparent,
@@ -74,7 +74,7 @@
                 FillMousePressColor         = MMPalette.Transparent40
             };
 
-            this.buttonPrevious = new RectangleButton(
+            this.buttonPrevious = new MMRectangleButton(
                 new Rectangle(0, buttonY, buttonWidth, buttonHeight), buttonSettings)
             {
                 Label =
@@ -88,7 +88,7 @@
             this.buttonPrevious.MousePressLeft +=
                 (sender, args) => this.CircularLayers.Previous();
 
-            this.buttonNext = new RectangleButton(
+            this.buttonNext = new MMRectangleButton(
                 new Rectangle(graphicsSettings.Width - buttonWidth, buttonY, buttonWidth, buttonHeight), buttonSettings)
             {
                 Label =

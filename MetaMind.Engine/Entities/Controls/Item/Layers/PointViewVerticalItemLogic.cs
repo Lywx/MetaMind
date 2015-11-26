@@ -1,10 +1,10 @@
 namespace MetaMind.Engine.Entities.Controls.Item.Layers
 {
+    using Controllers;
     using Data;
     using Frames;
     using Interactions;
     using Layouts;
-    using Logic;
 
     public class MMPointViewVerticalItemController : MMViewItemController, IMMPointViewVerticalItemController 
     {

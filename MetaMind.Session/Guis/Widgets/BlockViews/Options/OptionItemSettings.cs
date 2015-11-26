@@ -9,7 +9,7 @@
     using Microsoft.Xna.Framework;
     using Modules;
 
-    public class OptionItemSettings : ItemSettings, IParameterLoader<MMGraphicsSettings>
+    public class OptionItemSettings : ItemSettings, IParameterDependant<MMGraphicsSettings>
     {
         private readonly MMViewItemRenderSettings rootFrame;
 

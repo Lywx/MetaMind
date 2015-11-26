@@ -3,7 +3,7 @@ namespace MetaMind.Engine.Entities.Controls.Views.Layouts
     using Layers;
     using Settings;
 
-    public class MMPointView2DLayout : ViewLayout, IMMPointView2DLayout
+    public class MMPointView2DLayout : MMViewLayout, IMMPointView2DLayout
     {
         private PointView2DSettings viewSettings;
 
@@ -19,19 +19,13 @@ namespace MetaMind.Engine.Entities.Controls.Views.Layouts
             this.viewSettings = this.GetViewLayer<MMPointView2DLayer>().ViewSettings;
         }
 
-        public int ColumnNum
-        {
-            get
-            {
-                return this.RowNum > 1 ? this.viewSettings.ViewColumnMax : this.View.ItemsRead.Count;
-            }
-        }
+        public int ColumnNum => this.RowNum > 1 ? this.viewSettings.ViewColumnMax : this.View.Items.Count;
 
         public int RowNum
         {
             get
             {
-                var lastId = this.View.ItemsRead.Count - 1;
+                var lastId = this.View.Items.Count - 1;
                 return this.RowOf(lastId) + 1;
             }
         }

@@ -66,7 +66,7 @@ namespace MetaMind.Session.Concepts.Operations
 
     #region
 
-    public partial class Option<TTransition> : IBlockViewItemData
+    public partial class Option<TTransition> : IMMBlockViewItemData
     {
         public string BlockStringRaw
         {

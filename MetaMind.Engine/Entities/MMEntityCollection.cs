@@ -32,7 +32,7 @@
         /// <summary>
         /// Provides enumerators.
         /// </summary>
-        private List<T> list = new List<T>();
+        private List<T> entityList = new List<T>();
 
         #region Constructors and Finalizer
 
@@ -171,12 +171,12 @@
 
         public IEnumerator<T> GetEnumerator()
         {
-            return this.list.GetEnumerator();
+            return this.entityList.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ((IEnumerable)this.list).GetEnumerator();
+            return ((IEnumerable)this.entityList).GetEnumerator();
         }
 
         #endregion
@@ -185,6 +185,11 @@
 
         public void Add(T item)
         {
+            if (this.entityList.Contains(item))
+            {
+                return;
+            }
+
             if (item is IMMBufferable)
             {
                 this.bufferCollection.Add(item as IMMBufferable);
@@ -200,7 +205,7 @@
                 this.inputCollection.Add(item as IMMInputable);
             }
 
-            this.list.Add(item);
+            this.entityList.Add(item);
         }
 
         public void Clear()
@@ -209,11 +214,16 @@
             this.drawCollection  .Clear();
             this.inputCollection .Clear();
 
-            this.list.Clear();
+            this.entityList.Clear();
         }
 
         public bool Remove(T item)
         {
+            if (!this.entityList.Contains(item))
+            {
+                return false;
+            }
+
             if (item is IMMBufferable)
             {
                 this.bufferCollection.Remove(item as IMMBufferable);
@@ -229,7 +239,7 @@
                 this.inputCollection.Remove(item as IMMInputable);
             }
 
-            return this.list.Remove(item);
+            return this.entityList.Remove(item);
         }
 
         #endregion
@@ -238,17 +248,17 @@
 
         public bool Contains(T item)
         {
-            return this.list.Contains(item);
+            return this.entityList.Contains(item);
         }
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            this.list.CopyTo(array, arrayIndex);
+            this.entityList.CopyTo(array, arrayIndex);
         }
 
-        public int Count => this.list.Count;
+        public int Count => this.entityList.Count;
 
-        public bool IsReadOnly => ((ICollection<T>)this.list).IsReadOnly;
+        public bool IsReadOnly => ((ICollection<T>)this.entityList).IsReadOnly;
 
         #endregion
     }

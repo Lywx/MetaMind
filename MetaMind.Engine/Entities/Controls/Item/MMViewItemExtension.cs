@@ -17,7 +17,7 @@ namespace MetaMind.Engine.Entities.Controls.Item
                 if (MMViewItemState.Item_Is_Editing .Match(item)) return image.Editing;
 
                 if (MMViewItemState.Item_Is_Mouse_Over.Match(item)) return image.MouseOver;
-                else                                              return image.MouseOut;
+                else                                                return image.MouseOut;
             };
         }
 
@@ -32,7 +32,7 @@ namespace MetaMind.Engine.Entities.Controls.Item
                 if (MMViewItemState.Item_Is_Editing .Match(item)) return bounds.Crop(margin.Editing); 
 
                 if (MMViewItemState.Item_Is_Mouse_Over.Match(item)) return bounds.Crop(margin.MouseOver); 
-                else                                              return bounds.Crop(margin.MouseOut); 
+                else                                                return bounds.Crop(margin.MouseOut); 
             };
         }
 
@@ -47,7 +47,7 @@ namespace MetaMind.Engine.Entities.Controls.Item
                 if (MMViewItemState.Item_Is_Editing .Match(item)) return color.Editing;
 
                 if (MMViewItemState.Item_Is_Mouse_Over.Match(item)) return color.MouseOver;
-                else                                              return color.MouseOut;
+                else                                                return color.MouseOut;
             };
         }
     }

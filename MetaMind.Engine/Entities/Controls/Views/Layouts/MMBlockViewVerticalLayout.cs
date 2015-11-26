@@ -15,9 +15,9 @@ namespace MetaMind.Engine.Entities.Controls.Views.Layouts
         {
             get
             {
-                if (this.ItemsRead.Count > 0)
+                if (this.Items.Count > 0)
                 {
-                    var itemLayer = this.ItemsRead.Last().GetLayer<MMBlockViewVerticalItemLayer>();
+                    var itemLayer = this.Items.Last().GetLayer<MMBlockViewVerticalItemLayer>();
                     var itemLayout = itemLayer.ItemLayout;
                     return itemLayout.BlockRow + itemLayout.Row;
                 }
@@ -28,9 +28,9 @@ namespace MetaMind.Engine.Entities.Controls.Views.Layouts
 
         public override int RowOf(int id)
         {
-            if (this.ItemsRead.Count > id)
+            if (this.Items.Count > id)
             {
-                var itemLayer = this.GetItemLayer<MMBlockViewVerticalItemLayer>(this.ItemsRead[id]);
+                var itemLayer = this.GetItemLayer<MMBlockViewVerticalItemLayer>(this.Items[id]);
                 var itemLayout = itemLayer.ItemLayout;
 
                 return itemLayout.Row;
@@ -41,9 +41,9 @@ namespace MetaMind.Engine.Entities.Controls.Views.Layouts
 
         public override int RowIn(int id)
         {
-            if (this.ItemsRead.Count > id)
+            if (this.Items.Count > id)
             {
-                var itemLayer = this.GetItemLayer<MMBlockViewVerticalItemLayer>(this.ItemsRead[id]);
+                var itemLayer = this.GetItemLayer<MMBlockViewVerticalItemLayer>(this.Items[id]);
                 var itemLayout = itemLayer.ItemLayout;
 
                 return itemLayout.BlockRow;

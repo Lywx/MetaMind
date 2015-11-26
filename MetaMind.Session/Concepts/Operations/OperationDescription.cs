@@ -146,7 +146,7 @@ namespace MetaMind.Session.Concepts.Operations
 
     #region IBlockViewItemData
 
-    public partial class OperationDescription : IBlockViewItemData 
+    public partial class OperationDescription : IMMBlockViewItemData 
     {
         public string BlockStringRaw
         {

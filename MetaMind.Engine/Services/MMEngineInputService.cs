@@ -25,8 +25,8 @@ namespace MetaMind.Engine.Services
             this.input = input;
         }
 
-        public IInputEvent Event => this.input.Event;
+        public IMMInputEvent Event => this.input.Event;
 
-        public IInputState State => this.input.State;
+        public IMMInputState State => this.input.State;
     }
 }

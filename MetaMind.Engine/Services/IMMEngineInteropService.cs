@@ -14,13 +14,13 @@ namespace MetaMind.Engine.Services
     {
         IAssetManager Asset { get; }
 
-        IAudioManager Audio { get; }
+        IMMAudioManager Audio { get; }
 
         ContentManager Content { get; }
 
         MMConsole Console { get; set; }
 
-        IFileManager File { get; }
+        IMMDirectoryManager File { get; }
 
         IMMEventManager Event { get; }
 
@@ -28,7 +28,7 @@ namespace MetaMind.Engine.Services
 
         MMEngine Engine { get; }
 
-        IProcessManager Process { get; }
+        IMMProcessManager Process { get; }
 
         IMMScreenDirector Screen { get; }
 

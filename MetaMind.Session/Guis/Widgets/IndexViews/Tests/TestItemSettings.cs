@@ -9,7 +9,7 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
     using Microsoft.Xna.Framework;
     using Modules;
 
-    public class TestItemSettings : ItemSettings, IParameterLoader<MMGraphicsSettings>
+    public class TestItemSettings : ItemSettings, IParameterDependant<MMGraphicsSettings>
     {
         private readonly MMViewItemRenderSettings rootFrame;
 

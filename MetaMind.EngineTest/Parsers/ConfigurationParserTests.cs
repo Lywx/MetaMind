@@ -13,7 +13,7 @@
         {
             var input = "a=b";
 
-            var parsed = ConfigurationFileGrammar.ConfigurationPairParser.Parse(input);
+            var parsed = ConfigurationGrammar.AssignmentParser.Parse(input);
 
             Assert.AreEqual("a", parsed.Key);
             Assert.AreEqual("b", parsed.Value);
@@ -24,7 +24,7 @@
         {
             var input = "a = b";
 
-            var parsed = ConfigurationFileGrammar.ConfigurationPairParser.Parse(input);
+            var parsed = ConfigurationGrammar.AssignmentParser.Parse(input);
 
             Assert.AreEqual("a", parsed.Key);
             Assert.AreEqual("b", parsed.Value);
@@ -35,7 +35,7 @@
         {
             var input = "aaa = bbb";
 
-            var parsed = ConfigurationFileGrammar.ConfigurationPairParser.Parse(input);
+            var parsed = ConfigurationGrammar.AssignmentParser.Parse(input);
 
             Assert.AreEqual("aaa", parsed.Key);
             Assert.AreEqual("bbb", parsed.Value);
@@ -46,7 +46,7 @@
         {
             var input = "a b = b";
 
-            var parsed = ConfigurationFileGrammar.ConfigurationPairParser.Parse(input);
+            var parsed = ConfigurationGrammar.AssignmentParser.Parse(input);
 
             Assert.AreEqual("a b", parsed.Key);
             Assert.AreEqual("b", parsed.Value);
@@ -57,7 +57,7 @@
         {
             var input = "a = b c";
 
-            var parsed = ConfigurationFileGrammar.ConfigurationPairParser.Parse(input);
+            var parsed = ConfigurationGrammar.AssignmentParser.Parse(input);
 
             Assert.AreEqual("a", parsed.Key);
             Assert.AreEqual("b c", parsed.Value);
@@ -68,7 +68,7 @@
         {
             var input = "\" a = b c";
 
-            var parsed = ConfigurationFileGrammar.ConfigurationLineParser.Parse(input);
+            var parsed = ConfigurationGrammar.LineParser.Parse(input);
 
             Assert.AreEqual(null, parsed.Key);
             Assert.AreEqual(null, parsed.Value);
@@ -79,7 +79,7 @@
         {
             var input = "a = b c \" comment";
 
-            var parsed = ConfigurationFileGrammar.ConfigurationLineParser.Parse(input);
+            var parsed = ConfigurationGrammar.LineParser.Parse(input);
 
             Assert.AreEqual("a", parsed.Key);
             Assert.AreEqual("b c", parsed.Value);

@@ -38,7 +38,10 @@ namespace MetaMind.Engine.Entities.Controls.Images
                            ? Primitives2D.FillRectangle
                            : new Action<SpriteBatch, Rectangle, Color>(Primitives2D.DrawRectangle);
 
-            draw(graphics.SpriteBatch, this.BoundsSelector(), this.ColorSelector().MakeTransparent(alpha));
+            draw(
+                this.GraphicsDeviceController.SpriteBatch,
+                this.BoundsSelector(),
+                this.ColorSelector().MakeTransparent(this.Opacity.Displayed));
         }
     }
 }

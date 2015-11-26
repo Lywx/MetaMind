@@ -1,11 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Test.cs">
-//   Copyright (c) 2015 Wuxiang Lin
-//   All Rights Reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace MetaMind.Session.Concepts.Tests
+﻿namespace MetaMind.Session.Concepts.Tests
 {
     using System;
     using System.Collections.Generic;
@@ -16,7 +9,7 @@ namespace MetaMind.Session.Concepts.Tests
     /// Test is a functional programming interface for F#. Test is following 
     /// functional programming paradigm.
     /// </summary>
-    public class Test : ITest, IBlockViewItemData 
+    public class Test : ITest, IMMBlockViewItemData 
     {
         #region Static Dependency
 

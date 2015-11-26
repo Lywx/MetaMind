@@ -1,14 +1,9 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ControlSkinAsset.cs">
-//   Copyright (c) 2015 Wuxiang Lin
-//   All Rights Reserved.
-// </copyright>
 namespace MetaMind.Engine.Components.Content.Skins
 {
     using Asset;
-    using Geometry;
+    using Microsoft.Xna.Framework;
 
-    public class ControlSkinAsset : Asset
+    public class ControlSkinAsset : MMAsset
     {
         #region Constructors
 
@@ -41,7 +36,7 @@ namespace MetaMind.Engine.Components.Content.Skins
 
         #region Geometry Data
 
-        public MMSize DefaultSize { get; set; }
+        public Point DefaultSize { get; set; }
 
         #endregion
 

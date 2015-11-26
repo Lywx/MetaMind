@@ -2,6 +2,9 @@
 {
     using Input;
     using Microsoft.Xna.Framework;
+#if WINDOWS
+    using Windows.Components.Input;
+#endif
 
     public class MMEngineInput : MMInputableComponent, IMMEngineInput
     {
@@ -11,20 +14,22 @@
             // Event and State won't be added to the Game.Components collection, 
             // for it is better to control them manually
 
-            this.Event = new InputEvent(engine)
+#if WINDOWS
+            this.Event = new MMInputEventWin32(engine)
+#endif
             {
                 UpdateOrder = 1
             };
 
-            this.State = new InputState(engine)
+            this.State = new MMInputState(engine)
             {
                 UpdateOrder = 2
             };
         }
 
-        public IInputEvent Event { get; private set; }
+        public IMMInputEvent Event { get; private set; }
 
-        public IInputState State { get; private set; }
+        public IMMInputState State { get; private set; }
 
         public override void Initialize()
         {

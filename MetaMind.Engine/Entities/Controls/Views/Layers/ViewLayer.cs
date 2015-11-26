@@ -1,8 +1,8 @@
 namespace MetaMind.Engine.Entities.Controls.Views.Layers
 {
     using System;
+    using Controllers;
     using Item.Data;
-    using Logic;
     using Scrolls;
     using Selections;
     using Settings;
@@ -30,7 +30,7 @@ namespace MetaMind.Engine.Entities.Controls.Views.Layers
 
         public IMMViewSwapController ViewSwap => this.ViewController.ViewSwap;
 
-        public IViewBinding ViewBinding => this.ViewController.ViewBinding;
+        public IMMViewBinding ViewBinding => this.ViewController.ViewBinding;
 
         #endregion
 

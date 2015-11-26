@@ -7,7 +7,7 @@
     using Entities;
     using Loader;
 
-    public class FsScriptSearcher : MMEntity, IConfigurationLoader
+    public class FsScriptSearcher : MMEntity, IConfigurable
     {
         private readonly string searchPattern = "*.fsx";
 
@@ -30,12 +30,12 @@
 
         #region Configurations
 
-        public string ConfigurationFile => "Session.txt";
+        public string ConfigurationFilename => "Session.txt";
 
         public void LoadConfiguration()
         {
             var configuration = ConfigurationLoader.LoadUniquePairs(this);
-            this.SearchFolder = FileManager.DataPath(configuration["FsScriptSearcher.SearchFolder"]); ;
+            this.SearchFolder = MMDirectoryManager.DataPath(configuration["FsScriptSearcher.SearchFolder"]); ;
         }
 
         #endregion

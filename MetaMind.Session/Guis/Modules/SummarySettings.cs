@@ -6,7 +6,7 @@ namespace MetaMind.Session.Guis.Modules
     using Engine.Services.Loader;
     using Microsoft.Xna.Framework;
 
-    public class SummarySettings : MMVisualEntity, IParameterLoader<MMGraphicsSettings>
+    public class SummarySettings : MMVisualEntity, IParameterDependant<MMGraphicsSettings>
     {
         #region Parameters
 

@@ -28,7 +28,7 @@
         {
             get
             {
-                return (this.viewSettings.ViewColumnDisplay + this.ColumnOffset) < this.View.ItemsRead.Count;
+                return (this.viewSettings.ViewColumnDisplay + this.ColumnOffset) < this.View.Items.Count;
             }
         }
 

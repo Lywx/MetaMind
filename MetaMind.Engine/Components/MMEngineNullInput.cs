@@ -5,9 +5,9 @@
 
     internal class MMEngineNullInput : MMInputableComponent, IMMEngineInput
     {
-        public IInputEvent Event { get; private set; }
+        public IMMInputEvent Event { get; private set; }
 
-        public IInputState State { get; private set; }
+        public IMMInputState State { get; private set; }
 
         public override void Initialize()
         {

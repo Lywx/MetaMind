@@ -1,10 +1,3 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MMGame.cs">
-//   Copyright (c) 2014 Wuxiang Lin
-//   All Rights Reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
 namespace MetaMind.Engine
 {
     using Components;
@@ -23,9 +16,7 @@ namespace MetaMind.Engine
 
         #region IMMGame
 
-        public virtual void OnExiting()
-        {
-        }
+        public virtual void OnExiting() {}
 
         public void Run()
         {

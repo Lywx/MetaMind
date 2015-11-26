@@ -1,6 +1,6 @@
 namespace MetaMind.Engine.Entities.Controls.Item.Layers
 {
-    using Logic;
+    using Controllers;
 
     public class MMPointViewVerticalItemLayer : MMPointViewItemLayer
     {

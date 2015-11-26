@@ -41,8 +41,8 @@ namespace MetaMind.Engine.Entities.Particles
                 if (i == this.Particles.Count / 2)
                 {
                     // Half additive and half solid
-                    ((MMVisualEntity)this).Graphics.Renderer.End();
-                    ((MMVisualEntity)this).Graphics.Renderer.Begin(BlendState.Additive);
+                    this.GraphicsRenderer.End();
+                    this.GraphicsRenderer.Begin(BlendState.Additive);
                 }
 
                 this.Particles[i].Draw(time);

@@ -16,7 +16,7 @@
 
         public IMMRenderer Renderer { get; }
 
-        public MMRendererManager RendererManager { get; }
+        public MMRenderDeviceController DeviceController { get; }
 
         public GraphicsDevice Device { get; }
 

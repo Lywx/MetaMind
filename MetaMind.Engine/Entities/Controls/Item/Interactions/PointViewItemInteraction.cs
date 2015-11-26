@@ -59,8 +59,7 @@ namespace MetaMind.Engine.Entities.Controls.Item.Interactions
             var draggingViewLayer = draggingItem.View.GetLayer<MMPointViewLayer>();
             var draggingViewScroll = draggingViewLayer.ViewScroll;
 
-            this.viewSwap.StartProcess(interop,
-                this.Item,
+            this.viewSwap.StartProcess(this.Item,
                 this.viewScroll.Position(this.ItemLayout.Id),
                 draggingItem,
                 draggingItem.View,

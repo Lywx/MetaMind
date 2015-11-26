@@ -54,8 +54,9 @@
                     }
                     else if (!value.CanFocus)
                     {
-                        // When 
-                        if (this.focusedComponent != null && value.Root != this.focusedComponent.Root)
+                        // TODO: When 
+                        if (this.focusedComponent != null
+                            && value.Root != this.focusedComponent.Root)
                         {
                             if (this.focusedComponent != value.Root)
                             {

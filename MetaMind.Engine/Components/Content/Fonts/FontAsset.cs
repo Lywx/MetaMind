@@ -3,7 +3,7 @@ namespace MetaMind.Engine.Components.Content.Fonts
     using Asset;
     using Microsoft.Xna.Framework.Graphics;
 
-    public class FontAsset : Asset
+    public class FontAsset : MMAsset
     {
         public FontAsset(string name, int size, string asset, SpriteFont resource) : this(name, size, asset)
         {

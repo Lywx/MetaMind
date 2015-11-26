@@ -2,7 +2,14 @@
 {
     using Graphics;
 
-    public interface IMMNode : IMMNodeOrganization, IMMInputEntity, ICCUpdatable, IMMFocusable
+    public interface IMMNodeBase : IMMInputEntity, ICCUpdatable, IMMFocusable
+    {
+        
+    }
+
+    public interface IMMNode : IMMNodeBase,
+        IMMNodeOrganization,
+        IMMNodeScheduleOperations
     {
         IMMRendererOpacity Opacity { get; }
 

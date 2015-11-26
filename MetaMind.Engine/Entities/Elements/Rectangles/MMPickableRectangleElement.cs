@@ -85,18 +85,25 @@
 
         private void EventFrameChanged(object sender, MMElementEventArgs e)
         {
-            var mosue = this.Input.State.Mouse.CurrentState;
-            this.EventMouseMove(null, new MouseEventArgs(MouseButtons.None, 0, mosue.X, mosue.Y, 0));
+            var mousePosition = this.Input.State.Mouse.Position;
+            this.EventMouseMove(
+                null,
+                new MMMouseEventArgs(
+                    MMMouseButtons.None,
+                    0,
+                    mousePosition.X,
+                    mousePosition.Y,
+                    0));
         }
 
-        private void EventMouseDoubleClick(object sender, MouseEventArgs e)
+        private void EventMouseDoubleClick(object sender, MMMouseEventArgs e)
         {
-            if (this.mouse.IsMouseOver)
+            if (this.mouseState.IsMouseOver)
             {
                 if (this.IsLButton(e))
                 {
-                    this.mouse.LDoubleClick();
-                    this.mouse.RClear();
+                    this.mouseState.LDoubleClick();
+                    this.mouseState.RClear();
 
                     this.CacheAction(this.OnMouseDoubleClickLeft);
 
@@ -104,8 +111,8 @@
                 }
                 else if (this.IsRButton(e))
                 {
-                    this.mouse.LClear();
-                    this.mouse.RDoubleClick();
+                    this.mouseState.LClear();
+                    this.mouseState.RDoubleClick();
 
                     this.CacheAction(this.OnMouseDoubleClickRight);
 
@@ -114,19 +121,19 @@
             }
         }
 
-        private void EventMouseDown(object sender, MouseEventArgs e)
+        private void EventMouseDown(object sender, MMMouseEventArgs e)
         {
             if (this.IsLButton(e))
             {
-                this.mouse.LPress();
-                this.mouse.RClear();
+                this.mouseState.LPress();
+                this.mouseState.RClear();
 
-                if (this.mouse.IsMouseOver)
+                if (this.mouseState.IsMouseOver)
                 {
                     this.CacheAction(this.OnMousePressLeft);
                 }
 
-                if (!this.mouse.IsMouseOver)
+                if (!this.mouseState.IsMouseOver)
                 {
                     this.CacheAction(this.OnMousePressOutLeft);
                 }
@@ -135,15 +142,15 @@
             }
             else if (this.IsRButton(e))
             {
-                this.mouse.RPress();
-                this.mouse.LClear();
+                this.mouseState.RPress();
+                this.mouseState.LClear();
 
-                if (this.mouse.IsMouseOver)
+                if (this.mouseState.IsMouseOver)
                 {
                     this.CacheAction(this.OnMousePressRight);
                 }
 
-                if (!this.mouse.IsMouseOver)
+                if (!this.mouseState.IsMouseOver)
                 {
                     this.CacheAction(this.OnMousePressOutRight);
                 }
@@ -152,20 +159,20 @@
             }
         }
 
-        private void EventMouseMove(object sender, MouseEventArgs e)
+        private void EventMouseMove(object sender, MMMouseEventArgs e)
         {
-            if (!this.mouse.IsMouseOver && this.IsMouseOver(e.Location))
+            if (!this.mouseState.IsMouseOver && this.IsMouseOver(e.Location))
             {
-                this.mouse.Enter();
+                this.mouseState.Enter();
 
                 this.CacheAction(this.OnMouseEnter);
 
                 return;
             }
 
-            if (this.mouse.IsMouseOver && !this.IsMouseOver(e.Location))
+            if (this.mouseState.IsMouseOver && !this.IsMouseOver(e.Location))
             {
-                this.mouse.Leave();
+                this.mouseState.Leave();
 
                 this.CacheAction(this.OnMouseLeave);
 
@@ -173,13 +180,13 @@
             }
         }
 
-        private void EventMouseUp(object sender, MouseEventArgs e)
+        private void EventMouseUp(object sender, MMMouseEventArgs e)
         {
             if (this.IsLButton(e))
             {
-                this.mouse.LRelease();
+                this.mouseState.LRelease();
 
-                if (this.mouse.IsMouseOver)
+                if (this.mouseState.IsMouseOver)
                 {
                     this.CacheAction(this.OnMouseUpLeft);
                 }
@@ -192,9 +199,9 @@
             }
             else if (this.IsRButton(e))
             {
-                this.mouse.RRelease();
+                this.mouseState.RRelease();
 
-                if (this.mouse.IsMouseOver)
+                if (this.mouseState.IsMouseOver)
                 {
                     this.CacheAction(this.OnMouseUpRight);
                 }
@@ -364,7 +371,7 @@
 
         #region Element Geometry Data
 
-        public override sealed Microsoft.Xna.Framework.Rectangle Bounds
+        public override sealed Rectangle Bounds
         {
             get { return base.Bounds; }
             set { base.Bounds = value; }
@@ -392,28 +399,28 @@
         {
             this[MMElementState.Element_Is_Active] = () => this.Enabled;
 
-            this[MMElementState.Mouse_Is_Over] = () => this.mouse.IsMouseOver;
+            this[MMElementState.Mouse_Is_Over] = () => this.mouseState.IsMouseOver;
 
-            this[MMElementState.Mouse_Is_Left_Pressed]        = () => this.mouse.IsLButtonPressed && this.mouse.IsMouseOver;
-            this[MMElementState.Mouse_Is_Left_Pressed_Out]    = () => this.mouse.IsLButtonPressed && !this.mouse.IsMouseOver;
-            this[MMElementState.Mouse_Is_Left_Released]       = () => this.mouse.IsLButtonReleased;
-            this[MMElementState.Mouse_Is_Left_Double_Clicked] = () => this.mouse.IsLButtonDoubleClicked && this.mouse.IsMouseOver;
+            this[MMElementState.Mouse_Is_Left_Pressed]        = () => this.mouseState.IsLButtonPressed && this.mouseState.IsMouseOver;
+            this[MMElementState.Mouse_Is_Left_Pressed_Out]    = () => this.mouseState.IsLButtonPressed && !this.mouseState.IsMouseOver;
+            this[MMElementState.Mouse_Is_Left_Released]       = () => this.mouseState.IsLButtonReleased;
+            this[MMElementState.Mouse_Is_Left_Double_Clicked] = () => this.mouseState.IsLButtonDoubleClicked && this.mouseState.IsMouseOver;
 
-            this[MMElementState.Mouse_Is_Right_Pressed]        = () => this.mouse.IsRButtonPressed && this.mouse.IsMouseOver;
-            this[MMElementState.Mouse_Is_Right_Pressed_Out]    = () => this.mouse.IsRButtonPressed && !this.mouse.IsMouseOver;
-            this[MMElementState.Mouse_Is_Right_Released]       = () => this.mouse.IsRButtonReleased;
-            this[MMElementState.Mouse_Is_Right_Double_Clicked] = () => this.mouse.IsRButtonDoubleClicked && this.mouse.IsMouseOver;
+            this[MMElementState.Mouse_Is_Right_Pressed]        = () => this.mouseState.IsRButtonPressed && this.mouseState.IsMouseOver;
+            this[MMElementState.Mouse_Is_Right_Pressed_Out]    = () => this.mouseState.IsRButtonPressed && !this.mouseState.IsMouseOver;
+            this[MMElementState.Mouse_Is_Right_Released]       = () => this.mouseState.IsRButtonReleased;
+            this[MMElementState.Mouse_Is_Right_Double_Clicked] = () => this.mouseState.IsRButtonDoubleClicked && this.mouseState.IsMouseOver;
         }
 
         #endregion
 
         #region Mouse State Detection
 
-        private readonly MouseAutomata mouse = new MouseAutomata();
+        private readonly MouseStateAutomata mouseState = new MouseStateAutomata();
 
-        protected bool IsLButton(MouseEventArgs e)
+        protected bool IsLButton(MMMouseEventArgs e)
         {
-            return e.Button == MouseButtons.Left;
+            return e.Button == MMMouseButtons.Left;
         }
 
         protected bool IsMouseOver(Point location)
@@ -421,9 +428,9 @@
             return this.Enabled && this.Bounds.Contains(location);
         }
 
-        protected bool IsRButton(MouseEventArgs e)
+        protected bool IsRButton(MMMouseEventArgs e)
         {
-            return e.Button == MouseButtons.Right;
+            return e.Button == MMMouseButtons.Right;
         }
 
         #endregion

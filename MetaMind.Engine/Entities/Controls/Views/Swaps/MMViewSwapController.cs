@@ -1,10 +1,3 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ViewSwap.cs">
-//   Copyright (c) 2015 Wuxiang Lin
-//   All Rights Reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
 namespace MetaMind.Engine.Entities.Controls.Views.Swaps
 {
     using System;
@@ -70,7 +63,7 @@ namespace MetaMind.Engine.Entities.Controls.Views.Swaps
 
         #endregion
 
-        public virtual void StartProcess(IMMEngineInteropService interop, IMMViewItem touchedItem, Vector2 touchedStart, IMMViewItem draggingItem, IMMView draggingView, Vector2 draggingEnd)
+        public virtual void StartProcess(IMMViewItem touchedItem, Vector2 touchedStart, IMMViewItem draggingItem, IMMView draggingView, Vector2 draggingEnd)
         {
             this.HasStarted = true;
             this.Progress   = 0f;
@@ -80,7 +73,7 @@ namespace MetaMind.Engine.Entities.Controls.Views.Swaps
 
             ((MMViewItem)touchedItem).OnSwapping();
 
-            interop.Process.AttachProcess(new ViewItemSwapProcess(
+            this.Interop.Process.AttachProcess(new ViewItemSwapProcess(
                 draggingItem,
                 draggingItem.ItemLogic,
                 draggingView.ViewController,

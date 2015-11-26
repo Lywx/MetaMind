@@ -89,8 +89,10 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Components\ResourceMonitor.cs" />
-    <Compile Include="Components\MMSaveManager.cs" />
+    <Compile Include="Components\Input\KeyboardActions.cs" />
+    <Compile Include="Components\Input\SessionInputActions.cs" />
+    <Compile Include="Components\MMPerformanceMonitor.cs" />
+    <Compile Include="Components\SessionSaveManager.cs" />
     <Compile Include="Concepts\Cognitions\Cognition.cs" />
     <Compile Include="Concepts\Cognitions\Consciousness.cs" />
     <Compile Include="Concepts\Cognitions\ConsciousnessAwake.cs" />
@@ -120,6 +122,7 @@
     <Compile Include="Concepts\Synchronizations\ISynchronizationOperations.cs" />
     <Compile Include="Concepts\Synchronizations\SynchronizationData.cs" />
     <Compile Include="Concepts\Synchronizations\SynchronizationSpan.cs" />
+    <Compile Include="Concepts\Tests\ITestOrganization.cs" />
     <Compile Include="Concepts\Tests\TestTimer.cs" />
     <Compile Include="Concepts\Tests\ITestEvaluation.cs" />
     <Compile Include="Concepts\Operations\OperationOrganizer.cs" />

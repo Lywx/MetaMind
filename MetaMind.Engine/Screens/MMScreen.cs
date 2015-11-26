@@ -1,7 +1,6 @@
 namespace MetaMind.Engine.Screens
 {
     using System;
-    using System.Linq;
     using Entities.Nodes;
     using Microsoft.Xna.Framework;
     using Services;

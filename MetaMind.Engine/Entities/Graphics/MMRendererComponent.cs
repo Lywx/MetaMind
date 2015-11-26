@@ -1,29 +1,46 @@
 ﻿namespace MetaMind.Engine.Entities.Graphics
 {
-    using System;
     using Adapters;
     using Components.Graphics;
     using Elements;
     using Entities;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Nodes;
     using Shapes;
+    using System;
 
-    public abstract class MMRendererComponent : MMVisualEntity, IMMRendererComponent, IMMRendererComponentInternal
+    public abstract class MMRendererComponent : MMVisualEntity,
+        IMMRendererComponent,
+        IMMRendererComponentInternal
     {
         #region Constructors and Finalizer
 
         protected MMRendererComponent()
         {
-            this.Setup();
+            // Visual data
+            this.Opacity = new MMRendererOpacity(this);
+
+            // Structural data
+            this.Root = this;
+
+            // Element data
+            this.Rectangle.Move += (sender, args) =>
+            {
+                this.Move?.Invoke(sender, args);
+            };
+
+            this.Rectangle.Resize += (sender, args) =>
+            {
+                this.Resize?.Invoke(sender, args);
+            };
         }
 
         #endregion
 
         #region Engine Data
 
-        protected MMViewportAdapter ViewportAdapter { get; set; }
+        protected MMViewportAdapter ViewportAdapter { get; set; } =
+            new MMDefaultViewportAdapter();
 
         protected Viewport Viewport => this.GraphicsDevice.Viewport;
 
@@ -48,7 +65,8 @@
 
         #region Structural Data
 
-        public MMRendererComponenetCollection Children { get; protected set; } = new MMRendererComponenetCollection();
+        public MMRendererComponenetCollection Children { get; protected set; } =
+            new MMRendererComponenetCollection();
 
         public IMMRendererComponent Parent { get; set; } = null;
 
@@ -158,12 +176,12 @@
 
         #region Element Data
 
-        public event EventHandler<MMElementEventArgs> Move = delegate {};
+        public event EventHandler<MMElementEventArgs> Move = delegate { };
 
-        public event EventHandler<MMElementEventArgs> Resize = delegate {};
+        public event EventHandler<MMElementEventArgs> Resize = delegate { };
 
         /// <summary>
-        /// Delegates all the geometry related functionalities and events. 
+        /// Delegates all the geometry related functionalities and events.
         /// Properties of element data are provided by this.
         /// </summary>
         private MMRectangle Rectangle { get; } = new MMRectangle();
@@ -252,11 +270,14 @@
             }
         }
 
-        protected Point RenderTargetSize => new Point(this.RenderTargetWidth, this.RenderTargetHeight);
+        protected Point RenderTargetSize
+            => new Point(this.RenderTargetWidth, this.RenderTargetHeight);
 
-        protected Rectangle RenderTargetDestinationRectangle => new Rectangle(this.Rectangle.Location, this.RenderTargetSize);
+        protected Rectangle RenderTargetDestinationRectangle
+            => new Rectangle(this.Rectangle.Location, this.RenderTargetSize);
 
-        protected Rectangle RenderTargetSourceRectangle => new Rectangle(Point.Zero, this.RenderTargetSize);
+        protected Rectangle RenderTargetSourceRectangle
+            => new Rectangle(Point.Zero, this.RenderTargetSize);
 
         protected void CreateRenderTarget()
         {
@@ -284,9 +305,11 @@
 
         #region Events
 
-        public event EventHandler<MMRendererComponentDrawEventArgs> CascadedBeginDrawStarted = delegate { };
+        public event EventHandler<MMRendererComponentDrawEventArgs>
+            CascadedBeginDrawStarted = delegate {};
 
-        public event EventHandler<MMRendererComponentDrawEventArgs> CascadedEndDrawStarted = delegate { };
+        public event EventHandler<MMRendererComponentDrawEventArgs>
+            CascadedEndDrawStarted = delegate {};
 
         public event EventHandler ParentChanged = delegate { };
 
@@ -296,7 +319,7 @@
 
         public void OnOpacityChanged(object sender, EventArgs e)
         {
-            // TODO(Further): 
+            // TODO(Further):
         }
 
         public void OnParentResize(object sender, MMElementEventArgs e)
@@ -309,12 +332,16 @@
             this.ParentChanged?.Invoke(this, e);
         }
 
-        public void OnCascadedBeginDrawStarted(object sender, MMRendererComponentDrawEventArgs e)
+        public void OnCascadedBeginDrawStarted(
+            object sender,
+            MMRendererComponentDrawEventArgs e)
         {
             this.CascadedBeginDrawStarted?.Invoke(sender, e);
         }
 
-        public void OnCascadedEndDrawStarted(object sender, MMRendererComponentDrawEventArgs e)
+        public void OnCascadedEndDrawStarted(
+            object sender,
+            MMRendererComponentDrawEventArgs e)
         {
             this.CascadedEndDrawStarted?.Invoke(sender, e);
         }
@@ -347,40 +374,17 @@
             this.Initialized = true;
         }
 
-        private void Setup()
-        {
-            // Engine data
-            this.ViewportAdapter = new MMDefaultViewportAdapter(this.GraphicsDevice);
-
-            // Visual data
-            this.Opacity = new MMRendererOpacity(this);
-
-            // Structural data
-            this.Root = this;
-
-            // Element data
-            this.Rectangle.Move += (sender, args) =>
-            {
-                this.Move?.Invoke(sender, args);
-            };
-
-            this.Rectangle.Resize += (sender, args) =>
-            {
-                this.Resize?.Invoke(sender, args);
-            };
-        }
-
         #endregion
 
         #region Draw
 
         /// <summary>
-        /// Begin drawing in its own render target. 
+        /// Begin drawing in its own render target.
         /// </summary>
         /// <remarks>
         /// GraphicsDevice's RenderTarget will be changed inside BeginDraw.
         /// However, it will be restore to original state after the method.
-        /// 
+        ///
         /// This is capable to process non-controls children elements by
         /// overriding this.Draw method, in which case, all elements are drawn
         /// to parent control's render target.
@@ -392,14 +396,9 @@
                 return;
             }
 
-            switch (this.)
-            {
-                    
-            }
-
+            // Draw to back buffer directly
             if (!this.CascadedEnabled)
             {
-                // Draw to back buffer directly
                 this.Draw(time);
             }
 
@@ -422,7 +421,7 @@
 
                 this.Draw(time);
 
-                this.Graphics.RendererManager.RestoreRenderTarget();
+                this.GraphicsDeviceController.RestoreRenderTarget();
             }
         }
 
@@ -457,13 +456,11 @@
                 this.SetParentRenderTarget();
             }
 
-            this.GraphicsRenderer.Begin();
-            this.GraphicsRenderer.Draw(
+            this.GraphicsRenderer.DrawImmediate(
                 this.RenderTarget,
                 this.RenderTargetDestinationRectangle,
-                this.RenderTargetSourceRectangle, 
+                this.RenderTargetSourceRectangle,
                 Color.White);
-            this.GraphicsRenderer.End();
         }
 
         #endregion

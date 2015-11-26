@@ -1,8 +1,8 @@
 ﻿namespace MetaMind.Engine.Entities.Controls.Views.Scrolls
 {
+    using Controllers;
     using Layers;
     using Layouts;
-    using Logic;
     using Microsoft.Xna.Framework;
     using Settings;
 
@@ -56,7 +56,7 @@
             get
             {
                 return (this.viewSettings.ViewColumnDisplay * (this.viewSettings.ViewRowDisplay + this.RowOffset) < this.viewSettings.ViewColumnDisplay * this.viewSettings.ViewRowMax) && 
-                       (this.viewSettings.ViewColumnMax * (this.viewSettings.ViewRowDisplay + this.RowOffset) < this.View.ItemsRead.Count);
+                       (this.viewSettings.ViewColumnMax * (this.viewSettings.ViewRowDisplay + this.RowOffset) < this.View.Items.Count);
             }
         }
 

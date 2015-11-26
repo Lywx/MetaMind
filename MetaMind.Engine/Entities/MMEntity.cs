@@ -14,8 +14,7 @@ namespace MetaMind.Engine.Entities
 
         protected MMEntity()
         {
-            this.Guid      = Guid.NewGuid();
-            this.Listeners = new List<IMMEventListener>();
+            this.Guid = Guid.NewGuid();
         }
 
         ~MMEntity()
@@ -63,7 +62,7 @@ namespace MetaMind.Engine.Entities
 
         #region Event Data
 
-        protected List<IMMEventListener> Listeners { get; set; }
+        protected List<IMMEventListener> Listeners { get; set; } = new List<IMMEventListener>();
 
         #endregion Event Data
 

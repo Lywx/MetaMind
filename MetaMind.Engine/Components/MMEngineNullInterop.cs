@@ -19,19 +19,19 @@ namespace MetaMind.Engine.Components
 
         public IAssetManager Asset { get; }
 
-        public IAudioManager Audio { get; }
+        public IMMAudioManager Audio { get; }
 
         public ContentManager Content { get; }
 
         public MMConsole Console { get; set; }
 
-        public IFileManager File { get; }
+        public IMMDirectoryManager File { get; }
 
         public IMMEventManager Event { get; }
 
         public new IMMGameManager Game { get; }
 
-        public IProcessManager Process { get; }
+        public IMMProcessManager Process { get; }
 
         public IMMScreenDirector Screen { get; }
 

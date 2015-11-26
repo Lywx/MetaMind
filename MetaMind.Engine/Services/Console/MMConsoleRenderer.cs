@@ -16,7 +16,7 @@
     // TODO(Minor, Console): This is still not good enough
     public class MMConsoleRenderer :
         MMMVCComponentRenderer<MMConsole, GameConsoleSettings, MMConsoleController, MMConsoleRenderer>,
-        IParameterLoader<MMGraphicsSettings>
+        IParameterDependant<MMGraphicsSettings>
     {
         #region Dependency
 

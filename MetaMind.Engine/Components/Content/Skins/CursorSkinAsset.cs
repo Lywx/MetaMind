@@ -8,7 +8,7 @@ namespace MetaMind.Engine.Components.Content.Skins
     using Asset;
     using Entities.Controls;
 
-    public class CursorSkinAsset : Asset
+    public class CursorSkinAsset : MMAsset
     {
         #region Constructors
 

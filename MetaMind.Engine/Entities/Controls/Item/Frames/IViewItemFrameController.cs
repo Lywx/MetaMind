@@ -7,7 +7,7 @@ namespace MetaMind.Engine.Entities.Controls.Item.Frames
     /// Most of the derived classes are used as generics in view/item through 
     /// layering. It doesn't really need to be setup real member here.
     /// </remarks>
-    public interface IMMViewItemFrameController : IMMViewItemController
+    public interface IMMViewItemFrameController : IMMViewItemControllerComponent
     {
     }
 }

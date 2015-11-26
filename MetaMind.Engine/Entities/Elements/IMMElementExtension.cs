@@ -6,9 +6,9 @@ namespace MetaMind.Engine.Entities.Elements
 
     public static class IMMElementExtension
     {
-        public static Func<RectangleButtonSettings, Texture2D> ImageSelector(
+        public static Func<MMRectangleButtonSettings, Texture2D> ImageSelector(
             this IMMElement element,
-            RectangleButtonSettings settings)
+            MMRectangleButtonSettings settings)
         {
             return setting =>
             {

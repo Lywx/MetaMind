@@ -5,11 +5,14 @@
     using Graphics;
     using Microsoft.Xna.Framework;
 
-    public abstract class MMNode : MMInputEntity, IMMNode, IMMNodeInternal
+    /// <summary>
+    /// MMNode 
+    /// </summary>
+    public class MMNode : MMInputEntity, IMMNode, IMMNodeInternal
     {
         #region Constructors and Finalizer
 
-        protected MMNode()
+        protected internal MMNode()
         {
         }
 
@@ -17,23 +20,30 @@
 
         #region Dependency 
 
-        CCScheduler Scheduler
+        private CCScheduler Scheduler
         {
-            get { return Application != null ? Application.Scheduler : null; }
+            get { return Application.Scheduler; }
         }
 
-        MMActionManager ActionManager
+        private MMActionManager ActionManager
         {
-            get { return Application != null ? Application.ActionManager : null; }
+            get
+            {
+                return Application.ActionManager;
+            }
         }
 
         #endregion
+
+        #region Graphics Data
 
         public IMMRendererOpacity Opacity => this.Renderer.Opacity;
 
         public IMMNodeColor Color => this.Renderer.Color;
 
-        #region 
+        #endregion
+
+        #region MVC Data
 
         public IMMNodeRenderer Renderer { get; protected set; }
 
@@ -73,7 +83,8 @@
 
             if (node.Parent != null)
             {
-                throw new InvalidOperationException("Node is already added. It can't be added again.");
+                throw new InvalidOperationException(
+                    "Node is already added. It can't be added again.");
             }
 
             node.Parent = this;
@@ -92,11 +103,19 @@
 
             if (this.Children.Contains(node))
             {
-                this.DetachChild(node, disposing);
+                this.Detach(node, disposing);
             }
         }
 
-        private void DetachChild(MMNode node, bool disposing)
+        /// <summary>
+        /// </summary>
+        /// <param name="node">
+        /// </param>
+        /// <param name="disposing">
+        /// If you don't do cleanup, the child's actions will not get removed
+        /// and the its ScheduledSelectors dictionary will not get released!
+        /// </param>
+        private void Detach(MMNode node, bool disposing)
         {
             if (IsRunning)
             {
@@ -104,8 +123,6 @@
                 node.OnExit();
             }
 
-            // If you don't do cleanup, the child's actions will not get removed and the
-            // its scheduledSelectors_ dict will not get released!
             if (disposing)
             {
                 node.Dispose();
@@ -119,6 +136,23 @@
         }
 
         #endregion
+
+        public virtual void OnExit()
+        {
+            this.Pause();
+
+            IsRunning = false;
+
+            if (this.Children != null
+                && this.Children.Count > 0)
+            {
+                MMNode[] elements = this.Children;
+                for (int i = 0, count = this.Children.Count; i < count; i++)
+                {
+                    elements[i].OnExit();
+                }
+            }
+        }
 
         #region Load and Unload
 
@@ -184,7 +218,7 @@
         /// Update(float) from anywhere else.
         /// </remarks>
         /// <param name="dt">
-        /// Delta time in seconds.
+        /// Delta time in seconds. 
         /// </param>
         public virtual void Update(float dt)
         {
@@ -192,13 +226,151 @@
 
         public override void UpdateInput(GameTime time)
         {
-            this.Children.UpdateInput(time);
+            this.Children  .UpdateInput(time);
 
             this.Controller.UpdateInput(time);
             base           .UpdateInput(time);
         }
 
         #endregion
+
+        #region Schedule "Update" Operations
+
+        public void Schedule()
+        {
+            this.Schedule(0);
+        }
+
+        public void Schedule(int priority)
+        {
+            this.Scheduler.Schedule(this, priority, !IsRunning);
+        }
+
+        #endregion
+
+        #region
+
+        internal void AttachSchedules()
+        {
+            if (toBeAddedSchedules != null && toBeAddedSchedules.Count > 0)
+            {
+                var scheduler = this.Scheduler;
+                foreach (var schedule in toBeAddedSchedules)
+                {
+                    if (schedule.IsPriority)
+                    {
+                        scheduler.Schedule(
+                            schedule.Target,
+                            schedule.Priority,
+                            schedule.Paused);
+                    }
+                    else
+                    {
+                        scheduler.Schedule(
+                            schedule.Selector,
+                            schedule.Target,
+                            schedule.Interval,
+                            schedule.Repeat,
+                            schedule.Delay,
+                            schedule.Paused);}
+                }
+
+                toBeAddedSchedules.Clear();
+                toBeAddedSchedules = null;
+            }
+        }
+
+        public void Unschedule()
+        {
+            this.Scheduler.Unschedule(this);
+        }
+
+        #endregion
+
+        #region Schedule "Selector" Operations
+
+        public void Schedule(Action<float> selector)
+        {
+            this.Schedule(
+                selector,
+                0.0f,
+                CCSchedulePriority.RepeatForever,
+                0.0f);
+        }
+
+        public void Schedule(Action<float> selector, float interval)
+        {
+            this.Schedule(
+                selector,
+                interval,
+                CCSchedulePriority.RepeatForever,
+                0.0f);
+        }
+
+        public void Schedule(Action<float> selector, float interval, uint repeat, float delay)
+        {
+            if (selector == null)
+            {
+                throw new ArgumentNullException(nameof(selector));
+            }
+
+            if (interval < 0)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(interval),
+                    "Interval must be positive");
+            }
+
+            this.Scheduler.Schedule(
+                selector,
+                this,
+                interval,
+                repeat,
+                delay,
+                !IsRunning);
+        }
+
+        public void ScheduleOnce(Action<float> selector, float delay)
+        {
+            this.Schedule(selector, 0.0f, 0, delay);
+        }
+
+        public void Unschedule(Action<float> selector)
+        {
+            if (selector == null)
+            {
+                return;
+            }
+
+            this.Scheduler.Unschedule(selector, this);
+        }
+
+        public void UnscheduleAll()
+        {
+            this.Scheduler.UnscheduleAll(this);
+        }
+
+        #endregion 
+
+        public void Resume()
+        {
+            this.Scheduler    .Resume(this);
+            this.ActionManager.ResumeTarget(this);
+
+            if (EventDispatcher != null)
+                EventDispatcher.Resume(this);
+        }
+
+        public void Pause()
+        {
+            this.Scheduler    .PauseTarget(this);
+            this.ActionManager.PauseTarget(this);
+
+            if (EventDispatcher != null)
+            {
+                EventDispatcher.Pause(this);
+            }
+        }
 
         #region IDisposable
 
@@ -210,7 +382,10 @@
             {
                 if (disposing)
                 {
-                    if (!this.IsDisposed) {}
+                    if (!this.IsDisposed)
+                    {
+                        
+                    }
 
                     this.IsDisposed = true;
                 }

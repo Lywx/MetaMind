@@ -4,9 +4,9 @@
 
     public interface IViewItemFactory
     {
-        IMMViewItemController CreateLogic(IMMViewItem item);
+        IMMViewItemController CreateController(IMMViewItem item);
 
-        IMMViewItemRendererComponent CreateVisual(IMMViewItem item);
+        IMMViewItemRendererComponent CreateRenderer(IMMViewItem item);
 
         IMMViewItemLayer CreateLayer(IMMViewItem item);
     }

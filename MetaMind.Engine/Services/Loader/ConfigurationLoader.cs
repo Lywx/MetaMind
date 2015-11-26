@@ -6,19 +6,19 @@ namespace MetaMind.Engine.Services.Loader
 
     public static class ConfigurationLoader
     {
-        public static List<KeyValuePair<string, string>> LoadDuplicablePairs(IConfigurationLoader loader)
+        public static List<KeyValuePair<string, string>> LoadDuplicablePairs(IConfigurable configurable)
         {
-            return FileLoader.ReadListPairs(LoadAllLine(loader));
+            return InformationLoader.ReadListPairs(LoadAllLine(configurable));
         }
 
-        public static Dictionary<string, string> LoadUniquePairs(IConfigurationLoader loader)
+        public static Dictionary<string, string> LoadUniquePairs(IConfigurable configurable)
         {
-            return FileLoader.LoadDictPairs(LoadAllLine(loader));
+            return InformationLoader.LoadDictPairs(LoadAllLine(configurable));
         }
 
-        private static string[] LoadAllLine(IConfigurationLoader loader)
+        private static string[] LoadAllLine(IConfigurable configurable)
         {
-            return File.ReadAllLines(FileManager.ConfigurationPath(loader));
+            return File.ReadAllLines(MMDirectoryManager.ConfigurationPath(configurable));
         }
     }
 }

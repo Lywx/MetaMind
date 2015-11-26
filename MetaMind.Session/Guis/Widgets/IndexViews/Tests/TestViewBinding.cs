@@ -5,9 +5,9 @@
     using Concepts.Tests;
     using Engine.Entities.Controls.Item;
     using Engine.Entities.Controls.Item.Data;
-    using Engine.Entities.Controls.Views.Logic;
+    using Engine.Entities.Controls.Views.Controllers;
 
-    public class TestViewBinding : IViewBinding
+    public class TestViewBinding : IMMViewBinding
     {
         private readonly TestOrganizer treeOrganizer = new TestOrganizer();
 

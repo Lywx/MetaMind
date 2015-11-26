@@ -8,8 +8,6 @@
     {
         private readonly int mouseHoldDistance = 6;
 
-        private Point mouseLocation;
-
         private Point mousePressedPosition;
 
         /// <summary>
@@ -105,14 +103,14 @@
 
         private void FrameMousePress(object sender, MMElementEventArgs e)
         {
-            var mouse = this.Input.State.Mouse.CurrentState;
+            var mousePosition = this.Input.State.Mouse.Position;
 
             // origin for deciding whether is dragging
-            this.mousePressedPosition = new Point(mouse.X, mouse.Y);
+            this.mousePressedPosition = new Point(mousePosition.X, mousePosition.Y);
 
             // save relative position of mouse compared to rectangle
             // mouse y-axis value is fixed at y-axis center of the rectangle
-            this.mouseRelativePosition = new Point(mouse.X - this.Bounds.X, mouse.Y - this.Bounds.Y);
+            this.mouseRelativePosition = new Point(mousePosition.X - this.Bounds.X, mousePosition.Y - this.Bounds.Y);
 
             this.RectangleMachine.Fire(RectangleMachineTrigger.Pressed);
         }
@@ -218,31 +216,30 @@
                 return;
             }
 
-            this.UpdateFramePosition();
-            this.UpdateFrameStates();
+            var mousePosition = this.Input.State.Mouse.Position;
+
+            this.UpdateFramePosition(mousePosition);
+            this.UpdateFrameStates(mousePosition);
         }
 
-        private void UpdateFramePosition()
+        private void UpdateFramePosition(Point mousePosition)
         {
-            var mouse = this.Input.State.Mouse.CurrentState;
-            this.mouseLocation = new Point(mouse.X, mouse.Y);
-
             if (this.RectangleMachine.IsInState(RectangleMachineState.Dragging))
             {
                 // Keep rectangle relative position to the mouse position from 
                 // changing 
                 this.Bounds = new Rectangle(
-                    this.mouseLocation.X - this.mouseRelativePosition.X,
-                    this.mouseLocation.Y - this.mouseRelativePosition.Y,
+                    mousePosition.X - this.mouseRelativePosition.X,
+                    mousePosition.Y - this.mouseRelativePosition.Y,
                     this.Bounds.Width,
                     this.Bounds.Height);
             }
         }
 
-        private void UpdateFrameStates()
+        private void UpdateFrameStates(Point mousePosition)
         {
             var isOutOfHoldLen =
-                this.mouseLocation.DistanceFrom(this.mousePressedPosition).
+                mousePosition.DistanceFrom(this.mousePressedPosition).
                      Length() > this.mouseHoldDistance;
 
             this.RectangleMachine.Fire(

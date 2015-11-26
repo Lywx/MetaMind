@@ -1,38 +1,29 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Sentence.cs">
-//   Copyright (c) 2015 Wuxiang Lin
-//   All Rights Reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
 namespace MetaMind.Engine.Services.Parser.Elements
 {
     using System.Collections.Generic;
 
     public class Sentence
     {
-        private readonly List<string> words;
-
         public Sentence(List<string> words)
         {
-            this.words = words;
+            this.Words = words;
         }
 
-        public List<string> Words => this.words;
+        public List<string> Words { get; }
 
         public override string ToString()
         {
-            return string.Join(" ", this.words);
+            return string.Join(" ", this.Words);
         }
 
         public override int GetHashCode()
         {
-            return this.words?.GetHashCode() ?? 0;
+            return this.Words?.GetHashCode() ?? 0;
         }
 
         protected bool Equals(Sentence other)
         {
-            return Equals(this.words, other.words);
+            return Equals(this.Words, other.Words);
         }
     }
 }

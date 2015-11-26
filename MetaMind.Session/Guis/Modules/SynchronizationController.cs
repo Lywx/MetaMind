@@ -1,6 +1,7 @@
 namespace MetaMind.Session.Guis.Modules
 {
     using System;
+    using Components.Input;
     using Concepts.Cognitions;
     using Concepts.Synchronizations;
     using Engine.Components.Input;

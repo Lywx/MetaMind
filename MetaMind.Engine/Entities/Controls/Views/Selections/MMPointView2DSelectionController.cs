@@ -7,9 +7,9 @@
 
 namespace MetaMind.Engine.Entities.Controls.Views.Selections
 {
+    using Controllers;
     using Layers;
     using Layouts;
-    using Logic;
     using Scrolls;
 
     public class MMPointView2DSelectionController : MMViewControlComponent, IMMPointView2DSelectionController

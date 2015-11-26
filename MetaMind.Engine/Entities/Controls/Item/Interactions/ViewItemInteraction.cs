@@ -1,10 +1,3 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ViewItemInteraction.cs">
-//   Copyright (c) 2015 Wuxiang Lin
-//   All Rights Reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
 namespace MetaMind.Engine.Entities.Controls.Item.Interactions
 {
     using System;
@@ -19,12 +12,12 @@ namespace MetaMind.Engine.Entities.Controls.Item.Interactions
         {
             if (itemLayout == null)
             {
-                throw new ArgumentNullException("itemLayout");
+                throw new ArgumentNullException(nameof(itemLayout));
             }
 
             if (itemLayoutInteraction == null)
             {
-                throw new ArgumentNullException("itemLayoutInteraction");
+                throw new ArgumentNullException(nameof(itemLayoutInteraction));
             }
 
             this.ItemLayout            = itemLayout;
@@ -63,19 +56,13 @@ namespace MetaMind.Engine.Entities.Controls.Item.Interactions
         private void UpdateViewSelection(GameTime time)
         {
             var provider = this as IViewItemViewSelectionProvider;
-            if (provider != null)
-            {
-                provider.ViewUpdateSelection(time);
-            }
+            provider?.ViewUpdateSelection(time);
         }
 
         private void UpdateViewSwap(GameTime time)
         {
             var provider = this as IViewItemViewSwapProvider;
-            if (provider != null)
-            {
-                provider.ViewUpdateSwap();
-            }
+            provider?.ViewUpdateSwap();
         }
 
         #endregion
@@ -85,28 +72,19 @@ namespace MetaMind.Engine.Entities.Controls.Item.Interactions
         public void ViewSelect()
         {
             var provider = this as IViewItemViewSelectionProvider;
-            if (provider != null)
-            {
-                provider.ViewDoSelect();
-            }
+            provider?.ViewDoSelect();
         }
 
         public void ViewUnselect()
         {
             var provider = this as IViewItemViewSelectionProvider;
-            if (provider != null)
-            {
-                provider.ViewDoUnselect();
-            }
+            provider?.ViewDoUnselect();
         }
 
         public void ViewSwap(IMMEngineInteropService interop, IMMViewItem draggingItem)
         {
             var provider = this as IViewItemViewSwapProvider;
-            if (provider != null)
-            {
-                provider.ViewDoSwap(interop, draggingItem);
-            }
+            provider?.ViewDoSwap(interop, draggingItem);
         }
 
         #endregion

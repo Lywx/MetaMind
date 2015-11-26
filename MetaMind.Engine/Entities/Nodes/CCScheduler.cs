@@ -1,31 +1,22 @@
 ﻿namespace MetaMind.Engine.Entities.Nodes
 {
+    using Actions;
+    using NLog;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using Actions;
-    using NLog;
-
-    public static class CCSchedulePriority
-    {
-        /// We will define this as a static class since we can not define and enum with the way uint.MaxValue is represented.
-        public const uint RepeatForever = uint.MaxValue - 1;
-
-        public const int System = int.MinValue;
-
-        public const int User = System + 1;
-    }
 
     /// <summary>
-    /// Scheduler is responsible for triggering the scheduled callbacks.
-    /// You should not use NSTimer. Instead use this class.
-    ///
     /// There are 2 different types of callbacks (selectors):
     /// 
-    /// - update selector: the 'update' selector will be called every frame. You can customize the priority.
-    /// - custom selector: A custom selector will be called every frame, or with a custom interval of time
-    ///
-    /// The 'custom selectors' should be avoided when possible. It is faster, and consumes less memory to use the 'update selector'.
+    /// Update selector: the 'update' selector will be called every frame. You
+    /// can customize the priority.
+    /// 
+    /// Custom selector: A custom selector will be called every frame, or with a
+    /// custom interval of time
+    /// 
+    /// The 'custom selectors' should be avoided when possible. It is faster,
+    /// and consumes less memory to use the 'update selector'.
     /// </summary>
     public class CCScheduler
     {
@@ -35,47 +26,63 @@
 
         #endregion
 
-        private static HashTimeEntry[] tmpHashSelectorArray = new HashTimeEntry[128];
+        #region Update Data
 
-        private static ICCUpdatable[] tmpSelectorArray = new ICCUpdatable[128];
+        private CustomItemHash currentTarget;
 
-        private readonly Dictionary<ICCUpdatable, HashTimeEntry> hashForTimers = new Dictionary<ICCUpdatable, HashTimeEntry>();
+        private bool currentTargetSalvaged;
 
-        private readonly Dictionary<ICCUpdatable, HashUpdateEntry> hashForUpdates = new Dictionary<ICCUpdatable, HashUpdateEntry>();
+        private bool updateHashLocked;
+
+        private static ICCUpdatable[] updateItemsDynamic = new ICCUpdatable[128];
 
         /// <summary>
-        /// List of entity for priority == 0 
+        /// List of items with priority equals 0.
         /// </summary>
         /// <remarks>
         /// Hash used to fetch quickly the list entries for pause, delete, etc.
         /// </remarks>
-        private readonly LinkedList<ListEntry> updates0List = new LinkedList<ListEntry>(); 
+        private readonly LinkedList<UpdateItem> updateZeroItems = new LinkedList<UpdateItem>();
 
         /// <summary>
-        /// List of entity for priority < 0 
+        /// List of entities with priority smaller than 0. The list is sorted by priority.
         /// </summary>
-        private readonly LinkedList<ListEntry> updatesNegList = new LinkedList<ListEntry>(); 
+        private readonly LinkedList<UpdateItem> updateNegativeItems = new LinkedList<UpdateItem>();
 
         /// <summary>
-        /// List of entity for priority > 0 
+        /// List of entities with priority large than 0. The list is sorted by priority. 
         /// </summary>
-        private readonly LinkedList<ListEntry> updatesPosList = new LinkedList<ListEntry>(); 
+        private readonly LinkedList<UpdateItem> updatePositiveItems = new LinkedList<UpdateItem>();
 
-        private HashTimeEntry currentTarget;
+        /// <summary>
+        /// Hash of entities in update item list. This is used to quickly access
+        /// the item without searching in LinkedList.
+        /// </summary>
+        private readonly Dictionary<ICCUpdatable, UpdateItemHash> updateHashes = new Dictionary<ICCUpdatable, UpdateItemHash>();
 
-        private bool isCurrentTargetSalvaged;
+        /// <summary>
+        /// Hash of entities in custom item list. This is used to quickly access
+        /// the item without searching in LinkedList.
+        /// </summary>
+        private readonly Dictionary<ICCUpdatable, CustomItemHash> customHashes = new Dictionary<ICCUpdatable, CustomItemHash>();
 
-        private bool isUpdateHashLocked;
+        private static CustomItemHash[] customItemsDynamic = new CustomItemHash[128];
 
-        public float TimeScale { get; set; }
+        #endregion
+
+        #region Time Data
+
+        public double TimeScale { get; set; } = 1.0;
+
+        #endregion
 
         #region Manager Data
 
         public MMActionManager ActionManager { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the ActionManager is active. 
-        /// </summary> 
+        /// Gets a value indicating whether the ActionManager is active.
+        /// </summary>
         /// <remarks>
         /// The ActionManager can be stopped from processing actions by calling UnscheduleAll() method.
         /// </remarks>
@@ -87,14 +94,14 @@
                 {
                     var target = this.ActionManager;
 
-                    LinkedListNode<ListEntry> next;
+                    LinkedListNode<UpdateItem> next;
 
-                    for (var node = this.updatesNegList.First; node != null; node = next)
+                    for (var node = this.updateNegativeItems.First; node != null; node = next)
                     {
                         next = node.Next;
 
-                        if (node.Value.Target == target && 
-                           !node.Value.MarkedForDeletion)
+                        if (node.Value.Target == target &&
+                           !node.Value.IsDeleting)
                         {
                             return true;
                         }
@@ -105,21 +112,279 @@
             }
         }
 
-        #endregion 
+        #endregion
 
         #region Constructors
 
-        internal CCScheduler(MMActionManager actionManager = null)
+        internal CCScheduler(MMActionManager actionManager)
         {
-            this.ActionManager = actionManager;
+            if (actionManager == null)
+            {
+                throw new ArgumentNullException(nameof(actionManager));
+            }
 
-            this.TimeScale = 1.0f;
+            this.ActionManager = actionManager;
         }
 
         #endregion Constructors
 
+        #region Update
+
+        internal void Update(float dt)
+        {
+            this.updateHashLocked = true;
+
+            try
+            {
+                dt *= (float)this.TimeScale;
+
+                // First update entries with lower priority value
+                this.UpdateList(dt, this.updateNegativeItems);
+                this.UpdateList(dt, this.updateZeroItems);
+                this.UpdateList(dt, this.updatePositiveItems);
+
+                // Iterate over all the custom selectors
+                var count = this.customHashes.Count;
+                if (count > 0)
+                {
+                    // Dynamic array resizing when necessary
+                    if (updateItemsDynamic.Length < count)
+                    {
+                        updateItemsDynamic =
+                            new ICCUpdatable[updateItemsDynamic.Length * 2];
+                    }
+
+                    this.customHashes.Keys.CopyTo(updateItemsDynamic, 0);
+
+                    for (var i = 0; i < count; i++)
+                    {
+                        var key = updateItemsDynamic[i];
+
+                        if (!this.customHashes.ContainsKey(key))
+                        {
+                            continue;
+                        }
+
+                        var target = this.customHashes[key];
+
+                        this.currentTarget = target;
+                        this.currentTargetSalvaged = false;
+
+                        if (!this.currentTarget.Paused)
+                        {
+                            // The 'timers' array may change while inside this loop
+                            for (target.TimerIndex = 0;
+                                target.TimerIndex < target.Timers.Count;
+                                ++target.TimerIndex)
+                            {
+                                target.CurrentTimer = target.Timers[target.TimerIndex];
+                                if (target.CurrentTimer != null)
+                                {
+                                    target.CurrentTimerSalvaged = false;
+                                    target.CurrentTimer.Update(dt);
+                                    target.CurrentTimer = null;
+                                }
+                            }
+                        }
+
+                        // Only delete currentTarget if no actions were
+                        // scheduled during the cycle (issue #481)
+                        if (this.currentTargetSalvaged
+                            && this.currentTarget.Timers.Count == 0)
+                        {
+                            this.RemoveCustomSelector(this.currentTarget);
+                        }
+                    }
+                }
+
+                // Delete all updates that are marked for deletion
+                this.UpdateListRemoval(this.updateZeroItems);
+                this.UpdateListRemoval(this.updateNegativeItems);
+                this.UpdateListRemoval(this.updatePositiveItems);
+            }
+            finally
+            {
+                this.updateHashLocked = false;
+                this.currentTarget = null;
+            }
+        }
+
+        private void UpdateList(float dt, LinkedList<UpdateItem> updateList)
+        {
+            LinkedListNode<UpdateItem> nextNode;
+
+            for (var node = updateList.First; node != null; node = nextNode)
+            {
+                nextNode = node.Next;
+                var nextEntry = node.Value;
+
+                if (!nextEntry.IsPaused
+                    && !nextEntry.IsDeleting)
+                {
+                    nextEntry.Target.Update(dt);
+                }
+            }
+        }
+
+        private void UpdateListRemoval(LinkedList<UpdateItem> updateList)
+        {
+            LinkedListNode<UpdateItem> nextNode;
+
+            for (var node = updateList.First; node != null; node = nextNode)
+            {
+                nextNode = node.Next;
+                var nextEntry = node.Value;
+
+                if (nextEntry.IsDeleting)
+                {
+                    updateList.Remove(node);
+                    this.RemoveUpdateSelector(nextEntry);
+                }
+            }
+        }
+
+        #endregion
+
+        #region Add Operations
+
+        private void AddUpdateSelector(
+            LinkedList<UpdateItem> list,
+            ICCUpdatable target,
+            bool paused)
+        {
+            var item = new UpdateItem
+            {
+                Target          = target,
+                IsPaused          = paused,
+                IsDeleting = false,
+            };
+
+            list.AddLast(item);
+
+            this.AddUpdateSelectorHash(list, target, item);
+        }
+
+        private void AddUpdateSelectorHash(
+            LinkedList<UpdateItem> list,
+            ICCUpdatable target,
+            UpdateItem item)
+        {
+            var itemHash = new UpdateItemHash
+            {
+                Target = target,
+                List = list,
+                Item = item
+            };
+
+            this.updateHashes.Add(target, itemHash);
+        }
+
+        private void InsertUpdateSelector(
+            LinkedList<UpdateItem> list,
+            ICCUpdatable target,
+            int priority,
+            bool paused)
+        {
+            var item = new UpdateItem
+            {
+                Target = target,
+                Priority = priority,
+                IsPaused = paused,
+                IsDeleting = false
+            };
+
+            if (list.First == null)
+            {
+                list.AddFirst(item);
+            }
+            else
+            {
+                var added = false;
+
+                for (var node = list.First; node != null; node = node.Next)
+                {
+                    if (priority < node.Value.Priority)
+                    {
+                        list.AddBefore(node, item);
+                        added = true;
+                        break;
+                    }
+                }
+
+                if (!added)
+                {
+                    list.AddLast(item);
+                }
+            }
+
+            this.AddUpdateSelectorHash(list, target, item);
+        }
+
+        /// <summary>
+        /// Resurrect the given selector that is about to be deleted.
+        /// </summary>
+        /// <param name="updateSelector"></param>
+        private void ResurrectUpdateSelector(UpdateItemHash updateSelector)
+        {
+            if (!updateSelector.Item.IsDeleting)
+            {
+                throw new InvalidOperationException();
+            }
+
+            // Resurrect the selector.
+            updateSelector.Item.IsDeleting = false;
+        }
+
+        #endregion
+
+        #region Remove Operations
+
+        private void RemoveCustomSelector(CustomItemHash itemHash)
+        {
+            this.customHashes.Remove(itemHash.Target);
+
+            itemHash.Timers.Clear();
+            itemHash.Target = null;
+        }
+
+        private void RemoveUpdateSelector(UpdateItem item)
+        {
+            UpdateItemHash itemHash;
+
+            if (this.TryGetUpdateSelector(item.Target, out itemHash))
+            {
+                // Remove from list
+                itemHash.List.Remove(item);
+                itemHash.Item = null;
+
+                // Remove from hash
+                this.updateHashes.Remove(item.Target);
+                itemHash.Target = null;
+            }
+        }
+
+
+        #endregion
+
+        #region Get Operations
+
+        private bool TryGetCustomSelector(ICCUpdatable target, out CustomItemHash itemHash)
+        {
+            return this.customHashes.TryGetValue(target, out itemHash);
+        }
+
+        private bool TryGetUpdateSelector(ICCUpdatable target, out UpdateItemHash itemHash)
+        {
+            return this.updateHashes.TryGetValue(target, out itemHash);
+        }
+
+        #endregion
+
         #region Schedule Operations
 
+        /// <summary>
+        /// Schedule a custom selector.
+        /// </summary>
         /// <remarks>
         /// The scheduled method will be called every 'interval' seconds.
         /// If paused is YES, then it won't be called until it is resumed.
@@ -128,42 +393,58 @@
         /// repeat let the action be repeated repeat + 1 times, use RepeatForever to let the action run continuously
         /// delay is the amount of time the action will wait before it'll start
         /// @since v0.99.3, repeat and delay added in v1.1
-        /// </remarks>>
-        public void Schedule(Action<float> selector, ICCUpdatable target, float interval, uint repeat,
-                                     float delay, bool paused)
+        /// </remarks>
+        public void Schedule(
+            Action<float> selector,
+            ICCUpdatable target,
+            float interval,
+            uint repeat,
+            float delay,
+            bool paused)
         {
-            Debug.Assert(selector != null);
-            Debug.Assert(target != null);
-
-            HashTimeEntry element;
-
-            lock (this.hashForTimers)
+            if (target == null)
             {
-                if (!this.hashForTimers.TryGetValue(target, out element))
+                throw new ArgumentNullException(nameof(target));
+            }
+
+            if (selector == null)
+            {
+                throw new ArgumentNullException(nameof(selector));
+            }
+
+            lock (this.customHashes)
+            {
+                CustomItemHash customSelector;
+
+                if (!this.TryGetCustomSelector(target, out customSelector))
                 {
-                    element = new HashTimeEntry { Target = target };
-                    this.hashForTimers[target] = element;
+                    customSelector = new CustomItemHash
+                    {
+                        Target = target,
+                        Paused = paused
+                    };
+
+                    this.customHashes[target] = customSelector;
 
                     // Is this the 1st element ? Then set the pause level to all the selectors of this target
-                    element.Paused = paused;
                 }
                 else
                 {
-                    if (element != null)
+                    if (customSelector != null)
                     {
-                        Debug.Assert(element.Paused == paused, "CCScheduler.Schedule: All are paused");
+                        Debug.Assert(customSelector.Paused == paused, "CCScheduler.Schedule: All are paused");
                     }
                 }
 
-                if (element != null)
+                if (customSelector != null)
                 {
-                    if (element.Timers == null)
+                    if (customSelector.Timers == null)
                     {
-                        element.Timers = new List<CCTimer>();
+                        customSelector.Timers = new List<CCTimer>();
                     }
                     else
                     {
-                        var timers = element.Timers.ToArray();
+                        var timers = customSelector.Timers.ToArray();
                         foreach (var timer in timers)
                         {
                             if (timer == null)
@@ -182,52 +463,55 @@
                         }
                     }
 
-                    element.Timers.Add(new CCTimer(this, target, selector, interval, repeat, delay));
+                    customSelector.Timers.Add(new CCTimer(this, target, selector, interval, repeat, delay));
                 }
             }
         }
 
-        /** Schedules the 'update' selector for a given target with a given priority.
-    	     The 'update' selector will be called every frame.
-    	     The lower the priority, the earlier it is called.
-    	     @since v0.99.3
-    	     */
-
-        public void Schedule(ICCUpdatable targt, int priority, bool paused)
+        /// <summary>
+        /// Schedules the 'Update' selector for a given target with a given
+        /// priority. The 'Update' selector will be called every frame. The
+        /// 'Update' selector will be called every frame.
+        /// </summary>
+        /// <param name="priority">
+        /// The lower the priority, the earlier it is called.
+        /// </param>
+        public void Schedule(ICCUpdatable target, int priority, bool paused)
         {
-            HashUpdateEntry element;
+            UpdateItemHash updateSelector;
 
-            if (this.hashForUpdates.TryGetValue(targt, out element))
+            // When has been added before but has not been removed yet.
+            if (this.updateHashes.TryGetValue(target, out updateSelector))
             {
-                Debug.Assert(element.Entry.MarkedForDeletion);
+                // The only possibility for this scenario is that the item is
+                // about to be deleted.
+                Debug.Assert(updateSelector.Item.IsDeleting);
 
-                // TODO: check if priority has changed!
-                element.Entry.MarkedForDeletion = false;
+                this.ResurrectUpdateSelector(updateSelector);
 
                 return;
             }
 
-            // most of the updates are going to be 0, that's way there
-            // is an special list for updates with priority 0
+            // Most of the updates are going to be 0, that's way there
+            // is an special list for updates with priority 0.
             if (priority == 0)
             {
-                this.AppendIn(this.updates0List, targt, paused);
+                this.AddUpdateSelector(this.updateZeroItems, target, paused);
             }
             else if (priority < 0)
             {
-                this.PriorityIn(this.updatesNegList, targt, priority, paused);
+                this.InsertUpdateSelector(this.updateNegativeItems, target, priority, paused);
             }
             else
             {
-                this.PriorityIn(this.updatesPosList, targt, priority, paused);
+                this.InsertUpdateSelector(this.updatePositiveItems, target, priority, paused);
             }
         }
 
-        /** Unschedule a selector for a given target.
-    	     If you want to unschedule the "update", use unscheudleUpdateForTarget.
-    	     @since v0.99.3
-    	     */
-
+        /// <summary>
+        /// Unschedule a selector for a given target. If you want to unschedule
+        /// the "Update", use unscheudleUpdateForTarget.
+        /// </summary>
         public void Unschedule(Action<float> selector, ICCUpdatable target)
         {
             // explicitly handle nil arguments when removing an object
@@ -236,9 +520,9 @@
                 return;
             }
 
-            HashTimeEntry element;
+            CustomItemHash element;
 
-            if (this.hashForTimers.TryGetValue(target, out element))
+            if (this.customHashes.TryGetValue(target, out element))
             {
                 for (var i = 0; i < element.Timers.Count; i++)
                 {
@@ -253,7 +537,7 @@
 
                         element.Timers.RemoveAt(i);
 
-                        // update timerIndex in case we are in tick:, looping over the actions
+                        // Update timerIndex in case we are in tick:, looping over the actions
                         if (element.TimerIndex >= i)
                         {
                             element.TimerIndex--;
@@ -263,11 +547,11 @@
                         {
                             if (this.currentTarget == element)
                             {
-                                this.isCurrentTargetSalvaged = true;
+                                this.currentTargetSalvaged = true;
                             }
                             else
                             {
-                                this.RemoveHashElement(element);
+                                this.RemoveCustomSelector(element);
                             }
                         }
 
@@ -277,11 +561,10 @@
             }
         }
 
-        /// <remarks>
-        /// Unschedules all selectors for a given target.
-    	/// This also includes the "update" selector.
-    	/// @since v0.99.3
-        /// </remarks>
+        /// <summary>
+        /// Unschedules all selectors for a given target. This also includes the
+        /// "Update" selector.
+        /// </summary>
         public void Unschedule(ICCUpdatable target)
         {
             if (target == null)
@@ -289,42 +572,42 @@
                 return;
             }
 
-            HashUpdateEntry element;
+            UpdateItemHash updateSelector;
 
-            if (this.hashForUpdates.TryGetValue(target, out element))
+            if (this.TryGetUpdateSelector(target, out updateSelector))
             {
-                if (this.isUpdateHashLocked)
+                if (this.updateHashLocked)
                 {
-                    element.Entry.MarkedForDeletion = true;
+                    updateSelector.Item.IsDeleting = true;
                 }
                 else
                 {
-                    this.RemoveUpdateFromHash(element.Entry);
+                    this.RemoveUpdateSelector(updateSelector.Item);
                 }
             }
         }
 
         public void UnscheduleAll(int minPriority)
         {
-            var count = this.hashForTimers.Values.Count;
-            if (tmpHashSelectorArray.Length < count)
+            var count = this.customHashes.Values.Count;
+            if (customItemsDynamic.Length < count)
             {
-                tmpHashSelectorArray = new HashTimeEntry[tmpHashSelectorArray.Length * 2];
+                customItemsDynamic = new CustomItemHash[customItemsDynamic.Length * 2];
             }
 
-            this.hashForTimers.Values.CopyTo(tmpHashSelectorArray, 0);
+            this.customHashes.Values.CopyTo(customItemsDynamic, 0);
 
             for (int i = 0; i < count; i++)
             {
                 // Element may be removed in unscheduleAllSelectorsForTarget
-                this.UnscheduleAll(tmpHashSelectorArray[i].Target);
+                this.UnscheduleAll(customItemsDynamic[i].Target);
             }
 
             // Updates selectors
-            if (minPriority < 0 && this.updatesNegList.Count > 0)
+            if (minPriority < 0 && this.updateNegativeItems.Count > 0)
             {
-                LinkedList<ListEntry> copy = new LinkedList<ListEntry>(this.updatesNegList);
-                foreach (ListEntry entry in copy)
+                LinkedList<UpdateItem> copy = new LinkedList<UpdateItem>(this.updateNegativeItems);
+                foreach (UpdateItem entry in copy)
                 {
                     if (entry.Priority >= minPriority)
                     {
@@ -333,19 +616,19 @@
                 }
             }
 
-            if (minPriority <= 0 && this.updates0List.Count > 0)
+            if (minPriority <= 0 && this.updateZeroItems.Count > 0)
             {
-                LinkedList<ListEntry> copy = new LinkedList<ListEntry>(this.updates0List);
-                foreach (ListEntry entry in copy)
+                LinkedList<UpdateItem> copy = new LinkedList<UpdateItem>(this.updateZeroItems);
+                foreach (UpdateItem entry in copy)
                 {
                     this.UnscheduleAll(entry.Target);
                 }
             }
 
-            if (this.updatesPosList.Count > 0)
+            if (this.updatePositiveItems.Count > 0)
             {
-                LinkedList<ListEntry> copy = new LinkedList<ListEntry>(this.updatesPosList);
-                foreach (ListEntry entry in copy)
+                LinkedList<UpdateItem> copy = new LinkedList<UpdateItem>(this.updatePositiveItems);
+                foreach (UpdateItem entry in copy)
                 {
                     if (entry.Priority >= minPriority)
                     {
@@ -357,30 +640,30 @@
 
         public void UnscheduleAll(ICCUpdatable target)
         {
-            // explicit NULL handling
             if (target == null)
             {
                 return;
             }
 
-            // custom selectors           
-            HashTimeEntry element;
+            // Custom selectors
+            CustomItemHash element;
 
-            if (this.hashForTimers.TryGetValue(target, out element))
+            if (this.customHashes.TryGetValue(target, out element))
             {
                 if (element.Timers.Contains(element.CurrentTimer))
                 {
                     element.CurrentTimerSalvaged = true;
                 }
+
                 element.Timers.Clear();
 
                 if (this.currentTarget == element)
                 {
-                    this.isCurrentTargetSalvaged = true;
+                    this.currentTargetSalvaged = true;
                 }
                 else
                 {
-                    this.RemoveHashElement(element);
+                    this.RemoveCustomSelector(element);
                 }
             }
 
@@ -390,153 +673,193 @@
 
         public void UnscheduleAll()
         {
-            // This also stops ActionManger from updating which means all actions are stopped as well.
+            // This also stops ActionManger from updating which means all
+            // actions are stopped as well.
             this.UnscheduleAll(CCSchedulePriority.System);
         }
 
         #endregion
 
-        #region Update
+        #region Pause Operations
 
-        internal void Update(float dt)
+        public bool IsTargetPaused(ICCUpdatable target)
         {
-            this.isUpdateHashLocked = true;
-
-            try
+            if (target == null)
             {
-                if (this.TimeScale != 1.0f)
+                throw new ArgumentNullException(nameof(target));
+            }
+
+            CustomItemHash customSelector;
+            if (this.TryGetCustomSelector(target, out customSelector))
+            {
+                return customSelector.Paused;
+            }
+
+            // We should still check update selectors if target does not have
+            // custom selectors
+            UpdateItemHash updateSelector;
+            if (this.TryGetUpdateSelector(target, out updateSelector))
+            {
+                return updateSelector.Item.IsPaused;
+            }
+
+            // Should never get here
+            throw new InvalidOperationException();
+        }
+
+        public List<ICCUpdatable> PauseAllTargets()
+        {
+            return this.PauseAllTargets(int.MinValue);
+        }
+
+        /// <summary>
+        /// Pause all existing selector including update selectors and custom selectors.
+        /// </summary>
+        /// <param name="priorityMinimalThreshold">
+        /// Minimum value of priority which is used for this pausing operation
+        /// to filter the existing selectors. If the selectors with priority
+        /// that is higher or equal than the threshold will be paused.
+        /// </param>
+        /// <returns>
+        /// List of paused selectors.
+        /// </returns>
+        private List<ICCUpdatable> PauseAllTargets(int priorityMinimalThreshold)
+        {
+            var pausedSelectors = new List<ICCUpdatable>();
+
+            this.PauseCustomSelectors(pausedSelectors);
+            this.PauseUpdateSelectors(pausedSelectors, priorityMinimalThreshold);
+
+            return pausedSelectors;
+        }
+
+        public void PauseTarget(ICCUpdatable target)
+        {
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
+
+            // Custom selectors
+            CustomItemHash customSelector;
+            if (this.TryGetCustomSelector(target, out customSelector))
+            {
+                customSelector.Paused = true;
+            }
+
+            // Update selectors
+            UpdateItemHash updateSelector;
+            if (this.TryGetUpdateSelector(target, out updateSelector))
+            {
+                updateSelector.Item.IsPaused = true;
+            }
+        }
+
+        private void PauseCustomSelectors(List<ICCUpdatable> pausedSelectors)
+        {
+            foreach (var itemHash in this.customHashes.Values)
+            {
+                itemHash.Paused = true;
+
+                if (!pausedSelectors.Contains(itemHash.Target))
                 {
-                    dt *= this.TimeScale;
+                    pausedSelectors.Add(itemHash.Target);
                 }
+            }
+        }
 
-                LinkedListNode<ListEntry> next;
+        /// <param name="priorityMinimalThreshold">
+        /// Minimum value of priority which is used for this pausing operation
+        /// to filter the existing selectors. If the selectors with priority
+        /// that is higher or equal than the threshold will be paused.
+        /// </param>
+        private void PauseUpdateSelectors(List<ICCUpdatable> pausedSelectors, int priorityMinimalThreshold)
+        {
+            Predicate<int> commonPausedPredicate =
+                priority => priority >= priorityMinimalThreshold;
 
-                // updates with priority < 0
-                //foreach (ListEntry entry in _updatesNegList)
-                for (LinkedListNode<ListEntry> node = this.updatesNegList.First; node != null; node = next)
+            var updateNegativePausedCondition = priorityMinimalThreshold < 0;
+            this.PauseUpdateSelectors(
+                updateNegativePausedCondition,
+                commonPausedPredicate,
+                this.updateNegativeItems,
+                pausedSelectors);
+
+            var updateZeroPausedCondition = priorityMinimalThreshold <= 0;
+            Predicate<int> updateZeroPausedPredicate = priority => true;
+            this.PauseUpdateSelectors(
+                updateZeroPausedCondition,
+                updateZeroPausedPredicate,
+                this.updateZeroItems,
+                pausedSelectors);
+
+            var updatePositivePausedCondition = true;
+            this.PauseUpdateSelectors(
+                updatePositivePausedCondition,
+                commonPausedPredicate,
+                this.updatePositiveItems,
+                pausedSelectors);
+        }
+
+        private void PauseUpdateSelectors(
+            bool pausedCondition,
+            Predicate<int> pausedPredicate,
+            LinkedList<UpdateItem> pausedUpdateList,
+            List<ICCUpdatable> pausedSelectors)
+        {
+            if (pausedCondition)
+            {
+                foreach (var entry in pausedUpdateList)
                 {
-                    next = node.Next;
-                    if (!node.Value.Paused && !node.Value.MarkedForDeletion)
+                    if (pausedPredicate(entry.Priority))
                     {
-                        node.Value.Target.Update(dt);
-                    }
-                }
+                        entry.IsPaused = true;
 
-                // updates with priority == 0
-                //foreach (ListEntry entry in _updates0List)
-                for (LinkedListNode<ListEntry> node = this.updates0List.First; node != null; node = next)
-                {
-                    next = node.Next;
-                    if (!node.Value.Paused && !node.Value.MarkedForDeletion)
-                    {
-                        node.Value.Target.Update(dt);
-                    }
-                }
-
-                // updates with priority > 0
-                for (LinkedListNode<ListEntry> node = this.updatesPosList.First; node != null; node = next)
-                {
-                    next = node.Next;
-                    if (!node.Value.Paused && !node.Value.MarkedForDeletion)
-                    {
-                        node.Value.Target.Update(dt);
-                    }
-                }
-
-                // Iterate over all the custom selectors
-                var count = this.hashForTimers.Count;
-                if (count > 0)
-                {
-                    if (tmpSelectorArray.Length < count)
-                    {
-                        tmpSelectorArray = new ICCUpdatable[tmpSelectorArray.Length * 2];
-                    }
-                    this.hashForTimers.Keys.CopyTo(tmpSelectorArray, 0);
-
-                    for (int i = 0; i < count; i++)
-                    {
-                        ICCUpdatable key = tmpSelectorArray[i];
-                        if (!this.hashForTimers.ContainsKey(key))
+                        if (!pausedSelectors.Contains(entry.Target))
                         {
-                            continue;
+                            pausedSelectors.Add(entry.Target);
                         }
-                        HashTimeEntry elt = this.hashForTimers[key];
-
-                        this.currentTarget = elt;
-                        this.isCurrentTargetSalvaged = false;
-
-                        if (!this.currentTarget.Paused)
-                        {
-                            // The 'timers' array may change while inside this loop
-                            for (elt.TimerIndex = 0; elt.TimerIndex < elt.Timers.Count; ++elt.TimerIndex)
-                            {
-                                elt.CurrentTimer = elt.Timers[elt.TimerIndex];
-                                if (elt.CurrentTimer != null)
-                                {
-                                    elt.CurrentTimerSalvaged = false;
-
-                                    elt.CurrentTimer.Update(dt);
-
-                                    elt.CurrentTimer = null;
-                                }
-                            }
-                        }
-
-                        // only delete currentTarget if no actions were scheduled during the cycle (issue #481)
-                        if (this.isCurrentTargetSalvaged && this.currentTarget.Timers.Count == 0)
-                        {
-                            this.RemoveHashElement(this.currentTarget);
-                        }
-                    }
-                }
-
-                // delete all updates that are marked for deletion
-                // updates with priority < 0
-                for (LinkedListNode<ListEntry> node = this.updatesNegList.First; node != null; node = next)
-                {
-                    next = node.Next;
-                    if (node.Value.MarkedForDeletion)
-                    {
-                        this.updatesNegList.Remove(node);
-                        this.RemoveUpdateFromHash(node.Value);
-                    }
-                }
-
-                // updates with priority == 0
-                for (LinkedListNode<ListEntry> node = this.updates0List.First; node != null; node = next)
-                {
-                    next = node.Next;
-                    if (node.Value.MarkedForDeletion)
-                    {
-                        this.updates0List.Remove(node);
-                        this.RemoveUpdateFromHash(node.Value);
-                    }
-                }
-
-                // updates with priority > 0
-                for (LinkedListNode<ListEntry> node = this.updatesPosList.First; node != null; node = next)
-                {
-                    next = node.Next;
-                    if (node.Value.MarkedForDeletion)
-                    {
-                        this.updatesPosList.Remove(node);
-                        this.RemoveUpdateFromHash(node.Value);
                     }
                 }
             }
-            finally
-            {
-                // Always do this just in case there is a problem
+        }
 
-                this.isUpdateHashLocked = false;
-                this.currentTarget = null;
+        #endregion
+
+        #region Resume Operations
+
+        public void Resume(List<ICCUpdatable> targets)
+        {
+            foreach (var target in targets)
+            {
+                this.Resume(target);
+            }
+        }
+
+        public void Resume(ICCUpdatable target)
+        {
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
+
+            CustomItemHash customSelector;
+            if (this.TryGetCustomSelector(target, out customSelector))
+            {
+                customSelector.Paused = false;
+            }
+
+            UpdateItemHash updateSelector;
+            if (this.TryGetUpdateSelector(target, out updateSelector))
+            {
+                updateSelector.Item.IsPaused = false;
             }
         }
 
         #endregion
 
         /// <summary>
-        /// Starts the action manager.  		
+        /// Starts the action manager.
         /// This would be called after UnscheduleAll() method has been called to restart the ActionManager.
         /// </summary>
         public void StartActionManager()
@@ -547,230 +870,44 @@
             }
         }
 
-        public List<ICCUpdatable> PauseAllTargets()
+        #region Nested Types
+
+        private class UpdateItem
         {
-            return this.PauseAllTargets(int.MinValue);
+            /// <summary>
+            /// Whether is marked for deletion.
+            /// </summary>
+            public bool IsDeleting;
+
+            /// <summary>
+            /// Whether is paused.
+            /// </summary>
+            public bool IsPaused;
+
+            public int Priority;
+
+            public ICCUpdatable Target;
         }
 
-        public List<ICCUpdatable> PauseAllTargets(int minPriority)
+        private class UpdateItemHash
         {
-            var idsWithSelectors = new List<ICCUpdatable>();
+            /// <summary>
+            /// Item in the list.
+            /// </summary>
+            public UpdateItem Item;
 
-            // Custom Selectors
-            foreach (HashTimeEntry element in this.hashForTimers.Values)
-            {
-                element.Paused = true;
-                if (!idsWithSelectors.Contains(element.Target))
-                    idsWithSelectors.Add(element.Target);
-            }
+            /// <summary>
+            /// List it belongs to.
+            /// </summary>
+            public LinkedList<UpdateItem> List;
 
-            // Updates selectors
-            if (minPriority < 0)
-            {
-                foreach (ListEntry element in this.updatesNegList)
-                {
-                    if (element.Priority >= minPriority)
-                    {
-                        element.Paused = true;
-                        if (!idsWithSelectors.Contains(element.Target))
-                            idsWithSelectors.Add(element.Target);
-                    }
-                }
-            }
-
-            if (minPriority <= 0)
-            {
-                foreach (ListEntry element in this.updates0List)
-                {
-                    element.Paused = true;
-                    if (!idsWithSelectors.Contains(element.Target))
-                        idsWithSelectors.Add(element.Target);
-                }
-            }
-
-            if (minPriority < 0)
-            {
-                foreach (ListEntry element in this.updatesPosList)
-                {
-                    if (element.Priority >= minPriority)
-                    {
-                        element.Paused = true;
-                        if (!idsWithSelectors.Contains(element.Target))
-                            idsWithSelectors.Add(element.Target);
-                    }
-                }
-            }
-
-            return idsWithSelectors;
+            /// <summary>
+            /// Hash key.
+            /// </summary>
+            public ICCUpdatable Target;
         }
 
-        public void PauseTarget(ICCUpdatable target)
-        {
-            Debug.Assert(target != null);
-
-            // custom selectors
-            HashTimeEntry entry;
-            if (this.hashForTimers.TryGetValue(target, out entry))
-            {
-                entry.Paused = true;
-            }
-
-            // Update selector
-            HashUpdateEntry updateEntry;
-            if (this.hashForUpdates.TryGetValue(target, out updateEntry))
-            {
-                updateEntry.Entry.Paused = true;
-            }
-        }
-
-        public void Resume(List<ICCUpdatable> targetsToResume)
-        {
-            foreach (ICCUpdatable target in targetsToResume)
-            {
-                this.Resume(target);
-            }
-        }
-
-        public void Resume(ICCUpdatable target)
-        {
-            Debug.Assert(target != null);
-
-            // custom selectors
-            HashTimeEntry element;
-            if (this.hashForTimers.TryGetValue(target, out element))
-            {
-                element.Paused = false;
-            }
-
-            // Update selector
-            HashUpdateEntry elementUpdate;
-            if (this.hashForUpdates.TryGetValue(target, out elementUpdate))
-            {
-                elementUpdate.Entry.Paused = false;
-            }
-        }
-
-        public bool IsTargetPaused(ICCUpdatable target)
-        {
-            Debug.Assert(target != null, "target must be non nil");
-
-            // Custom selectors
-            HashTimeEntry element;
-            if (this.hashForTimers.TryGetValue(target, out element))
-            {
-                return element.Paused;
-            }
-
-            // We should check update selectors if target does not have custom selectors
-            HashUpdateEntry elementUpdate;
-            if (this.hashForUpdates.TryGetValue(target, out elementUpdate))
-            {
-                return elementUpdate.Entry.Paused;
-            }
-
-            return false; // should never get here
-        }
-
-        void RemoveHashElement(HashTimeEntry element)
-        {
-            this.hashForTimers.Remove(element.Target);
-
-            element.Timers.Clear();
-            element.Target = null;
-        }
-
-        private void RemoveUpdateFromHash(ListEntry entry)
-        {
-            HashUpdateEntry element;
-
-            if (this.hashForUpdates.TryGetValue(entry.Target, out element))
-            {
-                // Remove from list entry
-                element.List.Remove(entry);
-                element.Entry = null;
-
-                // Remove from hash entry
-                this.hashForUpdates.Remove(entry.Target);
-                element.Target = null;
-            }
-        }
-
-        private void PriorityIn(
-            LinkedList<ListEntry> list,
-            ICCUpdatable target,
-            int priority,
-            bool paused)
-        {
-            var listElement = new ListEntry
-            {
-                Target = target,
-                Priority = priority,
-                Paused = paused,
-                MarkedForDeletion = false
-            };
-
-            if (list.First == null)
-            {
-                list.AddFirst(listElement);
-            }
-            else
-            {
-                var added = false;
-                for (var node = list.First; node != null; node = node.Next)
-                {
-                    if (priority < node.Value.Priority)
-                    {
-                        list.AddBefore(node, listElement);
-                        added = true;
-                        break;
-                    }
-                }
-
-                if (!added)
-                {
-                    list.AddLast(listElement);
-                }
-            }
-
-            // update hash entry for quick access
-            var hashElement = new HashUpdateEntry
-            {
-                Target = target,
-                List = list,
-                Entry = listElement
-            };
-
-            this.hashForUpdates.Add(target, hashElement);
-        }
-
-        private void AppendIn(
-            LinkedList<ListEntry> list,
-            ICCUpdatable target,
-            bool paused)
-        {
-            var entry = new ListEntry
-            {
-                Target = target,
-                Paused = paused,
-                MarkedForDeletion = false
-            };
-
-            list.AddLast(entry);
-
-            // update hash entry for quicker access
-            var hashElement = new HashUpdateEntry
-            {
-                Target = target,
-                List   = list,
-                Entry  = entry
-            };
-
-            this.hashForUpdates.Add(target, hashElement);
-        }
-
-        #region Nested Type: HashSelectorEntry
-
-        private class HashTimeEntry
+        private class CustomItemHash
         {
             public CCTimer CurrentTimer;
 
@@ -783,46 +920,6 @@
             public int TimerIndex;
 
             public List<CCTimer> Timers;
-        }
-
-        #endregion
-
-        #region Nested Type: HashUpdateEntry
-
-        private class HashUpdateEntry
-        {
-            /// <summary>
-            /// Entry in the list.
-            /// </summary>
-            public ListEntry Entry;
-
-            /// <summary>
-            // List it belongs to.
-            /// </summary>
-            public LinkedList<ListEntry> List; 
-
-            /// <summary>
-            ///     Hash key.
-            /// </summary>
-            public ICCUpdatable Target; 
-        }
-
-        #endregion
-
-        #region Nested Type: ListEntry
-
-        private class ListEntry
-        {
-            /// <summary>
-            /// Flag for deletion.
-            /// </summary>
-            public bool MarkedForDeletion;
-
-            public bool Paused;
-
-            public int Priority;
-
-            public ICCUpdatable Target;
         }
 
         #endregion

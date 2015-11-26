@@ -11,7 +11,7 @@ namespace MetaMind.Engine.Entities.Controls.Item.Swaps
     using Components.Interop.Process;
     using Microsoft.Xna.Framework;
     using Views;
-    using Views.Logic;
+    using Views.Controllers;
 
     public class ViewItemSwapProcess : StepProcess
     {

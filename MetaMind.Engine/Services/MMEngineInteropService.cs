@@ -31,7 +31,7 @@ namespace MetaMind.Engine.Services
 
         public IAssetManager Asset => this.interop.Asset;
 
-        public IAudioManager Audio => this.interop.Audio;
+        public IMMAudioManager Audio => this.interop.Audio;
 
         public ContentManager Content => this.interop.Content;
 
@@ -47,7 +47,7 @@ namespace MetaMind.Engine.Services
             }
         }
 
-        public IFileManager File => this.interop.File;
+        public IMMDirectoryManager File => this.interop.File;
 
         public MMEngine Engine => this.interop.Engine;
 
@@ -55,7 +55,7 @@ namespace MetaMind.Engine.Services
 
         public IMMGameManager Game => this.interop.Game;
 
-        public IProcessManager Process => this.interop.Process;
+        public IMMProcessManager Process => this.interop.Process;
 
         public IMMScreenDirector Screen => this.interop.Screen;
 

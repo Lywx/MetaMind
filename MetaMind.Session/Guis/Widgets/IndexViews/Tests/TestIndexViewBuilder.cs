@@ -12,13 +12,13 @@
     using Engine.Entities.Controls.Item.Layers;
     using Engine.Entities.Controls.Regions;
     using Engine.Entities.Controls.Views;
+    using Engine.Entities.Controls.Views.Controllers;
     using Engine.Entities.Controls.Views.Layouts;
-    using Engine.Entities.Controls.Views.Logic;
     using Engine.Entities.Controls.Views.Regions;
+    using Engine.Entities.Controls.Views.Renderers;
     using Engine.Entities.Controls.Views.Scrolls;
     using Engine.Entities.Controls.Views.Selections;
     using Engine.Entities.Controls.Views.Swaps;
-    using Engine.Entities.Controls.Views.Visuals;
     using Engine.Entities.Elements;
     using Microsoft.Xna.Framework;
     using Modules;
@@ -85,7 +85,7 @@
             this.AddViewRegion();
             this.AddViewScrollbar();
 
-            this.SetupLogic();
+            this.InitializeLogic();
         }
 
         public IMMView Clone(IMMViewItem item)
@@ -227,7 +227,7 @@
                 item => new TestItemRenderer(item));
         }
 
-        protected virtual void SetupLogic()
+        protected virtual void InitializeLogic()
         {
             this.View[MMViewState.View_Has_Focus] =
                 () => this.View[MMViewState.View_Has_Selection]() ||

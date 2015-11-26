@@ -1,8 +1,8 @@
 namespace MetaMind.Engine.Entities.Controls.Item.Layers
 {
+    using Controllers;
     using Interactions;
     using Layouts;
-    using Logic;
 
     public class MMIndexBlockViewVerticalItemLayer : MMBlockViewVerticalItemLayer
     {

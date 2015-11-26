@@ -6,7 +6,7 @@
     using Engine.Entities.Controls.Item;
     using Engine.Entities.Controls.Item.Data;
 
-    public class OptionViewBinding : IViewBinding
+    public class OptionViewBinding : IMMViewBinding
     {
         private List<IOption> options;
 

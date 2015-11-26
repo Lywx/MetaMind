@@ -77,7 +77,7 @@
                 }
                 else if (value >= this.RowOffsetMax)
                 {
-                    this.rowOffset = this.View.ItemsRead.Count - this.ViewSettings.ViewRowDisplay;
+                    this.rowOffset = this.View.Items.Count - this.ViewSettings.ViewRowDisplay;
                 }
                 else
                 {
@@ -86,7 +86,7 @@
             }
         }
 
-        protected virtual int RowOffsetMax => this.View.ItemsRead.Count - this.ViewSettings.ViewRowDisplay;
+        protected virtual int RowOffsetMax => this.View.Items.Count - this.ViewSettings.ViewRowDisplay;
 
         protected virtual int RowOffsetMin => 0;
 

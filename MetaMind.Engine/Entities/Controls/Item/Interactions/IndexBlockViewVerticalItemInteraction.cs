@@ -62,10 +62,10 @@ namespace MetaMind.Engine.Entities.Controls.Item.Interactions
         {
             if (this.IndexedViewOpened)
             {
-                this.IndexedView.UpdateInput(input, time);
+                this.IndexedView.UpdateInput(time);
             }
 
-            base.UpdateInput(input, time);
+            base.UpdateInput(time);
         }
 
         public override void Update(GameTime time)
@@ -103,7 +103,7 @@ namespace MetaMind.Engine.Entities.Controls.Item.Interactions
                 this.indexedView = this.indexedViewBuilder.Clone(this.Item);
                 this.indexedViewBuilder.Compose(this.indexedView, this.Item.ItemData);
 
-                this.indexedView.LoadContent(this.Interop);
+                this.indexedView.LoadContent();
             }
 
             this.IndexedView[MMViewState.View_Is_Active] = () => true;

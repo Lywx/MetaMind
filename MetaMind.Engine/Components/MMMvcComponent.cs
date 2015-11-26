@@ -73,6 +73,8 @@ namespace MetaMind.Engine.Components
 
         public override void Update(GameTime time)
         {
+            base.Update(time);
+
             this.Controller?.Update(time);
             this.Renderer?  .Update(time);
         }

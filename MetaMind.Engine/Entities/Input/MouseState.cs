@@ -4,11 +4,11 @@ namespace MetaMind.Engine.Entities.Input
 
     public class MouseState
     {
-        public DateTime When { get; set; }
+        public DateTime TimeStamp { get; set; }
 
         public MouseState()
         {
-            this.When = DateTime.Now;
+            this.TimeStamp = DateTime.Now;
         }
     }
 }

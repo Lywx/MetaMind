@@ -9,9 +9,9 @@ namespace MetaMind.Session.Guis.Screens
 
     public class StartScreen : MMScreen
     {
-        private Image imageLogo;
+        private MMImage imageLogo;
 
-        private Image imagePressAnyButton;
+        private MMImage imagePressAnyButton;
 
         #region Constructors
 

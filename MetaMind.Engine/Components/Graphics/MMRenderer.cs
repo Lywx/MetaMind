@@ -12,40 +12,48 @@ namespace MetaMind.Engine.Components.Graphics
     {
         #region Constructors
 
-        public MMRenderer(MMRendererManager manager)
+        public MMRenderer(MMRenderDeviceController graphicsDeviceController)
         {
-            if (manager == null)
+            if (graphicsDeviceController == null)
             {
-                throw new ArgumentNullException(nameof(manager));
+                throw new ArgumentNullException(nameof(graphicsDeviceController));
             }
 
-            this.Manager = manager;
+            this.GraphicsDeviceController = graphicsDeviceController;
         }
 
         #endregion
 
         #region Render Data
 
-        private MMRendererManager Manager { get; }
+        /// <remarks>
+        /// Hide the MMObject's getter member.
+        /// </remarks>>
+        private new MMRenderDeviceController GraphicsDeviceController { get; }
 
-        private SpriteBatch SpriteBatch => this.Manager.SpriteBatch;
+        private SpriteBatch SpriteBatch => this.GraphicsDeviceController.SpriteBatch;
 
         #endregion
 
-        #region
+        #region Initialization
+
+        public bool Initialized { get; private set; }
 
         public void Initialize()
         {
             this.InitializeTextureDrawing();
+
+            this.Initialized = true;
         }
 
         private void InitializeTextureDrawing()
         {
             // Up direction is consistent with sprite batch and the XNA 3D coordinate 
-            this.textureQuad       = new Quad(Vector3.Zero, Vector3.Left, Vector3.Up, Vector3.Backward);
-            this.textureQuadEffect = new BasicEffect(this.GraphicsDevice)
+            this.textureItem = new MMTextureItem();
+            this.textureEffect = new BasicEffect(this.GraphicsDevice)
             {
-                TextureEnabled = true,
+                TextureEnabled     = true,
+                VertexColorEnabled = true,
 
                 World      = Matrix.Identity,
                 View       = Matrix.Identity,
@@ -246,36 +254,210 @@ namespace MetaMind.Engine.Components.Graphics
 
         #region Draw Texture
 
-        private Quad textureQuad;
+        private MMTextureItem textureItem;
 
-        private BasicEffect textureQuadEffect;
+        private BasicEffect textureEffect;
 
-        public void Draw(Texture2D texture, Rectangle destination, Color color, float depth, Matrix transformation)
+        // TODO(Test): Need test.
+        public void DrawImmediate(
+            Texture2D     texture,
+            Vector2?      position = null,
+            Rectangle?    destinationRectangle = null,
+            Rectangle?    sourceRectangle = null,
+            Vector2?      origin = null,
+            float         rotation = 0f,
+            Vector2?      scale = null,
+            Color?        color = null,
+            SpriteEffects effects = SpriteEffects.None,
+            float         depth = 0f,
+            Matrix?       transformation = null)
         {
-            // Set quad size to texture size
-            this.textureQuad.SetSize(texture.Width, texture.Height);
+            // Argument validation
+            if (destinationRectangle.HasValue == position.HasValue)
+            {
+                throw new InvalidOperationException(
+                    "Expected destinationRectangle or position, but received neither or both.");
+            }
 
-            // Set quad effect
-            this.textureQuadEffect.World = transformation;
+            // Nullable argument default
+            if (!origin.HasValue)
+            {
+                origin = Vector2.Zero;
+            }
 
-            // The camera move in the opposite direction compared with the
-            // texture. However, the Y coordinate is inverted.
-            var cameraDestination = new Vector2(-destination.X, destination.Y);
+            if (!scale.HasValue)
+            {
+                scale = Vector2.One;
+            }
 
-            // Camera Look From the backward to forward. The camera is inverted.
-            this.textureQuadEffect.View = Matrix.CreateLookAt(new Vector3(cameraDestination, 0) + Vector3.Backward, new Vector3(cameraDestination, 0), Vector3.Down);
-            this.textureQuadEffect.Texture =en
+            if (!color.HasValue)
+            {
+                color = Color.White;
+            }
 
-            this.Manager.VertexColorEnabled = true;
-            this.Manager.SetTexture(texture);
+            if (!transformation.HasValue)
+            {
+                transformation = Matrix.Identity;
+            }
 
-            this.Manager.PushEffect(this.textureQuadEffect);
-
-            this.Manager.DrawIndexedPrimitives(PrimitiveType.TriangleList, quad.Vertices, 0, 4, quad.Indexes, 0, 2);
-
-            this.Manager.PopEffect();
-            this.Manager.SetTexture(null);
+            // When position is provided
+            if (position != null)
+            {
+                this.DrawImmediate(
+                    texture,
+                    position.Value,
+                    sourceRectangle,
+                    color.Value,
+                    rotation,
+                    origin.Value,
+                    scale.Value,
+                    effects,
+                    depth,
+                    transformation.Value);
+            }
+            else
+            {
+                this.DrawImmediateInternal(
+                    texture,
+                    destinationRectangle.Value,
+                    sourceRectangle,
+                    color.Value,
+                    rotation,
+                    origin.Value,
+                    effects,
+                    depth,
+                    transformation.Value);
+            }
         }
+
+        public void DrawImmediate(
+            Texture2D     texture,
+            Vector2       position,
+            Rectangle?    sourceRectangle,
+            Color         color,
+            float         rotation,
+            Vector2       origin,
+            Vector2       scale,
+            SpriteEffects effects,
+            float         depth,
+            Matrix        transformation)
+
+        {
+            float width;
+            float height;
+
+            if (sourceRectangle.HasValue)
+            {
+                width = sourceRectangle.Value.Width * scale.X;
+                height = sourceRectangle.Value.Height * scale.Y;
+            }
+            else
+            {
+                width = texture.Width * scale.X;
+                height = texture.Height * scale.Y;
+            }
+
+            var size = new Vector2(width, height);
+
+            var destinationRectangle = new Rectangle(
+                position.ToPoint(),
+                size.ToPoint());
+
+            this.DrawImmediateInternal(
+                texture,
+                destinationRectangle,
+                sourceRectangle,
+                color,
+                rotation,
+                origin * scale,
+                effects,
+                depth,
+                transformation);
+        }
+
+        public void DrawImmediate(
+            Texture2D texrture,
+            Rectangle destinationRectangle,
+            Rectangle sourceRectangle,
+            Color color)
+        {
+            this.DrawImmediateInternal(
+                texrture,
+                destinationRectangle,
+                sourceRectangle,
+                color,
+                0f,
+                Vector2.Zero,
+                SpriteEffects.None,
+                0f,
+                Matrix.Identity);
+        }
+
+        private void DrawImmediateInternal(
+            Texture2D     texture,
+            Rectangle     destinationRectangle,
+            Rectangle?    sourceRectangle,
+            Color         color,
+            float         rotation,
+            Vector2       origin,
+            SpriteEffects effect,
+            float         depth,
+            Matrix        transformation)
+        {
+            Rectangle sourceRect;
+
+            if (sourceRectangle.HasValue)
+            {
+                sourceRect = sourceRectangle.Value;
+            }
+            else
+            {
+                sourceRect = new Rectangle
+                {
+                    Width  = texture.Width,
+                    Height = texture.Height
+                };
+            }
+
+            var textureCoordinate = new MMTextureCoordinate(
+                topLeft: new Vector2(
+                    sourceRect.X / (float)texture.Width,
+                    sourceRect.Y / (float)texture.Height), 
+                bottomRight: new Vector2(
+                    (sourceRect.X + sourceRect.Width) / (float)texture.Width,
+                    (sourceRect.Y + sourceRect.Height) / (float)texture.Height));
+
+            if ((effect & SpriteEffects.FlipVertically) != 0)
+            {
+                textureCoordinate.BottomRight.Y = textureCoordinate.TopLeft.Y;
+                textureCoordinate.TopLeft.Y     = textureCoordinate.BottomRight.Y;
+            }
+
+            if ((effect & SpriteEffects.FlipHorizontally) != 0)
+            {
+                textureCoordinate.BottomRight.X = textureCoordinate.TopLeft.X;
+                textureCoordinate.TopLeft.X     = textureCoordinate.BottomRight.X;
+            }
+
+            this.textureItem.Set(
+                new Vector3(destinationRectangle.X, destinationRectangle.Y, depth), 
+                new Vector2(destinationRectangle.Width, destinationRectangle.Height),
+                origin,
+                rotation,
+                textureCoordinate,
+                color);
+
+            this.textureEffect.World   = transformation;
+            this.textureEffect.Texture = texture;
+
+            this.GraphicsDeviceController.PushEffect(this.textureEffect);
+            this.GraphicsDeviceController.DrawTexture(this.textureItem);
+            this.GraphicsDeviceController.PopEffect();
+        }
+
+        #endregion
+
+        #region Draw Helpers
 
         public void Draw(Texture2D texture, Rectangle destination, Color color, float depth)
         {

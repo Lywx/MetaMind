@@ -1,9 +1,7 @@
 namespace MetaMind.Engine.Entities.Particles
 {
     using System;
-    using Components.Graphics;
     using Microsoft.Xna.Framework;
-    using Primtives2D;
 
     public class MMFloatParticle : MMVisualParticle, IMMRandomParticle
     {
@@ -54,7 +52,7 @@ namespace MetaMind.Engine.Entities.Particles
 
         public override void Update(GameTime time)
         {
-            // smooth disappearance
+            // Smooth disappearance
             if (this.Life < this.BubbleSeconds)
             {
                 this.Scale = Math.Min(this.Life, this.Scale);
@@ -62,7 +60,7 @@ namespace MetaMind.Engine.Entities.Particles
 
             this.Size = new Vector2(this.Width * this.Scale, this.Height * this.Scale);
 
-            // random water movements
+            // Random water movements
             this.Acceleration = new Vector2(
                 this.Random.Next((int)-this.Pressure.X, (int)this.Pressure.X),
                 this.Random.Next((int)-this.Pressure.Y, (int)this.Pressure.Y));

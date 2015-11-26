@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Entities.Particles
     using Microsoft.Xna.Framework;
     using Services.Loader;
 
-    public class MMParticle : MMVisualEntity, IMMParticle, IParameterLoader<MMGraphicsSettings>  
+    public class MMParticle : MMVisualEntity, IMMParticle, IParameterDependant<MMGraphicsSettings>  
     {
         #region Particle Movements
 

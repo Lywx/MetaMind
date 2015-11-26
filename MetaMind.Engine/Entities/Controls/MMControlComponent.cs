@@ -10,7 +10,9 @@
         {
             if (manager == null)
             {
-                throw new ArgumentNullException(nameof(manager), @"Control cannot be created. Manager instance is needed.");
+                throw new ArgumentNullException(
+                    nameof(manager),
+                    @"Control cannot be created. Manager instance is needed.");
             }
 
             this.Manager = manager;
@@ -192,6 +194,9 @@
 
         #region Update
 
+        /// <remarks>
+        /// Override this method to provide more precise control.
+        /// </remarks>
         public override void Update(GameTime time)
         {
             if (!this.Enabled)
@@ -203,6 +208,9 @@
             this.Children.Update(time);
         }
 
+        /// <remarks>
+        /// Override this method to provide more precise control.
+        /// </remarks>
         public override void UpdateInput(GameTime time)
         {
             if (!this.Enabled)
@@ -218,6 +226,9 @@
 
         #region Buffer
 
+        /// <remarks>
+        /// Override this method to provide more precise control.
+        /// </remarks>
         public void UpdateForwardBuffer()
         {
             if (!this.Enabled)
@@ -228,6 +239,9 @@
             this.Children.UpdateForwardBuffer();
         }
 
+        /// <remarks>
+        /// Override this method to provide more precise control.
+        /// </remarks>
         public void UpdateBackwardBuffer()
         {
             if (!this.Enabled)

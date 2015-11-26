@@ -7,7 +7,7 @@
     using Engine.Services.Loader;
     using Microsoft.Xna.Framework;
 
-    public class TestMonitor : MMInputableComponent, IConfigurationLoader
+    public class TestMonitor : MMInputableComponent, IConfigurable
     {
         public static float TestWarningRate = 10f;
 
@@ -41,13 +41,13 @@
 
         #region Configurations
 
-        public string ConfigurationFile => "Session.txt";
+        public string ConfigurationFilename => "Session.txt";
 
         public void LoadConfiguration()
         {
             var pairs = ConfigurationLoader.LoadUniquePairs(this);
 
-            TestWarningRate = FileLoader.ReadValueFloats(pairs, "TestMonitor.TestWarningRate", 0, 10f);
+            TestWarningRate = InformationLoader.ReadValueFloats(pairs, "TestMonitor.TestWarningRate", 0, 10f);
         }
 
         #endregion

@@ -12,7 +12,7 @@ namespace MetaMind.Engine.Entities.Controls.Item.Interactions
     /// <summary>
     ///     Item interaction with view, other items.
     /// </summary>
-    public interface IMMViewItemInteraction : IMMViewItemController
+    public interface IMMViewItemInteraction : IMMViewItemControllerComponent
     {
         /// <summary>
         /// Customized action for item which would be triggered after selection.

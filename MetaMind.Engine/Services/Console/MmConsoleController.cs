@@ -5,9 +5,9 @@
     using System.Windows.Forms;
     using Commands;
     using Components;
+    using Components.Input;
     using NLog;
     using Processors;
-    using KeyEventArgs = Components.Input.KeyEventArgs;
     using Keys = Microsoft.Xna.Framework.Input.Keys;
 
     public class MMConsoleController : MMMVCComponentController<MMConsole, GameConsoleSettings, MMConsoleController, MMConsoleRenderer>
@@ -164,15 +164,15 @@
             }
         }
 
-        private void InputEventKeyDown(object sender, KeyEventArgs e)
+        private void InputEventKeyDown(object sender, MMKeyEventArgs e)
         {
-            if (e.KeyCode == this.Settings.ToggleKey)
+            if (e.Key == this.Settings.ToggleKey)
             {
                 this.ToggleConsole();
                 this.isHandled = true;
             }
 
-            switch (e.KeyCode)
+            switch (e.Key)
             {
                 case Keys.Up:
                     this.Buffer.HistoryPrevious();

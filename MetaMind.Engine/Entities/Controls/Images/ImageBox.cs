@@ -4,15 +4,22 @@ namespace MetaMind.Engine.Entities.Controls.Images
     using Graphics;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using Nodes;
 
-    public class ImageBox : MMRendererComponent
+    public class MMImageBox : MMNode
+    {
+        
+    }
+
+    public class MMImageBoxRenderer : MMNodeRenderer
     {
         #region Constructors and Finalizer
 
-        public ImageBox(
-            Func<Texture2D> imageSelector, 
+        public MMImageBoxRenderer(
+            MMImageBox target,
+            Func<Texture2D> imageSelector,
             Func<Rectangle> boundsSelector,
-            Func<Color> colorSelector)
+            Func<Color> colorSelector) : this(target)
         {
             if (imageSelector == null)
             {
@@ -34,7 +41,11 @@ namespace MetaMind.Engine.Entities.Controls.Images
             this.colorSelector = colorSelector;
         }
 
-        public ImageBox(MMControlManager manager, Texture2D image, Rectangle bound, Color color) 
+        public MMImageBoxRenderer(
+            MMImageBox target,
+            Texture2D image,
+            Rectangle bound,
+            Color color) : this(target)
         {
             if (image == null)
             {
@@ -44,6 +55,11 @@ namespace MetaMind.Engine.Entities.Controls.Images
             this.image  = image;
             this.Bounds = bound;
             this.color  = color;
+        }
+
+        private MMImageBoxRenderer(MMImageBox target) : base(target)
+        {
+            
         }
 
         #endregion
@@ -110,14 +126,14 @@ namespace MetaMind.Engine.Entities.Controls.Images
 
         public Texture2D Image => this.imageSelector?.Invoke() ?? this.image;
 
+        public ImageMode ImageMode { get; set; } = ImageMode.Normal;
+
         private Color color;
 
         private Func<Color> colorSelector;
 
         public Color Color(byte alpha) => this.colorSelector?.Invoke().MakeTransparent(alpha)
-                        ?? this.color.MakeTransparent(alpha); 
-
-        public ImageMode ImageMode { get; set; } = ImageMode.Normal;
+                        ?? this.color.MakeTransparent(alpha);
 
         #endregion
 
@@ -129,12 +145,12 @@ namespace MetaMind.Engine.Entities.Controls.Images
             {
                 case ImageMode.Normal:
                 {
-                    graphics.Renderer.Draw(
+                    this.GraphicsRenderer.Draw(
                         this.Image,
                         this.X,
                         this.Y,
                         this.SourceRectangle,
-                        this.Color(this.MixedMinOpacity(alpha)),
+                        this.Color(this.Opacity.Displayed),
                         0f);
 
                     break;
@@ -142,11 +158,11 @@ namespace MetaMind.Engine.Entities.Controls.Images
 
                 case ImageMode.Stretched:
                 {
-                    graphics.Renderer.Draw(
+                    this.GraphicsRenderer.Draw(
                         this.Image,
                         this.Bounds,
                         this.SourceRectangle,
-                        this.Color(this.MixedMinOpacity(alpha)),
+                        this.Color(this.Opacity.Displayed),
                         0f);
 
                     break;

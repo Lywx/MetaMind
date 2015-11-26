@@ -7,10 +7,10 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
     using Engine.Entities.Controls.Item.Frames;
     using Engine.Entities.Controls.Item.Interactions;
     using Engine.Entities.Controls.Views;
-    using Engine.Entities.Controls.Views.Logic;
+    using Engine.Entities.Controls.Views.Controllers;
     using Engine.Entities.Controls.Views.Regions;
+    using Engine.Entities.Controls.Views.Renderers;
     using Engine.Entities.Controls.Views.Selections;
-    using Engine.Entities.Controls.Views.Visuals;
 
     /// <summary>
     /// Composers are not intended to be reused.
@@ -48,7 +48,7 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
             this.AddView();
             this.AddViewRegion();
 
-            this.SetupLogic();
+            this.InitializeLogic();
         }
 
         protected override MMBlockViewVerticalSelectionController AddViewSelection()
@@ -126,7 +126,7 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
             this.View.ViewComponents.Add("ViewRegion", hostViewRegion);
         }
 
-        protected override void SetupLogic()
+        protected override void InitializeLogic()
         {
             this.View[MMViewState.View_Has_Focus] =
                 () => this.View[MMViewState.View_Has_Selection]();

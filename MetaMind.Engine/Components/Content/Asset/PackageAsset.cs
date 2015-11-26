@@ -12,7 +12,7 @@
     /// <example>
     /// The 
     /// </example>
-    public class PackageAsset : Asset
+    public class PackageAsset : MMAsset
     {
         public PackageAsset(string name) : base(name)
         {
@@ -21,18 +21,19 @@
         public Dictionary<string, FontAsset> Fonts { get; private set; } =
             new Dictionary<string, FontAsset>();
 
-        public Dictionary<string, ImageAsset> Texture { get; private set; } =
-            new Dictionary<string, ImageAsset>();
+        public Dictionary<string, MMImageAsset> Texture { get; private set; } =
+            new Dictionary<string, MMImageAsset>();
 
-        public Dictionary<string, ControlAsset> Controls { get; private set; } =
-            new Dictionary<string, ControlAsset>();
+        // TODO
+        //public Dictionary<string, ControlAsset> Controls { get; private set; } =
+        //    new Dictionary<string, ControlAsset>();
 
         public void Add(FontAsset font)
         {
             this.Fonts.Add(font.Name, font);
         }
 
-        public void Add(ImageAsset image)
+        public void Add(MMImageAsset image)
         {
             this.Texture.Add(image.Name, image);
         }

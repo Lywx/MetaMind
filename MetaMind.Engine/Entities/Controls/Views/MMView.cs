@@ -2,11 +2,11 @@ namespace MetaMind.Engine.Entities.Controls.Views
 {
     using System;
     using System.Collections.Generic;
+    using Controllers;
     using Entities;
     using Item;
     using Item.Settings;
     using Layers;
-    using Logic;
     using Microsoft.Xna.Framework;
     using Settings;
 
@@ -59,7 +59,7 @@ namespace MetaMind.Engine.Entities.Controls.Views
 
         public IMMViewController ViewController { get; set; }
 
-        public List<IMMViewItem> ItemsRead
+        public List<IMMViewItem> Items
         {
             get { return this.items[this.currentBuffer]; }
             private set { this.items[this.currentBuffer] = value; }
@@ -70,8 +70,6 @@ namespace MetaMind.Engine.Entities.Controls.Views
             get { return this.items[this.NextBuffer()]; }
             set { this.items[this.NextBuffer()] = value; }
         }
-
-        public List<IMMViewItem> Items => this.ItemsRead;
 
         public ItemSettings ItemSettings { get; set; }
 
@@ -198,7 +196,7 @@ namespace MetaMind.Engine.Entities.Controls.Views
 
         private void UpdateItemsReadBuffer()
         {
-            this.ItemsRead = this.ItemsWrite.GetRange(0, this.ItemsWrite.Count);
+            this.Items = this.ItemsWrite.GetRange(0, this.ItemsWrite.Count);
         }
 
         private int NextBuffer()

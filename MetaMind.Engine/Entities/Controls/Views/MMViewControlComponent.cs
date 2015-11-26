@@ -42,9 +42,13 @@ namespace MetaMind.Engine.Entities.Controls.Views
 
         #region Indirect Dependency
 
-        public List<IMMViewItem> ItemsRead => this.View.ItemsRead;
+        public List<IMMViewItem> Items => this.View.Items;
 
-        public List<IMMViewItem> ItemsWrite => this.View.ItemsWrite;
+        internal List<IMMViewItem> ItemsWrite
+        {
+            get { return ((IMMViewInternal)this.View).ItemsWrite; }
+            set { ((IMMViewInternal)this.View).ItemsWrite = value; }
+        }
 
         #endregion
 

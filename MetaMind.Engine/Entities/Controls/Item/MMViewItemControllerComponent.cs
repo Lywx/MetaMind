@@ -9,7 +9,8 @@ namespace MetaMind.Engine.Entities.Controls.Item
     {
         #region Constructors and Finalizer
 
-        protected MMViewItemControllerComponent(IMMViewItem item) : base()
+        protected MMViewItemControllerComponent(IMMViewItem item) 
+            : base()
         {
             if (item == null)
             {

@@ -12,7 +12,7 @@ namespace MetaMind.EngineTest.Parsers
         {
             var input = "[Hello World]";
 
-            var parsed = LineGrammar.BracketedTextParser.Parse(input);
+            var parsed = CommonGrammar.BracketParser.Parse(input);
 
             Assert.AreEqual("Hello World", parsed);
         }
@@ -23,7 +23,7 @@ namespace MetaMind.EngineTest.Parsers
             // a word is a string of non-whitespace characters
             var input = "Hello";
 
-            var parsed = LineGrammar.WordParser.Parse(input);
+            var parsed = CommonGrammar.WordParser.Parse(input);
 
             Assert.AreEqual("Hello", parsed);
         }
@@ -33,8 +33,8 @@ namespace MetaMind.EngineTest.Parsers
         {
             var input = "[Hello]";
 
-            var insideBracket = LineGrammar.BracketedTextParser.Parse(input);
-            var parsed        = LineGrammar.WordParser         .Parse(insideBracket);
+            var insideBracket = CommonGrammar.BracketParser.Parse(input);
+            var parsed        = CommonGrammar.WordParser         .Parse(insideBracket);
 
             Assert.AreEqual("Hello", parsed);
         }
@@ -44,8 +44,8 @@ namespace MetaMind.EngineTest.Parsers
         {
             var input = "[Hello World]";
 
-            var insideBracket = LineGrammar.BracketedTextParser.Parse(input);
-            var parsed        = LineGrammar.SentenceParser     .Parse(insideBracket);
+            var insideBracket = CommonGrammar.BracketParser.Parse(input);
+            var parsed        = CommonGrammar.SentenceParser     .Parse(insideBracket);
 
             Assert.AreEqual("Hello", parsed.Words[0]);
             Assert.AreEqual("World", parsed.Words[1]);

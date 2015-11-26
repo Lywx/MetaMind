@@ -15,7 +15,7 @@ namespace MetaMind.Engine.Sessions
         [DataMember]
         public static readonly string SaveFilename = "Session.xml";
 
-        public static string SaveFilePath => FileManager.SavePath(SaveFilename);
+        public static string SaveFilePath => MMDirectoryManager.SavePath(SaveFilename);
 
         #endregion 
 

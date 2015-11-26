@@ -18,11 +18,11 @@
 
         public override void Draw(GameTime time)
         {
-            graphics.SpriteBatch.Begin();
+            this.GraphicsRenderer.Begin();
 
             this.Modules.Draw(time);
 
-            graphics.SpriteBatch.End();
+            this.GraphicsRenderer.End();
 
             base.Draw(time);
         }

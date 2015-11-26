@@ -158,12 +158,26 @@
             if (string.IsNullOrEmpty(channel))
             {
                 this.WriteLine(buffer, CommandType.Output);
+
+                return;
             }
-            else if (string.Compare(channel, "DEBUG", StringComparison.OrdinalIgnoreCase) == 0)
+
+            // Ignore case
+            if (string.Compare(
+                channel,
+                "DEBUG",
+                StringComparison.OrdinalIgnoreCase) == 0)
             {
                 this.WriteLine(buffer, CommandType.Debug);
+
+                return;
             }
-            else if (string.Compare(channel, "ERROR", StringComparison.OrdinalIgnoreCase) == 0)
+
+            // Ignore case
+            if (string.Compare(
+                channel,
+                "ERROR",
+                StringComparison.OrdinalIgnoreCase) == 0)
             {
                 this.WriteLine(buffer, CommandType.Error);
             }

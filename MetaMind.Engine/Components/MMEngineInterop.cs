@@ -28,13 +28,13 @@ namespace MetaMind.Engine.Components
                 throw new ArgumentNullException(nameof(console));
             }
 
-            this.Audio = AudioManagerFactory.Create(engine);
+            this.Audio = MMAudioManagerFactory.Create(engine);
             this.Engine.Components.Add(this.Audio);
 
             this.Asset = new AssetManager(engine);
             this.Engine.Components.Add(this.Asset);
 
-            this.File = new FileManager();
+            this.File = new MMDirectoryManager();
 
             this.Event = new MMEventManager(engine)
             {
@@ -44,7 +44,7 @@ namespace MetaMind.Engine.Components
 
             this.Game = new MMGameManager(engine);
 
-            this.Process = new ProcessManager(engine)
+            this.Process = new MMProcessManager(engine)
             {
                 UpdateOrder = 4
             };
@@ -63,19 +63,19 @@ namespace MetaMind.Engine.Components
 
         public IAssetManager Asset { get; private set; }
 
-        public IAudioManager Audio { get; private set; }
+        public IMMAudioManager Audio { get; private set; }
 
         public MMConsole Console { get; set; }
 
         public ContentManager Content { get; private set; }
 
-        public IFileManager File { get; private set; }
+        public IMMDirectoryManager File { get; private set; }
 
         public IMMEventManager Event { get; private set; }
 
         public new IMMGameManager Game { get; private set; }
 
-        public IProcessManager Process { get; private set; }
+        public IMMProcessManager Process { get; private set; }
 
         public IMMScreenDirector Screen { get; private set; }
 

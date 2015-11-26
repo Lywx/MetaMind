@@ -50,14 +50,14 @@ namespace MetaMind.Engine.Entities.Controls.Views.Scrolls
             get
             {
 #if DEBUG
-                Debug.Assert(0 <= this.View.ItemsRead.Count);
+                Debug.Assert(0 <= this.View.Items.Count);
 #endif
-                if (this.View.ItemsRead.Count == 0)
+                if (this.View.Items.Count == 0)
                 {
                     return 0;
                 }
 
-                var itemLayer = this.GetItemLayer(this.View.ItemsRead.Last());
+                var itemLayer = this.GetItemLayer(this.View.Items.Last());
                 return itemLayer.ItemLayout.Row + itemLayer.ItemLayout.BlockRow - this.ViewSettings.ViewRowDisplay;
             }
         }
@@ -73,16 +73,16 @@ namespace MetaMind.Engine.Entities.Controls.Views.Scrolls
 #if DEBUG
             Debug.Assert(id >= 0);
 #endif
-            var itemLayer = this.GetItemLayer(this.View.ItemsRead[id]);
+            var itemLayer = this.GetItemLayer(this.View.Items[id]);
             return itemLayer.ItemLayout.Row < this.RowOffset;
         }
 
         public override bool IsDownToDisplay(int id)
         {
 #if DEBUG
-            Debug.Assert(id < this.View.ItemsRead.Count);
+            Debug.Assert(id < this.View.Items.Count);
 #endif
-            var itemLayer = this.GetItemLayer(this.View.ItemsRead[id]);
+            var itemLayer = this.GetItemLayer(this.View.Items[id]);
             var itemLayout = itemLayer.ItemLayout;
 
             return itemLayout.Row + itemLayout.BlockRow > this.ViewSettings.ViewRowDisplay + this.RowOffset;
@@ -96,19 +96,19 @@ namespace MetaMind.Engine.Entities.Controls.Views.Scrolls
         public override void MoveDown()
         {
             // Items is empty
-            if (this.View.ItemsRead.Count == 0)
+            if (this.View.Items.Count == 0)
             {
                 return;
             }
 
             if (this.CanMoveDown)
             {
-                var itemLayer = this.GetItemLayer(this.View.ItemsRead[this.currentId]);
+                var itemLayer = this.GetItemLayer(this.View.Items[this.currentId]);
                 var itemLayout = itemLayer.ItemLayout;
 
                 this.RowOffset += itemLayout.BlockRow;
 
-                if (this.currentId < this.View.ItemsRead.Count - 1)
+                if (this.currentId < this.View.Items.Count - 1)
                 {
                     ++this.currentId;
                 }
@@ -118,7 +118,7 @@ namespace MetaMind.Engine.Entities.Controls.Views.Scrolls
         public override void MoveUp()
         {
             // Items is empty
-            if (this.View.ItemsRead.Count == 0)
+            if (this.View.Items.Count == 0)
             {
                 return;
             }
@@ -130,7 +130,7 @@ namespace MetaMind.Engine.Entities.Controls.Views.Scrolls
                     --this.currentId;
                 }
 
-                var itemLayer = this.GetItemLayer(this.View.ItemsRead[this.currentId]);
+                var itemLayer = this.GetItemLayer(this.View.Items[this.currentId]);
                 var itemLayout = itemLayer.ItemLayout;
 
                 this.RowOffset -= itemLayout.BlockRow;

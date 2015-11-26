@@ -15,14 +15,14 @@ namespace MetaMind.Engine.Entities.Controls.Views.Scrolls
             get
             {
 #if DEBUG
-                Debug.Assert(0 <= this.View.ItemsRead.Count);
+                Debug.Assert(0 <= this.View.Items.Count);
 #endif
-                if (this.View.ItemsRead.Count == 0)
+                if (this.View.Items.Count == 0)
                 {
                     return 0;
                 }
 
-                var itemLayer = this.GetItemLayer(this.View.ItemsRead.Last());
+                var itemLayer = this.GetItemLayer(this.View.Items.Last());
 
                 // Including the extra row owned by the indexed view
                 return itemLayer.ItemLayout.Row + itemLayer.ItemLayout.BlockRow + itemLayer.ItemLayout.IndexedViewRow - this.ViewSettings.ViewRowDisplay;

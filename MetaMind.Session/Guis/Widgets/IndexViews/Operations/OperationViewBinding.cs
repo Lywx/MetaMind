@@ -5,9 +5,9 @@
     using Concepts.Operations;
     using Engine.Entities.Controls.Item;
     using Engine.Entities.Controls.Item.Data;
-    using Engine.Entities.Controls.Views.Logic;
+    using Engine.Entities.Controls.Views.Controllers;
 
-    public class OperationViewBinding : IViewBinding
+    public class OperationViewBinding : IMMViewBinding
     {
         private readonly IMMViewController operationViewController;
 

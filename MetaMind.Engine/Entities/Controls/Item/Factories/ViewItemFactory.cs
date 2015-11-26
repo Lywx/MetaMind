@@ -36,12 +36,12 @@
 
         private Func<IMMViewItem, IMMViewItemRendererComponent> ItemVisual { get; set; }
 
-        public IMMViewItemController CreateLogic(IMMViewItem item)
+        public IMMViewItemController CreateController(IMMViewItem item)
         {
             return this.ItemLogic(item);
         }
 
-        public IMMViewItemRendererComponent CreateVisual(IMMViewItem item)
+        public IMMViewItemRendererComponent CreateRenderer(IMMViewItem item)
         {
             return this.ItemVisual(item);
         }

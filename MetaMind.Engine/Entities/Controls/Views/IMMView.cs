@@ -2,12 +2,18 @@ namespace MetaMind.Engine.Entities.Controls.Views
 {
     using System;
     using System.Collections.Generic;
+    using Controllers;
     using Item;
     using Item.Settings;
     using Layers;
-    using Logic;
+    using Nodes;
+    using Renderers;
     using Settings;
-    using Visuals;
+
+    public interface IMMViewBase : IMMNode, IMMBufferable
+    {
+        
+    }
 
     public interface IMMViewOperations
     {
@@ -22,7 +28,7 @@ namespace MetaMind.Engine.Entities.Controls.Views
     /// IView define the basic framework for a View object. It allows extending 
     /// component contracts by casting.
     /// </summary>
-    public interface IMMView : IMMViewOperations, IMMViewComponentOperations, IMMBufferable
+    public interface IMMView : IMMViewBase, IMMViewOperations, IMMViewComponentOperations
     {
         #region States
 
@@ -52,8 +58,6 @@ namespace MetaMind.Engine.Entities.Controls.Views
     public interface IMMViewInternal
     {
         #region Item Data
-
-        List<IMMViewItem> ItemsRead { get; }
 
         /// <summary>
         /// Items collection that is used to write to next frame.

@@ -19,7 +19,7 @@ namespace MetaMind.Engine.Components.Graphics
     /// <summary>
     /// Graphics settings data. 
     /// </summary>
-    public class MMGraphicsSettings : IConfigurationLoader, IParameter
+    public class MMGraphicsSettings : IConfigurable, IParameter
     {
 #if DEBUG
         #region Logger
@@ -99,7 +99,7 @@ namespace MetaMind.Engine.Components.Graphics
 
         #region Configuration
 
-        public string ConfigurationFile => "Graphics.txt";
+        public string ConfigurationFilename => "Graphics.txt";
 
         public void CheckConfiguration()
         {
@@ -119,17 +119,17 @@ namespace MetaMind.Engine.Components.Graphics
         {
             var configuration = ConfigurationLoader.LoadUniquePairs(this);
 
-            var dividend = FileLoader.ReadValueInts(configuration, "Resolution Aspect", 0, 16); 
-            var divisor  = FileLoader.ReadValueInts(configuration, "Resolution Aspect", 0, 9);
+            var dividend = InformationLoader.ReadValueInts(configuration, "Resolution Aspect", 0, 16); 
+            var divisor  = InformationLoader.ReadValueInts(configuration, "Resolution Aspect", 0, 9);
             this.Aspect  = (float)dividend / divisor;
 
-            this.Width  = FileLoader.ReadValueInts(configuration, "Resolution", 0, 800);
-            this.Height = FileLoader.ReadValueInts(configuration, "Resolution", 1, 600);
+            this.Width  = InformationLoader.ReadValueInts(configuration, "Resolution", 0, 800);
+            this.Height = InformationLoader.ReadValueInts(configuration, "Resolution", 1, 600);
 
-            this.IsFullscreen = FileLoader.ReadValueBool(configuration, "Full Screen", false);
-            this.IsWindowMode = FileLoader.ReadValueBool(configuration, "Window Mode", true);
+            this.IsFullscreen = InformationLoader.ReadValueBool(configuration, "Full Screen", false);
+            this.IsWindowMode = InformationLoader.ReadValueBool(configuration, "Window Mode", true);
 
-            this.FPS = FileLoader.ReadValueInts(configuration, "FPS", 0, 30);
+            this.FPS = InformationLoader.ReadValueInts(configuration, "FPS", 0, 30);
         }
 
         #endregion

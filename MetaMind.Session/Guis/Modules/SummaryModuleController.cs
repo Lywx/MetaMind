@@ -1,15 +1,15 @@
 ﻿namespace MetaMind.Session.Guis.Modules
 {
     using System;
+    using Components.Input;
     using Concepts.Cognitions;
     using Concepts.Synchronizations;
     using Engine.Components.Input;
     using Engine.Components.Interop.Event;
     using Engine.Entities;
-    using Engine.Services;
     using Microsoft.Xna.Framework;
     using Screens;
-    using Session.Sessions;
+    using Sessions;
 
     public class SummaryModuleController : MMMVCEntityController<SummaryModule, SummarySettings, SummaryModuleController>
     {
@@ -44,7 +44,7 @@
 
         public override void UpdateInput(GameTime time)
         {
-            var keyboard = input.State.Keyboard;
+            var keyboard = this.Input.State.Keyboard;
 
             if (keyboard.IsActionTriggered(KeyboardActions.ConsciousnessAwaken))
             {

@@ -67,7 +67,7 @@ namespace MetaMind.Engine.Entities.Controls.Views.Selections
 
         public virtual void MoveUp()
         {
-            if (this.View.ItemsRead.Count == 0)
+            if (this.View.Items.Count == 0)
             {
                 return;
             }
@@ -95,7 +95,7 @@ namespace MetaMind.Engine.Entities.Controls.Views.Selections
 
         public virtual void MoveDown()
         {
-            if (this.View.ItemsRead.Count == 0)
+            if (this.View.Items.Count == 0)
             {
                 return;
             }
@@ -135,7 +135,7 @@ namespace MetaMind.Engine.Entities.Controls.Views.Selections
         protected virtual bool IsBottommost(int id)
         {
             var row = id;
-            return row >= this.View.ItemsRead.Count - 1;
+            return row >= this.View.Items.Count - 1;
         }
 
         protected void Reverse()

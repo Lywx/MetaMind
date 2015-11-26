@@ -11,7 +11,7 @@ namespace MetaMind.Engine.Components.Content.Asset
 
         IFontManager Fonts { get; }
 
-        ITextureManager Texture { get; }
+        IMMTextureManager Texture { get; }
 
         #endregion
 

@@ -16,8 +16,8 @@
             var region = new PlayTest_Region(null);
             var frame  = new PlayTest_Frame(null);
 
-            tests.Add(region);
-            tests.Add(frame);
+            this.tests.Add(region);
+            this.tests.Add(frame);
 
             this.Layers.Add(
                 new MMLayer(this)

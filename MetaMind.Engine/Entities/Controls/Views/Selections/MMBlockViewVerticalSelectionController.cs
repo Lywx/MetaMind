@@ -30,16 +30,16 @@ namespace MetaMind.Engine.Entities.Controls.Views.Selections
         {
 #if DEBUG
             Debug.Assert(
-                this.View.ItemsRead.Count == 0 || id < this.View.ItemsRead.Count);
+                this.View.Items.Count == 0 || id < this.View.Items.Count);
 #endif
-            return id == this.View.ItemsRead.Count - 1;
+            return id == this.View.Items.Count - 1;
         }
 
         protected int LowerId(int id)
         {
-            return id < this.View.ItemsRead.Count - 1
+            return id < this.View.Items.Count - 1
                        ? id + 1
-                       : this.View.ItemsRead.Count - 1;
+                       : this.View.Items.Count - 1;
         }
 
         protected int UpperId(int id)
@@ -53,7 +53,7 @@ namespace MetaMind.Engine.Entities.Controls.Views.Selections
 
         public override void MoveUp()
         {
-            if (this.View.ItemsRead.Count == 0)
+            if (this.View.Items.Count == 0)
             {
                 return;
             }
@@ -82,7 +82,7 @@ namespace MetaMind.Engine.Entities.Controls.Views.Selections
         public override void MoveDown()
         {
             // Items is empty
-            if (this.View.ItemsRead.Count == 0)
+            if (this.View.Items.Count == 0)
             {
                 return;
             }
@@ -96,7 +96,7 @@ namespace MetaMind.Engine.Entities.Controls.Views.Selections
             var id = this.CurrentSelectedId.Value;
 
             // Last item is deleted
-            if (id >= this.View.ItemsRead.Count)
+            if (id >= this.View.Items.Count)
             {
                 return;
             }

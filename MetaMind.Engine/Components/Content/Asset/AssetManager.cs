@@ -32,7 +32,7 @@ namespace MetaMind.Engine.Components.Content.Asset
 
         public IFontManager Fonts { get; private set; }
 
-        public ITextureManager Texture { get; private set; }
+        public IMMTextureManager Texture { get; private set; }
 
         private AssetDictionary Assets { get; set; } = new AssetDictionary();
 
@@ -45,7 +45,7 @@ namespace MetaMind.Engine.Components.Content.Asset
         public AssetManager(MMEngine engine) : base(engine)
         {
             this.Fonts   = new FontManager(engine);
-            this.Texture = new TextureManager(engine);
+            this.Texture = new MMTextureManager(engine);
         }
 
         #endregion
@@ -54,7 +54,7 @@ namespace MetaMind.Engine.Components.Content.Asset
 
         private string AssetPath(string catalog, string asset) => Path.Combine(this.AssetCatalogPath(catalog), asset);
 
-        private string AssetCatalogPath(string catalog) => FileManager.ContentPath(catalog) + @"/";
+        private string AssetCatalogPath(string catalog) => MMDirectoryManager.ContentPath(catalog) + @"/";
 
         #endregion
 
@@ -156,7 +156,7 @@ namespace MetaMind.Engine.Components.Content.Asset
 
         #region Load and Unload Image
 
-        private void LoadImage(ImageAsset image, bool async = false)
+        private void LoadImage(MMImageAsset image, bool async = false)
         {
             var texturePath = this.AssetPath("Texture", image.Asset);
 
@@ -175,7 +175,7 @@ namespace MetaMind.Engine.Components.Content.Asset
             this.Texture.Add(image);
         }
 
-        private void UnloadImage(ImageAsset image)
+        private void UnloadImage(MMImageAsset image)
         {
             this.Assets.GetTexture(image.Name).Resource = null;
             this.Texture.Remove(image);
@@ -370,7 +370,8 @@ namespace MetaMind.Engine.Components.Content.Asset
 
                     this.ReadFonts(package, e);
                     this.ReadImages(package, e);
-                    this.ReadControls(package, e);
+
+                    // TODO this.ReadControls(package, e);
                 }
                 else
                 {
@@ -414,7 +415,7 @@ namespace MetaMind.Engine.Components.Content.Asset
                     var imageAsset  = this.ReadAttribute(imageElement, "Asset", null, true);
                     var imageDesign = this.ReadImageDesign(imageElement); 
 
-                    var image = new ImageAsset(imageName, imageAsset, imageDesign);
+                    var image = new MMImageAsset(imageName, imageAsset, imageDesign);
 
                     if (!package.Texture.ContainsKey(image.Name))
                     {
@@ -424,14 +425,14 @@ namespace MetaMind.Engine.Components.Content.Asset
             }
         }
 
-        private ImageDesign ReadImageDesign(XmlElement imageElement)
+        private MMImageDesign ReadImageDesign(XmlElement imageElement)
         {
             var designElement = imageElement["Design"];
 
             var screenWidth  = this.ReadAttributeInt(designElement, "ScreenWidth", 0, true);
             var screenHeight = this.ReadAttributeInt(designElement, "ScreenHeight", 0, true);
 
-            return new ImageDesign(screenWidth, screenHeight);
+            return new MMImageDesign(screenWidth, screenHeight);
         }
 
         // TODO: Fixed this

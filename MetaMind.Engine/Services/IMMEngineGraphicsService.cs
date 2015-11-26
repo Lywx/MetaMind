@@ -15,9 +15,9 @@ namespace MetaMind.Engine.Services
 
         #region Renderer
 
-        MMRendererManager RendererManager { get; }
-
         IMMRenderer Renderer { get; }
+
+        MMRenderDeviceController DeviceController { get; }
 
         GraphicsDevice Device { get; }
 

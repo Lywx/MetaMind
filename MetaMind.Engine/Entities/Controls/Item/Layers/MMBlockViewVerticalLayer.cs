@@ -1,8 +1,8 @@
 namespace MetaMind.Engine.Entities.Controls.Item.Layers
 {
     using Views;
+    using Views.Controllers;
     using Views.Layers;
-    using Views.Logic;
     using Views.Scrolls;
     using Views.Selections;
 

@@ -7,7 +7,7 @@
     using Engine.Settings;
     using Microsoft.Xna.Framework;
 
-    public class SynchronizationSettings : MMVisualEntity, IParameterLoader<MMGraphicsSettings>, ICloneable
+    public class SynchronizationSettings : MMVisualEntity, IParameterDependant<MMGraphicsSettings>, ICloneable
     {
         public Vector2 BarFrameCenterPosition;
 

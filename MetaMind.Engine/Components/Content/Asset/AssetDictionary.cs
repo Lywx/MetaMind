@@ -20,7 +20,7 @@ namespace MetaMind.Engine.Components.Content.Asset
             throw new KeyNotFoundException();
         }
 
-        public ImageAsset GetTexture(string assetName)
+        public MMImageAsset GetTexture(string assetName)
         {
             foreach (var package in this.Values)
             {

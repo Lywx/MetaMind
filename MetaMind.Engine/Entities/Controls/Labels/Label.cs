@@ -179,15 +179,6 @@
 
         #endregion
 
-        #region Initialization
-
-        public override void Initialize()
-        {
-            base.Initialize();
-        }
-
-        #endregion
-
         #region Draw
 
         protected Action<Font, string, Vector2, Color, float, HoritonalAlignment, VerticalAlignment, int> DrawAction => this.DrawActionSelector();
@@ -200,7 +191,7 @@
                 this.TextFont(),
                 this.Text(),
                 this.AnchorLocation(),
-                this.TextColor().MakeTransparent(this.MixedMinOpacity(alpha)),
+                this.TextColor().MakeTransparent(this.Opacity.Displayed),
                 this.TextSize(),
                 this.TextHAlignment,
                 this.TextVAlignment,

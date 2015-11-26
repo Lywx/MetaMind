@@ -2,44 +2,39 @@
 {
     using System;
 
-    // TODO:
     internal class CCTimer : ICCUpdatable
     {
         #region Constructors
 
-        public CCTimer(
-            CCScheduler scheduler,
-            ICCUpdatable target,
-            Action<float> selector)
-            : this(scheduler, target, selector, 0, 0, 0) {}
-
-        public CCTimer(
-            CCScheduler scheduler,
-            ICCUpdatable target,
-            Action<float> selector,
-            float seconds)
-            : this(scheduler, target, selector, seconds, 0, 0) {}
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="scheduler"></param>
+        /// <param name="target"></param>
+        /// <param name="selector"></param>
+        /// <param name="interval">Timer interval in seconds.</param>
+        /// <param name="repeat">Timer extra repetition number.</param>
+        /// <param name="delay">Timer delay for timing.</param>
         public CCTimer(
             CCScheduler scheduler,
             ICCUpdatable target,
             Action<float> selector,
-            float seconds,
-            uint repeat,
-            float delay)
+            float interval = 0f,
+            uint repeat = 0,
+            float delay = 0f)
         {
             this.Scheduler = scheduler;
             this.Target    = target;
             this.Selector  = selector;
 
-            this.OriginalInterval = seconds;
-            this.Interval         = seconds;
+            this.Interval         = interval;
+            this.IntervalOriginal = interval;
 
-            this.Delay    = delay;
-            this.UseDelay = delay > 0f;
+            this.Delay = delay;
+            this.DelayEnabled = this.Delay > 0f;
 
             // Default value for not updated  
-            this.elapsed = -1;
+            this.Elapsed = -1;
 
             this.Repeat     = repeat;
             this.RunForever = repeat == uint.MaxValue;
@@ -49,32 +44,40 @@
 
         #region Interval Data
 
-        public float OriginalInterval { get; internal set; }
+        /// <summary>
+        /// Timer interval in seconds when it is constructed.
+        /// </summary>
+        public float IntervalOriginal { get; internal set; }
 
+        /// <summary>
+        /// Timer interval in seconds.
+        /// </summary>
         public float Interval { get; set; }
 
         #endregion
 
         #region Repetition Data
 
-        private uint timesExecuted;
+        private uint invocationCount;
 
         /// <remarks>
         /// 0 = once, 1 is twice time executed, 2 is third time, etc.
         /// </remarks>
         public uint Repeat { get; }
 
+        public bool RunForever { get; }
+
         #endregion
 
         #region Timer Data
 
-        private float elapsed;
+        private bool elapsedEverUpdated;
+
+        public float Elapsed { get; private set; }
 
         public float Delay { get; }
 
-        public bool RunForever { get; }
-
-        public bool UseDelay { get; private set; }
+        public bool DelayEnabled { get; private set; }
 
         #endregion
 
@@ -93,68 +96,111 @@
         public void Update(float dt)
         {
             // When update for the first time
-            if (this.elapsed == -1)
+            if (this.elapsedEverUpdated)
             {
-                this.elapsed = 0;
-                this.timesExecuted = 0;
+                this.elapsedEverUpdated = true;
+
+                this.Reset();
+
+                return;
+            }
+
+            this.UpdateElapsed(dt);
+
+            if (this.DelayEnabled)
+            {
+                this.TryFinishDelay();
             }
             else
             {
-                // Standard timer usage: when run forever and not use delay
-                if (this.RunForever && 
-                   !this.UseDelay)
-                {
-                    this.elapsed += dt;
+                this.TryFinish();
+            }
 
-                    if (this.elapsed >= this.Interval)
-                    {
-                        this.Selector?.Invoke(this.elapsed);
-
-                        this.elapsed = 0;
-                    }
-                }
-
-                // Advanced time usage: when use delay
-                else
-                {
-                    this.elapsed += dt;
-
-                    if (this.UseDelay)
-                    {
-                        // Detect when delay is reached
-                        if (this.elapsed >= this.Delay)
-                        {
-                            this.Selector?.Invoke(this.elapsed);
-
-                            this.elapsed = this.elapsed - this.Delay;
-
-                            this.timesExecuted += 1;
-                            this.UseDelay = false;
-                        }
-                    }
-                    else
-                    {
-                        // Detect when the interval is reached
-                        if (this.elapsed >= this.Interval)
-                        {
-                            this.Selector?.Invoke(this.elapsed);
-
-                            // this.Interval = this.OriginalInterval - (this.elapsed - this.Interval);
-
-                            // Reset elapse data
-                            this.elapsed = 0;
-                            this.timesExecuted += 1;
-                        }
-                    }
-
-                    if (this.timesExecuted > this.Repeat && 
-                       !this.RunForever)
-                    {
-                        this.Scheduler.Unschedule(this.Selector, this.Target);
-                    }
-                }
+            if (!this.RunForever)
+            {
+                this.TryUnschedule();
             }
         }
+
+        private void UpdateElapsed(float dt)
+        {
+            this.Elapsed += dt;
+        }
+
+        #endregion
+
+        #region 
+
+        private void TryFinishDelay()
+        {
+            if (this.Elapsed >= this.Delay)
+            {
+                this.InvokeDelay();
+
+                this.DelayEnabled = false;
+            }
+        }
+
+        private void TryFinish()
+        {
+            if (this.Elapsed >= this.Interval)
+            {
+                this.InvokeHit();
+            }
+        }
+
+        private void TryUnschedule()
+        {
+            if (this.invocationCount > this.Repeat)
+            {
+                this.Scheduler.Unschedule(this.Selector, this.Target);
+            }
+        }
+
+        #endregion
+
+        #region Invoke Operations
+
+        private void InvokeSelector()
+        {
+            this.Selector?.Invoke(this.Elapsed);
+
+            this.invocationCount += 1;
+        }
+
+        private void InvokeHit()
+        {
+            this.InvokeSelector();
+
+            this.ResetElapsed();
+        }
+
+        private void InvokeDelay()
+        {
+            this.InvokeSelector();
+
+            this.Elapsed = this.Elapsed - this.Delay;
+        }
+
+        #endregion
+
+        #region Reset Operations
+
+        private void Reset()
+        {
+            this.ResetElapsed();
+            this.ResetCount();
+        }
+
+        private void ResetCount()
+        {
+            this.invocationCount = 0;
+        }
+
+        private void ResetElapsed()
+        {
+            this.Elapsed = 0;
+        }  
 
         #endregion
     }

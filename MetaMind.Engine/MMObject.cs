@@ -11,9 +11,10 @@ namespace MetaMind.Engine
     [DataContract]
     public class MMObject
     {
-        #region Service
 
         protected MMEngine Engine => this.Interop.Engine;
+
+        #region Graphics
 
         protected IMMEngineGraphicsService Graphics => MMEngine.Service.Graphics;
 
@@ -21,12 +22,14 @@ namespace MetaMind.Engine
 
         protected IMMRenderer GraphicsRenderer => this.Graphics.Renderer;
 
+        internal MMRenderDeviceController GraphicsDeviceController => this.Graphics.DeviceController;
+
+        #endregion
+
         protected IMMEngineInteropService Interop => MMEngine.Service.Interop;
 
         protected IMMEngineInputService Input => MMEngine.Service.Input;
 
         protected IMMEngineNumericalService Numerical => MMEngine.Service.Numerical;
-
-        #endregion
     }
 }
