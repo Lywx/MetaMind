@@ -10,6 +10,8 @@
 
     public class MMButton : MMNode
     {
+    public Configuration
+
         public MMButton()
         {
             this.Setup();

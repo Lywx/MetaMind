@@ -7,9 +7,9 @@
 
 namespace MetaMind.Session.Guis.Widgets.Items
 {
-    using Concepts.Synchronizations;
     using Engine.Components.Interop.Event;
     using Engine.Entities.Controls.Item;
+    using Runtime.Attention;
     using Session.Sessions;
 
     public class MMViewItemSynchronizationController : MMViewItemControllerComponent, ISynchronizationController 
@@ -18,34 +18,34 @@ namespace MetaMind.Session.Guis.Widgets.Items
             : base(item)
         {
             this.Synchronizable      = (ISynchronizable)this.Item.ItemData;
-            this.SynchronizationData = this.Synchronizable.SynchronizationData;
+            this.JobSynchronizationData = this.Synchronizable.SynchronizationJob;
         }
 
         protected ISynchronizable Synchronizable { get; private set; }
 
-        protected ISynchronizationData SynchronizationData { get; private set; }
+        protected IJobSynchronizationData JobSynchronizationData { get; private set; }
 
-        public void StartSynchronization()
+        public void BeginSync()
         {
-            var @event = this.Interop.Event;
+            var @event = this.GlobalInterop.Event;
             @event.QueueEvent(new MMEvent((int)SessionEvent.SyncStarted, new SynchronizationStartedEventArgs(this.Item.ItemData)));
         }
 
-        public void StopSynchronization()
+        public void EndSync()
         {
-            var @event = this.Interop.Event;
+            var @event = this.GlobalInterop.Event;
             @event.QueueEvent(new MMEvent((int)SessionEvent.SyncStopped, new SynchronizationStoppedEventArgs(this.Item.ItemData)));
         }
 
-        public void ToggleSynchronization()
+        public void ToggleSync()
         {
-            if (!this.SynchronizationData.IsSynchronizing)
+            if (!this.JobSynchronizationData.IsSynchronizing)
             {
-                this.StartSynchronization();
+                this.BeginSync();
             }
             else
             {
-                this.StopSynchronization();
+                this.EndSync();
             }
         }
     }

@@ -7,6 +7,11 @@
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
 
+    public class GameConsoleDesignSettings
+    {
+        
+    }
+
     public class GameConsoleSettings
     {
         #region Behavior
@@ -82,7 +87,7 @@
         /// </summary>
         public int Margin { get; set; } = 30;
 
-        public Font Font { get; set; }
+        public MMFont Font { get; set; }
 
         public Texture2D RoundedCorner { get; set; }
 

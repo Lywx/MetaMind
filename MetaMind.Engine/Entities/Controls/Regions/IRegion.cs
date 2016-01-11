@@ -7,6 +7,7 @@
 
 namespace MetaMind.Engine.Entities.Controls.Regions
 {
+    using Bases;
     using Entities;
     using Microsoft.Xna.Framework;
 

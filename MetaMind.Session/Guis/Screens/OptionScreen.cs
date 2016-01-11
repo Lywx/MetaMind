@@ -2,10 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-    using Concepts.Operations;
     using Engine.Components.Content.Fonts;
     using Engine.Components.Graphics;
     using Engine.Entities;
+    using Engine.Entities.Bases;
     using Engine.Entities.Controls.Item;
     using Engine.Entities.Controls.Item.Data;
     using Engine.Entities.Controls.Item.Factories;
@@ -21,11 +21,12 @@
     using Engine.Entities.Controls.Views.Selections;
     using Engine.Entities.Controls.Views.Swaps;
     using Engine.Entities.Graphics.Fonts;
-    using Engine.Screens;
+    using Engine.Entities.Screens;
     using Engine.Services;
     using Engine.Settings;
     using Microsoft.Xna.Framework;
     using Modules;
+    using Operations;
     using Widgets.BlockViews.Options;
     using Widgets.IndexViews.Tests;
 
@@ -89,14 +90,14 @@
 
         public override void LoadContent()
         {
-            var graphicsSettings = this.Graphics.Settings;
+            var graphicsSettings = this.EngineGraphics.Settings;
 
             var viewWidth = graphicsSettings.Width - OperationModuleSettings.ViewMargin.X * 2;
             
             // Screen label
             this.screenLabel = new Label
             {
-                TextFont     = () => Font.UiRegular,
+                TextFont     = () => MMFont.UiRegular,
                 Text         = () => "OPTIONS",
                 AnchorLocation = () => new Vector2(graphicsSettings.Width / 2.0f, 80),
                 TextColor    = () => this.Color.White,
@@ -108,7 +109,7 @@
             this.procedureNameLabelBox = new LabelBox(
                 new LabelSettings
                 {
-                    Font       = Font.ContentRegular,
+                    Font       = MMFont.ContentRegular,
                     Text           = () => this.procedureName,
                     AnchorLocation   = () => OperationModuleSettings.ViewMargin.ToVector2(),
                     Color      = this.Color.White,
@@ -126,7 +127,7 @@
             this.procedureDescriptionLabelBox = new LabelBox(
                 new LabelSettings
                 {
-                    Font       = Font.ContentRegular,
+                    Font       = MMFont.ContentRegular,
                     Text           = () => this.procedureDescription,
                     AnchorLocation   = () => new Vector2(OperationModuleSettings.ViewMargin.X, this.procedureNameLabelBox.Bottom),
                     Color      = this.Color.White,
@@ -204,7 +205,7 @@
 
         public override void Draw(GameTime time)
         {
-            ((MMVisualEntity)this).Graphics.Renderer.Begin();
+            ((MMVisualEntity)this).EngineGraphics.Renderer.Begin();
 
             this.procedureNameLabelBox.Draw(time);
             this.procedureDescriptionLabelBox.Draw(time);
@@ -212,7 +213,7 @@
             this.screenLabel.Draw(time);
             this.Entities.Draw(time);
 
-            ((MMVisualEntity)this).Graphics.Renderer.End();
+            ((MMVisualEntity)this).EngineGraphics.Renderer.End();
 
             base.Draw(time);
         }

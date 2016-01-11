@@ -29,7 +29,7 @@ namespace MetaMind.Engine.Services
             this.interop = interop;
         }
 
-        public IAssetManager Asset => this.interop.Asset;
+        public IMMAssetManager Asset => this.interop.Asset;
 
         public IMMAudioManager Audio => this.interop.Audio;
 

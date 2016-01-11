@@ -3,7 +3,8 @@
     using System;
     using Engine.Components.Graphics;
     using Engine.Entities;
-    using Engine.Screens;
+    using Engine.Entities.Bases;
+    using Engine.Entities.Screens;
     using Engine.Services;
     using Primtives2D;
 
@@ -40,9 +41,9 @@
             {
                 DrawAction = (graphics, time, alpha) =>
                 {
-                    ((MMVisualEntity)this).Graphics.Renderer.Begin();
-                    Primitives2D.FillRectangle(((MMVisualEntity)this).Graphics.Renderer, this.RenderTargetDestinationRectangle, this.Settings.GetColor());
-                    ((MMVisualEntity)this).Graphics.Renderer.End();
+                    ((MMVisualEntity)this).EngineGraphics.Renderer.Begin();
+                    Primitives2D.FillRectangle(((MMVisualEntity)this).EngineGraphics.Renderer, this.RenderTargetDestinationRectangle, this.Settings.GetColor());
+                    ((MMVisualEntity)this).EngineGraphics.Renderer.End();
                 },
                 UpdateAction = time =>
                 {

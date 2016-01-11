@@ -75,7 +75,7 @@
                         PastDebugColor = Color.Yellow,
                     },
                     this.Engine,
-                    this.Graphics.SpriteBatch,
+                    this.Graphics.DeviceController.SpriteBatch,
                     this.Graphics.Renderer));
 
             this.Engine.Input     = new MMEngineInput(this.Engine);

@@ -1,6 +1,7 @@
 namespace MetaMind.Engine.Entities.Controls.Item.Data
 {
     using System;
+    using Bases;
     using Entities;
 
     public interface IMMViewItemCharModifier : IMMInputable, IMMDrawable, IDisposable

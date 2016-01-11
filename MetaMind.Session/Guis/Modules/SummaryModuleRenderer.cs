@@ -1,20 +1,21 @@
 ﻿namespace MetaMind.Session.Guis.Modules
 {
-    using Concepts.Cognitions;
-    using Concepts.Synchronizations;
     using Engine.Entities;
+    using Engine.Entities.Bases;
     using Engine.Services;
     using Extensions;
     using Microsoft.Xna.Framework;
+    using Runtime;
+    using Runtime.Attention;
     using Summary;
 
     public class SummaryModuleRenderer : MMMVCEntityRenderer<SummaryModule, SummarySettings, SummaryModuleController>
     {
-        public SummaryModuleRenderer(SummaryModule module, IConsciousness consciousness, ISynchronization synchronization)
+        public SummaryModuleRenderer(SummaryModule module, IConsciousness consciousness, ISynchronizationData synchronizationData)
             : base(module)
         {
             this.Consciousness   = consciousness;
-            this.Synchronization = synchronization;
+            this.SynchronizationData = synchronizationData;
 
             this.Entities = new MMEntityCollection<IMMVisualEntity>();
         }
@@ -23,7 +24,7 @@
 
         private MMEntityCollection<IMMVisualEntity> Entities { get; set; }
 
-        private ISynchronization Synchronization { get; set; }
+        private ISynchronizationData SynchronizationData { get; set; }
 
         public override void LoadContent()
         {
@@ -42,7 +43,7 @@
                 factory.CreateEntry(
                     1,
                     "Hours in Synchronization:",
-                    () => this.Synchronization.SynchronizedHourYesterday.ToSummary(),
+                    () => this.SynchronizationData.SynchronizedHourYesterday.ToSummary(),
                     Color.White));
 
             this.Entities.Add(
@@ -64,15 +65,15 @@
                 factory.CreateEntry(
                     () => 6,
                     () => "",
-                    () => (this.Synchronization.SynchronizedHourYesterday - this.Settings.HourOfGood - this.Settings.HourOfLofty).ToSummary(),
-                    () => (this.Synchronization.SynchronizedHourYesterday - this.Settings.HourOfGood - this.Settings.HourOfLofty >= 0 ? Color.White : Color.Red)));
+                    () => (this.SynchronizationData.SynchronizedHourYesterday - this.Settings.HourOfGood - this.Settings.HourOfLofty).ToSummary(),
+                    () => (this.SynchronizationData.SynchronizedHourYesterday - this.Settings.HourOfGood - this.Settings.HourOfLofty >= 0 ? Color.White : Color.Red)));
 
             // Weekly statistics
             this.Entities.Add(
                 factory.CreateEntry(
                     8,
                     "Hours in Synchronization In Recent 7 Days:",
-                    () => ((int)this.Synchronization.SynchronizedTimeRecentWeek.TotalHours).ToSummary(),
+                    () => ((int)this.SynchronizationData.SynchronizedTimeRecentWeek.TotalHours).ToSummary(),
                     Color.White));
 
             this.Entities.Add(
@@ -88,8 +89,8 @@
                 factory.CreateEntry(
                     () => 12,
                     () => "",
-                    () => ((int)this.Synchronization.SynchronizedTimeRecentWeek.TotalHours - this.Settings.HourOfWorldRecord).ToSummary(),
-                    () => ((int)this.Synchronization.SynchronizedTimeRecentWeek.TotalHours - this.Settings.HourOfWorldRecord >= 0
+                    () => ((int)this.SynchronizationData.SynchronizedTimeRecentWeek.TotalHours - this.Settings.HourOfWorldRecord).ToSummary(),
+                    () => ((int)this.SynchronizationData.SynchronizedTimeRecentWeek.TotalHours - this.Settings.HourOfWorldRecord >= 0
                          ? Color.Gold
                          : Color.Red)));
 

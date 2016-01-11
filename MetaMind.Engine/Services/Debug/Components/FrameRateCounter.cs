@@ -11,7 +11,7 @@
 
         private int frameCounter;
 
-        private Font frameFont;
+        private MMFont frameFont;
 
         private TimeSpan elapsedTime = TimeSpan.Zero;
 

@@ -8,7 +8,7 @@ namespace MetaMind.Engine.Components.Interop.Process
     {
         #region Process Data
 
-        private List<IProcess> processes;
+        private List<IMMProcess> processes;
 
         #endregion Process Data
 
@@ -22,7 +22,7 @@ namespace MetaMind.Engine.Components.Interop.Process
                 throw new ArgumentNullException(nameof(engine));
             }
             
-            this.processes = new List<IProcess>();
+            this.processes = new List<IMMProcess>();
         }
 
         #endregion Constructors
@@ -125,7 +125,7 @@ namespace MetaMind.Engine.Components.Interop.Process
             }
         }
 
-        public void AttachProcess(IProcess process)
+        public void AttachProcess(IMMProcess process)
         {
             this.processes.Add(process);
         }

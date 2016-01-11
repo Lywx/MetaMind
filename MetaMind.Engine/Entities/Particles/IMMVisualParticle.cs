@@ -1,9 +1,9 @@
 namespace MetaMind.Engine.Entities.Particles
 {
-    using Entities;
+    using Bases;
     using Microsoft.Xna.Framework;
 
-    public interface IMMVisualParticle : IMMParticle, IUpdateable, IMMDrawable
+    public interface IMMVisualParticle : IMMParticle, IMMUpdateable, IMMDrawable
     {
         Color Color { get; set; }
 

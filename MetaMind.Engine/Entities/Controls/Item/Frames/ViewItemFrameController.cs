@@ -45,8 +45,8 @@ namespace MetaMind.Engine.Entities.Controls.Item.Frames
 
         private void RegisterStates()
         {
-            this.Item[MMViewItemState.Item_Is_Mouse_Over] = this.RootImmRectangle[MMElementState.Mouse_Is_Over];
-            this.Item[MMViewItemState.Item_Is_Dragging] = this.RootImmRectangle[MMElementState.Element_Is_Dragging];
+            this.Item[MMViewItemState.Item_Is_Mouse_Over] = this.RootImmRectangle[MMInputElementDebugState.Mouse_Is_Over];
+            this.Item[MMViewItemState.Item_Is_Dragging] = this.RootImmRectangle[MMInputElementDebugState.Element_Is_Dragging];
         }
 
         #endregion

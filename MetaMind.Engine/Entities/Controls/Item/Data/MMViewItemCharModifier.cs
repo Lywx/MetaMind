@@ -41,8 +41,8 @@ namespace MetaMind.Engine.Entities.Controls.Item.Data
         public MMViewItemCharModifier(IMMViewItem item)
             : base(item)
         {
-            this.Input.Event.CharEntered += this.InputEventCharEntered;
-            this.Input.Event.KeyDown     += this.InputEventEnterKeyDown;
+            this.GlobalInput.Event.CharEntered += this.InputEventCharEntered;
+            this.GlobalInput.Event.KeyDown     += this.InputEventEnterKeyDown;
         }
 
         ~MMViewItemCharModifier()
@@ -349,7 +349,7 @@ namespace MetaMind.Engine.Entities.Controls.Item.Data
 
         public override void UpdateInput(GameTime time)
         {
-            var keyboard = this.Input.State.Keyboard;
+            var keyboard = this.GlobalInput.State.Keyboard;
 
             if (keyboard.IsActionTriggered(MMInputActions.Escape))
             {
@@ -407,8 +407,8 @@ namespace MetaMind.Engine.Entities.Controls.Item.Data
                         this.modificationEnded = null;
                         this.ValueModified = null;
 
-                        this.Input.Event.CharEntered -= this.InputEventCharEntered;
-                        this.Input.Event.KeyDown -= this.InputEventEnterKeyDown;
+                        this.GlobalInput.Event.CharEntered -= this.InputEventCharEntered;
+                        this.GlobalInput.Event.KeyDown -= this.InputEventEnterKeyDown;
                     }
 
                     this.IsDisposed = true;

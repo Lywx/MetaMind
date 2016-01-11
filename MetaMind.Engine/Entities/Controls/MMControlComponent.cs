@@ -1,6 +1,7 @@
 ﻿namespace MetaMind.Engine.Entities.Controls
 {
     using System;
+    using Bases;
     using Entities;
     using Microsoft.Xna.Framework;
 
@@ -102,7 +103,7 @@
                     component.Parent?.Remove(component);
 
                     // Configure parenthood
-                    component.Enabled = (this.Enabled ? component.Enabled : this.Enabled);
+                    component.EntityEnabled = (this.EntityEnabled ? component.EntityEnabled : this.EntityEnabled);
                     component.Parent = this;
                     component.Root = this.Root;
 
@@ -199,7 +200,7 @@
         /// </remarks>
         public override void Update(GameTime time)
         {
-            if (!this.Enabled)
+            if (!this.EntityEnabled)
             {
                 return;
             }
@@ -213,7 +214,7 @@
         /// </remarks>
         public override void UpdateInput(GameTime time)
         {
-            if (!this.Enabled)
+            if (!this.EntityEnabled)
             {
                 return;
             }
@@ -231,7 +232,7 @@
         /// </remarks>
         public void UpdateForwardBuffer()
         {
-            if (!this.Enabled)
+            if (!this.EntityEnabled)
             {
                 return;
             }
@@ -244,7 +245,7 @@
         /// </remarks>
         public void UpdateBackwardBuffer()
         {
-            if (!this.Enabled)
+            if (!this.EntityEnabled)
             {
                 return;
             }

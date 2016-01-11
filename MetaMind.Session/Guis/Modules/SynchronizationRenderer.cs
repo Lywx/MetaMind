@@ -1,14 +1,15 @@
 namespace MetaMind.Session.Guis.Modules
 {
     using System;
-    using Concepts.Cognitions;
-    using Concepts.Synchronizations;
     using Engine.Components.Content.Fonts;
     using Engine.Entities;
+    using Engine.Entities.Bases;
     using Engine.Entities.Controls.Labels;
     using Engine.Entities.Graphics.Fonts;
     using Engine.Services;
     using Microsoft.Xna.Framework;
+    using Runtime;
+    using Runtime.Attention;
     using Synchronization;
 
     public class SynchronizationRenderer : MMMVCEntityRenderer<SynchronizationModule, SynchronizationSettings, SynchronizationController>
@@ -21,9 +22,9 @@ namespace MetaMind.Session.Guis.Modules
 
         private readonly IConsciousness consciousness;
 
-        private readonly ISynchronization synchronization;
+        private readonly ISynchronizationData synchronizationData;
 
-        public SynchronizationRenderer(SynchronizationModule module, ICognition cognition, IConsciousness consciousness, ISynchronization synchronization)
+        public SynchronizationRenderer(SynchronizationModule module, ICognition cognition, IConsciousness consciousness, ISynchronizationData synchronizationData)
             : base(module)
         {
             if (cognition == null)
@@ -31,9 +32,9 @@ namespace MetaMind.Session.Guis.Modules
                 throw new ArgumentNullException(nameof(cognition));
             }
 
-            if (synchronization == null)
+            if (synchronizationData == null)
             {
-                throw new ArgumentNullException(nameof(synchronization));
+                throw new ArgumentNullException(nameof(synchronizationData));
             }
 
             if (consciousness == null)
@@ -42,14 +43,14 @@ namespace MetaMind.Session.Guis.Modules
             }
 
             this.cognition = cognition;
-            this.synchronization = synchronization;
+            this.synchronizationData = synchronizationData;
             this.consciousness = consciousness;
 
-            var progressBar = new SynchronizationProgressBar(this.Module, this.synchronization);
+            var progressBar = new SynchronizationProgressBar(this.Module, this.synchronizationData);
 
             var stateInfo = new Label(
-                () => Font.UiStatistics,
-                () => this.synchronization.Enabled ? this.StateInfoTrue : this.StateInfoFalse,
+                () => MMFont.UiStatistics,
+                () => this.synchronizationData.Enabled ? this.StateInfoTrue : this.StateInfoFalse,
                 () => this.StateInfoCenterPosition,
                 () => Color.White,
                 () => 1.1f,
@@ -57,8 +58,8 @@ namespace MetaMind.Session.Guis.Modules
                 VerticalAlignment.Center);
 
             var statusInfo = new Label(
-                () => Font.UiStatistics,
-                () => $"Level {this.synchronization.Level}: {this.synchronization.State}",
+                () => MMFont.UiStatistics,
+                () => $"Level {this.synchronizationData.Level}: {this.synchronizationData.State}",
                 () => this.StatusInfoCenterPosition,
                 () => Color.White,
                 () => 0.7f,
@@ -66,8 +67,8 @@ namespace MetaMind.Session.Guis.Modules
                 VerticalAlignment.Center);
 
             var accumulationInfo = new Label(
-                () => Font.UiStatistics,
-                () => $"{this.synchronization.ElapsedTimeSinceTransition.ToString("hh':'mm':'ss")}",
+                () => MMFont.UiStatistics,
+                () => $"{this.synchronizationData.ElapsedTimeSinceTransition.ToString("hh':'mm':'ss")}",
                 () => this.AccumulationInfoPosition,
                 () => Color.White,
                 () => 0.7f,
@@ -95,7 +96,7 @@ namespace MetaMind.Session.Guis.Modules
                 VerticalAlignment.Center);
 
             var accelerationInfoPrefix = new Label(
-                () => Font.UiStatistics,
+                () => MMFont.UiStatistics,
                 () => "x ",
                 () => this.AccelerationInfoCenterPosition,
                 () => Color.White,
@@ -104,8 +105,8 @@ namespace MetaMind.Session.Guis.Modules
                 VerticalAlignment.Center);
 
             var accelerationInfoSubfix = new Label(
-                () => Font.UiStatistics,
-                () => $"{this.synchronization.Acceleration.ToString("F1")}",
+                () => MMFont.UiStatistics,
+                () => $"{this.synchronizationData.Acceleration.ToString("F1")}",
                 () => this.AccelerationInfoCenterPosition,
                 () => Color.White,
                 () => 2.0f,
@@ -131,21 +132,21 @@ namespace MetaMind.Session.Guis.Modules
             var factory = new SynchronizationFactory(this.Settings);
 
             // Empty point frames
-            for (var i = 0; i < this.synchronization.SynchronizedHourMax; ++i)
+            for (var i = 0; i < this.synchronizationData.SynchronizedHourMax; ++i)
             {
                 this.Entities.Add(factory.CreatePointFrame(this.StateInfoCenterPosition, i, SynchronizationPointSide.Left));
                 this.Entities.Add(factory.CreatePointFrame(this.StateInfoCenterPosition, i, SynchronizationPointSide.Right));
             }
 
             // Yesterday points
-            for (var i = 0; i < this.synchronization.SynchronizedHourYesterday; ++i)
+            for (var i = 0; i < this.synchronizationData.SynchronizedHourYesterday; ++i)
             {
                 this.Entities.Add(factory.CreatePoint(this.StateInfoCenterPosition, i, "", () => this.Settings.BarFrameDescendColor, SynchronizationPointSide.Left));
                 this.Entities.Add(factory.CreatePoint(this.StateInfoCenterPosition, i, "", () => this.Settings.BarFrameDescendColor, SynchronizationPointSide.Right));
             }
 
             // Today points
-            for (var i = 0; i < this.synchronization.SynchronizedHourToday; ++i)
+            for (var i = 0; i < this.synchronizationData.SynchronizedHourToday; ++i)
             {
                 this.Entities.Add(factory.CreatePoint(this.StateInfoCenterPosition, i, "", () => this.Settings.BarFrameAscendColor, SynchronizationPointSide.Left));
                 this.Entities.Add(factory.CreatePoint(this.StateInfoCenterPosition, i, "", () => this.Settings.BarFrameAscendColor, SynchronizationPointSide.Right));

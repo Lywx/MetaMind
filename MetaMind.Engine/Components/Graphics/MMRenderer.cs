@@ -12,7 +12,7 @@ namespace MetaMind.Engine.Components.Graphics
     {
         #region Constructors
 
-        public MMRenderer(MMRenderDeviceController graphicsDeviceController)
+        public MMRenderer(MMGraphicsDeviceController graphicsDeviceController)
         {
             if (graphicsDeviceController == null)
             {
@@ -28,8 +28,8 @@ namespace MetaMind.Engine.Components.Graphics
 
         /// <remarks>
         /// Hide the MMObject's getter member.
-        /// </remarks>>
-        private new MMRenderDeviceController GraphicsDeviceController { get; }
+        /// </remarks>
+        private MMGraphicsDeviceController GraphicsDeviceController { get; }
 
         private SpriteBatch SpriteBatch => this.GraphicsDeviceController.SpriteBatch;
 
@@ -50,7 +50,7 @@ namespace MetaMind.Engine.Components.Graphics
         {
             // Up direction is consistent with sprite batch and the XNA 3D coordinate 
             this.textureItem = new MMTextureItem();
-            this.textureEffect = new BasicEffect(this.GraphicsDevice)
+            this.textureEffect = new BasicEffect(this.GlobalGraphicsDevice)
             {
                 TextureEnabled     = true,
                 VertexColorEnabled = true,
@@ -59,13 +59,13 @@ namespace MetaMind.Engine.Components.Graphics
                 View       = Matrix.Identity,
 
                 Projection =
-                    Matrix.CreateOrthographicOffCenter(0, this.GraphicsDevice.Viewport.Width,
+                    Matrix.CreateOrthographicOffCenter(0, this.GlobalGraphicsDevice.Viewport.Width,
 
                         // Notice the Y coordinate goes from bottom of the screen to the
                         // top of the screen. The Y coordinate is inverted. But the Y
                         // axis relative position for the screen is consistent with the
                         // sprite batch.
-                        this.GraphicsDevice.Viewport.Height, 0, 0,
+                        this.GlobalGraphicsDevice.Viewport.Height, 0, 0,
 
                         // Z coordinate goes from 0 to 1.
                         1f)
@@ -102,7 +102,7 @@ namespace MetaMind.Engine.Components.Graphics
 
         #region Draw String
 
-        public void DrawMonospacedString(Font font, string str, Vector2 position, Color color, float scale)
+        public void DrawMonospacedString(MMFont font, string str, Vector2 position, Color color, float scale)
         {
             if (string.IsNullOrEmpty(str))
             {
@@ -133,7 +133,7 @@ namespace MetaMind.Engine.Components.Graphics
         /// <param name="halignment"></param>
         /// <param name="valignment"></param>
         /// <param name="leading">Vertical distance from line to line</param>
-        public void DrawMonospacedString(Font font, string str, Vector2 position, Color color, float scale, HoritonalAlignment halignment, VerticalAlignment valignment, int leading = 0)
+        public void DrawMonospacedString(MMFont font, string str, Vector2 position, Color color, float scale, HoritonalAlignment halignment, VerticalAlignment valignment, int leading = 0)
         {
             if (string.IsNullOrEmpty(str))
             {
@@ -182,7 +182,7 @@ namespace MetaMind.Engine.Components.Graphics
             }
         }
 
-        private void DrawMonospacedChar(Font font, char c, Vector2 position, Color color, float scale)
+        private void DrawMonospacedChar(MMFont font, char c, Vector2 position, Color color, float scale)
         {
             var str = c.ToString(CultureInfo.InvariantCulture);
 
@@ -191,7 +191,7 @@ namespace MetaMind.Engine.Components.Graphics
             this.DrawString(font, str, position, color, scale);
         }
 
-        public void DrawString(Font font, string str, Vector2 position, Color color, float scale)
+        public void DrawString(MMFont font, string str, Vector2 position, Color color, float scale)
         {
             if (string.IsNullOrEmpty(str))
             {
@@ -201,7 +201,7 @@ namespace MetaMind.Engine.Components.Graphics
             this.SpriteBatch.DrawString(font.SpriteData, font.AvailableString(str), position, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0);
         }
 
-        public void DrawString(Font font, string str, Vector2 position, Color color, float scale, HoritonalAlignment halignment, VerticalAlignment valignment, int leading = 0)
+        public void DrawString(MMFont font, string str, Vector2 position, Color color, float scale, HoritonalAlignment halignment, VerticalAlignment valignment, int leading = 0)
         {
             if (string.IsNullOrEmpty(str))
             {
@@ -450,9 +450,9 @@ namespace MetaMind.Engine.Components.Graphics
             this.textureEffect.World   = transformation;
             this.textureEffect.Texture = texture;
 
-            this.GraphicsDeviceController.PushEffect(this.textureEffect);
+            this.GraphicsDeviceController.EffectPush(this.textureEffect);
             this.GraphicsDeviceController.DrawTexture(this.textureItem);
-            this.GraphicsDeviceController.PopEffect();
+            this.GraphicsDeviceController.EffectPop();
         }
 
         #endregion

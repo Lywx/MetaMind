@@ -5,6 +5,7 @@ namespace MetaMind.Engine.Services.Script
     using System.Linq;
     using System.Threading;
     using Entities;
+    using Entities.Bases;
 
     public class QueueSession : MMEntity, IMMFreeUpdatable
     {

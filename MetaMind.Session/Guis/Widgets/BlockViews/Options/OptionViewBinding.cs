@@ -2,9 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
-    using Concepts.Operations;
     using Engine.Entities.Controls.Item;
     using Engine.Entities.Controls.Item.Data;
+    using Operations;
 
     public class OptionViewBinding : IMMViewBinding
     {

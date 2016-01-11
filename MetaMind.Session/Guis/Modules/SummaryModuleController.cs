@@ -2,18 +2,18 @@
 {
     using System;
     using Components.Input;
-    using Concepts.Cognitions;
-    using Concepts.Synchronizations;
     using Engine.Components.Input;
     using Engine.Components.Interop.Event;
     using Engine.Entities;
     using Microsoft.Xna.Framework;
+    using Runtime;
+    using Runtime.Attention;
     using Screens;
     using Sessions;
 
     public class SummaryModuleController : MMMVCEntityController<SummaryModule, SummarySettings, SummaryModuleController>
     {
-        public SummaryModuleController(SummaryModule module, IConsciousness consciousness, ISynchronization synchronization)
+        public SummaryModuleController(SummaryModule module, IConsciousness consciousness, ISynchronizationData synchronizationData)
             : base(module)
         {
             if (consciousness == null)
@@ -21,30 +21,30 @@
                 throw new ArgumentNullException(nameof(consciousness));
             }
 
-            if (synchronization == null)
+            if (synchronizationData == null)
             {
-                throw new ArgumentNullException(nameof(synchronization));
+                throw new ArgumentNullException(nameof(synchronizationData));
             }
 
             this.Consciousness   = consciousness;
-            this.Synchronization = synchronization;
+            this.SynchronizationData = synchronizationData;
         }
 
         private IConsciousness Consciousness { get; set; }
 
-        private ISynchronization Synchronization { get; set; }
+        private ISynchronizationData SynchronizationData { get; set; }
 
 
         public override void LoadContent()
         {
-            this.Listeners.Add(new SleepStoppedListener());
+            this.EntityListeners.Add(new SleepStoppedListener());
 
             base.LoadContent();
         }
 
         public override void UpdateInput(GameTime time)
         {
-            var keyboard = this.Input.State.Keyboard;
+            var keyboard = this.GlobalInput.State.Keyboard;
 
             if (keyboard.IsActionTriggered(KeyboardActions.ConsciousnessAwaken))
             {
@@ -66,7 +66,7 @@
 
             public override bool HandleEvent(IMMEvent @event)
             {
-                var screenManager = this.Interop.Screen;
+                var screenManager = this.GlobalInterop.Screen;
 
                 screenManager.ExitScreenFrom(1);
 

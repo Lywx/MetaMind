@@ -2,8 +2,8 @@
 {
     using System;
     using System.Speech.Synthesis;
-    using Concepts.Tests;
     using Engine.Entities;
+    using Tests;
 
     public class TestModule : MMMVCEntity<TesTMVCSettings>
     {

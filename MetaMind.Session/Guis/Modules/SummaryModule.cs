@@ -1,19 +1,19 @@
 namespace MetaMind.Session.Guis.Modules
 {
-    using Concepts.Cognitions;
-    using Concepts.Synchronizations;
     using Engine.Entities;
+    using Runtime;
+    using Runtime.Attention;
 
     public class SummaryModule : MMMVCEntity<SummarySettings>
     {
-        public SummaryModule(IConsciousness consciousness, ISynchronization synchronization, SummarySettings settings)
+        public SummaryModule(IConsciousness consciousness, ISynchronizationData synchronizationData, SummarySettings settings)
             : base(settings)
         {
             this.Consciousness   = consciousness;
-            this.Synchronization = synchronization;
+            this.SynchronizationData = synchronizationData;
 
-            this.Controller  = new SummaryModuleController(this, this.Consciousness, this.Synchronization);
-            this.Renderer = new SummaryModuleRenderer(this, this.Consciousness, this.Synchronization);
+            this.Controller  = new SummaryModuleController(this, this.Consciousness, this.SynchronizationData);
+            this.Renderer = new SummaryModuleRenderer(this, this.Consciousness, this.SynchronizationData);
         }
 
         ~SummaryModule()
@@ -25,7 +25,7 @@ namespace MetaMind.Session.Guis.Modules
 
         private IConsciousness Consciousness { get; set; }
 
-        private ISynchronization Synchronization { get; set; }
+        private ISynchronizationData SynchronizationData { get; set; }
 
         #endregion
     }

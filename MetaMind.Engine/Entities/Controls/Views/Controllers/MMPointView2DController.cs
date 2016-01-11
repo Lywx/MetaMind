@@ -202,7 +202,7 @@ namespace MetaMind.Engine.Entities.Controls.Views.Controllers
 
         #region Update Input
 
-        protected override void UpdateInputOfMouse(GameTime time)
+        protected override void UpdateMouseInput(GameTime time)
         {
             if (this.View[MMViewState.View_Is_Inputting]())
             {
@@ -222,7 +222,7 @@ namespace MetaMind.Engine.Entities.Controls.Views.Controllers
             }
         }
 
-        protected override void UpdateInputOfKeyboard(GameTime time)
+        protected override void UpdateKeyboardInput(GameTime time)
         {
             if (this.View[MMViewState.View_Is_Inputting]())
             {

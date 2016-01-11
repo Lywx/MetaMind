@@ -8,7 +8,7 @@ namespace MetaMind.Session.Guis.Modules.Summary
 
     public class SummaryTitle : Label
     {
-        public SummaryTitle(Func<Font> font, Func<string> text, Func<Vector2> pos, Func<Color> color, Func<float> size)
+        public SummaryTitle(Func<MMFont> font, Func<string> text, Func<Vector2> pos, Func<Color> color, Func<float> size)
             : base(font, text, pos, color, size)
         {
             this.TextHAlignment = HoritonalAlignment.Center;

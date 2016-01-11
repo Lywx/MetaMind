@@ -13,7 +13,7 @@ namespace MetaMind.Engine.Extensions
         /// I chose this font because it is a Chinese font that contains English 
         /// characters. It is the most large font for my current use.
         /// </remarks>
-        private static Font NSimSunRegularFont { get; set; }
+        private static MMFont NSimSunRegularFont { get; set; }
         
         public static string CropMonospacedString(string str, float scale, int maxLength)
         {
@@ -26,7 +26,7 @@ namespace MetaMind.Engine.Extensions
             return CropMonospacedString(str, 1.0f, (int)(count * NSimSunRegularFont.MonoData.AsciiSize(1.0f).X));
         }
 
-        public static string CropString(Font font, string str, float scale, int maxLength, bool monospaced = false)
+        public static string CropString(MMFont font, string str, float scale, int maxLength, bool monospaced = false)
         {
             if (maxLength < 1)
             {
@@ -93,7 +93,7 @@ namespace MetaMind.Engine.Extensions
         /// <summary>
         /// Break string using word by word method.
         /// </summary>
-        public static string BreakStringByWord(Font font, string str, float scale, float maxLineWidth, bool monospaced)
+        public static string BreakStringByWord(MMFont font, string str, float scale, float maxLineWidth, bool monospaced)
         {
             var spaceWidth = font.MeasureString(" ", scale, monospaced).X;
 
@@ -125,7 +125,7 @@ namespace MetaMind.Engine.Extensions
             return result.ToString();
         }
 
-        public static IEnumerable<string> BreakStringByWordToEnumerable(Font font, string str, float scale, float maxLineWidth, bool monospaced)
+        public static IEnumerable<string> BreakStringByWordToEnumerable(MMFont font, string str, float scale, float maxLineWidth, bool monospaced)
         {
             return BreakStringByWord(font, str, scale, maxLineWidth, monospaced).Split('\n');
         }
@@ -134,7 +134,7 @@ namespace MetaMind.Engine.Extensions
 
         #region Initialization
 
-        public static void Initialize(IFontManager fonts)
+        public static void Initialize(IMMFontManager fonts)
         {
             if (fonts == null)
             {

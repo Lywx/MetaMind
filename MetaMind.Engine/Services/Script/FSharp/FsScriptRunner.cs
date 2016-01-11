@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Entities;
+    using Entities.Bases;
 
     public class FsScriptRunner : MMEntity
     {

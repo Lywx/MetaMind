@@ -1,5 +1,6 @@
 ﻿namespace MetaMind.Engine.Entities.Controls
 {
+    using Bases;
     using Entities;
     using Microsoft.Xna.Framework;
 
@@ -30,7 +31,7 @@
             set
             {
                 if (value != null && 
-                    value.Enabled)
+                    value.EntityEnabled)
                 {
                     if (value.CanFocus)
                     {

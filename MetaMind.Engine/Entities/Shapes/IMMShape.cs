@@ -1,7 +1,6 @@
 namespace MetaMind.Engine.Entities.Shapes
 {
     using System;
-    using Entities.Elements;
     using Microsoft.Xna.Framework;
 
     public interface IMMShape
@@ -32,9 +31,9 @@ namespace MetaMind.Engine.Entities.Shapes
 
         #region Events
 
-        event EventHandler<MMElementEventArgs> Move;
+        event EventHandler Move;
 
-        event EventHandler<MMElementEventArgs> Resize;
+        event EventHandler Resize;
 
         #endregion
     }

@@ -2,8 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using Concepts.Operations;
     using Engine.Entities;
+    using Engine.Entities.Bases;
     using Engine.Entities.Controls.Item;
     using Engine.Entities.Controls.Item.Data;
     using Engine.Entities.Controls.Item.Factories;
@@ -23,6 +23,7 @@
     using Engine.Entities.Elements;
     using Microsoft.Xna.Framework;
     using Modules;
+    using Session.Operations;
     using Tests;
     using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
@@ -164,7 +165,7 @@
 
         protected virtual void AddViewRegion()
         {
-            var graphicsSettings = this.Graphics.Settings;
+            var graphicsSettings = this.EngineGraphics.Settings;
 
             var viewRegionSettings = new ViewRegionSettings();
             this.ViewRegion = new ViewRegion(
@@ -235,7 +236,7 @@
             this.View[MMViewState.View_Has_Focus] =
                 () => this.View[MMViewState.View_Has_Selection]() ||
                       this.ViewRegion[RegionState.Region_Has_Focus]() ||
-                      this.viewScrollbar[MMElementState.Element_Is_Dragging]();
+                      this.viewScrollbar[MMInputElementDebugState.Element_Is_Dragging]();
         }
     }
 }

@@ -8,6 +8,7 @@
 namespace MetaMind.Engine.Services.Console.Commands.Coreutils
 {
     using Entities;
+    using Entities.Bases;
 
     internal class ExitCommand : MMEntity, IConsoleCommand
     {
@@ -21,7 +22,7 @@ namespace MetaMind.Engine.Services.Console.Commands.Coreutils
 
         public string Execute(string[] arguments)
         {
-            this.Interop.Engine.Exit();
+            this.GlobalInterop.Engine.Exit();
             
             return "Exiting the engine";
         }

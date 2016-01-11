@@ -1,13 +1,13 @@
 ﻿namespace MetaMind.Session.Guis.Widgets.IndexViews.Operations
 {
     using System;
-    using Concepts.Operations;
     using Engine.Entities.Controls.Item;
     using Engine.Entities.Controls.Item.Interactions;
     using Engine.Entities.Controls.Item.Visuals;
     using Engine.Services;
     using Engine.Settings;
     using Microsoft.Xna.Framework;
+    using Session.Operations;
 
     public class OperationItemRenderer : MMViewItemRendererComponent
     {

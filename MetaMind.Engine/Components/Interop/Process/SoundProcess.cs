@@ -10,7 +10,7 @@ namespace MetaMind.Engine.Components.Interop.Process
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Audio;
 
-    public class SoundProcess : Process
+    public class SoundProcess : MMProcess
     {
         private readonly SoundEffectInstance soundInstance;
 

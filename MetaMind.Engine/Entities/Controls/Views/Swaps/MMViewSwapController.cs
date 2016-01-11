@@ -73,7 +73,7 @@ namespace MetaMind.Engine.Entities.Controls.Views.Swaps
 
             ((MMViewItem)touchedItem).OnSwapping();
 
-            this.Interop.Process.AttachProcess(new ViewItemSwapProcess(
+            this.GlobalInterop.Process.AttachProcess(new ViewItemSwapProcess(
                 draggingItem,
                 draggingItem.ItemLogic,
                 draggingView.ViewController,
@@ -124,7 +124,7 @@ namespace MetaMind.Engine.Entities.Controls.Views.Swaps
                !swappingItem[MMViewItemState.Item_Is_Swapped]())
             {
                 var swappingItemInteraction = swappingItem.ItemLogic.ItemInteraction;
-                swappingItemInteraction.ViewSwap(this.Interop, draggingItem);
+                swappingItemInteraction.ViewSwap(this.GlobalInterop, draggingItem);
             }
         }
 

@@ -1,7 +1,8 @@
 ﻿namespace MetaMind.Session.Guis.Layers
 {
     using Engine.Entities;
-    using Engine.Screens;
+    using Engine.Entities.Bases;
+    using Engine.Entities.Screens;
     using Engine.Services;
     using Microsoft.Xna.Framework;
     using Modules;
@@ -18,11 +19,11 @@
 
         public override void Draw(GameTime time)
         {
-            this.GraphicsRenderer.Begin();
+            this.GlobalGraphicsRenderer.Begin();
 
             this.Modules.Draw(time);
 
-            this.GraphicsRenderer.End();
+            this.GlobalGraphicsRenderer.End();
 
             base.Draw(time);
         }

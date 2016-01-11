@@ -3,6 +3,7 @@ namespace MetaMind.Engine.Components.Input
     using System;
     using System.Windows.Forms;
     using Microsoft.Xna.Framework;
+    using Mouse;
 
     /// <summary>
     /// Provide event based input handling. The advantages of event based input

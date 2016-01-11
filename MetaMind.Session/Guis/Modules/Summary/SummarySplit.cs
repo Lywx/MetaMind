@@ -2,6 +2,7 @@ namespace MetaMind.Session.Guis.Modules.Summary
 {
     using System;
     using Engine.Entities;
+    using Engine.Entities.Bases;
     using Engine.Services;
     using Microsoft.Xna.Framework;
     using Primtives2D;

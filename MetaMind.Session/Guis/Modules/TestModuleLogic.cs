@@ -2,12 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
-    using Concepts.Tests;
     using Engine.Entities;
+    using Engine.Entities.Bases;
     using Engine.Entities.Controls.Item;
     using Engine.Entities.Controls.Views;
     using Engine.Services;
     using Microsoft.Xna.Framework;
+    using Tests;
     using Widgets.IndexViews;
     using Widgets.IndexViews.Tests;
 
@@ -33,7 +34,7 @@
             this.test        = test;
             this.testSession = testSession;
 
-            this.TestMonitor = new TestMonitor(this.Interop.Engine, this.test);
+            this.TestMonitor = new TestMonitor(this.GlobalInterop.Engine, this.test);
 
             this.ControllableEntities = new MMEntityCollection<IMMInputEntity>();
         }
@@ -48,7 +49,7 @@
                                                                                                            
         public override void LoadContent()
         {
-            var graphicsSettings = this.Graphics.Settings;
+            var graphicsSettings = this.EngineGraphics.Settings;
 
             // View settings
             var viewSettings = new StandardIndexViewSettings(

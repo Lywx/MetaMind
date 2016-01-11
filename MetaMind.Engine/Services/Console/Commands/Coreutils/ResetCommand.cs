@@ -1,6 +1,7 @@
 ﻿namespace MetaMind.Engine.Services.Console.Commands.Coreutils
 {
     using Entities;
+    using Entities.Bases;
 
     internal class ResetCommand : MMEntity, IConsoleCommand
     {
@@ -15,10 +16,10 @@
         public string Execute(string[] arguments)
         {
             // Must call restart first, because it will synchronously save the current session
-            this.Interop.Engine.Restart();
+            this.GlobalInterop.Engine.Restart();
 
             // Delete the save file before next session is started
-            this.Interop.File.DeleteSaveDirectory();
+            this.GlobalInterop.File.DeleteSaveDirectory();
 
             return "";
         }

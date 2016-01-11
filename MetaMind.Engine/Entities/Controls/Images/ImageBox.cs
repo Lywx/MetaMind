@@ -145,7 +145,7 @@ namespace MetaMind.Engine.Entities.Controls.Images
             {
                 case ImageMode.Normal:
                 {
-                    this.GraphicsRenderer.Draw(
+                    this.GlobalGraphicsRenderer.Draw(
                         this.Image,
                         this.X,
                         this.Y,
@@ -158,7 +158,7 @@ namespace MetaMind.Engine.Entities.Controls.Images
 
                 case ImageMode.Stretched:
                 {
-                    this.GraphicsRenderer.Draw(
+                    this.GlobalGraphicsRenderer.Draw(
                         this.Image,
                         this.Bounds,
                         this.SourceRectangle,

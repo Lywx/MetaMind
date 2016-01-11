@@ -1,6 +1,7 @@
 namespace MetaMind.Engine.Entities.Controls
 {
     using System;
+    using Bases;
     using Entities;
 
     public interface IMMControlComponentBase : IMMReactor, IMMInputEntity, IMMFocusable  

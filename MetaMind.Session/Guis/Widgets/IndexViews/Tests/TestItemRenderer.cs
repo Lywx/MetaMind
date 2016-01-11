@@ -8,7 +8,6 @@
 namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
 {
     using System;
-    using Concepts.Tests;
     using Engine.Entities.Controls.Item;
     using Engine.Entities.Controls.Item.Interactions;
     using Engine.Entities.Controls.Item.Visuals;
@@ -16,6 +15,7 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
     using Engine.Settings;
     using Extensions;
     using Microsoft.Xna.Framework;
+    using Session.Tests;
 
     public class TestItemRenderer : MMViewItemRendererComponent
     {

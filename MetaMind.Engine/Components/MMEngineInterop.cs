@@ -31,7 +31,7 @@ namespace MetaMind.Engine.Components
             this.Audio = MMAudioManagerFactory.Create(engine);
             this.Engine.Components.Add(this.Audio);
 
-            this.Asset = new AssetManager(engine);
+            this.Asset = new MMAssetManager(engine);
             this.Engine.Components.Add(this.Asset);
 
             this.File = new MMDirectoryManager();
@@ -61,7 +61,7 @@ namespace MetaMind.Engine.Components
 
         #endregion
 
-        public IAssetManager Asset { get; private set; }
+        public IMMAssetManager Asset { get; private set; }
 
         public IMMAudioManager Audio { get; private set; }
 

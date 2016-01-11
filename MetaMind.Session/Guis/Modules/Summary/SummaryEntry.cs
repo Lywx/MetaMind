@@ -3,6 +3,7 @@ namespace MetaMind.Session.Guis.Modules.Summary
     using System;
     using Engine.Components.Content.Fonts;
     using Engine.Entities;
+    using Engine.Entities.Bases;
     using Engine.Entities.Controls.Labels;
     using Engine.Entities.Graphics.Fonts;
     using Engine.Services;
@@ -10,7 +11,7 @@ namespace MetaMind.Session.Guis.Modules.Summary
 
     public class SummaryEntry : MMVisualEntity
     {
-        public SummaryEntry(Func<Font> font, Func<string> caption, Func<Vector2> captionPos, Func<string> statistics, Func<Vector2> statisticsPos, Func<Color> color, Func<float> size)
+        public SummaryEntry(Func<MMFont> font, Func<string> caption, Func<Vector2> captionPos, Func<string> statistics, Func<Vector2> statisticsPos, Func<Color> color, Func<float> size)
         {
             this.Caption    = new Label(font, caption   , captionPos   , color, size);
             this.Statistics = new Label(font, statistics, statisticsPos, color, size)

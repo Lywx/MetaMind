@@ -4,9 +4,9 @@ namespace MetaMind.Engine.Components.Interop
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
+    using Entities.Screens;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Screens;
 
     public class MMScreenDirector : MMInputableComponent, IMMScreenDirector
     {

@@ -15,6 +15,13 @@ namespace MetaMind.Engine.Entities.Controls.Buttons
 
         public MMButtonVisualState<Color> Color;
 
-        public Font Font;
+        public MMFont Font;
+
+        public MMRectangleButtonSettings()
+        {
+            this.Image = new MMButtonVisualState<Texture2D>();
+        }
+
+        public static MMRectangleButtonSettings Default => new MMRectangleButtonSettings();
     }
 }

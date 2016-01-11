@@ -1,0 +1,15 @@
+namespace MetaMind.Engine.Entities.Bases
+{
+    using System;
+
+    public interface IMMUpdateable : IMMUpdateableOperations
+    {
+        bool EntityEnabled { get; set; }
+
+        int EntityUpdateOrder { get; set; }
+
+        event EventHandler<EventArgs> EntityEnabledChanged;
+
+        event EventHandler<EventArgs> EntityUpdateOrderChanged;
+    }
+}

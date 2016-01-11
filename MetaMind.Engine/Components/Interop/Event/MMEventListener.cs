@@ -10,6 +10,7 @@ namespace MetaMind.Engine.Components.Interop.Event
     using System;
     using System.Collections.Generic;
     using Entities;
+    using Entities.Bases;
 
     public class MMEventListener : MMEntity, IMMEventListener
     {

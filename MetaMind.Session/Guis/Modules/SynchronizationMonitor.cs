@@ -1,11 +1,11 @@
 ﻿namespace MetaMind.Session.Guis.Modules
 {
     using System;
-    using Concepts.Synchronizations;
     using Engine;
     using Engine.Components;
     using Engine.Components.Interop.Event;
     using Microsoft.Xna.Framework;
+    using Runtime.Attention;
     using Session.Sessions;
 
     /// <summary>
@@ -13,7 +13,7 @@
     /// </summary>
     public class SynchronizationMonitor : MMInputableComponent
     {
-        private readonly ISynchronization synchronization;
+        private readonly ISynchronizationData synchronizationData;
 
         private readonly string synchronizingFalseCue = "Synchronization False";
 
@@ -25,7 +25,7 @@
 
         private TimeSpan attentionSpan = TimeSpan.FromSeconds(5);
 
-        public SynchronizationMonitor(MMEngine engine, ISynchronization synchronization)
+        public SynchronizationMonitor(MMEngine engine, ISynchronizationData synchronizationData)
             : base(engine)
         {
             if (engine == null)
@@ -33,12 +33,12 @@
                 throw new ArgumentNullException(nameof(engine));
             }
 
-            if (synchronization == null)
+            if (synchronizationData == null)
             {
-                throw new ArgumentNullException(nameof(synchronization));
+                throw new ArgumentNullException(nameof(synchronizationData));
             }
 
-            this.synchronization = synchronization;
+            this.synchronizationData = synchronizationData;
 
             engine.Components.Add(this);
         }
@@ -51,7 +51,7 @@
             {
                 var audio = this.Interop.Audio;
 
-                if (this.synchronization.Enabled)
+                if (this.synchronizationData.Enabled)
                 {
                     audio.PlayMusic(this.synchronizingTrueCue);
 

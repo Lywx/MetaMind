@@ -2,11 +2,12 @@
 {
     using System;
     using Actions;
+    using Bases;
     using Graphics;
     using Microsoft.Xna.Framework;
 
     /// <summary>
-    /// MMNode 
+    /// MMNode TODO
     /// </summary>
     public class MMNode : MMInputEntity, IMMNode, IMMNodeInternal
     {
@@ -20,18 +21,9 @@
 
         #region Dependency 
 
-        private CCScheduler Scheduler
-        {
-            get { return Application.Scheduler; }
-        }
+        private CCScheduler Scheduler => this.GlobalInterop.Process.Scheduler;
 
-        private MMActionManager ActionManager
-        {
-            get
-            {
-                return Application.ActionManager;
-            }
-        }
+        private MMActionManager ActionManager => this.GlobalInterop.Process.ActionManager;
 
         #endregion
 

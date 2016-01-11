@@ -17,7 +17,7 @@ namespace MetaMind.Engine.Services
 
         IMMRenderer Renderer { get; }
 
-        MMRenderDeviceController DeviceController { get; }
+        MMGraphicsDeviceController DeviceController { get; }
 
         GraphicsDevice Device { get; }
 

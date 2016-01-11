@@ -38,7 +38,13 @@ namespace Microsoft.Xna.Framework
             return Color.FromNonPremultiplied(r, g, b, a);
         }
 
-        private static void HSVToRGB(float h, float s, float v, out float r, out float g, out float b)
+        private static void HSVToRGB(
+            float h,
+            float s,
+            float v,
+            out float r,
+            out float g,
+            out float b)
         {
             // Keeps h from going over 360
             h = h - ((int)(h / 360) * 360);
@@ -101,7 +107,13 @@ namespace Microsoft.Xna.Framework
             }
         }
 
-        private static void RGBToHSV(float r, float g, float b, out float h, out float s, out float v)
+        private static void RGBToHSV(
+            float r,
+            float g,
+            float b,
+            out float h,
+            out float s,
+            out float v)
         {
             const float tolerance = 0.1f;
 
@@ -144,6 +156,5 @@ namespace Microsoft.Xna.Framework
                 h = -1;
             }
         }
-        
     }
 }

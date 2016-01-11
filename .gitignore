@@ -24,19 +24,23 @@ MetaMind.Engine/Documentation/
 MetaMind.Engine/obj/
 MetaMind.Engine/bin/
 
-MetaMind.EngineProcessor/Content/obj/
-MetaMind.EngineProcessor/obj/
-MetaMind.EngineProcessor/bin/
+MetaMind.Engine.Processor/Content/obj/
+MetaMind.Engine.Processor/obj/
+MetaMind.Engine.Processor/bin/
 
-MetaMind.EngineTest/bin/
-MetaMind.EngineTest/obj/
+MetaMind.Engine.Test/bin/
+MetaMind.Engine.Test/obj/
 
 MetaMind.Session/bin/
 MetaMind.Session/Documentation/
 MetaMind.Session/obj/
 MetaMind.Session/Content/obj/
 MetaMind.Session/Content/Audio/
-MetaMind.SessionTest/obj/
-MetaMind.SessionTest/bin/
+
+MetaMind.Session.Test/obj/
+MetaMind.Session.Test/bin/
+
+MetaMind.Session.Model/obj/
+MetaMind.Session.Model/bin/
 
 MetaMind.v12.suo

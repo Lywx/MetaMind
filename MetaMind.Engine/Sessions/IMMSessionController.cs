@@ -2,6 +2,7 @@ namespace MetaMind.Engine.Sessions
 {
     using System;
     using Entities;
+    using Entities.Bases;
 
     /// <summary>
     ///     Session controller is the main control for session management. It should

@@ -23,10 +23,6 @@ namespace MetaMind.Engine.Entities.Nodes
         Color Displayed { set; }
 
         Color Real { get; set; }
-
-        event Action UpdateDisplayedInItselfStarted;
-
-        event Action UpdateDisplayedInItselfEnded;
     }
 
     internal interface IMMNodeColorOperationsInternal

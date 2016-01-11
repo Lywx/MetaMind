@@ -1,9 +1,9 @@
 ﻿namespace MetaMind.Session.Guis.Modules
 {
     using System;
-    using Concepts.Cognitions;
-    using Concepts.Synchronizations;
     using Engine.Entities;
+    using Runtime;
+    using Runtime.Attention;
 
     /// <summary>
     /// This module control all the interaction with the Synchronization and Consciousness object, 
@@ -13,7 +13,7 @@
     {
         private readonly IConsciousness consciousness;
 
-        private readonly ISynchronization synchronization;
+        private readonly ISynchronizationData synchronizationData;
 
         public SynchronizationModule(ICognition cognition, SynchronizationSettings settings)
             : base(settings)
@@ -24,10 +24,10 @@
             }
 
             this.consciousness   = cognition.Consciousness;
-            this.synchronization = cognition.Synchronization;
+            this.synchronizationData = cognition.SynchronizationData;
 
-            this.Controller  = new SynchronizationController(this, this.consciousness, this.synchronization);
-            this.Renderer = new SynchronizationRenderer(this, cognition, this.consciousness, this.synchronization);
+            this.Controller  = new SynchronizationController(this, this.consciousness, this.synchronizationData);
+            this.Renderer = new SynchronizationRenderer(this, cognition, this.consciousness, this.synchronizationData);
         }
     }
 }

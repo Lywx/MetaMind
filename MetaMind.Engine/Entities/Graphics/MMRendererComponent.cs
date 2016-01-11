@@ -1,9 +1,8 @@
 ﻿namespace MetaMind.Engine.Entities.Graphics
 {
     using Adapters;
+    using Bases;
     using Components.Graphics;
-    using Elements;
-    using Entities;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Shapes;
@@ -42,7 +41,7 @@
         protected MMViewportAdapter ViewportAdapter { get; set; } =
             new MMDefaultViewportAdapter();
 
-        protected Viewport Viewport => this.GraphicsDevice.Viewport;
+        protected Viewport Viewport => this.GlobalGraphicsDevice.Viewport;
 
         #endregion
 
@@ -57,8 +56,8 @@
 
         public int ZOrder
         {
-            get { return this.DrawOrder; }
-            set { this.DrawOrder = value; }
+            get { return this.EntityDrawOrder; }
+            set { this.EntityDrawOrder = value; }
         }
 
         #endregion
@@ -97,7 +96,7 @@
                     component.Parent?.Remove(component);
 
                     // Configure parenthood
-                    component.Enabled = this.Enabled ? component.Enabled : this.Enabled;
+                    component.EntityEnabled = this.EntityEnabled ? component.EntityEnabled : this.EntityEnabled;
 
                     var componentInternal = (IMMRendererComponentInternal)component;
                     componentInternal.Parent = this;
@@ -108,7 +107,7 @@
 
                     this.Resize += componentInternal.OnParentResize;
 
-                    if (this.Enabled)
+                    if (this.EntityEnabled)
                     {
                         this.OnParentChanged(this, EventArgs.Empty);
                     }
@@ -134,7 +133,7 @@
 
                 this.Resize -= componentInternal.OnParentResize;
 
-                if (this.Enabled)
+                if (this.EntityEnabled)
                 {
                     this.OnParentChanged(this, EventArgs.Empty);
                 }
@@ -166,19 +165,19 @@
 
         #region State Data
 
-        public override bool Enabled
+        public override bool EntityEnabled
         {
-            get { return this.Rectangle.Enabled; }
-            set { this.Rectangle.Enabled = value; }
+            get { return this.Rectangle.EntityEnabled; }
+            set { this.Rectangle.EntityEnabled = value; }
         }
 
         #endregion
 
         #region Element Data
 
-        public event EventHandler<MMElementEventArgs> Move = delegate { };
+        public event EventHandler Move = delegate { };
 
-        public event EventHandler<MMElementEventArgs> Resize = delegate { };
+        public event EventHandler Resize = delegate { };
 
         /// <summary>
         /// Delegates all the geometry related functionalities and events.
@@ -298,7 +297,7 @@
 
         protected virtual void SetParentRenderTarget()
         {
-            this.GraphicsDevice.SetRenderTarget(this.Parent.RenderTarget);
+            this.GlobalGraphicsDevice.SetRenderTarget(this.Parent.RenderTarget);
         }
 
         #endregion
@@ -306,10 +305,10 @@
         #region Events
 
         public event EventHandler<MMRendererComponentDrawEventArgs>
-            CascadedBeginDrawStarted = delegate {};
+            CascadedBeginDrawStarted = delegate { };
 
         public event EventHandler<MMRendererComponentDrawEventArgs>
-            CascadedEndDrawStarted = delegate {};
+            CascadedEndDrawStarted = delegate { };
 
         public event EventHandler ParentChanged = delegate { };
 
@@ -319,10 +318,10 @@
 
         public void OnOpacityChanged(object sender, EventArgs e)
         {
-            // TODO(Further):
+            // TODO(Further): Broadcast event from parent
         }
 
-        public void OnParentResize(object sender, MMElementEventArgs e)
+        public void OnParentResize(object sender, EventArgs e)
         {
             // TODO(Further): Broadcast event from parent
         }
@@ -391,7 +390,7 @@
         /// </remarks>
         public sealed override void BeginDraw(GameTime time)
         {
-            if (!this.Visible)
+            if (!this.EntityVisible)
             {
                 return;
             }
@@ -416,12 +415,12 @@
                         this.RenderTargetDestinationRectangle,
                         time));
 
-                this.GraphicsDevice.SetRenderTarget(this.RenderTarget);
-                this.GraphicsDevice.Clear(Color.Transparent);
+                this.GlobalGraphicsDevice.SetRenderTarget(this.RenderTarget);
+                this.GlobalGraphicsDevice.Clear(Color.Transparent);
 
                 this.Draw(time);
 
-                this.GraphicsDeviceController.RestoreRenderTarget();
+                this.GlobalGraphicsDeviceController.RestoreRenderTarget();
             }
         }
 
@@ -431,7 +430,7 @@
         /// </summary>
         public sealed override void EndDraw(GameTime time)
         {
-            if (!this.Visible)
+            if (!this.EntityVisible)
             {
                 return;
             }
@@ -456,7 +455,7 @@
                 this.SetParentRenderTarget();
             }
 
-            this.GraphicsRenderer.DrawImmediate(
+            this.GlobalGraphicsRenderer.DrawImmediate(
                 this.RenderTarget,
                 this.RenderTargetDestinationRectangle,
                 this.RenderTargetSourceRectangle,
@@ -469,7 +468,7 @@
 
         public override void Update(GameTime time)
         {
-            if (!this.Enabled)
+            if (!this.EntityEnabled)
             {
                 return;
             }
@@ -483,7 +482,7 @@
 
         public void UpdateForwardBuffer()
         {
-            if (!this.Enabled)
+            if (!this.EntityEnabled)
             {
                 return;
             }
@@ -493,7 +492,7 @@
 
         public void UpdateBackwardBuffer()
         {
-            if (!this.Enabled)
+            if (!this.EntityEnabled)
             {
                 return;
             }

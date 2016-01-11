@@ -2,19 +2,19 @@ namespace MetaMind.Session.Guis.Modules
 {
     using System;
     using Components.Input;
-    using Concepts.Cognitions;
-    using Concepts.Synchronizations;
     using Engine.Components.Input;
     using Engine.Components.Interop.Event;
     using Engine.Entities;
     using Engine.Services;
     using Microsoft.Xna.Framework;
+    using Runtime;
+    using Runtime.Attention;
     using Screens;
     using Session.Sessions;
 
     public class SynchronizationController : MMMVCEntityController<SynchronizationModule, SynchronizationSettings, SynchronizationController>
     {
-        public SynchronizationController(SynchronizationModule module, IConsciousness consciousness, ISynchronization synchronization)
+        public SynchronizationController(SynchronizationModule module, IConsciousness consciousness, ISynchronizationData synchronizationData)
             : base(module)
         {
             if (consciousness == null)
@@ -22,30 +22,30 @@ namespace MetaMind.Session.Guis.Modules
                 throw new ArgumentNullException(nameof(consciousness));
             }
 
-            if (synchronization == null)
+            if (synchronizationData == null)
             {
-                throw new ArgumentNullException(nameof(synchronization));
+                throw new ArgumentNullException(nameof(synchronizationData));
             }
 
             this.Consciousness   = consciousness;
-            this.Synchronization = synchronization;
+            this.SynchronizationData = synchronizationData;
 
-            this.SynchronizationMonitor = new SynchronizationMonitor(this.Interop.Engine, this.Synchronization);
+            this.SynchronizationMonitor = new SynchronizationMonitor(this.GlobalInterop.Engine, this.SynchronizationData);
         }
 
         private SynchronizationMonitor SynchronizationMonitor { get; set; }
 
         private IConsciousness Consciousness { get; set; }
 
-        private ISynchronization Synchronization { get; set; }
+        private ISynchronizationData SynchronizationData { get; set; }
 
         public override void LoadContent()
         {
-            this.Listeners.Add(new SleepStartedListener(this.Synchronization, this));
-            this.Listeners.Add(new SleepStoppedListener(this.Synchronization));
+            this.EntityListeners.Add(new SleepStartedListener(this.SynchronizationData, this));
+            this.EntityListeners.Add(new SleepStoppedListener(this.SynchronizationData));
 
-            this.Listeners.Add(new SynchronizationStartedListener(this.Synchronization));
-            this.Listeners.Add(new SynchronizationStoppedListener(this.Synchronization, this));
+            this.EntityListeners.Add(new SynchronizationStartedListener(this.SynchronizationData));
+            this.EntityListeners.Add(new SynchronizationStoppedListener(this.SynchronizationData, this));
 
             base.LoadContent();
         }
@@ -69,7 +69,7 @@ namespace MetaMind.Session.Guis.Modules
             // Reverse Synchronization 
             if (keyboard.IsActionTriggered(KeyboardActions.SynchronizationReverse))
             {
-                this.Synchronization.TryAbort();
+                this.SynchronizationData.TryAbort();
             }
         }
 
@@ -77,7 +77,7 @@ namespace MetaMind.Session.Guis.Modules
 
         public void Stop()
         {
-            this.Synchronization       .Stop();
+            this.SynchronizationData       .Stop();
             this.SynchronizationMonitor.Stop();
         }
 
@@ -102,13 +102,13 @@ namespace MetaMind.Session.Guis.Modules
 
         private class SleepStartedListener : MMEventListener
         {
-            private readonly ISynchronization synchronization;
+            private readonly ISynchronizationData synchronizationData;
 
             private readonly SynchronizationController synchronizationController;
 
-            public SleepStartedListener(ISynchronization synchronization, SynchronizationController synchronizationController)
+            public SleepStartedListener(ISynchronizationData synchronizationData, SynchronizationController synchronizationController)
             {
-                this.synchronization        = synchronization;
+                this.synchronizationData        = synchronizationData;
                 this.synchronizationController = synchronizationController;
 
                 this.RegisteredEvents.Add((int)SessionEvent.SleepStarted);
@@ -117,18 +117,18 @@ namespace MetaMind.Session.Guis.Modules
             public override bool HandleEvent(IMMEvent @event)
             {
                 // Stop synchronization
-                if (this.synchronization.Enabled)
+                if (this.synchronizationData.Enabled)
                 {
                     this.synchronizationController.Stop();
                 }
 
                 // Reset statistics
-                this.synchronization.ResetTomorrow();
+                this.synchronizationData.ResetTomorrow();
 
                 // Quit monitoring 
                 this.synchronizationController.Exit();
 
-                var screenManager = this.Interop.Screen;
+                var screenManager = this.GlobalInterop.Screen;
 
                 // Remove screens on the background screen
                 screenManager.ExitScreenFrom(1); 
@@ -140,18 +140,18 @@ namespace MetaMind.Session.Guis.Modules
 
         private class SleepStoppedListener : MMEventListener
         {
-            private readonly ISynchronization synchronization;
+            private readonly ISynchronizationData synchronizationData;
 
-            public SleepStoppedListener(ISynchronization synchronization)
+            public SleepStoppedListener(ISynchronizationData synchronizationData)
             {
-                this.synchronization = synchronization;
+                this.synchronizationData = synchronizationData;
 
                 this.RegisteredEvents.Add((int)SessionEvent.SleepStopped);
             }
 
             public override bool HandleEvent(IMMEvent e)
             {
-                this.synchronization.ResetToday();
+                this.synchronizationData.ResetToday();
 
                 return true;
             }
@@ -159,19 +159,19 @@ namespace MetaMind.Session.Guis.Modules
 
         private class SynchronizationStartedListener : MMEventListener
         {
-            public SynchronizationStartedListener(ISynchronization synchronization)
+            public SynchronizationStartedListener(ISynchronizationData synchronizationData)
             {
-                if (synchronization == null)
+                if (synchronizationData == null)
                 {
-                    throw new ArgumentNullException("synchronization");
+                    throw new ArgumentNullException("synchronizationData");
                 }
 
-                this.Synchronization = synchronization;
+                this.SynchronizationData = synchronizationData;
 
                 this.RegisteredEvents.Add((int)SessionEvent.SyncStarted);
             }
 
-            private ISynchronization Synchronization { get; set; }
+            private ISynchronizationData SynchronizationData { get; set; }
 
             public override bool HandleEvent(IMMEvent e)
             {
@@ -181,7 +181,7 @@ namespace MetaMind.Session.Guis.Modules
                 // uncomment this to enforce fixed entry start/stop
                 //// if (Synchronization.IsEnabled) return true;
 
-                this.Synchronization.TryStart(data);
+                this.SynchronizationData.TryBegin(data);
 
                 return true;
             }
@@ -189,13 +189,13 @@ namespace MetaMind.Session.Guis.Modules
 
         private class SynchronizationStoppedListener : MMEventListener
         {
-            private readonly ISynchronization synchronization;
+            private readonly ISynchronizationData synchronizationData;
 
             private readonly SynchronizationController synchronizationController;
 
-            public SynchronizationStoppedListener(ISynchronization synchronization, SynchronizationController synchronizationController)
+            public SynchronizationStoppedListener(ISynchronizationData synchronizationData, SynchronizationController synchronizationController)
             {
-                this.synchronization      = synchronization;
+                this.synchronizationData      = synchronizationData;
                 this.synchronizationController = synchronizationController;
 
                 this.RegisteredEvents.Add((int)SessionEvent.SyncStopped);
@@ -203,7 +203,7 @@ namespace MetaMind.Session.Guis.Modules
 
             public override bool HandleEvent(IMMEvent @event)
             {
-                if (!this.synchronization.Enabled)
+                if (!this.synchronizationData.Enabled)
                 {
                     return true;
                 }

@@ -28,7 +28,7 @@ namespace MetaMind.Engine.Services
 
         public IMMRenderer Renderer => this.Graphics.Renderer;
 
-        public MMRenderDeviceController DeviceController => this.Graphics.DeviceController;
+        public MMGraphicsDeviceController DeviceController => this.Graphics.DeviceController;
 
         #endregion
     }

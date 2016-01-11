@@ -7,6 +7,7 @@ namespace MetaMind.Engine.Windows.Components.Input
     using Microsoft.Xna.Framework;
     using System;
     using System.Windows.Forms;
+    using Engine.Components.Input.Mouse;
 
     public class MMInputEventWin32 : MMInputableComponent, IMMInputEvent
     {

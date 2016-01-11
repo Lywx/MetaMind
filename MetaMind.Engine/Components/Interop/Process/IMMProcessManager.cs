@@ -7,6 +7,6 @@ namespace MetaMind.Engine.Components.Interop.Process
     {
         void AbortProcesses(bool immediate);
 
-        void AttachProcess(IProcess process);
+        void AttachProcess(IMMProcess process);
     }
 }

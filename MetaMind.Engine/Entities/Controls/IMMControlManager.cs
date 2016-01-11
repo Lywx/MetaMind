@@ -1,5 +1,6 @@
 ﻿namespace MetaMind.Engine.Entities.Controls
 {
+    using Bases;
     using Entities;
 
     public interface IMMControlManager : IMMControlManagerOperations, IMMReactor, IMMEntity

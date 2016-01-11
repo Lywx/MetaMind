@@ -3,6 +3,7 @@ namespace MetaMind.Session.Guis.Modules.Summary
     using System;
     using Engine.Components.Content.Fonts;
     using Engine.Entities;
+    using Engine.Entities.Bases;
     using Microsoft.Xna.Framework;
 
     public class SummaryFactory : MMVisualEntity
@@ -21,7 +22,7 @@ namespace MetaMind.Session.Guis.Modules.Summary
 
         public SummaryEntry CreateEntry(Func<int> line, Func<string> caption, Func<string> statistics, Func<Color> color)
         {
-            var font = new Func<Font>(() => this.Settings.EntityFont);
+            var font = new Func<MMFont>(() => this.Settings.EntityFont);
 
             var captionPos    = new Func<Vector2>(() => new Vector2(this.Settings.ViewportWidth / 2f - 300, 150 + line() * this.Settings.LineHeight));
             var statisticsPos = new Func<Vector2>(() => new Vector2(this.Settings.ViewportWidth / 2f + 260, 150 + line() * this.Settings.LineHeight));

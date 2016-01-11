@@ -3,6 +3,7 @@
     using System;
     using Engine.Components.Graphics;
     using Engine.Entities;
+    using Engine.Entities.Bases;
     using Engine.Services.Loader;
     using Engine.Settings;
     using Microsoft.Xna.Framework;
@@ -31,7 +32,7 @@
 
         public SynchronizationSettings()
         {
-            this.LoadParameter(this.Graphics.Settings);
+            this.LoadParameter(this.EngineGraphics.Settings);
 
             this.BarFrameCenterPosition = new Vector2((float)this.viewportWidth / 2, 16);
         }

@@ -12,13 +12,13 @@ namespace MetaMind.Engine.Entities.Graphics.Adapters
 
         #endregion
 
-        public override int VirtualWidth => this.GraphicsDevice.Viewport.Width;
+        public override int VirtualWidth => this.GlobalGraphicsDevice.Viewport.Width;
 
-        public override int VirtualHeight => this.GraphicsDevice.Viewport.Height;
+        public override int VirtualHeight => this.GlobalGraphicsDevice.Viewport.Height;
 
-        public override int ViewportWidth => this.GraphicsDevice.Viewport.Width;
+        public override int ViewportWidth => this.GlobalGraphicsDevice.Viewport.Width;
 
-        public override int ViewportHeight => this.GraphicsDevice.Viewport.Height;
+        public override int ViewportHeight => this.GlobalGraphicsDevice.Viewport.Height;
 
         public override void OnClientSizeChanged()
         {

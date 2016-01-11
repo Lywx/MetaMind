@@ -39,7 +39,7 @@ namespace MetaMind.Engine.Entities.Controls.Images
                            : new Action<SpriteBatch, Rectangle, Color>(Primitives2D.DrawRectangle);
 
             draw(
-                this.GraphicsDeviceController.SpriteBatch,
+                this.GlobalGraphicsDeviceController.SpriteBatch,
                 this.BoundsSelector(),
                 this.ColorSelector().MakeTransparent(this.Opacity.Displayed));
         }

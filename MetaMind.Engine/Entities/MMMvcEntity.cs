@@ -1,5 +1,6 @@
 namespace MetaMind.Engine.Entities
 {
+    using Bases;
     using Microsoft.Xna.Framework;
 
     /// <summary>

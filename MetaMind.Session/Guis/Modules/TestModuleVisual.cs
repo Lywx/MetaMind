@@ -1,13 +1,14 @@
 ﻿namespace MetaMind.Session.Guis.Modules
 {
     using System;
-    using Concepts.Tests;
     using Engine.Components.Content.Fonts;
     using Engine.Entities;
+    using Engine.Entities.Bases;
     using Engine.Entities.Controls.Labels;
     using Engine.Entities.Graphics.Fonts;
     using Engine.Settings;
     using Microsoft.Xna.Framework;
+    using Tests;
 
     public class TesTMVCRenderer : MMMVCEntityRenderer<TestModule, TesTMVCSettings, TesTMVCController>
     {
@@ -29,7 +30,7 @@
 
         public override void LoadContent()
         {
-            var testCompletionFont  = new Func<Font>(() => Font.UiStatistics);
+            var testCompletionFont  = new Func<MMFont>(() => MMFont.UiStatistics);
             var testCompletionColor = new Func<Color>(() => this.test.Evaluation.ResultAllPassedRate > TestMonitor.TestWarningRate ? MMPalette.LightGreen : MMPalette.LightPink);
 
             var testRatePrefix = new Label
@@ -60,7 +61,7 @@
             base.LoadContent();
         }
 
-        private Vector2 TestRateCenterPosition => new Vector2(this.Graphics.Settings.Width / 2 - 160, 90);
+        private Vector2 TestRateCenterPosition => new Vector2(this.EngineGraphics.Settings.Width / 2 - 160, 90);
 
         public override void BeginDraw(GameTime time)
         {

@@ -36,6 +36,18 @@ namespace MetaMind.Engine.Components.Content.Texture
         {
         }
 
+        /// <summary>
+        /// Release all references to the fonts.
+        /// </summary>
+        protected override void UnloadContent()
+        {
+            this.Image.Clear();
+        }
+
+        #endregion Load and Unload
+
+        #region Operations
+
         public void Add(MMImageAsset imageAsset)
         {
             if (!this.Image.ContainsKey(imageAsset.Name))
@@ -52,15 +64,7 @@ namespace MetaMind.Engine.Components.Content.Texture
             }
         }
 
-        /// <summary>
-        /// Release all references to the fonts.
-        /// </summary>
-        protected override void UnloadContent()
-        {
-            this.Image.Clear();
-        }
-
-        #endregion Load and Unload
+        #endregion
 
         #region IDisposable
 

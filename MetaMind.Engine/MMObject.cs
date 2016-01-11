@@ -12,24 +12,24 @@ namespace MetaMind.Engine
     public class MMObject
     {
 
-        protected MMEngine Engine => this.Interop.Engine;
+        protected MMEngine GlobalEngine => this.GlobalInterop.Engine;
 
         #region Graphics
 
-        protected IMMEngineGraphicsService Graphics => MMEngine.Service.Graphics;
+        protected IMMEngineGraphicsService GlobalGraphics => MMEngine.Service.Graphics;
 
-        protected GraphicsDevice GraphicsDevice => this.Graphics.Device;
+        protected GraphicsDevice GlobalGraphicsDevice => this.GlobalGraphics.Device;
 
-        protected IMMRenderer GraphicsRenderer => this.Graphics.Renderer;
+        protected IMMRenderer GlobalGraphicsRenderer => this.GlobalGraphics.Renderer;
 
-        internal MMRenderDeviceController GraphicsDeviceController => this.Graphics.DeviceController;
+        internal MMGraphicsDeviceController GlobalGraphicsDeviceController => this.GlobalGraphics.DeviceController;
 
         #endregion
 
-        protected IMMEngineInteropService Interop => MMEngine.Service.Interop;
+        protected IMMEngineInteropService GlobalInterop => MMEngine.Service.Interop;
 
-        protected IMMEngineInputService Input => MMEngine.Service.Input;
+        protected IMMEngineInputService GlobalInput => MMEngine.Service.Input;
 
-        protected IMMEngineNumericalService Numerical => MMEngine.Service.Numerical;
+        protected IMMEngineNumericalService GlobalNumerical => MMEngine.Service.Numerical;
     }
 }

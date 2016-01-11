@@ -2,8 +2,7 @@
 {
     using System;
     using System.Linq;
-    using Components.Input;
-    using Entities;
+    using Components.Input.Mouse;
     using Input;
     using Microsoft.Xna.Framework;
     using Shapes;
@@ -33,59 +32,59 @@
 
         #region Events
 
-        public event EventHandler<MMElementEventArgs> MouseEnter = delegate { };
+        public event EventHandler<MMInputElementDebugEventArgs> MouseEnter = delegate { };
 
-        public event EventHandler<MMElementEventArgs> MouseLeave = delegate { };
+        public event EventHandler<MMInputElementDebugEventArgs> MouseLeave = delegate { };
 
         /// <summary>
         /// When mouse is pressed inside frame.
         /// </summary>
-        public event EventHandler<MMElementEventArgs> MousePress = delegate { };
+        public event EventHandler<MMInputElementDebugEventArgs> MousePress = delegate { };
 
-        public event EventHandler<MMElementEventArgs> MousePressLeft = delegate { };
+        public event EventHandler<MMInputElementDebugEventArgs> MousePressLeft = delegate { };
 
-        public event EventHandler<MMElementEventArgs> MousePressRight = delegate { };
+        public event EventHandler<MMInputElementDebugEventArgs> MousePressRight = delegate { };
 
         /// <summary>
         /// When mouse is pressed outside frame.
         /// </summary>
-        public event EventHandler<MMElementEventArgs> MousePressOut = delegate { };
+        public event EventHandler<MMInputElementDebugEventArgs> MousePressOut = delegate { };
 
-        public event EventHandler<MMElementEventArgs> MousePressOutLeft = delegate { };
+        public event EventHandler<MMInputElementDebugEventArgs> MousePressOutLeft = delegate { };
 
-        public event EventHandler<MMElementEventArgs> MousePressOutRight = delegate { };
+        public event EventHandler<MMInputElementDebugEventArgs> MousePressOutRight = delegate { };
 
         /// <summary>
         /// When mouse is released inside frame.
         /// </summary>
-        public event EventHandler<MMElementEventArgs> MouseUp = delegate { }; 
+        public event EventHandler<MMInputElementDebugEventArgs> MouseUp = delegate { };
 
-        public event EventHandler<MMElementEventArgs> MouseUpLeft = delegate { }; 
+        public event EventHandler<MMInputElementDebugEventArgs> MouseUpLeft = delegate { };
 
-        public event EventHandler<MMElementEventArgs> MouseUpRight = delegate { };
+        public event EventHandler<MMInputElementDebugEventArgs> MouseUpRight = delegate { };
 
         /// <summary>
         /// When mouse is released outside frame.
         /// </summary>
-        public event EventHandler<MMElementEventArgs> MouseUpOut = delegate { };
+        public event EventHandler<MMInputElementDebugEventArgs> MouseUpOut = delegate { };
 
-        public event EventHandler<MMElementEventArgs> MouseUpOutLeft = delegate { };
+        public event EventHandler<MMInputElementDebugEventArgs> MouseUpOutLeft = delegate { };
 
-        public event EventHandler<MMElementEventArgs> MouseUpOutRight = delegate {};
+        public event EventHandler<MMInputElementDebugEventArgs> MouseUpOutRight = delegate { };
 
-        public event EventHandler<MMElementEventArgs> MouseDoubleClick = delegate { };
+        public event EventHandler<MMInputElementDebugEventArgs> MouseDoubleClick = delegate { };
 
-        public event EventHandler<MMElementEventArgs> MouseDoubleClickLeft = delegate { };
+        public event EventHandler<MMInputElementDebugEventArgs> MouseDoubleClickLeft = delegate { };
 
-        public event EventHandler<MMElementEventArgs> MouseDoubleClickRight = delegate { }; 
+        public event EventHandler<MMInputElementDebugEventArgs> MouseDoubleClickRight = delegate { };
 
         #endregion
 
         #region Event Handlers
 
-        private void EventFrameChanged(object sender, MMElementEventArgs e)
+        private void EventFrameChanged(object sender, EventArgs e)
         {
-            var mousePosition = this.Input.State.Mouse.Position;
+            var mousePosition = this.GlobalInput.State.Mouse.Position;
             this.EventMouseMove(
                 null,
                 new MMMouseEventArgs(
@@ -105,18 +104,14 @@
                     this.mouseState.LDoubleClick();
                     this.mouseState.RClear();
 
-                    this.CacheAction(this.OnMouseDoubleClickLeft);
-
-                    return;
+                    this.InputCacher.CacheInput(this.OnMouseDoubleClickLeft);
                 }
-                else if (this.IsRButton(e))
+                if (this.IsRButton(e))
                 {
                     this.mouseState.LClear();
                     this.mouseState.RDoubleClick();
 
-                    this.CacheAction(this.OnMouseDoubleClickRight);
-
-                    return;
+                    this.InputCacher.CacheInput(this.OnMouseDoubleClickRight);
                 }
             }
         }
@@ -130,15 +125,13 @@
 
                 if (this.mouseState.IsMouseOver)
                 {
-                    this.CacheAction(this.OnMousePressLeft);
+                    this.InputCacher.CacheInput(this.OnMousePressLeft);
                 }
 
                 if (!this.mouseState.IsMouseOver)
                 {
-                    this.CacheAction(this.OnMousePressOutLeft);
+                    this.InputCacher.CacheInput(this.OnMousePressOutLeft);
                 }
-
-                return;
             }
             else if (this.IsRButton(e))
             {
@@ -147,15 +140,13 @@
 
                 if (this.mouseState.IsMouseOver)
                 {
-                    this.CacheAction(this.OnMousePressRight);
+                    this.InputCacher.CacheInput(this.OnMousePressRight);
                 }
 
                 if (!this.mouseState.IsMouseOver)
                 {
-                    this.CacheAction(this.OnMousePressOutRight);
+                    this.InputCacher.CacheInput(this.OnMousePressOutRight);
                 }
-
-                return;
             }
         }
 
@@ -165,7 +156,7 @@
             {
                 this.mouseState.Enter();
 
-                this.CacheAction(this.OnMouseEnter);
+                this.InputCacher.CacheInput(this.OnMouseEnter);
 
                 return;
             }
@@ -174,9 +165,7 @@
             {
                 this.mouseState.Leave();
 
-                this.CacheAction(this.OnMouseLeave);
-
-                return;
+                this.InputCacher.CacheInput(this.OnMouseLeave);
             }
         }
 
@@ -188,14 +177,12 @@
 
                 if (this.mouseState.IsMouseOver)
                 {
-                    this.CacheAction(this.OnMouseUpLeft);
+                    this.InputCacher.CacheInput(this.OnMouseUpLeft);
                 }
                 else
                 {
-                    this.CacheAction(this.OnMouseUpOutLeft);
+                    this.InputCacher.CacheInput(this.OnMouseUpOutLeft);
                 }
-
-                return;
             }
             else if (this.IsRButton(e))
             {
@@ -203,14 +190,12 @@
 
                 if (this.mouseState.IsMouseOver)
                 {
-                    this.CacheAction(this.OnMouseUpRight);
+                    this.InputCacher.CacheInput(this.OnMouseUpRight);
                 }
                 else
                 {
-                    this.CacheAction(this.OnMouseUpOutRight);
+                    this.InputCacher.CacheInput(this.OnMouseUpOutRight);
                 }
-
-                return;
             }
         }
 
@@ -232,10 +217,10 @@
 
         private void RegisterMouseInputHandlers()
         {
-            this.Input.Event.MouseMove += this.EventMouseMove;
-            this.Input.Event.MouseUp += this.EventMouseUp;
-            this.Input.Event.MouseDown += this.EventMouseDown;
-            this.Input.Event.MouseDoubleClick += this.EventMouseDoubleClick;
+            this.GlobalInput.Event.MouseMove += this.EventMouseMove;
+            this.GlobalInput.Event.MouseUp += this.EventMouseUp;
+            this.GlobalInput.Event.MouseDown += this.EventMouseDown;
+            this.GlobalInput.Event.MouseDoubleClick += this.EventMouseDoubleClick;
         }
 
         #endregion
@@ -244,72 +229,72 @@
 
         protected virtual void OnMouseDoubleClickLeft()
         {
-            this.MouseDoubleClick?.Invoke(this, new MMElementEventArgs(MMElementEvent.Mouse_Double_Click_Left));
-            this.MouseDoubleClickLeft?.Invoke(this, new MMElementEventArgs(MMElementEvent.Mouse_Double_Click_Left));
+            this.MouseDoubleClick?.Invoke(this, new MMInputElementDebugEventArgs(MMInputElementDebugEvent.Mouse_Double_Click_Left));
+            this.MouseDoubleClickLeft?.Invoke(this, new MMInputElementDebugEventArgs(MMInputElementDebugEvent.Mouse_Double_Click_Left));
         }
 
         protected virtual void OnMouseDoubleClickRight()
         {
-            this.MouseDoubleClick?.Invoke(this, new MMElementEventArgs(MMElementEvent.Mouse_Double_Click_Right));
-            this.MouseDoubleClickRight?.Invoke(this, new MMElementEventArgs(MMElementEvent.Mouse_Double_Click_Right));
+            this.MouseDoubleClick?.Invoke(this, new MMInputElementDebugEventArgs(MMInputElementDebugEvent.Mouse_Double_Click_Right));
+            this.MouseDoubleClickRight?.Invoke(this, new MMInputElementDebugEventArgs(MMInputElementDebugEvent.Mouse_Double_Click_Right));
         }
 
-        protected virtual  void OnMousePressOutLeft()
+        protected virtual void OnMousePressOutLeft()
         {
-            this.MousePressOut?.Invoke(this, new MMElementEventArgs(MMElementEvent.Mouse_Press_Out_Left));
-            this.MousePressOutLeft?.Invoke(this, new MMElementEventArgs(MMElementEvent.Mouse_Press_Out_Left));
+            this.MousePressOut?.Invoke(this, new MMInputElementDebugEventArgs(MMInputElementDebugEvent.Mouse_Press_Out_Left));
+            this.MousePressOutLeft?.Invoke(this, new MMInputElementDebugEventArgs(MMInputElementDebugEvent.Mouse_Press_Out_Left));
         }
 
         protected virtual void OnMousePressOutRight()
         {
-            this.MousePressOut?.Invoke(this, new MMElementEventArgs(MMElementEvent.Mouse_Pressed_Out_Right));
-            this.MousePressOutRight?.Invoke(this, new MMElementEventArgs(MMElementEvent.Mouse_Pressed_Out_Right));
+            this.MousePressOut?.Invoke(this, new MMInputElementDebugEventArgs(MMInputElementDebugEvent.Mouse_Pressed_Out_Right));
+            this.MousePressOutRight?.Invoke(this, new MMInputElementDebugEventArgs(MMInputElementDebugEvent.Mouse_Pressed_Out_Right));
         }
 
         protected virtual void OnMousePressLeft()
         {
-            this.MousePress?.Invoke(this, new MMElementEventArgs(MMElementEvent.Mouse_Press_Left));
-            this.MousePressLeft?.Invoke(this, new MMElementEventArgs(MMElementEvent.Mouse_Press_Left));
+            this.MousePress?.Invoke(this, new MMInputElementDebugEventArgs(MMInputElementDebugEvent.Mouse_Press_Left));
+            this.MousePressLeft?.Invoke(this, new MMInputElementDebugEventArgs(MMInputElementDebugEvent.Mouse_Press_Left));
         }
 
         protected virtual void OnMousePressRight()
         {
-            this.MousePress?.Invoke(this, new MMElementEventArgs(MMElementEvent.Mouse_Press_Right));
-            this.MousePressRight?.Invoke(this, new MMElementEventArgs(MMElementEvent.Mouse_Press_Right));
+            this.MousePress?.Invoke(this, new MMInputElementDebugEventArgs(MMInputElementDebugEvent.Mouse_Press_Right));
+            this.MousePressRight?.Invoke(this, new MMInputElementDebugEventArgs(MMInputElementDebugEvent.Mouse_Press_Right));
         }
 
         protected virtual void OnMouseUpLeft()
         {
-            this.MouseUp?.Invoke(this, new MMElementEventArgs(MMElementEvent.Mouse_Up_Left));
-            this.MouseUpLeft?.Invoke(this, new MMElementEventArgs(MMElementEvent.Mouse_Up_Left));
+            this.MouseUp?.Invoke(this, new MMInputElementDebugEventArgs(MMInputElementDebugEvent.Mouse_Up_Left));
+            this.MouseUpLeft?.Invoke(this, new MMInputElementDebugEventArgs(MMInputElementDebugEvent.Mouse_Up_Left));
         }
 
         protected virtual void OnMouseUpRight()
         {
-            this.MouseUp?.Invoke(this, new MMElementEventArgs(MMElementEvent.Mouse_Up_Right));
-            this.MouseUpRight?.Invoke(this, new MMElementEventArgs(MMElementEvent.Mouse_Up_Right));
+            this.MouseUp?.Invoke(this, new MMInputElementDebugEventArgs(MMInputElementDebugEvent.Mouse_Up_Right));
+            this.MouseUpRight?.Invoke(this, new MMInputElementDebugEventArgs(MMInputElementDebugEvent.Mouse_Up_Right));
         }
 
         private void OnMouseUpOutRight()
         {
-            this.MouseUpOut?.Invoke(this, new MMElementEventArgs(MMElementEvent.Mouse_Up_Out_Left));
-            this.MouseUpOutRight?.Invoke(this, new MMElementEventArgs(MMElementEvent.Mouse_Up_Out_Left));
+            this.MouseUpOut?.Invoke(this, new MMInputElementDebugEventArgs(MMInputElementDebugEvent.Mouse_Up_Out_Left));
+            this.MouseUpOutRight?.Invoke(this, new MMInputElementDebugEventArgs(MMInputElementDebugEvent.Mouse_Up_Out_Left));
         }
 
         private void OnMouseUpOutLeft()
         {
-            this.MouseUpOut?.Invoke(this, new MMElementEventArgs(MMElementEvent.Mouse_Up_Out_Right));
-            this.MouseUpOutLeft?.Invoke(this, new MMElementEventArgs(MMElementEvent.Mouse_Up_Out_Right));
+            this.MouseUpOut?.Invoke(this, new MMInputElementDebugEventArgs(MMInputElementDebugEvent.Mouse_Up_Out_Right));
+            this.MouseUpOutLeft?.Invoke(this, new MMInputElementDebugEventArgs(MMInputElementDebugEvent.Mouse_Up_Out_Right));
         }
 
         protected virtual void OnMouseLeave()
         {
-            this.MouseLeave?.Invoke(this, new MMElementEventArgs(MMElementEvent.Mouse_Leave));
+            this.MouseLeave?.Invoke(this, new MMInputElementDebugEventArgs(MMInputElementDebugEvent.Mouse_Leave));
         }
 
         protected virtual void OnMouseEnter()
         {
-            this.MouseEnter?.Invoke(this, new MMElementEventArgs(MMElementEvent.Mouse_Enter));
+            this.MouseEnter?.Invoke(this, new MMInputElementDebugEventArgs(MMInputElementDebugEvent.Mouse_Enter));
         }
 
         #endregion
@@ -319,15 +304,15 @@
         /// <summary>
         /// Gets or sets a value indicating whether this should receive or send any events.
         /// </summary>
-        public override bool Enabled
+        public override bool EntityEnabled
         {
-            get { return base.Enabled; }
+            get { return base.EntityEnabled; }
             set
             {
-                var changed = this.Enabled != value;
+                var changed = this.EntityEnabled != value;
                 if (changed)
                 {
-                    // This is used to deduce event performance overhead on 
+                    // This is used to deduce event performance overhead on
                     // an individual frame.
                     if (value)
                     {
@@ -339,33 +324,41 @@
                     }
                 }
 
-                base.Enabled = value;
+                base.EntityEnabled = value;
             }
         }
 
-        /// TODO(Minor): Enable read-only setter by implementing a permission array.
-        /// TODO(Minor): Migrate some advanced states to fields and properties.
+        #endregion
+
+        #region Element Input Data
+
+        protected MMInputCacher InputCacher { get; } = new MMInputCacher();
+
+#if DEBUG
         /// <summary>
-        /// Frame states as Func<bool> to replace messy things like active, 
-        /// visible. In order to enable logic passing, I decided to make them 
+        /// Frame states as Func<bool> to replace messy things like active,
+        /// visible. In order to enable logic passing, I decided to make them
         /// Func<bool>.
         /// </summary>
-        private readonly Func<bool>[] frameStates = new Func<bool>[(int)MMElementState.StateNum];
+        private readonly Func<bool>[] inputStates =
+            new Func<bool>[(int)MMInputElementDebugState.StateNum];
 
-        public Func<bool> this[MMElementState state]
+        public Func<bool> this[MMInputElementDebugState inputState]
         {
             get
             {
-                return this.frameStates[(int)state];
+                return this.inputStates[(int)inputState];
             }
 
             protected set
             {
-                this.frameStates[(int)state] = value;
+                this.inputStates[(int)inputState] = value;
             }
         }
 
-        internal bool[] FrameStates => this.frameStates.Select(state => state()).ToArray();
+        internal bool[] InputStates
+            => this.inputStates.Select(state => state()).ToArray();
+#endif
 
         #endregion
 
@@ -389,27 +382,27 @@
 
         private void InitializeDefaultStates()
         {
-            for (var i = 0; i < (int)MMElementState.StateNum; i++)
+            for (var i = 0; i < (int)MMInputElementDebugState.StateNum; i++)
             {
-                this.frameStates[i] = () => false;
+                this.inputStates[i] = () => false;
             }
         }
 
         private void InitializePickableStates()
         {
-            this[MMElementState.Element_Is_Active] = () => this.Enabled;
+            this[MMInputElementDebugState.Element_Is_Active] = () => this.EntityEnabled;
 
-            this[MMElementState.Mouse_Is_Over] = () => this.mouseState.IsMouseOver;
+            this[MMInputElementDebugState.Mouse_Is_Over] = () => this.mouseState.IsMouseOver;
 
-            this[MMElementState.Mouse_Is_Left_Pressed]        = () => this.mouseState.IsLButtonPressed && this.mouseState.IsMouseOver;
-            this[MMElementState.Mouse_Is_Left_Pressed_Out]    = () => this.mouseState.IsLButtonPressed && !this.mouseState.IsMouseOver;
-            this[MMElementState.Mouse_Is_Left_Released]       = () => this.mouseState.IsLButtonReleased;
-            this[MMElementState.Mouse_Is_Left_Double_Clicked] = () => this.mouseState.IsLButtonDoubleClicked && this.mouseState.IsMouseOver;
+            this[MMInputElementDebugState.Mouse_Is_Left_Pressed] = () => this.mouseState.IsLButtonPressed && this.mouseState.IsMouseOver;
+            this[MMInputElementDebugState.Mouse_Is_Left_Pressed_Out] = () => this.mouseState.IsLButtonPressed && !this.mouseState.IsMouseOver;
+            this[MMInputElementDebugState.Mouse_Is_Left_Released] = () => this.mouseState.IsLButtonReleased;
+            this[MMInputElementDebugState.Mouse_Is_Left_Double_Clicked] = () => this.mouseState.IsLButtonDoubleClicked && this.mouseState.IsMouseOver;
 
-            this[MMElementState.Mouse_Is_Right_Pressed]        = () => this.mouseState.IsRButtonPressed && this.mouseState.IsMouseOver;
-            this[MMElementState.Mouse_Is_Right_Pressed_Out]    = () => this.mouseState.IsRButtonPressed && !this.mouseState.IsMouseOver;
-            this[MMElementState.Mouse_Is_Right_Released]       = () => this.mouseState.IsRButtonReleased;
-            this[MMElementState.Mouse_Is_Right_Double_Clicked] = () => this.mouseState.IsRButtonDoubleClicked && this.mouseState.IsMouseOver;
+            this[MMInputElementDebugState.Mouse_Is_Right_Pressed] = () => this.mouseState.IsRButtonPressed && this.mouseState.IsMouseOver;
+            this[MMInputElementDebugState.Mouse_Is_Right_Pressed_Out] = () => this.mouseState.IsRButtonPressed && !this.mouseState.IsMouseOver;
+            this[MMInputElementDebugState.Mouse_Is_Right_Released] = () => this.mouseState.IsRButtonReleased;
+            this[MMInputElementDebugState.Mouse_Is_Right_Double_Clicked] = () => this.mouseState.IsRButtonDoubleClicked && this.mouseState.IsMouseOver;
         }
 
         #endregion
@@ -425,7 +418,7 @@
 
         protected bool IsMouseOver(Point location)
         {
-            return this.Enabled && this.Bounds.Contains(location);
+            return this.EntityEnabled && this.Bounds.Contains(location);
         }
 
         protected bool IsRButton(MMMouseEventArgs e)
@@ -439,22 +432,22 @@
 
         public override void Update(GameTime time)
         {
-            if (!((MMEntity)this).Enabled)
+            if (!this.EntityEnabled)
             {
                 return;
             }
 
-            this.ClearAction();
+            this.InputCacher.ClearInput();
         }
 
         public override void UpdateInput(GameTime time)
         {
-            if (!((MMEntity)this).Enabled)
+            if (!this.EntityEnabled)
             {
                 return;
             }
 
-            this.FlushAction();
+            this.InputCacher.FlushInput();
         }
 
         #endregion
@@ -473,7 +466,7 @@
                     {
                         this.DisposeEvents();
 
-                        // No need to dispose frame change handlers because the 
+                        // No need to dispose frame change handlers because the
                         // events are disposed in this.DisposeEvents
                         this.DisposeHandlers();
                     }
@@ -498,10 +491,10 @@
 
         private void DisposeMouseInputHandlers()
         {
-            this.Input.Event.MouseMove -= this.EventMouseMove;
-            this.Input.Event.MouseUp -= this.EventMouseUp;
-            this.Input.Event.MouseDown -= this.EventMouseDown;
-            this.Input.Event.MouseDoubleClick -= this.EventMouseDoubleClick;
+            this.GlobalInput.Event.MouseMove -= this.EventMouseMove;
+            this.GlobalInput.Event.MouseUp -= this.EventMouseUp;
+            this.GlobalInput.Event.MouseDown -= this.EventMouseDown;
+            this.GlobalInput.Event.MouseDoubleClick -= this.EventMouseDoubleClick;
         }
 
         private void DisposeEvents()

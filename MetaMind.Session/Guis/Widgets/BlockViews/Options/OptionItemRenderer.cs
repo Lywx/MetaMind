@@ -1,11 +1,11 @@
 namespace MetaMind.Session.Guis.Widgets.BlockViews.Options
 {
     using System;
-    using Concepts.Operations;
     using Engine.Entities.Controls.Item;
     using Engine.Entities.Controls.Item.Visuals;
     using Engine.Services;
     using Microsoft.Xna.Framework;
+    using Operations;
 
     public class OptionItemRenderer : MMViewItemRendererComponent
     {

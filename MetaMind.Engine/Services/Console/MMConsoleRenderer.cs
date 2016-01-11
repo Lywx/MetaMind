@@ -135,7 +135,7 @@
 
         public override void Initialize()
         {
-            this.LoadParameter(this.Engine.Graphics.Settings);
+            this.LoadParameter(this.GlobalEngine.Graphics.Settings);
 
             this.InitializeState();
             this.InitializePosition();
@@ -271,7 +271,7 @@
         /// <param name="font"></param>
         /// <param name="lines"></param>
         /// <param name="position">Position of the command to draw</param>
-        private Vector2 DrawCommands(Font font, IEnumerable<CommandLine> lines, Vector2 position)
+        private Vector2 DrawCommands(MMFont font, IEnumerable<CommandLine> lines, Vector2 position)
         {
             var firstColumn = position.X;
 
@@ -315,7 +315,7 @@
         /// <param name="position"></param>
         /// <param name="color"></param>
         /// <returns></returns>
-        private Vector2 DrawCommand(Font font, string command, Vector2 position, Color color)
+        private Vector2 DrawCommand(MMFont font, string command, Vector2 position, Color color)
         {
             var commandLines = command.Length > this.maxCharactersPerLine
                                           ? StringUtils.BreakStringByCharacterToEnumerable(command, this.maxCharactersPerLine) : new[] { command };

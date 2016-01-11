@@ -17,7 +17,7 @@ namespace MetaMind.Engine.Components
         {
         }
 
-        public IAssetManager Asset { get; }
+        public IMMAssetManager Asset { get; }
 
         public IMMAudioManager Audio { get; }
 

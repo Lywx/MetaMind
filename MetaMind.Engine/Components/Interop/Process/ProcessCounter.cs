@@ -1,6 +1,7 @@
 namespace MetaMind.Engine.Components.Interop.Process
 {
     using Entities;
+    using Entities.Bases;
     using Microsoft.Xna.Framework;
 
     public class ProcessCounter : MMEntity

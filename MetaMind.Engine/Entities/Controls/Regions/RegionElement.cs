@@ -2,6 +2,7 @@ namespace MetaMind.Engine.Entities.Controls.Regions
 {
     using System;
     using System.Linq;
+    using Bases;
     using Entities;
     using Stateless;
 

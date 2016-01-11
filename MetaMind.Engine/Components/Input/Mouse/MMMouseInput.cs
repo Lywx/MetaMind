@@ -5,20 +5,25 @@ namespace MetaMind.Engine.Components.Input.Mouse
 
     public class MMMouseInput : IMMMouseInput
     {
-        private readonly int WheelDelta =
+        #region Platform API
+
+        private const int WheelDelta =
 #if WINDOWS
 
             // https://msdn.microsoft.com/en-us/library/windows/desktop/ms645617%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396
             120;
+
 #elif LINUX
 
             // http://linux.die.net/man/3/qwheelevent
             120;
 #endif
 
-        private MouseState currentState;
+        #endregion
 
-        private MouseState previousState;
+        private MouseState mouseCurrent;
+
+        private MouseState mousePrevious;
 
         #region Constructors
 
@@ -32,12 +37,12 @@ namespace MetaMind.Engine.Components.Input.Mouse
         #region Button States
 
         public bool IsButtonLeftClicked
-            => this.currentState.LeftButton == ButtonState.Released &&
-               this.previousState.LeftButton == ButtonState.Pressed;
+            => this.mouseCurrent.LeftButton == ButtonState.Released &&
+               this.mousePrevious.LeftButton == ButtonState.Pressed;
 
         public bool IsButtonRightClicked
-            => this.currentState.RightButton == ButtonState.Released &&
-               this.previousState.RightButton == ButtonState.Pressed;
+            => this.mouseCurrent.RightButton == ButtonState.Released &&
+               this.mousePrevious.RightButton == ButtonState.Pressed;
 
         #endregion 
 
@@ -45,27 +50,27 @@ namespace MetaMind.Engine.Components.Input.Mouse
 
         public bool IsWheelScrolledDown
             =>
-                this.currentState.ScrollWheelValue
-                < this.previousState.ScrollWheelValue;
+                this.mouseCurrent.ScrollWheelValue
+                < this.mousePrevious.ScrollWheelValue;
 
         public bool IsWheelScrolledUp
             =>
-                this.currentState.ScrollWheelValue
-                > this.previousState.ScrollWheelValue;
+                this.mouseCurrent.ScrollWheelValue
+                > this.mousePrevious.ScrollWheelValue;
 
-        public int WheelRelativeMovement
+        public int WheelScroll
         {
             get
             {
                 if (this.IsWheelScrolledUp)
                 {
-                    return (this.currentState.ScrollWheelValue
-                            - this.previousState.ScrollWheelValue) / WheelDelta;
+                    return (this.mouseCurrent.ScrollWheelValue
+                            - this.mousePrevious.ScrollWheelValue) / WheelDelta;
                 }
 
                 return
-                    -(this.currentState.ScrollWheelValue
-                      - this.previousState.ScrollWheelValue) / WheelDelta;
+                    -(this.mouseCurrent.ScrollWheelValue
+                      - this.mousePrevious.ScrollWheelValue) / WheelDelta;
             }
         }
 
@@ -73,7 +78,7 @@ namespace MetaMind.Engine.Components.Input.Mouse
 
         #region Position States
 
-        public Point Position => new Point(this.currentState.X, this.currentState.Y);
+        public Point Position => new Point(this.mouseCurrent.X, this.mouseCurrent.Y);
 
         #endregion
 
@@ -81,8 +86,8 @@ namespace MetaMind.Engine.Components.Input.Mouse
 
         public void UpdateInput(GameTime time)
         {
-            this.previousState = this.currentState;
-            this.currentState = Mouse.GetState();
+            this.mousePrevious = this.mouseCurrent;
+            this.mouseCurrent = Mouse.GetState();
         }
 
         #endregion Update

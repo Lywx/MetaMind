@@ -12,7 +12,7 @@ namespace MetaMind.Engine.Services
 
     public interface IMMEngineInteropService
     {
-        IAssetManager Asset { get; }
+        IMMAssetManager Asset { get; }
 
         IMMAudioManager Audio { get; }
 

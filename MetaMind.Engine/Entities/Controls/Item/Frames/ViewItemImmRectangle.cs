@@ -48,12 +48,12 @@ namespace MetaMind.Engine.Entities.Controls.Item.Frames
 
         #region Event Handlers
 
-        private void ViewSelect(object sender, MMElementEventArgs e)
+        private void ViewSelect(object sender, MMInputElementDebugEventArgs e)
         {
             this.ItemLogic.ItemInteraction.ViewSelect();
         }
 
-        private void ViewUnselect(object sender, MMElementEventArgs e)
+        private void ViewUnselect(object sender, MMInputElementDebugEventArgs e)
         {
             this.ItemLogic.ItemInteraction.ViewUnselect();
         }

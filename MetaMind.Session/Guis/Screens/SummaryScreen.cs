@@ -3,7 +3,8 @@
     using System;
     using Engine.Components.Graphics;
     using Engine.Entities;
-    using Engine.Screens;
+    using Engine.Entities.Bases;
+    using Engine.Entities.Screens;
     using Engine.Services;
     using Modules;
 
@@ -35,9 +36,9 @@
                 {
                     DrawAction = (graphics, time, alpha) =>
                     {
-                        ((MMVisualEntity)this).Graphics.Renderer.Begin();
+                        ((MMVisualEntity)this).EngineGraphics.Renderer.Begin();
                         this.summary.Draw(time);
-                        ((MMVisualEntity)this).Graphics.Renderer.End();
+                        ((MMVisualEntity)this).EngineGraphics.Renderer.End();
                     },
                     UpdateAction = time =>
                     {

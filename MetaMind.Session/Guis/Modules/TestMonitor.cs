@@ -1,11 +1,11 @@
 ﻿namespace MetaMind.Session.Guis.Modules
 {
     using System;
-    using Concepts.Tests;
     using Engine;
     using Engine.Components;
     using Engine.Services.Loader;
     using Microsoft.Xna.Framework;
+    using Tests;
 
     public class TestMonitor : MMInputableComponent, IConfigurable
     {

@@ -211,7 +211,7 @@ namespace MetaMind.Engine.Entities.Controls.Item.Controllers
             // Keyboard
             if (this.View.ViewSettings.KeyboardEnabled)
             {
-                var keyboard = this.Input.State.Keyboard;
+                var keyboard = this.GlobalInput.State.Keyboard;
 
                 if (this.Item[MMViewItemState.Item_Is_Inputing]())
                 {

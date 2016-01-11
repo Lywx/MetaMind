@@ -1,12 +1,12 @@
 namespace MetaMind.Engine.Entities.Particles
 {
-    using System;
+    using Bases;
     using Components.Graphics;
-    using Entities;
     using Microsoft.Xna.Framework;
     using Services.Loader;
+    using System;
 
-    public class MMParticle : MMVisualEntity, IMMParticle, IParameterDependant<MMGraphicsSettings>  
+    public class MMParticle : MMVisualEntity, IMMParticle, IParameterDependant<MMGraphicsSettings>
     {
         #region Particle Movements
 
@@ -36,14 +36,14 @@ namespace MetaMind.Engine.Entities.Particles
 
         public void LoadParameter(MMGraphicsSettings parameter)
         {
-            this.ViewportWidth  = parameter.Width;
+            this.ViewportWidth = parameter.Width;
             this.ViewportHeight = parameter.Height;
         }
 
         protected int ViewportHeight { get; set; }
 
         protected int ViewportWidth { get; set; }
-        
+
         #endregion
 
         #region Constructors
@@ -51,22 +51,22 @@ namespace MetaMind.Engine.Entities.Particles
         public MMParticle()
         {
             // Parameters
-            this.LoadParameter(this.Graphics.Settings);
+            this.LoadParameter(this.EngineGraphics.Settings);
 
             // Dependency
-            this.Random = this.Numerical.Random;
+            this.Random = this.GlobalNumerical.Random;
         }
 
         public MMParticle(Vector2 position, Vector2 a, Vector2 v, float angle, float angluarA, float angluarV, float life)
             : this()
         {
-            this.Position     = position;
+            this.Position = position;
             this.Acceleration = a;
-            this.Velocity     = v;
+            this.Velocity = v;
 
-            this.Angle               = angle;
+            this.Angle = angle;
             this.AngularAcceleration = angluarA;
-            this.AngularVelocity     = angluarV;
+            this.AngularVelocity = angluarV;
 
             this.Life = life;
         }
@@ -80,7 +80,7 @@ namespace MetaMind.Engine.Entities.Particles
             base.Update(time);
 
             this.AngularVelocity += (float)time.ElapsedGameTime.TotalSeconds * this.AngularAcceleration;
-            this.Angle           += (float)time.ElapsedGameTime.TotalSeconds * this.AngularVelocity;
+            this.Angle += (float)time.ElapsedGameTime.TotalSeconds * this.AngularVelocity;
 
             this.Velocity += (float)time.ElapsedGameTime.TotalSeconds * this.Acceleration;
             this.Position += (float)time.ElapsedGameTime.TotalSeconds * this.Velocity;

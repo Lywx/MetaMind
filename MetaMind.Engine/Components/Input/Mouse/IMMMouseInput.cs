@@ -1,4 +1,4 @@
-namespace MetaMind.Engine.Components.Input
+namespace MetaMind.Engine.Components.Input.Mouse
 {
     using Microsoft.Xna.Framework;
 
@@ -18,7 +18,11 @@ namespace MetaMind.Engine.Components.Input
 
         bool IsWheelScrolledUp { get; }
 
-        int WheelRelativeMovement { get; }
+        /// <summary>
+        /// Integer value for wheel scrolling. Positive when scrolled down.
+        /// Negative when scrolled down.
+        /// </summary>
+        int WheelScroll { get; }
 
         #endregion
 

@@ -22,7 +22,7 @@
 
         private void InitializeStates()
         {
-            this[RegionState.Mouse_Is_Over] = () => this.ImmRectangle[MMElementState.Mouse_Is_Over]();
+            this[RegionState.Mouse_Is_Over] = () => this.ImmRectangle[MMInputElementDebugState.Mouse_Is_Over]();
 
             this[RegionState.Region_Has_Focus]  = () => this.RegionMachine.IsInState(RegionMachienState.HasFocus);
             this[RegionState.Region_Lost_Focus] = () => this.RegionMachine.IsInState(RegionMachienState.LostFocus);
@@ -37,12 +37,12 @@
 
         #region Events
 
-        private void RectangleMousePressLeft(object sender, MMElementEventArgs e)
+        private void RectangleMousePressLeft(object sender, MMInputElementDebugEventArgs e)
         {
             this.RegionMachine.Fire(RegionMachineTrigger.FocusInside);
         }
 
-        private void RectangleMousePressOutLeft(object sender, MMElementEventArgs e)
+        private void RectangleMousePressOutLeft(object sender, MMInputElementDebugEventArgs e)
         {
             this.RegionMachine.Fire(RegionMachineTrigger.FocusOutside);
         }

@@ -2,10 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-    using Concepts.Operations;
     using Engine.Entities.Controls.Item;
     using Engine.Entities.Controls.Item.Data;
     using Engine.Entities.Controls.Views.Controllers;
+    using Session.Operations;
 
     public class OperationViewBinding : IMMViewBinding
     {

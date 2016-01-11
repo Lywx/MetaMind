@@ -39,7 +39,7 @@ namespace MetaMind.Engine.Entities.Controls.Item.Data
         
         protected IMMViewItemCharModifier CharModifier { get; private set; }
 
-        protected Font NSimSumRegularFont { get; set; }
+        protected MMFont NSimSumRegularFont { get; set; }
 
         #endregion
 
@@ -57,7 +57,7 @@ namespace MetaMind.Engine.Entities.Controls.Item.Data
         {
             base.LoadContent();
 
-            this.NSimSumRegularFont = this.Interop.Asset.Fonts["NSimSum Regular"];
+            this.NSimSumRegularFont = this.GlobalInterop.Asset.Fonts["NSimSum Regular"];
         }
 
         #endregion

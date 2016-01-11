@@ -66,18 +66,44 @@ namespace MetaMind.Engine.Components.Graphics
     public interface IMMRendererStringOperations
     {
         /// <summary>
-        /// Draws the left-top mono-spaced text at particular position.
+        ///     Draws the left-top mono-spaced text at particular position.
         /// </summary>
-        void DrawMonospacedString(Font font, string str, Vector2 position, Color color, float scale);
+        void DrawMonospacedString(
+            MMFont font,
+            string str,
+            Vector2 position,
+            Color color,
+            float scale);
 
-        void DrawMonospacedString(Font font, string str, Vector2 position, Color color, float scale, HoritonalAlignment halignment, VerticalAlignment valignment, int leading = 0);
+        void DrawMonospacedString(
+            MMFont font,
+            string str,
+            Vector2 position,
+            Color color,
+            float scale,
+            HoritonalAlignment halignment,
+            VerticalAlignment valignment,
+            int leading = 0);
 
         /// <summary>
-        /// Draws the left-top text at particular position.
+        ///     Draws the left-top text at particular position.
         /// </summary>
-        void DrawString(Font font, string str, Vector2 position, Color color, float scale);
+        void DrawString(
+            MMFont font,
+            string str,
+            Vector2 position,
+            Color color,
+            float scale);
 
-        void DrawString(Font font, string str, Vector2 position, Color color, float scale, HoritonalAlignment halignment, VerticalAlignment valignment, int leading = 0);
+        void DrawString(
+            MMFont font,
+            string str,
+            Vector2 position,
+            Color color,
+            float scale,
+            HoritonalAlignment halignment,
+            VerticalAlignment valignment,
+            int leading = 0);
     }
 
     public interface IMMRendererBatchOperations
@@ -95,15 +121,10 @@ namespace MetaMind.Engine.Components.Graphics
         void End();
     }
 
-    public interface IMMRendererBase : IMMReactor
-    {
-        
-    }
+    public interface IMMRendererBase : IMMReactor {}
 
     public interface IMMRenderer : IMMRendererBase,
         IMMRendererStringOperations,
         IMMRendererTextureOperaions,
-        IMMRendererBatchOperations
-    {
-    }
+        IMMRendererBatchOperations {}
 }

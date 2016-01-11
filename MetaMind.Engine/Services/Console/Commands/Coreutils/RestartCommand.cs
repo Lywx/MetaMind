@@ -1,6 +1,7 @@
 ﻿namespace MetaMind.Engine.Services.Console.Commands.Coreutils
 {
     using Entities;
+    using Entities.Bases;
 
     internal class RestartCommand : MMEntity, IConsoleCommand
     {
@@ -14,7 +15,7 @@
 
         public string Execute(string[] arguments)
         {
-            this.Interop.Engine.Restart();
+            this.GlobalInterop.Engine.Restart();
 
             return string.Empty;
         }

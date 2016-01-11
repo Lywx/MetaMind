@@ -1,15 +1,5 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ViewLogic.cs">
-//   Copyright (c) 2015 Wuxiang Lin
-//   All Rights Reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-
 namespace MetaMind.Engine.Entities.Controls.Views.Controllers
 {
-    using System;
-    using Components.Input;
     using Item;
     using Item.Data;
     using Item.Factories;
@@ -18,15 +8,17 @@ namespace MetaMind.Engine.Entities.Controls.Views.Controllers
     using Scrolls;
     using Selections;
     using Swaps;
+    using System;
+    using Components.Input;
 
     public abstract class MMViewController : MMViewControlComponent, IMMViewController
     {
         protected MMViewController(
-            IMMView                    view,
-            IMMViewScrollController    viewScroll,
+            IMMView view,
+            IMMViewScrollController viewScroll,
             IMMViewSelectionController viewSelection,
-            IMMViewSwapController      viewSwap,
-            IMMViewLayout              viewLayout,
+            IMMViewSwapController viewSwap,
+            IMMViewLayout viewLayout,
             IViewItemFactory itemFactory)
             : this(view, itemFactory)
         {
@@ -50,10 +42,10 @@ namespace MetaMind.Engine.Entities.Controls.Views.Controllers
                 throw new ArgumentNullException(nameof(viewLayout));
             }
 
-            this.ViewScroll    = viewScroll;
+            this.ViewScroll = viewScroll;
             this.ViewSelection = viewSelection;
-            this.ViewSwap      = viewSwap;
-            this.ViewLayout    = viewLayout;
+            this.ViewSwap = viewSwap;
+            this.ViewLayout = viewLayout;
         }
 
         private MMViewController(IMMView view, IViewItemFactory itemFactory)
@@ -66,19 +58,21 @@ namespace MetaMind.Engine.Entities.Controls.Views.Controllers
 
             this.ItemFactory = itemFactory;
 
-            this.View[MMViewState.View_Is_Active]    = this.ViewIsActive;
+            this.View[MMViewState.View_Is_Active] = this.ViewIsActive;
             this.View[MMViewState.View_Is_Inputting] = this.ViewIsInputting;
         }
 
-        private Func<bool> ViewIsInputting
-        {
-            get
-            {
-                return () => this.View[MMViewState.View_Is_Active]() && 
-                            !this.View[MMViewState.View_Is_Editing]() && 
-                             this.View[MMViewState.View_Has_Focus]();
-            }
-        }
+        public IViewItemFactory ItemFactory { get; protected set; }
+
+        public IMMViewBinding ViewBinding { get; set; }
+
+        public IMMViewLayout ViewLayout { get; protected set; }
+
+        public IMMViewScrollController ViewScroll { get; protected set; }
+
+        public IMMViewSelectionController ViewSelection { get; protected set; }
+
+        public IMMViewSwapController ViewSwap { get; protected set; }
 
         private Func<bool> ViewIsActive
         {
@@ -88,17 +82,15 @@ namespace MetaMind.Engine.Entities.Controls.Views.Controllers
             }
         }
 
-        public IMMViewSelectionController ViewSelection { get; protected set; }
-
-        public IMMViewScrollController ViewScroll { get; protected set; }
-
-        public IMMViewSwapController ViewSwap { get; protected set; }
-
-        public IMMViewLayout ViewLayout { get; protected set; }
-
-        public IViewItemFactory ItemFactory { get; protected set; }
-
-        public IMMViewBinding ViewBinding { get; set; }
+        private Func<bool> ViewIsInputting
+        {
+            get
+            {
+                return () => this.View[MMViewState.View_Is_Active]() &&
+                            !this.View[MMViewState.View_Is_Editing]() &&
+                             this.View[MMViewState.View_Has_Focus]();
+            }
+        }
 
         #region Binding
 
@@ -123,11 +115,11 @@ namespace MetaMind.Engine.Entities.Controls.Views.Controllers
             base.Initialize();
 
             // This is order insensitive
-            this.ViewLayout   .Initialize();
-            this.ViewScroll   .Initialize();
+            this.ViewLayout.Initialize();
+            this.ViewScroll.Initialize();
             this.ViewSelection.Initialize();
-            this.ViewSwap     .Initialize();
-            this.ViewLayout   .Initialize();
+            this.ViewSwap.Initialize();
+            this.ViewLayout.Initialize();
         }
 
         #endregion
@@ -139,11 +131,11 @@ namespace MetaMind.Engine.Entities.Controls.Views.Controllers
             base.UpdateBackwardBuffer();
 
             // This is order insensitive
-            this.ViewLayout   .UpdateBackwardBuffer();
-            this.ViewScroll   .UpdateBackwardBuffer();
+            this.ViewLayout.UpdateBackwardBuffer();
+            this.ViewScroll.UpdateBackwardBuffer();
             this.ViewSelection.UpdateBackwardBuffer();
-            this.ViewSwap     .UpdateBackwardBuffer();
-            this.ViewLayout   .UpdateBackwardBuffer();
+            this.ViewSwap.UpdateBackwardBuffer();
+            this.ViewLayout.UpdateBackwardBuffer();
 
             foreach (var item in this.Items.ToArray())
             {
@@ -156,11 +148,11 @@ namespace MetaMind.Engine.Entities.Controls.Views.Controllers
             base.UpdateForwardBuffer();
 
             // This is order insensitive
-            this.ViewLayout   .UpdateForwardBuffer();
-            this.ViewScroll   .UpdateForwardBuffer();
+            this.ViewLayout.UpdateForwardBuffer();
+            this.ViewScroll.UpdateForwardBuffer();
             this.ViewSelection.UpdateForwardBuffer();
-            this.ViewSwap     .UpdateForwardBuffer();
-            this.ViewLayout   .UpdateForwardBuffer();
+            this.ViewSwap.UpdateForwardBuffer();
+            this.ViewLayout.UpdateForwardBuffer();
 
             foreach (var item in this.Items.ToArray())
             {
@@ -185,12 +177,12 @@ namespace MetaMind.Engine.Entities.Controls.Views.Controllers
 
         public override void UpdateInput(GameTime time)
         {
-            this.UpdateInputOfMouse(time);
-            this.UpdateInputOfKeyboard(time);
-            this.UpdateInputOfItems(time);
+            this.UpdateMouseInput(time);
+            this.UpdateKeyboardInput(time);
+            this.UpdateItemsInput(time);
         }
 
-        protected void UpdateInputOfItems(GameTime time)
+        protected void UpdateItemsInput(GameTime time)
         {
             foreach (var item in this.View.Items.ToArray())
             {
@@ -198,19 +190,22 @@ namespace MetaMind.Engine.Entities.Controls.Views.Controllers
             }
         }
 
-        protected virtual void UpdateInputOfKeyboard(GameTime time)
+        // TODO: Not immediate mode enough, I may need to process
+        //       computationally heavy task in a single run by collecting input
+        //       in a structure.
+        protected virtual void UpdateKeyboardInput(GameTime time)
         {
             if (this.View[MMViewState.View_Is_Inputting]())
             {
                 if (this.View.ViewSettings.KeyboardEnabled)
                 {
-                    var keyboard = this.Input.State.Keyboard;
-                    if (keyboard.IsActionTriggered(KeyboardActions.CommonCreateItem))
+                    var keyboard = this.GlobalInput.State.Keyboard;
+                    if (keyboard.IsActionTriggered(MMInputActions.CommonCreateItem))
                     {
                         this.AddItem();
                     }
 
-                    if (keyboard.IsActionTriggered(KeyboardActions.Escape))
+                    if (keyboard.IsActionTriggered(MMInputActions.Escape))
                     {
                         this.ViewSelection.Cancel();
                     }
@@ -218,7 +213,7 @@ namespace MetaMind.Engine.Entities.Controls.Views.Controllers
             }
         }
 
-        protected virtual void UpdateInputOfMouse(GameTime time)
+        protected virtual void UpdateMouseInput(GameTime time)
         {
         }
 
@@ -237,7 +232,7 @@ namespace MetaMind.Engine.Entities.Controls.Views.Controllers
 
             item.ItemLayer = this.ItemFactory.CreateLayer(item);
             item.ItemLogic = this.ItemFactory.CreateController(item);
-            item.Renderer  = this.ItemFactory.CreateRenderer(item);
+            item.Renderer = this.ItemFactory.CreateRenderer(item);
 
             item.ItemData = this.ViewBinding.AddData(item);
 
@@ -256,7 +251,7 @@ namespace MetaMind.Engine.Entities.Controls.Views.Controllers
 
             item.ItemLayer = this.ItemFactory.CreateLayer(item);
             item.ItemLogic = this.ItemFactory.CreateController(item);
-            item.Renderer  = this.ItemFactory.CreateRenderer(item);
+            item.Renderer = this.ItemFactory.CreateRenderer(item);
 
             item.ItemData = data;
 
@@ -276,7 +271,7 @@ namespace MetaMind.Engine.Entities.Controls.Views.Controllers
 
             this.ItemsWrite.Clear();
 
-            // HOTFIX: Has to be after the item clear(in this.ItemsRead) 
+            // HOTFIX: Has to be after the item clear(in this.ItemsRead)
             // because it is possible to view scroll control
             // to use the this.ItemsRead information in Reset()
             this.CacheAction(this.ViewScroll.Reset);

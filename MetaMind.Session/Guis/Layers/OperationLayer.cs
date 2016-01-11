@@ -1,16 +1,17 @@
 ﻿namespace MetaMind.Session.Guis.Layers
 {
     using System;
-    using Concepts.Operations;
     using Engine.Components.Content.Fonts;
     using Engine.Components.Graphics;
     using Engine.Entities;
+    using Engine.Entities.Bases;
     using Engine.Entities.Controls.Labels;
     using Engine.Entities.Graphics.Fonts;
-    using Engine.Screens;
+    using Engine.Entities.Screens;
     using Engine.Services;
     using Microsoft.Xna.Framework;
     using Modules;
+    using Operations;
 
     // TODO(Critical): I need to change this. I don't need this anymore
     public class OperationLayer : MMLayer
@@ -39,12 +40,12 @@
         {
             base.Draw(time);
 
-            ((MMVisualEntity)this).Graphics.Renderer.Begin();
+            ((MMVisualEntity)this).EngineGraphics.Renderer.Begin();
 
             this.ControllableEntities.Draw(time);
             this.VisuallEntities     .Draw(time);
             
-            ((MMVisualEntity)this).Graphics.Renderer.End();
+            ((MMVisualEntity)this).EngineGraphics.Renderer.End();
         }
 
         public override void LoadContent()
@@ -57,10 +58,10 @@
             this.ControllableEntities.Add(operationModule);
             this.ControllableEntities.LoadContent();
 
-            var graphicsSettings = this.Graphics.Settings;
+            var graphicsSettings = this.EngineGraphics.Settings;
             var screenLabel = new Label
             {
-                TextFont     = () => Font.UiRegular,
+                TextFont     = () => MMFont.UiRegular,
                 Text         = () => "OPERATIONS",
                 AnchorLocation = () => new Vector2((float)graphicsSettings.Width / 2, 80),
                 TextColor    = () => Color.White,

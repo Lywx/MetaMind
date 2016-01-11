@@ -3,6 +3,7 @@ namespace MetaMind.Session.Guis.Modules.Synchronization
     using System;
     using Engine.Components.Content.Fonts;
     using Engine.Entities;
+    using Engine.Entities.Bases;
     using Engine.Entities.Controls.Images;
     using Engine.Entities.Controls.Labels;
     using Engine.Entities.Graphics.Fonts;
@@ -14,7 +15,7 @@ namespace MetaMind.Session.Guis.Modules.Synchronization
         public SynchronizationPoint(string text, Func<Color> textColor, Func<Color> boxColor, Func<Rectangle> boxbounds)
         {
             this.Digit = new Label(
-                () => Font.UiStatistics,
+                () => MMFont.UiStatistics,
                 () => text,
                 () => boxbounds().Center.ToVector2() + new Vector2(0, 16),
                 textColor,

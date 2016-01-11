@@ -1,19 +1,20 @@
 ﻿namespace MetaMind.Session.Guis.Screens
 {
     using System;
-    using Concepts.Operations;
-    using Concepts.Synchronizations;
-    using Concepts.Tests;
     using Engine.Components.Content.Fonts;
     using Engine.Components.Graphics;
     using Engine.Entities;
+    using Engine.Entities.Bases;
     using Engine.Entities.Controls.Buttons;
-    using Engine.Screens;
+    using Engine.Entities.Screens;
     using Engine.Services;
     using Engine.Services.Script.FSharp;
     using Engine.Settings;
     using Layers;
     using Microsoft.Xna.Framework;
+    using Operations;
+    using Runtime.Attention;
+    using Tests;
 
     public class MainScreen : MMScreen
     {
@@ -59,7 +60,7 @@
             // Operation session
             this.operationSession = new OperationSession(SessionGame.FsiSession, SessionGame.SessionData.Cognition);
 
-            var graphicsSettings = this.Graphics.Settings;
+            var graphicsSettings = this.EngineGraphics.Settings;
 
             // Buttons
             const int buttonWidth = 30;
@@ -79,7 +80,7 @@
             {
                 Label =
                 {
-                    TextFont   = () => Font.UiRegular,
+                    TextFont   = () => MMFont.UiRegular,
                     Text       = () => "<",
                     TextColor  = () => this.Color.White,
                     TextSize   = () => 1f,
@@ -93,7 +94,7 @@
             {
                 Label =
                 {
-                    TextFont   = () => Font.UiRegular,
+                    TextFont   = () => MMFont.UiRegular,
                     Text       = () => ">",
                     TextColor  = () => this.Color.White,
                     TextSize   = () => 1f,
@@ -108,10 +109,10 @@
                 DrawAction = (graphics, time, alpha) =>
                 {
                     // Buttons have the same alpha value as circular layer
-                    ((MMVisualEntity)this).Graphics.Renderer.Begin();
+                    ((MMVisualEntity)this).EngineGraphics.Renderer.Begin();
                     this.buttonPrevious.Draw(time);
                     this.buttonNext.Draw(time);
-                    ((MMVisualEntity)this).Graphics.Renderer.End();
+                    ((MMVisualEntity)this).EngineGraphics.Renderer.End();
                 }
             });
 
@@ -119,8 +120,8 @@
             this.CircularLayers.Add(new TestLayer(this.testSession, SessionGame.Speech, this));
             this.CircularLayers.Add(new OperationLayer(this.operationSession, this)
             {
-                Enabled = false,
-                Visible = false,
+                EntityEnabled = false,
+                EntityVisible = false,
                 Opacity = 0,
             });
 
@@ -153,7 +154,7 @@
 
             if (keyboard.IsActionTriggered(KeyboardActions.SynchronizationPause))
             {
-                this.synchronizationSession.ToggleSynchronization();
+                this.synchronizationSession.ToggleSync();
             }
 
             this.buttonPrevious.UpdateInput(time);

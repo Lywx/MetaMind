@@ -7,6 +7,7 @@
 
 namespace MetaMind.Engine.Entities.Controls.Views.Controllers
 {
+    using Bases;
     using Entities;
     using Item.Data;
     using Item.Factories;

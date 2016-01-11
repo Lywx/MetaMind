@@ -1,15 +1,24 @@
 ﻿namespace MetaMind.Engine.Entities.Nodes
 {
+    using Bases;
     using Graphics;
 
-    public interface IMMNodeBase : IMMInputEntity, ICCUpdatable, IMMFocusable
+    public interface IMMNodeBase : 
+        IMMInputEntity, 
+        ICCUpdatable, 
+        IMMFocusable,
+        IMMNodeOrganization
     {
-        
     }
 
-    public interface IMMNode : IMMNodeBase,
-        IMMNodeOrganization,
+    public interface IMMNodeOperations : 
         IMMNodeScheduleOperations
+    {
+    }
+
+    public interface IMMNode : 
+        IMMNodeBase,
+        IMMNodeOperations
     {
         IMMRendererOpacity Opacity { get; }
 

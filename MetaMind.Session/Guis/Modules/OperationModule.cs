@@ -2,12 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
-    using Concepts.Operations;
     using Engine.Entities;
+    using Engine.Entities.Bases;
     using Engine.Entities.Controls.Item;
     using Engine.Entities.Controls.Views;
     using Engine.Services;
     using Microsoft.Xna.Framework;
+    using Operations;
     using Widgets.IndexViews;
     using Widgets.IndexViews.Operations;
 
@@ -45,7 +46,7 @@
                                                                                                            
         public override void LoadContent()
         {
-            var graphicsSettings = this.Graphics.Settings;
+            var graphicsSettings = this.EngineGraphics.Settings;
 
             // View settings
             var viewSettings = new StandardIndexViewSettings(

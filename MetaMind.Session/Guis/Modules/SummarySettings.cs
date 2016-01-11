@@ -3,6 +3,7 @@ namespace MetaMind.Session.Guis.Modules
     using Engine.Components.Content.Fonts;
     using Engine.Components.Graphics;
     using Engine.Entities;
+    using Engine.Entities.Bases;
     using Engine.Services.Loader;
     using Microsoft.Xna.Framework;
 
@@ -23,13 +24,13 @@ namespace MetaMind.Session.Guis.Modules
 
         public Vector2 TitleCenter;
 
-        public Font    TitleFont = Font.UiRegular;
+        public MMFont    TitleFont = MMFont.UiRegular;
 
         public float   TitleSize = 1f;
 
         public Color   TitleColor = Color.White;
 
-        public Font  EntityFont = Font.UiStatistics;
+        public MMFont  EntityFont = MMFont.UiStatistics;
 
         public float EntitySize = 1f;
 
@@ -45,7 +46,7 @@ namespace MetaMind.Session.Guis.Modules
 
         public SummarySettings()
         {
-            this.LoadParameter(this.Graphics.Settings);
+            this.LoadParameter(this.EngineGraphics.Settings);
 
             this.TitleCenter = new Vector2(this.ViewportWidth / 2f, 100);
         }

@@ -1,24 +1,24 @@
 namespace MetaMind.Session.Guis.Modules.Synchronization
 {
     using System;
-    using Concepts.Synchronizations;
     using Engine.Entities;
     using Engine.Entities.Controls.Images;
     using Engine.Services;
     using Engine.Settings;
     using Microsoft.Xna.Framework;
+    using Runtime.Attention;
 
     public class SynchronizationProgressBar : MMMVCEntityComponent<SynchronizationModule, SynchronizationSettings, SynchronizationController>
     {
-        public SynchronizationProgressBar(SynchronizationModule module, ISynchronization synchronization)
+        public SynchronizationProgressBar(SynchronizationModule module, ISynchronizationData synchronizationData)
             : base(module)
         {
-            if (synchronization == null)
+            if (synchronizationData == null)
             {
-                throw new ArgumentNullException("synchronization");
+                throw new ArgumentNullException("synchronizationData");
             }
 
-            this.Synchronization = synchronization;
+            this.SynchronizationData = synchronizationData;
 
             this.Frame = new ImageBox(
                 () => RectangleExtension.RectangleByCenter(
@@ -30,8 +30,8 @@ namespace MetaMind.Session.Guis.Modules.Synchronization
             this.Progress = new ImageBox(
                 () => RectangleExtension.RectangleByCenter(
                     this.Settings.BarFrameCenterPosition,
-                    this.Settings.BarFrameSize * new Vector2(this.Synchronization.Progress, 1)),
-                () => this.Synchronization.Enabled ? MMPalette.LightBlue : MMPalette.LightPink,
+                    this.Settings.BarFrameSize * new Vector2(this.SynchronizationData.Progress, 1)),
+                () => this.SynchronizationData.Enabled ? MMPalette.LightBlue : MMPalette.LightPink,
                 () => true);
         }
 
@@ -39,7 +39,7 @@ namespace MetaMind.Session.Guis.Modules.Synchronization
 
         public ImageBox Frame { get; set; }
 
-        private ISynchronization Synchronization { get; set; }
+        private ISynchronizationData SynchronizationData { get; set; }
 
         public override void Draw(GameTime time)
         {

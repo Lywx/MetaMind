@@ -1,5 +1,6 @@
 namespace MetaMind.Engine.Entities.Controls.Views.Renderers
 {
+    using Bases;
     using Entities;
     using Item;
     using Microsoft.Xna.Framework;

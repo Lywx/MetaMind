@@ -74,8 +74,8 @@
 
         public override void Initialize()
         {
-            this.Engine.Input.Event.KeyDown  += this.InputEventKeyDown;
-            this.Engine.Input.Event.KeyPress += this.InputEventKeyPress;
+            this.GlobalEngine.Input.Event.KeyDown  += this.InputEventKeyDown;
+            this.GlobalEngine.Input.Event.KeyPress += this.InputEventKeyPress;
 
             base.Initialize();
         }
@@ -120,7 +120,7 @@
 
             this.InputReset();
 
-            var keyboard = this.Engine.Input.State.Keyboard;
+            var keyboard = this.GlobalEngine.Input.State.Keyboard;
 
             switch (e.KeyChar)
             {
@@ -252,8 +252,8 @@
             {
                 if (!this.IsDisposed)
                 {
-                    this.Engine.Input.Event.KeyDown -= this.InputEventKeyDown;
-                    this.Engine.Input.Event.KeyPress -= this.InputEventKeyPress;
+                    this.GlobalEngine.Input.Event.KeyDown -= this.InputEventKeyDown;
+                    this.GlobalEngine.Input.Event.KeyPress -= this.InputEventKeyPress;
                 }
 
                 this.IsDisposed = true;

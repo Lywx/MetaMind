@@ -65,15 +65,15 @@
 
         #region Initialization
 
-        public static void Initialize(IFontManager fonts)
+        public static void Initialize(IMMFontManager fonts)
         {
             NSimSunRegularFont       = fonts["NSimSum Regular"];
             LucidaConsoleRegularFont = fonts["Lucida Console Regular"];
         }
 
-        private static Font NSimSunRegularFont { get; set; }
+        private static MMFont NSimSunRegularFont { get; set; }
 
-        private static Font LucidaConsoleRegularFont { get; set; }
+        private static MMFont LucidaConsoleRegularFont { get; set; }
 
         #endregion
     }

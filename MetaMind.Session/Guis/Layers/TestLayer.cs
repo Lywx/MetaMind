@@ -2,18 +2,19 @@ namespace MetaMind.Session.Guis.Layers
 {
     using System;
     using System.Speech.Synthesis;
-    using Concepts.Tests;
     using Engine.Components.Content.Fonts;
     using Engine.Components.Graphics;
     using Engine.Entities;
+    using Engine.Entities.Bases;
     using Engine.Entities.Controls.Labels;
     using Engine.Entities.Graphics.Fonts;
-    using Engine.Screens;
+    using Engine.Entities.Screens;
     using Engine.Services;
     using Engine.Settings;
     using Microsoft.Xna.Framework;
     using Modules;
     using Screens;
+    using Tests;
 
     public class TestLayer : MMLayer
     {
@@ -73,11 +74,11 @@ namespace MetaMind.Session.Guis.Layers
             this.inputEntities.LoadContent();
 
             // Visuals
-            var graphicsSettings = this.Graphics.Settings;
+            var graphicsSettings = this.EngineGraphics.Settings;
 
             this.testLabel = new Label
             {
-                TextFont     = () => Font.UiRegular,
+                TextFont     = () => MMFont.UiRegular,
                 Text         = () => "TESTS",
                 AnchorLocation = () => new Vector2((float)graphicsSettings.Width / 2, 80),
                 TextColor    = () => Color.White,
@@ -105,12 +106,12 @@ namespace MetaMind.Session.Guis.Layers
 
         public override void Draw(GameTime time)
         {
-            ((MMVisualEntity)this).Graphics.Renderer.Begin();
+            ((MMVisualEntity)this).EngineGraphics.Renderer.Begin();
 
             this.inputEntities.Draw(time);
             this.drawEntities .Draw(time); 
 
-            ((MMVisualEntity)this).Graphics.Renderer.End();
+            ((MMVisualEntity)this).EngineGraphics.Renderer.End();
 
             base.Draw(time);
         }

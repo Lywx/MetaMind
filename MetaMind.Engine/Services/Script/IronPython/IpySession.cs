@@ -56,8 +56,8 @@ namespace MetaMind.Engine.Services.Script.IronPython
 
         private void CreateVariables()
         {
-            this.SetVariable("GameEngine", this.Interop.Engine);
-            this.SetVariable("Game", this.Interop.Game.Game);
+            this.SetVariable("GameEngine", this.GlobalInterop.Engine);
+            this.SetVariable("Game", this.GlobalInterop.Game.Game);
             this.EvalExpressionAsync(
 @"
 import clr; 
@@ -66,7 +66,7 @@ from MetaMind.Unity import Unity"
 );
 
             // TODO(IronPython): Provide more built-in commands
-            this.SetVariable("clear", new Action(() => new ClearCommand(this.Interop.Console).Execute(new[] { "" })));
+            this.SetVariable("clear", new Action(() => new ClearCommand(this.GlobalInterop.Console).Execute(new[] { "" })));
         }
 
         public void SetVariable(string name, object value)

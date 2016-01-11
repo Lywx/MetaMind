@@ -1,12 +1,12 @@
 ﻿namespace MetaMind.Session.Guis.Widgets.IndexViews.Operations
 {
-    using Concepts.Operations;
     using Engine.Entities.Controls.Item;
     using Engine.Entities.Controls.Item.Controllers;
     using Engine.Entities.Controls.Item.Data;
     using Engine.Entities.Controls.Item.Frames;
     using Engine.Entities.Controls.Item.Interactions;
     using Engine.Entities.Controls.Item.Layouts;
+    using Session.Operations;
 
     public class OperationItemLogic : MMIndexBlockViewVerticalItemLogic 
     {

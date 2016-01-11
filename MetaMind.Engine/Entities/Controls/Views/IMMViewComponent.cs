@@ -1,5 +1,6 @@
 namespace MetaMind.Engine.Entities.Controls.Views
 {
+    using Bases;
     using Entities;
 
     // TODO???

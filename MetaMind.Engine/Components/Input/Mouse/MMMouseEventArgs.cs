@@ -1,4 +1,4 @@
-namespace MetaMind.Engine.Components.Input
+namespace MetaMind.Engine.Components.Input.Mouse
 {
     using System;
     using System.Windows.Forms;

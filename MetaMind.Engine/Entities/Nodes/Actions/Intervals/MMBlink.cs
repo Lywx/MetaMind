@@ -8,7 +8,7 @@
             : base(action, target)
         {
             this.Times         = action.Times;
-            this.OriginalState = target.Visible;
+            this.OriginalState = target.EntityVisible;
         }
 
         #endregion
@@ -26,13 +26,13 @@
 
                 // float m = fmodf(time, slice);
                 var m = time % slice;
-                this.Target.Visible = m > (slice / 2);
+                this.Target.EntityVisible = m > (slice / 2);
             }
         }
 
         protected internal override void Stop()
         {
-            this.Target.Visible = this.OriginalState;
+            this.Target.EntityVisible = this.OriginalState;
             base.Stop();
         }
     }

@@ -1,11 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Program.cs">
-//   Copyright (c) 2014 Wuxiang Lin
-//   All Rights Reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace MetaMind.Session
+﻿namespace MetaMind.Session
 {
     using System;
     using Engine;
@@ -24,12 +17,14 @@ namespace MetaMind.Session
         private static void Main(string[] args)
         {
             var configurer = new SessionConfigurer();
-            var builder    = new MMEngineBuilder(configurer);
+            var builder = new MMEngineBuilder(configurer);
 
             using (var engine = builder.Create())
             {
-                var testimony = new SessionGame(engine);
-                testimony.Run();
+                using (var session = new SessionGame(engine))
+                {
+                    session.Run();
+                }
             }
         }
     }

@@ -1,7 +1,6 @@
 namespace MetaMind.Session.Guis.Widgets.IndexViews.Operations
 {
     using System;
-    using Concepts.Operations;
     using Engine.Entities.Controls.Item.Data;
     using Engine.Entities.Controls.Item.Factories;
     using Engine.Entities.Controls.Item.Frames;
@@ -11,6 +10,7 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Operations
     using Engine.Entities.Controls.Views.Regions;
     using Engine.Entities.Controls.Views.Renderers;
     using Engine.Entities.Controls.Views.Selections;
+    using Session.Operations;
     using Tests;
 
     /// <summary>

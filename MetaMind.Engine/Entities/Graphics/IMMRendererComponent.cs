@@ -1,6 +1,7 @@
 namespace MetaMind.Engine.Entities.Graphics
 {
     using System;
+    using Bases;
     using Elements;
     using Entities;
     using Shapes;
@@ -84,7 +85,7 @@ namespace MetaMind.Engine.Entities.Graphics
 
         void OnOpacityChanged(object sender, EventArgs e);
 
-        void OnParentResize(object sender, MMElementEventArgs e);
+        void OnParentResize(object sender, EventArgs e);
 
         void OnParentChanged(object sender, EventArgs e);
 

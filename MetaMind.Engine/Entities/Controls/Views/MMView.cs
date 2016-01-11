@@ -2,6 +2,7 @@ namespace MetaMind.Engine.Entities.Controls.Views
 {
     using System;
     using System.Collections.Generic;
+    using Bases;
     using Controllers;
     using Entities;
     using Item;

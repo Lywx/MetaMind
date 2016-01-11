@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Components.Interop.Process
 {
     using Microsoft.Xna.Framework;
 
-    public abstract class StepProcess : Process
+    public abstract class StepProcess : MMProcess
     {
         private readonly ProcessCounter counter;
 

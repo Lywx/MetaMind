@@ -15,7 +15,27 @@
         /// </summary>
         private Point mouseRelativePosition;
 
-        #region Properties
+        #region Constructors and Finalizer
+
+        public MMDraggableRectangleElement()
+        {
+            this.Setup();
+        }
+
+        public MMDraggableRectangleElement(Rectangle bounds) 
+            : base(bounds)
+        {
+            this.Setup();
+        }
+
+        ~MMDraggableRectangleElement()
+        {
+            this.Dispose(true);
+        }
+
+        #endregion
+
+        #region Element States
 
         private bool movable;
 
@@ -39,26 +59,6 @@
 
                 this.movable = value;
             }
-        }
-
-        #endregion
-
-        #region Constructors and Finalizer
-
-        public MMDraggableRectangleElement()
-        {
-            this.Setup();
-        }
-
-        public MMDraggableRectangleElement(Rectangle bounds) 
-            : base(bounds)
-        {
-            this.Setup();
-        }
-
-        ~MMDraggableRectangleElement()
-        {
-            this.Dispose(true);
         }
 
         #endregion
@@ -87,23 +87,23 @@
             Released,
         }
 
-        protected StateMachine<RectangleMachineState, RectangleMachineTrigger> RectangleMachine { get; private set; }
+        protected StateMachine<RectangleMachineState, RectangleMachineTrigger> RectangleStateMachine { get; private set; }
 
         #endregion
 
         #region Events
 
-        public event EventHandler<MMElementEventArgs> MouseDrag;
+        public event EventHandler<MMInputElementDebugEventArgs> MouseDrag;
 
-        public event EventHandler<MMElementEventArgs> MouseDrop;
+        public event EventHandler<MMInputElementDebugEventArgs> MouseDrop;
 
         #endregion
 
         #region Event Handlers
 
-        private void FrameMousePress(object sender, MMElementEventArgs e)
+        private void FrameMousePress(object sender, MMInputElementDebugEventArgs e)
         {
-            var mousePosition = this.Input.State.Mouse.Position;
+            var mousePosition = this.GlobalInput.State.Mouse.Position;
 
             // origin for deciding whether is dragging
             this.mousePressedPosition = new Point(mousePosition.X, mousePosition.Y);
@@ -112,12 +112,12 @@
             // mouse y-axis value is fixed at y-axis center of the rectangle
             this.mouseRelativePosition = new Point(mousePosition.X - this.Bounds.X, mousePosition.Y - this.Bounds.Y);
 
-            this.RectangleMachine.Fire(RectangleMachineTrigger.Pressed);
+            this.RectangleStateMachine.Fire(RectangleMachineTrigger.Pressed);
         }
 
         private void FrameMouseUp(object sender, EventArgs e)
         {
-            this.RectangleMachine.Fire(RectangleMachineTrigger.Released);
+            this.RectangleStateMachine.Fire(RectangleMachineTrigger.Released);
         }
 
         #endregion
@@ -126,12 +126,12 @@
 
         private void OnMouseDropped()
         {
-            this.MouseDrop?.Invoke(this, new MMElementEventArgs(MMElementEvent.Element_Drop));
+            this.MouseDrop?.Invoke(this, new MMInputElementDebugEventArgs(MMInputElementDebugEvent.Element_Drop));
         }
 
         private void OnMouseDragged()
         {
-            this.MouseDrag?.Invoke(this, new MMElementEventArgs(MMElementEvent.Element_Drag));
+            this.MouseDrag?.Invoke(this, new MMInputElementDebugEventArgs(MMInputElementDebugEvent.Element_Drag));
         }
 
         #endregion
@@ -153,54 +153,54 @@
 
         private void Setup()
         {
-            this.InitializeMachine();
-            this.InitializeStates();
+            this.InitializeStateMachine();
+            this.InitializeStateDebug();
         }
 
-        private void InitializeMachine()
+        private void InitializeStateMachine()
         {
-            this.RectangleMachine = new StateMachine<RectangleMachineState, RectangleMachineTrigger>(RectangleMachineState.Released);
+            this.RectangleStateMachine = new StateMachine<RectangleMachineState, RectangleMachineTrigger>(RectangleMachineState.Released);
 
             // Possible cross interference 
-            this.RectangleMachine.Configure(RectangleMachineState.Released).PermitReentry(RectangleMachineTrigger.Released);
-            this.RectangleMachine.Configure(RectangleMachineState.Released).Permit(RectangleMachineTrigger.Pressed, RectangleMachineState.Pressing);
-            this.RectangleMachine.Configure(RectangleMachineState.Released).Ignore(RectangleMachineTrigger.DraggedWithinRange);
-            this.RectangleMachine.Configure(RectangleMachineState.Released).Ignore(RectangleMachineTrigger.DraggedOutOfRange);
+            this.RectangleStateMachine.Configure(RectangleMachineState.Released).PermitReentry(RectangleMachineTrigger.Released);
+            this.RectangleStateMachine.Configure(RectangleMachineState.Released).Permit(RectangleMachineTrigger.Pressed, RectangleMachineState.Pressing);
+            this.RectangleStateMachine.Configure(RectangleMachineState.Released).Ignore(RectangleMachineTrigger.DraggedWithinRange);
+            this.RectangleStateMachine.Configure(RectangleMachineState.Released).Ignore(RectangleMachineTrigger.DraggedOutOfRange);
 
             // Possible cross interference
-            this.RectangleMachine.Configure(RectangleMachineState.Pressing).PermitReentry(RectangleMachineTrigger.Pressed);
-            this.RectangleMachine.Configure(RectangleMachineState.Pressing).Permit(RectangleMachineTrigger.Released, RectangleMachineState.Released);
-            this.RectangleMachine.Configure(RectangleMachineState.Pressing).Permit(RectangleMachineTrigger.DraggedWithinRange, RectangleMachineState.Holding);
-            this.RectangleMachine.Configure(RectangleMachineState.Pressing).Permit(RectangleMachineTrigger.DraggedOutOfRange, RectangleMachineState.Dragging);
+            this.RectangleStateMachine.Configure(RectangleMachineState.Pressing).PermitReentry(RectangleMachineTrigger.Pressed);
+            this.RectangleStateMachine.Configure(RectangleMachineState.Pressing).Permit(RectangleMachineTrigger.Released, RectangleMachineState.Released);
+            this.RectangleStateMachine.Configure(RectangleMachineState.Pressing).Permit(RectangleMachineTrigger.DraggedWithinRange, RectangleMachineState.Holding);
+            this.RectangleStateMachine.Configure(RectangleMachineState.Pressing).Permit(RectangleMachineTrigger.DraggedOutOfRange, RectangleMachineState.Dragging);
 
-            this.RectangleMachine.Configure(RectangleMachineState.Holding).PermitReentry(RectangleMachineTrigger.DraggedWithinRange);
-            this.RectangleMachine.Configure(RectangleMachineState.Holding).Permit(RectangleMachineTrigger.DraggedOutOfRange, RectangleMachineState.Dragging);
-
-            // Possible cross interference
-            this.RectangleMachine.Configure(RectangleMachineState.Holding).Permit(RectangleMachineTrigger.Pressed, RectangleMachineState.Pressing);
-            this.RectangleMachine.Configure(RectangleMachineState.Holding).Permit(RectangleMachineTrigger.Released, RectangleMachineState.Released);
+            this.RectangleStateMachine.Configure(RectangleMachineState.Holding).PermitReentry(RectangleMachineTrigger.DraggedWithinRange);
+            this.RectangleStateMachine.Configure(RectangleMachineState.Holding).Permit(RectangleMachineTrigger.DraggedOutOfRange, RectangleMachineState.Dragging);
 
             // Possible cross interference
-            this.RectangleMachine.Configure(RectangleMachineState.Dragging).Permit(RectangleMachineTrigger.Pressed, RectangleMachineState.Released);
-            this.RectangleMachine.Configure(RectangleMachineState.Dragging).Permit(RectangleMachineTrigger.Released, RectangleMachineState.Released);
-            this.RectangleMachine.Configure(RectangleMachineState.Dragging).Ignore(RectangleMachineTrigger.DraggedOutOfRange);
-            this.RectangleMachine.Configure(RectangleMachineState.Dragging).Ignore(RectangleMachineTrigger.DraggedWithinRange);
+            this.RectangleStateMachine.Configure(RectangleMachineState.Holding).Permit(RectangleMachineTrigger.Pressed, RectangleMachineState.Pressing);
+            this.RectangleStateMachine.Configure(RectangleMachineState.Holding).Permit(RectangleMachineTrigger.Released, RectangleMachineState.Released);
 
-            this.RectangleMachine.Configure(RectangleMachineState.Dragging).OnEntry(() =>
+            // Possible cross interference
+            this.RectangleStateMachine.Configure(RectangleMachineState.Dragging).Permit(RectangleMachineTrigger.Pressed, RectangleMachineState.Released);
+            this.RectangleStateMachine.Configure(RectangleMachineState.Dragging).Permit(RectangleMachineTrigger.Released, RectangleMachineState.Released);
+            this.RectangleStateMachine.Configure(RectangleMachineState.Dragging).Ignore(RectangleMachineTrigger.DraggedOutOfRange);
+            this.RectangleStateMachine.Configure(RectangleMachineState.Dragging).Ignore(RectangleMachineTrigger.DraggedWithinRange);
+
+            this.RectangleStateMachine.Configure(RectangleMachineState.Dragging).OnEntry(() =>
                 {
-                    this.CacheAction(this.OnMouseDragged);
+                    this.InputCacher.CacheInput(this.OnMouseDragged);
                 });
 
-            this.RectangleMachine.Configure(RectangleMachineState.Dragging).OnExit(() =>
+            this.RectangleStateMachine.Configure(RectangleMachineState.Dragging).OnExit(() =>
                 {
-                    this.CacheAction(this.OnMouseDropped);
+                    this.InputCacher.CacheInput(this.OnMouseDropped);
                 });
         }
 
-        private void InitializeStates()
+        private void InitializeStateDebug()
         {
-            this[MMElementState.Element_Is_Holding] = () => this.RectangleMachine.IsInState(RectangleMachineState.Holding);
-            this[MMElementState.Element_Is_Dragging] = () => this.RectangleMachine.IsInState(RectangleMachineState.Dragging);
+            this[MMInputElementDebugState.Element_Is_Holding] = () => this.RectangleStateMachine.IsInState(RectangleMachineState.Holding);
+            this[MMInputElementDebugState.Element_Is_Dragging] = () => this.RectangleStateMachine.IsInState(RectangleMachineState.Dragging);
         }
 
         #endregion
@@ -216,7 +216,7 @@
                 return;
             }
 
-            var mousePosition = this.Input.State.Mouse.Position;
+            var mousePosition = this.GlobalInput.State.Mouse.Position;
 
             this.UpdateFramePosition(mousePosition);
             this.UpdateFrameStates(mousePosition);
@@ -224,7 +224,7 @@
 
         private void UpdateFramePosition(Point mousePosition)
         {
-            if (this.RectangleMachine.IsInState(RectangleMachineState.Dragging))
+            if (this.RectangleStateMachine.IsInState(RectangleMachineState.Dragging))
             {
                 // Keep rectangle relative position to the mouse position from 
                 // changing 
@@ -242,7 +242,7 @@
                 mousePosition.DistanceFrom(this.mousePressedPosition).
                      Length() > this.mouseHoldDistance;
 
-            this.RectangleMachine.Fire(
+            this.RectangleStateMachine.Fire(
                 isOutOfHoldLen ? RectangleMachineTrigger.DraggedOutOfRange : RectangleMachineTrigger.DraggedWithinRange);
         }
 

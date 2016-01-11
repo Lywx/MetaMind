@@ -47,7 +47,7 @@ namespace MetaMind.Engine.Entities.Particles
 
         public override void Draw(GameTime time)
         {
-            this.Graphics.Renderer.FillRectangle(this.Position, this.Size, this.Color, this.Angle);
+            this.EngineGraphics.Renderer.FillRectangle(this.Position, this.Size, this.Color, this.Angle);
         }
 
         public override void Update(GameTime time)

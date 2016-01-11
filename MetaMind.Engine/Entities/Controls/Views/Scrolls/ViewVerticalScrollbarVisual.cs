@@ -1,6 +1,7 @@
 namespace MetaMind.Engine.Entities.Controls.Views.Scrolls
 {
     using System;
+    using Bases;
     using Entities;
     using Entities.Elements;
     using Images;
@@ -24,7 +25,7 @@ namespace MetaMind.Engine.Entities.Controls.Views.Scrolls
             this.scrollbar = scrollbar;
             this.scrollbarShape = new ImageBox(
                 () => this.scrollbar.Rectangle,
-                () => this.scrollbar[MMElementState.Element_Is_Dragging]()
+                () => this.scrollbar[MMInputElementDebugState.Element_Is_Dragging]()
                         ? this.ScrollbarSettings.DraggingColor
                         : this.ScrollbarSettings.RegularColor,
                 () => true);
@@ -43,8 +44,8 @@ namespace MetaMind.Engine.Entities.Controls.Views.Scrolls
 
             var brightness = (int)(this.ScrollbarSettings.ColorBrightnessFadeSpeed * time.ElapsedGameTime.TotalSeconds);
 
-            if (this.scrollbar[MMElementState.Mouse_Is_Over]() ||
-                this.scrollbar[MMElementState.Element_Is_Dragging]())
+            if (this.scrollbar[MMInputElementDebugState.Mouse_Is_Over]() ||
+                this.scrollbar[MMInputElementDebugState.Element_Is_Dragging]())
             {
                 this.scrollbarBrightness += brightness;
                 if (this.scrollbarBrightness > this.ScrollbarSettings.ColorBrightnessMax)

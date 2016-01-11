@@ -14,7 +14,7 @@
         /// Label is the main text display control.
         /// </summary>
         public Label(
-            Func<Font> textFont,
+            Func<MMFont> textFont,
             Func<string> text,
             Func<Vector2> anchorLocation,
             Func<Color> textColor,
@@ -32,7 +32,7 @@
         }
 
         public Label(
-            Func<Font> textFont,
+            Func<MMFont> textFont,
             Func<string> text,
             Func<Vector2> anchorLocation,
             Func<Color> textColor,
@@ -76,9 +76,9 @@
                 : (() => this.TextFont().MeasureString(this.Text(), this.TextSize()));
 
             this.DrawActionSelector = () => this.TextMonospaced
-                ? (Action<Font, string, Vector2, Color, float, HoritonalAlignment, VerticalAlignment, int>)
-                  ((font, str, position, color, scale, halignment, valignment, leading) => this.Graphics.Renderer.DrawMonospacedString(font, str, position, color, scale, halignment, valignment, leading))
-                : ((font, str, position, color, scale, halignment, valignment, leading) => this.Graphics.Renderer.DrawString          (font, str, position, color, scale, halignment, valignment, leading));
+                ? (Action<MMFont, string, Vector2, Color, float, HoritonalAlignment, VerticalAlignment, int>)
+                  ((font, str, position, color, scale, halignment, valignment, leading) => this.EngineGraphics.Renderer.DrawMonospacedString(font, str, position, color, scale, halignment, valignment, leading))
+                : ((font, str, position, color, scale, halignment, valignment, leading) => this.EngineGraphics.Renderer.DrawString          (font, str, position, color, scale, halignment, valignment, leading));
         }
 
         #endregion
@@ -96,7 +96,7 @@
 
         public Func<float> TextSize { get; set; } = () => 0f;
 
-        public Func<Font> TextFont { get; set; } = () => null;
+        public Func<MMFont> TextFont { get; set; } = () => null;
 
         public HoritonalAlignment TextHAlignment { get; set; } = HoritonalAlignment.Right;
 
@@ -181,9 +181,9 @@
 
         #region Draw
 
-        protected Action<Font, string, Vector2, Color, float, HoritonalAlignment, VerticalAlignment, int> DrawAction => this.DrawActionSelector();
+        protected Action<MMFont, string, Vector2, Color, float, HoritonalAlignment, VerticalAlignment, int> DrawAction => this.DrawActionSelector();
 
-        protected Func<Action<Font, string, Vector2, Color, float, HoritonalAlignment, VerticalAlignment, int>> DrawActionSelector { get; }
+        protected Func<Action<MMFont, string, Vector2, Color, float, HoritonalAlignment, VerticalAlignment, int>> DrawActionSelector { get; }
 
         public override void Draw(GameTime time)
         {

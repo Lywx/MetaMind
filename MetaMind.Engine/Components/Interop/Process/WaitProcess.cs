@@ -3,7 +3,7 @@ namespace MetaMind.Engine.Components.Interop.Process
     using System;
     using Microsoft.Xna.Framework;
 
-    public class WaitProcess : Process
+    public class WaitProcess : MMProcess
     {
         public readonly TimeSpan TotalDuration;
 

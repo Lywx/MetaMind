@@ -21,10 +21,6 @@
 
         #region Events
 
-        public event Action UpdateDisplayedInItselfStarted;
-
-        public event Action UpdateDisplayedInItselfEnded;
-
         #endregion
 
         #region Target Data
@@ -94,10 +90,7 @@
 
         public virtual void UpdateDisplayed(IMMNodeColor parent)
         {
-            this.UpdateDisplayedInItselfStarted?.Invoke();
             this.UpdateDisplayedInItself(parent);
-            this.UpdateDisplayedInItselfEnded?.Invoke();
-
             this.UpdateDisplayedInChildren();
         }
 

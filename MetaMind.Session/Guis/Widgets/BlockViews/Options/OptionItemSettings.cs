@@ -66,7 +66,7 @@
 
         public OptionItemSettings()
         {
-            this.LoadParameter(this.Graphics.Settings);
+            this.LoadParameter(this.EngineGraphics.Settings);
 
             this.rootFrame = new MMViewItemRenderSettings
             {

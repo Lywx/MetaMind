@@ -1,7 +1,6 @@
 namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
 {
     using System;
-    using Concepts.Tests;
     using Engine.Entities.Controls.Item.Data;
     using Engine.Entities.Controls.Item.Factories;
     using Engine.Entities.Controls.Item.Frames;
@@ -11,6 +10,7 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
     using Engine.Entities.Controls.Views.Regions;
     using Engine.Entities.Controls.Views.Renderers;
     using Engine.Entities.Controls.Views.Selections;
+    using Session.Tests;
 
     /// <summary>
     /// Composers are not intended to be reused.
