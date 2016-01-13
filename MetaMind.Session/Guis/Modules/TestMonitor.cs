@@ -3,11 +3,11 @@
     using System;
     using Engine;
     using Engine.Components;
-    using Engine.Services.Loader;
+    using Engine.Services.IO;
     using Microsoft.Xna.Framework;
     using Tests;
 
-    public class TestMonitor : MMInputableComponent, IConfigurable
+    public class TestMonitor : MMInputableComponent, IPlainConfigurationFileLoader
     {
         public static float TestWarningRate = 10f;
 
@@ -45,9 +45,9 @@
 
         public void LoadConfiguration()
         {
-            var pairs = ConfigurationLoader.LoadUniquePairs(this);
+            var pairs = PlainConfigurationLoader.LoadUnique(this);
 
-            TestWarningRate = InformationLoader.ReadValueFloats(pairs, "TestMonitor.TestWarningRate", 0, 10f);
+            TestWarningRate = PlainConfigurationReader.ReadValueFloat(pairs, "TestMonitor.TestWarningRate", 10f);
         }
 
         #endregion

@@ -8,7 +8,7 @@
     using Components.Content.Fonts;
     using Components.Graphics;
     using Extensions;
-    using Loader;
+    using IO;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Primtives2D;
@@ -16,7 +16,7 @@
     // TODO(Minor, Console): This is still not good enough
     public class MMConsoleRenderer :
         MMMVCComponentRenderer<MMConsole, GameConsoleSettings, MMConsoleController, MMConsoleRenderer>,
-        IParameterDependant<MMGraphicsSettings>
+        IMMParameterDependant<MMGraphicsSettings>
     {
         #region Dependency
 

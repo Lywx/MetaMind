@@ -2,7 +2,7 @@ namespace MetaMind.Engine.Components.IO
 {
     using System;
     using System.IO;
-    using Services.Loader;
+    using Services.IO;
 #if WINDOWS
     using Windows.Components.IO;
 #endif
@@ -36,7 +36,7 @@ namespace MetaMind.Engine.Components.IO
 
         #region Path
 
-        public static string ConfigurationPath(IConfigurable loader) => Path.Combine(ConfigurationDirectory, loader.ConfigurationFilename);
+        public static string ConfigurationPath(IPlainConfigurationFileLoader loader) => Path.Combine(ConfigurationDirectory, loader.ConfigurationFilename);
 
         public static string ContentPath(string relativePath) => Path.Combine(ContentDirectory, relativePath);
 

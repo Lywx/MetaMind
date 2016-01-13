@@ -3,10 +3,10 @@ namespace MetaMind.Engine.Entities.Particles
     using Bases;
     using Components.Graphics;
     using Microsoft.Xna.Framework;
-    using Services.Loader;
     using System;
+    using Services.IO;
 
-    public class MMParticle : MMVisualEntity, IMMParticle, IParameterDependant<MMGraphicsSettings>
+    public class MMParticle : MMVisualEntity, IMMParticle, IMMParameterDependant<MMGraphicsSettings>
     {
         #region Particle Movements
 

@@ -14,12 +14,12 @@ namespace MetaMind.Engine.Components.Graphics
     using System.Windows.Forms;
     using Extensions;
     using NLog;
-    using Services.Loader;
+    using Services.IO;
 
     /// <summary>
     /// Graphics settings data. 
     /// </summary>
-    public class MMGraphicsSettings : IConfigurable, IParameter
+    public class MMGraphicsSettings : IPlainConfigurationFileLoader, IMMParameter
     {
 #if DEBUG
         #region Logger
@@ -117,19 +117,19 @@ namespace MetaMind.Engine.Components.Graphics
 
         public void LoadConfiguration()
         {
-            var configuration = ConfigurationLoader.LoadUniquePairs(this);
+            var configuration = PlainConfigurationLoader.LoadUnique(this);
 
-            var dividend = InformationLoader.ReadValueInts(configuration, "Resolution Aspect", 0, 16); 
-            var divisor  = InformationLoader.ReadValueInts(configuration, "Resolution Aspect", 0, 9);
+            var dividend = PlainConfigurationReader.ReadValueInts(configuration, "Resolution Aspect", 0, 16); 
+            var divisor  = PlainConfigurationReader.ReadValueInts(configuration, "Resolution Aspect", 1, 9);
             this.Aspect  = (float)dividend / divisor;
 
-            this.Width  = InformationLoader.ReadValueInts(configuration, "Resolution", 0, 800);
-            this.Height = InformationLoader.ReadValueInts(configuration, "Resolution", 1, 600);
+            this.Width  = PlainConfigurationReader.ReadValueInts(configuration, "Resolution", 0, 800);
+            this.Height = PlainConfigurationReader.ReadValueInts(configuration, "Resolution", 1, 600);
 
-            this.IsFullscreen = InformationLoader.ReadValueBool(configuration, "Full Screen", false);
-            this.IsWindowMode = InformationLoader.ReadValueBool(configuration, "Window Mode", true);
+            this.IsFullscreen = PlainConfigurationReader.ReadValueBool(configuration, "Full Screen", false);
+            this.IsWindowMode = PlainConfigurationReader.ReadValueBool(configuration, "Window Mode", true);
 
-            this.FPS = InformationLoader.ReadValueInts(configuration, "FPS", 0, 30);
+            this.FPS = PlainConfigurationReader.ReadValueInt(configuration, "FPS", 30);
         }
 
         #endregion

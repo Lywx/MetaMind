@@ -503,6 +503,7 @@
     <Compile Include="Entities\Nodes\MMNodeTag.cs" />
     <Compile Include="Entities\Graphics\MMRendererOpacity.cs" />
     <Compile Include="Entities\Shapes\MMShapeDebugEvent.cs" />
+    <Compile Include="Extensions\PointUtils.cs" />
     <Compile Include="IMMBufferOperations.cs" />
     <Compile Include="IMMFocusable.cs" />
     <Compile Include="Extensions\ObservableCollection.cs" />
@@ -512,9 +513,13 @@
     <Compile Include="Components\Content\ContentManagerExtension.cs" />
     <Compile Include="Components\Content\Asset\IMMAssetManager.cs" />
     <Compile Include="Components\Content\Skins\ControlSkinAsset.cs" />
-    <Compile Include="Components\Content\Texture\MMImageSettings.cs" />
+    <Compile Include="Components\Content\Texture\MMImageDesign.cs" />
     <Compile Include="Components\Content\Texture\MMImage.cs" />
     <Compile Include="MMObject.cs" />
+    <Compile Include="Services\IO\PlainConfigurationReader.cs" />
+    <Compile Include="Services\IO\XmlAttributeFormatter.cs" />
+    <Compile Include="Services\IO\ValueReader.cs" />
+    <Compile Include="Services\IO\XmlAttributeReader.cs" />
     <Compile Include="Settings\MMSettingDictionary.cs" />
     <Compile Include="Components\Content\Skins\CursorSkinAsset.cs" />
     <Compile Include="Components\Content\Fonts\MMFont.cs" />
@@ -684,8 +689,8 @@
     <Compile Include="Sessions\IMMSessionController.cs" />
     <Compile Include="Sessions\IMMSessionData.cs" />
     <Compile Include="Sessions\MMSession.cs" />
-    <Compile Include="Services\Loader\ConfigurationLoader.cs" />
-    <Compile Include="Services\Loader\IConfigurable.cs" />
+    <Compile Include="Services\IO\PlainConfigurationLoader.cs" />
+    <Compile Include="Services\IO\IPlainConfigurationFileLoader.cs" />
     <Compile Include="Windows\Components\Input\MMInputEventWin32.cs" />
     <Compile Include="Components\Input\MMInputState.cs" />
     <Compile Include="Components\Input\Keyboard\MMKeyboardInput.cs" />
@@ -712,8 +717,8 @@
     <Compile Include="Entities\Particles\MMFloatParticle.cs" />
     <Compile Include="Entities\Particles\MMVisualParticle.cs" />
     <Compile Include="Entities\Particles\MMParticle.cs" />
-    <Compile Include="Services\Loader\IParameter.cs" />
-    <Compile Include="Services\Loader\IParameterDependant.cs" />
+    <Compile Include="Settings\IMMParameter.cs" />
+    <Compile Include="Settings\IMMParameterDependant.cs" />
     <Compile Include="Entities\MMMVCEntity.cs" />
     <Compile Include="Entities\MMMVCEntityComponent.cs" />
     <Compile Include="Entities\MMMVCEntityController.cs" />
@@ -728,7 +733,6 @@
     <Compile Include="Entities\Screens\MMScreenState.cs" />
     <Compile Include="Settings\MMPalette.cs" />
     <Compile Include="Components\Graphics\MMGraphicsSettings.cs" />
-    <Compile Include="Services\Loader\InformationLoader.cs" />
     <Compile Include="Components\IO\IMMPlatformPath.cs" />
     <Compile Include="Windows\Components\IO\MMPlatformPathWin32.cs" />
   </ItemGroup>

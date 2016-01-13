@@ -3,10 +3,10 @@ namespace MetaMind.Engine.Components.Input
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
-    using Services.Loader;
     using System.Linq;
+    using Services.IO;
 
-    public class MMKeyboardInput : IMMKeyboardInput, IConfigurable
+    public class MMKeyboardInput : IMMKeyboardInput, IPlainConfigurationFileLoader
     {
         private MMKeyboardBinding<MMInputAction> keyboardBinding;
 

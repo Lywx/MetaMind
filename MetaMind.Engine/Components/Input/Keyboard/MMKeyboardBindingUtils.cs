@@ -6,7 +6,7 @@ namespace MetaMind.Engine.Components.Input
     using System.Reflection;
     using Microsoft.Xna.Framework.Input;
     using NLog;
-    using Services.Loader;
+    using Services.IO;
     using Services.Parser.Elements;
     using Services.Parser.Grammar;
     using Sprache;
@@ -24,12 +24,12 @@ namespace MetaMind.Engine.Components.Input
 
 #endif
 
-        public static MMKeyboardBinding<MMInputAction> Load<TActions>(IConfigurable loader)
+        public static MMKeyboardBinding<MMInputAction> Load<TActions>(IPlainConfigurationFileLoader loader)
             where TActions : MMInputActions
         {
             var actionBinding = new MMKeyboardBinding<MMInputAction>();
 
-            foreach (var actionPair in ConfigurationLoader.LoadDuplicablePairs(loader))
+            foreach (var actionPair in PlainConfigurationLoader.LoadDuplicable(loader))
             {
                 LoadPair<TActions>(actionBinding, actionPair);
             }

@@ -5,18 +5,18 @@
 
     public class MMImage
     {
-        public MMImage(MMImageSettings settings, Texture2D resource)
+        public MMImage(MMImageDesign design, Texture2D resource)
         {
             if (resource == null)
             {
                 throw new ArgumentNullException(nameof(resource));
             }
 
-            this.Settings = settings;
+            this.Design = design;
             this.Resource = resource;
         }
 
-        public MMImageSettings Settings { get; private set; }
+        public MMImageDesign Design { get; private set; }
 
         public Texture2D Resource { get; private set; }
     }

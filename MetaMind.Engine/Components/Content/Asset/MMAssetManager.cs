@@ -10,6 +10,7 @@ namespace MetaMind.Engine.Components.Content.Asset
     using System;
     using System.IO;
     using System.Xml;
+    using Services.IO;
     using Texture;
 
     // TODO(Critical): Test query system
@@ -389,11 +390,11 @@ namespace MetaMind.Engine.Components.Content.Asset
             {
                 foreach (XmlElement fontElement in fontList)
                 {
-                    var fontName = this.ReadAttribute(fontElement, "Name", null, true);
-                    var fontSize = this.ReadAttribute(fontElement, "Size", null, true);
-                    var fontAsset = this.ReadAttribute(fontElement, "Asset", null, true);
+                    var fontName  = XmlAttributeReader.ReadAttributeString(fontElement, "Name", null, true);
+                    var fontSize  = XmlAttributeReader.ReadAttributeInt(fontElement, "Size", 0, true);
+                    var fontAsset = XmlAttributeReader.ReadAttributeString(fontElement, "Asset", null, true);
 
-                    var font = new MMFontAsset(fontName, int.Parse(fontSize), fontAsset);
+                    var font = new MMFontAsset(fontName, fontSize, fontAsset);
                     if (!package.Fonts.ContainsKey(font.Name))
                     {
                         package.Add(font);
@@ -409,8 +410,8 @@ namespace MetaMind.Engine.Components.Content.Asset
             {
                 foreach (XmlElement imageElement in imageList)
                 {
-                    var imageName = this.ReadAttribute(imageElement, "Name", null, true);
-                    var imageAsset = this.ReadAttribute(imageElement, "Asset", null, true);
+                    var imageName = XmlAttributeReader.ReadAttributeString(imageElement, "Name", null, true);
+                    var imageAsset = XmlAttributeReader.ReadAttributeString(imageElement, "Asset", null, true);
                     var imageDesign = this.ReadImageDesign(imageElement);
 
                     var image = new MMImageAsset(imageName, imageAsset, imageDesign);
@@ -423,14 +424,14 @@ namespace MetaMind.Engine.Components.Content.Asset
             }
         }
 
-        private MMImageSettings ReadImageDesign(XmlElement imageElement)
+        private MMImageDesign ReadImageDesign(XmlElement imageElement)
         {
             var designElement = imageElement["Design"];
 
-            var screenWidth = this.ReadAttributeInt(designElement, "ScreenWidth", 0, true);
-            var screenHeight = this.ReadAttributeInt(designElement, "ScreenHeight", 0, true);
+            var screenWidth = XmlAttributeReader.ReadAttributeInt(designElement, "ScreenWidth", 0, true);
+            var screenHeight = XmlAttributeReader.ReadAttributeInt(designElement, "ScreenHeight", 0, true);
 
-            return new MMImageSettings(screenWidth, screenHeight);
+            return new MMImageDesign(screenWidth, screenHeight);
         }
 
         // TODO: Fixed this
@@ -516,91 +517,6 @@ namespace MetaMind.Engine.Components.Content.Asset
 
             var itemList = catalogElement.GetElementsByTagName(itemName);
             return itemList;
-        }
-
-        #endregion
-
-        #region XML Universal Operations
-
-        private string ReadAttribute(XmlElement element, string attribute, string defaultValue, bool needed)
-        {
-            if (element != null && element.HasAttribute(attribute))
-            {
-                return element.Attributes[attribute].Value;
-            }
-            else if (needed)
-            {
-                throw new Exception($@"Missing required attribute ""{attribute}"" in the file.");
-            }
-
-            return defaultValue;
-        }
-
-        /// <remarks>
-        /// The primary difference from the overloaded version is that it allow
-        /// inherited from parent value when return value already has parent's value.
-        /// </remarks>
-        private void ReadAttribute(ref string returnValue, bool inherited, XmlElement element, string attribute, string defaultValue, bool needed)
-        {
-            if (element != null && element.HasAttribute(attribute))
-            {
-                returnValue = element.Attributes[attribute].Value;
-            }
-            else if (inherited)
-            {
-                // Change nothing to existing value
-            }
-            else if (needed)
-            {
-                throw new Exception($@"Missing required attribute ""{attribute}"" in the file.");
-            }
-            else
-            {
-                returnValue = defaultValue;
-            }
-        }
-
-        private int ReadAttributeInt(XmlElement element, string attribute, int defaultValue, bool needed)
-        {
-            return int.Parse(this.ReadAttribute(element, attribute, defaultValue.ToString(), needed));
-        }
-
-        private void ReadAttributeInt(ref int returnValue, bool inherited, XmlElement element, string attribute, int defaultValue, bool needed)
-        {
-            var temp = returnValue.ToString();
-            this.ReadAttribute(ref temp, inherited, element, attribute, defaultValue.ToString(), needed);
-            returnValue = int.Parse(temp);
-        }
-
-        private bool ReadAttributeBool(XmlElement element, string attribute, bool defaultValue, bool needed)
-        {
-            return bool.Parse(this.ReadAttribute(element, attribute, defaultValue.ToString(), needed));
-        }
-
-        private void ReadAttributeBool(ref bool returnValue, bool inherited, XmlElement element, string attribute, bool defaultValue, bool needed)
-        {
-            string temp = returnValue.ToString();
-            this.ReadAttribute(ref temp, inherited, element, attribute, defaultValue.ToString(), needed);
-            returnValue = bool.Parse(temp);
-        }
-
-        private byte ReadAttributeByte(XmlElement element, string attribute, byte defaultValue, bool needed)
-        {
-            return byte.Parse(this.ReadAttribute(element, attribute, defaultValue.ToString(), needed));
-        }
-
-        private void ReadAttributeByte(ref byte returnValue, bool inherited, XmlElement element, string attribute, byte defaultValue, bool needed)
-        {
-            var temp = returnValue.ToString();
-            this.ReadAttribute(ref temp, inherited, element, attribute, defaultValue.ToString(), needed);
-            returnValue = byte.Parse(temp);
-        }
-
-        private void ReadAttributeColor(ref Color returnValue, bool inherited, XmlElement element, string attribute, Color defaultValue, bool needed)
-        {
-            var temp = ColorUtils.ToString(returnValue);
-            this.ReadAttribute(ref temp, inherited, element, attribute, ColorUtils.ToString(defaultValue), needed);
-            returnValue = ColorUtils.Parse(temp);
         }
 
         #endregion

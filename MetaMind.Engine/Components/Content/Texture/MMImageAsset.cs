@@ -6,21 +6,21 @@
 
     public class MMImageAsset : MMAsset
     {
-        public MMImageAsset(string name, string asset, MMImageSettings settings) : base(name)
+        public MMImageAsset(string name, string asset, MMImageDesign design) : base(name)
         {
             if (asset == null)
             {
                 throw new ArgumentNullException(nameof(asset));
             }
 
-            this.Settings = settings;
+            this.Design = design;
         }
 
         #region Resource
 
         public string Asset { get; set; }
 
-        public MMImageSettings Settings { get; set; }
+        public MMImageDesign Design { get; set; }
 
         public Texture2D Resource { get; set; }
 
@@ -30,7 +30,7 @@
 
         public MMImage ToImage()
         {
-            return new MMImage(this.Settings, this.Resource);
+            return new MMImage(this.Design, this.Resource);
         }
 
         #endregion

@@ -4,10 +4,10 @@ namespace MetaMind.Session.Components
     using Engine;
     using Engine.Components;
     using Engine.Components.Profiler;
-    using Engine.Services.Loader;
+    using Engine.Services.IO;
     using Microsoft.Xna.Framework;
 
-    public class MMPerformanceMonitor : MMInputableComponent, IConfigurable
+    public class MMPerformanceMonitor : MMInputableComponent, IPlainConfigurationFileLoader
     {
         public MMPerformanceMonitor(MMEngine engine) : base(engine)
         {
@@ -47,10 +47,10 @@ namespace MetaMind.Session.Components
 
         public void LoadConfiguration()
         {
-            var pairs = ConfigurationLoader.LoadUniquePairs(this);
+            var pairs = PlainConfigurationLoader.LoadUnique(this);
 
-            this.WarningCpuUsageInterval = TimeSpan.FromMinutes(InformationLoader.ReadValueFloats(pairs, "ResourceMonitor.WarningCPUUsageInterval", 0, 5f));
-            this.WarningCpuUsagePercentage = InformationLoader.ReadValueFloats(pairs, "ResourceMonitor.WarningCPUUsagePercentage", 0, 10f);
+            this.WarningCpuUsageInterval = TimeSpan.FromMinutes(PlainConfigurationReader.ReadValueFloat(pairs, "ResourceMonitor.WarningCPUUsageInterval", 5f));
+            this.WarningCpuUsagePercentage = PlainConfigurationReader.ReadValueFloat(pairs, "ResourceMonitor.WarningCPUUsagePercentage", 10f);
         }
 
         #endregion

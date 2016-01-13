@@ -6,9 +6,9 @@
     using Components.IO;
     using Entities;
     using Entities.Bases;
-    using Loader;
+    using IO;
 
-    public class FsScriptSearcher : MMEntity, IConfigurable
+    public class FsScriptSearcher : MMEntity, IPlainConfigurationFileLoader
     {
         private readonly string searchPattern = "*.fsx";
 
@@ -35,7 +35,7 @@
 
         public void LoadConfiguration()
         {
-            var configuration = ConfigurationLoader.LoadUniquePairs(this);
+            var configuration = PlainConfigurationLoader.LoadUnique(this);
             this.SearchFolder = MMDirectoryManager.DataPath(configuration["FsScriptSearcher.SearchFolder"]); ;
         }
 

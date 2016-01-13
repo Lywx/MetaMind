@@ -4,10 +4,10 @@ namespace MetaMind.Session.Guis.Modules
     using Engine.Components.Graphics;
     using Engine.Entities;
     using Engine.Entities.Bases;
-    using Engine.Services.Loader;
+    using Engine.Services.IO;
     using Microsoft.Xna.Framework;
 
-    public class SummarySettings : MMVisualEntity, IParameterDependant<MMGraphicsSettings>
+    public class SummarySettings : MMVisualEntity, IMMParameterDependant<MMGraphicsSettings>
     {
         #region Parameters
 

@@ -1,10 +1,10 @@
 ﻿namespace MetaMind.Engine.Services.Console
 {
     using Components.Graphics;
-    using Loader;
+    using IO;
     using Microsoft.Xna.Framework;
 
-    public class ScrollController : IParameterDependant<MMGraphicsSettings>
+    public class ScrollController : IMMParameterDependant<MMGraphicsSettings>
     {
         private float pageUp;
 

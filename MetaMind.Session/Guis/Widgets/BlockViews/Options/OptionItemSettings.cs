@@ -4,12 +4,12 @@
     using Engine.Entities.Controls.Item;
     using Engine.Entities.Controls.Item.Settings;
     using Engine.Entities.Graphics.Fonts;
-    using Engine.Services.Loader;
+    using Engine.Services.IO;
     using Engine.Settings;
     using Microsoft.Xna.Framework;
     using Modules;
 
-    public class OptionItemSettings : ItemSettings, IParameterDependant<MMGraphicsSettings>
+    public class OptionItemSettings : ItemSettings, IMMParameterDependant<MMGraphicsSettings>
     {
         private readonly MMViewItemRenderSettings rootFrame;
 

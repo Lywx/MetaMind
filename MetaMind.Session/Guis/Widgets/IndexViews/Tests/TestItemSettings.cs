@@ -4,12 +4,12 @@ namespace MetaMind.Session.Guis.Widgets.IndexViews.Tests
     using Engine.Entities.Controls.Item;
     using Engine.Entities.Controls.Item.Settings;
     using Engine.Entities.Graphics.Fonts;
-    using Engine.Services.Loader;
+    using Engine.Services.IO;
     using Engine.Settings;
     using Microsoft.Xna.Framework;
     using Modules;
 
-    public class TestItemSettings : ItemSettings, IParameterDependant<MMGraphicsSettings>
+    public class TestItemSettings : ItemSettings, IMMParameterDependant<MMGraphicsSettings>
     {
         private readonly MMViewItemRenderSettings rootFrame;
 

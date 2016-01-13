@@ -4,11 +4,11 @@
     using Engine.Components.Graphics;
     using Engine.Entities;
     using Engine.Entities.Bases;
-    using Engine.Services.Loader;
+    using Engine.Services.IO;
     using Engine.Settings;
     using Microsoft.Xna.Framework;
 
-    public class SynchronizationSettings : MMVisualEntity, IParameterDependant<MMGraphicsSettings>, ICloneable
+    public class SynchronizationSettings : MMVisualEntity, IMMParameterDependant<MMGraphicsSettings>, ICloneable
     {
         public Vector2 BarFrameCenterPosition;
 
