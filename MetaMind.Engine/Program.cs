@@ -1,6 +1,7 @@
 namespace MetaMind.Engine
 {
     using System;
+    using Core;
 
 #if WINDOWS || LINUX
 

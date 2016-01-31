@@ -1,18 +1,16 @@
 ﻿namespace MetaMind.EngineTest.Guis
 {
     using Engine;
-    using Engine.Entities;
-    using Engine.Entities.Bases;
-    using Engine.Entities.Screens;
-    using Engine.Services;
+    using Engine.Core.Entity.Common;
+    using Engine.Core.Entity.Screens;
 
     public class PlayTest_Screen : MMScreen
     {
-        private MMEntityCollection<MMInputEntity> tests;
+        private MMEntityCollection<MMInputtableEntity> tests;
 
         public override void LoadContent()
         {
-            this.tests = new MMEntityCollection<MMInputEntity>();
+            this.tests = new MMEntityCollection<MMInputtableEntity>();
 
             var region = new PlayTest_Region(null);
             var frame  = new PlayTest_Frame(null);

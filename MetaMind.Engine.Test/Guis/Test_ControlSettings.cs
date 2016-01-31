@@ -1,7 +1,7 @@
 ﻿namespace MetaMind.EngineTest.Guis
 {
     using Engine;
-    using Engine.Settings;
+    using Engine.Core.Settings;
     using Microsoft.Xna.Framework;
     using NUnit.Framework;
 

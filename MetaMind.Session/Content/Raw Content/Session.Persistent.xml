@@ -8,10 +8,10 @@
     <Font Name="NSimSun Bold Italic" Asset="NSimSun Bold Italic" Size="18"/>
   </Fonts>
   <Texture>
-    <Image Name="StartScreen.Meta Mind" Asset="StartScreen.Meta Mind">
+    <Image Name="Background_Screen_Start_Logo_1" Asset="Background_Screen_Start_Logo_1">
       <Design ScreenWidth="1920" ScreenHeight="1080"/>
     </Image>
-    <Image Name="StartScreen.Press Any Button" Asset="StartScreen.Press Any Button">
+    <Image Name="Background_Screen_Start_PressAnyButton_1" Asset="Background_Screen_Start_PressAnyButton_1">
       <Design ScreenWidth="1920" ScreenHeight="1080"/>
     </Image>
   </Texture>

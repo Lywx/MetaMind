@@ -1,23 +1,21 @@
 ﻿namespace MetaMind.EngineTest.Guis
 {
     using Engine;
-    using Engine.Entities;
-    using Engine.Entities.Bases;
-    using Engine.Entities.Controls.Images;
-    using Engine.Entities.Controls.Regions;
-    using Engine.Services;
+    using Engine.Core.Entity;
+    using Engine.Core.Entity.Common;
+    using Engine.Core.Entity.Control.Regions;
     using Microsoft.Xna.Framework;
 
     public class PlayTest_Region : MMMVCEntity<object>
     {
-        private MMEntityCollection<MMInputEntity> control;
+        private MMEntityCollection<MMInputtableEntity> control;
         private MMEntityCollection<MMVisualEntity> visual;
         private RectangleRegion region;
 
         public PlayTest_Region(object settings)
             : base(settings)
         {
-            this.control = new MMEntityCollection<MMInputEntity>();
+            this.control = new MMEntityCollection<MMInputtableEntity>();
             this.visual  = new MMEntityCollection<MMVisualEntity>();
 
             // Region Control

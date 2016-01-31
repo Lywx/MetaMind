@@ -2,7 +2,8 @@
 
 namespace MetaMind.EngineTest.Entities.Nodes
 {
-    using Engine.Entities.Nodes;
+    using Engine.Core.Entity.Node;
+    using Engine.Core.Entity.Node.Model;
     using Moq;
     using NUnit.Framework;
 

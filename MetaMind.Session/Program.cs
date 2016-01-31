@@ -2,6 +2,7 @@
 {
     using System;
     using Engine;
+    using Engine.Core;
 
 #if WINDOWS || LINUX
 
@@ -16,12 +17,12 @@
         [STAThread]
         private static void Main(string[] args)
         {
-            var configurer = new SessionConfigurer();
+            var configurer = new MMSessionConfigurer();
             var builder = new MMEngineBuilder(configurer);
 
             using (var engine = builder.Create())
             {
-                using (var session = new SessionGame(engine))
+                using (var session = new MMSessionGame(engine))
                 {
                     session.Run();
                 }

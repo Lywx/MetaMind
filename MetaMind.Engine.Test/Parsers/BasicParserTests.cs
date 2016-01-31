@@ -1,6 +1,6 @@
 namespace MetaMind.EngineTest.Parsers
 {
-    using Engine.Services.Parser.Grammar;
+    using Engine.Core.Services.Parser.Grammar;
     using NUnit.Framework;
 
     using Sprache;

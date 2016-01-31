@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Text;
-    using Components.Content.Fonts;
+    using Core.Backend.Content.Fonts;
     using Microsoft.Xna.Framework;
 
     public static class StringExtension

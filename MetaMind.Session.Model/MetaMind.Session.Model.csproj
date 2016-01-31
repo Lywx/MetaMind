@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,9 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Memory\Tagging\Tag.cs" />
-    <Compile Include="Memory\Tagging\TagGroup.cs" />
-    <Compile Include="Memory\Tagging\TagGroupExample.cs" />
+    <Compile Include="Memory\MMMemoryPiece.cs" />
+    <Compile Include="Story\IMMDialogue.cs" />
+    <Compile Include="Story\IMMDialogueConvertible.cs" />
+    <Compile Include="Tagging\Tag.cs" />
+    <Compile Include="Tagging\TagGroup.cs" />
+    <Compile Include="Tagging\TagGroupExample.cs" />
     <Compile Include="Process\IJob.cs" />
     <Compile Include="Process\IJobSynchronizationData.cs" />
     <Compile Include="Process\Job.cs" />
@@ -77,12 +81,21 @@
     <Compile Include="Runtime\IConsciousnessAsleep.cs" />
     <Compile Include="Runtime\IConsciousnessAwake.cs" />
     <Compile Include="Runtime\IConsciousnessState.cs" />
-    <Compile Include="Runtime\Story\Objective.cs" />
     <Compile Include="Runtime\Timeline.cs" />
+    <Compile Include="Settings\ModelSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Monitor\" />
     <Folder Include="Process\Planning\" />
+    <Folder Include="Runtime\Environment\Stimuli\Monitoring\" />
+    <Folder Include="Runtime\Environment\Stimuli\Remapping\" />
+    <Folder Include="Runtime\Environment\Stimuli\Tolerance\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MetaMind.Engine\MetaMind.Engine.csproj">
+      <Project>{8944C3AB-1865-49CF-9E84-1ECC42AD2C3E}</Project>
+      <Name>MetaMind.Engine</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

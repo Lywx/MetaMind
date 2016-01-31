@@ -89,108 +89,102 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Components\Input\SessionInputActions.cs" />
-    <Compile Include="Components\MMPerformanceMonitor.cs" />
-    <Compile Include="Components\SessionSaveManager.cs" />
-    <Compile Include="Operations\IOperation.cs" />
-    <Compile Include="Operations\IOperationComputation.cs" />
-    <Compile Include="Operations\IOperationDescription.cs" />
-    <Compile Include="Operations\IOperationDescriptionComputation.cs" />
-    <Compile Include="Operations\IOperationDescriptionOperations.cs" />
-    <Compile Include="Operations\IOperationDescriptionOrganization.cs" />
-    <Compile Include="Operations\IOperationOperations.cs" />
-    <Compile Include="Operations\IOption.cs" />
-    <Compile Include="Operations\IOptionOperation.cs" />
-    <Compile Include="Operations\Operation.cs" />
-    <Compile Include="Operations\OperationDescription.cs" />
-    <Compile Include="Operations\OperationSession.cs" />
-    <Compile Include="Operations\Option.cs" />
-    <Compile Include="Tests\ITestOrganization.cs" />
-    <Compile Include="Tests\TestTimer.cs" />
-    <Compile Include="Tests\ITestEvaluation.cs" />
-    <Compile Include="Operations\OperationOrganizer.cs" />
-    <Compile Include="Tests\TestEffect.cs" />
-    <Compile Include="Tests\TestEvaluation.cs" />
-    <Compile Include="Tests\TestEvaluationEventArgs.cs" />
-    <Compile Include="Tests\TestOrganization.cs" />
-    <Compile Include="Tests\TestOrganizer.cs" />
-    <Compile Include="Tests\TestSession.cs" />
+    <Compile Include="Core\Components\Input\SessionInputActions.cs" />
+    <Compile Include="Core\Components\MMPerformanceMonitor.cs" />
+    <Compile Include="Core\Components\MMSessionSaveManager.cs" />
+    <Compile Include="Core\Services\IO\PathSystem.cs" />
+    <Compile Include="Core\System\Operations\IOperation.cs" />
+    <Compile Include="Core\System\Operations\IOperationComputation.cs" />
+    <Compile Include="Core\System\Operations\IOperationDescription.cs" />
+    <Compile Include="Core\System\Operations\IOperationDescriptionComputation.cs" />
+    <Compile Include="Core\System\Operations\IOperationDescriptionOperations.cs" />
+    <Compile Include="Core\System\Operations\IOperationDescriptionOrganization.cs" />
+    <Compile Include="Core\System\Operations\IOperationOperations.cs" />
+    <Compile Include="Core\System\Operations\IOption.cs" />
+    <Compile Include="Core\System\Operations\IOptionOperation.cs" />
+    <Compile Include="Core\System\Operations\Operation.cs" />
+    <Compile Include="Core\System\Operations\OperationDescription.cs" />
+    <Compile Include="Core\System\Operations\OperationSession.cs" />
+    <Compile Include="Core\System\Operations\Option.cs" />
+    <Compile Include="MMSessionPlainConfigurationRoot.cs" />
+    <Compile Include="Core\View\Dialogue\MMDialogueView.cs" />
+    <Compile Include="Core\View\Dialogue\MMDialogueViewSettings.cs" />
+    <Compile Include="Core\System\Operations\OperationOrganizer.cs" />
     <Compile Include="Extensions\EnumExtension.cs" />
     <Compile Include="Extensions\HashSetExtension.cs" />
     <Compile Include="Extensions\ObservableCollectionExtension.cs" />
-    <Compile Include="Console\Uniutils\ListCommand.cs" />
-    <Compile Include="Guis\Layers\OperationLayer.cs" />
-    <Compile Include="Guis\Modules\OperationModule.cs" />
-    <Compile Include="Guis\Modules\OperationModuleSettings.cs" />
-    <Compile Include="Guis\Modules\OperationSettings.cs" />
-    <Compile Include="Guis\Modules\TestModuleLogic.cs" />
-    <Compile Include="Guis\Modules\TestModuleVisual.cs" />
-    <Compile Include="Guis\Modules\TestMonitor.cs" />
-    <Compile Include="Guis\Screens\BackgroundScreenSettings.cs" />
-    <Compile Include="Guis\Screens\ScreenEvent.cs" />
-    <Compile Include="Guis\Screens\StartScreen.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemFrameController.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemLayer.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemLogic.cs" />
-    <Compile Include="Guis\Widgets\BlockViews\Options\OptionItemFrameController.cs" />
-    <Compile Include="Guis\Widgets\BlockViews\Options\OptionItemLogic.cs" />
-    <Compile Include="Guis\Widgets\BlockViews\Options\OptionItemSettings.cs" />
-    <Compile Include="Guis\Widgets\BlockViews\Options\OptionItemRenderer.cs" />
-    <Compile Include="Guis\Widgets\BlockViews\Options\OptionViewBinding.cs" />
-    <Compile Include="Guis\Widgets\BlockViews\Options\OptionViewSettings.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationIndexedViewBuilder.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationIndexViewBuilder.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemSettings.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationItemRenderer.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Operations\OperationViewBinding.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Tests\TestIndexedViewBuilder.cs" />
-    <Compile Include="Guis\Widgets\BlockViews\Options\OptionItemLayer.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Tests\TestIndexViewBuilder.cs" />
-    <Compile Include="Guis\Layers\TestLayer.cs" />
-    <Compile Include="Guis\Screens\OptionScreen.cs" />
-    <Compile Include="Guis\Layers\SynchronizationLayer.cs" />
-    <Compile Include="Tests\ITest.cs" />
-    <Compile Include="Tests\Test.cs" />
+    <Compile Include="Core\Services\Console\Uniutils\ListCommand.cs" />
+    <Compile Include="Core\Entities\Layers\OperationLayer.cs" />
+    <Compile Include="Core\Entities\Modules\OperationModule.cs" />
+    <Compile Include="Core\Entities\Modules\OperationModuleSettings.cs" />
+    <Compile Include="Core\Entities\Modules\OperationSettings.cs" />
+    <Compile Include="Core\Entities\Modules\TestModuleLogic.cs" />
+    <Compile Include="Core\Entities\Modules\TestModuleVisual.cs" />
+    <Compile Include="Core\Entities\Modules\TestMonitor.cs" />
+    <Compile Include="Core\Entities\Screens\BackgroundScreenSettings.cs" />
+    <Compile Include="Core\Entities\Screens\ScreenEvent.cs" />
+    <Compile Include="Core\Entities\Screens\StartScreen.cs" />
+    <Compile Include="Core\Entities\Widgets\IndexViews\Operations\OperationItemFrameController.cs" />
+    <Compile Include="Core\Entities\Widgets\IndexViews\Operations\OperationItemLayer.cs" />
+    <Compile Include="Core\Entities\Widgets\IndexViews\Operations\OperationItemLogic.cs" />
+    <Compile Include="Core\Entities\Widgets\BlockViews\Options\OptionItemFrameController.cs" />
+    <Compile Include="Core\Entities\Widgets\BlockViews\Options\OptionItemLogic.cs" />
+    <Compile Include="Core\Entities\Widgets\BlockViews\Options\OptionItemSettings.cs" />
+    <Compile Include="Core\Entities\Widgets\BlockViews\Options\OptionItemRenderer.cs" />
+    <Compile Include="Core\Entities\Widgets\BlockViews\Options\OptionViewBinding.cs" />
+    <Compile Include="Core\Entities\Widgets\BlockViews\Options\OptionViewSettings.cs" />
+    <Compile Include="Core\Entities\Widgets\IndexViews\Operations\OperationIndexedViewBuilder.cs" />
+    <Compile Include="Core\Entities\Widgets\IndexViews\Operations\OperationIndexViewBuilder.cs" />
+    <Compile Include="Core\Entities\Widgets\IndexViews\Operations\OperationItemSettings.cs" />
+    <Compile Include="Core\Entities\Widgets\IndexViews\Operations\OperationItemRenderer.cs" />
+    <Compile Include="Core\Entities\Widgets\IndexViews\Operations\OperationViewBinding.cs" />
+    <Compile Include="Core\Entities\Widgets\IndexViews\Tests\TestIndexedViewBuilder.cs" />
+    <Compile Include="Core\Entities\Widgets\BlockViews\Options\OptionItemLayer.cs" />
+    <Compile Include="Core\Entities\Widgets\IndexViews\Tests\TestIndexViewBuilder.cs" />
+    <Compile Include="Core\Entities\Layers\TestLayer.cs" />
+    <Compile Include="Core\Entities\Screens\OptionScreen.cs" />
+    <Compile Include="Core\Entities\Layers\SynchronizationLayer.cs" />
     <Compile Include="Extensions\Int32Extension.cs" />
-    <Compile Include="Guis\Modules\TestModule.cs" />
-    <Compile Include="Guis\Modules\TestModuleSettings.cs" />
-    <Compile Include="Guis\Modules\SummaryModuleController.cs" />
-    <Compile Include="Guis\Modules\SummaryModuleRenderer.cs" />
-    <Compile Include="Guis\Modules\Summary\SummaryEntry.cs" />
-    <Compile Include="Guis\Modules\Summary\SummaryFactory.cs" />
-    <Compile Include="Guis\Modules\Summary\SummarySplit.cs" />
-    <Compile Include="Guis\Modules\Summary\SummaryTitle.cs" />
-    <Compile Include="Guis\Modules\SynchronizationController.cs" />
-    <Compile Include="Guis\Modules\SynchronizationRenderer.cs" />
-    <Compile Include="Guis\Modules\SummaryModule.cs" />
-    <Compile Include="Guis\Modules\SummarySettings.cs" />
-    <Compile Include="Guis\Modules\SynchronizationModule.cs" />
-    <Compile Include="Guis\Modules\SynchronizationMonitor.cs" />
-    <Compile Include="Guis\Modules\SynchronizationSettings.cs" />
-    <Compile Include="Guis\Modules\Synchronization\SynchronizationFactory.cs" />
-    <Compile Include="Guis\Modules\Synchronization\SynchronizationPoint.cs" />
-    <Compile Include="Guis\Modules\Synchronization\SynchronizationPointSide.cs" />
-    <Compile Include="Guis\Modules\Synchronization\SynchronizationProgressBar.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Tests\TestViewBinding.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Tests\TestItemFrameController.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Tests\TestItemLayer.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Tests\TestItemLayout.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Tests\TestItemLogic.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Tests\TestItemRenderer.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\Tests\TestItemSettings.cs" />
-    <Compile Include="Guis\Widgets\IndexViews\StandardIndexViewSettings.cs" />
-    <Compile Include="Guis\Widgets\Items\ViewItemSynchronizationController.cs" />
-    <Compile Include="SessionController.cs" />
-    <Compile Include="SessionGame.cs" />
+    <Compile Include="Core\Entities\Modules\TestModule.cs" />
+    <Compile Include="Core\Entities\Modules\TestModuleSettings.cs" />
+    <Compile Include="Core\Entities\Modules\SummaryModuleController.cs" />
+    <Compile Include="Core\Entities\Modules\SummaryModuleRenderer.cs" />
+    <Compile Include="Core\Entities\Modules\Summary\SummaryEntry.cs" />
+    <Compile Include="Core\Entities\Modules\Summary\SummaryFactory.cs" />
+    <Compile Include="Core\Entities\Modules\Summary\SummarySplit.cs" />
+    <Compile Include="Core\Entities\Modules\Summary\SummaryTitle.cs" />
+    <Compile Include="Core\Entities\Modules\SynchronizationController.cs" />
+    <Compile Include="Core\Entities\Modules\SynchronizationRenderer.cs" />
+    <Compile Include="Core\Entities\Modules\SummaryModule.cs" />
+    <Compile Include="Core\Entities\Modules\SummarySettings.cs" />
+    <Compile Include="Core\Entities\Modules\SynchronizationModule.cs" />
+    <Compile Include="Core\Entities\Modules\SynchronizationMonitor.cs" />
+    <Compile Include="Core\Entities\Modules\SynchronizationSettings.cs" />
+    <Compile Include="Core\Entities\Modules\Synchronization\SynchronizationFactory.cs" />
+    <Compile Include="Core\Entities\Modules\Synchronization\SynchronizationPoint.cs" />
+    <Compile Include="Core\Entities\Modules\Synchronization\SynchronizationPointSide.cs" />
+    <Compile Include="Core\Entities\Modules\Synchronization\SynchronizationProgressBar.cs" />
+    <Compile Include="Core\Entities\Widgets\IndexViews\Tests\TestViewBinding.cs" />
+    <Compile Include="Core\Entities\Widgets\IndexViews\Tests\TestItemFrameController.cs" />
+    <Compile Include="Core\Entities\Widgets\IndexViews\Tests\TestItemLayer.cs" />
+    <Compile Include="Core\Entities\Widgets\IndexViews\Tests\TestItemLayout.cs" />
+    <Compile Include="Core\Entities\Widgets\IndexViews\Tests\TestItemLogic.cs" />
+    <Compile Include="Core\Entities\Widgets\IndexViews\Tests\TestItemRenderer.cs" />
+    <Compile Include="Core\Entities\Widgets\IndexViews\Tests\TestItemSettings.cs" />
+    <Compile Include="Core\Entities\Widgets\IndexViews\StandardIndexViewSettings.cs" />
+    <Compile Include="Core\Entities\Widgets\Items\ViewItemSynchronizationController.cs" />
+    <Compile Include="MMSessionController.cs" />
+    <Compile Include="MMSessionGame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Guis\Screens\BackgroundScreen.cs" />
-    <Compile Include="Guis\Screens\MainScreen.cs" />
-    <Compile Include="Guis\Screens\SummaryScreen.cs" />
-    <Compile Include="ISessionData.cs" />
-    <Compile Include="SessionData.cs" />
-    <Compile Include="SessionEvent.cs" />
-    <Compile Include="SessionConfigurer.cs" />
+    <Compile Include="Core\Entities\Screens\BackgroundScreen.cs" />
+    <Compile Include="Core\Entities\Screens\MainScreen.cs" />
+    <Compile Include="Core\Entities\Screens\SummaryScreen.cs" />
+    <Compile Include="IMMSessionGameData.cs" />
+    <Compile Include="MMSessionGameData.cs" />
+    <Compile Include="MMSessionGameEvent.cs" />
+    <Compile Include="MMSessionConfigurer.cs" />
+    <Compile Include="Core\System\Story\MMDialogueStream.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Compiler.Service, Version=1.4.0.1, Culture=neutral, processorArchitecture=MSIL">
@@ -255,17 +249,25 @@
     <Reference Include="System.Speech" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Core\Entities\Controls\" />
+    <Folder Include="Core\System\Runtime\" />
+    <Folder Include="Core\ViewModel\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MetaMind.Engine\MetaMind.Engine.csproj">
       <Project>{8944c3ab-1865-49cf-9e84-1ecc42ad2c3e}</Project>
       <Name>MetaMind.Engine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MetaMind.Session.Model\MetaMind.Session.Model.csproj">
+      <Project>{e734a0d7-3dae-4a7c-866f-8143d44dd90b}</Project>
+      <Name>MetaMind.Session.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Configurations\Session.txt">
+    <None Include="Configurations\Session.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
     <Content Include="Content\Raw Content\Session.Persistent.xml" />
     <Content Include="Icon.ico" />
   </ItemGroup>
@@ -302,6 +304,9 @@
     </None>
     <None Include="Content\Audio\Win\Wave Bank.xwb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Configurations\Control.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>

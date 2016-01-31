@@ -1,5 +1,6 @@
 ﻿namespace MetaMind.Session.Model.Runtime
 {
+    using System.Runtime.Serialization;
     using Attention;
 
     [DataContract]

@@ -1,7 +1,7 @@
 ﻿namespace MetaMind.UnityTest.Concepts.Tests
 {
     using System;
-    using Engine.Services.Script.FSharp;
+    using Engine.Core.Services.Script.FSharp;
     using NUnit.Framework;
 
     [TestFixture]
