@@ -2,24 +2,7 @@ namespace MetaMind.Engine.Core.Entity.Node.Model
 {
     using Microsoft.Xna.Framework;
 
-    public interface __IMMNodeColorOperations
-    {
-    }
-
-    internal interface __IMMNodeColorOperationsInternal : __IMMNodeColorOperations
-    {
-        #region Cascade
-
-        void DisableCascade();
-
-        void UpdateCascade();
-
-        #endregion
-
-        void UpdateBlend();
-    }
-
-    public interface IMMNodeColor : __IMMNodeColorOperations
+    public interface IMMNodeColor
     {
         /// <summary>
         /// Raw color without processing.
@@ -33,10 +16,5 @@ namespace MetaMind.Engine.Core.Entity.Node.Model
         Color Blend { get; }
 
         bool CascadeEnabled { get; set; }
-    }
-
-    internal interface IMMNodeColorInternal : IMMNodeColor, __IMMNodeColorOperationsInternal 
-    {
-        IMMNode Target { get; }
     }
 }

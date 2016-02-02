@@ -27,7 +27,7 @@ namespace MetaMind.Engine.Core.Backend.Input.Mouse
 
         #region Constructors
 
-        public MMMouseInput()
+        internal MMMouseInput()
         {
             
         }

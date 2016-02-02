@@ -21,7 +21,7 @@
     {
     }
 
-    public interface __IMMNodeOperations : IMMSchedulableOperations
+    public interface __IMMNodeOperations 
     {
     }
 

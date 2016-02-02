@@ -1,13 +1,8 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PointView2DLogicControl.cs">
-//   Copyright (c) 2014 Wuxiang Lin
-//   All Rights Reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
 namespace MetaMind.Engine.Core.Entity.Control.Views.Controllers
 {
     using System;
+    using Backend.Input;
+    using Backend.Input.Keyboard;
     using Item.Data;
     using Item.Factories;
     using Layers;
@@ -207,7 +202,7 @@ namespace MetaMind.Engine.Core.Entity.Control.Views.Controllers
             {
                 if (this.ViewSettings.MouseEnabled)
                 {
-                    var mouse = input.State.Mouse;
+                    var mouse = this.GlobalInput.State.Mouse;
                     if (mouse.IsWheelScrolledUp)
                     {
                         this.ScrollUp();
@@ -227,48 +222,48 @@ namespace MetaMind.Engine.Core.Entity.Control.Views.Controllers
             {
                 if (this.ViewSettings.KeyboardEnabled)
                 {
-                    var keyboard = input.State.Keyboard;
-                    if (keyboard.IsActionTriggered(KeyboardActions.Up))
+                    var keyboard = this.GlobalInput.State.Keyboard;
+                    if (keyboard.IsActionTriggered(MMInputActions.Up))
                     {
                         this.MoveUp();
                     }
 
-                    if (keyboard.IsActionTriggered(KeyboardActions.Down))
+                    if (keyboard.IsActionTriggered(MMInputActions.Down))
                     {
                         this.MoveDown();
                     }
 
-                    if (keyboard.IsActionTriggered(KeyboardActions.Left))
+                    if (keyboard.IsActionTriggered(MMInputActions.Left))
                     {
                         this.MoveLeft();
                     }
 
-                    if (keyboard.IsActionTriggered(KeyboardActions.Right))
+                    if (keyboard.IsActionTriggered(MMInputActions.Right))
                     {
                         this.MoveRight();
                     }
 
-                    if (keyboard.IsActionTriggered(KeyboardActions.FastUp))
+                    if (keyboard.IsActionTriggered(MMInputActions.FastUp))
                     {
                         this.FastMoveUp();
                     }
 
-                    if (keyboard.IsActionTriggered(KeyboardActions.FastDown))
+                    if (keyboard.IsActionTriggered(MMInputActions.FastDown))
                     {
                         this.FastMoveDown();
                     }
 
-                    if (keyboard.IsActionTriggered(KeyboardActions.FastLeft))
+                    if (keyboard.IsActionTriggered(MMInputActions.FastLeft))
                     {
                         this.FastMoveLeft();
                     }
 
-                    if (keyboard.IsActionTriggered(KeyboardActions.FastRight))
+                    if (keyboard.IsActionTriggered(MMInputActions.FastRight))
                     {
                         this.FastMoveRight();
                     }
 
-                    if (keyboard.IsActionTriggered(KeyboardActions.Escape))
+                    if (keyboard.IsActionTriggered(MMInputActions.Escape))
                     {
                         this.ViewSelection.Cancel();
                     }

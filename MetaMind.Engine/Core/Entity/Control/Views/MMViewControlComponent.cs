@@ -1,17 +1,10 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ViewComponent.cs">
-//   Copyright (c) 2015 Wuxiang Lin
-//   All Rights Reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace MetaMind.Engine.Core.Entity.Control.Views
+﻿namespace MetaMind.Engine.Core.Entity.Control.Views
 {
-    using System;
-    using System.Collections.Generic;
     using Item;
     using Item.Layers;
     using Layers;
+    using System;
+    using System.Collections.Generic;
 
     /// <summary>
     ///     ViewComponent hooks all necessary external information to the View object,

@@ -3,7 +3,12 @@ namespace MetaMind.Engine.Core.Backend.Input.Mouse
     using Entity.Common;
     using Microsoft.Xna.Framework;
 
-    public interface IMMMouseInput : IMMInputtable
+    public interface __IMMMouseInputOperations : IMMInputtableOperations
+    {
+        
+    }
+
+    public interface IMMMouseInput : __IMMMouseInputOperations 
     {
         #region Button States
 

@@ -109,9 +109,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Core\Entity\Control\Images\ImageMode.cs" />
-    <Compile Include="Core\Entity\Control\IMMControlComponent.cs" />
-    <Compile Include="Core\Entity\Control\IMMControlManager.cs" />
-    <Compile Include="Core\Entity\Control\IMMControlManagerOperations.cs" />
+    <Compile Include="Core\Entity\Control\MMContainer.cs" />
+    <Compile Include="Core\Entity\Control\MMControl.cs" />
+    <Compile Include="Core\Entity\Control\MMControlFactory.cs" />
+    <Compile Include="Core\Entity\Control\MMWindow.cs" />
+    <Compile Include="Core\Entity\Node\Controller\IMMControlComponent.cs" />
+    <Compile Include="Core\Entity\Node\Controller\IMMControlManager.cs" />
+    <Compile Include="Core\Entity\Node\Controller\IMMControlManagerOperations.cs" />
     <Compile Include="Core\Entity\Control\Item\Data\IMMBlockViewItemData.cs" />
     <Compile Include="Core\Entity\Control\Item\Data\IMMViewBinding.cs" />
     <Compile Include="Core\Entity\Control\Item\Data\IMMViewItemCharModifier.cs">
@@ -251,9 +255,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Core\Entity\Control\Labels\LabelBox.cs" />
-    <Compile Include="Core\Entity\Control\MMControlCollection.cs" />
-    <Compile Include="Core\Entity\Control\MMControlComponent.cs" />
-    <Compile Include="Core\Entity\Control\MMControlManager.cs" />
+    <Compile Include="Core\Entity\Node\Controller\MMControlCollection.cs" />
+    <Compile Include="Core\Entity\Node\Controller\MMControlComponent.cs" />
+    <Compile Include="Core\Entity\Node\Controller\MMControlManager.cs" />
     <Compile Include="Core\Entity\Control\MMCursor.cs" />
     <Compile Include="Core\Entity\Control\MMMargin.cs" />
     <Compile Include="Core\Entity\Control\MMTooltip.cs" />
@@ -447,6 +451,7 @@
     <Compile Include="Core\Entity\Input\MMElementInputCacher.cs" />
     <Compile Include="Core\Entity\Input\IMMRectangleElement.cs" />
     <Compile Include="Core\Entity\Common\IMMSchedulableOperations.cs" />
+    <Compile Include="Core\Entity\Node\Controller\MMNodeController.cs" />
     <Compile Include="Core\Entity\Shape\MMShapeEventArgs.cs" />
     <Compile Include="Core\Entity\Input\MMElementEvent.cs" />
     <Compile Include="Core\Entity\Input\MMElementEventArgs.cs" />
@@ -511,7 +516,7 @@
     <Compile Include="Core\Entity\Node\Controller\IMMNodeController.cs" />
     <Compile Include="Core\Entity\Node\View\IMMNodeRenderer.cs" />
     <Compile Include="Core\Entity\Node\Model\MMNode.cs" />
-    <Compile Include="Core\Entity\Node\MMNodeCollection.cs" />
+    <Compile Include="Core\Entity\Node\Model\MMNodeCollection.cs" />
     <Compile Include="Core\Entity\Node\Model\MMNodeColor.cs" />
     <Compile Include="Core\Entity\Node\View\MMNodeRenderer.cs" />
     <Compile Include="Core\Entity\Node\Model\MMNodeTag.cs" />

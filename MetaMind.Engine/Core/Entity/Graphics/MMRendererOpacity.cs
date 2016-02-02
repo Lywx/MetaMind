@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class MMRendererOpacity : IMMRendererOpacity, IMMRendererOpacityInternal
+    public class MMRendererOpacity : IMMRendererOpacity
     {
         public MMRendererOpacity(IMMRendererComponent target)
         {
@@ -24,23 +24,13 @@
 
         #region Opacity Data
 
-        private byte blend = byte.MaxValue;
-
         /// <summary>
-        /// Opacity influenced by parent's opacity.
+        /// Opacity blend with parent's opacity.
         /// </summary>
-        byte IMMRendererOpacity.Blend => this.blend;
+        public byte Blend { get;
 
-        /// <summary>
-        /// Opacity influenced by parent's opacity.
-        /// </summary>
-        byte IMMRendererOpacityInternal.Blend
-        {
-            get { return this.blend; }
-
-            // Setter is only visible to the internal interface
-            set { this.blend = value; }
-        }
+            // Setter is only visible to the internal
+            internal set; } = byte.MaxValue;
 
         private byte raw = byte.MaxValue;
 
@@ -93,28 +83,26 @@
 
         #region Display Operations
 
-        public virtual void UpdateDisplayed(IMMRendererOpacity parent)
+        public virtual void UpdateBlend(IMMRendererOpacity parent)
         {
-            this.UpdateDisplayedInItself(parent);
-            this.UpdateDisplayedInChildren();
+            this.UpdateBlendFromParent(parent);
+            this.UpdateBlendToChildren();
         }
 
-        private void UpdateDisplayedInChildren()
+        private void UpdateBlendToChildren()
         {
             if (this.IsCascaded)
             {
                 foreach (var child in this.Target.Children)
                 {
-                    ((IMMRenderOpacityInternal)child.Opacity).UpdateDisplayed(this);
+                    ((MMRendererOpacity)child.Opacity).UpdateBlend(this);
                 }
             }
         }
 
-        private void UpdateDisplayedInItself(IMMRendererOpacity parent)
+        private void UpdateBlendFromParent(byte @base)
         {
-            var baseOpacity = parent?.Blend ?? 255;
-
-            this.Blend = (byte)(this.Raw * baseOpacity / 255.0f);
+            this.Blend = (byte)(this.Raw * @base / 255.0f);
         }
 
         #endregion
@@ -127,14 +115,13 @@
 
             foreach (var child in this.Target.Children)
             {
-                ((IMMRenderOpacityInternal)child.Opacity).
-                    UpdateDisplayed(null);
+                ((MMRendererOpacity)child.Opacity).UpdateBlend(null);
             }
         }
 
         public virtual void UpdateCascade(IMMRendererOpacity parent)
         {
-            this.UpdateDisplayed(parent);
+            this.UpdateBlend(parent);
         }
 
         #endregion

@@ -78,11 +78,12 @@
 
         public IMMControlComponentInternal Parent { get; set; }
 
-        IMMControlComponent IMMControlComponentOrganization.Parent => (IMMControlComponent)this.Parent;
+        // TODO: Remove this ugly thing
+        IMMControlComponent __IMMControlComponentBaseOrganizational.Parent => (IMMControlComponent)this.Parent;
 
         public IMMControlComponentInternal Root { get; set; }
 
-        IMMControlComponent IMMControlComponentOrganization.Root => (IMMControlComponent)this.Root;
+        IMMControlComponent __IMMControlComponentBaseOrganizational.Root => (IMMControlComponent)this.Root;
 
         public bool IsChild => this.Parent != null;
 

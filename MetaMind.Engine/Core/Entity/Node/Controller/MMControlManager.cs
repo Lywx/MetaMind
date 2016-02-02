@@ -3,6 +3,9 @@
     using Entity.Common;
     using Microsoft.Xna.Framework;
 
+    /// <summary>
+    /// Control Manager handle a lot things, include Z order of controls, .
+    /// </summary>
     public class MMControlManager : MMInputtableEntity, IMMControlManager, IMMControlManagerInternal 
     {
         #region Constructors and Finalizer

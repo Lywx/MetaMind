@@ -1,8 +1,14 @@
 namespace MetaMind.Engine.Core.Backend.Input.Keyboard
 {
+    using Entity.Common;
     using Microsoft.Xna.Framework.Input;
 
-    public interface IMMKeyboardInput 
+    public interface __IMMKeyboardInputOperations : IMMInputtableOperations
+    {
+        
+    }
+
+    public interface IMMKeyboardInput : __IMMKeyboardInputOperations
     {
         #region Action States
 

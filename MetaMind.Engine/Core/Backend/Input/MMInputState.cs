@@ -20,8 +20,8 @@ namespace MetaMind.Engine.Core.Backend.Input
                 throw new ArgumentNullException(nameof(engine));
             }
 
+            this.Mouse    = new MMMouseInput();
             this.Keyboard = new MMKeyboardInput();
-            this.Mouse = new MMMouseInput();
         }
 
         #endregion Constructors
@@ -32,10 +32,10 @@ namespace MetaMind.Engine.Core.Backend.Input
 
         #region Update and Draw
 
-        public override void UpdateInput(GameTime gameTime)
+        public override void UpdateInput(GameTime time)
         {
-            this.Mouse.UpdateInput(gameTime);
-            this.Keyboard.UpdateInput(gameTime);
+            this.Mouse   .UpdateInput(time);
+            this.Keyboard.UpdateInput(time);
         }
 
         #endregion Update and Draw
